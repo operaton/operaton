@@ -19,7 +19,7 @@
                        [{
                            "name": "myVariable",
                            "operator": "eq",
-                           "value": "camunda"
+                           "value": "operaton"
                          }, {
                            "name": "mySecondVariable",
                            "operator": "neq",

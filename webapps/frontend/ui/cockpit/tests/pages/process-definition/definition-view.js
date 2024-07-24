@@ -20,7 +20,7 @@
 var Base = require('./../base');
 
 module.exports = Base.extend({
-  url: '/camunda/app/cockpit/default/#/process-definition/:process/runtime',
+  url: '/operaton/app/cockpit/default/#/process-definition/:process/runtime',
 
   pageHeader: function() {
     return element(by.binding('processDefinition.key'));

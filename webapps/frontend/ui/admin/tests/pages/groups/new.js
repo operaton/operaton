@@ -20,7 +20,7 @@
 var Base = require('./../base');
 
 module.exports = Base.extend({
-  url: '/camunda/app/admin/default/#/group-create',
+  url: '/operaton/app/admin/default/#/group-create',
 
   newGroupIdInput: function(inputValue) {
     var inputField = element(by.model('group.id'));

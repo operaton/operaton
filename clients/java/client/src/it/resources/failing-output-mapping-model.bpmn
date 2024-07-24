@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_01hjp0v" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" id="Definitions_01hjp0v" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.1">
   <bpmn:process id="process3" name="Test Process" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_10h801u</bpmn:outgoing>
@@ -9,13 +9,13 @@
       <bpmn:incoming>SequenceFlow_0w8k3oc</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0w8k3oc" sourceRef="externalTask" targetRef="EndEvent_1ayvv6q" />
-    <bpmn:serviceTask id="externalTask" name="Error Task" camunda:type="external" camunda:topic="foo">
+    <bpmn:serviceTask id="externalTask" name="Error Task" operaton:type="external" operaton:topic="foo">
       <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:outputParameter name="errorVar">
-            <camunda:script scriptFormat="javascript">var test = nonExistingVar;</camunda:script>
-          </camunda:outputParameter>
-        </camunda:inputOutput>
+        <operaton:inputOutput>
+          <operaton:outputParameter name="errorVar">
+            <operaton:script scriptFormat="javascript">var test = nonExistingVar;</operaton:script>
+          </operaton:outputParameter>
+        </operaton:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_10h801u</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0w8k3oc</bpmn:outgoing>

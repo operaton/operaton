@@ -4,11 +4,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-  <display-name>Camunda Platform webapp</display-name>
+  <display-name>Operaton webapp</display-name>
 
   <filter>
     <filter-name>CsrfPreventionFilter</filter-name>
-    <filter-class>org.camunda.bpm.webapp.impl.security.filter.CsrfPreventionFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.impl.security.filter.CsrfPreventionFilter</filter-class>
     <init-param>
       <param-name>enableSameSiteCookie</param-name>
       <param-value>false</param-value>

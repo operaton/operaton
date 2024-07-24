@@ -1,4 +1,4 @@
-org.camunda.impl.test.utils.testcontainers.CamundaPostgreSQLContainerProvider
-org.camunda.impl.test.utils.testcontainers.CamundaMariaDBContainerProvider
-org.camunda.impl.test.utils.testcontainers.CamundaMySqlContainerProvider
-org.camunda.impl.test.utils.testcontainers.CamundaMSSQLContainerProvider
+org.operaton.impl.test.utils.testcontainers.OperatonPostgreSQLContainerProvider
+org.operaton.impl.test.utils.testcontainers.OperatonMariaDBContainerProvider
+org.operaton.impl.test.utils.testcontainers.OperatonMySqlContainerProvider
+org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider

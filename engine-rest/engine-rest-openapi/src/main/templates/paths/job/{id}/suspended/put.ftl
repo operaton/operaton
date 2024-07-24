@@ -1,5 +1,5 @@
 <#macro endpoint_macro docsUrl="">
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/job/put-activate-suspend-by-id/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/job/put-activate-suspend-by-id/index.html -->
 {
   <@lib.endpointInfo
       id = "updateJobSuspensionState"

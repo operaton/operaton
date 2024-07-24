@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1k1vca8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
-  <bpmn:process id="ReviewInvoice" name="Review Invoice" isExecutable="true" camunda:historyTimeToLive="45" camunda:isStartableInTasklist="false">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1k1vca8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0">
+  <bpmn:process id="ReviewInvoice" name="Review Invoice" isExecutable="true" operaton:historyTimeToLive="45" operaton:isStartableInTasklist="false">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_1ggutts</bpmn:outgoing>
     </bpmn:startEvent>
@@ -10,11 +10,11 @@
       <bpmn:incoming>SequenceFlow_0vvoxt0</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0vvoxt0" sourceRef="reviewInvoice" targetRef="EndEvent_1og1zom" />
-    <bpmn:userTask id="assignReviewer" name="Assign Reviewer" camunda:formKey="embedded:app:forms/assign-reviewer.html" camunda:assignee="demo">
+    <bpmn:userTask id="assignReviewer" name="Assign Reviewer" operaton:formKey="embedded:app:forms/assign-reviewer.html" operaton:assignee="demo">
       <bpmn:incoming>SequenceFlow_1ggutts</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_144f11w</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="reviewInvoice" name="Review Invoice" camunda:formKey="embedded:app:forms/review-invoice.html" camunda:assignee="${reviewer}" camunda:dueDate="${dateTime().plusDays(2).toDate()}">
+    <bpmn:userTask id="reviewInvoice" name="Review Invoice" operaton:formKey="embedded:app:forms/review-invoice.html" operaton:assignee="${reviewer}" operaton:dueDate="${dateTime().plusDays(2).toDate()}">
       <bpmn:incoming>SequenceFlow_144f11w</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0vvoxt0</bpmn:outgoing>
     </bpmn:userTask>

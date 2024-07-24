@@ -1,18 +1,18 @@
 This is a distribution of
 
-       Camunda Platform v${project.version}
+       Operaton v${project.version}
 
 visit
-       http://docs.camunda.org/
+       http://docs.operaton.org/
 
-The Camunda Platform is a dual-license Java-based framework.
-This particular copy of the Camunda Platform is released either
+The Operaton is a dual-license Java-based framework.
+This particular copy of the Operaton is released either
 under the Apache License 2.0 (Community Platform) OR a commercial
 license agreement (Enterprise Platform).
 
 License information can be found in the LICENSE file.
  
-The Camunda Platform includes libraries developed by third
+The Operaton includes libraries developed by third
 parties. For license and attribution notices for these libraries,
 please refer to the documentation that accompanies this distribution
 (see the LICENSE_BOOK-${project.version} file).
@@ -30,7 +30,7 @@ Contents:
 
   server/
         This directory contains a preconfigured distribution 
-        of Apache Tomcat with Camunda Platform readily 
+        of Apache Tomcat with Operaton readily
         installed. 
 
         run the
@@ -40,7 +40,7 @@ Contents:
         After starting the server, you can access the 
         following web applications:
 
-        http://localhost:8080/camunda
+        http://localhost:8080/operaton
         http://localhost:8080/engine-rest
 
   sql/
@@ -49,11 +49,11 @@ Contents:
         The engine create script contain the engine and history tables.
 
         Execute the current upgrade script to make the database compatible
-        with the newest Camunda Platform release.
+        with the newest Operaton release.
 
 ==================
 
-Camunda Platform version: ${project.version}
+Operaton version: ${project.version}
 Apache Tomcat Server version: ${version.tomcat}
 
 =================

@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.run</groupId>
-    <artifactId>camunda-bpm-run-qa</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.run</groupId>
+    <artifactId>operaton-bpm-run-qa</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
 
-  <artifactId>camunda-bpm-run-qa-integration-tests</artifactId>
-  <name>Camunda Platform - Run - QA - Integration Tests</name>
+  <artifactId>operaton-bpm-run-qa-integration-tests</artifactId>
+  <name>Operaton - Run - QA - Integration Tests</name>
   <packaging>jar</packaging>
 
   <dependencies>
@@ -62,14 +62,14 @@
 
     <!-- Webapps -->
     <dependency>
-      <groupId>org.camunda.bpm.qa</groupId>
-      <artifactId>camunda-qa-integration-tests-webapps</artifactId>
+      <groupId>org.operaton.bpm.qa</groupId>
+      <artifactId>operaton-qa-integration-tests-webapps</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.model</groupId>
-      <artifactId>camunda-bpmn-model</artifactId>
+      <groupId>org.operaton.bpm.model</groupId>
+      <artifactId>operaton-bpmn-model</artifactId>
       <scope>test</scope>
     </dependency>
 

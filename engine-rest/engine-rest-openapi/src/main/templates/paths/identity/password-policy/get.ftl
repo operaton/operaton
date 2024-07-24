@@ -1,5 +1,5 @@
 <#macro endpoint_macro docsUrl="">
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/identity/get-password-policy/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/identity/get-password-policy/index.html -->
 {
   <@lib.endpointInfo
       id = "getPasswordPolicy"
@@ -7,7 +7,7 @@
       summary = "Get Password Policy"
       desc = "A password policy consists of a list of rules that new passwords must follow to be
               policy compliant. This end point returns a JSON representation of the
-              list of policy rules. More information on password policies in Camunda can be found in the password policy
+              list of policy rules. More information on password policies in Operaton can be found in the password policy
               [user guide](${docsUrl}/user-guide/process-engine/password-policy/) and in
               the [security instructions](${docsUrl}/user-guide/security/)."
   />

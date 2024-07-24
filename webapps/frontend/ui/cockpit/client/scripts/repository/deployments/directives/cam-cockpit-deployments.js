@@ -17,12 +17,12 @@
 
 'use strict';
 
-var lodash = require('camunda-commons-ui/vendor/lodash');
+var lodash = require('operaton-commons-ui/vendor/lodash');
 
 var template = require('./cam-cockpit-deployments.html?raw');
 var searchConfigJSON = require('./cam-cockpit-deployments-search-plugin-config.json');
 
-var debouncePromiseFactory = require('camunda-bpm-sdk-js').utils
+var debouncePromiseFactory = require('operaton-bpm-sdk-js').utils
   .debouncePromiseFactory;
 var debounceQuery = debouncePromiseFactory();
 

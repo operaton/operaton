@@ -6,7 +6,7 @@
     </layout>
   </appender>
   
-  <logger name="org.camunda" level="info" />
+  <logger name="org.operaton" level="info" />
   
   <root level="info">
     <appender-ref ref="STDOUT" />

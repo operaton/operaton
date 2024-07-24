@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.run</groupId>
-    <artifactId>camunda-bpm-run-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.run</groupId>
+    <artifactId>operaton-bpm-run-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
 
-  <artifactId>camunda-bpm-run-qa</artifactId>
-  <name>Camunda Platform - Run - QA</name>
+  <artifactId>operaton-bpm-run-qa</artifactId>
+  <name>Operaton - Run - QA</name>
   <packaging>pom</packaging>
 
   <properties>
@@ -86,7 +86,7 @@
       </modules>
     </profile>
     <profile>
-      <id>integration-test-camunda-run</id>
+      <id>integration-test-operaton-run</id>
       <modules>
         <module>example-plugin</module>
         <module>integration-tests</module>

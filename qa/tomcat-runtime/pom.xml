@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>camunda-qa-tomcat-runtime</artifactId>
+  <artifactId>operaton-qa-tomcat-runtime</artifactId>
   <packaging>pom</packaging>
 
-  <name>Camunda Platform - QA Tomcat Test Runtime</name>
+  <name>Operaton - QA Tomcat Test Runtime</name>
 
   <parent>
-    <groupId>org.camunda.bpm.qa</groupId>
-    <artifactId>camunda-qa</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.qa</groupId>
+    <artifactId>operaton-qa</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <dependencies>
@@ -18,8 +18,8 @@
         Make sure it comes after assembly in the build.
         Leave scope test, otherwise libs from pom will be copied into Tomcat's lib folder
       -->
-      <groupId>org.camunda.bpm.tomcat</groupId>
-      <artifactId>camunda-tomcat-assembly</artifactId>
+      <groupId>org.operaton.bpm.tomcat</groupId>
+      <artifactId>operaton-tomcat-assembly</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
       <scope>test</scope>
@@ -54,8 +54,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.qa</groupId>
-      <artifactId>camunda-qa-ensure-clean-db</artifactId>
+      <groupId>org.operaton.bpm.qa</groupId>
+      <artifactId>operaton-qa-ensure-clean-db</artifactId>
       <version>${project.version}</version>
       <scope>runtime</scope>
     </dependency>
@@ -87,8 +87,8 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.camunda.bpm.tomcat</groupId>
-                      <artifactId>camunda-tomcat-assembly</artifactId>
+                      <groupId>org.operaton.bpm.tomcat</groupId>
+                      <artifactId>operaton-tomcat-assembly</artifactId>
                       <version>${project.version}</version>
                       <type>tar.gz</type>
                       <overWrite>true</overWrite>

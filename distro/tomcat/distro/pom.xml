@@ -1,22 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>camunda-bpm-tomcat</artifactId>
+  <artifactId>operaton-bpm-tomcat</artifactId>
   <packaging>pom</packaging>
 
   <parent>
-    <groupId>org.camunda.bpm.tomcat</groupId>
-    <artifactId>camunda-tomcat</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.tomcat</groupId>
+    <artifactId>operaton-tomcat</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <name>Camunda Platform - tomcat Distro</name>
+  <name>Operaton - tomcat Distro</name>
 
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.bpm.distro</groupId>
-      <artifactId>camunda-sql-scripts</artifactId>
+      <groupId>org.operaton.bpm.distro</groupId>
+      <artifactId>operaton-sql-scripts</artifactId>
       <version>${project.version}</version>
       <type>jar</type>
     </dependency>
@@ -24,30 +24,30 @@
     <!-- Tomcat 10 dependencies -->
 
     <dependency>
-      <groupId>org.camunda.bpm.tomcat</groupId>
-      <artifactId>camunda-tomcat-assembly</artifactId>
+      <groupId>org.operaton.bpm.tomcat</groupId>
+      <artifactId>operaton-tomcat-assembly</artifactId>
       <version>${project.version}</version>
       <type>tar.gz</type>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.webapp</groupId>
-      <artifactId>camunda-webapp-tomcat-jakarta</artifactId>
+      <groupId>org.operaton.bpm.webapp</groupId>
+      <artifactId>operaton-webapp-tomcat-jakarta</artifactId>
       <version>${project.version}</version>
       <type>war</type>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-rest-jakarta</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-jakarta</artifactId>
       <version>${project.version}</version>
       <classifier>tomcat</classifier>
       <type>war</type>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.example</groupId>
-      <artifactId>camunda-example-invoice-jakarta</artifactId>
+      <groupId>org.operaton.bpm.example</groupId>
+      <artifactId>operaton-example-invoice-jakarta</artifactId>
       <version>${project.version}</version>
       <type>war</type>
     </dependency>
@@ -70,7 +70,7 @@
               <descriptors>
                 <descriptor>assembly.xml</descriptor>
               </descriptors>
-              <finalName>camunda-bpm-tomcat-${project.version}</finalName>
+              <finalName>operaton-bpm-tomcat-${project.version}</finalName>
               <attach>true</attach>
               <appendAssemblyId>false</appendAssemblyId>
               <outputDirectory>target/</outputDirectory>

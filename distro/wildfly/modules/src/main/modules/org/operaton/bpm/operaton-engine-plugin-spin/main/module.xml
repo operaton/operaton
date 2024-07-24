@@ -1,0 +1,22 @@
+<module xmlns="urn:jboss:module:1.0" name="org.operaton.bpm.operaton-engine-plugin-spin">
+  <resources>
+    <resource-root path="operaton-engine-plugin-spin-@project.version@.jar" />
+  </resources>
+
+  <dependencies>
+
+    <module name="java.base" />
+    <module name="org.joda.time" slot="2.1" />
+
+    <module name="org.operaton.commons.operaton-commons-typed-values" />
+    <module name="org.operaton.commons.operaton-commons-logging" />
+    <module name="org.operaton.bpm.operaton-engine" />
+
+    <module name="org.operaton.spin.operaton-spin-core" />
+    <module name="org.operaton.spin.operaton-spin-dataformat-json-jackson" services="import" />
+    <module name="org.operaton.spin.operaton-spin-dataformat-xml-dom-jakarta" services="import" />
+
+    <module name="org.operaton.bpm.dmn.operaton-engine-feel-scala" />
+    <module name="org.camunda.feel.feel-engine" />
+  </dependencies>
+</module>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions" 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+
+  <process id="process" isExecutable="true">
+
+    <startEvent id="theStart" />
+
+    <sequenceFlow sourceRef="theStart" targetRef="serviceTask1" />
+
+    <serviceTask id="serviceTask1" operaton:class="org.operaton.bpm.engine.test.history.IncrementVariableService" />
+
+    <sequenceFlow sourceRef="serviceTask1" targetRef="serviceTask2" />
+
+    <serviceTask id="serviceTask2" operaton:class="org.operaton.bpm.engine.test.history.IncrementVariableService" />
+
+    <sequenceFlow sourceRef="serviceTask2" targetRef="serviceTask3" />
+
+    <serviceTask id="serviceTask3" operaton:class="org.operaton.bpm.engine.test.history.IncrementVariableService" />
+
+    <sequenceFlow sourceRef="serviceTask3" targetRef="end1" />
+
+    <endEvent id="end1" />
+
+  </process>
+
+</definitions>

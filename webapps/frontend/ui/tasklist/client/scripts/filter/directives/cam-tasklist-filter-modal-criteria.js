@@ -21,7 +21,7 @@ var dateExpLangHelp =
   'E.g.: `${ now() }`, `${ dateTime() }` or `${ dateTime().plusWeeks(2) }`';
 var userExpLangHelp = 'E.g.: `${ currentUser() }`';
 var commaSeparatedExps =
-  'List of values separated by comma or an expression which evaluates to a list. E.g.: `camunda-admin, accounting` or `${ currentUserGroups() }`';
+  'List of values separated by comma or an expression which evaluates to a list. E.g.: `operaton-admin, accounting` or `${ currentUserGroups() }`';
 var commaSeparatedValues =
   'List of values seperated by comma. E.g.: `keyC, keyA, keyB`';
 

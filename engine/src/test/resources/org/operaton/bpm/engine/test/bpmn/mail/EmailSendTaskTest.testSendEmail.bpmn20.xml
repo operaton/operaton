@@ -1,0 +1,41 @@
+<definitions 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+
+  <process id="sendMailExample"  isExecutable="true">
+
+    <startEvent id="theStart" />
+    <sequenceFlow sourceRef="theStart" targetRef="sendMail" />
+    
+    <sendTask id="sendMail" operaton:type="mail">
+      <extensionElements>
+        <operaton:field name="from" expression="${sender}" />
+        <operaton:field name="to" expression="${recipient}" />
+        <operaton:field name="subject" expression="Your order ${orderId} has been shipped" />
+        <operaton:field name="html">
+          <operaton:expression>
+            <![CDATA[
+              <html>
+                <body>
+                  Hello ${male ? 'Mr.' : 'Mrs.' } ${recipientName},<br/><br/>
+                  
+                  As of ${now}, your order <b>has been processed and shipped</b>.<br/><br/>
+                  
+                  Kind regards,<br/>
+                  
+                  TheCompany.
+                </body>
+              </html>
+            ]]>
+          </operaton:expression>
+        </operaton:field>      
+      </extensionElements>
+    </sendTask>
+    <sequenceFlow sourceRef="sendMail" targetRef="theEnd" />
+    
+    <endEvent id="theEnd" />
+
+  </process>
+
+</definitions>

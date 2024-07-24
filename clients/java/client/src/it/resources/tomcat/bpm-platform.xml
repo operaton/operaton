@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpm-platform xmlns="http://www.camunda.org/schema/1.0/BpmPlatform"
+<bpm-platform xmlns="http://www.operaton.org/schema/1.0/BpmPlatform"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://www.camunda.org/schema/1.0/BpmPlatform http://www.camunda.org/schema/1.0/BpmPlatform ">
+              xsi:schemaLocation="http://www.operaton.org/schema/1.0/BpmPlatform http://www.operaton.org/schema/1.0/BpmPlatform ">
 
   <job-executor>
     <job-acquisition name="default"/>
@@ -9,7 +9,7 @@
 
   <process-engine name="default">
     <job-acquisition>default</job-acquisition>
-    <configuration>org.camunda.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration</configuration>
+    <configuration>org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration</configuration>
 
     <properties>
       <property name="history">activity</property> <!-- do not remove, needed for PA variable test -->
@@ -17,7 +17,7 @@
       <property name="authorizationEnabled">true</property>
       <property name="jobExecutorDeploymentAware">true</property>
 
-      <property name="jdbcUrl">jdbc:h2:mem:camunda1;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</property>
+      <property name="jdbcUrl">jdbc:h2:mem:operaton1;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</property>
       <property name="jdbcDriver">org.h2.Driver</property>
       <property name="jdbcUsername">sa</property>
       <property name="jdbcPassword"></property>
@@ -28,17 +28,17 @@
     <plugins>
       <!-- plugin enabling Process Application event listener support -->
       <plugin>
-        <class>org.camunda.bpm.application.impl.event.ProcessApplicationEventListenerPlugin</class>
+        <class>org.operaton.bpm.application.impl.event.ProcessApplicationEventListenerPlugin</class>
       </plugin>
 
-      <!-- plugin enabling integration of camunda Spin -->
+      <!-- plugin enabling integration of operaton Spin -->
       <plugin>
-        <class>org.camunda.spin.plugin.impl.SpinProcessEnginePlugin</class>
+        <class>org.operaton.spin.plugin.impl.SpinProcessEnginePlugin</class>
       </plugin>
 
       <!-- plugin enabling connect support -->
       <plugin>
-        <class>org.camunda.connect.plugin.impl.ConnectProcessEnginePlugin</class>
+        <class>org.operaton.connect.plugin.impl.ConnectProcessEnginePlugin</class>
       </plugin>
 
     </plugins>
@@ -46,7 +46,7 @@
 
   <process-engine name="another-engine">
     <job-acquisition>default</job-acquisition>
-    <configuration>org.camunda.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration</configuration>
+    <configuration>org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration</configuration>
 
     <properties>
       <property name="history">activity</property> <!-- do not remove, needed for PA variable test -->
@@ -54,7 +54,7 @@
       <property name="authorizationEnabled">true</property>
       <property name="jobExecutorDeploymentAware">true</property>
 
-      <property name="jdbcUrl">jdbc:h2:mem:camunda1;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</property>
+      <property name="jdbcUrl">jdbc:h2:mem:operaton1;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</property>
       <property name="jdbcDriver">org.h2.Driver</property>
       <property name="jdbcUsername">sa</property>
       <property name="jdbcPassword"></property>
@@ -66,17 +66,17 @@
     <plugins>
       <!-- plugin enabling Process Application event listener support -->
       <plugin>
-        <class>org.camunda.bpm.application.impl.event.ProcessApplicationEventListenerPlugin</class>
+        <class>org.operaton.bpm.application.impl.event.ProcessApplicationEventListenerPlugin</class>
       </plugin>
 
-      <!-- plugin enabling integration of camunda Spin -->
+      <!-- plugin enabling integration of operaton Spin -->
       <plugin>
-        <class>org.camunda.spin.plugin.impl.SpinProcessEnginePlugin</class>
+        <class>org.operaton.spin.plugin.impl.SpinProcessEnginePlugin</class>
       </plugin>
 
       <!-- plugin enabling connect support -->
       <plugin>
-        <class>org.camunda.connect.plugin.impl.ConnectProcessEnginePlugin</class>
+        <class>org.operaton.connect.plugin.impl.ConnectProcessEnginePlugin</class>
       </plugin>
 
     </plugins>

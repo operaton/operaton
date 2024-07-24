@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_KvS8sPBXEeOtYvXzz5ksgw" targetNamespace="http://operaton.org/schema/1.0/bpmn">
+  <process id="testProcess" isExecutable="true">
+    <startEvent id="start" />
+    <sequenceFlow sourceRef="start" targetRef="task" />
+    <serviceTask id="task">
+      <extensionElements>
+        <operaton:connector>
+          <operaton:connectorId>testConnector</operaton:connectorId>
+          <operaton:inputOutput>
+            <operaton:inputParameter name="reqParam1">${someInputVariable}</operaton:inputParameter>
+            <operaton:outputParameter name="out1">${someOutputParameter}</operaton:outputParameter>
+          </operaton:inputOutput>
+        </operaton:connector>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow sourceRef="task" targetRef="wait" />
+    <receiveTask id="wait" />
+    <sequenceFlow sourceRef="wait" targetRef="end" />
+    <endEvent id="end" />
+  </process>
+</definitions>

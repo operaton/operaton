@@ -17,13 +17,13 @@
 
 'use strict';
 
-var angular = require('camunda-commons-ui/vendor/angular'),
+var angular = require('operaton-commons-ui/vendor/angular'),
   camTasklistForm = require('./directives/cam-tasklist-form'),
   camTasklistFormGeneric = require('./directives/cam-tasklist-form-generic'),
   camTasklistFormGenericVariables = require('./directives/cam-tasklist-form-generic-variables'),
   camTasklistFormEmbedded = require('./directives/cam-tasklist-form-embedded'),
   camTasklistFormExternal = require('./directives/cam-tasklist-form-external'),
-  camTasklistFormCamunda = require('./directives/cam-tasklist-form-camunda'),
+  camTasklistFormOperaton = require('./directives/cam-tasklist-form-operaton'),
   camTasklistUniqueValue = require('./directives/cam-tasklist-unique-value');
 
 var formModule = angular.module('cam.tasklist.form', ['ui.bootstrap']);
@@ -36,7 +36,7 @@ formModule.directive(
 );
 formModule.directive('camTasklistFormEmbedded', camTasklistFormEmbedded);
 formModule.directive('camTasklistFormExternal', camTasklistFormExternal);
-formModule.directive('camTasklistFormCamunda', camTasklistFormCamunda);
+formModule.directive('camTasklistFormOperaton', camTasklistFormOperaton);
 
 formModule.directive('camUniqueValue', camTasklistUniqueValue);
 

@@ -1,51 +1,51 @@
-# Camunda Platform Quarkus Extensions
+# Operaton Quarkus Extensions
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.quarkus/camunda-bpm-quarkus-engine/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.quarkus/camunda-bpm-quarkus-engine) [![camunda manual latest](https://img.shields.io/badge/manual-latest-brown.svg)](https://docs.camunda.org/manual/develop/user-guide/quarkus-integration/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.operaton.bpm.quarkus/operaton-bpm-quarkus-engine/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.operaton.bpm.quarkus/operaton-bpm-quarkus-engine) [![operaton manual latest](https://img.shields.io/badge/manual-latest-brown.svg)](https://docs.operaton.org/manual/develop/user-guide/quarkus-integration/)
 
-This sub-project provides Camunda Platform Quarkus Extensions that allow you to add behavior to your Quarkus 
+This sub-project provides Operaton Quarkus Extensions that allow you to add behavior to your Quarkus 
 application by adding dependencies to the classpath.
 
-You can find the documentation on the Camunda Platform Quarkus Extensions 
-[here](https://docs.camunda.org/manual/develop/user-guide/quarkus-integration/).
+You can find the documentation on the Operaton Quarkus Extensions 
+[here](https://docs.operaton.org/manual/develop/user-guide/quarkus-integration/).
 
 We also provide some useful examples at our 
-[camunda-bpm-examples](https://github.com/camunda/camunda-bpm-examples/tree/master/quarkus-extension) repository.
+[operaton-bpm-examples](https://github.com/camunda/camunda-bpm-examples/tree/master/quarkus-extension) repository.
 
 ```xml
 <dependency>
   <dependency>
-    <groupId>org.camunda.bpm.quarkus</groupId>
-    <artifactId>camunda-bpm-quarkus-engine</artifactId>
-    <version>${version.camunda}</version><!-- place Camunda version here -->
+    <groupId>org.operaton.bpm.quarkus</groupId>
+    <artifactId>operaton-bpm-quarkus-engine</artifactId>
+    <version>${version.operaton}</version><!-- place Operaton version here -->
   </dependency>
 </dependency>
 ```
 
-To configure a Camunda Platform Quarkus extension, you can use an `application.properties` file. It
+To configure a Operaton Quarkus extension, you can use an `application.properties` file. It
 can look like the following:
 
 ```properties
 # process engine configuration
-quarkus.camunda.cmmn-enabled=false
-quarkus.camunda.dmn-enabled=false
-quarkus.camunda.history=none
-quarkus.camunda.initialize-telemetry=false
+quarkus.operaton.cmmn-enabled=false
+quarkus.operaton.dmn-enabled=false
+quarkus.operaton.history=none
+quarkus.operaton.initialize-telemetry=false
 
 # job executor configuration
-quarkus.camunda.job-executor.thread-pool.max-pool-size=12
-quarkus.camunda.job-executor.thread-pool.queue-size=5
-quarkus.camunda.job-executor.max-jobs-per-acquisition=5
-quarkus.camunda.job-executor.lock-time-in-millis=500000
-quarkus.camunda.job-executor.wait-time-in-millis=7000
-quarkus.camunda.job-executor.max-wait=65000
-quarkus.camunda.job-executor.backoff-time-in-millis=5
+quarkus.operaton.job-executor.thread-pool.max-pool-size=12
+quarkus.operaton.job-executor.thread-pool.queue-size=5
+quarkus.operaton.job-executor.max-jobs-per-acquisition=5
+quarkus.operaton.job-executor.lock-time-in-millis=500000
+quarkus.operaton.job-executor.wait-time-in-millis=7000
+quarkus.operaton.job-executor.max-wait=65000
+quarkus.operaton.job-executor.backoff-time-in-millis=5
 
 # custom data source configuration and selection
 quarkus.datasource.my-datasource.db-kind=h2
-quarkus.datasource.my-datasource.username=camunda
-quarkus.datasource.my-datasource.password=camunda
-quarkus.datasource.my-datasource.jdbc.url=jdbc:h2:mem:camunda;TRACE_LEVEL_FILE=0;DB_CLOSE_ON_EXIT=FALSE
-quarkus.camunda.datasource=my-datasource
+quarkus.datasource.my-datasource.username=operaton
+quarkus.datasource.my-datasource.password=operaton
+quarkus.datasource.my-datasource.jdbc.url=jdbc:h2:mem:operaton;TRACE_LEVEL_FILE=0;DB_CLOSE_ON_EXIT=FALSE
+quarkus.operaton.datasource=my-datasource
 ```
 
 ### Local Build
@@ -69,14 +69,14 @@ quarkus.camunda.datasource=my-datasource
 Caused by: java.lang.VerifyError: Bad type on operand stack
 Exception Details:
 Location:
-org/camunda/bpm/engine/impl/el/JuelExpressionManager.<init>(Ljava/util/Map;)V @28: putfield
+org/operaton/bpm/engine/impl/el/JuelExpressionManager.<init>(Ljava/util/Map;)V @28: putfield
 Reason:
-Type 'org/camunda/bpm/impl/juel/ExpressionFactoryImpl' (current frame, stack[1]) is not assignable to 'org/camunda/bpm/impl/juel/jakarta/el/ExpressionFactory'
+Type 'org/operaton/bpm/impl/juel/ExpressionFactoryImpl' (current frame, stack[1]) is not assignable to 'org/operaton/bpm/impl/juel/jakarta/el/ExpressionFactory'
 Current Frame:
 bci: @28
 flags: { }
-locals: { 'org/camunda/bpm/engine/impl/el/JuelExpressionManager', 'java/util/Map' }
-stack: { 'org/camunda/bpm/engine/impl/el/JuelExpressionManager', 'org/camunda/bpm/impl/juel/ExpressionFactoryImpl' }
+locals: { 'org/operaton/bpm/engine/impl/el/JuelExpressionManager', 'java/util/Map' }
+stack: { 'org/operaton/bpm/engine/impl/el/JuelExpressionManager', 'org/operaton/bpm/impl/juel/ExpressionFactoryImpl' }
 Bytecode:
 0000000: 2ab7 0007 2abb 000c 59b7 000e b500 0f2a
 0000010: 03b5 0013 2abb 0017 59b7 0019 b500 1a2a

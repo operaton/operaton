@@ -1,5 +1,5 @@
 <#macro endpoint_macro docsUrl="">
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/execution/post-signal/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/execution/post-signal/index.html -->
 {
   <@lib.endpointInfo
       id = "signalExecution"
@@ -30,7 +30,7 @@
                      "value": {
                        "variables": {
                          "myVariable": {
-                           "value": "camunda",
+                           "value": "operaton",
                            "type": "String"
                          },
                          "mySecondVariable": {

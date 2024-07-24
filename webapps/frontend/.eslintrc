@@ -29,7 +29,6 @@
   ],
   "extends": [
     "eslint:recommended",
-    "plugin:camunda-licensed/apache",
     "plugin:prettier/recommended",
     "plugin:i18n-json/recommended"
   ],

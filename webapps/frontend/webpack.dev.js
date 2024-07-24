@@ -31,18 +31,18 @@ module.exports = (_env, argv = {}) => {
 
   const addEngines = engines => {
     return engines.reduce((acc, engine) => {
-      acc[`/camunda/app/*/${engine}/`] = {
+      acc[`/operaton/app/*/${engine}/`] = {
         target: 'http://localhost:8081/',
         pathRewrite: path => {
-          return path.replace(`/${engine}`, '').replace('/camunda', '');
+          return path.replace(`/${engine}`, '').replace('/operaton', '');
         }
       };
-      acc[`/camunda/app/*/${engine}/setup/`] = {
+      acc[`/operaton/app/*/${engine}/setup/`] = {
         target: 'http://localhost:8081/',
         pathRewrite: path => {
           return path
             .replace(`/${engine}`, '')
-            .replace('/camunda', '')
+            .replace('/operaton', '')
             .replace('/setup', '');
         }
       };
@@ -67,33 +67,33 @@ module.exports = (_env, argv = {}) => {
       https: false,
       proxy: {
         '/api': {
-          target: 'http://localhost:8080/camunda/api',
+          target: 'http://localhost:8080/operaton/api',
           logLevel: 'debug',
           pathRewrite: {
             '^/api': ''
           }
         },
-        '/camunda-welcome': {
+        '/operaton-welcome': {
           target: 'http://localhost:8080/',
           logLevel: 'debug'
         },
         ...addEngines(['default', 'engine2', 'engine3']),
-        '/camunda/*': {
+        '/operaton/*': {
           target: 'http://localhost:8081/',
           logLevel: 'debug',
           pathRewrite: path => {
-            return path.replace('/camunda', '');
+            return path.replace('/operaton', '');
           }
         },
-        '/camunda/api/*': {
+        '/operaton/api/*': {
           target: 'http://localhost:8081/',
           logLevel: 'debug',
           pathRewrite: path => {
-            return path.replace('/camunda', '');
+            return path.replace('/operaton', '');
           }
         }
       },
-      open: ['/camunda/app/cockpit/default/']
+      open: ['/operaton/app/cockpit/default/']
     }
   };
 
@@ -140,9 +140,9 @@ module.exports = (_env, argv = {}) => {
       const options = plugin.options;
       plugin.options = {
         ...options,
-        publicPath: '/camunda',
-        appRoot: '/camunda',
-        appBase: `/camunda/app/${options['appName']}/{ENGINE}/`,
+        publicPath: '/operaton',
+        appRoot: '/operaton',
+        appBase: `/operaton/app/${options['appName']}/{ENGINE}/`,
         pluginDeps: getPluginDeps(options['appName']),
         pluginPackages: getPluginPackages(options['appName'])
       };

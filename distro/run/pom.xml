@@ -3,16 +3,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-database-settings</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-database-settings</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>../../database</relativePath>
   </parent>
 
-  <groupId>org.camunda.bpm.run</groupId>
-  <artifactId>camunda-bpm-run-root</artifactId>
-  <name>Camunda Platform - Run - Root</name>
-  <description>This is the root of Camunda Platform Run</description>
+  <groupId>org.operaton.bpm.run</groupId>
+  <artifactId>operaton-bpm-run-root</artifactId>
+  <name>Operaton - Run - Root</name>
+  <description>This is the root of Operaton Run</description>
   <packaging>pom</packaging>
 
   <dependencyManagement>
@@ -106,7 +106,7 @@
       </modules>
     </profile>
     <profile>
-      <id>integration-test-camunda-run</id>
+      <id>integration-test-operaton-run</id>
       <modules>
         <module>qa</module>
       </modules>

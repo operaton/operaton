@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions" 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+  
+  <process id="subProcessLocalOutputAllVariables" isExecutable="true">
+  
+    <startEvent id="theStart" />
+    
+    <sequenceFlow id="flow1" sourceRef="theStart" targetRef="userTask1" />
+    
+    <userTask id="userTask1" name="Task before subprocess" />
+    
+    <sequenceFlow id="flow2" sourceRef="userTask1" targetRef="callSubProcess" />
+    
+    <callActivity id="callSubProcess" operaton:caseRef="oneTaskCase">
+      <extensionElements>
+        <operaton:inputOutput>
+          <operaton:inputParameter name="inputParameter">${"val2"}</operaton:inputParameter>
+          <operaton:outputParameter name="outputParameter">${calledCaseVar1 + 1}</operaton:outputParameter>
+        </operaton:inputOutput>
+        <operaton:in variables="all" />
+        <operaton:out variables="all" local="true" />
+      </extensionElements>
+    </callActivity>
+    
+    <sequenceFlow id="flow3" sourceRef="callSubProcess" targetRef="userTask2" />
+    
+    <userTask id="userTask2" name="Task after subprocess" />
+  
+    <sequenceFlow id="flow4" sourceRef="userTask2" targetRef="theEnd" />
+    
+    <endEvent id="theEnd" />
+    
+  </process>
+
+</definitions>

@@ -3,25 +3,25 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.springboot.project</groupId>
-    <artifactId>camunda-bpm-spring-boot-starter-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.springboot.project</groupId>
+    <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.camunda.bpm.springboot</groupId>
-  <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
-  <name>Camunda Platform - Spring Boot Starter - Rest</name>
+  <groupId>org.operaton.bpm.springboot</groupId>
+  <artifactId>operaton-bpm-spring-boot-starter-rest</artifactId>
+  <name>Operaton - Spring Boot Starter - Rest</name>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+      <artifactId>operaton-bpm-spring-boot-starter</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-rest-core-jakarta</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -43,7 +43,7 @@
     </dependency>
 
     <dependency>
-      <artifactId>camunda-bpm-spring-boot-starter-test</artifactId>
+      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
       <groupId>${project.groupId}</groupId>
       <version>${project.version}</version>
       <scope>test</scope>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+             targetNamespace="Examples">
+
+  <message id="messageId" name="newMessage" />
+
+  <process id="process" isExecutable="true">
+
+    <startEvent id="theStart">
+      <extensionElements>
+        <operaton:executionListener event="start" class="org.operaton.bpm.engine.test.standalone.entity.ExecutionOrderListener" />
+      </extensionElements>
+    </startEvent>
+
+    <sequenceFlow sourceRef="theStart" targetRef="theService1" />
+
+    <serviceTask id="theService1" operaton:expression="${true}">
+      <extensionElements>
+        <operaton:executionListener event="start" class="org.operaton.bpm.engine.test.standalone.entity.ExecutionOrderListener" />
+      </extensionElements>
+    </serviceTask>
+
+    <sequenceFlow sourceRef="theService1" targetRef="theTask" />
+
+    <userTask id="theTask">
+      <extensionElements>
+        <operaton:executionListener event="start" class="org.operaton.bpm.engine.test.standalone.entity.ExecutionOrderListener" />
+      </extensionElements>
+    </userTask>
+
+    <sequenceFlow sourceRef="theTask" targetRef="theEnd1" />
+
+    <endEvent id="theEnd1">
+      <extensionElements>
+        <operaton:executionListener event="start" class="org.operaton.bpm.engine.test.standalone.entity.ExecutionOrderListener" />
+      </extensionElements>
+    </endEvent>
+
+    <boundaryEvent id="messageBoundary" attachedToRef="theTask" cancelActivity="false">
+      <extensionElements>
+        <operaton:executionListener event="start" class="org.operaton.bpm.engine.test.standalone.entity.ExecutionOrderListener" />
+      </extensionElements>
+      <messageEventDefinition messageRef="messageId" />
+    </boundaryEvent>
+
+    <sequenceFlow sourceRef="messageBoundary" targetRef="theServiceAfterMessage" />
+
+    <serviceTask id="theServiceAfterMessage" operaton:expression="${true}">
+      <extensionElements>
+        <operaton:executionListener event="start" class="org.operaton.bpm.engine.test.standalone.entity.ExecutionOrderListener" />
+      </extensionElements>
+    </serviceTask>
+
+    <sequenceFlow sourceRef="theServiceAfterMessage" targetRef="theEnd2" />
+
+    <endEvent id="theEnd2">
+      <extensionElements>
+        <operaton:executionListener event="start" class="org.operaton.bpm.engine.test.standalone.entity.ExecutionOrderListener" />
+      </extensionElements>
+    </endEvent>
+
+  </process>
+
+</definitions>

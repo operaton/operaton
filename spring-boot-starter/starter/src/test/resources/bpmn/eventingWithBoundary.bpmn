@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1lmgbl7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.6.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" id="Definitions_1lmgbl7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.6.0">
   <bpmn:process id="eventingWithBoundaryEvent" name="eventingWithBoundaryEvent" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_0ndk8rv</bpmn:outgoing>
@@ -21,7 +21,7 @@
       <bpmn:outgoing>SequenceFlow_174pps9</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_1v71gzr" errorRef="Error_0sbs2cc" />
     </bpmn:boundaryEvent>
-    <bpmn:serviceTask id="service_task" name="execute service&#10;task" camunda:delegateExpression="${boundaryEventServiceTask}">
+    <bpmn:serviceTask id="service_task" name="execute service&#10;task" operaton:delegateExpression="${boundaryEventServiceTask}">
       <bpmn:incoming>SequenceFlow_19tspdp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1juyzhf</bpmn:outgoing>
     </bpmn:serviceTask>

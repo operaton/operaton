@@ -19,9 +19,9 @@
 
 var template = require('./decision-definition.html?raw');
 
-var angular = require('camunda-commons-ui/vendor/angular'),
+var angular = require('operaton-commons-ui/vendor/angular'),
   routeUtil = require('../../../../common/scripts/util/routeUtil'),
-  camCommons = require('camunda-commons-ui/lib');
+  camCommons = require('operaton-commons-ui/lib');
 
 var ngModule = angular.module('cam.cockpit.pages.decisionDefinition', [
   'dataDepend',

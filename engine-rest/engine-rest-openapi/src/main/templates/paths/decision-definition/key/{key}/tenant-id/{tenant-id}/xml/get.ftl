@@ -38,8 +38,8 @@
                          "dmnXml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
                                     <definitions xmlns=\\"http://www.omg.org/spec/DMN/20151101/dmn.xsd\\"
                                                  id=\\"definitions\\"
-                                                 name=\\"camunda\\"
-                                                 namespace=\\"http://camunda.org/schema/1.0/dmn\\">
+                                                 name=\\"operaton\\"
+                                                 namespace=\\"http://operaton.org/schema/1.0/dmn\\">
                                       <decision id=\\"testDecision\\" name=\\"decision\\">
                                         <decisionTable id=\\"table\\">
                                           <output id=\\"result\\" name=\\"result\\" >

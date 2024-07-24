@@ -1,5 +1,5 @@
 <#macro endpoint_macro docsUrl="">
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/identity/validate-password/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/identity/validate-password/index.html -->
 {
   <@lib.endpointInfo
       id = "checkPassword"
@@ -7,7 +7,7 @@
       summary = "Validate Password"
       desc = "A password policy consists of a list of rules that new passwords must follow to be
               policy compliant. A password can be checked for compliancy via this
-              end point. More information on password policies in Camunda can be found in the password policy
+              end point. More information on password policies in Operaton can be found in the password policy
               [user guide](${docsUrl}/user-guide/process-engine/password-policy/) and in
               the [security instructions](${docsUrl}/user-guide/security/)."
   />
@@ -23,7 +23,7 @@
                          "id": "jonny1",
                          "firstName": "John",
                          "lastName": "Doe",
-                         "email": "jonny@camunda.org"
+                         "email": "jonny@operaton.org"
                        }
                      }
                    }']

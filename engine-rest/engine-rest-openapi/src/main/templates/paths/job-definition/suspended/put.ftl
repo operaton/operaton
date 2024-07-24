@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/job-definition/put-activate-suspend-by-proc-def-id/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/job-definition/put-activate-suspend-by-proc-def-id/index.html -->
 <#macro endpoint_macro docsUrl="">
 {
   <@lib.endpointInfo

@@ -1,0 +1,7 @@
+<module xmlns="urn:jboss:module:1.0" name="org.operaton.bpm.operaton-engine-plugins">
+
+  <dependencies>
+    <!-- Add custom engine plugins here -->
+    <!-- <module name="org.operaton.bpm.operaton-custom-engine-plugin" export="true" /> -->
+  </dependencies>
+</module>

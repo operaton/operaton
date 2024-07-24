@@ -63,8 +63,8 @@
                            "taskDefinitionKey":"aTaskDefinitionKey",
                            "suspended": false,
                            "formKey":"aFormKey",
-                           "camundaFormRef":{
-                             "key": "aCamundaFormKey",
+                           "operatonFormRef":{
+                             "key": "aOperatonFormKey",
                              "binding": "version",
                              "version": 2
                            },

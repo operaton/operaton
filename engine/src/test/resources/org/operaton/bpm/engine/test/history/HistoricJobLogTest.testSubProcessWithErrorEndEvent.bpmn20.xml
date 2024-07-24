@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions" 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+
+  <process id="simpleSubProcess" isExecutable="true">
+
+    <startEvent id="theStart" />
+
+    <sequenceFlow sourceRef="theStart" targetRef="fork" />
+
+    <parallelGateway id="fork" />
+
+    <sequenceFlow sourceRef="fork" targetRef="serviceTask1" />
+    <sequenceFlow sourceRef="fork" targetRef="serviceTask2" />
+
+    <serviceTask id="serviceTask1" operaton:asyncBefore="true" operaton:expression="${true}" />
+
+    <sequenceFlow sourceRef="serviceTask1" targetRef="theErrorEnd" />
+
+    <endEvent id="theErrorEnd">
+      <errorEventDefinition errorRef="myError" />
+    </endEvent>
+
+    <serviceTask id="serviceTask2" operaton:asyncBefore="true" operaton:expression="${true}" />
+
+    <sequenceFlow sourceRef="serviceTask2" targetRef="theEnd" />
+
+    <endEvent id="theEnd" />
+
+  </process>
+
+</definitions>

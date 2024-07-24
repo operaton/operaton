@@ -17,10 +17,10 @@
 
 'use strict';
 
-var angular = require('camunda-commons-ui/vendor/angular');
+var angular = require('operaton-commons-ui/vendor/angular');
 
 require('angular-data-depend');
-require('camunda-commons-ui/lib/index');
+require('operaton-commons-ui/lib/index');
 
 var routes = require('./config/routes'),
   camCockpitRepositoryViewCtrl = require('./controllers/cam-cockpit-repository-view-ctrl'),

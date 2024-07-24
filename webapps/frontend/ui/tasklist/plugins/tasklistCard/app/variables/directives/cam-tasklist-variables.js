@@ -20,7 +20,7 @@
 var template = require('./cam-tasklist-variables.html?raw');
 var modalTemplate = require('./../modals/cam-tasklist-variables-detail-modal.html?raw');
 
-var angular = require('camunda-commons-ui/vendor/angular');
+var angular = require('operaton-commons-ui/vendor/angular');
 
 // AngularJS DI
 module.exports = [

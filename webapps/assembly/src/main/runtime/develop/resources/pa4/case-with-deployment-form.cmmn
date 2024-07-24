@@ -5,14 +5,14 @@
  xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" 
  xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" 
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
- xmlns:camunda="http://camunda.org/schema/1.0/cmmn">
+ xmlns:operaton="http://operaton.org/schema/1.0/cmmn">
     <cmmn:case name="case-with-deployment-form" id="case-with-deployment-form">
         <cmmn:casePlanModel autoComplete="false" name="Callcenter-Case" id="_0dcfb756-2a01-445e-905b-90299e95d0e0">
             <cmmn:planItem definitionRef="PID__9b1c0031-5d22-40c9-af25-d03cf1bf107c" id="_9b1c0031-5d22-40c9-af25-d03cf1bf107c"/>
             <cmmn:humanTask isBlocking="true" name="Form from Deployment (CMMN)" 
             	id="PID__9b1c0031-5d22-40c9-af25-d03cf1bf107c" 
-            	camunda:assignee="demo"
-            	camunda:formKey="embedded:deployment:pa4/deployed-form.html">
+            	operaton:assignee="demo"
+            	operaton:formKey="embedded:deployment:pa4/deployed-form.html">
                 <cmmn:defaultControl>
                     <cmmn:manualActivationRule id="c08afa0f-092e-401d-b40d-f16528f1b9b2">
                     	<cmmn:condition id="d7cf3f28-4784-4997-8f3d-d56876c5a99f">${false}</cmmn:condition>

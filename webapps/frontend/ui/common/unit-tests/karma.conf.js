@@ -49,8 +49,8 @@ module.exports = function(config) {
             expose: {
               angular: 'angular',
               jquery: 'jquery',
-              'camunda-commons-ui': 'camunda-commons-ui',
-              'camunda-bpm-sdk-js': 'camunda-bpm-sdk-js',
+              'operaton-commons-ui': 'operaton-commons-ui',
+              'operaton-bpm-sdk-js': 'operaton-bpm-sdk-js',
               'angular-data-depend': 'angular-data-depend',
               moment: 'moment',
               events: 'events',

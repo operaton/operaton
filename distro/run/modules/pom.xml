@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.run</groupId>
-    <artifactId>camunda-bpm-run-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.run</groupId>
+    <artifactId>operaton-bpm-run-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
 
-  <artifactId>camunda-bpm-run-modules</artifactId>
-  <name>Camunda Platform - Run - Modules</name>
+  <artifactId>operaton-bpm-run-modules</artifactId>
+  <name>Operaton - Run - Modules</name>
   <packaging>pom</packaging>
 
   <!-- define provided dependencies that will already be present in the Spring 
@@ -18,8 +18,8 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.camunda.bpm.springboot</groupId>
-        <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+        <groupId>org.operaton.bpm.springboot</groupId>
+        <artifactId>operaton-bpm-spring-boot-starter</artifactId>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -83,8 +83,8 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-engine-rest-core</artifactId>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-engine-rest-core</artifactId>
         <scope>provided</scope>
       </dependency>
     </dependencies>

@@ -1,5 +1,5 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/history/variable-instance/get-variable-instance-query/index.html -->
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/history/variable-instance/post-variable-instance-query/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/history/variable-instance/get-variable-instance-query/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/history/variable-instance/post-variable-instance-query/index.html -->
 
 <#assign sortByValues = [
   '"instanceId"','"variableName"','"tenantId"'

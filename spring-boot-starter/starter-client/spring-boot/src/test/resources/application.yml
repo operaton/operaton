@@ -1,4 +1,4 @@
-camunda:
+operaton:
   bpm:
     client:
       base-url: http://localhost:8081/engine-rest
@@ -11,5 +11,5 @@ camunda:
           process-definition-key: proc-def-key
 logging:
   level:
-    org.camunda.bpm.client: debug
+    org.operaton.bpm.client: debug
       

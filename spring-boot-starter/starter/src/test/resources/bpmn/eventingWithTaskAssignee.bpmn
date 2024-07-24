@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1lmgbl7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" id="Definitions_1lmgbl7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.1">
   <bpmn:process id="eventingWithAssignment" name="eventing" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_0ndk8rv</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0ndk8rv" sourceRef="StartEvent_1" targetRef="user_task" />
-    <bpmn:userTask id="user_task" name="execute&#10;user task" camunda:assignee="testUser">
+    <bpmn:userTask id="user_task" name="execute&#10;user task" operaton:assignee="testUser">
       <bpmn:incoming>SequenceFlow_0ndk8rv</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0mjrja8</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="SequenceFlow_0mjrja8" sourceRef="user_task" targetRef="service_task" />
-    <bpmn:serviceTask id="service_task" name="execute service&#10;task" camunda:delegateExpression="${eventingServiceTask}">
+    <bpmn:serviceTask id="service_task" name="execute service&#10;task" operaton:delegateExpression="${eventingServiceTask}">
       <bpmn:incoming>SequenceFlow_0mjrja8</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1juyzhf</bpmn:outgoing>
     </bpmn:serviceTask>

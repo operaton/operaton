@@ -20,5 +20,5 @@
 var Page = require('./authorizations-base');
 
 module.exports = Page.extend({
-  url: '/camunda/app/admin/default/#/authorization?resource=5'
+  url: '/operaton/app/admin/default/#/authorization?resource=5'
 });

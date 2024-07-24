@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/history/batch/get-cleanable-batch-report-count/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/history/batch/get-cleanable-batch-report-count/index.html -->
 <#macro endpoint_macro docsUrl="">
 {
   <@lib.endpointInfo

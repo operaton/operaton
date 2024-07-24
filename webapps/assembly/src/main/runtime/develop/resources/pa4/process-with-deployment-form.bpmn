@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
-  <bpmn:process id="process-with-deployment-form" name="process-with-deployment-form" isExecutable="true" camunda:historyTimeToLive="P180D">
-    <bpmn:startEvent id="StartEvent_1" camunda:formKey="embedded:deployment:pa4/deployed-form.html">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="process-with-deployment-form" name="process-with-deployment-form" isExecutable="true" operaton:historyTimeToLive="P180D">
+    <bpmn:startEvent id="StartEvent_1" operaton:formKey="embedded:deployment:pa4/deployed-form.html">
       <bpmn:outgoing>SequenceFlow_11dohsm</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_11dohsm" sourceRef="StartEvent_1" targetRef="UserTask_043k4l7" />
@@ -9,7 +9,7 @@
       <bpmn:incoming>SequenceFlow_1buvfpq</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1buvfpq" sourceRef="UserTask_043k4l7" targetRef="EndEvent_14j08s1" />
-    <bpmn:userTask id="UserTask_043k4l7" name="Form From Deployment (BPMN)" camunda:formKey="embedded:deployment:pa4/deployed-form.html">
+    <bpmn:userTask id="UserTask_043k4l7" name="Form From Deployment (BPMN)" operaton:formKey="embedded:deployment:pa4/deployed-form.html">
       <bpmn:incoming>SequenceFlow_11dohsm</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1buvfpq</bpmn:outgoing>
     </bpmn:userTask>

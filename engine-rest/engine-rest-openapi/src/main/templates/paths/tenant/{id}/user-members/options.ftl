@@ -1,5 +1,5 @@
 <#macro endpoint_macro docsUrl="">
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/tenant/user-members/options/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/tenant/user-members/options/index.html -->
 {
   <@lib.endpointInfo
       id = "availableTenantUserMembersOperations"

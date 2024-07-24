@@ -1,10 +1,10 @@
 # This configuration is intended for production use and was created with respect to the security guide.
 # The provided links to documentation guides for each property will give more information about the purpose of each property.
-# security guide: https://docs.camunda.org/manual/latest/user-guide/security/
+# security guide: https://docs.operaton.org/manual/latest/user-guide/security/
 
-camunda.bpm:
-# https://docs.camunda.org/manual/latest/user-guide/security/#http-header-security-in-webapps
-# https://docs.camunda.org/manual/latest/webapps/shared-options/header-security/
+operaton.bpm:
+# https://docs.operaton.org/manual/latest/user-guide/security/#http-header-security-in-webapps
+# https://docs.operaton.org/manual/latest/webapps/shared-options/header-security/
   webapp:
     csrf:
       enable-same-site-cookie: true
@@ -12,34 +12,34 @@ camunda.bpm:
     header-security:
       hsts-disabled: false
 
-# https://docs.camunda.org/manual/latest/user-guide/security/#authorization
-# https://docs.camunda.org/manual/latest/user-guide/process-engine/authorization-service/
+# https://docs.operaton.org/manual/latest/user-guide/security/#authorization
+# https://docs.operaton.org/manual/latest/user-guide/process-engine/authorization-service/
   authorization.enabled: true
 
   generic-properties.properties:
-# https://docs.camunda.org/manual/latest/user-guide/security/#variable-values-from-untrusted-sources
+# https://docs.operaton.org/manual/latest/user-guide/security/#variable-values-from-untrusted-sources
     deserialization-type-validation-enabled: true
     deserialization-allowed-packages:
     deserialization-allowed-classes:
-# https://docs.camunda.org/manual/latest/user-guide/security/#password-policy
-# https://docs.camunda.org/manual/latest/user-guide/process-engine/password-policy/
+# https://docs.operaton.org/manual/latest/user-guide/security/#password-policy
+# https://docs.operaton.org/manual/latest/user-guide/process-engine/password-policy/
     enable-password-policy: true
 
   run:
-# https://docs.camunda.org/manual/latest/user-guide/security/#authentication
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#authentication
+# https://docs.operaton.org/manual/latest/user-guide/security/#authentication
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#authentication
     auth.enabled: true
-# https://docs.camunda.org/manual/latest/user-guide/process-engine/identity-service/#configuration-properties-of-the-ldap-plugin
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#ldap-identity-service
-# Uncomment this section to enable LDAP support for Camunda Run
+# https://docs.operaton.org/manual/latest/user-guide/process-engine/identity-service/#configuration-properties-of-the-ldap-plugin
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#ldap-identity-service
+# Uncomment this section to enable LDAP support for Operaton Run
 #    ldap:
 #      enabled: true
 #      server-url: ldaps://localhost:4334
-#      administrator-group-name: camunda-admin
+#      administrator-group-name: operaton-admin
 #      accept-untrusted-certificates: false
-#      manager-dn: uid=jonny,ou=office-berlin,o=camunda,c=org
+#      manager-dn: uid=jonny,ou=office-berlin,o=operaton,c=org
 #      manager-password: s3cr3t
-#      base-dn: o=camunda,c=org
+#      base-dn: o=operaton,c=org
 #      user-search-base: ''
 #      user-search-filter: (objectclass=person)
 #      user-id-attribute: uid
@@ -53,8 +53,8 @@ camunda.bpm:
 #      group-name-attribute: cn
 #      group-member-attribute: member
 #      sort-control-supported: false
-# https://docs.camunda.org/manual/latest/user-guide/process-engine/authorization-service/#the-administrator-authorization-plugin
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#ldap-administrator-authorization
+# https://docs.operaton.org/manual/latest/user-guide/process-engine/authorization-service/#the-administrator-authorization-plugin
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#ldap-administrator-authorization
 # Uncomment this section to grant administrator authorizations to an existing LDAP user or group
 #    admin-auth:
 #      enabled: true
@@ -62,7 +62,7 @@ camunda.bpm:
 #      administrator-group-name: admins
 
 server:
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#https
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#https
 # do not use the provided certificate in production
   ssl:
     key-store: classpath:keystore.p12
@@ -72,24 +72,24 @@ server:
     key-password: camunda
   port: 8443
 
-# https://docs.camunda.org/manual/latest/user-guide/security/#http-header-security-in-webapps
-# https://docs.camunda.org/manual/latest/webapps/shared-options/header-security/
+# https://docs.operaton.org/manual/latest/user-guide/security/#http-header-security-in-webapps
+# https://docs.operaton.org/manual/latest/webapps/shared-options/header-security/
   servlet.session.cookie:
     secure: true
     http-only: true
 
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#logging
-# https://docs.camunda.org/manual/latest/user-guide/logging/#process-engine
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#logging
+# https://docs.operaton.org/manual/latest/user-guide/logging/#process-engine
 logging:
    level.root: INFO
-   file.name: logs/camunda-bpm-run.log
+   file.name: logs/operaton-bpm-run.log
 
 # datasource configuration is required
 # do not use the H2 databse in production
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#connect-to-a-database
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#database
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#connect-to-a-database
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#database
 spring.datasource:
-  url: jdbc:h2:./camunda-h2-test-production/process-engine;TRACE_LEVEL_FILE=0;DB_CLOSE_ON_EXIT=FALSE
+  url: jdbc:h2:./operaton-h2-test-production/process-engine;TRACE_LEVEL_FILE=0;DB_CLOSE_ON_EXIT=FALSE
   driver-class-name: org.h2.Driver
   username: sa
   password: sa

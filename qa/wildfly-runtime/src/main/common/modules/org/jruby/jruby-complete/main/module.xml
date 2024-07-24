@@ -7,6 +7,6 @@
     <module name="java.base" />
     <module name="java.logging" />
     <module name="sun.jdk" />
-    <module name="org.camunda.spin.camunda-spin-core" />
+    <module name="org.operaton.spin.operaton-spin-core" />
   </dependencies>
 </module>

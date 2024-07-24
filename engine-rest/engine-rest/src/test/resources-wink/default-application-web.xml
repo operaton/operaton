@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-  <display-name>camunda rest api</display-name>
+  <display-name>operaton rest api</display-name>
 
   <servlet>
     <servlet-name>Engine Api</servlet-name>
     <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
     <init-param>
       <param-name>javax.ws.rs.Application</param-name>
-      <param-value>org.camunda.bpm.engine.rest.util.container.JaxrsApplication</param-value>
+      <param-value>org.operaton.bpm.engine.rest.util.container.JaxrsApplication</param-value>
     </init-param>
   </servlet>
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<operaton:process-application
+  xmlns:operaton="http://www.operaton.org/schema/1.0/ProcessApplication"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.operaton.org/schema/1.0/ProcessApplication http://www.operaton.org/schema/1.0/ProcessApplication ">
+  
+  <operaton:process-engine name="engine1">
+    <operaton:job-acquisition>default</operaton:job-acquisition>
+    <operaton:configuration>configuration</operaton:configuration>
+    <operaton:datasource>datasource</operaton:datasource>
+    <operaton:properties />
+  </operaton:process-engine>
+  
+  <operaton:process-archive name="pa1">
+    <operaton:process-engine>process-engine</operaton:process-engine>
+    <operaton:process>process</operaton:process>
+    <operaton:properties />
+  </operaton:process-archive>
+  
+</operaton:process-application>

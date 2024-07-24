@@ -3,20 +3,20 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.dmn</groupId>
-    <artifactId>camunda-engine-dmn-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.dmn</groupId>
+    <artifactId>operaton-engine-dmn-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-engine-feel-api</artifactId>
-  <name>camunda DMN - engine FEEL - API</name>
+  <artifactId>operaton-engine-feel-api</artifactId>
+  <name>operaton DMN - engine FEEL - API</name>
   <properties>
-    <camunda.artifact>org.camunda.bpm.dmn.feel.impl</camunda.artifact>
+    <operaton.artifact>org.operaton.bpm.dmn.feel.impl</operaton.artifact>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-typed-values</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-typed-values</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
@@ -58,10 +58,10 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>clirr-maven-plugin</artifactId>
             <configuration>
-              <comparisonVersion>${camunda.version.old}</comparisonVersion>
+              <comparisonVersion>${operaton.version.old}</comparisonVersion>
               <logResults>true</logResults>
               <excludes>
-                <exclude>org/camunda/bpm/dmn/feel/impl/**</exclude>
+                <exclude>org/operaton/bpm/dmn/feel/impl/**</exclude>
               </excludes>
             </configuration>
             <executions>

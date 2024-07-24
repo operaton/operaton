@@ -1,0 +1,16 @@
+<module xmlns="urn:jboss:module:1.0" name="org.operaton.connect.operaton-connect-soap-http-client">
+  <resources>
+    <resource-root path="operaton-connect-soap-http-client-@project.version@.jar" />
+  </resources>
+
+  <dependencies>
+    <module name="java.base" />
+    <module name="org.operaton.commons.operaton-commons-logging" />
+    <module name="org.operaton.commons.operaton-commons-utils" />
+
+    <module name="org.operaton.connect.operaton-connect-core" />
+    <module name="org.operaton.connect.operaton-connect-http-client" />
+
+    <module name="org.apache.httpcomponents.httpclient" />
+  </dependencies>
+</module>

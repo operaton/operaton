@@ -7,7 +7,7 @@ needs the database SQL scripts. These script
 should been build before.
 
 ```
-cd camunda-bpm-platform/distro/sql-script
+cd operaton-bpm-platform/distro/sql-script
 mvn clean install
 ```
 

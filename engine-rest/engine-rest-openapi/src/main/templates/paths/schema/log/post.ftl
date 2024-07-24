@@ -31,7 +31,7 @@
         array = true
         last = true
         desc = "Request successful.
-                **Note**: In order to get any results a user of group camunda-admin must be
+                **Note**: In order to get any results a user of group operaton-admin must be
                 authenticated."
         examples = ['"example-1": {
                        "summary": "Status 200 Response",

@@ -20,7 +20,7 @@
 var Base = require('./../base');
 
 module.exports = Base.extend({
-  url: '/camunda/app/welcome/default/#/welcome',
+  url: '/operaton/app/welcome/default/#/welcome',
 
   webappLinks: function() {
     return element(by.css('.webapps'));

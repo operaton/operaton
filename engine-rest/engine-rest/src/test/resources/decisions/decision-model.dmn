@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
              id="definitions"
-             name="camunda"
+             name="operaton"
              namespace="Examples">
   <decision id="one" name="One">
     <decisionTable id="decisionTable">

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions" 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+	
+	<process id="compensateProcess" isExecutable="true">
+
+		<startEvent id="start" />
+		
+		<sequenceFlow sourceRef="start"	targetRef="fork" />
+		
+		<parallelGateway id="fork" />
+
+		<sequenceFlow sourceRef="fork" targetRef="bookHotel" />
+		<sequenceFlow sourceRef="fork" targetRef="bookFlight" />
+		
+			<serviceTask id="bookHotel" operaton:expression="${true}">
+				<multiInstanceLoopCharacteristics isSequential="true">
+				  <loopCardinality>5</loopCardinality>
+				</multiInstanceLoopCharacteristics>
+			</serviceTask>		
+				
+			<boundaryEvent id="compensateBookHotelEvt" name="Boundary event" attachedToRef="bookHotel">
+				<compensateEventDefinition />
+			</boundaryEvent>	
+			
+			<serviceTask id="undoBookHotel" operaton:expression="${true}" />
+			
+			
+			<serviceTask id="bookFlight" operaton:expression="${true}">
+				<multiInstanceLoopCharacteristics isSequential="true">
+				  <loopCardinality>5</loopCardinality>
+				</multiInstanceLoopCharacteristics>
+			</serviceTask>		
+			
+			<boundaryEvent id="compensateBookFlightEvt" name="Boundary event" attachedToRef="bookFlight">
+				<compensateEventDefinition  />
+			</boundaryEvent>		
+			
+			<serviceTask id="undoBookFlight" isForCompensation="true" operaton:expression="${true}" />
+			
+			<parallelGateway id="join" />
+
+		<sequenceFlow sourceRef="bookHotel" targetRef="join" />
+		<sequenceFlow sourceRef="bookFlight" targetRef="join" />
+		<sequenceFlow sourceRef="join" targetRef="throwCompensate" />
+		
+		
+		<intermediateThrowEvent id="throwCompensate">
+			<compensateEventDefinition  />
+		</intermediateThrowEvent>
+		
+		<sequenceFlow sourceRef="throwCompensate" targetRef="end" />
+		
+		<endEvent id="end" />
+		
+		<association id="Association_1" associationDirection="One" sourceRef="compensateBookHotelEvt" targetRef="undoBookHotel" />
+		<association id="Association_3" associationDirection="One" sourceRef="compensateBookFlightEvt" targetRef="undoBookFlight" />
+	</process>
+
+</definitions>

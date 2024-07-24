@@ -2,15 +2,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.dmn</groupId>
-    <artifactId>camunda-engine-dmn-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.dmn</groupId>
+    <artifactId>operaton-engine-dmn-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-engine-feel-scala</artifactId>
-  <name>camunda DMN - engine FEEL - SCALA</name>
+  <artifactId>operaton-engine-feel-scala</artifactId>
+  <name>operaton DMN - engine FEEL - SCALA</name>
   <properties>
-    <camunda.artifact>org.camunda.bpm.dmn.feel.impl.scala</camunda.artifact>
+    <operaton.artifact>org.operaton.bpm.dmn.feel.impl.scala</operaton.artifact>
   </properties>
   <dependencies>
 
@@ -21,8 +21,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.dmn</groupId>
-      <artifactId>camunda-engine-feel-api</artifactId>
+      <groupId>org.operaton.bpm.dmn</groupId>
+      <artifactId>operaton-engine-feel-api</artifactId>
     </dependency>
 
     <dependency>

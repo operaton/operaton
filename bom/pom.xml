@@ -3,19 +3,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>../</relativePath>
   </parent>
 
-  <artifactId>camunda-bom-root</artifactId>
+  <artifactId>operaton-bom-root</artifactId>
   <packaging>pom</packaging>
-  <name>Camunda Platform - Bom Root</name>
+  <name>Operaton - Bom Root</name>
 
   <modules>
-    <module>camunda-only-bom</module>
-    <module>camunda-bom</module>
+    <module>operaton-only-bom</module>
+    <module>operaton-bom</module>
   </modules>
 
 </project>

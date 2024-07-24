@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
-  <bpmn:process id="multiTenancyCallActivity" isExecutable="true" camunda:historyTimeToLive="P180D">
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="multiTenancyCallActivity" isExecutable="true" operaton:historyTimeToLive="P180D">
     <bpmn:startEvent id="StartEvent_1" name="Start">
       <bpmn:outgoing>SequenceFlow_14pyocq</bpmn:outgoing>
     </bpmn:startEvent>
@@ -23,11 +23,11 @@
       <bpmn:incoming>SequenceFlow_139miyl</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_139miyl" sourceRef="ParallelGateway_1gfi9w9" targetRef="EndEvent_0dcd09p" />
-    <bpmn:callActivity id="CallActivity_Tenant2" name="CallActivity Tenant2" calledElement="userTaskProcess" camunda:calledElementTenantId="tenant2">
+    <bpmn:callActivity id="CallActivity_Tenant2" name="CallActivity Tenant2" calledElement="userTaskProcess" operaton:calledElementTenantId="tenant2">
       <bpmn:incoming>SequenceFlow_0kmxlbt</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1xa7203</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:callActivity id="CallActivity_Tenant1" name="CallActivity Tenant1" calledElement="userTaskProcess" camunda:calledElementTenantId="tenant1">
+    <bpmn:callActivity id="CallActivity_Tenant1" name="CallActivity Tenant1" calledElement="userTaskProcess" operaton:calledElementTenantId="tenant1">
       <bpmn:incoming>SequenceFlow_0o717yf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1k924eo</bpmn:outgoing>
     </bpmn:callActivity>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cockpit.base">
+
+  <resultMap id="processDefinitionMap" type="org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="name" column="NAME_" jdbcType="VARCHAR" />
+    <result property="key" column="KEY_" jdbcType="VARCHAR" />
+    <result property="version" column="VERSION_" jdbcType="INTEGER" />
+    <result property="failedJobs" column="FAILED_JOBS_" jdbcType="INTEGER" />
+
+  </resultMap>
+
+  <resultMap id="calledProcessDefinitionMap" type="org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionDto">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="key" column="KEY_" jdbcType="VARCHAR" />
+    <result property="name" column="NAME_" jdbcType="VARCHAR" />
+    <result property="version" column="VERSION_" jdbcType="INTEGER" />
+
+    <collection property="calledFromActivityIds" javaType="java.util.ArrayList" ofType="String" >
+      <result column="ACT_ID_" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+
+  <resultMap id="processDefinitionStatisticsMap" type="org.operaton.bpm.cockpit.impl.plugin.base.dto.ProcessDefinitionStatisticsDto">
+    <id property="id" column="ID_" jdbcType="VARCHAR" />
+    <result property="key" column="KEY_" jdbcType="VARCHAR" />
+    <result property="name" column="NAME_" jdbcType="VARCHAR" />
+    <result property="version" column="VERSION_" jdbcType="INTEGER" />
+    <result property="tenantId" column="TENANT_ID_" jdbcType="VARCHAR" />
+    <result property="suspensionState" column="SUSPENSION_STATE_" jdbcType="INTEGER" />
+    <result property="instances" column="INSTANCE_COUNT_" jdbcType="INTEGER" />
+    <result property="incidents" column="INCIDENT_COUNT_" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="selectPDStatistics" resultMap="processDefinitionStatisticsMap"
+          parameterType="org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionStatisticsQueryDto">
+    ${limitBefore}
+    select ${distinct} RES.*
+    ${limitBetween}
+    <include refid="selectPDStatisticsByQueryCriteriaSql"/>
+    ${orderBy}
+    ${limitAfter}
+  </select>
+
+  <select id="selectPDStatisticsCount" resultType="long"
+          parameterType="org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionStatisticsQueryDto">
+    ${countDistinctBeforeStart} RES.ID_ ${countDistinctBeforeEnd}
+    <include refid="selectPDStatisticsByQueryCriteriaSql"/>
+    ${countDistinctAfterEnd}
+  </select>
+
+  <sql id="selectPDStatisticsByQueryCriteriaSql">
+    from (
+        select ${distinct}
+              RES.ID_
+            , RES.KEY_
+            , RES.NAME_
+            , RES.VERSION_
+            , RES.TENANT_ID_
+            , RES.SUSPENSION_STATE_
+            , GROUPED.INSTANCE_COUNT_
+            , GROUPED.INCIDENT_COUNT_
+        from ${prefix}ACT_RE_PROCDEF RES
+            inner join
+            (
+              select
+                    PROCDEF.KEY_
+                  , PROCDEF.TENANT_ID_
+                  , max(PROCDEF.version_)         as LATEST_VERSION_
+                  , ${dbSpecificIfNullFunction}(sum(INSTANCE.INSTANCE_COUNT_), 0) as INSTANCE_COUNT_
+                  , ${dbSpecificIfNullFunction}(sum(INC.INCIDENT_COUNT_), 0)      as INCIDENT_COUNT_
+              <!-- Join process definitions with data about running instances and failed jobs -->
+              from ${prefix}ACT_RE_PROCDEF PROCDEF
+
+              <!-- instances -->
+              left outer join
+                  <!-- Count and group all process instances (executions that have ID_ = PROC_INST_ID_) by process definition -->
+                  (
+                    select
+                        E.PROC_DEF_ID_
+                      , count(E.PROC_INST_ID_) as INSTANCE_COUNT_
+                    from
+                        ${prefix}ACT_RU_EXECUTION E
+
+                    where
+                        E.PARENT_ID_ IS NULL
+                      <bind name="columnPrefix" value="'E.'"/>
+                      <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheckWithPrefix" />
+                    group by
+                        E.PROC_DEF_ID_
+                  ) INSTANCE
+              on
+                  PROCDEF.ID_ = INSTANCE.PROC_DEF_ID_
+
+              <!-- incidents -->
+              left outer join
+                  <!-- Sum all incidents grouped by process definition and incident type-->
+                  (
+                    select
+                        I.PROC_DEF_ID_
+                      , I.INCIDENT_TYPE_
+                      , count(I.ID_) as INCIDENT_COUNT_
+                    from
+                        ${prefix}ACT_RU_INCIDENT I
+
+                    <where>
+                      <bind name="columnPrefix" value="'I.'"/>
+                      <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheckWithPrefix" />
+                    </where>
+                    group by
+                        I.PROC_DEF_ID_, I.INCIDENT_TYPE_
+                  ) INC
+              on
+                  PROCDEF.ID_ = INC.PROC_DEF_ID_
+
+              group by PROCDEF.KEY_, PROCDEF.TENANT_ID_
+            ) GROUPED
+              <!-- join on key, tenantId and latest version -->
+              on GROUPED.key_ = RES.key_ and GROUPED.latest_version_ = RES.version_ and
+              (GROUPED.tenant_id_ = RES.tenant_id_ or (GROUPED.tenant_id_ is null and RES.tenant_id_ is null))
+    ) RES
+
+    <if test="authCheck.shouldPerformAuthorizatioCheck &amp;&amp; !authCheck.revokeAuthorizationCheckEnabled &amp;&amp; authCheck.authUserId != null">
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" />
+      AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart} RES.ID_ ${authJoinSeparator} RES.KEY_ ${authJoinSeparator} '*' ${authJoinEnd})
+    </if>
+
+    <where>
+      <!-- key -->
+      <if test="key != null">
+        RES.KEY_ = #{key}
+      </if>
+      <!-- keyLike -->
+      <if test="keyLike != null">
+        and UPPER(RES.KEY_) like UPPER(#{keyLike}) ESCAPE ${escapeChar}
+      </if>
+
+      <!-- name -->
+      <if test="name != null">
+        and RES.NAME_ = #{name}
+      </if>
+      <!-- nameLike -->
+      <if test="nameLike != null">
+        and UPPER(RES.NAME_) like UPPER(#{nameLike}) ESCAPE ${escapeChar}
+      </if>
+
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.queryAuthorizationCheck" />
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheck" />
+    </where>
+  </sql>
+
+  <select id="selectProcessDefinitionWithFailedJobs" resultMap="processDefinitionMap">
+    select distinct procdef.*,
+      (select count(*) FROM ${prefix}ACT_RU_EXECUTION exe, ${prefix}ACT_RU_JOB job
+         where exe.PROC_INST_ID_ = job.PROCESS_INSTANCE_ID_ AND
+               exe.PROC_DEF_ID_ = procdef.ID_ and job.RETRIES_ = 0) FAILED_JOBS_
+    from ${prefix}ACT_RE_PROCDEF procdef
+  </select>
+
+  <select id="selectCalledProcessDefinitions" parameterType="org.operaton.bpm.cockpit.impl.plugin.base.dto.query.ProcessDefinitionQueryDto"
+          resultMap="calledProcessDefinitionMap">
+    select distinct RES.ID_, RES.KEY_, RES.NAME_, RES.VERSION_, EXEC2.ACT_ID_
+    <include refid="selectCalledProcesses"/>
+    group by RES.ID_, RES.KEY_, RES.NAME_, RES.VERSION_, EXEC2.ACT_ID_
+    ${orderBy}
+  </select>
+
+  <sql id="selectCalledProcesses">
+    from
+      ${prefix}ACT_RE_PROCDEF RES
+    inner join
+      ${prefix}ACT_RU_EXECUTION EXEC1
+    on
+      RES.ID_ = EXEC1.PROC_DEF_ID_
+    inner join
+      ${prefix}ACT_RU_EXECUTION EXEC2
+    on
+      EXEC1.SUPER_EXEC_ = EXEC2.ID_
+    <if test="authCheck.shouldPerformAuthorizatioCheck &amp;&amp; authCheck.authUserId != null">
+    inner join
+        ${prefix}ACT_RE_PROCDEF PROCDEF
+    on
+        EXEC2.PROC_DEF_ID_ = PROCDEF.ID_
+    </if>
+
+    <if test="authCheck.shouldPerformAuthorizatioCheck &amp;&amp; !authCheck.revokeAuthorizationCheckEnabled &amp;&amp; authCheck.authUserId != null">
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" />
+      AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart} EXEC2.PROC_INST_ID_ ${authJoinSeparator} PROCDEF.KEY_ ${authJoinSeparator} '*' ${authJoinEnd})
+    </if>
+
+    <where>
+
+      <!-- parentProcessDefinitionId -->
+      <if test="parentProcessDefinitionId != null">
+        EXEC2.PROC_DEF_ID_ = #{parentProcessDefinitionId}
+      </if>
+
+      <!-- superProcessDefinitionId -->
+      <if test="superProcessDefinitionId != null">
+      and EXISTS (
+                    select
+                      EXEC4.ID_
+                    from
+                      ${prefix}ACT_RU_EXECUTION EXEC3
+                    inner join
+                      ${prefix}ACT_RU_EXECUTION EXEC4
+                    on
+                      EXEC3.SUPER_EXEC_ = EXEC4.ID_
+                    where
+                      EXEC2.PROC_INST_ID_ = EXEC3.ID_
+                      and EXEC4.PROC_DEF_ID_ = #{superProcessDefinitionId}
+                  )
+      </if>
+
+      <!-- activityIds -->
+      <if test="activityIdIn != null &amp;&amp; activityIdIn.length > 0">
+        and
+        <foreach item="item" index="index" collection="activityIdIn"
+                 open="(" separator="or" close=")">
+          EXEC2.ACT_ID_ = #{item}
+        </foreach>
+      </if>
+
+      <!-- businessKey -->
+      <if test="businessKey != null">
+      and EXISTS (
+                    select
+                      ID_
+                    from
+                      ${prefix}ACT_RU_EXECUTION
+                    where
+                      EXEC2.PROC_INST_ID_ = ID_
+                      and BUSINESS_KEY_ = #{businessKey}
+                  )
+      </if>
+
+      <!-- queryVariables -->
+      <!-- PLEASE NOTE: If you change anything have a look into the HistoricVariableInstance & HistoricProcessInstance, the same query object is used there! -->
+      <foreach collection="queryVariableValues" index="index" item="queryVariableValue">
+      and EXISTS (
+        select
+          ID_
+        from
+          ${prefix}ACT_RU_VARIABLE
+        where
+          EXEC2.PROC_INST_ID_ = PROC_INST_ID_
+
+          and NAME_= #{queryVariableValue.name}
+
+        <if test="queryVariableValue.valueConditions != null">
+          and
+          <if test="queryVariableValue.operatorName.equals('NOT_EQUALS')">NOT</if><!-- NOT_EQUALS uses the same conditions as EQUALS -->
+          (
+          <foreach collection="queryVariableValue.valueConditions" item="valueCondition" separator="or">
+            <trim prefix="(" prefixOverrides="and" suffix=")">
+              <if test="!valueCondition.type.equals('null')">
+              <!-- when type of value is null, type doesn't matter! -->
+              and TYPE_ = #{valueCondition.type}
+              </if>
+
+              <if test="valueCondition.textValue != null &amp;&amp; valueCondition.longValue == null &amp;&amp; valueCondition.doubleValue == null">
+                and TEXT_
+              <choose>
+                <when test="queryVariableValue.operatorName.equals('LIKE')">LIKE</when>
+                <otherwise><include refid="executionVariableOperator" /></otherwise>
+              </choose>
+                #{valueCondition.textValue}
+                <if test="queryVariableValue.operatorName.equals('LIKE')">ESCAPE ${escapeChar}</if>
+              </if>
+              <if test="valueCondition.textValue2 != null">
+                and TEXT2_
+              <choose>
+                <when test="queryVariableValue.operatorName.equals('LIKE')">LIKE</when>
+                <otherwise><include refid="executionVariableOperator" /></otherwise>
+              </choose>
+                #{valueCondition.textValue2}
+                <if test="queryVariableValue.operatorName.equals('LIKE')">ESCAPE ${escapeChar}</if>
+              </if>
+
+              <if test="valueCondition.longValue != null">
+                and LONG_
+                <include refid="executionVariableOperator" />
+                #{valueCondition.longValue}
+              </if>
+
+              <if test="valueCondition.doubleValue != null">
+                and DOUBLE_
+                <include refid="executionVariableOperator" />
+                #{valueCondition.doubleValue}
+              </if>
+
+              <!-- Null variable type -->
+              <if test="valueCondition.textValue == null &amp;&amp; valueCondition.textValue2 == null &amp;&amp; valueCondition.longValue == null &amp;&amp; valueCondition.doubleValue == null">
+                and TEXT_ is null and TEXT2_ is null and LONG_ is null and DOUBLE_ is null and BYTEARRAY_ID_ is null
+              </if>
+            </trim>
+          </foreach>
+          )
+        </if>
+      )
+      </foreach>
+
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.queryAuthorizationCheck" />
+      <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheck" />
+
+    </where>
+  </sql>
+
+</mapper>

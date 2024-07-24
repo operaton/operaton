@@ -16,7 +16,7 @@
     <dependencySet>
       <unpack>true</unpack>
       <includes>
-        <include>org.camunda.bpm.wildfly:camunda-wildfly-assembly</include>
+        <include>org.operaton.bpm.wildfly:operaton-wildfly-assembly</include>
       </includes>
       <outputDirectory />
     </dependencySet>
@@ -30,28 +30,28 @@
         </excludes>
       </unpackOptions>
       <includes>
-        <include>org.camunda.bpm.distro:camunda-sql-scripts:jar:*</include>
+        <include>org.operaton.bpm.distro:operaton-sql-scripts:jar:*</include>
       </includes>
     </dependencySet>
 
     <dependencySet>
         <outputFileNameMapping>${artifact.artifactId}-${artifact.version}.${artifact.extension}</outputFileNameMapping>
         <includes>
-            <include>org.camunda.bpm:camunda-engine-rest-jakarta:war:*</include>
+            <include>org.operaton.bpm:operaton-engine-rest-jakarta:war:*</include>
         </includes>
         <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments</outputDirectory>
     </dependencySet>
     
     <dependencySet>
         <includes>
-          <include>org.camunda.bpm.webapp:camunda-webapp-wildfly:war:*</include>
+          <include>org.operaton.bpm.webapp:operaton-webapp-wildfly:war:*</include>
         </includes>
         <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments</outputDirectory>
     </dependencySet>
 
     <dependencySet>
         <includes>
-          <include>org.camunda.bpm.example:camunda-example-invoice-jakarta:war:*</include>
+          <include>org.operaton.bpm.example:operaton-example-invoice-jakarta:war:*</include>
         </includes>
         <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments</outputDirectory>
     </dependencySet>
@@ -60,8 +60,8 @@
   
   <fileSets>
     <fileSet>
-      <directory>../../camunda-welcome</directory>
-      <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments/camunda-welcome.war</outputDirectory>
+      <directory>../../operaton-welcome</directory>
+      <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments/operaton-welcome.war</outputDirectory>
     </fileSet>
   </fileSets>
   
@@ -69,7 +69,7 @@
      <file>
       <source>src/EMPTY_FILE</source>
       <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments/</outputDirectory>
-      <destName>camunda-welcome.war.dodeploy</destName>
+      <destName>operaton-welcome.war.dodeploy</destName>
     </file>  
   </files>
   

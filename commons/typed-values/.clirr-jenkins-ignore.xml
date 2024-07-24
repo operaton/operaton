@@ -13,10 +13,10 @@
   </difference>
   <difference>
     <differenceType>8001</differenceType>
-    <className>camundajar/com/sun/activation/**/*</className>
+    <className>operatonjar/com/sun/activation/**/*</className>
   </difference>
   <difference>
     <differenceType>8001</differenceType>
-    <className>camundajar/javax/activation/**/*</className>
+    <className>operatonjar/javax/activation/**/*</className>
   </difference>
 </differences>

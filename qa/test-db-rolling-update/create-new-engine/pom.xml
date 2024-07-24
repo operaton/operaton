@@ -2,31 +2,31 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.qa.upgrade</groupId>
-    <artifactId>camunda-qa-db-rolling-update</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.qa.upgrade</groupId>
+    <artifactId>operaton-qa-db-rolling-update</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-qa-db-create-new-engine</artifactId>
+  <artifactId>operaton-qa-db-create-new-engine</artifactId>
   <packaging>jar</packaging>
-  <name>Camunda Platform - QA - upgrade - rolling update - create new engine</name>
+  <name>Operaton - QA - upgrade - rolling update - create new engine</name>
 
   <properties>
-    <camunda.version.current>${project.version}</camunda.version.current>
-    <camunda.version.previous>7.21.0</camunda.version.previous>
+    <operaton.version.current>${project.version}</operaton.version.current>
+    <operaton.version.previous>7.21.0</operaton.version.previous>
   </properties>
 
   <dependencies>
     <!-- NOTE: this pulls transitive dependencies of version ${project.version} in unless
-      you declare them to be ${camunda.version.current} here -->
+      you declare them to be ${operaton.version.current} here -->
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.qa.upgrade</groupId>
-      <artifactId>camunda-qa-db-rolling-update-util</artifactId>
+      <groupId>org.operaton.bpm.qa.upgrade</groupId>
+      <artifactId>operaton-qa-db-rolling-update-util</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
@@ -60,8 +60,8 @@
                 <phase>generate-test-sources</phase>
                 <configuration>
                   <target>
-                    <property name="current.minor.version" value="${camunda.current.majorVersion}.${camunda.current.minorVersion}" />
-                    <property name="previous.minor.version" value="${camunda.previous.majorVersion}.${camunda.previous.minorVersion}" />
+                    <property name="current.minor.version" value="${operaton.current.majorVersion}.${operaton.current.minorVersion}" />
+                    <property name="previous.minor.version" value="${operaton.previous.majorVersion}.${operaton.previous.minorVersion}" />
                     <property name="current.sql.upgrade.dir" value="${project.build.directory}/scripts-current/sql/upgrade" />
                     <property name="minor.version.upgrade.script.previous.to.current.engine" value="${database.type}_engine_${previous.minor.version}_to_${current.minor.version}.sql" />
                     <property name="minor.version.upgrade.script.previous.to.current.identity" value="${database.type}_identity_${previous.minor.version}_to_${current.minor.version}.sql" />
@@ -73,8 +73,8 @@
                     <mkdir dir="${current.sql.upgrade.dir}/" />
 
                     <!-- concatenated patches for last minor version -->
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch.sql" />
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch.sql" />
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch.sql" />
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch.sql" />
 
                     <!-- minor version upgrade from previous to current version -->
                     <touch file="${current.sql.upgrade.dir}/${minor.version.upgrade.script.previous.to.current.engine}" />
@@ -102,9 +102,9 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.camunda.bpm.distro</groupId>
-                      <artifactId>camunda-sql-scripts</artifactId>
-                      <version>${camunda.version.current}</version>
+                      <groupId>org.operaton.bpm.distro</groupId>
+                      <artifactId>operaton-sql-scripts</artifactId>
+                      <version>${operaton.version.current}</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
                       <overWrite>true</overWrite>
@@ -126,8 +126,8 @@
                   <goal>parse-version</goal>
                 </goals>
                 <configuration>
-                  <propertyPrefix>camunda.current</propertyPrefix>
-                  <versionString>${camunda.version.current}</versionString>
+                  <propertyPrefix>operaton.current</propertyPrefix>
+                  <versionString>${operaton.version.current}</versionString>
                 </configuration>
               </execution>
               <execution>
@@ -136,8 +136,8 @@
                   <goal>parse-version</goal>
                 </goals>
                 <configuration>
-                  <propertyPrefix>camunda.previous</propertyPrefix>
-                  <versionString>${camunda.version.previous}</versionString>
+                  <propertyPrefix>operaton.previous</propertyPrefix>
+                  <versionString>${operaton.version.previous}</versionString>
                 </configuration>
               </execution>
             </executions>
@@ -156,8 +156,8 @@
                 <configuration>
                   <srcFiles>
                     <!-- now patch old version of the schema -->
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch.sql</srcFile>
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch.sql</srcFile>
                   </srcFiles>
                 </configuration>
               </execution>
@@ -170,8 +170,8 @@
                 <configuration>
                   <srcFiles>
                     <!-- now perform the schema migrations -->
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_to_${camunda.current.majorVersion}.${camunda.current.minorVersion}.sql</srcFile>
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_to_${camunda.current.majorVersion}.${camunda.current.minorVersion}.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql</srcFile>
                   </srcFiles>
                 </configuration>
               </execution>
@@ -186,7 +186,7 @@
                     <!-- now perform the schema migrations -->
                     <!-- now patch new version of the schema, apply any patches explicitly -->
                     <!-- example:
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.current.majorVersion}.${camunda.current.minorVersion}_patch_${camunda.current.majorVersion}.${camunda.current.minorVersion}.0_to_${camunda.current.majorVersion}.${camunda.current.minorVersion}.1.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.current.majorVersion}.${operaton.current.minorVersion}_patch_${operaton.current.majorVersion}.${operaton.current.minorVersion}.0_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.1.sql</srcFile>
                     -->
                   </srcFiles>
                 </configuration>
@@ -212,7 +212,7 @@
                 </goals>
                 <phase>process-test-classes</phase>
                 <configuration>
-                  <mainClass>org.camunda.bpm.qa.rolling.update.TestNewEngineMain</mainClass>
+                  <mainClass>org.operaton.bpm.qa.rolling.update.TestNewEngineMain</mainClass>
                   <includePluginDependencies>false</includePluginDependencies>
                 </configuration>
               </execution>

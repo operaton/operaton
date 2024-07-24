@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
-  <bpmn:process id="process-with-http-form" name="process-with-http-form" isExecutable="true" camunda:historyTimeToLive="P180D">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="process-with-http-form" name="process-with-http-form" isExecutable="true" operaton:historyTimeToLive="P180D">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_0oftx4f</bpmn:outgoing>
     </bpmn:startEvent>
@@ -9,7 +9,7 @@
       <bpmn:incoming>SequenceFlow_19g38js</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_19g38js" sourceRef="UserTask_0uwyrbt" targetRef="EndEvent_0rryd15" />
-    <bpmn:userTask id="UserTask_0uwyrbt" name="HTTP Form" camunda:formKey="embedded:http://localhost:8080/camunda/develop/forms/hello-track-start-form.html">
+    <bpmn:userTask id="UserTask_0uwyrbt" name="HTTP Form" operaton:formKey="embedded:http://localhost:8080/operaton/develop/forms/hello-track-start-form.html">
       <bpmn:incoming>SequenceFlow_0oftx4f</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_19g38js</bpmn:outgoing>
     </bpmn:userTask>

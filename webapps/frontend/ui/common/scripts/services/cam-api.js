@@ -17,7 +17,7 @@
 
 'use strict';
 
-var CamSDK = require('camunda-bpm-sdk-js/lib/angularjs/index');
+var CamSDK = require('operaton-bpm-sdk-js/lib/angularjs/index');
 
 module.exports = [
   'Uri',

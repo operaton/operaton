@@ -2,24 +2,24 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.qa.upgrade</groupId>
-    <artifactId>camunda-qa-db-instance-migration</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.qa.upgrade</groupId>
+    <artifactId>operaton-qa-db-instance-migration</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-qa-upgrade-test-fixture-721</artifactId>
+  <artifactId>operaton-qa-upgrade-test-fixture-721</artifactId>
   <packaging>jar</packaging>
-  <name>camunda BPM - QA - upgrade - instance migration - test fixture - 7.21.0</name>
+  <name>operaton BPM - QA - upgrade - instance migration - test fixture - 7.21.0</name>
 
   <properties>
-    <camunda.version.previous>7.21.0</camunda.version.previous>
+    <operaton.version.previous>7.21.0</operaton.version.previous>
   </properties>
 
    <dependencyManagement>
      <dependencies>
        <dependency>
-         <groupId>org.camunda.bpm</groupId>
-         <artifactId>camunda-bom</artifactId>
+         <groupId>org.operaton.bpm</groupId>
+         <artifactId>operaton-bom</artifactId>
          <version>7.21.0</version>
          <scope>import</scope>
          <type>pom</type>
@@ -29,23 +29,23 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.spin</groupId>
-      <artifactId>camunda-spin-dataformat-json-jackson</artifactId>
+      <groupId>org.operaton.spin</groupId>
+      <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-plugin-spin</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-plugin-spin</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.qa.upgrade</groupId>
-      <artifactId>camunda-qa-upgrade-scenario-util</artifactId>
+      <groupId>org.operaton.bpm.qa.upgrade</groupId>
+      <artifactId>operaton-qa-upgrade-scenario-util</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
@@ -81,7 +81,7 @@
                   <goal>update</goal>
                 </goals>
                 <configuration>
-                  <changeLogFile>camunda-changelog.xml</changeLogFile>
+                  <changeLogFile>operaton-changelog.xml</changeLogFile>
                   <changeLogDirectory>${project.build.directory}/scripts-current/sql/liquibase/</changeLogDirectory>
                 </configuration>
               </execution>
@@ -101,8 +101,8 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.camunda.bpm.distro</groupId>
-                      <artifactId>camunda-sql-scripts</artifactId>
+                      <groupId>org.operaton.bpm.distro</groupId>
+                      <artifactId>operaton-sql-scripts</artifactId>
                       <version>7.21.0</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
@@ -130,7 +130,7 @@
                 </goals>
                 <phase>process-test-classes</phase>
                 <configuration>
-                  <mainClass>org.camunda.bpm.qa.upgrade.TestFixture</mainClass>
+                  <mainClass>org.operaton.bpm.qa.upgrade.TestFixture</mainClass>
                 </configuration>
               </execution>
             </executions>

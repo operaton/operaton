@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/history/batch/get-query/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/history/batch/get-query/index.html -->
 
 <#assign sortByValues = [
   '"batchId"',

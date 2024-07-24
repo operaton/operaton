@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:operaton="http://operaton.org/schema/1.0/bpmn" 
+    xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+    xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" 
+    xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" 
+    typeLanguage="http://www.w3.org/2001/XMLSchema" 
+    expressionLanguage="http://www.w3.org/1999/XPath"
+    targetNamespace="test">
+
+  <process id="testProcess" isExecutable="true">
+
+    <startEvent id="start">
+      <extensionElements>
+        <operaton:formData>
+          <operaton:formField 
+              id="enumField" label="Enum Field" type="enum"
+              defaultValue="a">
+              <operaton:value id="a" name="A"/>
+              <operaton:value id="b" name="B"/>
+              <operaton:value id="c" name="C"/>
+          </operaton:formField> 
+        </operaton:formData>
+      </extensionElements>
+    </startEvent>
+
+    <sequenceFlow sourceRef="start" targetRef="usertask" />
+
+    <userTask id="usertask" name="Task" operaton:candidateGroups="dummy" />
+
+    <sequenceFlow sourceRef="usertask" targetRef="task2" />
+
+    <userTask id="task2" />
+
+  </process>
+
+</definitions>

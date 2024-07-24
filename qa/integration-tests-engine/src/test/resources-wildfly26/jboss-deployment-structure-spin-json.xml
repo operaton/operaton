@@ -5,7 +5,7 @@
       <subsystem name="jaxrs" />
     </exclude-subsystems>
     <dependencies>
-      <module name="org.camunda.spin.camunda-spin-dataformat-json-jackson" services="import" />
+      <module name="org.operaton.spin.operaton-spin-dataformat-json-jackson" services="import" />
       <module name="com.fasterxml.jackson.core.jackson-databind" slot="2.15.2" />
     </dependencies>
   </deployment>

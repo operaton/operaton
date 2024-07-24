@@ -49,7 +49,7 @@ The structure of the template is:
  | | +--sort-params.ftl
  | | +--sort-props.ftl
  +--models
- | +--org/camunda/bpm/engine/rest/dto
+ | +--org/operaton/bpm/engine/rest/dto
  | | +--ExceptionDto.ftl
  | | +--history
  | | | +--HistoricProcessInstanceQueryDto.ftl
@@ -107,16 +107,16 @@ and some need to be provided if necessary (nice to have - `minimum`,`defaultValu
 
 This folder contains all of the DTOs used in the request and response bodies. Instructions:
 * use the name and package structure of the Rest DTOs when possible
-([org.camunda.bpm.engine.rest.dto.ExceptionDto.java](https://github.com/camunda/camunda-bpm-platform/blob/master/engine-rest/engine-rest/src/main/java/org/camunda/bpm/engine/rest/dto/ExceptionDto.java) --> 
-[org/camunda/bpm/engine/rest/dto/ExceptionDto.ftl](https://github.com/camunda/camunda-bpm-platform/blob/master/engine-rest/engine-rest-openapi/src/main/templates/models/org/camunda/bpm/engine/rest/dto/ExceptionDto.ftl))
-Keep the properties of OpenAPI doc as close as possible to the Java DTOs and add explicit description whenever a property is not applicable to a certain endpoint (e.g. [PUT /process-instance/suspended](https://github.com/camunda/camunda-bpm-platform/blob/master/engine-rest/engine-rest-openapi/src/main/templates/paths/process-instance/suspended/put.ftl))
+([org.operaton.bpm.engine.rest.dto.ExceptionDto.java](https://github.com/operaton/operaton/blob/master/engine-rest/engine-rest/src/main/java/org/operaton/bpm/engine/rest/dto/ExceptionDto.java) --> 
+[org/operaton/bpm/engine/rest/dto/ExceptionDto.ftl](https://github.com/operaton/operaton/blob/master/engine-rest/engine-rest-openapi/src/main/templates/models/org/operaton/bpm/engine/rest/dto/ExceptionDto.ftl))
+Keep the properties of OpenAPI doc as close as possible to the Java DTOs and add explicit description whenever a property is not applicable to a certain endpoint (e.g. [PUT /process-instance/suspended](https://github.com/operaton/operaton/blob/master/engine-rest/engine-rest-openapi/src/main/templates/paths/process-instance/suspended/put.ftl))
 * the definitions of the models are resolved automatically via the folder structure. The `/models` directory should contain only the models that are used in the documentation, any additional files (macros and reusable files) should go to [commons](#commons), do not create empty folders. The models are ordered lexicographically.
 * use the [utils](#utils) from the previous section when possible.
 * use the `dto` macro to define a DTO
   * in case of a DTO hierarchy (`TriggerVariableValueDto extends VariableValueDto`), the `dto` macro provides an `extends` 
-  attribute that makes use of the `allOf` OpenAPI syntax - [example](https://github.com/camunda/camunda-bpm-platform/blob/392d98b61e5e0eff3e1dad0ee15a5ad986e0d93c/engine-rest/engine-rest-openapi/src/main/templates/models/org/camunda/bpm/engine/rest/dto/runtime/TriggerVariableValueDto.ftl#L2-L19).
+  attribute that makes use of the `allOf` OpenAPI syntax - [example](https://github.com/operaton/operaton/blob/392d98b61e5e0eff3e1dad0ee15a5ad986e0d93c/engine-rest/engine-rest-openapi/src/main/templates/models/org/operaton/bpm/engine/rest/dto/runtime/TriggerVariableValueDto.ftl#L2-L19).
   * the `property` macros should be nested inside the `dto` macro
-* in case the response can be two DTOs depending on request parameter (example - [message correlation](https://docs.camunda.org/manual/develop/reference/rest/message/post-message/#result) and responses `MessageCorrelationResultDto` or `MessageCorrelationResultWithVariableDto` (extending `MessageCorrelationResultDto`)), please use the DTO for the response that contains all of the properties (in the correlation case - `MessageCorrelationResultWithVariableDto`) even some are not applicable for all of the responses, and make sure to document which properties are not applicable in which use cases. (In some use cases `oneOf` approach might be applicable together with `discrimitator` ([spec](https://github.com/OAI/OpenAPI-Specification/blob/3.0.2/versions/3.0.2.md#discriminator-object)), please test this additionally as the clients might have problems to be generated in this approach.)
+* in case the response can be two DTOs depending on request parameter (example - [message correlation](https://docs.operaton.org/manual/develop/reference/rest/message/post-message/#result) and responses `MessageCorrelationResultDto` or `MessageCorrelationResultWithVariableDto` (extending `MessageCorrelationResultDto`)), please use the DTO for the response that contains all of the properties (in the correlation case - `MessageCorrelationResultWithVariableDto`) even some are not applicable for all of the responses, and make sure to document which properties are not applicable in which use cases. (In some use cases `oneOf` approach might be applicable together with `discrimitator` ([spec](https://github.com/OAI/OpenAPI-Specification/blob/3.0.2/versions/3.0.2.md#discriminator-object)), please test this additionally as the clients might have problems to be generated in this approach.)
 * for the `property` macros DO NOT forget to put `last = true` param for the last property, that will take care for the commas in the json file.
 * the DTOs that have sorting or pagination properties should use the [common templates](#commons).
 
@@ -129,7 +129,7 @@ NOTE: The endpoints' paths are automatically resolved from the folder structure,
 The endpoints' paths are ordered lexicographically. 
 * the dynamic endpoints should be structured with brakes like `process-instance/{id}/variables/{varName}/data`,
 then the path parameters (`id` and `varName`) should always be included in the endpoint definition and marked as `required`.
-* endpoints that are almost similar but have a different paths (e.g. [Get Activity Instance Statistics](https://docs.camunda.org/manual/7.12/reference/rest/process-definition/get-activity-statistics/)) needs to be separated in different files. A unique `operationId` should be assigned to each of them. You can consider adding the common parts of the endpoints in [lib/commons](#commons).
+* endpoints that are almost similar but have a different paths (e.g. [Get Activity Instance Statistics](https://docs.operaton.org/manual/7.12/reference/rest/process-definition/get-activity-statistics/)) needs to be separated in different files. A unique `operationId` should be assigned to each of them. You can consider adding the common parts of the endpoints in [lib/commons](#commons).
 * the name of the method's request (GET, POST, PUT, DELETE, OPTIONS) is the name of the template file (get.ftl, post.frl, etc.).
 * each endpoint definition has a unique `operationId` that will be used for the generation of clients.
 * for `async` endpoints make sure to add `Operation` suffix to prevent collisions in generated C# clients, e.g. `setExternalTaskRetriesAsync` -> `setExternalTaskRetriesAsyncOperation`, `modifyProcessInstanceAsync` -> `modifyProcessInstanceAsyncOperation`
@@ -187,7 +187,7 @@ Recommendations:
 * use unix line endings
 * to add links use markdown, e.g. `[link](http://example.com)`
 * Add `docsUrl` to resolve doc link - [User guide](${docsUrl}/user-guide/process-engine/process-instance-modification/)
-`docsUrl="https://docs.camunda.org/manual/${docsVersion}"
+`docsUrl="https://docs.operaton.org/manual/${docsVersion}"
 * keep line length to a maximum of 120 characters
 * use indentation, avoid adding long descriptions on a single line,
 improve the readibility by splitting the next with single or multiple line breaks:
@@ -204,7 +204,7 @@ improve the readibility by splitting the next with single or multiple line break
                   Instructions are executed immediately and in the order they are provided in this request's body.
                   Variables can be provided with every starting instruction.
 
-                  The exact semantics of modification can be read about in the [User guide](https://docs.camunda.org/manual/develop/user-guide/process-engine/process-instance-modification/)."
+                  The exact semantics of modification can be read about in the [User guide](https://docs.operaton.org/manual/develop/user-guide/process-engine/process-instance-modification/)."
 ```
 
 #### Formats
@@ -218,10 +218,10 @@ Specify the `date-time` format of the date properties whenever is possible,
         type = "string"
         format = "date-time"
         description = "Restrict to instances that were started before the given date.
-                       By default (https://docs.camunda.org/manual/${docsVersion}/reference/rest/overview/date-format/),
+                       By default (https://docs.operaton.org/manual/${docsVersion}/reference/rest/overview/date-format/),
                        the date must have the format `yyyy-MM-dd'T'HH:mm:ss.SSSZ`, e.g., 2013-01-23T14:42:45.000+0200." />
 ```
-That will improve the clients that are generated from the OpenAPI documentation. **Note:** When using a 'date-time' in a 'GET' request (as URL parameter), it is important to use proper URL encoding as described in the [Date Format Overview](https://docs.camunda.org/manual/develop/reference/rest/overview/date-format/)
+That will improve the clients that are generated from the OpenAPI documentation. **Note:** When using a 'date-time' in a 'GET' request (as URL parameter), it is important to use proper URL encoding as described in the [Date Format Overview](https://docs.operaton.org/manual/develop/reference/rest/overview/date-format/)
 
 #### Nullable
 

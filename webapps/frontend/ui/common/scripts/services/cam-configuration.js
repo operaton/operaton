@@ -64,7 +64,7 @@ module.exports = function(config, app) {
   return [
     function() {
       var storage = window.localStorage;
-      var values = JSON.parse(storage.getItem('camunda-web') || '{}');
+      var values = JSON.parse(storage.getItem('operaton-web') || '{}');
 
       this.get = function(key, defaultValue) {
         return typeof values[key] !== 'undefined' ? values[key] : defaultValue;
@@ -72,7 +72,7 @@ module.exports = function(config, app) {
 
       this.set = function(key, value) {
         values[key] = value;
-        storage.setItem('camunda-web', JSON.stringify(values));
+        storage.setItem('operaton-web', JSON.stringify(values));
       };
 
       // Removes old translations - default localStorage is limited to 10MB
@@ -83,7 +83,7 @@ module.exports = function(config, app) {
           }
         }
 
-        window.localStorage.setItem('camunda-web', JSON.stringify(values));
+        window.localStorage.setItem('operaton-web', JSON.stringify(values));
       };
 
       this.getDateFormat = function(formatName) {
@@ -114,7 +114,7 @@ module.exports = function(config, app) {
       };
 
       this.getAppVendor = function() {
-        return config.app && config.app.vendor ? config.app.vendor : 'Camunda';
+        return config.app && config.app.vendor ? config.app.vendor : 'Operaton';
       };
 
       this.getAppName = function() {

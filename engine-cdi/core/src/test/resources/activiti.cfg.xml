@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="processEngineConfiguration"
-		class="org.camunda.bpm.engine.cdi.CdiStandaloneProcessEngineConfiguration">
+		class="org.operaton.bpm.engine.cdi.CdiStandaloneProcessEngineConfiguration">
 
         <property name="jdbcUrl" value="jdbc:h2:mem:default-process-engine" />
 		<property name="databaseSchemaUpdate" value="true" />				
@@ -21,7 +21,7 @@
 
 		<property name="customPostBPMNParseListeners">
 			<list>
-				<bean class="org.camunda.bpm.engine.cdi.impl.event.CdiEventSupportBpmnParseListener" />
+				<bean class="org.operaton.bpm.engine.cdi.impl.event.CdiEventSupportBpmnParseListener" />
 			</list>
 		</property>
 

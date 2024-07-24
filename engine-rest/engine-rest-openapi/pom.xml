@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>camunda-engine-rest-openapi</artifactId>
-  <name>Camunda Platform - engine - REST - OpenAPI</name>
+  <artifactId>operaton-engine-rest-openapi</artifactId>
+  <name>Operaton - engine - REST - OpenAPI</name>
   <packaging>jar</packaging>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-engine-rest-root</artifactId>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-engine-rest-root</artifactId>
     <relativePath>../</relativePath>
-    <version>7.22.0-SNAPSHOT</version>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -31,8 +31,8 @@
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-rest-openapi-generator</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-openapi-generator</artifactId>
       <scope>test</scope>
       <version>${project.version}</version>
     </dependency>
@@ -131,7 +131,7 @@
             </goals>
             <configuration>
               <classpathScope>test</classpathScope>
-              <mainClass>org.camunda.bpm.engine.rest.openapi.generator.impl.TemplateParser</mainClass>
+              <mainClass>org.operaton.bpm.engine.rest.openapi.generator.impl.TemplateParser</mainClass>
               <arguments>
                 <argument>${project.basedir}/src/main/templates</argument>
                 <argument>main.ftl</argument>
@@ -148,7 +148,7 @@
             </goals>
             <configuration>
               <classpathScope>test</classpathScope>
-              <mainClass>org.camunda.bpm.engine.rest.openapi.generator.impl.SchemaValidator</mainClass>
+              <mainClass>org.operaton.bpm.engine.rest.openapi.generator.impl.SchemaValidator</mainClass>
               <arguments>
                 <!-- The following json schema is a copy from https://github.com/OAI/OpenAPI-Specification/blob/master/schemas/v3.0/schema.json -->
                 <!-- Date: 11-Feb-2020 -->
@@ -186,7 +186,7 @@
             <phase>generate-test-sources</phase>
             <configuration>
               <sources>
-                <source>${project.build.directory}/camunda-openapi-client/src/main/java</source>
+                <source>${project.build.directory}/operaton-openapi-client/src/main/java</source>
               </sources>
             </configuration>
           </execution>
@@ -206,7 +206,7 @@
             </goals>
             <configuration>
               <inputSpec>${generated-directory}/${generated-file}</inputSpec>
-              <output>${project.build.directory}/camunda-openapi-client</output>
+              <output>${project.build.directory}/operaton-openapi-client</output>
               <generatorName>java</generatorName>
               <configOptions>
                 <dateLibrary>legacy</dateLibrary>

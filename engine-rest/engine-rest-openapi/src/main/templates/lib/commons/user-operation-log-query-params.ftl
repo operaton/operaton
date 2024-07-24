@@ -75,7 +75,7 @@
   "operationType": {
     "type": "string",
     "desc": "Filter by the type of the operation like `Claim` or `Delegate`. See the
-             [Javadoc](${docsUrl}/reference/javadoc/?org/camunda/bpm/engine/history/UserOperationLogEntry.html)
+             [Javadoc](${docsUrl}/reference/javadoc/?org/operaton/bpm/engine/history/UserOperationLogEntry.html)
              for a list of available operation types."
   },
   "entityType": {

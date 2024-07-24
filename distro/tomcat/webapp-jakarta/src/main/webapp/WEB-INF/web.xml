@@ -5,31 +5,31 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-  <display-name>Camunda Platform webapp</display-name>
+  <display-name>Operaton webapp</display-name>
 
   <!-- cockpit bootstrap listener -->
   <listener>
-    <listener-class>org.camunda.bpm.cockpit.impl.web.bootstrap.CockpitContainerBootstrap</listener-class>
+    <listener-class>org.operaton.bpm.cockpit.impl.web.bootstrap.CockpitContainerBootstrap</listener-class>
   </listener>
 
   <!-- admin bootstrap listener -->
   <listener>
-    <listener-class>org.camunda.bpm.admin.impl.web.bootstrap.AdminContainerBootstrap</listener-class>
+    <listener-class>org.operaton.bpm.admin.impl.web.bootstrap.AdminContainerBootstrap</listener-class>
   </listener>
 
   <!-- tasklist bootstrap listener -->
   <listener>
-    <listener-class>org.camunda.bpm.tasklist.impl.web.bootstrap.TasklistContainerBootstrap</listener-class>
+    <listener-class>org.operaton.bpm.tasklist.impl.web.bootstrap.TasklistContainerBootstrap</listener-class>
   </listener>
 
   <!-- welcome bootstrap listener -->
   <listener>
-    <listener-class>org.camunda.bpm.welcome.impl.web.bootstrap.WelcomeContainerBootstrap</listener-class>
+    <listener-class>org.operaton.bpm.welcome.impl.web.bootstrap.WelcomeContainerBootstrap</listener-class>
   </listener>
 
   <!-- http session mutex listener -->
   <listener>
-    <listener-class>org.camunda.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener</listener-class>
+    <listener-class>org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener</listener-class>
   </listener>
 
   <session-config>
@@ -42,10 +42,10 @@
   <!-- Container Based Authentication filter -->
   <!-- <filter>
     <filter-name>Container Based Authentication Filter</filter-name>
-    <filter-class>org.camunda.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter</filter-class>
     <init-param>
       <param-name>authentication-provider</param-name>
-      <param-value>org.camunda.bpm.engine.rest.security.auth.impl.ContainerBasedAuthenticationProvider</param-value>
+      <param-value>org.operaton.bpm.engine.rest.security.auth.impl.ContainerBasedAuthenticationProvider</param-value>
     </init-param>
   </filter>
   <filter-mapping>
@@ -57,8 +57,8 @@
   <!-- Authentication filter -->
   <filter>
     <filter-name>Authentication Filter</filter-name>
-    <filter-class>org.camunda.bpm.webapp.impl.security.auth.AuthenticationFilter</filter-class>
-    <!-- See https://docs.camunda.org/manual/latest/webapps/shared-options/authentication/#cache -->
+    <filter-class>org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter</filter-class>
+    <!-- See https://docs.operaton.org/manual/latest/webapps/shared-options/authentication/#cache -->
     <init-param>
       <param-name>cacheTimeToLive</param-name>
       <param-value>300000</param-value>
@@ -73,7 +73,7 @@
   <!-- Security filter -->
   <filter>
     <filter-name>SecurityFilter</filter-name>
-    <filter-class>org.camunda.bpm.webapp.impl.security.filter.SecurityFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.impl.security.filter.SecurityFilter</filter-class>
     <init-param>
       <param-name>configFile</param-name>
       <param-value>/WEB-INF/securityFilterRules.json</param-value>  
@@ -88,7 +88,7 @@
   <!-- CSRF Prevention filter -->
   <filter>
     <filter-name>CsrfPreventionFilter</filter-name>
-    <filter-class>org.camunda.bpm.webapp.impl.security.filter.CsrfPreventionFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.impl.security.filter.CsrfPreventionFilter</filter-class>
     <!--<init-param>-->
     <!--<param-name>targetOrigin</param-name>-->
     <!--<param-value>http://localhost:8080</param-value>-->
@@ -102,7 +102,7 @@
   <!-- Session Cookie filter -->
   <filter>
     <filter-name>SessionCookieFilter</filter-name>
-    <filter-class>org.camunda.bpm.webapp.impl.security.filter.SessionCookieFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.impl.security.filter.SessionCookieFilter</filter-class>
     <!--<init-param>-->
     <!--<param-name>enableSecureCookie</param-name>-->
     <!--<param-value>true</param-value>-->
@@ -116,13 +116,13 @@
   <!-- HTTP Header Security Filter -->
   <filter>
     <filter-name>HttpHeaderSecurity</filter-name>
-    <filter-class>org.camunda.bpm.webapp.impl.security.filter.headersec.HttpHeaderSecurityFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.impl.security.filter.headersec.HttpHeaderSecurityFilter</filter-class>
 
     <!--
     The Strict Transport Security header is disabled by default.
     You can enable it by uncommenting the configuration below.
     Read more about it in the documentation
-    https://docs.camunda.org/manual/latest/webapps/shared-options/header-security/#strict-transport-security
+    https://docs.operaton.org/manual/latest/webapps/shared-options/header-security/#strict-transport-security
     -->
 
     <!--
@@ -142,7 +142,7 @@
   <!-- Empty body filter -->
   <filter>
     <filter-name>EmptyBodyFilter</filter-name>
-    <filter-class>org.camunda.bpm.engine.rest.filter.EmptyBodyFilter</filter-class>
+    <filter-class>org.operaton.bpm.engine.rest.filter.EmptyBodyFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>EmptyBodyFilter</filter-name>
@@ -152,7 +152,7 @@
   <!-- REST cache control filter -->
   <filter>
     <filter-name>CacheControlFilter</filter-name>
-    <filter-class>org.camunda.bpm.engine.rest.filter.CacheControlFilter</filter-class>    
+    <filter-class>org.operaton.bpm.engine.rest.filter.CacheControlFilter</filter-class>    
   </filter>
   <filter-mapping>
     <filter-name>CacheControlFilter</filter-name>
@@ -162,7 +162,7 @@
   <!-- engines filter -->
   <filter>
     <filter-name>Engines Filter</filter-name>
-    <filter-class>org.camunda.bpm.webapp.impl.engine.ProcessEnginesFilter</filter-class>
+    <filter-class>org.operaton.bpm.webapp.impl.engine.ProcessEnginesFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>Engines Filter</filter-name>
@@ -176,7 +176,7 @@
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
       <param-name>jakarta.ws.rs.Application</param-name>
-      <param-value>org.camunda.bpm.cockpit.impl.web.CockpitApplication</param-value>
+      <param-value>org.operaton.bpm.cockpit.impl.web.CockpitApplication</param-value>
     </init-param>
     <init-param>
       <param-name>resteasy.servlet.mapping.prefix</param-name>
@@ -194,7 +194,7 @@
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
       <param-name>jakarta.ws.rs.Application</param-name>
-      <param-value>org.camunda.bpm.admin.impl.web.AdminApplication</param-value>
+      <param-value>org.operaton.bpm.admin.impl.web.AdminApplication</param-value>
     </init-param>
     <init-param>
       <param-name>resteasy.servlet.mapping.prefix</param-name>
@@ -212,7 +212,7 @@
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
       <param-name>jakarta.ws.rs.Application</param-name>
-      <param-value>org.camunda.bpm.tasklist.impl.web.TasklistApplication</param-value>
+      <param-value>org.operaton.bpm.tasklist.impl.web.TasklistApplication</param-value>
     </init-param>
     <init-param>
       <param-name>resteasy.servlet.mapping.prefix</param-name>
@@ -230,7 +230,7 @@
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
       <param-name>jakarta.ws.rs.Application</param-name>
-      <param-value>org.camunda.bpm.webapp.impl.engine.EngineRestApplication</param-value>
+      <param-value>org.operaton.bpm.webapp.impl.engine.EngineRestApplication</param-value>
     </init-param>
     <init-param>
       <param-name>resteasy.servlet.mapping.prefix</param-name>
@@ -248,7 +248,7 @@
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
     <init-param>
       <param-name>jakarta.ws.rs.Application</param-name>
-      <param-value>org.camunda.bpm.welcome.impl.web.WelcomeApplication</param-value>
+      <param-value>org.operaton.bpm.welcome.impl.web.WelcomeApplication</param-value>
     </init-param>
     <init-param>
       <param-name>resteasy.servlet.mapping.prefix</param-name>

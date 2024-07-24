@@ -1,15 +1,15 @@
-# Camunda External Task Client (Java)
+# Operaton External Task Client (Java)
 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm/camunda-external-task-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm/camunda-external-task-client)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.operaton.bpm/operaton-external-task-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.operaton.bpm/operaton-external-task-client)
 
 > Are you looking for the Spring Boot External Task Client? This way please: [Spring Boot External Task Client](../../spring-boot-starter/starter-client)
 
-The **Camunda External Task Client (Java)** allows to set up remote Service Tasks for your workflow.
+The **Operaton External Task Client (Java)** allows to set up remote Service Tasks for your workflow.
 
-* [Quick Start](https://docs.camunda.org/get-started/quick-start/)
-* [Documentation](https://docs.camunda.org/manual/develop/user-guide/ext-client/)
-* [Examples](https://github.com/camunda/camunda-bpm-examples/tree/master/clients/java)
+* [Quick Start](https://docs.operaton.org/get-started/quick-start/)
+* [Documentation](https://docs.operaton.org/manual/develop/user-guide/ext-client/)
+* [Examples](https://github.com/operaton/operaton/tree/master/clients/java)
 
 ## Features
 * Complete External Tasks
@@ -20,26 +20,26 @@ The **Camunda External Task Client (Java)** allows to set up remote Service Task
 
 
 ## Configuration options
-* The client can be configured with the fluent api of the [ExternalTaskClientBuilder](client/src/main/java/org/camunda/bpm/client/ExternalTaskClientBuilder.java).
-* The topic subscription can be configured with the fluent api of the [TopicSubscriptionBuilder](client/src/main/java/org/camunda/bpm/client/topic/TopicSubscriptionBuilder.java).
+* The client can be configured with the fluent api of the [ExternalTaskClientBuilder](client/src/main/java/org/operaton/bpm/client/ExternalTaskClientBuilder.java).
+* The topic subscription can be configured with the fluent api of the [TopicSubscriptionBuilder](client/src/main/java/org/operaton/bpm/client/topic/TopicSubscriptionBuilder.java).
 
 ## Prerequisites
-* Java (supported version by the used Camunda Platform 7)
-* Camunda Platform 7
+* Java (supported version by the used Operaton)
+* Operaton
 
 ## Maven coordinates
 The following Maven coordinate needs to be added to the projects `pom.xml`:
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm</groupId>
-  <artifactId>camunda-external-task-client</artifactId>
+  <groupId>org.operaton.bpm</groupId>
+  <artifactId>operaton-external-task-client</artifactId>
   <version>${version}</version>
 </dependency>
 ```
 
 ## Contributing
 
-Have a look at our [contribution guide](https://github.com/camunda/camunda-bpm-platform/blob/master/CONTRIBUTING.md) for how to contribute to this repository.
+Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/master/CONTRIBUTING.md) for how to contribute to this repository.
 
 
 ## License

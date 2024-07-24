@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:operaton_1="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fox="http://www.operaton.com/fox" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_909qwBvREeWYHZni1EZ71A" exporter="operaton modeler" exporterVersion="2.7.0" targetNamespace="http://camunda.org/schema/1.0/bpmn">
+  <bpmn2:process id="Process_1" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent_1">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:serviceTask id="UserTask_1" operaton_1:class="org.operaton.bpm.engine.test.bpmn.servicetask.DummyServiceTask" name="Task">
+      <bpmn2:extensionElements>
+        <operaton_1:properties>
+          <operaton_1:property/>
+        </operaton_1:properties>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
+    <bpmn2:serviceTask id="ServiceTask_1" operaton_1:class="org.operaton.bpm.engine.test.bpmn.servicetask.DummyServiceTask" operaton_1:async="true" operaton_1:asyncAfter="true" name="ConnectorTask">
+      <bpmn2:extensionElements>
+        <operaton_1:connector>
+          <operaton_1:connectorId>connector</operaton_1:connectorId>
+          <operaton_1:inputOutput>
+            <operaton_1:inputParameter name="in"/>
+            <operaton_1:outputParameter name="out"/>
+          </operaton_1:inputOutput>
+        </operaton_1:connector>
+        <operaton_1:inputOutput>
+          <operaton_1:inputParameter name="Input">
+            <operaton_1:map>
+              <operaton_1:entry key="foo">bar</operaton_1:entry>
+            </operaton_1:map>
+          </operaton_1:inputParameter>
+          <operaton_1:inputParameter name="Input2">text</operaton_1:inputParameter>
+          <operaton_1:inputParameter name="Input3">
+            <operaton_1:list>
+              <operaton_1:value><![CDATA["ABC"]]></operaton_1:value>
+            </operaton_1:list>
+          </operaton_1:inputParameter>
+          <operaton_1:inputParameter name="Input4">
+            <operaton_1:script scriptFormat="groovy"/>
+          </operaton_1:inputParameter>
+          <operaton_1:outputParameter name="out">out</operaton_1:outputParameter>
+        </operaton_1:inputOutput>
+        <fox:failedJobRetryTimeCycle>R3/PT10M</fox:failedJobRetryTimeCycle>
+        <operaton_1:field name="inject">
+          <operaton_1:string>ion</operaton_1:string>
+          <operaton_1:expression>${injection}</operaton_1:expression>
+        </operaton_1:field>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="UserTask_1" targetRef="ServiceTask_1"/>
+    <bpmn2:userTask id="UserTask_2" name="Form User Task">
+      <bpmn2:extensionElements>
+        <operaton_1:formData>
+          <operaton_1:formField id="form" label="field" type="long" defaultValue="1">
+            <operaton_1:properties>
+              <operaton_1:property id="prop" value="prop"/>
+            </operaton_1:properties>
+            <operaton_1:validation>
+              <operaton_1:constraint name="min" config="1"/>
+            </operaton_1:validation>
+          </operaton_1:formField>
+        </operaton_1:formData>
+        <operaton_1:executionListener event="start" expression="${foo}"/>
+        <operaton_1:taskListener delegateExpression="${fooBar}" event="create"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="ServiceTask_1" targetRef="UserTask_2"/>
+    <bpmn2:endEvent id="EndEvent_1">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="UserTask_2" targetRef="EndEvent_1"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="139.0" y="192.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_1" bpmnElement="UserTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="225.0" y="170.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_3" targetElement="_BPMNShape_UserTask_2">
+        <di:waypoint xsi:type="dc:Point" x="175.0" y="210.0"/>
+        <di:waypoint xsi:type="dc:Point" x="225.0" y="210.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_2" bpmnElement="ServiceTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="375.0" y="170.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_UserTask_2" targetElement="_BPMNShape_ServiceTask_2">
+        <di:waypoint xsi:type="dc:Point" x="325.0" y="210.0"/>
+        <di:waypoint xsi:type="dc:Point" x="375.0" y="210.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="UserTask_2">
+        <dc:Bounds height="80.0" width="100.0" x="525.0" y="170.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_ServiceTask_2" targetElement="_BPMNShape_UserTask_2">
+        <di:waypoint xsi:type="dc:Point" x="475.0" y="210.0"/>
+        <di:waypoint xsi:type="dc:Point" x="525.0" y="210.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_15" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="675.0" y="192.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_UserTask_2" targetElement="_BPMNShape_EndEvent_15">
+        <di:waypoint xsi:type="dc:Point" x="625.0" y="210.0"/>
+        <di:waypoint xsi:type="dc:Point" x="675.0" y="210.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

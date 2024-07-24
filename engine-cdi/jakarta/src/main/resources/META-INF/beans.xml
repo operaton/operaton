@@ -4,8 +4,8 @@
        version="4.0" bean-discovery-mode="all">
 
   <interceptors>
-    <class>org.camunda.bpm.engine.cdi.impl.annotation.CompleteTaskInterceptor</class>
-    <class>org.camunda.bpm.engine.cdi.impl.annotation.StartProcessInterceptor</class>
+    <class>org.operaton.bpm.engine.cdi.impl.annotation.CompleteTaskInterceptor</class>
+    <class>org.operaton.bpm.engine.cdi.impl.annotation.StartProcessInterceptor</class>
   </interceptors>
 
 </beans>

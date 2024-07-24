@@ -3,49 +3,49 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>../../</relativePath>
   </parent>
 
-  <groupId>org.camunda.bpm.dmn</groupId>
-  <artifactId>camunda-engine-dmn-bom</artifactId>
-  <version>7.22.0-SNAPSHOT</version>
-  <name>camunda DMN - engine - bom</name>
+  <groupId>org.operaton.bpm.dmn</groupId>
+  <artifactId>operaton-engine-dmn-bom</artifactId>
+  <version>1.0.0-beta-1-SNAPSHOT</version>
+  <name>operaton DMN - engine - bom</name>
   <packaging>pom</packaging>
 
   <dependencyManagement>
     <dependencies>
 
       <dependency>
-        <groupId>org.camunda.bpm.dmn</groupId>
-        <artifactId>camunda-engine-dmn</artifactId>
+        <groupId>org.operaton.bpm.dmn</groupId>
+        <artifactId>operaton-engine-dmn</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.camunda.bpm.dmn</groupId>
-        <artifactId>camunda-engine-feel-api</artifactId>
+        <groupId>org.operaton.bpm.dmn</groupId>
+        <artifactId>operaton-engine-feel-api</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.camunda.bpm.dmn</groupId>
-        <artifactId>camunda-engine-feel-juel</artifactId>
+        <groupId>org.operaton.bpm.dmn</groupId>
+        <artifactId>operaton-engine-feel-juel</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.camunda.bpm.dmn</groupId>
-        <artifactId>camunda-engine-feel-scala</artifactId>
+        <groupId>org.operaton.bpm.dmn</groupId>
+        <artifactId>operaton-engine-feel-scala</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <!-- See CAM-11346
       <dependency>
-        <groupId>org.camunda.bpm.dmn</groupId>
-        <artifactId>camunda-engine-feel-spin</artifactId>
+        <groupId>org.operaton.bpm.dmn</groupId>
+        <artifactId>operaton-engine-feel-spin</artifactId>
         <version>${project.version}</version>
       </dependency>
       -->

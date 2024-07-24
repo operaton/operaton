@@ -20,7 +20,7 @@
 var Page = require('./../base');
 
 module.exports = Page.extend({
-  url: '/camunda/app/admin/default/#/groups/:group?tab=group',
+  url: '/operaton/app/admin/default/#/groups/:group?tab=group',
 
   updateGroupButton: function() {
     return element(by.css('[ng-click="updateGroup()"]'));

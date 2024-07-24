@@ -3,50 +3,50 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.dmn</groupId>
-    <artifactId>camunda-engine-dmn-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.dmn</groupId>
+    <artifactId>operaton-engine-dmn-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-engine-dmn</artifactId>
-  <name>camunda DMN - engine</name>
+  <artifactId>operaton-engine-dmn</artifactId>
+  <name>operaton DMN - engine</name>
   <properties>
-    <camunda.artifact>org.camunda.bpm.dmn.engine</camunda.artifact>
-    <camunda.osgi.import.additional>
+    <operaton.artifact>org.operaton.bpm.dmn.engine</operaton.artifact>
+    <operaton.osgi.import.additional>
       org.junit.*;resolution:=optional
-    </camunda.osgi.import.additional>
+    </operaton.osgi.import.additional>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-utils</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-utils</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-typed-values</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-typed-values</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.model</groupId>
-      <artifactId>camunda-dmn-model</artifactId>
+      <groupId>org.operaton.bpm.model</groupId>
+      <artifactId>operaton-dmn-model</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.dmn</groupId>
-      <artifactId>camunda-engine-feel-api</artifactId>
+      <groupId>org.operaton.bpm.dmn</groupId>
+      <artifactId>operaton-engine-feel-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.dmn</groupId>
-      <artifactId>camunda-engine-feel-juel</artifactId>
+      <groupId>org.operaton.bpm.dmn</groupId>
+      <artifactId>operaton-engine-feel-juel</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.dmn</groupId>
-      <artifactId>camunda-engine-feel-scala</artifactId>
+      <groupId>org.operaton.bpm.dmn</groupId>
+      <artifactId>operaton-engine-feel-scala</artifactId>
     </dependency>
 
     <dependency>
@@ -56,8 +56,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.juel</groupId>
-      <artifactId>camunda-juel</artifactId>
+      <groupId>org.operaton.bpm.juel</groupId>
+      <artifactId>operaton-juel</artifactId>
     </dependency>
 
     <dependency>
@@ -109,8 +109,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-bpm-archunit</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-archunit</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
@@ -123,7 +123,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <dependenciesToScan>
-            <dependency>org.camunda.bpm:camunda-bpm-archunit</dependency>
+            <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
       </plugin>
@@ -156,10 +156,10 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>clirr-maven-plugin</artifactId>
             <configuration>
-              <comparisonVersion>${camunda.version.old}</comparisonVersion>
+              <comparisonVersion>${operaton.version.old}</comparisonVersion>
               <logResults>true</logResults>
               <excludes>
-                <exclude>org/camunda/bpm/dmn/engine/impl/**</exclude>
+                <exclude>org/operaton/bpm/dmn/engine/impl/**</exclude>
               </excludes>
             </configuration>
             <executions>

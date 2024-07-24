@@ -3,6 +3,6 @@
   <include resource="org/springframework/boot/logging/logback/base.xml"/>
   <logger name="org.springframework" level="info"/>
   <logger name="org.hibernate" level="info"/>
-  <logger name="org.camunda" level="info"/>
-  <logger name="org.camunda.bpm.engine.persistence" level="warn" />
+  <logger name="org.operaton" level="info"/>
+  <logger name="org.operaton.bpm.engine.persistence" level="warn" />
 </configuration>

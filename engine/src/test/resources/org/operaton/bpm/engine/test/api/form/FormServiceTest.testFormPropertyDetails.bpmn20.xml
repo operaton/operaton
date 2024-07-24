@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<definitions id="definitions"
+             targetNamespace="http://operaton.org/schema/1.0/bpmn20" 
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:operaton="http://operaton.org/schema/1.0/bpmn">
+  
+  <process id="FormPropertyDetails" isExecutable="true">
+  
+    <startEvent id="start">
+      <extensionElements>
+        <operaton:formProperty id="speaker" 
+          name="Speaker"
+          variable="SpeakerName" 
+          type="string" />
+
+        <operaton:formProperty id="start" 
+          type="date" 
+          datePattern="dd-MMM-yyyy" />
+
+        <operaton:formProperty id="direction" type="enum">
+          <operaton:value id="left" name="Go Left" />
+          <operaton:value id="right" name="Go Right" />
+          <operaton:value id="up" name="Go Up" />
+          <operaton:value id="down" name="Go Down" />
+        </operaton:formProperty>
+        
+      </extensionElements>
+    </startEvent>
+
+  </process>
+  
+</definitions>

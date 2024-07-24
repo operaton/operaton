@@ -17,7 +17,7 @@
         desc = "Request successful."
         examples = ['"example-1": {
                        "summary": "Status 200 response",
-                       "description": "Response for GET `/process-instance/count?variables=myVariable_eq_camunda`",
+                       "description": "Response for GET `/process-instance/count?variables=myVariable_eq_operaton`",
                        "value": {
                          "count": 1
                        }

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="test-process" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL">
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:operaton="http://camunda.org/schema/1.0/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="test-process" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL">
   <process id="ProcessEngineTests-job" name="Test Process" isExecutable="true">
     <parallelGateway id="ParallelGateway_1">
       <incoming>SequenceFlow_6</incoming>
       <outgoing>SequenceFlow_7</outgoing>
       <outgoing>SequenceFlow_12</outgoing>
     </parallelGateway>
-    <serviceTask id="ServiceTask_1" camunda:expression="#{serviceTask_1}" camunda:async="true">
+    <serviceTask id="ServiceTask_1" operaton:expression="#{serviceTask_1}" operaton:async="true">
       <incoming>SequenceFlow_5</incoming>
       <outgoing>SequenceFlow_6</outgoing>
     </serviceTask>
@@ -15,12 +15,12 @@
       <outgoing>SequenceFlow_5</outgoing>
     </startEvent>
     <sequenceFlow id="SequenceFlow_5" name="" sourceRef="StartEvent_1" targetRef="ServiceTask_1"/>
-    <serviceTask id="ServiceTask_2" camunda:expression="#{serviceTask_2}" camunda:async="true">
+    <serviceTask id="ServiceTask_2" operaton:expression="#{serviceTask_2}" operaton:async="true">
       <incoming>SequenceFlow_7</incoming>
       <outgoing>SequenceFlow_16</outgoing>
     </serviceTask>
     <sequenceFlow id="SequenceFlow_7" name="" sourceRef="ParallelGateway_1" targetRef="ServiceTask_2"/>
-    <serviceTask id="ServiceTask_3" camunda:expression="#{serviceTask_3}" camunda:async="true">
+    <serviceTask id="ServiceTask_3" operaton:expression="#{serviceTask_3}" operaton:async="true">
       <incoming>SequenceFlow_12</incoming>
       <outgoing>SequenceFlow_17</outgoing>
     </serviceTask>

@@ -39,7 +39,7 @@
         <extension module="org.wildfly.extension.security.manager"/>
         <extension module="org.wildfly.extension.undertow"/>
         <extension module="org.wildfly.iiop-openjdk"/>
-        <extension module="org.camunda.bpm.wildfly.camunda-wildfly-subsystem"/>
+        <extension module="org.operaton.bpm.wildfly.operaton-wildfly-subsystem"/>
     </extensions>
     <system-properties>
         <property name="java.net.preferIPv4Stack" value="true"/>
@@ -455,7 +455,7 @@
                 <client-config name="Standard-Client-Config"/>
             </subsystem>
             <subsystem xmlns="urn:jboss:domain:weld:5.0"/>
-            <subsystem xmlns="urn:org.camunda.bpm.jboss:1.1">
+            <subsystem xmlns="urn:org.operaton.bpm.jboss:1.1">
                 <process-engines>
                     <process-engine name="default" default="true">
                         <datasource>java:jboss/datasources/ProcessEngine</datasource>
@@ -468,13 +468,13 @@
                         </properties>
                         <plugins>
                             <plugin>
-                                <class>org.camunda.bpm.application.impl.event.ProcessApplicationEventListenerPlugin</class>
+                                <class>org.operaton.bpm.application.impl.event.ProcessApplicationEventListenerPlugin</class>
                             </plugin>
                             <plugin>
-                                <class>org.camunda.spin.plugin.impl.SpinProcessEnginePlugin</class>
+                                <class>org.operaton.spin.plugin.impl.SpinProcessEnginePlugin</class>
                             </plugin>
                             <plugin>
-                                <class>org.camunda.connect.plugin.impl.ConnectProcessEnginePlugin</class>
+                                <class>org.operaton.connect.plugin.impl.ConnectProcessEnginePlugin</class>
                             </plugin>
                         </plugins>
                     </process-engine>

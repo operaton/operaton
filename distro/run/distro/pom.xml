@@ -3,36 +3,36 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.run</groupId>
-    <artifactId>camunda-bpm-run-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.run</groupId>
+    <artifactId>operaton-bpm-run-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
 
-  <artifactId>camunda-bpm-run</artifactId>
-  <name>Camunda Platform - Run - Distribution</name>
+  <artifactId>operaton-bpm-run</artifactId>
+  <name>Operaton - Run - Distribution</name>
   <packaging>pom</packaging>
 
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.bpm.run</groupId>
-      <artifactId>camunda-bpm-run-assembly</artifactId>
+      <groupId>org.operaton.bpm.run</groupId>
+      <artifactId>operaton-bpm-run-assembly</artifactId>
       <version>${project.version}</version>
       <type>tar.gz</type>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.distro</groupId>
-      <artifactId>camunda-sql-scripts</artifactId>
+      <groupId>org.operaton.bpm.distro</groupId>
+      <artifactId>operaton-sql-scripts</artifactId>
       <version>${project.version}</version>
       <type>jar</type>
     </dependency>
 
     <!-- make sure this runs after webapps -->
     <dependency>
-      <groupId>org.camunda.bpm.run</groupId>
-      <artifactId>camunda-bpm-run-modules-webapps</artifactId>
+      <groupId>org.operaton.bpm.run</groupId>
+      <artifactId>operaton-bpm-run-modules-webapps</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
       <exclusions>

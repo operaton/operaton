@@ -22,7 +22,7 @@ var groupTemplate = require('./create-group-membership.html?raw');
 var tenantTemplate = require('./create-tenant-user-membership.html?raw');
 var confirmationTemplate = require('./generic-confirmation.html?raw');
 
-var angular = require('camunda-commons-ui/vendor/angular');
+var angular = require('operaton-commons-ui/vendor/angular');
 
 module.exports = [
   '$routeProvider',

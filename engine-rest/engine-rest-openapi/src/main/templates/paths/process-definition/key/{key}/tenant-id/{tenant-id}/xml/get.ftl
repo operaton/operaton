@@ -38,7 +38,7 @@
                        "id": "anProcessDefinitionId",
                        "bpmn20Xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>\n<definitions
                          xmlns=\\"http://www.omg.org/spec/BPMN/20100524/MODEL\\"
-                         xmlns:camunda=\\"http://camunda.org/schema/1.0/bpmn\\"
+                         xmlns:operaton=\\"http://operaton.org/schema/1.0/bpmn\\"
                          targetNamespace=\\"Examples\\">
                          <process id=\\"oneTaskProcess\\" isExecutable=\\"true\\">
                            <startEvent id=\\"theStart\\" />

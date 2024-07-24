@@ -4,7 +4,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean id="processEngineConfiguration" class="org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+  <bean id="processEngineConfiguration" class="org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
   
     <property name="processEngineName" value="LdapQueryToleranceTest-engine" />
   
@@ -31,12 +31,12 @@
     
   </bean>
   
-  <bean id="ldapIdentityProviderPlugin" class="org.camunda.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin">
+  <bean id="ldapIdentityProviderPlugin" class="org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin">
   
     <property name="serverUrl" value="ldap://localhost:${ldap.server.port}/" />
-    <property name="managerDn" value="uid=daniel,ou=office-berlin,o=camunda,c=org" />
+    <property name="managerDn" value="uid=daniel,ou=office-berlin,o=operaton,c=org" />
     <property name="managerPassword" value="daniel" />
-    <property name="baseDn" value="o=camunda,c=org" />
+    <property name="baseDn" value="o=operaton,c=org" />
     
     <property name="userSearchBase" value="" />
     <property name="userSearchFilter" value="(objectclass=person)" />

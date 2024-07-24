@@ -17,7 +17,7 @@
 
 'use strict';
 
-var typeUtils = require('camunda-bpm-sdk-js').utils.typeUtils;
+var typeUtils = require('operaton-bpm-sdk-js').utils.typeUtils;
 
 module.exports = function() {
   return typeUtils;

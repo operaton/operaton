@@ -1,0 +1,71 @@
+/*
+ * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+ * under one or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information regarding copyright
+ * ownership. Camunda licenses this file to you under the Apache License,
+ * Version 2.0; you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.operaton.bpm.engine.impl.persistence.entity;
+
+import org.operaton.bpm.engine.authorization.Authorization;
+import org.operaton.bpm.engine.authorization.Permissions;
+import org.operaton.bpm.engine.authorization.Resources;
+import org.operaton.bpm.engine.history.DurationReportResult;
+import org.operaton.bpm.engine.history.HistoricTaskInstanceReportResult;
+import org.operaton.bpm.engine.impl.HistoricTaskInstanceReportImpl;
+import org.operaton.bpm.engine.impl.TaskReportImpl;
+import org.operaton.bpm.engine.impl.persistence.AbstractManager;
+import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
+
+import java.util.List;
+
+/**
+ * @author Stefan Hentschel
+ *
+ */
+public class TaskReportManager extends AbstractManager {
+
+  @SuppressWarnings("unchecked")
+  public List<TaskCountByCandidateGroupResult> createTaskCountByCandidateGroupReport(TaskReportImpl query) {
+    configureQuery(query);
+    return getDbEntityManager().selectListWithRawParameter("selectTaskCountByCandidateGroupReportQuery", query, 0, Integer.MAX_VALUE);
+  }
+
+  @SuppressWarnings("unchecked")
+  public List<HistoricTaskInstanceReportResult> selectHistoricTaskInstanceCountByTaskNameReport(HistoricTaskInstanceReportImpl query) {
+    configureQuery(query);
+    return getDbEntityManager().selectListWithRawParameter("selectHistoricTaskInstanceCountByTaskNameReport", query, 0, Integer.MAX_VALUE);
+  }
+
+  @SuppressWarnings("unchecked")
+  public List<HistoricTaskInstanceReportResult> selectHistoricTaskInstanceCountByProcDefKeyReport(HistoricTaskInstanceReportImpl query) {
+    configureQuery(query);
+    return getDbEntityManager().selectListWithRawParameter("selectHistoricTaskInstanceCountByProcDefKeyReport", query, 0, Integer.MAX_VALUE);
+  }
+
+  @SuppressWarnings("unchecked")
+  public List<DurationReportResult> createHistoricTaskDurationReport(HistoricTaskInstanceReportImpl query) {
+    configureQuery(query);
+    return getDbEntityManager().selectListWithRawParameter("selectHistoricTaskInstanceDurationReport", query, 0, Integer.MAX_VALUE);
+  }
+
+  protected void configureQuery(HistoricTaskInstanceReportImpl parameter) {
+    getAuthorizationManager().checkAuthorization(Permissions.READ_HISTORY, Resources.PROCESS_DEFINITION, Authorization.ANY);
+    getTenantManager().configureTenantCheck(parameter.getTenantCheck());
+  }
+
+  protected void configureQuery(TaskReportImpl parameter) {
+    getAuthorizationManager().checkAuthorization(Permissions.READ, Resources.TASK, Authorization.ANY);
+    getTenantManager().configureTenantCheck(parameter.getTenantCheck());
+  }
+
+}

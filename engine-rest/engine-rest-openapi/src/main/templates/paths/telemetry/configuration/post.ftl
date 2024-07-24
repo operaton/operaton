@@ -5,7 +5,7 @@
       id = "configureTelemetry"
       tag = "Telemetry"
       summary = "Configure Telemetry"
-      desc = "Configures whether Camunda receives data collection of the process engine setup and usage." />
+      desc = "Configures whether Operaton receives data collection of the process engine setup and usage." />
 
   "parameters" : [],
 
@@ -30,7 +30,7 @@
         code = "401"
         dto = "ExceptionDto"
         last = true
-        desc = "If the user who perform the operation is not a <b>camunda-admin</b> user." />
+        desc = "If the user who perform the operation is not a <b>operaton-admin</b> user." />
   }
 }
 </#macro>

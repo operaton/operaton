@@ -12,7 +12,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-# This is the default environment for using camunda Spin in Python applications.
+# This is the default environment for using operaton Spin in Python applications.
 
 # Import the Spin S(...) function.
-import org.camunda.spin.Spin.S as S
+import org.operaton.spin.Spin.S as S

@@ -1,0 +1,12 @@
+<module xmlns="urn:jboss:module:1.0" name="org.operaton.bpm.qa.operaton-qa-ensure-clean-db">
+  <resources>
+    <resource-root path="operaton-qa-ensure-clean-db-@project.version@.jar" />
+  </resources>
+
+  <dependencies>
+
+    <module name="javax.api" />
+    <module name="org.operaton.bpm.operaton-engine" />
+
+  </dependencies>
+</module>

@@ -1,4 +1,4 @@
-<!-- # CE - camunda-cockpit-ui/client/scripts/directives/sortable-table-head.html -->
+<!-- # CE - operaton-cockpit-ui/client/scripts/directives/sortable-table-head.html -->
 <th ng-repeat="column in headColumns" ng-class="column.class" ng-if="evaluateCondition(column.condition)">
   <span  ng-class="formatClassName(column.class) + '-label'">{{column.content}}</span>
   <a ng-if="column.sortable === true"
@@ -6,5 +6,5 @@
     <span class="glyphicon" ng-class="orderClass(column.request)"></span>
   </a>
 </th>
-<!-- / CE - camunda-cockpit-ui/client/scripts/directives/sortable-table-head.html -->
+<!-- / CE - operaton-cockpit-ui/client/scripts/directives/sortable-table-head.html -->
 

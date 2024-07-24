@@ -18,8 +18,8 @@
 
 -->
 <xsd:schema version="1.0" 
-  targetNamespace="http://www.camunda.org/schema/1.0/ProcessApplication" 
-  xmlns:tns="http://www.camunda.org/schema/1.0/ProcessApplication"
+  targetNamespace="http://www.operaton.org/schema/1.0/ProcessApplication" 
+  xmlns:tns="http://www.operaton.org/schema/1.0/ProcessApplication"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
   elementFormDefault="qualified" 
   attributeFormDefault="unqualified">

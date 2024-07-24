@@ -11,4 +11,4 @@
  |_____| /_/\_\  \__|  \___| |_|    |_| |_|  \__,_| |_|     |_|    \__,_| |___/ |_|\_\    \____| |_| |_|  \___| |_| |_|  \__|
 
   Spring-Boot: ${spring-boot.formatted-version}
-  Camunda Platform: (v${project.version})
+  Operaton: (v${project.version})

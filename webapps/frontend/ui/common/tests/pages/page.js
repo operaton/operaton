@@ -60,13 +60,13 @@ Page.prototype.isActive = function(params) {
 };
 
 Page.prototype.navigateToWebapp = function(appName) {
-  browser.get('camunda/app/' + appName.toLowerCase() + '/');
+  browser.get('operaton/app/' + appName.toLowerCase() + '/');
   browser.driver
     .manage()
     .window()
     .maximize();
 
-  expect(this.navbarBrand().getText()).to.eventually.eql('Camunda ' + appName);
+  expect(this.navbarBrand().getText()).to.eventually.eql('Operaton ' + appName);
 };
 
 Page.prototype.navbarBrand = function() {

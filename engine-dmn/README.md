@@ -4,9 +4,8 @@
 Lightweight Execution Engine for DMN (Decision Model and Notation) written in Java.
 
 <p>
-  <a href="http://camunda.org/">Home</a> |
-  <a href="http://camunda.org/community/forum.html">Forum</a> |
-  <a href="https://app.camunda.com/jira/browse/CAM">Issues</a> |
+  <a href="http://operaton.org/">Home</a> |
+  <a href="http://operaton.org/community/forum.html">Forum</a> |
 </p>
 
 The Decision Engine can be used seamlessly in combination with BPMN and CMMN or standalone.
@@ -17,9 +16,9 @@ Add the following Maven Coordinates to your project:
 
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm.dmn</groupId>
-  <artifactId>camunda-engine-dmn</artifactId>
-  <version>${version.camunda}</version>
+  <groupId>org.operaton.bpm.dmn</groupId>
+  <artifactId>operaton-engine-dmn</artifactId>
+  <version>${version.operaton}</version>
 </dependency>
 ```
 
@@ -53,9 +52,9 @@ public class DmnApp {
 Add the following Maven Coordinates to your project:
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm</groupId>
-  <artifactId>camunda-engine</artifactId>
-  <version>${version.camunda}</versions>
+  <groupId>org.operaton.bpm</groupId>
+  <artifactId>operaton-engine</artifactId>
+  <version>${version.operaton}</versions>
 </dependency>
 <dependency>
   <groupId>com.h2database</groupId>
@@ -69,12 +68,12 @@ Next, reference a DMN decision from a BPMN Business Rule Task:
 
 ```xml
 <bpmn:businessRuleTask id="assignApprover"
-  camunda:decisionRef="invoice-assign-approver"
-  camunda:resultVariable="approverGroups"
+  operaton:decisionRef="invoice-assign-approver"
+  operaton:resultVariable="approverGroups"
   name="Assign Approver Group(s)">
 </bpmn:businessRuleTask>
 ```
-The `camunda:decisionRef` attribute references the id of the decision in the DMN file:
+The `operaton:decisionRef` attribute references the id of the decision in the DMN file:
 
 ```xml
 <dmn:decision id="invoice-assign-approver" name="Assign Approver">

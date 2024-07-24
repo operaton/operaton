@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions" 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+  
+  <process id="receiveTask" isExecutable="true">
+  
+    <extensionElements>
+      <operaton:executionListener class="org.operaton.bpm.engine.test.standalone.history.VariableUpdateExecutionListener" event="start">
+        <operaton:field name="varName" stringValue="zVar1" />
+      </operaton:executionListener>
+    </extensionElements>
+  
+    <startEvent id="theStart" />
+    
+    <sequenceFlow id="flow1" sourceRef="theStart" targetRef="serviceTask">
+      <extensionElements>
+        <operaton:executionListener class="org.operaton.bpm.engine.test.standalone.history.VariableUpdateExecutionListener">
+          <operaton:field name="varName" stringValue="zVar2" />
+        </operaton:executionListener>
+      </extensionElements>
+    </sequenceFlow>
+
+    <serviceTask id="serviceTask" operaton:class="org.operaton.bpm.engine.test.standalone.history.VariableUpdateDelegate">
+      <extensionElements>
+        <operaton:executionListener class="org.operaton.bpm.engine.test.standalone.history.VariableUpdateExecutionListener" event="start">
+          <operaton:field name="varName" stringValue="zVar3" />
+        </operaton:executionListener>
+        <operaton:executionListener class="org.operaton.bpm.engine.test.standalone.history.VariableUpdateExecutionListener" event="end">
+          <operaton:field name="varName" stringValue="zVar4" />
+        </operaton:executionListener>
+      </extensionElements>
+    </serviceTask>
+    
+    <sequenceFlow id="flow2" sourceRef="serviceTask" targetRef="waitState" />
+    
+    <receiveTask id="waitState" name="Wait State" />
+    
+    <sequenceFlow id="flow3" sourceRef="waitState" targetRef="theEnd" />
+    
+    <endEvent id="theEnd" />
+    
+  </process>
+
+</definitions>

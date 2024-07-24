@@ -1,25 +1,25 @@
 # Find more available configuration properties on the following pages of the documentation.
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#configure-camunda-bpm-run
-# https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/configuration/#camunda-engine-properties
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#configure-operaton-bpm-run
+# https://docs.operaton.org/manual/latest/user-guide/spring-boot-integration/configuration/#operaton-engine-properties
 
-camunda.bpm:
+operaton.bpm:
   admin-user:
     id: demo
     password: demo
   filter:
     create: All tasks
   run:
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#cross-origin-resource-sharing
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#cross-origin-resource-sharing
     cors:
       enabled: true
       allowed-origins: "*"
-# https://docs.camunda.org/manual/latest/user-guide/camunda-bpm-run/#example-application
+# https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#example-application
     example:
       enabled: true
 
 # datasource configuration is required
 spring.datasource:
-  url: jdbc:h2:./camunda-h2-default/process-engine;TRACE_LEVEL_FILE=0;DB_CLOSE_ON_EXIT=FALSE
+  url: jdbc:h2:./operaton-h2-default/process-engine;TRACE_LEVEL_FILE=0;DB_CLOSE_ON_EXIT=FALSE
   driver-class-name: org.h2.Driver
   username: sa
   password: sa

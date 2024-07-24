@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animals xmlns="http://operaton.org/animals"
+  xmlns:tns="http://operaton.org/animals"
+  xmlns:mechanical="http://operaton.org/mechanical"
+  xmlns:yans="http://operaton.org/yans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://operaton.org/animals ../Testmodel.xsd ">
+
+  <bird id="hedwig" gender="Male">
+    <mechanical:wings>wusch</mechanical:wings>
+  </bird>
+  <bird id="birdo" gender="Female">
+   <mechanical:wings>zisch</mechanical:wings>
+  </bird>
+  <bird id="donald" gender="Unknown" yans:canHazExtendedWings="true">
+   <yans:wings>flappy</yans:wings>
+  </bird>
+  <bird id="plucky" gender="Unknown" mechanical:canHazExtendedWings="false"/>
+</animals>

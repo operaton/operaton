@@ -56,7 +56,7 @@ describe.skip('Task Removal Notification Spec', function() {
           };
           xhr.open(
             'POST',
-            '/camunda/api/engine/engine/default/task/1/submit-form',
+            '/operaton/api/engine/engine/default/task/1/submit-form',
             true
           );
           xhr.setRequestHeader('Content-Type', 'application/json');

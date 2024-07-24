@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cam="http://camunda.org/schema/1.0/bpmn"
-                   xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_4lGncKBlEeO4IoJaDKNTsQ" targetNamespace="http://activiti.org/bpmn">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cam="http://operaton.org/schema/1.0/bpmn"
+                   xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:operaton="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_4lGncKBlEeO4IoJaDKNTsQ" targetNamespace="http://camunda.org/schema/1.0/bpmn">
   <bpmn2:process id="changeVariablesProcess" name="Change Variables Process" isExecutable="true" cam:historyTimeToLive="P180D">
     <bpmn2:startEvent id="StartEvent_1">
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:serviceTask id="addVariables" camunda:class="org.camunda.bpm.pa.service.AddVariablesService" name="Add Variables">
+    <bpmn2:serviceTask id="addVariables" operaton:class="org.operaton.bpm.pa.service.AddVariablesService" name="Add Variables">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="addVariables"/>
-    <bpmn2:serviceTask id="changeVariables_1" camunda:class="org.camunda.bpm.pa.service.ChangeVariablesService" name="Change Variables 1">
+    <bpmn2:serviceTask id="changeVariables_1" operaton:class="org.operaton.bpm.pa.service.ChangeVariablesService" name="Change Variables 1">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="addVariables" targetRef="changeVariables_1"/>
-    <bpmn2:serviceTask id="changeVariables_2" camunda:class="org.camunda.bpm.pa.service.AnotherChangeVariablesService" name="Change Variables 2">
+    <bpmn2:serviceTask id="changeVariables_2" operaton:class="org.operaton.bpm.pa.service.AnotherChangeVariablesService" name="Change Variables 2">
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="changeVariables_1" targetRef="changeVariables_2"/>
-    <bpmn2:userTask id="userTask" name="Approve Variables" camunda:assignee="jonny1">
+    <bpmn2:userTask id="userTask" name="Approve Variables" operaton:assignee="jonny1">
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
     </bpmn2:userTask>

@@ -1,9 +1,9 @@
-<subsystem xmlns="urn:org.camunda.bpm.jboss:1.1">
+<subsystem xmlns="urn:org.operaton.bpm.jboss:1.1">
   <process-engines>
     <process-engine name="__default" default="true">
       <datasource>java:jboss/datasources/ExampleDS</datasource>
       <history-level>audit</history-level>
-      <configuration>org.camunda.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
+      <configuration>org.operaton.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
       <properties>
         <property name="job-acquisition-name">default</property>
         <property name="job-acquisition">default</property>
@@ -13,13 +13,13 @@
     <process-engine  default="false"  name="__test">
       <datasource>java:jboss/datasources/ExampleDS</datasource>
       <history-level>full</history-level>
-      <configuration>org.camunda.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
+      <configuration>org.operaton.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
       <properties>
         <property name="job-acquisition-name">default</property>
       </properties>
       <plugins>
         <plugin>
-          <class>org.camunda.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin</class>
+          <class>org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin</class>
           <properties>
             <property name="test">abc</property>
             <property name="number">123</property>
@@ -27,7 +27,7 @@
           </properties>
         </plugin>
         <plugin>
-          <class>org.camunda.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin</class>
+          <class>org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin</class>
           <properties>
             <property name="test">cba</property>
             <property name="number">321</property>
@@ -36,18 +36,18 @@
         </plugin>
         <!-- LDAP CONFIGURATION -->
         <!-- Uncomment this section in order to enable LDAP support for this process engine -->
-        <!-- Adjust configuration, see ( http://docs.camunda.org/latest/guides/user-guide/#process-engine-identity-service-the-ldap-identity-service ) -->
+        <!-- Adjust configuration, see ( http://docs.operaton.org/latest/guides/user-guide/#process-engine-identity-service-the-ldap-identity-service ) -->
         <!--
           <plugin>
-            <class>org.camunda.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin</class>
+            <class>org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin</class>
             <properties>
 
               <property name="serverUrl">ldaps://localhost:4334/</property>
               <property name="acceptUntrustedCertificates">false</property>
-              <property name="managerDn">uid=jonny,ou=office-berlin,o=camunda,c=org</property>
+              <property name="managerDn">uid=jonny,ou=office-berlin,o=operaton,c=org</property>
               <property name="managerPassword">s3cr3t</property>
 
-              <property name="baseDn">o=camunda,c=org</property>
+              <property name="baseDn">o=operaton,c=org</property>
 
               <property name="userSearchBase">ou=employees</property>
               <property name="userSearchFilter">(objectclass=person)</property>
@@ -73,7 +73,7 @@
         <!-- The following plugin allows you to grant administrator authorizations to an existing LDAP user -->
         <!--
         <plugin>
-          <class>org.camunda.bpm.engine.impl.plugin.AdministratorAuthorizationPlugin</class>
+          <class>org.operaton.bpm.engine.impl.plugin.AdministratorAuthorizationPlugin</class>
           <properties>
             <property name="administratorUserName">admin</property>
           </properties>

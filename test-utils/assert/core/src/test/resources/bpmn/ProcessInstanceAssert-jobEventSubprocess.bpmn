@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0ozqxbc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.0.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0ozqxbc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.0.0">
   <bpmn:process id="ProcessInstanceAssert-jobEventSubprocess" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_158hwqi</bpmn:outgoing>
@@ -21,7 +21,7 @@
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_0ubhuzp" sourceRef="StartEvent_2" targetRef="EndEvent_2" />
     </bpmn:subProcess>
-    <bpmn:serviceTask id="ServiceTask_1" camunda:asyncBefore="true" camunda:expression="${true}">
+    <bpmn:serviceTask id="ServiceTask_1" operaton:asyncBefore="true" operaton:expression="${true}">
       <bpmn:incoming>Flow_158hwqi</bpmn:incoming>
       <bpmn:outgoing>Flow_1ycpdtq</bpmn:outgoing>
     </bpmn:serviceTask>

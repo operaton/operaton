@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animals xmlns="http://operaton.org/animals"
+  xmlns:tns="http://operaton.org/animals"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:custom="http://example.com/TEST"
+  xsi:schemaLocation="http://operaton.org/animals ../Testmodel.xsd ">
+
+  <bird id="timmy" gender="Male" />
+</animals>

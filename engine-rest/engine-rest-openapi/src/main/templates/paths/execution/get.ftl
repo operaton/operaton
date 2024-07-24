@@ -1,5 +1,5 @@
 <#macro endpoint_macro docsUrl="">
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/execution/get-query/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/execution/get-query/index.html -->
 {
   <@lib.endpointInfo
       id = "getExecutions"
@@ -37,7 +37,7 @@
         desc = "Request successful."
         examples = ['"example-1": {
                        "summary": "Status 200.",
-                       "description": "GET `/execution?variables=myVariable_eq_camunda`",
+                       "description": "GET `/execution?variables=myVariable_eq_operaton`",
                        "value": [
                          {
                            "id": "anId",

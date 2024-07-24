@@ -22,7 +22,7 @@ var Page = require('./edit-base');
 var formElement = element(by.css('form[name="updateGroupMemberships"]'));
 
 module.exports = Page.extend({
-  url: '/camunda/app/admin/default/#/users/:user?tab=groups',
+  url: '/operaton/app/admin/default/#/users/:user?tab=groups',
 
   subHeader: function() {
     return formElement.element(by.css('.h4')).getText();

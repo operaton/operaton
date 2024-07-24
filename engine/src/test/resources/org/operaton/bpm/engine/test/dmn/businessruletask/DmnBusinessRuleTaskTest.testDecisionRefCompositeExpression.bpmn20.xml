@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="taskAssigneeExample"
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+
+  <process id="testProcessCompositeExpression" isExecutable="true">
+
+    <startEvent id="start"/>
+
+    <sequenceFlow sourceRef="start" targetRef="task" />
+
+    <businessRuleTask id="task"
+                      operaton:decisionRef="test${'Decision'}"
+                      operaton:decisionRefBinding="version"
+                      operaton:decisionRefVersion="0${version}"
+                      operaton:mapDecisionResult="singleEntry"
+                      operaton:resultVariable="result" />
+
+    <sequenceFlow sourceRef="task" targetRef="end" />
+
+    <endEvent id="end" operaton:asyncBefore="true" />
+
+  </process>
+
+</definitions>

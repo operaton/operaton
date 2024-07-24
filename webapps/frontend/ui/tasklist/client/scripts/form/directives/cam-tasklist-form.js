@@ -23,7 +23,7 @@ var EMBEDDED_KEY = 'embedded:',
   APP_KEY = 'app:',
   ENGINE_KEY = 'engine:',
   DEPLOYMENT_KEY = 'deployment:',
-  CAMUNDA_FORMS_KEY = 'camunda-forms:';
+  CAMUNDA_FORMS_KEY = 'operaton-forms:';
 
 function compact(arr) {
   var a = [];
@@ -136,7 +136,7 @@ module.exports = function() {
           }
 
           var key = form.key,
-            camundaFormRef = form.camundaFormRef,
+            operatonFormRef = form.operatonFormRef,
             applicationContextPath = form.contextPath;
 
           // structure may be [embedded:][app:]formKey
@@ -145,13 +145,13 @@ module.exports = function() {
           // structure may be [app:]formKey
           // structure may be [deployment:]formKey
 
-          if (!key && !camundaFormRef) {
+          if (!key && !operatonFormRef) {
             form.type = 'generic';
             return;
           }
 
-          if (camundaFormRef) {
-            form.type = 'camunda-forms';
+          if (operatonFormRef) {
+            form.type = 'operaton-forms';
 
             if ($scope.params.taskId) {
               key = Uri.appUri(
@@ -178,7 +178,7 @@ module.exports = function() {
             form.type = 'embedded';
           } else if (key.indexOf(CAMUNDA_FORMS_KEY) === 0) {
             key = key.substring(CAMUNDA_FORMS_KEY.length);
-            form.type = 'camunda-forms';
+            form.type = 'operaton-forms';
           } else {
             form.type = 'external';
           }

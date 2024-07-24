@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0r2v1wu" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://operaton.org/schema/modeler/1.0" id="Definitions_0r2v1wu" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Operaton" modeler:executionPlatformVersion="7.17.0">
   <bpmn:process id="Process_14ltot0" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1wah0af</bpmn:outgoing>
@@ -9,9 +9,9 @@
       <bpmn:incoming>Flow_1lfeioc</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1lfeioc" sourceRef="Activity_1mvoh71" targetRef="Event_06i6xdp" />
-    <bpmn:serviceTask id="Activity_1mvoh71" camunda:type="external" camunda:topic="my-topic">
+    <bpmn:serviceTask id="Activity_1mvoh71" operaton:type="external" operaton:topic="my-topic">
       <bpmn:extensionElements>
-        <camunda:executionListener class="org.camunda.qa.MyExecutionListener" event="end" />
+        <operaton:executionListener class="org.operaton.qa.MyExecutionListener" event="end" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1wah0af</bpmn:incoming>
       <bpmn:outgoing>Flow_1lfeioc</bpmn:outgoing>

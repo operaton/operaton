@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/history/history-cleanup/get-history-cleanup-job/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/history/history-cleanup/get-history-cleanup-job/index.html -->
 <#macro endpoint_macro docsUrl="">
 {
   <@lib.endpointInfo

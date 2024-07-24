@@ -43,7 +43,7 @@ const DEV_LICENSES = [
 
 const ALLOWED_PACKAGES = [
   'argparse@2.0.1',
-  'caniuse-lite@1.0.30001458' // uses CC BY 4.0, permitted as of https://jira.camunda.com/browse/OB-26
+  'caniuse-lite@1.0.30001458' // uses CC BY 4.0, permitted as of https://jira.operaton.com/browse/OB-26
 ];
 
 const parseResults = (allowedLicenses, resolve, reject) =>

@@ -6,7 +6,7 @@
   <persistence-unit name="activiti-jpa-pu">
     <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
     
-    <class>org.camunda.bpm.qa.upgrade.variables.FieldAccessJPAEntity</class>
+    <class>org.operaton.bpm.qa.upgrade.variables.FieldAccessJPAEntity</class>
 
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>

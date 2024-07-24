@@ -14,7 +14,7 @@
   <fileSets>
     <fileSet>
       <directory>${project.build.directory}/sql</directory>
-      <outputDirectory>/camunda-sql-scripts-${project.version}/</outputDirectory>
+      <outputDirectory>/operaton-sql-scripts-${project.version}/</outputDirectory>
     </fileSet>     
   </fileSets>
   

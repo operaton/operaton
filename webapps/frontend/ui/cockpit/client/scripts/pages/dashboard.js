@@ -18,7 +18,7 @@
 'use strict';
 
 var template = require('./dashboard.html?raw');
-var series = require('camunda-bpm-sdk-js').utils.series;
+var series = require('operaton-bpm-sdk-js').utils.series;
 
 function prioritySort(a, b) {
   return a.priority > b.priority ? 1 : a.priority < b.priority ? -1 : 0;

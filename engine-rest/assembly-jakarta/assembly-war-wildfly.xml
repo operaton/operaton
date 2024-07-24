@@ -24,18 +24,18 @@
       <useTransitiveFiltering>true</useTransitiveFiltering>
       <scope>provided</scope>
       <includes>
-        <include>org.camunda.bpm:camunda-engine-rest-core-jakarta:jar</include>
+        <include>org.operaton.bpm:operaton-engine-rest-core-jakarta:jar</include>
       </includes>
       <excludes>
-        <exclude>org.camunda.bpm:camunda-engine-rest-core-jakarta:jar:tests</exclude>
-        <exclude>org.camunda.bpm:camunda-engine-rest-core-jakarta:jar:sources</exclude>
+        <exclude>org.operaton.bpm:operaton-engine-rest-core-jakarta:jar:tests</exclude>
+        <exclude>org.operaton.bpm:operaton-engine-rest-core-jakarta:jar:sources</exclude>
       </excludes>
     </dependencySet>
 
     <dependencySet>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>org.camunda.bpm:camunda-engine-rest-jakarta:war:*</include>
+        <include>org.operaton.bpm:operaton-engine-rest-jakarta:war:*</include>
       </includes>
       <unpack>true</unpack>
       <unpackOptions>

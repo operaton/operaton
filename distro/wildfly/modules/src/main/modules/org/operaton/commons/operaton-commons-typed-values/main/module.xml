@@ -1,0 +1,15 @@
+<module xmlns="urn:jboss:module:1.0" name="org.operaton.commons.operaton-commons-typed-values">
+  <resources>
+    <resource-root path="operaton-commons-typed-values-@project.version@.jar" />
+  </resources>
+
+  <dependencies>
+    <module name="java.base" />
+    <module name="java.compiler" />
+    <module name="java.desktop" />
+    <module name="java.logging"/>
+    
+    <module name="org.operaton.commons.operaton-commons-utils" />
+    
+  </dependencies>
+</module>

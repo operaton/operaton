@@ -20,7 +20,7 @@
 var Page = require('./../base');
 
 module.exports = Page.extend({
-  url: '/camunda/app/cockpit/default/#/reports',
+  url: '/operaton/app/cockpit/default/#/reports',
 
   reportsType: function() {
     return element(by.css('[cam-reports-type]'));

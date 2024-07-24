@@ -2,22 +2,22 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.camunda.commons</groupId>
-  <artifactId>camunda-commons-typed-values</artifactId>
-  <name>camunda Commons - Typed Values</name>
+  <groupId>org.operaton.commons</groupId>
+  <artifactId>operaton-commons-typed-values</artifactId>
+  <name>operaton Commons - Typed Values</name>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-database-settings</artifactId>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-database-settings</artifactId>
     <relativePath>../../database</relativePath>
-    <version>7.22.0-SNAPSHOT</version>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-core-internal-dependencies</artifactId>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
@@ -25,16 +25,16 @@
     </dependencies>
   </dependencyManagement>
   <properties>
-    <camunda.artifact>org.camunda.bpm.engine.variable</camunda.artifact>
-    <camunda.osgi.import.additional>
+    <operaton.artifact>org.operaton.bpm.engine.variable</operaton.artifact>
+    <operaton.osgi.import.additional>
       !javax.activation
-    </camunda.osgi.import.additional>
+    </operaton.osgi.import.additional>
   </properties>
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-utils</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-utils</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -58,8 +58,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-bpm-archunit</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-archunit</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
@@ -72,10 +72,10 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>clirr-maven-plugin</artifactId>
         <configuration>
-          <comparisonVersion>${camunda.version.old}</comparisonVersion>
+          <comparisonVersion>${operaton.version.old}</comparisonVersion>
           <logResults>true</logResults>
           <excludes>
-            <exclude>org/camunda/bpm/engine/impl/**</exclude>
+            <exclude>org/operaton/bpm/engine/impl/**</exclude>
           </excludes>
         </configuration>
         <executions>
@@ -92,11 +92,11 @@
               <ignored>
                 <difference>
                   <differenceType>8001</differenceType>
-                  <className>camundajar/com/sun/activation/**/*</className>
+                  <className>operatonjar/com/sun/activation/**/*</className>
                 </difference>
                 <difference>
                   <differenceType>8001</differenceType>
-                  <className>camundajar/javax/activation/**/*</className>
+                  <className>operatonjar/javax/activation/**/*</className>
                 </difference>
               </ignored>
             </configuration>
@@ -134,11 +134,11 @@
               <relocations>
                 <relocation>
                   <pattern>com.sun.activation</pattern>
-                  <shadedPattern>camundajar.com.sun.activation</shadedPattern>
+                  <shadedPattern>operatonjar.com.sun.activation</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>javax.activation</pattern>
-                  <shadedPattern>camundajar.javax.activation</shadedPattern>
+                  <shadedPattern>operatonjar.javax.activation</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>
@@ -168,7 +168,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <dependenciesToScan>
-            <dependency>org.camunda.bpm:camunda-bpm-archunit</dependency>
+            <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
       </plugin>

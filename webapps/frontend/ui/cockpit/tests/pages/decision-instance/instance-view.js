@@ -20,7 +20,7 @@
 var Base = require('./../base');
 
 module.exports = Base.extend({
-  url: '/camunda/app/cockpit/default/#/decision-instance/:decision',
+  url: '/operaton/app/cockpit/default/#/decision-instance/:decision',
 
   pageHeader: function() {
     this.waitForElementToBeVisible(element(by.css('.ctn-header h1')));

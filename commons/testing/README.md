@@ -1,6 +1,6 @@
-#camunda commons Testing
+#operaton commons Testing
 
-This project provides utility classes for Testing that are used in several Camunda projects
+This project provides utility classes for Testing that are used in several Operaton projects
 
 ## Usage of the `ProcessEngineLoggingRule` class
 

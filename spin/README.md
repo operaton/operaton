@@ -1,11 +1,10 @@
-camunda-spin
+operaton-spin
 ============
 
 <p>
-  <a href="https://camunda.com/">Home</a> |
-  <a href="https://docs.camunda.org/manual/reference/spin/">Documentation</a> |
-  <a href="https://forum.camunda.org/">Forum</a> |
-  <a href="https://app.camunda.com/jira/browse/CAM">Issues</a> |
+  <a href="https://operaton.com/">Home</a> |
+  <a href="https://docs.operaton.org/manual/reference/spin/">Documentation</a> |
+  <a href="https://forum.operaton.org/">Forum</a> |
   <a href="../LICENSE">License</a> |
   <a href="../CONTRIBUTING.md">Contribute</a>
 </p>
@@ -36,7 +35,7 @@ Given the following XML document as `String` or `InputStream`:
 It can directly be worked on with Spin:
 
 ```java
-import static org.camunda.spin.Spin.*;
+import static org.operaton.spin.Spin.*;
 
 // get id of first customer
 XML( xmlInput ).childElements("customer")
@@ -72,7 +71,7 @@ Element e = XML( xmlSource ).childElement("customer").unwrap();
 
 # Contributing
 
-Have a look at our [contribution guide](https://github.com/camunda/camunda-bpm-platform/blob/master/CONTRIBUTING.md) for how to contribute to this repository.
+Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/master/CONTRIBUTING.md) for how to contribute to this repository.
 
 
 # License:

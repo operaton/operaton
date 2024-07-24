@@ -24,8 +24,8 @@ export const setupDev = () => {
   const newPath = href.replace('{ENGINE}', engine);
   base.attr('href', newPath);
 
-  if (!window.location.href.includes(`/camunda/app/admin/${engine}/setup/`)) {
-    fetch(`/camunda/api/admin/setup/${engine}/user/create`, {
+  if (!window.location.href.includes(`/operaton/app/admin/${engine}/setup/`)) {
+    fetch(`/operaton/api/admin/setup/${engine}/user/create`, {
       method: 'POST',
       body: JSON.stringify({}),
       headers: {
@@ -37,7 +37,7 @@ export const setupDev = () => {
         .json()
         .then(json => {
           if (json.message !== 'Setup action not available') {
-            window.location.href = `/camunda/app/admin/${engine}/setup/#setup`;
+            window.location.href = `/operaton/app/admin/${engine}/setup/#setup`;
           }
         })
         .catch(() => {});

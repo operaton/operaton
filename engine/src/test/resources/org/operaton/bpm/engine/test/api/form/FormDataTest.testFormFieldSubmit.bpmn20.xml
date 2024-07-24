@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:operaton="http://operaton.org/schema/1.0/bpmn" 
+    xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+    xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" 
+    xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" 
+    typeLanguage="http://www.w3.org/2001/XMLSchema" 
+    expressionLanguage="http://www.w3.org/1999/XPath"
+    targetNamespace="test">
+
+  <process id="FormDataTest.testFormFieldSubmit" isExecutable="true">
+
+    <startEvent id="start" />
+    <sequenceFlow sourceRef="start" targetRef="usertask" />
+    <userTask id="usertask" name="Task" operaton:candidateGroups="dummy">
+      <extensionElements>
+        <operaton:formData>
+          <operaton:formField id="stringField" label="String Field" type="string" defaultValue="someString">
+            <operaton:validation>
+              <operaton:constraint name="maxlength" config="10" />
+              <operaton:constraint name="minlength" config="5" />
+            </operaton:validation>
+          </operaton:formField>
+          <operaton:formField id="longField" label="Long Field" type="long" defaultValue="5">
+            <operaton:validation>
+              <operaton:constraint name="max" config="10" />
+              <operaton:constraint name="min" config="3" />
+            </operaton:validation>
+          </operaton:formField>
+          <operaton:formField id="customField" label="Custom Field" type="string">
+            <operaton:validation>
+              <operaton:constraint name="validator" config="org.operaton.bpm.engine.test.api.form.CustomValidator" />
+            </operaton:validation>
+          </operaton:formField>
+          <operaton:formField id="customFieldWithValidationDetails" label="Custom Field with validation details" type="string">
+            <operaton:validation>
+              <operaton:constraint name="validator" config="org.operaton.bpm.engine.test.api.form.CustomValidatorWithDetail" />
+            </operaton:validation>
+          </operaton:formField>
+
+        </operaton:formData>
+      </extensionElements>
+    </userTask>
+    
+    <sequenceFlow sourceRef="usertask" targetRef="task2" />
+    <userTask id="task2" />
+
+  </process>
+
+</definitions>

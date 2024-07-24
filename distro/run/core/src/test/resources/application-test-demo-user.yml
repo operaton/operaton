@@ -1,4 +1,4 @@
-camunda.bpm:
+operaton.bpm:
   admin-user:
     id: demo
     password: demo

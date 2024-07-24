@@ -113,7 +113,7 @@ module.exports.writeThirdPartyNotice = function (dependencies){
         const packageId = license.name + '@' + license.version;
 
         if (license.name === "swagger-ui") {
-            // see https://jira.camunda.com/browse/OB-16
+            // see https://jira.operaton.com/browse/OB-16
             license.licenseText =
                 "\n-----------------------------------------------------------\n" +
                 `swagger-UI-dist (Licensed under ${PRODUCTION_LICENSES.join(', ')}) \n` +

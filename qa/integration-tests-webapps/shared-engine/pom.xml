@@ -1,20 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>camunda-qa-integration-tests-webapps-shared-engine</artifactId>
-  <name>Camunda Platform - QA Integration Tests - Webapps Shared Engine</name>
+  <artifactId>operaton-qa-integration-tests-webapps-shared-engine</artifactId>
+  <name>Operaton - QA Integration Tests - Webapps Shared Engine</name>
 
   <parent>
-    <groupId>org.camunda.bpm.qa</groupId>
-    <artifactId>camunda-qa-integration-tests-webapps-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.qa</groupId>
+    <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>../</relativePath>
   </parent>
 
   <dependencies>
     <dependency>
-      <groupId>org.camunda.bpm.qa</groupId>
-      <artifactId>camunda-qa-integration-tests-webapps</artifactId>
+      <groupId>org.operaton.bpm.qa</groupId>
+      <artifactId>operaton-qa-integration-tests-webapps</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
@@ -30,29 +30,29 @@
       <dependencies>
         <dependency>
           <!-- make sure it comes after assembly in the build -->
-          <groupId>org.camunda.bpm.qa</groupId>
-          <artifactId>camunda-qa-wildfly-runtime</artifactId>
+          <groupId>org.operaton.bpm.qa</groupId>
+          <artifactId>operaton-qa-wildfly-runtime</artifactId>
           <version>${project.version}</version>
           <type>pom</type>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm.webapp</groupId>
-          <artifactId>camunda-webapp-wildfly</artifactId>
+          <groupId>org.operaton.bpm.webapp</groupId>
+          <artifactId>operaton-webapp-wildfly</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm</groupId>
-          <artifactId>camunda-engine-rest-jakarta</artifactId>
+          <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine-rest-jakarta</artifactId>
           <version>${project.version}</version>
           <classifier>wildfly</classifier>
           <scope>test</scope>
           <type>war</type>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm.example</groupId>
-          <artifactId>camunda-example-invoice-jakarta</artifactId>
+          <groupId>org.operaton.bpm.example</groupId>
+          <artifactId>operaton-example-invoice-jakarta</artifactId>
           <version>${project.version}</version>
           <scope>test</scope>
           <type>war</type>
@@ -99,25 +99,25 @@
               </configuration>
               <deployables>
                 <deployable>
-                  <groupId>org.camunda.bpm.example</groupId>
-                  <artifactId>camunda-example-invoice-jakarta</artifactId>
+                  <groupId>org.operaton.bpm.example</groupId>
+                  <artifactId>operaton-example-invoice-jakarta</artifactId>
                   <type>war</type>
                   <pingURL>http://localhost:${jboss.http.port}/engine-rest/engine/default/user/demo/profile</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
                 </deployable>
                 <deployable>
-                  <groupId>org.camunda.bpm</groupId>
-                  <artifactId>camunda-engine-rest-jakarta</artifactId>
+                  <groupId>org.operaton.bpm</groupId>
+                  <artifactId>operaton-engine-rest-jakarta</artifactId>
                   <classifier>wildfly</classifier>
                   <type>war</type>
                   <pingURL>http://localhost:${jboss.http.port}/engine-rest/engine/default/process-definition</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
                 </deployable>
                 <deployable>
-                  <groupId>org.camunda.bpm.webapp</groupId>
-                  <artifactId>camunda-webapp-wildfly</artifactId>
+                  <groupId>org.operaton.bpm.webapp</groupId>
+                  <artifactId>operaton-webapp-wildfly</artifactId>
                   <type>war</type>
-                  <pingURL>http://localhost:${jboss.http.port}/camunda</pingURL>
+                  <pingURL>http://localhost:${jboss.http.port}/operaton</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
                 </deployable>
               </deployables>
@@ -146,21 +146,21 @@
       <dependencies>
         <dependency>
           <!-- make sure it comes after assembly in the build -->
-          <groupId>org.camunda.bpm.qa</groupId>
-          <artifactId>camunda-qa-wildfly26-runtime</artifactId>
+          <groupId>org.operaton.bpm.qa</groupId>
+          <artifactId>operaton-qa-wildfly26-runtime</artifactId>
           <version>${project.version}</version>
           <type>pom</type>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm.webapp</groupId>
-          <artifactId>camunda-webapp-jboss</artifactId>
+          <groupId>org.operaton.bpm.webapp</groupId>
+          <artifactId>operaton-webapp-jboss</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm</groupId>
-          <artifactId>camunda-engine-rest</artifactId>
+          <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine-rest</artifactId>
           <version>${project.version}</version>
           <classifier>wildfly</classifier>
           <scope>test</scope>
@@ -208,25 +208,25 @@
               </configuration>
               <deployables>
                 <deployable>
-                  <groupId>org.camunda.bpm.example</groupId>
-                  <artifactId>camunda-example-invoice</artifactId>
+                  <groupId>org.operaton.bpm.example</groupId>
+                  <artifactId>operaton-example-invoice</artifactId>
                   <type>war</type>
                   <pingURL>http://localhost:${jboss.http.port}/engine-rest/engine/default/user/demo/profile</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
                 </deployable>
                 <deployable>
-                  <groupId>org.camunda.bpm</groupId>
-                  <artifactId>camunda-engine-rest</artifactId>
+                  <groupId>org.operaton.bpm</groupId>
+                  <artifactId>operaton-engine-rest</artifactId>
                   <classifier>wildfly</classifier>
                   <type>war</type>
                   <pingURL>http://localhost:${jboss.http.port}/engine-rest/engine/default/process-definition</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
                 </deployable>
                 <deployable>
-                  <groupId>org.camunda.bpm.webapp</groupId>
-                  <artifactId>camunda-webapp-jboss</artifactId>
+                  <groupId>org.operaton.bpm.webapp</groupId>
+                  <artifactId>operaton-webapp-jboss</artifactId>
                   <type>war</type>
-                  <pingURL>http://localhost:${jboss.http.port}/camunda</pingURL>
+                  <pingURL>http://localhost:${jboss.http.port}/operaton</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
                 </deployable>
               </deployables>
@@ -255,21 +255,21 @@
       <dependencies>
         <dependency>
           <!-- make sure it comes after assembly in the build -->
-          <groupId>org.camunda.bpm.qa</groupId>
-          <artifactId>camunda-qa-tomcat9-runtime</artifactId>
+          <groupId>org.operaton.bpm.qa</groupId>
+          <artifactId>operaton-qa-tomcat9-runtime</artifactId>
           <version>${project.version}</version>
           <type>pom</type>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm.webapp</groupId>
-          <artifactId>camunda-webapp-tomcat</artifactId>
+          <groupId>org.operaton.bpm.webapp</groupId>
+          <artifactId>operaton-webapp-tomcat</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm</groupId>
-          <artifactId>camunda-engine-rest</artifactId>
+          <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine-rest</artifactId>
           <scope>test</scope>
           <type>war</type>
           <classifier>tomcat</classifier>
@@ -317,8 +317,8 @@
               </configuration>
               <deployables>
                 <deployable>
-                  <groupId>org.camunda.bpm</groupId>
-                  <artifactId>camunda-engine-rest</artifactId>
+                  <groupId>org.operaton.bpm</groupId>
+                  <artifactId>operaton-engine-rest</artifactId>
                   <type>war</type>
                   <classifier>tomcat</classifier>
                   <pingURL>http://localhost:${tomcat.connector.http.port}/engine-rest/engine/default/process-definition</pingURL>
@@ -328,18 +328,18 @@
                   </properties>
                 </deployable>
                 <deployable>
-                  <groupId>org.camunda.bpm.webapp</groupId>
-                  <artifactId>camunda-webapp-tomcat</artifactId>
+                  <groupId>org.operaton.bpm.webapp</groupId>
+                  <artifactId>operaton-webapp-tomcat</artifactId>
                   <type>war</type>
-                  <pingURL>http://localhost:${tomcat.connector.http.port}/camunda</pingURL>
+                  <pingURL>http://localhost:${tomcat.connector.http.port}/operaton</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
                   <properties>
-                    <context>camunda</context>
+                    <context>operaton</context>
                   </properties>
                 </deployable>
                 <deployable>
-                  <groupId>org.camunda.bpm.example</groupId>
-                  <artifactId>camunda-example-invoice</artifactId>
+                  <groupId>org.operaton.bpm.example</groupId>
+                  <artifactId>operaton-example-invoice</artifactId>
                   <type>war</type>
                   <properties>
                     <context>invoice</context>
@@ -361,29 +361,29 @@
       <dependencies>
         <dependency>
           <!-- make sure it comes after assembly in the build -->
-          <groupId>org.camunda.bpm.qa</groupId>
-          <artifactId>camunda-qa-tomcat-runtime</artifactId>
+          <groupId>org.operaton.bpm.qa</groupId>
+          <artifactId>operaton-qa-tomcat-runtime</artifactId>
           <version>${project.version}</version>
           <type>pom</type>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm.webapp</groupId>
-          <artifactId>camunda-webapp-tomcat-jakarta</artifactId>
+          <groupId>org.operaton.bpm.webapp</groupId>
+          <artifactId>operaton-webapp-tomcat-jakarta</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm</groupId>
-          <artifactId>camunda-engine-rest-jakarta</artifactId>
+          <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine-rest-jakarta</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
           <classifier>tomcat</classifier>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm.example</groupId>
-          <artifactId>camunda-example-invoice-jakarta</artifactId>
+          <groupId>org.operaton.bpm.example</groupId>
+          <artifactId>operaton-example-invoice-jakarta</artifactId>
           <version>${project.version}</version>
           <type>war</type>
           <scope>test</scope>
@@ -430,8 +430,8 @@
               </configuration>
               <deployables>
                 <deployable>
-                  <groupId>org.camunda.bpm</groupId>
-                  <artifactId>camunda-engine-rest-jakarta</artifactId>
+                  <groupId>org.operaton.bpm</groupId>
+                  <artifactId>operaton-engine-rest-jakarta</artifactId>
                   <type>war</type>
                   <classifier>tomcat</classifier>
                   <pingURL>http://localhost:${tomcat.connector.http.port}/engine-rest/engine/default/process-definition</pingURL>
@@ -441,18 +441,18 @@
                   </properties>
                 </deployable>
                 <deployable>
-                  <groupId>org.camunda.bpm.webapp</groupId>
-                  <artifactId>camunda-webapp-tomcat-jakarta</artifactId>
+                  <groupId>org.operaton.bpm.webapp</groupId>
+                  <artifactId>operaton-webapp-tomcat-jakarta</artifactId>
                   <type>war</type>
-                  <pingURL>http://localhost:${tomcat.connector.http.port}/camunda</pingURL>
+                  <pingURL>http://localhost:${tomcat.connector.http.port}/operaton</pingURL>
                   <pingTimeout>${cargo.deploy.timeout}</pingTimeout>
                   <properties>
-                    <context>camunda</context>
+                    <context>operaton</context>
                   </properties>
                 </deployable>
                 <deployable>
-                  <groupId>org.camunda.bpm.example</groupId>
-                  <artifactId>camunda-example-invoice-jakarta</artifactId>
+                  <groupId>org.operaton.bpm.example</groupId>
+                  <artifactId>operaton-example-invoice-jakarta</artifactId>
                   <type>war</type>
                   <properties>
                     <context>invoice</context>
@@ -492,7 +492,7 @@
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
               <dependenciesToScan>
-                <dependency>org.camunda.bpm.qa:camunda-qa-integration-tests-webapps</dependency>
+                <dependency>org.operaton.bpm.qa:operaton-qa-integration-tests-webapps</dependency>
               </dependenciesToScan>
               <systemPropertyVariables>
                 <selenium.screenshot.directory>${project.build.directory}/selenium-screenshots</selenium.screenshot.directory>
@@ -521,8 +521,8 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.camunda.bpm</groupId>
-                      <artifactId>camunda-engine</artifactId>
+                      <groupId>org.operaton.bpm</groupId>
+                      <artifactId>operaton-engine</artifactId>
                       <outputDirectory>${project.build.directory}/sql-scripts/engine</outputDirectory>
                       <overWrite>true</overWrite>
                     </artifactItem>
@@ -544,13 +544,13 @@
                 <configuration>
                   <srcFiles>
                     <!-- try dropping the DB if it exists. -->
-                    <srcFile>${project.build.directory}/sql-scripts/engine/org/camunda/bpm/engine/db/drop/activiti.${database.type}.drop.decision.engine.sql</srcFile>
-                    <srcFile>${project.build.directory}/sql-scripts/engine/org/camunda/bpm/engine/db/drop/activiti.${database.type}.drop.case.engine.sql</srcFile>
-                    <srcFile>${project.build.directory}/sql-scripts/engine/org/camunda/bpm/engine/db/drop/activiti.${database.type}.drop.engine.sql</srcFile>
-                    <srcFile>${project.build.directory}/sql-scripts/engine/org/camunda/bpm/engine/db/drop/activiti.${database.type}.drop.identity.sql</srcFile>
-                    <srcFile>${project.build.directory}/sql-scripts/engine/org/camunda/bpm/engine/db/drop/activiti.${database.type}.drop.decision.history.sql</srcFile>
-                    <srcFile>${project.build.directory}/sql-scripts/engine/org/camunda/bpm/engine/db/drop/activiti.${database.type}.drop.case.history.sql</srcFile>
-                    <srcFile>${project.build.directory}/sql-scripts/engine/org/camunda/bpm/engine/db/drop/activiti.${database.type}.drop.history.sql</srcFile>
+                    <srcFile>${project.build.directory}/sql-scripts/engine/org/operaton/bpm/engine/db/drop/activiti.${database.type}.drop.decision.engine.sql</srcFile>
+                    <srcFile>${project.build.directory}/sql-scripts/engine/org/operaton/bpm/engine/db/drop/activiti.${database.type}.drop.case.engine.sql</srcFile>
+                    <srcFile>${project.build.directory}/sql-scripts/engine/org/operaton/bpm/engine/db/drop/activiti.${database.type}.drop.engine.sql</srcFile>
+                    <srcFile>${project.build.directory}/sql-scripts/engine/org/operaton/bpm/engine/db/drop/activiti.${database.type}.drop.identity.sql</srcFile>
+                    <srcFile>${project.build.directory}/sql-scripts/engine/org/operaton/bpm/engine/db/drop/activiti.${database.type}.drop.decision.history.sql</srcFile>
+                    <srcFile>${project.build.directory}/sql-scripts/engine/org/operaton/bpm/engine/db/drop/activiti.${database.type}.drop.case.history.sql</srcFile>
+                    <srcFile>${project.build.directory}/sql-scripts/engine/org/operaton/bpm/engine/db/drop/activiti.${database.type}.drop.history.sql</srcFile>
                   </srcFiles>
                   <autocommit>true</autocommit>
                   <onError>continue</onError>
@@ -580,7 +580,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <dependenciesToScan>
-                <dependency>org.camunda.bpm.qa:camunda-qa-integration-tests-webapps</dependency>
+                <dependency>org.operaton.bpm.qa:operaton-qa-integration-tests-webapps</dependency>
               </dependenciesToScan>
               <skipTests>false</skipTests>
               <includes>

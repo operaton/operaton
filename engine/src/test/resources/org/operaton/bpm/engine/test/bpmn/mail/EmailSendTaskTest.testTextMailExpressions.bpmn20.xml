@@ -1,0 +1,33 @@
+<definitions 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+
+  <process id="textMailExpressions"  isExecutable="true">
+
+    <startEvent id="theStart" />
+    <sequenceFlow sourceRef="theStart" targetRef="sendMail" />
+    
+    <sendTask id="sendMail" operaton:type="mail">
+      <extensionElements>
+        <operaton:field name="from">
+          <operaton:expression>${sender}</operaton:expression>
+        </operaton:field>
+        <operaton:field name="to">
+          <operaton:expression>${recipient}</operaton:expression>
+        </operaton:field>
+        <operaton:field name="subject">
+          <operaton:expression>${subject}</operaton:expression>
+        </operaton:field>
+        <operaton:field name="text">
+          <operaton:expression>Hello ${recipientName}, this is an e-mail</operaton:expression>
+        </operaton:field>      
+      </extensionElements>
+    </sendTask>
+    <sequenceFlow sourceRef="sendMail" targetRef="theEnd" />
+    
+    <endEvent id="theEnd" />
+
+  </process>
+
+</definitions>

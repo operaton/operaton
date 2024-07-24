@@ -21,7 +21,7 @@ var template = require('./groupEdit.html?raw');
 var tenantTemplate = require('./create-tenant-group-membership.html?raw');
 var confirmationTemplate = require('./generic-confirmation.html?raw');
 
-var angular = require('camunda-commons-ui/vendor/angular');
+var angular = require('operaton-commons-ui/vendor/angular');
 
 var Controller = [
   '$scope',

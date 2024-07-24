@@ -22,7 +22,7 @@ var angular = require('angular');
 var template = require('./process-instance-table.html?raw');
 var searchConfig = require('./process-instance-search-config.json');
 
-var debouncePromiseFactory = require('camunda-bpm-sdk-js').utils
+var debouncePromiseFactory = require('operaton-bpm-sdk-js').utils
   .debouncePromiseFactory;
 var debouncePromise = debouncePromiseFactory();
 

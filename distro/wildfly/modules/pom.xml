@@ -2,14 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.wildfly</groupId>
-    <artifactId>camunda-wildfly</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.wildfly</groupId>
+    <artifactId>operaton-wildfly</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-wildfly-modules</artifactId>
+  <artifactId>operaton-wildfly-modules</artifactId>
   <packaging>jar</packaging>
-  <name>Camunda Platform - Wildfly Modules</name>
+  <name>Operaton - Wildfly Modules</name>
 
   <properties>
     <org.jboss.shrinkwrap.resolver.version>1.0.0-beta-5</org.jboss.shrinkwrap.resolver.version>
@@ -23,8 +23,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.camunda.bpm.wildfly</groupId>
-      <artifactId>camunda-wildfly-subsystem</artifactId>
+      <groupId>org.operaton.bpm.wildfly</groupId>
+      <artifactId>operaton-wildfly-subsystem</artifactId>
       <version>${project.version}</version>
       <exclusions>
         <exclusion>
@@ -43,41 +43,41 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.identity</groupId>
-      <artifactId>camunda-identity-ldap</artifactId>
+      <groupId>org.operaton.bpm.identity</groupId>
+      <artifactId>operaton-identity-ldap</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-plugin-spin</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-plugin-spin</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.spin</groupId>
-      <artifactId>camunda-spin-dataformat-json-jackson</artifactId>
+      <groupId>org.operaton.spin</groupId>
+      <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.spin</groupId>
-      <artifactId>camunda-spin-dataformat-xml-dom-jakarta</artifactId>
+      <groupId>org.operaton.spin</groupId>
+      <artifactId>operaton-spin-dataformat-xml-dom-jakarta</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-plugin-connect</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-plugin-connect</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.connect</groupId>
-      <artifactId>camunda-connect-http-client</artifactId>
+      <groupId>org.operaton.connect</groupId>
+      <artifactId>operaton-connect-http-client</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.connect</groupId>
-      <artifactId>camunda-connect-soap-http-client</artifactId>
+      <groupId>org.operaton.connect</groupId>
+      <artifactId>operaton-connect-soap-http-client</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -119,8 +119,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.template-engines</groupId>
-      <artifactId>camunda-template-engines-freemarker</artifactId>
+      <groupId>org.operaton.template-engines</groupId>
+      <artifactId>operaton-template-engines-freemarker</artifactId>
     </dependency>
 
     <dependency>
@@ -155,7 +155,7 @@
                   <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
                 </copy>
 
-                <delete dir="target/modules/org/camunda/bpm" />
+                <delete dir="target/modules/org/operaton/bpm" />
 
                 <!-- copy all files again, but this only matches fox files and this treatment makes is maven 2/3 compatible => timestamped snapshot -->
                 <copy todir="target/modules" flatten="false">
@@ -163,63 +163,63 @@
                   <mapper>
                     <chainedmapper>
                       <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
-                      <regexpmapper from="^(org.camunda.bpm.*)/((camunda-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                      <regexpmapper from="^(org.operaton.bpm.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
                     </chainedmapper>
                   </mapper>
                 </copy>
 
-                <delete dir="target/modules/org/camunda/spin" />
+                <delete dir="target/modules/org/operaton/spin" />
                 <copy todir="target/modules" flatten="false">
                   <fileset refid="maven.project.dependencies" />
                   <mapper>
                     <chainedmapper>
                       <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
-                      <regexpmapper from="^(org.camunda.spin.*)/((camunda-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                      <regexpmapper from="^(org.operaton.spin.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
                     </chainedmapper>
                   </mapper>
                 </copy>
 
-                <delete dir="target/modules/org/camunda/connect" />
+                <delete dir="target/modules/org/operaton/connect" />
                 <copy todir="target/modules" flatten="false">
                   <fileset refid="maven.project.dependencies" />
                   <mapper>
                     <chainedmapper>
                       <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
-                      <regexpmapper from="^(org.camunda.connect.*)/((camunda-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                      <regexpmapper from="^(org.operaton.connect.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
                     </chainedmapper>
                   </mapper>
                 </copy>
 
                 <!-- do not include connectors-all dependency, because
                   we are using the individual connect modules on Wildfly -->
-                <delete dir="target/modules/org/camunda/connect/camunda-connect-connectors-all" />
+                <delete dir="target/modules/org/operaton/connect/operaton-connect-connectors-all" />
 
-                <delete dir="target/modules/org/camunda/commons" />
+                <delete dir="target/modules/org/operaton/commons" />
                 <copy todir="target/modules" flatten="false">
                   <fileset refid="maven.project.dependencies" />
                   <mapper>
                     <chainedmapper>
                       <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
                       <mapper>
-                        <regexpmapper from="^(org.camunda.commons.*)\/((camunda-commons-(utils|logging)-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
-                        <regexpmapper from="^(org.camunda.commons.*)\/((camunda-commons-typed-values-)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                        <regexpmapper from="^(org.operaton.commons.*)\/((operaton-commons-(utils|logging)-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                        <regexpmapper from="^(org.operaton.commons.*)\/((operaton-commons-typed-values-)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
                       </mapper>
                     </chainedmapper>
                   </mapper>
                 </copy>
 
-                <delete dir="target/modules/org/camunda/template-engines" />
+                <delete dir="target/modules/org/operaton/template-engines" />
                 <copy todir="target/modules" flatten="false">
                   <fileset refid="maven.project.dependencies" />
                   <mapper>
                     <chainedmapper>
                       <regexpmapper from="^(.*)/([^/]+)/([^/]*)$$" to="\1/main/\3" handledirsep="yes" />
-                      <regexpmapper from="^(org.camunda.template-engines.*)/((camunda-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
+                      <regexpmapper from="^(org.operaton.template-engines.*)/((operaton-[A-Za-z-]*)[0-9\.]*).*.jar$$" to="\1/\3${project.version}.jar" handledirsep="yes" />
                     </chainedmapper>
                   </mapper>
                 </copy>
 
-                <delete dir="target/modules/org/camunda/feel" />
+                <delete dir="target/modules/org/operaton/feel" />
                 <copy todir="target/modules" flatten="false">
                   <fileset refid="maven.project.dependencies" />
                   <mapper>

@@ -1,5 +1,5 @@
 <#macro endpoint_macro docsUrl="">
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/job/get-exception-stacktrace/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/job/get-exception-stacktrace/index.html -->
 {
   <@lib.endpointInfo
       id = "getStacktrace"
@@ -30,9 +30,9 @@
         examples = ['"example-1": {
                        "description": "GET `/job/aJobId/stacktrace`",
                        "value": "java.lang.RuntimeException: A exception message!
-                                 at org.camunda.bpm.pa.service.FailingDelegate.execute(FailingDelegate.java:10)
-                                 at org.camunda.bpm.engine.impl.delegate.JavaDelegateInvocation.invoke(JavaDelegateInvocation.java:34)
-                                 at org.camunda.bpm.engine.impl.delegate.DelegateInvocation.proceed(DelegateInvocation.java:37)
+                                 at org.operaton.bpm.pa.service.FailingDelegate.execute(FailingDelegate.java:10)
+                                 at org.operaton.bpm.engine.impl.delegate.JavaDelegateInvocation.invoke(JavaDelegateInvocation.java:34)
+                                 at org.operaton.bpm.engine.impl.delegate.DelegateInvocation.proceed(DelegateInvocation.java:37)
                                  ..."
                      }']
     />

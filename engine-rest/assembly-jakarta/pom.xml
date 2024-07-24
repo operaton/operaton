@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>camunda-engine-rest-jakarta</artifactId>
-  <name>Camunda Platform - engine - REST - Assembly Jakarta</name>
+  <artifactId>operaton-engine-rest-jakarta</artifactId>
+  <name>Operaton - engine - REST - Assembly Jakarta</name>
   <packaging>war</packaging>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-engine-rest-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-engine-rest-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -45,23 +45,23 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-rest-core-jakarta</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <!-- dependencies only used for assemblies should be scope provided -->
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-rest-core-jakarta</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
       <version>${project.version}</version>
       <classifier>sources</classifier>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-rest-core-jakarta</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-core-jakarta</artifactId>
       <version>${project.version}</version>
       <classifier>tests</classifier>
       <scope>provided</scope>
@@ -107,13 +107,13 @@
               <archive>
                 <manifestEntries>
                   <!-- module dependencies for deployment on wildfly  -->
-                  <Dependencies>org.camunda.bpm.camunda-engine,org.camunda.bpm.dmn.camunda-engine-dmn,org.camunda.commons.camunda-commons-logging,org.camunda.spin.camunda-spin-core,org.camunda.bpm.juel.camunda-juel services,org.graalvm.js.js-scriptengine services</Dependencies>
+                  <Dependencies>org.operaton.bpm.operaton-engine,org.operaton.bpm.dmn.operaton-engine-dmn,org.operaton.commons.operaton-commons-logging,org.operaton.spin.operaton-spin-core,org.operaton.bpm.juel.operaton-juel services,org.graalvm.js.js-scriptengine services</Dependencies>
                 </manifestEntries>
               </archive>
               <descriptors>
                 <descriptor>assembly-war-wildfly.xml</descriptor>
               </descriptors>
-              <finalName>camunda-engine-rest-jakarta-${project.version}</finalName>
+              <finalName>operaton-engine-rest-jakarta-${project.version}</finalName>
               <attach>true</attach>
               <classifier>wildfly</classifier>
               <outputDirectory>target/</outputDirectory>
@@ -131,7 +131,7 @@
               <descriptors>
                 <descriptor>assembly-war-tomcat.xml</descriptor>
               </descriptors>
-              <finalName>camunda-engine-rest-jakarta-${project.version}</finalName>
+              <finalName>operaton-engine-rest-jakarta-${project.version}</finalName>
               <attach>true</attach>
               <classifier>tomcat</classifier>
               <outputDirectory>target/</outputDirectory>
@@ -149,7 +149,7 @@
               <descriptors>
                 <descriptor>assembly-classes.xml</descriptor>
               </descriptors>
-              <finalName>camunda-engine-rest-jakarta-${project.version}</finalName>
+              <finalName>operaton-engine-rest-jakarta-${project.version}</finalName>
               <attach>true</attach>
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
@@ -166,7 +166,7 @@
               <descriptors>
                 <descriptor>assembly-sources.xml</descriptor>
               </descriptors>
-              <finalName>camunda-engine-rest-jakarta-${project.version}</finalName>
+              <finalName>operaton-engine-rest-jakarta-${project.version}</finalName>
               <attach>true</attach>
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
@@ -183,7 +183,7 @@
               <descriptors>
                 <descriptor>assembly-tests.xml</descriptor>
               </descriptors>
-              <finalName>camunda-engine-rest-jakarta-${project.version}</finalName>
+              <finalName>operaton-engine-rest-jakarta-${project.version}</finalName>
               <attach>true</attach>
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>

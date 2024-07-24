@@ -1,5 +1,5 @@
 <#macro endpoint_macro docsUrl="">
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/execution/post-query-count/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/execution/post-query-count/index.html -->
 {
   <@lib.endpointInfo
       id = "queryExecutionsCount"
@@ -22,7 +22,7 @@
                          {
                            "name": "myVariable",
                            "operator": "eq",
-                           "value": "camunda"
+                           "value": "operaton"
                          },
                          {
                            "name": "mySecondVariable",

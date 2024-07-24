@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/history/process-definition/get-historic-activity-statistics-query/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/history/process-definition/get-historic-activity-statistics-query/index.html -->
 
 <#assign sortByValues = [
   '"activityId"'

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1y6jroc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.2">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1y6jroc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.2">
   <bpmn:process id="ProcessInstanceAssert-isWaitingAt-ActivityTreeTests" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1swxism</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1swxism" sourceRef="StartEvent_1" targetRef="AsyncServiceTask" />
-    <bpmn:serviceTask id="AsyncServiceTask" name="Async service task" camunda:asyncBefore="true" camunda:expression="${true}">
+    <bpmn:serviceTask id="AsyncServiceTask" name="Async service task" operaton:asyncBefore="true" operaton:expression="${true}">
       <bpmn:incoming>Flow_1swxism</bpmn:incoming>
       <bpmn:outgoing>Flow_18hxorp</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -25,7 +25,7 @@
         <bpmn:startEvent id="Event_16t69gy">
           <bpmn:outgoing>Flow_05glhxu</bpmn:outgoing>
         </bpmn:startEvent>
-        <bpmn:serviceTask id="NestedAsyncServiceTask" name="Nested async service task" camunda:asyncBefore="true" camunda:expression="${true}">
+        <bpmn:serviceTask id="NestedAsyncServiceTask" name="Nested async service task" operaton:asyncBefore="true" operaton:expression="${true}">
           <bpmn:incoming>Flow_05glhxu</bpmn:incoming>
           <bpmn:outgoing>Flow_0lwea33</bpmn:outgoing>
         </bpmn:serviceTask>

@@ -22,7 +22,7 @@ export default {
   //   vendor: 'Company'
   // },
   // // custom libraries and scripts loading and initialization,
-  // // see: http://docs.camunda.org/guides/user-guide/#tasklist-customizing-custom-scripts
+  // // see: http://docs.operaton.org/guides/user-guide/#tasklist-customizing-custom-scripts
   // customScripts: [
   //   // If you have a folder called 'my-custom-script' (in the 'admin' folder)
   //   // with a file called 'customScript.js' in it

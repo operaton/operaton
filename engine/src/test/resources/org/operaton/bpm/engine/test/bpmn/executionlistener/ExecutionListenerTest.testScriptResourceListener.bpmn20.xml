@@ -1,0 +1,39 @@
+<definitions
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+
+  <process id="process" isExecutable="true">
+    <extensionElements>
+      <operaton:executionListener event="start">
+        <operaton:script scriptFormat="groovy" resource="org/operaton/bpm/engine/test/bpmn/executionlistener/executionListener.groovy"/>
+      </operaton:executionListener>
+      <operaton:executionListener event="end">
+        <operaton:script scriptFormat="groovy" resource="org/operaton/bpm/engine/test/bpmn/executionlistener/executionListener.groovy"/>
+      </operaton:executionListener>
+    </extensionElements>
+
+    <startEvent id="start">
+      <extensionElements>
+        <operaton:executionListener event="end">
+          <operaton:script scriptFormat="groovy" resource="classpath://org/operaton/bpm/engine/test/bpmn/executionlistener/executionListener.groovy"/>
+        </operaton:executionListener>
+      </extensionElements>
+    </startEvent>
+    <sequenceFlow id="flow" sourceRef="start" targetRef="end">
+      <extensionElements>
+        <operaton:executionListener>
+          <operaton:script scriptFormat="groovy" resource="deployment://org/operaton/bpm/engine/test/bpmn/executionlistener/executionListener.groovy"/>
+        </operaton:executionListener>
+      </extensionElements>
+    </sequenceFlow>
+    <endEvent id="end">
+      <extensionElements>
+        <operaton:executionListener event="start">
+          <operaton:script scriptFormat="groovy" resource="deployment://org/operaton/bpm/engine/test/bpmn/executionlistener/executionListener.groovy"/>
+        </operaton:executionListener>
+      </extensionElements>
+    </endEvent>
+  </process>
+</definitions>
+

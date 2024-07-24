@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>camunda-bpm-assert-root</artifactId>
+  <artifactId>operaton-bpm-assert-root</artifactId>
   <packaging>pom</packaging>
 
-  <name>Camunda Platform - Assert - Root</name>
+  <name>Operaton - Assert - Root</name>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-database-settings</artifactId>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-database-settings</artifactId>
     <relativePath>../../database</relativePath>
-    <version>7.22.0-SNAPSHOT</version>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <dependencyManagement>
@@ -17,7 +17,7 @@
       <!-- spring-framework-bom as first element in the list
            ensures to be chosen over spring-boot-dependencies
            to load spring-beans with Spring 5.
-           Can be removed if camunda-engine supports Spring 6 -->
+           Can be removed if operaton-engine supports Spring 6 -->
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-framework-bom</artifactId>
@@ -35,8 +35,8 @@
         <type>pom</type>
       </dependency>
       <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-core-internal-dependencies</artifactId>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>

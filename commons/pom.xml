@@ -2,14 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.commons</groupId>
-    <artifactId>camunda-commons-bom</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.commons</groupId>
+    <artifactId>operaton-commons-bom</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>bom</relativePath>
   </parent>
 
-  <artifactId>camunda-commons-root</artifactId>
-  <name>camunda Commons - Root Pom</name>
+  <artifactId>operaton-commons-root</artifactId>
+  <name>operaton Commons - Root Pom</name>
   <inceptionYear>2014</inceptionYear>
   <packaging>pom</packaging>
 
@@ -79,7 +79,7 @@
           <version>${maven-bundle-plugin.version}</version>
           <configuration>
             <instructions>
-              <Export-Package>org.camunda*</Export-Package>
+              <Export-Package>org.operaton*</Export-Package>
             </instructions>
           </configuration>
           <executions>
@@ -131,9 +131,9 @@
   </profiles>
 
   <scm>
-    <url>https://github.com/camunda/camunda-bpm-platform</url>
-    <connection>scm:git:git@github.com:camunda/camunda-bpm-platform.git</connection>
-    <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-platform.git</developerConnection>
+    <url>https://github.com/operaton/operaton</url>
+    <connection>scm:git:git@github.com:operaton/operaton.git</connection>
+    <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 

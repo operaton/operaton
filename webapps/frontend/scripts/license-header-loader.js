@@ -32,7 +32,7 @@ const addMissingLicenseHeaders = (filePath, source) => {
         /^(.*)node_modules\/(@[a-z-\d.]+\/[a-z-\d.]+)?([a-z-\d.]+)?(.*)$/,
         (match, p1, p2, p3) => p2 || p3
       );
-    } else if (!rowFile.includes('camunda-bpm-sdk-js')) {
+    } else if (!rowFile.includes('operaton-bpm-sdk-js')) {
       pkg = rowFile.replace(
         /^(@[a-z-\d.]+\/[a-z-\d.]+)?([a-z-\d.]+)?(.*)$/,
         (match, p1, p2) => p2 || p1
@@ -42,7 +42,7 @@ const addMissingLicenseHeaders = (filePath, source) => {
     if (pkg) {
       let packagePath = `${process.cwd()}/node_modules/${pkg}`;
       if (!fs.existsSync(packagePath)) {
-        packagePath = `${process.cwd()}/node_modules/camunda-bpm-webapp/node_modules/${pkg}`;
+        packagePath = `${process.cwd()}/node_modules/operaton-bpm-webapp/node_modules/${pkg}`;
       }
 
       let licenseInfo = null;

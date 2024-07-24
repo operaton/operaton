@@ -40,7 +40,7 @@
                        "summary": "GET /process-definition/statistics?failedJobs=true",
                        "description": "Request with Query Parameter `failedJobs=true`",
                        "value": [{
-                         "@class": "org.camunda.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
+                         "@class": "org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
                          "id":"aProcessDefinitionId",
                          "instances": 123,
                          "failedJobs": 42,
@@ -62,7 +62,7 @@
                          "incidents": []
                         },
                         {
-                         "@class": "org.camunda.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
+                         "@class": "org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
                          "id": "aProcessDefinitionId:2",
                          "instances": 124,
                          "failedJobs": 43,
@@ -88,7 +88,7 @@
                        "summary": "GET /process-definition/statistics?incidents=true",
                        "description": "Request with Query Parameter `incidents=true`",
                        "value": [{
-                         "@class": "org.camunda.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
+                         "@class": "org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
                          "id": "aProcessDefinitionId",
                          "instances": 123,
                          "failedJobs": 0,
@@ -116,7 +116,7 @@
                            "incidentCount": 20
                          }]
                      }, {
-                         "@class": "org.camunda.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
+                         "@class": "org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
                          "id": "aProcessDefinitionId:2",
                          "instances": 124,
                          "failedJobs": 0,
@@ -152,7 +152,7 @@
                        "summary": "GET /process-definition/statistics?incidentsForType=anIncident",
                        "description": "Request with Query Parameter `incidentsForType=anIncident`",
                        "value": [{
-                         "@class": "org.camunda.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
+                         "@class": "org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
                          "id":"aProcessDefinitionId",
                          "id": "aProcessDefinitionId",
                          "instances": 123,
@@ -183,7 +183,7 @@
                        "summary": "GET /process-definition/statistics?rootIncidents=true",
                        "description": "Request with Query Parameter `rootIncidents=true`",
                        "value": [{
-                         "@class": "org.camunda.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
+                         "@class": "org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionStatisticsResultDto",
                          "id": "aProcessDefinitionId",
                          "instances": 123,
                          "failedJobs": 0,

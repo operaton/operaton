@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  targetNamespace="Examples">
+
+  <process id="asyncService" isExecutable="true">
+  
+    <startEvent id="theStart" />
+    <sequenceFlow sourceRef="theStart" targetRef="service" />
+        
+    <serviceTask id="service" operaton:class="org.operaton.bpm.engine.test.bpmn.async.AsyncService">
+	 	<multiInstanceLoopCharacteristics isSequential="true" operaton:asyncBefore="true">
+	 		<loopCardinality>5</loopCardinality>	 		
+	 	</multiInstanceLoopCharacteristics>    
+    </serviceTask>
+   
+    <sequenceFlow sourceRef="service" targetRef="theEnd" />
+        
+    <endEvent id="theEnd" />
+    
+  </process>
+
+</definitions>

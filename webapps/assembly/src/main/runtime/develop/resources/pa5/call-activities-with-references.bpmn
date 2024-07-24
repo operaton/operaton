@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="_0yVNEMLBEeKbkYsGzbdBqg" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="4.8.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
-  <bpmn2:process id="CallActivitiesWithReferences" name="CallActivities with references" isExecutable="true" camunda:historyTimeToLive="P180D">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" id="_0yVNEMLBEeKbkYsGzbdBqg" targetNamespace="http://operaton.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="4.8.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="CallActivitiesWithReferences" name="CallActivities with references" isExecutable="true" operaton:historyTimeToLive="P180D">
     <bpmn2:startEvent id="StartEvent_1" name="Start Event">
       <bpmn2:outgoing>Flow_13cjket</bpmn2:outgoing>
     </bpmn2:startEvent>
@@ -9,16 +9,16 @@
       <bpmn2:outgoing>Flow_1p4xoty</bpmn2:outgoing>
     </bpmn2:callActivity>
     <bpmn2:sequenceFlow id="Flow_1p4xoty" sourceRef="latestCA_1" targetRef="version_2" />
-    <bpmn2:callActivity id="version_2" name="version 2 (resolves)" calledElement="FailingProcess" camunda:calledElementBinding="version" camunda:calledElementVersion="2">
+    <bpmn2:callActivity id="version_2" name="version 2 (resolves)" calledElement="FailingProcess" operaton:calledElementBinding="version" operaton:calledElementVersion="2">
       <bpmn2:incoming>Flow_1p4xoty</bpmn2:incoming>
       <bpmn2:outgoing>Flow_16j0n28</bpmn2:outgoing>
     </bpmn2:callActivity>
     <bpmn2:sequenceFlow id="Flow_16j0n28" sourceRef="version_2" targetRef="deployment_1" />
-    <bpmn2:callActivity id="deployment_1" name="deployment (resolves)" calledElement="FailingProcess" camunda:calledElementBinding="deployment">
+    <bpmn2:callActivity id="deployment_1" name="deployment (resolves)" calledElement="FailingProcess" operaton:calledElementBinding="deployment">
       <bpmn2:incoming>Flow_16j0n28</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1fkm59u</bpmn2:outgoing>
     </bpmn2:callActivity>
-    <bpmn2:callActivity id="version_tag1" name="versionTag (resolves)" calledElement="parallel-user-tasks" camunda:calledElementBinding="versionTag" camunda:calledElementVersionTag="1.0.0">
+    <bpmn2:callActivity id="version_tag1" name="versionTag (resolves)" calledElement="parallel-user-tasks" operaton:calledElementBinding="versionTag" operaton:calledElementVersionTag="1.0.0">
       <bpmn2:incoming>Flow_1fkm59u</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1sz364i</bpmn2:outgoing>
     </bpmn2:callActivity>
@@ -33,7 +33,7 @@
       <bpmn2:incoming>Flow_1xkm9mi</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1dtsr3t</bpmn2:outgoing>
     </bpmn2:callActivity>
-    <bpmn2:callActivity id="Activity_08fmue3" name="cmmn reference" camunda:caseRef="loanApplicationCase">
+    <bpmn2:callActivity id="Activity_08fmue3" name="cmmn reference" operaton:caseRef="loanApplicationCase">
       <bpmn2:incoming>Flow_0d9nvtl</bpmn2:incoming>
       <bpmn2:outgoing>Flow_0kgehy3</bpmn2:outgoing>
     </bpmn2:callActivity>
@@ -44,7 +44,7 @@
     <bpmn2:sequenceFlow id="Flow_1dtsr3t" sourceRef="incorrect_reference_1" targetRef="dynamic_reference_1" />
     <bpmn2:sequenceFlow id="Flow_0d9nvtl" sourceRef="dynamic_reference_1" targetRef="Activity_08fmue3" />
     <bpmn2:sequenceFlow id="Flow_0kgehy3" sourceRef="Activity_08fmue3" targetRef="tenant_reference_1" />
-    <bpmn2:callActivity id="tenant_reference_1" name="tenant2 (resolves)" calledElement="invoice" camunda:calledElementTenantId="tenant2">
+    <bpmn2:callActivity id="tenant_reference_1" name="tenant2 (resolves)" calledElement="invoice" operaton:calledElementTenantId="tenant2">
       <bpmn2:incoming>Flow_0kgehy3</bpmn2:incoming>
       <bpmn2:outgoing>Flow_0v7uehs</bpmn2:outgoing>
     </bpmn2:callActivity>

@@ -17,10 +17,10 @@
 
 'use strict';
 
-var angular = require('camunda-commons-ui/vendor/angular');
+var angular = require('operaton-commons-ui/vendor/angular');
 
 require('angular-route');
-require('camunda-commons-ui');
+require('operaton-commons-ui');
 
 var authorizations = require('./authorizations'),
   authorizationCreate = require('./authorizationCreate'),
@@ -41,7 +41,6 @@ var authorizations = require('./authorizations'),
   tenantEdit = require('./tenantEdit'),
   tenantMembershipCreate = require('./tenantMembershipsCreate'),
   executionMetrics = require('./execution-metrics'),
-  analytics = require('./analytics'),
   diagnostics = require('./diagnostics');
 
 var ngModule = angular.module('cam.admin.pages', ['ngRoute', 'cam.commons']);
@@ -68,7 +67,6 @@ ngModule.config(tenantCreate);
 ngModule.config(tenantEdit);
 ngModule.controller('TenantMembershipDialogController', tenantMembershipCreate);
 ngModule.config(executionMetrics);
-ngModule.config(analytics);
 ngModule.config(diagnostics);
 
 module.exports = ngModule;

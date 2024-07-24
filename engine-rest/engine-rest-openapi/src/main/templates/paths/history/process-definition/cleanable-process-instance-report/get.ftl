@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/history/process-definition/get-cleanable-process-instance-report-query/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/history/process-definition/get-cleanable-process-instance-report-query/index.html -->
 <#macro endpoint_macro docsUrl="">
 {
   <@lib.endpointInfo

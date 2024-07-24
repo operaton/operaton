@@ -22,7 +22,7 @@ var angular = require('angular');
 var template = require('./incidents-tab.html?raw');
 var inspectTemplate = require('./incidents-tab-stacktrace.html?raw');
 
-var debouncePromiseFactory = require('camunda-bpm-sdk-js').utils
+var debouncePromiseFactory = require('operaton-bpm-sdk-js').utils
   .debouncePromiseFactory;
 var debouncePromise = debouncePromiseFactory();
 

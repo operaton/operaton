@@ -2,21 +2,21 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.wildfly</groupId>
-    <artifactId>camunda-wildfly</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.wildfly</groupId>
+    <artifactId>operaton-wildfly</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-wildfly-subsystem</artifactId>
+  <artifactId>operaton-wildfly-subsystem</artifactId>
   <packaging>jar</packaging>
 
-  <name>Camunda Platform - Wildfly Subsystem</name>
+  <name>Operaton - Wildfly Subsystem</name>
 
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>

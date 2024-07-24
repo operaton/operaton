@@ -2,17 +2,17 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.qa</groupId>
-    <artifactId>camunda-qa</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.qa</groupId>
+    <artifactId>operaton-qa</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-qa-old-engine</artifactId>
+  <artifactId>operaton-qa-old-engine</artifactId>
   <packaging>jar</packaging>
-  <name>Camunda Platform - QA - test new schema with old engine</name>
+  <name>Operaton - QA - test new schema with old engine</name>
 
   <properties>
-    <camunda.old.engine.version>7.21.0</camunda.old.engine.version>
+    <operaton.old.engine.version>7.21.0</operaton.old.engine.version>
   </properties>
 
   <build>
@@ -22,8 +22,8 @@
         <directory>${project.build.directory}/engine-test-sources</directory>
         <excludes>
           <exclude>**/*.java</exclude>
-          <exclude>camunda.cfg.xml</exclude>
-          <exclude>**/historycleanup.camunda.cfg.xml</exclude>
+          <exclude>operaton.cfg.xml</exclude>
+          <exclude>**/historycleanup.operaton.cfg.xml</exclude>
         </excludes>
       </testResource>
       <testResource>
@@ -96,8 +96,8 @@
       <dependencyManagement>
         <dependencies>
           <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-bom</artifactId>
+            <groupId>org.operaton.bpm</groupId>
+            <artifactId>operaton-bom</artifactId>
             <!-- Cannot use variables due to bug in Maven Release Plugin -->
             <version>7.21.0</version>
             <scope>import</scope>
@@ -193,15 +193,15 @@
         </dependency>
 
         <dependency>
-          <groupId>org.camunda.bpm.distro</groupId>
-          <artifactId>camunda-sql-scripts</artifactId>
+          <groupId>org.operaton.bpm.distro</groupId>
+          <artifactId>operaton-sql-scripts</artifactId>
           <version>${project.version}</version>
           <type>test-jar</type>
         </dependency>
 
         <dependency>
-          <groupId>org.camunda.bpm</groupId>
-          <artifactId>camunda-engine</artifactId>
+          <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine</artifactId>
           <scope>test</scope>
         </dependency>
         <dependency>
@@ -225,8 +225,8 @@
         </dependency>
 
         <dependency>
-          <groupId>org.camunda.commons</groupId>
-          <artifactId>camunda-commons-testing</artifactId>
+          <groupId>org.operaton.commons</groupId>
+          <artifactId>operaton-commons-testing</artifactId>
           <version>${project.version}</version>
           <scope>test</scope>
         </dependency>
@@ -288,9 +288,9 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.camunda.bpm</groupId>
-                      <artifactId>camunda-engine</artifactId>
-                      <version>${camunda.old.engine.version}</version>
+                      <groupId>org.operaton.bpm</groupId>
+                      <artifactId>operaton-engine</artifactId>
+                      <version>${operaton.old.engine.version}</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
                     </artifactItem>
@@ -308,8 +308,8 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.camunda.bpm.distro</groupId>
-                      <artifactId>camunda-sql-scripts</artifactId>
+                      <groupId>org.operaton.bpm.distro</groupId>
+                      <artifactId>operaton-sql-scripts</artifactId>
                       <version>${project.version}</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>

@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>camunda-qa-performance-tests-engine</artifactId>
+  <artifactId>operaton-qa-performance-tests-engine</artifactId>
   <packaging>jar</packaging>
-  <name>Camunda Platform - QA Performance Tests Engine</name>
+  <name>Operaton - QA Performance Tests Engine</name>
 
   <parent>
-    <groupId>org.camunda.bpm.qa</groupId>
-    <artifactId>camunda-qa</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.qa</groupId>
+    <artifactId>operaton-qa</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -20,8 +20,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -148,7 +148,7 @@
                         <include name="**/*.png" />
                       </fileset>
                     </copy>
-                    <java classname="org.camunda.bpm.qa.performance.engine.benchmark.BenchmarkReport" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.benchmark.BenchmarkReport" classpathref="maven.test.classpath" />
                   </tasks>
                 </configuration>
               </execution>
@@ -219,7 +219,7 @@
                         <include name="**/*.png" />
                       </fileset>
                     </copy>
-                    <java classname="org.camunda.bpm.qa.performance.engine.benchmark.BenchmarkReport" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.benchmark.BenchmarkReport" classpathref="maven.test.classpath" />
                   </tasks>
                 </configuration>
               </execution>
@@ -239,8 +239,8 @@
       <properties>
         <numberOfThreads>1</numberOfThreads>
         <numberOfRuns>1</numberOfRuns>
-        <testWatchers>org.camunda.bpm.qa.performance.engine.sqlstatementlog.StatementLogPerfTestWatcher</testWatchers>
-        <processEnginePlugins>org.camunda.bpm.qa.performance.engine.sqlstatementlog.StatementLogProcessEnginePlugin</processEnginePlugins>
+        <testWatchers>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogPerfTestWatcher</testWatchers>
+        <processEnginePlugins>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogProcessEnginePlugin</processEnginePlugins>
         <watchActivities />
         <test.excludes>query</test.excludes>
       </properties>
@@ -287,7 +287,7 @@
                         <include name="**/*.png" />
                       </fileset>
                     </copy>
-                    <java classname="org.camunda.bpm.qa.performance.engine.sqlstatementlog.SqlStatementLogReport" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.sqlstatementlog.SqlStatementLogReport" classpathref="maven.test.classpath" />
                   </tasks>
                 </configuration>
               </execution>
@@ -333,7 +333,7 @@
                 <configuration>
                   <tasks>
                     <echo message="Generating load" />
-                    <java classname="org.camunda.bpm.qa.performance.engine.query.DefaultLoadGenerator" classpathref="maven.test.classpath" failonerror="true" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.query.DefaultLoadGenerator" classpathref="maven.test.classpath" failonerror="true" />
                   </tasks>
                 </configuration>
               </execution>
@@ -357,8 +357,8 @@
       <properties>
         <numberOfThreads>1</numberOfThreads>
         <numberOfRuns>1</numberOfRuns>
-        <testWatchers>org.camunda.bpm.qa.performance.engine.sqlstatementlog.StatementLogPerfTestWatcher</testWatchers>
-        <processEnginePlugins>org.camunda.bpm.qa.performance.engine.sqlstatementlog.StatementLogProcessEnginePlugin</processEnginePlugins>
+        <testWatchers>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogPerfTestWatcher</testWatchers>
+        <processEnginePlugins>org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogProcessEnginePlugin</processEnginePlugins>
         <watchActivities />
         <test.includes>query</test.includes>
         <skip.tests>false</skip.tests>
@@ -406,7 +406,7 @@
                         <include name="**/*.png" />
                       </fileset>
                     </copy>
-                    <java classname="org.camunda.bpm.qa.performance.engine.sqlstatementlog.SqlStatementLogReport" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.sqlstatementlog.SqlStatementLogReport" classpathref="maven.test.classpath" />
                   </tasks>
                 </configuration>
               </execution>
@@ -474,7 +474,7 @@
                         <include name="**/*.png" />
                       </fileset>
                     </copy>
-                    <java classname="org.camunda.bpm.qa.performance.engine.framework.activitylog.ActivityCountReporter" classpathref="maven.test.classpath" />
+                    <java classname="org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityCountReporter" classpathref="maven.test.classpath" />
                   </tasks>
                 </configuration>
               </execution>

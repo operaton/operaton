@@ -585,7 +585,7 @@ describe('Repository Spec', function() {
       expect(resourcePage.definitions.table().count()).to.eventually.eql(2);
 
       expect(resourcePage.drdTable.name().getText()).to.eventually.eql(
-        'camunda'
+        'operaton'
       );
       expect(resourcePage.drdTable.key().getText()).to.eventually.eql(
         'definitions'

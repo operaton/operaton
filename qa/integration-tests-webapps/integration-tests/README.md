@@ -1,6 +1,6 @@
 # Webapp Integration Tests
 
-This file contains integration tests for the camunda webapps.
+This file contains integration tests for the operaton webapps.
 
 
 ## Running protractor JS Integration Tests

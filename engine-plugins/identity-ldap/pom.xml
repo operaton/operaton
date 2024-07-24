@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.camunda.bpm.identity</groupId>
-  <artifactId>camunda-identity-ldap</artifactId>
+  <groupId>org.operaton.bpm.identity</groupId>
+  <artifactId>operaton-identity-ldap</artifactId>
   <packaging>jar</packaging>
-  <name>Camunda Platform - engine plugins - identity - ldap</name>
+  <name>Operaton - engine plugins - identity - ldap</name>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-engine-plugins</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-engine-plugins</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -19,8 +19,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-logging</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-logging</artifactId>
       <version>${project.version}</version>
     </dependency>
 

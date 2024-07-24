@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="test-process" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" exporter="Camunda Modeler" exporterVersion="2.2.4" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" id="test-process" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" exporter="Camunda Modeler" exporterVersion="2.2.4" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <process id="ProcessInstanceAssert-externalTask" name="Test Process" isExecutable="true">
     <sequenceFlow id="SequenceFlow_2" name="" sourceRef="ExternalTask_1" targetRef="ParallelGateway_1" />
     <sequenceFlow id="SequenceFlow_3" name="" sourceRef="ParallelGateway_1" targetRef="ExternalTask_2" />
@@ -8,19 +8,19 @@
     <sequenceFlow id="SequenceFlow_10" name="" sourceRef="ExternalTask_3" targetRef="ExclusiveGateway_1" />
     <sequenceFlow id="SequenceFlow_11" name="" sourceRef="ExclusiveGateway_1" targetRef="ExternalTask_4" />
     <sequenceFlow id="SequenceFlow_8" name="" sourceRef="ExternalTask_4" targetRef="EndEvent_1" />
-    <serviceTask id="ExternalTask_1" camunda:type="external" camunda:topic="External_1">
+    <serviceTask id="ExternalTask_1" operaton:type="external" operaton:topic="External_1">
       <incoming>SequenceFlow_0dziarg</incoming>
       <outgoing>SequenceFlow_2</outgoing>
     </serviceTask>
-    <serviceTask id="ExternalTask_2" camunda:type="external" camunda:topic="External_2">
+    <serviceTask id="ExternalTask_2" operaton:type="external" operaton:topic="External_2">
       <incoming>SequenceFlow_3</incoming>
       <outgoing>SequenceFlow_9</outgoing>
     </serviceTask>
-    <serviceTask id="ExternalTask_3" camunda:type="external" camunda:topic="External_3">
+    <serviceTask id="ExternalTask_3" operaton:type="external" operaton:topic="External_3">
       <incoming>SequenceFlow_4</incoming>
       <outgoing>SequenceFlow_10</outgoing>
     </serviceTask>
-    <serviceTask id="ExternalTask_4" camunda:type="external" camunda:topic="External_4">
+    <serviceTask id="ExternalTask_4" operaton:type="external" operaton:topic="External_4">
       <incoming>SequenceFlow_11</incoming>
       <outgoing>SequenceFlow_8</outgoing>
     </serviceTask>

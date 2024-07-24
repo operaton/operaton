@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>camunda-bpm-assert-qa</artifactId>
+  <artifactId>operaton-bpm-assert-qa</artifactId>
   <packaging>jar</packaging>
   
-  <name>Camunda Platform - QA - Assert</name>
+  <name>Operaton - QA - Assert</name>
   
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-bpm-assert-root</artifactId>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-bpm-assert-root</artifactId>
     <relativePath>../</relativePath>
-    <version>7.22.0-SNAPSHOT</version>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <dependencies>
@@ -29,21 +29,21 @@
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- managed by camunda internal dependencies -->
+    <!-- managed by operaton internal dependencies -->
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-bpm-junit5</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-junit5</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-bpm-assert</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-assert</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>

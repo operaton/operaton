@@ -19,7 +19,7 @@
 
 var template = require('./cam-tasklist-task-detail-form-plugin.html?raw');
 
-var angular = require('camunda-commons-ui/vendor/angular');
+var angular = require('operaton-commons-ui/vendor/angular');
 
 var DEFAULT_OPTIONS = {
   hideCompleteButton: false,

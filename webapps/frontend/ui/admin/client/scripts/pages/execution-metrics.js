@@ -22,7 +22,7 @@ const moment = require('moment');
 const angular = require('angular');
 const Chart = require('chart.js');
 
-const debouncePromiseFactory = require('camunda-bpm-sdk-js').utils
+const debouncePromiseFactory = require('operaton-bpm-sdk-js').utils
   .debouncePromiseFactory;
 const debounceMonthly = debouncePromiseFactory();
 const debounceAnnual = debouncePromiseFactory();

@@ -8,7 +8,7 @@ SET WEBAPPS_PATH=%BASEDIR%webapps
 SET REST_PATH=%BASEDIR%rest
 SET SWAGGER_PATH=%BASEDIR%swaggerui
 SET EXAMPLE_PATH=%BASEDIR%example
-SET APPNAME=Camunda Run
+SET APPNAME=Operaton Run
 
 IF [%~1]==[start] GOTO Startup
 IF [%~1]==[stop] GOTO Stop
@@ -50,7 +50,7 @@ SET JAVA_VERSION=%JAVA_VERSION:"=%
 ECHO Java version is %JAVA_VERSION%
 FOR /f "delims=. tokens=1" %%v in ("%JAVA_VERSION%") do (
   IF %%v LSS %EXPECTED_JAVA_VERSION% (
-    ECHO You must use at least JDK 17 to start Camunda Platform Run.
+    ECHO You must use at least JDK 17 to start Operaton Run.
     GOTO :EOF
   )
 )
@@ -138,7 +138,7 @@ setlocal disabledelayedexpansion
 REM if Swagger UI is enabled but REST is not, warn the user
 IF [%swaggeruiChosen%]==[true] (
   IF [%restChosen%]==[false] (
-    ECHO You did not enable the REST API. Swagger UI will not be able to send any requests to this Camunda Platform Run instance.
+    ECHO You did not enable the REST API. Swagger UI will not be able to send any requests to this Operaton Run instance.
   )
 )
 
@@ -147,10 +147,10 @@ ECHO classpath: %classPath%
 REM start the application
 IF [%detachProcess%]==[true] (
   REM in the background
-  start "%APPNAME%" "%JAVA%" -Dloader.path="%classPath%" -Dcamunda.deploymentDir="%DEPLOYMENTDIR%" %JAVA_OPTS% -jar "%BASEDIR%camunda-bpm-run-core.jar" --spring.config.location=file:"%configuration%"
+  start "%APPNAME%" "%JAVA%" -Dloader.path="%classPath%" -Doperaton.deploymentDir="%DEPLOYMENTDIR%" %JAVA_OPTS% -jar "%BASEDIR%operaton-bpm-run-core.jar" --spring.config.location=file:"%configuration%"
 
 ) ELSE (
-  call "%JAVA%" -Dloader.path="%classPath%" -Dcamunda.deploymentDir="%DEPLOYMENTDIR%" %JAVA_OPTS% -jar "%BASEDIR%camunda-bpm-run-core.jar" --spring.config.location=file:"%configuration%"
+  call "%JAVA%" -Dloader.path="%classPath%" -Doperaton.deploymentDir="%DEPLOYMENTDIR%" %JAVA_OPTS% -jar "%BASEDIR%operaton-bpm-run-core.jar" --spring.config.location=file:"%configuration%"
 )
 
 GOTO End
@@ -159,8 +159,8 @@ GOTO End
 REM remove argument
 SHIFT
 
-REM shut down Camunda Run
-ECHO Camunda Run is shutting down.
+REM shut down Operaton Run
+ECHO Operaton Run is shutting down.
 TASKKILL /FI "WINDOWTITLE eq %APPNAME%"
 
 GOTO End
@@ -169,11 +169,11 @@ GOTO End
 ECHO Usage: run.bat [start^|stop] (options...)
 :ArgsHelp
 ECHO Options:
-ECHO   --webapps    - Enables the Camunda Platform Webapps
+ECHO   --webapps    - Enables the Operaton Webapps
 ECHO   --rest       - Enables the REST API
 ECHO   --swaggerui  - Enables the Swagger UI
 ECHO   --example    - Enables the example application
 ECHO   --production - Applies the production.yaml configuration file
-ECHO   --detached   - Starts Camunda Run as a detached process
+ECHO   --detached   - Starts Operaton Run as a detached process
 
 :End

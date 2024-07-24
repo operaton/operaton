@@ -16,7 +16,7 @@
       <unpack>true</unpack>
       <scope>provided</scope>
       <includes>
-        <include>org.camunda.bpm:camunda-engine-rest-core:jar:tests:*</include>
+        <include>org.operaton.bpm:operaton-engine-rest-core:jar:tests:*</include>
       </includes>
     </dependencySet>
   </dependencySets>

@@ -39,7 +39,7 @@ module.exports = [
         async function createForm() {
           const json = JSON.parse($scope.source);
           const form = new Form({
-            container: $element.find('.camundaForm')[0]
+            container: $element.find('.operatonForm')[0]
           });
           await form.importSchema(json);
           form.setProperty('readOnly', true);

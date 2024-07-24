@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<definitions id="definitions"
+             targetNamespace="http://operaton.org/schema/1.0/bpmn20" 
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:operaton="http://operaton.org/schema/1.0/bpmn">
+  
+  <process id="FormPropertyHandlingProcess" isExecutable="true">
+  
+    <startEvent id="start">
+      <extensionElements>
+        <operaton:formProperty id="speaker" variable="SpeakerName"/>
+        <operaton:formProperty id="duration" type="long"/>
+      </extensionElements>
+    </startEvent>
+
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="wait" />
+    
+    <receiveTask id="wait" />
+
+  </process>
+  
+</definitions>

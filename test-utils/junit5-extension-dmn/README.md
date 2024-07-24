@@ -1,4 +1,4 @@
-# Camunda Platform DMN JUnit 5
+# Operaton DMN JUnit 5
 
 JUnit 5 extension that allows you to inject a DMN engine into your test.
 
@@ -9,8 +9,8 @@ Add the dependency to your pom.xml
 
 ```xml
     <dependency>
-      <groupId>org.camunda.bpm.dmn</groupId>
-      <artifactId>camunda-dmn-junit5</artifactId>
+      <groupId>org.operaton.bpm.dmn</groupId>
+      <artifactId>operaton-dmn-junit5</artifactId>
       <version>7.20.0</version>
       <scope>test</scope>
     </dependency>

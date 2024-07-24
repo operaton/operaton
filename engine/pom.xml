@@ -2,22 +2,22 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <name>Camunda Platform - engine</name>
-  <artifactId>camunda-engine</artifactId>
+  <name>Operaton - engine</name>
+  <artifactId>operaton-engine</artifactId>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-database-settings</artifactId>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
-    <version>7.22.0-SNAPSHOT</version>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <dependencyManagement>
     <dependencies>
 
       <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-core-internal-dependencies</artifactId>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
@@ -44,26 +44,26 @@
 
   <dependencies>
 
-    <!-- camunda dependencies -->
+    <!-- operaton dependencies -->
 
     <dependency>
-      <groupId>org.camunda.bpm.model</groupId>
-      <artifactId>camunda-bpmn-model</artifactId>
+      <groupId>org.operaton.bpm.model</groupId>
+      <artifactId>operaton-bpmn-model</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.model</groupId>
-      <artifactId>camunda-cmmn-model</artifactId>
+      <groupId>org.operaton.bpm.model</groupId>
+      <artifactId>operaton-cmmn-model</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.juel</groupId>
-      <artifactId>camunda-juel</artifactId>
+      <groupId>org.operaton.bpm.juel</groupId>
+      <artifactId>operaton-juel</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.dmn</groupId>
-      <artifactId>camunda-engine-dmn</artifactId>
+      <groupId>org.operaton.bpm.dmn</groupId>
+      <artifactId>operaton-engine-dmn</artifactId>
       <exclusions>
         <!-- these exclusions are needed when building with Maven >= 3.3
           see CAM-11822 for details -->
@@ -87,14 +87,14 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-logging</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-logging</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-typed-values</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-typed-values</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -119,23 +119,23 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.connect</groupId>
-      <artifactId>camunda-connect-core</artifactId>
+      <groupId>org.operaton.connect</groupId>
+      <artifactId>operaton-connect-core</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.connect</groupId>
-      <artifactId>camunda-connect-connectors-all</artifactId>
+      <groupId>org.operaton.connect</groupId>
+      <artifactId>operaton-connect-connectors-all</artifactId>
       <version>${project.version}</version>
       <exclusions>
         <exclusion>
-          <groupId>org.camunda.connect</groupId>
-          <artifactId>camunda-connect-http-client</artifactId>
+          <groupId>org.operaton.connect</groupId>
+          <artifactId>operaton-connect-http-client</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.camunda.connect</groupId>
-          <artifactId>camunda-connect-soap-http-client</artifactId>
+          <groupId>org.operaton.connect</groupId>
+          <artifactId>operaton-connect-soap-http-client</artifactId>
         </exclusion>
       </exclusions>
       <scope>runtime</scope>
@@ -257,15 +257,15 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-testing</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-testing</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-test-utils-testcontainers</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-test-utils-testcontainers</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
@@ -337,8 +337,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-bpm-archunit</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-archunit</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
@@ -358,17 +358,17 @@
     for the license book -->
     <skip-third-party-bom>false</skip-third-party-bom>
 
-    <camunda.artifact>
-      org.camunda.bpm
-    </camunda.artifact>
-    <camunda.osgi.export.pkg>
-      !${camunda.artifact}.engine.variable.*,
-      ${camunda.artifact},
-      ${camunda.artifact}.application.*,
-      ${camunda.artifact}.container.*,
-      ${camunda.artifact}.engine.*
-    </camunda.osgi.export.pkg>
-    <camunda.osgi.import.additional>
+    <operaton.artifact>
+      org.operaton.bpm
+    </operaton.artifact>
+    <operaton.osgi.export.pkg>
+      !${operaton.artifact}.engine.variable.*,
+      ${operaton.artifact},
+      ${operaton.artifact}.application.*,
+      ${operaton.artifact}.container.*,
+      ${operaton.artifact}.engine.*
+    </operaton.osgi.export.pkg>
+    <operaton.osgi.import.additional>
       !com.google.gson.*,
       junit*;resolution:=optional,
       org.junit*;resolution:=optional,
@@ -386,7 +386,7 @@
       org.springframework*;resolution:=optional,
       com.fasterxml*;resolution:=optional,
       org.jboss.vfs*;resolution:=optional
-    </camunda.osgi.import.additional>
+    </operaton.osgi.import.additional>
   </properties>
 
   <build>
@@ -399,7 +399,7 @@
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
         <includes>
-          <include>org/camunda/bpm/engine/product-info.properties</include>
+          <include>org/operaton/bpm/engine/product-info.properties</include>
         </includes>
       </resource>
     </resources>
@@ -411,9 +411,9 @@
         <directory>src/test/resources</directory>
         <filtering>true</filtering>
         <includes>
-          <include>**/camunda.cfg.xml</include>
-          <include>**/*camunda.cfg.xml</include>
-          <include>**/camunda.cfg.*.xml</include>
+          <include>**/operaton.cfg.xml</include>
+          <include>**/*operaton.cfg.xml</include>
+          <include>**/operaton.cfg.*.xml</include>
           <include>testconfig.properties</include>
           <include>database.properties</include>
           <include>**/testcontainers.properties</include>
@@ -436,7 +436,7 @@
             <exclude>%regex[.*(${test.excludes}).*Test.*.class]</exclude>
           </excludes>
           <dependenciesToScan>
-            <dependency>org.camunda.bpm:camunda-bpm-archunit</dependency>
+            <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
       </plugin>
@@ -480,11 +480,11 @@
           <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
           <artifactSet>
             <excludes>
-              <exclude>org.camunda.bpm.model:*</exclude>
-              <exclude>org.camunda.bpm.dmn:*</exclude>
-              <exclude>org.camunda.bpm.juel:*</exclude>
-              <exclude>org.camunda.commons:*</exclude>
-              <exclude>org.camunda.connect:*</exclude>
+              <exclude>org.operaton.bpm.model:*</exclude>
+              <exclude>org.operaton.bpm.dmn:*</exclude>
+              <exclude>org.operaton.bpm.juel:*</exclude>
+              <exclude>org.operaton.commons:*</exclude>
+              <exclude>org.operaton.connect:*</exclude>
               <exclude>org.camunda.feel:*</exclude>
 
               <exclude>org.springframework:*</exclude>
@@ -503,7 +503,7 @@
           <relocations>
             <relocation>
               <pattern>com.google.gson</pattern>
-              <shadedPattern>camundajar.impl.com.google.gson</shadedPattern>
+              <shadedPattern>operatonjar.impl.com.google.gson</shadedPattern>
             </relocation>
           </relocations>
           <transformers>
@@ -526,9 +526,9 @@
               <target>
 
                 <!-- copy all upgrade scripts after 7.15 -->
-                <mkdir dir="target/classes/org/camunda/bpm/engine/db/liquibase/upgrade" />
-                <copy todir="target/classes/org/camunda/bpm/engine/db/liquibase/upgrade">
-                  <fileset dir="target/classes/org/camunda/bpm/engine/db/upgrade" excludes="*_6.*_*,*_7.0_*,*_7.1_*,*_7.2_*,*_7.3_*,*_7.4_*,*_7.5_*,*_7.6_*,*_7.7_*, *_7.8_*,*_7.9_*,*_7.10_*,*_7.11_*,*_7.12_*,*_7.13_*,*_7.14_*,*_7.15_*" />
+                <mkdir dir="target/classes/org/operaton/bpm/engine/db/liquibase/upgrade" />
+                <copy todir="target/classes/org/operaton/bpm/engine/db/liquibase/upgrade">
+                  <fileset dir="target/classes/org/operaton/bpm/engine/db/upgrade" excludes="*_6.*_*,*_7.0_*,*_7.1_*,*_7.2_*,*_7.3_*,*_7.4_*,*_7.5_*,*_7.6_*,*_7.7_*, *_7.8_*,*_7.9_*,*_7.10_*,*_7.11_*,*_7.12_*,*_7.13_*,*_7.14_*,*_7.15_*" />
                 </copy>
 
               </target>
@@ -620,7 +620,7 @@
               </execution>
             </executions>
             <configuration>
-              <mainClass>org.camunda.bpm.engine.impl.db.DbSchemaDrop</mainClass>
+              <mainClass>org.operaton.bpm.engine.impl.db.DbSchemaDrop</mainClass>
               <classpathScope>test</classpathScope>
               <cleanupDaemonThreads>false</cleanupDaemonThreads>
             </configuration>
@@ -675,7 +675,7 @@
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
               <reuseForks>true</reuseForks>
               <systemPropertyVariables>
-                <jdbcUrl>jdbc:h2:mem:camunda_${surefire.forkNumber};DB_CLOSE_DELAY=1000</jdbcUrl>
+                <jdbcUrl>jdbc:h2:mem:operaton_${surefire.forkNumber};DB_CLOSE_DELAY=1000</jdbcUrl>
               </systemPropertyVariables>
             </configuration>
           </plugin>
@@ -753,12 +753,12 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>clirr-maven-plugin</artifactId>
             <configuration>
-              <comparisonVersion>${camunda.version.old}</comparisonVersion>
+              <comparisonVersion>${operaton.version.old}</comparisonVersion>
               <logResults>true</logResults>
               <excludes>
-                <exclude>org/camunda/bpm/*/impl/**</exclude>
-                <exclude>org/camunda/bpm/engine/test/ProcessEngineRule</exclude>
-                <exclude>camundajar/**/*</exclude>
+                <exclude>org/operaton/bpm/*/impl/**</exclude>
+                <exclude>org/operaton/bpm/engine/test/ProcessEngineRule</exclude>
+                <exclude>operatonjar/**/*</exclude>
               </excludes>
             </configuration>
             <executions>
@@ -796,30 +796,30 @@
       <id>check-plugins</id>
       <dependencies>
         <dependency>
-          <groupId>org.camunda.bpm</groupId>
-          <artifactId>camunda-engine-plugin-spin</artifactId>
+          <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine-plugin-spin</artifactId>
         </dependency>
         <dependency>
-          <groupId>org.camunda.spin</groupId>
-          <artifactId>camunda-spin-dataformat-all</artifactId>
+          <groupId>org.operaton.spin</groupId>
+          <artifactId>operaton-spin-dataformat-all</artifactId>
           <version>${project.version}</version>
         </dependency>
         <dependency>
-          <groupId>org.camunda.bpm</groupId>
-          <artifactId>camunda-engine-plugin-connect</artifactId>
+          <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine-plugin-connect</artifactId>
         </dependency>
         <dependency>
-          <groupId>org.camunda.connect</groupId>
-          <artifactId>camunda-connect-connectors-all</artifactId>
+          <groupId>org.operaton.connect</groupId>
+          <artifactId>operaton-connect-connectors-all</artifactId>
           <version>${project.version}</version>
           <exclusions>
             <exclusion>
-              <groupId>org.camunda.connect</groupId>
-              <artifactId>camunda-connect-http-client</artifactId>
+              <groupId>org.operaton.connect</groupId>
+              <artifactId>operaton-connect-http-client</artifactId>
             </exclusion>
             <exclusion>
-              <groupId>org.camunda.connect</groupId>
-              <artifactId>camunda-connect-soap-http-client</artifactId>
+              <groupId>org.operaton.connect</groupId>
+              <artifactId>operaton-connect-soap-http-client</artifactId>
             </exclusion>
           </exclusions>
         </dependency>
@@ -830,15 +830,15 @@
             <artifactId>maven-antrun-plugin</artifactId>
             <executions>
               <execution>
-                <id>copy-camunda-cfg</id>
+                <id>copy-operaton-cfg</id>
                 <phase>process-test-classes</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
                 <configuration>
                   <target>
-                    <echo message="Copying camunda.cfg.plugins.xml to camunda.cfg.xml" />
-                    <copy file="target/test-classes/camunda.cfg.plugins.xml" tofile="target/test-classes/camunda.cfg.xml" overwrite="true" />
+                    <echo message="Copying operaton.cfg.plugins.xml to operaton.cfg.xml" />
+                    <copy file="target/test-classes/operaton.cfg.plugins.xml" tofile="target/test-classes/operaton.cfg.xml" overwrite="true" />
                   </target>
                 </configuration>
               </execution>
@@ -871,7 +871,7 @@
                 </goals>
                 <configuration>
                   <target>
-                    <copy file="target/test-classes/camunda.cfg.prefix.xml" tofile="target/test-classes/camunda.cfg.xml" overwrite="true" />
+                    <copy file="target/test-classes/operaton.cfg.prefix.xml" tofile="target/test-classes/operaton.cfg.xml" overwrite="true" />
                   </target>
                 </configuration>
               </execution>

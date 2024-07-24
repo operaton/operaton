@@ -2,18 +2,18 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.wildfly</groupId>
-    <artifactId>camunda-wildfly</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.wildfly</groupId>
+    <artifactId>operaton-wildfly</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-wildfly-assembly</artifactId>
+  <artifactId>operaton-wildfly-assembly</artifactId>
   <packaging>pom</packaging>
 
-  <name>Camunda Platform - Wildfly Assembly</name>
+  <name>Operaton - Wildfly Assembly</name>
 
   <description>
-    Assembles the Camunda Platform and makes it ready for qa.
+    Assembles the Operaton and makes it ready for qa.
     The assembly is installed to maven later in the reactor, if the integration tests pass successfully
   </description>
   
@@ -33,39 +33,39 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.javaee</groupId>
-      <artifactId>camunda-ejb-client-jakarta</artifactId>
+      <groupId>org.operaton.bpm.javaee</groupId>
+      <artifactId>operaton-ejb-client-jakarta</artifactId>
     </dependency>
     
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.identity</groupId>
-      <artifactId>camunda-identity-ldap</artifactId>
+      <groupId>org.operaton.bpm.identity</groupId>
+      <artifactId>operaton-identity-ldap</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-cdi-jakarta</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-cdi-jakarta</artifactId>
     </dependency>
     
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-spring-6</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-spring-6</artifactId>
     </dependency>
     
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-rest-jakarta</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-jakarta</artifactId>
       <classifier>classes</classifier>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
+      <groupId>org.operaton.bpm</groupId>
       <artifactId>license-book</artifactId>
       <version>${project.version}</version>
       <type>zip</type>
@@ -107,10 +107,10 @@
     </dependency>
 
     <dependency>
-      <!-- this dependency is to make sure that we are executed after camunda-modules 
+      <!-- this dependency is to make sure that we are executed after operaton-modules 
         in the reactor -->
-      <groupId>org.camunda.bpm.wildfly</groupId>
-      <artifactId>camunda-wildfly-modules</artifactId>
+      <groupId>org.operaton.bpm.wildfly</groupId>
+      <artifactId>operaton-wildfly-modules</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>

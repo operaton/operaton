@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/migration/validate-migration-plan/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/migration/validate-migration-plan/index.html -->
 <#macro endpoint_macro docsUrl="">
 {
   <@lib.endpointInfo

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_04y1ds8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.4">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_04y1ds8" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.4">
   <bpmn:process id="spinJava8ServiceProcess" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_110juaz</bpmn:outgoing>
@@ -9,7 +9,7 @@
       <bpmn:incoming>SequenceFlow_13uh5xc</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_13uh5xc" sourceRef="Task_0x8lay6" targetRef="EndEvent_0hgnwnx" />
-    <bpmn:serviceTask id="Task_0x8lay6" name="Spin Service Task" camunda:delegateExpression="${spinJava8DeserializerDelegate}">
+    <bpmn:serviceTask id="Task_0x8lay6" name="Spin Service Task" operaton:delegateExpression="${spinJava8DeserializerDelegate}">
       <bpmn:incoming>SequenceFlow_110juaz</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_13uh5xc</bpmn:outgoing>
     </bpmn:serviceTask>

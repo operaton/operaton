@@ -71,8 +71,8 @@ export default {
   // bpmnJs: {
   //   moddleExtensions: {
   //     // if you have a folder called 'my-custom-moddle' (in the 'cockpit' folder)
-  //     // with a file called 'camunda.json' in it defining the 'camunda' moddle extension
-  //     camunda: 'my-custom-moddle/camunda'
+  //     // with a file called 'operaton.json' in it defining the 'operaton' moddle extension
+  //     operaton: 'my-custom-moddle/operaton'
   //   },
   //   additionalModules: [
   //     // if you have a folder called 'my-custom-module' (in the 'cockpit' folder)

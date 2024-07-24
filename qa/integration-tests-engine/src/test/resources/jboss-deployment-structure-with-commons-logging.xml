@@ -2,8 +2,8 @@
 <jboss-deployment-structure>
   <deployment>
     <dependencies>
-      <module name="org.camunda.bpm.camunda-engine" />
-      <module name="org.camunda.commons.camunda-commons-logging" />
+      <module name="org.operaton.bpm.operaton-engine" />
+      <module name="org.operaton.commons.operaton-commons-logging" />
     </dependencies>
   </deployment>
 </jboss-deployment-structure>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_13zv3w6" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.2">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_13zv3w6" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.2">
   <bpmn:process id="ProcessInstanceAssert-isWaitingAt-AsyncUserTask" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_06hopmz</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_06hopmz" sourceRef="StartEvent_1" targetRef="AsyncUserTask" />
-    <bpmn:userTask id="AsyncUserTask" name="Async User Task" camunda:asyncBefore="true" camunda:asyncAfter="true">
+    <bpmn:userTask id="AsyncUserTask" name="Async User Task" operaton:asyncBefore="true" operaton:asyncAfter="true">
       <bpmn:incoming>Flow_06hopmz</bpmn:incoming>
       <bpmn:outgoing>Flow_19d7wtt</bpmn:outgoing>
     </bpmn:userTask>

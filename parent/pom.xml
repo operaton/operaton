@@ -2,19 +2,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>../</relativePath>
   </parent>
 
-  <artifactId>camunda-parent</artifactId>
-  <name>Camunda Platform - Parent Pom</name>
+  <artifactId>operaton-parent</artifactId>
+  <name>Operaton - Parent Pom</name>
   <inceptionYear>2013</inceptionYear>
   <packaging>pom</packaging>
 
   <description>
-    This pom is the parent of all Camunda Platform projects
+    This pom is the parent of all Operaton projects
   </description>
 
   <properties>
@@ -79,41 +79,41 @@
     <version.npm>8.11.0</version.npm>
 
     <!-- OSGi bundles properties -->
-    <camunda.artifact />
-    <camunda.osgi.import.camunda.spin.version>version="[$(version;==;${camunda.spin.version.clean}),$(version;=+;${camunda.spin.version.clean}))"</camunda.osgi.import.camunda.spin.version>
-    <camunda.osgi.import.camunda.connect.version>version="[$(version;==;${camunda.connect.version.clean}),$(version;=+;${camunda.connect.version.clean}))"</camunda.osgi.import.camunda.connect.version>
-    <camunda.osgi.import.camunda.commons.version>version="[$(version;==;${camunda.commons.version.clean}),$(version;=+;${camunda.commons.version.clean}))"</camunda.osgi.import.camunda.commons.version>
-    <camunda.osgi.import.camunda.version>version="[$(version;==;${camunda.osgi.version.clean}),$(version;=+;${camunda.osgi.version.clean}))"</camunda.osgi.import.camunda.version>
-    <camunda.osgi.import.strict.version>version="[$(version;===;${camunda.osgi.version.clean}),$(version;==+;${camunda.osgi.version.clean}))"</camunda.osgi.import.strict.version>
-    <camunda.osgi.import.default.version>[$(version;==;$(@)),$(version;+;$(@)))</camunda.osgi.import.default.version>
-    <camunda.osgi.import.defaults>
-    </camunda.osgi.import.defaults>
-    <camunda.osgi.import.before.defaults />
-    <camunda.osgi.import.additional />
-    <camunda.osgi.import.pkg>
-      ${camunda.osgi.import.before.defaults},
-      ${camunda.osgi.import.defaults},
-      ${camunda.osgi.import.additional},
+    <operaton.artifact />
+    <operaton.osgi.import.operaton.spin.version>version="[$(version;==;${operaton.spin.version.clean}),$(version;=+;${operaton.spin.version.clean}))"</operaton.osgi.import.operaton.spin.version>
+    <operaton.osgi.import.operaton.connect.version>version="[$(version;==;${operaton.connect.version.clean}),$(version;=+;${operaton.connect.version.clean}))"</operaton.osgi.import.operaton.connect.version>
+    <operaton.osgi.import.operaton.commons.version>version="[$(version;==;${operaton.commons.version.clean}),$(version;=+;${operaton.commons.version.clean}))"</operaton.osgi.import.operaton.commons.version>
+    <operaton.osgi.import.operaton.version>version="[$(version;==;${operaton.osgi.version.clean}),$(version;=+;${operaton.osgi.version.clean}))"</operaton.osgi.import.operaton.version>
+    <operaton.osgi.import.strict.version>version="[$(version;===;${operaton.osgi.version.clean}),$(version;==+;${operaton.osgi.version.clean}))"</operaton.osgi.import.strict.version>
+    <operaton.osgi.import.default.version>[$(version;==;$(@)),$(version;+;$(@)))</operaton.osgi.import.default.version>
+    <operaton.osgi.import.defaults>
+    </operaton.osgi.import.defaults>
+    <operaton.osgi.import.before.defaults />
+    <operaton.osgi.import.additional />
+    <operaton.osgi.import.pkg>
+      ${operaton.osgi.import.before.defaults},
+      ${operaton.osgi.import.defaults},
+      ${operaton.osgi.import.additional},
       *
-    </camunda.osgi.import.pkg>
-    <camunda.osgi.activator />
-    <camunda.osgi.failok>false</camunda.osgi.failok>
-    <camunda.osgi.export>${camunda.osgi.export.pkg};${camunda.osgi.version};-noimport:=true</camunda.osgi.export>
+    </operaton.osgi.import.pkg>
+    <operaton.osgi.activator />
+    <operaton.osgi.failok>false</operaton.osgi.failok>
+    <operaton.osgi.export>${operaton.osgi.export.pkg};${operaton.osgi.version};-noimport:=true</operaton.osgi.export>
     <!--
-    <camunda.osgi.export.pkg>!*.impl;${camunda.artifact}*</camunda.osgi.export.pkg>
-    <camunda.osgi.private.pkg>${camunda.artifact}*.impl</camunda.osgi.private.pkg>
+    <operaton.osgi.export.pkg>!*.impl;${operaton.artifact}*</operaton.osgi.export.pkg>
+    <operaton.osgi.private.pkg>${operaton.artifact}*.impl</operaton.osgi.private.pkg>
     -->
-    <camunda.osgi.export.pkg>${camunda.artifact}*</camunda.osgi.export.pkg>
-    <camunda.osgi.private.pkg />
-    <camunda.osgi.version>version=${project.version}</camunda.osgi.version>
-    <camunda.osgi.split.pkg>-split-package:=first</camunda.osgi.split.pkg>
-    <camunda.osgi.import>${camunda.osgi.import.pkg}</camunda.osgi.import>
-    <camunda.osgi.dynamic />
-    <camunda.osgi.symbolic.name>${camunda.artifact}</camunda.osgi.symbolic.name>
-    <camunda.osgi.exclude.dependencies>false</camunda.osgi.exclude.dependencies>
-    <camunda.osgi.remove.headers>Ignore-Package,Include-Resource,Private-Package,Bundle-DocURL</camunda.osgi.remove.headers>
-    <camunda.osgi.include.resource>{maven-resources}</camunda.osgi.include.resource>
-    <camunda.osgi.embed />
+    <operaton.osgi.export.pkg>${operaton.artifact}*</operaton.osgi.export.pkg>
+    <operaton.osgi.private.pkg />
+    <operaton.osgi.version>version=${project.version}</operaton.osgi.version>
+    <operaton.osgi.split.pkg>-split-package:=first</operaton.osgi.split.pkg>
+    <operaton.osgi.import>${operaton.osgi.import.pkg}</operaton.osgi.import>
+    <operaton.osgi.dynamic />
+    <operaton.osgi.symbolic.name>${operaton.artifact}</operaton.osgi.symbolic.name>
+    <operaton.osgi.exclude.dependencies>false</operaton.osgi.exclude.dependencies>
+    <operaton.osgi.remove.headers>Ignore-Package,Include-Resource,Private-Package,Bundle-DocURL</operaton.osgi.remove.headers>
+    <operaton.osgi.include.resource>{maven-resources}</operaton.osgi.include.resource>
+    <operaton.osgi.embed />
     <plugin.version.maven-bundle>5.1.9</plugin.version.maven-bundle> <!-- compatible with JDK 17 -->
   </properties>
 
@@ -121,8 +121,8 @@
     <dependencies>
 
       <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-bom</artifactId>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-bom</artifactId>
         <version>${project.version}</version>
         <type>pom</type>
         <scope>import</scope>
@@ -209,30 +209,30 @@
           <artifactId>maven-bundle-plugin</artifactId>
           <version>${plugin.version.maven-bundle}</version>
           <configuration>
-           <excludeDependencies>${camunda.osgi.exclude.dependencies}</excludeDependencies>
+           <excludeDependencies>${operaton.osgi.exclude.dependencies}</excludeDependencies>
            <instructions>
              <Bundle-Name>${project.name}</Bundle-Name>
-             <Bundle-SymbolicName>${camunda.osgi.symbolic.name}</Bundle-SymbolicName>
-             <Bundle-Activator>${camunda.osgi.activator}</Bundle-Activator>
-             <Export-Package>${camunda.osgi.export}</Export-Package>
-             <Import-Package>${camunda.osgi.import}</Import-Package>
-             <DynamicImport-Package>${camunda.osgi.dynamic}</DynamicImport-Package>
-             <Private-Package>${camunda.osgi.private.pkg}</Private-Package>
-             <Implementation-Title>camunda</Implementation-Title>
+             <Bundle-SymbolicName>${operaton.osgi.symbolic.name}</Bundle-SymbolicName>
+             <Bundle-Activator>${operaton.osgi.activator}</Bundle-Activator>
+             <Export-Package>${operaton.osgi.export}</Export-Package>
+             <Import-Package>${operaton.osgi.import}</Import-Package>
+             <DynamicImport-Package>${operaton.osgi.dynamic}</DynamicImport-Package>
+             <Private-Package>${operaton.osgi.private.pkg}</Private-Package>
+             <Implementation-Title>operaton</Implementation-Title>
              <Implementation-Version>${project.version}</Implementation-Version>
-             <Include-Resource>${camunda.osgi.include.resource}</Include-Resource>
-             <_versionpolicy>${camunda.osgi.import.default.version}</_versionpolicy>
-             <_removeheaders>${camunda.osgi.remove.headers}</_removeheaders>
-             <_failok>${camunda.osgi.failok}</_failok>
-             <Export-Service>${camunda.osgi.export.service}</Export-Service>
-             <Import-Service>${camunda.osgi.import.service}</Import-Service>
-             <Embed-Dependency>${camunda.osgi.embed}</Embed-Dependency>
+             <Include-Resource>${operaton.osgi.include.resource}</Include-Resource>
+             <_versionpolicy>${operaton.osgi.import.default.version}</_versionpolicy>
+             <_removeheaders>${operaton.osgi.remove.headers}</_removeheaders>
+             <_failok>${operaton.osgi.failok}</_failok>
+             <Export-Service>${operaton.osgi.export.service}</Export-Service>
+             <Import-Service>${operaton.osgi.import.service}</Import-Service>
+             <Embed-Dependency>${operaton.osgi.embed}</Embed-Dependency>
             </instructions>
            <versions>
-            <camunda.osgi.version.clean>${project.version}</camunda.osgi.version.clean>
-            <camunda.connect.version.clean>${project.version}</camunda.connect.version.clean>
-            <camunda.spin.version.clean>${project.version}</camunda.spin.version.clean>
-            <camunda.commons.version.clean>${project.version}</camunda.commons.version.clean>
+            <operaton.osgi.version.clean>${project.version}</operaton.osgi.version.clean>
+            <operaton.connect.version.clean>${project.version}</operaton.connect.version.clean>
+            <operaton.spin.version.clean>${project.version}</operaton.spin.version.clean>
+            <operaton.commons.version.clean>${project.version}</operaton.commons.version.clean>
            </versions>
           </configuration>
         </plugin>
@@ -279,8 +279,8 @@
               <additionalJOption>-Xdoclint:none</additionalJOption>
               <additionalJOption>--ignore-source-errors</additionalJOption>
             </additionalJOptions>
-            <doctitle>Camunda Platform Javadocs ${project.version}</doctitle>
-            <windowtitle>Camunda Platform Javadocs ${project.version}</windowtitle>
+            <doctitle>Operaton Javadocs ${project.version}</doctitle>
+            <windowtitle>Operaton Javadocs ${project.version}</windowtitle>
           </configuration>
         </plugin>
 
@@ -292,8 +292,8 @@
             <rules>
               <jakartaDefaults>true</jakartaDefaults>
               <renames>
-                <rename>jar:file:${org.camunda.bpm:camunda-engine:jar}!/META-INF/jakarta-renames.properties</rename>
-                <rename>jar:file:${org.camunda.bpm:camunda-engine:jar}!/META-INF/camunda-renames.properties</rename>
+                <rename>jar:file:${org.operaton.bpm:operaton-engine:jar}!/META-INF/jakarta-renames.properties</rename>
+                <rename>jar:file:${org.operaton.bpm:operaton-engine:jar}!/META-INF/operaton-renames.properties</rename>
               </renames>
             </rules>
             <classifier>jakarta</classifier>
@@ -352,11 +352,11 @@
   </licenses>
 
   <organization>
-    <name>camunda services GmbH</name>
-    <url>http://www.camunda.com</url>
+    <name>Operaton</name>
+    <url>http://www.operaton.com</url>
   </organization>
 
-  <url>http://www.camunda.org</url>
+  <url>http://www.operaton.org</url>
 </project>
 
 

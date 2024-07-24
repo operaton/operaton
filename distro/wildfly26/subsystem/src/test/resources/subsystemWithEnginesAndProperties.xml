@@ -1,9 +1,9 @@
-<subsystem xmlns="urn:org.camunda.bpm.jboss:1.1">
+<subsystem xmlns="urn:org.operaton.bpm.jboss:1.1">
   <process-engines>
     <process-engine name="__default" default="true">
       <datasource>java:jboss/datasources/ExampleDS</datasource>
       <history-level>audit</history-level>
-      <configuration>org.camunda.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
+      <configuration>org.operaton.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
       <properties>
         <property name="job-acquisition-name">default</property>
         <property name="job-acquisition">default</property>
@@ -13,7 +13,7 @@
     <process-engine  default="false"  name="__test">
       <datasource>java:jboss/datasources/ExampleDS</datasource>
       <history-level>full</history-level>
-      <configuration>org.camunda.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
+      <configuration>org.operaton.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
       <properties>
         <property name="job-acquisition-name">default</property>
       </properties>
@@ -21,12 +21,12 @@
     <process-engine  default="false"  name="__emptyPropertiesTag">
       <datasource>java:jboss/datasources/ExampleDS</datasource>
       <history-level>full</history-level>
-      <configuration>org.camunda.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
+      <configuration>org.operaton.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
     </process-engine>
     <process-engine default="false"  name="__noPropertiesTag">
       <datasource>java:jboss/datasources/ExampleDS</datasource>
       <history-level>full</history-level>
-      <configuration>org.camunda.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
+      <configuration>org.operaton.bpm.container.impl.jboss.config.ManagedJtaProcessEngineConfiguration</configuration>
     </process-engine>
   </process-engines>
 </subsystem>

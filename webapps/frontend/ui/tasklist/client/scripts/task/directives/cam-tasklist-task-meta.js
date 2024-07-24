@@ -20,7 +20,7 @@
 var template = require('./cam-tasklist-task-meta.html?raw');
 var editGroupsFormTemplate = require('./../modals/cam-tasklist-groups-modal.html?raw');
 
-var angular = require('camunda-commons-ui/vendor/angular');
+var angular = require('operaton-commons-ui/vendor/angular');
 
 module.exports = [
   '$uibModal',

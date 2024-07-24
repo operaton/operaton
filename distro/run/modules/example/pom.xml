@@ -3,13 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.run</groupId>
-    <artifactId>camunda-bpm-run-modules</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.run</groupId>
+    <artifactId>operaton-bpm-run-modules</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-bpm-run-modules-example-invoice</artifactId>
-  <name>Camunda Platform - Run - Module Example Invoice</name>
+  <artifactId>operaton-bpm-run-modules-example-invoice</artifactId>
+  <name>Operaton - Run - Module Example Invoice</name>
   
   <properties>
     <!-- generate a bom of compile time dependencies for the license book.
@@ -21,14 +21,14 @@
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.bpm.springboot</groupId>
-      <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+      <groupId>org.operaton.bpm.springboot</groupId>
+      <artifactId>operaton-bpm-spring-boot-starter-webapp</artifactId>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.example</groupId>
-      <artifactId>camunda-example-invoice-jakarta</artifactId>
+      <groupId>org.operaton.bpm.example</groupId>
+      <artifactId>operaton-example-invoice-jakarta</artifactId>
       <version>${project.version}</version>
       <classifier>classes</classifier>
       <scope>provided</scope>
@@ -53,8 +53,8 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.camunda.bpm.example</groupId>
-                  <artifactId>camunda-example-invoice-jakarta</artifactId>
+                  <groupId>org.operaton.bpm.example</groupId>
+                  <artifactId>operaton-example-invoice-jakarta</artifactId>
                   <version>${project.version}</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
@@ -68,11 +68,11 @@
                     </org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
                     <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
                       <pattern>^\Qindex.html\E</pattern>
-                      <replacement>./camunda-invoice/index.html</replacement>
+                      <replacement>./operaton-invoice/index.html</replacement>
                     </org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
                     <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
                       <pattern>^\Qassets/\E</pattern>
-                      <replacement>./camunda-invoice/assets/</replacement>
+                      <replacement>./operaton-invoice/assets/</replacement>
                     </org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
                   </fileMappers>
                 </artifactItem>

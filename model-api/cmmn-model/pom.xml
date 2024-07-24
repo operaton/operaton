@@ -2,29 +2,29 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.model</groupId>
-    <artifactId>camunda-model-apis</artifactId>
+    <groupId>org.operaton.bpm.model</groupId>
+    <artifactId>operaton-model-apis</artifactId>
     <relativePath>../</relativePath>
-    <version>7.22.0-SNAPSHOT</version>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-cmmn-model</artifactId>
+  <artifactId>operaton-cmmn-model</artifactId>
   <packaging>jar</packaging>
 
-  <name>Camunda Platform - CMMN Model API</name>
+  <name>Operaton - CMMN Model API</name>
   <inceptionYear>2014</inceptionYear>
   <properties>
-    <camunda.artifact>org.camunda.bpm.model.cmmn</camunda.artifact>
-    <camunda.osgi.export>
-      !org.camunda.bpm.model.cmmn.schema.*,
-      ${camunda.osgi.export.pkg};${camunda.osgi.version};-noimport:=true
-    </camunda.osgi.export>
+    <operaton.artifact>org.operaton.bpm.model.cmmn</operaton.artifact>
+    <operaton.osgi.export>
+      !org.operaton.bpm.model.cmmn.schema.*,
+      ${operaton.osgi.export.pkg};${operaton.osgi.version};-noimport:=true
+    </operaton.osgi.export>
   </properties>
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.bpm.model</groupId>
-      <artifactId>camunda-xml-model</artifactId>
+      <groupId>org.operaton.bpm.model</groupId>
+      <artifactId>operaton-xml-model</artifactId>
     </dependency>
 
     <dependency>
@@ -40,8 +40,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-bpm-archunit</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-archunit</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
@@ -73,7 +73,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <dependenciesToScan>
-            <dependency>org.camunda.bpm:camunda-bpm-archunit</dependency>
+            <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
           </dependenciesToScan>
         </configuration>
       </plugin>
@@ -93,10 +93,10 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>clirr-maven-plugin</artifactId>
             <configuration>
-              <comparisonVersion>${camunda.version.old}</comparisonVersion>
+              <comparisonVersion>${operaton.version.old}</comparisonVersion>
               <logResults>true</logResults>
               <excludes>
-                <exclude>org/camunda/bpm/model/cmmn/impl/**</exclude>
+                <exclude>org/operaton/bpm/model/cmmn/impl/**</exclude>
               </excludes>
             </configuration>
             <executions>

@@ -12,10 +12,10 @@
  */
 
 /*
- * This is the default environment for using camunda Spin in Groovy applications.
+ * This is the default environment for using operaton Spin in Groovy applications.
  */
 
 /*
  * Bind the Spin S(...) function to the variable S.
  */
-S = org.camunda.spin.Spin.&S
+S = org.operaton.spin.Spin.&S

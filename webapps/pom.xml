@@ -4,16 +4,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-database-settings</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-database-settings</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
     <relativePath>../database</relativePath>
   </parent>
 
-  <artifactId>camunda-webapp-root</artifactId>
-  <groupId>org.camunda.bpm.webapp</groupId>
+  <artifactId>operaton-webapp-root</artifactId>
+  <groupId>org.operaton.bpm.webapp</groupId>
   <packaging>pom</packaging>
-  <name>Camunda Platform - Webapp - Root</name>
+  <name>Operaton - Webapp - Root</name>
 
   <properties>
     <version.jetty>9.4.31.v20200723</version.jetty>
@@ -46,8 +46,8 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-core-internal-dependencies</artifactId>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
         <scope>import</scope>
         <type>pom</type>
@@ -58,14 +58,14 @@
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-logging</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-logging</artifactId>
       <version>${project.version}</version>
       <exclusions>
         <exclusion>
@@ -78,8 +78,8 @@
     <!-- tests -->
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-testing</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-testing</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>

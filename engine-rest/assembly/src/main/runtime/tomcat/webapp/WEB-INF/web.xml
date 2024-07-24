@@ -13,16 +13,16 @@
 
   <!-- rest bootstrap listener -->
   <listener>
-    <listener-class>org.camunda.bpm.engine.rest.impl.web.bootstrap.RestContainerBootstrap</listener-class>
+    <listener-class>org.operaton.bpm.engine.rest.impl.web.bootstrap.RestContainerBootstrap</listener-class>
   </listener>
 
   <listener>
-    <listener-class>org.camunda.bpm.engine.rest.impl.FetchAndLockContextListener</listener-class>
+    <listener-class>org.operaton.bpm.engine.rest.impl.FetchAndLockContextListener</listener-class>
   </listener>
 
   <filter>
     <filter-name>EmptyBodyFilter</filter-name>
-    <filter-class>org.camunda.bpm.engine.rest.filter.EmptyBodyFilter</filter-class>
+    <filter-class>org.operaton.bpm.engine.rest.filter.EmptyBodyFilter</filter-class>
     <async-supported>true</async-supported>
   </filter>
   <filter-mapping>
@@ -32,7 +32,7 @@
 
   <filter>
     <filter-name>CacheControlFilter</filter-name>
-    <filter-class>org.camunda.bpm.engine.rest.filter.CacheControlFilter</filter-class>
+    <filter-class>org.operaton.bpm.engine.rest.filter.CacheControlFilter</filter-class>
     <async-supported>true</async-supported>
   </filter>
   <filter-mapping>
@@ -42,14 +42,14 @@
 
   <!-- Http Basic Authentication Filter -->
   <!-- <filter>
-    <filter-name>camunda-auth</filter-name>
+    <filter-name>operaton-auth</filter-name>
     <filter-class>
-      org.camunda.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter
+      org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter
     </filter-class>
 	<async-supported>true</async-supported>
     <init-param>
       <param-name>authentication-provider</param-name>
-      <param-value>org.camunda.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider</param-value>
+      <param-value>org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider</param-value>
     </init-param>
     <init-param>
 	    <param-name>rest-url-pattern-prefix</param-name>
@@ -58,7 +58,7 @@
   </filter>
 
   <filter-mapping>
-    <filter-name>camunda-auth</filter-name>
+    <filter-name>operaton-auth</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping> -->
 
@@ -67,7 +67,7 @@
     <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServlet30Dispatcher</servlet-class>
     <init-param>
       <param-name>javax.ws.rs.Application</param-name>
-      <param-value>org.camunda.bpm.engine.rest.impl.application.DefaultApplication</param-value>
+      <param-value>org.operaton.bpm.engine.rest.impl.application.DefaultApplication</param-value>
     </init-param>
     <async-supported>true</async-supported>
   </servlet>

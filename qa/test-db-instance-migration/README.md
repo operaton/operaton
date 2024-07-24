@@ -1,7 +1,7 @@
 Instance Migration Tests
 ========================
 
-These modules test scenarios in which process instances are started before upgrading Camunda from a minor version to another minor version and completed after. The tests ensure that object instances persisted in the database tables by the engine in a previous minor version can be successfully processed by succeeding versions. The most common use case is migration of execution trees.
+These modules test scenarios in which process instances are started before upgrading Operaton from a minor version to another minor version and completed after. The tests ensure that object instances persisted in the database tables by the engine in a previous minor version can be successfully processed by succeeding versions. The most common use case is migration of execution trees.
 
 Executing Tests
 ---------------

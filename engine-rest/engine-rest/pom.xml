@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>camunda-engine-rest-core</artifactId>
-  <name>Camunda Platform - engine - REST</name>
+  <artifactId>operaton-engine-rest-core</artifactId>
+  <name>Operaton - engine - REST</name>
   <packaging>jar</packaging>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-engine-rest-root</artifactId>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-engine-rest-root</artifactId>
     <relativePath>../</relativePath>
-    <version>7.22.0-SNAPSHOT</version>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -72,8 +72,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -84,8 +84,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-logging</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-logging</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
@@ -108,16 +108,16 @@
       BOMs must be installed before this module is built
     -->
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-bom</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bom</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-core-internal-dependencies</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-core-internal-dependencies</artifactId>
       <version>${project.version}</version>
       <type>pom</type>
       <scope>test</scope>
@@ -216,8 +216,8 @@
    </dependency>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-testing</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-testing</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
@@ -538,7 +538,7 @@
       <id>wildfly-compatibility</id>
       <properties>
         <!-- Test with Resteasy version used by the oldest
-             Camunda-supported Wildfly/JBoss EAP version.
+             Operaton-supported Wildfly/JBoss EAP version.
              Currently, this is JBoss EAP 7.2. -->
         <version.resteasy>3.6.1.SP2</version.resteasy>
         <version.netty>4.1.42.Final</version.netty>

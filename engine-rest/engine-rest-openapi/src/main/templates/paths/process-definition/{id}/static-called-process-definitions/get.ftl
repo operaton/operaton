@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/process-definition/get-static-called-process-definitions/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/process-definition/get-static-called-process-definitions/index.html -->
 <#macro endpoint_macro docsUrl="">
 {
   <@lib.endpointInfo

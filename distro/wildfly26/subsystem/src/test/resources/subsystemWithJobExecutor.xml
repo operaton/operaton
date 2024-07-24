@@ -1,4 +1,4 @@
-<subsystem xmlns="urn:org.camunda.bpm.jboss:1.1">
+<subsystem xmlns="urn:org.operaton.bpm.jboss:1.1">
 	<job-executor>
 		<thread-pool-name>job-executor-tp</thread-pool-name>
 		<core-threads>5</core-threads>

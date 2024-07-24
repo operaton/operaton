@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="test-process" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" exporter="Camunda Modeler" exporterVersion="5.0.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:operaton="http://operaton.org/schema/1.0/bpmn" id="test-process" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" exporter="Camunda Modeler" exporterVersion="5.0.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <process id="ExternalTaskAssert-localVariables" name="Test Process localVariables" isExecutable="true">
-    <serviceTask id="ExternalTask_1" camunda:type="external" camunda:topic="External_1">
+    <serviceTask id="ExternalTask_1" operaton:type="external" operaton:topic="External_1">
       <extensionElements>
-        <camunda:inputOutput>
-          <camunda:outputParameter name="variable_1">${ local_variable_1 }</camunda:outputParameter>
-        </camunda:inputOutput>
+        <operaton:inputOutput>
+          <operaton:outputParameter name="variable_1">${ local_variable_1 }</operaton:outputParameter>
+        </operaton:inputOutput>
       </extensionElements>
       <incoming>SequenceFlow_0dziarg</incoming>
       <outgoing>SequenceFlow_013elpr</outgoing>
@@ -19,7 +19,7 @@
     </endEvent>
     <sequenceFlow id="SequenceFlow_013elpr" sourceRef="ExternalTask_1" targetRef="Activity_check" />
     <sequenceFlow id="Flow_1ed0jmc" sourceRef="Activity_check" targetRef="EndEvent_1" />
-    <serviceTask id="Activity_check" name="check" camunda:type="external" camunda:topic="Noop">
+    <serviceTask id="Activity_check" name="check" operaton:type="external" operaton:topic="Noop">
       <incoming>SequenceFlow_013elpr</incoming>
       <outgoing>Flow_1ed0jmc</outgoing>
     </serviceTask>

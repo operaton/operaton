@@ -1,0 +1,3 @@
+org.operaton.bpm.client.variable.impl.format.json.JacksonJsonDataFormatProvider
+org.operaton.bpm.client.variable.impl.format.serializable.SerializableDataFormatProvider
+org.operaton.bpm.client.variable.impl.format.xml.DomXmlDataFormatProvider

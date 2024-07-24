@@ -20,7 +20,7 @@
 var Base = require('./../base');
 
 module.exports = Base.extend({
-  url: '/camunda/app/tasklist/default/#/',
+  url: '/operaton/app/tasklist/default/#/',
 
   header: function() {
     return element(by.css('[cam-widget-header]'));

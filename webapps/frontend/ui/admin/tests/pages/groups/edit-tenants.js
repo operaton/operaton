@@ -22,7 +22,7 @@ var Page = require('./edit');
 var formElement = element(by.css('form[name="updateTenantMemberships"]'));
 
 module.exports = Page.extend({
-  url: '/camunda/app/admin/default/#/groups/:group?tab=tenants',
+  url: '/operaton/app/admin/default/#/groups/:group?tab=tenants',
 
   subHeader: function() {
     return formElement.element(by.css('.h4')).getText();

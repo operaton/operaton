@@ -16,7 +16,7 @@
               Instructions are executed immediately and in the order they are provided in this request's body.
               Variables can be provided with every starting instruction.
       
-              The exact semantics of modification can be read about in the [User guide](https://docs.camunda.org/manual/develop/user-guide/process-engine/process-instance-modification/)." />
+              The exact semantics of modification can be read about in the [User guide](https://docs.operaton.org/manual/develop/user-guide/process-engine/process-instance-modification/)." />
 
   "parameters" : [ 
       <@lib.parameter

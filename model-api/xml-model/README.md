@@ -1,4 +1,4 @@
-camunda-xml-model
+operaton-xml-model
 ==================
 
 XML model API written in Java.

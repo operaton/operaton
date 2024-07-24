@@ -16,9 +16,9 @@
 
   <logger name="org.eclipse.jetty" level="info" />
 
-  <logger name="org.camunda" level="info" />
+  <logger name="org.operaton" level="info" />
 
-  <logger name="org.camunda.bpm.engine.test" level="debug" />
+  <logger name="org.operaton.bpm.engine.test" level="debug" />
 
   <!-- Ignore Testcontainers debug logs -->
   <logger name="org.testcontainers" level="info" />

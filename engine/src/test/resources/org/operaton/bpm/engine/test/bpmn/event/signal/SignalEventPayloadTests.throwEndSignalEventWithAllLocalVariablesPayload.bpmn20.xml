@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+	xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+	xmlns:operaton="http://operaton.org/schema/1.0/bpmn" 
+	targetNamespace="Examples">
+	
+	<signal id="alertSignal" name="alert" />
+
+	<process id="throwPayloadSignal" isExecutable="true">
+
+		<startEvent id="start" />
+
+		<sequenceFlow sourceRef="start" targetRef="end" />
+
+		<endEvent id="end">
+			<extensionElements>
+				<operaton:inputOutput>
+					<operaton:inputParameter name="localVar1">localVal1</operaton:inputParameter>
+					<operaton:inputParameter name="localVar2">localVal2</operaton:inputParameter>
+				</operaton:inputOutput>
+			</extensionElements>
+			<signalEventDefinition signalRef="alertSignal">
+				<extensionElements>
+					<operaton:in variables="all" local="true" />
+				</extensionElements>
+			</signalEventDefinition>
+		</endEvent>
+
+	</process>
+
+</definitions>

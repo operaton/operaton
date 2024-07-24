@@ -6,7 +6,7 @@
   <dependencies>
     <module name="javax.api" />
     <module name="sun.jdk" />
-    <module name="org.camunda.spin.camunda-spin-core" />
+    <module name="org.operaton.spin.operaton-spin-core" />
     <module name="org.graalvm.regex.regex" />
     <module name="org.graalvm.truffle.truffle-api" />
     <module name="org.graalvm.sdk.graal-sdk" />

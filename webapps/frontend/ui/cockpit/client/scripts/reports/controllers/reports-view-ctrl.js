@@ -18,7 +18,7 @@
 'use strict';
 
 var template = require('./reports-view.html?raw');
-var angular = require('camunda-commons-ui/vendor/angular');
+var angular = require('operaton-commons-ui/vendor/angular');
 var extend = angular.extend;
 
 var Controller = [

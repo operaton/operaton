@@ -2,17 +2,17 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm</groupId>
-    <artifactId>camunda-parent</artifactId>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
-    <version>7.22.0-SNAPSHOT</version>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.camunda.template-engines</groupId>
-  <artifactId>camunda-template-engines-freemarker</artifactId>
-  <version>7.22.0-SNAPSHOT</version>
+  <groupId>org.operaton.template-engines</groupId>
+  <artifactId>operaton-template-engines-freemarker</artifactId>
+  <version>1.0.0-beta-1-SNAPSHOT</version>
   
-  <name>camunda template engine jsr223 freemarker</name>
+  <name>operaton template engine jsr223 freemarker</name>
 
   <inceptionYear>2014</inceptionYear>
 
@@ -59,7 +59,7 @@
         <version>${maven-bundle-plugin.version}</version>
         <configuration>
           <instructions>
-            <Export-Package>org.camunda.templateengines*</Export-Package>
+            <Export-Package>org.operaton.templateengines*</Export-Package>
           </instructions>
         </configuration>
         <executions>
@@ -99,9 +99,9 @@
   </profiles>
 
   <scm>
-    <url>https://github.com/camunda/camunda-bpm-platform</url>
-    <connection>scm:git:git@github.com:camunda/camunda-bpm-platform.git</connection>
-    <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-platform.git</developerConnection>
+    <url>https://github.com/operaton/operaton</url>
+    <connection>scm:git:git@github.com:operaton/operaton.git</connection>
+    <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 

@@ -12,10 +12,10 @@
  */
 
 /**
- * This is the default environment for using camunda Spin in Javascript applications.
+ * This is the default environment for using operaton Spin in Javascript applications.
  */
 
 /**
  * Bind the Spin S function to the variable S.
  */
-var S = Java.type('org.camunda.spin.Spin').S;
+var S = Java.type('org.operaton.spin.Spin').S;

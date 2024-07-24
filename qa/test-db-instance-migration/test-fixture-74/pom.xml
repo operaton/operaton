@@ -2,20 +2,20 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.qa.upgrade</groupId>
-    <artifactId>camunda-qa-db-instance-migration</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.qa.upgrade</groupId>
+    <artifactId>operaton-qa-db-instance-migration</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-qa-upgrade-test-fixture-74</artifactId>
+  <artifactId>operaton-qa-upgrade-test-fixture-74</artifactId>
   <packaging>jar</packaging>
-  <name>Camunda Platform - QA - upgrade - instance migration - test fixture - 7.4.0</name>
+  <name>Operaton - QA - upgrade - instance migration - test fixture - 7.4.0</name>
 
   <!-- Due to https://issues.apache.org/jira/browse/MRELEASE-799 the release test fails when
      the version is managed in a property. Thus we use explicit versions everywhere. -->
   <properties>
-    <!-- camunda.version.current>${project.version}</camunda.version.current-->
-    <camunda.version.previous>7.3.0</camunda.version.previous>
+    <!-- operaton.version.current>${project.version}</operaton.version.current-->
+    <operaton.version.previous>7.3.0</operaton.version.previous>
     
     <version.h2>${version.h2-v1}</version.h2>
     <version.mariadb>${version.mariadb-v1}</version.mariadb>
@@ -24,8 +24,8 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-bom</artifactId>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-bom</artifactId>
         <version>7.4.0</version>
         <scope>import</scope>
         <type>pom</type>
@@ -35,12 +35,12 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.camunda.bpm.qa.upgrade</groupId>
-      <artifactId>camunda-qa-upgrade-scenario-util</artifactId>
+      <groupId>org.operaton.bpm.qa.upgrade</groupId>
+      <artifactId>operaton-qa-upgrade-scenario-util</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
@@ -82,15 +82,15 @@
 
                     <!-- patches for previous minor version if any -->
                     <!-- 7.3.0 to 7.3.1 -->
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.0_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.1.sql" />
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.0_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.1.sql" />
                     <!-- 7.3.2 to 7.3.3_1 -->
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.2_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.3_1.sql" />
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.2_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.3_1.sql" />
                     <!-- 7.3.2 to 7.3.3_2 -->
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.2_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.3_2.sql" />
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.2_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.3_2.sql" />
 
                     <!-- minor version upgrade from previous to current version -->
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_to_${camunda.current.majorVersion}.${camunda.current.minorVersion}.sql" />
-                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_to_${camunda.current.majorVersion}.${camunda.current.minorVersion}.sql" />
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" />
+                    <touch file="${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" />
                   </target>
                 </configuration>
                 <goals>
@@ -106,14 +106,14 @@
                     <!-- copy mysql upgrade scripts from 7.4 for mariadb as with 7.5 mariadb has own scripts -->
                     <!-- TODO: if 7.3 patch scripts for mysql are created they probably also have to be copied for mariadb -->
 
-                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_to_${camunda.current.majorVersion}.${camunda.current.minorVersion}.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_to_${camunda.current.majorVersion}.${camunda.current.minorVersion}.sql" overwrite="true" />
+                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql" overwrite="true" />
 
                     <!-- 7.3.0 to 7.3.1 -->
-                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.0_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.1.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.0_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.1.sql" overwrite="true" />
+                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.0_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.1.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.0_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.1.sql" overwrite="true" />
                     <!-- 7.3.2 to 7.3.3_1 -->
-                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.2_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.3_1.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.2_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.3_1.sql" overwrite="true" />
+                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.2_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.3_1.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.2_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.3_1.sql" overwrite="true" />
                     <!-- 7.3.2 to 7.3.3_2 -->
-                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.2_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.3_2.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.2_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.3_2.sql" overwrite="true" />
+                    <copy file="${project.build.directory}/scripts-current/sql/upgrade/mysql_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.2_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.3_2.sql" tofile="${project.build.directory}/scripts-current/sql/upgrade/mariadb_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.2_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.3_2.sql" overwrite="true" />
 
                   </target>
                 </configuration>
@@ -138,8 +138,8 @@
                 <configuration>
                   <artifactItems>
                     <artifactItem>
-                      <groupId>org.camunda.bpm.distro</groupId>
-                      <artifactId>camunda-sql-scripts</artifactId>
+                      <groupId>org.operaton.bpm.distro</groupId>
+                      <artifactId>operaton-sql-scripts</artifactId>
                       <version>7.4.0</version>
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
@@ -162,7 +162,7 @@
                   <goal>parse-version</goal>
                 </goals>
                 <configuration>
-                  <propertyPrefix>camunda.current</propertyPrefix>
+                  <propertyPrefix>operaton.current</propertyPrefix>
                   <versionString>7.4.0</versionString>
                 </configuration>
               </execution>
@@ -172,8 +172,8 @@
                   <goal>parse-version</goal>
                 </goals>
                 <configuration>
-                  <propertyPrefix>camunda.previous</propertyPrefix>
-                  <versionString>${camunda.version.previous}</versionString>
+                  <propertyPrefix>operaton.previous</propertyPrefix>
+                  <versionString>${operaton.version.previous}</versionString>
                 </configuration>
               </execution>
             </executions>
@@ -197,11 +197,11 @@
                     <!-- now patch old version of the schema -->
 
                     <!-- 7.3.0 to 7.3.1 -->
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.0_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.1.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.0_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.1.sql</srcFile>
                     <!-- 7.3.2 to 7.3.3_1 -->
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.2_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.3_1.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.2_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.3_1.sql</srcFile>
                     <!-- 7.3.2 to 7.3.3_2 -->
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_patch_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.2_to_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}.3_2.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_patch_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.2_to_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}.3_2.sql</srcFile>
                   </srcFiles>
                 </configuration>
               </execution>
@@ -214,8 +214,8 @@
                 <configuration>
                   <srcFiles>
                     <!-- now perform the schema migrations -->
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_to_${camunda.current.majorVersion}.${camunda.current.minorVersion}.sql</srcFile>
-                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${camunda.previous.majorVersion}.${camunda.previous.minorVersion}_to_${camunda.current.majorVersion}.${camunda.current.minorVersion}.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_engine_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql</srcFile>
+                    <srcFile>${project.build.directory}/scripts-current/sql/upgrade/${database.type}_identity_${operaton.previous.majorVersion}.${operaton.previous.minorVersion}_to_${operaton.current.majorVersion}.${operaton.current.minorVersion}.sql</srcFile>
                   </srcFiles>
                 </configuration>
               </execution>

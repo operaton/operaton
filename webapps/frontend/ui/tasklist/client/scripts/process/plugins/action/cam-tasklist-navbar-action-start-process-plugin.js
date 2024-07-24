@@ -17,7 +17,7 @@
 
 'use strict';
 
-var angular = require('camunda-commons-ui/vendor/angular');
+var angular = require('operaton-commons-ui/vendor/angular');
 
 var startProcessActionTemplate = require('./cam-tasklist-navbar-action-start-process-plugin.html?raw');
 var template = require('./modals/cam-tasklist-process-start-modal.html?raw');

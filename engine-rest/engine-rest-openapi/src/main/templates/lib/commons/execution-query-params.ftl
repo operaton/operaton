@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/execution/get-query/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/execution/get-query/index.html -->
 
 <#assign sortByValues = [
   '"instanceId"',

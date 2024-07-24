@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/variable-instance/get-query/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/variable-instance/get-query/index.html -->
 
 <#assign sortByValues = [
   '"variableName"',

@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.spin</groupId>
-    <artifactId>camunda-spin-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.spin</groupId>
+    <artifactId>operaton-spin-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-spin-dataformat-xml-dom-jakarta</artifactId>
-  <name>camunda Spin - DOM XML data format Jakarta</name>
+  <artifactId>operaton-spin-dataformat-xml-dom-jakarta</artifactId>
+  <name>operaton Spin - DOM XML data format Jakarta</name>
 
   <properties>
     <jaxb-runtime.version>4.0.1</jaxb-runtime.version>
@@ -16,18 +16,18 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.camunda.spin</groupId>
-      <artifactId>camunda-spin-core</artifactId>
+      <groupId>org.operaton.spin</groupId>
+      <artifactId>operaton-spin-core</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-logging</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-logging</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.commons</groupId>
-      <artifactId>camunda-commons-utils</artifactId>
+      <groupId>org.operaton.commons</groupId>
+      <artifactId>operaton-commons-utils</artifactId>
     </dependency>
 
     <dependency>
@@ -105,8 +105,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.spin</groupId>
-      <artifactId>camunda-spin-core</artifactId>
+      <groupId>org.operaton.spin</groupId>
+      <artifactId>operaton-spin-core</artifactId>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

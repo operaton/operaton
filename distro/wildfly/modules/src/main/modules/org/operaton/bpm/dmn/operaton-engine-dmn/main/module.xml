@@ -1,0 +1,21 @@
+<module xmlns="urn:jboss:module:1.0" name="org.operaton.bpm.dmn.operaton-engine-dmn">
+  <resources>
+    <resource-root path="operaton-engine-dmn-@project.version@.jar" />
+  </resources>
+
+  <dependencies>
+    <module name="java.base" />
+    <module name="java.desktop" />
+    <module name="java.scripting"/>
+    <module name="org.joda.time" slot="2.1" />
+    
+    <module name="org.operaton.commons.operaton-commons-utils" />
+    <module name="org.operaton.commons.operaton-commons-logging" />
+    <module name="org.operaton.commons.operaton-commons-typed-values" export="true" />
+    <module name="org.operaton.bpm.juel.operaton-juel" services="import"/>
+    <module name="org.operaton.bpm.model.operaton-dmn-model" />
+    <module name="org.operaton.bpm.dmn.operaton-engine-feel-api" />
+    <module name="org.operaton.bpm.dmn.operaton-engine-feel-juel" />
+    <module name="org.operaton.bpm.dmn.operaton-engine-feel-scala" export="true" />
+  </dependencies>
+</module>

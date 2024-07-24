@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.connect</groupId>
-    <artifactId>camunda-connect-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.connect</groupId>
+    <artifactId>operaton-connect-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-connect-connectors-all</artifactId>
-  <name>Camunda Platform - connect - all connectors in one</name>
+  <artifactId>operaton-connect-connectors-all</artifactId>
+  <name>Operaton - connect - all connectors in one</name>
 
   <properties>
     <!-- We shade artifacts into the jar, so we need to generate 
@@ -19,13 +19,13 @@
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.connect</groupId>
-      <artifactId>camunda-connect-http-client</artifactId>
+      <groupId>org.operaton.connect</groupId>
+      <artifactId>operaton-connect-http-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.connect</groupId>
-      <artifactId>camunda-connect-soap-http-client</artifactId>
+      <groupId>org.operaton.connect</groupId>
+      <artifactId>operaton-connect-soap-http-client</artifactId>
     </dependency>
 
   </dependencies>
@@ -47,8 +47,8 @@
               <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
               <artifactSet>
                 <excludes>
-                  <exclude>org.camunda.commons:*</exclude>
-                  <exclude>org.camunda.connect:camunda-connect-core</exclude>
+                  <exclude>org.operaton.commons:*</exclude>
+                  <exclude>org.operaton.connect:operaton-connect-core</exclude>
                   <exclude>org.slf4j:*</exclude>
                 </excludes>
               </artifactSet>
@@ -73,7 +73,7 @@
           <includeDependencySources>true</includeDependencySources>
           <includeTransitiveDependencySources>true</includeTransitiveDependencySources>
           <dependencySourceIncludes>
-            <include>org.camunda.connect:*</include>
+            <include>org.operaton.connect:*</include>
           </dependencySourceIncludes>
         </configuration>
       </plugin>
@@ -86,7 +86,7 @@
             <Import-Package>
               !connectjar*,
               javax.*;resolution:=optional,
-              org.camunda.commons.logging
+              org.operaton.commons.logging
             </Import-Package>
             <Bundle-ClassPath>.</Bundle-ClassPath>
             <Embed-Dependency>*;inline=true</Embed-Dependency>

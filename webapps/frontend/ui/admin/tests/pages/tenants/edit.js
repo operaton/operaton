@@ -20,7 +20,7 @@
 var Page = require('./../base');
 
 module.exports = Page.extend({
-  url: '/camunda/app/admin/default/#/tenants/:tenant?tab=tenant',
+  url: '/operaton/app/admin/default/#/tenants/:tenant?tab=tenant',
 
   updateTenantButton: function() {
     return element(by.css('[ng-click="updateTenant()"]'));

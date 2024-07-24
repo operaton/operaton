@@ -1,2 +1,2 @@
 # Application Listeners
-org.springframework.context.ApplicationListener=org.camunda.bpm.spring.boot.starter.runlistener.PropertiesListener
+org.springframework.context.ApplicationListener=org.operaton.bpm.spring.boot.starter.runlistener.PropertiesListener

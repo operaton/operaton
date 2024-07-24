@@ -17,7 +17,7 @@
 
 const appRoot = document.querySelector('base').getAttribute('app-root');
 
-const camundaPlugins = [
+const operatonPlugins = [
   'admin-plugin-adminPlugins',
   'admin-plugin-adminEE',
   'cockpit-plugin-cockpitPlugins',
@@ -42,7 +42,7 @@ module.exports = async function loadPlugins(config, appName) {
 
   const JARScripts = window.PLUGIN_PACKAGES.filter(
     el =>
-      !camundaPlugins.includes(el.name) &&
+      !operatonPlugins.includes(el.name) &&
       !el.name.startsWith(`${appName}-plugin-legacy`)
   ).map(el => {
     addCssSource(`${el.location}/plugin.css?bust=${CAMUNDA_VERSION}`); // eslint-disable-line

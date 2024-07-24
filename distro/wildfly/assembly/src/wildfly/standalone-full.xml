@@ -40,7 +40,7 @@
         <extension module="org.wildfly.extension.security.manager"/>
         <extension module="org.wildfly.extension.undertow"/>
         <extension module="org.wildfly.iiop-openjdk"/>
-        <extension module="org.camunda.bpm.wildfly.camunda-wildfly-subsystem"/>
+        <extension module="org.operaton.bpm.wildfly.operaton-wildfly-subsystem"/>
     </extensions>
     <management>
         <audit-log>
@@ -139,7 +139,7 @@
                     <security user-name="sa" password="sa"/>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasources/ProcessEngine" pool-name="ProcessEngine" enabled="true" use-java-context="true" jta="true" use-ccm="true">
-                    <connection-url>jdbc:h2:./camunda-h2-dbs/process-engine;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
+                    <connection-url>jdbc:h2:./operaton-h2-dbs/process-engine;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
                     <driver>h2</driver>
                     <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
                     <security user-name="sa" password="sa"/>
@@ -546,7 +546,7 @@
             <client-config name="Standard-Client-Config"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:weld:5.0"/>
-        <subsystem xmlns="urn:org.camunda.bpm.jboss:1.1">
+        <subsystem xmlns="urn:org.operaton.bpm.jboss:1.1">
             <process-engines>
                 <process-engine name="default" default="true">
                     <datasource>java:jboss/datasources/ProcessEngine</datasource>
@@ -562,33 +562,33 @@
 
                         <!-- plugin enabling Process Application event listener support -->
                         <plugin>
-                            <class>org.camunda.bpm.application.impl.event.ProcessApplicationEventListenerPlugin</class>
+                            <class>org.operaton.bpm.application.impl.event.ProcessApplicationEventListenerPlugin</class>
                         </plugin>
 
-                        <!-- plugin enabling integration of camunda Spin -->
+                        <!-- plugin enabling integration of operaton Spin -->
                         <plugin>
-                            <class>org.camunda.spin.plugin.impl.SpinProcessEnginePlugin</class>
+                            <class>org.operaton.spin.plugin.impl.SpinProcessEnginePlugin</class>
                         </plugin>
 
                         <!-- plugin enabling connect support -->
                         <plugin>
-                            <class>org.camunda.connect.plugin.impl.ConnectProcessEnginePlugin</class>
+                            <class>org.operaton.connect.plugin.impl.ConnectProcessEnginePlugin</class>
                         </plugin>
 
                         <!-- LDAP CONFIGURATION -->
                         <!-- Uncomment this section in order to enable LDAP support for this process engine -->
-                        <!-- Adjust configuration, see ( http://docs.camunda.org/latest/guides/user-guide/#process-engine-identity-service-the-ldap-identity-service ) -->
+                        <!-- Adjust configuration, see ( http://docs.operaton.org/latest/guides/user-guide/#process-engine-identity-service-the-ldap-identity-service ) -->
                         <!--
                             <plugin>
-                                <class>org.camunda.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin</class>
+                                <class>org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin</class>
 
                                 <properties>
                                     <property name="serverUrl">ldaps://localhost:4334/</property>
                                     <property name="acceptUntrustedCertificates">false</property>
-                                    <property name="managerDn">uid=jonny,ou=office-berlin,o=camunda,c=org</property>
+                                    <property name="managerDn">uid=jonny,ou=office-berlin,o=operaton,c=org</property>
                                     <property name="managerPassword">s3cr3t</property>
 
-                                    <property name="baseDn">o=camunda,c=org</property>
+                                    <property name="baseDn">o=operaton,c=org</property>
 
                                     <property name="userSearchBase">ou=employees</property>
                                     <property name="userSearchFilter">(objectclass=person)</property>
@@ -614,7 +614,7 @@
                         <!-- The following plugin allows you to grant administrator authorizations to an existing LDAP user -->
                         <!--
                             <plugin>
-                                <class>org.camunda.bpm.engine.impl.plugin.AdministratorAuthorizationPlugin</class>
+                                <class>org.operaton.bpm.engine.impl.plugin.AdministratorAuthorizationPlugin</class>
                                 <properties>
                                     <property name="administratorUserName">admin</property>
                                 </properties>

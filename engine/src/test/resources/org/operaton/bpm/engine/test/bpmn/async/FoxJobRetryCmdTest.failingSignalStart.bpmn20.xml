@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+  xmlns:fox="http://www.operaton.com/fox"
+  targetNamespace="Examples">
+
+  <signal id="signal" name="abort" />
+
+  <process id="failingSignalProcess" isExecutable="true">
+    
+    <startEvent id="signalStart">
+        <signalEventDefinition signalRef="signal" />
+      </startEvent>
+      
+    <sequenceFlow sourceRef="signalStart" targetRef="failingServiceTask" />
+  
+    <serviceTask id="failingServiceTask" operaton:class="org.operaton.bpm.engine.test.bpmn.async.FailingDelegate"/>
+    
+    <sequenceFlow sourceRef="failingServiceTask" targetRef="end" /> 
+       
+    <endEvent id="end" />
+  </process>
+
+</definitions>

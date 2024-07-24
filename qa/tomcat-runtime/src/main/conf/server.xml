@@ -31,7 +31,7 @@
   <!-- Prevent memory leaks due to use of particular java/javax APIs-->
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
   
-  <Listener className="org.camunda.bpm.container.impl.tomcat.TomcatBpmPlatformBootstrap" />
+  <Listener className="org.operaton.bpm.container.impl.tomcat.TomcatBpmPlatformBootstrap" />
   
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
@@ -68,15 +68,15 @@
               minIdle="5"
               maxIdle="20" />
               
-    <Resource name="global/camunda-bpm-platform/process-engine/ProcessEngineService!org.camunda.bpm.ProcessEngineService" auth="Container"
-              type="org.camunda.bpm.ProcessEngineService"
-              description="Camunda Platform Process Engine Service"
-              factory="org.camunda.bpm.container.impl.jndi.ProcessEngineServiceObjectFactory" />
+    <Resource name="global/operaton-bpm-platform/process-engine/ProcessEngineService!org.operaton.bpm.ProcessEngineService" auth="Container"
+              type="org.operaton.bpm.ProcessEngineService"
+              description="Operaton Process Engine Service"
+              factory="org.operaton.bpm.container.impl.jndi.ProcessEngineServiceObjectFactory" />
               
-    <Resource name="global/camunda-bpm-platform/process-engine/ProcessApplicationService!org.camunda.bpm.ProcessApplicationService" auth="Container"
-              type="org.camunda.bpm.ProcessApplicationService"
-              description="Camunda Platform Process Application Service"
-              factory="org.camunda.bpm.container.impl.jndi.ProcessApplicationServiceObjectFactory" />              
+    <Resource name="global/operaton-bpm-platform/process-engine/ProcessApplicationService!org.operaton.bpm.ProcessApplicationService" auth="Container"
+              type="org.operaton.bpm.ProcessApplicationService"
+              description="Operaton Process Application Service"
+              factory="org.operaton.bpm.container.impl.jndi.ProcessApplicationServiceObjectFactory" />              
               
   </GlobalNamingResources>
 

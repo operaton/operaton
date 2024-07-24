@@ -4,10 +4,10 @@
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
   <mirrors>
     <mirror>
-      <id>camunda-nexus</id>
-      <mirrorOf>camunda-nexus</mirrorOf>
-      <name>Camunda Nexus</name>
-      <url>https://artifacts.camunda.com/artifactory/public/</url>
+      <id>operaton-nexus</id>
+      <mirrorOf>operaton-nexus</mirrorOf>
+      <name>Operaton Nexus</name>
+      <url>https://artifacts.operaton.com/artifactory/public/</url>
     </mirror>
   </mirrors>
 
@@ -28,8 +28,8 @@
         <database.host>localhost</database.host>
         <database.port>50000</database.port>
         <database.name>engine</database.name>
-        <database.username>camunda</database.username>
-        <database.password>camunda</database.password>
+        <database.username>operaton</database.username>
+        <database.password>operaton</database.password>
       </properties>
     </profile>
     <profile>
@@ -48,8 +48,8 @@
         <database.host>localhost</database.host>
         <database.port>3306</database.port>
         <database.name>process-engine</database.name>
-        <database.username>camunda</database.username>
-        <database.password>camunda</database.password>
+        <database.username>operaton</database.username>
+        <database.password>operaton</database.password>
       </properties>
     </profile>
     <profile>
@@ -58,8 +58,8 @@
         <database.host>localhost</database.host>
         <database.port>3306</database.port>
         <database.name>process-engine</database.name>
-        <database.username>camunda</database.username>
-        <database.password>camunda</database.password>
+        <database.username>operaton</database.username>
+        <database.password>operaton</database.password>
       </properties>
     </profile>
     <profile>
@@ -68,8 +68,8 @@
         <database.host>localhost</database.host>
         <database.port>1521</database.port>
         <database.name>orclcdb</database.name>
-        <database.username>camunda</database.username>
-        <database.password>camunda</database.password>
+        <database.username>operaton</database.username>
+        <database.password>operaton</database.password>
       </properties>
     </profile>
     <profile>
@@ -78,8 +78,8 @@
         <database.host>localhost</database.host>
         <database.port>5432</database.port>
         <database.name>process-engine</database.name>
-        <database.username>camunda</database.username>
-        <database.password>camunda</database.password>
+        <database.username>operaton</database.username>
+        <database.password>operaton</database.password>
       </properties>
     </profile>
     <profile>
@@ -88,8 +88,8 @@
         <database.host>localhost</database.host>
         <database.port>1433</database.port>
         <database.name>process-engine</database.name>
-        <database.username>camunda</database.username>
-        <database.password>Camunda-BPM123</database.password>
+        <database.username>operaton</database.username>
+        <database.password>Operaton-BPM123</database.password>
       </properties>
     </profile>
     <profile>

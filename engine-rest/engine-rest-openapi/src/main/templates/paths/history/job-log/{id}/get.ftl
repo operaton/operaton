@@ -1,4 +1,4 @@
-<#-- Generated From File: camunda-docs-manual/public/reference/rest/history/job-log/get-job-log/index.html -->
+<#-- Generated From File: operaton-docs-manual/public/reference/rest/history/job-log/get-job-log/index.html -->
 <#macro endpoint_macro docsUrl="">
 {
   <@lib.endpointInfo

@@ -1,34 +1,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <!-- FIXME -->
   <parent>
-    <groupId>org.camunda</groupId>
-    <artifactId>camunda-bpm-release-parent</artifactId>
-    <version>2.3.0</version>
+    <groupId>org.operaton</groupId>
+    <artifactId>operaton-release-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <!-- do not remove empty tag - http://jira.codehaus.org/browse/MNG-4687 -->
     <relativePath />
   </parent>
 
-  <groupId>org.camunda.bpm</groupId>
-  <artifactId>camunda-root</artifactId>
-  <version>7.22.0-SNAPSHOT</version>
+  <groupId>org.operaton.bpm</groupId>
+  <artifactId>operaton-root</artifactId>
+  <version>1.0.0-beta-1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Camunda Platform - Root Pom</name>
+  <name>Operaton - Root Pom</name>
   <inceptionYear>2013</inceptionYear>
 
   <description>
     This pom defines the modules that make up the build.
-    The parent pom for all Camunda Platform projects can be found in the parent directory relative to this file.
+    The parent pom for all Operaton projects can be found in the parent directory relative to this file.
   </description>
 
   <properties>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
 
-    <!-- These properties are used in both the BOM as well as camunda-parent and subprojects -->
+    <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
     <version.mybatis>3.5.15</version.mybatis>
     <version.joda-time>2.12.5</version.joda-time>
     <version.uuid-generator>4.3.0</version.uuid-generator>
     <version.feel-scala>1.17.5</version.feel-scala>
+    <version.java>11</version.java>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
   <build>
@@ -98,7 +102,7 @@
         <module>distro/jboss</module>
         <module>distro/tomcat</module>
         <module>distro/sql-script</module>
-        <module>distro/run</module>
+        <!-- module>distro/run</module -->
 
         <module>clients/java</module>
 
@@ -122,7 +126,7 @@
         <module>distro/license-book</module>
         <module>distro/jboss</module>
         <module>distro/tomcat</module>
-        <module>distro/run</module>
+        <!-- module>distro/run</module -->
       </modules>
     </profile>
 
@@ -139,8 +143,8 @@
                 <additionalJOption>-Xdoclint:none</additionalJOption>
                 <additionalJOption>--ignore-source-errors</additionalJOption>
               </additionalJOptions>
-              <doctitle>Camunda Platform Javadocs ${project.version}</doctitle>
-              <windowtitle>Camunda Platform Javadocs ${project.version}</windowtitle>
+              <doctitle>Operaton Javadocs ${project.version}</doctitle>
+              <windowtitle>Operaton Javadocs ${project.version}</windowtitle>
             </configuration>
           </plugin>
         </plugins>
@@ -186,7 +190,7 @@
     <profile>
       <id>distro-wildfly</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
+        <activeByDefault>false</activeByDefault>
       </activation>
       <modules>
         <module>javaee/ejb-client</module>
@@ -213,7 +217,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <module>distro/run</module>
+        <!-- module>distro/run</module -->
       </modules>
     </profile>
 
@@ -317,18 +321,6 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-    <repository>
-      <!-- Required for local builds by community users on master branch -->
-      <id>camunda-public-repository</id>
-      <name>Camunda Platform Maven Repository</name>
-      <url>https://artifacts.camunda.com/artifactory/public/</url>
-    </repository>
-    <repository>
-      <!-- Required for local builds by developers on maintainance branches -->
-      <id>camunda-nexus</id>
-      <name>Camunda Nexus</name>
-      <url>https://artifacts.camunda.com/artifactory/internal</url>
-    </repository>
   </repositories>
 
   <licenses>
@@ -339,25 +331,25 @@
   </licenses>
 
   <organization>
-    <name>camunda services GmbH</name>
-    <url>http://www.camunda.com</url>
+    <name>Operaton</name>
+    <url>http://www.operaton.com</url>
   </organization>
 
-  <url>http://www.camunda.org</url>
+  <url>http://www.operaton.org</url>
 
   <developers>
     <developer>
-      <id>camunda.org</id>
-      <name>Camunda Platform Community</name>
-      <organization>camunda.org</organization>
-      <organizationUrl>http://camunda.org</organizationUrl>
+      <id>operaton.org</id>
+      <name>Operaton Community</name>
+      <organization>operaton.org</organization>
+      <organizationUrl>http://operaton.org</organizationUrl>
     </developer>
   </developers>
 
   <scm>
-    <url>https://github.com/camunda/camunda-bpm-platform</url>
-    <connection>scm:git:git@github.com:camunda/camunda-bpm-platform.git</connection>
-    <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-platform.git</developerConnection>
+    <url>https://github.com/operaton/operaton</url>
+    <connection>scm:git:git@github.com:operaton/operaton.git</connection>
+    <developerConnection>scm:git:git@github.com:operaton/operaton.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
@@ -365,5 +357,13 @@
     <system>Jira</system>
     <url>https://app.camunda.com/jira/browse/CAM/</url>
   </issueManagement>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>lambda-snapshots</id>
+      <url>https://nexus.lambdaschmiede.com/repository/maven-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+  
 
 </project>

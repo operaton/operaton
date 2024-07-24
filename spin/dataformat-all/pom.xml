@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.spin</groupId>
-    <artifactId>camunda-spin-root</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.spin</groupId>
+    <artifactId>operaton-spin-root</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-spin-dataformat-all</artifactId>
-  <name>camunda Spin - all dataformats in one</name>
+  <artifactId>operaton-spin-dataformat-all</artifactId>
+  <name>operaton Spin - all dataformats in one</name>
 
   <properties>
     <!-- We shade artifacts into the jar, so we need to generate 
@@ -21,13 +21,13 @@
   <dependencies>
 
     <dependency>
-      <groupId>org.camunda.spin</groupId>
-      <artifactId>camunda-spin-dataformat-json-jackson</artifactId>
+      <groupId>org.operaton.spin</groupId>
+      <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.spin</groupId>
-      <artifactId>camunda-spin-dataformat-xml-dom</artifactId>
+      <groupId>org.operaton.spin</groupId>
+      <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
     </dependency>
 
     <dependency>
@@ -60,8 +60,8 @@
               <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
               <artifactSet>
                 <excludes>
-                  <exclude>org.camunda.commons:*</exclude>
-                  <exclude>org.camunda.spin:camunda-spin-core</exclude>
+                  <exclude>org.operaton.commons:*</exclude>
+                  <exclude>org.operaton.spin:operaton-spin-core</exclude>
                   <exclude>org.slf4j:*</exclude>
                 </excludes>
               </artifactSet>
@@ -136,7 +136,7 @@
         <configuration>
           <includeDependencySources>true</includeDependencySources>
           <includeTransitiveDependencySources>true</includeTransitiveDependencySources>
-          <dependencySourceIncludes><include>org.camunda.spin:*</include></dependencySourceIncludes>
+          <dependencySourceIncludes><include>org.operaton.spin:*</include></dependencySourceIncludes>
           <additionalDependencies>
            <additionalDependency>
              <groupId>junit</groupId>
@@ -164,8 +164,8 @@
               !net.minidev.json*,
               !org.codehaus.jackson*,
               org.slf4j,
-              org.camunda.commons.utils,
-              org.camunda.commons.logging,
+              org.operaton.commons.utils,
+              org.operaton.commons.logging,
               *
             </Import-Package>
             <Bundle-ClassPath>.</Bundle-ClassPath>

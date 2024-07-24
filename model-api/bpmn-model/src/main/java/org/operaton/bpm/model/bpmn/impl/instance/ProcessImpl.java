@@ -1,0 +1,361 @@
+/*
+ * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+ * under one or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information regarding copyright
+ * ownership. Camunda licenses this file to you under the Apache License,
+ * Version 2.0; you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.operaton.bpm.model.bpmn.impl.instance;
+
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_IS_CLOSED;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_IS_EXECUTABLE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_PROCESS_TYPE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_PROCESS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CANDIDATE_STARTER_GROUPS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CANDIDATE_STARTER_USERS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_HISTORY_TIME_TO_LIVE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_IS_STARTABLE_IN_TASKLIST;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_JOB_PRIORITY;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_TASK_PRIORITY;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_VERSION_TAG;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
+
+import java.util.Collection;
+import java.util.List;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import org.operaton.bpm.model.bpmn.ProcessType;
+import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
+import org.operaton.bpm.model.bpmn.instance.Artifact;
+import org.operaton.bpm.model.bpmn.instance.Auditing;
+import org.operaton.bpm.model.bpmn.instance.CallableElement;
+import org.operaton.bpm.model.bpmn.instance.CorrelationSubscription;
+import org.operaton.bpm.model.bpmn.instance.FlowElement;
+import org.operaton.bpm.model.bpmn.instance.LaneSet;
+import org.operaton.bpm.model.bpmn.instance.Monitoring;
+import org.operaton.bpm.model.bpmn.instance.Process;
+import org.operaton.bpm.model.bpmn.instance.Property;
+import org.operaton.bpm.model.bpmn.instance.ResourceRole;
+import org.operaton.bpm.model.xml.ModelBuilder;
+import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
+import org.operaton.bpm.model.xml.impl.util.StringUtil;
+import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
+import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
+import org.operaton.bpm.model.xml.type.attribute.Attribute;
+import org.operaton.bpm.model.xml.type.child.ChildElement;
+import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
+import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
+import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
+
+/**
+ * The BPMN process element
+ *
+ * @author Daniel Meyer
+ * @author Sebastian Menski
+ */
+public class ProcessImpl extends CallableElementImpl implements Process {
+
+  public static final String DEFAULT_HISTORY_TIME_TO_LIVE = "P180D";
+
+  protected static Attribute<ProcessType> processTypeAttribute;
+  protected static Attribute<Boolean> isClosedAttribute;
+  protected static Attribute<Boolean> isExecutableAttribute;
+  // TODO: definitionalCollaborationRef
+  protected static ChildElement<Auditing> auditingChild;
+  protected static ChildElement<Monitoring> monitoringChild;
+  protected static ChildElementCollection<Property> propertyCollection;
+  protected static ChildElementCollection<LaneSet> laneSetCollection;
+  protected static ChildElementCollection<FlowElement> flowElementCollection;
+  protected static ChildElementCollection<Artifact> artifactCollection;
+  protected static ChildElementCollection<ResourceRole> resourceRoleCollection;
+  protected static ChildElementCollection<CorrelationSubscription> correlationSubscriptionCollection;
+  protected static ElementReferenceCollection<Process, Supports> supportsCollection;
+
+  /** operaton extensions */
+
+  protected static Attribute<String> operatonCandidateStarterGroupsAttribute;
+  protected static Attribute<String> operatonCandidateStarterUsersAttribute;
+  protected static Attribute<String> operatonJobPriorityAttribute;
+  protected static Attribute<String> operatonTaskPriorityAttribute;
+  protected static Attribute<String> operatonHistoryTimeToLiveAttribute;
+  protected static Attribute<Boolean> operatonIsStartableInTasklistAttribute;
+  protected static Attribute<String> operatonVersionTagAttribute;
+
+  public static void registerType(ModelBuilder modelBuilder) {
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Process.class, BPMN_ELEMENT_PROCESS)
+      .namespaceUri(BPMN20_NS)
+      .extendsType(CallableElement.class)
+      .instanceProvider(new ModelTypeInstanceProvider<Process>() {
+        public Process newInstance(ModelTypeInstanceContext instanceContext) {
+          return new ProcessImpl(instanceContext);
+        }
+      });
+
+    processTypeAttribute = typeBuilder.enumAttribute(BPMN_ATTRIBUTE_PROCESS_TYPE, ProcessType.class)
+      .defaultValue(ProcessType.None)
+      .build();
+
+    isClosedAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_IS_CLOSED)
+      .defaultValue(false)
+      .build();
+
+    isExecutableAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_IS_EXECUTABLE)
+      .build();
+
+    // TODO: definitionalCollaborationRef
+
+    SequenceBuilder sequenceBuilder = typeBuilder.sequence();
+
+    auditingChild = sequenceBuilder.element(Auditing.class)
+      .build();
+
+    monitoringChild = sequenceBuilder.element(Monitoring.class)
+      .build();
+
+    propertyCollection = sequenceBuilder.elementCollection(Property.class)
+      .build();
+
+    laneSetCollection = sequenceBuilder.elementCollection(LaneSet.class)
+      .build();
+
+    flowElementCollection = sequenceBuilder.elementCollection(FlowElement.class)
+      .build();
+
+    artifactCollection = sequenceBuilder.elementCollection(Artifact.class)
+      .build();
+
+    resourceRoleCollection = sequenceBuilder.elementCollection(ResourceRole.class)
+      .build();
+
+    correlationSubscriptionCollection = sequenceBuilder.elementCollection(CorrelationSubscription.class)
+      .build();
+
+    supportsCollection = sequenceBuilder.elementCollection(Supports.class)
+      .qNameElementReferenceCollection(Process.class)
+      .build();
+
+    /** operaton extensions */
+
+    operatonCandidateStarterGroupsAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CANDIDATE_STARTER_GROUPS)
+      .namespace(OPERATON_NS)
+      .build();
+
+    operatonCandidateStarterUsersAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CANDIDATE_STARTER_USERS)
+      .namespace(OPERATON_NS)
+      .build();
+
+    operatonJobPriorityAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_JOB_PRIORITY)
+      .namespace(OPERATON_NS)
+      .build();
+
+    operatonTaskPriorityAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_TASK_PRIORITY)
+      .namespace(OPERATON_NS)
+      .build();
+
+    operatonHistoryTimeToLiveAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
+      .namespace(OPERATON_NS)
+      .build();
+
+    operatonIsStartableInTasklistAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_IS_STARTABLE_IN_TASKLIST)
+      .defaultValue(true)
+      .namespace(OPERATON_NS)
+      .build();
+
+    operatonVersionTagAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VERSION_TAG)
+      .namespace(OPERATON_NS)
+      .build();
+
+    typeBuilder.build();
+  }
+
+  public ProcessImpl(ModelTypeInstanceContext context) {
+    super(context);
+  }
+
+  @Override
+  public ProcessBuilder builder() {
+    return new ProcessBuilder((BpmnModelInstance) modelInstance, this);
+  }
+
+  public ProcessType getProcessType() {
+    return processTypeAttribute.getValue(this);
+  }
+
+  public void setProcessType(ProcessType processType) {
+    processTypeAttribute.setValue(this, processType);
+  }
+
+  public boolean isClosed() {
+    return isClosedAttribute.getValue(this);
+  }
+
+  public void setClosed(boolean closed) {
+    isClosedAttribute.setValue(this, closed);
+  }
+
+  public boolean isExecutable() {
+    return isExecutableAttribute.getValue(this);
+  }
+
+  public void setExecutable(boolean executable) {
+    isExecutableAttribute.setValue(this, executable);
+  }
+
+  public Auditing getAuditing() {
+    return auditingChild.getChild(this);
+  }
+
+  public void setAuditing(Auditing auditing) {
+    auditingChild.setChild(this, auditing);
+  }
+
+  public Monitoring getMonitoring() {
+    return monitoringChild.getChild(this);
+  }
+
+  public void setMonitoring(Monitoring monitoring) {
+    monitoringChild.setChild(this, monitoring);
+  }
+
+  public Collection<Property> getProperties() {
+    return propertyCollection.get(this);
+  }
+
+  public Collection<LaneSet> getLaneSets() {
+    return laneSetCollection.get(this);
+  }
+
+  public Collection<FlowElement> getFlowElements() {
+    return flowElementCollection.get(this);
+  }
+
+  public Collection<Artifact> getArtifacts() {
+    return artifactCollection.get(this);
+  }
+
+  public Collection<CorrelationSubscription> getCorrelationSubscriptions() {
+    return correlationSubscriptionCollection.get(this);
+  }
+
+  public Collection<ResourceRole> getResourceRoles() {
+    return resourceRoleCollection.get(this);
+  }
+
+  public Collection<Process> getSupports() {
+    return supportsCollection.getReferenceTargetElements(this);
+  }
+
+  /** operaton extensions */
+
+  public String getOperatonCandidateStarterGroups() {
+    return operatonCandidateStarterGroupsAttribute.getValue(this);
+  }
+
+  public void setOperatonCandidateStarterGroups(String operatonCandidateStarterGroups) {
+    operatonCandidateStarterGroupsAttribute.setValue(this, operatonCandidateStarterGroups);
+  }
+
+  public List<String> getOperatonCandidateStarterGroupsList() {
+    String groupsString = operatonCandidateStarterGroupsAttribute.getValue(this);
+    return StringUtil.splitCommaSeparatedList(groupsString);
+  }
+
+  public void setOperatonCandidateStarterGroupsList(List<String> operatonCandidateStarterGroupsList) {
+    String candidateStarterGroups = StringUtil.joinCommaSeparatedList(operatonCandidateStarterGroupsList);
+    operatonCandidateStarterGroupsAttribute.setValue(this, candidateStarterGroups);
+  }
+
+  public String getOperatonCandidateStarterUsers() {
+    return operatonCandidateStarterUsersAttribute.getValue(this);
+  }
+
+  public void setOperatonCandidateStarterUsers(String operatonCandidateStarterUsers) {
+    operatonCandidateStarterUsersAttribute.setValue(this, operatonCandidateStarterUsers);
+  }
+
+  public List<String> getOperatonCandidateStarterUsersList() {
+    String candidateStarterUsers = operatonCandidateStarterUsersAttribute.getValue(this);
+    return StringUtil.splitCommaSeparatedList(candidateStarterUsers);
+  }
+
+  public void setOperatonCandidateStarterUsersList(List<String> operatonCandidateStarterUsersList) {
+    String candidateStarterUsers = StringUtil.joinCommaSeparatedList(operatonCandidateStarterUsersList);
+    operatonCandidateStarterUsersAttribute.setValue(this, candidateStarterUsers);
+  }
+
+  public String getOperatonJobPriority() {
+    return operatonJobPriorityAttribute.getValue(this);
+  }
+
+  public void setOperatonJobPriority(String jobPriority) {
+    operatonJobPriorityAttribute.setValue(this, jobPriority);
+  }
+
+  @Override
+  public String getOperatonTaskPriority() {
+    return operatonTaskPriorityAttribute.getValue(this);
+  }
+
+  @Override
+  public void setOperatonTaskPriority(String taskPriority) {
+    operatonTaskPriorityAttribute.setValue(this, taskPriority);
+  }
+
+  @Override
+  public Integer getOperatonHistoryTimeToLive() {
+    String ttl = getOperatonHistoryTimeToLiveString();
+    if (ttl != null) {
+      return Integer.parseInt(ttl);
+    }
+    return null;
+  }
+
+  @Override
+  public void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
+    var value = historyTimeToLive == null ? null : String.valueOf(historyTimeToLive);
+    setOperatonHistoryTimeToLiveString(value);
+  }
+
+  @Override
+  public String getOperatonHistoryTimeToLiveString() {
+    return operatonHistoryTimeToLiveAttribute.getValue(this);
+  }
+
+  @Override
+  public void setOperatonHistoryTimeToLiveString(String historyTimeToLive) {
+    if (historyTimeToLive == null) {
+      operatonHistoryTimeToLiveAttribute.removeAttribute(this);
+    } else {
+      operatonHistoryTimeToLiveAttribute.setValue(this, historyTimeToLive);
+    }
+  }
+
+  @Override
+  public Boolean isOperatonStartableInTasklist() {
+    return operatonIsStartableInTasklistAttribute.getValue(this);
+  }
+
+  @Override
+  public void setOperatonIsStartableInTasklist(Boolean isStartableInTasklist) {
+    operatonIsStartableInTasklistAttribute.setValue(this, isStartableInTasklist);
+  }
+
+  @Override
+  public String getOperatonVersionTag() {
+    return operatonVersionTagAttribute.getValue(this);
+  }
+
+  @Override
+  public void setOperatonVersionTag(String versionTag) {
+    operatonVersionTagAttribute.setValue(this, versionTag);
+  }
+}

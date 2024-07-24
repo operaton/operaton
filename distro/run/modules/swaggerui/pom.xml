@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.run</groupId>
-    <artifactId>camunda-bpm-run-modules</artifactId>
-    <version>7.22.0-SNAPSHOT</version>
+    <groupId>org.operaton.bpm.run</groupId>
+    <artifactId>operaton-bpm-run-modules</artifactId>
+    <version>1.0.0-beta-1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-bpm-run-modules-swaggerui</artifactId>
-  <name>camunda Platform - Run - Module Swagger UI</name>
+  <artifactId>operaton-bpm-run-modules-swaggerui</artifactId>
+  <name>operaton Platform - Run - Module Swagger UI</name>
   <packaging>jar</packaging>
 
   <properties>
@@ -35,8 +35,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm</groupId>
-      <artifactId>camunda-engine-rest-openapi</artifactId>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest-openapi</artifactId>
       <version>${project.version}</version>
     </dependency>
 

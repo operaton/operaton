@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE foo [<!ELEMENT bpmn:incoming ANY >
+  <!ENTITY xxe SYSTEM "./file.txt" >]>
+
+<animals xmlns="http://operaton.org/animals"
+  xmlns:tns="http://operaton.org/animals"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://operaton.org/animals ../Testmodel.xsd ">
+
+  <bird id="timmy" gender="Male" >
+    <guardEgg>egg1 egg2 &xxe;</guardEgg>
+    <guardEgg>egg3</guardEgg>
+  </bird>
+</animals>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<definitions id="_7f0c94c0-2a22-445d-b4b7-4fd181e08248"
+                  xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL"
+                  xmlns:operaton="http://operaton.org/schema/1.0/cmmn"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  targetNamespace="Examples">
+  <case id="case" name="Case">
+
+    <casePlanModel id="CasePlanModel_1">
+
+      <extensionElements>
+        <operaton:caseExecutionListener event="create" class="org.operaton.bpm.engine.test.cmmn.listener.FieldInjectionCaseExecutionListener">
+
+          <operaton:field name="greeter" stringValue="The Case" />
+          <operaton:field name="helloWorld">
+            <operaton:string>Hello World</operaton:string>
+          </operaton:field>
+          <operaton:field name="prefix" expression="${'operaton'.substring(0,3)}" />
+          <operaton:field name="suffix">
+            <operaton:expression>${'operaton'.substring(3,7)}</operaton:expression>
+          </operaton:field>
+
+        </operaton:caseExecutionListener>
+
+      </extensionElements>
+
+      <planItem id="PI_HumanTask_1" definitionRef="HumanTask_1" />
+      <humanTask id="HumanTask_1" name="A HumanTask" />
+
+    </casePlanModel>
+  </case>
+
+</definitions>

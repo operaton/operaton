@@ -9,7 +9,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-bpm-assert-root</artifactId>
     <relativePath>../</relativePath>
-    <version>1.0.0-beta-1-SNAPSHOT</version>
+    <version>1.0.0-beta-1</version>
   </parent>
 
   <dependencies>

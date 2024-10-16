@@ -12,7 +12,7 @@
 
   <groupId>org.operaton.bpm</groupId>
   <artifactId>operaton-root</artifactId>
-  <version>1.0.0-beta-1-SNAPSHOT</version>
+  <version>1.0.0-beta-1</version>
   <packaging>pom</packaging>
   <name>Operaton - Root Pom</name>
   <inceptionYear>2013</inceptionYear>
@@ -357,13 +357,5 @@
     <system>Jira</system>
     <url>https://app.camunda.com/jira/browse/CAM/</url>
   </issueManagement>
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>lambda-snapshots</id>
-      <url>https://nexus.lambdaschmiede.com/repository/maven-snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-  
 
 </project>

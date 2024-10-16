@@ -9,6 +9,10 @@ OPERATON is a native BPMN 2.0 process engine that runs inside the Java Virtual M
 - User Forum: https://forum.operaton.org/
 - Issue Tracker: https://github.com/operaton/operaton/issues
 
+### This is a fork of the Camunda 7 BPM platform
+
+We have not removed the old issue links and they still lead to Camunda's JIRA or the GitHub repo.
+
 ## Components
 
 OPERATON provides a rich set of components centered around the BPM lifecycle.
@@ -50,4 +54,4 @@ To run the tests in this repository, please see our [testing tips and tricks](TE
 
 The source files in this repository are made available under the [Apache License Version 2.0](./LICENSE).
 
-OPERATON uses and includes third-party dependencies published under various licenses. By downloading and using OPERATON artifacts, you agree to their terms and conditions. Refer to our [licens-book.txt](./distro/license-book/src/main/resources/license-book.txt) for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.
+OPERATON uses and includes third-party dependencies published under various licenses. By downloading and using OPERATON artifacts, you agree to their terms and conditions. Refer to our [license-book.txt](./distro/license-book/src/main/resources/license-book.txt) for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.

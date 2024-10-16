@@ -13,6 +13,12 @@ OPERATON is a native BPMN 2.0 process engine that runs inside the Java Virtual M
 
 We have not removed the old issue links and they still lead to Camunda's JIRA or the GitHub repo.
 
+### What we plan to do and where we are going
+Take a look at our [Roadmap](https://www.operaton.org/en/#roadmap)
+
+### Want to talk to us or other people around OPERATON?
+Visit our [Forum](https://forum.operaton.org)
+
 ## Components
 
 OPERATON provides a rich set of components centered around the BPM lifecycle.

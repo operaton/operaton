@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 
 /**
  * NOTE: copied from
- * <a href="https://github.com/operaton/operaton/blob/master/qa/integration-tests-webapps/integration-tests/src/test/java/org/operaton/bpm/AbstractWebIntegrationTest.java">platform</a>,
+ * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/test/java/org/operaton/bpm/AbstractWebIntegrationTest.java">platform</a>,
  * might be removed with https://jira.operaton.com/browse/CAM-11379
  */
 public abstract class AbstractWebIT {

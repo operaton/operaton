@@ -43,7 +43,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
 /**
  * NOTE:
  * copied from
- * <a href="https://github.com/operaton/operaton/blob/master/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/LoginIT.java">platform</a>
+ * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/LoginIT.java">platform</a>
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
  * and <code>@Parameters</code> for different setups, might be removed with https://jira.operaton.com/browse/CAM-11379
  */

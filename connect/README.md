@@ -23,7 +23,7 @@ process engine and standalone usage via API. Please see the [official documentat
 
 # Contributing
 
-Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/master/CONTRIBUTING.md) for how to contribute to this repository.
+Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/main/CONTRIBUTING.md) for how to contribute to this repository.
 
 
 # License:
@@ -32,4 +32,4 @@ The source files in this repository are made available under the <a href="../LIC
 
 
 
-[CONTRIBUTING.md]: https://github.com/operaton/operaton/blob/master/CONTRIBUTING.md
+[CONTRIBUTING.md]: https://github.com/operaton/operaton/blob/main/CONTRIBUTING.md

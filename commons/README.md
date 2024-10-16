@@ -48,7 +48,7 @@ Java JRE 11+ is required.
 
 ## Contributing
 
-Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/master/CONTRIBUTING.md) for how to contribute to this repository.
+Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/main/CONTRIBUTING.md) for how to contribute to this repository.
 
 
 ## License:

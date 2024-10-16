@@ -96,7 +96,7 @@ You are __more than welcome__ to take part on the development of this project!
 
 Clone the repository, add, fix or improve and send us a pull request.
 But please take care about the commit messages, [our conventions can be found
-here](https://github.com/operaton/operaton/blob/master/CONTRIBUTING.md).
+here](https://github.com/operaton/operaton/blob/main/CONTRIBUTING.md).
 
 #### Coding style guide
 

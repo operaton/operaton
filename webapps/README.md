@@ -57,7 +57,7 @@ You need [node.js](http://nodejs.org) >= 17 and npm.
 
 #### Adjusting Maven Settings
 
-See https://github.com/operaton/operaton/blob/master/CONTRIBUTING.md#build-from-source
+See https://github.com/operaton/operaton/blob/main/CONTRIBUTING.md#build-from-source
 
 #### Using Webpack
 
@@ -126,7 +126,7 @@ The supported browsers are:
 
 ## Contributing
 
-Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/master/CONTRIBUTING.md) for how to contribute to this repository.
+Have a look at our [contribution guide](https://github.com/operaton/operaton/blob/main/CONTRIBUTING.md) for how to contribute to this repository.
 
 
 ## Help and support

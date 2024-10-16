@@ -59,7 +59,7 @@ public class DomXmlDataFormatWriterTest {
 
 
   // this is what execution.setVariable("test", spinXml); does
-  // see https://github.com/operaton/operaton/blob/master/engine-plugins/spin-plugin/src/main/java/org/operaton/spin/plugin/impl/SpinValueSerializer.java
+  // see https://github.com/operaton/operaton/blob/main/engine-plugins/spin-plugin/src/main/java/org/operaton/spin/plugin/impl/SpinValueSerializer.java
   private byte[] serializeValue(SpinXmlElement spinXml) throws UnsupportedEncodingException {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");

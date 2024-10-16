@@ -38,7 +38,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * NOTE:
  * copied from
- * <a href="https://github.com/operaton/operaton/blob/master/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/PluginsRootResourceIT.java">platform</a>
+ * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/PluginsRootResourceIT.java">platform</a>
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
  * and changed  <code>appBasePath</code> to <code>APP_BASE_PATH</code>, might be removed with https://jira.operaton.com/browse/CAM-11379
  */

@@ -49,7 +49,6 @@
 
 <!--   <logger name="org.operaton.bpm.engine.metrics" level="debug" /> -->
 <!--   <logger name="org.operaton.bpm.engine.util" level="debug" /> -->
-<!--   <logger name="org.operaton.bpm.engine.telemetry" level="debug" /> -->
 
 <!--   <logger name="org.operaton.bpm.application" level="debug" /> -->
 <!--   <logger name="org.operaton.bpm.container" level="debug" /> -->

@@ -34,8 +34,7 @@
 
     <property name="enforceHistoryTimeToLive" value="false" />
 
-    <!-- telemetry configuration -->
-    <property name="telemetryReporterActivate" value="false"/>
+
   </bean>
 
 </beans>

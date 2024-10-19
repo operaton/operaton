@@ -22,15 +22,16 @@ import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.deployment.DiscoverBpmPlatformPluginsStep;
+import org.operaton.bpm.container.impl.deployment.PlatformXmlStartProcessEnginesStep;
 import org.operaton.bpm.container.impl.deployment.StopProcessApplicationsStep;
 import org.operaton.bpm.container.impl.deployment.StopProcessEnginesStep;
 import org.operaton.bpm.container.impl.deployment.UnregisterBpmPlatformPluginsStep;
 import org.operaton.bpm.container.impl.deployment.jobexecutor.StartJobExecutorStep;
 import org.operaton.bpm.container.impl.deployment.jobexecutor.StopJobExecutorStep;
 import org.operaton.bpm.container.impl.ejb.deployment.EjbJarParsePlatformXmlStep;
-import org.operaton.bpm.container.impl.ejb.deployment.EjbPlatformXmlStartProcessEnginesStep;
 import org.operaton.bpm.container.impl.ejb.deployment.StartJcaExecutorServiceStep;
 import org.operaton.bpm.container.impl.ejb.deployment.StopJcaExecutorServiceStep;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -71,7 +72,7 @@ public class EjbBpmPlatformBootstrap {
       .addStep(new DiscoverBpmPlatformPluginsStep())
       .addStep(new StartJcaExecutorServiceStep(executorServiceBean))
       .addStep(new StartJobExecutorStep())
-      .addStep(new EjbPlatformXmlStartProcessEnginesStep())
+      .addStep(new PlatformXmlStartProcessEnginesStep())
       .execute();
 
     processEngineService = containerDelegate.getProcessEngineService();

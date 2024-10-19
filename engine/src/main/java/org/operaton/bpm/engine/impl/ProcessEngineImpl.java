@@ -43,7 +43,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
-import org.operaton.bpm.engine.impl.telemetry.reporter.TelemetryReporter;
 import org.operaton.bpm.engine.impl.util.CompositeCondition;
 
 /**
@@ -169,11 +168,6 @@ public class ProcessEngineImpl implements ProcessEngine {
 
     if(processEngineConfiguration.isMetricsEnabled()) {
       processEngineConfiguration.getDbMetricsReporter().stop();
-    }
-
-    TelemetryReporter telemetryReporter = processEngineConfiguration.getTelemetryReporter();
-    if (telemetryReporter != null) {
-      telemetryReporter.stop();
     }
 
     if ((jobExecutor != null)) {

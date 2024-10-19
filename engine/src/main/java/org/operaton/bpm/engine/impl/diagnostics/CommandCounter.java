@@ -14,17 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.container.impl.ejb.deployment;
+package org.operaton.bpm.engine.impl.diagnostics;
 
-import org.operaton.bpm.container.impl.deployment.PlatformXmlStartProcessEnginesStep;
-import org.operaton.bpm.container.impl.deployment.StartProcessEngineStep;
-import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class EjbPlatformXmlStartProcessEnginesStep extends PlatformXmlStartProcessEnginesStep {
+public class CommandCounter {
 
-  @Override
-  protected StartProcessEngineStep createStartProcessEngineStep(ProcessEngineXml parsedProcessEngine) {
-    return new EjbStartProcessEngineStep(parsedProcessEngine);
+  protected String name;
+  protected AtomicLong count = new AtomicLong(0);
+
+  public CommandCounter(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+
+  public void mark() {
+    count.incrementAndGet();
+  }
+
+  public void mark(long times) {
+    count.addAndGet(times);
+  }
+
+  public long get() {
+    return count.get();
   }
 
 }

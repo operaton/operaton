@@ -1014,7 +1014,6 @@ public abstract class MockProvider {
   public static final InternalsImpl EXAMPLE_TELEMETRY_INTERNALS = new InternalsImpl(EXAMPLE_TELEMETRY_DATABASE,
       EXAMPLE_TELEMETRY_SERVER, EXAMPLE_TELEMETRY_LICENSE, EXAMPLE_TELEMETRY_JDK);
   static {
-    EXAMPLE_TELEMETRY_INTERNALS.setTelemetryEnabled(false);
     EXAMPLE_TELEMETRY_INTERNALS.setOperatonIntegration(
         Stream.of("spring-boot-starter", "operaton-bpm-run").collect(Collectors.toCollection(HashSet::new)));
     EXAMPLE_TELEMETRY_INTERNALS

@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.impl.cfg.BeansConfigurationHelper;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.impl.telemetry.TelemetryRegistry;
 import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
 import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
 
@@ -411,8 +410,6 @@ public abstract class ProcessEngineConfiguration {
 
   /** An unique installation identifier */
   protected String installationId;
-
-  protected TelemetryRegistry telemetryRegistry;
 
   /**
    * On failing activities we can skip output mapping. This might be helpful if output mapping uses variables that might not
@@ -1053,15 +1050,6 @@ public abstract class ProcessEngineConfiguration {
 
   public ProcessEngineConfiguration setInstallationId(String installationId) {
     this.installationId = installationId;
-    return this;
-  }
-
-  public TelemetryRegistry getTelemetryRegistry() {
-    return telemetryRegistry;
-  }
-
-  public ProcessEngineConfiguration setTelemetryRegistry(TelemetryRegistry telemetryRegistry) {
-    this.telemetryRegistry = telemetryRegistry;
     return this;
   }
 

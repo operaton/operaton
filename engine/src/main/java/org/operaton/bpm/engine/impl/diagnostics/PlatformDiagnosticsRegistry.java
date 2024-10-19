@@ -14,14 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.impl.telemetry;
+package org.operaton.bpm.engine.impl.diagnostics;
 
-public class OperatonIntegration {
+import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
 
-  public static final String SPRING_BOOT_STARTER = "spring-boot-starter";
-  public static final String CAMUNDA_BPM_RUN = "operaton-bpm-run";
-  public static final String WILDFLY_SUBSYSTEM = "wildfly-subsystem";
-  public static final String JBOSS_SUBSYSTEM = "jboss-subsystem";
-  public static final String CAMUNDA_EJB_SERVICE = "operaton-ejb-service";
+public class PlatformDiagnosticsRegistry {
 
+  protected static ApplicationServerImpl applicationServer;
+
+  public static synchronized ApplicationServerImpl getApplicationServer() {
+    return applicationServer;
+  }
+
+  public static synchronized void setApplicationServer(String applicationServerVersion) {
+    if (applicationServer == null) {
+      applicationServer = new ApplicationServerImpl(applicationServerVersion);
+    }
+  }
+
+  public static synchronized void clear() {
+    applicationServer = null;
+  }
 }

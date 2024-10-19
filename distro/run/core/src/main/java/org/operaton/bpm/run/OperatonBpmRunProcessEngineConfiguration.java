@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.telemetry.OperatonIntegration;
+import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;

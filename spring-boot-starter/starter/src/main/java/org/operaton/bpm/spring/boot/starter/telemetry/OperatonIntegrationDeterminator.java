@@ -20,7 +20,7 @@ import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.telemetry.OperatonIntegration;
+import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -31,6 +31,7 @@ public class OperatonIntegrationDeterminator implements InitializingBean {
   @Autowired
   protected ProcessEngine processEngine;
 
+  @Override
   public void afterPropertiesSet() throws Exception {
     ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
 

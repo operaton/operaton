@@ -61,6 +61,17 @@ public class ScalaFeelEngine implements FeelEngine {
     feelEngine = buildFeelEngine(customFunctionTransformer, compositeValueMapper);
   }
 
+    /**
+   * Evaluates a simple expression using the provided expression string and variable context.
+   * Returns the result of the evaluation as type T.
+   * If the evaluation fails, an EvaluationException is thrown with the error message.
+   *
+   * @param expression the expression to evaluate
+   * @param variableContext the context containing variables for the expression evaluation
+   * @param <T> the type of the evaluation result
+   * @return the result of the evaluation as type T
+   * @throws EvaluationException if the evaluation fails
+   */
   public <T> T evaluateSimpleExpression(String expression, VariableContext variableContext) {
 
     CustomContext context = new CustomContext() {
@@ -86,6 +97,14 @@ public class ScalaFeelEngine implements FeelEngine {
     }
   }
 
+    /**
+   * Evaluates a simple unary test expression with the given input variable and variable context.
+   * 
+   * @param expression the unary test expression to evaluate
+   * @param inputVariable the input variable to use in the evaluation
+   * @param variableContext the variable context to use in the evaluation
+   * @return true if the evaluation result is true, false otherwise
+   */
   public boolean evaluateSimpleUnaryTests(String expression,
                                           String inputVariable,
                                           VariableContext variableContext) {
@@ -119,6 +138,11 @@ public class ScalaFeelEngine implements FeelEngine {
     }
   }
 
+    /**
+   * Retrieves a list of CustomValueMapper instances, including a JavaValueMapper and a SpinValueMapper if available.
+   * 
+   * @return List of CustomValueMapper instances
+   */
   protected List<CustomValueMapper> getValueMappers() {
     SpinValueMapperFactory spinValueMapperFactory = new SpinValueMapperFactory();
 
@@ -134,6 +158,12 @@ public class ScalaFeelEngine implements FeelEngine {
     }
   }
 
+    /**
+   * Converts the specified elements into a Scala List.
+   * 
+   * @param elements the elements to be converted
+   * @return a Scala List containing the elements
+   */
   @SafeVarargs
   protected final <T> List<T> toScalaList(T... elements) {
     java.util.List<T> listAsJava = Arrays.asList(elements);
@@ -141,10 +171,24 @@ public class ScalaFeelEngine implements FeelEngine {
     return toList(listAsJava);
   }
 
+    /**
+   * Converts a Java List to a Scala List and returns it
+   * 
+   * @param list the Java List to be converted
+   * @return the converted Scala List
+   */
   protected <T> List<T> toList(java.util.List list) {
     return ListHasAsScala(list).asScala().toList();
   }
 
+    /**
+   * Builds a FEEL (Friendly Enough Expression Language) engine with the provided custom function transformer
+   * and composite value mapper.
+   *
+   * @param transformer the custom function transformer to be used by the engine
+   * @param valueMapper the composite value mapper to be used by the engine
+   * @return a FEEL engine with the specified transformer and value mapper
+   */
   protected org.camunda.feel.FeelEngine buildFeelEngine(CustomFunctionTransformer transformer,
                                                         CompositeValueMapper valueMapper) {
     return new Builder()

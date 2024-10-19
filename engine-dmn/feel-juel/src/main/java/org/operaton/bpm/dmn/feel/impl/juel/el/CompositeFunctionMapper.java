@@ -30,6 +30,14 @@ public class CompositeFunctionMapper extends FunctionMapper {
 
   protected List<FunctionMapper> functionMappers = new ArrayList<>();
 
+    /**
+   * Resolves a function by searching through a list of FunctionMappers for the given prefix and local name.
+   * 
+   * @param prefix the prefix of the function
+   * @param localName the local name of the function
+   * @return the Method object representing the resolved function
+   * @throws UnknownFunctionException if the function cannot be resolved
+   */
   public Method resolveFunction(String prefix, String localName) {
     for (FunctionMapper functionMapper : functionMappers) {
       Method method = functionMapper.resolveFunction(prefix, localName);
@@ -40,14 +48,29 @@ public class CompositeFunctionMapper extends FunctionMapper {
     throw LOG.unknownFunction(prefix, localName);
   }
 
+    /**
+   * Sets the list of function mappers for this object.
+   * 
+   * @param functionMappers the list of FunctionMapper objects to set
+   */
   public void setFunctionMappers(List<FunctionMapper> functionMappers) {
     this.functionMappers = functionMappers;
   }
 
+    /**
+   * Adds a FunctionMapper to the list of function mappers.
+   * 
+   * @param functionMapper the FunctionMapper to add
+   */
   public void add(FunctionMapper functionMapper) {
     functionMappers.add(functionMapper);
   }
 
+    /**
+   * Removes the specified FunctionMapper from the list of function mappers.
+   *
+   * @param functionMapper the FunctionMapper to be removed
+   */
   public void remove(FunctionMapper functionMapper) {
     functionMappers.remove(functionMapper);
   }

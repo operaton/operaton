@@ -89,61 +89,101 @@ public class VariableContextScriptBindings implements Bindings {
     return wrappedBindings.put(name, value);
   }
 
+    /**
+   * Returns a set view of the mappings contained in this object's binding map.
+   *
+   * @return a set view of the mappings contained in this object's binding map
+   */
   public Set<Entry<String, Object>> entrySet() {
     return calculateBindingMap().entrySet();
   }
 
+    /**
+   * Returns a set containing all the keys in the binding map.
+   *
+   * @return a set of strings representing the keys in the binding map
+   */
   public Set<String> keySet() {
     return calculateBindingMap().keySet();
   }
 
+    /**
+   * Returns the size of the binding map calculated by the method calculateBindingMap.
+   */
   public int size() {
     return calculateBindingMap().size();
   }
 
+    /**
+   * Returns a collection of values from the binding map.
+   *
+   * @return a collection of values from the binding map
+   */
   public Collection<Object> values() {
     return calculateBindingMap().values();
   }
 
+    /**
+   * Copies all of the mappings from the specified map to this map.
+   * 
+   * @param toMerge the map containing key-value pairs to be merged with this map
+   */
   public void putAll(Map< ? extends String, ?> toMerge) {
     for (Entry<? extends String, ?> entry : toMerge.entrySet()) {
       put(entry.getKey(), entry.getValue());
     }
   }
 
+    /**
+   * Removes the mapping for a key from this map if it is present.
+   * 
+   * @param key the key whose mapping is to be removed from the map
+   * @return the previous value associated with key, or null if there was no mapping for key
+   */
   public Object remove(Object key) {
     return wrappedBindings.remove(key);
   }
 
+    /**
+   * Clears the wrapped bindings.
+   */
   public void clear() {
     wrappedBindings.clear();
   }
 
+    /**
+   * Returns true if the calculated binding map contains the specified value.
+   * 
+   * @param value the value to check for
+   * @return true if the value is found in the calculated binding map, false otherwise
+   */
   public boolean containsValue(Object value) {
     return calculateBindingMap().containsValue(value);
   }
 
+    /**
+  * Checks if the binding map is empty.
+  * 
+  * @return true if the binding map is empty, false otherwise
+  */
   public boolean isEmpty() {
     return calculateBindingMap().isEmpty();
   }
 
+    /**
+   * Calculates the binding map by iterating over the variable context and wrapped bindings,
+   * unpacking the values and adding them to the map.
+   * 
+   * @return the binding map containing variable names and their corresponding values
+   */
   protected Map<String, Object> calculateBindingMap() {
 
-    Map<String, Object> bindingMap = new HashMap<String, Object>();
-
-    Set<String> keySet = variableContext.keySet();
-    for (String variableName : keySet) {
-      bindingMap.put(variableName, unpack(variableContext.resolve(variableName)));
-    }
-
-    Set<Entry<String, Object>> wrappedBindingsEntries = wrappedBindings.entrySet();
-    for (Entry<String, Object> entry : wrappedBindingsEntries) {
-      bindingMap.put(entry.getKey(), entry.getValue());
-    }
-
-    return bindingMap;
-  }
-
+    /**
+   * Unpacks the value from a TypedValue object if it is not null.
+   *
+   * @param resolvedValue the TypedValue object to unpack
+   * @return the unpacked value if resolvedValue is not null, otherwise returns null
+   */
   protected Object unpack(TypedValue resolvedValue) {
     if(resolvedValue != null) {
       return resolvedValue.getValue();
@@ -151,6 +191,13 @@ public class VariableContextScriptBindings implements Bindings {
     return null;
   }
 
+    /**
+   * Wraps the given bindings and variable context into a new VariableContextScriptBindings object.
+   * 
+   * @param wrappedBindings the bindings to wrap
+   * @param variableContext the variable context to wrap
+   * @return a new VariableContextScriptBindings object with the given bindings and variable context
+   */
   public static VariableContextScriptBindings wrap(Bindings wrappedBindings, VariableContext variableContext) {
     return new VariableContextScriptBindings(wrappedBindings, variableContext);
   }

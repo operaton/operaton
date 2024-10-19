@@ -34,6 +34,10 @@ import static org.assertj.core.api.Assertions.*;
  */
 public class DefaultScriptEngineResolverTest {
 
+    /**
+   * Tests the caching behavior of the script engine resolver by ensuring that the script engine is only created once
+   * when requested multiple times for the same script language.
+   */
   @Test
   public void testCacheScriptEngine() {
     String scriptLang = "hipster-script";

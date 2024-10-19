@@ -32,18 +32,27 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
 
   public static final String RESULT_TEST_DMN = "ReturnBlankTableOutputAsNull.dmn";
 
+    /**
+   * Configures the DMN engine to return blank table output as null.
+   */
   @Before
   public void configure() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) dmnEngine.getConfiguration();
     configuration.setReturnBlankTableOutputAsNull(true);
   }
 
+    /**
+   * Resets the default DMN engine configuration by setting the flag to return blank table output as null to false.
+   */
   @After
   public void reset() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) dmnEngine.getConfiguration();
     configuration.setReturnBlankTableOutputAsNull(false);
   }
 
+    /**
+   * Test method to verify that null is returned when the expression is null.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void shouldReturnNullWhenExpressionIsNull() {
@@ -58,6 +67,9 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
       .containsOnly(entry("output", null));
   }
 
+    /**
+   * Test method to verify that the decision engine returns null when the text tag is empty.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void shouldReturnNullWhenTextTagEmpty() {
@@ -72,20 +84,26 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
       .containsOnly(entry("output", null));
   }
 
+    /**
+   * This method tests that the decision engine returns an empty result when evaluating a decision with a specific input value.
+   */
   @Test
-  @DecisionResource(resource = RESULT_TEST_DMN)
-  public void shouldReturnEmpty() {
-    // given
+    @DecisionResource(resource = RESULT_TEST_DMN)
+    public void shouldReturnEmpty() {
+      // given
+  
+      // when
+      DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision, Variables.putValue("name", "C"));
+  
+      // then
+      assertThat(decisionResult).hasSize(1);
+      assertThat(decisionResult.getSingleResult().getEntryMap())
+        .containsOnly(entry("output", ""));
+    }
 
-    // when
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision, Variables.putValue("name", "C"));
-
-    // then
-    assertThat(decisionResult).hasSize(1);
-    assertThat(decisionResult.getSingleResult().getEntryMap())
-      .containsOnly(entry("output", ""));
-  }
-
+    /**
+   * Test method to verify that the method returns null when the output entry is empty.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void shouldReturnNullWhenOutputEntryEmpty() {

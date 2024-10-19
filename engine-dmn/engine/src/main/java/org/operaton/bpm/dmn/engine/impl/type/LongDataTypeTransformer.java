@@ -29,6 +29,13 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class LongDataTypeTransformer implements DmnDataTypeTransformer {
 
+    /**
+   * Transforms the given value into a TypedValue based on its type.
+   *
+   * @param value the value to transform
+   * @return the transformed TypedValue
+   * @throws IllegalArgumentException if the value is not a Number or String
+   */
   @Override
   public TypedValue transform(Object value) throws IllegalArgumentException {
     if (value instanceof Number) {
@@ -44,6 +51,13 @@ public class LongDataTypeTransformer implements DmnDataTypeTransformer {
     }
   }
 
+    /**
+   * Transforms a Number object into a long value if it is of type Long.
+   * 
+   * @param value the Number object to transform
+   * @return the long value of the Number object
+   * @throws IllegalArgumentException if the Number object is not of type Long
+   */
   protected long transformNumber(Number value) {
     if(isLong(value)) {
       return value.longValue();
@@ -52,11 +66,23 @@ public class LongDataTypeTransformer implements DmnDataTypeTransformer {
     }
   }
 
+    /**
+   * Checks if the given number is a long value without any decimal places.
+   * 
+   * @param value the Number to be checked
+   * @return true if the Number is a long value, false otherwise
+   */
   protected boolean isLong(Number value) {
     double doubleValue = value.doubleValue();
     return doubleValue == (long) doubleValue;
   }
 
+    /**
+   * Parses a given string value to a long data type.
+   * 
+   * @param value the string value to be parsed
+   * @return the long value parsed from the input string
+   */
   protected long transformString(String value) {
     return Long.parseLong(value);
   }

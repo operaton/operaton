@@ -34,12 +34,20 @@ public class EvaluateDecisionTest extends DmnEngineTest {
   public static final String DMN12_NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/dmn12/NoInput.dmn";
   public static final String DMN13_NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/dmn13/NoInput.dmn";
 
+    /**
+   * Returns a new instance of DefaultDmnEngineConfiguration with FEEL legacy behavior enabled.
+   *
+   * @return the DmnEngineConfiguration with FEEL legacy behavior enabled
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     return new DefaultDmnEngineConfiguration()
       .enableFeelLegacyBehavior(true);
   }
 
+    /**
+   * Test method to evaluate a rule without input and verify the result.
+   */
   @Test
   @DecisionResource(resource = NO_INPUT_DMN)
   public void shouldEvaluateRuleWithoutInput() {
@@ -48,6 +56,11 @@ public class EvaluateDecisionTest extends DmnEngineTest {
       .hasSingleEntry("ok");
   }
 
+    /**
+   * This method tests the evaluation of a single rule in a decision table.
+   * It sets the input variable to "ok" and asserts that the decision table result has a single entry of "ok".
+   * It then sets the input variable to "notok" and asserts that the decision table result is empty.
+   */
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
   public void shouldEvaluateSingleRule() {
@@ -63,6 +76,9 @@ public class EvaluateDecisionTest extends DmnEngineTest {
       .isEmpty();
   }
 
+    /**
+   * This method tests the evaluation of a decision table using different variables values.
+   */
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
   public void shouldEvaluateExample() {
@@ -94,34 +110,40 @@ public class EvaluateDecisionTest extends DmnEngineTest {
       .containsOnly(entry("result", "ok"), entry("reason", "you get anything you want"));
   }
 
+    /**
+   * Test method to detect data types by setting boolean, integer, and double values in variables map
+   */
   @Test
   @DecisionResource(resource = DATA_TYPE_DMN)
   public void shouldDetectDataTypes() {
-    variables.put("boolean", true);
-    variables.put("integer", 9000);
-    variables.put("double", 13.37);
+      variables.put("boolean", true);
+      variables.put("integer", 9000);
+      variables.put("double", 13.37);
+  
+      assertThatDecisionTableResult()
+        .hasSingleResult()
+        .hasSingleEntry(true);
+  
+      variables.put("boolean", false);
+      variables.put("integer", 10000);
+      variables.put("double", 21.42);
+  
+      assertThatDecisionTableResult()
+        .hasSingleResult()
+        .hasSingleEntry(true);
+  
+      variables.put("boolean", true);
+      variables.put("integer", -9000);
+      variables.put("double", -13.37);
+  
+      assertThatDecisionTableResult()
+        .hasSingleResult()
+        .hasSingleEntry(true);
+    }
 
-    assertThatDecisionTableResult()
-      .hasSingleResult()
-      .hasSingleEntry(true);
-
-    variables.put("boolean", false);
-    variables.put("integer", 10000);
-    variables.put("double", 21.42);
-
-    assertThatDecisionTableResult()
-      .hasSingleResult()
-      .hasSingleEntry(true);
-
-    variables.put("boolean", true);
-    variables.put("integer", -9000);
-    variables.put("double", -13.37);
-
-    assertThatDecisionTableResult()
-      .hasSingleResult()
-      .hasSingleEntry(true);
-  }
-
+    /**
+   * Test method to evaluate a decision rule without input for DMN12 standard.
+   */
   @Test
   @DecisionResource(resource = DMN12_NO_INPUT_DMN)
   public void shouldEvaluateRuleWithoutInput_Dmn12() {
@@ -130,6 +152,9 @@ public class EvaluateDecisionTest extends DmnEngineTest {
       .hasSingleEntry("ok");
   }
 
+    /**
+   * Tests the evaluation of a decision rule without input for DMN 1.3 version
+   */
   @Test
   @DecisionResource(resource = DMN13_NO_INPUT_DMN)
   public void shouldEvaluateRuleWithoutInput_Dmn13() {

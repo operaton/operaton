@@ -38,6 +38,11 @@ public class DefaultElementTransformHandlerRegistry implements DmnElementTransfo
 
   protected final Map<Class<? extends DmnModelElementInstance>, DmnElementTransformHandler> handlers = getDefaultElementTransformHandlers();
 
+    /**
+   * Returns a map of default element transform handlers for different types of DmnModelElementInstances.
+   *
+   * @return a map containing default element transform handlers
+   */
   protected static Map<Class<? extends DmnModelElementInstance>, DmnElementTransformHandler> getDefaultElementTransformHandlers() {
     Map<Class<? extends DmnModelElementInstance>, DmnElementTransformHandler> handlers = new HashMap<>();
 
@@ -58,10 +63,26 @@ public class DefaultElementTransformHandlerRegistry implements DmnElementTransfo
     return handlers;
   }
 
+    /**
+   * Associates a DmnElementTransformHandler with a specific source class.
+   * 
+   * @param <Source> the type of the source class that the handler is associated with
+   * @param <Target> the type of the target class that the handler transforms to
+   * @param sourceClass the source class to associate with the handler
+   * @param handler the DmnElementTransformHandler to associate with the specified source class
+   */
   public <Source extends DmnModelElementInstance, Target> void addHandler(Class<Source> sourceClass, DmnElementTransformHandler<Source, Target> handler) {
     handlers.put(sourceClass, handler);
   }
 
+    /**
+   * Retrieves the handler for transforming a specific type of DmnModelElementInstance to a target type.
+   * 
+   * @param <Source> the type of DmnModelElementInstance to transform
+   * @param <Target> the target type to transform to
+   * @param sourceClass the class representing the source type
+   * @return the handler for transforming the specified source type to the target type
+   */
   @SuppressWarnings("unchecked")
   public <Source extends DmnModelElementInstance, Target> DmnElementTransformHandler<Source, Target> getHandler(Class<Source> sourceClass) {
     return handlers.get(sourceClass);

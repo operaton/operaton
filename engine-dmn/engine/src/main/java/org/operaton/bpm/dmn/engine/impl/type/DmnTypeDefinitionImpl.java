@@ -37,6 +37,14 @@ public class DmnTypeDefinitionImpl implements DmnTypeDefinition {
     this.transformer = transformer;
   }
 
+    /**
+   * Transforms a given object value to a TypedValue. If the value is null, 
+   * returns an untypedNullValue TypedValue. Otherwise, calls the transformNotNullValue method 
+   * to transform the non-null value to a TypedValue.
+   *
+   * @param value the object value to transform
+   * @return the transformed TypedValue
+   */
   @Override
   public TypedValue transform(Object value) {
     if (value == null) {
@@ -46,6 +54,13 @@ public class DmnTypeDefinitionImpl implements DmnTypeDefinition {
     }
   }
 
+    /**
+   * Transforms a non-null value using the provided transformer.
+   *
+   * @param value the non-null value to transform
+   * @return the transformed value
+   * @throws InvalidValueException if the transformation fails
+   */
   protected TypedValue transformNotNullValue(Object value) {
     ensureNotNull("transformer", transformer);
 
@@ -58,18 +73,37 @@ public class DmnTypeDefinitionImpl implements DmnTypeDefinition {
     }
   }
 
+    /**
+   * Returns the type name.
+   *
+   * @return the type name
+   */
   public String getTypeName() {
     return typeName;
   }
 
+    /**
+   * Sets the type name for the object.
+   *
+   * @param typeName the new type name to be set
+   */
   public void setTypeName(String typeName) {
     this.typeName = typeName;
   }
 
+    /**
+   * Sets the DMN data type transformer to be used.
+   * 
+   * @param transformer the DMN data type transformer to set
+   */
   public void setTransformer(DmnDataTypeTransformer transformer) {
     this.transformer = transformer;
   }
 
+    /**
+   * Returns a string representation of the DmnTypeDefinitionImpl object, 
+   * including the type name.
+   */
   @Override
   public String toString() {
     return "DmnTypeDefinitionImpl{" +

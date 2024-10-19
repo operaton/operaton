@@ -31,6 +31,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CustomFunctionConfigTest extends DmnEngineTest {
 
+    /**
+   * Returns the DMN engine configuration with custom function providers for two custom functions.
+   * 
+   * @return the DMN engine configuration
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
@@ -42,6 +47,9 @@ public class CustomFunctionConfigTest extends DmnEngineTest {
     return configuration;
   }
 
+    /**
+   * This method tests the registration of custom functions by evaluating a decision and asserting the result
+   */
   @Test
   @DecisionResource(resource = "custom_function.dmn")
   public void shouldRegisterCustomFunctions() {

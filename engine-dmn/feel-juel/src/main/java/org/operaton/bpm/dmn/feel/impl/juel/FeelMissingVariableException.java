@@ -35,6 +35,11 @@ public class FeelMissingVariableException extends FeelException {
     this.variable = variable;
   }
 
+    /**
+   * Returns the value of the variable.
+   *
+   * @return the value of the variable
+   */
   public String getVariable() {
     return variable;
   }

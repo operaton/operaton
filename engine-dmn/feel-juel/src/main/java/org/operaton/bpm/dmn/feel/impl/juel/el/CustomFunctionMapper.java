@@ -31,11 +31,24 @@ public class CustomFunctionMapper extends FunctionMapper {
 
   protected final Map<String, Method> methods = new HashMap<String, Method>();
 
+    /**
+   * Resolves a function with the given prefix and local name.
+   * 
+   * @param prefix the prefix of the function
+   * @param localName the local name of the function
+   * @return the resolved function method
+   */
   @Override
   public Method resolveFunction(String prefix, String localName) {
     return methods.get(localName);
   }
 
+    /**
+   * Adds a method to the collection with the given name.
+   * 
+   * @param name the name of the method
+   * @param method the method to add
+   */
   public void addMethod(final String name, final Method method) {
     methods.put(name, method);
   }

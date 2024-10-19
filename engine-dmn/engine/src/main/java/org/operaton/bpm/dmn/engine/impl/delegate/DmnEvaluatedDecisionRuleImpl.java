@@ -31,22 +31,47 @@ public class DmnEvaluatedDecisionRuleImpl implements DmnEvaluatedDecisionRule {
     this.id = matchingRule.getId();
   }
 
+    /**
+   * Returns the ID of the object.
+   *
+   * @return the ID of the object
+   */
   public String getId() {
     return id;
   }
 
+    /**
+   * Sets the id of the object.
+   * 
+   * @param id the new id to set
+   */
   public void setId(String id) {
     this.id = id;
   }
 
+    /**
+   * Returns the output entries of the Dmn evaluation.
+   * 
+   * @return a Map containing the evaluated output entries
+   */
   public Map<String, DmnEvaluatedOutput> getOutputEntries() {
     return outputEntries;
   }
 
+    /**
+   * Sets the output entries for the evaluated DMN.
+   * 
+   * @param outputEntries a map containing the output entries
+   */
   public void setOutputEntries(Map<String, DmnEvaluatedOutput> outputEntries) {
     this.outputEntries = outputEntries;
   }
 
+    /**
+   * Returns a string representation of the DmnEvaluatedDecisionRuleImpl object, including the id and output entries.
+   * 
+   * @return a string representation of the DmnEvaluatedDecisionRuleImpl object
+   */
   @Override
   public String toString() {
     return "DmnEvaluatedDecisionRuleImpl{" +

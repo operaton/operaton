@@ -57,6 +57,9 @@ public class DmnTransformTest extends DmnEngineTest {
   public static final String LOOP_REQUIRED_DECISIONS_DIFFERENT_ORDER_DMN = "org/operaton/bpm/dmn/engine/api/LoopInRequiredDecision2.dmn";
   public static final String SELF_REQUIRED_DECISIONS_DMN = "org/operaton/bpm/dmn/engine/api/SelfRequiredDecision.dmn";
 
+    /**
+   * This method tests the transformation of decisions from a DMN file.
+   */
   @Test
   public void shouldTransformDecisions() {
     List<DmnDecision> decisions = parseDecisionsFromFile(TRANSFORM_DMN);
@@ -75,6 +78,10 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(decision.getName()).isEqualTo("operaton");
   }
 
+    /**
+   * This method tests the transformation of decision tables by parsing decisions from a file,
+   * checking if the decisions are instances of DmnDecisionImpl and if their hit policy handlers are correct.
+   */
   @Test
   public void shouldTransformDecisionTables() {
     List<DmnDecision> decisions = parseDecisionsFromFile(TRANSFORM_DMN);
@@ -93,6 +100,9 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(decisionTable.getHitPolicyHandler()).isInstanceOf(FirstHitPolicyHandler.class);
   }
 
+    /**
+   * This method tests the transformation of inputs in a DMN decision table.
+   */
   @Test
   public void shouldTransformInputs() {
     DmnDecisionImpl decisionEntity = (DmnDecisionImpl) parseDecisionFromFile("decision1", TRANSFORM_DMN);
@@ -131,6 +141,10 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(inputExpression.getTypeDefinition()).isEqualTo(new DefaultTypeDefinition());
   }
 
+    /**
+   * This method tests the transformation of outputs for a specific decision entity,
+   * ensuring that the outputs are correctly parsed and validated.
+   */
   @Test
   public void shouldTransformOutputs() {
     DmnDecisionImpl decisionEntity = (DmnDecisionImpl) parseDecisionFromFile("decision1", TRANSFORM_DMN);
@@ -153,6 +167,9 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(output.getTypeDefinition()).isEqualTo(new DefaultTypeDefinition());
   }
 
+    /**
+   * This method tests the transformation of rules in a decision table.
+   */
   @Test
   public void shouldTransformRules() {
     DmnDecisionImpl decisionEntity = (DmnDecisionImpl) parseDecisionFromFile("decision1", TRANSFORM_DMN);
@@ -193,6 +210,9 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(dmnOutputEntry.getExpression()).isNull();
   }
 
+    /**
+   * Test method to verify transformation of a decision with a literal expression.
+   */
   @Test
   public void shouldTransformDecisionWithLiteralExpression() {
     List<DmnDecision> decisions = parseDecisionsFromFile(DECISION_WITH_LITERAL_EXPRESSION_DMN);
@@ -224,6 +244,11 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(dmnExpression.getTypeDefinition()).isNull();
   }
 
+    /**
+   * This method tests the parsing of a decision with required decisions.
+   * It reads a DMN file, parses the decision "buyProduct", and asserts its correctness.
+   * Then it checks the required decisions of "buyProduct" and continues to assert the correctness of subsequent required decisions.
+   */
   @Test
   public void shouldParseDecisionWithRequiredDecisions() {
     InputStream inputStream = IoUtil.fileAsStream(REQUIRED_DECISIONS_DMN);
@@ -247,6 +272,10 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(buyElectronicDecision.getRequiredDecisions().size()).isEqualTo(0);
   }
 
+    /**
+   * This method tests the parsing of decisions with required decisions by reading a DMN model from a file,
+   * parsing the decisions, and asserting that the required decisions are correctly identified.
+   */
   @Test
   public void shouldParseDecisionsWithRequiredDecisions() {
     InputStream inputStream = IoUtil.fileAsStream(REQUIRED_DECISIONS_DMN);
@@ -277,6 +306,9 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(buyElectronicRequiredDecisions.size()).isEqualTo(0);
   }
 
+    /**
+   * This method tests the parsing of a decision with multiple required decisions.
+   */
   @Test
   public void shouldParseDecisionWithMultipleRequiredDecisions() {
     InputStream inputStream = IoUtil.fileAsStream(MULTIPLE_REQUIRED_DECISIONS_DMN);
@@ -292,6 +324,9 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(carSpeedDecision).isNotNull();
   }
 
+    /**
+   * This method tests the detection of a loop in a parse decision with a required decision in a DMN model.
+   */
   @Test
   public void shouldDetectLoopInParseDecisionWithRequiredDecision() {
     InputStream inputStream = IoUtil.fileAsStream(LOOP_REQUIRED_DECISIONS_DMN);
@@ -308,6 +343,9 @@ public class DmnTransformTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests the detection of a loop in parse decision with required decisions of different order.
+   */
   @Test
   public void shouldDetectLoopInParseDecisionWithRequiredDecisionOfDifferentOrder() {
     InputStream inputStream = IoUtil.fileAsStream(LOOP_REQUIRED_DECISIONS_DIFFERENT_ORDER_DMN);
@@ -324,6 +362,9 @@ public class DmnTransformTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests if the DmnTransformException is thrown when there is a loop in the parse decision with a self-required decision.
+   */
   @Test
   public void shouldDetectLoopInParseDecisionWithSelfRequiredDecision() {
     InputStream inputStream = IoUtil.fileAsStream(SELF_REQUIRED_DECISIONS_DMN);
@@ -340,6 +381,9 @@ public class DmnTransformTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test method to verify that the engine does not detect a loop in a multi-level decision with multiple required decisions.
+   */
   @Test
   public void shouldNotDetectLoopInMultiLevelDecisionWithMultipleRequiredDecision() {
     InputStream inputStream = IoUtil.fileAsStream(MULTI_LEVEL_MULTIPLE_REQUIRED_DECISIONS_DMN);
@@ -349,6 +393,10 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(decisions.size()).isEqualTo(8);
   }
 
+    /**
+   * This method tests the transformation of a Decision Requirements Graph by parsing a DMN file
+   * and asserting that the resulting DRG has the expected properties such as key, name, and decisions.
+   */
   @Test
   public void shouldTransformDecisionRequirementsGraph() {
     InputStream inputStream = IoUtil.fileAsStream(REQUIRED_DECISIONS_DMN);
@@ -368,11 +416,24 @@ public class DmnTransformTest extends DmnEngineTest {
       .contains("buyProduct", "buyComputer", "buyElectronic");
   }
 
+    /**
+   * Asserts that the given decision is not null and its key matches the specified key.
+   * 
+   * @param decision the DmnDecision to be asserted
+   * @param key the expected key of the decision
+   */
   protected void assertDecision(DmnDecision decision, String key) {
     assertThat(decision).isNotNull();
     assertThat(decision.getKey()).isEqualTo(key);
   }
 
+    /**
+   * Returns the decision with the specified key from the given collection of decisions.
+   * 
+   * @param decisions the collection of decisions to search through
+   * @param key the key of the decision to find
+   * @return the decision with the specified key, or null if not found
+   */
   protected DmnDecision getDecision(Collection<DmnDecision> decisions, String key) {
     for(DmnDecision decision: decisions) {
       if(decision.getKey().equals(key)) {

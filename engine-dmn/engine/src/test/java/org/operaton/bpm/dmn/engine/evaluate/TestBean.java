@@ -24,6 +24,12 @@ public class TestBean {
     this.factor = factor;
   }
 
+    /**
+   * Multiplies the input number by a factor and returns the result.
+   *
+   * @param number the number to be multiplied
+   * @return the result of multiplying the input number by a factor
+   */
   public int call(int number) {
     return number * factor;
   }

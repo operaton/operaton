@@ -27,16 +27,36 @@ public class NotTransformer implements FeelToJuelTransformer {
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
   public static final Pattern NOT_PATTERN = Pattern.compile("^not\\((.+)\\)$");
 
+    /**
+   * Checks if the given feel expression starts with "not("
+   * @param feelExpression the feel expression to check
+   * @return true if the expression starts with "not(", false otherwise
+   */
   public boolean canTransform(String feelExpression) {
     return feelExpression.startsWith("not(");
   }
 
+    /**
+   * Transforms a FEEL expression into a JUEL expression by extracting inner expressions, transforming them, and adding a 'not' operator.
+   *
+   * @param transform the transformation object used to convert FEEL to JUEL expressions
+   * @param feelExpression the FEEL expression to transform
+   * @param inputName the name of the input variable
+   * @return the transformed JUEL expression with a 'not' operator added
+   */
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     String simplePositiveUnaryTests = extractInnerExpression(feelExpression);
     String juelExpression = transform.transformSimplePositiveUnaryTests(simplePositiveUnaryTests, inputName);
     return "not(" + juelExpression + ")";
   }
 
+    /**
+   * Extracts the inner expression from a FEEL expression that starts with a "not" keyword.
+   * 
+   * @param feelExpression the FEEL expression to extract the inner expression from
+   * @return the inner expression extracted from the input FEEL expression
+   * @throws IllegalArgumentException if the input FEEL expression does not start with a "not" keyword
+   */
   public String extractInnerExpression(String feelExpression) {
     Matcher matcher = NOT_PATTERN.matcher(feelExpression);
     if (matcher.matches()) {

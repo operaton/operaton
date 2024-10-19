@@ -26,6 +26,11 @@ public class DmnDecisionTableResultAssert extends AbstractListAssert<DmnDecision
     super(decisionTableResult, DmnDecisionTableResultAssert.class);
   }
 
+    /**
+   * Verifies that the actual DmnDecisionRuleResult has a single result
+   * 
+   * @return a new DmnDecisionRuleResultAssert for the single result
+   */
   public DmnDecisionRuleResultAssert hasSingleResult() {
     hasSize(1);
 
@@ -34,6 +39,13 @@ public class DmnDecisionTableResultAssert extends AbstractListAssert<DmnDecision
     return new DmnDecisionRuleResultAssert(singleResult);
   }
 
+    /**
+   * Creates an assertion for the given DmnDecisionRuleResult with the specified description.
+   * 
+   * @param value the DmnDecisionRuleResult to create an assertion for
+   * @param description the description for the assertion
+   * @return a new DmnDecisionRuleResultAssert for the given DmnDecisionRuleResult
+   */
   @Override
   protected DmnDecisionRuleResultAssert toAssert(DmnDecisionRuleResult value, String description) {
     info.description(description, "");

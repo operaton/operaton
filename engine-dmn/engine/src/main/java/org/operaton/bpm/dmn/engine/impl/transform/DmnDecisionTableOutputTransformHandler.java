@@ -27,10 +27,24 @@ import org.operaton.bpm.model.dmn.instance.Output;
 
 public class DmnDecisionTableOutputTransformHandler implements DmnElementTransformHandler<Output, DmnDecisionTableOutputImpl> {
 
+    /**
+   * Handles the given output element by creating a DmnDecisionTableOutputImpl object from it.
+   *
+   * @param context the DmnElementTransformContext object
+   * @param output the Output object to be transformed
+   * @return the DmnDecisionTableOutputImpl created from the given output
+   */
   public DmnDecisionTableOutputImpl handleElement(DmnElementTransformContext context, Output output) {
     return createFromOutput(context, output);
   }
 
+    /**
+   * Creates a DmnDecisionTableOutputImpl object from the given Output object.
+   * 
+   * @param context the DmnElementTransformContext
+   * @param output the Output object to create from
+   * @return the created DmnDecisionTableOutputImpl object
+   */
   protected DmnDecisionTableOutputImpl createFromOutput(DmnElementTransformContext context, Output output) {
     DmnDecisionTableOutputImpl decisionTableOutput = createDmnElement(context, output);
 
@@ -42,10 +56,24 @@ public class DmnDecisionTableOutputTransformHandler implements DmnElementTransfo
     return decisionTableOutput;
   }
 
+    /**
+   * Creates a new DmnDecisionTableOutputImpl object.
+   * 
+   * @param context the transformation context
+   * @param output the output to create the decision table output from
+   * @return the created DmnDecisionTableOutputImpl object
+   */
   protected DmnDecisionTableOutputImpl createDmnElement(DmnElementTransformContext context, Output output) {
     return new DmnDecisionTableOutputImpl();
   }
 
+    /**
+   * Returns the type definition for the given output element based on its type reference.
+   * 
+   * @param context the element transform context
+   * @param output the output element
+   * @return the type definition for the output element
+   */
   protected DmnTypeDefinition getTypeDefinition(DmnElementTransformContext context, Output output) {
     String typeRef = output.getTypeRef();
     if (typeRef != null) {

@@ -28,6 +28,13 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class DoubleDataTypeTransformer implements DmnDataTypeTransformer {
 
+    /**
+   * Transforms the input value to a TypedValue of type double.
+   *
+   * @param value the input value to transform
+   * @return a TypedValue containing the transformed double value
+   * @throws IllegalArgumentException if the input value is not a Number or a String
+   */
   @Override
   public TypedValue transform(Object value) throws IllegalArgumentException {
     if (value instanceof Number) {
@@ -43,10 +50,22 @@ public class DoubleDataTypeTransformer implements DmnDataTypeTransformer {
     }
   }
 
+    /**
+   * Converts a Number to a double value.
+   * 
+   * @param value the Number to be transformed
+   * @return the double value of the input Number
+   */
   protected double transformNumber(Number value) {
     return value.doubleValue();
   }
 
+    /**
+   * Parses a string value into a double.
+   * 
+   * @param value the string value to be parsed
+   * @return the double value parsed from the string
+   */
   protected double transformString(String value) {
     return Double.parseDouble(value);
   }

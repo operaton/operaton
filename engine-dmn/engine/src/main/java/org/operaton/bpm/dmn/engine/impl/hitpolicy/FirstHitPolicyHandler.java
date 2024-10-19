@@ -28,6 +28,13 @@ import org.operaton.bpm.model.dmn.HitPolicy;
 public class FirstHitPolicyHandler implements DmnHitPolicyHandler {
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.FIRST, null);
 
+    /**
+   * Applies the first matched rule to the decision table evaluation event.
+   * If there are matching rules, the first one is set as the only matching rule in the event.
+   * 
+   * @param decisionTableEvaluationEvent the decision table evaluation event to apply the first matched rule to
+   * @return the updated decision table evaluation event
+   */
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     if (!decisionTableEvaluationEvent.getMatchingRules().isEmpty()) {
       DmnEvaluatedDecisionRule firstMatchedRule = decisionTableEvaluationEvent.getMatchingRules().get(0);
@@ -36,11 +43,17 @@ public class FirstHitPolicyHandler implements DmnHitPolicyHandler {
     return decisionTableEvaluationEvent;
   }
 
+    /**
+   * Returns the HitPolicyEntry constant value.
+   */
   @Override
   public HitPolicyEntry getHitPolicyEntry() {
     return HIT_POLICY;
   }
 
+    /**
+   * Returns a string representation of the FirstHitPolicyHandler object.
+   */
   @Override
   public String toString() {
     return "FirstHitPolicyHandler{}";

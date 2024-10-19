@@ -52,6 +52,11 @@ public class FeelIntegrationTest extends DmnEngineTest {
 
   protected FeelEngine feelEngineSpy;
 
+    /**
+   * Returns the DMN engine configuration with customized settings.
+   *
+   * @return the DMN engine configuration
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
@@ -60,6 +65,9 @@ public class FeelIntegrationTest extends DmnEngineTest {
     return configuration;
   }
 
+    /**
+   * Test method to evaluate a decision using FEEL input entry.
+   */
   @Test
   @DecisionResource(resource = DMN)
   public void testFeelInputEntry() {
@@ -70,6 +78,9 @@ public class FeelIntegrationTest extends DmnEngineTest {
     verify(feelEngineSpy, atLeastOnce()).evaluateSimpleUnaryTests(anyString(), anyString(), any(VariableContext.class));
   }
 
+    /**
+   * Test method to evaluate a decision using FEEL input entry with alternative name.
+   */
   @Test
   @DecisionResource(resource = DMN)
   public void testFeelInputEntryWithAlternativeName() {
@@ -84,6 +95,9 @@ public class FeelIntegrationTest extends DmnEngineTest {
     verify(feelEngineSpy, atLeastOnce()).evaluateSimpleUnaryTests(anyString(), anyString(), any(VariableContext.class));
   }
 
+    /**
+   * Test method to verify that FEEL exception does not contain JUEL expression.
+   */
   @Test
   @DecisionResource(resource = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.script.dmn")
   public void testFeelExceptionDoesNotContainJuel() {
@@ -97,6 +111,10 @@ public class FeelIntegrationTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests the integration of date and time values by setting a specific date, 
+   * formatting it, and then asserting the result against a decision table.
+   */
   @Test
   @DecisionResource()
   public void testDateAndTimeIntegration() {
@@ -110,6 +128,9 @@ public class FeelIntegrationTest extends DmnEngineTest {
       .hasSingleEntryTyped(Variables.dateValue(testDate));
   }
 
+    /**
+   * This method tests the input expression of a decision using the FEEL expression language.
+   */
   @Test
   @DecisionResource(resource = DMN)
   public void testFeelInputExpression() {
@@ -128,18 +149,27 @@ public class FeelIntegrationTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test the input expression for Decision Model and Notation 1.2 version.
+   */
   @Test
   @DecisionResource(resource = DMN_12)
   public void testFeelInputExpression_Dmn12() {
     testFeelInputExpression();
   }
 
+    /**
+   * Test the input expression for DMN 13 by invoking the testFeelInputExpression method.
+   */
   @Test
   @DecisionResource(resource = DMN_13)
   public void testFeelInputExpression_Dmn13() {
     testFeelInputExpression();
   }
 
+    /**
+   * This method tests the evaluation of a decision using a FEEL output entry expression language.
+   */
   @Test
   @DecisionResource(resource = DMN)
   public void testFeelOutputEntry() {
@@ -158,6 +188,9 @@ public class FeelIntegrationTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test method to evaluate input expression with a custom DMN engine.
+   */
   @Test
   @DecisionResource(resource = DMN)
   public void testFeelInputExpressionWithCustomEngine() {
@@ -175,6 +208,9 @@ public class FeelIntegrationTest extends DmnEngineTest {
     verify(feelEngineSpy).evaluateSimpleExpression(anyString(), any(VariableContext.class));
   }
 
+    /**
+   * This method tests the evaluation of a FEEL output entry with a custom engine configuration.
+   */
   @Test
   @DecisionResource(resource = DMN)
   public void testFeelOutputEntryWithCustomEngine() {
@@ -199,6 +235,11 @@ public class FeelIntegrationTest extends DmnEngineTest {
       feelEngineSpy = spy(feelEngineFactory.createInstance());
     }
 
+        /**
+     * Returns an instance of the FeelEngine.
+     * 
+     * @return the FeelEngine instance
+     */
     public FeelEngine createInstance() {
       return feelEngineSpy;
     }

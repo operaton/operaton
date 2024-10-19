@@ -64,6 +64,11 @@ public class ExpressionLanguageTest extends DmnEngineTest {
   protected DefaultScriptEngineResolver scriptEngineResolver;
   protected JuelElProvider elProvider;
 
+    /**
+  * Returns the DmnEngineConfiguration with the default configuration settings.
+  * 
+  * @return the DmnEngineConfiguration with default settings
+  */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
@@ -75,16 +80,30 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     return configuration;
   }
 
+    /**
+   * Creates and returns a new ElProvider object by spying on a new instance of JuelElProvider.
+   * 
+   * @return the newly created ElProvider object
+   */
   protected ElProvider createElProvider() {
     elProvider = spy(new JuelElProvider());
     return elProvider;
   }
 
+    /**
+   * Creates a script engine resolver by creating a new instance of DefaultScriptEngineResolver
+   * and returns it.
+   * 
+   * @return the created script engine resolver
+   */
   protected DmnScriptEngineResolver createScriptEngineResolver() {
     scriptEngineResolver = spy(new DefaultScriptEngineResolver());
     return scriptEngineResolver;
   }
 
+    /**
+   * Test method for evaluating a decision table with global expression language set to "groovy".
+   */
   @Test
   @DecisionResource(resource = GROOVY_DECISION_TABLE_DMN)
   public void testGlobalExpressionLanguageDecisionTable() {
@@ -107,6 +126,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(scriptEngineResolver, never()).getScriptEngineForLanguage(JUEL);
   }
 
+    /**
+   * Test method for evaluating a decision with a global expression language set to groovy.
+   */
   @Test
   @DecisionResource(resource = GROOVY_DECISION_LITERAL_EXPRESSION_DMN)
   public void testGlobalExpressionLanguageDecisionLiteralExpression() {
@@ -121,6 +143,10 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(scriptEngineResolver, never()).getScriptEngineForLanguage(JUEL);
   }
 
+    /**
+   * Test the execution of the default DMN engine configuration by asserting an example with the DMN engine
+   * and verifying that the EL provider creates an expression at least once with any string.
+   */
   @Test
   public void testExecuteDefaultDmnEngineConfiguration() {
     assertExample(dmnEngine);
@@ -128,6 +154,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(elProvider, atLeastOnce()).createExpression(anyString());
   }
 
+    /**
+   * Test method to execute a decision using the JUEL DMN engine configuration.
+   */
   @Test
   @DecisionResource(resource = SCRIPT_DMN)
   public void testExecuteJuelDmnEngineConfiguration() {
@@ -137,6 +166,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(elProvider, atLeastOnce()).createExpression(anyString());
   }
 
+    /**
+   * Test method for executing a Groovy DMN engine configuration. 
+   */
   @Test
   @DecisionResource(resource = SCRIPT_DMN)
   public void testExecuteGroovyDmnEngineConfiguration() {
@@ -147,6 +179,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(scriptEngineResolver, never()).getScriptEngineForLanguage(JUEL);
   }
 
+    /**
+   * This method tests the execution of a DMN decision using a JavaScript engine configuration.
+   */
   @Test
   @DecisionResource(resource = SCRIPT_DMN)
   public void testExecuteJavascriptDmnEngineConfiguration() {
@@ -157,6 +192,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(scriptEngineResolver, never()).getScriptEngineForLanguage(JUEL);
   }
 
+    /**
+   * Test method to evaluate a decision with a literal expression using the default DMN engine configuration.
+   */
   @Test
   @DecisionResource(resource = DECISION_WITH_LITERAL_EXPRESSION_DMN)
   public void testExecuteLiteralExpressionWithDefaultDmnEngineConfiguration() {
@@ -166,6 +204,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(elProvider, atLeastOnce()).createExpression(anyString());
   }
 
+    /**
+   * Test method to execute a literal expression using the Groovy DMN engine configuration.
+   */
   @Test
   @DecisionResource(resource = DECISION_WITH_LITERAL_EXPRESSION_DMN)
   public void testExecuteLiteralExpressionWithGroovyDmnEngineConfiguration() {
@@ -178,6 +219,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(scriptEngineResolver, never()).getScriptEngineForLanguage("juel");
   }
 
+    /**
+   * Test method to verify that the default empty expressions are created correctly.
+   */
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN)
   public void testDefaultEmptyExpressions() {
@@ -188,6 +232,11 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(elProvider).createExpression(anyString());
   }
 
+    /**
+   * Test method to verify the behavior of JUEL empty expressions in a decision table result.
+   * It creates a DMN engine with default expression language JUEL, asserts that the decision table result has a single result with a single entry as true,
+   * and verifies the creation of an expression provider.
+   */
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN)
   public void testJuelEmptyExpressions() {
@@ -199,6 +248,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(elProvider).createExpression(anyString());
   }
 
+    /**
+   * Test method to verify the behavior of an empty Groovy expression in a decision table.
+   */
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN)
   public void testGroovyEmptyExpressions() {
@@ -210,6 +262,10 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(scriptEngineResolver).getScriptEngineForLanguage("groovy");
   }
 
+    /**
+   * Test method to verify that empty expressions in a decision table using JavaScript as the expression language
+   * results in the expected outcome.
+   */
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN)
   public void testJavascriptEmptyExpressions() {
@@ -221,6 +277,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(scriptEngineResolver).getScriptEngineForLanguage("javascript");
   }
 
+    /**
+   * Test method to verify failure when using an empty input expression in a decision table.
+   */
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN, decisionKey = "decision2")
   public void testFailFeelUseOfEmptyInputExpression() {
@@ -235,6 +294,11 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test the resolution of EL expressions using the JUEL engine.
+   *
+   * @throws Exception if an error occurs during the test
+   */
   @Test
   @DecisionResource(resource = CAPITAL_JUEL_DMN)
   public void testElResolution () throws Exception {
@@ -245,6 +309,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     verify(scriptEngineResolver, never()).getScriptEngineForLanguage(JUEL.toUpperCase());
   }
 
+    /**
+   * This method tests that JUEL expressions do not shadow inner property values.
+   */
   @Test
   @DecisionResource(resource = JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN)
   public void testJuelDoesNotShadowInnerProperty() {
@@ -261,6 +328,9 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     assertThat((String) result.getSingleEntry()).isEqualTo("B_FROM_MAP");
   }
 
+    /**
+   * This method tests if JUEL can resolve the index of an element in a list.
+   */
   @Test
   @DecisionResource(resource = JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN)
   public void testJuelResolvesListIndex() {
@@ -276,6 +346,12 @@ public class ExpressionLanguageTest extends DmnEngineTest {
     assertThat((String) result.getSingleEntry()).isEqualTo("0_FROM_LIST");
   }
 
+    /**
+   * Creates a DMN engine with the specified default expression language for input expressions, input entries, output entries, and literal expressions.
+   * 
+   * @param expressionLanguage the default expression language to be set for all expression types
+   * @return the DMN engine created with the specified default expression language
+   */
   protected DmnEngine createEngineWithDefaultExpressionLanguage(String expressionLanguage) {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
 

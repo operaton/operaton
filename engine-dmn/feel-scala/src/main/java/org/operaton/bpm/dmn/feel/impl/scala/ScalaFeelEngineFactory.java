@@ -33,14 +33,29 @@ public class ScalaFeelEngineFactory implements FeelEngineFactory {
     this.customFunctionProviders = customFunctionProviders;
   }
 
+    /**
+   * Creates a new instance of FeelEngine using custom function providers.
+   * 
+   * @return a new instance of FeelEngine
+   */
   public FeelEngine createInstance() {
       return new ScalaFeelEngine(customFunctionProviders);
    }
 
+    /**
+   * Sets the list of custom function providers for the FEEL engine.
+   * 
+   * @param customFunctionProviders the list of custom function providers to be set
+   */
   public void setCustomFunctionProviders(List<FeelCustomFunctionProvider> customFunctionProviders) {
     this.customFunctionProviders = customFunctionProviders;
   }
 
+    /**
+   * Retrieves the list of custom function providers.
+   *
+   * @return the list of custom function providers
+   */
   public List<FeelCustomFunctionProvider> getCustomFunctionProviders() {
     return customFunctionProviders;
   }

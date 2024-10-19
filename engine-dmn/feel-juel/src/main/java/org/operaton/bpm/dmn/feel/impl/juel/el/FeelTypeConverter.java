@@ -29,6 +29,13 @@ public class FeelTypeConverter extends TypeConverterImpl {
 
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
 
+    /**
+   * Coerces the given value to a Boolean.
+   * 
+   * @param value the value to coerce
+   * @return the Boolean representation of the value
+   * @throws IllegalArgumentException if the value cannot be converted to a Boolean
+   */
   @Override
   protected Boolean coerceToBoolean(Object value) {
     if (value instanceof Boolean) {
@@ -39,6 +46,13 @@ public class FeelTypeConverter extends TypeConverterImpl {
     }
   }
 
+    /**
+   * Coerces the given value to a BigDecimal if possible.
+   * 
+   * @param value the value to be coerced
+   * @return the value coerced to a BigDecimal
+   * @throws IllegalArgumentException if the value cannot be coerced to a BigDecimal
+   */
   @Override
   protected BigDecimal coerceToBigDecimal(Object value) {
     if (value instanceof BigDecimal) {
@@ -55,6 +69,13 @@ public class FeelTypeConverter extends TypeConverterImpl {
     }
   }
 
+    /**
+   * Coerces the given value to a BigInteger.
+   *
+   * @param value the value to be coerced
+   * @return the BigInteger representation of the value
+   * @throws IllegalArgumentException if the value cannot be converted to a BigInteger
+   */
   @Override
   protected BigInteger coerceToBigInteger(Object value) {
     if (value instanceof BigInteger) {
@@ -71,6 +92,13 @@ public class FeelTypeConverter extends TypeConverterImpl {
     }
   }
 
+    /**
+   * Coerces an object value to a Double.
+   *
+   * @param value the object value to be coerced
+   * @return the Double value of the input object
+   * @throws IllegalArgumentException if unable to convert the value to a Double
+   */
   @Override
   protected Double coerceToDouble(Object value) {
     if (value instanceof Double) {
@@ -84,6 +112,13 @@ public class FeelTypeConverter extends TypeConverterImpl {
     }
   }
 
+    /**
+   * Coerces the given value to a Long.
+   * 
+   * @param value the value to coerce
+   * @return the coerced Long value
+   * @throws IllegalArgumentException if the value cannot be coerced to Long
+   */
   @Override
   protected Long coerceToLong(Object value) {
     if (value instanceof Long) {
@@ -97,6 +132,13 @@ public class FeelTypeConverter extends TypeConverterImpl {
     }
   }
 
+    /**
+   * Coerces an object value into a String representation.
+   *
+   * @param value the object value to be coerced
+   * @return the String representation of the object value
+   * @throws IllegalArgumentException if the value cannot be converted to a String
+   */
   @Override
   protected String coerceToString(Object value) {
     if (value instanceof String) {
@@ -110,6 +152,14 @@ public class FeelTypeConverter extends TypeConverterImpl {
     }
   }
 
+    /**
+   * Convert the given value to the specified type.
+   *
+   * @param value the value to convert
+   * @param type the class representing the type to convert to
+   * @return the converted value
+   * @throws ELException if unable to convert the value
+   */
   @Override
   public <T> T convert(Object value, Class<T> type) throws ELException {
     try {
@@ -120,6 +170,12 @@ public class FeelTypeConverter extends TypeConverterImpl {
     }
   }
 
+    /**
+   * Checks if a given Number value is a whole number by converting it to a double and comparing it with its long value.
+   * 
+   * @param value the Number value to be checked
+   * @return true if the value is a whole number, false otherwise
+   */
   protected boolean isLong(Number value) {
     double doubleValue = value.doubleValue();
     return doubleValue == (long) doubleValue;

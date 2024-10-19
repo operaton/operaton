@@ -28,6 +28,13 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class StringDataTypeTransformer implements DmnDataTypeTransformer {
 
+    /**
+   * Transforms the given object value into a TypedValue object.
+   * 
+   * @param value the object value to transform
+   * @return the TypedValue object representing the transformed value
+   * @throws IllegalArgumentException if the transformation fails
+   */
   @Override
   public TypedValue transform(Object value) throws IllegalArgumentException {
     String stringValue = String.valueOf(value);

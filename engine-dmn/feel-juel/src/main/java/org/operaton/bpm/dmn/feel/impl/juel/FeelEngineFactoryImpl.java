@@ -66,10 +66,20 @@ public class FeelEngineFactoryImpl implements FeelEngineFactory {
     feelEngine = createFeelEngine();
   }
 
+    /**
+   * Creates and returns an instance of FeelEngine.
+   *
+   * @return the created instance of FeelEngine
+   */
   public FeelEngine createInstance() {
     return feelEngine;
   }
 
+    /**
+   * Creates and returns a FeelEngine instance with the necessary dependencies.
+   *
+   * @return a new instance of FeelEngine
+   */
   protected FeelEngine createFeelEngine() {
     FeelToJuelTransform transform = createFeelToJuelTransform();
     ExpressionFactory expressionFactory = createExpressionFactory();
@@ -78,6 +88,11 @@ public class FeelEngineFactoryImpl implements FeelEngineFactory {
     return new FeelEngineImpl(transform, expressionFactory, elContextFactory, transformExpressionCache);
   }
 
+    /**
+   * Creates a FeelToJuelTransform object and adds custom function transformers to it based on the customFunctionTransformers list.
+   *
+   * @return the created FeelToJuelTransform object
+   */
   protected FeelToJuelTransform createFeelToJuelTransform() {
     FeelToJuelTransformImpl transformer = new FeelToJuelTransformImpl();
 
@@ -88,6 +103,11 @@ public class FeelEngineFactoryImpl implements FeelEngineFactory {
     return transformer;
   }
 
+    /**
+   * Creates a new ExpressionFactory with the specified expression cache size.
+   *
+   * @return the newly created ExpressionFactory
+   */
   protected ExpressionFactory createExpressionFactory() {
     Properties properties = new Properties();
     properties.put(ExpressionFactoryImpl.PROP_CACHE_SIZE, String.valueOf(expressionCacheSize));
@@ -100,10 +120,20 @@ public class FeelEngineFactoryImpl implements FeelEngineFactory {
     }
   }
 
+    /**
+   * Creates a new instance of FeelTypeConverter.
+   *
+   * @return a new instance of FeelTypeConverter
+   */
   protected FeelTypeConverter createTypeConverter() {
     return new FeelTypeConverter();
   }
 
+    /**
+   * Creates a new ElContextFactory by initializing a FeelElContextFactory and adding custom functions from the list of customFunctionTransformers.
+   * 
+   * @return The newly created ElContextFactory
+   */
   protected ElContextFactory createElContextFactory() {
     FeelElContextFactory factory = new FeelElContextFactory();
 
@@ -114,6 +144,11 @@ public class FeelEngineFactoryImpl implements FeelEngineFactory {
     return factory;
   }
 
+    /**
+   * Creates a cache for storing transformation expressions, using ConcurrentLruCache implementation.
+   *
+   * @return the created Cache instance
+   */
   protected Cache<TransformExpressionCacheKey, String> createTransformExpressionCache() {
     return new ConcurrentLruCache<TransformExpressionCacheKey, String>(expressionCacheSize);
   }

@@ -24,6 +24,12 @@ public class MyPojo {
     this.factor = factor;
   }
 
+    /**
+   * Multiplies the given number by a factor and returns the result.
+   *
+   * @param number the number to multiply
+   * @return the result of multiplying the number by the factor
+   */
   public int call(int number) {
     return number * factor;
   }

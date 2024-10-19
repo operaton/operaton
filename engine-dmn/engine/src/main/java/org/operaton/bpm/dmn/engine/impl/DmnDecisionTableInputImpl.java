@@ -26,30 +26,66 @@ public class DmnDecisionTableInputImpl {
   protected DmnExpressionImpl expression;
   protected String inputVariable;
 
+    /**
+   * Returns the name of the object.
+   *
+   * @return the name of the object
+   */
   public String getName() {
     return name;
   }
 
+    /**
+   * Sets the name of the object.
+   * 
+   * @param name the new name to set
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+    /**
+   * Returns the id of the object.
+   *
+   * @return the id of the object
+   */
   public String getId() {
     return id;
   }
 
+    /**
+   * Sets the ID of the object.
+   *
+   * @param id the ID to set
+   */
   public void setId(String id) {
     this.id = id;
   }
 
+    /**
+   * Sets the DMN expression for this object.
+   *
+   * @param expression the DMN expression to be set
+   */
   public void setExpression(DmnExpressionImpl expression) {
     this.expression = expression;
   }
 
+    /**
+  * Returns the expression associated with this DmnExpressionImpl object.
+  * 
+  * @return the expression associated with this DmnExpressionImpl object
+  */
   public DmnExpressionImpl getExpression() {
     return expression;
   }
 
+    /**
+   * Retrieves the input variable. If the input variable is not null, returns the input variable. 
+   * Otherwise, returns the default input variable name.
+   * 
+   * @return the input variable or the default input variable name
+   */
   public String getInputVariable() {
     if (inputVariable != null) {
       return inputVariable;
@@ -59,10 +95,18 @@ public class DmnDecisionTableInputImpl {
     }
   }
 
+    /**
+   * Sets the input variable to the specified value.
+   *
+   * @param inputVariable the new value for the input variable
+   */
   public void setInputVariable(String inputVariable) {
     this.inputVariable = inputVariable;
   }
 
+    /**
+   * Returns a string representation of the DmnDecisionTableInputImpl object
+   */
   @Override
   public String toString() {
     return "DmnDecisionTableInputImpl{" +

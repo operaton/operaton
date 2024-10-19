@@ -31,6 +31,9 @@ public class ExpressionEvaluationTest extends DmnEngineTest {
     protected static final String DMN_VARIABLE_CONTEXT = "org/operaton/bpm/dmn/engine/el/ExpressionEvaluationTest.variableContext.dmn";
     protected static final String DMN_VARIABLE_CONTEXT_WITH_INPUT_VARIABLE = "org/operaton/bpm/dmn/engine/el/ExpressionEvaluationTest.variableContextWithInputVariable.dmn";
 
+        /**
+     * Test method to verify if the decision result has input variable name.
+     */
     @Test
     @DecisionResource(resource = DMN_INPUT_VARIABLE)
     public void testHasInputVariableName() {
@@ -39,6 +42,9 @@ public class ExpressionEvaluationTest extends DmnEngineTest {
       assertThat((boolean) decisionResult.getSingleEntry()).isEqualTo(true);
     }
 
+        /**
+     * Test method to verify that input variable name can be overridden successfully.
+     */
     @Test
     @DecisionResource(resource = DMN_OVERRIDE_INPUT_VARIABLE)
     public void testOverrideInputVariableName() {
@@ -47,6 +53,9 @@ public class ExpressionEvaluationTest extends DmnEngineTest {
       assertThat((boolean) decisionResult.getSingleEntry()).isEqualTo(true);
     }
 
+        /**
+     * This method tests if a variable context is present in the decision result.
+     */
     @Test
     @DecisionResource(resource = DMN_VARIABLE_CONTEXT)
     public void testHasVariableContext() {
@@ -55,6 +64,9 @@ public class ExpressionEvaluationTest extends DmnEngineTest {
       assertThat((boolean) decisionResult.getSingleEntry()).isEqualTo(true);
     }
 
+        /**
+     * Test method to verify if the input variable name is present in the variable context.
+     */
     @Test
     @DecisionResource(resource = DMN_VARIABLE_CONTEXT_WITH_INPUT_VARIABLE)
     public void testHasInputVariableNameInVariableContext() {

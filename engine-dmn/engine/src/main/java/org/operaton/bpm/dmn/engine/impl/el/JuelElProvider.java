@@ -54,27 +54,59 @@ public class JuelElProvider implements ElProvider {
     this.parsingElContext = createDefaultParsingElContext();
   }
 
+    /**
+   * Creates and returns a new SimpleContext object.
+   * 
+   * @return a new SimpleContext object
+   */
   protected SimpleContext createDefaultParsingElContext() {
     return new SimpleContext();
   }
 
+    /**
+   * Creates an EL expression from the given string representation.
+   * 
+   * @param expression the string representation of the EL expression
+   * @return the created EL expression
+   */
   public ElExpression createExpression(String expression) {
     TreeValueExpression juelExpr = factory.createValueExpression(parsingElContext, expression, Object.class);
     return new JuelExpression(juelExpr, elContextFactory);
   }
 
+    /**
+   * Returns the ExpressionFactoryImpl instance.
+   *
+   * @return the ExpressionFactoryImpl instance
+   */
   public ExpressionFactoryImpl getFactory() {
     return factory;
   }
 
+    /**
+   * Returns the JuelElContextFactory used by this class.
+   *
+   * @return the JuelElContextFactory instance
+   */
   public JuelElContextFactory getElContextFactory() {
     return elContextFactory;
   }
 
+    /**
+   * Returns the ELContext used for parsing.
+   *
+   * @return the ELContext used for parsing
+   */
   public ELContext getParsingElContext() {
     return parsingElContext;
   }
 
+    /**
+   * Creates a default ELResolver with a CompositeELResolver that includes VariableContextElResolver, ArrayELResolver, 
+   * ListELResolver, MapELResolver, ResourceBundleELResolver, and BeanELResolver.
+   * 
+   * @return the default ELResolver
+   */
   protected static ELResolver createDefaultResolver() {
     CompositeELResolver resolver = new CompositeELResolver();
     resolver.add(new VariableContextElResolver());

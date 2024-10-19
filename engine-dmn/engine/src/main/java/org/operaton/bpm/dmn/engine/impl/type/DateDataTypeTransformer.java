@@ -47,6 +47,13 @@ public class DateDataTypeTransformer implements DmnDataTypeTransformer {
 
   protected String formatPattern = "yyyy-MM-dd'T'HH:mm:ss";
 
+    /**
+   * Transforms the given object value into a TypedValue representing a Date.
+   *
+   * @param value the object value to transform
+   * @return a TypedValue representing the Date
+   * @throws IllegalArgumentException if the value is not a supported type
+   */
   @Override
   public TypedValue transform(Object value) throws IllegalArgumentException {
     if (value instanceof Date) {
@@ -92,6 +99,13 @@ public class DateDataTypeTransformer implements DmnDataTypeTransformer {
     }
   }
 
+    /**
+   * Parses a string value into a Date object using the specified format pattern.
+   *
+   * @param value the string value to be parsed
+   * @return a Date object representing the parsed value
+   * @throws IllegalArgumentException if the string value cannot be parsed
+   */
   protected Date transformString(String value) {
     try {
       return new SimpleDateFormat(formatPattern).parse(value);
@@ -100,6 +114,12 @@ public class DateDataTypeTransformer implements DmnDataTypeTransformer {
     }
   }
 
+    /**
+   * Returns a DmnEngineException with a message stating that the provided value's type cannot be converted to java.util.Date.
+   * 
+   * @param value the object whose type is to be checked
+   * @return a DmnEngineException with a message indicating the unsupported type
+   */
   protected DmnEngineException unsupportedType(Object value) {
     String className = value.getClass().getName();
     return new DmnEngineException("Unsupported type: '" + className +

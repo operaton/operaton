@@ -38,10 +38,20 @@ public class FeelSyntaxException extends FeelException {
     this.description = description;
   }
 
+    /**
+   * Returns the feel expression.
+   *
+   * @return the feel expression
+   */
   public String getFeelExpression() {
     return feelExpression;
   }
 
+    /**
+   * Returns the description of the object.
+   *
+   * @return the description
+   */
   public String getDescription() {
     return description;
   }

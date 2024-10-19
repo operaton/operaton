@@ -85,12 +85,23 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
 
   protected boolean returnBlankTableOutputAsNull = false;
 
+    /**
+   * Initializes the engine and returns a new instance of DefaultDmnEngine.
+   * 
+   * @return a new instance of DefaultDmnEngine
+   */
   @Override
   public DmnEngine buildEngine() {
     init();
     return new DefaultDmnEngine(this);
   }
 
+    /**
+   * Initializes various components required for the execution of the program,
+   * including metric collectors, decision table evaluation listeners, decision 
+   * evaluation listeners, script engine resolvers, EL defaults, EL providers, 
+   * and FEEL engines.
+   */
   public void init() {
     initMetricCollector();
     initDecisionTableEvaluationListener();
@@ -101,6 +112,9 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
     initFeelEngine();
   }
 
+    /**
+   * Initializes default expression languages based on the value of enableFeelLegacyBehavior.
+   */
   public void initElDefaults() {
     if (enableFeelLegacyBehavior) {
       if (defaultInputExpressionExpressionLanguage == null) {
@@ -133,12 +147,18 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
     }
   }
 
+    /**
+   * Initializes the engine metric collector if it is null by assigning a new DefaultEngineMetricCollector object to it.
+   */
   protected void initMetricCollector() {
     if (engineMetricCollector == null) {
       engineMetricCollector = new DefaultEngineMetricCollector();
     }
   }
 
+    /**
+   * Initializes the decision table evaluation listeners by combining custom pre and post listeners.
+   */
   protected void initDecisionTableEvaluationListener() {
     List<DmnDecisionTableEvaluationListener> listeners = new ArrayList<>();
     if (customPreDecisionTableEvaluationListeners != null && !customPreDecisionTableEvaluationListeners.isEmpty()) {
@@ -151,20 +171,20 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
     decisionTableEvaluationListeners = listeners;
   }
 
+    /**
+   * Initializes the decision evaluation listeners by combining custom pre and post listeners with default listeners.
+   */
   protected void initDecisionEvaluationListener() {
     List<DmnDecisionEvaluationListener> listeners = new ArrayList<>();
     if (customPreDecisionEvaluationListeners != null && !customPreDecisionEvaluationListeners.isEmpty()) {
       listeners.addAll(customPreDecisionEvaluationListeners);
     }
 
-    listeners.addAll(getDefaultDmnDecisionEvaluationListeners());
-
-    if (customPostDecisionEvaluationListeners != null && !customPostDecisionEvaluationListeners.isEmpty()) {
-      listeners.addAll(customPostDecisionEvaluationListeners);
-    }
-    decisionEvaluationListeners = listeners;
-  }
-
+    /**
+   * Retrieves the default DMN decision evaluation listeners.
+   * 
+   * @return A collection of DMN decision evaluation listeners
+   */
   protected Collection<? extends DmnDecisionEvaluationListener> getDefaultDmnDecisionEvaluationListeners() {
     List<DmnDecisionEvaluationListener> defaultListeners = new ArrayList<>();
 
@@ -177,18 +197,30 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
     return defaultListeners;
   }
 
+    /**
+   * Initializes the EL provider if it is null by creating a new instance of JuelElProvider
+   */
   protected void initElProvider() {
     if(elProvider == null) {
       elProvider = new JuelElProvider();
     }
   }
 
+    /**
+   * Initializes the script engine resolver if it is null by creating a new DefaultScriptEngineResolver object.
+   */
   protected void initScriptEngineResolver() {
     if (scriptEngineResolver == null) {
       scriptEngineResolver = new DefaultScriptEngineResolver();
     }
   }
 
+    /**
+   * Initializes the Feel engine if it has not been initialized already.
+   * If enableFeelLegacyBehavior is false, it creates a new ScalaFeelEngineFactory with the specified custom function providers.
+   * If enableFeelLegacyBehavior is true, it creates a new FeelEngineFactoryImpl.
+   * Finally, it creates a new Feel engine instance using the selected factory.
+   */
   protected void initFeelEngine() {
     if (feelEngineFactory == null) {
       if (!enableFeelLegacyBehavior) {
@@ -200,85 +232,160 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
       }
     }
 
-    if (feelEngine == null) {
-      feelEngine = feelEngineFactory.createInstance();
-    }
-  }
-
+    /**
+   * Returns the engine metric collector associated with this DmnEngine.
+   * 
+   * @return the engine metric collector
+   */
   @Override
   public DmnEngineMetricCollector getEngineMetricCollector() {
     return engineMetricCollector;
   }
 
+    /**
+   * Sets the engine metric collector for the DMN engine.
+   * 
+   * @param engineMetricCollector the engine metric collector to be set
+   */
   @Override
   public void setEngineMetricCollector(DmnEngineMetricCollector engineMetricCollector) {
     this.engineMetricCollector = engineMetricCollector;
   }
 
+    /**
+   * Sets the engine metric collector for the DMN engine configuration.
+   * 
+   * @param engineMetricCollector the engine metric collector to set
+   * @return the DMN engine configuration with the specified engine metric collector set
+   */
   @Override
   public DefaultDmnEngineConfiguration engineMetricCollector(DmnEngineMetricCollector engineMetricCollector) {
     setEngineMetricCollector(engineMetricCollector);
     return this;
   }
 
+    /**
+   * Returns the list of custom pre-decision table evaluation listeners.
+   *
+   * @return the list of custom pre-decision table evaluation listeners
+   */
   @Override
   public List<DmnDecisionTableEvaluationListener> getCustomPreDecisionTableEvaluationListeners() {
     return customPreDecisionTableEvaluationListeners;
   }
 
+    /**
+   * Sets the custom pre-decision table evaluation listeners for the DMN engine.
+   *
+   * @param decisionTableEvaluationListeners the custom pre-decision table evaluation listeners to be set
+   */
   @Override
   public void setCustomPreDecisionTableEvaluationListeners(List<DmnDecisionTableEvaluationListener> decisionTableEvaluationListeners) {
     this.customPreDecisionTableEvaluationListeners = decisionTableEvaluationListeners;
   }
 
+    /**
+   * Sets the custom pre-decision table evaluation listeners for the DMN engine configuration.
+   * 
+   * @param decisionTableEvaluationListeners the list of decision table evaluation listeners to set
+   * @return the updated DMN engine configuration with the custom pre-decision table evaluation listeners
+   */
   @Override
   public DefaultDmnEngineConfiguration customPreDecisionTableEvaluationListeners(List<DmnDecisionTableEvaluationListener> decisionTableEvaluationListeners) {
     setCustomPreDecisionTableEvaluationListeners(decisionTableEvaluationListeners);
     return this;
   }
 
+    /**
+   * Returns the custom post decision table evaluation listeners.
+   *
+   * @return the list of custom post decision table evaluation listeners
+   */
   @Override
   public List<DmnDecisionTableEvaluationListener> getCustomPostDecisionTableEvaluationListeners() {
     return customPostDecisionTableEvaluationListeners;
   }
 
+    /**
+   * Sets the custom post decision table evaluation listeners for this object.
+   * 
+   * @param decisionTableEvaluationListeners the list of custom post decision table evaluation listeners to set
+   */
   @Override
   public void setCustomPostDecisionTableEvaluationListeners(List<DmnDecisionTableEvaluationListener> decisionTableEvaluationListeners) {
     this.customPostDecisionTableEvaluationListeners = decisionTableEvaluationListeners;
   }
 
+    /**
+   * Sets custom post decision table evaluation listeners.
+   * 
+   * @param decisionTableEvaluationListeners the list of decision table evaluation listeners to set
+   * @return the DefaultDmnEngineConfiguration instance
+   */
   @Override
   public DefaultDmnEngineConfiguration customPostDecisionTableEvaluationListeners(List<DmnDecisionTableEvaluationListener> decisionTableEvaluationListeners) {
     setCustomPostDecisionTableEvaluationListeners(decisionTableEvaluationListeners);
     return this;
   }
 
+    /**
+   * Returns a list of custom pre-decision evaluation listeners.
+   * 
+   * @return the list of custom pre-decision evaluation listeners
+   */
   @Override
   public List<DmnDecisionEvaluationListener> getCustomPreDecisionEvaluationListeners() {
     return customPreDecisionEvaluationListeners;
   }
 
+    /**
+   * Sets the custom pre-decision evaluation listeners for this instance.
+   *
+   * @param decisionEvaluationListeners the list of custom pre-decision evaluation listeners to set
+   */
   @Override
   public void setCustomPreDecisionEvaluationListeners(List<DmnDecisionEvaluationListener> decisionEvaluationListeners) {
     this.customPreDecisionEvaluationListeners = decisionEvaluationListeners;
   }
 
+    /**
+   * Sets the custom pre-decision evaluation listeners for the DMN engine configuration.
+   * 
+   * @param decisionEvaluationListeners the list of decision evaluation listeners to set
+   * @return the updated DMN engine configuration
+   */
   @Override
   public DefaultDmnEngineConfiguration customPreDecisionEvaluationListeners(List<DmnDecisionEvaluationListener> decisionEvaluationListeners) {
     setCustomPreDecisionEvaluationListeners(decisionEvaluationListeners);
     return this;
   }
 
+    /**
+   * Returns the custom post decision evaluation listeners.
+   * 
+   * @return the list of custom post decision evaluation listeners
+   */
   @Override
   public List<DmnDecisionEvaluationListener> getCustomPostDecisionEvaluationListeners() {
     return customPostDecisionEvaluationListeners;
   }
 
+    /**
+   * Sets the list of custom decision evaluation listeners to be used after the decision evaluation.
+   * 
+   * @param decisionEvaluationListeners the list of custom decision evaluation listeners
+   */
   @Override
   public void setCustomPostDecisionEvaluationListeners(List<DmnDecisionEvaluationListener> decisionEvaluationListeners) {
     this.customPostDecisionEvaluationListeners = decisionEvaluationListeners;
   }
 
+    /**
+   * Sets custom post decision evaluation listeners for the DMN engine configuration.
+   *
+   * @param decisionEvaluationListeners the list of custom post decision evaluation listeners to set
+   * @return the updated DMN engine configuration
+   */
   @Override
   public DefaultDmnEngineConfiguration customPostDecisionEvaluationListeners(List<DmnDecisionEvaluationListener> decisionEvaluationListeners) {
     setCustomPostDecisionEvaluationListeners(decisionEvaluationListeners);

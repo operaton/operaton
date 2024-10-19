@@ -44,17 +44,28 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
 
   public TestDecisionEvaluationListener listener;
 
+    /**
+   * Returns a new instance of TestDecisionEvaluationListenerConfiguration as the DmnEngineConfiguration.
+   *
+   * @return a new TestDecisionEvaluationListenerConfiguration instance
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     return new TestDecisionEvaluationListenerConfiguration();
   }
 
+    /**
+   * Initializes the decision evaluation listener by retrieving the configuration from the DMN engine and assigning the test decision listener from the configuration to the class variable 'listener'.
+   */
   @Before
   public void initListener() {
     TestDecisionEvaluationListenerConfiguration configuration = (TestDecisionEvaluationListenerConfiguration) dmnEngine.getConfiguration();
     listener = configuration.testDecisionListener;
   }
 
+    /**
+   * Executes a decision and verifies that the listener's evaluation event is not null.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void shouldCallListener() {
@@ -62,6 +73,9 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
     assertThat(listener.getEvaluationEvent()).isNotNull();
   }
 
+    /**
+   * This method tests the execution of decision elements by evaluating a DMN decision model with specific inputs and asserts the expected results.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void shouldGetExecutedDecisionElements() {
@@ -81,6 +95,9 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
 
   }
 
+    /**
+   * Verifies the root decision result after evaluating a DMN decision table with specific inputs.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void shouldVerifyRootDecisionResult() {
@@ -107,6 +124,9 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
 
   }
 
+    /**
+   * Test method to verify the root decision result when there is no matching output.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void shouldVerifyRootDecisionResultWithNoMatchingOutput() {
@@ -121,6 +141,9 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
 
   }
 
+    /**
+   * This method verifies the results of required decisions by evaluating a DMN file with given inputs and asserting the expected outcomes.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void shouldVerifyRequiredDecisionResults() {
@@ -153,6 +176,13 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
   }
 
   // helper
+    /**
+   * Retrieves the DmnDecisionTableEvaluationEvent from a collection of required decision events based on the key.
+   *
+   * @param requiredDecisionEvents the collection of required decision events
+   * @param key the key to search for
+   * @return the DmnDecisionTableEvaluationEvent with the specified key, or null if not found
+   */
   protected DmnDecisionTableEvaluationEvent getDmnDecisionTable(Collection<DmnDecisionLogicEvaluationEvent> requiredDecisionEvents, String key) {
     for(DmnDecisionLogicEvaluationEvent event : requiredDecisionEvents) {
       if(event.getDecision().getKey().equals(key)) {
@@ -162,6 +192,14 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
     return null;
   }
 
+    /**
+   * Evaluates a decision table based on the provided inputs and input stream.
+   * 
+   * @param input1 the input for temperature
+   * @param input2 the input for day type
+   * @param inputStream the input stream for the decision table
+   * @return the result of evaluating the decision table
+   */
   protected DmnDecisionTableResult evaluateDecision(Object input1, Object input2, InputStream inputStream) {
     variables.put("temperature", input1);
     variables.put("dayType", input2);
@@ -182,10 +220,20 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
 
     public DmnDecisionEvaluationEvent evaluationEvent;
 
+        /**
+     * Sets the provided DmnDecisionEvaluationEvent as the evaluationEvent attribute of the class.
+     * 
+     * @param evaluationEvent the DmnDecisionEvaluationEvent to be set
+     */
     public void notify(DmnDecisionEvaluationEvent evaluationEvent) {
-      this.evaluationEvent = evaluationEvent;
-    }
+          this.evaluationEvent = evaluationEvent;
+        }
 
+        /**
+     * Returns the evaluation event associated with the decision.
+     *
+     * @return the evaluation event
+     */
     public DmnDecisionEvaluationEvent getEvaluationEvent() {
       return evaluationEvent;
     }

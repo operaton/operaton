@@ -40,6 +40,13 @@ public class DefaultScriptEngineResolver implements DmnScriptEngineResolver {
     this(new ScriptEngineManager());
   }
 
+    /**
+   * Returns a ScriptEngine for the specified language. If a ScriptEngine for the language is not already
+   * cached, it will be obtained from the ScriptEngineManager and cached for future use.
+   * 
+   * @param language the programming language for which to obtain a ScriptEngine
+   * @return the ScriptEngine for the specified language
+   */
   public ScriptEngine getScriptEngineForLanguage(String language) {
     ensureNotNull("language", language);
 

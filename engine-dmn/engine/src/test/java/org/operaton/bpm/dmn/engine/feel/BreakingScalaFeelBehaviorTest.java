@@ -39,6 +39,11 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
+    /**
+   * Returns the DMN engine configuration with a default configuration and a Scala FEEL engine factory set.
+   * 
+   * @return the DMN engine configuration
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
@@ -47,6 +52,9 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
   }
 
   // https://jira.operaton.com/browse/CAM-11304
+    /**
+   * Test method to compare a short untyped number in a decision table result.
+   */
   @Test
   @DecisionResource(resource = "breaking_unary_test_compare_short_untyped.dmn")
   public void shouldCompareShortUntyped() {
@@ -68,6 +76,23 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
     assertThat((String)decisionResult.getSingleEntry()).isEqualTo("foo");
   }
 
+    /**
+   * This method tests if a decision in a DMN model returns a boolean value equal to "foo".
+   */
+   @Test
+    @DecisionResource(resource = "breaking_unary_test_boolean.dmn")
+    public void shouldEqualBoolean() {
+      DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
+      DmnEngine engine = configuration.buildEngine();
+  
+      DmnDecisionResult decisionResult = engine.evaluateDecision(decision, Variables.createVariables());
+  
+      assertThat((String)decisionResult.getSingleEntry()).isEqualTo("foo");
+    }
+
+    /**
+   * This method tests the evaluation of a decision table involving timezone comparison with a typed value.
+   */
   @Test
   @DecisionResource(resource = "breaking_compare_date_with_time_zone_untyped.dmn")
   public void shouldEvaluateTimezoneComparisonWithTypedValue() {
@@ -81,19 +106,25 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
     assertThat(evaluationResult).isEmpty();
   }
 
+    /**
+   * This method tests the evaluation of timezone comparison with a date. 
+   */
   @Test
-  @DecisionResource(resource = "breaking_compare_date_with_time_zone_untyped.dmn")
-  public void shouldEvaluateTimezoneComparisonWithDate() {
-    // given a date
-    variables.putValue("date1", new Date());
+    @DecisionResource(resource = "breaking_compare_date_with_time_zone_untyped.dmn")
+    public void shouldEvaluateTimezoneComparisonWithDate() {
+      // given a date
+      variables.putValue("date1", new Date());
+  
+      // when it is compared against timezone
+      var evaluationResult = evaluateDecisionTable(dmnEngine);
+  
+      // then the evaluation is handled gracefully and empty results are returned despite the type mismatch
+      assertThat(evaluationResult).isEmpty();
+    }
 
-    // when it is compared against timezone
-    var evaluationResult = evaluateDecisionTable(dmnEngine);
-
-    // then the evaluation is handled gracefully and empty results are returned despite the type mismatch
-    assertThat(evaluationResult).isEmpty();
-  }
-
+    /**
+   * Test method to verify that single quotes are used correctly in string literals when evaluating a decision.
+   */
   @Test
   @DecisionResource(resource = "breaking_single_quotes.dmn")
   public void shouldUseSingleQuotesInStringLiterals() {
@@ -110,6 +141,9 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
     engine.evaluateDecision(decision, Variables.createVariables().putValue("input", "Hello World"));
   }
 
+    /**
+   * This method tests the comparison of two instances of TestPojo using a decision table.
+   */
   @Ignore("CAM-11319")
   @Test
   @DecisionResource(resource = "breaking_pojo_comparison.dmn")

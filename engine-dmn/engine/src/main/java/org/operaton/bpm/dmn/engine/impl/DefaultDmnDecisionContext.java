@@ -95,6 +95,12 @@ public class DefaultDmnDecisionContext {
     return evaluatedResult;
   }
 
+    /**
+   * Constructs a VariableMap from the given VariableContext.
+   *
+   * @param variableContext the VariableContext containing variables to be added to the VariableMap
+   * @return the VariableMap containing variables from the VariableContext
+   */
   protected VariableMap buildVariableMapFromVariableContext(VariableContext variableContext) {
 
     VariableMap variableMap = Variables.createVariables();
@@ -107,6 +113,12 @@ public class DefaultDmnDecisionContext {
     return variableMap;
   }
 
+    /**
+   * Builds a decision tree starting from the specified decision by recursively adding all required decisions to the list.
+   *
+   * @param decision the decision to start building the tree from
+   * @param requiredDecisions the list of required decisions to add to the tree
+   */
   protected void buildDecisionTree(DmnDecision decision, List<DmnDecision> requiredDecisions) {
     if (requiredDecisions.contains(decision)) {
       return;
@@ -116,9 +128,13 @@ public class DefaultDmnDecisionContext {
       buildDecisionTree(dmnDecision, requiredDecisions);
     }
 
-    requiredDecisions.add(decision);
-  }
-
+    /**
+   * Retrieves the decision evaluation handler based on the decision logic type.
+   * 
+   * @param decision the decision for which to retrieve the evaluation handler
+   * @return the decision evaluation handler
+   * @throws UnsupportedOperationException if the decision logic type is not supported
+   */
   protected DmnDecisionLogicEvaluationHandler getDecisionEvaluationHandler(DmnDecision decision) {
     Class<? extends DmnDecisionLogic> key = decision.getDecisionLogic().getClass();
 
@@ -129,6 +145,9 @@ public class DefaultDmnDecisionContext {
     }
   }
 
+    /**
+   * Adds the evaluated decision result to the variable context based on the hit policy.
+   */
   protected void addResultToVariableContext(DmnDecisionResult evaluatedResult, VariableMap variableMap, DmnDecision evaluatedDecision) {
     List<Map<String, Object>> resultList = evaluatedResult.getResultList();
 
@@ -150,6 +169,12 @@ public class DefaultDmnDecisionContext {
     }
   }
 
+    /**
+   * Checks if the evaluated decision is a decision table with a hit policy of COLLECT or RULE_ORDER.
+   *
+   * @param evaluatedDecision the decision to be evaluated
+   * @return true if the decision table has a hit policy of COLLECT or RULE_ORDER, false otherwise
+   */
   protected boolean isDecisionTableWithCollectOrRuleOrderHitPolicy(DmnDecision evaluatedDecision) {
     boolean isDecisionTableWithCollectHitPolicy = false;
 
@@ -162,6 +187,11 @@ public class DefaultDmnDecisionContext {
     return isDecisionTableWithCollectHitPolicy;
   }
 
+    /**
+   * Generates a decision evaluation event based on the list of evaluated decision logic events.
+   * 
+   * @param evaluatedEvents the list of evaluated decision logic events
+   */
   protected void generateDecisionEvaluationEvent(List<DmnDecisionLogicEvaluationEvent> evaluatedEvents) {
 
     DmnDecisionLogicEvaluationEvent rootEvaluatedEvent = null;

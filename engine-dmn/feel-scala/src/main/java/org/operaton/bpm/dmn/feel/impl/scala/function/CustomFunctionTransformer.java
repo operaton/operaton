@@ -47,6 +47,11 @@ public class CustomFunctionTransformer extends JavaFunctionProvider {
     }
   }
 
+    /**
+   * Transforms a list of custom function providers into JavaFunctions and stores them in a map.
+   *
+   * @param functionProviders the list of custom function providers
+   */
   protected void transformFunctions(List<FeelCustomFunctionProvider> functionProviders) {
     functionProviders.forEach(functionProvider -> {
       Collection<String> functionNames = functionProvider.getFunctionNames();
@@ -68,6 +73,12 @@ public class CustomFunctionTransformer extends JavaFunctionProvider {
     });
   }
 
+    /**
+   * Returns a function that transforms a list of Val objects using the specified CustomFunction.
+   *
+   * @param function the CustomFunction to apply to the list of Val objects
+   * @return a Function that transforms the list of Val objects into a single Val object
+   */
   protected Function<List<Val>, Val> transformFunction(CustomFunction function) {
     return args -> {
 
@@ -80,25 +91,54 @@ public class CustomFunctionTransformer extends JavaFunctionProvider {
     };
   }
 
+    /**
+   * Unpacks a list of Val objects into a list of Objects by applying the unpackVal method to each Val.
+   * 
+   * @param args the list of Val objects to be unpacked
+   * @return a list of Objects containing the unpacked values
+   */
   protected List<Object> unpackVals(List<Val> args) {
     return args.stream()
       .map(this::unpackVal)
       .collect(Collectors.toList());
   }
 
+    /**
+   * Converts a raw result object to a Val object using a valueMapper.
+   * 
+   * @param rawResult the raw result object to be converted
+   * @return the Val object after conversion
+   */
   protected Val toVal(Object rawResult) {
     return valueMapper.toVal(rawResult);
   }
 
+    /**
+   * Unpacks the given Val object using the valueMapper and returns the result.
+   * 
+   * @param arg the Val object to be unpacked
+   * @return the unpacked Object
+   */
   protected Object unpackVal(Val arg) {
     return valueMapper.unpackVal(arg);
   }
 
+    /**
+   * Resolves a JavaFunction object based on the specified function name.
+   *
+   * @param functionName the name of the function to resolve
+   * @return an Optional containing the JavaFunction object associated with the function name, if it exists
+   */
   @Override
   public Optional<JavaFunction> resolveFunction(String functionName) {
     return Optional.ofNullable(functions.get(functionName));
   }
 
+    /**
+   * Retrieves a collection of function names from the map of functions
+   * 
+   * @return a collection of function names
+   */
   @Override
   public Collection<String> getFunctionNames() {
     return functions.keySet();

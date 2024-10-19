@@ -40,15 +40,30 @@ public class FeelRule extends TestWatcher {
     feelEngine = new ScalaFeelEngine(null);
   }
 
+    /**
+   * Constructs a FeelRule object with a new FunctionProvider.
+   *
+   * @return a new FeelRule object with the initialized FunctionProvider
+   */
   public static FeelRule buildWithFunctionProvider() {
     FunctionProvider functionProvider = new FunctionProvider();
     return new FeelRule(functionProvider);
   }
 
+    /**
+   * Constructs and returns a new instance of FeelRule.
+   *
+   * @return a new FeelRule instance
+   */
   public static FeelRule build() {
     return new FeelRule();
   }
 
+    /**
+   * Called when a test has finished running. Clears the function provider if it is not null.
+   *
+   * @param description the description of the test that has finished
+   */
   @Override
   protected void finished(Description description) {
     super.finished(description);
@@ -58,10 +73,23 @@ public class FeelRule extends TestWatcher {
     }
   }
 
+    /**
+   * Evaluates the given expression with the default parameters.
+   * 
+   * @param expression the expression to be evaluated
+   * @return the result of evaluating the expression
+   */
   public <T> T evaluateExpression(String expression) {
     return evaluateExpression(expression, null);
   }
 
+    /**
+   * Evaluates a given expression with the provided value using the FEEL engine.
+   *
+   * @param expression the expression to evaluate
+   * @param value the value to evaluate the expression with
+   * @return the result of evaluating the expression with the provided value
+   */
   public <T> T evaluateExpression(String expression, Object value) {
     if (functionProvider != null) {
       List<FeelCustomFunctionProvider> functionProviders =
@@ -70,10 +98,11 @@ public class FeelRule extends TestWatcher {
       feelEngine = new ScalaFeelEngine(functionProviders);
     }
 
-    VariableContext variableCtx = Variables.putValue("variable", value).asVariableContext();
-    return feelEngine.evaluateSimpleExpression(expression, variableCtx);
-  }
-
+    /**
+   * Returns the FunctionProvider object.
+   *
+   * @return the FunctionProvider object
+   */
   public FunctionProvider getFunctionProvider() {
     return functionProvider;
   }

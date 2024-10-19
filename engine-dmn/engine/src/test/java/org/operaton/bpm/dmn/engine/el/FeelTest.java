@@ -24,6 +24,9 @@ public class FeelTest extends DmnEngineTest {
 
   public static final String FEEL_TEST_DMN = "FeelTest.dmn";
 
+    /**
+   * Test method for evaluating a decision table with string, number, and boolean input variables.
+   */
   @Test
   @DecisionResource(resource = FEEL_TEST_DMN)
   public void testStringVariable() {

@@ -35,6 +35,9 @@ public class CollectResultValueTypeTest extends DmnEngineTest {
   public static final String COLLECT_MAX = "HitPolicyTest.collect.max.single.dmn";
   public static final String COLLECT_COUNT = "HitPolicyTest.collect.count.single.dmn";
 
+    /**
+   * Method to test the collect sum hit policy for different data types. 
+   */
   @Test
   @DecisionResource(resource = COLLECT_SUM)
   public void collectSumHitPolicy() {
@@ -51,6 +54,9 @@ public class CollectResultValueTypeTest extends DmnEngineTest {
       .hasSingleEntryTyped(Variables.doubleValue(81.5));
   }
 
+    /**
+   * Executes the collectMin hit policy decision logic for different data types and verifies the results.
+   */
   @Test
   @DecisionResource(resource = COLLECT_MIN)
   public void collectMinHitPolicy() {
@@ -67,6 +73,9 @@ public class CollectResultValueTypeTest extends DmnEngineTest {
       .hasSingleEntryTyped(Variables.doubleValue(10.3));
   }
 
+    /**
+   * Method to test the collectMaxHitPolicy decision logic by asserting the results for integer, long, and double values.
+   */
   @Test
   @DecisionResource(resource = COLLECT_MAX)
   public void collectMaxHitPolicy() {
@@ -83,6 +92,9 @@ public class CollectResultValueTypeTest extends DmnEngineTest {
       .hasSingleEntryTyped(Variables.doubleValue(50.7));
   }
 
+    /**
+   * Method to test the collect count hit policy for different data types.
+   */
   @Test
   @DecisionResource(resource = COLLECT_COUNT)
   public void collectCountHitPolicy() {
@@ -99,6 +111,14 @@ public class CollectResultValueTypeTest extends DmnEngineTest {
       .hasSingleEntryTyped(Variables.integerValue(3));
   }
 
+    /**
+   * Set input and output variables for the decision table.
+   * 
+   * @param output1 the value of output1
+   * @param output2 the value of output2
+   * @param output3 the value of output3
+   * @return a DmnDecisionTableResultAssert object with the variables set
+   */
   public DmnDecisionTableResultAssert assertThatDecisionTableResult(Object output1, Object output2, Object output3) {
     variables.put("input1", true);
     variables.put("input2", true);

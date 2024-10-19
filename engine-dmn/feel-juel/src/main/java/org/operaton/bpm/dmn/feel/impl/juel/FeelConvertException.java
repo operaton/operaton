@@ -44,10 +44,20 @@ public class FeelConvertException extends FeelException {
     this.type = convertException.getType();
   }
 
+    /**
+  * Returns the value stored in the object.
+  *
+  * @return the value stored in the object
+  */
   public Object getValue() {
     return value;
   }
 
+    /**
+   * Returns the type of the class.
+   * 
+   * @return the type of the class
+   */
   public Class<?> getType() {
     return type;
   }

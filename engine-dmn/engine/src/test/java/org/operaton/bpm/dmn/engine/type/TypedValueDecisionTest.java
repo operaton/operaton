@@ -27,6 +27,9 @@ public class TypedValueDecisionTest extends DmnEngineTest {
 
   public static final String DMN_FILE = "org/operaton/bpm/dmn/engine/type/TypedValue.dmn";
 
+    /**
+   * Sets variables for a decision with untyped value and asserts that the decision table result has a single entry with a value of true.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void decisionWithUntypedValueSatisfied() {
@@ -38,6 +41,9 @@ public class TypedValueDecisionTest extends DmnEngineTest {
       .hasSingleEntry(true);
   }
 
+    /**
+   * This method tests a decision table with untyped values to ensure that the result is not satisfied.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void decisionWithUntypedValueNotSatisfied() {
@@ -49,6 +55,9 @@ public class TypedValueDecisionTest extends DmnEngineTest {
       .hasSingleEntry(false);
   }
 
+    /**
+   * Sets the variables "type" to "typed" and "integer" to 73, then asserts that the decision table result has a single entry with a boolean value of true.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void decisionWithTypedValueSatisfied() {
@@ -60,6 +69,9 @@ public class TypedValueDecisionTest extends DmnEngineTest {
       .hasSingleEntry(true);
   }
 
+    /**
+   * Test method to verify the decision with a typed value that is not satisfied.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void decisionWithTypedValueNotSatisfied() {

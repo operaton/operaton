@@ -35,6 +35,11 @@ public class DefaultDataTypeTransformerRegistry implements DmnDataTypeTransforme
 
   protected static final Map<String, DmnDataTypeTransformer> transformers = getDefaultTransformers();
 
+    /**
+   * Returns a map of default data type transformers, with each transformer mapped to a specific data type.
+   * 
+   * @return a map of default data type transformers
+   */
   protected static Map<String, DmnDataTypeTransformer> getDefaultTransformers() {
     Map<String, DmnDataTypeTransformer> transformers = new HashMap<String, DmnDataTypeTransformer>();
 
@@ -48,10 +53,22 @@ public class DefaultDataTypeTransformerRegistry implements DmnDataTypeTransforme
     return transformers;
   }
 
+    /**
+   * Adds a DmnDataTypeTransformer for the specified type name to the transformers map.
+   *
+   * @param typeName the type name for the transformer
+   * @param transformer the DmnDataTypeTransformer to be added
+   */
   public void addTransformer(String typeName, DmnDataTypeTransformer transformer) {
     transformers.put(typeName, transformer);
   }
 
+    /**
+   * Retrieves the transformer for the specified data type name.
+   *
+   * @param typeName the name of the data type
+   * @return the transformer corresponding to the data type name, or a new IdentityDataTypeTransformer if none is found
+   */
   public DmnDataTypeTransformer getTransformer(String typeName) {
     if(typeName != null && transformers.containsKey(typeName.toLowerCase())) {
       return transformers.get(typeName.toLowerCase());

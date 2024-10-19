@@ -18,10 +18,24 @@ package org.operaton.bpm.dmn.feel.impl.juel.transform;
 
 public class HyphenTransformer implements FeelToJuelTransformer {
 
+    /**
+   * Checks if the given feelExpression is equal to "-"
+   * 
+   * @param feelExpression the feel expression to check
+   * @return true if the feel expression is equal to "-", false otherwise
+   */
   public boolean canTransform(String feelExpression) {
     return feelExpression.equals("-");
   }
 
+    /**
+   * Transforms a FEEL expression to a JUEL expression.
+   * 
+   * @param transform the transformation to be applied
+   * @param feelExpression the FEEL expression to be transformed
+   * @param inputName the name of the input
+   * @return the transformed JUEL expression as a String
+   */
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     return "true";
   }

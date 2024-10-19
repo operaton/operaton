@@ -50,6 +50,11 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
 
   protected static DmnDataTypeTransformer dataTypeTransformerMock;
 
+    /**
+   * Returns a DefaultDmnEngineConfiguration with a mocked DmnDataTypeTransformer and registry, enabling feel legacy behavior.
+   * 
+   * @return the DefaultDmnEngineConfiguration object
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
@@ -66,6 +71,11 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
     return configuration;
   }
 
+    /**
+   * Invoke the transformer for the output definition by putting the "output" variable with a value of 21,
+   * asserting that the decision table result has a single result with a single entry of the transformed value,
+   * and verifying that the dataTypeTransformerMock is called at least once to transform the value 21.
+   */
   @Test
   @DecisionResource(resource = DMN_OUTPUT_FILE)
   public void invokeTransformerForOutputDefinition() {
@@ -78,6 +88,9 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
     verify(dataTypeTransformerMock, atLeastOnce()).transform(21);
   }
 
+    /**
+   * This method tests the scenario where the output definition has a null value, ensuring that the transformer is not invoked.
+   */
   @Test
   @DecisionResource(resource = DMN_OUTPUT_FILE)
   public void dontInvokeTransformerForOutputDefinitionWithNull() {
@@ -90,6 +103,11 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
     verify(dataTypeTransformerMock, never()).transform(any());
   }
 
+    /**
+   * Invokes a transformer for the input type definition, setting the input variable to 21, 
+   * asserting that the decision table result has a single result with a single entry "is transformed",
+   * and verifying that the dataTypeTransformerMock is called at least once with the input value 21.
+   */
   @Test
   @DecisionResource(resource = DMN_INPUT_FILE)
   public void invokeTransformerForInputTypeDefinition() {
@@ -102,6 +120,9 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
     verify(dataTypeTransformerMock, atLeastOnce()).transform(21);
   }
 
+    /**
+   * Test method to verify that the transformer is not invoked when the input type definition is null.
+   */
   @Test
   @DecisionResource(resource = DMN_INPUT_FILE)
   public void dontInvokeTransformerForInputTypeDefinitionWithNull() {
@@ -114,6 +135,9 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
     verify(dataTypeTransformerMock, never()).transform(any());
   }
 
+    /**
+   * Test method to verify that the transformer is not invoked when there is no type definition for input clause and no output definition for output clause.
+   */
   @Test
   @DecisionResource(resource = DMN_NO_TYPE_FILE)
   public void dontInvokeTransformerForNoTypeDefinition() {

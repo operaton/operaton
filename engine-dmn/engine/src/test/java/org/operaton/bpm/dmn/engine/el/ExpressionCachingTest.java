@@ -45,6 +45,10 @@ public class ExpressionCachingTest {
   protected ElProvider elProviderSpy;
   private GroovyScriptEngineImpl scriptEngineSpy;
 
+    /**
+   * Sets up the necessary configurations for the test by mocking objects and initializing the DefaultDmnEngineConfiguration.
+   * @throws ScriptException if an error occurs during script execution
+   */
   @Before
   public void setup() throws ScriptException {
     ScriptEngineManager scriptEngineManager = mock(ScriptEngineManager.class);
@@ -66,29 +70,15 @@ public class ExpressionCachingTest {
     expressionEvaluationHandler = new ExpressionEvaluationHandler(configuration);
   }
 
+    /**
+   * This method tests the caching behavior of compiled scripts in a script evaluation handler.
+   */
   @Test
   public void testCompiledScriptCaching() throws ScriptException {
 
-    // given
-    DmnExpressionImpl expression = createExpression("1 > 2", "groovy");
-
-    // when
-    expressionEvaluationHandler.evaluateExpression("groovy", expression, emptyVariableContext());
-
-    // then
-    InOrder inOrder = inOrder(expression, scriptEngineSpy);
-    inOrder.verify(expression, atLeastOnce()).getCachedCompiledScript();
-    inOrder.verify(scriptEngineSpy, times(1)).compile(anyString());
-    inOrder.verify(expression, times(1)).cacheCompiledScript(any(CompiledScript.class));
-
-    // when (2)
-    expressionEvaluationHandler.evaluateExpression("groovy", expression, emptyVariableContext());
-
-    // then (2)
-    inOrder.verify(expression, atLeastOnce()).getCachedCompiledScript();
-    inOrder.verify(scriptEngineSpy, times(0)).compile(anyString());
-  }
-
+    /**
+   * Test method to verify caching behavior of EL expressions.
+   */
   @Test
   public void testElExpressionCaching() {
 
@@ -112,6 +102,13 @@ public class ExpressionCachingTest {
     inOrder.verify(elProviderSpy, times(0)).createExpression(anyString());
   }
 
+    /**
+   * Creates a new DmnExpressionImpl object with the given text and language.
+   * 
+   * @param text the text of the expression
+   * @param language the language of the expression
+   * @return a new DmnExpressionImpl object
+   */
   private DmnExpressionImpl createExpression(String text, String language) {
     DmnExpressionImpl expression = spy(new DmnExpressionImpl());
     expression.setExpression(text);

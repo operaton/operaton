@@ -25,10 +25,25 @@ public class EndpointTransformer implements FeelToJuelTransformer {
 
   public static final Pattern DATE_AND_TIME_PATTERN = Pattern.compile("^date and time\\((.+)\\)$");
 
+    /**
+   * Determines if the given feel expression can be transformed.
+   *
+   * @param feelExpression the feel expression to check
+   * @return true if the expression can be transformed, false otherwise
+   */
   public boolean canTransform(String feelExpression) {
     return true;
   }
 
+    /**
+   * Transforms a FEEL expression to a JUEL expression if it matches the DATE_AND_TIME_PATTERN.
+   * If the expression does not match, returns the original FEEL expression.
+   * 
+   * @param transform the FeelToJuelTransform object
+   * @param feelExpression the FEEL expression to transform
+   * @param inputName the name of the input
+   * @return the transformed JUEL expression or the original FEEL expression
+   */
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     Matcher matcher = DATE_AND_TIME_PATTERN.matcher(feelExpression);
     if (matcher.matches()) {

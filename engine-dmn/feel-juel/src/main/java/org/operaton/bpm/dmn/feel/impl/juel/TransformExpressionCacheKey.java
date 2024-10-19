@@ -26,6 +26,9 @@ public class TransformExpressionCacheKey {
     this.inputName = inputName;
   }
 
+    /**
+   * Returns a hash code value for the object based on the expression and inputName fields.
+   */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -35,6 +38,11 @@ public class TransformExpressionCacheKey {
     return result;
   }
 
+    /**
+   * Compares this TransformExpressionCacheKey object with another object to check if they are equal.
+   * @param obj the object to compare with
+   * @return true if the objects are equal, false otherwise
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -57,6 +65,10 @@ public class TransformExpressionCacheKey {
     return true;
   }
 
+    /**
+   * Returns a string representation of the TransformExpressionCacheKey object.
+   * The string includes the expression and inputName fields.
+   */
   @Override
   public String toString() {
     return "TransformExpressionCacheKey [expression=" + expression + ", inputName=" + inputName + "]";

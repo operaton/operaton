@@ -29,12 +29,21 @@ public final class DmnExampleVerifier {
 
   public static final String EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/api/Example.dmn";
 
+    /**
+   * Parses a DMN decision from a given input stream using the provided DMN engine
+   * and asserts the result.
+   * 
+   * @param engine the DMN engine used for parsing the decision
+   */
   public static void assertExample(DmnEngine engine) {
     InputStream inputStream = IoUtil.fileAsStream(EXAMPLE_DMN);
     DmnDecision decision = engine.parseDecision("decision", inputStream);
     assertExample(engine, decision);
   }
 
+    /**
+   * Asserts the results of a decision table evaluation based on different input variables.
+   */
   public static void assertExample(DmnEngine engine, DmnDecision decision) {
     VariableMap variables = Variables.createVariables();
     variables.put("status", "bronze");

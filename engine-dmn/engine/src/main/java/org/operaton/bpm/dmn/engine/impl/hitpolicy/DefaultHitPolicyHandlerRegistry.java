@@ -28,6 +28,11 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
 
   protected static final Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = getDefaultHandlers();
 
+    /**
+   * This method returns a map containing default handlers for different Hit Policies in a DMN table.
+   * 
+   * @return a map of default handlers for Hit Policies
+   */
   protected static Map<HitPolicyEntry, DmnHitPolicyHandler> getDefaultHandlers() {
     Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = new HashMap<HitPolicyEntry, DmnHitPolicyHandler>();
 
@@ -44,10 +49,24 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
     return handlers;
   }
 
+    /**
+   * Returns the handler for the specified HitPolicy and BuiltinAggregator.
+   * 
+   * @param hitPolicy the HitPolicy to retrieve the handler for
+   * @param builtinAggregator the BuiltinAggregator to retrieve the handler for
+   * @return the handler for the given HitPolicy and BuiltinAggregator
+   */
   public DmnHitPolicyHandler getHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator) {
     return handlers.get(new HitPolicyEntry(hitPolicy, builtinAggregator));
   }
 
+    /**
+   * Adds a handler for a specific HitPolicy and BuiltinAggregator combination.
+   * 
+   * @param hitPolicy the HitPolicy to be handled
+   * @param builtinAggregator the BuiltinAggregator to be handled
+   * @param hitPolicyHandler the handler to be added
+   */
   public void addHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator, DmnHitPolicyHandler hitPolicyHandler) {
     handlers.put(new HitPolicyEntry(hitPolicy, builtinAggregator), hitPolicyHandler);
   }

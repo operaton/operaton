@@ -47,16 +47,25 @@ public class FeelEngineTest {
 
   public VariableMap variables;
 
+    /**
+   * Initializes the FeelEngine for testing purposes.
+   */
   @BeforeClass
   public static void initFeelEngine() {
     feelEngine = new FeelEngineFactoryImpl().createInstance();
   }
 
+    /**
+   * Initializes the variables by creating a new Variables object.
+   */
   @Before
   public void initVariables() {
     variables = Variables.createVariables();
   }
 
+    /**
+   * Test method to verify the behavior of comparing long values stored in different types of variables.
+   */
   @Test
   public void testLong() {
     variables.putValue("integer", 12);
@@ -68,6 +77,9 @@ public class FeelEngineTest {
     assertEvaluatesToTrue(Variables.longValue(12L), "<= integer");
   }
 
+    /**
+   * This method tests the evaluation of two strings to determine if they are equal or not.
+   */
   @Test
   public void testEndpointString() {
     assertEvaluatesToTrue("Hello World", "\"Hello World\"");
@@ -78,6 +90,10 @@ public class FeelEngineTest {
     assertEvaluatesToTrue("Why.not?", "\"Why.not?\"");
   }
 
+    /**
+   * Test method for evaluating endpoint variables.
+   * This method tests the evaluation of variables put into a map, comparing expected values with actual values.
+   */
   @Test
   public void testEndpointVariable() {
     variables.put("y", "a");
@@ -89,6 +105,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse("hello", "customer.name");
   }
 
+    /**
+   * Test method to verify if a given value is lesser than a variable stored in a map.
+   */
   @Test
   public void testEndpointVariableGreater() {
     variables.put("y", 13.37);
@@ -96,6 +115,10 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(13.38, "<y");
   }
 
+    /**
+   * Test method to verify the functionality of evaluating if a variable is greater than or equal to a given value.
+   * Variables map is updated with a value for 'y', then the method asserts if the given values are greater than or equal to 'y'.
+   */
   @Test
   public void testEndpointVariableGreaterEqual() {
     variables.put("y", 13.37);
@@ -104,6 +127,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(13.38, "<=y");
   }
 
+    /**
+   * Test method for evaluating an endpoint variable.
+   */
   @Test
   public void testEndpointVariableLess() {
     variables.put("y", 13.37);
@@ -111,6 +137,9 @@ public class FeelEngineTest {
     assertEvaluatesToTrue(13.38, ">y");
   }
 
+    /**
+   * Test method to evaluate if a variable is less than or equal to a specified value.
+   */
   @Test
   public void testEndpointVariableLessEqual() {
     variables.put("y", 13.37);
@@ -119,6 +148,9 @@ public class FeelEngineTest {
     assertEvaluatesToTrue(13.38, ">=y");
   }
 
+    /**
+   * This method tests the evaluation of boolean values using the assertEvaluatesToTrue and assertEvaluatesToFalse methods.
+   */
   @Test
   public void testEndpointBoolean() {
     assertEvaluatesToTrue(true, "true");
@@ -127,6 +159,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(false, "true");
   }
 
+    /**
+   * This method tests various endpoint numbers to see if they evaluate to true or false.
+   */
   @Test
   public void testEndpointNumber() {
     assertEvaluatesToTrue(13, "13");
@@ -136,6 +171,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0.42, ".37");
   }
 
+    /**
+   * Test method to check if numbers are greater than a specified value.
+   */
   @Test
   public void testEndpointNumberGreater() {
     assertEvaluatesToTrue(12, "<13");
@@ -145,6 +183,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0.37, "<.37");
   }
 
+    /**
+   * This method tests if the endpoint number is greater than or equal to the specified value.
+   */
   @Test
   public void testEndpointNumberGreaterEqual() {
     assertEvaluatesToTrue(13.37, "<=13.37");
@@ -155,6 +196,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0.42, "<=.37");
   }
 
+    /**
+   * Tests that the endpoint number is less than the specified value.
+   */
   @Test
   public void testEndpointNumberLess() {
     assertEvaluatesToTrue(13.37, ">13");
@@ -164,6 +208,11 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0.37, ">.37");
   }
 
+    /**
+   * Test method to evaluate if a number is less than or equal to the specified endpoint.
+   * 
+   * The method performs several tests using the assertEvaluatesToTrue and assertEvaluatesToFalse methods.
+   */
   @Test
   public void testEndpointNumberLessEqual() {
     assertEvaluatesToTrue(13.37, ">=13");
@@ -174,6 +223,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0.23, ">=.37");
   }
 
+    /**
+   * Test method for evaluating date and time values using a specific endpoint.
+   */
   @Test
   public void testEndpointDateAndTime() {
     DateValue dateTime = parseDateAndTime("2015-12-12T22:12:53");
@@ -184,6 +236,12 @@ public class FeelEngineTest {
     assertEvaluatesToTrue(dateTime, "date and time(y)");
   }
 
+    /**
+   * This method tests the thread safety of parsing date and time strings using a ThreadPoolExecutor with multiple threads.
+   * It creates a pool of threads, submits tasks to parse date and time strings, and compares the actual parsed dates with the expected dates.
+   * @throws ExecutionException if an error occurs during the execution of the task
+   * @throws InterruptedException if the current thread is interrupted while waiting
+   */
   @Test
   public void testThreadSafetyDateAndTimeParsing() throws ExecutionException, InterruptedException {
     int threadCount = 2;
@@ -217,6 +275,9 @@ public class FeelEngineTest {
     assertThat(actualDates).hasSameElementsAs(expectedDates);
   }
 
+    /**
+   * This method tests the interval number evaluation by asserting if a given number falls within the specified intervals.
+   */
   @Test
   public void testIntervalNumber() {
     assertEvaluatesToTrue(0.23, "[.12...37]");
@@ -244,6 +305,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(13.37, "].12...37[");
   }
 
+    /**
+   * This method tests various interval variable scenarios by evaluating different interval expressions.
+   */
   @Test
   public void testIntervalVariable() {
     variables.put("a", 10);
@@ -274,6 +338,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0.37, "]a..b[");
   }
 
+    /**
+   * This method tests the interval of a given date and time against various ranges
+   */
   @Test
   public void testIntervalDateAndTime() {
     DateValue dateAndTime = parseDateAndTime("2016-03-03T00:00:00");
@@ -320,6 +387,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(dateAndTime, "(date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
   }
 
+    /**
+   * This method tests the behavior of the "not" operation in the context of evaluating expressions.
+   */
   @Test
   public void testNot() {
     variables.put("y", 13.37);
@@ -342,6 +412,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0.37, "not(>=.37)");
   }
 
+    /**
+   * This method is used to test the functionality of the list by adding variables and asserting the evaluations of different expressions.
+   */
   @Test
   public void testList() {
     variables.put("a", "Hello operaton");
@@ -360,6 +433,9 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0, "<y,>13.37,>=.37");
   }
 
+    /**
+   * Test method for evaluating nested expressions with variables.
+   */
   @Test
   public void testNested() {
     variables.put("a", 23.42);
@@ -370,11 +446,17 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0, "not(>=a,13.37,].37...42),<.37)");
   }
 
+    /**
+   * Test method to verify that assertEvaluatesToTrue method returns true when passing in the values 13.37 and "-".
+   */
   @Test
   public void testDontCare() {
     assertEvaluatesToTrue(13.37, "-");
   }
 
+    /**
+   * Test method for evaluating expressions with whitespace.
+   */
   @Test
   public void testWhitespace() {
     assertEvaluatesToTrue("Hello World", "'Hello World' ");
@@ -387,6 +469,9 @@ public class FeelEngineTest {
     assertEvaluatesToTrue(0, " not( 13 ,\t>0)\t");
   }
 
+    /**
+   * This method tests the evaluation of variables in a TestPojo object.
+   */
   @Test
   public void testPojo() {
     variables.putValue("pojo", new TestPojo("foo", 13.37));
@@ -396,21 +481,46 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(13.33, ">= pojo.bar");
   }
 
+    /**
+   * Evaluates the given FEEL expression with the provided input and asserts that the result is true.
+   * 
+   * @param input the input object to evaluate
+   * @param feelExpression the FEEL expression to evaluate
+   */
   public void assertEvaluatesToTrue(Object input, String feelExpression) {
     boolean result = evaluateFeel(input, feelExpression);
     assertThat(result).isTrue();
   }
 
+    /**
+   * Asserts that the given FEEL expression evaluates to false for the specified input object.
+   * 
+   * @param input the input object for the FEEL expression evaluation
+   * @param feelExpression the FEEL expression to be evaluated
+   */
   public void assertEvaluatesToFalse(Object input, String feelExpression) {
     boolean result = evaluateFeel(input, feelExpression);
     assertThat(result).isFalse();
   }
 
+    /**
+   * Evaluates a FEEL expression with the given input object.
+   *
+   * @param input the input object to evaluate the expression with
+   * @param feelExpression the FEEL expression to evaluate
+   * @return the result of evaluating the expression with the input object
+   */
   public boolean evaluateFeel(Object input, String feelExpression) {
     variables.putValue(INPUT_VARIABLE, input);
     return feelEngine.evaluateSimpleUnaryTests(feelExpression, INPUT_VARIABLE, variables.asVariableContext());
   }
 
+    /**
+   * Parses a string containing a date and time and returns a DateValue object.
+   * 
+   * @param dateAndTimeString the string containing the date and time to be parsed
+   * @return the DateValue object representing the parsed date and time
+   */
   protected DateValue parseDateAndTime(String dateAndTimeString) {
     Date date = FeelFunctionMapper.parseDateAndTime(dateAndTimeString);
     return Variables.dateValue(date);
@@ -426,14 +536,27 @@ public class FeelEngineTest {
       this.bar = bar;
     }
 
+        /**
+     * Returns the value of foo.
+     *
+     * @return the value of foo
+     */
     public String getFoo() {
       return foo;
     }
 
+        /**
+     * Returns the value of the Double variable bar.
+     *
+     * @return the value of the Double variable bar
+     */
     public Double getBar() {
       return bar;
     }
 
+        /**
+     * Returns a string representation of the TestPojo object, including the values of foo and bar.
+     */
     public String toString() {
       return "TestPojo{" +
         "foo='" + foo + '\'' +

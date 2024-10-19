@@ -23,10 +23,24 @@ import org.operaton.bpm.model.dmn.instance.Rule;
 
 public class DmnDecisionTableRuleTransformHandler implements DmnElementTransformHandler<Rule, DmnDecisionTableRuleImpl> {
 
+    /**
+   * Handles a DmnElementTransformContext and a Rule object by creating a DmnDecisionTableRuleImpl object.
+   *
+   * @param context the DmnElementTransformContext object
+   * @param rule the Rule object
+   * @return the DmnDecisionTableRuleImpl object created from the Rule object
+   */
   public DmnDecisionTableRuleImpl handleElement(DmnElementTransformContext context, Rule rule) {
     return createFromRule(context, rule);
   }
 
+    /**
+   * Creates a DmnDecisionTableRuleImpl from a Rule object.
+   * 
+   * @param context the DmnElementTransformContext
+   * @param rule the Rule object to transform
+   * @return the created DmnDecisionTableRuleImpl
+   */
   protected DmnDecisionTableRuleImpl createFromRule(DmnElementTransformContext context, Rule rule) {
     DmnDecisionTableRuleImpl decisionTableRule = createDmnElement(context, rule);
 
@@ -36,6 +50,13 @@ public class DmnDecisionTableRuleTransformHandler implements DmnElementTransform
     return decisionTableRule;
   }
 
+    /**
+   * Creates a DmnDecisionTableRuleImpl element based on the provided Rule object.
+   *
+   * @param context the transformation context
+   * @param rule the rule to be transformed into a DmnDecisionTableRuleImpl element
+   * @return a new DmnDecisionTableRuleImpl element
+   */
   protected DmnDecisionTableRuleImpl createDmnElement(DmnElementTransformContext context, Rule rule) {
     return new DmnDecisionTableRuleImpl();
   }

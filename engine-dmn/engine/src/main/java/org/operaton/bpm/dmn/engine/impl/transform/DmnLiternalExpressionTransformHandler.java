@@ -26,10 +26,24 @@ import org.operaton.bpm.model.dmn.instance.LiteralExpression;
 
 public class DmnLiternalExpressionTransformHandler implements DmnElementTransformHandler<LiteralExpression, DmnExpressionImpl> {
 
+    /**
+   * Handles a DMN element by creating a DmnExpressionImpl from a given LiteralExpression.
+   *
+   * @param context the context of the DMN element transformation
+   * @param literalExpression the LiteralExpression to create the DmnExpressionImpl from
+   * @return the DmnExpressionImpl created from the LiteralExpression
+   */
   public DmnExpressionImpl handleElement(DmnElementTransformContext context, LiteralExpression literalExpression) {
     return createFromLiteralExpressionEntry(context, literalExpression);
   }
 
+    /**
+   * Creates a DmnExpressionImpl object from a LiteralExpression object.
+   * 
+   * @param context the transformation context
+   * @param literalExpression the LiteralExpression object to transform
+   * @return the created DmnExpressionImpl object
+   */
   protected DmnExpressionImpl createFromLiteralExpressionEntry(DmnElementTransformContext context, LiteralExpression literalExpression) {
     DmnExpressionImpl dmnExpression = createDmnElement(context, literalExpression);
 
@@ -41,6 +55,13 @@ public class DmnLiternalExpressionTransformHandler implements DmnElementTransfor
     return dmnExpression;
   }
 
+    /**
+   * Creates a new DmnExpressionImpl element.
+   *
+   * @param context the context for transforming the DmnElement
+   * @param inputEntry the LiteralExpression input entry
+   * @return a new DmnExpressionImpl element
+   */
   protected DmnExpressionImpl createDmnElement(DmnElementTransformContext context, LiteralExpression inputEntry) {
     return new DmnExpressionImpl();
   }

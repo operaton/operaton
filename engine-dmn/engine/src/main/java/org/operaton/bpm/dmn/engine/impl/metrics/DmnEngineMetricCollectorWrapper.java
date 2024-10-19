@@ -30,11 +30,17 @@ public class DmnEngineMetricCollectorWrapper implements DmnEngineMetricCollector
     this.collector = collector;
   }
 
+    /**
+   * Notify method for handling DmnDecisionTableEvaluationEvent.
+   */
   @Override
   public void notify(DmnDecisionTableEvaluationEvent evaluationEvent) {
     // the wrapper listen for decision evaluation events
   }
 
+    /**
+   * Notifies the collector with the decision result and required decision results from the evaluation event.
+   */
   @Override
   public void notify(DmnDecisionEvaluationEvent evaluationEvent) {
     notifyCollector(evaluationEvent.getDecisionResult());
@@ -44,6 +50,12 @@ public class DmnEngineMetricCollectorWrapper implements DmnEngineMetricCollector
     }
   }
 
+    /**
+   * Notifies the collector with the provided evaluation event if it is an instance of DmnDecisionTableEvaluationEvent.
+   * This method is implemented to work specifically with decision table evaluation events.
+   * 
+   * @param evaluationEvent the evaluation event to be notified to the collector
+   */
   protected void notifyCollector(DmnDecisionLogicEvaluationEvent evaluationEvent) {
     if (evaluationEvent instanceof DmnDecisionTableEvaluationEvent) {
       collector.notify((DmnDecisionTableEvaluationEvent) evaluationEvent);
@@ -51,21 +63,41 @@ public class DmnEngineMetricCollectorWrapper implements DmnEngineMetricCollector
     // ignore other evaluation events since the collector is implemented as decision table evaluation listener
   }
 
+    /**
+   * Returns the number of executed decision instances.
+   *
+   * @return the number of executed decision instances
+   */
   @Override
   public long getExecutedDecisionInstances() {
     return collector.getExecutedDecisionInstances();
   }
 
+    /**
+   * Returns the number of executed decision elements.
+   *
+   * @return the number of executed decision elements
+   */
   @Override
   public long getExecutedDecisionElements() {
     return collector.getExecutedDecisionElements();
   }
 
+    /**
+   * Clears all executed decision instances.
+   * 
+   * @return the number of cleared executed decision instances
+   */
   @Override
   public long clearExecutedDecisionInstances() {
     return collector.clearExecutedDecisionInstances();
   }
 
+    /**
+   * Clears the executed decision elements
+   *
+   * @return the number of cleared executed decision elements
+   */
   @Override
   public long clearExecutedDecisionElements() {
     return collector.clearExecutedDecisionElements();

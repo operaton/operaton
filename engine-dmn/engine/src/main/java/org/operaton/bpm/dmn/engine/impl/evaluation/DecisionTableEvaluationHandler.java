@@ -73,6 +73,13 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     returnBlankTableOutputAsNull = configuration.isReturnBlankTableOutputAsNull();
   }
 
+    /**
+   * Evaluates a DMN decision using the specified decision and variable context.
+   * 
+   * @param decision the DMN decision to evaluate
+   * @param variableContext the variable context to use for evaluation
+   * @return the evaluation event containing the result of the evaluation
+   */
   @Override
   public DmnDecisionLogicEvaluationEvent evaluate(DmnDecision decision, VariableContext variableContext) {
     DmnDecisionTableEvaluationEventImpl evaluationResult = new DmnDecisionTableEvaluationEventImpl();
@@ -94,10 +101,24 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     return evaluationResult;
   }
 
+    /**
+   * Calculates the total number of decision elements executed in the given decision table.
+   * This is determined by adding the number of input and output elements, and multiplying it by the number of rules in the decision table.
+   *
+   * @param decisionTable the decision table for which to calculate the executed decision elements
+   * @return the total number of executed decision elements in the decision table
+   */
   protected long calculateExecutedDecisionElements(DmnDecisionTableImpl decisionTable) {
     return (decisionTable.getInputs().size() + decisionTable.getOutputs().size()) * decisionTable.getRules().size();
   }
 
+    /**
+   * Evaluates the given decision table using the provided variable context and updates the evaluation result.
+   * 
+   * @param decisionTable the decision table to evaluate
+   * @param variableContext the variable context containing the input variables
+   * @param evaluationResult the evaluation result to update with the outcome
+   */
   protected void evaluateDecisionTable(DmnDecisionTableImpl decisionTable, VariableContext variableContext, DmnDecisionTableEvaluationEventImpl evaluationResult) {
     int inputSize = decisionTable.getInputs().size();
     List<DmnDecisionTableRuleImpl> matchingRules = new ArrayList<DmnDecisionTableRuleImpl>(decisionTable.getRules());
@@ -117,6 +138,13 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     setEvaluationOutput(decisionTable, matchingRules, variableContext, evaluationResult);
   }
 
+    /**
+   * Evaluates the input of a Decision Table using the provided input and variable context.
+   *
+   * @param input the decision table input to evaluate
+   * @param variableContext the variable context containing the variables for evaluation
+   * @return the evaluated input with the corresponding value set
+   */
   protected DmnEvaluatedInput evaluateInput(DmnDecisionTableInputImpl input, VariableContext variableContext) {
     DmnEvaluatedInputImpl evaluatedInput = new DmnEvaluatedInputImpl(input);
 
@@ -133,6 +161,10 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     return evaluatedInput;
   }
 
+    /**
+   * Evaluates the input for available rules based on the condition index, input, available rules, and variable context.
+   * Returns a list of matching rules.
+   */
   protected List<DmnDecisionTableRuleImpl> evaluateInputForAvailableRules(int conditionIdx, DmnDecisionTableInputImpl input, List<DmnDecisionTableRuleImpl> availableRules, VariableContext variableContext) {
     List<DmnDecisionTableRuleImpl> matchingRules = new ArrayList<DmnDecisionTableRuleImpl>();
     for (DmnDecisionTableRuleImpl availableRule : availableRules) {
@@ -144,11 +176,27 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     return matchingRules;
   }
 
+    /**
+   * Evaluates if the condition is applicable based on the input entry, condition expression, and variable context.
+   * 
+   * @param input the decision table input
+   * @param condition the condition expression to evaluate
+   * @param variableContext the variable context for evaluation
+   * @return true if the condition is applicable, false otherwise
+   */
   protected boolean isConditionApplicable(DmnDecisionTableInputImpl input, DmnExpressionImpl condition, VariableContext variableContext) {
     Object result = evaluateInputEntry(input, condition, variableContext);
     return result != null && result.equals(true);
   }
 
+    /**
+   * Set the evaluation output for a decision table based on the matching rules and variable context.
+   * 
+   * @param decisionTable the decision table to evaluate
+   * @param matchingRules the list of matching rules
+   * @param variableContext the variable context used for evaluation
+   * @param evaluationResult the evaluation result to update with the matching rules
+   */
   protected void setEvaluationOutput(DmnDecisionTableImpl decisionTable, List<DmnDecisionTableRuleImpl> matchingRules, VariableContext variableContext, DmnDecisionTableEvaluationEventImpl evaluationResult) {
     List<DmnDecisionTableOutputImpl> decisionTableOutputs = decisionTable.getOutputs();
 
@@ -165,9 +213,32 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     Map<String, DmnEvaluatedOutput> outputEntries = evaluateOutputEntries(decisionTableOutputs, matchingRule, variableContext);
     evaluatedDecisionRule.setOutputEntries(outputEntries);
 
-    return evaluatedDecisionRule;
+    /**
+   * Evaluates a matching rule based on the decision table outputs and input variables.
+   *
+   * @param decisionTableOutputs the list of decision table outputs
+   * @param matchingRule the matching rule to be evaluated
+   * @param variableContext the variable context containing input variables
+   * @return the evaluated decision rule
+   */
+  protected DmnEvaluatedDecisionRule evaluateMatchingRule(List<DmnDecisionTableOutputImpl> decisionTableOutputs, 
+                                                          DmnDecisionTableRuleImpl matchingRule, 
+                                                          VariableContext variableContext) {
+      DmnEvaluatedDecisionRuleImpl evaluatedDecisionRule = new DmnEvaluatedDecisionRuleImpl(matchingRule);
+      Map<String, DmnEvaluatedOutput> outputEntries = evaluateOutputEntries(decisionTableOutputs, matchingRule, variableContext);
+      evaluatedDecisionRule.setOutputEntries(outputEntries);
+  
+      return evaluatedDecisionRule;
   }
 
+    /**
+   * Returns a local variable context based on the input, evaluated input, and existing variable context.
+   *
+   * @param input the decision table input
+   * @param evaluatedInput the evaluated input
+   * @param variableContext the existing variable context
+   * @return the local variable context
+   */
   protected VariableContext getLocalVariableContext(DmnDecisionTableInputImpl input, DmnEvaluatedInput evaluatedInput, VariableContext variableContext) {
     if (isNonEmptyExpression(input.getExpression())) {
       String inputVariableName = evaluatedInput.getInputVariable();
@@ -184,10 +255,24 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     }
   }
 
+    /**
+   * Checks if the given DmnExpressionImpl is not null and its expression is not empty after trimming.
+   * 
+   * @param expression the DmnExpressionImpl to check
+   * @return true if the expression is not null and not empty after trimming, false otherwise
+   */
   protected boolean isNonEmptyExpression(DmnExpressionImpl expression) {
     return expression != null && expression.getExpression() != null && !expression.getExpression().trim().isEmpty();
   }
 
+    /**
+   * Evaluates the input expression using the provided expression, variable context, and expression language.
+   * If the expression language is null, it defaults to the inputExpressionExpressionLanguage.
+   * 
+   * @param expression the expression to evaluate
+   * @param variableContext the context containing variables for evaluation
+   * @return the result of evaluating the expression
+   */
   protected Object evaluateInputExpression(DmnExpressionImpl expression, VariableContext variableContext) {
     String expressionLanguage = expression.getExpressionLanguage();
     if (expressionLanguage == null) {
@@ -196,6 +281,18 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     return expressionEvaluationHandler.evaluateExpression(expressionLanguage, expression, variableContext);
   }
 
+    /**
+   * Evaluates the input entry based on the condition and variable context.
+   * If the condition is non-empty, evaluates it using the specified expression language.
+   * If the expression language is FEEL, uses evaluateFeelSimpleUnaryTests method.
+   * Otherwise, evaluates the expression using evaluateExpression method.
+   * Returns true if the condition is empty.
+   *
+   * @param input the decision table input
+   * @param condition the expression condition
+   * @param variableContext the context containing variables
+   * @return the result of evaluating the input entry
+   */
   protected Object evaluateInputEntry(DmnDecisionTableInputImpl input, DmnExpressionImpl condition, VariableContext variableContext) {
     if (isNonEmptyExpression(condition)) {
       String expressionLanguage = condition.getExpressionLanguage();
@@ -213,6 +310,14 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     }
   }
 
+    /**
+   * Evaluates the output entries of a decision table based on the matching rule and variable context.
+   *
+   * @param decisionTableOutputs the list of decision table outputs
+   * @param matchingRule the matching rule for the decision table
+   * @param variableContext the context containing variables for evaluation
+   * @return a map of evaluated output entries
+   */
   protected Map<String, DmnEvaluatedOutput> evaluateOutputEntries(List<DmnDecisionTableOutputImpl> decisionTableOutputs, DmnDecisionTableRuleImpl matchingRule, VariableContext variableContext) {
     Map<String, DmnEvaluatedOutput> outputEntries = new LinkedHashMap<>();
 
@@ -235,6 +340,13 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     return outputEntries;
   }
 
+    /**
+   * This method evaluates the output entry using the specified conclusion and variable context.
+   *
+   * @param conclusion the conclusion representing the output entry to be evaluated
+   * @param variableContext the variable context containing the variables to be used during evaluation
+   * @return the result of evaluating the output entry
+   */
   protected Object evaluateOutputEntry(DmnExpressionImpl conclusion, VariableContext variableContext) {
     String expressionLanguage = conclusion.getExpressionLanguage();
     if (expressionLanguage == null) {
@@ -243,6 +355,14 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     return expressionEvaluationHandler.evaluateExpression(expressionLanguage, conclusion, variableContext);
   }
 
+    /**
+   * Evaluates a simple unary test expression based on the given condition and input values.
+   * 
+   * @param input the decision table input
+   * @param condition the condition expression to evaluate
+   * @param variableContext the context containing variable values
+   * @return the result of evaluating the simple unary test expression
+   */
   protected Object evaluateFeelSimpleUnaryTests(DmnDecisionTableInputImpl input, DmnExpressionImpl condition, VariableContext variableContext) {
     String expressionText = condition.getExpression();
     if (expressionText != null) {
@@ -253,6 +373,12 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
     }
   }
 
+    /**
+   * Generates a decision result based on the evaluation event passed as a parameter.
+   *
+   * @param event the DmnDecisionLogicEvaluationEvent to generate the decision result from
+   * @return the generated DmnDecisionResult
+   */
   @Override
   public DmnDecisionResult generateDecisionResult(DmnDecisionLogicEvaluationEvent event) {
     DmnDecisionTableEvaluationEvent evaluationResult = (DmnDecisionTableEvaluationEvent) event;

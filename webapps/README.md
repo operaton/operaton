@@ -65,8 +65,8 @@ Build the web apps using Webpack:
 
 ```sh
 # cd <path to your workspace>
-git clone git@github.com:operaton/operaton-bpm-platform.git
-cd operaton-bpm-platform/webapps/frontend
+git clone git@github.com:operaton/operaton.git
+cd operaton/webapps/frontend
 npm install
 npm start
 ```
@@ -74,7 +74,7 @@ npm start
 To start the server in development mode, call
 
 ```sh
-cd operaton-bpm-platform/webapps/assembly
+cd operaton/webapps/assembly
 mvn jetty:run -Pdevelop
 ```
 
@@ -87,7 +87,7 @@ You can now start developing using the `npm run start` command in the frontend d
 In order to run the Jakarta Webapps start Jetty the same way from the `assembly-jakarta` folder
 
 ```sh
-cd operaton-bpm-platform/webapps/assembly
+cd operaton/webapps/assembly
 mvn jetty:run -Pdevelop
 npm run start
 ```

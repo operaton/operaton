@@ -60,7 +60,7 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
     checkVariables("foo", "var_s", "var_xml", "var_json");
   }
 
-  // Check https://jira.operaton.com/browse/CAM-5869
+  // Check https://jira.camunda.com/browse/CAM-5869
   public void FAILING_testSpinInternalVariablesNotExportedByJavascriptScriptTask() {
     String importXML = "var XML = org.operaton.spin.Spin.XML;\n";
     String importJSON = "var JSON = org.operaton.spin.Spin.JSON;\n";

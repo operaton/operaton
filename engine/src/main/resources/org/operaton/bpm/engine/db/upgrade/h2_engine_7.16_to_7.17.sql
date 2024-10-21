@@ -18,7 +18,7 @@
 insert into ACT_GE_SCHEMA_LOG
 values ('600', CURRENT_TIMESTAMP, '7.17.0');
 
--- https://jira.operaton.com/browse/CAM-14006 --
+-- https://jira.camunda.com/browse/CAM-14006 --
 ALTER TABLE ACT_RU_JOB 
   ADD COLUMN LAST_FAILURE_LOG_ID_ varchar(64);
   
@@ -28,6 +28,6 @@ ALTER TABLE ACT_RU_EXT_TASK
 create index ACT_IDX_HI_VARINST_NAME on ACT_HI_VARINST(NAME_);
 create index ACT_IDX_HI_VARINST_ACT_INST_ID on ACT_HI_VARINST(ACT_INST_ID_);
 
--- https://jira.operaton.com/browse/CAM-14205 --
+-- https://jira.camunda.com/browse/CAM-14205 --
 -- ensures liquibase creates the same schema as the normal create scripts --
 ALTER TABLE ACT_GE_BYTEARRAY ALTER COLUMN BYTES_ SET DATA TYPE blob;

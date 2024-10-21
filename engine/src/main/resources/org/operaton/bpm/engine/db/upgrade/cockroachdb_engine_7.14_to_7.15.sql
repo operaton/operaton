@@ -15,7 +15,7 @@
 -- limitations under the License.
 --
 
--- https://jira.operaton.com/browse/CAM-13013
+-- https://jira.camunda.com/browse/CAM-13013
 
 create table ACT_RU_TASK_METER_LOG (
   ID_ varchar(64) not null,
@@ -31,7 +31,7 @@ create index ACT_IDX_TASK_METER_LOG_TIME on ACT_RU_TASK_METER_LOG(TIMESTAMP_);
 insert into ACT_GE_SCHEMA_LOG
 values ('400', CURRENT_TIMESTAMP, '7.15.0');
 
--- https://jira.operaton.com/browse/CAM-13060
+-- https://jira.camunda.com/browse/CAM-13060
 ALTER TABLE ACT_RU_INCIDENT
   ADD ANNOTATION_ varchar(4000);
 

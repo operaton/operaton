@@ -15,23 +15,23 @@
 -- limitations under the License.
 --
 
--- https://jira.operaton.com/browse/CAM-14303 --
+-- https://jira.camunda.com/browse/CAM-14303 --
 ALTER TABLE ACT_RU_TASK
   ADD COLUMN LAST_UPDATED_ timestamp;
 
 -- table writes should ideally come after schema changes, see https://github.com/cockroachdb/cockroach/pull/58182
 
--- https://jira.operaton.com/browse/CAM-14303 --
+-- https://jira.camunda.com/browse/CAM-14303 --
 create index ACT_IDX_TASK_LAST_UPDATED on ACT_RU_TASK(LAST_UPDATED_);
 
 insert into ACT_GE_SCHEMA_LOG
 values ('700', CURRENT_TIMESTAMP, '7.18.0');
 
--- https://jira.operaton.com/browse/CAM-14721
+-- https://jira.camunda.com/browse/CAM-14721
 ALTER TABLE ACT_RU_BATCH
     ADD COLUMN START_TIME_ timestamp;
 
--- https://jira.operaton.com/browse/CAM-14722
+-- https://jira.camunda.com/browse/CAM-14722
 ALTER TABLE ACT_RU_BATCH
     ADD COLUMN EXEC_START_TIME_ timestamp;
 ALTER TABLE ACT_HI_BATCH

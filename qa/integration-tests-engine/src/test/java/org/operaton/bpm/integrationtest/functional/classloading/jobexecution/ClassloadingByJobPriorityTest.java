@@ -38,7 +38,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /*
-  See https://jira.operaton.com/browse/CAM-9913
+  See https://jira.camunda.com/browse/CAM-9913
  */
 @RunWith(Arquillian.class)
 public class ClassloadingByJobPriorityTest extends AbstractFoxPlatformIntegrationTest {

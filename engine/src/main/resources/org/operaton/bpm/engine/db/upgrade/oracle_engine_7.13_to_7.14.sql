@@ -18,7 +18,7 @@
 insert into ACT_GE_SCHEMA_LOG
 values ('300', CURRENT_TIMESTAMP, '7.14.0');
 
--- https://jira.operaton.com/browse/CAM-12304
+-- https://jira.camunda.com/browse/CAM-12304
 ALTER TABLE ACT_RU_VARIABLE
   ADD BATCH_ID_ NVARCHAR2(64);
 CREATE INDEX ACT_IDX_BATCH_ID ON ACT_RU_VARIABLE(BATCH_ID_);
@@ -27,5 +27,5 @@ ALTER TABLE ACT_RU_VARIABLE
     FOREIGN KEY (BATCH_ID_)
     REFERENCES ACT_RU_BATCH (ID_);
     
--- https://jira.operaton.com/browse/CAM-12411
+-- https://jira.camunda.com/browse/CAM-12411
 create index ACT_IDX_VARIABLE_TASK_NAME_TYP on ACT_RU_VARIABLE(TASK_ID_, NAME_, TYPE_);

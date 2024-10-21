@@ -18,6 +18,6 @@
 insert into ACT_GE_SCHEMA_LOG
 values ('301', CURRENT_TIMESTAMP, '7.14.3');
 
--- https://jira.operaton.com/browse/CAM-12832  --
+-- https://jira.camunda.com/browse/CAM-12832  --
 drop index ACT_IDX_JOB_HANDLER;
 create index ACT_IDX_JOB_HANDLER on ACT_RU_JOB(HANDLER_TYPE_, SUBSTR(HANDLER_CFG_, 1, 1850));

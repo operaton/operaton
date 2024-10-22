@@ -354,8 +354,8 @@
   </scm>
 
   <issueManagement>
-    <system>Jira</system>
-    <url>https://app.camunda.com/jira/browse/CAM/</url>
+    <system>GitHub</system>
+    <url>https://github.com/operaton/operaton/issues/</url>
   </issueManagement>
 
 </project>

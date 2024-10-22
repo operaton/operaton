@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>docs</artifactId>
-  <name>Operaton - engine - REST - Docs</name>
+  <name>Operaton - Engine - REST - Docs</name>
   <packaging>pom</packaging>
 
   <properties>

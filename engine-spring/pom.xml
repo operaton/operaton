@@ -11,7 +11,7 @@
   <artifactId>operaton-spring-compatibility-root</artifactId>
 
   <packaging>pom</packaging>
-  <name>Operaton - engine - Spring - Root</name>
+  <name>Operaton - Engine - Spring - Root</name>
 
   <modules>
     <module>core</module>

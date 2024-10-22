@@ -13,7 +13,7 @@
   <groupId>org.operaton.bpm.webapp</groupId>
   <artifactId>operaton-webapp-webjar</artifactId>
   <packaging>jar</packaging>
-  <name>Operaton - webapp - webjar</name>
+  <name>Operaton - Webapp - Webjar</name>
 
   <properties>
     <skipTests>true</skipTests>

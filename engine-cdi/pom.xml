@@ -11,7 +11,7 @@
   <artifactId>operaton-cdi-compatibility-root</artifactId>
 
   <packaging>pom</packaging>
-  <name>Operaton - engine - CDI - Root</name>
+  <name>Operaton - Engine - CDI - Root</name>
 
   <modules>
     <module>core</module>

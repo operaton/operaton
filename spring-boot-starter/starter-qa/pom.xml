@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
 
   <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
-  <name>Operaton - Spring Boot Starter - QA - Root Pom</name>
+  <name>Operaton - Spring Boot Starter - QA - Root POM</name>
 
   <profiles>  
     <profile>

@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>operaton-commons-root</artifactId>
-  <name>operaton Commons - Root Pom</name>
+  <name>Operaton - Commons - Root POM</name>
   <inceptionYear>2014</inceptionYear>
   <packaging>pom</packaging>
 

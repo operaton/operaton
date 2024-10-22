@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-spin-dataformat-all</artifactId>
-  <name>operaton Spin - all dataformats in one</name>
+  <name>Operaton - Spin - All data formats in one</name>
 
   <properties>
     <!-- We shade artifacts into the jar, so we need to generate 

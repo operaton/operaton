@@ -37,7 +37,7 @@
     <jboss.txn-status-manager.port>34713</jboss.txn-status-manager.port>
     <jboss.mail-smtp.port>25</jboss.mail-smtp.port>
 
-    <!-- tomcat -->
+    <!-- Tomcat -->
     <tomcat.connector.http.port>48080</tomcat.connector.http.port>
     <tomcat.connector.http.redirectPort>48443</tomcat.connector.http.redirectPort>
     <tomcat.connector.ajp.port>48009</tomcat.connector.ajp.port>

@@ -12,7 +12,7 @@
 
   <artifactId>operaton-webapp-jakarta</artifactId>
   <packaging>war</packaging>
-  <name>Operaton - Webapp - Assembly Jakarta</name>
+  <name>Operaton - Webapp - Assembly - Jakarta</name>
 
   <properties>
     <jakarta.webapp>${project.build.directory}/generated-resources/jakarta-webapp</jakarta.webapp>

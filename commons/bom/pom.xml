@@ -10,7 +10,7 @@
 
   <groupId>org.operaton.commons</groupId>
   <artifactId>operaton-commons-bom</artifactId>
-  <name>operaton Commons - Bom</name>
+  <name>Operaton - Commons - BOM</name>
   <packaging>pom</packaging>
 
   <dependencyManagement>

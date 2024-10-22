@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
-  <name>operaton Spin - DOM XML data format</name>
+  <name>Operaton - Spin - DOM XML data format</name>
 
   <dependencies>
     <dependency>

@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
-  <name>operaton Spin - Jackson JSON data format</name>
+  <name>Operaton - Spin - Jackson JSON data format</name>
 
   <dependencies>
     <dependency>

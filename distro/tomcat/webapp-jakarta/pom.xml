@@ -7,7 +7,7 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <name>Operaton - webapp - Tomcat - Jakarta</name>
+  <name>Operaton - Webapp - Tomcat - Jakarta</name>
   <groupId>org.operaton.bpm.webapp</groupId>
   <artifactId>operaton-webapp-tomcat-jakarta</artifactId>
   <packaging>war</packaging>

@@ -11,7 +11,7 @@
 
   <artifactId>operaton-bom-root</artifactId>
   <packaging>pom</packaging>
-  <name>Operaton - Bom Root</name>
+  <name>Operaton - BOM Root</name>
 
   <modules>
     <module>operaton-only-bom</module>

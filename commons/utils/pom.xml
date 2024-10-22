@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-commons-utils</artifactId>
-  <name>operaton Commons - Utils</name>
+  <name>Operaton - Commons - Utils</name>
   <packaging>jar</packaging>
 
   <dependencies>

@@ -11,7 +11,7 @@
 
   <artifactId>operaton-only-bom</artifactId>
   <packaging>pom</packaging>
-  <name>Operaton Only - Bom</name>
+  <name>Operaton - Only BOM</name>
   <url>http://operaton.org</url>
 
   <description>Operaton Only bill of material</description>

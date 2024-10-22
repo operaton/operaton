@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>operaton-engine-plugin-connect</artifactId>
-  <name>Operaton - engine plugins - connect</name>
+  <name>Operaton - Engine Plugins - Connect</name>
 
   <dependencies>
 

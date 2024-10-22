@@ -4,7 +4,7 @@
   <groupId>org.operaton.bpm.identity</groupId>
   <artifactId>operaton-identity-ldap</artifactId>
   <packaging>jar</packaging>
-  <name>Operaton - engine plugins - identity - ldap</name>
+  <name>Operaton - Engine Plugins - Identity - LDAP</name>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>

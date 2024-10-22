@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>operaton-qa-integration-tests-engine-jakarta</artifactId>
-  <name>Operaton - QA Integration Tests - Engine - Jakarta</name>
+  <name>Operaton - QA - Integration Tests - Engine - Jakarta</name>
 
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>

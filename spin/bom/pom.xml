@@ -10,7 +10,7 @@
 
   <groupId>org.operaton.spin</groupId>
   <artifactId>operaton-spin-bom</artifactId>
-  <name>operaton spin - bom</name>
+  <name>Operaton - Spin - BOM</name>
   <packaging>pom</packaging>
 
   <properties>

@@ -12,7 +12,7 @@
   <groupId>org.operaton.bpm.tomcat</groupId>
   <packaging>pom</packaging>
 
-  <name>Operaton - tomcat</name>
+  <name>Operaton - Tomcat</name>
 
   <dependencyManagement>
     <dependencies>

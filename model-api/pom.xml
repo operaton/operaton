@@ -5,7 +5,7 @@
   <groupId>org.operaton.bpm.model</groupId>
   <artifactId>operaton-model-apis</artifactId>
 
-  <name>operaton Model APIs</name>
+  <name>Operaton - Model APIs</name>
   <packaging>pom</packaging>
 
   <parent>

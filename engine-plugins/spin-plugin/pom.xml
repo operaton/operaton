@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>operaton-engine-plugin-spin</artifactId>
-  <name>Operaton - engine plugins - spin</name>
+  <name>Operaton - Engine Plugins - Spin</name>
 
   <dependencies>
 

@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>operaton-spin-root</artifactId>
-  <name>operaton Spin - root</name>
+  <name>Operaton - Spin - Root</name>
   <inceptionYear>2014</inceptionYear>
   <packaging>pom</packaging>
 

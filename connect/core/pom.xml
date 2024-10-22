@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-connect-core</artifactId>
-  <name>Operaton - connect - core</name>
+  <name>Operaton - Connect - Core</name>
 
   <dependencies>
 

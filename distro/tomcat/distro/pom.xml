@@ -10,7 +10,7 @@
     <version>1.0.0-beta-1</version>
   </parent>
 
-  <name>Operaton - tomcat Distro</name>
+  <name>Operaton - Tomcat - Distro</name>
 
   <dependencies>
 

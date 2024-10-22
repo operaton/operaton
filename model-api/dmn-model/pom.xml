@@ -11,7 +11,7 @@
   <artifactId>operaton-dmn-model</artifactId>
   <packaging>jar</packaging>
 
-  <name>Operaton - DMN Model API</name>
+  <name>Operaton - DMN - Model API</name>
   <inceptionYear>2015</inceptionYear>
   <properties>
     <operaton.artifact>org.operaton.bpm.model.dmn</operaton.artifact>

@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>operaton-connect-root</artifactId>
-  <name>Operaton - connect - root</name>
+  <name>Operaton - Connect - Root</name>
   <inceptionYear>2014</inceptionYear>
   <packaging>pom</packaging>
 

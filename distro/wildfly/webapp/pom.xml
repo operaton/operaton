@@ -8,7 +8,7 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.operaton.bpm.webapp</groupId>
-  <name>Operaton - webapp - WildFly</name>
+  <name>Operaton - Webapp - WildFly</name>
   <artifactId>operaton-webapp-wildfly</artifactId>
   <packaging>war</packaging>
 

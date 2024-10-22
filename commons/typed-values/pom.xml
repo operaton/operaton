@@ -4,7 +4,7 @@
 
   <groupId>org.operaton.commons</groupId>
   <artifactId>operaton-commons-typed-values</artifactId>
-  <name>operaton Commons - Typed Values</name>
+  <name>Operaton - Commons - Typed Values</name>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>

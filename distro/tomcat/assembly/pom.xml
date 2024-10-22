@@ -19,7 +19,7 @@
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
 
-  <name>Operaton - tomcat Assembly</name>
+  <name>Operaton - Tomcat - Assembly</name>
 
   <dependencies>
     <dependency>

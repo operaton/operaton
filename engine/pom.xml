@@ -2,7 +2,7 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <name>Operaton - engine</name>
+  <name>Operaton - Engine</name>
   <artifactId>operaton-engine</artifactId>
 
   <parent>

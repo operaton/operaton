@@ -11,7 +11,7 @@
 
   <artifactId>operaton-database-settings</artifactId>
   <packaging>pom</packaging>
-  <name>Operaton - database settings</name>
+  <name>Operaton - Database Settings</name>
   <description>Provides general dependencies and profiles for database testing</description>
 
   <properties>

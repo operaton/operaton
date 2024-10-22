@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-connect-soap-http-client</artifactId>
-  <name>Operaton - connect - soap http client</name>
+  <name>Operaton - Connect - SOAP HTTP Client</name>
 
   <dependencies>
 

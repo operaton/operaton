@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-connect-connectors-all</artifactId>
-  <name>Operaton - connect - all connectors in one</name>
+  <name>Operaton - Connect - All connectors in one</name>
 
   <properties>
     <!-- We shade artifacts into the jar, so we need to generate 

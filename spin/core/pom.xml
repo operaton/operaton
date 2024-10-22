@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-spin-core</artifactId>
-  <name>operaton Spin - core</name>
+  <name>Operaton - Spin - Core</name>
 
   <dependencies>
 

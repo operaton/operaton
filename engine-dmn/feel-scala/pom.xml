@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-engine-feel-scala</artifactId>
-  <name>operaton DMN - engine FEEL - SCALA</name>
+  <name>Operaton - DMN - Engine - FEEL - SCALA</name>
   <properties>
     <operaton.artifact>org.operaton.bpm.dmn.feel.impl.scala</operaton.artifact>
   </properties>

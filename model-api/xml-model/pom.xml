@@ -11,7 +11,7 @@
   <artifactId>operaton-xml-model</artifactId>
   <packaging>jar</packaging>
 
-  <name>Operaton - Xml Model API</name>
+  <name>Operaton - XML Model API</name>
   <inceptionYear>2014</inceptionYear>
   <properties>
     <operaton.artifact>org.operaton.bpm.model.xml</operaton.artifact>

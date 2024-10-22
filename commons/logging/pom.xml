@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-commons-logging</artifactId>
-  <name>operaton Commons - Logging</name>
+  <name>Operaton - Commons - Logging</name>
   <packaging>jar</packaging>
 
   <dependencies>

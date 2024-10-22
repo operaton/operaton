@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>operaton-engine-dmn</artifactId>
-  <name>operaton DMN - engine</name>
+  <name>Operaton - DMN - Engine</name>
   <properties>
     <operaton.artifact>org.operaton.bpm.dmn.engine</operaton.artifact>
     <operaton.osgi.import.additional>

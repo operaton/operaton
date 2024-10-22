@@ -12,7 +12,7 @@
   <groupId>org.operaton.bpm.dmn</groupId>
   <artifactId>operaton-engine-dmn-bom</artifactId>
   <version>1.0.0-beta-1</version>
-  <name>operaton DMN - engine - bom</name>
+  <name>Operaton - DMN - Engine - BOM</name>
   <packaging>pom</packaging>
 
   <dependencyManagement>

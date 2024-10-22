@@ -8,7 +8,7 @@
   </parent>
 
   <artifactId>operaton-spin-dataformat-xml-dom-jakarta</artifactId>
-  <name>operaton Spin - DOM XML data format Jakarta</name>
+  <name>Operaton - Spin - DOM XML data format - Jakarta</name>
 
   <properties>
     <jaxb-runtime.version>4.0.1</jaxb-runtime.version>

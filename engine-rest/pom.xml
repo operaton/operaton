@@ -11,7 +11,7 @@
   <artifactId>operaton-engine-rest-root</artifactId>
 
   <packaging>pom</packaging>
-  <name>Operaton - engine - REST - Root</name>
+  <name>Operaton - Engine - REST - Root</name>
 
   <properties>
     <version.rest-assured>4.5.0</version.rest-assured>

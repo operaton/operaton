@@ -4,7 +4,7 @@
   <artifactId>operaton-dmn-junit5</artifactId>
   <packaging>jar</packaging>
 
-  <name>Operaton DMN - JUnit 5 Extension</name>
+  <name>Operaton - DMN - JUnit 5 Extension</name>
 
   <parent>
     <groupId>org.operaton.bpm</groupId>

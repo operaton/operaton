@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>operaton-parent</artifactId>
-  <name>Operaton - Parent Pom</name>
+  <name>Operaton - Parent POM</name>
   <inceptionYear>2013</inceptionYear>
   <packaging>pom</packaging>
 

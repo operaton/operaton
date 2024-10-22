@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>qa-plugins-spin-dataformat-json-jackson</artifactId>
-  <name>Operaton - Spring Boot Starter - QA - Plugins - Spin Json Jackson</name>
+  <name>Operaton - Spring Boot Starter - QA - Plugins - Spin JSON Jackson</name>
 
   <dependencies>
 

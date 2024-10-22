@@ -31,6 +31,12 @@ public interface DmnDataTypeTransformerRegistry {
    */
   DmnDataTypeTransformer getTransformer(String typeName);
 
+    /**
+   * Adds a custom transformer for a specific data type.
+   *
+   * @param typeName the name of the data type
+   * @param transformer the custom transformer to be added
+   */
   void addTransformer(String typeName, DmnDataTypeTransformer transformer);
 
 }

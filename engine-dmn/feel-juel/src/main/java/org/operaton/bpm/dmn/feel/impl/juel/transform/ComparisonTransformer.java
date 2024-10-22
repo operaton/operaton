@@ -27,10 +27,24 @@ public class ComparisonTransformer implements FeelToJuelTransformer {
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
   public static final Pattern COMPARISON_PATTERN = Pattern.compile("^(<=|>=|<|>)([^=].*)$");
 
+    /**
+   * Checks if the given feelExpression starts with "<=", "<", ">=", or ">".
+   * @param feelExpression the FEEL expression to check
+   * @return true if the feelExpression starts with one of the specified operators, false otherwise
+   */
   public boolean canTransform(String feelExpression) {
     return feelExpression.startsWith("<=") || feelExpression.startsWith("<") || feelExpression.startsWith(">=") || feelExpression.startsWith(">");
   }
 
+    /**
+   * Transforms a given FEEL expression using the specified transformation, input name, and comparison pattern.
+   *
+   * @param transform The transformation to be applied
+   * @param feelExpression The FEEL expression to transform
+   * @param inputName The input name to be used
+   * @return The transformed expression
+   * @throws IllegalArgumentException if the FEEL expression is not a valid comparison expression
+   */
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     Matcher matcher = COMPARISON_PATTERN.matcher(feelExpression);
     if (matcher.matches()) {
@@ -41,6 +55,15 @@ public class ComparisonTransformer implements FeelToJuelTransformer {
     }
   }
 
+    /**
+   * Transforms a comparison expression from FEEL to JUEL format.
+   *
+   * @param transform the FEEL to JUEL transform object
+   * @param operator the comparison operator
+   * @param endpoint the endpoint to transform
+   * @param inputName the name of the input
+   * @return the transformed comparison expression
+   */
   protected String transformComparison(FeelToJuelTransform transform, String operator, String endpoint, String inputName) {
     String juelEndpoint = transform.transformEndpoint(endpoint, inputName);
     return String.format("%s %s %s", inputName, operator, juelEndpoint);

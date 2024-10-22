@@ -26,6 +26,12 @@ public class DmnDecisionRuleResultAssert extends AbstractMapAssert<DmnDecisionRu
     super(decisionRuleResult, DmnDecisionRuleResultAssert.class);
   }
 
+    /**
+   * Asserts that the DmnDecisionRuleResult contains a single entry with the specified value.
+   * 
+   * @param value the value to check for in the DmnDecisionRuleResult
+   * @return this DmnDecisionRuleResultAssert for further assertions
+   */
   public DmnDecisionRuleResultAssert hasSingleEntry(Object value) {
     hasSize(1);
     containsValue(value);
@@ -33,6 +39,12 @@ public class DmnDecisionRuleResultAssert extends AbstractMapAssert<DmnDecisionRu
     return this;
   }
 
+    /**
+   * Verifies that the result has a single entry with the specified TypedValue.
+   * 
+   * @param value the TypedValue to compare with
+   * @return this DmnDecisionRuleResultAssert for further assertions
+   */
   public DmnDecisionRuleResultAssert hasSingleEntryTyped(TypedValue value) {
     hasSize(1);
 
@@ -42,6 +54,13 @@ public class DmnDecisionRuleResultAssert extends AbstractMapAssert<DmnDecisionRu
     return this;
   }
 
+    /**
+   * Checks if the given expected typed value is equal to the actual typed value.
+   * If the actual value is null when it should not be or if the values are not equal, a failure message is generated.
+   *
+   * @param expectedValue The expected TypedValue
+   * @param actualValue The actual TypedValue
+   */
   protected void failIfTypedValuesAreNotEqual(TypedValue expectedValue, TypedValue actualValue) {
     if (actualValue == null && expectedValue != null) {
       failWithMessage("Expected value to be '%s' but was null", expectedValue);

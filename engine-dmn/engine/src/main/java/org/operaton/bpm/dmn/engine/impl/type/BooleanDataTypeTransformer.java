@@ -28,6 +28,17 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class BooleanDataTypeTransformer implements DmnDataTypeTransformer {
 
+    /**
+   * Transforms the given value into a TypedValue representing a boolean.
+   * If the value is a Boolean, it returns the boolean value as a TypedValue.
+   * If the value is a String, it transforms the string into a boolean value 
+   * and returns it as a TypedValue.
+   * Throws an IllegalArgumentException if the value is neither a Boolean nor a String.
+   *
+   * @param value the value to transform into a boolean TypedValue
+   * @return a TypedValue representing a boolean value
+   * @throws IllegalArgumentException if the value is not a Boolean or a String
+   */
   @Override
   public TypedValue transform(Object value) throws IllegalArgumentException {
     if (value instanceof Boolean) {
@@ -42,6 +53,14 @@ public class BooleanDataTypeTransformer implements DmnDataTypeTransformer {
     }
   }
 
+    /**
+   * Converts a string value to a boolean value by checking if it equals "true" or "false".
+   * Throws an IllegalArgumentException if the input is neither "true" nor "false".
+   * 
+   * @param value the string value to be transformed
+   * @return true if the value is "true", false if the value is "false"
+   * @throws IllegalArgumentException if the value is neither "true" nor "false"
+   */
   protected boolean transformString(String value) {
     if (value.equalsIgnoreCase("true")) {
       return true;

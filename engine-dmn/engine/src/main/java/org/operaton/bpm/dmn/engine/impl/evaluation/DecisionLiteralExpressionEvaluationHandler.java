@@ -45,6 +45,13 @@ public class DecisionLiteralExpressionEvaluationHandler implements DmnDecisionLo
     literalExpressionLanguage = configuration.getDefaultLiteralExpressionLanguage();
   }
 
+    /**
+   * Evaluates a decision by evaluating the literal expression associated with the decision.
+   * 
+   * @param decision the decision to evaluate
+   * @param variableContext the context containing variables for evaluation
+   * @return the evaluation event representing the result of the evaluation
+   */
   @Override
   public DmnDecisionLogicEvaluationEvent evaluate(DmnDecision decision, VariableContext variableContext) {
     DmnDecisionLiteralExpressionEvaluationEventImpl evaluationResult = new DmnDecisionLiteralExpressionEvaluationEventImpl();
@@ -64,6 +71,14 @@ public class DecisionLiteralExpressionEvaluationHandler implements DmnDecisionLo
     return evaluationResult;
   }
 
+    /**
+   * Evaluates a literal expression using the specified expression language and variable context.
+   * If no expression language is specified, the default literal expression language is used.
+   *
+   * @param expression the literal expression to evaluate
+   * @param variableContext the context containing variables to be used in the evaluation
+   * @return the result of evaluating the literal expression
+   */
   protected Object evaluateLiteralExpression(DmnExpressionImpl expression, VariableContext variableContext) {
     String expressionLanguage = expression.getExpressionLanguage();
     if (expressionLanguage == null) {
@@ -72,6 +87,12 @@ public class DecisionLiteralExpressionEvaluationHandler implements DmnDecisionLo
     return expressionEvaluationHandler.evaluateExpression(expressionLanguage, expression, variableContext);
   }
 
+    /**
+   * Generates a decision result based on the evaluation event passed as parameter.
+   *
+   * @param event the decision logic evaluation event
+   * @return the generated decision result
+   */
   @Override
   public DmnDecisionResult generateDecisionResult(DmnDecisionLogicEvaluationEvent event) {
     DmnDecisionLiteralExpressionEvaluationEvent evaluationEvent = (DmnDecisionLiteralExpressionEvaluationEvent) event;

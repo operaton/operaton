@@ -39,12 +39,26 @@ public class StartsWithFunctionTransformer implements FeelToJuelFunctionTransfor
     }
   }
 
+    /**
+   * Determines if the given feel expression matches the pattern for starting with a certain sequence.
+   * 
+   * @param feelExpression a string representing a feel expression
+   * @return true if the feel expression matches the pattern for starting with a certain sequence, false otherwise
+   */
   public boolean canTransform(String feelExpression) {
     Matcher startsWithMatcher   = STARTS_WITH_PATTERN.matcher(feelExpression);
 
     return startsWithMatcher.matches();
   }
 
+    /**
+   * Transforms a FEEL expression into a JUEL expression if it matches the startsWith pattern.
+   * 
+   * @param transform the transformation object
+   * @param feelExpression the FEEL expression to transform
+   * @param inputName the input name to use in the JUEL expression
+   * @return the transformed JUEL expression or the original FEEL expression if no transformation is needed
+   */
   @Override
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     Matcher startsWithMatcher   = STARTS_WITH_PATTERN.matcher(feelExpression);
@@ -56,6 +70,13 @@ public class StartsWithFunctionTransformer implements FeelToJuelFunctionTransfor
     }
   }
 
+    /**
+   * Checks if the given input string starts with the specified match string.
+   * 
+   * @param input the input string to check
+   * @param match the string to check if it is the prefix of the input string
+   * @return true if the input string starts with the match string, false otherwise
+   */
   public static boolean startsWith(final String input, final String match) {
     if (input != null) {
       return input.startsWith(match);
@@ -63,11 +84,21 @@ public class StartsWithFunctionTransformer implements FeelToJuelFunctionTransfor
     return false;
   }
 
+    /**
+   * Returns the name constant defined in JUEL_STARTS_WITH.
+   *
+   * @return the name constant defined in JUEL_STARTS_WITH
+   */
   @Override
   public String getName() {
     return JUEL_STARTS_WITH;
   }
 
+    /**
+  * Returns the method associated with this object.
+  *
+  * @return the method
+  */
   @Override
   public Method getMethod()
   {

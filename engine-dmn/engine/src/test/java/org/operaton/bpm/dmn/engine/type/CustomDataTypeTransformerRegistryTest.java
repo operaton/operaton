@@ -35,6 +35,11 @@ public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
   protected static final String DMN_INPUT_FILE = "org/operaton/bpm/dmn/engine/type/CustomInputDefinition.dmn";
   protected static final String DMN_OUTPUT_FILE = "org/operaton/bpm/dmn/engine/type/CustomOutputDefinition.dmn";
 
+    /**
+   * Returns a new instance of DefaultDmnEngineConfiguration with a custom DataTypeTransformerRegistry and Feel Legacy Behavior enabled.
+   * 
+   * @return a new instance of DefaultDmnEngineConfiguration
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
@@ -43,6 +48,9 @@ public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
     return configuration;
   }
 
+    /**
+   * This method applies a custom output transformation to the decision table result.
+   */
   @Test
   @DecisionResource(resource = DMN_OUTPUT_FILE)
   public void customOutputTransformer() {
@@ -53,6 +61,9 @@ public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
       .hasSingleEntry(CustomDataTypeTransformer.CUSTOM_OBJECT.getValue());
   }
 
+    /**
+   * Custom input transformer method for testing decision table result.
+   */
   @Test
   @DecisionResource(resource = DMN_INPUT_FILE)
   public void customInputTransformer() {
@@ -67,6 +78,12 @@ public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
 
     protected final DmnDataTypeTransformerRegistry defaultRegistry = new DefaultDataTypeTransformerRegistry();
 
+        /**
+     * Gets the appropriate data type transformer based on the provided type name.
+     *
+     * @param typeName the name of the data type
+     * @return the data type transformer for the specified type name, or the default transformer if not found
+     */
     @Override
     public DmnDataTypeTransformer getTransformer(String typeName) {
       if (typeName.equals("custom")) {
@@ -76,6 +93,12 @@ public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
       }
     }
 
+        /**
+     * Adds a transformer for a specific data type to the registry.
+     *
+     * @param typeName the name of the data type
+     * @param transformer the transformer to add
+     */
     @Override
     public void addTransformer(String typeName, DmnDataTypeTransformer transformer) {
       defaultRegistry.addTransformer(typeName, transformer);
@@ -86,6 +109,13 @@ public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
 
     protected static final TypedValue CUSTOM_OBJECT = Variables.integerValue(42);
 
+        /**
+     * Transforms the given object into a TypedValue.
+     *
+     * @param value the object to transform
+     * @return the transformed TypedValue
+     * @throws IllegalArgumentException if the transformation fails
+     */
     @Override
     public TypedValue transform(Object value) throws IllegalArgumentException {
       return CUSTOM_OBJECT;

@@ -22,6 +22,12 @@ import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformer;
 
 public class DefaultTransformFactory implements DmnTransformFactory {
 
+    /**
+   * Creates a DmnTransform object with the specified transformer.
+   * 
+   * @param transformer the DmnTransformer to be used in the DmnTransform object
+   * @return a new DmnTransform object initialized with the provided transformer
+   */
   public DmnTransform createTransform(DmnTransformer transformer) {
     return new DefaultDmnTransform(transformer);
   }

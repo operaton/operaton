@@ -38,11 +38,19 @@ public class DmnEngineRuleTest {
 
   public DmnEngineConfiguration customConfiguration;
 
+    /**
+   * Initializes and returns a new instance of DefaultDmnEngineConfiguration.
+   * 
+   * @return the initialized DefaultDmnEngineConfiguration
+   */
   public DmnEngineConfiguration initConfiguration() {
     customConfiguration = new DefaultDmnEngineConfiguration();
     return customConfiguration;
   }
 
+    /**
+   * Verifies that a default DMN engine can be created without any configuration.
+   */
   @Test
   public void shouldCreateDefaultDmnEngineWithoutConfiguration() {
     DmnEngine dmnEngine = engineRule.getDmnEngine();
@@ -51,6 +59,9 @@ public class DmnEngineRuleTest {
       .isNotNull();
   }
 
+    /**
+   * Test method to verify that a default DMN engine is created with null configuration.
+   */
   @Test
   public void shouldCreateDefaultDmnEngineWithNullConfiguration() {
     DmnEngine dmnEngine = nullEngineRule.getDmnEngine();
@@ -59,6 +70,9 @@ public class DmnEngineRuleTest {
       .isNotNull();
   }
 
+    /**
+   * Test method to verify that an engine can be created from a custom configuration.
+   */
   @Test
   public void shouldCreateEngineFromCustomConfiguration() {
     DmnEngine dmnEngine = customEngineRule.getDmnEngine();

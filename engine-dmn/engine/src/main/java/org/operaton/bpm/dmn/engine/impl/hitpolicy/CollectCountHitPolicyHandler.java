@@ -27,39 +27,77 @@ public class CollectCountHitPolicyHandler extends AbstractCollectNumberHitPolicy
 
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.COUNT);
 
+    /**
+   * Returns the HitPolicyEntry constant for this class.
+   *
+   * @return the HitPolicyEntry constant
+   */
   @Override
   public HitPolicyEntry getHitPolicyEntry() {
     return HIT_POLICY;
   }
 
+    /**
+   * Returns the built-in aggregator COUNT.
+   * 
+   * @return the built-in aggregator COUNT
+   */
   @Override
   protected BuiltinAggregator getAggregator() {
     return BuiltinAggregator.COUNT;
   }
 
+    /**
+   * Aggregates a list of TypedValue objects by returning the total number of elements in the list.
+   *
+   * @param values the list of TypedValue objects to be aggregated
+   * @return a TypedValue object representing the total number of elements in the list
+   */
   @Override
   protected TypedValue aggregateValues(List<TypedValue> values) {
     return Variables.integerValue(values.size());
   }
 
+    /**
+   * This method aggregates a list of Integer values, but it always returns 0 as it is not used.
+   * 
+   * @param intValues a list of Integer values to aggregate
+   * @return 0
+   */
   @Override
   protected Integer aggregateIntegerValues(List<Integer> intValues) {
     // not used
     return 0;
   }
 
+    /**
+   * This method aggregates a list of Long values. 
+   * However, it is not used and always returns 0L.
+   * 
+   * @param longValues the list of Long values to aggregate
+   * @return the aggregated Long value, which is always 0L
+   */
   @Override
   protected Long aggregateLongValues(List<Long> longValues) {
     // not used
     return 0L;
   }
 
+    /**
+   * This method aggregates a list of Double values, but it is not used in the current implementation.
+   * Returns 0.0.
+   */
   @Override
   protected Double aggregateDoubleValues(List<Double> doubleValues) {
     // not used
     return 0.0;
   }
 
+    /**
+   * Returns a string representation of the CollectCountHitPolicyHandler object.
+   * 
+   * @return a string representing the CollectCountHitPolicyHandler object
+   */
   @Override
   public String toString() {
     return "CollectCountHitPolicyHandler{}";

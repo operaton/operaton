@@ -36,11 +36,22 @@ public class JuelExpression implements ElExpression {
     this.elContextFactory = elContextFactory;
   }
 
+    /**
+   * Retrieves the value of an expression using the provided variable context.
+   *
+   * @param variableContext the variable context containing the necessary variables for the expression
+   * @return the value of the expression
+   */
   public Object getValue(VariableContext variableContext) {
     ELContext elContext = elContextFactory.createElContext(variableContext);
     return expression.getValue(elContext);
   }
 
+    /**
+   * Returns a string representation of the JuelExpression object, including the expression and elContextFactory.
+   *
+   * @return a string representation of the JuelExpression object
+   */
   @Override
   public String toString() {
     return "JuelExpression{" +

@@ -25,38 +25,81 @@ public class DmnDecisionTableOutputImpl {
   protected String outputName;
   protected DmnTypeDefinition typeDefinition;
 
+    /**
+   * Returns the id of the object.
+   *
+   * @return the id
+   */
   public String getId() {
     return id;
   }
 
+    /**
+   * Sets the ID of the object.
+   *
+   * @param id the new ID to set
+   */
   public void setId(String id) {
     this.id = id;
   }
 
+    /**
+   * Returns the name of the object.
+   *
+   * @return the name of the object
+   */
   public String getName() {
     return name;
   }
 
+    /**
+   * Sets the name of the object.
+   * 
+   * @param name the name to be set
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+    /**
+   * Returns the output name.
+   *
+   * @return the output name
+   */
   public String getOutputName() {
     return outputName;
   }
 
+    /**
+   * Sets the output name for the method.
+   *
+   * @param outputName the new output name to set
+   */
   public void setOutputName(String outputName) {
     this.outputName = outputName;
   }
 
+    /**
+   * Returns the type definition associated with this object.
+   *
+   * @return the type definition
+   */
   public DmnTypeDefinition getTypeDefinition() {
     return typeDefinition;
   }
 
+    /**
+   * Sets the type definition for a DMN element.
+   * 
+   * @param typeDefinition the type definition to be set
+   */
   public void setTypeDefinition(DmnTypeDefinition typeDefinition) {
     this.typeDefinition = typeDefinition;
   }
 
+    /**
+   * Returns a string representation of the DmnDecisionTableOutputImpl object
+   */
   @Override
   public String toString() {
     return "DmnDecisionTableOutputImpl{" +

@@ -23,15 +23,31 @@ import org.operaton.bpm.model.dmn.HitPolicy;
 public class CollectHitPolicyHandler implements DmnHitPolicyHandler {
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, null);
 
+    /**
+   * Returns the HitPolicyEntry constant.
+   * 
+   * @return the HitPolicyEntry constant
+   */
   @Override
   public HitPolicyEntry getHitPolicyEntry() {
     return HIT_POLICY;
   }
 
+    /**
+   * Applies the given decision table evaluation event.
+   *
+   * @param decisionTableEvaluationEvent the decision table evaluation event to apply
+   * @return the decision table evaluation event that was applied
+   */
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     return decisionTableEvaluationEvent;
   }
 
+    /**
+   * Returns a string representation of the CollectHitPolicyHandler object.
+   *
+   * @return a string representing the CollectHitPolicyHandler object
+   */
   @Override
   public String toString() {
     return "CollectHitPolicyHandler{}";

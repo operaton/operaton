@@ -39,10 +39,20 @@ public class FeelMethodInvocationException extends FeelException {
     this.parameters = parameters;
   }
 
+    /**
+   * Returns the value of the method variable.
+   *
+   * @return the method variable
+   */
   public String getMethod() {
     return method;
   }
 
+    /**
+   * Returns the array of parameters.
+   *
+   * @return the array of parameters
+   */
   public String[] getParameters() {
     return parameters;
   }

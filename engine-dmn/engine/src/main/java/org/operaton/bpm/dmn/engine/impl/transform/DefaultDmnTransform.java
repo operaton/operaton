@@ -90,6 +90,11 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     hitPolicyHandlerRegistry = transformer.getHitPolicyHandlerRegistry();
   }
 
+    /**
+   * Sets the model instance by reading a DMN model from the specified file.
+   *
+   * @param file the file containing the DMN model
+   */
   public void setModelInstance(File file) {
     ensureNotNull("file", file);
     try {
@@ -100,11 +105,22 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
   }
 
+    /**
+   * Sets the model instance using the given file and returns the instance of DmnTransform.
+   * 
+   * @param file the file to set as the model instance
+   * @return an instance of DmnTransform
+   */
   public DmnTransform modelInstance(File file) {
     setModelInstance(file);
     return this;
   }
 
+    /**
+   * Sets the model instance by reading a DMN model from the provided input stream.
+   * 
+   * @param inputStream the input stream containing the DMN model
+   */
   public void setModelInstance(InputStream inputStream) {
     ensureNotNull("inputStream", inputStream);
     try {
@@ -115,16 +131,33 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
   }
 
+    /**
+   * Sets the model instance using the provided input stream.
+   * 
+   * @param inputStream the input stream to set as the model instance
+   * @return the current DmnTransform instance
+   */
   public DmnTransform modelInstance(InputStream inputStream) {
     setModelInstance(inputStream);
     return this;
   }
 
+    /**
+   * Sets the DMN model instance for this object.
+   * 
+   * @param modelInstance the DMN model instance to set
+   */
   public void setModelInstance(DmnModelInstance modelInstance) {
     ensureNotNull("dmnModelInstance", modelInstance);
     this.modelInstance = modelInstance;
   }
 
+    /**
+   * Sets the given DMN model instance and returns the current DmnTransform instance.
+   *
+   * @param modelInstance the DMN model instance to set
+   * @return the current DmnTransform instance
+   */
   public DmnTransform modelInstance(DmnModelInstance modelInstance) {
     setModelInstance(modelInstance);
     return this;
@@ -132,6 +165,12 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
 
   // transform ////////////////////////////////////////////////////////////////
 
+    /**
+   * Transforms a DMN Decision Requirements Graph.
+   * 
+   * @param <T> the type of the DmnDecisionRequirementsGraph to transform
+   * @return the transformed DMN Decision Requirements Graph
+   */
   @SuppressWarnings("unchecked")
   public <T extends DmnDecisionRequirementsGraph> T transformDecisionRequirementsGraph() {
     try {
@@ -143,6 +182,12 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
   }
 
+    /**
+   * Transforms the input Definitions object to a DmnDecisionRequirementsGraph object.
+   * 
+   * @param definitions the Definitions object to be transformed
+   * @return the transformed DmnDecisionRequirementsGraph object
+   */
   protected DmnDecisionRequirementsGraph transformDefinitions(Definitions definitions) {
     DmnElementTransformHandler<Definitions, DmnDecisionRequirementsGraphImpl> handler = handlerRegistry.getHandler(Definitions.class);
     DmnDecisionRequirementsGraphImpl dmnDrg = handler.handleElement(this, definitions);
@@ -162,6 +207,11 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     return dmnDrg;
   }
 
+    /**
+   * Transform a list of DMN decisions into a list of specified type.
+   * 
+   * @return List of transformed decisions
+   */
   @SuppressWarnings("unchecked")
   public <T extends DmnDecision> List<T> transformDecisions() {
     try {
@@ -174,6 +224,14 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
   }
 
+    /**
+   * Transforms a collection of decisions into a list of DmnDecision objects by 
+   * first transforming individual decisions, building decision requirements,
+   * notifying transform listeners, and ensuring no loops in the decisions.
+   * 
+   * @param decisions the collection of decisions to transform
+   * @return the list of DmnDecision objects
+   */
   protected List<DmnDecision> transformDecisions(Collection<Decision> decisions) {
     Map<String,DmnDecisionImpl> dmnDecisions = transformIndividualDecisions(decisions);
     buildDecisionRequirements(decisions, dmnDecisions);
@@ -196,10 +254,35 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
       if (dmnDecision != null) {
         dmnDecisions.put(dmnDecision.getKey(), dmnDecision);
       }
-    }
-    return dmnDecisions;
+      ensureNoLoopInDecisions(dmnDecisionList);
+  
+      return dmnDecisionList;
   }
 
+    /**
+   * Transforms a collection of Decisions into a Map of DmnDecisionImpl objects.
+   *
+   * @param decisions the collection of Decisions to transform
+   * @return a Map containing the transformed DmnDecisionImpl objects
+   */
+  protected Map<String, DmnDecisionImpl> transformIndividualDecisions(Collection<Decision> decisions) {
+      Map<String, DmnDecisionImpl> dmnDecisions = new HashMap<String, DmnDecisionImpl>();
+  
+      for (Decision decision : decisions) {
+        DmnDecisionImpl dmnDecision = transformDecision(decision);
+        if (dmnDecision != null) {
+          dmnDecisions.put(dmnDecision.getKey(), dmnDecision);
+        }
+      }
+      return dmnDecisions;
+  }
+
+    /**
+   * Builds the decision requirements for each decision based on the provided decisions and mapping of decision IDs to DmnDecisionImpl objects.
+   *
+   * @param decisions the collection of Decision objects
+   * @param dmnDecisions the mapping of decision IDs to DmnDecisionImpl objects
+   */
   protected void buildDecisionRequirements(Collection<Decision> decisions, Map<String, DmnDecisionImpl> dmnDecisions) {
     for(Decision decision: decisions) {
       List<DmnDecision> requiredDmnDecisions = getRequiredDmnDecisions(decision, dmnDecisions);
@@ -211,6 +294,11 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
   }
 
+    /**
+   * Ensures that there are no loops in the decisions by iterating through a list of DmnDecision objects.
+   * 
+   * @param dmnDecisionList a list of DmnDecision objects to check for loops
+   */
   protected void ensureNoLoopInDecisions(List<DmnDecision> dmnDecisionList) {
     List<String> visitedDecisions = new ArrayList<String>();
 
@@ -219,6 +307,13 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
   }
 
+    /**
+   * Ensures that there are no loops in the decision dependencies by recursively traversing the decision graph starting from the given decision.
+   * 
+   * @param decision the decision to check for loops
+   * @param parentDecisionList the list of parent decisions in the current path
+   * @param visitedDecisions the list of visited decisions to prevent revisiting the same decision
+   */
   protected void ensureNoLoopInDecision(DmnDecision decision, List<String> parentDecisionList, List<String> visitedDecisions) {
 
     if (visitedDecisions.contains(decision.getKey())) {
@@ -232,57 +327,58 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
       if (parentDecisionList.contains(requiredDecision.getKey())) {
         throw LOG.requiredDecisionLoopDetected(requiredDecision.getKey());
       }
-
-      ensureNoLoopInDecision(requiredDecision, new ArrayList<String>(parentDecisionList), visitedDecisions);
+  
+      parentDecisionList.add(decision.getKey());
+  
+      for(DmnDecision requiredDecision : decision.getRequiredDecisions()){
+  
+        if (parentDecisionList.contains(requiredDecision.getKey())) {
+          throw LOG.requiredDecisionLoopDetected(requiredDecision.getKey());
+        }
+  
+        ensureNoLoopInDecision(requiredDecision, new ArrayList<String>(parentDecisionList), visitedDecisions);
+      }
+      visitedDecisions.add(decision.getKey());
     }
-    visitedDecisions.add(decision.getKey());
-  }
 
-  protected List<DmnDecision> getRequiredDmnDecisions(Decision decision, Map<String, DmnDecisionImpl> dmnDecisions) {
-    List<DmnDecision> requiredDecisionList = new ArrayList<DmnDecision>();
-    for(InformationRequirement informationRequirement: decision.getInformationRequirements()) {
-
-      Decision requiredDecision = informationRequirement.getRequiredDecision();
-      if(requiredDecision != null) {
-        DmnDecision requiredDmnDecision = dmnDecisions.get(requiredDecision.getId());
-        requiredDecisionList.add(requiredDmnDecision);
+    /**
+       * Retrieves a list of required DMN decisions based on the given Decision and a map of DMN decisions.
+       *
+       * @param decision the Decision object for which required DMN decisions are to be retrieved
+       * @param dmnDecisions a map of DMN decisions with Decision IDs as keys
+       * @return a list of required DMN decisions
+       */
+      protected List<DmnDecision> getRequiredDmnDecisions(Decision decision, Map<String, DmnDecisionImpl> dmnDecisions) {
+          List<DmnDecision> requiredDecisionList = new ArrayList<DmnDecision>();
+          for(InformationRequirement informationRequirement: decision.getInformationRequirements()) {
+  
+            Decision requiredDecision = informationRequirement.getRequiredDecision();
+            if(requiredDecision != null) {
+              DmnDecision requiredDmnDecision = dmnDecisions.get(requiredDecision.getId());
+              requiredDecisionList.add(requiredDmnDecision);
+            }
+          }
+          return requiredDecisionList;
       }
     }
     return requiredDecisionList;
   }
 
+    /**
+   * Transforms a given decision into a DmnDecisionImpl object by handling its elements,
+   * validating the decision ID, and transforming the decision logic based on its expression type.
+   * 
+   * @param decision the decision to transform
+   * @return the transformed DmnDecisionImpl object
+   */
   protected DmnDecisionImpl transformDecision(Decision decision) {
 
-    DmnElementTransformHandler<Decision, DmnDecisionImpl> handler = handlerRegistry.getHandler(Decision.class);
-    DmnDecisionImpl dmnDecision = handler.handleElement(this, decision);
-    this.decision = dmnDecision;
-    // validate decision id
-    if (dmnDecision.getKey() == null) {
-      throw LOG.decisionIdIsMissing(dmnDecision);
-    }
-
-    Expression expression = decision.getExpression();
-    if (expression == null) {
-      LOG.decisionWithoutExpression(decision);
-      return null;
-    }
-
-    if (expression instanceof DecisionTable) {
-      DmnDecisionTableImpl dmnDecisionTable = transformDecisionTable((DecisionTable) expression);
-      dmnDecision.setDecisionLogic(dmnDecisionTable);
-
-    } else if (expression instanceof LiteralExpression) {
-      DmnDecisionLiteralExpressionImpl dmnDecisionLiteralExpression = transformDecisionLiteralExpression(decision, (LiteralExpression) expression);
-      dmnDecision.setDecisionLogic(dmnDecisionLiteralExpression);
-
-    } else {
-      LOG.decisionTypeNotSupported(expression, decision);
-      return null;
-    }
-
-    return dmnDecision;
-  }
-
+    /**
+   * Transforms a given DecisionTable into a DmnDecisionTableImpl object.
+   * 
+   * @param decisionTable the DecisionTable to transform
+   * @return the transformed DmnDecisionTableImpl object
+   */
   protected DmnDecisionTableImpl transformDecisionTable(DecisionTable decisionTable) {
     DmnElementTransformHandler<DecisionTable, DmnDecisionTableImpl> handler = handlerRegistry.getHandler(DecisionTable.class);
     DmnDecisionTableImpl dmnDecisionTable = handler.handleElement(this, decisionTable);
@@ -329,9 +425,12 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
       }
     }
 
-    return dmnDecisionTable;
-  }
-
+    /**
+   * Transforms the given Input object into a DmnDecisionTableInputImpl object
+   * 
+   * @param input the Input object to be transformed
+   * @return the transformed DmnDecisionTableInputImpl object
+   */
   protected DmnDecisionTableInputImpl transformDecisionTableInput(Input input) {
     DmnElementTransformHandler<Input, DmnDecisionTableInputImpl> handler = handlerRegistry.getHandler(Input.class);
     DmnDecisionTableInputImpl dmnInput = handler.handleElement(this, input);
@@ -353,6 +452,13 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     return dmnInput;
   }
 
+    /**
+   * Transforms the provided Output object into a DmnDecisionTableOutputImpl object using the handlerRegistry.
+   * Validates the output id and throws an exception if it is missing.
+   *
+   * @param output the Output object to transform
+   * @return the transformed DmnDecisionTableOutputImpl object
+   */
   protected DmnDecisionTableOutputImpl transformDecisionTableOutput(Output output) {
     DmnElementTransformHandler<Output, DmnDecisionTableOutputImpl> handler = handlerRegistry.getHandler(Output.class);
     DmnDecisionTableOutputImpl dmnOutput = handler.handleElement(this, output);
@@ -365,6 +471,13 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     return dmnOutput;
   }
 
+    /**
+   * Transforms a given Rule into a DmnDecisionTableRuleImpl object by extracting inputs and outputs
+   * and validating the rule id.
+   *
+   * @param rule the Rule object to be transformed
+   * @return the transformed DmnDecisionTableRuleImpl object
+   */
   protected DmnDecisionTableRuleImpl transformDecisionTableRule(Rule rule) {
     DmnElementTransformHandler<Rule, DmnDecisionTableRuleImpl> handler = handlerRegistry.getHandler(Rule.class);
     DmnDecisionTableRuleImpl dmnRule = handler.handleElement(this, rule);
@@ -402,43 +515,80 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     return dmnRule;
   }
 
+    /**
+   * Transforms the given input expression into a DmnExpressionImpl object using the appropriate handler.
+   *
+   * @param inputExpression the input expression to transform
+   * @return the transformed DmnExpressionImpl object
+   */
   protected DmnExpressionImpl transformInputExpression(InputExpression inputExpression) {
     DmnElementTransformHandler<InputExpression, DmnExpressionImpl> handler = handlerRegistry.getHandler(InputExpression.class);
     return handler.handleElement(this, inputExpression);
   }
 
+    /**
+   * Transforms the given InputEntry into a DmnExpressionImpl using the appropriate handler from the handler registry.
+   * 
+   * @param inputEntry the InputEntry to transform
+   * @return the transformed DmnExpressionImpl
+   */
   protected DmnExpressionImpl transformInputEntry(InputEntry inputEntry) {
     DmnElementTransformHandler<InputEntry, DmnExpressionImpl> handler = handlerRegistry.getHandler(InputEntry.class);
     return handler.handleElement(this, inputEntry);
   }
 
+    /**
+   * Transforms the given OutputEntry into a DmnExpressionImpl using the registered handler.
+   * 
+   * @param outputEntry the OutputEntry to transform
+   * @return the transformed DmnExpressionImpl
+   */
   protected DmnExpressionImpl transformOutputEntry(OutputEntry outputEntry) {
     DmnElementTransformHandler<OutputEntry, DmnExpressionImpl> handler = handlerRegistry.getHandler(OutputEntry.class);
     return handler.handleElement(this, outputEntry);
   }
 
+    /**
+   * Transforms a decision literal expression into a DmnDecisionLiteralExpressionImpl object.
+   * 
+   * @param decision the decision object
+   * @param literalExpression the literal expression object
+   * @return the transformed DmnDecisionLiteralExpressionImpl object
+   */
   protected DmnDecisionLiteralExpressionImpl transformDecisionLiteralExpression(Decision decision, LiteralExpression literalExpression) {
-    DmnDecisionLiteralExpressionImpl dmnDecisionLiteralExpression = new DmnDecisionLiteralExpressionImpl();
-
-    Variable variable = decision.getVariable();
-    if (variable == null) {
-      throw LOG.decisionVariableIsMissing(decision.getId());
+      DmnDecisionLiteralExpressionImpl dmnDecisionLiteralExpression = new DmnDecisionLiteralExpressionImpl();
+  
+      Variable variable = decision.getVariable();
+      if (variable == null) {
+        throw LOG.decisionVariableIsMissing(decision.getId());
+      }
+  
+      DmnVariableImpl dmnVariable = transformVariable(variable);
+      dmnDecisionLiteralExpression.setVariable(dmnVariable);
+  
+      DmnExpressionImpl dmnLiteralExpression = transformLiteralExpression(literalExpression);
+      dmnDecisionLiteralExpression.setExpression(dmnLiteralExpression);
+  
+      return dmnDecisionLiteralExpression;
     }
 
-    DmnVariableImpl dmnVariable = transformVariable(variable);
-    dmnDecisionLiteralExpression.setVariable(dmnVariable);
-
-    DmnExpressionImpl dmnLiteralExpression = transformLiteralExpression(literalExpression);
-    dmnDecisionLiteralExpression.setExpression(dmnLiteralExpression);
-
-    return dmnDecisionLiteralExpression;
-  }
-
+    /**
+   * Transforms a LiteralExpression into a DmnExpressionImpl using the appropriate handler from the handler registry.
+   *
+   * @param literalExpression the LiteralExpression to transform
+   * @return the transformed DmnExpressionImpl
+   */
   protected DmnExpressionImpl transformLiteralExpression(LiteralExpression literalExpression) {
     DmnElementTransformHandler<LiteralExpression, DmnExpressionImpl> handler = handlerRegistry.getHandler(LiteralExpression.class);
     return handler.handleElement(this, literalExpression);
   }
 
+    /**
+   * Transforms a Variable object into a DmnVariableImpl object using the appropriate handler from the handler registry.
+   * 
+   * @param variable the Variable object to transform
+   * @return the transformed DmnVariableImpl object
+   */
   protected DmnVariableImpl transformVariable(Variable variable) {
     DmnElementTransformHandler<Variable, DmnVariableImpl> handler = handlerRegistry.getHandler(Variable.class);
     return handler.handleElement(this, variable);
@@ -446,30 +596,60 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
 
   // listeners ////////////////////////////////////////////////////////////////
 
+    /**
+   * Notifies all transform listeners with the given decision and DmnDecision.
+   * 
+   * @param decision the decision that was transformed
+   * @param dmnDecision the DmnDecision associated with the decision
+   */
   protected void notifyTransformListeners(Decision decision, DmnDecision dmnDecision) {
     for (DmnTransformListener transformListener : transformListeners) {
       transformListener.transformDecision(decision, dmnDecision);
     }
   }
 
+    /**
+   * Notifies all transform listeners with the given input and decision table input.
+   * 
+   * @param input the input to be transformed
+   * @param dmnInput the decision table input to be transformed
+   */
   protected void notifyTransformListeners(Input input, DmnDecisionTableInputImpl dmnInput) {
     for (DmnTransformListener transformListener : transformListeners) {
       transformListener.transformDecisionTableInput(input, dmnInput);
     }
   }
 
+    /**
+   * Notifies all transform listeners that a decision requirements graph has been transformed.
+   * 
+   * @param definitions the definitions associated with the decision requirements graph
+   * @param dmnDecisionRequirementsGraph the decision requirements graph that was transformed
+   */
   protected void notifyTransformListeners(Definitions definitions, DmnDecisionRequirementsGraphImpl dmnDecisionRequirementsGraph) {
     for (DmnTransformListener transformListener : transformListeners) {
       transformListener.transformDecisionRequirementsGraph(definitions, dmnDecisionRequirementsGraph);
     }
   }
 
+    /**
+   * Notifies all registered transform listeners with the given output and decision table output.
+   * 
+   * @param output the output to be transformed
+   * @param dmnOutput the decision table output
+   */
   protected void notifyTransformListeners(Output output, DmnDecisionTableOutputImpl dmnOutput) {
     for (DmnTransformListener transformListener : transformListeners) {
       transformListener.transformDecisionTableOutput(output, dmnOutput);
     }
   }
 
+    /**
+   * Notifies all registered transform listeners when a decision table rule is transformed.
+   *
+   * @param rule the rule being transformed
+   * @param dmnRule the transformed decision table rule
+   */
   protected void notifyTransformListeners(Rule rule, DmnDecisionTableRuleImpl dmnRule) {
     for (DmnTransformListener transformListener : transformListeners) {
       transformListener.transformDecisionTableRule(rule, dmnRule);
@@ -478,22 +658,47 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
 
   // context //////////////////////////////////////////////////////////////////
 
+    /**
+  * Returns the DMN model instance.
+  * 
+  * @return the DMN model instance
+  */
   public DmnModelInstance getModelInstance() {
     return modelInstance;
   }
 
+    /**
+   * Returns the parent object.
+   *
+   * @return the parent object
+   */
   public Object getParent() {
     return parent;
   }
 
+    /**
+   * Returns the decision associated with this method.
+   *
+   * @return the decision associated with this method
+   */
   public DmnDecision getDecision() {
     return decision;
   }
 
+    /**
+   * Returns the data type transformer registry.
+   *
+   * @return the data type transformer registry
+   */
   public DmnDataTypeTransformerRegistry getDataTypeTransformerRegistry() {
     return dataTypeTransformerRegistry;
   }
 
+    /**
+   * Returns the hit policy handler registry.
+   *
+   * @return the hit policy handler registry
+   */
   public DmnHitPolicyHandlerRegistry getHitPolicyHandlerRegistry() {
     return hitPolicyHandlerRegistry;
   }

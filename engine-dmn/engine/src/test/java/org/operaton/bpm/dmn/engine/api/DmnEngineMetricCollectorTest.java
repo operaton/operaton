@@ -42,27 +42,42 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
   protected DmnEngineMetricCollector metricCollector;
 
+    /**
+   * Retrieves the engine metric collector from the DMN engine configuration.
+   */
   @Before
   public void getEngineMetricCollector() {
     metricCollector = dmnEngine.getConfiguration().getEngineMetricCollector();
   }
 
+    /**
+   * Sets test variables with the status as "bronze" and sum as 100.
+   */
   @Before
   public void setTestVariables() {
     variables.putValue("status", "bronze");
     variables.putValue("sum", 100);
   }
 
+    /**
+   * Clears the executed decision elements in the metric collector after each test.
+   */
   @After
   public void clearEngineMetrics() {
     metricCollector.clearExecutedDecisionElements();
   }
 
+    /**
+   * Test to verify that the initial value of executed decision elements is 0.
+   */
   @Test
   public void testInitialExecutedDecisionElementsValue() {
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
   }
 
+    /**
+   * This method tests the execution of decision elements in a decision table by evaluating the decision table multiple times and verifying the number of executed decision elements.
+   */
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
   public void testExecutedDecisionElementsOfDecisionTable() {
@@ -79,6 +94,9 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(64L);
   }
 
+    /**
+   * Test method to verify the execution of decision elements in a DRG for a specific dish example DMN.
+   */
   @Test
   @DecisionResource(resource = DISH_EXAMPLE_DMN, decisionKey = "Dish")
   public void testExecutedDecisionElementsOfDrg() {
@@ -99,6 +117,9 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(120L);
   }
 
+    /**
+   * Test method to evaluate decision elements of decision literal expressions.
+   */
   @Test
   public void testExecutedDecisionElementsOfDecisionLiteralExpression() {
     // evaluate one decision with a single literal expression
@@ -112,6 +133,9 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(3);
   }
 
+    /**
+   * Test method to verify the functionality of clearing the executed decision elements value in the metric collector.
+   */
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
   public void testClearExecutedDecisionElementsValue() {
@@ -124,6 +148,10 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
   }
 
+    /**
+   * This method tests the DRD Dish decision example by evaluating a decision table with certain input values
+   * and asserts the expected results using metric collector.
+   */
   @Test
   @DecisionResource(resource = DISH_EXAMPLE_DMN, decisionKey = "Dish")
   public void testDrdDishDecisionExample() {
@@ -139,6 +167,12 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
   }
 
+    /**
+   * Test method for custom engine metric collector.
+   * Creates a default DmnEngineConfiguration, sets a mock metric collector,
+   * builds an engine, evaluates decision tables and literal expressions,
+   * and verifies that the metric collector is notified.
+   */
   @Test
   public void testCustomEngineMetricCollector() {
     DmnEngineConfiguration configuration = DmnEngineConfiguration.createDefaultDmnEngineConfiguration();

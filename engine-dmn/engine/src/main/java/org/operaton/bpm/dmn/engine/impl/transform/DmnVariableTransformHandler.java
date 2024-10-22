@@ -26,10 +26,24 @@ import org.operaton.bpm.model.dmn.instance.Variable;
 
 public class DmnVariableTransformHandler implements DmnElementTransformHandler<Variable, DmnVariableImpl> {
 
+    /**
+   * Handles a DmnElementTransformContext and a Variable to create a DmnVariableImpl.
+   * 
+   * @param context the DmnElementTransformContext
+   * @param variable the Variable to create the DmnVariableImpl from
+   * @return the DmnVariableImpl created from the Variable
+   */
   public DmnVariableImpl handleElement(DmnElementTransformContext context, Variable variable) {
     return createFromVariable(context, variable);
   }
 
+    /**
+   * Creates a DmnVariableImpl object from a Variable object using the provided context
+   * 
+   * @param context the DmnElementTransformContext used for transformation
+   * @param variable the Variable object to be transformed
+   * @return the created DmnVariableImpl object
+   */
   protected DmnVariableImpl createFromVariable(DmnElementTransformContext context, Variable variable) {
     DmnVariableImpl dmnVariable = createDmnElement(context, variable);
 
@@ -42,6 +56,13 @@ public class DmnVariableTransformHandler implements DmnElementTransformHandler<V
     return dmnVariable;
   }
 
+    /**
+   * Creates a new DmnVariableImpl using the provided DmnElementTransformContext and Variable objects.
+   * 
+   * @param context the DmnElementTransformContext object to use
+   * @param variable the Variable object to use
+   * @return a new DmnVariableImpl object
+   */
   protected DmnVariableImpl createDmnElement(DmnElementTransformContext context, Variable variable) {
     return new DmnVariableImpl();
   }

@@ -42,36 +42,68 @@ public abstract class DmnEngineTest {
   public DmnDecision decision;
   public VariableMap variables;
 
+    /**
+   * Returns the DMN engine configuration.
+   *
+   * @return the DMN engine configuration
+   */
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     return null;
   }
 
+    /**
+   * Initializes the DMN engine by getting it from the DMN engine rule.
+   */
   @Before
   public void initDmnEngine() {
     dmnEngine = dmnEngineRule.getDmnEngine();
   }
 
+    /**
+   * Initializes the decision by retrieving it from the DMN engine rule.
+   */
   @Before
   public void initDecision() {
     decision = dmnEngineRule.getDecision();
   }
 
+    /**
+   * Initializes variables by creating a new instance of Variables.
+   */
   @Before
   public void initVariables() {
     variables = Variables.createVariables();
   }
 
+    /**
+   * Returns the VariableMap containing all variables.
+   *
+   * @return the VariableMap containing all variables
+   */
   public VariableMap getVariables() {
     return variables;
   }
 
   // parsing //////////////////////////////////////////////////////////////////
 
+    /**
+   * Parses DMN decisions from a file.
+   * 
+   * @param filename the name of the file to parse decisions from
+   * @return a list of parsed DMN decisions
+   */
   public List<DmnDecision> parseDecisionsFromFile(String filename) {
     InputStream inputStream = IoUtil.fileAsStream(filename);
     return dmnEngine.parseDecisions(inputStream);
   }
 
+    /**
+   * Parses a DMN decision from a file.
+   *
+   * @param decisionKey the key of the decision to parse
+   * @param filename the name of the file containing the DMN decision
+   * @return the parsed DMN decision
+   */
   public DmnDecision parseDecisionFromFile(String decisionKey, String filename) {
     InputStream inputStream = IoUtil.fileAsStream(filename);
     return dmnEngine.parseDecision(decisionKey, inputStream);
@@ -79,25 +111,52 @@ public abstract class DmnEngineTest {
 
   // evaluations //////////////////////////////////////////////////////////////
 
+    /**
+   * Evaluates the decision table using the provided decision and variables.
+   *
+   * @return the result of the evaluation
+   */
   public DmnDecisionTableResult evaluateDecisionTable() {
     return dmnEngine.evaluateDecisionTable(decision, variables);
   }
 
+    /**
+   * Evaluates a DMN decision table using the provided DMN engine.
+   *
+   * @param engine the DMN engine used to evaluate the decision table
+   * @return the result of the evaluation
+   */
   public DmnDecisionTableResult evaluateDecisionTable(DmnEngine engine) {
     return engine.evaluateDecisionTable(decision, variables);
   }
 
+    /**
+   * Evaluates a DMN decision using the decision engine and provided variables.
+   * 
+   * @return the result of the decision evaluation
+   */
   public DmnDecisionResult evaluateDecision() {
     return dmnEngine.evaluateDecision(decision, variables);
   }
 
   // assertions ///////////////////////////////////////////////////////////////
 
+    /**
+   * Asserts the result of a DMN decision table evaluation.
+   * 
+   * @return an instance of DmnDecisionTableResultAssert for making assertions on the decision table result
+   */
   public DmnDecisionTableResultAssert assertThatDecisionTableResult() {
     DmnDecisionTableResult results = evaluateDecisionTable(dmnEngine);
     return assertThat(results);
   }
 
+    /**
+   * Asserts the decision table result using the given DMN engine.
+   * 
+   * @param engine the DMN engine used to evaluate the decision table
+   * @return an assertion object for the decision table result
+   */
   public DmnDecisionTableResultAssert assertThatDecisionTableResult(DmnEngine engine) {
     DmnDecisionTableResult results = evaluateDecisionTable(engine);
     return assertThat(results);

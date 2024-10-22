@@ -44,23 +44,38 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
   public static DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry;
   public TestDecisionTableEvaluationListener listener;
 
+    /**
+   * Returns a new TestDecisionTableEvaluationListenerConfiguration with FEEL legacy behavior enabled.
+   *
+   * @return a new TestDecisionTableEvaluationListenerConfiguration with FEEL legacy behavior enabled
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     return new TestDecisionTableEvaluationListenerConfiguration()
       .enableFeelLegacyBehavior(true);
   }
 
+    /**
+   * Initializes the hit policy handler registry by creating a new instance of DefaultHitPolicyHandlerRegistry.
+   */
   @BeforeClass
   public static void initHitPolicyHandlerRegistry() {
     hitPolicyHandlerRegistry = new DefaultHitPolicyHandlerRegistry();
   }
 
+    /**
+   * Initializes the listener for test decision table evaluation based on the configuration provided by the DMN engine.
+   */
   @Before
   public void initListener() {
     TestDecisionTableEvaluationListenerConfiguration configuration = (TestDecisionTableEvaluationListenerConfiguration) dmnEngine.getConfiguration();
     listener = configuration.testDecisionTableListener;
   }
 
+    /**
+   * Test method to verify that the listener is called after evaluating a decision table.
+   * It evaluates the decision table with specified inputs and asserts that the listener's evaluation event is not null.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testListenerIsCalled() {
@@ -68,6 +83,9 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(listener.evaluationEvent).isNotNull();
   }
 
+    /**
+   * Test method to verify the number of executed decision elements
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testExecutedDecisionElements() {
@@ -82,6 +100,9 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(listener.evaluationEvent.getExecutedDecisionElements()).isEqualTo(36);
   }
 
+    /**
+   * This method tests input values by evaluating a decision table and asserting the expected results for each input.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testInputValues() {
@@ -108,6 +129,9 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(input3.getValue()).isEqualTo(Variables.untypedNullValue());
   }
 
+    /**
+   * This method tests the matching rules of a decision table by evaluating different scenarios and verifying the expected outcomes.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testMatchingRules() {
@@ -152,6 +176,9 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(matchedRule.getOutputEntries()).hasSize(1);
   }
 
+    /**
+   * This method tests the outputs of a decision table by evaluating the rules and verifying the output values against expected values.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testOutputs() {
@@ -186,6 +213,10 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(output2.getValue()).isEqualTo(Variables.untypedValue("operaton"));
   }
 
+    /**
+   * This method tests the collect result functionality by setting the hit policy to COLLECT, 
+   * evaluating a decision table with specific inputs, and asserting the results.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testCollectResult() {
@@ -201,6 +232,10 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(matchingRules.get(3).getId()).isEqualTo("rule6");
   }
 
+    /**
+   * Test method to evaluate a decision table with hit policy COLLECT and aggregator COUNT,
+   * and assert the results including the collect result name, value, and matching rules.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testCollectCountResult() {
@@ -216,6 +251,10 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(matchingRules.get(3).getId()).isEqualTo("rule6");
   }
 
+    /**
+   * This method tests the sum aggregation of a decision table by setting the hit policy to COLLECT and the aggregator to SUM. 
+   * It then evaluates the decision table with specific input values and asserts the expected results.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testCollectSumResult() {
@@ -231,6 +270,10 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(matchingRules.get(3).getId()).isEqualTo("rule6");
   }
 
+    /**
+   * Test method to evaluate decision table with HitPolicy.COLLECT and BuiltinAggregator.MAX
+   * and verify the collected result name, value, and matching rules.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testCollectMaxResult() {
@@ -246,6 +289,10 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(matchingRules.get(3).getId()).isEqualTo("rule6");
   }
 
+    /**
+   * Test method to evaluate a decision table with hit policy COLLECT and aggregator MIN,
+   * and check if the result collection is done correctly.
+   */
   @Test
   @DecisionResource(resource = DMN_FILE)
   public void testCollectMinResult() {
@@ -263,6 +310,12 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
   // helper
 
+    /**
+   * Sets the hit policy and aggregator for the decision table.
+   * 
+   * @param hitPolicy the hit policy to set
+   * @param aggregator the aggregator to set
+   */
   public void setDecisionTableHitPolicy(HitPolicy hitPolicy, BuiltinAggregator aggregator) {
     DmnHitPolicyHandler handler = hitPolicyHandlerRegistry.getHandler(hitPolicy, aggregator);
     assertThat(handler).isNotNull();
@@ -270,6 +323,15 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     decisionTable.setHitPolicyHandler(handler);
   }
 
+    /**
+   * Evaluates a decision table with the provided input variables and stores the result in the output variable.
+   * 
+   * @param input1 the first input variable
+   * @param input2 the second input variable
+   * @param input3 the third input variable
+   * @param output1 the output variable to store the result
+   * @return the result of evaluating the decision table
+   */
   public DmnDecisionTableResult evaluateDecisionTable(Object input1, Object input2, Object input3, Object output1) {
     variables.put("input1", input1);
     variables.put("input2", input2);
@@ -293,6 +355,11 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
     public DmnDecisionTableEvaluationEvent evaluationEvent;
 
+        /**
+     * Sets the evaluation event for the decision table.
+     * 
+     * @param evaluationEvent the event to be set
+     */
     public void notify(DmnDecisionTableEvaluationEvent evaluationEvent) {
       this.evaluationEvent = evaluationEvent;
     }

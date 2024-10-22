@@ -38,6 +38,10 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
+    /**
+   * Returns a new instance of DefaultDmnEngineConfiguration with a ScalaFeelEngineFactory set as the FeelEngineFactory.
+   * @return the DmnEngineConfiguration with the ScalaFeelEngineFactory set
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
@@ -45,6 +49,9 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
     return configuration;
   }
 
+    /**
+   * Test method to evaluate a simple input expression decision in a DMN file.
+   */
   @Test
   @DecisionResource(resource = "scala_input_expression.dmn")
   public void shouldEvaluateInputExpression_Simple() {
@@ -60,6 +67,9 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
     assertThat(result).isEqualTo("bar");
   }
 
+    /**
+   * Test method to evaluate input expression using a built-in function in a decision table.
+   */
   @Test
   @DecisionResource(resource = "scala_input_expression_builtin_function.dmn")
   public void shouldEvaluateInputExpression_BuiltInFunction() {
@@ -74,6 +84,9 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
     assertThat(result).isEqualTo("foo");
   }
 
+    /**
+   * This method tests the evaluation of timezone comparison with ZonedDateTime using a DMN decision table.
+   */
   @Test
   @DecisionResource(resource = "scala_compare_date_with_time_zone_non_typed.dmn")
   public void shouldEvaluateTimezoneComparisonWithZonedDateTime() {
@@ -84,6 +97,9 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
       .hasSingleEntryTyped(Variables.stringValue("bar"));
   }
 
+    /**
+   * This method tests the evaluation of a built-in function in a unary test case using a DMN decision table.
+   */
   @Test
   @DecisionResource(resource = "scala_unary_builtin_function.dmn")
   public void shouldEvaluateBuiltInFunctionInUnaryTest() {
@@ -94,6 +110,9 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
       .hasSingleEntryTyped(Variables.integerValue(45));
   }
 
+    /**
+   * Test method to evaluate a DMN decision with non input clause type involving comparing dates in Scala.
+   */
   @Test
   @DecisionResource(resource = "scala_compare_date_untyped.dmn")
   public void shouldEvaluateLocalDate_NonInputClauseType() {
@@ -108,6 +127,9 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
     assertThat(result).isEqualTo("not ok");
   }
 
+    /**
+   * This method tests the evaluation of a DMN decision that returns a Date object with a literal expression.
+   */
   @Test
   @DecisionResource(resource = "scala_literal_expression_date_typed.dmn")
   public void shouldEvaluateToUtilDateWithLiteralExpression() {
@@ -122,6 +144,9 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
     assertThat(result).isInstanceOf(Date.class);
   }
 
+    /**
+   * This method tests the evaluation of a decision that returns a UtilDate for a typed output clause.
+   */
   @Test
   @DecisionResource(resource = "scala_date_typed_output.dmn")
   public void shouldEvaluateToUtilDateForTypedOutputClause() {
@@ -135,6 +160,9 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
   }
 
   // https://jira.operaton.com/browse/CAM-11382
+    /**
+   * Tests if the decision returns the maximum double value.
+   */
   @Test
   @DecisionResource(resource = "scala_output_expression_double.dmn")
   public void shouldReturnMaxDouble() {

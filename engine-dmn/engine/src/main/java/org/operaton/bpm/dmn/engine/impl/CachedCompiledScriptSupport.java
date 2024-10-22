@@ -24,8 +24,18 @@ import javax.script.CompiledScript;
  */
 public interface CachedCompiledScriptSupport {
 
+    /**
+   * Caches the given compiled script for future use.
+   * 
+   * @param compiledScript the compiled script to cache
+   */
   void cacheCompiledScript(CompiledScript compiledScript);
 
+    /**
+   * Returns the cached compiled script.
+   *
+   * @return the cached compiled script
+   */
   CompiledScript getCachedCompiledScript();
 
 }

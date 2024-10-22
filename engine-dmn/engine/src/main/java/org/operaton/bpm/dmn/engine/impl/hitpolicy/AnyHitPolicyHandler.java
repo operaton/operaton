@@ -33,11 +33,24 @@ public class AnyHitPolicyHandler implements DmnHitPolicyHandler {
   public static final DmnHitPolicyLogger LOG = DmnLogger.HIT_POLICY_LOGGER;
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.ANY, null);
 
+    /**
+   * Returns the Hit Policy Entry.
+   *
+   * @return the Hit Policy Entry
+   */
   @Override
   public HitPolicyEntry getHitPolicyEntry() {
     return HIT_POLICY;
   }
 
+    /**
+   * Applies the any hit policy to the given decision table evaluation event.
+   * If there are multiple matching rules, only the first one is kept if all outputs are equal.
+   * Otherwise, an exception is thrown.
+   * 
+   * @param decisionTableEvaluationEvent the decision table evaluation event to apply the any hit policy to
+   * @return the updated decision table evaluation event
+   */
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     List<DmnEvaluatedDecisionRule> matchingRules = decisionTableEvaluationEvent.getMatchingRules();
 
@@ -53,6 +66,12 @@ public class AnyHitPolicyHandler implements DmnHitPolicyHandler {
     return decisionTableEvaluationEvent;
   }
 
+    /**
+   * Checks if all the evaluated decision rules have the same output entries.
+   * 
+   * @param matchingRules the list of evaluated decision rules to compare
+   * @return true if all output entries are equal, false otherwise
+   */
   protected boolean allOutputsAreEqual(List<DmnEvaluatedDecisionRule> matchingRules) {
     Map<String, DmnEvaluatedOutput> firstOutputEntries = matchingRules.get(0).getOutputEntries();
     if (firstOutputEntries == null) {
@@ -71,6 +90,11 @@ public class AnyHitPolicyHandler implements DmnHitPolicyHandler {
     return true;
   }
 
+    /**
+   * Returns a string representation of the AnyHitPolicyHandler object.
+   * 
+   * @return a string with the format "AnyHitPolicyHandler{}"
+   */
   @Override
   public String toString() {
     return "AnyHitPolicyHandler{}";

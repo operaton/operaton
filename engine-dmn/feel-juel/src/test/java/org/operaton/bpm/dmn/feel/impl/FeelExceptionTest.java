@@ -37,11 +37,17 @@ public class FeelExceptionTest {
 
   public VariableMap variables;
 
+    /**
+   * Initializes the FeelEngine by creating a new instance of FeelEngineFactoryImpl.
+   */
   @BeforeClass
   public static void initFeelEngine() {
     feelEngine = new FeelEngineFactoryImpl().createInstance();
   }
 
+    /**
+   * Test method to verify that simple expressions are not supported by the FEEL engine.
+   */
   @Test
   public void testSimpleExpressionNotSupported() {
     try {
@@ -53,12 +59,18 @@ public class FeelExceptionTest {
     }
   }
 
+    /**
+   * Initializes variables by creating a new instance of Variables and putting a value in it.
+   */
   @Before
   public void initVariables() {
     variables = Variables.createVariables();
     variables.putValue(INPUT_VARIABLE, 13);
   }
 
+    /**
+   * Test method to validate invalid 'not' expressions.
+   */
   @Test
   public void testInvalidNot() {
     assertException("FEEL-01001",
@@ -70,6 +82,9 @@ public class FeelExceptionTest {
       );
   }
 
+    /**
+   * Test method to validate invalid interval expressions.
+   */
   @Test
   public void testInvalidInterval() {
     assertException("FEEL-01002",
@@ -102,6 +117,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * This method tests invalid comparison operators by asserting an exception with specified error code and comparison operators.
+   */
   @Test
   public void testInvalidComparison() {
     assertException("FEEL-01003",
@@ -112,6 +130,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * This method tests the behavior of an unknown method by asserting exceptions for various input parameters.
+   */
   @Test
   public void testUnknownMethod() {
     assertException("FEEL-01007",
@@ -126,6 +147,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * Test method for handling unknown variables in FEEL expressions
+   */
   @Test
   public void testUnknownVariable() {
     assertException("FEEL-01009",
@@ -140,6 +164,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * This method tests invalid syntax by asserting exceptions for various invalid expressions.
+   */
   @Test
   public void testInvalidSyntax() {
     assertException("FEEL-01010",
@@ -163,6 +190,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * Test method to verify that an exception is thrown when unable to convert a value to a boolean.
+   */
   @Test
   public void testUnableToConvertToBoolean() {
     variables.putValue(INPUT_VARIABLE, true);
@@ -175,6 +205,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * Test method to verify that unable to convert to BigDecimal
+   */
   @Test
   public void testUnableToConvertToBigDecimal() {
     variables.putValue(INPUT_VARIABLE, BigDecimal.valueOf(10));
@@ -192,6 +225,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * This method tests the scenario when it is unable to convert the input value to a BigInteger.
+   */
   @Test
   public void testUnableToConvertToBigInteger() {
     variables.putValue(INPUT_VARIABLE, BigInteger.valueOf(10));
@@ -209,6 +245,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * Test method to verify behavior when unable to convert to double.
+   */
   @Test
   public void testUnableToConvertToDouble() {
     variables.putValue(INPUT_VARIABLE, 10.0);
@@ -226,6 +265,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * Test method to verify behavior when unable to convert to long.
+   */
   @Test
   public void testUnableToConvertToLong() {
     variables.putValue(INPUT_VARIABLE, 10L);
@@ -243,6 +285,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * This method tests the scenario where a value cannot be converted to a string.
+   */
   @Test
   public void testUnableToConvertToString() {
     variables.putValue(INPUT_VARIABLE, "operaton");
@@ -254,6 +299,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * This method tests the case where the input variable is missing by removing the input variable from the list of variables and asserting an exception with specific parameters.
+   */
   @Test
   public void testMissingInputVariable() {
     variables.remove(INPUT_VARIABLE);
@@ -265,6 +313,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * Test method to check invalid date and time formats.
+   */
   @Test
   public void testInvalidDateAndTimeFormat() {
     assertException("FEEL-01019",
@@ -275,6 +326,9 @@ public class FeelExceptionTest {
     );
   }
 
+    /**
+   * Test method to validate invalid list formats.
+   */
   @Test
   public void testInvalidListFormat() {
     assertException("FEEL-01020",
@@ -287,6 +341,12 @@ public class FeelExceptionTest {
       );
   }
 
+    /**
+   * Asserts that evaluating the given FEEL expressions will throw a FeelException with the specified exception code.
+   *
+   * @param exceptionCode the expected exception code
+   * @param feelExpressions FEEL expressions to evaluate
+   */
   public void assertException(String exceptionCode, String... feelExpressions) {
     for (String feelExpression : feelExpressions) {
       try {
@@ -303,6 +363,12 @@ public class FeelExceptionTest {
     }
   }
 
+    /**
+   * Evaluates a FEEL expression using the FeelEngine.
+   * 
+   * @param feelExpression the FEEL expression to be evaluated
+   * @return the result of the evaluation
+   */
   public boolean evaluateFeel(String feelExpression) {
     return feelEngine.evaluateSimpleUnaryTests(feelExpression, INPUT_VARIABLE, variables.asVariableContext());
   }

@@ -26,10 +26,24 @@ import org.operaton.bpm.model.dmn.instance.InputEntry;
 
 public class DmnDecisionTableConditionTransformHandler implements DmnElementTransformHandler<InputEntry, DmnExpressionImpl> {
 
+    /**
+   * Handles the given input entry by creating a DmnExpressionImpl object from it.
+   * 
+   * @param context the DmnElementTransformContext
+   * @param inputEntry the InputEntry to create the DmnExpressionImpl from
+   * @return the DmnExpressionImpl created from the input entry
+   */
   public DmnExpressionImpl handleElement(DmnElementTransformContext context, InputEntry inputEntry) {
     return createFromInputEntry(context, inputEntry);
   }
 
+    /**
+   * Creates a DmnExpressionImpl object from an InputEntry object
+   * 
+   * @param context the DmnElementTransformContext object
+   * @param inputEntry the InputEntry object to create the DmnExpressionImpl from
+   * @return the created DmnExpressionImpl object
+   */
   protected DmnExpressionImpl createFromInputEntry(DmnElementTransformContext context, InputEntry inputEntry) {
     DmnExpressionImpl condition = createDmnElement(context, inputEntry);
 
@@ -41,6 +55,13 @@ public class DmnDecisionTableConditionTransformHandler implements DmnElementTran
     return condition;
   }
 
+    /**
+   * Creates a new DmnExpressionImpl element based on the provided context and inputEntry.
+   *
+   * @param context the DmnElementTransformContext to use
+   * @param inputEntry the InputEntry to use
+   * @return a new DmnExpressionImpl element
+   */
   protected DmnExpressionImpl createDmnElement(DmnElementTransformContext context, InputEntry inputEntry) {
     return new DmnExpressionImpl();
   }

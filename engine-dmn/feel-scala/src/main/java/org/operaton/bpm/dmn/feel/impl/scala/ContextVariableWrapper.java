@@ -35,6 +35,14 @@ public class ContextVariableWrapper implements VariableProvider {
     this.context = context;
   }
 
+    /**
+   * Retrieves the value of a variable stored in the context by its name.
+   * If the variable exists, it returns an Option containing the value.
+   * If the variable does not exist, it returns None.
+   * 
+   * @param name the name of the variable to retrieve
+   * @return an Option containing the value if the variable exists, otherwise None
+   */
   public Option getVariable(String name) {
     if (context.containsVariable(name)) {
       TypedValue typedValue = context.resolve(name);
@@ -47,6 +55,11 @@ public class ContextVariableWrapper implements VariableProvider {
     }
   }
 
+    /**
+   * Returns an iterable of keys from the context.
+   *
+   * @return an iterable of keys
+   */
   public Iterable<String> keys() {
     Set<String> strings = context.keySet();
     return SetHasAsScala(strings).asScala();

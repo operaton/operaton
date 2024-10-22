@@ -35,11 +35,17 @@ public class DmnEngineConfigurationApiTest {
 
   protected DmnEngineConfiguration configuration;
 
+    /**
+   * Initializes the configuration for the DMN engine.
+   */
   @Before
   public void initConfiguration() {
     configuration = DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
   }
 
+    /**
+   * Test method to verify that a default engine configuration is created successfully.
+   */
   @Test
   public void shouldCreateDefaultEngineConfiguration() {
     DmnEngineConfiguration configuration = DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
@@ -48,19 +54,25 @@ public class DmnEngineConfigurationApiTest {
       .isNotNull();
   }
 
+    /**
+   * Test method to verify the setting and retrieval of the engine metric collector in the configuration.
+   */
   @Test
-  public void shouldSetEngineMetricCollector() {
-    configuration.setEngineMetricCollector(null);
-    assertThat(configuration.getEngineMetricCollector())
-      .isNull();
+    public void shouldSetEngineMetricCollector() {
+      configuration.setEngineMetricCollector(null);
+      assertThat(configuration.getEngineMetricCollector())
+        .isNull();
+  
+      DefaultEngineMetricCollector metricCollector = new DefaultEngineMetricCollector();
+      configuration.setEngineMetricCollector(metricCollector);
+  
+      assertThat(configuration.getEngineMetricCollector())
+        .isEqualTo(metricCollector);
+      }
 
-    DefaultEngineMetricCollector metricCollector = new DefaultEngineMetricCollector();
-    configuration.setEngineMetricCollector(metricCollector);
-
-    assertThat(configuration.getEngineMetricCollector())
-      .isEqualTo(metricCollector);
-    }
-
+    /**
+   * Test method to verify the setting of the FluentEngineMetricCollector in the configuration.
+   */
   @Test
   public void shouldSetFluentEngineMetricCollector() {
     configuration.engineMetricCollector(null);
@@ -74,6 +86,12 @@ public class DmnEngineConfigurationApiTest {
       .isEqualTo(metricCollector);
   }
 
+    /**
+   * Test method to verify the behavior of setting custom pre decision table evaluation listeners in the configuration.
+   * 
+   * It sets the listeners to null, empty list, and a list with two DefaultEngineMetricCollector instances, 
+   * and then asserts the behavior of the configuration getters.
+   */
   @Test
   public void shouldSetCustomPreDecisionTableEvaluationListeners() {
     configuration.setCustomPreDecisionTableEvaluationListeners(null);
@@ -93,6 +111,9 @@ public class DmnEngineConfigurationApiTest {
       .containsExactlyElementsOf(listeners);
   }
 
+    /**
+   * Test method to verify the behavior of setting fluent custom pre-decision table evaluation listeners.
+   */
   @Test
   public void shouldSetFluentCustomPreDecisionTableEvaluationListeners() {
     configuration.customPreDecisionTableEvaluationListeners(null);
@@ -112,6 +133,11 @@ public class DmnEngineConfigurationApiTest {
       .containsExactlyElementsOf(listeners);
   }
 
+    /**
+   * Test method for setting custom pre-decision evaluation listeners.
+   * Verifies that the configuration can set custom listeners to null, an empty list, 
+   * or a list of specific decision evaluation listeners.
+   */
   @Test
   public void shouldSetCustomPreDecisionEvaluationListeners() {
     configuration.setCustomPreDecisionEvaluationListeners(null);
@@ -131,6 +157,9 @@ public class DmnEngineConfigurationApiTest {
       .containsExactlyElementsOf(listeners);
   }
 
+    /**
+   * Test method to verify the setting of custom pre-decision evaluation listeners in the configuration.
+   */
   @Test
   public void shouldSetFluentCustomPreDecisionEvaluationListeners() {
     configuration.customPreDecisionEvaluationListeners(null);
@@ -150,6 +179,9 @@ public class DmnEngineConfigurationApiTest {
       .containsExactlyElementsOf(listeners);
   }
 
+    /**
+   * Test method to verify the functionality of setting custom post decision table evaluation listeners in the configuration.
+   */
   @Test
   public void shouldSetCustomPostDecisionTableEvaluationListeners() {
     configuration.setCustomPostDecisionTableEvaluationListeners(null);
@@ -169,6 +201,9 @@ public class DmnEngineConfigurationApiTest {
       .containsExactlyElementsOf(listeners);
   }
 
+    /**
+   * Test method to verify setting custom post decision table evaluation listeners in configuration.
+   */
   @Test
   public void shouldSetFluentCustomPostDecisionTableEvaluationListeners() {
     configuration.customPostDecisionTableEvaluationListeners(null);
@@ -188,6 +223,10 @@ public class DmnEngineConfigurationApiTest {
       .containsExactlyElementsOf(listeners);
   }
 
+    /**
+   * Test method for setting custom post decision evaluation listeners in the configuration.
+   * Verifies that the listeners are set correctly and can be retrieved as expected.
+   */
   @Test
   public void shouldSetCustomPostDecisionEvaluationListeners() {
     configuration.setCustomPostDecisionEvaluationListeners(null);
@@ -207,6 +246,10 @@ public class DmnEngineConfigurationApiTest {
       .containsExactlyElementsOf(listeners);
   }
 
+    /**
+   * Test method to verify setting fluent custom post decision evaluation listeners.
+   * It sets listeners to null, empty list, and a list with test listeners, then asserts the configuration.
+   */
   @Test
   public void shouldSetFluentCustomPostDecisionEvaluationListeners() {
     configuration.customPostDecisionEvaluationListeners(null);
@@ -226,6 +269,10 @@ public class DmnEngineConfigurationApiTest {
       .containsExactlyElementsOf(listeners);
   }
 
+    /**
+   * This method tests the configurability of the DmnEngine by setting various custom listeners and metric collectors
+   * and then verifying that the configurations are correctly set.
+   */
   @Test
   public void shouldBeFluentConfigurable() {
     DefaultEngineMetricCollector metricCollector = new DefaultEngineMetricCollector();
@@ -261,6 +308,9 @@ public class DmnEngineConfigurationApiTest {
       .containsExactlyElementsOf(postDecisionListeners);
   }
 
+    /**
+   * Test method to verify the successful creation of a DmnEngine using the configuration.
+   */
   @Test
   public void shouldBuildEngine() {
     DmnEngine engine = configuration.buildEngine();
@@ -272,10 +322,20 @@ public class DmnEngineConfigurationApiTest {
 
     public DmnDecisionEvaluationEvent evaluationEvent;
 
+        /**
+     * This method sets the provided DmnDecisionEvaluationEvent as the evaluation event.
+     * 
+     * @param evaluationEvent the DmnDecisionEvaluationEvent to be set
+     */
     public void notify(DmnDecisionEvaluationEvent evaluationEvent) {
-      this.evaluationEvent = evaluationEvent;
-    }
+          this.evaluationEvent = evaluationEvent;
+        }
 
+        /**
+     * Returns the evaluation event associated with the decision.
+     *
+     * @return the evaluation event
+     */
     public DmnDecisionEvaluationEvent getEvaluationEvent() {
       return evaluationEvent;
     }

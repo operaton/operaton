@@ -28,6 +28,13 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class IntegerDataTypeTransformer implements DmnDataTypeTransformer {
 
+    /**
+   * Transforms the given Object value into an Integer TypedValue. If the value is a Number, it calls transformNumber method. If the value is a String, it calls transformString method. Throws IllegalArgumentException if the value is neither a Number nor a String.
+   * 
+   * @param value the Object value to transform
+   * @return the transformed Integer TypedValue
+   * @throws IllegalArgumentException if the value is neither a Number nor a String
+   */
   @Override
   public TypedValue transform(Object value) throws IllegalArgumentException {
     if (value instanceof Number) {
@@ -43,6 +50,13 @@ public class IntegerDataTypeTransformer implements DmnDataTypeTransformer {
     }
   }
 
+    /**
+   * Transforms a Number object into an integer value.
+   * 
+   * @param value the Number object to transform
+   * @return the integer value of the Number object
+   * @throws IllegalArgumentException if the Number object is not an integer
+   */
   protected int transformNumber(Number value) {
     if(isInteger(value)){
       return value.intValue();
@@ -51,11 +65,23 @@ public class IntegerDataTypeTransformer implements DmnDataTypeTransformer {
     }
   }
 
+    /**
+   * Checks if the given Number value is an integer by comparing its double value with its integer value.
+   * 
+   * @param value the Number value to be checked
+   * @return true if the value is an integer, false otherwise
+   */
   protected boolean isInteger(Number value) {
     double doubleValue = value.doubleValue();
     return doubleValue == (int) doubleValue;
   }
 
+    /**
+   * Parses a string into an integer value.
+   * 
+   * @param value the string to be parsed
+   * @return the integer value parsed from the input string
+   */
   protected int transformString(String value) {
     return Integer.parseInt(value);
   }

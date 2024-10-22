@@ -27,6 +27,12 @@ import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
 
 public class DmnEngineLogger extends DmnLogger {
 
+    /**
+   * Creates a DmnTransformException with a specific message if unable to find a decision with the given key.
+   * 
+   * @param decisionKey the key of the decision that could not be found
+   * @return a DmnTransformException with the appropriate error message
+   */
   public DmnTransformException unableToFindDecisionWithKey(String decisionKey) {
     return new DmnTransformException(exceptionMessage(
       "001",
@@ -34,14 +40,29 @@ public class DmnEngineLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Constructs a DmnEvaluationException with a specific message based on the expression and expression language, along with a cause.
+   * 
+   * @param expression the expression being evaluated
+   * @param expressionLanguage the language of the expression being evaluated
+   * @param cause the cause of the evaluation exception
+   * @return a DmnEvaluationException with a formatted exception message
+   */
   public DmnEvaluationException unableToEvaluateExpression(String expression, String expressionLanguage, Throwable cause) {
-    return new DmnEvaluationException(exceptionMessage(
-      "002",
-      "Unable to evaluate expression for language '{}': '{}'", expressionLanguage, expression),
-      cause
-    );
-  }
+      return new DmnEvaluationException(exceptionMessage(
+        "002",
+        "Unable to evaluate expression for language '{}': '{}'", expressionLanguage, expression),
+        cause
+      );
+    }
 
+    /**
+   * Creates a DmnEvaluationException with an error message stating that no script engine was found
+   * for the given expression language.
+   *
+   * @param expressionLanguage the expression language for which the script engine was not found
+   * @return a DmnEvaluationException with the error message
+   */
   public DmnEvaluationException noScriptEngineFoundForLanguage(String expressionLanguage) {
     return new DmnEvaluationException(exceptionMessage(
       "003",
@@ -49,13 +70,26 @@ public class DmnEngineLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Creates a DmnEngineException with a message indicating that the decision type is not supported by the DMN engine.
+   * 
+   * @param decision the DmnDecision object that is not supported
+   * @return a new DmnEngineException with the appropriate message
+   */
   public DmnEngineException decisionTypeNotSupported(DmnDecision decision) {
-    return new DmnEngineException(exceptionMessage(
-      "004",
-      "Decision type '{}' not supported by DMN engine.", decision.getClass())
-    );
-  }
+      return new DmnEngineException(exceptionMessage(
+        "004",
+        "Decision type '{}' not supported by DMN engine.", decision.getClass())
+      );
+    }
 
+    /**
+   * Creates a DmnEngineException with a specific message indicating that the provided value is invalid for a given type definition.
+   * 
+   * @param typeName the name of the type definition
+   * @param value the value that is invalid for the type definition
+   * @return a DmnEngineException with a formatted error message
+   */
   public DmnEngineException invalidValueForTypeDefinition(String typeName, Object value) {
     return new DmnEngineException(exceptionMessage(
       "005",
@@ -63,13 +97,24 @@ public class DmnEngineLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Logs a warning message for an unsupported type definition for a clause.
+   * 
+   * @param typeName The name of the unsupported type
+   */
   public void unsupportedTypeDefinitionForClause(String typeName) {
-    logWarn(
-      "006",
-      "Unsupported type '{}' for clause. Values of this clause will not transform into another type.", typeName
-    );
-  }
+      logWarn(
+        "006",
+        "Unsupported type '{}' for clause. Values of this clause will not transform into another type.", typeName
+      );
+    }
 
+    /**
+   * Constructs a DmnDecisionResultException with a specific error message when a decision rule result has more than one value.
+   *
+   * @param ruleResult the decision rule result with more than one value
+   * @return the DmnDecisionResultException with the specific error message
+   */
   public DmnDecisionResultException decisionOutputHasMoreThanOneValue(DmnDecisionRuleResult ruleResult) {
     return new DmnDecisionResultException(exceptionMessage(
       "007",
@@ -77,13 +122,24 @@ public class DmnEngineLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Creates a DmnDecisionResultException with a specific exception message if the provided decision table result has more than one output.
+   * 
+   * @param decisionResult the decision table result to check
+   * @return a DmnDecisionResultException with the exception message
+   */
   public DmnDecisionResultException decisionResultHasMoreThanOneOutput(DmnDecisionTableResult decisionResult) {
-    return new DmnDecisionResultException(exceptionMessage(
-      "008",
-      "Unable to get single decision rule result as it has more than one rule result '{}'", decisionResult)
-    );
-  }
+      return new DmnDecisionResultException(exceptionMessage(
+        "008",
+        "Unable to get single decision rule result as it has more than one rule result '{}'", decisionResult)
+      );
+    }
 
+    /**
+   * Creates a DmnTransformException with a specific exception message indicating that no decision table could be found in the model.
+   * 
+   * @return a DmnTransformException with the exception message "009 - Unable to find any decision table in model."
+   */
   public DmnTransformException unableToFindAnyDecisionTable() {
     return new DmnTransformException(exceptionMessage(
       "009",
@@ -91,6 +147,12 @@ public class DmnEngineLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Creates a DmnDecisionResultException with a specific error message when a decision result has more than one value.
+   * 
+   * @param result the decision result entries with more than one value
+   * @return a DmnDecisionResultException with the appropriate error message
+   */
   public DmnDecisionResultException decisionOutputHasMoreThanOneValue(DmnDecisionResultEntries result) {
     return new DmnDecisionResultException(exceptionMessage(
       "010",
@@ -98,6 +160,12 @@ public class DmnEngineLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Creates a DmnDecisionResultException with a specific exception message indicating that the decision result has more than one output.
+   * 
+   * @param decisionResult the decision result with multiple outputs
+   * @return the DmnDecisionResultException with the exception message
+   */
   public DmnDecisionResultException decisionResultHasMoreThanOneOutput(DmnDecisionResult decisionResult) {
     return new DmnDecisionResultException(exceptionMessage(
       "011",
@@ -105,6 +173,12 @@ public class DmnEngineLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Creates a DmnEngineException with a message indicating that the decision logic type is not supported by the DMN engine.
+   *
+   * @param decisionLogic the decision logic that is not supported
+   * @return a DmnEngineException with the appropriate exception message
+   */
   public DmnEngineException decisionLogicTypeNotSupported(DmnDecisionLogic decisionLogic) {
     return new DmnEngineException(exceptionMessage(
       "012",
@@ -112,6 +186,12 @@ public class DmnEngineLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Creates a DmnEngineException for the case when the provided DmnDecision is not implemented as a decision table.
+   * 
+   * @param decision the DmnDecision that is not a decision table
+   * @return a DmnEngineException with the corresponding exception message
+   */
   public DmnEngineException decisionIsNotADecisionTable(DmnDecision decision) {
     return new DmnEngineException(exceptionMessage(
       "013",

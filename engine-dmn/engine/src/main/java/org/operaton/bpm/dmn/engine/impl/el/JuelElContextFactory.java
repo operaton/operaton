@@ -35,6 +35,12 @@ public class JuelElContextFactory {
     this.resolver = resolver;
   }
 
+    /**
+   * Creates and returns a new ELContext object with the given VariableContext.
+   * 
+   * @param variableContext the VariableContext to be associated with the ELContext
+   * @return a new ELContext object with the given VariableContext
+   */
   public ELContext createElContext(VariableContext variableContext) {
     SimpleContext elContext = new SimpleContext(resolver);
     elContext.putContext(VariableContext.class, variableContext);

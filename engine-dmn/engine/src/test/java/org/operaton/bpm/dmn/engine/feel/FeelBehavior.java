@@ -38,6 +38,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
+    /**
+   * This method tests the comparison of mixed variable types in a decision table.
+   */
   @Test
   @DecisionResource(resource = "mixed_variable_types.dmn")
   public void shouldCompareMixedVariableTypes() {
@@ -50,6 +53,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
       .hasSingleEntry(true);
   }
 
+    /**
+   * Test method to compare a string value against a decision table result.
+   */
   @Test
   @DecisionResource(resource = "string_untyped.dmn")
   public void shouldCompareStringUntyped() {
@@ -60,6 +66,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
       .hasSingleEntry(false);
   }
 
+    /**
+   * This method tests the comparison of a boolean value in a decision table with an untyped input.
+   */
   @Test
   @DecisionResource(resource = "boolean_untyped.dmn")
   public void shouldCompareBooleanUntyped() {
@@ -70,6 +79,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
       .hasSingleEntry(false);
   }
 
+    /**
+   * This method tests if a long value is correctly compared in an untyped manner in a decision table.
+   */
   @Test
   @DecisionResource(resource = "number_untyped.dmn")
   public void shouldCompareLongUntyped() {
@@ -80,6 +92,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
       .hasSingleEntry(false);
   }
 
+    /**
+   * Test method to compare a float value against a decision table with untyped numbers.
+   */
   @Test
   @DecisionResource(resource = "number_untyped.dmn")
   public void shouldCompareFloatUntyped() {
@@ -90,6 +105,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
       .hasSingleEntry(false);
   }
 
+    /**
+   * Test method to compare a double value with the decision table result
+   */
   @Test
   @DecisionResource(resource = "number_untyped.dmn")
   public void shouldCompareDoubleUntyped() {
@@ -100,6 +118,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
       .hasSingleEntry(false);
   }
 
+    /**
+   * Executes a decision table to compare two dates and validates the result.
+   */
   @Test
   @DecisionResource(resource = "compare_dates_non_typed.dmn")
   public void shouldCompareDates() {
@@ -111,6 +132,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
     .hasSingleEntryTyped(Variables.stringValue("foo"));
   }
 
+    /**
+   * Test method to compare two Local DateTimes using a decision table.
+   */
   @Test
   @DecisionResource(resource = "compare_dates_non_typed.dmn")
   public void shouldCompareLocalDateTimes() {
@@ -122,6 +146,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
     .hasSingleEntryTyped(Variables.stringValue("foo"));
   }
 
+    /**
+   * Test method to compare two ZonedDateTime objects using a decision table from a DMN resource.
+   */
   @Test
   @DecisionResource(resource = "compare_dates_non_typed.dmn")
   public void shouldCompareZonedDateTimes() {
@@ -133,6 +160,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
     .hasSingleEntryTyped(Variables.stringValue("foo"));
   }
 
+    /**
+   * This method tests the comparison of Joda LocalDateTime objects using a DMN decision table.
+   */
   @Ignore("CAM-11319")
   @Test
   @DecisionResource(resource = "compare_dates_non_typed.dmn")
@@ -145,6 +175,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
     .hasSingleEntryTyped(Variables.stringValue("foo"));
   }
 
+    /**
+   * This method tests the comparison of Joda DateTimes by executing a decision table with two dates as input variables.
+   */
   @Ignore("CAM-11319")
   @Test
   @DecisionResource(resource = "compare_dates_non_typed.dmn")
@@ -157,6 +190,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
     .hasSingleEntryTyped(Variables.stringValue("foo"));
   }
 
+    /**
+   * Test method to compare two typed date values using a decision table.
+   */
   @Test
   @DecisionResource(resource = "compare_dates_non_typed.dmn")
   public void shouldCompareTypedDateValues() {
@@ -169,6 +205,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
   }
 
 
+    /**
+   * Test method to evaluate a decision using a Java object as input.
+   */
   @Test
   @DecisionResource(resource = "java_object.dmn")
   public void shouldEvaluateInputClause_Object() {
@@ -184,6 +223,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
     assertThat(foo).isEqualTo("bar");
   }
 
+    /**
+   * This method tests whether an exception is thrown when trying to evaluate a decision with a Joda date typed input.
+   */
   @Test
   @DecisionResource(resource = "input_date_typed.dmn")
   public void shouldThrowExceptionWhenEvaluateJodaDate_Typed() {
@@ -199,6 +241,9 @@ public abstract class FeelBehavior extends DmnEngineTest {
     evaluateDecision().getSingleEntry();
   }
 
+    /**
+   * Test method to verify that an exception is thrown when evaluating a decision with a LocalDate input
+   */
   @Test
   @DecisionResource(resource = "input_date_typed.dmn")
   public void shouldThrowExceptionWhenEvaluateLocalDate_Typed() {
@@ -223,6 +268,11 @@ public abstract class FeelBehavior extends DmnEngineTest {
       this.birthday = age;
     }
 
+        /**
+     * Returns the birthday of the person.
+     *
+     * @return the birthday of the person
+     */
     public Date getBirthday() {
       return birthday;
     }

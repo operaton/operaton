@@ -57,6 +57,9 @@ public class ParseDecisionTest extends DmnEngineTest {
   public static final String DMN12_NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/dmn12/NoInput.dmn";
   public static final String DMN13_NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/dmn13/NoInput.dmn";
 
+    /**
+   * Parses a decision from an input stream and asserts the result.
+   */
   @Test
   public void shouldParseDecisionFromInputStream() {
     InputStream inputStream = IoUtil.fileAsStream(NO_INPUT_DMN);
@@ -64,6 +67,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     assertDecision(decision, "decision");
   }
 
+    /**
+   * Parses a decision from a given DMN model instance and asserts its correctness.
+   */
   @Test
   public void shouldParseDecisionFromModelInstance() {
     InputStream inputStream = IoUtil.fileAsStream(NO_INPUT_DMN);
@@ -73,6 +79,10 @@ public class ParseDecisionTest extends DmnEngineTest {
     assertDecision(decision, "decision");
   }
 
+    /**
+   * This method tests if an exception is thrown when trying to parse a decision
+   * from a file with an unknown decision key.
+   */
   @Test
   public void shouldFailIfDecisionKeyIsUnknown() {
     try {
@@ -87,6 +97,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test method to verify that an exception is thrown if a decision id is missing when parsing decisions from a file.
+   */
   @Test
   public void shouldFailIfDecisionIdIsMissing() {
     try {
@@ -102,6 +115,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test method to verify that an exception is thrown when input id is missing in the decision file.
+   */
   @Test
   public void shouldFailIfInputIdIsMissing() {
     try {
@@ -117,6 +133,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test method to verify that an exception is thrown if the output id is missing when parsing decisions from a file.
+   */
   @Test
   public void shouldFailIfOutputIdIsMissing() {
     try {
@@ -132,6 +151,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test method to verify that an exception is thrown when a rule id is missing in the DMN file.
+   */
   @Test
   public void shouldFailIfRuleIdIsMissing() {
     try {
@@ -147,6 +169,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests that an exception is thrown if a compound outputs name is missing when parsing decisions from a file.
+   */
   @Test
   public void shouldFailIfCompoundOutputsNameIsMissing() {
     try {
@@ -162,6 +187,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests if an exception is thrown when a DMN file contains compound outputs with duplicate names.
+   */
   @Test
   public void shouldFailIfCompoundOutputsHaveDuplicateName() {
     try {
@@ -178,6 +206,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests if an exception is thrown when a variable is missing in a DMN file.
+   */
   @Test
   public void shouldFailIfVariableIsMissing() {
     try {
@@ -193,6 +224,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test method to verify that a DmnTransformException is thrown if a required decision reference is missing.
+   */
   @Test
   public void shouldFailIfRequiredDecisionReferenceMissing() {
     try {
@@ -207,6 +241,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests whether an exception is thrown when parsing a DMN file with a wrong required decision reference.
+   */
   @Test
   public void shouldFailIfWrongRequiredDecisionReference() {
     try {
@@ -221,6 +258,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Test method to verify that the system does not fail if a required decision attribute is missing.
+   */
   @Test
   public void shouldNotFailIfMissingRequiredDecisionAttribute() {
     List<DmnDecision> decisions = parseDecisionsFromFile(MISSING_REQUIRED_DECISION_ATTRIBUTE_DMN);
@@ -228,6 +268,10 @@ public class ParseDecisionTest extends DmnEngineTest {
     assertThat(decisions.get(0).getRequiredDecisions().size()).isEqualTo(0);
   }
 
+    /**
+   * This method tests if an exception is thrown when attempting to parse decisions from a file
+   * that does not contain the required information requirement attribute.
+   */
   @Test
   public void shouldFailIfNoInformationRequirementAttribute() {
     try {
@@ -242,6 +286,10 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests the parsing of a Decision Requirements Graph (DRG) from an input stream.
+   * It reads an input stream from a file, parses it using the DMN engine, and asserts the result.
+   */
   @Test
   public void shouldParseDrgFromInputStream() {
     InputStream inputStream = IoUtil.fileAsStream(NO_INPUT_DMN);
@@ -250,6 +298,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     assertDecisionRequirementsGraph(drg, "definitions");
   }
 
+    /**
+   * Parses a Decision Requirements Graph (DRG) from a DMN model instance and asserts the result.
+   */
   @Test
   public void shouldParseDrgFromModelInstance() {
     InputStream inputStream = IoUtil.fileAsStream(NO_INPUT_DMN);
@@ -260,6 +311,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     assertDecisionRequirementsGraph(drg, "definitions");
   }
 
+    /**
+   * Test method to verify that an exception is thrown if the Decision Requirement Diagram ID is missing.
+   */
   @Test
   public void shouldFailIfDecisionDrgIdIsMissing() {
     try {
@@ -277,6 +331,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Reads a DMN 1.2 decision from an input stream, parses it using the DMN engine, and asserts its correctness.
+   */
   @Test
   public void shouldParseDecisionFromInputStream_Dmn12() {
     InputStream inputStream = IoUtil.fileAsStream(DMN12_NO_INPUT_DMN);
@@ -284,6 +341,9 @@ public class ParseDecisionTest extends DmnEngineTest {
     assertDecision(decision, "decision");
   }
 
+    /**
+   * Test method to parse a decision from an input stream using DMN 1.3 version.
+   */
   @Test
   public void shouldParseDecisionFromInputStream_Dmn13() {
     InputStream inputStream = IoUtil.fileAsStream(DMN13_NO_INPUT_DMN);
@@ -291,11 +351,23 @@ public class ParseDecisionTest extends DmnEngineTest {
     assertDecision(decision, "decision");
   }
 
+    /**
+   * Asserts that the provided DmnDecision object is not null and its key matches the given key.
+   *
+   * @param decision the DmnDecision object to be asserted
+   * @param key the key to compare the DmnDecision key to
+   */
   protected void assertDecision(DmnDecision decision, String key) {
     assertThat(decision).isNotNull();
     assertThat(decision.getKey()).isEqualTo(key);
   }
 
+    /**
+   * Asserts that the given DmnDecisionRequirementsGraph is not null and has a key that matches the specified key.
+   * 
+   * @param drg the DmnDecisionRequirementsGraph to be checked
+   * @param key the key to compare against the DmnDecisionRequirementsGraph key
+   */
   protected void assertDecisionRequirementsGraph(DmnDecisionRequirementsGraph drg, String key) {
     assertThat(drg).isNotNull();
     assertThat(drg.getKey()).isEqualTo(key);

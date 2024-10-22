@@ -29,6 +29,11 @@ import org.junit.Test;
 
 public class ScalaFeelBehaviorTest extends FeelBehavior {
 
+    /**
+   * Returns the DMN Engine Configuration with a custom FEEL engine factory.
+   * 
+   * @return the DMN Engine Configuration
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();

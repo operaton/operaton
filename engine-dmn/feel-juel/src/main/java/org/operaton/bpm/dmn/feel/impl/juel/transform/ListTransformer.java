@@ -29,23 +29,58 @@ public class ListTransformer implements FeelToJuelTransformer {
   // regex to split by comma which does a positive look ahead to ignore commas enclosed in quotes
   public static final String COMMA_SEPARATOR_REGEX = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
+    /**
+   * Checks if the given FEEL expression can be transformed.
+   * 
+   * @param feelExpression the FEEL expression to be checked
+   * @return true if the expression can be transformed, false otherwise
+   */
   public boolean canTransform(String feelExpression) {
     return splitExpression(feelExpression).size() > 1;
   }
 
+    /**
+   * Transforms a FEEL expression to JUEL expressions using the given transformation
+   * and input name.
+   * 
+   * @param transform the transformation to use
+   * @param feelExpression the FEEL expression to transform
+   * @param inputName the name of the input
+   * @return a string representing the transformed JUEL expression
+   */
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     List<String> juelExpressions = transformExpressions(transform, feelExpression, inputName);
     return joinExpressions(juelExpressions);
   }
 
+    /**
+   * Collects expressions from a given FEEL expression by splitting the expression.
+   *
+   * @param feelExpression the FEEL expression to collect expressions from
+   * @return a list of strings representing the collected expressions
+   */
   protected List<String> collectExpressions(String feelExpression) {
     return splitExpression(feelExpression);
   }
 
+    /**
+   * Splits the given FEEL expression by the comma separator regex and returns a List of the split strings.
+   * 
+   * @param feelExpression the FEEL expression to split
+   * @return a list of strings split from the FEEL expression
+   */
   private List<String> splitExpression(String feelExpression) {
     return Arrays.asList(feelExpression.split(COMMA_SEPARATOR_REGEX, -1));
   }
 
+    /**
+   * Transforms a list of FEEL expressions into JUEL expressions using the provided transform object.
+   *
+   * @param transform the transformation object to use
+   * @param feelExpression the FEEL expression to transform
+   * @param inputName the name of the input
+   * @return a list of JUEL expressions
+   */
   protected List<String> transformExpressions(FeelToJuelTransform transform, String feelExpression, String inputName) {
     List<String> expressions = collectExpressions(feelExpression);
     List<String> juelExpressions = new ArrayList<String>();
@@ -61,6 +96,12 @@ public class ListTransformer implements FeelToJuelTransformer {
     return juelExpressions;
   }
 
+    /**
+   * Joins a list of JUEL expressions with OR operators and wraps each expression in parentheses.
+   * 
+   * @param juelExpressions the list of JUEL expressions to be joined
+   * @return a string representing the joined JUEL expressions
+   */
   protected String joinExpressions(List<String> juelExpressions) {
     StringBuilder builder = new StringBuilder();
     builder.append("(").append(juelExpressions.get(0)).append(")");

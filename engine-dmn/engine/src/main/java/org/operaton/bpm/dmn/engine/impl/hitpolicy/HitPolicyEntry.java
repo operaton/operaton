@@ -34,6 +34,9 @@ public class HitPolicyEntry {
     this.aggregator = builtinAggregator;
   }
 
+    /**
+   * Compares this HitPolicyEntry to the specified object. Returns true if both objects are equal, false otherwise.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -46,6 +49,9 @@ public class HitPolicyEntry {
 
   }
 
+    /**
+   * Returns a hash code value for the object based on the hit policy and aggregator.
+   */
   @Override
   public int hashCode() {
     int result = hitPolicy != null ? hitPolicy.hashCode() : 0;
@@ -53,10 +59,20 @@ public class HitPolicyEntry {
     return result;
   }
 
+    /**
+  * Returns the hit policy of the current object.
+  *
+  * @return the hit policy
+  */
   public HitPolicy getHitPolicy() {
     return hitPolicy;
   }
 
+    /**
+   * Returns the BuiltinAggregator object associated with this instance.
+   * 
+   * @return the BuiltinAggregator object
+   */
   public BuiltinAggregator getAggregator() {
     return aggregator;
   }

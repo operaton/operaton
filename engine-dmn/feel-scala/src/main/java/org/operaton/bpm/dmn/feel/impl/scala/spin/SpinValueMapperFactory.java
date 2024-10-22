@@ -26,6 +26,11 @@ public class SpinValueMapperFactory {
   public static final String SPIN_VALUE_MAPPER_CLASS_NAME =
     "org.operaton.spin.plugin.impl.feel.integration.SpinValueMapper";
 
+    /**
+   * Creates an instance of CustomValueMapper by looking up the valueMapperClass, instantiating it, and logging if the valueMapper is detected. 
+   * 
+   * @return the created CustomValueMapper instance, or null if the engine plugin is not on the classpath
+   */
   public CustomValueMapper createInstance() {
     Class<?> valueMapperClass = lookupClass();
 
@@ -42,6 +47,16 @@ public class SpinValueMapperFactory {
     return valueMapper;
   }
 
+    /**
+   * Creates a new instance of CustomValueMapper based on the given valueMapperClass.
+   * 
+   * @param valueMapperClass the class of the CustomValueMapper to be instantiated
+   * @return a new instance of CustomValueMapper
+   * @throws SpinValueMapperInstantiationException if an instantiation exception occurs
+   * @throws SpinValueMapperAccessException if an illegal access exception occurs
+   * @throws SpinValueMapperCastException if a class cast exception occurs
+   * @throws SpinValueMapperException if any other exception occurs
+   */
   protected CustomValueMapper newInstance(Class<?> valueMapperClass) {
     try {
       return (CustomValueMapper) valueMapperClass.newInstance();
@@ -61,6 +76,12 @@ public class SpinValueMapperFactory {
     }
   }
 
+    /**
+   * Looks up and returns the class specified by the SPIN_VALUE_MAPPER_CLASS_NAME constant.
+   * If the class is not found on the classpath, null is returned.
+   *
+   * @return the Class object representing the specified class, or null if not found
+   */
   protected Class<?> lookupClass() {
     try {
       return Class.forName(SPIN_VALUE_MAPPER_CLASS_NAME);

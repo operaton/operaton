@@ -43,10 +43,20 @@ public class DmnEngineTestRule extends DmnEngineRule {
     super(dmnEngineConfiguration);
   }
 
+    /**
+   * Returns the DmnDecision object.
+   *
+   * @return the DmnDecision object
+   */
   public DmnDecision getDecision() {
     return decision;
   }
 
+    /**
+   * Calls the super class's starting method with the provided description and then loads a decision based on the description.
+   * 
+   * @param description the description used to load the decision
+   */
   @Override
   protected void starting(Description description) {
     super.starting(description);
@@ -54,6 +64,12 @@ public class DmnEngineTestRule extends DmnEngineRule {
     decision = loadDecision(description);
   }
 
+    /**
+   * Loads a DMN decision based on the provided Description.
+   *
+   * @param description the Description containing information about the decision
+   * @return the loaded DmnDecision, or null if the decision cannot be loaded
+   */
   protected DmnDecision loadDecision(Description description) {
     DecisionResource decisionResource = description.getAnnotation(DecisionResource.class);
 
@@ -84,6 +100,16 @@ public class DmnEngineTestRule extends DmnEngineRule {
     }
   }
 
+    /**
+   * Expands the given resource path based on the description and test class.
+   * If the resource path already contains "/", it is considered expanded.
+   * If the resource path is empty, it uses the test class and method name as the resource file name.
+   * If the resource path is not empty, it uses the test class location as the resource location.
+   * 
+   * @param description the description of the test
+   * @param resourcePath the path of the resource file
+   * @return the expanded resource path
+   */
   protected String expandResourcePath(Description description, String resourcePath) {
     if (resourcePath.contains("/")) {
       // already expanded path

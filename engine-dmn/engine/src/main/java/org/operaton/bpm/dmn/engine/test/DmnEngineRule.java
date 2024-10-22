@@ -77,6 +77,11 @@ public class DmnEngineRule extends TestWatcher {
     return dmnEngine;
   }
 
+    /**
+   * Sets up the DMN engine if it is not already initialized before starting the test described by the given {@code Description}.
+   *
+   * @param description the description of the test being started
+   */
   @Override
   protected void starting(Description description) {
     if (dmnEngine == null) {

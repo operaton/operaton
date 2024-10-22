@@ -42,26 +42,56 @@ public class CustomFunction {
     return new CustomFunctionBuilderImpl();
   }
 
+    /**
+   * Returns the list of parameters.
+   *
+   * @return the list of parameters
+   */
   public List<String> getParams() {
     return params;
   }
 
+    /**
+   * Sets the list of parameters for the object.
+   *
+   * @param params the list of parameters to be set
+   */
   public void setParams(List<String> params) {
     this.params = params;
   }
 
+    /**
+   * Returns the function used by this object.
+   *
+   * @return the function
+   */
   public Function<List<Object>, Object> getFunction() {
     return function;
   }
 
+    /**
+   * Sets the function to be used by the method.
+   * 
+   * @param function the function to be set
+   */
   public void setFunction(Function<List<Object>, Object> function) {
     this.function = function;
   }
 
+    /**
+   * Returns a boolean indicating if the method has varargs.
+   *
+   * @return true if the method has varargs, false otherwise
+   */
   public boolean hasVarargs() {
     return hasVarargs;
   }
 
+    /**
+   * Sets whether the method has varargs or not.
+   * 
+   * @param hasVarargs true if the method has varargs, false otherwise
+   */
   public void setHasVarargs(boolean hasVarargs) {
     this.hasVarargs = hasVarargs;
   }

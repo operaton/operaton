@@ -48,50 +48,63 @@ public class CustomFunctionTest {
 
   protected FunctionProvider functionProvider;
 
+    /**
+   * Assigns the FunctionProvider from the feelRule to the functionProvider variable.
+   */
   @Before
   public void assign() {
     functionProvider = feelRule.getFunctionProvider();
   }
 
+    /**
+   * Test method to verify that an exception is thrown when both a function and a return value are set for a custom function builder.
+   */
   @Test
-  public void shouldThrowExceptionBothFunctionAndReturnValueSet() {
-    // given
-    CustomFunctionBuilder myFunctionBuilder = CustomFunction.create()
-      .setParams("x")
-      .setFunction(args -> "")
-      .setReturnValue("foo");
+    public void shouldThrowExceptionBothFunctionAndReturnValueSet() {
+      // given
+      CustomFunctionBuilder myFunctionBuilder = CustomFunction.create()
+        .setParams("x")
+        .setFunction(args -> "")
+        .setReturnValue("foo");
+  
+      // then
+      thrown.expect(FeelException.class);
+      thrown.expectMessage("Only set one return value or a function.");
+  
+      // when
+      myFunctionBuilder.build();
+    }
 
-    // then
-    thrown.expect(FeelException.class);
-    thrown.expectMessage("Only set one return value or a function.");
-
-    // when
-    myFunctionBuilder.build();
-  }
-
+    /**
+   * Test method to set multiple arguments for a custom function, register the function and evaluate the expression.
+   */
   @Test
   public void shouldSetMultipleArgs() {
-    // given
-    CustomFunction myFunction = CustomFunction.create()
-      .setParams("x", "y", "z")
-      .setFunction(args -> {
-        String argX = (String) args.get(0);
-        boolean argY = (boolean) args.get(1);
-        List<String> argZ = (List<String>) args.get(2);
+      // given
+      CustomFunction myFunction = CustomFunction.create()
+        .setParams("x", "y", "z")
+        .setFunction(args -> {
+          String argX = (String) args.get(0);
+          boolean argY = (boolean) args.get(1);
+          List<String> argZ = (List<String>) args.get(2);
+  
+          return argX + "-" + argY + "-" + argZ;
+        })
+        .build();
+  
+      functionProvider.register("myFunction", myFunction);
+  
+      // when
+      String result = feelRule.evaluateExpression("myFunction(\"foo\", true, [\"elem\"])");
+  
+      // then
+      assertThat(result).isEqualTo("foo-true-[elem]");
+    }
 
-        return argX + "-" + argY + "-" + argZ;
-      })
-      .build();
-
-    functionProvider.register("myFunction", myFunction);
-
-    // when
-    String result = feelRule.evaluateExpression("myFunction(\"foo\", true, [\"elem\"])");
-
-    // then
-    assertThat(result).isEqualTo("foo-true-[elem]");
-  }
-
+    /**
+   * This method tests the functionality of registering multiple custom functions with a function provider and evaluating an expression
+   * that uses these functions to ensure that the correct result is returned.
+   */
   @Test
   public void shouldRegisterMultipleFunctions() {
     // given
@@ -118,6 +131,9 @@ public class CustomFunctionTest {
     assertThat(result).isEqualTo("ABC");
   }
 
+    /**
+   * This method tests the functionality of calling a custom function defined by a MyPojo object with a specific argument value.
+   */
   @Test
   public void shouldCallBean() {
     // given
@@ -135,27 +151,33 @@ public class CustomFunctionTest {
     assertThat(result).isEqualTo(6);
   }
 
+    /**
+   * Test method to verify if the custom function can correctly pass an integer argument.
+   */
   @Test
-  public void shouldPassInteger() {
-    // given
-    CustomFunction myFunction = CustomFunction.create()
-      .setParams("x")
-      .setFunction(args -> {
-        Object argX = args.get(0);
+    public void shouldPassInteger() {
+      // given
+      CustomFunction myFunction = CustomFunction.create()
+        .setParams("x")
+        .setFunction(args -> {
+          Object argX = args.get(0);
+  
+          // then
+          assertThat(argX).isEqualTo((long) 12);
+  
+          return "";
+        })
+        .build();
+  
+      functionProvider.register("myFunction", myFunction);
+  
+      // when
+      feelRule.evaluateExpression("myFunction(variable)", 12);
+    }
 
-        // then
-        assertThat(argX).isEqualTo((long) 12);
-
-        return "";
-      })
-      .build();
-
-    functionProvider.register("myFunction", myFunction);
-
-    // when
-    feelRule.evaluateExpression("myFunction(variable)", 12);
-  }
-
+    /**
+   * This method tests if the CustomFunction correctly evaluates the input parameter as a double value.
+   */
   @Test
   public void shouldPassDouble() {
     // given
@@ -177,27 +199,33 @@ public class CustomFunctionTest {
     feelRule.evaluateExpression("myFunction(variable)", 12.1);
   }
 
+    /**
+   * This method tests the functionality of passing a String parameter to a custom function
+   */
   @Test
-  public void shouldPassString() {
-    // given
-    CustomFunction myFunction = CustomFunction.create()
-      .setParams("x")
-      .setFunction(args -> {
-        Object argX = args.get(0);
+    public void shouldPassString() {
+      // given
+      CustomFunction myFunction = CustomFunction.create()
+        .setParams("x")
+        .setFunction(args -> {
+          Object argX = args.get(0);
+  
+          // then
+          assertThat(argX).isEqualTo("foo");
+  
+          return "";
+        })
+        .build();
+  
+      functionProvider.register("myFunction", myFunction);
+  
+      // when
+      feelRule.evaluateExpression("myFunction(variable)", "foo");
+    }
 
-        // then
-        assertThat(argX).isEqualTo("foo");
-
-        return "";
-      })
-      .build();
-
-    functionProvider.register("myFunction", myFunction);
-
-    // when
-    feelRule.evaluateExpression("myFunction(variable)", "foo");
-  }
-
+    /**
+   * Test method to verify that the function can handle a null input parameter.
+   */
   @Test
   public void shouldPassNull() {
     // given
@@ -219,6 +247,11 @@ public class CustomFunctionTest {
     feelRule.evaluateExpression("myFunction(variable)", null);
   }
 
+    /**
+   * This method tests that the CustomFunction created with a parameter "x" and a function
+   * that asserts the argument "x" is equal to true. It then evaluates an expression
+   * using the functionProvider and feelRule.
+   */
   @Test
   public void shouldPassTrue() {
     // given
@@ -240,6 +273,9 @@ public class CustomFunctionTest {
     feelRule.evaluateExpression("myFunction(variable)", true);
   }
 
+    /**
+   * This method tests if a given date is passed correctly to a custom function
+   */
   @Test
   public void shouldPassDate() {
     // given
@@ -264,6 +300,9 @@ public class CustomFunctionTest {
     feelRule.evaluateExpression("myFunction(variable)", now);
   }
 
+    /**
+   * Test method to evaluate if a list matches a custom function result.
+   */
   @Test
   public void shouldPassList() {
     // given
@@ -287,29 +326,35 @@ public class CustomFunctionTest {
     feelRule.evaluateExpression("myFunction(variable)", list);
   }
 
+    /**
+   * Test method to evaluate an expression with a map parameter using a custom function.
+   */
   @Test
-  public void shouldPassMap() {
-    // given
-    Map<String, String> map = Collections.singletonMap("foo", "bar");
+    public void shouldPassMap() {
+      // given
+      Map<String, String> map = Collections.singletonMap("foo", "bar");
+  
+      CustomFunction myFunction = CustomFunction.create()
+        .setParams("x")
+        .setFunction(args -> {
+          Object argX = args.get(0);
+  
+          // then
+          assertThat(argX).isEqualTo(map);
+  
+          return "";
+        })
+        .build();
+  
+      functionProvider.register("myFunction", myFunction);
+  
+      // when
+      feelRule.evaluateExpression("myFunction(variable)", map);
+    }
 
-    CustomFunction myFunction = CustomFunction.create()
-      .setParams("x")
-      .setFunction(args -> {
-        Object argX = args.get(0);
-
-        // then
-        assertThat(argX).isEqualTo(map);
-
-        return "";
-      })
-      .build();
-
-    functionProvider.register("myFunction", myFunction);
-
-    // when
-    feelRule.evaluateExpression("myFunction(variable)", map);
-  }
-
+    /**
+   * This method tests if a custom function returns the correct string value when evaluated.
+   */
   @Test
   public void shouldReturnString() {
     // given
@@ -326,6 +371,9 @@ public class CustomFunctionTest {
     assertThat(result).isEqualTo("foo");
   }
 
+    /**
+   * Test method for evaluating a custom function that should return a double value.
+   */
   @Test
   public void shouldReturnDouble() {
     // given
@@ -342,6 +390,9 @@ public class CustomFunctionTest {
     assertThat(result).isEqualTo(1.7976931348623157);
   }
 
+    /**
+   * Test method to verify that the function "myFunction" returns null when evaluated.
+   */
   @Test
   public void shouldReturnNull() {
     // given
@@ -358,6 +409,9 @@ public class CustomFunctionTest {
     assertThat(result).isNull();
   }
 
+    /**
+   * Test method to verify that the evaluateExpression method returns true when evaluating a custom function
+   */
   @Test
   public void shouldReturnTrue() {
     // given
@@ -374,6 +428,9 @@ public class CustomFunctionTest {
     assertThat(result).isTrue();
   }
 
+    /**
+   * Tests that the method should return the current date by evaluating a custom function and converting it to LocalDateTime.
+   */
   @Test
   public void shouldReturnDate() {
     // given
@@ -394,6 +451,9 @@ public class CustomFunctionTest {
     assertThat(result).isEqualTo(localDateTime);
   }
 
+    /**
+   * This method tests the functionality of returning a list from a custom function by registering the function, evaluating the expression, and verifying the result.
+   */
   @Test
   public void shouldReturnList() {
     // given
@@ -412,24 +472,30 @@ public class CustomFunctionTest {
     assertThat(result).containsExactly("foo", "bar", "bazz");
   }
 
+    /**
+   * Test method to verify that a nested list is returned correctly when calling a custom function.
+   */
   @Test
-  public void shouldReturnList_Nested() {
-    // given
-    List<Object> list = Arrays.asList("foo", Arrays.asList("bar", "bazz"));
+    public void shouldReturnList_Nested() {
+      // given
+      List<Object> list = Arrays.asList("foo", Arrays.asList("bar", "bazz"));
+  
+      CustomFunction myFunction = CustomFunction.create()
+        .setReturnValue(list)
+        .build();
+  
+      functionProvider.register("myFunction", myFunction);
+  
+      // when
+      List<Object> result = feelRule.evaluateExpression("myFunction()");
+  
+      // then
+      assertThat(result).containsExactly("foo", Arrays.asList("bar", "bazz"));
+    }
 
-    CustomFunction myFunction = CustomFunction.create()
-      .setReturnValue(list)
-      .build();
-
-    functionProvider.register("myFunction", myFunction);
-
-    // when
-    List<Object> result = feelRule.evaluateExpression("myFunction()");
-
-    // then
-    assertThat(result).containsExactly("foo", Arrays.asList("bar", "bazz"));
-  }
-
+    /**
+   * This method tests the functionality of returning a specific map using a custom function
+   */
   @Test
   public void shouldReturnMap() {
     // given
@@ -448,25 +514,31 @@ public class CustomFunctionTest {
     assertThat(result).containsExactly(entry("foo", "bar"));
   }
 
+    /**
+   * Test method to verify that the method should return a nested map.
+   */
   @Test
-  public void shouldReturnMap_Nested() {
-    // given
-    Map<String, Object> map = Collections.singletonMap("foo",
-      Collections.singletonMap("bar", "bazz"));
+    public void shouldReturnMap_Nested() {
+      // given
+      Map<String, Object> map = Collections.singletonMap("foo",
+        Collections.singletonMap("bar", "bazz"));
+  
+      CustomFunction myFunction = CustomFunction.create()
+        .setReturnValue(map)
+        .build();
+  
+      functionProvider.register("myFunction", myFunction);
+  
+      // when
+      Map<String, Object> result = feelRule.evaluateExpression("myFunction()");
+  
+      // then
+      assertThat(result).containsExactly(entry("foo", Collections.singletonMap("bar", "bazz")));
+    }
 
-    CustomFunction myFunction = CustomFunction.create()
-      .setReturnValue(map)
-      .build();
-
-    functionProvider.register("myFunction", myFunction);
-
-    // when
-    Map<String, Object> result = feelRule.evaluateExpression("myFunction()");
-
-    // then
-    assertThat(result).containsExactly(entry("foo", Collections.singletonMap("bar", "bazz")));
-  }
-
+    /**
+   * This method tests the functionality of passing varargs to a custom function.
+   */
   @Test
   public void shouldPassVarargs() {
     // given
@@ -484,6 +556,9 @@ public class CustomFunctionTest {
     assertThat(result).containsExactly("foo", "bar", "baz");
   }
 
+    /**
+   * This method tests that an exception is thrown due to disabled varargs in the CustomFunction class.
+   */
   @Test
   public void shouldThrowExceptionDueToDisabledVarargs() {
     // given
@@ -500,6 +575,10 @@ public class CustomFunctionTest {
     assertThat(result).isNull();
   }
 
+    /**
+   * This method tests passing explicit parameters and varargs to a custom function by registering the function, 
+   * evaluating an expression with the function, and asserting the result.
+   */
   @Test
   public void shouldPassExplicitParamsAndVarargs() {
     // given
@@ -518,6 +597,9 @@ public class CustomFunctionTest {
     assertThat(result).containsExactly("foo", Arrays.asList("bar", "baz"));
   }
 
+    /**
+   * Test method to verify that explicit parameters are passed correctly when varargs are enabled.
+   */
   @Test
   public void shouldPassExplicitParamsWithVarargsEnabled() {
     // given

@@ -29,38 +29,82 @@ public class DmnDecisionLiteralExpressionEvaluationEventImpl implements DmnDecis
 
   protected long executedDecisionElements;
 
+    /**
+   * Returns the DmnDecision object.
+   * 
+   * @return the DmnDecision object
+   */
   public DmnDecision getDecision() {
     return decision;
   }
 
+    /**
+   * Sets the specified DMN decision for this object.
+   * 
+   * @param decision the DMN decision to be set
+   */
   public void setDecision(DmnDecision decision) {
     this.decision = decision;
   }
 
+    /**
+   * Returns the output name.
+   * 
+   * @return the output name
+   */
   public String getOutputName() {
     return outputName;
   }
 
+    /**
+   * Sets the output name for the method.
+   *
+   * @param outputName the new output name
+   */
   public void setOutputName(String outputName) {
     this.outputName = outputName;
   }
 
+    /**
+   * Returns the output value.
+   *
+   * @return the output value
+   */
   public TypedValue getOutputValue() {
     return outputValue;
   }
 
+    /**
+   * Sets the output value for the method.
+   * 
+   * @param outputValue the value to be set as the output
+   */
   public void setOutputValue(TypedValue outputValue) {
     this.outputValue = outputValue;
   }
 
+    /**
+   * Returns the number of executed decision elements.
+   *
+   * @return the number of executed decision elements
+   */
   public long getExecutedDecisionElements() {
     return executedDecisionElements;
   }
 
+    /**
+  * Sets the number of executed decision elements.
+  * 
+  * @param executedDecisionElements the number of executed decision elements
+  */
   public void setExecutedDecisionElements(long executedDecisionElements) {
     this.executedDecisionElements = executedDecisionElements;
   }
 
+    /**
+   * Returns a string representation of the DmnDecisionLiteralExpressionEvaluationEventImpl object,
+   * including key, name, decision logic, output name, output value, and executed decision elements.
+   */
   @Override
   public String toString() {
     return "DmnDecisionLiteralExpressionEvaluationEventImpl [" +

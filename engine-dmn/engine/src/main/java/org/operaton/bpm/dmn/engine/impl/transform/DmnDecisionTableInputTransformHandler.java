@@ -23,10 +23,25 @@ import org.operaton.bpm.model.dmn.instance.Input;
 
 public class DmnDecisionTableInputTransformHandler implements DmnElementTransformHandler<Input, DmnDecisionTableInputImpl> {
 
+    /**
+   * Handles the given input element by creating a new DmnDecisionTableInputImpl object
+   * based on the input element and the context.
+   *
+   * @param context the context for transforming the input element
+   * @param input the input element to be handled
+   * @return a new DmnDecisionTableInputImpl object created from the input element
+   */
   public DmnDecisionTableInputImpl handleElement(DmnElementTransformContext context, Input input) {
     return createFromInput(context, input);
   }
 
+    /**
+   * Creates a DmnDecisionTableInputImpl object from the given Input object
+   *
+   * @param context the DmnElementTransformContext object
+   * @param input the Input object to create the DmnDecisionTableInputImpl from
+   * @return the created DmnDecisionTableInputImpl object
+   */
   protected DmnDecisionTableInputImpl createFromInput(DmnElementTransformContext context, Input input) {
     DmnDecisionTableInputImpl decisionTableInput = createDmnElement(context, input);
 
@@ -37,6 +52,13 @@ public class DmnDecisionTableInputTransformHandler implements DmnElementTransfor
     return decisionTableInput;
   }
 
+    /**
+   * Creates a new DmnDecisionTableInputImpl element based on the provided context and input.
+   * 
+   * @param context the transformation context
+   * @param input the input element used for creating the new element
+   * @return a new DmnDecisionTableInputImpl element
+   */
   protected DmnDecisionTableInputImpl createDmnElement(DmnElementTransformContext context, Input input) {
     return new DmnDecisionTableInputImpl();
   }

@@ -25,30 +25,65 @@ public class DmnVariableImpl {
 
   protected DmnTypeDefinition typeDefinition;
 
+    /**
+   * Returns the ID of the object.
+   *
+   * @return the ID of the object
+   */
   public String getId() {
     return id;
   }
 
+    /**
+   * Sets the ID for the object.
+   * 
+   * @param id the new ID value
+   */
   public void setId(String id) {
     this.id = id;
   }
 
+    /**
+   * Returns the name of the object.
+   *
+   * @return the name of the object
+   */
   public String getName() {
     return name;
   }
 
+    /**
+   * Sets the name of the object.
+   * 
+   * @param name the name to set
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+    /**
+   * Returns the type definition associated with this object.
+   *
+   * @return the type definition
+   */
   public DmnTypeDefinition getTypeDefinition() {
     return typeDefinition;
   }
 
+    /**
+   * Sets the type definition for a DMN element.
+   * 
+   * @param typeDefinition the type definition to be set
+   */
   public void setTypeDefinition(DmnTypeDefinition typeDefinition) {
     this.typeDefinition = typeDefinition;
   }
 
+    /**
+   * Returns a string representation of the DmnVariableImpl object, including its id, name, and typeDefinition.
+   * 
+   * @return a string representation of the DmnVariableImpl object
+   */
   @Override
   public String toString() {
     return "DmnVariableImpl{" +

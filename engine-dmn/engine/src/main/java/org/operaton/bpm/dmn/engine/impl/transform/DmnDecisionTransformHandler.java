@@ -23,10 +23,24 @@ import org.operaton.bpm.model.dmn.instance.Decision;
 
 public class DmnDecisionTransformHandler implements DmnElementTransformHandler<Decision, DmnDecisionImpl> {
 
+    /**
+   * Handles a DMN element and returns a DmnDecisionImpl object.
+   * 
+   * @param context the DmnElementTransformContext object
+   * @param decision the Decision object to handle
+   * @return a DmnDecisionImpl object created from the provided Decision object
+   */
   public DmnDecisionImpl handleElement(DmnElementTransformContext context, Decision decision) {
     return createFromDecision(context, decision);
   }
 
+    /**
+   * Creates a DmnDecisionImpl entity from a Decision element.
+   *
+   * @param context the transformation context
+   * @param decision the Decision element to transform
+   * @return the created DmnDecisionImpl entity
+   */
   protected DmnDecisionImpl createFromDecision(DmnElementTransformContext context, Decision decision) {
     DmnDecisionImpl decisionEntity = createDmnElement();
 
@@ -35,6 +49,11 @@ public class DmnDecisionTransformHandler implements DmnElementTransformHandler<D
     return decisionEntity;
   }
 
+    /**
+   * Creates and returns a new instance of DmnDecisionImpl.
+   *
+   * @return a new DmnDecisionImpl instance
+   */
   protected DmnDecisionImpl createDmnElement() {
     return new DmnDecisionImpl();
   }

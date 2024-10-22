@@ -29,6 +29,14 @@ public class UniqueHitPolicyHandler implements DmnHitPolicyHandler {
   public static final DmnHitPolicyLogger LOG = DmnLogger.HIT_POLICY_LOGGER;
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.UNIQUE, null);
 
+    /**
+   * Applies the hit policy to the decision table evaluation event.
+   * If there are less than 2 matching rules, returns the decision table evaluation event.
+   * Otherwise, throws an exception indicating that the unique hit policy only allows a single matching rule.
+   *
+   * @param decisionTableEvaluationEvent the decision table evaluation event to apply the hit policy to
+   * @return the decision table evaluation event after applying the hit policy
+   */
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     List<DmnEvaluatedDecisionRule> matchingRules = decisionTableEvaluationEvent.getMatchingRules();
 
@@ -40,11 +48,19 @@ public class UniqueHitPolicyHandler implements DmnHitPolicyHandler {
     }
   }
 
+    /**
+   * Returns the HitPolicyEntry object representing the hit policy of this class.
+   *
+   * @return the hit policy entry object
+   */
   @Override
   public HitPolicyEntry getHitPolicyEntry() {
     return HIT_POLICY;
   }
 
+    /**
+   * Returns a string representation of the UniqueHitPolicyHandler object.
+   */
   @Override
   public String toString() {
     return "UniqueHitPolicyHandler{}";

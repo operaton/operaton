@@ -27,6 +27,13 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class IdentityDataTypeTransformer implements DmnDataTypeTransformer {
 
+    /**
+   * Transforms the given object value into a TypedValue using Variables.untypedValue() method.
+   * 
+   * @param value the object value to be transformed
+   * @return the TypedValue transformed from the given object value
+   * @throws IllegalArgumentException if the transformation fails
+   */
   @Override
   public TypedValue transform(Object value) throws IllegalArgumentException {
     return Variables.untypedValue(value);

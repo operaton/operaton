@@ -43,6 +43,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
   public static final String RESULT_TEST_WITH_TYPES_DMN = "DmnResultTypedTest.dmn";
   public static final String RESULT_TEST_WITH_SINGLE_UNNAMED_OUTPUT_DMN = "DmnResultTest.testSingleOutputNoName.dmn";
 
+    /**
+   * This method tests the evaluation of a decision table when no result is returned.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testNoResult() {
@@ -56,6 +59,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat((Object) results.getSingleEntryTyped()).isNull();
   }
 
+    /**
+   * This method tests the evaluation of a single result from a decision table.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testSingleResult() {
@@ -69,6 +75,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat((String) results.getSingleEntry()).isEqualTo("singleValue");
   }
 
+    /**
+   * This method tests the evaluation of a decision table with multiple results.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testMultipleResults() {
@@ -110,6 +119,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests the scenario where there is no output value generated from a decision table evaluation.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testNoOutputValue() {
@@ -121,6 +133,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat((Object) decisionResult.getSingleEntry()).isNull();
   }
 
+    /**
+   * Test method for evaluating a decision table with a single output value.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testSingleOutputValue() {
@@ -132,6 +147,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat((String) decisionResult.getSingleEntry()).isEqualTo("singleValue");
   }
 
+    /**
+   * This method tests the evaluation of a decision table with a single output without a name.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_WITH_SINGLE_UNNAMED_OUTPUT_DMN)
   public void testSingleOutputNoName() {
@@ -145,6 +163,11 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat((String) decisionResult.getSingleEntry()).isEqualTo("outputValue");
   }
 
+    /**
+   * This method tests the evaluation of a DMN decision table with multiple output values. 
+   * It verifies that the decision result has a size of 1, asserts the values of the first result, 
+   * and expects a DmnDecisionResultException to be thrown when trying to get a single entry.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testMultipleOutputValues() {
@@ -165,6 +188,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * Tests the collection of output values from a DMN decision table result.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testCollectOutputValues() {
@@ -178,6 +204,10 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(entryValues).containsExactly("multipleValues2");
   }
 
+    /**
+   * This method tests the output list of a decision table by evaluating the decision result
+   * and checking the size and contents of the resulting list of entry maps.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testOutputList() {
@@ -196,6 +226,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(secondResult).containsEntry("secondOutput", "multipleValues2");
   }
 
+    /**
+   * This method tests the value mapping functionality by evaluating a decision table with multiple output values
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testValueMap() {
@@ -210,6 +243,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(entryMap).containsEntry("secondOutput", "multipleValues2");
   }
 
+    /**
+   * Tests the evaluation of a decision table with a single output untyped value.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testSingleOutputUntypedValue() {
@@ -231,6 +267,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(typedEntry).isEqualTo(Variables.untypedValue("singleValue"));
   }
 
+    /**
+   * Test method to verify the behavior of a decision table with a single output typed value.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_WITH_TYPES_DMN)
   public void testSingleOutputTypedValue() {
@@ -252,6 +291,10 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(typedValue).isEqualTo(Variables.stringValue("singleValue"));
   }
 
+    /**
+   * This method tests the evaluation of a decision table with a single output value
+   * and verifies that the typed value retrieved is equal to an untyped value "singleValue".
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
   public void testSingleEntryUntypedValue() {
@@ -261,6 +304,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(typedValue).isEqualTo(Variables.untypedValue("singleValue"));
   }
 
+    /**
+   * This method tests the retrieval of a single entry typed value from a decision table result.
+   */
   @Test
   @DecisionResource(resource = RESULT_TEST_WITH_TYPES_DMN)
   public void testSingleEntryTypedValue() {
@@ -272,6 +318,12 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   // helper methods
 
+    /**
+   * Evaluates the decision table with the provided matching rules.
+   * 
+   * @param matchingRules the matching rules to evaluate the decision table with
+   * @return the result of evaluating the decision table
+   */
   protected DmnDecisionTableResult evaluateWithMatchingRules(String... matchingRules) {
     List<String> matchingRulesList = Arrays.asList(matchingRules);
     variables.putValue(NO_OUTPUT_VALUE, matchingRulesList.contains(NO_OUTPUT_VALUE));
@@ -280,6 +332,11 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     return evaluateDecisionTable();
   }
 
+    /**
+   * Asserts that the provided decision rule result contains a single output value with the expected value "singleValue".
+   * 
+   * @param decisionRuleResult the decision rule result to be validated
+   */
   protected void assertSingleOutputValue(DmnDecisionRuleResult decisionRuleResult) {
     assertThat(decisionRuleResult.size()).isEqualTo(1);
 
@@ -296,6 +353,11 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(value).isEqualTo("singleValue");
   }
 
+    /**
+   * Asserts that the given decision rule result has no output values.
+   * 
+   * @param decisionRuleResult the decision rule result to be checked
+   */
   protected void assertNoOutputValue(DmnDecisionRuleResult decisionRuleResult) {
     assertThat(decisionRuleResult.size()).isEqualTo(0);
 
@@ -312,6 +374,13 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(value).isNull();
   }
 
+    /**
+   * Asserts that the given decision rule result contains multiple output values. 
+   * It checks the size of the result, the values of specific output keys, 
+   * and verifies the behavior of getting single entry from the result.
+   * 
+   * @param decisionRuleResult the decision rule result to be validated
+   */
   protected void assertMultipleOutputValues(DmnDecisionRuleResult decisionRuleResult) {
     assertThat(decisionRuleResult.size()).isEqualTo(2);
 

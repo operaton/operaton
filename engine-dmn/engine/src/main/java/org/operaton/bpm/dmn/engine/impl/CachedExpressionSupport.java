@@ -24,8 +24,18 @@ import org.operaton.bpm.dmn.engine.impl.spi.el.ElExpression;
  */
 public interface CachedExpressionSupport {
 
+    /**
+   * Sets the cached EL expression.
+   *
+   * @param expression the EL expression to be set as cached
+   */
   void setCachedExpression(ElExpression expression);
 
+    /**
+   * Retrieves a cached EL expression.
+   *
+   * @return the cached EL expression
+   */
   ElExpression getCachedExpression();
 
 }

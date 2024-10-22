@@ -24,15 +24,31 @@ import org.operaton.bpm.model.dmn.HitPolicy;
 public class CollectSumHitPolicyHandler extends AbstractCollectNumberHitPolicyHandler {
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.SUM);
 
+    /**
+   * Returns the HitPolicyEntry object representing the hit policy.
+   *
+   * @return the HitPolicyEntry object representing the hit policy
+   */
   @Override
   public HitPolicyEntry getHitPolicyEntry() {
     return HIT_POLICY;
   }
 
+    /**
+   * Returns the built-in aggregator SUM.
+   *
+   * @return the built-in aggregator SUM
+   */
   protected BuiltinAggregator getAggregator() {
     return BuiltinAggregator.SUM;
   }
 
+    /**
+   * Aggregates a list of Integer values by summing them up.
+   * 
+   * @param intValues the list of Integer values to be aggregated
+   * @return the sum of all non-null Integer values in the list
+   */
   @Override
   protected Integer aggregateIntegerValues(List<Integer> intValues) {
     int sum = 0;
@@ -44,6 +60,12 @@ public class CollectSumHitPolicyHandler extends AbstractCollectNumberHitPolicyHa
     return sum;
   }
 
+    /**
+   * Aggregates a list of Long values by summing them up.
+   * 
+   * @param longValues the list of Long values to be aggregated
+   * @return the aggregated sum of the Long values
+   */
   @Override
   protected Long aggregateLongValues(List<Long> longValues) {
     long sum = 0L;
@@ -55,6 +77,12 @@ public class CollectSumHitPolicyHandler extends AbstractCollectNumberHitPolicyHa
     return sum;
   }
 
+    /**
+   * Aggregate a list of Double values by summing them up.
+   * 
+   * @param doubleValues the list of Double values to be aggregated
+   * @return the sum of the Double values in the list
+   */
   @Override
   protected Double aggregateDoubleValues(List<Double> doubleValues) {
     double sum = 0.0;
@@ -66,6 +94,9 @@ public class CollectSumHitPolicyHandler extends AbstractCollectNumberHitPolicyHa
     return sum;
   }
 
+    /**
+   * Returns a string representation of the CollectSumHitPolicyHandler object.
+   */
   @Override
   public String toString() {
     return "CollectSumHitPolicyHandler{}";

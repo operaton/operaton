@@ -21,6 +21,12 @@ import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 
 public class DmnEngineTestAssertions extends Assertions {
 
+    /**
+   * Creates a new DmnDecisionTableResultAssert instance for performing assertions on the provided DmnDecisionTableResult.
+   *
+   * @param dmnDecisionTableResult the DmnDecisionTableResult to perform assertions on
+   * @return a new DmnDecisionTableResultAssert instance
+   */
   public static DmnDecisionTableResultAssert assertThat(DmnDecisionTableResult dmnDecisionTableResult) {
     return new DmnDecisionTableResultAssert(dmnDecisionTableResult);
   }

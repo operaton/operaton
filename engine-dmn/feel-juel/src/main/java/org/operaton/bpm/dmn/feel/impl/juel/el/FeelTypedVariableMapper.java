@@ -37,6 +37,14 @@ public class FeelTypedVariableMapper extends VariableMapper {
     this.variableContext = variableContext;
   }
 
+    /**
+   * Resolves the given variable by checking if it exists in the variable context. 
+   * If the variable exists, unpacks its value and creates a ValueExpression with the value. 
+   * If the variable does not exist, throws an exception with a message indicating unknown variable.
+   * 
+   * @param variable the variable to resolve
+   * @return the resolved ValueExpression
+   */
   public ValueExpression resolveVariable(String variable) {
     if (variableContext.containsVariable(variable)) {
       Object value = unpackVariable(variable);
@@ -47,10 +55,24 @@ public class FeelTypedVariableMapper extends VariableMapper {
     }
   }
 
+    /**
+   * Sets a variable with the given expression. This method is read-only and will throw an exception.
+   *
+   * @param variable the name of the variable to set
+   * @param expression the value expression to associate with the variable
+   * @return ValueExpression the value expression associated with the variable
+   * @throws VariableMapperException if the variable mapper is read-only
+   */
   public ValueExpression setVariable(String variable, ValueExpression expression) {
     throw LOG.variableMapperIsReadOnly();
   }
 
+    /**
+   * Unpacks the value of a variable from the variable context.
+   * 
+   * @param variable the name of the variable to unpack
+   * @return the value of the variable, or null if the variable is not found
+   */
   public Object unpackVariable(String variable) {
     TypedValue valueTyped = variableContext.resolve(variable);
     if(valueTyped != null) {

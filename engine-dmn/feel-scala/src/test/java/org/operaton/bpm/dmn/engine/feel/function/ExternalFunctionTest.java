@@ -31,6 +31,9 @@ public class ExternalFunctionTest {
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(feelRule).around(thrown);
 
+    /**
+   * Test case to verify that an exception is thrown when using an external function in the FEEL expression.
+   */
   @Test
   public void shouldFailWhenUsingExternalFunction() {
     // given

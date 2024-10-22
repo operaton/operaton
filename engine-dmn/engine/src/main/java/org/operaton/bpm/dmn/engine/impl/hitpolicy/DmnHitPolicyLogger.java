@@ -28,6 +28,12 @@ import org.operaton.bpm.model.dmn.HitPolicy;
 
 public class DmnHitPolicyLogger extends DmnLogger {
 
+    /**
+   * Creates a DmnHitPolicyException if the hit policy is set to UNIQUE and multiple rules have been matched.
+   * 
+   * @param matchingRules the list of decision rules that have been matched
+   * @return a DmnHitPolicyException with a specific exception message
+   */
   public DmnHitPolicyException uniqueHitPolicyOnlyAllowsSingleMatchingRule(List<DmnEvaluatedDecisionRule> matchingRules) {
     return new DmnHitPolicyException(exceptionMessage(
       "001",
@@ -35,6 +41,12 @@ public class DmnHitPolicyLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Creates a new DmnHitPolicyException with a specific message indicating that the any hit policy requires all outputs to be equal for multiple matching rules.
+   *
+   * @param matchingRules a list of DmnEvaluatedDecisionRule objects representing the matching rules
+   * @return a DmnHitPolicyException with a formatted exception message
+   */
   public DmnHitPolicyException anyHitPolicyRequiresThatAllOutputsAreEqual(List<DmnEvaluatedDecisionRule> matchingRules) {
     return new DmnHitPolicyException(exceptionMessage(
       "002",
@@ -42,6 +54,13 @@ public class DmnHitPolicyLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Creates a DmnHitPolicyException with a message indicating that aggregation is not applicable on compound decision output.
+   * 
+   * @param aggregator the BuiltinAggregator used for aggregation
+   * @param outputEntries a Map of output entries for the compound decision output
+   * @return a DmnHitPolicyException with the appropriate exception message
+   */
   public DmnHitPolicyException aggregationNotApplicableOnCompoundOutput(BuiltinAggregator aggregator, Map<String, DmnEvaluatedOutput> outputEntries) {
     return new DmnHitPolicyException(exceptionMessage(
       "003",
@@ -49,6 +68,13 @@ public class DmnHitPolicyLogger extends DmnLogger {
     );
   }
 
+    /**
+   * Creates a DmnHitPolicyException with a specific exception message indicating that values cannot be converted to aggregatable types.
+   *
+   * @param values The list of TypedValue objects that could not be converted
+   * @param targetClasses The target classes to which the values could not be converted
+   * @return a new DmnHitPolicyException with the formatted exception message
+   */
   public DmnHitPolicyException unableToConvertValuesToAggregatableTypes(List<TypedValue> values, Class<?>... targetClasses) {
     return new DmnHitPolicyException(exceptionMessage(
       "004",

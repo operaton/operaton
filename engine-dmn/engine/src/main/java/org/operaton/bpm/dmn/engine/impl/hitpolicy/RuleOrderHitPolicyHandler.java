@@ -24,15 +24,29 @@ public class RuleOrderHitPolicyHandler implements DmnHitPolicyHandler {
 
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.RULE_ORDER, null);
 
+    /**
+   * Returns the hit policy entry.
+   *
+   * @return the HitPolicyEntry object
+   */
   @Override
   public HitPolicyEntry getHitPolicyEntry() {
     return HIT_POLICY;
   }
 
+    /**
+   * Applies the given decision table evaluation event.
+   * 
+   * @param decisionTableEvaluationEvent the decision table evaluation event to apply
+   * @return the decision table evaluation event
+   */
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     return decisionTableEvaluationEvent;
   }
 
+    /**
+   * Returns a string representation of the RuleOrderHitPolicyHandler object.
+   */
   @Override
   public String toString() {
     return "RuleOrderHitPolicyHandler{}";

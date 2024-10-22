@@ -35,8 +35,19 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
 
   public static final DmnHitPolicyLogger LOG = DmnLogger.HIT_POLICY_LOGGER;
 
+    /**
+   * Returns the BuiltinAggregator used by the class.
+   *
+   * @return the BuiltinAggregator used
+   */
   protected abstract BuiltinAggregator getAggregator();
 
+    /**
+   * Applies the result name and value to the provided decision table evaluation event.
+   * 
+   * @param decisionTableEvaluationEvent the decision table evaluation event to apply the result name and value to
+   * @return the updated decision table evaluation event with the result name and value applied
+   */
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     String resultName = getResultName(decisionTableEvaluationEvent);
     TypedValue resultValue = getResultValue(decisionTableEvaluationEvent);
@@ -48,6 +59,12 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
     return evaluationEvent;
   }
 
+    /**
+   * Retrieves the name of the result from the first matching rule's output entry.
+   * 
+   * @param decisionTableEvaluationEvent the event containing the matching rules
+   * @return the name of the result or null if no matching rule has output entries
+   */
   protected String getResultName(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     for (DmnEvaluatedDecisionRule matchingRule : decisionTableEvaluationEvent.getMatchingRules()) {
       Map<String, DmnEvaluatedOutput> outputEntries = matchingRule.getOutputEntries();
@@ -58,11 +75,23 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
     return null;
   }
 
+    /**
+   * Retrieves a single result value from a decision table evaluation event.
+   * 
+   * @param decisionTableEvaluationEvent the event containing the decision table evaluation data
+   * @return the aggregated result value
+   */
   protected TypedValue getResultValue(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     List<TypedValue> values = collectSingleValues(decisionTableEvaluationEvent);
     return aggregateValues(values);
   }
 
+    /**
+   * Collects single values from the evaluated decision table rules.
+   *
+   * @param decisionTableEvaluationEvent the event containing the evaluated decision table
+   * @return a list of TypedValues containing the single output values
+   */
   protected List<TypedValue> collectSingleValues(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     List<TypedValue> values = new ArrayList<TypedValue>();
     for (DmnEvaluatedDecisionRule matchingRule : decisionTableEvaluationEvent.getMatchingRules()) {
@@ -79,6 +108,12 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
     return values;
   }
 
+    /**
+   * Aggregates a list of TypedValue objects by calling aggregateNumberValues if the list is not empty.
+   * 
+   * @param values a list of TypedValue objects to aggregate
+   * @return the aggregated TypedValue object or null if the list is empty
+   */
   protected TypedValue aggregateValues(List<TypedValue> values) {
     if (!values.isEmpty()) {
       return aggregateNumberValues(values);
@@ -90,6 +125,14 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
 
   }
 
+    /**
+   * Aggregates a list of TypedValues containing numbers into a single TypedValue.
+   * This method attempts to convert the values to integers, longs, and doubles in that order,
+   * and aggregates them accordingly. If conversion fails for all types, an exception is thrown.
+   *
+   * @param values the list of TypedValues to aggregate
+   * @return the aggregated TypedValue
+   */
   protected TypedValue aggregateNumberValues(List<TypedValue> values) {
     try {
       List<Integer> intValues = convertValuesToInteger(values);
@@ -118,12 +161,39 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
     throw LOG.unableToConvertValuesToAggregatableTypes(values, Integer.class, Long.class, Double.class);
   }
 
+    /**
+   * This method aggregates a list of Integer values in a specific way.
+   * The implementation of this method will vary depending on the subclass.
+   *
+   * @param intValues the list of Integer values to be aggregated
+   * @return the result of aggregating the Integer values
+   */
   protected abstract Integer aggregateIntegerValues(List<Integer> intValues);
 
+    /**
+   * This method aggregates a list of Long values into a single Long value.
+   *
+   * @param longValues the list of Long values to aggregate
+   * @return the aggregated Long value
+   */
   protected abstract Long aggregateLongValues(List<Long> longValues);
 
+    /**
+   * This method takes a list of Double values and aggregates them in some way to return a Double result.
+   *
+   * @param doubleValues the list of Double values to be aggregated
+   * @return the aggregated Double value
+   */
   protected abstract Double aggregateDoubleValues(List<Double> doubleValues);
 
+    /**
+   * Converts a list of TypedValues to a list of Integers. Checks if the TypedValues are of type INTEGER
+   * or contain Integer values, otherwise throws an IllegalArgumentException.
+   * 
+   * @param typedValues the list of TypedValues to convert
+   * @return a list of Integers extracted from the TypedValues
+   * @throws IllegalArgumentException if the TypedValues do not contain valid Integer values
+   */
   protected List<Integer> convertValuesToInteger(List<TypedValue> typedValues) throws IllegalArgumentException {
     List<Integer> intValues = new ArrayList<Integer>();
     for (TypedValue typedValue : typedValues) {
@@ -151,6 +221,15 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
     return intValues;
   }
 
+    /**
+   * Converts a list of TypedValues to a list of Long values. If a TypedValue is of type LONG, adds its value to the resulting list. 
+   * If the type is null, checks if it is a Long or a String representing a number and adds it accordingly. 
+   * Throws an IllegalArgumentException for any other TypedValue types.
+   * 
+   * @param typedValues the list of TypedValues to convert
+   * @return a list of Long values extracted from the TypedValues
+   * @throws IllegalArgumentException if a TypedValue is not of type LONG or null
+   */
   protected List<Long> convertValuesToLong(List<TypedValue> typedValues) throws IllegalArgumentException {
     List<Long> longValues = new ArrayList<Long>();
     for (TypedValue typedValue : typedValues) {
@@ -180,6 +259,16 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
   }
 
 
+    /**
+   * Converts a list of TypedValue objects to a list of Double values.
+   * If the TypedValue is of type DOUBLE, directly adds the value to the list.
+   * If the TypedValue is null or not of type DOUBLE, attempts to convert the value to a Double.
+   * Throws an IllegalArgumentException if the TypedValue is of a different type.
+   * 
+   * @param typedValues the list of TypedValue objects to convert
+   * @return a list of Double values converted from the TypedValues
+   * @throws IllegalArgumentException if a TypedValue is not of type DOUBLE or is null
+   */
   protected List<Double> convertValuesToDouble(List<TypedValue> typedValues) throws IllegalArgumentException {
     List<Double> doubleValues = new ArrayList<Double>();
     for (TypedValue typedValue : typedValues) {

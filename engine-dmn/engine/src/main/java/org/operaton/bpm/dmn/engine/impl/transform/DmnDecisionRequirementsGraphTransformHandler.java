@@ -23,10 +23,24 @@ import org.operaton.bpm.model.dmn.instance.Definitions;
 
 public class DmnDecisionRequirementsGraphTransformHandler implements DmnElementTransformHandler<Definitions, DmnDecisionRequirementsGraphImpl> {
 
+    /**
+   * Handles the given DMN element and returns a decision requirements graph implementation based on the provided definitions.
+   *
+   * @param context the element transformation context
+   * @param definitions the DMN definitions
+   * @return a decision requirements graph implementation created from the definitions
+   */
   public DmnDecisionRequirementsGraphImpl handleElement(DmnElementTransformContext context, Definitions definitions) {
     return createFromDefinitions(context, definitions);
   }
 
+    /**
+   * Creates a new decision requirements graph from the provided Definitions object.
+   * 
+   * @param context the element transform context
+   * @param definitions the definitions object to create the decision requirements graph from
+   * @return the newly created decision requirements graph
+   */
   protected DmnDecisionRequirementsGraphImpl createFromDefinitions(DmnElementTransformContext context, Definitions definitions) {
     DmnDecisionRequirementsGraphImpl drd = createDmnElement();
 
@@ -36,6 +50,11 @@ public class DmnDecisionRequirementsGraphTransformHandler implements DmnElementT
     return drd;
   }
 
+    /**
+   * Creates a new instance of DmnDecisionRequirementsGraphImpl
+   * 
+   * @return a new DmnDecisionRequirementsGraphImpl instance
+   */
   protected DmnDecisionRequirementsGraphImpl createDmnElement() {
     return new DmnDecisionRequirementsGraphImpl();
   }

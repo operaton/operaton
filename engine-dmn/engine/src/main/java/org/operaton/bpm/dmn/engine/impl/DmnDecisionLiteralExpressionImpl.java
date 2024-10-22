@@ -23,19 +23,42 @@ public class DmnDecisionLiteralExpressionImpl implements DmnDecisionLogic {
   protected DmnVariableImpl variable;
   protected DmnExpressionImpl expression;
 
+    /**
+   * Returns the variable associated with this DmnVariableImpl object.
+   *
+   * @return the variable associated with this DmnVariableImpl object
+   */
   public DmnVariableImpl getVariable() {
     return variable;
   }
+    /**
+   * Sets the variable for the DMN.
+   * 
+   * @param variable the DMN variable to be set
+   */
   public void setVariable(DmnVariableImpl variable) {
     this.variable = variable;
   }
+    /**
+   * Returns the expression associated with this DmnExpressionImpl object.
+   *
+   * @return the expression associated with this DmnExpressionImpl object
+   */
   public DmnExpressionImpl getExpression() {
     return expression;
   }
+    /**
+   * Sets the DMN expression for this object.
+   *
+   * @param expression the DMN expression to be set
+   */
   public void setExpression(DmnExpressionImpl expression) {
     this.expression = expression;
   }
 
+    /**
+   * Returns a string representation of the DmnDecisionLiteralExpressionImpl object.
+   */
   @Override
   public String toString() {
     return "DmnDecisionLiteralExpressionImpl [variable=" + variable + ", expression=" + expression + "]";

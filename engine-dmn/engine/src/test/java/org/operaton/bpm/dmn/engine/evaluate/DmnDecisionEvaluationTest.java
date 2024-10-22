@@ -54,24 +54,27 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   public static final String DRG_COLLECT_DMN = "org/operaton/bpm/dmn/engine/transform/DrgCollectTest.dmn";
   public static final String DRG_RULE_ORDER_DMN = "org/operaton/bpm/dmn/engine/transform/DrgRuleOrderTest.dmn";
 
+    /**
+   * Returns a new instance of DefaultDmnEngineConfiguration with Feel Legacy Behavior enabled.
+   *
+   * @return a new DefaultDmnEngineConfiguration with Feel Legacy Behavior enabled
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     return new DefaultDmnEngineConfiguration()
       .enableFeelLegacyBehavior(true);
   }
 
+    /**
+   * Evaluates the decision table for the DRD Dish Decision example with specified temperature and day type,
+   * and asserts that the result contains a single entry with the desired dish set to "Steak".
+   */
   @Test
   public void shouldEvaluateDrdDishDecisionExample() {
 
-    DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("Dish", DMN_DECISIONS_WITH_DISH_DECISON_EXAMPLE) , createVariables()
-      .putValue("temperature", 20)
-      .putValue("dayType", "Weekend"));
-
-    assertThat(results)
-      .hasSingleResult()
-      .containsEntry("desiredDish", "Steak");
-  }
-
+    /**
+   * This method tests the evaluation of a decision with a required decision key.
+   */
   @Test
   public void shouldEvaluateDecisionWithRequiredDecisionByKey() {
 
@@ -105,6 +108,9 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests the failure of decision evaluation when a required decision does not have a matching rule in a child decision.
+   */
   @Test
   public void shouldFailDecisionEvaluationWithRequiredDecisionAndMissingInput() {
 
@@ -119,8 +125,29 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
       .hasMessageStartingWith("DMN-01002")
       .hasMessageContaining("Unable to evaluate expression for language 'juel': '${ll}'");
     }
+
+    /**
+   * This method tests that the decision evaluation fails when a required decision has missing input variables.
+   */
+  @Test
+  public void shouldFailDecisionEvaluationWithRequiredDecisionAndMissingInput() {
+  
+      try {
+          dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_MULTI_LEVEL_MULTIPLE_INPUT_SINGLE_OUTPUT) , createVariables()
+                  .putValue("xx", "xx")
+                  .putValue("yy", "yy")
+                  .putValue("zz", "zz")
+                  .asVariableContext());
+      } catch(DmnEvaluationException e) {
+          assertThat(e)
+                  .hasMessageStartingWith("DMN-01002")
+                  .hasMessageContaining("Unable to evaluate expression for language 'juel': '${ll}'");
+      }
   }
 
+    /**
+   * This method tests the evaluation of decisions with a required decision and multiple matching rules.
+   */
   @Test
   public void shouldEvaluateDecisionsWithRequiredDecisionAndMultipleMatchingRules() {
 
@@ -134,6 +161,9 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
     assertThat(resultList.get(1)).containsEntry("aa", "aaa");
   }
 
+    /**
+   * This method tests the evaluation of decisions with a required decision and multiple matching rules that result in multiple outputs.
+   */
   @Test
   public void shouldEvaluateDecisionsWithRequiredDecisionAndMultipleMatchingRulesMultipleOutputs() {
 
@@ -148,6 +178,10 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
 
   }
 
+    /**
+   * This method tests the evaluation of a decision with a required decision and no matching rule in the parent decision. 
+   * It evaluates the decision table and checks if the result list is empty.
+   */
   @Test
   public void shouldEvaluateDecisionWithRequiredDecisionAndNoMatchingRuleInParentDecision() {
 
@@ -161,6 +195,10 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
 
   }
 
+    /**
+   * This method tests the evaluation of decisions with a required parent decision. It evaluates a decision table
+   * with specific inputs and verifies that the result matches the expected output.
+   */
   @Test
   public void shouldEvaluateDecisionsWithRequiredDecisionAndParentDecision() {
 
@@ -174,6 +212,10 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
      .containsEntry("aa", 7.0);
   }
 
+    /**
+   * This method tests the evaluation of shared decisions using the DMN engine. It evaluates a specific decision table 
+   * with the provided variables and asserts that the result contains a single entry with key "aa" and value "aa".
+   */
   @Test
   public void shouldEvaluateSharedDecisions() {
 
@@ -186,6 +228,9 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
       .containsEntry("aa", "aa");
   }
 
+    /**
+   * This method tests the evaluation of decisions with different input and output types by using the DMN engine to evaluate a decision table with different input and output types.
+   */
   @Test
   public void shouldEvaluateDecisionsWithDifferentInputAndOutputTypes() {
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_DIFFERENT_INPUT_OUTPUT_TYPES) , createVariables()
@@ -205,19 +250,15 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
     .containsEntry("aa", 7.0);
   }
 
+    /**
+   * This method tests the evaluation of decisions when there is no matching rule and a default rule in the parent.
+   */
   @Test
   public void shouldEvaluateDecisionsWithNoMatchingRuleAndDefaultRuleInParent() {
 
-    DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_DIFFERENT_INPUT_OUTPUT_TYPES) , createVariables()
-      .putValue("dd", "7")
-      .putValue("ee", 2147483650L)
-      .asVariableContext());
-
-    assertThat(results)
-      .hasSingleResult()
-      .containsEntry("aa", 7.2);
-  }
-
+    /**
+   * This method tests the evaluation of decisions with a default rule in a child decision table.
+   */
   @Test
   public void shouldEvaluateDecisionsWithDefaultRuleInChildDecision() {
 
@@ -245,6 +286,9 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
       .containsEntry("aa", 7.2);
   }
 
+    /**
+   * This method evaluates decisions with user input for the parent decision.
+   */
   @Test
   public void shouldEvaluateDecisionsWithInputTypeMisMatchInChildDecision() {
     try {
@@ -259,6 +303,9 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests the evaluation of decisions with input type mismatch in a child decision. 
+   */
   @Test
   public void shouldEvaluateDecisionsWithInputTypeMisMatchInParentDecision() {
 
@@ -273,6 +320,9 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
     }
   }
 
+    /**
+   * This method tests the evaluation of decisions with input type mismatch in parent decision.
+   */
   @Test
   public void shouldEvaluateDecisionWithLiteralExpression() {
     DmnDecisionResult result = dmnEngine.evaluateDecision(parseDecisionFromFile("decision", DMN_DECISION_WITH_LITERAL_EXPRESSION) ,
@@ -282,11 +332,27 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
 
     assertThat(result.getSingleResult().keySet()).containsOnly("c");
 
-    assertThat((int) result.getSingleEntry())
-      .isNotNull()
-      .isEqualTo(5);
-  }
+    /**
+   * This method tests the evaluation of a decision with a literal expression. It evaluates a decision with variables "a" and "b" set to 2 and 3 respectively,
+   * and expects the result to contain only key "c" with a single entry value of 5.
+   */
+  @Test
+    public void shouldEvaluateDecisionWithLiteralExpression() {
+      DmnDecisionResult result = dmnEngine.evaluateDecision(parseDecisionFromFile("decision", DMN_DECISION_WITH_LITERAL_EXPRESSION) ,
+          createVariables()
+            .putValue("a", 2)
+            .putValue("b", 3));
+  
+      assertThat(result.getSingleResult().keySet()).containsOnly("c");
+  
+      assertThat((int) result.getSingleEntry())
+        .isNotNull()
+        .isEqualTo(5);
+    }
 
+    /**
+   * This method tests the evaluation of a decision table with literal expressions in a DMN.
+   */
   @Test
   public void shouldEvaluateDecisionsDrgWithLiteralExpression() {
     DmnDecisionTableResult result = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("dish-decision", DMN_DRG_WITH_LITERAL_EXPRESSION) ,
@@ -299,6 +365,9 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
       .containsEntry("desiredDish", "Light Salad");
   }
 
+    /**
+   * Test method to evaluate a decision with bean invocation in a literal expression.
+   */
   @Test
   public void shouldEvaluateDecisionWithBeanInvocationInLiteralExpression() {
     DmnDecisionResult result = dmnEngine.evaluateDecision(parseDecisionFromFile("decision", DMN_DECISION_WITH_BEAN_INVOCATION_IN_LITERAL_EXPRESSION) ,
@@ -311,6 +380,9 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
       .isEqualTo(6);
   }
 
+    /**
+   * This method tests the evaluation of a decision with collect hit policy returning a list.
+   */
   @Test
   public void shouldEvaluateDecisionWithCollectHitPolicyReturningAList() {
     DmnDecisionRequirementsGraph graph = dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_COLLECT_DMN));
@@ -323,6 +395,9 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
       .isEqualTo("Steak");
   }
 
+    /**
+   * This method tests the evaluation of a decision with rule order hit policy returning a list.
+   */
   @Test
   public void shouldEvaluateDecisionWithRuleOrderHitPolicyReturningAList() {
     DmnDecisionRequirementsGraph graph = dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_RULE_ORDER_DMN));

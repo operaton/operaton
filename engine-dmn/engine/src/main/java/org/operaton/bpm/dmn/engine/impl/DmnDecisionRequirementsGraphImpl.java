@@ -31,42 +31,91 @@ public class DmnDecisionRequirementsGraphImpl implements DmnDecisionRequirements
 
   protected Map<String, DmnDecision> decisions = new HashMap<String, DmnDecision>();
 
+    /**
+   * Returns the key.
+   *
+   * @return the key
+   */
   public String getKey() {
     return key;
   }
 
+    /**
+   * Sets the key for the object.
+   * 
+   * @param key the key to set
+   */
   public void setKey(String key) {
     this.key = key;
   }
 
+    /**
+   * Returns the name of the object.
+   *
+   * @return the name of the object
+   */
   public String getName() {
     return name;
   }
 
+    /**
+   * Sets the name of the object.
+   *
+   * @param name the new name to set
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+    /**
+   * Retrieves a collection of DmnDecision objects.
+   *
+   * @return the collection of DmnDecision objects
+   */
   public Collection<DmnDecision> getDecisions() {
-    return decisions.values();
-  }
+      return decisions.values();
+    }
 
+    /**
+   * Sets the decisions map with the specified decisions.
+   * 
+   * @param decisions a map of decisions with their corresponding keys
+   */
   public void setDecisions(Map<String, DmnDecision> decisions) {
     this.decisions = decisions;
   }
 
+    /**
+   * Adds a DMN decision to the decisions map.
+   * 
+   * @param decision the DMN decision to be added
+   */
   public void addDecision(DmnDecision decision) {
     decisions.put(decision.getKey(), decision);
   }
 
+    /**
+   * Returns the decision associated with the given key.
+   * 
+   * @param key the key of the decision to retrieve
+   * @return the decision with the specified key, or null if not found
+   */
   public DmnDecision getDecision(String key) {
     return decisions.get(key);
   }
 
+    /**
+   * Retrieves the set of decision keys from the map of decisions.
+   *
+   * @return a Set of Strings representing the decision keys
+   */
   public Set<String> getDecisionKeys() {
     return decisions.keySet();
   }
 
+    /**
+   * Returns a string representation of the DmnDecisionRequirementsGraphImpl object.
+   */
   @Override
   public String toString() {
     return "DmnDecisionRequirementsGraphImpl [key=" + key + ", name=" + name + ", decisions=" + decisions + "]";

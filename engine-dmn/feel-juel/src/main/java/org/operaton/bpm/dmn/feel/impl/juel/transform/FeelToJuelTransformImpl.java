@@ -35,6 +35,13 @@ public class FeelToJuelTransformImpl implements FeelToJuelTransform {
   public static final FeelToJuelTransformer ENDPOINT_TRANSFORMER = new EndpointTransformer();
   public static final List<FeelToJuelTransformer> CUSTOM_FUNCTION_TRANSFORMERS = new ArrayList<FeelToJuelTransformer>();
 
+    /**
+   * Transforms a simple unary test expression into a JUEL expression by checking if it can be transformed using either the hyphen transformer, not transformer, or default positive unary test transformer.
+   * 
+   * @param simpleUnaryTests the simple unary test expression to transform
+   * @param inputName the input name to be used in the transformation
+   * @return the transformed JUEL expression
+   */
   public String transformSimpleUnaryTests(String simpleUnaryTests, String inputName) {
     simpleUnaryTests = simpleUnaryTests.trim();
     String juelExpression;
@@ -48,9 +55,13 @@ public class FeelToJuelTransformImpl implements FeelToJuelTransform {
       juelExpression = transformSimplePositiveUnaryTests(simpleUnaryTests, inputName);
     }
 
-    return "${" + juelExpression + "}";
-  }
-
+    /**
+   * Transforms a simple positive unary test to a specific format based on the input name.
+   * 
+   * @param simplePositiveUnaryTests the simple positive unary test to be transformed
+   * @param inputName the name of the input
+   * @return the transformed simple positive unary test
+   */
   public String transformSimplePositiveUnaryTests(String simplePositiveUnaryTests, String inputName) {
     simplePositiveUnaryTests = simplePositiveUnaryTests.trim();
     if (LIST_TRANSFORMER.canTransform(simplePositiveUnaryTests)) {
@@ -61,6 +72,13 @@ public class FeelToJuelTransformImpl implements FeelToJuelTransform {
     }
   }
 
+    /**
+   * Transforms a simple positive unary test expression into a different format based on the available transformers.
+   * 
+   * @param simplePositiveUnaryTest the simple positive unary test expression to transform
+   * @param inputName the name of the input
+   * @return the transformed expression
+   */
   public String transformSimplePositiveUnaryTest(String simplePositiveUnaryTest, String inputName) {
     simplePositiveUnaryTest = simplePositiveUnaryTest.trim();
 
@@ -70,22 +88,23 @@ public class FeelToJuelTransformImpl implements FeelToJuelTransform {
       }
     }
 
-    if (INTERVAL_TRANSFORMER.canTransform(simplePositiveUnaryTest)) {
-      return INTERVAL_TRANSFORMER.transform(this, simplePositiveUnaryTest, inputName);
-    }
-    else if (COMPARISON_TRANSFORMER.canTransform(simplePositiveUnaryTest)) {
-      return COMPARISON_TRANSFORMER.transform(this, simplePositiveUnaryTest, inputName);
-    }
-    else {
-      return EQUAL_TRANSFORMER.transform(this, simplePositiveUnaryTest, inputName);
-    }
-  }
-
+    /**
+   * Transforms the given endpoint using the specified input name.
+   * 
+   * @param endpoint the endpoint to transform
+   * @param inputName the name of the input
+   * @return the transformed endpoint
+   */
   public String transformEndpoint(String endpoint, String inputName) {
     endpoint = endpoint.trim();
     return ENDPOINT_TRANSFORMER.transform(this, endpoint, inputName);
   }
 
+    /**
+   * Adds a custom function transformer to the list of custom function transformers.
+   * 
+   * @param functionTransformer the custom function transformer to be added
+   */
   public void addCustomFunctionTransformer(FeelToJuelTransformer functionTransformer) {
     CUSTOM_FUNCTION_TRANSFORMERS.add(functionTransformer);
   }

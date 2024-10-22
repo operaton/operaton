@@ -25,21 +25,45 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class DefaultTypeDefinition implements DmnTypeDefinition {
 
+    /**
+   * Transforms the given object value into a TypedValue using Variables.untypedValue method.
+   *
+   * @param value the object value to transform
+   * @return the transformed TypedValue
+   * @throws IllegalArgumentException if unable to transform the object value
+   */
   @Override
   public TypedValue transform(Object value) throws IllegalArgumentException {
     return Variables.untypedValue(value);
   }
 
+    /**
+   * Returns the type name as "untyped".
+   *
+   * @return the string "untyped"
+   */
   @Override
   public String getTypeName() {
     return "untyped";
   }
 
+    /**
+   * Returns a string representation of the DefaultTypeDefinition object.
+   * 
+   * @return a string representation of the DefaultTypeDefinition object
+   */
   @Override
   public String toString() {
     return "DefaultTypeDefinition []";
   }
 
+    /**
+   * Indicates whether some other object is "equal to" this one.
+   * This method checks if the specified object is the same as the current object.
+   * 
+   * @param obj the object to compare with
+   * @return true if the objects are equal, false otherwise
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)

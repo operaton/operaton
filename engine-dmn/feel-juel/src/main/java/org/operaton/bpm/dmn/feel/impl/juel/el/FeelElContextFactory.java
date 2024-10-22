@@ -36,6 +36,14 @@ public class FeelElContextFactory implements ElContextFactory {
 
   protected CustomFunctionMapper customFunctionMapper = new CustomFunctionMapper();
 
+    /**
+   * Creates a new ELContext with the specified ExpressionFactory and VariableContext.
+   * Initializes ELResolver, FunctionMapper, and VariableMapper and returns a new FeelElContext.
+   * 
+   * @param expressionFactory the ExpressionFactory to be used in the ELContext
+   * @param variableContext the VariableContext to be used in the ELContext
+   * @return a new ELContext with the initialized components
+   */
   public ELContext createContext(ExpressionFactory expressionFactory, VariableContext variableContext) {
     ELResolver elResolver = createElResolver();
     FunctionMapper functionMapper = createFunctionMapper();
@@ -44,10 +52,21 @@ public class FeelElContextFactory implements ElContextFactory {
     return new FeelElContext(elResolver, functionMapper, variableMapper);
   }
 
+    /**
+   * Creates and returns a new ELResolver using the SimpleResolver class with auto resetting enabled.
+   *
+   * @return a new ELResolver with auto resetting enabled
+   */
   public ELResolver createElResolver() {
     return new SimpleResolver(true);
   }
 
+    /**
+   * Creates a FunctionMapper object by creating a CompositeFunctionMapper,
+   * adding a FeelFunctionMapper and a customFunctionMapper, and returning the CompositeFunctionMapper.
+   * 
+   * @return a FunctionMapper object with added function mappers
+   */
   public FunctionMapper createFunctionMapper() {
     CompositeFunctionMapper functionMapper = new CompositeFunctionMapper();
     functionMapper.add(new FeelFunctionMapper());
@@ -55,10 +74,23 @@ public class FeelElContextFactory implements ElContextFactory {
     return functionMapper;
   }
 
+    /**
+   * Creates a new VariableMapper using the provided ExpressionFactory and VariableContext.
+   *
+   * @param expressionFactory the ExpressionFactory to be used
+   * @param variableContext the VariableContext to be used
+   * @return a new FeelTypedVariableMapper object
+   */
   public VariableMapper createVariableMapper(ExpressionFactory expressionFactory, VariableContext variableContext) {
     return new FeelTypedVariableMapper(expressionFactory, variableContext);
   }
 
+    /**
+   * Adds a custom function to the mapper with the specified name and method.
+   * 
+   * @param name the name of the custom function
+   * @param method the method representing the custom function
+   */
   public void addCustomFunction(String name, Method method) {
     customFunctionMapper.addMethod(name, method);
   }

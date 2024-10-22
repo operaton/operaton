@@ -26,6 +26,11 @@ import org.junit.Test;
 
 public class JuelFeelBehaviorTest extends FeelBehavior {
 
+    /**
+   * Returns the DMN engine configuration with the default settings.
+   *
+   * @return the DMN engine configuration
+   */
   @Override
   public DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();

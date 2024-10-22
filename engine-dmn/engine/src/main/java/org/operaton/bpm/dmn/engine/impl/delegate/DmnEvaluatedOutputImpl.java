@@ -33,38 +33,83 @@ public class DmnEvaluatedOutputImpl implements DmnEvaluatedOutput {
     this.outputName = decisionTableOutput.getOutputName();
     this.value = value;
   }
+    /**
+   * Returns the id of the object.
+   *
+   * @return the id of the object
+   */
   public String getId() {
     return id;
   }
 
+    /**
+   * Sets the id of the object.
+   * 
+   * @param id the new id to set
+   */
   public void setId(String id) {
     this.id = id;
   }
 
+    /**
+   * Returns the name of the object.
+   *
+   * @return the name of the object
+   */
   public String getName() {
     return name;
   }
 
+    /**
+   * Sets the name of the object.
+   *
+   * @param name the new name to set
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+    /**
+   * Returns the output name.
+   *
+   * @return the output name
+   */
   public String getOutputName() {
     return outputName;
   }
 
+    /**
+   * Sets the output name for the method.
+   *
+   * @param outputName the name of the output
+   */
   public void setOutputName(String outputName) {
-    this.outputName = outputName;
-  }
+      this.outputName = outputName;
+    }
 
+    /**
+   * Returns the value stored in the TypedValue object.
+   *
+   * @return the stored value
+   */
   public TypedValue getValue() {
     return value;
   }
 
+    /**
+   * Sets the value of the TypedValue object.
+   *
+   * @param value the TypedValue object to be set
+   */
   public void setValue(TypedValue value) {
     this.value = value;
   }
 
+    /**
+   * Compares this DmnEvaluatedOutputImpl instance with the specified object for equality.
+   * Returns true if the objects are equal based on their id, name, outputName, and value.
+   * Otherwise, returns false.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -79,6 +124,11 @@ public class DmnEvaluatedOutputImpl implements DmnEvaluatedOutput {
 
   }
 
+    /**
+   * Returns the hash code value for this object based on its id, name, outputName, and value fields.
+   *
+   * @return the hash code value for this object
+   */
   @Override
   public int hashCode() {
     int result = id != null ? id.hashCode() : 0;
@@ -88,6 +138,11 @@ public class DmnEvaluatedOutputImpl implements DmnEvaluatedOutput {
     return result;
   }
 
+    /**
+   * Returns a string representation of the DmnEvaluatedOutputImpl object, including its id, name, outputName, and value.
+   * 
+   * @return a string representation of the DmnEvaluatedOutputImpl object
+   */
   @Override
   public String toString() {
     return "DmnEvaluatedOutputImpl{" +

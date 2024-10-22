@@ -33,14 +33,29 @@ public class FeelElContext extends ELContext {
     this.variableMapper = variableMapper;
   }
 
+    /**
+   * Returns the ELResolver associated with this object.
+   *
+   * @return the ELResolver
+   */
   public ELResolver getELResolver() {
     return elResolver;
   }
 
+    /**
+   * Returns the function mapper for this object.
+   *
+   * @return the function mapper
+   */
   public FunctionMapper getFunctionMapper() {
     return functionMapper;
   }
 
+    /**
+   * Returns the VariableMapper associated with this object.
+   *
+   * @return the VariableMapper
+   */
   public VariableMapper getVariableMapper() {
     return variableMapper;
   }

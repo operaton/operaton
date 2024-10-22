@@ -33,38 +33,81 @@ public class DmnDecisionTableImpl implements DmnDecisionLogic {
   protected List<DmnDecisionTableOutputImpl> outputs = new ArrayList<DmnDecisionTableOutputImpl>();
   protected List<DmnDecisionTableRuleImpl> rules = new ArrayList<DmnDecisionTableRuleImpl>();
 
+    /**
+   * Returns the hit policy handler for the DMN engine.
+   *
+   * @return the hit policy handler
+   */
   public DmnHitPolicyHandler getHitPolicyHandler() {
     return hitPolicyHandler;
   }
 
+    /**
+   * Sets the hit policy handler for the DMN processor.
+   * 
+   * @param hitPolicyHandler the hit policy handler to be set
+   */
   public void setHitPolicyHandler(DmnHitPolicyHandler hitPolicyHandler) {
     this.hitPolicyHandler = hitPolicyHandler;
   }
 
+    /**
+   * Returns the list of DMN decision table inputs.
+   *
+   * @return the list of DMN decision table inputs
+   */
   public List<DmnDecisionTableInputImpl> getInputs() {
     return inputs;
   }
 
+    /**
+   * Sets the inputs for the decision table.
+   * 
+   * @param inputs the list of decision table inputs to set
+   */
   public void setInputs(List<DmnDecisionTableInputImpl> inputs) {
     this.inputs = inputs;
   }
 
+    /**
+   * Returns the list of DmnDecisionTableOutputImpl objects.
+   *
+   * @return the list of DmnDecisionTableOutputImpl objects
+   */
   public List<DmnDecisionTableOutputImpl> getOutputs() {
     return outputs;
   }
 
+    /**
+   * Sets the list of decision table outputs for this decision table.
+   * 
+   * @param outputs the list of decision table outputs to be set
+   */
   public void setOutputs(List<DmnDecisionTableOutputImpl> outputs) {
     this.outputs = outputs;
   }
 
+    /**
+   * Returns the list of DmnDecisionTableRuleImpl objects.
+   *
+   * @return the list of DmnDecisionTableRuleImpl objects
+   */
   public List<DmnDecisionTableRuleImpl> getRules() {
     return rules;
   }
 
+    /**
+   * Sets the list of decision table rules for this decision table.
+   *
+   * @param rules the list of decision table rules
+   */
   public void setRules(List<DmnDecisionTableRuleImpl> rules) {
     this.rules = rules;
   }
 
+    /**
+   * Returns a string representation of the DmnDecisionTableImpl object.
+   */
   @Override
   public String toString() {
     return "DmnDecisionTableImpl{" +

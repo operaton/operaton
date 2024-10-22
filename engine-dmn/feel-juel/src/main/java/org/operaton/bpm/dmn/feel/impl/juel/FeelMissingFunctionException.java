@@ -35,6 +35,11 @@ public class FeelMissingFunctionException extends FeelException {
     this.function = function;
   }
 
+    /**
+   * Returns the function value.
+   *
+   * @return the function value
+   */
   public String getFunction() {
     return function;
   }

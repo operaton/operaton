@@ -35,6 +35,12 @@ public class CustomFunctionBuilderImpl implements CustomFunctionBuilder {
     functionCount = 0;
   }
 
+    /**
+   * Sets the parameters for the custom function builder.
+   * 
+   * @param params the parameters to be set
+   * @return the custom function builder with the parameters set
+   */
   @Override
   public CustomFunctionBuilder setParams(String... params) {
     List<String> paramList = Arrays.asList(params);
@@ -42,12 +48,23 @@ public class CustomFunctionBuilderImpl implements CustomFunctionBuilder {
     return this;
   }
 
+    /**
+   * Enables varargs for the custom function builder.
+   *
+   * @return the custom function builder with varargs enabled
+   */
   @Override
   public CustomFunctionBuilder enableVarargs() {
     customFunction.setHasVarargs(true);
     return this;
   }
 
+    /**
+   * Increments the function count, sets the return value of a custom function, and returns the CustomFunctionBuilder object.
+   * 
+   * @param returnValue the return value to set for the custom function
+   * @return the CustomFunctionBuilder object with the return value set
+   */
   @Override
   public CustomFunctionBuilder setReturnValue(Object returnValue) {
     functionCount++;
@@ -55,6 +72,12 @@ public class CustomFunctionBuilderImpl implements CustomFunctionBuilder {
     return this;
   }
 
+    /**
+   * Sets the custom function and increments the function count.
+   * 
+   * @param function the function to set
+   * @return the CustomFunctionBuilder instance
+   */
   @Override
   public CustomFunctionBuilder setFunction(Function<List<Object>, Object> function) {
     functionCount++;
@@ -62,12 +85,20 @@ public class CustomFunctionBuilderImpl implements CustomFunctionBuilder {
     return this;
   }
 
+    /**
+  * Builds and returns a custom function after checking if it has been set.
+  *
+  * @return the built custom function
+  */
   @Override
   public CustomFunction build() {
     checkHasFunction();
     return customFunction;
   }
 
+    /**
+   * Checks if the function count exceeds 1 and throws an exception if it does.
+   */
   protected void checkHasFunction() {
     if (functionCount > 1) {
       throw LOGGER.functionCountExceededException();

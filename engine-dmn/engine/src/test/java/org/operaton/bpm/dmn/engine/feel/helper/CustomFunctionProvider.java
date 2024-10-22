@@ -36,16 +36,30 @@ public class CustomFunctionProvider implements FeelCustomFunctionProvider {
     functions.put(name, function);
   }
 
+    /**
+   * Resolves a custom function by its name.
+   * 
+   * @param functionName the name of the function to resolve
+   * @return an Optional containing the CustomFunction if it exists, otherwise empty
+   */
   @Override
   public Optional<CustomFunction> resolveFunction(String functionName) {
     return Optional.ofNullable(functions.get(functionName));
   }
 
+    /**
+  * Returns a collection of all function names.
+  *
+  * @return a collection of function names
+  */
   @Override
   public Collection<String> getFunctionNames() {
     return functions.keySet();
   }
 
+    /**
+   * Clears all elements from the functions list.
+   */
   public void clear() {
     functions.clear();
   }

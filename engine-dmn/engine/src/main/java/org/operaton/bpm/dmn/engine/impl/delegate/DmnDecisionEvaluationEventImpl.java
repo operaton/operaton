@@ -30,42 +30,85 @@ public class DmnDecisionEvaluationEventImpl implements DmnDecisionEvaluationEven
   protected long executedDecisionInstances;
   protected long executedDecisionElements;
 
-  @Override
-  public DmnDecisionLogicEvaluationEvent getDecisionResult() {
-    return decisionResult;
-  }
+    /**
+   * Returns the decision result.
+   *
+   * @return the decision result
+   */
+   @Override
+    public DmnDecisionLogicEvaluationEvent getDecisionResult() {
+      return decisionResult;
+    }
 
+    /**
+   * Sets the decision result for a DMN Decision Logic Evaluation Event.
+   * 
+   * @param decisionResult the decision result to set
+   */
   public void setDecisionResult(DmnDecisionLogicEvaluationEvent decisionResult) {
     this.decisionResult = decisionResult;
   }
 
+    /**
+   * Returns a collection of DmnDecisionLogicEvaluationEvent objects representing the required decision results
+   * 
+   * @return the collection of required decision results
+   */
   @Override
   public Collection<DmnDecisionLogicEvaluationEvent> getRequiredDecisionResults() {
     return requiredDecisionResults;
   }
 
+    /**
+   * Sets the required decision results for the evaluation event.
+   *
+   * @param requiredDecisionResults the required decision results to set
+   */
   public void setRequiredDecisionResults(Collection<DmnDecisionLogicEvaluationEvent> requiredDecisionResults) {
     this.requiredDecisionResults = requiredDecisionResults;
   }
 
+    /**
+   * Returns the number of executed decision instances.
+   *
+   * @return the number of executed decision instances
+   */
   @Override
   public long getExecutedDecisionInstances() {
     return executedDecisionInstances;
   }
 
+    /**
+   * Sets the number of executed decision instances.
+   * 
+   * @param executedDecisionInstances the number of executed decision instances to set
+   */
   public void setExecutedDecisionInstances(long executedDecisionInstances) {
     this.executedDecisionInstances = executedDecisionInstances;
   }
 
+    /**
+   * Returns the number of executed decision elements.
+   *
+   * @return the number of executed decision elements
+   */
   @Override
   public long getExecutedDecisionElements() {
     return executedDecisionElements;
   }
 
+    /**
+   * Sets the number of executed decision elements.
+   * 
+   * @param executedDecisionElements the number of executed decision elements to set
+   */
   public void setExecutedDecisionElements(long executedDecisionElements) {
     this.executedDecisionElements = executedDecisionElements;
   }
 
+    /**
+   * Returns a String representation of the DmnDecisionEvaluationEventImpl object, including key, name, decisionLogic, requiredDecisionResults, executedDecisionInstances, and executedDecisionElements.
+   */
   @Override
   public String toString() {
     DmnDecision dmnDecision = decisionResult.getDecision();

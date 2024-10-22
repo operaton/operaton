@@ -41,9 +41,6 @@ insert into ACT_GE_PROPERTY
 values ('startup.lock', '0', 1);
 
 insert into ACT_GE_PROPERTY
-values ('telemetry.lock', '0', 1);
-
-insert into ACT_GE_PROPERTY
 values ('installationId.lock', '0', 1);
 
 create table ACT_GE_BYTEARRAY (
@@ -591,6 +588,6 @@ create index ACT_IDX_PROCDEF_DEPLOYMENT_ID ON ACT_RE_PROCDEF(DEPLOYMENT_ID_);
 create index ACT_IDX_PROCDEF_TENANT_ID ON ACT_RE_PROCDEF(TENANT_ID_);
 create index ACT_IDX_PROCDEF_VER_TAG ON ACT_RE_PROCDEF(VERSION_TAG_);
 
--- indices for history cleanup: https://jira.operaton.com/browse/CAM-11616
+-- indices for history cleanup: https://jira.camunda.com/browse/CAM-11616
 create index ACT_IDX_AUTH_ROOT_PI on ACT_RU_AUTHORIZATION(ROOT_PROC_INST_ID_);
 create index ACT_IDX_AUTH_RM_TIME on ACT_RU_AUTHORIZATION(REMOVAL_TIME_);

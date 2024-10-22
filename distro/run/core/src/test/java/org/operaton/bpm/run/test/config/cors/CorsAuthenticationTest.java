@@ -42,7 +42,7 @@ import org.springframework.test.context.ActiveProfiles;
  * {@code sun.net.http.allowRestrictedHeaders} to {@code true}.
  * (e.g. System.setProperty("sun.net.http.allowRestrictedHeaders", "true");)
  * 
- * @see https://jira.operaton.com/browse/CAM-11290
+ * @see https://jira.camunda.com/browse/CAM-11290
  */
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @ActiveProfiles(profiles = { "test-cors-enabled", "test-auth-enabled", "test-demo-user" }, inheritProfiles = false)

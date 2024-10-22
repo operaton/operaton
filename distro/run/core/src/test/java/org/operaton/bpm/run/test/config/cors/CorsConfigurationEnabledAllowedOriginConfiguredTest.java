@@ -37,7 +37,7 @@ import org.springframework.test.context.TestPropertySource;
  * {@code sun.net.http.allowRestrictedHeaders} to {@code true}.
  * (e.g. System.setProperty("sun.net.http.allowRestrictedHeaders", "true");)
  *
- * @see https://jira.operaton.com/browse/CAM-11290
+ * @see https://jira.camunda.com/browse/CAM-11290
  */
 @ActiveProfiles(profiles = { "test-cors-enabled" }, inheritProfiles = true)
 @TestPropertySource(properties = {OperatonBpmRunCorsProperty.PREFIX + ".allowed-origins=http://other.origin:8081"})

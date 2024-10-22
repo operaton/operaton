@@ -191,7 +191,7 @@ public class ThrowingHistoryExecutionListenerTest {
   }
 
   // CAUGHT EXCEPTION AFTER FAILED CUSTOM END LISTENER
-  // NOTE: it is fine to alter the result of these tests, see https://jira.operaton.com/browse/CAM-14408
+  // NOTE: it is fine to alter the result of these tests, see https://jira.camunda.com/browse/CAM-14408
 
   @Test
   public void shouldCatchBpmnErrorFromHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundary() {

@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.telemetry.OperatonIntegration;
+import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
 import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.junit.Test;

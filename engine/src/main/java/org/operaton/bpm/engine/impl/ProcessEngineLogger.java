@@ -43,7 +43,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.plugin.AdministratorAuthorizationPluginLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
 import org.operaton.bpm.engine.impl.scripting.ScriptLogger;
-import org.operaton.bpm.engine.impl.telemetry.TelemetryLogger;
 import org.operaton.bpm.engine.impl.test.TestLogger;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
 import org.operaton.commons.logging.BaseLogger;
@@ -135,9 +134,7 @@ public class ProcessEngineLogger extends BaseLogger {
 
   public static final IndentityLogger INDENTITY_LOGGER = BaseLogger.createLogger(
       IndentityLogger.class, PROJECT_CODE, "org.operaton.bpm.engine.identity", "27");
-
-  public static final TelemetryLogger TELEMETRY_LOGGER = BaseLogger.createLogger(
-      TelemetryLogger.class, PROJECT_CODE, "org.operaton.bpm.engine.telemetry", "28");
+  // Use code 29 for the next logger. Skip 28 as it's previously used for telemetry feature that is removed from the code base now
 
   public static boolean shouldLogJobException(ProcessEngineConfiguration processEngineConfiguration, JobEntity currentJob) {
     boolean enableReducedJobExceptionLogging = processEngineConfiguration.isEnableReducedJobExceptionLogging();

@@ -36,7 +36,7 @@ import java.util.Locale;
 /**
  * NOTE: copied from
  * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/test/java/org/operaton/bpm/AbstractWebappUiIntegrationTest.java">platform</a>,
- * might be removed with https://jira.operaton.com/browse/CAM-11379
+ * might be removed with https://jira.camunda.com/browse/CAM-11379
  */
 public class AbstractWebappUiIT extends AbstractWebIT {
 

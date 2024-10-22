@@ -57,7 +57,6 @@ import org.operaton.bpm.engine.test.concurrency.ConcurrentHistoryCleanupTest;
 import org.operaton.bpm.engine.test.concurrency.ConcurrentHistoryLevelTest;
 import org.operaton.bpm.engine.test.concurrency.ConcurrentInstallationIdInitializationTest;
 import org.operaton.bpm.engine.test.concurrency.ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest;
-import org.operaton.bpm.engine.test.concurrency.ConcurrentTelemetryConfigurationTest;
 import org.operaton.bpm.engine.test.jobexecutor.ControllableJobExecutor;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
@@ -104,7 +103,6 @@ public class CockroachDbExclusiveLockDisabledTest extends ConcurrencyTestHelper 
     historyService = engineRule.getHistoryService();
 
     TestHelper.deleteInstallationId(processEngineConfiguration);
-    TestHelper.deleteTelemetryProperty(processEngineConfiguration);
     TestHelper.deleteHistoryLevel(processEngineConfiguration);
   }
 
@@ -530,8 +528,7 @@ public class CockroachDbExclusiveLockDisabledTest extends ConcurrencyTestHelper 
           ProcessEngineConfiguration
               .createProcessEngineConfigurationFromResource("operaton.cfg.xml"))
           .setCommandRetries(COMMAND_RETRIES)
-          .setProcessEngineName(PROCESS_ENGINE_NAME)
-          .setInitializeTelemetry(false);
+          .setProcessEngineName(PROCESS_ENGINE_NAME);
       processEngineConfiguration.setProcessEngineBootstrapCommand(bootstrapCommand);
 
       processEngineConfiguration.buildProcessEngine();
@@ -617,17 +614,6 @@ public class CockroachDbExclusiveLockDisabledTest extends ConcurrencyTestHelper 
       super(threadControl);
     }
 
-    @Override
-    public void initializeTelemetryProperty(CommandContext commandContext) {
-
-      monitor.sync(); // thread will block here until makeContinue() is called from main thread
-
-      tries++;
-      super.initializeTelemetryProperty(commandContext);
-
-      monitor.sync(); // thread will block here until waitUntilDone() is called form main thread
-
-    }
   }
 
   protected static class ControllableHistoryCleanupCommand extends ControllableCommand<Void> {

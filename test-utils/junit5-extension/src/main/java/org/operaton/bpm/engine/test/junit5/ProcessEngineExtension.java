@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.telemetry.PlatformTelemetryRegistry;
+import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.test.Deployment;
@@ -218,7 +218,7 @@ public class ProcessEngineExtension implements TestWatcher,
 
    TestHelper.resetIdGenerator(processEngineConfiguration);
    ClockUtil.reset();
-   PlatformTelemetryRegistry.clear();
+   PlatformDiagnosticsRegistry.clear();
 
    // finally clear database and fail test if database is dirty
    if (ensureCleanAfterTest) {

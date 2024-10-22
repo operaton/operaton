@@ -15,7 +15,7 @@
 -- limitations under the License.
 --
 
--- https://jira.operaton.com/browse/CAM-14006 --
+-- https://jira.camunda.com/browse/CAM-14006 --
 ALTER TABLE ACT_RU_JOB 
   ADD COLUMN LAST_FAILURE_LOG_ID_ varchar(64);
   

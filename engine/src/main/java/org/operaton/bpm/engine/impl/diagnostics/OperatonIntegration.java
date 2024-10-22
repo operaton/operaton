@@ -14,28 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.impl.util;
+package org.operaton.bpm.engine.impl.diagnostics;
 
-import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
-import org.operaton.bpm.engine.impl.telemetry.TelemetryRegistry;
+public class OperatonIntegration {
 
-public class TelemetryUtil {
+  public static final String SPRING_BOOT_STARTER = "spring-boot-starter";
+  public static final String CAMUNDA_BPM_RUN = "operaton-bpm-run";
+  public static final String WILDFLY_SUBSYSTEM = "wildfly-subsystem";
+  public static final String JBOSS_SUBSYSTEM = "jboss-subsystem";
+  public static final String CAMUNDA_EJB_SERVICE = "operaton-ejb-service";
 
-  public static void toggleLocalTelemetry(
-      boolean telemetryActivated,
-      TelemetryRegistry telemetryRegistry,
-      MetricsRegistry metricsRegistry) {
-
-    boolean previouslyActivated = telemetryRegistry.setTelemetryLocallyActivated(telemetryActivated);
-
-    if (!previouslyActivated && telemetryActivated) {
-      if (telemetryRegistry != null) {
-        telemetryRegistry.clearCommandCounts();
-      }
-      if (metricsRegistry != null) {
-        metricsRegistry.clearTelemetryMetrics();
-      }
-    }
-
-  }
 }

@@ -32,7 +32,7 @@ import java.time.Duration;
 /**
  * NOTE:
  * This test is specific to RUN, as Swagger UI is exclusive to RUN.
- * Do not remove with https://jira.operaton.com/browse/CAM-11379
+ * Do not remove with https://jira.camunda.com/browse/CAM-11379
  */
 public class SwaggerUIGetRequestIT extends AbstractWebappUiIT {
   private static SpringBootManagedContainer container;

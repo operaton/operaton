@@ -20,7 +20,7 @@ import java.util.Set;
 
 import org.operaton.bpm.engine.impl.cfg.JtaProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
-import org.operaton.bpm.engine.impl.telemetry.OperatonIntegration;
+import org.operaton.bpm.engine.impl.diagnostics.OperatonIntegration;
 
 /**
  *

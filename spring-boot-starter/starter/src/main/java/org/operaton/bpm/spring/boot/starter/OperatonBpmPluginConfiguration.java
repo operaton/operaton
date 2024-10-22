@@ -113,7 +113,7 @@ public class OperatonBpmPluginConfiguration {
   /*
     Provide option to apply application context classloader switch when Spring
     Spring Developer tools are enabled
-    For more details: https://jira.operaton.com/browse/CAM-9043
+    For more details: https://jira.camunda.com/browse/CAM-9043
    */
   @ConditionalOnInitializedRestarter
   @Configuration

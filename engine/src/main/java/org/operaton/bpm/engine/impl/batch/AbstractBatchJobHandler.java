@@ -126,7 +126,7 @@ public abstract class AbstractBatchJobHandler<T extends BatchConfiguration> impl
   protected void sanitizeMappings(DeploymentMappings idMappings, List<String> ids) {
     // for mixed version SeedJob execution, there might be ids that have been processed
     // without updating the mappings, this is corrected here,
-    // see https://jira.operaton.com/browse/CAM-11188
+    // see https://jira.camunda.com/browse/CAM-11188
     int elementsToRemove = idMappings.getOverallIdCount() - ids.size();
     if (elementsToRemove > 0) {
       for (Iterator<DeploymentMapping> iterator = idMappings.iterator(); iterator.hasNext();) {

@@ -147,6 +147,8 @@ import org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityCacheKeyMappi
 import org.operaton.bpm.engine.impl.db.sql.DbSqlPersistenceProviderFactory;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.delegate.DefaultDelegateInterceptor;
+import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsCollector;
+import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.digest.Default16ByteSaltGenerator;
 import org.operaton.bpm.engine.impl.digest.PasswordEncryptor;
 import org.operaton.bpm.engine.impl.digest.PasswordManager;
@@ -348,13 +350,11 @@ import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
 import org.operaton.bpm.engine.impl.scripting.engine.VariableScopeResolverFactory;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptingEnvironment;
-import org.operaton.bpm.engine.impl.telemetry.TelemetryRegistry;
 import org.operaton.bpm.engine.impl.telemetry.dto.DatabaseImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.InternalsImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.ProductImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.TelemetryDataImpl;
-import org.operaton.bpm.engine.impl.telemetry.reporter.TelemetryReporter;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ParseUtil;
@@ -387,9 +387,6 @@ import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.mock.MocksResolverFactory;
 import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.connect.Connectors;
-import org.operaton.connect.spi.Connector;
-import org.operaton.connect.spi.ConnectorRequest;
 
 /**
  * @author Tom Baeyens
@@ -1040,33 +1037,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   // OLEs for foreign key constraint violations on databases that rollback on SQL exceptions, e.g. PostgreSQL
   protected boolean enableOptimisticLockingOnForeignKeyViolation = true;
 
-  // telemetry ///////////////////////////////////////////////////////
-  /**
-   * Sets the initial property value of telemetry configuration only once
-   * when it has never been enabled/disabled before.
-   * Subsequent changes can be done only via the
-   * {@link ManagementService#toggleTelemetry(boolean) Telemetry} API in {@link ManagementService}
-   * Telemetry is deactivated by default.
-   */
-  protected boolean initializeTelemetry = false;
-  /** The endpoint which telemetry is sent to */
-  protected String telemetryEndpoint = "http://localhost/pings"; // Disable, until we remove telemetry properly
-  /** The number of times the telemetry request is retried in case it fails **/
-  protected int telemetryRequestRetries = 2;
-  protected TelemetryReporter telemetryReporter;
-  /** Determines if the telemetry reporter thread runs. For telemetry to be sent,
-   * this flag must be set to <code>true</code> and telemetry must be enabled via API
-   * (see {@link ManagementService#toggleTelemetry(boolean)}. */
-  protected boolean isTelemetryReporterActivate = true;
-  /** http client used for sending telemetry */
-  protected Connector<? extends ConnectorRequest<?>> telemetryHttpConnector;
-  /** default: once every 24 hours */
-  protected long telemetryReportingPeriod = 24 * 60 * 60;
+  protected int telemetryRequestTimeout;
   protected TelemetryDataImpl telemetryData;
-  /** the connection and socket timeout configuration of the telemetry request
-   * in milliseconds
-   *  default: 15 seconds */
-  protected int telemetryRequestTimeout = 15 * 1000;
+  protected DiagnosticsRegistry diagnosticsRegistry;
+  protected DiagnosticsCollector diagnosticsCollector;
 
   // Exception Codes ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1216,7 +1190,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     initPermissionProvider();
     initHostName();
     initMetrics();
-    initTelemetry();
+    initDiagnostics();
     initMigration();
     initCommandCheckers();
     initDefaultUserPermissionForTask();
@@ -2944,34 +2918,15 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
   }
 
-  protected void initTelemetry() {
-    if (telemetryRegistry == null) {
-      telemetryRegistry = new TelemetryRegistry();
+  protected void initDiagnostics() {
+    if (diagnosticsRegistry == null) {
+      diagnosticsRegistry = new DiagnosticsRegistry();
     }
     if (telemetryData == null) {
       initTelemetryData();
     }
-    try {
-      if (telemetryHttpConnector == null) {
-        telemetryHttpConnector = Connectors.getConnector(Connectors.HTTP_CONNECTOR_ID);
-      }
-    } catch (Exception e) {
-      ProcessEngineLogger.TELEMETRY_LOGGER.unexpectedExceptionDuringHttpConnectorConfiguration(e);
-    }
-    if (telemetryHttpConnector == null) {
-      ProcessEngineLogger.TELEMETRY_LOGGER.unableToConfigureHttpConnectorWarning();
-    } else {
-      if (telemetryReporter == null) {
-        telemetryReporter = new TelemetryReporter(commandExecutorTxRequired,
-                                                  telemetryEndpoint,
-                                                  telemetryRequestRetries,
-                                                  telemetryReportingPeriod,
-                                                  telemetryData,
-                                                  telemetryHttpConnector,
-                                                  telemetryRegistry,
-                                                  metricsRegistry,
-                                                  telemetryRequestTimeout);
-      }
+    if (diagnosticsCollector == null) {
+      diagnosticsCollector = new DiagnosticsCollector(telemetryData, diagnosticsRegistry, metricsRegistry);
     }
   }
 
@@ -2980,10 +2935,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     JdkImpl jdk = ParseUtil.parseJdkDetails();
 
-    InternalsImpl internals = new InternalsImpl(database, telemetryRegistry.getApplicationServer(), telemetryRegistry.getLicenseKey(), jdk);
+    InternalsImpl internals = new InternalsImpl(database, diagnosticsRegistry.getApplicationServer(), diagnosticsRegistry.getLicenseKey(), jdk);
     internals.setDataCollectionStartDate(ClockUtil.getCurrentTime());
 
-    String operatonIntegration = telemetryRegistry.getOperatonIntegration();
+    String operatonIntegration = diagnosticsRegistry.getOperatonIntegration();
     if (operatonIntegration != null && !operatonIntegration.isEmpty()) {
       internals.getOperatonIntegration().add(operatonIntegration);
     }
@@ -5334,67 +5289,11 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public boolean isInitializeTelemetry() {
-    return initializeTelemetry;
+  public DiagnosticsCollector getDiagnosticsCollector() {
+    return diagnosticsCollector;
   }
-
-  public ProcessEngineConfigurationImpl setInitializeTelemetry(boolean telemetryInitialized) {
-    this.initializeTelemetry = telemetryInitialized;
-    return this;
-  }
-
-  public String getTelemetryEndpoint() {
-    return telemetryEndpoint;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryEndpoint(String telemetryEndpoint) {
-    this.telemetryEndpoint = telemetryEndpoint;
-    return this;
-  }
-
-  public int getTelemetryRequestRetries() {
-    return telemetryRequestRetries;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryRequestRetries(int telemetryRequestRetries) {
-    this.telemetryRequestRetries = telemetryRequestRetries;
-    return this;
-  }
-
-  public long getTelemetryReportingPeriod() {
-    return telemetryReportingPeriod;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryReportingPeriod(long telemetryReportingPeriod) {
-    this.telemetryReportingPeriod = telemetryReportingPeriod;
-    return this;
-  }
-
-  public TelemetryReporter getTelemetryReporter() {
-    return telemetryReporter;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryReporter(TelemetryReporter telemetryReporter) {
-    this.telemetryReporter = telemetryReporter;
-    return this;
-  }
-
-  public boolean isTelemetryReporterActivate() {
-    return isTelemetryReporterActivate;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryReporterActivate(boolean isTelemetryReporterActivate) {
-    this.isTelemetryReporterActivate = isTelemetryReporterActivate;
-    return this;
-  }
-
-  public Connector<? extends ConnectorRequest<?>> getTelemetryHttpConnector() {
-    return telemetryHttpConnector;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryHttpConnector(Connector<? extends ConnectorRequest<?>> telemetryHttp) {
-    this.telemetryHttpConnector = telemetryHttp;
-    return this;
+  public void setDiagnosticsCollector(DiagnosticsCollector diagnosticsCollector) {
+    this.diagnosticsCollector = diagnosticsCollector;
   }
 
   public TelemetryDataImpl getTelemetryData() {
@@ -5454,4 +5353,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return new ExceptionCodeInterceptor(builtinExceptionCodeProvider, customExceptionCodeProvider);
   }
 
+  public DiagnosticsRegistry getDiagnosticsRegistry() {
+    return diagnosticsRegistry;
+  }
+
+  public ProcessEngineConfiguration setDiagnosticsRegistry(DiagnosticsRegistry diagnosticsRegistry) {
+    this.diagnosticsRegistry = diagnosticsRegistry;
+    return this;
+  }
 }

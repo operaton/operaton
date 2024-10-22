@@ -70,7 +70,7 @@ public class SetJobRetriesAsyncTest {
     helper.removeAllRunningAndHistoricBatches();
   }
 
-  /* See https://jira.operaton.com/browse/CAM-12852 for more details */
+  /* See https://jira.camunda.com/browse/CAM-12852 for more details */
   @Test
   public void shouldModifyJobRetriesAsync() {
     // given

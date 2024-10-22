@@ -32,7 +32,7 @@ jobs:
         cache: maven
     - name: Build with Maven Wrapper
       shell: bash
-      run: ./mvnw -B package
+      run: ./mvnw -B -ntp package
 
     # Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph

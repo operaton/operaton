@@ -20,7 +20,7 @@ Help others by participating in our [forum](https://forum.operaton.org/).
 
 ## File bugs or feature requests
 
-Found a bug in the code or have a feature that you would like to see in the future? [Search our open issues](https://github.com/operaton/operaton/issues) if we have it on the radar already or [create a new issue otherwise](https://github.com/operaton/operaton-bpm-platform/issues/new/choose).
+Found a bug in the code or have a feature that you would like to see in the future? [Search our open issues](https://github.com/operaton/operaton/issues) if we have it on the radar already or [create a new issue otherwise](https://github.com/operaton/operaton/issues/new/choose).
 
 Please note, that our main goal after the fork is to provide minimal maintenance and ensure stability. We appreciate feature requests, but might decide not to merge them into the application in the first months.
 
@@ -90,7 +90,7 @@ A pull request can be submitted as follows:
 Before submitting your pull request for code review, please go through the following checklist:
 
 1. Is your code formatted according to our code style guidelines?
-    * Java: Please check our [Java Code Style Guidelines](https://github.com/camunda/camunda-bpm-platform/wiki/Coding-Style-Java). You can also import [our template and settings files](https://github.com/operaton/operaton-bpm-platform/tree/master/settings) into your IDE before you start coding.
+    * Java: Please check our [Java Code Style Guidelines](https://github.com/camunda/camunda-bpm-platform/wiki/Coding-Style-Java). You can also import [our template and settings files](https://github.com/operaton/operaton/tree/master/settings) into your IDE before you start coding.
     * Javascript: Your code is automatically formatted whenever you commit.
 1. Is your code covered by unit tests?
     * Ask us if you are not sure where to write the tests or what kind of tests you should write.

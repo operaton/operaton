@@ -68,7 +68,7 @@
               minIdle="5"
               maxIdle="20" />
               
-    <Resource name="global/operaton-bpm-platform/process-engine/ProcessEngineService!org.operaton.bpm.ProcessEngineService" auth="Container"
+    <Resource name="global/operaton/process-engine/ProcessEngineService!org.operaton.bpm.ProcessEngineService" auth="Container"
               type="org.operaton.bpm.ProcessEngineService"
               description="Operaton Process Engine Service"
               factory="org.operaton.bpm.container.impl.jndi.ProcessEngineServiceObjectFactory" />

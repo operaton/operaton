@@ -9,7 +9,7 @@ operaton commons is a collection of shared libraries used by operaton open sourc
 
 * [operaton commons logging][logging]
 * [operaton commons utils][utils]
-* [operaton-bpm-platform][typed-values]
+* [operaton][typed-values]
 
 
 ## Getting started

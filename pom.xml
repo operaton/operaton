@@ -36,6 +36,7 @@
   </properties>
 
   <build>
+    <defaultGoal>verify</defaultGoal>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

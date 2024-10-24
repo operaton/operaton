@@ -17,59 +17,58 @@
 package org.operaton.connect.httpclient;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
-import org.junit.Before;
-import org.junit.Test;
 
-public class HttpResponseTest {
+class HttpResponseTest {
 
   protected HttpConnector connector;
   protected TestResponse testResponse;
 
-  @Before
-  public void getConnector() {
+  @BeforeEach
+  void getConnector() {
     testResponse = new TestResponse();
     connector = new HttpConnectorImpl();
     connector.addRequestInterceptor(new DebugRequestInterceptor(testResponse));
   }
 
   @Test
-  public void testResponseCode() {
+  void responseCode() {
     testResponse.statusCode(123);
     HttpResponse response = getResponse();
     assertThat(response.getStatusCode()).isEqualTo(123);
   }
 
   @Test
-  public void testResponseBody() {
+  void responseBody() {
     testResponse.payload("test");
     HttpResponse response = getResponse();
     assertThat(response.getResponse()).isEqualTo("test");
   }
 
   @Test
-  public void testEmptyResponseBody() {
+  void emptyResponseBody() {
     testResponse.payload("");
     HttpResponse response = getResponse();
     assertThat(response.getResponse()).isEmpty();
   }
 
   @Test
-  public void testNullResponseBody() {
+  void nullResponseBody() {
     HttpResponse response = getResponse();
     assertThat(response.getResponse()).isNull();
   }
 
   @Test
-  public void testEmptyHeaders() {
+  void emptyHeaders() {
     HttpResponse response = getResponse();
     assertThat(response.getHeaders()).isEmpty();
   }
 
   @Test
-  public void testHeaders() {
+  void headers() {
     testResponse
       .header("foo", "bar")
       .header("hello", "world");

@@ -20,7 +20,6 @@
     <version.jersey-json>1.15</version.jersey-json>
     <version.jersey-apache-client>1.15</version.jersey-apache-client>
     <version.httpcomponents>4.5.10</version.httpcomponents>
-    <version.junit>4.13.1</version.junit>
     <version.chromedriver>112.0.5615.49</version.chromedriver>
   </properties>
 
@@ -59,7 +58,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>${version.junit}</version>
+        <version>${version.junit4}</version>
       </dependency>
 
     </dependencies>

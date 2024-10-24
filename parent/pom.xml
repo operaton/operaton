@@ -46,6 +46,7 @@
 
     <version.slf4j>1.7.26</version.slf4j>
     <version.logback>1.2.11</version.logback>
+    <version.junit>5.11.3</version.junit>
     <version.junit4>4.13.1</version.junit4>
     <version.assertj>2.9.1</version.assertj>
     <version.mockito>5.10.0</version.mockito>

@@ -13,23 +13,12 @@
     <relativePath>../../database</relativePath>
   </parent>
 
-  <properties>
-    <version.junit5>5.9.3</version.junit5>
-  </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>${version.junit5}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>

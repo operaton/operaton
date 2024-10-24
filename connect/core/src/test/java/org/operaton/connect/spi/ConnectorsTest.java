@@ -20,32 +20,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.connect.Connectors;
 import org.operaton.connect.dummy.DummyConnector;
-import org.junit.Test;
 
-public class ConnectorsTest {
+class ConnectorsTest {
 
   @Test
-  public void shouldReturnNullForUnknownConnectorId() {
+  void shouldReturnNullForUnknownConnectorId() {
     Connector unknown = Connectors.getConnector("unknown");
     assertThat(unknown).isNull();
   }
 
   @Test
-  public void shouldMyHttpConnector() {
+  void shouldMyHttpConnector() {
     Connector http = Connectors.http();
     assertThat(http).isNotNull();
   }
 
   @Test
-  public void shouldNotDiscoverSoapConnector() {
+  void shouldNotDiscoverSoapConnector() {
     Connector soap = Connectors.soap();
     assertThat(soap).isNull();
   }
 
   @Test
-  public void shouldDiscoverDummyConnector() {
+  void shouldDiscoverDummyConnector() {
     DummyConnector connector = Connectors.getConnector(DummyConnector.ID);
     assertThat(connector).isNotNull();
 
@@ -55,7 +55,7 @@ public class ConnectorsTest {
   }
 
   @Test
-  public void shouldConfigureDummyConnector() {
+  void shouldConfigureDummyConnector() {
     DummyConnector connector = new DummyConnector();
     assertThat(connector.getConfiguration()).isEqualTo("default");
 

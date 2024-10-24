@@ -10,7 +10,7 @@
 
   <artifactId>operaton-parent</artifactId>
   <name>Operaton - Parent POM</name>
-  <inceptionYear>2013</inceptionYear>
+  <inceptionYear>2024</inceptionYear>
   <packaging>pom</packaging>
 
   <description>

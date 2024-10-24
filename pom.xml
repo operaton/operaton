@@ -44,14 +44,14 @@
         <version>3.5.0</version>
         <executions>
           <execution>
-            <id>enforce-group-id</id>
+            <id>enforce-default</id>
             <goals>
               <goal>enforce</goal>
             </goals>
             <configuration>
               <rules>
                 <requireJavaVersion>
-                  <version>11</version>
+                  <version>[11,)</version>
                 </requireJavaVersion>
                 <requireMavenVersion>
                   <version>3.9.0</version>
@@ -59,6 +59,7 @@
                 <requireMatchingCoordinates>
                   <groupIdPattern>org\.operaton(?:..*)</groupIdPattern>
                 </requireMatchingCoordinates>
+                <failFast>true</failFast>
               </rules>
             </configuration>
           </execution>

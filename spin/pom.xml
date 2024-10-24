@@ -11,7 +11,6 @@
 
   <artifactId>operaton-spin-root</artifactId>
   <name>Operaton - Spin - Root</name>
-  <inceptionYear>2014</inceptionYear>
   <packaging>pom</packaging>
 
   <modules>

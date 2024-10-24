@@ -11,7 +11,6 @@
   <groupId>org.operaton.bpm.dmn</groupId>
   <artifactId>operaton-engine-dmn-root</artifactId>
   <name>Operaton - DMN - Engine - Root</name>
-  <inceptionYear>2015</inceptionYear>
   <packaging>pom</packaging>
 
   <properties>

@@ -14,8 +14,6 @@
   
   <name>Operaton - Template Engine - JSR223 Freemarker</name>
 
-  <inceptionYear>2014</inceptionYear>
-
   <properties>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>

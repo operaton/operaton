@@ -10,7 +10,6 @@
 
   <artifactId>operaton-commons-root</artifactId>
   <name>Operaton - Commons - Root POM</name>
-  <inceptionYear>2014</inceptionYear>
   <packaging>pom</packaging>
 
   <modules>

@@ -15,7 +15,7 @@
   <version>1.0.0-beta-1</version>
   <packaging>pom</packaging>
   <name>Operaton - Root POM</name>
-  <inceptionYear>2013</inceptionYear>
+  <inceptionYear>2024</inceptionYear>
 
   <description>
     This pom defines the modules that make up the build.

@@ -12,7 +12,6 @@
   <packaging>jar</packaging>
 
   <name>Operaton - DMN - Model API</name>
-  <inceptionYear>2015</inceptionYear>
   <properties>
     <operaton.artifact>org.operaton.bpm.model.dmn</operaton.artifact>
     <operaton.osgi.export>

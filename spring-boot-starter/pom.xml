@@ -11,7 +11,6 @@
   <groupId>org.operaton.bpm.springboot.project</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
   <name>Operaton - Spring Boot Starter - Root POM</name>
-  <inceptionYear>2015</inceptionYear>
 
   <packaging>pom</packaging>
 

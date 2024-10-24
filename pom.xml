@@ -59,7 +59,6 @@
                 <requireMatchingCoordinates>
                   <groupIdPattern>org\.operaton(?:..*)</groupIdPattern>
                 </requireMatchingCoordinates>
-                <failFast>true</failFast>
               </rules>
             </configuration>
           </execution>

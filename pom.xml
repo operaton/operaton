@@ -39,6 +39,32 @@
     <defaultGoal>verify</defaultGoal>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <id>enforce-default</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>[11,)</version>
+                </requireJavaVersion>
+                <requireMavenVersion>
+                  <version>3.9.0</version>
+                </requireMavenVersion>
+                <requireMatchingCoordinates>
+                  <groupIdPattern>org\.operaton(?:..*)</groupIdPattern>
+                </requireMatchingCoordinates>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <version>1.14</version>

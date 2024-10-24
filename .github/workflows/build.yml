@@ -1,5 +1,5 @@
 # This workflow builds Operaton, and cache/restore any dependencies to improve the workflow execution time
-name: Java CI with Maven
+name: build
 
 on:
   push:

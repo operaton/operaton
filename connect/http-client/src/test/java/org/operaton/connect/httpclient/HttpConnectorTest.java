@@ -17,7 +17,7 @@
 package org.operaton.connect.httpclient;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 
@@ -31,14 +31,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpTrace;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.Connectors;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 import org.operaton.connect.spi.Connector;
-import org.junit.Before;
-import org.junit.Test;
 
 public class HttpConnectorTest {
 
@@ -49,21 +49,21 @@ public class HttpConnectorTest {
   protected HttpConnector connector;
   protected DebugRequestInterceptor interceptor;
 
-  @Before
-  public void createConnector() {
+  @BeforeEach
+  void createConnector() {
     connector = new HttpConnectorImpl();
     interceptor = new DebugRequestInterceptor(false);
     connector.addRequestInterceptor(interceptor);
   }
 
   @Test
-  public void shouldDiscoverConnector() {
+  void shouldDiscoverConnector() {
     Connector http = Connectors.getConnector(HttpConnector.ID);
     assertThat(http).isNotNull();
   }
 
   @Test
-  public void shouldFailWithoutMethod() {
+  void shouldFailWithoutMethod() {
     try {
       connector.createRequest().url("localhost").execute();
       fail("No method specified");
@@ -74,7 +74,7 @@ public class HttpConnectorTest {
   }
 
   @Test
-  public void shouldFailWithoutUrl() {
+  void shouldFailWithoutUrl() {
     try {
       connector.createRequest().execute();
       fail("No url specified");
@@ -85,62 +85,62 @@ public class HttpConnectorTest {
   }
 
   @Test
-  public void shouldCreateHttpGetRequest() {
+  void shouldCreateHttpGetRequest() {
     connector.createRequest().url(EXAMPLE_URL).get().execute();
     verifyHttpRequest(HttpGet.class);
   }
 
   @Test
-  public void shouldCreateHttpPostRequest() {
+  void shouldCreateHttpPostRequest() {
     connector.createRequest().url(EXAMPLE_URL).post().execute();
     verifyHttpRequest(HttpPost.class);
   }
 
   @Test
-  public void shouldCreateHttpPutRequest() {
+  void shouldCreateHttpPutRequest() {
     connector.createRequest().url(EXAMPLE_URL).put().execute();
     verifyHttpRequest(HttpPut.class);
   }
 
   @Test
-  public void shouldCreateHttpDeleteRequest() {
+  void shouldCreateHttpDeleteRequest() {
     connector.createRequest().url(EXAMPLE_URL).delete().execute();
     verifyHttpRequest(HttpDelete.class);
   }
 
   @Test
-  public void shouldCreateHttpPatchRequest() {
+  void shouldCreateHttpPatchRequest() {
     connector.createRequest().url(EXAMPLE_URL).patch().execute();
     verifyHttpRequest(HttpPatch.class);
   }
 
   @Test
-  public void shouldCreateHttpHeadRequest() {
+  void shouldCreateHttpHeadRequest() {
     connector.createRequest().url(EXAMPLE_URL).head().execute();
     verifyHttpRequest(HttpHead.class);
   }
 
   @Test
-  public void shouldCreateHttpOptionsRequest() {
+  void shouldCreateHttpOptionsRequest() {
     connector.createRequest().url(EXAMPLE_URL).options().execute();
     verifyHttpRequest(HttpOptions.class);
   }
 
   @Test
-  public void shouldCreateHttpTraceRequest() {
+  void shouldCreateHttpTraceRequest() {
     connector.createRequest().url(EXAMPLE_URL).trace().execute();
     verifyHttpRequest(HttpTrace.class);
   }
 
   @Test
-  public void shouldSetUrlOnHttpRequest() {
+  void shouldSetUrlOnHttpRequest() {
     connector.createRequest().url(EXAMPLE_URL).get().execute();
     HttpGet request = interceptor.getTarget();
     assertThat(request.getURI().toASCIIString()).isEqualTo(EXAMPLE_URL);
   }
 
   @Test
-  public void shouldSetContentTypeOnHttpRequest() {
+  void shouldSetContentTypeOnHttpRequest() {
     connector.createRequest().url(EXAMPLE_URL).contentType(EXAMPLE_CONTENT_TYPE).get().execute();
     HttpGet request = interceptor.getTarget();
     Header[] headers = request.getHeaders(HttpBaseRequest.HEADER_CONTENT_TYPE);
@@ -150,7 +150,7 @@ public class HttpConnectorTest {
   }
 
   @Test
-  public void shouldSetHeadersOnHttpRequest() {
+  void shouldSetHeadersOnHttpRequest() {
     connector.createRequest().url(EXAMPLE_URL).header("foo", "bar").header("hello", "world").get().execute();
     HttpGet request = interceptor.getTarget();
     Header[] headers = request.getAllHeaders();
@@ -158,7 +158,7 @@ public class HttpConnectorTest {
   }
 
   @Test
-  public void shouldSetPayloadOnHttpRequest() throws IOException {
+  void shouldSetPayloadOnHttpRequest() throws IOException {
     connector.createRequest().url(EXAMPLE_URL).payload(EXAMPLE_PAYLOAD).post().execute();
     HttpPost request = interceptor.getTarget();
     String content = IoUtil.inputStreamAsString(request.getEntity().getContent());
@@ -166,7 +166,7 @@ public class HttpConnectorTest {
   }
 
   @Test
-  public void shouldSetContentLength() {
+  void shouldSetContentLength() {
     connector.createRequest().url(EXAMPLE_URL).payload(EXAMPLE_PAYLOAD).post().execute();
     HttpPost request = interceptor.getTarget();
     long contentLength = request.getEntity().getContentLength();

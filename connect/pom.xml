@@ -15,7 +15,9 @@
   <properties>
     <commons-codec.version>1.15</commons-codec.version>
     <connect.version.old>1.6.0</connect.version.old>
-    <mockito.version>1.9.5</mockito.version>
+    <mockito.version>4.11.0</mockito.version>
+    <version.wiremock>3.9.2</version.wiremock>
+    <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
 
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <additionalparam>-Xdoclint:none</additionalparam>

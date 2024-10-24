@@ -29,9 +29,9 @@ import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpTrace;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.connect.Connectors;
-import org.junit.Before;
-import org.junit.Test;
 
 public class HttpRequestTest {
 
@@ -41,13 +41,13 @@ public class HttpRequestTest {
 
   protected HttpConnector connector;
 
-  @Before
-  public void createRequest() {
+  @BeforeEach
+  void createRequest() {
     connector = Connectors.getConnector(HttpConnector.ID);
   }
 
   @Test
-  public void createAnEmptyRequest() {
+  void createAnEmptyRequest() {
     HttpRequest request = connector.createRequest();
 
     assertThat(request.getMethod()).isNull();
@@ -59,7 +59,7 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void setHttpMethod() {
+  void setHttpMethod() {
     HttpRequest request = connector.createRequest().get();
     assertThat(request.getMethod()).isEqualTo(HttpGet.METHOD_NAME);
 
@@ -86,13 +86,13 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void setUrl() {
+  void setUrl() {
     HttpRequest request = connector.createRequest().url(EXAMPLE_URL);
     assertThat(request.getUrl()).isEqualTo(EXAMPLE_URL);
   }
 
   @Test
-  public void setContentType() {
+  void setContentType() {
     HttpRequest request = connector.createRequest().contentType(EXAMPLE_CONTENT_TYPE);
     assertThat(request.getContentType()).isEqualTo(EXAMPLE_CONTENT_TYPE);
     assertThat(request.getHeaders())
@@ -101,7 +101,7 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void shouldIgnoreNullOrEmptyContentType() {
+  void shouldIgnoreNullOrEmptyContentType() {
     HttpRequest request = connector.createRequest().contentType(null);
     assertThat(request.getContentType()).isNull();
 
@@ -110,7 +110,7 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void setHeaders() {
+  void setHeaders() {
     HttpRequest request = connector.createRequest().header("hello", "world").header("foo", "bar");
     assertThat(request.getHeaders())
       .hasSize(2)
@@ -122,7 +122,7 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void shouldIgnoreHeadersWithNullOrEmptyNameOrValue() {
+  void shouldIgnoreHeadersWithNullOrEmptyNameOrValue() {
     HttpRequest request = connector.createRequest().header(null, "test");
     assertThat(request.getHeaders()).isNull();
 
@@ -137,13 +137,13 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void setPayLoad() {
+  void setPayLoad() {
     HttpRequest request = connector.createRequest().payload(EXAMPLE_PAYLOAD);
     assertThat(request.getPayload()).isEqualTo(EXAMPLE_PAYLOAD);
   }
 
   @Test
-  public void setRequestParameters() {
+  void setRequestParameters() {
     HttpRequest request = connector.createRequest();
 
     request.setRequestParameter("hello", "world");
@@ -161,7 +161,7 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void setConfigOption() {
+  void setConfigOption() {
     Object value = new Object();
     HttpRequest request = connector.createRequest()
         .configOption("object-field", value)
@@ -178,7 +178,7 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void shouldIgnoreConfigWithNullOrEmptyNameOrNullValue() {
+  void shouldIgnoreConfigWithNullOrEmptyNameOrNullValue() {
       HttpRequest request = connector.createRequest();
 
       request.configOption(null, "test");

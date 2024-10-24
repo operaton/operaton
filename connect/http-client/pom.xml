@@ -10,6 +10,9 @@
 
   <artifactId>operaton-connect-http-client</artifactId>
   <name>Operaton - Connect - HTTP Client</name>
+  <properties>
+    <version.wiremock>3.9.2</version.wiremock>
+  </properties>
 
   <dependencies>
 
@@ -31,14 +34,14 @@
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.11.3</version>
       <scope>test</scope>
     </dependency>
 
@@ -51,6 +54,7 @@
     <dependency>
       <groupId>org.wiremock</groupId>
       <artifactId>wiremock</artifactId>
+      <version>${version.wiremock}</version>
       <scope>test</scope>
     </dependency>
 

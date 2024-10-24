@@ -1,0 +1,35 @@
+# This workflow builds Operaton, and cache/restore any dependencies to improve the workflow execution time
+name: build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+  
+jobs:
+  build:
+    name: Build
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest] # If needed multi-OS add macos-13, windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven Wrapper
+      shell: bash
+      run: ./mvnw package

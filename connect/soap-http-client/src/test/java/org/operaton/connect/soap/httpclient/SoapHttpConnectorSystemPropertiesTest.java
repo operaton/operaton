@@ -16,29 +16,20 @@
  */
 package org.operaton.connect.soap.httpclient;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.apache.http.protocol.HTTP;
-import org.operaton.connect.httpclient.HttpConnector;
-import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
-import org.operaton.connect.httpclient.soap.SoapHttpConnector;
-import org.operaton.connect.httpclient.soap.impl.SoapHttpConnectorImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.operaton.connect.httpclient.soap.SoapHttpConnector;
+import org.operaton.connect.httpclient.soap.impl.SoapHttpConnectorImpl;
 
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import java.util.HashSet;
+import java.util.Set;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 /**
  * Since Apache HTTP client makes it extremely hard to test the proper configuration
@@ -60,7 +51,7 @@ public class SoapHttpConnectorSystemPropertiesTest {
   @Before
   public void setUp() {
     updatedSystemProperties = new HashSet<String>();
-    wireMockRule.stubFor(get(urlEqualTo("/")).willReturn(aResponse().withStatus(200)));
+    wireMockRule.stubFor(post(urlEqualTo("/")).willReturn(aResponse().withStatus(200)));
   }
 
   @After

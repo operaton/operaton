@@ -53,7 +53,14 @@
             <configuration>
               <rules>
                 <requireJavaVersion>
-                  <version>[11,)</version>
+                  <version>[17,)</version>
+                  <message>
+                    *************************************************************************************
+                    *                                                                                   *
+                    *                You must use at least JDK 17 to compile Operaton !!!               *
+                    *                                                                                   *
+                    *************************************************************************************
+                  </message>
                 </requireJavaVersion>
                 <requireMavenVersion>
                   <version>3.9.0</version>

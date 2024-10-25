@@ -17,31 +17,27 @@
 package org.operaton.commons.logging;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
 
-public class MdcAccessTest {
+class MdcAccessTest {
 
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
-
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     MDC.clear();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     MDC.clear();
   }
 
   @Test
-  public void shouldPutValueToMdc() {
+  void shouldPutValueToMdc() {
     // when
     MdcAccess.put("foo", "bar");
     // then
@@ -50,7 +46,7 @@ public class MdcAccessTest {
   }
 
   @Test
-  public void shouldPutNullValueToMdc() {
+  void shouldPutNullValueToMdc() {
     // given
     MDC.put("foo", "bar");
     // when
@@ -60,15 +56,14 @@ public class MdcAccessTest {
   }
 
   @Test
-  public void shouldNotPutNullKeyToMdc() {
-    // then
-    thrown.expect(IllegalArgumentException.class);
-    // when
-    MdcAccess.put(null, "bar");
+  void shouldNotPutNullKeyToMdc() {
+    assertThrows(IllegalArgumentException.class, () ->
+      // when
+      MdcAccess.put(null, "bar"));
   }
 
   @Test
-  public void shouldGetValueFromMdc() {
+  void shouldGetValueFromMdc() {
     // given
     MDC.put("foo", "bar");
     // when
@@ -78,15 +73,14 @@ public class MdcAccessTest {
   }
 
   @Test
-  public void shouldNotGetNullKeyFromMdc() {
-    // then
-    thrown.expect(IllegalArgumentException.class);
-    // when
-    MdcAccess.get(null);
+  void shouldNotGetNullKeyFromMdc() {
+    assertThrows(IllegalArgumentException.class, () ->
+      // when
+      MdcAccess.get(null));
   }
 
   @Test
-  public void shouldRemoveFromMdc() {
+  void shouldRemoveFromMdc() {
     // given
     MDC.put("foo", "bar");
     MDC.put("baz", "fooz");
@@ -98,11 +92,10 @@ public class MdcAccessTest {
   }
 
   @Test
-  public void shouldNotRemoveNullKeyFromMdc() {
-    // then
-    thrown.expect(IllegalArgumentException.class);
-    // when
-    MdcAccess.remove(null);
+  void shouldNotRemoveNullKeyFromMdc() {
+    assertThrows(IllegalArgumentException.class, () ->
+      // when
+      MdcAccess.remove(null));
   }
 
 }

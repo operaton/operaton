@@ -20,10 +20,11 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsMapContaining.hasEntry;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -35,61 +36,61 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Ronny Bräunlich
  *
  */
-public class FileValueTypeImplTest {
+class FileValueTypeImplTest {
 
   private FileValueTypeImpl type;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     type = new FileValueTypeImpl();
   }
 
   @Test
-  public void nameShouldBeFile() {
+  void nameShouldBeFile() {
     assertThat(type.getName(), is("file"));
   }
 
   @Test
-  public void shouldNotHaveParent() {
+  void shouldNotHaveParent() {
     assertThat(type.getParent(), is(nullValue()));
   }
 
   @Test
-  public void isPrimitiveValue() {
+  void isPrimitiveValue() {
     assertThat(type.isPrimitiveValueType(), is(true));
   }
 
   @Test
-  public void isNotAnAbstractType() {
+  void isNotAnAbstractType() {
     assertThat(type.isAbstract(), is(false));
   }
 
   @Test
-  public void canNotConvertFromAnyValue() {
+  void canNotConvertFromAnyValue() {
     // we just use null to make sure false is always returned
     assertThat(type.canConvertFromTypedValue(null), is(false));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void convertingThrowsException() {
-    type.convertFromTypedValue(Variables.untypedNullValue());
+  @Test
+  void convertingThrowsException() {
+    assertThrows(IllegalArgumentException.class, () ->
+      type.convertFromTypedValue(Variables.untypedNullValue()));
   }
 
   @Test
-  public void createValueFromFile() throws URISyntaxException {
+  void createValueFromFile() throws URISyntaxException {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/variables/simpleFile.txt").toURI());
     TypedValue value = type.createValue(file, Collections.<String, Object> singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
     assertThat(value, is(instanceOf(FileValue.class)));
@@ -98,7 +99,7 @@ public class FileValueTypeImplTest {
   }
 
   @Test
-  public void createValueFromStream() {
+  void createValueFromStream() {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     TypedValue value = type.createValue(file, Collections.<String, Object> singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
     assertThat(value, is(instanceOf(FileValue.class)));
@@ -107,7 +108,7 @@ public class FileValueTypeImplTest {
   }
 
   @Test
-  public void createValueFromBytes() throws IOException, URISyntaxException {
+  void createValueFromBytes() throws IOException, URISyntaxException {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/variables/simpleFile.txt").toURI());
     TypedValue value = type.createValue(file, Collections.<String, Object> singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
     assertThat(value, is(instanceOf(FileValue.class)));
@@ -115,13 +116,14 @@ public class FileValueTypeImplTest {
     checkStreamFromValue(value, "text");
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void createValueFromObject() throws IOException, URISyntaxException {
-    type.createValue(new Object(), Collections.<String, Object> singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
+  @Test
+  void createValueFromObject() {
+    assertThrows(IllegalArgumentException.class, () ->
+      type.createValue(new Object(), Collections.<String, Object>singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt")));
   }
 
   @Test
-  public void createValueWithProperties() {
+  void createValueWithProperties() {
     // given
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     Map<String, Object> properties = new HashMap<String, Object>();
@@ -140,7 +142,7 @@ public class FileValueTypeImplTest {
 
 
   @Test
-  public void createValueWithNullProperties() {
+  void createValueWithNullProperties() {
     // given
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     Map<String, Object> properties = new HashMap<String, Object>();
@@ -173,20 +175,22 @@ public class FileValueTypeImplTest {
     }
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void cannotCreateFileWithoutName() {
+  @Test
+  void cannotCreateFileWithoutName() {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
-    type.createValue(file, Collections.<String, Object> emptyMap());
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void cannotCreateFileWithoutValueInfo() {
-    InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
-    type.createValue(file, null);
+    assertThrows(IllegalArgumentException.class, () ->
+      type.createValue(file, Collections.<String, Object>emptyMap()));
   }
 
   @Test
-  public void cannotCreateFileWithInvalidTransientFlag() {
+  void cannotCreateFileWithoutValueInfo() {
+    InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
+    assertThrows(IllegalArgumentException.class, () ->
+      type.createValue(file, null));
+  }
+
+  @Test
+  void cannotCreateFileWithInvalidTransientFlag() {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     Map<String, Object> info = new HashMap<String, Object>();
     info.put("filename", "bar");
@@ -200,7 +204,7 @@ public class FileValueTypeImplTest {
   }
 
   @Test
-  public void valueInfoContainsFileTypeNameTransientFlagAndCharsetEncoding() {
+  void valueInfoContainsFileTypeNameTransientFlagAndCharsetEncoding() {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     String fileName = "simpleFile.txt";
     String fileType = "text/plain";
@@ -215,7 +219,7 @@ public class FileValueTypeImplTest {
   }
 
   @Test
-  public void valueInfoContainsFileTypeNameAndStringEncoding() {
+  void valueInfoContainsFileTypeNameAndStringEncoding() {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     String fileName = "simpleFile.txt";
     String fileType = "text/plain";
@@ -229,7 +233,7 @@ public class FileValueTypeImplTest {
   }
 
   @Test
-  public void fileByteArrayIsEqualToFileValueContent() throws IOException {
+  void fileByteArrayIsEqualToFileValueContent() throws IOException {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     String fileName = "simpleFile.txt";
 
@@ -239,7 +243,7 @@ public class FileValueTypeImplTest {
   }
 
   @Test
-  public void fileByteArrayIsEqualToFileValueContentCase2() throws IOException {
+  void fileByteArrayIsEqualToFileValueContentCase2() throws IOException {
 
     byte[] bytes = new byte[]{ -16, -128, -128, -128 };
     InputStream byteStream = new ByteArrayInputStream(bytes);
@@ -251,7 +255,7 @@ public class FileValueTypeImplTest {
   }
 
   @Test
-  public void doesNotHaveParent(){
+  void doesNotHaveParent(){
     assertThat(type.getParent(), is(nullValue()));
   }
 

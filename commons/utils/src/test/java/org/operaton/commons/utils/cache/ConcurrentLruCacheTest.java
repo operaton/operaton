@@ -16,32 +16,28 @@
  */
 package org.operaton.commons.utils.cache;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ConcurrentLruCacheTest {
-
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
+class ConcurrentLruCacheTest {
 
   private ConcurrentLruCache<String, String> cache;
 
-  @Before
-  public void createCache() {
+  @BeforeEach
+  void createCache() {
     cache = new ConcurrentLruCache<String, String>(3);
   }
 
   @Test
-  public void getEntryWithNotExistingKey() {
+  void getEntryWithNotExistingKey() {
     assertThat(cache.get("not existing")).isNull();
   }
 
   @Test
-  public void getEntry() {
+  void getEntry() {
     cache.put("a", "1");
 
     assertThat(cache.size()).isEqualTo(1);
@@ -49,7 +45,7 @@ public class ConcurrentLruCacheTest {
   }
 
   @Test
-  public void overrideEntry() {
+  void overrideEntry() {
     cache.put("a", "1");
     cache.put("a", "2");
 
@@ -58,7 +54,7 @@ public class ConcurrentLruCacheTest {
   }
 
   @Test
-  public void removeLeastRecentlyInsertedEntry() {
+  void removeLeastRecentlyInsertedEntry() {
     cache.put("a", "1");
     cache.put("b", "2");
     cache.put("c", "3");
@@ -72,7 +68,7 @@ public class ConcurrentLruCacheTest {
   }
 
   @Test
-  public void removeLeastRecentlyUsedEntry() {
+  void removeLeastRecentlyUsedEntry() {
     cache.put("a", "1");
     cache.put("b", "2");
     cache.put("c", "3");
@@ -90,7 +86,7 @@ public class ConcurrentLruCacheTest {
   }
 
   @Test
-  public void clearCache() {
+  void clearCache() {
     cache.put("a", "1");
 
     cache.clear();
@@ -99,28 +95,29 @@ public class ConcurrentLruCacheTest {
   }
 
   @Test
-  public void failToInsertInvalidKey() {
-    thrown.expect(NullPointerException.class);
+  void failToInsertInvalidKey() {
+    assertThrows(NullPointerException.class, () ->
 
-    cache.put(null, "1");
+      cache.put(null, "1"));
   }
 
   @Test
-  public void failToInsertInvalidValue() {
-    thrown.expect(NullPointerException.class);
+  void failToInsertInvalidValue() {
+    assertThrows(NullPointerException.class, () ->
 
-    cache.put("a", null);
+      cache.put("a", null));
   }
 
   @Test
-  public void failToCreateCacheWithInvalidCapacity() {
-    thrown.expect(IllegalArgumentException.class);
+  void failToCreateCacheWithInvalidCapacity() {
+    assertThrows(IllegalArgumentException.class, () -> {
 
-    new ConcurrentLruCache<String, String>(-1);
+      new ConcurrentLruCache<String, String>(-1);
+    });
   }
 
   @Test
-  public void removeElementInEmptyCache() {
+  void removeElementInEmptyCache() {
 
     // given
     cache.clear();
@@ -133,7 +130,7 @@ public class ConcurrentLruCacheTest {
   }
 
   @Test
-  public void removeNoneExistingKeyInCache(){
+  void removeNoneExistingKeyInCache(){
     //given
     cache.put("a", "1");
     cache.put("b", "2");
@@ -149,7 +146,7 @@ public class ConcurrentLruCacheTest {
   }
 
   @Test
-  public void removeAllElements() {
+  void removeAllElements() {
     // given
     cache.put("a", "1");
     cache.put("b", "2");

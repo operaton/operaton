@@ -16,13 +16,13 @@
  */
 package org.operaton.commons.utils;
 
-import org.junit.Test;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -34,21 +34,21 @@ public class IoUtilTest {
   public final static String TEST_FILE_NAME = "org/operaton/commons/utils/testFile.txt";
 
   @Test
-  public void shouldTransformBetweenInputStreamAndString() {
+  void shouldTransformBetweenInputStreamAndString() {
     InputStream inputStream = IoUtil.stringAsInputStream("test");
     String string = IoUtil.inputStreamAsString(inputStream);
     assertThat(string).isEqualTo("test");
   }
-  
+
   @Test
-  public void shouldTransformFromInputStreamToByteArray() {
+  void shouldTransformFromInputStreamToByteArray() {
     String testString = "Test String";
     InputStream inputStream = IoUtil.stringAsInputStream(testString);
     assertThat(IoUtil.inputStreamAsByteArray(inputStream)).isEqualTo(testString.getBytes(IoUtil.ENCODING_CHARSET));
-  }  
-  
+  }
+
   @Test
-  public void shouldTransformFromStringToInputStreamToByteArray() {
+  void shouldTransformFromStringToInputStreamToByteArray() {
     String testString = "Test String";
     InputStream inputStream = IoUtil.stringAsInputStream(testString);
     
@@ -58,16 +58,16 @@ public class IoUtilTest {
     inputStream = IoUtil.stringAsInputStream(testString);
     byte[] newBytes = newString.getBytes(IoUtil.ENCODING_CHARSET);
     assertThat(IoUtil.inputStreamAsByteArray(inputStream)).isEqualTo(newBytes);
-  }  
-  
-  
+  }
+
+
   @Test
-  public void getFileContentAsString() {
+  void getFileContentAsString() {
     assertThat(IoUtil.fileAsString(TEST_FILE_NAME)).isEqualTo("This is a Test!");
   }
 
   @Test
-  public void shouldFailGetFileContentAsStringWithGarbageAsFilename() {
+  void shouldFailGetFileContentAsStringWithGarbageAsFilename() {
     try {
       IoUtil.fileAsString("asd123");
       fail("Expected: IoUtilException");
@@ -77,7 +77,7 @@ public class IoUtilTest {
   }
 
   @Test
-  public void getFileContentAsStream() {
+  void getFileContentAsStream() {
     InputStream stream = IoUtil.fileAsStream(TEST_FILE_NAME);
     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
     StringBuilder output = new StringBuilder();
@@ -93,7 +93,7 @@ public class IoUtilTest {
   }
 
   @Test
-  public void shouldFailGetFileContentAsStreamWithGarbageAsFilename() {
+  void shouldFailGetFileContentAsStreamWithGarbageAsFilename() {
     try {
       IoUtil.fileAsStream("asd123");
       fail("Expected: IoUtilException");
@@ -103,7 +103,7 @@ public class IoUtilTest {
   }
 
   @Test
-  public void getFileFromClassPath() {
+  void getFileFromClassPath() {
     File file = IoUtil.getClasspathFile(TEST_FILE_NAME);
 
     assertThat(file).isNotNull();
@@ -111,7 +111,7 @@ public class IoUtilTest {
   }
 
   @Test
-  public void shouldFailGetFileFromClassPathWithGarbage() {
+  void shouldFailGetFileFromClassPathWithGarbage() {
     try {
       IoUtil.getClasspathFile("asd123");
       fail("Expected: IoUtilException");
@@ -121,7 +121,7 @@ public class IoUtilTest {
   }
 
   @Test
-  public void shouldFailGetFileFromClassPathWithNull() {
+  void shouldFailGetFileFromClassPathWithNull() {
     try {
       IoUtil.getClasspathFile(null);
       fail("Expected: IoUtilException");
@@ -131,7 +131,7 @@ public class IoUtilTest {
   }
 
   @Test
-  public void shouldUseFallBackWhenCustomClassLoaderIsWrong() {
+  void shouldUseFallBackWhenCustomClassLoaderIsWrong() {
     File file = IoUtil.getClasspathFile(TEST_FILE_NAME, new ClassLoader() {
       @Override
       public URL getResource(String name) {
@@ -143,7 +143,7 @@ public class IoUtilTest {
   }
 
   @Test
-  public void shouldUseFallBackWhenCustomClassLoaderIsNull() {
+  void shouldUseFallBackWhenCustomClassLoaderIsNull() {
     File file = IoUtil.getClasspathFile(TEST_FILE_NAME, null);
     assertThat(file).isNotNull();
     assertThat(file.getName()).isEqualTo("testFile.txt");

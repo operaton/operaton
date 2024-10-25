@@ -16,7 +16,7 @@
  */
 package org.operaton.commons.utils;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.commons.utils.StringUtil.isExpression;
@@ -28,10 +28,10 @@ import static org.operaton.commons.utils.StringUtil.getStackTrace;
 /**
  * @author Sebastian Menski
  */
-public class StringUtilTest {
+class StringUtilTest {
 
   @Test
-  public void testExpressionDetection() {
+  void expressionDetection() {
     assertThat(isExpression("${test}")).isTrue();
     assertThat(isExpression("${a(b,c)}")).isTrue();
     assertThat(isExpression("${ test }")).isTrue();
@@ -53,7 +53,7 @@ public class StringUtilTest {
   }
 
   @Test
-  public void testStringSplit() {
+  void stringSplit() {
     assertThat(split("a,b,c", ",")).hasSize(3).containsExactly("a", "b", "c");
     assertThat(split("aaaxbaaxc", "a{2}x")).hasSize(3).containsExactly("a", "b", "c");
     assertThat(split(null, ",")).isNull();
@@ -62,7 +62,7 @@ public class StringUtilTest {
   }
 
   @Test
-  public void testStringJoin() {
+  void stringJoin() {
     assertThat(join(",", "a", "b", "c")).isEqualTo("a,b,c");
     assertThat(join(", ", "a", "b", "c")).isEqualTo("a, b, c");
     assertThat(join(null, "a", "b", "c")).isEqualTo("abc");
@@ -72,17 +72,17 @@ public class StringUtilTest {
   }
 
   @Test
-  public void testDefaultString() {
+  void testDefaultString() {
     assertThat(defaultString(null)).isEqualTo("");
     assertThat(defaultString("")).isEqualTo("");
     assertThat(defaultString("bat")).isEqualTo("bat");
   }
 
   @Test
-  public void testGetStacktrace() {
+  void getStacktrace() {
     Throwable th = new IllegalArgumentException("Wrong argument!", new NullPointerException("This shouldn't have been empty"));
     assertThat(getStackTrace(th)).containsSubsequence("java.lang.IllegalArgumentException: Wrong argument!",
-      "at org.operaton.commons.utils.StringUtilTest.testGetStacktrace(StringUtilTest.java:",
+      "at org.operaton.commons.utils.StringUtilTest.getStacktrace(StringUtilTest.java:",
       "Caused by: java.lang.NullPointerException: This shouldn't have been empty");
   }
 

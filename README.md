@@ -47,6 +47,11 @@ Out of the box, OPERATON provides infrastructure-level integration with Java EE 
 
 Most of the components that make up the platform can even be completely embedded inside an application. For instance, you can add the process engine and the REST API as a library to your application and assemble your custom BPM platform configuration.
 
+## Process modelling
+
+Operaton is fully backwards compatible to your existing BPMN-, DMN-models and Forms, which were created in Camunda Modeler for Camunda 7. You can download the Camunda Modeler [here](https://camunda.com/download/modeler/) (MIT Licence). 
+Operaton removed the compatibility layer for Activiti. If you need to use Activiti models you will have to convert them (see the following [blog post](https://camunda.com/blog/2016/10/migrate-from-activiti-to-camunda/) for details).
+
 ## Contributing
 
 Please see our [contribution guidelines](CONTRIBUTING.md) for how to raise issues and how to contribute code to our project.

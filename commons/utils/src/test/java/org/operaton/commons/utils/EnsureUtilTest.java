@@ -16,7 +16,7 @@
  */
 package org.operaton.commons.utils;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.fail;
@@ -24,10 +24,10 @@ import static org.assertj.core.api.Fail.fail;
 /**
  * @author Stefan Hentschel.
  */
-public class EnsureUtilTest {
+class EnsureUtilTest {
 
   @Test
-  public void ensureNotNull() {
+  void ensureNotNull() {
     String string = "string";
 
     try {
@@ -39,7 +39,7 @@ public class EnsureUtilTest {
   }
 
   @Test
-  public void shouldFailEnsureNotNull() {
+  void shouldFailEnsureNotNull() {
     String string = null;
 
     try {
@@ -52,7 +52,7 @@ public class EnsureUtilTest {
   }
 
   @Test
-  public void ensureParameterInstanceOfClass() {
+  void ensureParameterInstanceOfClass() {
     Object string = "string";
 
     try{
@@ -65,7 +65,7 @@ public class EnsureUtilTest {
   }
 
   @Test
-  public void shouldFailEnsureParameterInstanceOfClass() {
+  void shouldFailEnsureParameterInstanceOfClass() {
     Object string = "string";
 
     try{

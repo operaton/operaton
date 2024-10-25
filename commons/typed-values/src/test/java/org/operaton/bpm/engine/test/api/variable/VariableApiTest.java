@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.variable;
-
+import static org.junit.jupiter.api.Assertions.*;
 import static org.operaton.bpm.engine.variable.Variables.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -31,19 +27,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class VariableApiTest {
+class VariableApiTest {
 
   private static final String DESERIALIZED_OBJECT_VAR_NAME = "deserializedObject";
   private static final ExampleObject DESERIALIZED_OBJECT_VAR_VALUE = new ExampleObject();
@@ -51,7 +47,7 @@ public class VariableApiTest {
   private static final String SERIALIZATION_DATA_FORMAT_NAME = "data-format-name";
 
   @Test
-  public void testCreateObjectVariables() {
+  void createObjectVariables() {
 
     VariableMap variables = createVariables()
       .putValue(DESERIALIZED_OBJECT_VAR_NAME, objectValue(DESERIALIZED_OBJECT_VAR_VALUE));
@@ -78,7 +74,7 @@ public class VariableApiTest {
   }
 
   @Test
-  public void testVariableMapWithoutCreateVariables() {
+  void variableMapWithoutCreateVariables() {
     VariableMap map1 = putValue("foo", true).putValue("bar", 20);
     VariableMap map2 = putValueTyped("foo", booleanValue(true)).putValue("bar", integerValue(20));
 
@@ -87,7 +83,7 @@ public class VariableApiTest {
   }
 
   @Test
-  public void testVariableMapCompatibility() {
+  void variableMapCompatibility() {
 
     // test compatibility with Map<String, Object>
     VariableMap map1 = createVariables()
@@ -131,7 +127,7 @@ public class VariableApiTest {
   }
 
   @Test
-  public void testSerializationDataFormats() {
+  void serializationDataFormats() {
     ObjectValue objectValue = objectValue(DESERIALIZED_OBJECT_VAR_VALUE).serializationDataFormat(SerializationDataFormats.JAVA).create();
     assertEquals(SerializationDataFormats.JAVA.getName(), objectValue.getSerializationDataFormat());
 
@@ -143,27 +139,27 @@ public class VariableApiTest {
   }
 
   @Test
-  public void testEmptyVariableMapAsVariableContext() {
+  void emptyVariableMapAsVariableContext() {
     VariableContext varContext = createVariables().asVariableContext();
-    assertTrue(varContext.keySet().size() == 0);
+    assertEquals(0, varContext.keySet().size());
     assertNull(varContext.resolve("nonExisting"));
     assertFalse(varContext.containsVariable("nonExisting"));
   }
 
   @Test
-  public void testEmptyVariableContext() {
+  void testEmptyVariableContext() {
     VariableContext varContext = emptyVariableContext();
-    assertTrue(varContext.keySet().size() == 0);
+    assertEquals(0, varContext.keySet().size());
     assertNull(varContext.resolve("nonExisting"));
     assertFalse(varContext.containsVariable("nonExisting"));
   }
 
   @Test
-  public void testVariableMapAsVariableContext() {
+  void variableMapAsVariableContext() {
     VariableContext varContext = createVariables()
         .putValueTyped("someValue", integerValue(1)).asVariableContext();
 
-    assertTrue(varContext.keySet().size() == 1);
+    assertEquals(1, varContext.keySet().size());
 
     assertNull(varContext.resolve("nonExisting"));
     assertFalse(varContext.containsVariable("nonExisting"));
@@ -173,7 +169,7 @@ public class VariableApiTest {
   }
 
   @Test
-  public void testTransientVariables() throws URISyntaxException {
+  void transientVariables() throws URISyntaxException {
     VariableMap variableMap = createVariables().putValueTyped("foo", doubleValue(10.0, true))
                      .putValueTyped("bar", integerValue(10, true))
                      .putValueTyped("aa", booleanValue(true, true))
@@ -191,12 +187,12 @@ public class VariableApiTest {
 
     for (Entry<String, Object> e : variableMap.entrySet()) {
       TypedValue value = (TypedValue) variableMap.getValueTyped(e.getKey());
-      assertTrue("Variable '" + e.getKey() + "' is not transient: " + value, value.isTransient());
+      assertTrue(value.isTransient(), "Variable '" + e.getKey() + "' is not transient: " + value);
     }
   }
-  
+
   @Test
-  public void testTransientVariablesRaw() throws URISyntaxException {
+  void transientVariablesRaw() throws URISyntaxException {
     VariableMap variableMap = createVariables().putValueTyped("foo", doubleValue(10.0, true))
                      .putValue("bar", integerValue(10, true))
                      .putValue("aa", booleanValue(true, true))
@@ -216,7 +212,7 @@ public class VariableApiTest {
 
     for (Entry<String, Object> e : variableMap.entrySet()) {
       TypedValue value = (TypedValue) variableMap.getValueTyped(e.getKey());
-      assertTrue("Variable '" + e.getKey() + "' is not transient: " + value, value.isTransient());
+      assertTrue(value.isTransient(), "Variable '" + e.getKey() + "' is not transient: " + value);
     }
   }
 }

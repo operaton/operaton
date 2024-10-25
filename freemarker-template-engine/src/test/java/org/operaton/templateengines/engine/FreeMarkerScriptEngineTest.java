@@ -20,12 +20,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import javax.script.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.templateengines.engine.util.Greeter;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -33,7 +32,7 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * @author Sebastian Menski
  */
-public class FreeMarkerScriptEngineTest {
+class FreeMarkerScriptEngineTest {
 
   protected static ScriptEngine scriptEngine;
   protected Bindings bindings;
@@ -41,19 +40,19 @@ public class FreeMarkerScriptEngineTest {
   protected String template;
   protected String expected;
 
-  @BeforeClass
-  public static void getScriptEngine() {
+  @BeforeAll
+  static void getScriptEngine() {
     ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     scriptEngine = scriptEngineManager.getEngineByName("freemarker");
   }
 
-  @Before
-  public void createBindings() {
+  @BeforeEach
+  void createBindings() {
     bindings = new SimpleBindings();
   }
 
-  @After
-  public void checkResult() throws ScriptException {
+  @AfterEach
+  void checkResult() throws ScriptException {
     if (template != null) {
       assertThat(evaluate(template)).isEqualTo(expected);
     }
@@ -64,54 +63,54 @@ public class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  public void testScriptEngineExists() {
+  void scriptEngineExists() {
     assertThat(scriptEngine).isNotNull();
   }
 
   @Test
-  public void testVariableExpansion() {
+  void variableExpansion() {
     bindings.put("name", "world");
     expected = "Hello world!";
     template = "Hello ${name}!";
   }
 
   @Test
-  public void testJavaProperties() {
+  void javaProperties() {
     bindings.put("greeter", new Greeter());
     expected = "!";
     template = "${greeter.suffix}";
   }
 
   @Test
-  public void testJavaMethodCall() throws ScriptException {
+  void javaMethodCall() throws ScriptException {
     bindings.put("greeter", new Greeter());
     expected = "Hello world!";
     template = "${greeter.hello('world')}";
   }
 
   @Test
-  public void testJavaArrays() throws ScriptException {
+  void javaArrays() throws ScriptException {
     bindings.put("myarray", new String[]{"hello", "foo", "world", "bar"});
     expected = "4 hello world!";
     template = "${myarray?size} ${myarray[0]} ${myarray[2]}!";
   }
 
   @Test
-  public void testJavaBoolean() throws ScriptException {
+  void javaBoolean() throws ScriptException {
     bindings.put("mybool", false);
     expected = "Hello world!";
     template = "<#if mybool>okey<#else>Hello world!</#if>";
   }
 
   @Test
-  public void testJavaInteger() throws ScriptException {
+  void javaInteger() throws ScriptException {
     bindings.put("myint", 6);
     expected = "42";
     template = "<#assign myint = myint + 36>${myint}";
   }
 
   @Test
-  public void testJavaCollection() throws ScriptException {
+  void javaCollection() throws ScriptException {
     Collection names = Arrays.asList("tweety", "duffy", "tom");
     bindings.put("names", names);
     expected = "tweety, duffy, tom";
@@ -119,14 +118,14 @@ public class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  public void testDefineBlock() throws ScriptException {
+  void defineBlock() throws ScriptException {
     bindings.put("who", "world");
     expected = "Hello world!";
     template = "<#macro block>Hello ${who}!</#macro><@block/>";
   }
-  
+
   @Test
-  public void testFailingEvaluation() {
+  void failingEvaluation() {
     try {
       String invalidTemplate = "${}";
       evaluate(invalidTemplate);

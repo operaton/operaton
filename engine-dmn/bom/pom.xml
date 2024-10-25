@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
-    <version>1.0.0-beta-1</version>
+    <version>1.0.0-beta-2</version>
     <relativePath>../../</relativePath>
   </parent>
 
   <groupId>org.operaton.bpm.dmn</groupId>
   <artifactId>operaton-engine-dmn-bom</artifactId>
-  <version>1.0.0-beta-1</version>
+  <version>1.0.0-beta-2</version>
   <name>Operaton - DMN - Engine - BOM</name>
   <packaging>pom</packaging>
 

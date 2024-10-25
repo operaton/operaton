@@ -5,7 +5,6 @@
   <name>Operaton - Java External Task Client - Root</name>
 
   <artifactId>operaton-external-task-client-root</artifactId>
-  <inceptionYear>2018</inceptionYear>
 
   <packaging>pom</packaging>
 

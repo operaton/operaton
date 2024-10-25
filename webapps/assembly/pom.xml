@@ -13,7 +13,6 @@
   <artifactId>operaton-webapp</artifactId>
   <packaging>war</packaging>
   <name>Operaton - Webapp - Assembly</name>
-  <inceptionYear>2014</inceptionYear>
 
   <properties>
     <java.resources.override>src/main/runtime/default/resources</java.resources.override>

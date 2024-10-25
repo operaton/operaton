@@ -56,7 +56,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>${version.junit}</version>
+        <version>${version.junit4}</version>
       </dependency>
 
       <dependency>

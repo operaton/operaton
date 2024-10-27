@@ -16,24 +16,9 @@
  */
 package org.operaton.bpm.client.task;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.client.rule.ClientRule.LOCK_DURATION;
-import static org.operaton.bpm.client.util.ProcessModels.BPMN_ERROR_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_ID;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_PRIORITY;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
-import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY;
-import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY_2;
-import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_AFTER_BPMN_ERROR;
-import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_ID;
-import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclusiveGateway;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.IncidentDto;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
@@ -48,26 +33,39 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.BoundaryEvent;
 import org.operaton.bpm.model.bpmn.instance.ErrorEventDefinition;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.client.rule.ClientRule.LOCK_DURATION;
+import static org.operaton.bpm.client.util.ProcessModels.BPMN_ERROR_EXTERNAL_TASK_PROCESS;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_ID;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_PRIORITY;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
+import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY;
+import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY_2;
+import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_AFTER_BPMN_ERROR;
+import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_ID;
+import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclusiveGateway;
+
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class ExternalTaskHandlerIT {
 
   private static final String BUSINESS_KEY = "aBusinessKey";
   protected ClientRule clientRule = new ClientRule();
   protected EngineRule engineRule = new EngineRule();
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule);
-
   protected ExternalTaskClient client;
 
   protected ProcessDefinitionDto processDefinition;
   protected ProcessInstanceDto processInstance;
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     client = clientRule.client();
 

@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.client.variable.pa;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.HistoricProcessInstanceDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -29,11 +33,6 @@ import org.operaton.bpm.client.util.RecordingInvocationHandler.RecordedInvocatio
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.qa.Bean;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 import java.util.Collections;
 import java.util.Properties;
@@ -47,6 +46,8 @@ import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
 /**
  * @author Tassilo Weidner
  */
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class PaSerializationIT {
 
   protected static final String ENGINE_NAME = "/engine/another-engine";
@@ -76,9 +77,6 @@ public class PaSerializationIT {
     return properties;
   });
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule);
-
   protected ExternalTaskClient client;
 
   protected ProcessInstanceDto processInstance;
@@ -86,7 +84,7 @@ public class PaSerializationIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     client = clientRule.client();
 
@@ -96,7 +94,7 @@ public class PaSerializationIT {
     invocationHandler.clear();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     HistoricProcessInstanceDto historicProcessInstance = engineRule.getHistoricProcessInstanceById(processInstance.getId());
     if (historicProcessInstance.getEndTime() == null) {

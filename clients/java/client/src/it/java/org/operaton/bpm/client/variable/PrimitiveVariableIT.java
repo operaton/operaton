@@ -16,6 +16,29 @@
  */
 package org.operaton.bpm.client.variable;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.dto.ProcessDefinitionDto;
+import org.operaton.bpm.client.dto.ProcessInstanceDto;
+import org.operaton.bpm.client.rule.ClientRule;
+import org.operaton.bpm.client.rule.EngineRule;
+import org.operaton.bpm.client.task.ExternalTask;
+import org.operaton.bpm.client.task.ExternalTaskService;
+import org.operaton.bpm.client.util.RecordingExternalTaskHandler;
+import org.operaton.bpm.client.util.RecordingInvocationHandler;
+import org.operaton.bpm.client.util.RecordingInvocationHandler.RecordedInvocation;
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
@@ -30,30 +53,8 @@ import static org.operaton.bpm.engine.variable.type.ValueType.NULL;
 import static org.operaton.bpm.engine.variable.type.ValueType.SHORT;
 import static org.operaton.bpm.engine.variable.type.ValueType.STRING;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.operaton.bpm.client.ExternalTaskClient;
-import org.operaton.bpm.client.dto.ProcessDefinitionDto;
-import org.operaton.bpm.client.dto.ProcessInstanceDto;
-import org.operaton.bpm.client.rule.ClientRule;
-import org.operaton.bpm.client.rule.EngineRule;
-import org.operaton.bpm.client.task.ExternalTask;
-import org.operaton.bpm.client.task.ExternalTaskService;
-import org.operaton.bpm.client.util.RecordingExternalTaskHandler;
-import org.operaton.bpm.client.util.RecordingInvocationHandler;
-import org.operaton.bpm.client.util.RecordingInvocationHandler.RecordedInvocation;
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class PrimitiveVariableIT {
 
   protected static final String VARIABLE_NAME = "foo";
@@ -81,9 +82,6 @@ public class PrimitiveVariableIT {
   protected ClientRule clientRule = new ClientRule();
   protected EngineRule engineRule = new EngineRule();
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule);
-
   protected ExternalTaskClient client;
 
   protected ProcessDefinitionDto processDefinition;
@@ -92,7 +90,7 @@ public class PrimitiveVariableIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);

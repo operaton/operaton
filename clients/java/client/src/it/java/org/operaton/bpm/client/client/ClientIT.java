@@ -16,26 +16,9 @@
  */
 package org.operaton.bpm.client.client;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.client.util.ProcessModels.BPMN_ERROR_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_PRIORITY;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
-import static org.operaton.bpm.client.util.ProcessModels.TWO_PRIORITISED_EXTERNAL_TASKS_PROCESS;
-import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
-import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
 import org.operaton.bpm.client.backoff.BackoffStrategy;
@@ -55,15 +38,33 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.RuleChain;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.client.util.ProcessModels.BPMN_ERROR_EXTERNAL_TASK_PROCESS;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_PRIORITY;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
+import static org.operaton.bpm.client.util.ProcessModels.TWO_PRIORITISED_EXTERNAL_TASKS_PROCESS;
+import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
+import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
 
 /**
  * @author Tassilo Weidner
  */
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class ClientIT {
 
   protected static final String BASE_URL;
@@ -77,17 +78,13 @@ public class ClientIT {
 
   protected ClientRule clientRule = new ClientRule(() -> ExternalTaskClient.create().baseUrl(BASE_URL)); // without lock duration
   protected EngineRule engineRule = new EngineRule();
-  protected ExpectedException thrown = ExpectedException.none();
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule).around(thrown);
 
   protected ExternalTaskClient client;
 
   protected ProcessDefinitionDto processDefinition;
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     client = clientRule.client();
     handler.clear();
@@ -191,68 +188,64 @@ public class ClientIT {
 
   @Test
   public void shouldThrowExceptionDueToBaseUrlIsEmpty() {
-    ExternalTaskClient client = null;
+    ExternalTaskClient[] client = new ExternalTaskClient[1];
 
     try {
       // given
       ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create();
       
-      // then
-      thrown.expect(ExternalTaskClientException.class);
-      
-      // when
-      client = externalTaskClientBuilder.build();
+      // when + then
+      assertThatThrownBy(() -> client[0] = externalTaskClientBuilder.build())
+              .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
-      if (client != null) {
-        client.stop();
+      if (client[0] != null) {
+        client[0].stop();
       }
     }
   }
 
   @Test
   public void shouldThrowExceptionDueToBaseUrlIsNull() {
-    ExternalTaskClient client = null;
+    ExternalTaskClient[] client = new ExternalTaskClient[1];
 
     try {
       // given
       ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create();
       
-      // then
-      thrown.expect(ExternalTaskClientException.class);
-      
-      // when
-      client = externalTaskClientBuilder
-          .baseUrl(null)
-          .build();
+      // when + then
+      assertThatThrownBy(() ->
+        client[0] = externalTaskClientBuilder
+            .baseUrl(null)
+            .build()
+      ).isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
-      if (client != null) {
-        client.stop();
+      if (client[0] != null) {
+        client[0].stop();
       }
     }
   }
 
   @Test
   public void shouldThrowExceptionDueToMaxTasksNotGreaterThanZero() {
-    ExternalTaskClient client = null;
+    ExternalTaskClient[] client = new ExternalTaskClient[1];
 
     try {
       // given
       ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
           .baseUrl("http://operaton.com/engine-rest");
       
-      // then
-      thrown.expect(ExternalTaskClientException.class);
-      
-      // when
-      client = externalTaskClientBuilder
-          .maxTasks(0)
-          .build();
+      // when + then
+      assertThatThrownBy(() ->
+        client[0] = externalTaskClientBuilder
+            .maxTasks(0)
+            .build()
+      ).isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
-      if (client != null) {
-        client.stop();
+      if (client[0] != null) {
+        client[0].stop();
       }
     }
   }
@@ -286,7 +279,7 @@ public class ClientIT {
 
   @Test
   public void shouldThrowExceptionDueToAsyncResponseTimeoutNotGreaterThanZero() {
-    ExternalTaskClient client = null;
+    ExternalTaskClient[] client = new ExternalTaskClient[1];
 
     try {
       // given
@@ -294,15 +287,13 @@ public class ClientIT {
           .baseUrl("http://operaton.com/engine-rest")
           .asyncResponseTimeout(0);
       
-      // then
-      thrown.expect(ExternalTaskClientException.class);
-      
       // when
-      client = clientBuilder.build();
+      assertThatThrownBy(() -> client[0] = clientBuilder.build())
+              .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
-      if (client != null) {
-        client.stop();
+      if (client[0] != null) {
+        client[0].stop();
       }
     }
   }
@@ -360,7 +351,7 @@ public class ClientIT {
 
   @Test
   public void shouldThrowExceptionDueToClientLockDurationNotGreaterThanZero() {
-    ExternalTaskClient client = null;
+    ExternalTaskClient[] client = new ExternalTaskClient[1];
 
     try {
       // given
@@ -368,22 +359,20 @@ public class ClientIT {
           .baseUrl("http://operaton.com/engine-rest")
           .lockDuration(0);
       
-      // then
-      thrown.expect(ExternalTaskClientException.class);
-      
-      // when
-      client = externalTaskClientBuilder.build();
+      // when + then
+      assertThatThrownBy(() -> client[0] = externalTaskClientBuilder.build())
+              .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
-      if (client != null) {
-        client.stop();
+      if (client[0] != null) {
+        client[0].stop();
       }
     }
   }
 
   @Test
   public void shouldThrowExceptionDueToInterceptorIsNull() {
-    ExternalTaskClient client = null;
+    ExternalTaskClient[] client = new ExternalTaskClient[1];
 
     try {
       // given
@@ -391,15 +380,13 @@ public class ClientIT {
         .baseUrl("http://operaton.com/engine-rest")
         .addInterceptor(null);
 
-      // then
-      thrown.expect(ExternalTaskClientException.class);
-
-      // when
-      client = externalTaskClientBuilder.build();
+      // when + then
+      assertThatThrownBy(() -> client[0] = externalTaskClientBuilder.build())
+              .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
-      if (client != null) {
-        client.stop();
+      if (client[0] != null) {
+        client[0].stop();
       }
     }
   }

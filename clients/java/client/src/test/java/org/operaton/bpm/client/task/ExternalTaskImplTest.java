@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.client.task;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
 import org.operaton.bpm.client.variable.impl.DefaultValueMappers;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
@@ -30,16 +31,15 @@ import org.operaton.bpm.client.variable.impl.ValueMappers;
 import org.operaton.bpm.client.variable.impl.VariableValue;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.junit.Test;
 
 /**
  * @author Tobias Metzke
  *
  */
-public class ExternalTaskImplTest {
+class ExternalTaskImplTest {
 
   @Test
-  public void shouldDisplayAttributesEmptyInToString() {
+  void shouldDisplayAttributesEmptyInToString() {
     // no attributes set, only priority initialized as 0
     ExternalTaskImpl task = new ExternalTaskImpl();
     assertEquals("ExternalTaskImpl [activityId=null, "
@@ -65,7 +65,7 @@ public class ExternalTaskImplTest {
   }
 
   @Test
-  public void shouldDisplayAttributesFilledInToString() {
+  void shouldDisplayAttributesFilledInToString() {
     // with basic attributes set, attributes should be displayed and separated by comma
     ExternalTaskImpl task = new ExternalTaskImpl();
     
@@ -111,10 +111,10 @@ public class ExternalTaskImplTest {
         + "workerId=wi]", 
         task.toString());
   }
-  
+
   @SuppressWarnings("rawtypes")
   @Test
-  public void shouldDisplayAttributesIncludingMapsInToString() {
+  void shouldDisplayAttributesIncludingMapsInToString() {
     // variables map entries should be displayed as well
     ExternalTaskImpl task = new ExternalTaskImpl();
 

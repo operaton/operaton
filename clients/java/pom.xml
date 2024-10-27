@@ -5,6 +5,7 @@
   <name>Operaton - Java External Task Client - Root</name>
 
   <artifactId>operaton-external-task-client-root</artifactId>
+  <inceptionYear>2018</inceptionYear>
 
   <packaging>pom</packaging>
 
@@ -29,8 +30,22 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+    </dependency>
+  </dependencies>
 
   <scm>
     <url>http://github.com/operaton/operaton-external-task-client-java</url>

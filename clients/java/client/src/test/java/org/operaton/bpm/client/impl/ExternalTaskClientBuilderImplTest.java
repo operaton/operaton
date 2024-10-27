@@ -19,19 +19,19 @@ package org.operaton.bpm.client.impl;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.util.Timeout;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-public class ExternalTaskClientBuilderImplTest {
+class ExternalTaskClientBuilderImplTest {
 
   @Test
-  public void testCustomizeHttpClientExposesInternalHttpClientBuilder() {
+  void customizeHttpClientExposesInternalHttpClientBuilder() {
     // given
     var clientBuilder = new ExternalTaskClientBuilderImpl();
     var requestConfigArgumentCaptor = ArgumentCaptor.forClass(RequestConfig.class);

@@ -16,19 +16,23 @@
  */
 package org.operaton.bpm.client.rule;
 
-import static org.operaton.bpm.client.util.PropertyUtil.*;
-import static org.operaton.bpm.client.util.TestUtil.waitUntil;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.operaton.bpm.client.ExternalTaskClient;
+import org.operaton.bpm.client.ExternalTaskClientBuilder;
+import org.operaton.bpm.client.util.PropertyUtil;
 
 import java.util.Properties;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
-import org.operaton.bpm.client.ExternalTaskClient;
-import org.operaton.bpm.client.ExternalTaskClientBuilder;
-import org.operaton.bpm.client.util.PropertyUtil;
-import org.junit.rules.ExternalResource;
+import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_NAME;
+import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_REST;
+import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
+import static org.operaton.bpm.client.util.TestUtil.waitUntil;
 
-public class ClientRule extends ExternalResource {
+public class ClientRule implements BeforeEachCallback, AfterEachCallback {
 
   public static final long LOCK_DURATION = 1000 * 60 * 5;
 
@@ -44,8 +48,8 @@ public class ClientRule extends ExternalResource {
       String endpoint = properties.getProperty(CAMUNDA_ENGINE_REST);
       String engine = properties.getProperty(CAMUNDA_ENGINE_NAME);
       return ExternalTaskClient.create()
-          .baseUrl(endpoint + engine)
-          .lockDuration(LOCK_DURATION);
+              .baseUrl(endpoint + engine)
+              .lockDuration(LOCK_DURATION);
     });
   }
 
@@ -53,9 +57,19 @@ public class ClientRule extends ExternalResource {
     this.builder = builderSupplier.get();
   }
 
+  @Override
+  public void beforeEach(ExtensionContext context) {
+    before();
+  }
+
   public void before() {
     builder.disableAutoFetching();
     client = builder.build();
+  }
+
+  @Override
+  public void afterEach(ExtensionContext context) {
+    after();
   }
 
   public void after() {
@@ -76,6 +90,5 @@ public class ClientRule extends ExternalResource {
     finally {
       client.stop();
     }
-
   }
 }

@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.client.topic;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -26,23 +29,27 @@ import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.util.RecordingExternalTaskHandler;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.RuleChain;
 
-import java.util.HashMap;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.client.util.ProcessModels.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.client.util.ProcessModels.BPMN_ERROR_EXTERNAL_TASK_PROCESS;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
+import static org.operaton.bpm.client.util.ProcessModels.ONE_EXTERNAL_TASK_WITH_OUTPUT_PARAM_PROCESS;
+import static org.operaton.bpm.client.util.ProcessModels.ONE_EXTERNAL_TASK_WITH_VERSION_TAG;
+import static org.operaton.bpm.client.util.ProcessModels.PROCESS_DEFINITION_VERSION_TAG;
+import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY;
+import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY_2;
 
 /**
  * @author Tassilo Weidner
  */
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class TopicSubscriptionIT {
 
   protected static final String BUSINESS_KEY = "aBusinessKey";
@@ -55,10 +62,6 @@ public class TopicSubscriptionIT {
 
   protected ClientRule clientRule = new ClientRule();
   protected EngineRule engineRule = new EngineRule();
-  protected ExpectedException thrown = ExpectedException.none();
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule).around(thrown);
 
   protected ExternalTaskClient client;
 
@@ -66,7 +69,7 @@ public class TopicSubscriptionIT {
   protected ProcessDefinitionDto processDefinition2;
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     client = clientRule.client();
     handler.clear();
@@ -475,13 +478,12 @@ public class TopicSubscriptionIT {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
-    // then
-    thrown.expect(ExternalTaskClientException.class);
-
-    // when
-    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .lockDuration(0)
-      .open();
+    // when + then
+    assertThatThrownBy(() ->
+      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
+        .lockDuration(0)
+        .open()
+    ).isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test
@@ -489,12 +491,8 @@ public class TopicSubscriptionIT {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
-    // then
-    thrown.expect(ExternalTaskClientException.class);
-
-    // when
-    client.subscribe(null)
-      .open();
+    // when + then
+    assertThatThrownBy(() -> client.subscribe(null).open()).isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test
@@ -502,12 +500,8 @@ public class TopicSubscriptionIT {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
-    // then
-    thrown.expect(ExternalTaskClientException.class);
-
-    // when
-    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .open();
+    // when + then
+    assertThatThrownBy(() -> client.subscribe(EXTERNAL_TASK_TOPIC_FOO).open()).isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test
@@ -515,13 +509,11 @@ public class TopicSubscriptionIT {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
-    // then
-    thrown.expect(ExternalTaskClientException.class);
-
-    // when
-    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
+    // when + then
+    assertThatThrownBy(() -> client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
       .handler(null)
-      .open();
+      .open())
+            .isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test
@@ -547,13 +539,12 @@ public class TopicSubscriptionIT {
       .handler(handler)
       .open();
 
-    // then
-    thrown.expect(ExternalTaskClientException.class);
-
-    // when
-    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
-      .open();
+    // when + then
+    assertThatThrownBy(() ->
+      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
+        .handler(handler)
+        .open()
+    ).isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test

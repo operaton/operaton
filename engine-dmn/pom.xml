@@ -19,7 +19,6 @@
 
   <dependencyManagement>
     <dependencies>
-
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>

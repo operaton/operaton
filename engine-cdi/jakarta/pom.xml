@@ -286,7 +286,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
-        <version>3.2.0</version>
         <executions>
           <execution>
             <id>add-jakarta-source</id>
@@ -354,10 +353,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.2</version>
-        <configuration>
-          <useDefaultManifestFile combine.self="override" />
-        </configuration>
         <executions>
           <execution>
             <id>create-test-jar</id>

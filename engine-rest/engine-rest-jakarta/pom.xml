@@ -491,7 +491,6 @@
       <plugin>
         <groupId>org.jboss.shrinkwrap.resolver</groupId>
         <artifactId>shrinkwrap-resolver-maven-plugin</artifactId>
-        <version>${version.shrinkwrap.resolvers}</version>
         <executions>
           <execution>
             <goals>

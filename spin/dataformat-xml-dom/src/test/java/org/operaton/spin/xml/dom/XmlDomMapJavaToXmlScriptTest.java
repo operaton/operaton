@@ -17,13 +17,14 @@
 package org.operaton.spin.xml.dom;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.createExampleOrder;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.xml.mapping.Order;
-import org.junit.Test;
 
 public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest{
 
@@ -39,9 +40,10 @@ public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest{
     assertThat(xml).isXmlEqualTo(EXAMPLE_VALIDATION_XML);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   @Script(execute = false)
-  public void shouldFailWithNull() throws Throwable {
-    failingWithException();
+  public void shouldFailWithNull() {
+    assertThrows(IllegalArgumentException.class, () ->
+      failingWithException());
   }
 }

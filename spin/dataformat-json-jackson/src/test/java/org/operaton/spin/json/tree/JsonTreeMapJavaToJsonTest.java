@@ -28,15 +28,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.mapping.Order;
-import org.junit.Test;
 
-public class JsonTreeMapJavaToJsonTest {
+class JsonTreeMapJavaToJsonTest {
 
   @Test
-  public void shouldMapJavaObjectToJson() {
+  void shouldMapJavaObjectToJson() {
     Order exampleOrder = createExampleOrder();
 
     String json = JSON(exampleOrder).toString();
@@ -45,7 +45,7 @@ public class JsonTreeMapJavaToJsonTest {
   }
 
   @Test
-  public void shouldMapListToJson() {
+  void shouldMapListToJson() {
     List<String> names = new ArrayList<String>();
     names.add("Waldo");
     names.add("Hugo");
@@ -58,7 +58,7 @@ public class JsonTreeMapJavaToJsonTest {
   }
 
   @Test
-  public void shouldMapArrayToJson() {
+  void shouldMapArrayToJson() {
     String[] names = new String[] { "Waldo", "Hugo", "Kermit" };
 
     String json = JSON(names).toString();
@@ -68,7 +68,7 @@ public class JsonTreeMapJavaToJsonTest {
   }
 
   @Test
-  public void shouldMapMapToJson() {
+  void shouldMapMapToJson() {
     Map<String, Object> javaMap = new HashMap<String, Object>();
     javaMap.put("aKey", "aValue");
     javaMap.put("anotherKey", 42);
@@ -80,7 +80,7 @@ public class JsonTreeMapJavaToJsonTest {
   }
 
   @Test
-  public void shouldFailWithNull() {
+  void shouldFailWithNull() {
     try {
       JSON(null).toString();
       fail("expected exception");
@@ -90,7 +90,7 @@ public class JsonTreeMapJavaToJsonTest {
   }
 
   @Test
-  public void shouldMapPrimitiveBooleanToJson() {
+  void shouldMapPrimitiveBooleanToJson() {
     SpinJsonNode node = JSON(true);
     assertThat(node.isBoolean()).isTrue();
     assertThat(node.isValue()).isTrue();
@@ -98,7 +98,7 @@ public class JsonTreeMapJavaToJsonTest {
   }
 
   @Test
-  public void shouldMapPrimitiveNumberToJson() {
+  void shouldMapPrimitiveNumberToJson() {
     SpinJsonNode node = JSON(42);
     assertThat(node.isNumber()).isTrue();
     assertThat(node.isValue()).isTrue();
@@ -106,7 +106,7 @@ public class JsonTreeMapJavaToJsonTest {
   }
 
   @Test
-  public void shouldMapListOfPrimitiveStrings() {
+  void shouldMapListOfPrimitiveStrings() {
     List<String> inputList = new ArrayList<String>();
     inputList.add("Waldo");
     inputList.add("Hugo");

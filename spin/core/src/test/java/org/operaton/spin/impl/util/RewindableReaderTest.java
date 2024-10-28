@@ -24,10 +24,10 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
 
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
-public class RewindableReaderTest {
+class RewindableReaderTest {
 
   private static final String EXAMPLE_INPUT_STRING = "a long string with content";
   private static final int DEFAULT_BUFFER_SIZE = 10;
@@ -35,7 +35,7 @@ public class RewindableReaderTest {
   protected RewindableReader reader;
 
   @Test
-  public void shouldRead() throws IOException {
+  void shouldRead() throws IOException {
     // read(char[])
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
     assertThat(reader.getRewindBufferSize()).isEqualTo(DEFAULT_BUFFER_SIZE);
@@ -77,7 +77,7 @@ public class RewindableReaderTest {
   }
 
   @Test
-  public void shouldRewind() throws IOException {
+  void shouldRewind() throws IOException {
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];
@@ -89,7 +89,7 @@ public class RewindableReaderTest {
   }
 
   @Test
-  public void shouldRewindAfterRepeatedRead() throws IOException {
+  void shouldRewindAfterRepeatedRead() throws IOException {
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];
@@ -102,7 +102,7 @@ public class RewindableReaderTest {
   }
 
   @Test
-  public void shouldReadAndRewindWhenEndOfInputIsReached() throws IOException {
+  void shouldReadAndRewindWhenEndOfInputIsReached() throws IOException {
     String input = EXAMPLE_INPUT_STRING.substring(0, 5);
 
     reader = newReaderInstance(input, DEFAULT_BUFFER_SIZE);
@@ -129,7 +129,7 @@ public class RewindableReaderTest {
   }
 
   @Test
-  public void shouldReadRemainder() throws IOException {
+  void shouldReadRemainder() throws IOException {
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];
@@ -143,7 +143,7 @@ public class RewindableReaderTest {
    * @throws IOException
    */
   @Test
-  public void shouldFailWhenRewindLimitExceeded() throws IOException {
+  void shouldFailWhenRewindLimitExceeded() throws IOException {
     // exceeding with read(char[])
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
@@ -190,7 +190,7 @@ public class RewindableReaderTest {
   }
 
   @Test
-  public void shouldRewindWhenNothingWasRead() throws IOException {
+  void shouldRewindWhenNothingWasRead() throws IOException {
     reader = newReaderInstance("", DEFAULT_BUFFER_SIZE);
 
     int charRead = reader.read();
@@ -202,8 +202,8 @@ public class RewindableReaderTest {
     assertThat(charRead).isEqualTo(-1);
   }
 
-  @After
-  public void closeReader() {
+  @AfterEach
+  void closeReader() {
     if (reader != null) {
       SpinIoUtil.closeSilently(reader);
     }

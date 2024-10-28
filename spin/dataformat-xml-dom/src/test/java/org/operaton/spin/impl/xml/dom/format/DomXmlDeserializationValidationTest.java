@@ -18,33 +18,31 @@ package org.operaton.spin.impl.xml.dom.format;
 
 import org.operaton.spin.DeserializationTypeValidator;
 import org.operaton.spin.SpinRuntimeException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class DomXmlDeserializationValidationTest {
+class DomXmlDeserializationValidationTest {
 
   protected DeserializationTypeValidator validator;
   protected static DomXmlDataFormat format;
 
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
-
-  @BeforeClass
-  public static void setUpMocks() {
+  @BeforeAll
+  static void setUpMocks() {
     format = new DomXmlDataFormat("test");
   }
 
-  @AfterClass
-  public static void tearDown() {
+  @AfterAll
+  static void tearDown() {
     format = null;
   }
 
   @Test
-  public void shouldValidateNothingForPrimitiveClass() {
+  void shouldValidateNothingForPrimitiveClass() {
     // given
     validator = createValidatorMock(true);
 
@@ -52,11 +50,11 @@ public class DomXmlDeserializationValidationTest {
     format.getMapper().validateType(int.class, validator);
 
     // then
-    Mockito.verifyZeroInteractions(validator);
+    Mockito.verifyNoInteractions(validator);
   }
 
   @Test
-  public void shouldValidateBaseTypeOnlyForBaseClass() {
+  void shouldValidateBaseTypeOnlyForBaseClass() {
     // given
     validator = createValidatorMock(true);
 
@@ -69,7 +67,7 @@ public class DomXmlDeserializationValidationTest {
   }
 
   @Test
-  public void shouldValidateBaseTypeOnlyForComplexClass() {
+  void shouldValidateBaseTypeOnlyForComplexClass() {
     // given
     validator = createValidatorMock(true);
 
@@ -82,7 +80,7 @@ public class DomXmlDeserializationValidationTest {
   }
 
   @Test
-  public void shouldValidateContentTypeOnlyForArrayClass() {
+  void shouldValidateContentTypeOnlyForArrayClass() {
     // given
     validator = createValidatorMock(true);
 
@@ -95,42 +93,39 @@ public class DomXmlDeserializationValidationTest {
   }
 
   @Test
-  public void shouldFailForSimpleClass() {
-    // given
-    validator = createValidatorMock(false);
+  void shouldFailForSimpleClass() {
+    Throwable exception = assertThrows(SpinRuntimeException.class, () -> {
+      // given
+      validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("'java.lang.String'");
-
-    // when
-    format.getMapper().validateType(String.class, validator);
+      // when
+      format.getMapper().validateType(String.class, validator);
+    });
+    assertTrue(exception.getMessage().contains("'java.lang.String'"));
   }
 
   @Test
-  public void shouldFailForComplexClass() {
-    // given
-    validator = createValidatorMock(false);
+  void shouldFailForComplexClass() {
+    Throwable exception = assertThrows(SpinRuntimeException.class, () -> {
+      // given
+      validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("'org.operaton.spin.impl.xml.dom.format.DomXmlDeserializationValidationTest$Complex'");
-
-    // when
-    format.getMapper().validateType(Complex.class, validator);
+      // when
+      format.getMapper().validateType(Complex.class, validator);
+    });
+    assertTrue(exception.getMessage().contains("'org.operaton.spin.impl.xml.dom.format.DomXmlDeserializationValidationTest$Complex'"));
   }
 
   @Test
-  public void shouldFailForArrayClass() {
-    // given
-    validator = createValidatorMock(false);
+  void shouldFailForArrayClass() {
+    Throwable exception = assertThrows(SpinRuntimeException.class, () -> {
+      // given
+      validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("'java.lang.Integer'");
-
-    // when
-    format.getMapper().validateType(Integer[].class, validator);
+      // when
+      format.getMapper().validateType(Integer[].class, validator);
+    });
+    assertTrue(exception.getMessage().contains("'java.lang.Integer'"));
   }
 
   public static class Complex {

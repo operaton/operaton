@@ -22,14 +22,14 @@ import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.createExampleOrder;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.xml.mapping.NonXmlRootElementType;
 import org.operaton.spin.xml.mapping.Order;
-import org.junit.Test;
 
-public class XmlDomMapJavaToXmlTest {
+class XmlDomMapJavaToXmlTest {
 
   @Test
-  public void shouldMapJavaToXml() {
+  void shouldMapJavaToXml() {
     Order order = createExampleOrder();
     String orderAsString = XML(order).toString();
 
@@ -37,7 +37,7 @@ public class XmlDomMapJavaToXmlTest {
   }
 
   @Test
-  public void shouldMapNonXmlRootElementToXml() {
+  void shouldMapNonXmlRootElementToXml() {
     NonXmlRootElementType nonXmlRootElementType = new NonXmlRootElementType();
     nonXmlRootElementType.setProperty("propValue");
 
@@ -49,7 +49,7 @@ public class XmlDomMapJavaToXmlTest {
 
   @Test
   @SuppressWarnings("unused")
-  public void shouldFailWithNull() {
+  void shouldFailWithNull() {
     try {
       String s = XML(null).toString();
       fail("Expected IllegalArgumentException");

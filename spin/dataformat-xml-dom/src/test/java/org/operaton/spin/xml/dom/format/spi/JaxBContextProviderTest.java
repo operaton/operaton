@@ -23,28 +23,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.xml.bind.JAXBException;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.Spin;
 import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
 import org.operaton.spin.xml.SpinXmlDataFormatException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.mapping.Customer;
-import org.junit.After;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class JaxBContextProviderTest {
+class JaxBContextProviderTest {
 
   /**
    * This test uses a dataformat with a JAXBContext that cannot resolve any classes.
    * Thus, it is expected that mapping an object to XML using this context fails.
    */
   @Test
-  public void testCustomJaxBProvider() {
+  void customJaxBProvider() {
 
     Object objectToConvert = new Customer();
 
@@ -75,8 +74,8 @@ public class JaxBContextProviderTest {
 
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     // reset jaxb context provider
     ((DomXmlDataFormat) DataFormats.xml()).setJaxBContextProvider(DomXmlDataFormat.defaultJaxBContextProvider());
   }

@@ -16,9 +16,9 @@
  */
 package org.operaton.spin.impl.test;
 
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Sebastian Menski

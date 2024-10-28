@@ -16,9 +16,9 @@
  */
 package org.operaton.spin.javascript.json.tree;
 
+import org.junit.jupiter.api.Disabled;
 import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.json.tree.JsonTreeMapObjectToJsonScriptTest;
-import org.junit.Ignore;
 
 /**
  * Note: Jackson is apparently not able to map graal.js's internal representations
@@ -26,7 +26,7 @@ import org.junit.Ignore;
  *
  * @author Thorben Lindhauer
  */
-@Ignore
+@Disabled
 @ScriptEngine("graal.js")
 public class JsonTreeMapObjectToJsonJavascriptTest extends JsonTreeMapObjectToJsonScriptTest {
 

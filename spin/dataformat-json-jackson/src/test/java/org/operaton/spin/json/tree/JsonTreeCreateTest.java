@@ -28,18 +28,18 @@ import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 
 import java.io.Reader;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.spi.SpinDataFormatException;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  */
-public class JsonTreeCreateTest {
+class JsonTreeCreateTest {
 
   @Test
-  public void shouldCreateForString() {
+  void shouldCreateForString() {
     SpinJsonNode json = JSON(EXAMPLE_JSON);
     assertThat(json).isNotNull();
 
@@ -54,14 +54,14 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldCreateObjectDeclaredInput() {
+  void shouldCreateObjectDeclaredInput() {
     Object input = EXAMPLE_JSON;
     SpinJsonNode jsonNode = JSON(input);
     assertThat(jsonNode.prop("order")).isNotNull();
   }
 
   @Test
-  public void shouldCreateForReader() {
+  void shouldCreateForReader() {
     SpinJsonNode json = JSON(stringAsReader(EXAMPLE_JSON));
     assertThat(json).isNotNull();
 
@@ -76,7 +76,7 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldBeIdempotent() {
+  void shouldBeIdempotent() {
     SpinJsonNode json = JSON(EXAMPLE_JSON);
     assertThat(json).isEqualTo(JSON(json));
     assertThat(json).isEqualTo(S(json, json()));
@@ -85,7 +85,7 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldFailForNull() {
+  void shouldFailForNull() {
     SpinJsonNode jsonNode = null;
 
     try {
@@ -164,7 +164,7 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldFailForInvalidJson() {
+  void shouldFailForInvalidJson() {
     try {
       JSON(EXAMPLE_INVALID_JSON);
       fail("Expected IllegalArgumentException");
@@ -195,7 +195,7 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldFailForEmptyString() {
+  void shouldFailForEmptyString() {
     try {
       JSON(EXAMPLE_EMPTY_STRING);
       fail("Expected IllegalArgumentException");
@@ -226,7 +226,7 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldFailForEmptyReader() {
+  void shouldFailForEmptyReader() {
     try {
       JSON(stringAsReader(EXAMPLE_EMPTY_STRING));
       fail("Expected IllegalArgumentException");
@@ -250,7 +250,7 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldCreateForBoolean() {
+  void shouldCreateForBoolean() {
     SpinJsonNode node = JSON("false");
     assertThat(node.isBoolean()).isTrue();
     assertThat(node.isValue()).isTrue();
@@ -258,7 +258,7 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldCreateForNumber() {
+  void shouldCreateForNumber() {
     SpinJsonNode node = JSON("42");
     assertThat(node.isNumber()).isTrue();
     assertThat(node.isValue()).isTrue();
@@ -266,7 +266,7 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldCreateForPrimitiveString() {
+  void shouldCreateForPrimitiveString() {
     SpinJsonNode node = JSON("\"a String\"");
     assertThat(node.isString()).isTrue();
     assertThat(node.isValue()).isTrue();
@@ -274,7 +274,7 @@ public class JsonTreeCreateTest {
   }
 
   @Test
-  public void shouldFailForUnescapedString() {
+  void shouldFailForUnescapedString() {
     try {
       JSON("a String");
       fail("expected exception");

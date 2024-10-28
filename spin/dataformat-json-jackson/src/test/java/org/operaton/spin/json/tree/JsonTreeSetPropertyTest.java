@@ -26,16 +26,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPropertyException;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Stefan Hentschel
  */
-public class JsonTreeSetPropertyTest {
+class JsonTreeSetPropertyTest {
 
   protected SpinJsonNode jsonNode;
   protected SpinJsonNode order;
@@ -46,8 +45,8 @@ public class JsonTreeSetPropertyTest {
   protected SpinJsonNode active;
   protected SpinJsonNode nullValue;
 
-  @Before
-  public void readJson() {
+  @BeforeEach
+  void readJson() {
     jsonNode = JSON(EXAMPLE_JSON);
     order = jsonNode.prop("order");
     dueUntil = jsonNode.prop("dueUntil");
@@ -59,7 +58,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setStringProperty() {
+  void setStringProperty() {
     String newComment = "42!";
 
     jsonNode.prop("comment", newComment);
@@ -70,7 +69,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void replaceStringProperty() {
+  void replaceStringProperty() {
     String value = "new Order";
     String oldValue = order.stringValue();
 
@@ -91,7 +90,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setIntegerProperty() {
+  void setIntegerProperty() {
     Integer newComment = 42;
     jsonNode.prop("comment", newComment);
     SpinJsonNode comment = jsonNode.prop("comment");
@@ -101,7 +100,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void replaceIntegerProperty() {
+  void replaceIntegerProperty() {
     Integer value = 42;
     Integer oldValue = dueUntil.numberValue().intValue();
 
@@ -123,7 +122,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setFloatProperty() {
+  void setFloatProperty() {
     Float floatValue = 42.00F;
     jsonNode.prop("comment", floatValue);
     SpinJsonNode comment = jsonNode.prop("comment");
@@ -133,7 +132,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void replaceFloatProperty() {
+  void replaceFloatProperty() {
     SpinJsonNode price = orderDetails.prop("price");
     Float value = 42.00F;
 
@@ -157,7 +156,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setLongProperty() {
+  void setLongProperty() {
     Long longValue = 4200000000L;
     jsonNode.prop("comment", longValue);
     SpinJsonNode comment = jsonNode.prop("comment");
@@ -167,7 +166,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void replaceLongProperty() {
+  void replaceLongProperty() {
     Long value = 4200000000L;
 
     Long oldValue = id.numberValue().longValue();
@@ -190,7 +189,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setBooleanProperty() {
+  void setBooleanProperty() {
     jsonNode.prop("comment", true);
     SpinJsonNode comment = jsonNode.prop("comment");
 
@@ -199,7 +198,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void replaceBooleanProperty() {
+  void replaceBooleanProperty() {
     SpinJsonNode active = jsonNode.prop("active");
 
     Boolean oldValue = active.boolValue();
@@ -223,7 +222,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setArrayProperty() {
+  void setArrayProperty() {
     ArrayList<Object> list1 = new ArrayList<Object>();
     ArrayList<Object> list2 = new ArrayList<Object>();
     Map<String, Object> map = new HashMap<String, Object>();
@@ -252,7 +251,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void replaceArrayProperty() {
+  void replaceArrayProperty() {
 
     assertThat(customers.isArray()).isTrue();
     assertThat(customers.elements()).hasSize(3);
@@ -297,7 +296,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setObjectProperty() {
+  void setObjectProperty() {
     Map<String, Object> map = new HashMap<String, Object>();
     map.put("id1", "object1");
     map.put("id2", 1337);
@@ -312,7 +311,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void replaceObjectProperty() {
+  void replaceObjectProperty() {
     SpinJsonNode childNode = orderDetails;
     String oldValue = childNode.prop("article").stringValue();
 
@@ -332,7 +331,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setPropertyWithJSON() {
+  void setPropertyWithJSON() {
     String json = "{\"agent\":\"Smith\"}";
 
     jsonNode.prop("name", JSON(json));
@@ -342,7 +341,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void replacePropertyWithJSON() {
+  void replacePropertyWithJSON() {
     String json = "{\"agent\":\"Smith\"}";
 
     assertThat(active.isBoolean()).isTrue();
@@ -355,7 +354,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void failWhileSettingObjectWithMap() {
+  void failWhileSettingObjectWithMap() {
     Date date = new Date();
     Map<String, Object> map = new HashMap<String, Object>();
     map.put("date", date);
@@ -369,7 +368,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void failWhileSettingObjectWithList() {
+  void failWhileSettingObjectWithList() {
     Date date = new Date();
     ArrayList<Object> list = new ArrayList<Object>();
     list.add(date);
@@ -383,7 +382,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void replaceNullProperty() {
+  void replaceNullProperty() {
     jsonNode.prop("order", (String) null);
     jsonNode.prop("id", (String) null);
     jsonNode.prop("nullValue", (String) null);
@@ -399,7 +398,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setNullStringProperty() {
+  void setNullStringProperty() {
 
     jsonNode.prop("newNullValue", (String) null);
 
@@ -408,7 +407,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setNullMapProperty() {
+  void setNullMapProperty() {
     jsonNode.prop("newNullValue", (Map) null);
 
     assertThat(jsonNode.prop("newNullValue").isNull()).isTrue();
@@ -416,7 +415,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setNullListProperty() {
+  void setNullListProperty() {
     jsonNode.prop("newNullValue", (List) null);
 
     assertThat(jsonNode.prop("newNullValue").isNull()).isTrue();
@@ -424,7 +423,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setNullBooleanProperty() {
+  void setNullBooleanProperty() {
     jsonNode.prop("newNullValue", (Boolean) null);
 
     assertThat(jsonNode.prop("newNullValue").isNull()).isTrue();
@@ -432,7 +431,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setNullNumberProperty() {
+  void setNullNumberProperty() {
     jsonNode.prop("newNullValue", (Number) null);
 
     assertThat(jsonNode.prop("newNullValue").isNull()).isTrue();
@@ -440,7 +439,7 @@ public class JsonTreeSetPropertyTest {
   }
 
   @Test
-  public void setNullSpinJsonNodeProperty() {
+  void setNullSpinJsonNodeProperty() {
     jsonNode.prop("newNullValue", (SpinJsonNode) null);
 
     assertThat(jsonNode.prop("newNullValue").isNull()).isTrue();

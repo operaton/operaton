@@ -17,71 +17,78 @@
 package org.operaton.spin.xml.dom;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.operaton.spin.Spin.S;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.xml.SpinXPathException;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski
  */
-public class XmlDomXPathTest {
+class XmlDomXPathTest {
 
   protected SpinXmlElement element;
   protected SpinXmlElement elementWithNamespace;
   protected SpinXmlElement elementWithDefaultNamespace;
 
-  @Before
-  public void parseXml() {
+  @BeforeEach
+  void parseXml() {
     element = S("<root><child id=\"child\"><a id=\"a\"/><b id=\"b\"/><a id=\"c\"/></child></root>");
     elementWithNamespace = S("<root xmlns:bar=\"http://operaton.org\" xmlns:foo=\"http://operaton.com\"><foo:child id=\"child\"><bar:a id=\"a\"/><foo:b id=\"b\"/><a id=\"c\"/></foo:child></root>");
     elementWithDefaultNamespace = S("<root xmlns=\"http://operaton.com/example\" xmlns:bar=\"http://operaton.org\" xmlns:foo=\"http://operaton.com\"><foo:child id=\"child\"><bar:a id=\"a\"/><foo:b id=\"b\"/><a id=\"c\"/></foo:child></root>");
   }
 
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryDocumentAsElement() {
-    element.xPath("/").element();
-  }
-
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryDocumentAsElementList() {
-    element.xPath("/").elementList();
-  }
-
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryDocumentAsAttribute() {
-    element.xPath("/").attribute();
-  }
-
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryDocumentAsAttributeList() {
-    element.xPath("/").attributeList();
-  }
-
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryDocumentAsString() {
-    element.xPath("/").string();
-  }
-
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryDocumentAsNumber() {
-    element.xPath("/").number();
-  }
-
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryDocumentAsBoolean() {
-    element.xPath("/").bool();
+  @Test
+  void canNotQueryDocumentAsElement() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/").element());
   }
 
   @Test
-  public void canQueryElement() {
+  void canNotQueryDocumentAsElementList() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/").elementList());
+  }
+
+  @Test
+  void canNotQueryDocumentAsAttribute() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/").attribute());
+  }
+
+  @Test
+  void canNotQueryDocumentAsAttributeList() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/").attributeList());
+  }
+
+  @Test
+  void canNotQueryDocumentAsString() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/").string());
+  }
+
+  @Test
+  void canNotQueryDocumentAsNumber() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/").number());
+  }
+
+  @Test
+  void canNotQueryDocumentAsBoolean() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/").bool());
+  }
+
+  @Test
+  void canQueryElement() {
     SpinXmlElement child = element.xPath("/root/child").element();
     assertThat(child.name()).isEqualTo("child");
     assertThat(child.attr("id").value()).isEqualTo("child");
@@ -91,56 +98,62 @@ public class XmlDomXPathTest {
     assertThat(b.attr("id").value()).isEqualTo("b");
   }
 
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryElement() {
-    element.xPath("/root/nonExisting").element();
-  }
-
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryElementAsAttribute() {
-    element.xPath("/root/child/").attribute();
+  @Test
+  void canNotQueryElement() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/root/nonExisting").element());
   }
 
   @Test
-  public void canQueryElementList() {
+  void canNotQueryElementAsAttribute() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/root/child/").attribute());
+  }
+
+  @Test
+  void canQueryElementList() {
     SpinList<SpinXmlElement> childs = element.xPath("/root/child/a").elementList();
     assertThat(childs).hasSize(2);
   }
 
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryElementList() {
-    element.xPath("/root/child/nonExisting").elementList();
+  @Test
+  void canNotQueryElementList() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/root/child/nonExisting").elementList());
   }
 
   @Test
-  public void canQueryAttribute() {
+  void canQueryAttribute() {
     SpinXmlAttribute attribute = element.xPath("/root/child/@id").attribute();
     assertThat(attribute.value()).isEqualTo("child");
   }
 
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryAttribute() {
-    element.xPath("/root/child/@nonExisting").attribute();
-  }
-
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryAttributeAsElement() {
-    element.xPath("/root/child/@id").element();
+  @Test
+  void canNotQueryAttribute() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/root/child/@nonExisting").attribute());
   }
 
   @Test
-  public void canQueryAttributeList() {
+  void canNotQueryAttributeAsElement() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/root/child/@id").element());
+  }
+
+  @Test
+  void canQueryAttributeList() {
     SpinList<SpinXmlAttribute> attributes = element.xPath("/root/child/a/@id").attributeList();
     assertThat(attributes).hasSize(2);
   }
 
-  @Test(expected = SpinXPathException.class)
-  public void canNotQueryAttributeList() {
-    element.xPath("/root/child/a/@nonExisting").attributeList();
+  @Test
+  void canNotQueryAttributeList() {
+    assertThrows(SpinXPathException.class, () ->
+      element.xPath("/root/child/a/@nonExisting").attributeList());
   }
 
   @Test
-  public void canQueryString() {
+  void canQueryString() {
     String value = element.xPath("string(/root/child/@id)").string();
     assertThat(value).isEqualTo("child");
 
@@ -154,7 +167,7 @@ public class XmlDomXPathTest {
   }
 
   @Test
-  public void canQueryNumber() {
+  void canQueryNumber() {
     Double count = element.xPath("count(/root/child/a)").number();
     assertThat(count).isEqualTo(2);
 
@@ -168,7 +181,7 @@ public class XmlDomXPathTest {
   }
 
   @Test
-  public void canQueryBoolean() {
+  void canQueryBoolean() {
     Boolean exists = element.xPath("boolean(/root/child)").bool();
     assertThat(exists).isTrue();
 
@@ -182,7 +195,7 @@ public class XmlDomXPathTest {
   }
 
   @Test
-  public void canQueryElementWithNamespace() {
+  void canQueryElementWithNamespace() {
     SpinXmlElement child = elementWithNamespace.xPath("/root/a:child")
       .ns("a", "http://operaton.com")
       .element();
@@ -193,7 +206,7 @@ public class XmlDomXPathTest {
   }
 
   @Test
-  public void canQueryElementWithNamespaceMap() {
+  void canQueryElementWithNamespaceMap() {
     Map<String, String> namespaces = new HashMap<String, String>();
     namespaces.put("a", "http://operaton.com");
     namespaces.put("b", "http://operaton.org");
@@ -208,7 +221,7 @@ public class XmlDomXPathTest {
   }
 
   @Test
-  public void canQueryElementWithDefaultNamespace() {
+  void canQueryElementWithDefaultNamespace() {
     SpinXmlElement child = elementWithDefaultNamespace.xPath("/:root/a:child")
       .ns("a", "http://operaton.com")
       .element();

@@ -28,19 +28,19 @@ import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML;
 
 import java.io.Reader;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.spi.SpinDataFormatException;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class XmlDomCreateTest {
+class XmlDomCreateTest {
 
   @Test
-  public void shouldCreateForString() {
+  void shouldCreateForString() {
     SpinXmlElement xml = XML(EXAMPLE_XML);
     assertThat(xml).isNotNull();
 
@@ -55,7 +55,7 @@ public class XmlDomCreateTest {
   }
 
   @Test
-  public void shouldCreateForReader() {
+  void shouldCreateForReader() {
     SpinXmlElement xml = XML(stringAsReader(EXAMPLE_XML));
     assertThat(xml).isNotNull();
 
@@ -70,7 +70,7 @@ public class XmlDomCreateTest {
   }
 
   @Test
-  public void shouldBeIdempotent() {
+  void shouldBeIdempotent() {
     SpinXmlElement xml = XML(EXAMPLE_XML);
     assertThat(xml).isEqualTo(XML(xml));
     assertThat(xml).isEqualTo(S(xml, xml()));
@@ -79,7 +79,7 @@ public class XmlDomCreateTest {
   }
 
   @Test
-  public void shouldFailForNull() {
+  void shouldFailForNull() {
     SpinXmlElement xmlTreeElement = null;
 
     try {
@@ -158,7 +158,7 @@ public class XmlDomCreateTest {
   }
 
   @Test
-  public void shouldFailForInvalidXml() {
+  void shouldFailForInvalidXml() {
     try {
       XML(EXAMPLE_INVALID_XML);
       fail("Expected IllegalArgumentException");
@@ -189,7 +189,7 @@ public class XmlDomCreateTest {
   }
 
   @Test
-  public void shouldFailForEmptyString() {
+  void shouldFailForEmptyString() {
     try {
       XML(EXAMPLE_EMPTY_STRING);
       fail("Expected IllegalArgumentException");
@@ -220,7 +220,7 @@ public class XmlDomCreateTest {
   }
 
   @Test
-  public void shouldFailForEmptyReader() {
+  void shouldFailForEmptyReader() {
     try {
       XML(stringAsReader(EXAMPLE_EMPTY_STRING));
       fail("Expected IllegalArgumentException");

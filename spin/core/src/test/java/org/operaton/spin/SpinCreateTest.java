@@ -19,17 +19,17 @@ package org.operaton.spin;
 import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.spin.Spin.S;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.spi.DataFormat;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class SpinCreateTest {
+class SpinCreateTest {
 
   @Test
-  public void shouldFailForNonExistingDataFormat() {
+  void shouldFailForNonExistingDataFormat() {
     try {
       S("{}", "a non-existing format");
       fail("expected exception");

@@ -17,61 +17,62 @@
 package org.operaton.spin.xml.dom;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.operaton.spin.Spin.XML;
 
 import java.io.StringWriter;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlAttributeException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.XmlTestConstants;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski
  */
-public class XmlDomAttributeTest {
+class XmlDomAttributeTest {
 
   private SpinXmlAttribute attribute;
 
-  @Before
-  public void getAttribute() {
+  @BeforeEach
+  void getAttribute() {
     attribute = XML(XmlTestConstants.EXAMPLE_XML).attr("order");
   }
 
   @Test
-  public void getValue() {
+  void getValue() {
     assertThat(attribute.value()).isEqualTo("order1");
   }
 
   @Test
-  public void getName() {
+  void getName() {
     assertThat(attribute.name()).isEqualTo("order");
   }
 
   @Test
-  public void getNamespace() {
+  void getNamespace() {
     assertThat(attribute.namespace()).isNull();
   }
 
   @Test
-  public void hasNamespace() {
+  void hasNamespace() {
     assertThat(attribute.hasNamespace(null)).isTrue();
   }
 
   @Test
-  public void setValue() {
+  void setValue() {
     assertThat(attribute.value("order2").value()).isEqualTo("order2");
   }
 
-  @Test(expected = SpinXmlAttributeException.class)
-  public void setNullValue() {
-    attribute.value(null);
+  @Test
+  void setNullValue() {
+    assertThrows(SpinXmlAttributeException.class, () ->
+      attribute.value(null));
   }
 
   @Test
-  public void remove() {
+  void remove() {
     String namespace = attribute.namespace();
     String name = attribute.name();
 
@@ -82,12 +83,12 @@ public class XmlDomAttributeTest {
   // test io
 
   @Test
-  public void canWriteToString() {
+  void canWriteToString() {
     assertThat(attribute.toString()).isEqualTo("order1");
   }
 
   @Test
-  public void canWriteToWriter() {
+  void canWriteToWriter() {
     StringWriter writer = new StringWriter();
     attribute.writeToWriter(writer);
     String value = writer.toString();

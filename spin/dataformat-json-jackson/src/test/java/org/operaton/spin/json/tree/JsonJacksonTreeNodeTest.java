@@ -21,27 +21,26 @@ import static org.operaton.spin.Spin.S;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 
 import java.io.StringWriter;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.impl.json.jackson.JacksonJsonNode;
-import org.junit.Before;
-import org.junit.Test;
 
-public class JsonJacksonTreeNodeTest {
+class JsonJacksonTreeNodeTest {
 
   protected JacksonJsonNode jsonNode;
 
-  @Before
-  public void parseJson() {
+  @BeforeEach
+  void parseJson() {
     jsonNode = S(EXAMPLE_JSON);
   }
 
   @Test
-  public void canWriteToString() {
+  void canWriteToString() {
     assertThatJson(jsonNode.toString()).isEqualTo(EXAMPLE_JSON);
   }
 
   @Test
-  public void canWriteToWriter() {
+  void canWriteToWriter() {
     StringWriter writer = new StringWriter();
     jsonNode.writeToWriter(writer);
     String value = writer.toString();

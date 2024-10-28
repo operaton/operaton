@@ -17,14 +17,15 @@
 package org.operaton.spin.xml.dom;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML_FILE_NAME;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.xml.SpinXmlAttributeException;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski
@@ -48,7 +49,7 @@ public abstract class XmlDomAttributeScriptTest extends ScriptTest {
     assertThat((String) script.getVariable("newValue")).isEqualTo("order2");
   }
 
-  @Test(expected = SpinXmlAttributeException.class)
+  @Test
   @Script(
     name = "XmlDomAttributeScriptTest.testAttribute",
     variables = {
@@ -58,8 +59,9 @@ public abstract class XmlDomAttributeScriptTest extends ScriptTest {
     },
     execute = false
   )
-  public void setNullValue() throws Throwable {
-    failingWithException();
+  public void setNullValue() {
+    assertThrows(SpinXmlAttributeException.class, () ->
+      failingWithException());
   }
 
   @Test

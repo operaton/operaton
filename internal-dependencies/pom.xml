@@ -109,7 +109,7 @@
       <dependency>
         <groupId>org.junit.platform</groupId>
         <artifactId>junit-platform-testkit</artifactId>
-        <version>${version.junit5}</version>
+        <version>1.11.3</version>
         <scope>test</scope>
       </dependency>
       <dependency>

@@ -35,7 +35,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 )
 public class ArchRulesTest {
 
-  //FIXME @ArchTest
+  @ArchTest
   public static final ArchRule publicApiShouldNotExposeImplementation = classes().that()
       .areInterfaces().and().resideOutsideOfPackages("..impl..")
       .should().onlyDependOnClassesThat().resideOutsideOfPackages("..impl..")

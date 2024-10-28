@@ -27,26 +27,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonException;
 import org.operaton.spin.json.mapping.Order;
 import org.operaton.spin.json.mapping.RegularCustomer;
-import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-public class JsonTreeMapJsonToJavaTest {
+class JsonTreeMapJsonToJavaTest {
 
   @Test
-  public void shouldMapJsonObjectToJavaObject() {
+  void shouldMapJsonObjectToJavaObject() {
     Order order = JSON(EXAMPLE_JSON).mapTo(Order.class);
     assertIsExampleOrder(order);
   }
 
   @Test
-  public void shouldFailMappingToMismatchingClass() {
+  void shouldFailMappingToMismatchingClass() {
     try {
       JSON(EXAMPLE_JSON).mapTo(RegularCustomer.class);
       fail("Expected SpinJsonTreeNodeException");
@@ -56,13 +55,13 @@ public class JsonTreeMapJsonToJavaTest {
   }
 
   @Test
-  public void shouldMapByCanonicalString() {
+  void shouldMapByCanonicalString() {
     Order order = JSON(EXAMPLE_JSON).mapTo(Order.class.getCanonicalName());
     assertIsExampleOrder(order);
   }
 
   @Test
-  public void shouldMapListByCanonicalString() {
+  void shouldMapListByCanonicalString() {
     JavaType desiredType =
         TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Order.class);
 
@@ -73,7 +72,7 @@ public class JsonTreeMapJsonToJavaTest {
   }
 
   @Test
-  public void shouldFailForMalformedTypeString() {
+  void shouldFailForMalformedTypeString() {
     try {
       JSON(EXAMPLE_JSON_COLLECTION).mapTo("rubbish");
       fail("Expected SpinJsonTreeNodeException");

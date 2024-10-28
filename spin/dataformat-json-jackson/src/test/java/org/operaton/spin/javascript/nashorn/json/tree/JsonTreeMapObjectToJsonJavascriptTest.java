@@ -16,15 +16,15 @@
  */
 package org.operaton.spin.javascript.nashorn.json.tree;
 
+import org.junit.jupiter.api.Disabled;
 import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.json.tree.JsonTreeMapObjectToJsonScriptTest;
-import org.junit.Ignore;
 
 /**
  * Note: Jackson is apparently not able to map Nashorn's internal representations
  * of javascript objects and arrays.
  */
-@Ignore
+@Disabled
 @ScriptEngine("nashorn")
 public class JsonTreeMapObjectToJsonJavascriptTest extends JsonTreeMapObjectToJsonScriptTest {
 

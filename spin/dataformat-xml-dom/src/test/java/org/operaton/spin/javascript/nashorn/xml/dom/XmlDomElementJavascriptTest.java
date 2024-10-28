@@ -16,16 +16,17 @@
  */
 package org.operaton.spin.javascript.nashorn.xml.dom;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML_FILE_NAME;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.xml.dom.XmlDomElementScriptTest;
-import org.junit.Test;
 
 @ScriptEngine("nashorn")
-public class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
+class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
 
   /**
    * The Nashorn scripting engine cannot determine the method to call if the
@@ -33,7 +34,7 @@ public class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
    */
 
   @Override
-  @Test(expected = RuntimeException.class)
+  @Test
   @Script(
     name = "XmlDomElementScriptTest.appendChildElement",
     variables = {
@@ -42,8 +43,9 @@ public class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
     },
     execute = false
   )
-  public void cannotAppendNullChildElement() throws Throwable {
-    failingWithException();
+  public void cannotAppendNullChildElement() {
+    assertThrows(RuntimeException.class, () ->
+      failingWithException());
   }
 
   /**
@@ -51,7 +53,7 @@ public class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
    * parameter is null.
    */
   @Override
-  @Test(expected = RuntimeException.class)
+  @Test
   @Script(
     name = "XmlDomElementScriptTest.removeChildElement",
     variables = {
@@ -61,8 +63,9 @@ public class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
     },
     execute = false
   )
-  public void cannotRemoveANullChildElement() throws Throwable {
-    failingWithException();
+  public void cannotRemoveANullChildElement() {
+    assertThrows(RuntimeException.class, () ->
+      failingWithException());
   }
 
 }

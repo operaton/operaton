@@ -22,12 +22,11 @@ import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 
 import java.util.Date;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.json.SpinJsonException;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPropertyException;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Index:
@@ -44,14 +43,14 @@ import org.junit.Test;
  *
  * @author Stefan Hentschel
  */
-public class JsonTreeEditListPropertyTest {
+class JsonTreeEditListPropertyTest {
 
   protected SpinJsonNode jsonNode;
   protected SpinJsonNode customers;
   protected SpinJsonNode currencies;
 
-  @Before
-  public void readJson() {
+  @BeforeEach
+  void readJson() {
     jsonNode = JSON(EXAMPLE_JSON);
     customers = jsonNode.prop("customers");
     currencies = jsonNode.prop("orderDetails").prop("currencies");
@@ -60,7 +59,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 1) indexOf ----------------------
 
   @Test
-  public void readIndexOfNonArray() {
+  void readIndexOfNonArray() {
     try {
       jsonNode.indexOf("n");
       fail("Expected: SpinJsonTreeNodeException");
@@ -70,7 +69,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void readIndexOfWithoutSearchNode() {
+  void readIndexOfWithoutSearchNode() {
     try {
       jsonNode.indexOf(null);
       fail("Expected: IllegalArgumentException");
@@ -80,7 +79,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void readIndexOfNonExistentValue() {
+  void readIndexOfNonExistentValue() {
     try {
       customers.indexOf("n");
       fail("Expected: SpinJsonTreeNodeException");
@@ -90,7 +89,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void readIndexOfExistentValue() {
+  void readIndexOfExistentValue() {
     Integer i = currencies.indexOf("euro");
 
     assertThat(i).isZero();
@@ -99,7 +98,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 2) lastIndexOf ----------------------
 
   @Test
-  public void readLastIndexOfNonArray() {
+  void readLastIndexOfNonArray() {
     try {
       jsonNode.lastIndexOf("n");
       fail("Expected: SpinJsonTreeNodeException");
@@ -109,7 +108,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void readLastIndexOfWithoutSearchNode() {
+  void readLastIndexOfWithoutSearchNode() {
     try {
       jsonNode.lastIndexOf(null);
       fail("Expected: IllegalArgumentException");
@@ -119,7 +118,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void readLastIndexOfNonExistentValue() {
+  void readLastIndexOfNonExistentValue() {
     try {
       customers.lastIndexOf("n");
       fail("Expected: SpinJsonTreeNodeException");
@@ -129,7 +128,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void readLastIndexOfExistentValue() {
+  void readLastIndexOfExistentValue() {
     Integer i = currencies.lastIndexOf("dollar");
 
     assertThat(i).isEqualTo(1);
@@ -138,7 +137,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 3) append ----------------------
 
   @Test
-  public void appendNodeToArray() {
+  void appendNodeToArray() {
     Integer oldSize = customers.elements().size();
     customers.append("Testcustomer");
     Integer newSize = customers.elements().size();
@@ -150,7 +149,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void appendNodeToNonArray() {
+  void appendNodeToNonArray() {
     try {
       jsonNode.append("testcustomer");
       fail("Expected: SpinJsonTreeNodeException");
@@ -160,7 +159,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void appendWrongNode() {
+  void appendWrongNode() {
     try {
       jsonNode.append(new Date());
       fail("Expected: SpinJsonTreeNodeException");
@@ -170,7 +169,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void appendNullNode() {
+  void appendNullNode() {
     try {
       jsonNode.append(null);
       fail("Expected: IllegalArgumentException");
@@ -182,7 +181,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 4) insertAt ----------------------
 
   @Test
-  public void insertAtWithIndex() {
+  void insertAtWithIndex() {
     Integer oldSize = currencies.elements().size();
     Integer oldPosition = currencies.indexOf("dollar");
     SpinJsonNode oldNode = currencies.elements().get(1);
@@ -200,7 +199,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertAtNonArray() {
+  void insertAtNonArray() {
     try {
       jsonNode.insertAt(1, "test");
       fail("Expected: SpinJsonTreeNodeException");
@@ -210,7 +209,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertAtWithNegativeIndex() {
+  void insertAtWithNegativeIndex() {
     Integer oldSize = currencies.elements().size();
     Integer oldPosition = currencies.indexOf("dollar");
     SpinJsonNode oldNode = currencies.elements().get(0);
@@ -228,7 +227,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertAtWithIndexOutOfBounds() {
+  void insertAtWithIndexOutOfBounds() {
     try {
       currencies.insertAt(6, "string");
       fail("Expected: IndexOutOfBoundsException");
@@ -238,7 +237,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertAtWithNegativeIndexOutOfBounds() {
+  void insertAtWithNegativeIndexOutOfBounds() {
     try {
       currencies.insertAt(-6, "string");
       fail("Expected: IndexOutOfBoundsException");
@@ -248,7 +247,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertAtWithWrongObject() {
+  void insertAtWithWrongObject() {
     try {
       currencies.insertAt(1, new Date());
       fail("Expected: SpinJsonTreeNodeException");
@@ -258,7 +257,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertAtWithNullObject() {
+  void insertAtWithNullObject() {
     try {
       currencies.insertAt(1, null);
       fail("Expected: IllegalArgumentException");
@@ -270,7 +269,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 5) insertBefore ----------------------
 
   @Test
-  public void insertBeforeNonExistentSearchObject() {
+  void insertBeforeNonExistentSearchObject() {
     try {
       currencies.insertBefore(1, "test");
       fail("Expected: SpinJsonTreePropertyException");
@@ -280,7 +279,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertBeforeWithNullAsSearchObject() {
+  void insertBeforeWithNullAsSearchObject() {
     try {
       currencies.insertBefore(null, "test");
       fail("Expected: IllegalArgumentException");
@@ -290,7 +289,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertBeforeSearchObjectOnBeginning() {
+  void insertBeforeSearchObjectOnBeginning() {
     SpinJsonNode oldNode = currencies.elements().get(0);
     Integer size = currencies.elements().size();
 
@@ -307,7 +306,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertBeforeSearchObject() {
+  void insertBeforeSearchObject() {
     SpinJsonNode oldNode = currencies.elements().get(1);
     Integer size = currencies.elements().size();
 
@@ -324,7 +323,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertNullObjectBeforeSearchObject() {
+  void insertNullObjectBeforeSearchObject() {
     try {
       currencies.insertBefore("euro", null);
       fail("Expected: IllegalArgumentException");
@@ -334,7 +333,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertWrongObjectBeforeSearchObject() {
+  void insertWrongObjectBeforeSearchObject() {
     try {
       currencies.insertBefore("euro", new Date());
       fail("Expected: SpinJsonTreePropertyException");
@@ -344,7 +343,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertObjectBeforeWrongSearchObject() {
+  void insertObjectBeforeWrongSearchObject() {
     try {
       currencies.insertBefore(new Date(), "test");
       fail("Expected: SpinJsonTreePropertyException");
@@ -354,7 +353,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertBeforeOnNonArray() {
+  void insertBeforeOnNonArray() {
     try {
       jsonNode.insertBefore("test", "test");
       fail("Expected: SpinJsonTreeNodeException");
@@ -366,7 +365,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 6) insertAfter ----------------------
 
   @Test
-  public void insertAfterNonExistentSearchObject() {
+  void insertAfterNonExistentSearchObject() {
     try {
       currencies.insertBefore("test", "test");
       fail("Expected: SpinJsonTreeNodeException");
@@ -376,7 +375,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertAfterSearchObjectOnEnding() {
+  void insertAfterSearchObjectOnEnding() {
     SpinJsonNode oldNode = currencies.elements().get(1);
     Integer size = currencies.elements().size();
 
@@ -392,7 +391,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertAfterSearchObject() {
+  void insertAfterSearchObject() {
     SpinJsonNode oldNode = currencies.elements().get(0);
     Integer size = currencies.elements().size();
 
@@ -408,7 +407,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertNullObjectAfterSearchObject() {
+  void insertNullObjectAfterSearchObject() {
     try {
       currencies.insertBefore("euro", null);
       fail("Expected: IllegalArgumentException");
@@ -418,7 +417,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertWrongObjectAfterSearchObject() {
+  void insertWrongObjectAfterSearchObject() {
     try {
       currencies.insertBefore("euro", new Date());
       fail("Expected: SpinJsonTreeNodeException");
@@ -428,7 +427,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertAfterOnNonArray() {
+  void insertAfterOnNonArray() {
     try {
       jsonNode.insertBefore("euro", "test");
       fail("Expected: SpinJsonTreeNodeException");
@@ -438,7 +437,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void insertObjectAfterWrongSearchObject() {
+  void insertObjectAfterWrongSearchObject() {
     try {
       currencies.insertAfter(new Date(), "test");
       fail("Expected: SpinJsonTreePropertyException");
@@ -450,7 +449,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 7) remove ----------------------
 
   @Test
-  public void removeObject() {
+  void removeObject() {
     Integer oldSize = currencies.elements().size();
 
     currencies.remove("euro");
@@ -464,7 +463,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void removeNonExistentObject() {
+  void removeNonExistentObject() {
     try {
       currencies.remove("test");
       fail("Expected: SpinJsonTreePropertyException");
@@ -474,7 +473,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void removeObjectInNonExistentArray() {
+  void removeObjectInNonExistentArray() {
     try {
       jsonNode.remove("test");
       fail("Expected: SpinJsonTreePropertyException");
@@ -482,9 +481,9 @@ public class JsonTreeEditListPropertyTest {
       // expected
     }
   }
-  
+
   @Test
-  public void removeNullObject() {
+  void removeNullObject() {
     try {
       jsonNode.remove(null);
       fail("Expected: IllegalArgumentException");
@@ -496,7 +495,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 8) removeLast ----------------------
 
   @Test
-  public void removeLastNullObject() {
+  void removeLastNullObject() {
     try {
       currencies.removeLast(null);
       fail("Expected: IllegalArgumentException");
@@ -506,7 +505,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void removeLastWrongObject() {
+  void removeLastWrongObject() {
     try {
       currencies.removeLast(new Date());
       fail("Expected: SpinJsonTreeNodeException");
@@ -516,7 +515,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void removeLast() {
+  void removeLast() {
     String testJson = "[\"test\",\"test\",\"new value\",\"test\"]";
     SpinJsonNode testNode = JSON(testJson);
     Integer size = testNode.elements().size();
@@ -530,9 +529,9 @@ public class JsonTreeEditListPropertyTest {
     assertThat(newSize + 1).isEqualTo(size);
     assertThat(node.stringValue()).isEqualTo("new value");
   }
-  
+
   @Test
-  public void removeLastNonExistentArray() {
+  void removeLastNonExistentArray() {
     try {
       jsonNode.removeLast(1);
       fail("Expected: SpinJsonTreeNodeException ");
@@ -544,7 +543,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 9) removeAt ----------------------
 
   @Test
-  public void removeAtWithIndex() {
+  void removeAtWithIndex() {
     Integer oldSize = currencies.elements().size();
 
     currencies.removeAt(1);
@@ -558,7 +557,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void removeAtNonArray() {
+  void removeAtNonArray() {
     try {
       jsonNode.removeAt(1);
       fail("Expected: SpinJsonTreeNodeException");
@@ -568,7 +567,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void removeAtWithNegativeIndex() {
+  void removeAtWithNegativeIndex() {
     Integer oldSize = currencies.elements().size();
 
     currencies.removeAt(-2);
@@ -582,7 +581,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void removeAtWithIndexOutOfBounds() {
+  void removeAtWithIndexOutOfBounds() {
     try {
       currencies.removeAt(6);
       fail("Expected: IndexOutOfBoundsException");
@@ -592,7 +591,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void removeAtWithNegativeIndexOutOfBounds() {
+  void removeAtWithNegativeIndexOutOfBounds() {
     try {
       currencies.removeAt(-6);
       fail("Expected: IndexOutOfBoundsException");
@@ -604,7 +603,7 @@ public class JsonTreeEditListPropertyTest {
   // ----------------- 10) contains ----------------------
 
   @Test
-  public void containsOfNonArray() {
+  void containsOfNonArray() {
     try {
       jsonNode.contains("n");
       fail("Expected: SpinJsonTreeNodeException");
@@ -614,7 +613,7 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void containsWithoutSearchNode() {
+  void containsWithoutSearchNode() {
     try {
       jsonNode.contains(null);
       fail("Expected: IllegalArgumentException");
@@ -624,14 +623,14 @@ public class JsonTreeEditListPropertyTest {
   }
 
   @Test
-  public void containsNonExistentValue() {
+  void containsNonExistentValue() {
     boolean res = customers.contains("n");
 
     assertThat(res).isFalse();
   }
 
   @Test
-  public void containsOfExistentValue() {
+  void containsOfExistentValue() {
     boolean res = currencies.contains("euro");
 
     assertThat(res).isTrue();

@@ -21,26 +21,26 @@ import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.assertIsExampleOrder;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.xml.SpinXmlDataFormatException;
 import org.operaton.spin.xml.mapping.Order;
-import org.junit.Test;
 
-public class XmlDomMapXmlToJavaTest {
+class XmlDomMapXmlToJavaTest {
 
   @Test
-  public void shouldMapXmlObjectToJavaObject() {
+  void shouldMapXmlObjectToJavaObject() {
     Order order = XML(EXAMPLE_VALIDATION_XML).mapTo(Order.class);
     assertIsExampleOrder(order);
   }
 
   @Test
-  public void shouldMapByCanonicalString() {
+  void shouldMapByCanonicalString() {
     Order order = XML(EXAMPLE_VALIDATION_XML).mapTo(Order.class.getCanonicalName());
     assertIsExampleOrder(order);
   }
 
   @Test
-  public void shouldFailForMalformedTypeString() {
+  void shouldFailForMalformedTypeString() {
     try {
       XML(EXAMPLE_VALIDATION_XML).mapTo("rubbish");
       fail("Expected SpinXmlDataFormatException");

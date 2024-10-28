@@ -25,23 +25,30 @@ import org.operaton.spin.json.SpinJsonPathException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.spin.SpinList;
+import org.operaton.spin.json.SpinJsonDataFormatException;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.json.SpinJsonPathException;
 
 /**
  * @author Stefan Hentschel
  */
-public class JsonTreeJsonPathTest {
+class JsonTreeJsonPathTest {
 
   protected SpinJsonNode jsonNode;
 
-  @Before
-  public void readJson() {
+  @BeforeEach
+  void readJson() {
     jsonNode = JSON(EXAMPLE_JSON);
   }
 
   @Test
-  public void shouldGetElementFromJsonPath() {
+  void shouldGetElementFromJsonPath() {
     SpinJsonNode node = jsonNode.jsonPath("$.orderDetails").element();
 
     assertThat(node.isObject()).isTrue();
@@ -49,7 +56,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void shouldGetElementListFromJsonPath() {
+  void shouldGetElementListFromJsonPath() {
     SpinList<SpinJsonNode> node = jsonNode.jsonPath("$.customers").elementList();
 
     assertThat(node).hasSize(3);
@@ -58,34 +65,34 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void shouldGetBooleanFromJsonPath() {
+  void shouldGetBooleanFromJsonPath() {
     Boolean active = jsonNode.jsonPath("$.active").boolValue();
 
     assertThat(active).isTrue();
   }
 
   @Test
-  public void shouldGetStringFromJsonPath() {
+  void shouldGetStringFromJsonPath() {
     String order = jsonNode.jsonPath("$.order").stringValue();
 
     assertThat(order).isEqualTo("order1");
   }
 
   @Test
-  public void shouldGetNumberFromJsonPath() {
+  void shouldGetNumberFromJsonPath() {
     Number order = jsonNode.jsonPath("$.id").numberValue();
 
     assertThat(order.longValue()).isEqualTo(1234567890987654321L);
   }
-  
+
   @Test
-  public void shouldGetNullNode() {
+  void shouldGetNullNode() {
 	  SpinJsonNode node = jsonNode.jsonPath("$.nullValue").element();
 	  assertThat(node.isNull()).isTrue();
   }
 
   @Test
-  public void shouldGetSingleArrayEntry() {
+  void shouldGetSingleArrayEntry() {
     SpinJsonNode node = jsonNode.jsonPath("$.customers[0]").element();
 
     assertThat(node.isObject()).isTrue();
@@ -94,7 +101,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void shouldGetMultipleArrayEntries() {
+  void shouldGetMultipleArrayEntries() {
     SpinList<SpinJsonNode> nodeList = jsonNode.jsonPath("$.customers[0:2]").elementList();
 
     assertThat(nodeList).hasSize(2);
@@ -103,7 +110,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void shouldGetFilteredResult() {
+  void shouldGetFilteredResult() {
     SpinList<SpinJsonNode> nodeList = jsonNode.jsonPath("$.customers[?(@.name == 'Klo')]").elementList();
 
     assertThat(nodeList).isEmpty();
@@ -115,7 +122,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void shouldGetMultipleArrayPropertyValues() {
+  void shouldGetMultipleArrayPropertyValues() {
     SpinList<SpinJsonNode> nodeList = jsonNode.jsonPath("$.customers[*].name").elementList();
 
     assertThat(nodeList).hasSize(3);
@@ -125,7 +132,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void failReadingJsonPath() {
+  void failReadingJsonPath() {
     try {
       jsonNode.jsonPath("$.....").element();
       fail("Expected: SpinJsonTreePathException");
@@ -142,7 +149,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void failAccessNonExistentProperty() {
+  void failAccessNonExistentProperty() {
     try {
       jsonNode.jsonPath("$.order.test").element();
       fail("Expected: SpinJsonDataFormatException");
@@ -152,7 +159,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void failReadingElementList() {
+  void failReadingElementList() {
     try {
       jsonNode.jsonPath("$.order").elementList();
       fail("Expected: SpinJsonDataFormatException");
@@ -183,7 +190,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void failReadingStringProperty() {
+  void failReadingStringProperty() {
     try {
       jsonNode.jsonPath("$.customers").stringValue();
       fail("Expected: SpinJsonDataFormatException");
@@ -214,7 +221,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-   public void failReadingNumberProperty() {
+  void failReadingNumberProperty() {
     try {
       jsonNode.jsonPath("$.customers").numberValue();
       fail("Expected: SpinJsonDataFormatException");
@@ -245,7 +252,7 @@ public class JsonTreeJsonPathTest {
   }
 
   @Test
-  public void failReadingBooleanProperty() {
+  void failReadingBooleanProperty() {
     try {
       jsonNode.jsonPath("$.customers").boolValue();
       fail("Expected: SpinJsonDataFormatException");
@@ -275,10 +282,11 @@ public class JsonTreeJsonPathTest {
     }
   }
 
-  @Test(expected = SpinJsonPathException.class)
-  public void failOnNonExistingJsonPath() {
+  @Test
+  void failOnNonExistingJsonPath() {
     SpinJsonNode json = JSON("{\"a\": {\"id\": \"a\"}, \"b\": {\"id\": \"b\"}}");
-    json.jsonPath("$.c?(@.id)").element();
+    assertThrows(SpinJsonPathException.class, () ->
+      json.jsonPath("$.c?(@.id)").element());
   }
 
 }

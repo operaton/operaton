@@ -16,40 +16,36 @@
  */
 package org.operaton.spin.impl.json.jackson.format;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 
 import org.operaton.spin.DeserializationTypeValidator;
 import org.operaton.spin.SpinRuntimeException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-public class JsonDeserializationValidationTest {
+class JsonDeserializationValidationTest {
 
   protected DeserializationTypeValidator validator;
   protected static JacksonJsonDataFormat format;
 
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
-
-  @BeforeClass
-  public static void setUpMocks() {
+  @BeforeAll
+  static void setUpMocks() {
     format = new JacksonJsonDataFormat("test");
   }
 
-  @AfterClass
-  public static void tearDown() {
+  @AfterAll
+  static void tearDown() {
     format = null;
   }
 
   @Test
-  public void shouldValidateNothingForPrimitiveClass() {
+  void shouldValidateNothingForPrimitiveClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructType(int.class);
     validator = createValidatorMock(true);
@@ -58,11 +54,11 @@ public class JsonDeserializationValidationTest {
     format.getMapper().validateType(type, validator);
 
     // then
-    Mockito.verifyZeroInteractions(validator);
+    Mockito.verifyNoInteractions(validator);
   }
 
   @Test
-  public void shouldValidateBaseTypeOnlyForBaseClass() {
+  void shouldValidateBaseTypeOnlyForBaseClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructType(String.class);
     validator = createValidatorMock(true);
@@ -76,7 +72,7 @@ public class JsonDeserializationValidationTest {
   }
 
   @Test
-  public void shouldValidateBaseTypeOnlyForComplexClass() {
+  void shouldValidateBaseTypeOnlyForComplexClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructType(Complex.class);
     validator = createValidatorMock(true);
@@ -90,7 +86,7 @@ public class JsonDeserializationValidationTest {
   }
 
   @Test
-  public void shouldValidateContentTypeOnlyForArrayClass() {
+  void shouldValidateContentTypeOnlyForArrayClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructType(Integer[].class);
     validator = createValidatorMock(true);
@@ -104,7 +100,7 @@ public class JsonDeserializationValidationTest {
   }
 
   @Test
-  public void shouldValidateCollectionAndContentTypeForCollectionClass() {
+  void shouldValidateCollectionAndContentTypeForCollectionClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.ArrayList<java.lang.String>");
     validator = createValidatorMock(true);
@@ -119,7 +115,7 @@ public class JsonDeserializationValidationTest {
   }
 
   @Test
-  public void shouldValidateCollectionAndContentTypeForNestedCollectionClass() {
+  void shouldValidateCollectionAndContentTypeForNestedCollectionClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.ArrayList<java.util.ArrayList<java.lang.String>>");
     validator = createValidatorMock(true);
@@ -134,7 +130,7 @@ public class JsonDeserializationValidationTest {
   }
 
   @Test
-  public void shouldValidateMapAndKeyAndContentTypeForMapClass() {
+  void shouldValidateMapAndKeyAndContentTypeForMapClass() {
     // given
     JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.Integer>");
     validator = createValidatorMock(true);
@@ -150,87 +146,81 @@ public class JsonDeserializationValidationTest {
   }
 
   @Test
-  public void shouldFailForSimpleClass() {
-    // given
-    JavaType type = TypeFactory.defaultInstance().constructType(String.class);
-    validator = createValidatorMock(false);
+  void shouldFailForSimpleClass() {
+    Throwable exception = assertThrows(SpinRuntimeException.class, () -> {
+      // given
+      JavaType type = TypeFactory.defaultInstance().constructType(String.class);
+      validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("[java.lang.String]");
-
-    // when
-    format.getMapper().validateType(type, validator);
+      // when
+      format.getMapper().validateType(type, validator);
+    });
+    assertTrue(exception.getMessage().contains("[java.lang.String]"));
   }
 
   @Test
-  public void shouldFailForComplexClass() {
-    // given
-    JavaType type = TypeFactory.defaultInstance().constructType(Complex.class);
-    validator = createValidatorMock(false);
+  void shouldFailForComplexClass() {
+    Throwable exception = assertThrows(SpinRuntimeException.class, () -> {
+      // given
+      JavaType type = TypeFactory.defaultInstance().constructType(Complex.class);
+      validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("[org.operaton.spin.impl.json.jackson.format.JsonDeserializationValidationTest$Complex]");
-
-    // when
-    format.getMapper().validateType(type, validator);
+      // when
+      format.getMapper().validateType(type, validator);
+    });
+    assertTrue(exception.getMessage().contains("[org.operaton.spin.impl.json.jackson.format.JsonDeserializationValidationTest$Complex]"));
   }
 
   @Test
-  public void shouldFailForArrayClass() {
-    // given
-    JavaType type = TypeFactory.defaultInstance().constructType(Integer[].class);
-    validator = createValidatorMock(false);
+  void shouldFailForArrayClass() {
+    Throwable exception = assertThrows(SpinRuntimeException.class, () -> {
+      // given
+      JavaType type = TypeFactory.defaultInstance().constructType(Integer[].class);
+      validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("[java.lang.Integer]");
-
-    // when
-    format.getMapper().validateType(type, validator);
+      // when
+      format.getMapper().validateType(type, validator);
+    });
+    assertTrue(exception.getMessage().contains("[java.lang.Integer]"));
   }
 
   @Test
-  public void shouldFailForCollectionClass() {
-    // given
-    JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.ArrayList<java.lang.String>");
-    validator = createValidatorMock(false);
+  void shouldFailForCollectionClass() {
+    Throwable exception = assertThrows(SpinRuntimeException.class, () -> {
+      // given
+      JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.ArrayList<java.lang.String>");
+      validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("[java.util.ArrayList, java.lang.String]");
-
-    // when
-    format.getMapper().validateType(type, validator);
+      // when
+      format.getMapper().validateType(type, validator);
+    });
+    assertTrue(exception.getMessage().contains("[java.util.ArrayList, java.lang.String]"));
   }
 
   @Test
-  public void shouldFailForMapClass() {
-    // given
-    JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.Integer>");
-    validator = createValidatorMock(false);
+  void shouldFailForMapClass() {
+    Throwable exception = assertThrows(SpinRuntimeException.class, () -> {
+      // given
+      JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.Integer>");
+      validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("[java.util.HashMap, java.lang.String, java.lang.Integer]");
-
-    // when
-    format.getMapper().validateType(type, validator);
+      // when
+      format.getMapper().validateType(type, validator);
+    });
+    assertTrue(exception.getMessage().contains("[java.util.HashMap, java.lang.String, java.lang.Integer]"));
   }
 
   @Test
-  public void shouldFailOnceForMapClass() {
-    // given
-    JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.String>");
-    validator = createValidatorMock(false);
+  void shouldFailOnceForMapClass() {
+    Throwable exception = assertThrows(SpinRuntimeException.class, () -> {
+      // given
+      JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.String>");
+      validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("[java.util.HashMap, java.lang.String]");
-
-    // when
-    format.getMapper().validateType(type, validator);
+      // when
+      format.getMapper().validateType(type, validator);
+    });
+    assertTrue(exception.getMessage().contains("[java.util.HashMap, java.lang.String]"));
   }
 
   public static class Complex {

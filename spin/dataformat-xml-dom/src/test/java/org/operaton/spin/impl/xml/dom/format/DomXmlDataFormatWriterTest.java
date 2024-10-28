@@ -17,6 +17,8 @@
 package org.operaton.spin.impl.xml.dom.format;
 
 import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.SpinFactory;
 import org.operaton.spin.spi.DataFormat;
@@ -94,7 +96,7 @@ public class DomXmlDataFormatWriterTest {
    * standard behaviour: an unformatted XML will be formatted stored into a SPIN variable and also returned formatted.
    */
   @Test
-  public void testStandardFormatter() throws Exception {
+  void standardFormatter() throws Exception {
     // given
     DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
 
@@ -120,7 +122,7 @@ public class DomXmlDataFormatWriterTest {
    * returned formatted but no additional blank lines are inserted into the XML.
    */
   @Test
-  public void testAlreadyFormattedXml() throws Exception {
+  void alreadyFormattedXml() throws Exception {
     // given
     DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
 
@@ -145,7 +147,7 @@ public class DomXmlDataFormatWriterTest {
    * new feature provided by CAM-13699 - pretty print feature disabled. The XML is stored and returned as is.
    */
   @Test
-  public void testDisabledPrettyPrintUnformatted() throws Exception {
+  void disabledPrettyPrintUnformatted() throws Exception {
     // given
     DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
     ((DomXmlDataFormat) dataFormat).setPrettyPrint(false);
@@ -171,7 +173,7 @@ public class DomXmlDataFormatWriterTest {
    * new feature provided by CAM-13699 - pretty print feature disabled. The XML is stored and returned as is.
    */
   @Test
-  public void testDisabledPrettyPrintFormatted() throws Exception {
+  void disabledPrettyPrintFormatted() throws Exception {
 
     // given
     String expectedXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order>" + newLine
@@ -205,7 +207,7 @@ public class DomXmlDataFormatWriterTest {
    * configuration to preserve-space.
    */
   @Test
-  public void testCustomStripSpaceXSL() throws Exception {
+  void customStripSpaceXSL() throws Exception {
     final DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
 
     try (final InputStream inputStream = DomXmlDataFormatWriterTest.class.getClassLoader()

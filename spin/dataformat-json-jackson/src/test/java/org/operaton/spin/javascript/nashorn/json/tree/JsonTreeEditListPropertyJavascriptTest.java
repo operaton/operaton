@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 package org.operaton.spin.javascript.nashorn.json.tree;
-
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
-import org.junit.Ignore;
-import org.junit.Test;
 
 @ScriptEngine("nashorn")
-public class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScriptTest {
+class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScriptTest {
 
   /**
    * Ignored since javascript implementation changed
    * see: https://app.camunda.com/jira/browse/CAM-3612
    */
   @Test
-  @Ignore
+  @Disabled
   @Override
   public void shouldFailInsertAtWithWrongObject() throws Throwable {
   }
@@ -39,7 +38,7 @@ public class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListProp
    * see: https://app.camunda.com/jira/browse/CAM-3612
    */
   @Test
-  @Ignore
+  @Disabled
   @Override
   public void shouldFailInsertWrongObjectAfterSearchObject() throws Throwable {
   }
@@ -49,7 +48,7 @@ public class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListProp
    * see: https://app.camunda.com/jira/browse/CAM-3612
    */
   @Test
-  @Ignore
+  @Disabled
   @Override
   public void shouldFailAppendWrongNode() throws Throwable {
   }
@@ -59,7 +58,7 @@ public class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListProp
    * see: https://app.camunda.com/jira/browse/CAM-3612
    */
   @Test
-  @Ignore
+  @Disabled
   @Override
   public void shouldFailInsertWrongObjectBeforeSearchObject() throws Throwable {
   }

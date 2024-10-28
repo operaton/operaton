@@ -26,15 +26,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.operaton.spin.impl.json.jackson.format.MapJacksonJsonTypeDetector;
 import org.operaton.spin.impl.json.jackson.format.SetJacksonJsonTypeDetector;
 import org.operaton.spin.json.mapping.Customer;
 import org.operaton.spin.json.mapping.RegularCustomer;
-import org.junit.Before;
-import org.junit.Test;
 
 public class JsonJacksonTreeTypeDetectionTest {
 
@@ -44,21 +43,21 @@ public class JsonJacksonTreeTypeDetectionTest {
   public JacksonJsonDataFormat dataFormatWithMapTypeDetector =
       new JacksonJsonDataFormat(DataFormats.JSON_DATAFORMAT_NAME);
 
-  @Before
-  public void configure() {
+  @BeforeEach
+  void configure() {
     dataFormatWithSetTypeDetector.addTypeDetector(SetJacksonJsonTypeDetector.INSTANCE);
     dataFormatWithMapTypeDetector.addTypeDetector(MapJacksonJsonTypeDetector.INSTANCE);
   }
 
   @Test
-  public void shouldDetectTypeFromObject() {
+  void shouldDetectTypeFromObject() {
     RegularCustomer customer = new RegularCustomer();
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(customer);
     assertThat(canonicalTypeString).isEqualTo("org.operaton.spin.json.mapping.RegularCustomer");
   }
 
   @Test
-  public void shouldDetectListType() {
+  void shouldDetectListType() {
     List<Customer> customers = new ArrayList<>();
     customers.add(new RegularCustomer());
 
@@ -67,7 +66,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldDetectListTypeFromEmptyList() {
+  void shouldDetectListTypeFromEmptyList() {
     List<RegularCustomer> customers = new ArrayList<>();
 
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(customers);
@@ -75,7 +74,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldDetectSetType() {
+  void shouldDetectSetType() {
     Set<Customer> customers = new HashSet<>();
     customers.add(new RegularCustomer());
 
@@ -84,7 +83,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldDetectSetTypeFromEmptySet() {
+  void shouldDetectSetTypeFromEmptySet() {
     Set<RegularCustomer> customers = new HashSet<>();
 
     String canonicalTypeString = dataFormatWithSetTypeDetector.getCanonicalTypeName(customers);
@@ -92,7 +91,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldDetectMapType() {
+  void shouldDetectMapType() {
     Map<String, Customer> customers = new HashMap<>();
     customers.put("foo", new RegularCustomer());
 
@@ -101,7 +100,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldDetectMapTypeFromEmptyMap() {
+  void shouldDetectMapTypeFromEmptyMap() {
     Map<Integer, RegularCustomer> customers = new HashMap<>();
 
     String canonicalTypeString = dataFormatWithMapTypeDetector.getCanonicalTypeName(customers);
@@ -109,7 +108,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleNullParameter() {
+  void shouldHandleNullParameter() {
     try {
       json().getMapper().getCanonicalTypeName(null);
       fail("Expected IllegalArgumentException");
@@ -119,7 +118,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleListOfLists() {
+  void shouldHandleListOfLists() {
     List<List<RegularCustomer>> nestedCustomers = new ArrayList<>();
     List<RegularCustomer> customers = new ArrayList<>();
     customers.add(new RegularCustomer());
@@ -130,7 +129,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleSetOfSets() {
+  void shouldHandleSetOfSets() {
     Set<Set<RegularCustomer>> nestedCustomers = new HashSet<>();
     Set<RegularCustomer> customers = new HashSet<>();
     customers.add(new RegularCustomer());
@@ -142,7 +141,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleSetOfLists() {
+  void shouldHandleSetOfLists() {
     Set<List<RegularCustomer>> nestedCustomers = new HashSet<>();
     List<RegularCustomer> customers = new ArrayList<>();
     customers.add(new RegularCustomer());
@@ -154,7 +153,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleMapOfMaps() {
+  void shouldHandleMapOfMaps() {
     Map<String, Map<Integer, RegularCustomer>> nestedCustomers = new HashMap<>();
     Map<Integer, RegularCustomer> customers = new HashMap<>();
     customers.put(42, new RegularCustomer());
@@ -166,7 +165,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleMapWithNullAndStringValue() {
+  void shouldHandleMapWithNullAndStringValue() {
     Map<String, Object> map = new HashMap<>();
     map.put("bar", null);
     map.put("foo", "baz");
@@ -176,7 +175,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleMapWithNullAndNullValue() {
+  void shouldHandleMapWithNullAndNullValue() {
     Map<String, Object> map = new HashMap<>();
     map.put("foo", null);
     map.put("bar", null);
@@ -186,7 +185,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleMapWithSingleNullValue() {
+  void shouldHandleMapWithSingleNullValue() {
     Map<String, Object> map = new HashMap<>();
     map.put("bar", null);
 
@@ -195,7 +194,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleSetWithSingleStringValue() {
+  void shouldHandleSetWithSingleStringValue() {
     Set<String> set = new HashSet<>();
     set.add("foo");
 
@@ -204,7 +203,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleSetWithNullAndStringValue() {
+  void shouldHandleSetWithNullAndStringValue() {
     Set<Object> set = new HashSet<>();
     set.add(null);
     set.add("foo");
@@ -214,7 +213,7 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleSetWithNullValue() {
+  void shouldHandleSetWithNullValue() {
     Set<String> set = new HashSet<>();
     set.add(null);
 

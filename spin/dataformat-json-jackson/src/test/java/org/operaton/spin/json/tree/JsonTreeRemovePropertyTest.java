@@ -23,30 +23,29 @@ import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPropertyException;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Stefan Hentschel
  */
-public class JsonTreeRemovePropertyTest {
+class JsonTreeRemovePropertyTest {
 
   protected SpinJsonNode jsonNode;
   protected String order;
   protected String active;
 
-  @Before
-  public void readJson() {
+  @BeforeEach
+  void readJson() {
     jsonNode = JSON(EXAMPLE_JSON);
     order = "order";
     active = "active";
   }
 
   @Test
-  public void removePropertyByName() {
+  void removePropertyByName() {
     assertThat(jsonNode.hasProp(order)).isTrue();
 
     jsonNode.deleteProp(order);
@@ -55,7 +54,7 @@ public class JsonTreeRemovePropertyTest {
   }
 
   @Test
-  public void removePropertyByList() {
+  void removePropertyByList() {
     List<String> names = new ArrayList<>();
     names.add(order);
     names.add(active);
@@ -70,7 +69,7 @@ public class JsonTreeRemovePropertyTest {
   }
 
   @Test
-  public void failWhileRemovePropertyByName() {
+  void failWhileRemovePropertyByName() {
     try {
       jsonNode.deleteProp("waldo");
       fail("Expected SpinJsonTreePropertyException");
@@ -80,7 +79,7 @@ public class JsonTreeRemovePropertyTest {
   }
 
   @Test
-  public void failWhileRemovePropertyByList() {
+  void failWhileRemovePropertyByList() {
     List<String> names = new ArrayList<>();
     names.add(active);
     names.add("waldo");

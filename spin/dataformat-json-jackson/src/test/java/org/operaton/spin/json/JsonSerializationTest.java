@@ -17,9 +17,9 @@
 package org.operaton.spin.json;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.operaton.spin.DataFormats.json;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.json.mapping.CustomerList;
 import org.operaton.spin.json.mapping.GenericCustomerList;
 import org.operaton.spin.json.mapping.Order;
@@ -41,12 +42,11 @@ import org.operaton.spin.json.mapping.dmn.DmnDecisionResultImpl;
 import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.spi.DataFormatReader;
 import org.operaton.spin.spi.DataFormatWriter;
-import org.junit.Test;
 
 public class JsonSerializationTest {
 
   @Test
-  public void testNotGenericList() throws Exception {
+  void notGenericList() throws Exception {
     CustomerList<RegularCustomer> customers = new CustomerList<>();
     customers.add(new RegularCustomer("someCustomer", 5));
 
@@ -65,7 +65,7 @@ public class JsonSerializationTest {
   }
 
   @Test
-  public void testOrder() throws Exception {
+  void order() throws Exception {
     Order order = JsonTestConstants.createExampleOrder();
 
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(order);
@@ -82,7 +82,7 @@ public class JsonSerializationTest {
   }
 
   @Test
-  public void testPlainTypeArray() throws Exception {
+  void plainTypeArray() throws Exception {
     int[] array = new int[]{5, 10};
 
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(array);
@@ -100,7 +100,7 @@ public class JsonSerializationTest {
   }
 
   @Test
-  public void testGenericList() throws Exception {
+  void genericList() throws Exception {
     GenericCustomerList<RegularCustomer> customers = new GenericCustomerList<>();
     customers.add(new RegularCustomer("someCustomer", 5));
 
@@ -120,7 +120,7 @@ public class JsonSerializationTest {
   }
 
   @Test
-  public void serializeAndDeserializeGenericCollection() throws Exception {
+  void serializeAndDeserializeGenericCollection() throws Exception {
     List<DmnDecisionResultEntries> ruleResults = new ArrayList<>();
     final DmnDecisionResultEntriesImpl result1 = new DmnDecisionResultEntriesImpl();
     result1.putValue("key1", "value1");
@@ -143,7 +143,7 @@ public class JsonSerializationTest {
   }
 
   @Test
-  public void deserializeHashMap() throws Exception {
+  void deserializeHashMap() throws Exception {
     final byte[] bytes = new String("{\"foo\": \"bar\"}").getBytes();
     assertThat(bytes).isNotEmpty();
 

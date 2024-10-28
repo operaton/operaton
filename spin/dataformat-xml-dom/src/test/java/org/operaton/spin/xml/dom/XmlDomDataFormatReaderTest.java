@@ -22,13 +22,12 @@ import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
 import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormatReader;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class XmlDomDataFormatReaderTest {
 
@@ -37,21 +36,21 @@ public class XmlDomDataFormatReaderTest {
 
   private static final int REWINDING_LIMIT = 256;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     DomXmlDataFormat domXmlDataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
     reader = domXmlDataFormat.getReader();
   }
 
   @Test
-  public void shouldMatchXmlInput() throws IOException {
+  void shouldMatchXmlInput() throws IOException {
     inputReader = stringToReader(EXAMPLE_XML);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();
   }
 
   @Test
-  public void shouldMatchXmlInputWithWhitespace() throws IOException {
+  void shouldMatchXmlInputWithWhitespace() throws IOException {
     inputReader = stringToReader("   " + EXAMPLE_XML);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();
@@ -61,7 +60,7 @@ public class XmlDomDataFormatReaderTest {
   }
 
   @Test
-  public void shouldNotMatchInvalidXml() {
+  void shouldNotMatchInvalidXml() {
     inputReader = stringToReader("prefix " + EXAMPLE_XML);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isFalse();
   }
@@ -70,8 +69,8 @@ public class XmlDomDataFormatReaderTest {
     return new StringReader(input);
   }
 
-  @After
-  public void tearDown() throws IOException {
+  @AfterEach
+  void tearDown() throws IOException {
     if (inputReader != null) {
       inputReader.close();
     }

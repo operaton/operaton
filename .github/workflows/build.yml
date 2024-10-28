@@ -9,6 +9,8 @@ on:
 
 permissions:
   contents: read
+  checks: write
+  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,6 +32,19 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven Wrapper
+    - name: Maven Build
       shell: bash
       run: ./mvnw package
+    - name: Publish Test Report
+      if: always()
+      uses: mikepenz/action-junit-report@v4 #https://github.com/marketplace/actions/junit-report-action
+      with:
+        report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
+        require_passed_tests: true
+    - name: Upload Surefire Reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: surefire-reports
+        path: ${{ github.workspace }}/**/target/surefire-reports/**
+        retention-days: 30

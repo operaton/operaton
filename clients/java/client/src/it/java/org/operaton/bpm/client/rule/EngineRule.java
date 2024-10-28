@@ -118,9 +118,7 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback  {
     parameters.put("skipCustomListeners", true);
     parameters.put("skipIoMappings", true);
 
-    deployments.forEach(deployment -> {
-      deleteDeployment(deployment, parameters);
-    });
+    deployments.forEach(deployment -> deleteDeployment(deployment, parameters));
   }
 
 

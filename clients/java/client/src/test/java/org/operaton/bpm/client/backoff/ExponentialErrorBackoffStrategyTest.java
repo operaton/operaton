@@ -17,27 +17,27 @@
 package org.operaton.bpm.client.backoff;
 
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.exception.ExternalTaskClientException;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExponentialErrorBackoffStrategyTest {
+class ExponentialErrorBackoffStrategyTest {
 
   protected ExponentialErrorBackoffStrategy backoffStrategy;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     backoffStrategy = new ExponentialErrorBackoffStrategy();
   }
 
   @Test
-  public void shouldAdvanceBackoffStrategy() {
+  void shouldAdvanceBackoffStrategy() {
     // given
     long initialWaitingTime = backoffStrategy.calculateBackoffTime();
     assertThat(initialWaitingTime).isEqualTo(0L);
@@ -57,7 +57,7 @@ public class ExponentialErrorBackoffStrategyTest {
   }
 
   @Test
-  public void shouldResetBackoffStrategy() {
+  void shouldResetBackoffStrategy() {
     // given
     List<ExternalTask> tasks = Lists.newArrayList(new ExternalTaskImpl());
     ExternalTaskClientException error = new ExternalTaskClientException();
@@ -75,7 +75,7 @@ public class ExponentialErrorBackoffStrategyTest {
   }
 
   @Test
-  public void shouldCapWaitingTime() {
+  void shouldCapWaitingTime() {
     // given
     long waitingTime = backoffStrategy.calculateBackoffTime();
     assertThat(waitingTime).isEqualTo(0L);
@@ -94,7 +94,7 @@ public class ExponentialErrorBackoffStrategyTest {
   }
 
   @Test
-  public void shouldCapWaitingTime2() {
+  void shouldCapWaitingTime2() {
     // given
     long waitingTime = backoffStrategy.calculateBackoffTime();
     assertThat(waitingTime).isEqualTo(0L);

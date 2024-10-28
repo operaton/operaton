@@ -24,52 +24,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
+import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.client5.http.ClientProtocolException;
-import org.apache.hc.client5.http.classic.methods.HttpDelete;
-import org.apache.hc.client5.http.classic.methods.HttpGet;
-import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
-import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.client5.http.classic.methods.*;
 import org.apache.hc.core5.http.io.HttpClientResponseHandler;
-import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
-import org.apache.hc.client5.http.impl.classic.AbstractHttpClientResponseHandler;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.operaton.bpm.client.dto.HistoricProcessInstanceDto;
-import org.operaton.bpm.client.dto.IncidentDto;
-import org.operaton.bpm.client.dto.ProcessDefinitionDto;
-import org.operaton.bpm.client.dto.ProcessInstanceDto;
-import org.operaton.bpm.client.dto.TaskDto;
-import org.operaton.bpm.client.dto.VariableInstanceDto;
+import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
+import org.apache.hc.client5.http.impl.classic.*;
+import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import com.fasterxml.jackson.databind.*;
+
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.operaton.bpm.client.dto.*;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
 import org.operaton.bpm.engine.variable.impl.value.FileValueImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.operaton.bpm.engine.variable.value.SerializableValue;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.operaton.bpm.model.bpmn.Bpmn;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.rules.ExternalResource;
+import org.operaton.bpm.engine.variable.value.*;
+import org.operaton.bpm.model.bpmn.*;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-public class EngineRule extends ExternalResource {
+public class EngineRule implements BeforeEachCallback, AfterEachCallback  {
 
   protected static final String URI_DEPLOYMEN_CREATE = "%s/deployment/create";
   protected static final String URI_DEPLOYMENT_DELETE = "%s/deployment/%s";
@@ -86,7 +69,6 @@ public class EngineRule extends ExternalResource {
   protected Properties properties;
   protected CloseableHttpClient httpClient;
   protected ObjectMapper objectMapper;
-
   protected Set<String> deployments = new HashSet<>();
 
   public EngineRule() {
@@ -101,18 +83,19 @@ public class EngineRule extends ExternalResource {
     this.properties = properties.get();
   }
 
-  @Override
-  protected void before() throws Throwable {
-    deployments.clear();
 
-    initializeHttpClient();
-    initializeObjectMapper();
-  }
+    @Override
+    public void beforeEach(ExtensionContext context) throws Exception {
+        deployments.clear();
+        initializeHttpClient();
+        initializeObjectMapper();
 
-  @Override
-  protected void after() {
-    cleanEngine();
-  }
+    }
+
+    @Override
+    public void afterEach(ExtensionContext context) throws Exception {
+        cleanEngine();
+    }
 
   protected void initializeHttpClient() {
     if (httpClient == null) {
@@ -135,10 +118,9 @@ public class EngineRule extends ExternalResource {
     parameters.put("skipCustomListeners", true);
     parameters.put("skipIoMappings", true);
 
-    deployments.forEach((deployment) -> {
-      deleteDeployment(deployment, parameters);
-    });
+    deployments.forEach(deployment -> deleteDeployment(deployment, parameters));
   }
+
 
   public List<ProcessDefinitionDto> deploy(BpmnModelInstance... processes) {
     return deploy(null, processes);

@@ -16,17 +16,9 @@
  */
 package org.operaton.bpm.client.variable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
-import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.XML;
-import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
-
-import java.util.Arrays;
-import java.util.Map;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -43,12 +35,21 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.Spin;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.RuleChain;
 
+import java.util.Arrays;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
+import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
+import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.XML;
+import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
+
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class XmlSerializationIT {
 
   protected static final String VARIABLE_NAME_XML = "xmlVariable";
@@ -82,10 +83,6 @@ public class XmlSerializationIT {
 
   protected ClientRule clientRule = new ClientRule();
   protected EngineRule engineRule = new EngineRule();
-  protected ExpectedException thrown = ExpectedException.none();
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule).around(thrown);
 
   protected ExternalTaskClient client;
 
@@ -95,7 +92,7 @@ public class XmlSerializationIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);
@@ -272,13 +269,12 @@ public class XmlSerializationIT {
 
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, objectValue);
 
-    // then
-    thrown.expect(ValueMapperException.class);
-
-    // when
+    // when + then
+    assertThatThrownBy(() ->
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
       .handler(handler)
-      .open();
+      .open()
+    ).isInstanceOf(ValueMapperException.class);
 
     clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
 
@@ -296,13 +292,12 @@ public class XmlSerializationIT {
 
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, objectValue);
 
-    // then
-    thrown.expect(ValueMapperException.class);
-
-    // when
-    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
-      .open();
+    // when + then
+    assertThatThrownBy(() ->
+      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
+        .handler(handler)
+        .open()
+    ).isInstanceOf(ValueMapperException.class);
 
     clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
 
@@ -381,13 +376,12 @@ public class XmlSerializationIT {
 
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, serializedValue);
 
-    // then
-    thrown.expect(ValueMapperException.class);
-
-    // when
-    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
-      .open();
+    // when + then
+    assertThatThrownBy(() ->
+      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
+        .handler(handler)
+        .open()
+    ).isInstanceOf(ValueMapperException.class);
 
     clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
 
@@ -409,13 +403,12 @@ public class XmlSerializationIT {
 
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, serializedValue);
 
-    // then
-    thrown.expect(ValueMapperException.class);
-
-    // when
-    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
-      .open();
+    // when + then
+    assertThatThrownBy(() ->
+      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
+        .handler(handler)
+        .open()
+    ).isInstanceOf(ValueMapperException.class);
 
     clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
 

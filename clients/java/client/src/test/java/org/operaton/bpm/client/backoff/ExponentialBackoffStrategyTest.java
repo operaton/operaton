@@ -17,26 +17,26 @@
 package org.operaton.bpm.client.backoff;
 
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Nikola Koevski
  */
-public class ExponentialBackoffStrategyTest {
+class ExponentialBackoffStrategyTest {
 
   protected ExponentialBackoffStrategy backoffStrategy;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     backoffStrategy = new ExponentialBackoffStrategy();
   }
 
   @Test
-  public void shouldAdvanceBackoffStrategy() {
+  void shouldAdvanceBackoffStrategy() {
     // given
     long initialWaitingTime = backoffStrategy.calculateBackoffTime();
     assertThat(initialWaitingTime).isEqualTo(0L);
@@ -54,7 +54,7 @@ public class ExponentialBackoffStrategyTest {
   }
 
   @Test
-  public void shouldResetBackoffStrategy() {
+  void shouldResetBackoffStrategy() {
     // given
     backoffStrategy.reconfigure(Lists.emptyList());
     long waitingTime1 = backoffStrategy.calculateBackoffTime();
@@ -70,7 +70,7 @@ public class ExponentialBackoffStrategyTest {
   }
 
   @Test
-  public void shouldCapWaitingTime() {
+  void shouldCapWaitingTime() {
     // given
     long waitingTime = backoffStrategy.calculateBackoffTime();
     assertThat(waitingTime).isEqualTo(0L);

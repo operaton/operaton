@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.client.task;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -28,20 +28,18 @@ import org.operaton.bpm.client.util.ProcessModels;
 import org.operaton.bpm.client.util.RecordingExternalTaskHandler;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
+
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class ExternalTaskCustomExtensionPropertiesIT {
 
   protected BpmnModelInstance externalTaskProcess;
 
   protected ClientRule clientRule = new ClientRule();
   protected EngineRule engineRule = new EngineRule();
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule);
 
   protected ExternalTaskClient client;
 
@@ -50,7 +48,7 @@ public class ExternalTaskCustomExtensionPropertiesIT {
 
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
-  @Before
+  @BeforeEach
   public void setup() {
     client = clientRule.client();
     handler.clear();

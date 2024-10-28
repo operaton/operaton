@@ -16,19 +16,9 @@
  */
 package org.operaton.bpm.client.variable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
-import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY_2;
-import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_ID;
-import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclusiveGateway;
-import static org.operaton.bpm.client.variable.ClientValues.XML;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -45,12 +35,22 @@ import org.operaton.bpm.client.variable.value.XmlValue;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
+import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY_2;
+import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
+import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_ID;
+import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclusiveGateway;
+import static org.operaton.bpm.client.variable.ClientValues.XML;
+
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class XmlValueIT {
 
   protected static final String VARIABLE_NAME_XML = "xmlVariable";
@@ -65,9 +65,6 @@ public class XmlValueIT {
   protected ClientRule clientRule = new ClientRule();
   protected EngineRule engineRule = new EngineRule();
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule);
-
   protected ExternalTaskClient client;
 
   protected ProcessDefinitionDto processDefinition;
@@ -76,7 +73,7 @@ public class XmlValueIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);

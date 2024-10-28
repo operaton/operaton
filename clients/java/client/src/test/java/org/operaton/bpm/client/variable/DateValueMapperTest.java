@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 package org.operaton.bpm.client.variable;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
 import org.operaton.bpm.client.variable.impl.mapper.DateValueMapper;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.type.PrimitiveValueTypeImpl;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.DateValue;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Date;
 import java.util.Calendar;
@@ -32,7 +31,7 @@ import java.text.SimpleDateFormat;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DateValueMapperTest {
+class DateValueMapperTest {
 
   protected final static String DATE_FORMAT = "dd.MM.yyyy - HH:mm:ss.SSSZ";
   protected final Date VARIABLE_VALUE_DATE = new GregorianCalendar(2018, Calendar.JANUARY, 1, 8, 0, 0).getTime();
@@ -40,13 +39,13 @@ public class DateValueMapperTest {
 
   protected DateValueMapper dateValueMapper;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     dateValueMapper = new DateValueMapper(DATE_FORMAT);
   }
 
   @Test
-  public void shouldConvertToTypedValue() {
+  void shouldConvertToTypedValue() {
     // given
     UntypedValueImpl untypedValue = (UntypedValueImpl) Variables.untypedValue(VARIABLE_VALUE_DATE);
 
@@ -59,7 +58,7 @@ public class DateValueMapperTest {
   }
 
   @Test
-  public void shouldReadValue() {
+  void shouldReadValue() {
     // given
     TypedValueField typedValueField = new TypedValueField();
     typedValueField.setValue(VARIABLE_VALUE_DATE_SERIALIZED);
@@ -74,7 +73,7 @@ public class DateValueMapperTest {
   }
 
   @Test
-  public void shouldReadValue_Null() {
+  void shouldReadValue_Null() {
     // given
     TypedValueField typedValueField = new TypedValueField();
     typedValueField.setValue(null);
@@ -89,7 +88,7 @@ public class DateValueMapperTest {
   }
 
   @Test
-  public void shouldWriteValue() {
+  void shouldWriteValue() {
     // given
     DateValue dateValue = Variables.dateValue(VARIABLE_VALUE_DATE);
     TypedValueField typedValueField = new TypedValueField();

@@ -16,21 +16,9 @@
  */
 package org.operaton.bpm.client.variable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.client.rule.ClientRule.LOCK_DURATION;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
-import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_NAME;
-import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_REST;
-import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
-import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
-import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.JAVA;
-import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
-
-import java.util.Map;
-import java.util.Properties;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -43,12 +31,24 @@ import org.operaton.bpm.client.util.RecordingInvocationHandler;
 import org.operaton.bpm.client.util.RecordingInvocationHandler.RecordedInvocation;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.RuleChain;
 
+import java.util.Map;
+import java.util.Properties;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.client.rule.ClientRule.LOCK_DURATION;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
+import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
+import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
+import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_NAME;
+import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_REST;
+import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
+import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
+import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.JAVA;
+import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
+
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class JavaSerializationIT {
 
   protected static final String ENGINE_NAME = "/engine/another-engine";
@@ -79,11 +79,6 @@ public class JavaSerializationIT {
     return properties;
   });
 
-  protected ExpectedException thrown = ExpectedException.none();
-
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule).around(thrown);
-
   protected ExternalTaskClient client;
 
   protected ProcessDefinitionDto processDefinition;
@@ -92,7 +87,7 @@ public class JavaSerializationIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);

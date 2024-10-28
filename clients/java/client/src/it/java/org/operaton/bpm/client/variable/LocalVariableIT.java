@@ -19,6 +19,9 @@ package org.operaton.bpm.client.variable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -29,11 +32,9 @@ import org.operaton.bpm.client.util.RecordingExternalTaskHandler;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
+@ExtendWith(EngineRule.class)
+@ExtendWith(ClientRule.class)
 public class LocalVariableIT {
 
   private static final String GLOBAL_VARIABLE_NAME = "globalVariable";
@@ -52,9 +53,6 @@ public class LocalVariableIT {
   protected ClientRule clientRule = new ClientRule();
   protected EngineRule engineRule = new EngineRule();
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(clientRule);
-
   protected ExternalTaskClient client;
 
   protected ProcessDefinitionDto processDefinition;
@@ -62,7 +60,7 @@ public class LocalVariableIT {
 
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
-  @Before
+  @BeforeEach
   public void setup() throws Exception {
     client = clientRule.client();
     processDefinition = engineRule.deploy(EXTERNAL_TASK_PROCESS).get(0);

@@ -1,6 +1,7 @@
 # OPERATON - The open source process engine
 
 ![build status](https://github.com/operaton/operaton/actions/workflows/build.yml/badge.svg?branch=main)
+[![Maven Central Version](https://img.shields.io/maven-central/v/org.operaton.bpm/operaton-bom-root?color=blue)](https://central.sonatype.com/search?q=org.operaton)
 [![operaton manual latest](https://img.shields.io/badge/manual-latest-brown.svg)](https://docs.operaton.org/) [![License](https://img.shields.io/github/license/operaton/operaton?color=blue&logo=apache)](https://github.com/operaton/operaton/blob/main/LICENSE) [![Forum](https://img.shields.io/badge/forum-operaton-green)](https://forum.operaton.org/)
 
 OPERATON is a native BPMN 2.0 process engine that runs inside the Java Virtual Machine. It can be embedded inside any Java application and any Runtime Container. It integrates with Java EE 6 and is a perfect match for the Spring Framework. On top of the process engine, you can choose from a stack of tools for human workflow management, operations and monitoring.

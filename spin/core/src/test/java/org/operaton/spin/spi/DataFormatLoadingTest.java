@@ -16,22 +16,23 @@
  */
 package org.operaton.spin.spi;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.operaton.spin.DataFormats;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-import org.operaton.spin.DataFormats;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.powermock.core.classloader.annotations.PrepareForTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /**
  * Note: The @RunWith and @PrepareForTest annotations are required by powermock to be able
@@ -48,19 +49,22 @@ class DataFormatLoadingTest {
   @SuppressWarnings("rawtypes")
   protected ServiceLoader<DataFormatConfigurator> mockConfiguratorLoader;
 
+  private MockedStatic<ServiceLoader> mockServiceLoader1;
+  private MockedStatic<ServiceLoader> mockServiceLoader2;
+
   @BeforeEach
   @SuppressWarnings("unchecked")
   void setUp() {
-
     mockServiceLoader = mock(ServiceLoader.class);
-    try (MockedStatic<ServiceLoader> mockServiceLoader1 = mockStatic(ServiceLoader.class)) {
-      mockServiceLoader1.when(ServiceLoader.load(ArgumentMatchers.eq(DataFormatProvider.class), ArgumentMatchers.any(ClassLoader.class))).thenReturn(mockServiceLoader);
+    mockConfiguratorLoader = mock(ServiceLoader.class);
+    mockServiceLoader1 = mockStatic(ServiceLoader.class);
+    mockServiceLoader1.when(() -> ServiceLoader.load(ArgumentMatchers.eq(DataFormatProvider.class), ArgumentMatchers.any(ClassLoader.class))).thenReturn(mockServiceLoader);
+    mockServiceLoader1.when(() -> ServiceLoader.load(ArgumentMatchers.eq(DataFormatConfigurator.class), ArgumentMatchers.any(ClassLoader.class))).thenReturn(mockConfiguratorLoader);
+  }
 
-      mockConfiguratorLoader = mock(ServiceLoader.class);
-      try (MockedStatic<ServiceLoader> mockServiceLoader2 = mockStatic(ServiceLoader.class)) {
-        mockServiceLoader2.when(ServiceLoader.load(ArgumentMatchers.eq(DataFormatConfigurator.class), ArgumentMatchers.any(ClassLoader.class))).thenReturn(mockConfiguratorLoader);
-      }
-    }
+  @AfterEach
+  void tearDown () {
+    mockServiceLoader1.close();
   }
 
   @Test

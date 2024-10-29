@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
+import org.junit.After;
+import org.junit.Test;
 import org.operaton.bpm.engine.CrdbTransactionRetryException;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -34,9 +33,11 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.variable.VariableMap;
-import org.junit.After;
-import org.junit.Test;
 import org.slf4j.Logger;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test cases for ensuring that an INSERTs/UPDATEs on entities with referenced
@@ -124,7 +125,7 @@ public abstract class AbstractCompetingTransactionsOptimisticLockingTest {
     assertThat(thread1.exception)
       .isInstanceOf(ProcessEngineException.class)
       .extracting("code")
-      .contains(BuiltinExceptionCode.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode());
+      .isEqualTo(BuiltinExceptionCode.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode());
   }
 
   public class CompleteTaskThread extends ControllableThread {

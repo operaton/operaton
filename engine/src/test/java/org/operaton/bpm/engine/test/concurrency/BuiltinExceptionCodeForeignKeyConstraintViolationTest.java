@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BuiltinExceptionCodeForeignKeyConstraintViolationTest extends ConcurrencyTestCase {
 
@@ -117,7 +117,7 @@ public class BuiltinExceptionCodeForeignKeyConstraintViolationTest extends Concu
     assertThat(thread2.exception)
         .isInstanceOf(ProcessEngineException.class)
         .extracting("code")
-        .contains(BuiltinExceptionCode.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode());
+        .isEqualTo(BuiltinExceptionCode.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode());
   }
 
 }

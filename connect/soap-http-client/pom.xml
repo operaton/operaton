@@ -9,9 +9,6 @@
 
   <artifactId>operaton-connect-soap-http-client</artifactId>
   <name>Operaton - Connect - SOAP HTTP Client</name>
-  <properties>
-    <wiremock.version>3.9.2</wiremock.version>
-  </properties>
 
   <dependencies>
 

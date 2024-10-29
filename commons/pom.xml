@@ -59,10 +59,6 @@
             </execution>
           </executions>
         </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>clirr-maven-plugin</artifactId>
-        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>

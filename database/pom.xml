@@ -96,7 +96,6 @@
         <plugin>
           <groupId>org.liquibase</groupId>
           <artifactId>liquibase-maven-plugin</artifactId>
-          <version>${version.liquibase}</version>
           <configuration>
             <driver>${database.driver}</driver>
             <url>${database.url}</url> 

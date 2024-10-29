@@ -73,7 +73,6 @@
       <!-- then remove the WEB-INF part except the security.json -->
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.8</version>
         <executions>
           <execution>
             <phase>generate-resources</phase>

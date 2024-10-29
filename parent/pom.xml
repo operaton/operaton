@@ -21,7 +21,7 @@
     <version.quarkus>3.8.0</version.quarkus>
     <version.spring.framework>5.3.36</version.spring.framework>
     <version.spring.framework6>6.1.8</version.spring.framework6>
-    <version.spring-boot>3.3.0</version.spring-boot>
+    <version.spring-boot>3.3.5</version.spring-boot>
     <version.resteasy>3.15.6.Final</version.resteasy>
     <version.jersey2>2.34</version.jersey2>
     <!-- use minimum version of resteasy and jersey -->
@@ -74,7 +74,6 @@
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
     <version.jakarta-ee-spec>10.0.0</version.jakarta-ee-spec>
 
-    <version.eirslett.frontend.maven.plugin>1.12.1</version.eirslett.frontend.maven.plugin>
     <version.nodejs>17.9.1</version.nodejs>
     <version.npm>8.11.0</version.npm>
 
@@ -114,7 +113,6 @@
     <operaton.osgi.remove.headers>Ignore-Package,Include-Resource,Private-Package,Bundle-DocURL</operaton.osgi.remove.headers>
     <operaton.osgi.include.resource>{maven-resources}</operaton.osgi.include.resource>
     <operaton.osgi.embed />
-    <plugin.version.maven-bundle>5.1.9</plugin.version.maven-bundle> <!-- compatible with JDK 17 -->
   </properties>
 
   <dependencyManagement>
@@ -138,7 +136,6 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.2</version>
           <configuration>
             <runOrder>hourly</runOrder>
             <systemPropertyVariables>
@@ -151,7 +148,6 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.16</version>
           <configuration>
             <argLine>-Xmx968m</argLine>
             <runOrder>hourly</runOrder>
@@ -164,18 +160,6 @@
                 </goals>
               </execution>
             </executions>
-        </plugin>
-
-        <!-- code plugins -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.8</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>2.6</version>
         </plugin>
 
         <!-- artifact plugins -->
@@ -195,19 +179,8 @@
           </executions>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.8</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>build-helper-maven-plugin</artifactId>
-          <version>1.9.1</version>
-        </plugin>
-        <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
-          <version>${plugin.version.maven-bundle}</version>
           <configuration>
            <excludeDependencies>${operaton.osgi.exclude.dependencies}</excludeDependencies>
            <instructions>
@@ -237,37 +210,11 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.codehaus.cargo</groupId>
-          <artifactId>cargo-maven3-plugin</artifactId>
-          <version>1.10.9</version>
-        </plugin>
-        <plugin>
-          <groupId>net.kennychua</groupId>
-          <artifactId>maven-urlpoller-plugin</artifactId>
-          <version>1.0.3</version>
-        </plugin>
-        <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>sql-maven-plugin</artifactId>
-          <version>1.5</version>
           <configuration>
             <keepFormat>true</keepFormat>
           </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>clirr-maven-plugin</artifactId>
-          <version>2.8</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
-          <version>1.4.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.3.2</version>
         </plugin>
 
         <plugin>
@@ -287,7 +234,6 @@
         <plugin>
           <groupId>org.eclipse.transformer</groupId>
           <artifactId>transformer-maven-plugin</artifactId>
-          <version>0.5.0</version>
           <configuration>
             <rules>
               <jakartaDefaults>true</jakartaDefaults>
@@ -303,7 +249,6 @@
         <plugin>
           <groupId>com.github.eirslett</groupId>
           <artifactId>frontend-maven-plugin</artifactId>
-          <version>${version.eirslett.frontend.maven.plugin}</version>
           <configuration>
             <nodeVersion>v${version.nodejs}</nodeVersion>
             <npmVersion>${version.npm}</npmVersion>
@@ -318,6 +263,7 @@
             <wait>750</wait>
           </configuration>
         </plugin>
+
       </plugins>
     </pluginManagement>
   </build>

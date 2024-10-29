@@ -146,7 +146,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M3</version>
             <configuration>
               <dependenciesToScan>
                 <dependency>org.operaton.bpm.qa:operaton-qa-integration-tests-webapps</dependency>
@@ -182,7 +181,6 @@
           <plugin>
             <groupId>com.googlecode.maven-download-plugin</groupId>
             <artifactId>download-maven-plugin</artifactId>
-            <version>1.3.0</version>
             <executions>
               <execution>
                 <phase>process-resources</phase>

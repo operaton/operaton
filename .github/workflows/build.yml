@@ -45,11 +45,8 @@ jobs:
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
     - name: Maven Build
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: bash
-      run: ./mvnw package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=operaton_operaton
+      run: ./mvnw package
     - name: Publish Test Report
       if: always()
       uses: mikepenz/action-junit-report@v4 #https://github.com/marketplace/actions/junit-report-action
@@ -63,3 +60,11 @@ jobs:
         name: surefire-reports
         path: ${{ github.workspace }}/**/target/surefire-reports/**
         retention-days: 30
+    - name: Sonarqube Analysis
+      if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      shell: bash
+      run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=operaton_operaton
+

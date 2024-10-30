@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.dmn.feel.impl.juel.el;
 
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.FunctionMapper;
-import org.operaton.bpm.impl.juel.jakarta.el.VariableMapper;
+import jakarta.el.ELContext;
+import jakarta.el.ELResolver;
+import jakarta.el.FunctionMapper;
+import jakarta.el.VariableMapper;
 
 public class FeelElContext extends ELContext {
 

@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.cdi.impl;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationElResolver;
 import org.operaton.bpm.engine.cdi.impl.el.CdiResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
+import jakarta.el.ELResolver;
 
 /**
  * <p>Exposes the CdiResolver in a multiple-applications, shared process engine context.</p>

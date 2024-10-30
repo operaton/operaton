@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.dmn.feel.impl.juel;
 
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELException;
-import org.operaton.bpm.impl.juel.jakarta.el.ExpressionFactory;
-import org.operaton.bpm.impl.juel.jakarta.el.ValueExpression;
-
+import jakarta.el.ELContext;
+import jakarta.el.ELException;
+import jakarta.el.ExpressionFactory;
+import jakarta.el.ValueExpression;
 import org.operaton.bpm.dmn.feel.impl.FeelEngine;
 import org.operaton.bpm.dmn.feel.impl.juel.el.ElContextFactory;
 import org.operaton.bpm.dmn.feel.impl.juel.transform.FeelToJuelTransform;
@@ -37,7 +36,7 @@ public class FeelEngineImpl implements FeelEngine {
   protected Cache<TransformExpressionCacheKey, String> transformExpressionCache;
 
   public FeelEngineImpl(FeelToJuelTransform transform, ExpressionFactory expressionFactory, ElContextFactory elContextFactory,
-      Cache<TransformExpressionCacheKey, String> transformExpressionCache) {
+                        Cache<TransformExpressionCacheKey, String> transformExpressionCache) {
     this.transform = transform;
     this.expressionFactory = expressionFactory;
     this.elContextFactory = elContextFactory;

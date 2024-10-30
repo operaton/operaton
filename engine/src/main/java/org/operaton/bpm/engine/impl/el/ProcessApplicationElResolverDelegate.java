@@ -21,8 +21,8 @@ import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.impl.juel.jakarta.el.CompositeELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
+import jakarta.el.CompositeELResolver;
+import jakarta.el.ELResolver;
 
 /**
  * <p>This is an {@link ELResolver} implementation that delegates to a ProcessApplication-provided

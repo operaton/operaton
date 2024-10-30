@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
+import jakarta.el.ELContext;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.delegate.ExpressionGetInvocation;
 import org.operaton.bpm.engine.impl.delegate.ExpressionSetInvocation;
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELException;
-import org.operaton.bpm.impl.juel.jakarta.el.MethodNotFoundException;
-import org.operaton.bpm.impl.juel.jakarta.el.PropertyNotFoundException;
-import org.operaton.bpm.impl.juel.jakarta.el.ValueExpression;
+import jakarta.el.ELException;
+import jakarta.el.MethodNotFoundException;
+import jakarta.el.PropertyNotFoundException;
+import jakarta.el.ValueExpression;
 
 
 /**

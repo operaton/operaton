@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
+import jakarta.el.ELContext;
+import jakarta.el.ELResolver;
+
 import java.beans.FeatureDescriptor;
 import java.util.Collections;
 import java.util.Iterator;
-
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
 
 /**
  * @author Thorben Lindhauer

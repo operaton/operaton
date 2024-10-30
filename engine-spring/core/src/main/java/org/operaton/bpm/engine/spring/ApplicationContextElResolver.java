@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.spring;
 
+import jakarta.el.ELContext;
+import org.operaton.bpm.engine.ProcessEngineException;
+import jakarta.el.ELResolver;
+import org.springframework.context.ApplicationContext;
+
 import java.beans.FeatureDescriptor;
 import java.util.Iterator;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Tom Baeyens

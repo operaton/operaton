@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.dmn.feel.impl.juel.el;
 
-import java.lang.reflect.Method;
-
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ExpressionFactory;
-
+import jakarta.el.ELContext;
+import jakarta.el.ExpressionFactory;
 import org.operaton.bpm.engine.variable.context.VariableContext;
+
+import java.lang.reflect.Method;
 
 public interface ElContextFactory {
 

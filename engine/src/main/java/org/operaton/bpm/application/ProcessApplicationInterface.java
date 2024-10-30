@@ -25,8 +25,8 @@ import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.application.impl.ServletProcessApplication;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
-import org.operaton.bpm.impl.juel.jakarta.el.BeanELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
+import jakarta.el.BeanELResolver;
+import jakarta.el.ELResolver;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 
 /**

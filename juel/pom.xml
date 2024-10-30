@@ -29,7 +29,6 @@
       <groupId>jakarta.el</groupId>
       <artifactId>jakarta.el-api</artifactId>
       <version>${version.jakarta.el}</version>
-      <optional>true</optional>
     </dependency>
   </dependencies>
 
@@ -45,33 +44,6 @@
             <goals>
               <goal>jar-no-fork</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
-              <shadeSourcesContent>true</shadeSourcesContent>
-              <artifactSet>
-                <includes>
-                  <include>jakarta.el:jakarta.el-api</include>
-                </includes>
-              </artifactSet>
-              <relocations>
-                <relocation>
-                  <pattern>jakarta.el</pattern>
-                  <shadedPattern>org.operaton.bpm.impl.juel.jakarta.el</shadedPattern>
-                </relocation>
-              </relocations>
-            </configuration>
           </execution>
         </executions>
       </plugin>

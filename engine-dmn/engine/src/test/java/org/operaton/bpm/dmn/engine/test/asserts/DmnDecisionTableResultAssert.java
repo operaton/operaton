@@ -19,6 +19,9 @@ package org.operaton.bpm.dmn.engine.test.asserts;
 import org.assertj.core.api.AbstractListAssert;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
+import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableResultImpl;
+
+import java.util.ArrayList;
 
 public class DmnDecisionTableResultAssert extends AbstractListAssert<DmnDecisionTableResultAssert, DmnDecisionTableResult, DmnDecisionRuleResult, DmnDecisionRuleResultAssert> {
 
@@ -40,4 +43,12 @@ public class DmnDecisionTableResultAssert extends AbstractListAssert<DmnDecision
 
     return new DmnDecisionRuleResultAssert(value);
   }
+
+  @Override
+  protected DmnDecisionTableResultAssert newAbstractIterableAssert(Iterable<? extends DmnDecisionRuleResult> iterable) {
+    DmnDecisionTableResult decisionTableResult = new DmnDecisionTableResultImpl(new ArrayList<>());
+
+    iterable.forEach(decisionTableResult::add);
+
+    return new DmnDecisionTableResultAssert(decisionTableResult);  }
 }

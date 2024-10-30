@@ -17,6 +17,12 @@
 package org.operaton.bpm.engine.test.errorcode.conf;
 
 import org.assertj.core.api.ThrowableAssert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.identity.User;
@@ -28,16 +34,8 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class ExceptionCodeDisabledTest {
 
@@ -80,7 +78,7 @@ public class ExceptionCodeDisabledTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process", businessKey))
         .extracting("code")
-        .contains(BuiltinExceptionCode.FALLBACK.getCode());
+        .isEqualTo(BuiltinExceptionCode.FALLBACK.getCode());
   }
 
   @Test
@@ -100,7 +98,7 @@ public class ExceptionCodeDisabledTest {
     // when/then
     assertThatThrownBy(() -> identityService.saveUser(user2))
         .extracting("code")
-        .contains(BuiltinExceptionCode.FALLBACK.getCode());
+        .isEqualTo(BuiltinExceptionCode.FALLBACK.getCode());
   }
 
   @Test
@@ -123,7 +121,7 @@ public class ExceptionCodeDisabledTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(999_999);
+        .isEqualTo(999_999);
   }
 
   @Test
@@ -146,7 +144,7 @@ public class ExceptionCodeDisabledTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(1000);
+        .isEqualTo(1000);
   }
 
   // helper ////////////////////////////////////////////////////////////////////////////////////////

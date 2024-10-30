@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.engine.test.errorcode.conf;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -29,18 +35,10 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 import java.sql.SQLException;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 
 public class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
@@ -104,7 +102,7 @@ public class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process", businessKey))
         .extracting("code")
-        .contains(PROVIDED_CUSTOM_CODE);
+        .isEqualTo(PROVIDED_CUSTOM_CODE);
   }
 
   @Test
@@ -124,7 +122,7 @@ public class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
     // when/then
     assertThatThrownBy(() -> identityService.saveUser(user2))
         .extracting("code")
-        .contains(PROVIDED_CUSTOM_CODE);
+        .isEqualTo(PROVIDED_CUSTOM_CODE);
   }
 
   @Test
@@ -147,7 +145,7 @@ public class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(999_999);
+        .isEqualTo(999_999);
   }
 
   @Test
@@ -170,7 +168,7 @@ public class BuiltinExceptionCodeProviderDisabledWithCustomProviderTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(1000);
+        .isEqualTo(1000);
   }
 
   // helper ////////////////////////////////////////////////////////////////////////////////////////

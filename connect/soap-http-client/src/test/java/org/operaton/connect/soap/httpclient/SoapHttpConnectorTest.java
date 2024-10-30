@@ -19,31 +19,31 @@ package org.operaton.connect.soap.httpclient;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.http.client.methods.HttpPost;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.connect.Connectors;
 import org.operaton.connect.httpclient.soap.SoapHttpConnector;
 import org.operaton.connect.httpclient.soap.impl.SoapHttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 import org.operaton.connect.spi.Connector;
-import org.junit.Before;
-import org.junit.Test;
 
 public class SoapHttpConnectorTest {
 
   public SoapHttpConnector connector;
 
-  @Before
-  public void createConnector() {
+  @BeforeEach
+  void createConnector() {
     connector = new SoapHttpConnectorImpl();
   }
 
   @Test
-  public void shouldDiscoverConnector() {
+  void shouldDiscoverConnector() {
     Connector soap = Connectors.getConnector(SoapHttpConnector.ID);
     assertThat(soap).isNotNull();
   }
 
   @Test
-  public void shouldCreateHttpPostRequestByDefault() {
+  void shouldCreateHttpPostRequestByDefault() {
     DebugRequestInterceptor interceptor = new DebugRequestInterceptor(false);
     connector.addRequestInterceptor(interceptor);
     connector.createRequest().url("http://operaton.org").payload("test").soapAction("as").execute();

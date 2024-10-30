@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.client.variable;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
@@ -24,10 +25,10 @@ import org.operaton.bpm.engine.variable.impl.type.PrimitiveValueTypeImpl;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.DateValue;
 
-import java.util.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -84,7 +85,7 @@ class DateValueMapperTest {
 
     // then
     assertThat(dateValue.getType()).isInstanceOf(PrimitiveValueTypeImpl.DateTypeImpl.class);
-    assertThat(dateValue.getValue()).isEqualTo(null);
+    assertThat(dateValue.getValue()).isNull();
   }
 
   @Test

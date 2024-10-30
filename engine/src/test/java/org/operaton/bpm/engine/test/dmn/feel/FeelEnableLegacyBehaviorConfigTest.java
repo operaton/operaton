@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.engine.test.dmn.feel;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import org.operaton.bpm.dmn.feel.impl.juel.FeelSyntaxException;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.operaton.bpm.engine.variable.Variables;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+import org.operaton.bpm.dmn.feel.impl.juel.FeelSyntaxException;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
+import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
+import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.variable.Variables;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FeelEnableLegacyBehaviorConfigTest {
 
@@ -87,7 +86,7 @@ public class FeelEnableLegacyBehaviorConfigTest {
         Variables.putValue("cellInput", 6)).getSingleEntry())
       .hasCauseInstanceOf(FeelSyntaxException.class)
       .extracting("cause.message")
-      .contains("FEEL-01010 Syntax error in expression 'for x in 1..3 return x * 2'");
+      .isEqualTo("FEEL-01010 Syntax error in expression 'for x in 1..3 return x * 2'");
   }
 
   @Test

@@ -72,11 +72,9 @@
 
   <modules>
     <module>engine-rest</module>
-    <module>engine-rest-jakarta</module>
     <module>engine-rest-openapi</module>
     <module>engine-rest-openapi-generator</module>
     <module>assembly</module>
-    <module>assembly-jakarta</module>
     <module>docs</module>
   </modules>
 

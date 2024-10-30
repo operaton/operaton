@@ -20,9 +20,9 @@ import org.operaton.bpm.dmn.engine.impl.spi.el.ElExpression;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ValueExpression;
 import org.operaton.bpm.engine.variable.context.VariableContext;
+import jakarta.el.ELContext;
+import jakarta.el.ValueExpression;
 
 /**
  * @author Daniel Meyer

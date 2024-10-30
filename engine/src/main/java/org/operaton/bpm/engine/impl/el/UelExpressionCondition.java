@@ -23,7 +23,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.Condition;
-import org.operaton.bpm.impl.juel.jakarta.el.PropertyNotFoundException;
+import jakarta.el.PropertyNotFoundException;
 
 
 /**

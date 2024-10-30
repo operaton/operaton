@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.dmn.feel.impl.juel.el;
 
-import org.operaton.bpm.impl.juel.jakarta.el.ExpressionFactory;
-import org.operaton.bpm.impl.juel.jakarta.el.ValueExpression;
-import org.operaton.bpm.impl.juel.jakarta.el.VariableMapper;
+import jakarta.el.ExpressionFactory;
+import jakarta.el.ValueExpression;
+import jakarta.el.VariableMapper;
 
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineLogger;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelLogger;

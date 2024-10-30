@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.test.mock;
 
+import jakarta.el.ELContext;
+import jakarta.el.ELResolver;
+
 import java.beans.FeatureDescriptor;
 import java.util.Iterator;
-
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
 
 public class MockElResolver extends ELResolver {
 

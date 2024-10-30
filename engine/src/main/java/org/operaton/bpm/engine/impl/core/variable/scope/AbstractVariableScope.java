@@ -16,14 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.scope;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import jakarta.el.ELContext;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -32,11 +25,13 @@ import org.operaton.bpm.engine.impl.core.variable.VariableUtil;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEventDispatcher;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Daniel Meyer

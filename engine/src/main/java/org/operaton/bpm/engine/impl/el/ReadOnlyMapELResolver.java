@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
+import jakarta.el.ELContext;
+import org.operaton.bpm.engine.ProcessEngineException;
+import jakarta.el.ELResolver;
+
 import java.beans.FeatureDescriptor;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
 
 /**
  * An {@link ELResolver} that exposed object values in the map, under the name of the entry's key.

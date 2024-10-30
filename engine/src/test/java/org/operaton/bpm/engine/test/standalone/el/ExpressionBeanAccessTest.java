@@ -23,7 +23,7 @@ import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.impl.juel.jakarta.el.PropertyNotFoundException;
+import jakarta.el.PropertyNotFoundException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;

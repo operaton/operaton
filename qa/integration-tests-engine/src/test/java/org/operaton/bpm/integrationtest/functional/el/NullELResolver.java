@@ -18,7 +18,7 @@ package org.operaton.bpm.integrationtest.functional.el;
 
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationElResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
+import jakarta.el.ELResolver;
 
 /**
  * @author Thorben Lindhauer

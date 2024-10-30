@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import org.operaton.bpm.impl.juel.jakarta.el.FunctionMapper;
+import jakarta.el.FunctionMapper;
 
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineLogger;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelLogger;

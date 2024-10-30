@@ -21,8 +21,8 @@ import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.impl.juel.jakarta.el.BeanELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
+import jakarta.el.BeanELResolver;
+import jakarta.el.ELResolver;
 
 /**
  * <p>Resolves a {@link BeanELResolver} from the current process application.

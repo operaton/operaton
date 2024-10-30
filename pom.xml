@@ -255,6 +255,11 @@
           <version>1.0.0</version>
         </plugin>
         <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.12</version>
+        </plugin>
+        <plugin>
           <groupId>org.jboss.shrinkwrap.resolver</groupId>
           <artifactId>shrinkwrap-resolver-maven-plugin</artifactId>
           <version>${version.shrinkwrap.resolvers}</version>
@@ -534,7 +539,6 @@
         </plugins>
       </build>
     </profile>
-
   </profiles>
 
   <repositories>

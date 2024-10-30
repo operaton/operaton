@@ -16,15 +16,18 @@
  */
 package org.operaton.bpm.engine.test.standalone.scripting;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.Test;
+import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
+import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
+import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
-import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
-import org.operaton.bpm.engine.repository.ProcessApplicationDeployment;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.as;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class EnvScriptResolutionTest extends AbstractScriptEnvironmentTest {
 
@@ -58,8 +61,8 @@ public class EnvScriptResolutionTest extends AbstractScriptEnvironmentTest {
     assertThat(environmentScripts)
       .hasSize(1)
       .containsKey(ECMASCRIPT_LANGUAGE)
-      .extracting(ECMASCRIPT_LANGUAGE)
-        .hasSize(1);
+      .extracting(ECMASCRIPT_LANGUAGE, as(InstanceOfAssertFactories.list(Object.class)))
+      .hasSize(1);
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }
@@ -80,8 +83,8 @@ public class EnvScriptResolutionTest extends AbstractScriptEnvironmentTest {
       .hasSize(2)
       .containsKeys(ECMASCRIPT_LANGUAGE, SCRIPT_LANGUAGE)
       .containsEntry(SCRIPT_LANGUAGE, Collections.emptyList())
-      .extracting(ECMASCRIPT_LANGUAGE)
-        .hasSize(1);
+      .extracting(ECMASCRIPT_LANGUAGE, as(InstanceOfAssertFactories.list(Object.class)))
+      .hasSize(1);
 
     repositoryService.deleteDeployment(deployment.getId(), true);
   }

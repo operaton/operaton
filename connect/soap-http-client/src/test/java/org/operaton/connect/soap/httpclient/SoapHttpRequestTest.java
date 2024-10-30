@@ -17,24 +17,23 @@
 package org.operaton.connect.soap.httpclient;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.connect.Connectors;
 import org.operaton.connect.httpclient.soap.SoapHttpConnector;
 import org.operaton.connect.httpclient.soap.SoapHttpRequest;
-import org.junit.Before;
-import org.junit.Test;
 
-public class SoapHttpRequestTest {
+class SoapHttpRequestTest {
 
   private SoapHttpConnector connector;
 
-  @Before
-  public void createRequest() {
+  @BeforeEach
+  void createRequest() {
     connector = Connectors.getConnector(SoapHttpConnector.ID);
   }
 
   @Test
-  public void shouldSetSoapAction() {
+  void shouldSetSoapAction() {
     SoapHttpRequest request = connector.createRequest().soapAction("test");
     assertThat(request.getSoapAction()).isEqualTo("test");
   }

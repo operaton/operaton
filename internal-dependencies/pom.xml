@@ -85,6 +85,12 @@
         <version>2.5</version>
       </dependency>
       <dependency>
+        <groupId>jakarta.el</groupId>
+        <artifactId>jakarta.el-api</artifactId>
+        <version>4.0.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
         <groupId>org.hibernate.javax.persistence</groupId>
         <artifactId>hibernate-jpa-2.0-api</artifactId>
         <version>1.0.1.Final</version>
@@ -110,6 +116,12 @@
         <groupId>org.junit.platform</groupId>
         <artifactId>junit-platform-testkit</artifactId>
         <version>1.11.3</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${version.junit5}</version>
         <scope>test</scope>
       </dependency>
       <dependency>

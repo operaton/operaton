@@ -18,6 +18,12 @@ package org.operaton.bpm.engine.test.errorcode.conf;
 
 import ch.qos.logback.classic.Level;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -33,12 +39,6 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 import java.sql.SQLException;
 
@@ -178,7 +178,7 @@ public class CustomErrorCodeProviderTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(BuiltinExceptionCode.OPTIMISTIC_LOCKING.getCode());
+        .isEqualTo(BuiltinExceptionCode.OPTIMISTIC_LOCKING.getCode());
     assertThat(loggingRule.getLog().get(0).getMessage())
         .contains("Falling back to built-in code");
   }
@@ -203,7 +203,7 @@ public class CustomErrorCodeProviderTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(PROVIDED_CUSTOM_CODE);
+        .isEqualTo(PROVIDED_CUSTOM_CODE);
   }
 
   @Test
@@ -226,7 +226,7 @@ public class CustomErrorCodeProviderTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(BuiltinExceptionCode.FALLBACK.getCode());
+        .isEqualTo(BuiltinExceptionCode.FALLBACK.getCode());
     assertThat(loggingRule.getLog().get(0).getMessage())
         .contains("Falling back to default error code 0.");
   }
@@ -251,7 +251,7 @@ public class CustomErrorCodeProviderTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(BuiltinExceptionCode.FALLBACK.getCode());
+        .isEqualTo(BuiltinExceptionCode.FALLBACK.getCode());
     assertThat(loggingRule.getLog().get(0).getMessage())
         .contains("Falling back to default error code 0.");
   }
@@ -276,7 +276,7 @@ public class CustomErrorCodeProviderTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(BuiltinExceptionCode.FALLBACK.getCode());
+        .isEqualTo(BuiltinExceptionCode.FALLBACK.getCode());
     assertThat(loggingRule.getLog().get(0).getMessage())
         .contains("Falling back to default error code 0.");
   }
@@ -301,7 +301,7 @@ public class CustomErrorCodeProviderTest {
     // then
     assertThatThrownBy(callable)
         .extracting("code")
-        .contains(22_222);
+        .isEqualTo(22_222);
   }
 
   @Test
@@ -320,7 +320,7 @@ public class CustomErrorCodeProviderTest {
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process", businessKey))
         .isInstanceOf(ProcessEngineException.class)
         .extracting("code")
-        .contains(BuiltinExceptionCode.COLUMN_SIZE_TOO_SMALL.getCode());
+        .isEqualTo(BuiltinExceptionCode.COLUMN_SIZE_TOO_SMALL.getCode());
   }
 
   // helper ////////////////////////////////////////////////////////////////////////////////////////

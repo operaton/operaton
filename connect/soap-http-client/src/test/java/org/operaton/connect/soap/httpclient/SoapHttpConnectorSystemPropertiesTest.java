@@ -16,20 +16,25 @@
  */
 package org.operaton.connect.soap.httpclient;
 
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.apache.http.protocol.HTTP;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.connect.httpclient.soap.SoapHttpConnector;
 import org.operaton.connect.httpclient.soap.impl.SoapHttpConnectorImpl;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
 /**
  * Since Apache HTTP client makes it extremely hard to test the proper configuration
@@ -38,24 +43,19 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
  *
  * @author Thorben Lindhauer
  */
+@WireMockTest
 public class SoapHttpConnectorSystemPropertiesTest {
-
-  public static final int PORT = 51234;
-
-  @Rule
-  public WireMockRule wireMockRule = new WireMockRule(
-      WireMockConfiguration.wireMockConfig().port(PORT));
 
   protected Set<String> updatedSystemProperties;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     updatedSystemProperties = new HashSet<String>();
-    wireMockRule.stubFor(post(urlEqualTo("/")).willReturn(aResponse().withStatus(200)));
+    stubFor(get(urlEqualTo("/")).willReturn(aResponse().withStatus(200)));
   }
 
-  @After
-  public void clearCustomSystemProperties() {
+  @AfterEach
+  void clearCustomSystemProperties() {
     for (String property : updatedSystemProperties) {
       System.getProperties().remove(property);
     }
@@ -73,14 +73,14 @@ public class SoapHttpConnectorSystemPropertiesTest {
   }
 
   @Test
-  public void shouldSetUserAgentFromSystemProperty() {
+  void shouldSetUserAgentFromSystemProperty(WireMockRuntimeInfo wmRuntimeInfo) {
     // given
     setSystemProperty("http.agent", "foo");
 
     SoapHttpConnector customConnector = new SoapHttpConnectorImpl();
 
     // when
-    customConnector.createRequest().url("http://localhost:" + PORT).payload("test").execute();
+    customConnector.createRequest().url("http://localhost:" + wmRuntimeInfo.getHttpPort()).payload("test").execute();
 
     // then
     verify(postRequestedFor(urlEqualTo("/")).withHeader(HTTP.USER_AGENT, equalTo("foo")));

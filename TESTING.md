@@ -1,4 +1,4 @@
-# OPERATON Testing Guidelines
+# Operaton Testing Guidelines
 
 * [Best Practices for Writing Test Cases](#best-practices-for-writing-test-cases)
 * [Running Integration Tests](#running-integration-tests)

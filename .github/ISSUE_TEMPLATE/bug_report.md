@@ -26,7 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **Desktop (please complete the following information):**
  - OS: [e.g. iOS]
  - Browser [e.g. chrome, safari]
- - OPERATON-Version [e.g. 22]
+ - Operaton-Version [e.g. 22]
 
 **Additional context**
 Add any other context about the problem here.

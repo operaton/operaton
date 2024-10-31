@@ -102,7 +102,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <argLine>-XX:PermSize=128m</argLine>
+              <argLine>${jacoco.argLine} -XX:PermSize=128m</argLine>
               <excludes>
                 <exclude>**/javascript/**</exclude>
               </excludes>
@@ -123,7 +123,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <argLine>-XX:PermSize=128m</argLine>
+              <argLine>${jacoco.argLine} -XX:PermSize=128m</argLine>
               <excludes>
                 <exclude>**/DataFormatLoadingTest.java</exclude>
               </excludes>
@@ -163,9 +163,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <argLine>
-                -XX:MetaspaceSize=128m
-              </argLine>
+              <argLine>${jacoco.argLine} -XX:MetaspaceSize=128m</argLine>
               <excludes combine.children="append">
                 <exclude>**/*NashornTest.java</exclude>
               </excludes>

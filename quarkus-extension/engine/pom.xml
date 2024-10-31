@@ -29,7 +29,7 @@
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
           <trimStackTrace>false</trimStackTrace>
-          <argLine>-Xmx2048m</argLine>
+          <argLine>${jacoco.argLine} -Xmx2048m</argLine>
         </configuration>
       </plugin>
     </plugins>

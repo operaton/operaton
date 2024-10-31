@@ -217,7 +217,7 @@
             <systemPropertyVariables>
               <myWorkingDir>${project.build.directory}</myWorkingDir>
             </systemPropertyVariables>
-            <argLine>-XX:MaxMetaspaceSize=128m</argLine>
+            <argLine>${jacoco.argLine} -XX:MaxMetaspaceSize=128m</argLine>
           </configuration>
         </plugin>
 

@@ -119,7 +119,7 @@
             <configuration>
               <runOrder>alphabetical</runOrder>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <argLine>-Xmx1024m</argLine>
+              <argLine>${jacoco.argLine} -Xmx1024m</argLine>
               <includes>
                  <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>
@@ -189,7 +189,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <argLine>-Xmx1024m</argLine>
+              <argLine>${jacoco.argLine} -Xmx1024m</argLine>
               <includes>
                  <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>
@@ -257,7 +257,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <argLine>-Xmx1024m</argLine>
+              <argLine>${jacoco.argLine} -Xmx1024m</argLine>
               <includes>
                  <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>
@@ -374,7 +374,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <argLine>-Xmx1024m</argLine>
+              <argLine>${jacoco.argLine} -Xmx1024m</argLine>
               <includes>
                  <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>
@@ -440,7 +440,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <argLine>-Xmx1024m</argLine>
+              <argLine>${jacoco.argLine} -Xmx1024m</argLine>
               <includes>
                  <include>%regex[.*(${test.includes}).*Test.*.class]</include>
               </includes>

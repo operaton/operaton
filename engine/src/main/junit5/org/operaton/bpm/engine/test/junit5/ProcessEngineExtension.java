@@ -23,8 +23,12 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
+import org.operaton.bpm.engine.impl.interceptor.Command;
+import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.slf4j.Logger;
@@ -33,6 +37,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -155,11 +160,16 @@ public class ProcessEngineExtension implements TestWatcher,
   protected boolean ensureCleanAfterTest = false;
   protected List<String> additionalDeployments = new ArrayList<>();
 
+  protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
+
   // SETUP
 
   protected void initializeProcessEngine() {
     processEngine = TestHelper.getProcessEngine(configurationResource);
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
+    if (processEngineConfigurator != null) {
+      processEngineConfigurator.accept(processEngineConfiguration);
+    }
   }
 
   protected void initializeServices() {
@@ -252,8 +262,26 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public void afterAll(ExtensionContext context) {
+    deleteHistoryCleanupJob();
+    processEngine.close();
+    ProcessEngines.unregister(processEngine);
+    processEngine = null;
     clearServiceReferences();
   }
+
+  private void deleteHistoryCleanupJob() {
+    final List<Job> jobs = processEngine.getHistoryService().findHistoryCleanupJobs();
+    for (final Job job: jobs) {
+      ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequired().execute(new Command<Void>() {
+        public Void execute(CommandContext commandContext) {
+          commandContext.getJobManager().deleteJob((JobEntity) job);
+          commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
+          return null;
+        }
+      });
+    }
+  }
+
 
   @Override
   public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
@@ -327,6 +355,11 @@ public class ProcessEngineExtension implements TestWatcher,
 
   public ProcessEngineExtension manageDeployment(org.operaton.bpm.engine.repository.Deployment deployment) {
     this.additionalDeployments.add(deployment.getId());
+    return this;
+  }
+
+  public ProcessEngineExtension configurator (Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
+    this.processEngineConfigurator = processEngineConfigurator;
     return this;
   }
 

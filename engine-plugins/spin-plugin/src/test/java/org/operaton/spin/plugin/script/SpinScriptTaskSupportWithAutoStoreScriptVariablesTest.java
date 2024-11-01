@@ -16,21 +16,36 @@
  */
 package org.operaton.spin.plugin.script;
 
-import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends PluggableProcessEngineTestCase {
+@ExtendWith(ProcessEngineExtension.class)
+public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
+  private ProcessEngineConfigurationImpl processEngineConfiguration;
+  private RepositoryService repositoryService;
+  private RuntimeService runtimeService;
 
   protected static String TEST_SCRIPT = """
                                         var_s = S('{}')
@@ -39,18 +54,20 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
                                         """;
 
   protected ProcessInstance processInstance;
+  private TaskService taskService;
 
-  @Override
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     processEngineConfiguration.setAutoStoreScriptVariables(true);
   }
 
-  @Override
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngineConfiguration.setAutoStoreScriptVariables(false);
   }
 
-  public void testSpinInternalVariablesNotExportedGroovyScriptTask() {
+  @Test
+  void spinInternalVariablesNotExportedGroovyScriptTask() {
     String importXML = "XML = org.operaton.spin.Spin.&XML\n";
     String importJSON = "JSON = org.operaton.spin.Spin.&JSON\n";
 
@@ -79,7 +96,8 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
     checkVariables("foo", "var_s", "var_xml", "var_json");
   }
 
-  public void testSpinInternalVariablesNotExportedByPythonScriptTask() {
+  @Test
+  void spinInternalVariablesNotExportedByPythonScriptTask() {
     String importXML = "import org.operaton.spin.Spin.XML as XML;\n";
     String importJSON = "import org.operaton.spin.Spin.JSON as JSON;\n";
 
@@ -93,7 +111,8 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
     checkVariables("foo", "var_s", "var_xml", "var_json");
   }
 
-  public void testSpinInternalVariablesNotExportedByRubyScriptTask() {
+  @Test
+  void spinInternalVariablesNotExportedByRubyScriptTask() {
     String importXML = "def XML(*args)\n\torg.operaton.spin.Spin.XML(*args)\nend\n";
     String importJSON = "def JSON(*args)\n\torg.operaton.spin.Spin.JSON(*args)\nend\n";
 
@@ -114,7 +133,7 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
 
   protected void continueProcess() {
     Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
     taskService.complete(task.getId());
   }
 
@@ -122,7 +141,7 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
     Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
     checkVariablesValues(expectedVariables, variables);
 
-    assertEquals(expectedVariables.length, variables.size());
+    assertThat(variables).hasSize(expectedVariables.length);
   }
 
   protected void checkVariablesJRuby(String... expectedVariables) {
@@ -134,13 +153,12 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
   }
 
   protected void checkVariablesValues(String[] expectedVariables, Map<String, Object> actualVariables) {
-
-    assertFalse(actualVariables.containsKey("S"));
-    assertFalse(actualVariables.containsKey("XML"));
-    assertFalse(actualVariables.containsKey("JSON"));
+    assertThat(actualVariables).doesNotContainKey("S");
+    assertThat(actualVariables).doesNotContainKey("XML");
+    assertThat(actualVariables).doesNotContainKey("JSON");
 
     for (String expectedVariable : expectedVariables) {
-      assertTrue(actualVariables.containsKey(expectedVariable));
+      assertThat(actualVariables).containsKey(expectedVariable);
     }
   }
 
@@ -150,7 +168,6 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
       .addModelInstance("testProcess.bpmn", process)
       .addString("testScript.txt", scriptText)
       .deploy();
-    deploymentId = deployment.getId();
   }
 
   protected BpmnModelInstance createProcess(String scriptFormat, String scriptText) {

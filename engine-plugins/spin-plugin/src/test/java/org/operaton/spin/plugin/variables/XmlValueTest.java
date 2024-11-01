@@ -16,11 +16,18 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.DeploymentExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -42,11 +49,14 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * @author Roman Smirnov
  *
  */
-public class XmlValueTest extends PluggableProcessEngineTestCase {
+@ExtendWith(ProcessEngineExtension.class)
+class XmlValueTest {
 
   protected static final String ONE_TASK_PROCESS = "org/operaton/spin/plugin/oneTaskProcess.bpmn20.xml";
   protected static final String XML_FORMAT_NAME = DataFormats.XML_DATAFORMAT_NAME;
@@ -57,9 +67,15 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
   protected String brokenXmlString = "<elementName attrName=attrValue\" />";
 
   protected String variableName = "x";
+  private RuntimeService runtimeService = null;
+  private TaskService taskService = null;
+
+  @RegisterExtension
+  DeploymentExtension deploymentExtension = new DeploymentExtension();
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testGetUntypedXmlValue() {
+  @Test
+  void getUntypedXmlValue() {
     // given
     XmlValue xmlValue = xmlValue(xmlString).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
@@ -77,7 +93,8 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testGetTypedXmlValue() {
+  @Test
+  void getTypedXmlValue() {
     // given
     XmlValue xmlValue = xmlValue(xmlString).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
@@ -100,22 +117,22 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testBrokenXmlSerialization() {
+  @Test
+  void brokenXmlSerialization() {
     // given
     XmlValue value = xmlValue(brokenXmlString).create();
 
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    try {
+    Assertions.assertDoesNotThrow(() -> {
       // when
       runtimeService.setVariable(processInstanceId, variableName, value);
-    } catch (Exception e) {
-      fail("no exception expected");
-    }
+    }, "no exception expected");
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testFailingDeserialization() {
+  @Test
+  void failingDeserialization() {
     // given
     XmlValue value = xmlValue(brokenXmlString).create();
 
@@ -151,7 +168,8 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testFailForNonExistingSerializationFormat() {
+  @Test
+  void failForNonExistingSerializationFormat() {
     // given
     XmlValueBuilder builder = xmlValue(xmlString).serializationDataFormat("non existing data format");
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
@@ -162,7 +180,7 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
       fail("Exception expected");
     } catch (ProcessEngineException e) {
       // then (1)
-      assertTextPresent("Cannot find serializer for value", e.getMessage());
+      assertThat(e.getMessage()).contains("Cannot find serializer for value");
       // happy path
     }
 
@@ -172,13 +190,14 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
       fail("Exception expected");
     } catch (ProcessEngineException e) {
       // then (2)
-      assertTextPresent("Cannot find serializer for value", e.getMessage());
+      assertThat(e.getMessage()).contains("Cannot find serializer for value");
       // happy path
     }
   }
 
   @Deployment(resources = "org/operaton/spin/plugin/xmlConditionProcess.bpmn20.xml")
-  public void testXmlValueInCondition() {
+  @Test
+  void xmlValueInCondition() {
     // given
     String xml = "<customer age=\"22\" />";
     XmlValue value = xmlValue(xml).create();
@@ -193,7 +212,8 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testTransientXmlValueFluent() {
+  @Test
+  void transientXmlValueFluent() {
     // given
     XmlValue xmlValue = xmlValue(xmlString).setTransient(true).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
@@ -207,7 +227,8 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testTransientXmlValue() {
+  @Test
+  void transientXmlValue() {
     // given
     XmlValue xmlValue = xmlValue(xmlString, true).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);
@@ -223,7 +244,8 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
   /**
    * See https://app.camunda.com/jira/browse/CAM-9932
    */
-  public void testTransientXmlSpinVariables() {
+  @Test
+  void transientXmlSpinVariables() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("aProcess")
         .startEvent()
@@ -232,7 +254,7 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
         .userTask()
         .endEvent()
         .done();
-      deployment(modelInstance);
+    deploymentExtension.deploy(modelInstance);
 
     // when
     String processInstanceId = runtimeService.startProcessInstanceByKey("aProcess").getId();
@@ -242,7 +264,8 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
     assertThat(value).isNull();
   }
 
-  public void testApplyValueInfoFromSerializedValue() {
+  @Test
+  void applyValueInfoFromSerializedValue() {
     // given
     Map<String, Object> valueInfo = new HashMap<>();
     valueInfo.put(ValueType.VALUE_INFO_TRANSIENT, true);
@@ -251,12 +274,13 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
     XmlValue xmlValue = (XmlValue) SpinValueType.XML.createValueFromSerialized(xmlString, valueInfo);
 
     // then
-    assertEquals(true, xmlValue.isTransient());
+    assertTrue(xmlValue.isTransient());
     Map<String, Object> returnedValueInfo = SpinValueType.XML.getValueInfo(xmlValue);
     assertEquals(true, returnedValueInfo.get(ValueType.VALUE_INFO_TRANSIENT));
   }
 
-  public void testDeserializeTransientXmlValue() {
+  @Test
+  void deserializeTransientXmlValue() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -271,7 +295,7 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
           .endEvent()
         .done();
 
-    deployment(modelInstance);
+    deploymentExtension.deploy(modelInstance);
 
     XmlValue xmlValue = xmlValue(xmlString, true).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, xmlValue);

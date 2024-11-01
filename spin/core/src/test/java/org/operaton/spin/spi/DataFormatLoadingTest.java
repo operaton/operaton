@@ -24,7 +24,6 @@ import org.mockito.MockedStatic;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.operaton.spin.DataFormats;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,11 +34,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
- * Note: The @RunWith and @PrepareForTest annotations are required by powermock to be able
- * to mock static methods provided by the JDK (i.e. ServiceLoader.load(..) in our case).
- * See https://code.google.com/p/powermock/wiki/MockSystem and
- * https://code.google.com/p/powermock/wiki/MockStatic
- *
  * @author Thorben Lindhauer
  */
 class DataFormatLoadingTest {
@@ -50,7 +44,6 @@ class DataFormatLoadingTest {
   protected ServiceLoader<DataFormatConfigurator> mockConfiguratorLoader;
 
   private MockedStatic<ServiceLoader> mockServiceLoader1;
-  private MockedStatic<ServiceLoader> mockServiceLoader2;
 
   @BeforeEach
   @SuppressWarnings("unchecked")
@@ -68,7 +61,6 @@ class DataFormatLoadingTest {
   }
 
   @Test
-  @PrepareForTest({DataFormats.class})
   void customDataFormatProvider() {
     // given a custom data format provider that is returned by the service loader API
     mockProviders(new CustomDataFormatProvider());
@@ -84,7 +76,6 @@ class DataFormatLoadingTest {
 
 
   @Test
-  @PrepareForTest({DataFormats.class})
   void configureDataFormat() {
     // given a custom data format provider that is returned by the service loader API
     mockProviders(new CustomDataFormatProvider());
@@ -99,7 +90,6 @@ class DataFormatLoadingTest {
   }
 
   @Test
-  @PrepareForTest(DataFormats.class)
   void configureDataFormatWithConfiguratorList() {
     // given a custom data format provider that is returned by the service loader API
     mockProviders(new CustomDataFormatProvider());
@@ -118,7 +108,6 @@ class DataFormatLoadingTest {
   }
 
   @Test
-  @PrepareForTest(DataFormats.class)
   void registerDataFormatWithConfiguratorList() {
     // given a custom data format provider that is returned by the service loader API
     mockProviders(new CustomDataFormatProvider());
@@ -137,7 +126,6 @@ class DataFormatLoadingTest {
   }
 
   @Test
-  @PrepareForTest(DataFormats.class)
   void shouldPassConfiguratorPropertiesToProvider() {
     // given a custom data format provider that is returned by the service loader API
     mockProviders(new CustomDataFormatProvider());

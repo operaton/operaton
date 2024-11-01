@@ -16,7 +16,7 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

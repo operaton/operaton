@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
 
 /**
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class VariableResponseProvider {
 

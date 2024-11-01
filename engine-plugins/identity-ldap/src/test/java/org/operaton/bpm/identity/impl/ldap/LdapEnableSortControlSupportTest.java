@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * Represents a test case where the sortControlSupport property is enabled.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class LdapEnableSortControlSupportTest {
 

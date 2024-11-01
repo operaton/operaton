@@ -26,7 +26,7 @@ import org.operaton.bpm.qa.upgrade.Times;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ProcessWithMultiInstanceCallActivityScenario {
 

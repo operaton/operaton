@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 /**
  * Represents a delegated mapping of input and output variables.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public interface DelegateVariableMapping {
 

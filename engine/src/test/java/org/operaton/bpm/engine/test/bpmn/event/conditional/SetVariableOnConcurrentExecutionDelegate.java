@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.task.Task;
 
 /**
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class SetVariableOnConcurrentExecutionDelegate implements JavaDelegate {
 

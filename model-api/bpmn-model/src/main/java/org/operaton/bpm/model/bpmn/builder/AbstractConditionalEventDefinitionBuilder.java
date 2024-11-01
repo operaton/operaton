@@ -25,7 +25,7 @@ import org.operaton.bpm.model.bpmn.instance.Event;
 /**
  * Represents the abstract conditional event definition builder.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  * @param <B>
  */
 public class AbstractConditionalEventDefinitionBuilder<B extends AbstractConditionalEventDefinitionBuilder<B>> extends AbstractRootElementBuilder<B, ConditionalEventDefinition>{

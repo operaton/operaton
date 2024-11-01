@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.runtime.MessageCorrelationResultType;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class MessageCorrelationResultDto {
 

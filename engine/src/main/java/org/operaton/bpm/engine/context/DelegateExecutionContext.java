@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  * Represents a delegation execution context which should return the current
  * delegation execution.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class DelegateExecutionContext {
 

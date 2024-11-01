@@ -23,7 +23,7 @@ package org.operaton.bpm.engine.runtime;
  * a waiting execution (BPMN receive message event) or a process definition
  * (BPMN message start event). The result type indicates which correlation was performed.
  * 
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public enum MessageCorrelationResultType {
 

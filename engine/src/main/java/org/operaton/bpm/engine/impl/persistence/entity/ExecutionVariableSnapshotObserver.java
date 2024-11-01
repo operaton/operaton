@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 /**
  * Provides access to the snapshot of latest variables of an execution.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ExecutionVariableSnapshotObserver implements ExecutionObserver {
 

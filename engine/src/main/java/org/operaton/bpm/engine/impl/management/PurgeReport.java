@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.CachePurgeReport;
  * and also the deleted values which are removed from the deployment cache.
  * If now entities are deleted since the database was already clean the purge report is empty.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class PurgeReport {
 

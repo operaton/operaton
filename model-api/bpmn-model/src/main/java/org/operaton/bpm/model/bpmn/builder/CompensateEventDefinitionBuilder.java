@@ -21,7 +21,7 @@ import org.operaton.bpm.model.bpmn.instance.CompensateEventDefinition;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class CompensateEventDefinitionBuilder extends AbstractCompensateEventDefinitionBuilder<CompensateEventDefinitionBuilder> {
 

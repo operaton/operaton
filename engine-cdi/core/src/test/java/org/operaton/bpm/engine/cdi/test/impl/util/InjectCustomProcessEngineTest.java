@@ -32,7 +32,7 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 
 /**
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @RunWith(Arquillian.class)
 public class InjectCustomProcessEngineTest extends CdiProcessEngineTestCase {

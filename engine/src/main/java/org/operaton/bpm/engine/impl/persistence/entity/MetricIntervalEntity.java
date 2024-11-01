@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.management.MetricIntervalValue;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class MetricIntervalEntity implements MetricIntervalValue, DbEntity, Serializable {
 

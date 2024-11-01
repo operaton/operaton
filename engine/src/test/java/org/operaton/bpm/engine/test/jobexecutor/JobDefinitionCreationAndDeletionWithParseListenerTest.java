@@ -49,7 +49,7 @@ import org.junit.Test;
  * In this case there should delete and create some job declarations for the activity which
  * was asyncBefore before and are now asyncAfter.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class JobDefinitionCreationAndDeletionWithParseListenerTest {
 

@@ -28,7 +28,7 @@ import org.junit.Test;
  * This test ensures that the old engine can complete an
  * existing process with user task on the new schema.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithUserTaskScenario")
 public class CompleteProcessWithUserTaskTest extends AbstractRollingUpdateTestCase {

@@ -23,7 +23,7 @@ package org.operaton.bpm.engine.impl.pvm.runtime;
  *
  * @param <P> the type of the callback parameter
  * @param <R> the type of the callback result
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public interface Callback<P, R> {
 

@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 /**
  * Represents an task which generates metrics of an year.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class GenerateMetricsTask implements Runnable {
 

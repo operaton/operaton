@@ -27,7 +27,7 @@ import org.junit.Test;
  * Represents a base class for authorization test cases to handle
  * an already locked (single) external task.
  * 
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public abstract class HandleLockedExternalTaskAuthorizationTest extends HandleExternalTaskAuthorizationTest {
 

@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 /**
  * Represents the logger for the external task.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ExternalTaskLogger extends ProcessEngineLogger {
 

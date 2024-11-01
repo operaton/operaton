@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 /**
  * Represents an example implementation for the {@link DelegateVariableMapping} interface.
  * 
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class DelegatedVarMapping implements DelegateVariableMapping {
 

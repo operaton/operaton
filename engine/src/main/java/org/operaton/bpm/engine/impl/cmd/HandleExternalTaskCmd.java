@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 /**
  * Represents an abstract class for the handle of external task commands.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public abstract class HandleExternalTaskCmd extends ExternalTaskCmd {
 

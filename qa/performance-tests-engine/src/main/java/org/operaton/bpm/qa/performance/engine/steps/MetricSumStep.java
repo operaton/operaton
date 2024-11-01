@@ -23,7 +23,7 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class MetricSumStep extends ProcessEngineAwareStep {
 

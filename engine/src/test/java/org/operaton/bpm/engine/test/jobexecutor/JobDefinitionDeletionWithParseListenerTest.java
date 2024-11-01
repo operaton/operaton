@@ -44,7 +44,7 @@ import org.junit.Test;
  * They set the activity asyncBefore property to false. In this case
  * there should delete some job declarations for the activity which was async before.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class JobDefinitionDeletionWithParseListenerTest {
 

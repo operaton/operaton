@@ -40,7 +40,7 @@ import java.util.Map;
  * The command returns a purge report. That report contains information of the
  * deleted rows for each table and the values from the cache which are removed.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class PurgeDatabaseAndCacheCmd implements Command<PurgeReport>, Serializable {
 

@@ -46,7 +46,7 @@ import org.junit.Test;
  * They set the activity asyncBefore property to true. In this case
  * there should created some job declarations for the async activity.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class JobDefinitionCreationWithParseListenerTest {
 

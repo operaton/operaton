@@ -54,7 +54,7 @@ import org.junit.rules.RuleChain;
  * Represents the test class for the process instantiation on which
  * the process instance is returned with variables.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @RequiredHistoryLevel(ProcessEngineConfigurationImpl.HISTORY_AUDIT)
 public class ProcessInstantiationWithVariablesInReturnTest {

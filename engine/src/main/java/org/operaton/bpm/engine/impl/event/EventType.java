@@ -23,7 +23,7 @@ package org.operaton.bpm.engine.impl.event;
  * the enum variant can't be used, so we have to reimplement an enum like class.
  * That is done so we can restrict the event types to only the defined ones.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public final class EventType {
 

@@ -29,7 +29,7 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithCallActivityScenario")
 public class CompleteProcessWithCallActivityTest extends AbstractRollingUpdateTestCase {

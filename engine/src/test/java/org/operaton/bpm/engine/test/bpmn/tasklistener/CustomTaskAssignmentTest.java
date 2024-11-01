@@ -33,7 +33,7 @@ import org.junit.Test;
 
 /**
  * @author Joram Barrez
- * @author Falko Menge <falko.menge@operaton.com>
+ * @author Falko Menge <falko.menge@camunda.com>
  * @author Frederik Heremans
  */
 public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {

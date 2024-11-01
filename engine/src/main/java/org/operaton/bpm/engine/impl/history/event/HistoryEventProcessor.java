@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
  * {@link HistoryEvent}. The {@link HistoryEvent} will be handled by the
  * {@link HistoryEventHandler} from the {@link ProcessEngineConfiguration}.</p>
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  * @since 7.5
  */
 public class HistoryEventProcessor {

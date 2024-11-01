@@ -22,7 +22,7 @@ import java.util.Date;
  * Represents a metric which contains a name, reporter like the node,
  * timestamp and corresponding value.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  * @since 7.6.0
  */
 public interface MetricIntervalValue {

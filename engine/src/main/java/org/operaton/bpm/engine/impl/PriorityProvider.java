@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  * @param <T> the type of the extra param to determine the priority
  */
 public interface PriorityProvider<T> {

@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 
 /**
  * @author Tom Baeyens
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public interface Condition {
 

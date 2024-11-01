@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.impl.bpmn.behavior.ConditionalEventBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
 /**
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ConditionalEventUpdateEventTriggerValidator implements MigrationInstructionValidator {
 

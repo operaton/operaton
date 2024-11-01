@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.identity.User;
 /**
  * Contains some test utilities to test the Ldap plugin.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public final class LdapTestUtilities {
 

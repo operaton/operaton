@@ -21,18 +21,16 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 
 /**
+ * This class isn't used in the Process Engine test suite anymore.
+ * However, some Test classes in the following modules still use it:
+ *   * operaton-engine-plugin-spin
+ *
+ * It should be removed once those Test classes are migrated to JUnit 4.
  * @author Tom Baeyens
  * @author Joram Barrez
  */
+@Deprecated(forRemoval = true)
 public abstract class ResourceProcessEngineTestCase extends AbstractProcessEngineTestCase {
-  /**
-   * This class isn't used in the Process Engine test suite anymore.
-   * However, some Test classes in the following modules still use it:
-   *   * operaton-engine-plugin-spin
-   *
-   * It should be removed once those Test classes are migrated to JUnit 4.
-   */
-
   protected String engineConfigurationResource;
 
   protected ResourceProcessEngineTestCase(String configurationResource) {

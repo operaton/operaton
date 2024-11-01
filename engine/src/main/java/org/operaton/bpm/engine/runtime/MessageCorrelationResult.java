@@ -22,7 +22,7 @@ package org.operaton.bpm.engine.runtime;
  * (BPMN message start event). The type of the correlation (execution vs.
  * processDefinition) can be obtained using {@link #getResultType()}</p>
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  * @since 7.6
  */
 public interface MessageCorrelationResult {

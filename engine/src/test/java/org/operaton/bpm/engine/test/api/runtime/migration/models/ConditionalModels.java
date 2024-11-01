@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime.migration.models;
 
 /**
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ConditionalModels {
 

@@ -32,7 +32,7 @@ import org.junit.runners.Parameterized.Parameters;
  * all tests for each engine version. The engine version will be used as tag for
  * the upgrade test rule.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @RunWith(Parameterized.class)
 public abstract class AbstractRollingUpdateTestCase {

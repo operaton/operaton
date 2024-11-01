@@ -25,7 +25,7 @@ import org.operaton.bpm.qa.upgrade.Times;
 /**
  * Starts the process with a user task on the old engine.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ProcessWithUserTaskScenario {
 

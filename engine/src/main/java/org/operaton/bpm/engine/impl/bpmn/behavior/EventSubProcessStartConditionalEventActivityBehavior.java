@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class EventSubProcessStartConditionalEventActivityBehavior extends EventSubProcessStartEventActivityBehavior implements ConditionalEventBehavior {
 

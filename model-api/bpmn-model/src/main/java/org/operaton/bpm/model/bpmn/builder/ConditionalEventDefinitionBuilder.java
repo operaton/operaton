@@ -21,7 +21,7 @@ import org.operaton.bpm.model.bpmn.instance.ConditionalEventDefinition;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ConditionalEventDefinitionBuilder extends AbstractConditionalEventDefinitionBuilder<ConditionalEventDefinitionBuilder> {
 

@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
  * Makes it possible to leave the current activity if the condition of the
  * conditional event is satisfied.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public interface ConditionalEventBehavior {
 

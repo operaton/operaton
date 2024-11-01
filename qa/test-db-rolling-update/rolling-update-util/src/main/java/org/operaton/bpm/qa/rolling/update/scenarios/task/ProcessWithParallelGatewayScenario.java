@@ -28,7 +28,7 @@ import org.operaton.bpm.qa.upgrade.Times;
 /**
  * Starts the process with a parallel gateway and user task's on the old engine.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ProcessWithParallelGatewayScenario {
 

@@ -19,7 +19,7 @@ package org.operaton.bpm.qa.rolling.update;
 /**
  * Contains the rolling update tags which are used for the scenarios and test cases.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public final class RollingUpdateConstants {
   public static final String OLD_ENGINE_TAG = "OLD";

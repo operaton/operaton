@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 /**
  * Represents the command to set the priority of an existing external task.
  * 
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class SetExternalTaskPriorityCmd extends ExternalTaskCmd {
   

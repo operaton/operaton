@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * Represents the conditional event definition corresponding to the
  * ConditionalEvent defined by the BPMN 2.0 spec.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ConditionalEventDefinition extends EventSubscriptionDeclaration implements Serializable {
 

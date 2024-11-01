@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @Named
 @Dependent

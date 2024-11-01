@@ -24,7 +24,7 @@ import org.junit.Test;
  * This test ensures that the old engine can delete an
  * existing deployment with a process instance from the new schema.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("DeploymentWhichShouldBeDeletedScenario")
 public class DeleteDeploymentTest extends AbstractRollingUpdateTestCase {

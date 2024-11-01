@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 /**
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @RunWith(Parameterized.class)
 public class ConditionalEventWithSpecificVariableEventTest extends AbstractConditionalEventTestCase {

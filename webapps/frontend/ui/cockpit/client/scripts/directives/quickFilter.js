@@ -22,7 +22,7 @@
   @memberof cam.cockpit.directives
   @type angular.directive
 
-  @author Valentin Vago <valentin.vago@operaton.com>
+  @author Valentin Vago <valentin.vago@camunda.com>
 
   @example
     <div cam-quick-filter

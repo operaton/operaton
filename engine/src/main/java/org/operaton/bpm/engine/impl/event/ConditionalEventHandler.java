@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ConditionalEventHandler implements EventHandler {
 

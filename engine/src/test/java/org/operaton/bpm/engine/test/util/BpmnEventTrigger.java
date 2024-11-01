@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.test.util;
 
 /**
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;

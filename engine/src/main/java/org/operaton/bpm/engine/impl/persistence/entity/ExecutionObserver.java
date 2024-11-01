@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 /**
  * Represents an observer for the exeuction.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public interface ExecutionObserver {
 

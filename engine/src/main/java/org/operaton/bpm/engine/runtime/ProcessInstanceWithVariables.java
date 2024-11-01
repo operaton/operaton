@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 /**
  * Represents a process instance with the corresponding latest variables.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public interface ProcessInstanceWithVariables extends ProcessInstance {
 

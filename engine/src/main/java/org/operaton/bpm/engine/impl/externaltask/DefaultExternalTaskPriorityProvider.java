@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 /**
  * Represents the default priority provider for external tasks.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class DefaultExternalTaskPriorityProvider extends DefaultPriorityProvider<ExternalTaskActivityBehavior> {
 

@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 
 
 /**
- * @author Falko Menge <falko.menge@operaton.com>
+ * @author Falko Menge <falko.menge@camunda.com>
  */
 public class AssigneeOverwriteFromVariable implements TaskListener {
 

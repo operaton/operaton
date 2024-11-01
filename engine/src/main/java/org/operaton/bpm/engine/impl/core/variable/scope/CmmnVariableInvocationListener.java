@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class CmmnVariableInvocationListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 

@@ -44,7 +44,7 @@ import org.junit.rules.RuleChain;
 /**
  * Represents test class to test the delegate execution context.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class DelegateExecutionContextTest {
 

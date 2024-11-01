@@ -44,7 +44,7 @@ import org.junit.Rule;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public abstract class AbstractConditionalEventTestCase {
 

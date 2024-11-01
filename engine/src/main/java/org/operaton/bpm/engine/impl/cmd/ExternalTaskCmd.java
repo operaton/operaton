@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  * Contains functionality to get the external task by id and check
  * the authorization for the execution of a command on the requested external task.
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public abstract class ExternalTaskCmd implements Command<Void> {
 

@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.rest.dto.task.TaskBpmnErrorDto;
 
 /**
  *
- * @author Christopher Zell <christopher.zell@operaton.com>
+ * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ExternalTaskBpmnError extends TaskBpmnErrorDto {
 

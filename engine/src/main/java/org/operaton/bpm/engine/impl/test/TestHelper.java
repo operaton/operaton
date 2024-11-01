@@ -27,10 +27,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
@@ -59,6 +56,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.slf4j.Logger;
 
 

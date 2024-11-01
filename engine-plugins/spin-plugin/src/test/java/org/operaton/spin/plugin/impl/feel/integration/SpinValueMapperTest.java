@@ -24,7 +24,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
 import org.operaton.bpm.dmn.feel.impl.scala.spin.SpinValueMapperFactory;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
@@ -39,9 +40,7 @@ import org.camunda.feel.valuemapper.ValueMapper;
 import org.operaton.spin.Spin;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.junit.BeforeClass;
 import org.junit.Rule;
-import org.junit.Test;
 
 public class SpinValueMapperTest {
 
@@ -50,8 +49,8 @@ public class SpinValueMapperTest {
   @Rule
   public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
 
-  @BeforeClass
-  public static void setUp() {
+  @BeforeAll
+  static void setUp() {
     DefaultValueMapper defaultValueMapper = DefaultValueMapper.instance();
     SpinValueMapper spinValueMapper = new SpinValueMapper();
     List<CustomValueMapper> mapperList = Arrays.asList(defaultValueMapper, spinValueMapper);
@@ -60,7 +59,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinJSONObjectAsContext() {
+  void shouldMapOperatonSpinJSONObjectAsContext() {
     // given
     Map<String, Val> map = new HashMap<>();
     map.put("customer", new ValString("Kermit"));
@@ -76,7 +75,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinJSONarrayAsList() {
+  void shouldMapOperatonSpinJSONarrayAsList() {
     // given
     List<Val> list = Arrays.asList(new ValString("Kermit"), new ValString("Waldo"));
     ValList feelList = (ValList) valueMapper.toVal(list);
@@ -91,7 +90,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapNestedOperatonSpinJSONObjectAsContext() {
+  void shouldMapNestedOperatonSpinJSONObjectAsContext() {
 
     // given
     Map<String, Val> nestedMap = new HashMap<>();
@@ -117,7 +116,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithAttributes() {
+  void shouldMapOperatonSpinXMLObjectWithAttributes() {
     // given
     Map<String, Val> xmlInnerMap = new HashMap();
     xmlInnerMap.put("@name", new ValString("Kermit"));
@@ -136,7 +135,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithChildObject() {
+  void shouldMapOperatonSpinXMLObjectWithChildObject() {
     // given
     Map<String, Val> xmlAttrMap = new HashMap();
     xmlAttrMap.put("@city", new ValString("Berlin"));
@@ -159,7 +158,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithListOfChildObjects() {
+  void shouldMapOperatonSpinXMLObjectWithListOfChildObjects() {
     // given
     SpinXmlElement xml = Spin.XML("<data>" +
                                           "<customer name=\"Kermit\" language=\"en\" />" +
@@ -196,7 +195,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithContent() {
+  void shouldMapOperatonSpinXMLObjectWithContent() {
     // given
     SpinXmlElement xml = Spin.XML("<customer>Kermit</customer>");
 
@@ -216,7 +215,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithoutContent() {
+  void shouldMapOperatonSpinXMLObjectWithoutContent() {
     // given
     SpinXmlElement xml = Spin.XML("<customer />");
     ValContext context = (ValContext) valueMapper
@@ -230,7 +229,7 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldMapOperatonSpinXMLObjectWithPrefix() {
+  void shouldMapOperatonSpinXMLObjectWithPrefix() {
     // given
     SpinXmlElement xml = Spin.XML("<data xmlns:p=\"http://www.example.org\">" +
                                           "<p:customer p:name=\"Kermit\" language=\"en\" />" +
@@ -257,14 +256,14 @@ public class SpinValueMapperTest {
   }
 
   @Test
-  public void shouldEqualClassNameForSpinValueMapper() {
+  void shouldEqualClassNameForSpinValueMapper() {
     assertThat(SpinValueMapper.class.getName())
         .isEqualTo(SpinValueMapperFactory.SPIN_VALUE_MAPPER_CLASS_NAME);
   }
 
   @Test
   @WatchLogger(loggerNames = {ScalaFeelLogger.PROJECT_LOGGER}, level = "INFO")
-  public void shouldLogValueMapperDetection() {
+  void shouldLogValueMapperDetection() {
     // given
     SpinValueMapperFactory mapperFactory = new SpinValueMapperFactory();
 

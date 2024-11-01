@@ -16,27 +16,23 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.hamcrest.CoreMatchers.isA;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.json.SpinJsonException;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
 
 /**
  * Test cases for multiple engines defining different validators that do not
@@ -47,37 +43,32 @@ import org.junit.rules.ExpectedException;
  */
 public class JsonSerializationWithValidationOnMultipleEnginesTest {
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRulePositive = new ProcessEngineBootstrapRule(configuration -> {
-      DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
-      when(validatorMock.validate(anyString())).thenReturn(true);
-      configuration
-          .setDeserializationTypeValidator(validatorMock)
-          .setDeserializationTypeValidationEnabled(true)
-          .setJdbcUrl("jdbc:h2:mem:positive");
-  });
+  @RegisterExtension
+  static ProcessEngineExtension engineRulePositive = ProcessEngineExtension.builder()
+          .configurator(configuration -> {
+            DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
+            when(validatorMock.validate(anyString())).thenReturn(true);
+            configuration
+                    .setDeserializationTypeValidator(validatorMock)
+                    .setDeserializationTypeValidationEnabled(true)
+                    .setJdbcUrl("jdbc:h2:mem:positive");
+          })
+          .build();
 
-  @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRuleNegative = new ProcessEngineBootstrapRule(configuration -> {
-      DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
-      when(validatorMock.validate(anyString())).thenReturn(false);
-      configuration
-          .setDeserializationTypeValidator(validatorMock)
-          .setDeserializationTypeValidationEnabled(true)
-          .setJdbcUrl("jdbc:h2:mem:negative");
-  });
-
-  @Rule
-  public ProcessEngineRule engineRulePositive = new ProvidedProcessEngineRule(bootstrapRulePositive);
-
-  @Rule
-  public ProcessEngineRule engineRuleNegative = new ProvidedProcessEngineRule(bootstrapRuleNegative);
-
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
+  @RegisterExtension
+  static ProcessEngineExtension engineRuleNegative = ProcessEngineExtension.builder()
+          .configurator(configuration -> {
+              DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
+              when(validatorMock.validate(anyString())).thenReturn(false);
+              configuration
+                      .setDeserializationTypeValidator(validatorMock)
+                      .setDeserializationTypeValidationEnabled(true)
+                      .setJdbcUrl("jdbc:h2:mem:negative");
+          })
+          .build();
 
   @Test
-  public void shouldUsePositiveValidator() {
+  void shouldUsePositiveValidator() {
     // given
     engineRulePositive.manageDeployment(engineRulePositive.getRepositoryService().createDeployment()
         .addModelInstance("foo.bpmn", getOneTaskModel())
@@ -97,7 +88,7 @@ public class JsonSerializationWithValidationOnMultipleEnginesTest {
   }
 
   @Test
-  public void shouldUseNegativeValidator() {
+  void shouldUseNegativeValidator() {
     // given
     engineRuleNegative.manageDeployment(engineRuleNegative.getRepositoryService().createDeployment()
         .addModelInstance("foo.bpmn", getOneTaskModel())
@@ -106,13 +97,12 @@ public class JsonSerializationWithValidationOnMultipleEnginesTest {
 
     // add serialized value
     JsonSerializable bean = new JsonSerializable("a String", 42, true);
-    engineRuleNegative.getRuntimeService().setVariable(instance.getId(), "simpleBean",
-        objectValue(bean).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create());
 
-    // then
-    thrown.expect(ProcessEngineException.class);
-    thrown.expectMessage("Cannot deserialize");
-    thrown.expectCause(isA(SpinJsonException.class));
+    Assertions.assertThatThrownBy(() -> engineRuleNegative.getRuntimeService().setVariable(instance.getId(), "simpleBean",
+            objectValue(bean).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create()))
+            .isExactlyInstanceOf(ProcessEngineException.class)
+            .hasMessage("Cannot deserialize")
+            .hasCauseExactlyInstanceOf(SpinJsonException.class);
 
     // when
     engineRuleNegative.getRuntimeService().getVariable(instance.getId(), "simpleBean");

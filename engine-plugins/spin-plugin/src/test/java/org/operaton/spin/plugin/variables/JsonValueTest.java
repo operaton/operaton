@@ -16,11 +16,17 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.DeploymentExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -32,16 +38,12 @@ import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.JsonValue;
 import org.operaton.spin.plugin.variable.value.builder.JsonValueBuilder;
-import static org.operaton.spin.DataFormats.json;
-import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
-import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,7 +51,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Roman Smirnov
  *
  */
-public class JsonValueTest extends PluggableProcessEngineTestCase {
+class JsonValueTest {
 
   protected static final String ONE_TASK_PROCESS = "org/operaton/spin/plugin/oneTaskProcess.bpmn20.xml";
   protected static final String JSON_FORMAT_NAME = DataFormats.JSON_DATAFORMAT_NAME;
@@ -61,8 +63,16 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
 
   protected String variableName = "x";
 
+  @RegisterExtension
+  static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
+  @RegisterExtension
+  DeploymentExtension deploymentExtension = new DeploymentExtension(engineExtension.getRepositoryService());
+  private RuntimeService runtimeService;
+  private TaskService taskService;
+
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testGetUntypedJsonValue() throws JSONException {
+  @Test
+  void getUntypedJsonValue() throws JSONException {
     // given
     JsonValue jsonValue = jsonValue(jsonString).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);
@@ -78,7 +88,8 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testGetNullJsonValue() {
+  @Test
+  void getNullJsonValue() {
     // given
     JsonValue jsonValue = jsonValue((String) null).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);
@@ -93,7 +104,8 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testGetTypedJsonValue() throws JSONException {
+  @Test
+  void getTypedJsonValue() throws JSONException {
     // given
     JsonValue jsonValue = jsonValue(jsonString).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);
@@ -114,42 +126,33 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testBrokenJsonSerialization() {
+  @Test
+  void brokenJsonSerialization() {
     // given
     JsonValue value = jsonValue(brokenJsonString).create();
 
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    try {
+    assertDoesNotThrow(() -> {
       // when
       runtimeService.setVariable(processInstanceId, variableName, value);
-    } catch (Exception e) {
-      fail("no exception expected");
-    }
+    }, "no exception expected");
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testFailingDeserialization() {
+  @Test
+  void failingDeserialization() {
     // given
     JsonValue value = jsonValue(brokenJsonString).create();
 
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     runtimeService.setVariable(processInstanceId, variableName, value);
 
-    try {
-      // when
-      runtimeService.getVariable(processInstanceId, variableName);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.getVariable(processInstanceId, variableName))
+            .isInstanceOf(ProcessEngineException.class);
 
-    try {
-      runtimeService.getVariableTyped(processInstanceId, variableName);
-      fail("exception expected");
-    } catch(ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.getVariableTyped(processInstanceId, variableName))
+            .isInstanceOf(ProcessEngineException.class);
 
     // However, I can access the serialized value
     JsonValue jsonValue = runtimeService.getVariableTyped(processInstanceId, variableName, false);
@@ -157,42 +160,29 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
     assertEquals(brokenJsonString, jsonValue.getValueSerialized());
 
     // but not the deserialized properties
-    try {
-      jsonValue.getValue();
-      fail("exception expected");
-    } catch(SpinRuntimeException e) {
-    }
+    assertThatThrownBy(() -> jsonValue.getValue())
+            .isInstanceOf(SpinRuntimeException.class);
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testFailForNonExistingSerializationFormat() {
+  @Test
+  void failForNonExistingSerializationFormat() {
     // given
     JsonValueBuilder builder = jsonValue(jsonString).serializationDataFormat("non existing data format");
     String processInstanceId = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    try {
-      // when (1)
-      runtimeService.setVariable(processInstanceId, variableName, builder);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // then (1)
-      assertTextPresent("Cannot find serializer for value", e.getMessage());
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, variableName, builder))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("Cannot find serializer for value");
 
-    try {
-      // when (2)
-      runtimeService.setVariable(processInstanceId, variableName, builder.create());
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      // then (2)
-      assertTextPresent("Cannot find serializer for value", e.getMessage());
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, variableName, builder.create()))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("Cannot find serializer for value");
   }
 
   @Deployment(resources = "org/operaton/spin/plugin/jsonConditionProcess.bpmn20.xml")
-  public void testJsonValueInCondition() {
+  @Test
+  void jsonValueInCondition() {
     // given
     String json = "{\"age\": 22 }";
     JsonValue value = jsonValue(json).create();
@@ -207,7 +197,8 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testTransientJsonValueFluent() {
+  @Test
+  void transientJsonValueFluent() {
     // given
     JsonValue jsonValue = jsonValue(jsonString).setTransient(true).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);
@@ -221,7 +212,8 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
   }
 
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testTransientJsonValue() {
+  @Test
+  void transientJsonValue() {
     // given
     JsonValue jsonValue = jsonValue(jsonString, true).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);
@@ -234,7 +226,8 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
     assertEquals(0, variableInstances.size());
   }
 
-  public void testApplyValueInfoFromSerializedValue() {
+  @Test
+  void applyValueInfoFromSerializedValue() {
     // given
     Map<String, Object> valueInfo = new HashMap<>();
     valueInfo.put(ValueType.VALUE_INFO_TRANSIENT, true);
@@ -243,7 +236,7 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
     JsonValue jsonValue = (JsonValue) SpinValueType.JSON.createValueFromSerialized(jsonString, valueInfo);
 
     // then
-    assertEquals(true, jsonValue.isTransient());
+    assertTrue(jsonValue.isTransient());
     Map<String, Object> returnedValueInfo = SpinValueType.JSON.getValueInfo(jsonValue);
     assertEquals(true, returnedValueInfo.get(ValueType.VALUE_INFO_TRANSIENT));
   }
@@ -251,7 +244,8 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
   /**
    * See https://app.camunda.com/jira/browse/CAM-9932
    */
-  public void testTransientJsonSpinVariables() {
+  @Test
+  void transientJsonSpinVariables() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("aProcess")
       .startEvent()
@@ -260,7 +254,7 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
       .userTask()
       .endEvent()
       .done();
-    deployment(modelInstance);
+    deploymentExtension.deploy(modelInstance);
 
     // when
     String processInstanceId = runtimeService.startProcessInstanceByKey("aProcess").getId();
@@ -270,7 +264,8 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
     assertThat(value).isNull();
   }
 
-  public void testDeserializeTransientJsonValue() {
+  @Test
+  void deserializeTransientJsonValue() {
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo")
         .startEvent()
@@ -285,7 +280,7 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
           .endEvent()
         .done();
 
-    deployment(modelInstance);
+    deploymentExtension.deploy(modelInstance);
 
     JsonValue jsonValue = jsonValue(jsonString, true).create();
     VariableMap variables = Variables.createVariables().putValueTyped(variableName, jsonValue);

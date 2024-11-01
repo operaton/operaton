@@ -16,19 +16,26 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import java.util.Collections;
-
-import org.operaton.bpm.engine.impl.test.ResourceProcessEngineTestCase;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
+
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The test is copied from the engine to check how JSON serialization will behave with DMN result object.
  *
  * @author Svetlana Dorokhova
  */
-public class DmnBusinessRuleTaskResultMappingTest extends ResourceProcessEngineTestCase {
+public class DmnBusinessRuleTaskResultMappingTest {
 
   protected static final String TEST_DECISION = "org/operaton/spin/plugin/DmnBusinessRuleTaskResultMappingTest.dmn11.xml";
   protected static final String CUSTOM_MAPPING_BPMN = "org/operaton/spin/plugin/DmnBusinessRuleTaskResultMappingTest.testCustomOutputMapping.bpmn20.xml";
@@ -36,20 +43,30 @@ public class DmnBusinessRuleTaskResultMappingTest extends ResourceProcessEngineT
   protected static final String DEFAULT_MAPPING_BPMN = "org/operaton/spin/plugin/DmnBusinessRuleTaskResultMappingTest.testDefaultMapping.bpmn20.xml";
   protected static final String STORE_DECISION_RESULT_BPMN = "org/operaton/spin/plugin/DmnBusinessRuleTaskResultMappingTest.testStoreDecisionResult.bpmn20.xml";
 
-  public DmnBusinessRuleTaskResultMappingTest() {
-    super("org/operaton/spin/plugin/json.operaton.cfg.xml");
+  @RegisterExtension
+  static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder()
+          .configurationResource("org/operaton/spin/plugin/json.operaton.cfg.xml").build();
+  private RuntimeService runtimeService;
+  private HistoryService historyService;
+
+  @BeforeEach
+  void setUp () {
+    runtimeService = engineExtension.getRuntimeService();
+    historyService = engineExtension.getHistoryService();
   }
 
-  @Deployment(resources = {STORE_DECISION_RESULT_BPMN, TEST_DECISION })
-  public void testStoreDecisionResult() {
+  @Deployment(resources = {STORE_DECISION_RESULT_BPMN, TEST_DECISION})
+  @Test
+  void storeDecisionResult() {
     ProcessInstance processInstance = startTestProcess("multiple entries");
 
     //deserialization is not working for this type of object -> deserializeValue parameter is false
     assertNotNull(runtimeService.getVariableTyped(processInstance.getId(), "result", false));
   }
 
-  @Deployment(resources = {CUSTOM_MAPPING_BPMN, TEST_DECISION })
-  public void testCustomOutputMapping() {
+  @Deployment(resources = {CUSTOM_MAPPING_BPMN, TEST_DECISION})
+  @Test
+  void customOutputMapping() {
     ProcessInstance processInstance = startTestProcess("multiple entries");
 
     assertEquals("foo", runtimeService.getVariable(processInstance.getId(), "result1"));
@@ -59,16 +76,18 @@ public class DmnBusinessRuleTaskResultMappingTest extends ResourceProcessEngineT
     assertEquals(Variables.stringValue("bar"), runtimeService.getVariableTyped(processInstance.getId(), "result2"));
   }
 
-  @Deployment(resources = { SINGLE_ENTRY_BPMN, TEST_DECISION})
-  public void testSingleEntryMapping() {
+  @Deployment(resources = {SINGLE_ENTRY_BPMN, TEST_DECISION})
+  @Test
+  void singleEntryMapping() {
     ProcessInstance processInstance = startTestProcess("single entry");
 
     assertEquals("foo", runtimeService.getVariable(processInstance.getId(), "result"));
     assertEquals(Variables.stringValue("foo"), runtimeService.getVariableTyped(processInstance.getId(), "result"));
   }
 
-  @Deployment(resources = { DEFAULT_MAPPING_BPMN, TEST_DECISION })
-  public void testTransientDecisionResult() {
+  @Deployment(resources = {DEFAULT_MAPPING_BPMN, TEST_DECISION})
+  @Test
+  void transientDecisionResult() {
     // when a decision is evaluated and the result is stored in a transient variable "decisionResult"
     ProcessInstance processInstance = startTestProcess("single entry");
 

@@ -16,22 +16,32 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import java.util.List;
-
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionOutputInstance;
-import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
 
-public class HistoricDecisionInstanceSerializationTest extends PluggableProcessEngineTestCase {
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@ExtendWith(ProcessEngineExtension.class)
+class HistoricDecisionInstanceSerializationTest {
+  DecisionService decisionService;
+  HistoryService historyService;
   @Deployment(resources = {"org/operaton/spin/plugin/DecisionSingleOutput.dmn11.xml"})
-  public void testListJsonProperty() {
+  @Test
+  void listJsonProperty() {
     JsonListSerializable<String> list = new JsonListSerializable<>();
     list.addElement("foo");
 

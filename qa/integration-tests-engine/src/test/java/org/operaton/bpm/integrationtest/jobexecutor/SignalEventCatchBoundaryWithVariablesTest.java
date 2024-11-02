@@ -20,9 +20,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import javax.inject.Inject;
-
-import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -43,9 +40,6 @@ public class SignalEventCatchBoundaryWithVariablesTest extends AbstractFoxPlatfo
             .addAsResource("org/operaton/bpm/integrationtest/jobexecutor/SignalEventCatchBoundaryWithVariablesTest.catchAlertSignalBoundaryWithReceiveTask.bpmn20.xml")
             .addAsResource("org/operaton/bpm/integrationtest/jobexecutor/SignalEventCatchBoundaryWithVariablesTest.throwAlertSignalWithDelegate.bpmn20.xml");
   }
-
-  @Inject
-  private RuntimeService runtimeService;
 
   @Test
   public void testSignalCatchBoundaryWithVariables() throws InterruptedException {

@@ -43,7 +43,7 @@ public class TestWarDeploymentWithoutProcessesXml extends AbstractFoxPlatformInt
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addAsLibraries(DeploymentHelper.getEngineCdi())
             .addClass(AbstractFoxPlatformIntegrationTest.class);
-    
+
     TestContainer.addContainerSpecificResources(deployment);
     
     return deployment;

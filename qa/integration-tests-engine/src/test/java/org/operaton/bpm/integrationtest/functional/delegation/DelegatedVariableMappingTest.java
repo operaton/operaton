@@ -24,9 +24,13 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+import org.operaton.bpm.integrationtest.util.TestConstants;
+import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,16 +44,34 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
 
   @Deployment(name = "mainDeployment")
   public static WebArchive createProcessArchiveDeplyoment() {
-    return initWebArchiveDeployment("mainDeployment.war")
-            .addClass(DelegateVarMapping.class)
-            .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/DelegatedVariableMappingTest.testCallSubProcessWithDelegatedVariableMapping.bpmn20.xml")
-            .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/DelegatedVariableMappingTest.testCallSubProcessWithDelegatedVariableMappingExpression.bpmn20.xml");
+    WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "mainDeployment.war")
+        .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
+        .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
+        .addClass(AbstractFoxPlatformIntegrationTest.class)
+        .addClass(TestConstants.class)
+        .addClass(DelegateVarMapping.class)
+        .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/DelegatedVariableMappingTest.testCallSubProcessWithDelegatedVariableMapping.bpmn20.xml")
+        .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/DelegatedVariableMappingTest.testCallSubProcessWithDelegatedVariableMappingExpression.bpmn20.xml");
+
+    TestContainer.addContainerSpecificResourcesEmbedCdiLib(webArchive);
+
+    return webArchive;
   }
 
   @Deployment(name = "calledDeployment")
   public static WebArchive createSecondProcessArchiveDeployment() {
-    return initWebArchiveDeployment("calledDeployment.war")
-            .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/simpleSubProcess.bpmn20.xml");
+    WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "calledDeployment.war")
+        .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
+        .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
+        .addClass(AbstractFoxPlatformIntegrationTest.class)
+        .addClass(TestConstants.class)
+        .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/simpleSubProcess.bpmn20.xml");
+
+    TestContainer.addContainerSpecificResourcesEmbedCdiLib(webArchive);
+
+    return webArchive;
   }
 
   @Inject

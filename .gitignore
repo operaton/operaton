@@ -25,3 +25,4 @@ operaton-h2-dbs
 *.DS_Store
 
 .java-version
+pom.xml.versionsBackup

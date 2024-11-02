@@ -39,10 +39,12 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import io.restassured.http.ContentType;
 
+@Ignore("See PR#52: Causes an issue resolving operaton-core-internal-dependencies")
 public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
 
   @ClassRule

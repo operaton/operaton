@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
-    <version>1.0.0-beta-1</version>
+    <version>1.0.0-beta-2</version>
     <relativePath>../</relativePath>
   </parent>
 

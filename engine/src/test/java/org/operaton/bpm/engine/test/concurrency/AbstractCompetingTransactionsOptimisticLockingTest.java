@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import org.junit.After;
 import org.junit.Test;
-import org.operaton.bpm.engine.CrdbTransactionRetryException;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -86,13 +85,7 @@ public abstract class AbstractCompetingTransactionsOptimisticLockingTest {
 
     // then
     assertThat(thread1.exception).isNotNull();
-    if (getTestRule().isOptimisticLockingExceptionSuppressible()) {
-      assertThat(thread1.exception).isInstanceOf(OptimisticLockingException.class);
-    } else {
-      // on CRDB, the transaction needs to be rolled back and retried,
-      // so a CrdbTransactionRetryException is thrown.
-      assertThat(thread1.exception).isInstanceOf(CrdbTransactionRetryException.class);
-    }
+    assertThat(thread1.exception).isInstanceOf(OptimisticLockingException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/AbstractCompetingTransactionsOptimisticLockingTest.shouldDetectConcurrentDeletionOfExecutionForTaskInsert.bpmn20.xml")

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.errorcode;
 
-import org.operaton.bpm.engine.CrdbTransactionRetryException;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngineException;
 
@@ -32,7 +31,7 @@ public enum BuiltinExceptionCode {
   FALLBACK(0),
 
   /**
-   * This code is assigned when an {@link OptimisticLockingException} or {@link CrdbTransactionRetryException} occurs.
+   * This code is assigned when an {@link OptimisticLockingException} occurs.
    */
   OPTIMISTIC_LOCKING(1),
 

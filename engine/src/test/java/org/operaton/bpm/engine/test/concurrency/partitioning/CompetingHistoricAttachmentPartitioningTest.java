@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.concurrency.partitioning;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.operaton.bpm.engine.CrdbTransactionRetryException;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
@@ -57,12 +56,7 @@ public class CompetingHistoricAttachmentPartitioningTest extends AbstractPartiti
     asyncThread.waitUntilDone();
 
     // then
-    if (testRule.isOptimisticLockingExceptionSuppressible()) {
-      assertThat(taskService.getAttachment(attachment.getId())).isNull();
-    } else {
-      // with CockroachDB, the OLE can't be ignored, the TX will fail and be rolled-back
-      assertThat(asyncThread.getException()).isInstanceOf(CrdbTransactionRetryException.class);
-    }
+    assertThat(taskService.getAttachment(attachment.getId())).isNull();
   }
 
   public class AsyncThread extends ControllableCommand<Void> {

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import static org.operaton.bpm.engine.impl.ExternalTaskQueryProperty.CREATE_TIME;
-import static org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory.CRDB;
 import static org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory.POSTGRES;
 import static org.operaton.bpm.engine.impl.util.DatabaseUtil.checkDatabaseType;
 
@@ -85,7 +84,7 @@ public class ExternalTaskManager extends AbstractManager {
         "now", ClockUtil.getCurrentTime(),
         "applyOrdering", shouldApplyOrdering,
         "orderingProperties", orderingProperties,
-        "usesPostgres", checkDatabaseType(POSTGRES, CRDB)
+        "usesPostgres", checkDatabaseType(POSTGRES)
     );
 
     ListQueryParameterObject parameter = new ListQueryParameterObject(parameters, 0, maxResults);

@@ -63,7 +63,7 @@ jobs:
         path: ${{ github.workspace }}/**/target/surefire-reports/**
         retention-days: 30
     - name: Sonarqube Analysis
-      if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request' && github.repository_owner == 'operaton'
+      if: env.SONAR_TOKEN && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

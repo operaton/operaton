@@ -70,11 +70,3 @@ jobs:
       shell: bash
       run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=operaton_operaton
       continue-on-error: true
-      # Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-    - name: Update dependency graph
-      if: github.ref == 'refs/heads/main' && github.repository_owner == 'operaton'
-      uses: advanced-security/maven-dependency-submission-action@v4
-      continue-on-error: true
-      with:
-        token: '${{ secrets.GITHUB_TOKEN }}'
-

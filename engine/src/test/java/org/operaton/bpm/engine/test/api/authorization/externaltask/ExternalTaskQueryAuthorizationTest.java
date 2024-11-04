@@ -29,7 +29,7 @@ import java.util.List;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
-import org.camunda.commons.testing.ProcessEngineLoggingRule;
+import org.operaton.commons.testing.ProcessEngineLoggingRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

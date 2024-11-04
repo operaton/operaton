@@ -6,7 +6,6 @@ SET PARENTDIR=%BASEDIR%..\
 SET DEPLOYMENTDIR=%PARENTDIR%configuration/resources
 SET WEBAPPS_PATH=%BASEDIR%webapps
 SET REST_PATH=%BASEDIR%rest
-SET SWAGGER_PATH=%BASEDIR%swaggerui
 SET EXAMPLE_PATH=%BASEDIR%example
 SET APPNAME=Operaton Run
 
@@ -64,7 +63,6 @@ IF NOT "x%JAVA_OPTS%" == "x" (
 REM set environment parameters
 SET optionalComponentChosen=false
 SET restChosen=false
-SET swaggeruiChosen=false
 SET productionChosen=false
 SET detachProcess=false
 SET classPath=%PARENTDIR%configuration\userlib,%PARENTDIR%configuration\keystore
@@ -86,13 +84,6 @@ IF [%~1]==[--rest] (
   SET restChosen=true
   SET classPath=%REST_PATH%,%classPath%
   ECHO REST API enabled
-)
-
-IF [%~1]==[--swaggerui] (
-  SET optionalComponentChosen=true
-  SET swaggeruiChosen=true
-  SET classPath=%SWAGGER_PATH%,%classPath%
-  ECHO Swagger UI enabled
 )
 
 IF [%~1]==[--example] (
@@ -119,17 +110,15 @@ GOTO Loop
 :Continue
 
 REM If no optional component is chosen, enable REST and Webapps.
-REM If production mode is not chosen, also enable Swagger UI and the example application.
+REM If production mode is not chosen, also enable the example application.
 setlocal enabledelayedexpansion
 IF [%optionalComponentChosen%]==[false] (
   SET restChosen=true
   ECHO REST API enabled
   ECHO WebApps enabled
   IF [%productionChosen%]==[false] (
-    SET swaggeruiChosen=true
-    ECHO Swagger UI enabled
     ECHO Invoice Example included - needs to be enabled in application configuration as well
-    SET classPath=%SWAGGER_PATH%,%EXAMPLE_PATH%,%classPath%
+    SET classPath=%EXAMPLE_PATH%,%classPath%
   )
   SET classPath=%WEBAPPS_PATH%,%REST_PATH%,!classPath!
 )
@@ -171,7 +160,6 @@ ECHO Usage: run.bat [start^|stop] (options...)
 ECHO Options:
 ECHO   --webapps    - Enables the Operaton Webapps
 ECHO   --rest       - Enables the REST API
-ECHO   --swaggerui  - Enables the Swagger UI
 ECHO   --example    - Enables the example application
 ECHO   --production - Applies the production.yaml configuration file
 ECHO   --detached   - Starts Operaton Run as a detached process

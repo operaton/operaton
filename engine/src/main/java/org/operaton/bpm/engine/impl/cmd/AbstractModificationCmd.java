@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
+import org.operaton.bpm.engine.impl.HistoricProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.ModificationBuilderImpl;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -51,6 +52,12 @@ public abstract class AbstractModificationCmd <T> implements Command<T> {
     final ProcessInstanceQueryImpl processInstanceQuery = (ProcessInstanceQueryImpl) builder.getProcessInstanceQuery();
     if (processInstanceQuery != null) {
       collectedProcessInstanceIds.addAll(processInstanceQuery.listIds());
+    }
+
+    final HistoricProcessInstanceQueryImpl historicProcessInstanceQuery =
+        (HistoricProcessInstanceQueryImpl) builder.getHistoricProcessInstanceQuery();
+    if(historicProcessInstanceQuery != null) {
+      collectedProcessInstanceIds.addAll(historicProcessInstanceQuery.listIds());
     }
 
     return collectedProcessInstanceIds;

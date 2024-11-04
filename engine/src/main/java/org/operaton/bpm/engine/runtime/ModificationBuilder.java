@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.batch.Batch;
+import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 
 public interface ModificationBuilder extends InstantiationBuilder<ModificationBuilder>{
 
@@ -116,5 +117,12 @@ public interface ModificationBuilder extends InstantiationBuilder<ModificationBu
    *   </ul>
    */
   Batch executeAsync();
+
+  /**
+   * @param historicProcessInstanceQuery a query which selects the process instances to modify.
+   *   It is advised to include the `unfinished` filter in the historicProcessInstanceQuery as finished instances cause failures for the modification.
+   *   Query results are restricted to process instances for which the user has {@link Permissions#READ_HISTORY} permission.
+   */
+  ModificationBuilder historicProcessInstanceQuery(HistoricProcessInstanceQuery historicProcessInstanceQuery);
 }
 

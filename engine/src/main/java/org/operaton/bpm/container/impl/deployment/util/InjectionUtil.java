@@ -83,9 +83,8 @@ public class InjectionUtil {
           injectionResolved = true;
         }
 
-      } else if(parameterType instanceof ParameterizedType) {
+      } else if(parameterType instanceof ParameterizedType parameterizedType) {
 
-        ParameterizedType parameterizedType = (ParameterizedType) parameterType;
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
 
         // support injection of List<ProcessEngine>

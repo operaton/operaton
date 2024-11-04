@@ -225,8 +225,7 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
       .findHistoricDetailsByQueryCriteria(this, page);
     if (historicDetails!=null) {
       for (HistoricDetail historicDetail: historicDetails) {
-        if (historicDetail instanceof HistoricDetailVariableInstanceUpdateEntity) {
-          HistoricDetailVariableInstanceUpdateEntity entity = (HistoricDetailVariableInstanceUpdateEntity) historicDetail;
+        if (historicDetail instanceof HistoricDetailVariableInstanceUpdateEntity entity) {
           if (shouldFetchValue(entity)) {
             try {
               entity.getTypedValue(isCustomObjectDeserializationEnabled);

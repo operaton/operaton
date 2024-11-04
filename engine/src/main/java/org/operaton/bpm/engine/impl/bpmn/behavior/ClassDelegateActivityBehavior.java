@@ -91,8 +91,7 @@ public class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior 
   protected void doSignal(final ActivityExecution execution, final String signalName, final Object signalData) throws Exception {
     final ActivityBehavior activityBehaviorInstance = getActivityBehaviorInstance(execution);
 
-    if (activityBehaviorInstance instanceof CustomActivityBehavior) {
-      CustomActivityBehavior behavior = (CustomActivityBehavior) activityBehaviorInstance;
+    if (activityBehaviorInstance instanceof CustomActivityBehavior behavior) {
       ActivityBehavior delegate = behavior.getDelegateActivityBehavior();
 
       if (!(delegate instanceof SignallableActivityBehavior)) {
@@ -111,10 +110,10 @@ public class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior 
   protected ActivityBehavior getActivityBehaviorInstance(ActivityExecution execution) {
     Object delegateInstance = instantiateDelegate(className, fieldDeclarations);
 
-    if (delegateInstance instanceof ActivityBehavior) {
-      return new CustomActivityBehavior((ActivityBehavior) delegateInstance);
-    } else if (delegateInstance instanceof JavaDelegate) {
-      return new ServiceTaskJavaDelegateActivityBehavior((JavaDelegate) delegateInstance);
+    if (delegateInstance instanceof ActivityBehavior activityBehavior) {
+      return new CustomActivityBehavior(activityBehavior);
+    } else if (delegateInstance instanceof JavaDelegate javaDelegate) {
+      return new ServiceTaskJavaDelegateActivityBehavior(javaDelegate);
     } else {
       throw LOG.missingDelegateParentClassException(
         delegateInstance.getClass().getName(),

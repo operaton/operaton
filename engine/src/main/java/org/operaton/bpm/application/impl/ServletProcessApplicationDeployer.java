@@ -44,8 +44,8 @@ public class ServletProcessApplicationDeployer extends AbstractServletProcessApp
     try {
       onStartUp(c, ctx.getContextPath(), ServletProcessApplication.class, ctx::addListener);
     } catch (Exception e) {
-      if (e instanceof ServletException) {
-        throw (ServletException) e;
+      if (e instanceof ServletException servletException) {
+        throw servletException;
       }
     }
   }

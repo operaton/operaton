@@ -71,8 +71,8 @@ public abstract class CallableElementActivityBehavior extends AbstractBpmnActivi
   }
 
   protected DelegateVariableMapping getDelegateVariableMapping(Object instance) {
-    if (instance instanceof DelegateVariableMapping) {
-      return (DelegateVariableMapping) instance;
+    if (instance instanceof DelegateVariableMapping mapping) {
+      return mapping;
     } else {
       throw LOG.missingDelegateVariableMappingParentClassException(
               instance.getClass().getName(),

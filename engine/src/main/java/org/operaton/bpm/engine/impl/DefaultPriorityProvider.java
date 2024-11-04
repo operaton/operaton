@@ -88,11 +88,10 @@ public abstract class DefaultPriorityProvider<T> implements PriorityProvider<T> 
       }
     }
 
-    if (!(value instanceof Number)) {
+    if (!(value instanceof Number numberValue)) {
       throw new ProcessEngineException(errorMessageHeading + ": Priority value is not an Integer");
     }
     else {
-      Number numberValue = (Number) value;
       if (isValidLongValue(numberValue)) {
         return numberValue.longValue();
       }

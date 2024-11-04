@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
@@ -32,6 +33,7 @@ import org.operaton.bpm.engine.rest.TaskRestService;
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
+import org.operaton.bpm.engine.rest.dto.task.TaskWithAttachmentAndCommentDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.hal.Hal;
 import org.operaton.bpm.engine.rest.hal.task.HalTaskList;
@@ -66,6 +68,7 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
   }
 
   public List<TaskDto> getJsonTasks(UriInfo uriInfo, Integer firstResult, Integer maxResults) {
+    // get list of tasks
     TaskQueryDto queryDto = new TaskQueryDto(getObjectMapper(), uriInfo.getQueryParameters());
     return queryTasks(queryDto, firstResult, maxResults);
   }
@@ -95,11 +98,12 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
     List<Task> matchingTasks = executeTaskQuery(firstResult, maxResults, query);
 
     List<TaskDto> tasks = new ArrayList<TaskDto>();
-    for (Task task : matchingTasks) {
-      TaskDto returnTask = TaskDto.fromEntity(task);
-      tasks.add(returnTask);
+    if (Boolean.TRUE.equals(queryDto.getWithCommentAttachmentInfo())) {
+      tasks = matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).collect(Collectors.toList());
     }
-
+    else {
+      tasks = matchingTasks.stream().map(TaskDto::fromEntity).collect(Collectors.toList());
+    }
     return tasks;
   }
 
@@ -130,8 +134,8 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
   }
 
   @Override
-  public TaskResource getTask(String id) {
-    return new TaskResourceImpl(getProcessEngine(), id, relativeRootResourcePath, getObjectMapper());
+  public TaskResource getTask(String id, boolean withCommentAttachmentInfo) {
+    return new TaskResourceImpl(getProcessEngine(), id, relativeRootResourcePath, getObjectMapper(), withCommentAttachmentInfo);
   }
 
   @Override

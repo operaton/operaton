@@ -44,6 +44,7 @@ import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProviderCaseInstanc
 import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProviderHistoricDecisionInstanceContext;
 import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProviderProcessInstanceContext;
 import org.operaton.bpm.engine.impl.history.event.HistoricVariableUpdateEventEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -122,6 +123,10 @@ public class RestartProcessInstanceSyncTest {
     ProcessInstance restartedProcessInstance = runtimeService.createProcessInstanceQuery().active().singleResult();
     Task restartedTask = engineRule.getTaskService().createTaskQuery().processInstanceId(restartedProcessInstance.getId()).active().singleResult();
     Assert.assertEquals(task.getTaskDefinitionKey(), restartedTask.getTaskDefinitionKey());
+
+    HistoricProcessInstanceEntity historicProcessInstanceEntity = (HistoricProcessInstanceEntity) historyService.createHistoricProcessInstanceQuery().processInstanceId(restartedProcessInstance.getId()).singleResult();
+    Assert.assertEquals(processInstance.getId(), historicProcessInstanceEntity.getRestartedProcessInstanceId());
+
   }
 
   @Test

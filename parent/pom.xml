@@ -74,8 +74,8 @@
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
     <version.jakarta-ee-spec>10.0.0</version.jakarta-ee-spec>
 
-    <version.nodejs>17.9.1</version.nodejs>
-    <version.npm>8.11.0</version.npm>
+    <version.nodejs>20.14.0</version.nodejs>
+    <version.npm>10.7.0</version.npm>
 
     <!-- OSGi bundles properties -->
     <operaton.artifact />

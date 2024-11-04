@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.concurrency.partitioning;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.operaton.bpm.engine.CrdbTransactionRetryException;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
@@ -62,13 +61,8 @@ public class CompetingHistoricVariableInstancePartitioningTest extends AbstractP
     asyncThread.waitUntilDone();
 
     // then
-    if (testRule.isOptimisticLockingExceptionSuppressible()) {
-      assertThat(runtimeService.createVariableInstanceQuery().singleResult().getName()).isEqualTo(VARIABLE_NAME);
-      assertThat(runtimeService.createVariableInstanceQuery().singleResult().getValue()).isEqualTo(ANOTHER_VARIABLE_VALUE);
-    } else {
-      // with CockroachDB, the OLE can't be ignored, the TX will fail and be rolled-back
-      assertThat(asyncThread.getException()).isInstanceOf(CrdbTransactionRetryException.class);
-    }
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult().getName()).isEqualTo(VARIABLE_NAME);
+    assertThat(runtimeService.createVariableInstanceQuery().singleResult().getValue()).isEqualTo(ANOTHER_VARIABLE_VALUE);
   }
 
   public class AsyncThread extends ControllableCommand<Void> {

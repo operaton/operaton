@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNull;
 
 import java.sql.Connection;
 
-import org.operaton.bpm.engine.CrdbTransactionRetryException;
 import org.operaton.bpm.engine.impl.BootstrapEngineCommand;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -74,13 +73,7 @@ public class ConcurrentInstallationIdInitializationTest extends ConcurrencyTestC
 
     assertNull(thread1.getException());
     Throwable thread2Exception = thread2.getException();
-    if (testRule.isOptimisticLockingExceptionSuppressible()) {
-      assertNull(thread2Exception);
-    } else {
-      // on CRDB, the pessimistic lock is disabled and the concurrent transaction
-      // with fail with a CrdbTransactionRetryException and will need to be retried
-      assertThat(thread2Exception).isInstanceOf(CrdbTransactionRetryException.class);
-    }
+    assertNull(thread2Exception);
 
     String id = processEngineConfiguration.getInstallationId();
     assertThat(id).isNotEmpty();

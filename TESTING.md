@@ -133,7 +133,6 @@ sure that the database image is configured with the proper isolation-level:
 * PostgreSQL
 * MariaDB
 * MySQL
-* CockroachDB
 * MS-SQL 2017/2019 
 
 To execute the process engine test suite with a certain database (e.g. PostgreSQL), you should call Maven in the 

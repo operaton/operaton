@@ -79,7 +79,6 @@ public class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
   @Test
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventConcurrencyTest.testSignalWithCompletedExecution.bpmn20.xml" })
-  @RequiredDatabase(excludes = DbSqlSessionFactory.CRDB)
   public void shouldThrowExceptionWhenSignallingWithCompletedExecution() {
 
     runtimeService.startProcessInstanceByKey("mainProcess");

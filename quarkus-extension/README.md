@@ -29,7 +29,6 @@ can look like the following:
 quarkus.operaton.cmmn-enabled=false
 quarkus.operaton.dmn-enabled=false
 quarkus.operaton.history=none
-quarkus.operaton.initialize-telemetry=false
 
 # job executor configuration
 quarkus.operaton.job-executor.thread-pool.max-pool-size=12

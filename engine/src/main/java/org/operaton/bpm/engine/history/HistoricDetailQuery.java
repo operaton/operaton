@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.engine.history;
 
+import java.util.Date;
 import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.runtime.CaseExecution;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
-
-import java.util.Date;
 
 /**
  * Programmatic querying for {@link HistoricDetail}s.
@@ -73,6 +72,12 @@ public interface HistoricDetailQuery extends Query<HistoricDetailQuery, Historic
 
   /** Only select historic process variables which match one of the given variable types. */
   HistoricDetailQuery variableTypeIn(String... variableTypes);
+
+  /** Only select historic process variables that have a name matching the criteria.
+   * The syntax is that of SQL: for example usage: variableNameLike(%operaton%).
+   * The query will match the names of variables in a case-insensitive way.
+   */
+  HistoricDetailQuery variableNameLike(String variableNameLike);
 
   /** Only select {@link HistoricFormProperty}s. */
   @Deprecated

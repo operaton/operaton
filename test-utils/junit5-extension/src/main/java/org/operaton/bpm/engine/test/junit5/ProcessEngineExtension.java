@@ -16,28 +16,9 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.function.Supplier;
-
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineServices;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.extension.*;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -46,17 +27,13 @@ import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.extension.AfterAllCallback;
-import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
-import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.ParameterContext;
-import org.junit.jupiter.api.extension.ParameterResolutionException;
-import org.junit.jupiter.api.extension.ParameterResolver;
-import org.junit.jupiter.api.extension.TestInstancePostProcessor;
-import org.junit.jupiter.api.extension.TestWatcher;
 import org.slf4j.Logger;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * Junit 5 Extension to create and inject a {@link ProcessEngine} into the test class.
@@ -67,10 +44,12 @@ import org.slf4j.Logger;
  * </p>
  * <pre>
  * <code>@ExtendWith(ProcessEngineExtension.class)</code>
- * public class YourTest {
+ * class YourTest {
  *
- *   // provide a property where the extension can inject the process engine
- *   public ProcessEngine processEngine;
+ *   // provide a property where the extension can inject the process engine or its services
+ *   ProcessEngine processEngine;
+ *   ProcessEngineConfiguration processEngineConfiguration;
+ *   RuntimeService runtimeService;
  *
  *   ...
  * }
@@ -81,7 +60,6 @@ import org.slf4j.Logger;
  * you can register the extension directly and use the builder pattern to configure it.
  * <br>
  * Usage with configuration:
- *
  * </p>
  * Usage:
  * <p>
@@ -227,7 +205,7 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   @Override
-  public void afterAll(ExtensionContext context) throws Exception {
+  public void afterAll(ExtensionContext context) {
     clearServiceReferences();
   }
 
@@ -235,10 +213,40 @@ public class ProcessEngineExtension implements TestWatcher,
   public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
     if (processEngine == null) {
       initializeProcessEngine();
+      // allow other extensions to access the engine instance created by this extension
+      context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     }
     Arrays.stream(testInstance.getClass().getDeclaredFields())
-      .filter(field -> field.getType() == ProcessEngine.class)
-      .forEach(field -> inject(testInstance, field));
+            .filter(field -> field.getType() == ProcessEngine.class)
+            .forEach(field -> inject(testInstance, field, processEngine));
+    Arrays.stream(testInstance.getClass().getDeclaredFields())
+            .filter(field -> ProcessEngineConfiguration.class.isAssignableFrom(field.getType()))
+            .forEach(field -> inject(testInstance, field, processEngine.getProcessEngineConfiguration()));
+
+    Arrays.stream(ProcessEngineServices.class.getDeclaredMethods())
+            .filter(method -> method.getName().startsWith("get"))
+            .map(Method::getReturnType)
+            .forEach(serviceType -> injectProcessEngineService(testInstance, serviceType));
+  }
+
+  private void injectProcessEngineService(Object testInstance, Class<?> serviceType) {
+    Objects.requireNonNull(processEngine, "ProcessEngine not initialized");
+    Optional<Object> serviceInstance = Arrays.stream(ProcessEngineServices.class.getDeclaredMethods())
+              .filter(method -> method.getReturnType() == serviceType)
+              .findFirst()
+              .map(method -> {
+                try {
+                  return method.invoke(processEngine);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                  throw new RuntimeException(e);
+                }
+              });
+
+    if (serviceInstance.isPresent()) {
+      Arrays.stream(testInstance.getClass().getDeclaredFields())
+              .filter(field -> field.getType().isAssignableFrom(serviceType))
+              .forEach(field -> inject(testInstance, field, serviceInstance.get()));
+    }
   }
 
   // FLUENT BUILDER
@@ -281,10 +289,18 @@ public class ProcessEngineExtension implements TestWatcher,
     return () -> new IllegalStateException(msg);
   }
 
+  /**
+   * @deprecated Use {@link #inject(Object, Field, Object)} instead
+   */
+  @Deprecated(forRemoval = true)
   protected void inject(Object instance, Field field) {
+    inject(instance, field, processEngine);
+  }
+
+  protected void inject(Object testInstance, Field field, Object serviceInstance) {
     field.setAccessible(true);
     try {
-      field.set(instance, processEngine);
+      field.set(testInstance, serviceInstance);
     } catch (IllegalAccessException iae) {
       throw new RuntimeException(iae);
     }

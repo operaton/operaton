@@ -111,6 +111,7 @@
         <include>org.operaton.bpm.model:*:jar</include>
 
         <include>org.operaton.bpm.dmn:*:jar</include>
+        <include>org.operaton.bpm.juel:*:jar</include>
 
         <include>org.camunda.feel:*:jar</include>
 

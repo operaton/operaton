@@ -255,9 +255,9 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     InputStream inputStream = null;
 
     try {
-      if(source instanceof File) {
+      if(source instanceof File file) {
         try {
-          inputStream = new FileInputStream((File) source);
+          inputStream = new FileInputStream(file);
         }
         catch (IOException e) {
           throw LOG.cannotOpenFileInputStream(((File) source).getAbsolutePath(), e);

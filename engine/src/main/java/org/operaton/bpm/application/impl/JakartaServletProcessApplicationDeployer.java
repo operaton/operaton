@@ -42,8 +42,8 @@ public class JakartaServletProcessApplicationDeployer extends AbstractServletPro
     try {
       onStartUp(c, ctx.getContextPath(), JakartaServletProcessApplication.class, ctx::addListener);
     } catch (Exception e) {
-      if (e instanceof ServletException) {
-        throw (ServletException) e;
+      if (e instanceof ServletException servletException) {
+        throw servletException;
       }
     }
   }

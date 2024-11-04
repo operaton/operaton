@@ -172,8 +172,8 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
       else {
 
         ScopeImpl flowScope = srcActivity.getFlowScope();
-        if (flowScope != null && flowScope instanceof PvmActivity) {
-          return isReachable((PvmActivity) flowScope, targetActivity, visitedActivities);
+        if (flowScope != null && flowScope instanceof PvmActivity pvmActivity) {
+          return isReachable(pvmActivity, targetActivity, visitedActivities);
         }
 
       }

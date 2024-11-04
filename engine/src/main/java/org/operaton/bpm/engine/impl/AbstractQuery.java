@@ -281,8 +281,8 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
       }
 
       // automatically convert DateTime to date
-      if (value instanceof DateTime) {
-        value = ((DateTime) value).toDate();
+      if (value instanceof DateTime dateTimeValue) {
+        value = dateTimeValue.toDate();
       }
 
       try {

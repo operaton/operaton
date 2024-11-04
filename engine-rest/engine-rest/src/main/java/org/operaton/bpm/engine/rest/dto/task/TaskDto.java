@@ -21,6 +21,7 @@ import java.util.Date;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.rest.dto.converter.DelegationStateConverter;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
 
@@ -54,6 +55,44 @@ public class TaskDto {
    */
   private String taskState;
 
+  public TaskDto() {
+  }
+
+  public TaskDto(Task task) {
+    this.id = task.getId();
+    this.name = task.getName();
+    this.assignee = task.getAssignee();
+    this.created = task.getCreateTime();
+    this.lastUpdated = task.getLastUpdated();
+    this.due = task.getDueDate();
+    this.followUp = task.getFollowUpDate();
+
+    if (task.getDelegationState() != null) {
+      this.delegationState = task.getDelegationState().toString();
+    }
+
+    this.description = task.getDescription();
+    this.executionId = task.getExecutionId();
+    this.owner = task.getOwner();
+    this.parentTaskId = task.getParentTaskId();
+    this.priority = task.getPriority();
+    this.processDefinitionId = task.getProcessDefinitionId();
+    this.processInstanceId = task.getProcessInstanceId();
+    this.taskDefinitionKey = task.getTaskDefinitionKey();
+    this.caseDefinitionId = task.getCaseDefinitionId();
+    this.caseExecutionId = task.getCaseExecutionId();
+    this.caseInstanceId = task.getCaseInstanceId();
+    this.suspended = task.isSuspended();
+    this.tenantId = task.getTenantId();
+    this.taskState = task.getTaskState();
+    try {
+      this.formKey = task.getFormKey();
+      this.operatonFormRef = task.getOperatonFormRef();
+    }
+    catch (BadUserRequestException e) {
+      // ignore (initializeFormKeys was not called)
+    }
+  }
   public String getId() {
     return id;
   }

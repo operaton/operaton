@@ -821,7 +821,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <argLine>-Xmx968m</argLine>
+              <argLine>${jacoco.argLine} -Xmx968m</argLine>
             </configuration>
           </plugin>
         </plugins>

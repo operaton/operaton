@@ -35,6 +35,7 @@
     <maven.compiler.target>17</maven.compiler.target>
     <sonar.organization>operaton</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <C>**/target/jacoco/jacoco.xml</C>
   </properties>
 
   <build>
@@ -80,6 +81,19 @@
           <acceptPomPackaging>true</acceptPomPackaging>
           <excludedScopes>test</excludedScopes>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report-aggregate</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
 
@@ -255,6 +269,11 @@
           <version>1.0.0</version>
         </plugin>
         <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.12</version>
+        </plugin>
+        <plugin>
           <groupId>org.jboss.shrinkwrap.resolver</groupId>
           <artifactId>shrinkwrap-resolver-maven-plugin</artifactId>
           <version>${version.shrinkwrap.resolvers}</version>
@@ -381,8 +400,14 @@
       <modules>
         <module>qa</module>
 
+        <module>model-api</module>
+        <module>test-utils/archunit</module>
+        <module>test-utils/testcontainers</module>
+        <module>commons</module>
+        <module>juel</module>
         <module>engine</module>
         <module>engine-cdi</module>
+        <module>engine-dmn</module>
         <module>engine-spring</module>
         <module>engine-rest</module>
 
@@ -534,7 +559,6 @@
         </plugins>
       </build>
     </profile>
-
   </profiles>
 
   <repositories>

@@ -16,8 +16,6 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
@@ -32,8 +30,10 @@ import org.operaton.spin.DataFormats;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ProcessEngineExtension.class)
 class HistoricDecisionInstanceSerializationTest {

@@ -34,6 +34,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Junit 5 Extension to create and inject a {@link ProcessEngine} into the test class.
@@ -60,6 +61,7 @@ import java.util.function.Supplier;
  * you can register the extension directly and use the builder pattern to configure it.
  * <br>
  * Usage with configuration:
+ *
  * </p>
  * Usage:
  * <p>
@@ -216,10 +218,10 @@ public class ProcessEngineExtension implements TestWatcher,
       // allow other extensions to access the engine instance created by this extension
       context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     }
-    Arrays.stream(testInstance.getClass().getDeclaredFields())
+    getAllFields(testInstance.getClass())
             .filter(field -> field.getType() == ProcessEngine.class)
             .forEach(field -> inject(testInstance, field, processEngine));
-    Arrays.stream(testInstance.getClass().getDeclaredFields())
+    getAllFields(testInstance.getClass())
             .filter(field -> ProcessEngineConfiguration.class.isAssignableFrom(field.getType()))
             .forEach(field -> inject(testInstance, field, processEngine.getProcessEngineConfiguration()));
 
@@ -227,6 +229,15 @@ public class ProcessEngineExtension implements TestWatcher,
             .filter(method -> method.getName().startsWith("get"))
             .map(Method::getReturnType)
             .forEach(serviceType -> injectProcessEngineService(testInstance, serviceType));
+  }
+
+  private Stream<Field> getAllFields(Class<?> clazz) {
+    Stream<Field> fields = Stream.of(clazz.getDeclaredFields());
+    Class<?> superclass = clazz.getSuperclass();
+
+    return superclass != null
+            ? Stream.concat(fields, getAllFields(superclass))
+            : fields;
   }
 
   private void injectProcessEngineService(Object testInstance, Class<?> serviceType) {
@@ -243,7 +254,7 @@ public class ProcessEngineExtension implements TestWatcher,
               });
 
     if (serviceInstance.isPresent()) {
-      Arrays.stream(testInstance.getClass().getDeclaredFields())
+      getAllFields(testInstance.getClass())
               .filter(field -> field.getType().isAssignableFrom(serviceType))
               .forEach(field -> inject(testInstance, field, serviceInstance.get()));
     }

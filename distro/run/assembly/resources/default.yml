@@ -13,6 +13,8 @@ operaton.bpm:
     cors:
       enabled: true
       allowed-origins: "*"
+    rest:
+      disable-wadl: false
 # https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#example-application
     example:
       enabled: true

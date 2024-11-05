@@ -45,8 +45,8 @@ public class DmnEngineMetricCollectorWrapper implements DmnEngineMetricCollector
   }
 
   protected void notifyCollector(DmnDecisionLogicEvaluationEvent evaluationEvent) {
-    if (evaluationEvent instanceof DmnDecisionTableEvaluationEvent) {
-      collector.notify((DmnDecisionTableEvaluationEvent) evaluationEvent);
+    if (evaluationEvent instanceof DmnDecisionTableEvaluationEvent dmnEvent) {
+      collector.notify(dmnEvent);
     }
     // ignore other evaluation events since the collector is implemented as decision table evaluation listener
   }

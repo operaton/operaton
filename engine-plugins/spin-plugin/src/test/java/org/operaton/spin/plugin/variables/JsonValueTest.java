@@ -16,9 +16,6 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import org.json.JSONException;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -38,18 +35,22 @@ import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.JsonValue;
 import org.operaton.spin.plugin.variable.value.builder.JsonValueBuilder;
-import org.skyscreamer.jsonassert.JSONAssert;
+import static org.operaton.spin.DataFormats.json;
+import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
+import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.skyscreamer.jsonassert.JSONAssert;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.operaton.spin.DataFormats.json;
-import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
-import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
 
 /**
  * @author Roman Smirnov

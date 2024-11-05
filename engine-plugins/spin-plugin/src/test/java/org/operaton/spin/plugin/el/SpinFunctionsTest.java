@@ -16,20 +16,10 @@
  */
 package org.operaton.spin.plugin.el;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -38,6 +28,18 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.plugin.script.TestVariableScope;
 import org.operaton.spin.xml.SpinXmlElement;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * <p>Testcase ensuring integration of operaton Spin into Process Engine expression language.</p>

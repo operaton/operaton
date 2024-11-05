@@ -42,6 +42,9 @@ public class OperatonBpmRunProperties {
   @NestedConfigurationProperty
   protected List<OperatonBpmRunProcessEnginePluginProperty> processEnginePlugins = new ArrayList<>();
 
+  @NestedConfigurationProperty
+  protected OperatonBpmRunRestProperties rest = new OperatonBpmRunRestProperties();
+
   protected OperatonBpmRunAdministratorAuthorizationProperties adminAuth
       = new OperatonBpmRunAdministratorAuthorizationProperties();
 
@@ -85,6 +88,14 @@ public class OperatonBpmRunProperties {
     this.processEnginePlugins = processEnginePlugins;
   }
 
+  public OperatonBpmRunRestProperties getRest() {
+    return rest;
+  }
+
+  public void setRest(OperatonBpmRunRestProperties rest) {
+    this.rest = rest;
+  }
+
   @Override
   public String toString() {
     return "OperatonBpmRunProperties [" +
@@ -93,6 +104,7 @@ public class OperatonBpmRunProperties {
         ", ldap=" + ldap +
         ", adminAuth=" + adminAuth +
         ", plugins=" + processEnginePlugins +
+        ", rest=" + rest +
         "]";
   }
 }

@@ -113,6 +113,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected DelegationState delegationState;
   protected String candidateUser;
   protected String candidateGroup;
+  protected String candidateGroupLike;
   protected List<String> candidateGroups;
   protected Boolean withCandidateGroups;
   protected Boolean withoutCandidateGroups;
@@ -450,6 +451,18 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   @Override
+  public TaskQuery taskCandidateGroupLike(String candidateGroupLike) {
+    ensureNotNull("Candidate group like", candidateGroupLike);
+
+    if (!isOrQueryActive && (candidateUser != null || expressions.containsKey("taskCandidateUser"))) {
+      throw new ProcessEngineException("Invalid query usage: cannot set both candidateGroupLike and candidateUser");
+    }
+
+    this.candidateGroupLike = candidateGroupLike;
+    return this;
+  }
+
+  @Override
   public TaskQuery taskCandidateGroupIn(List<String> candidateGroups) {
     ensureNotEmpty("Candidate group list", candidateGroups);
 
@@ -480,10 +493,11 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   @Override
   public TaskQuery includeAssignedTasks() {
-    if (candidateUser == null && candidateGroup == null && candidateGroups == null && !isWithCandidateGroups() && !isWithoutCandidateGroups() && !isWithCandidateUsers() && !isWithoutCandidateUsers()
+    if (candidateUser == null && candidateGroup == null && candidateGroupLike == null && candidateGroups == null
+        && !isWithCandidateGroups() && !isWithoutCandidateGroups() && !isWithCandidateUsers() && !isWithoutCandidateUsers()
         && !expressions.containsKey("taskCandidateUser") && !expressions.containsKey("taskCandidateGroup")
         && !expressions.containsKey("taskCandidateGroupIn")) {
-      throw new ProcessEngineException("Invalid query usage: candidateUser, candidateGroup, candidateGroupIn, withCandidateGroups, withoutCandidateGroups, withCandidateUsers, withoutCandidateUsers has to be called before 'includeAssignedTasks'.");
+      throw new ProcessEngineException("Invalid query usage: candidateUser, candidateGroup, candidateGroupLike, candidateGroupIn, withCandidateGroups, withoutCandidateGroups, withCandidateUsers, withoutCandidateUsers has to be called before 'includeAssignedTasks'.");
     }
 
     includeAssignedTasks = true;
@@ -1563,6 +1577,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     return candidateGroup;
   }
 
+  public String getCandidateGroupLike() {
+    return candidateGroupLike;
+  }
+
   public boolean isIncludeAssignedTasks() {
     return includeAssignedTasks != null ? includeAssignedTasks : false;
   }
@@ -1912,6 +1930,13 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     }
     else if (this.getCandidateGroup() != null) {
       extendedQuery.taskCandidateGroup(this.getCandidateGroup());
+    }
+
+    if (extendingQuery.getCandidateGroupLike() != null) {
+      extendedQuery.taskCandidateGroupLike(extendingQuery.getCandidateGroupLike());
+    }
+    else if (this.getCandidateGroupLike() != null) {
+      extendedQuery.taskCandidateGroupLike(this.getCandidateGroupLike());
     }
 
     if (extendingQuery.isWithCandidateGroups() || this.isWithCandidateGroups()) {

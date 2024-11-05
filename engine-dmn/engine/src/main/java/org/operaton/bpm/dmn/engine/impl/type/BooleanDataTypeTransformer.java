@@ -30,11 +30,11 @@ public class BooleanDataTypeTransformer implements DmnDataTypeTransformer {
 
   @Override
   public TypedValue transform(Object value) throws IllegalArgumentException {
-    if (value instanceof Boolean) {
-      return Variables.booleanValue((Boolean) value);
+    if (value instanceof Boolean booleanValue) {
+      return Variables.booleanValue(booleanValue);
 
-    } else if (value instanceof String) {
-      boolean booleanValue = transformString((String) value);
+    } else if (value instanceof String stringValue) {
+      boolean booleanValue = transformString(stringValue);
       return Variables.booleanValue(booleanValue);
 
     } else {

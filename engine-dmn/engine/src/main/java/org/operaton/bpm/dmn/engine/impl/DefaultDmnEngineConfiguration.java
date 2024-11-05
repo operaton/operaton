@@ -168,8 +168,8 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
   protected Collection<? extends DmnDecisionEvaluationListener> getDefaultDmnDecisionEvaluationListeners() {
     List<DmnDecisionEvaluationListener> defaultListeners = new ArrayList<>();
 
-    if (engineMetricCollector instanceof DmnDecisionEvaluationListener) {
-      defaultListeners.add((DmnDecisionEvaluationListener) engineMetricCollector);
+    if (engineMetricCollector instanceof DmnDecisionEvaluationListener listener) {
+      defaultListeners.add(listener);
     } else {
       defaultListeners.add(new DmnEngineMetricCollectorWrapper(engineMetricCollector));
     }

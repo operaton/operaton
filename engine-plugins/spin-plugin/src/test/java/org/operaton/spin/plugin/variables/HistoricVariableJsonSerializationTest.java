@@ -16,10 +16,8 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import org.json.JSONException;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
@@ -32,10 +30,17 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.spin.DataFormats;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
+
+import java.util.List;
+
+import org.json.JSONException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
 
 @ExtendWith(ProcessEngineExtension.class)
 public class HistoricVariableJsonSerializationTest {
@@ -44,9 +49,18 @@ public class HistoricVariableJsonSerializationTest {
 
   protected static final String JSON_FORMAT_NAME = DataFormats.json().getName();
 
-  protected HistoryService historyService;
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
-  protected RuntimeService runtimeService;
+  ProcessEngine processEngine;
+  HistoryService historyService;
+  ProcessEngineConfigurationImpl processEngineConfiguration;
+  RuntimeService runtimeService;
+
+  @BeforeEach
+  void setUp () {
+    List<String> processInstanceIds = historyService.createHistoricVariableInstanceQuery().list().stream().map(HistoricVariableInstance::getProcessInstanceId).toList();
+    if (!processInstanceIds.isEmpty()) {
+      historyService.deleteHistoricProcessInstances(processInstanceIds);
+    }
+  }
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)

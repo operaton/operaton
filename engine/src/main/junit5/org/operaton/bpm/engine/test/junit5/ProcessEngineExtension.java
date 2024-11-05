@@ -243,6 +243,9 @@ public class ProcessEngineExtension implements TestWatcher,
     final String testMethod = context.getTestMethod().orElseThrow(illegalStateException("testMethod not set")).getName();
     final Class<?> testClass = context.getTestClass().orElseThrow(illegalStateException("testClass not set"));
 
+    processEngine.getRuntimeService().createExecutionQuery().active().list().stream().forEach(execution ->
+            processEngine.getRuntimeService().deleteProcessInstance(execution.getProcessInstanceId(), "Test shutdown"));
+
    TestHelper.annotationDeploymentTearDown(processEngine, deploymentId, testClass, testMethod);
    deploymentId = null;
    for (String additionalDeployment : additionalDeployments) {
@@ -258,6 +261,9 @@ public class ProcessEngineExtension implements TestWatcher,
    if (ensureCleanAfterTest) {
      TestHelper.assertAndEnsureCleanDbAndCache(processEngine);
    }
+
+   //processEngine.getRuntimeService().createProcessInstanceQuery().
+   //processEngine.getTaskService().deleteTasks(processEngine.getTaskService().createTaskQuery().list().stream().map(Task::getId).toList(), "Test cleanup");
   }
 
   @Override

@@ -16,9 +16,6 @@
  */
 package org.operaton.spin.plugin.impl;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.variable.serializer.DefaultVariableSerializers;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -30,8 +27,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ronny Bräunlich

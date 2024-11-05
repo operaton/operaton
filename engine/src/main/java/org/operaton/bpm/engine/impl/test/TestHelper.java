@@ -16,18 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.test;
 
-import java.io.InputStream;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.operaton.bpm.engine.*;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
@@ -56,7 +48,12 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.*;
+
 import org.slf4j.Logger;
 
 

@@ -35,7 +35,7 @@
     <maven.compiler.target>17</maven.compiler.target>
     <sonar.organization>operaton</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <C>**/target/jacoco/jacoco.xml</C>
+    <sonar.coverage.jacoco.xmlReportPaths>**/target/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 
   <build>

@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.run.property;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ConfigurationProperties(OperatonBpmRunProperties.PREFIX)
 public class OperatonBpmRunProperties {
@@ -44,6 +42,9 @@ public class OperatonBpmRunProperties {
 
   @NestedConfigurationProperty
   protected OperatonBpmRunRestProperties rest = new OperatonBpmRunRestProperties();
+
+  @NestedConfigurationProperty
+  protected OperatonBpmRunDeploymentProperties deployment = new OperatonBpmRunDeploymentProperties();
 
   protected OperatonBpmRunAdministratorAuthorizationProperties adminAuth
       = new OperatonBpmRunAdministratorAuthorizationProperties();
@@ -96,6 +97,15 @@ public class OperatonBpmRunProperties {
     this.rest = rest;
   }
 
+  public OperatonBpmRunDeploymentProperties getDeployment() {
+    return deployment;
+  }
+
+  public void setDeployment(OperatonBpmRunDeploymentProperties deployment) {
+    this.deployment = deployment;
+  }
+
+
   @Override
   public String toString() {
     return "OperatonBpmRunProperties [" +
@@ -105,6 +115,7 @@ public class OperatonBpmRunProperties {
         ", adminAuth=" + adminAuth +
         ", plugins=" + processEnginePlugins +
         ", rest=" + rest +
+        ", deployment=" + deployment +
         "]";
   }
 }

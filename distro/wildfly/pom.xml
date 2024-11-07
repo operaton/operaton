@@ -36,14 +36,6 @@
         <module>assembly</module>
         <module>modules</module>
         <module>subsystem</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>distro-ce</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
         <module>webapp</module>
         <module>distro</module>
       </modules>

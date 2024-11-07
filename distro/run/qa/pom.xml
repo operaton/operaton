@@ -71,17 +71,9 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
+        <module>runtime</module>
         <module>example-plugin</module>
         <module>integration-tests</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>distro-ce</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
-        <module>runtime</module>
       </modules>
     </profile>
     <profile>

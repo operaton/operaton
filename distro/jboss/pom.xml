@@ -28,7 +28,7 @@
 
   <profiles>
     <profile>
-      <id>distro-ce</id>
+      <id>distro</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>

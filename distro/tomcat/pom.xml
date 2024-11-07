@@ -34,14 +34,6 @@
       </activation>
       <modules>
         <module>assembly</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>distro-ce</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
         <module>distro</module>
         <module>webapp</module>
         <module>webapp-jakarta</module>

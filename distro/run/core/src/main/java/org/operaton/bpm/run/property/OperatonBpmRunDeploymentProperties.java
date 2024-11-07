@@ -16,35 +16,22 @@
  */
 package org.operaton.bpm.run.property;
 
-import java.util.Collections;
-import java.util.Map;
+public class OperatonBpmRunDeploymentProperties {
 
-public class OperatonBpmRunProcessEnginePluginProperty {
+  public static final String PREFIX = OperatonBpmRunProperties.PREFIX + ".deployment";
 
-  protected String pluginClass;
-  protected Map<String, Object> pluginParameters = Collections.EMPTY_MAP;
+  protected boolean deployChangedOnly = true;
 
-  public String getPluginClass() {
-    return pluginClass;
+  public boolean isDeployChangedOnly() {
+    return deployChangedOnly;
   }
 
-  public void setPluginClass(String pluginClass) {
-    this.pluginClass = pluginClass;
-  }
-
-  public Map<String, Object> getPluginParameters() {
-    return pluginParameters;
-  }
-
-  public void setPluginParameters(Map<String, Object> pluginParameters) {
-    this.pluginParameters = pluginParameters;
+  public void setDeployChangedOnly(boolean deployChangedOnly) {
+    this.deployChangedOnly = deployChangedOnly;
   }
 
   @Override
   public String toString() {
-    return "OperatonBpmRunProcessEnginePluginProperty [pluginClass=" + pluginClass +
-        ", pluginParameters=" + pluginParameters +
-        "]";
+    return "OperatonBpmRunDeploymentProperties[" + "deployChangedOnly=" + deployChangedOnly + ']';
   }
-
 }

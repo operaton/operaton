@@ -16,64 +16,55 @@
  */
 package org.operaton.bpm.run;
 
-import java.util.List;
-import java.util.Map;
-
-import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.plugin.AdministratorAuthorizationPlugin;
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
 import org.operaton.bpm.run.property.OperatonBpmRunAdministratorAuthorizationProperties;
 import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
-import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
-import org.operaton.bpm.run.utils.OperatonBpmRunProcessEnginePluginHelper;
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
-import org.operaton.bpm.spring.boot.starter.configuration.OperatonDeploymentConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @EnableConfigurationProperties(OperatonBpmRunProperties.class)
 @Configuration
 @AutoConfigureAfter({ OperatonBpmAutoConfiguration.class })
 public class OperatonBpmRunConfiguration {
 
-  @Autowired
-  OperatonBpmRunProperties operatonBpmRunProperties;
-
   @Bean
   @ConditionalOnProperty(name = "enabled", havingValue = "true", prefix = OperatonBpmRunLdapProperties.PREFIX)
-  public LdapIdentityProviderPlugin ldapIdentityProviderPlugin() {
-    return operatonBpmRunProperties.getLdap();
+  public LdapIdentityProviderPlugin ldapIdentityProviderPlugin(OperatonBpmRunProperties properties) {
+    return properties.getLdap();
   }
 
   @Bean
   @ConditionalOnProperty(name = "enabled", havingValue = "true", prefix = OperatonBpmRunAdministratorAuthorizationProperties.PREFIX)
-  public AdministratorAuthorizationPlugin administratorAuthorizationPlugin() {
-    return operatonBpmRunProperties.getAdminAuth();
+  public AdministratorAuthorizationPlugin administratorAuthorizationPlugin(OperatonBpmRunProperties properties) {
+    return properties.getAdminAuth();
   }
 
   @Bean
-  public ProcessEngineConfigurationImpl processEngineConfigurationImpl(List<ProcessEnginePlugin> processEnginePlugins) {
-    final SpringProcessEngineConfiguration configuration = new OperatonBpmRunProcessEngineConfiguration();
+  public ProcessEngineConfigurationImpl processEngineConfigurationImpl(List<ProcessEnginePlugin> processEnginePluginsFromContext,
+                                                                       OperatonBpmRunProperties properties,
+                                                                       OperatonBpmRunDeploymentConfiguration deploymentConfig) {
+    String normalizedDeploymentDir = deploymentConfig.getNormalizedDeploymentDir();
+    boolean deployChangedOnly = properties.getDeployment().isDeployChangedOnly();
+    var processEnginePluginsFromYaml = properties.getProcessEnginePlugins();
 
-    // register process engine plugins defined in yaml
-    List<OperatonBpmRunProcessEnginePluginProperty> yamlPluginsInfo = operatonBpmRunProperties.getProcessEnginePlugins();
-    OperatonBpmRunProcessEnginePluginHelper.registerYamlPlugins(processEnginePlugins, yamlPluginsInfo);
-
-    configuration.getProcessEnginePlugins().add(new CompositeProcessEnginePlugin(processEnginePlugins));
-    return configuration;
+    return new OperatonBpmRunProcessEngineConfiguration(normalizedDeploymentDir, deployChangedOnly,
+        processEnginePluginsFromContext, processEnginePluginsFromYaml);
   }
 
   @Bean
-  public static OperatonDeploymentConfiguration operatonDeploymentConfiguration() {
-    return new OperatonBpmRunDeploymentConfiguration();
+  public OperatonBpmRunDeploymentConfiguration operatonDeploymentConfiguration(@Value("${operaton.deploymentDir:#{null}}") String deploymentDir) {
+    return new OperatonBpmRunDeploymentConfiguration(deploymentDir);
   }
 
 }

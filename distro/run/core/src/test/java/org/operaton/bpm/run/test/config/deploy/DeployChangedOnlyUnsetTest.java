@@ -14,37 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.run.property;
+package org.operaton.bpm.run.test.config.deploy;
 
-import java.util.Collections;
-import java.util.Map;
+import org.operaton.bpm.run.OperatonBpmRunProcessEngineConfiguration;
+import org.operaton.bpm.run.test.AbstractRestTest;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class OperatonBpmRunProcessEnginePluginProperty {
+import static org.assertj.core.api.Assertions.assertThat;
 
-  protected String pluginClass;
-  protected Map<String, Object> pluginParameters = Collections.EMPTY_MAP;
+public class DeployChangedOnlyUnsetTest extends AbstractRestTest {
 
-  public String getPluginClass() {
-    return pluginClass;
+  @Autowired
+  private OperatonBpmRunProcessEngineConfiguration engineConfig;
+
+  @Test
+  public void shouldEnableDeployChangedOnlyOnOperatonRunProperty() {
+    assertThat(engineConfig.isDeployChangedOnly()).isEqualTo(true);
   }
-
-  public void setPluginClass(String pluginClass) {
-    this.pluginClass = pluginClass;
-  }
-
-  public Map<String, Object> getPluginParameters() {
-    return pluginParameters;
-  }
-
-  public void setPluginParameters(Map<String, Object> pluginParameters) {
-    this.pluginParameters = pluginParameters;
-  }
-
-  @Override
-  public String toString() {
-    return "OperatonBpmRunProcessEnginePluginProperty [pluginClass=" + pluginClass +
-        ", pluginParameters=" + pluginParameters +
-        "]";
-  }
-
 }

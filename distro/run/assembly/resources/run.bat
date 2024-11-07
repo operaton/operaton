@@ -5,6 +5,7 @@ SET BASEDIR=%~dp0
 SET PARENTDIR=%BASEDIR%..\
 SET DEPLOYMENTDIR=%PARENTDIR%configuration/resources
 SET WEBAPPS_PATH=%BASEDIR%webapps
+SET OAUTH2_PATH=%BASEDIR%oauth2
 SET REST_PATH=%BASEDIR%rest
 SET EXAMPLE_PATH=%BASEDIR%example
 SET APPNAME=Operaton Run
@@ -77,6 +78,12 @@ IF [%~1]==[--webapps] (
   SET optionalComponentChosen=true
   SET classPath=%WEBAPPS_PATH%,%classPath%
   ECHO WebApps enabled
+)
+
+IF [%~1]==[--oauth2] (
+  SET optionalComponentChosen=true
+  SET classPath=%OAUTH2_PATH%,%classPath%
+  ECHO Spring Security OAuth2 enabled
 )
 
 IF [%~1]==[--rest] (
@@ -159,6 +166,7 @@ ECHO Usage: run.bat [start^|stop] (options...)
 :ArgsHelp
 ECHO Options:
 ECHO   --webapps    - Enables the Operaton Webapps
+ECHO   --oauth2     - Enables the Operaton Platform Spring Security OAuth2 integration
 ECHO   --rest       - Enables the REST API
 ECHO   --example    - Enables the example application
 ECHO   --production - Applies the production.yaml configuration file

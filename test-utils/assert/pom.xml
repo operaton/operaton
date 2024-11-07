@@ -14,6 +14,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${version.junit5}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <!-- spring-framework-bom as first element in the list
            ensures to be chosen over spring-boot-dependencies
            to load spring-beans with Spring 5.

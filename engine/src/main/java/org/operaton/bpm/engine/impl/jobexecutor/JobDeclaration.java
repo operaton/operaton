@@ -20,8 +20,9 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.batch.BatchEntity;
+import org.operaton.bpm.engine.impl.batch.BatchJobContext;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -76,6 +77,15 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
     // set job definition id
     String jobDefinitionId = resolveJobDefinitionId(context);
     job.setJobDefinitionId(jobDefinitionId);
+
+    //set batch id for monitor and seed jobs (BatchEntity) and batch execution jobs (BatchJobContext)
+    if (context instanceof BatchEntity) {
+      BatchEntity batch = ((BatchEntity) context);
+      job.setBatchId(batch.getId());
+    } else if (context instanceof BatchJobContext) {
+      BatchJobContext batchJobContext = (BatchJobContext) context;
+      job.setBatchId(batchJobContext.getBatch().getId());
+    }
 
     if(jobDefinitionId != null) {
 

@@ -1,0 +1,43 @@
+# jreleaser.yml
+project:
+  name: operaton
+  description: Operaton - The open source process engine
+  version: @release.version@
+
+release:
+  github:
+    owner: operaton
+    repo: operaton
+    token: {{ secrets.GITHUB_TOKEN }}
+    draft: false
+    overwrite: true
+    skip_tag: false
+
+distributions:
+  maven:
+    group_id: org.operaton
+    artifact_id: operaton-root
+
+checksum:
+  algorithms: [SHA-256, SHA-512]
+
+packagers:
+  maven:
+    active: release
+    deployer:
+      repository: mavenCentral
+      url: https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/
+      username: {{ secrets.OSSRH_USERNAME }}
+      password: {{ secrets.OSSRH_PASSWORD }}
+
+changelog:
+  enabled: true
+  sort: ASC
+  preset: conventional-commits
+  categories:
+    - title: "Features"
+      labels: ["enhancement", "feature"]
+    - title: "Bug Fixes"
+      labels: ["bug"]
+    - title: "Documentation"
+      labels: ["docs", "documentation"]

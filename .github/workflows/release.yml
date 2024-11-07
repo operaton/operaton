@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      next_version:
+        description: 'The next development version to set'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Maven Build
+        run: mvn clean verify
+
+      - name: Release with JReleaser
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        run: jreleaser release
+
+      - name: Set next development version
+        run: |
+          mvn versions:set -DnewVersion=${{ github.event.inputs.next_version }}
+          git commit -am "[releng] Prepare for next development iteration ${{ github.event.inputs.next_version }}"
+          git push origin main

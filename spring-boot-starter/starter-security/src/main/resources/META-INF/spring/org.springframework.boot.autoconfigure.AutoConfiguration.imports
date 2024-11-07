@@ -1,0 +1,2 @@
+org.operaton.bpm.spring.boot.starter.security.oauth2.OperatonBpmSpringSecurityDisableAutoConfiguration
+org.operaton.bpm.spring.boot.starter.security.oauth2.OperatonSpringSecurityOAuth2AutoConfiguration

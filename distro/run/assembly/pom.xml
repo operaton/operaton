@@ -54,7 +54,7 @@
       <groupId>org.operaton.bpm.run</groupId>
       <artifactId>operaton-bpm-run-modules-oauth2</artifactId>
       <version>${project.version}</version>
-      <type>jar</type>
+      <type>pom</type>
       <exclusions>
         <!-- we don't need any transitive dependencies -->
         <exclusion>

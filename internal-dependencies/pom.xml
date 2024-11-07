@@ -15,10 +15,6 @@
 
   <description>Operaton core internal bill of material for dependencies</description>
 
-  <properties>
-    <version.junit5>5.11.3</version.junit5>
-  </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>

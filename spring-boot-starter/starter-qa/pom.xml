@@ -14,7 +14,7 @@
   <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Root POM</name>
 
-  <profiles>  
+  <profiles>
     <profile>
       <id>distro</id>
       <activation>
@@ -25,27 +25,6 @@
         <module>integration-test-request-scope</module>
         <module>integration-test-plugins</module>
         <module>integration-test-liquibase</module>
-      </modules>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-surefire-plugin</artifactId>
-              <configuration>
-                <skipTests>true</skipTests>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-    <profile>
-      <id>distro-ce</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
         <module>integration-test-webapp</module>
       </modules>
       <build>

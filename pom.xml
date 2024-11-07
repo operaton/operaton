@@ -358,23 +358,6 @@
     </profile>
 
     <profile>
-      <id>distro-ce</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
-        <!-- This profile is run in the CI after the webapps were built (platform-ASSEMBLY);
-          It should activate any module that has a dependency to the webapps -->
-        <module>spring-boot-starter</module>
-
-        <module>distro/license-book</module>
-        <module>distro/jboss</module>
-        <module>distro/tomcat</module>
-        <!-- module>distro/run</module -->
-      </modules>
-    </profile>
-
-    <profile>
       <id>javadocs</id>
       <build>
         <plugins>

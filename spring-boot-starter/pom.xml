@@ -47,15 +47,6 @@
         <module>starter-test</module>
         <module>starter-client/spring</module>
         <module>starter-client/spring-boot</module>
-        <module>starter-qa</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>distro-ce</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
         <module>starter-webapp-core</module>
         <module>starter-webapp</module>
         <module>starter-qa</module>

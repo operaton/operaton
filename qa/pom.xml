@@ -63,6 +63,7 @@
 
   <modules>
     <module>ensure-clean-db-plugin</module>
+    <module>integration-tests-engine-jakarta</module>
   </modules>
 
   <profiles>
@@ -85,16 +86,6 @@
         <!--module>test-old-engine</module-->
         <module>performance-tests-engine</module>
         <module>large-data-tests</module>
-      </modules>
-    </profile>
-
-    <profile>
-      <id>jdk17</id>
-      <activation>
-        <jdk>[17,)</jdk>
-      </activation>
-      <modules>
-        <module>integration-tests-engine-jakarta</module>
       </modules>
     </profile>
 

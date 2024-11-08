@@ -21,6 +21,7 @@
     <version.resteasy>6.2.8.Final</version.resteasy>
     <version.jetty>11.0.14</version.jetty>
     <version.jersey2>3.1.1</version.jersey2>
+    <version.spring.framework>${version.spring.framework6}</version.spring.framework>
 
     <web.resources.override>${jakarta.runtime}/default/webapp</web.resources.override>
     <java.resources.override>${jakarta.runtime}/default/resources</java.resources.override>
@@ -120,6 +121,20 @@
       <version>${project.version}</version>
       <scope>test</scope>
       <classifier>tests</classifier>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${version.spring.framework}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${version.spring.framework}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -632,57 +647,6 @@
       </build>
     </profile>
 
-    <profile>
-      <id>below-jdk17</id>
-      <activation>
-        <jdk>(,17)</jdk>
-      </activation>
-
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <testExcludes>
-                <exclude>**/AuthCacheTest.java</exclude>
-                <exclude>**/ContainerAuthenticationFilterTest.java</exclude>
-                <exclude>**/CsrfPreventionFilterAppPathTest.java</exclude>
-                <exclude>**/CsrfPreventionFilterTest.java</exclude>
-                <exclude>**/UserAuthenticationResourceTest.java</exclude>
-                <exclude>**/UserAuthenticationResourceLoggingTest.java</exclude>
-              </testExcludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>jdk17-and-onwards</id>
-      <activation>
-        <jdk>[17,)</jdk>
-      </activation>
-
-      <properties>
-        <version.spring.framework>${version.spring.framework6}</version.spring.framework>
-      </properties>
-
-      <dependencies>
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-test</artifactId>
-          <version>${version.spring.framework}</version>
-          <scope>test</scope>
-        </dependency>
-
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-web</artifactId>
-          <version>${version.spring.framework}</version>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
-    </profile>
   </profiles>
 
 </project>

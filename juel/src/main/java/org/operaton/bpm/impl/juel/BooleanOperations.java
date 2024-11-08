@@ -56,11 +56,11 @@ public class BooleanOperations {
 		if (t1 == String.class || t2 == String.class) {
 			return converter.convert(o1, String.class).compareTo(converter.convert(o2, String.class)) < 0;
 		}
-		if (o1 instanceof Comparable) {
-			return ((Comparable)o1).compareTo(o2) < 0;
+		if (o1 instanceof Comparable comparable) {
+			return comparable.compareTo(o2) < 0;
 		}
-		if (o2 instanceof Comparable) {
-			return ((Comparable)o2).compareTo(o1) > 0;
+		if (o2 instanceof Comparable comparable) {
+			return comparable.compareTo(o1) > 0;
 		}
 		throw new ELException(LocalMessages.get("error.compare.types", o1.getClass(), o2.getClass()));
 	}
@@ -84,11 +84,11 @@ public class BooleanOperations {
 		if (t1 == String.class || t2 == String.class) {
 			return converter.convert(o1, String.class).compareTo(converter.convert(o2, String.class)) > 0;
 		}
-		if (o1 instanceof Comparable) {
-			return ((Comparable)o1).compareTo(o2) > 0;
+		if (o1 instanceof Comparable comparable) {
+			return comparable.compareTo(o2) > 0;
 		}
-		if (o2 instanceof Comparable) {
-			return ((Comparable)o2).compareTo(o1) < 0;
+		if (o2 instanceof Comparable comparable) {
+			return comparable.compareTo(o1) < 0;
 		}
 		throw new ELException(LocalMessages.get("error.compare.types", o1.getClass(), o2.getClass()));
 	}
@@ -177,14 +177,14 @@ public class BooleanOperations {
 		if (o == null || "".equals(o)) {
 			return true;
 		}
-		if (o instanceof Object[]) {
-			return ((Object[])o).length == 0;
+		if (o instanceof Object[] array) {
+			return array.length == 0;
 		}
-		if (o instanceof Map<?,?>) {
-			return ((Map<?,?>)o).isEmpty();
+		if (o instanceof Map<?,?> map) {
+			return map.isEmpty();
 		}
-		if (o instanceof Collection<?>) {
-			return ((Collection<?>)o).isEmpty();
+		if (o instanceof Collection<?> collection) {
+			return collection.isEmpty();
 		}
 		return false;
 	}

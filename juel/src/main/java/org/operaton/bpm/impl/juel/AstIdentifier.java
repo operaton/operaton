@@ -116,8 +116,7 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		if (value == null) {
 			throw new MethodNotFoundException(LocalMessages.get("error.identifier.method.notfound", name));
 		}
-		if (value instanceof Method) {
-			Method method = (Method)value;
+		if (value instanceof Method method) {
 			if (returnType != null && !returnType.isAssignableFrom(method.getReturnType())) {
 				throw new MethodNotFoundException(LocalMessages.get("error.identifier.method.notfound", name));
 			}

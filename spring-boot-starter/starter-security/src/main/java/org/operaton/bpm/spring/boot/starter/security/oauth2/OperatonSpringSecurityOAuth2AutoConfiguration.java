@@ -23,9 +23,10 @@ import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.AuthorizeTokenFilter;
+import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2GrantedAuthoritiesMapper;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2IdentityProviderPlugin;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
 import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,8 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Map;
@@ -96,20 +99,26 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain filterChain(HttpSecurity http, OAuth2AuthorizedClientManager clientManager)
+      throws Exception {
     logger.info("Enabling Operaton Spring Security oauth2 integration");
 
+    var validateTokenFilter = new AuthorizeTokenFilter(clientManager);
+
+    // @formatter:off
     http.authorizeHttpRequests(c -> c
             .requestMatchers(webappPath + "/app/**").authenticated()
             .requestMatchers(webappPath + "/api/**").authenticated()
             .anyRequest().permitAll()
         )
+        .addFilterAfter(validateTokenFilter, OAuth2AuthorizationRequestRedirectFilter.class)
         .anonymous(AbstractHttpConfigurer::disable)
         .oauth2Login(Customizer.withDefaults())
         .oidcLogout(Customizer.withDefaults())
         .oauth2Client(Customizer.withDefaults())
         .cors(AbstractHttpConfigurer::disable)
         .csrf(AbstractHttpConfigurer::disable);
+    // @formatter:on
 
     return http.build();
   }

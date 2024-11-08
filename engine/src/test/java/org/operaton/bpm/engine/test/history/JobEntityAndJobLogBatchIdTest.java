@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
@@ -39,6 +40,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.history.removaltime.batch.helper.BatchSetRemovalTimeRule;
 import org.operaton.bpm.engine.test.util.BatchRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
@@ -51,6 +53,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 
+@RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class JobEntityAndJobLogBatchIdTest {
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();

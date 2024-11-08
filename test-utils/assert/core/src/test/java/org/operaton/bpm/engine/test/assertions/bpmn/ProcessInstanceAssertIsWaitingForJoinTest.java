@@ -139,7 +139,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).isWaitingAt(null);
+        assertThat(processInstance).isWaitingAt((String[]) null);
       }
     }, "Expecting list of activityIds not to be null, not to be empty");
   }

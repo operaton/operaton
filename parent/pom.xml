@@ -79,7 +79,9 @@
     <version.npm>10.7.0</version.npm>
     <version.junit5>5.11.3</version.junit5>
 
-    <surefire.argLine>-Xmx968m -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof -Xlog:class+load=off</surefire.argLine>
+    <jacoco.argLine/>
+    <surefire.memArgs>-Xmx968m -XX:MetaspaceSize=128m</surefire.memArgs>
+    <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof -Xshare:off</surefire.argLine>
 
     <!-- OSGi bundles properties -->
     <operaton.artifact />
@@ -145,8 +147,8 @@
             <systemPropertyVariables>
               <myWorkingDir>${project.build.directory}</myWorkingDir>
             </systemPropertyVariables>
-            <!-- when configuring argLine in submodules, don't forget to prepend ${jacoco.argLine} -->
-            <argLine>${jacoco.argLine} ${surefire.argLine}</argLine>
+            <!-- when configuring argLine in submodules, don't forget to prepend ${surefire.argLine} -->
+            <argLine>${surefire.argLine}</argLine>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
           </configuration>
         </plugin>

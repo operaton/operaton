@@ -54,17 +54,6 @@
 
   <profiles>
     <profile>
-      <id>jdk17-and-onwards</id>
-      <activation>
-        <jdk>[17,)</jdk>
-      </activation>
-
-      <modules>
-        <module>engine</module>
-      </modules>
-    </profile>
-
-    <profile>
       <id>quarkus-tests</id>
       <build>
         <pluginManagement>
@@ -80,4 +69,8 @@
       </build>
     </profile>
   </profiles>
+
+  <modules>
+    <module>engine</module>
+  </modules>
 </project>

@@ -423,11 +423,13 @@
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
           <includes>
-           <include>%regex[.*(${test.includes}).*Test.*.class]</include>
+            <include>%regex[.*(${test.includes}).*Test.*.class]</include>
           </includes>
-          <excludes>
+          <excludes combine.children="append">
             <exclude>**/*TestCase.java</exclude>
             <exclude>%regex[.*(${test.excludes}).*Test.*.class]</exclude>
+            <!-- Nashorn is not part of the JDK anymore in Java 15+ -->
+            <exclude>**/*NashornTest.java</exclude>
           </excludes>
           <dependenciesToScan>
             <dependency>org.operaton.bpm:operaton-bpm-archunit</dependency>
@@ -877,28 +879,6 @@
             </configuration>
           </plugin>
         </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>java15</id>
-      <activation>
-        <jdk>[15,)</jdk>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <artifactId>maven-surefire-plugin</artifactId>
-              <configuration>
-                <!-- Nashorn is not part of the JDK anymore in Java 15+ -->
-                <excludes combine.children="append">
-                  <exclude>**/*NashornTest.java</exclude>
-                </excludes>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
       </build>
     </profile>
 

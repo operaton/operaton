@@ -206,7 +206,7 @@ public class HistoricBatchRestServiceInteractionTest extends AbstractRestService
     verify(queryMock).batchId(EXAMPLE_BATCH_ID);
 
     verify(builder).calculatedRemovalTime();
-    verify(builder).byIds(null);
+    verify(builder).byIds((String[]) null);
     verify(builder).byQuery(queryMock);
     verify(builder).executeAsync();
     verifyNoMoreInteractions(builder);

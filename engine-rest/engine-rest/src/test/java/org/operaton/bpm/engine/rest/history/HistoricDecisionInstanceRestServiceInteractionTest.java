@@ -443,7 +443,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
     verify(historicQueryMock).decisionInstanceId(EXAMPLE_DECISION_INSTANCE_ID);
 
     verify(builder).calculatedRemovalTime();
-    verify(builder).byIds(null);
+    verify(builder).byIds((String[]) null);
     verify(builder).byQuery(historicQueryMock);
     verify(builder).executeAsync();
     verifyNoMoreInteractions(builder);

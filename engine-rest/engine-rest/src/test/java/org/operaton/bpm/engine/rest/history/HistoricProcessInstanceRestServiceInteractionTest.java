@@ -348,7 +348,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
     verify(query).processDefinitionId(EXAMPLE_PROCESS_DEFINITION_ID);
 
     verify(builder).calculatedRemovalTime();
-    verify(builder).byIds(null);
+    verify(builder).byIds((String[]) null);
     verify(builder).byQuery(query);
     verify(builder).executeAsync();
     verifyNoMoreInteractions(builder);

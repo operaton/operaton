@@ -41,7 +41,7 @@ public class NumberOperations {
 	}
 
 	private final static boolean isDotEe(Object value) {
-		return value instanceof String && isDotEe((String)value);
+		return value instanceof String stringValue && isDotEe(stringValue);
 	}
 
 	private static final boolean isFloatOrDouble(Object value) {
@@ -144,35 +144,35 @@ public class NumberOperations {
 		if (value == null) {
 			return LONG_ZERO;
 		}
-		if (value instanceof BigDecimal) {
-			return ((BigDecimal)value).negate();
+		if (value instanceof BigDecimal bigDecimal) {
+			return bigDecimal.negate();
 		}
-		if (value instanceof BigInteger) {
-			return ((BigInteger)value).negate();
+		if (value instanceof BigInteger bigInteger) {
+			return bigInteger.negate();
 		}
-		if (value instanceof Double) {
-			return -((Double) value).doubleValue();
+		if (value instanceof Double doubleValue) {
+			return -doubleValue.doubleValue();
 		}
-		if (value instanceof Float) {
-			return -((Float) value).floatValue();
+		if (value instanceof Float floatValue) {
+			return -floatValue.floatValue();
 		}
-		if (value instanceof String) {
-			if (isDotEe((String)value)) {
+		if (value instanceof String stringValue) {
+			if (isDotEe(stringValue)) {
 				return -converter.convert(value, Double.class).doubleValue();
 			}
 			return -converter.convert(value, Long.class).longValue();
 		}
-		if (value instanceof Long) {
-			return -((Long) value).longValue();
+		if (value instanceof Long longValue) {
+			return -longValue.longValue();
 		}
-		if (value instanceof Integer) {
-			return -((Integer) value).intValue();
+		if (value instanceof Integer integerValue) {
+			return -integerValue.intValue();
 		}
-		if (value instanceof Short) {
-			return (short) -((Short) value).shortValue();
+		if (value instanceof Short shortValue) {
+			return (short) -shortValue.shortValue();
 		}
-		if (value instanceof Byte) {
-			return (byte) -((Byte) value).byteValue();
+		if (value instanceof Byte byteValue) {
+			return (byte) -byteValue.byteValue();
 		}
 		throw new ELException(LocalMessages.get("error.negate", value.getClass()));
 	}

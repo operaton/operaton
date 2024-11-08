@@ -26,18 +26,18 @@ can look like the following:
 
 ```properties
 # process engine configuration
-quarkus.operaton.cmmn-enabled=false
-quarkus.operaton.dmn-enabled=false
-quarkus.operaton.history=none
+quarkus.operaton.generic-config.cmmn-enabled=false
+quarkus.operaton.generic-config.dmn-enabled=false
+quarkus.operaton.generic-config.history=none
 
 # job executor configuration
 quarkus.operaton.job-executor.thread-pool.max-pool-size=12
 quarkus.operaton.job-executor.thread-pool.queue-size=5
-quarkus.operaton.job-executor.max-jobs-per-acquisition=5
-quarkus.operaton.job-executor.lock-time-in-millis=500000
-quarkus.operaton.job-executor.wait-time-in-millis=7000
-quarkus.operaton.job-executor.max-wait=65000
-quarkus.operaton.job-executor.backoff-time-in-millis=5
+quarkus.operaton.job-executor.generic-config.max-jobs-per-acquisition=5
+quarkus.operaton.job-executor.generic-config.lock-time-in-millis=500000
+quarkus.operaton.job-executor.generic-config.wait-time-in-millis=7000
+quarkus.operaton.job-executor.generic-config.max-wait=65000
+quarkus.operaton.job-executor.generic-config.backoff-time-in-millis=5
 
 # custom data source configuration and selection
 quarkus.datasource.my-datasource.db-kind=h2

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.test;
 
-import junit.framework.AssertionFailedError;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
@@ -31,7 +29,7 @@ public class ProcessEngineAssert {
       .singleResult();
     
     if (processInstance!=null) {
-      throw new AssertionFailedError("expected finished process instance '"+processInstanceId+"' but it was still in the db"); 
+      throw new AssertionError("expected finished process instance '"+processInstanceId+"' but it was still in the db");
     }
   }
 }

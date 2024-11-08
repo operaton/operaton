@@ -29,6 +29,8 @@ operaton.bpm:
 # https://docs.operaton.org/manual/latest/user-guide/security/#authentication
 # https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#authentication
     auth.enabled: true
+    rest.disable-wadl: true
+    deployment.deploy-changed-only: true
 # https://docs.operaton.org/manual/latest/user-guide/process-engine/identity-service/#configuration-properties-of-the-ldap-plugin
 # https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#ldap-identity-service
 # Uncomment this section to enable LDAP support for Operaton Run

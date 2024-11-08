@@ -50,6 +50,11 @@ public class MockTaskBuilder {
   private String formKey;
   private OperatonFormRef operatonFormRef;
   private String tenantId;
+  private boolean hasAttachment;
+
+  private boolean hasComment;
+
+
 
   private String taskState;
 
@@ -170,6 +175,16 @@ public class MockTaskBuilder {
     return this;
   }
 
+  public MockTaskBuilder hasAttachment(boolean hasAttachment) {
+    this.hasAttachment = hasAttachment;
+    return this;
+  }
+
+  public MockTaskBuilder hasComment(boolean hasComment) {
+    this.hasComment = hasComment;
+    return this;
+  }
+
   public Task build() {
     Task mockTask = mock(Task.class);
     when(mockTask.getId()).thenReturn(id);
@@ -195,6 +210,8 @@ public class MockTaskBuilder {
     when(mockTask.getOperatonFormRef()).thenReturn(operatonFormRef);
     when(mockTask.getTenantId()).thenReturn(tenantId);
     when(mockTask.getTaskState()).thenReturn(taskState);
+    when(mockTask.hasAttachment()).thenReturn(hasAttachment);
+    when(mockTask.hasComment()).thenReturn(hasComment);
     return mockTask;
   }
 

@@ -34,53 +34,99 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
- * Junit 5 Extension to create and inject a {@link ProcessEngine} into the test class.
+ * JUnit 5 Extension to create and inject a {@link ProcessEngine} into test classes.
  * <p>
- * If you provide a {@code operaton.cfg.xml} file on the classpath. This file is used to configure the process engine.
- * <br>
- * Usage:
+ * This extension provides a managed instance of {@link ProcessEngine} and its services, which can
+ * be automatically injected into test fields. The process engine configuration can be provided
+ * through an {@code operaton.cfg.xml} file on the classpath or customized using a builder pattern.
  * </p>
+ *
+ * <h3>Basic Usage:</h3>
  * <pre>
  * <code>@ExtendWith(ProcessEngineExtension.class)</code>
  * class YourTest {
  *
- *   // provide a property where the extension can inject the process engine or its services
  *   ProcessEngine processEngine;
- *   ProcessEngineConfiguration processEngineConfiguration;
  *   RuntimeService runtimeService;
- *
+ *   TaskService taskService;
+ *   // other engine services
  *   ...
  * }
  * </pre>
  *
  * <p>
- * If you want to choose the {@code operaton.cfg.xml} file that is used in the test programmatically,
- * you can register the extension directly and use the builder pattern to configure it.
- * <br>
- * Usage with configuration:
+ * For advanced usage, where specific configurations are required, the extension can be registered
+ * manually with a custom configuration file:
  * </p>
- * Usage:
- * <p>
  * <pre>
  * <code>@RegisterExtension</code>
  * ProcessEngineExtension extension = ProcessEngineExtension.builder()
- *    .configurationResource("myConfigurationFile.xml")
- *    .build();}
+ *    .configurationResource("customConfiguration.xml")
+ *    .build();
  * </pre>
- * </p>
+ *
+ * <h3>Annotations:</h3>
+ * <ul>
+ * <li>{@link Deployment} - Deploys a specified deployment before each test and
+ * cascades deletion after each test execution.</li>
+ * <li>{@link RequiredHistoryLevel} - Skips tests if the engine's history level does not meet the required level.</li>
+ * </ul>
+ *
+ * <h3>Injected Services:</h3>
  * <p>
- * You can declare a deployment with the {@link Deployment} annotation. This
- * base class will make sure that this deployment gets deployed before the setUp
- * and {@link RepositoryService#deleteDeployment(String, boolean) cascade
- * deleted} after the tearDown.
+ * In addition to {@link ProcessEngine}, the extension also injects various BPM services:
+ * {@link RepositoryService}, {@link RuntimeService}, {@link TaskService}, {@link HistoryService},
+ * {@link IdentityService}, {@link ManagementService}, {@link FormService}, {@link FilterService},
+ * {@link AuthorizationService}, {@link CaseService}, {@link ExternalTaskService}, and
+ * {@link DecisionService}. Each of these services can be injected directly into the test class
+ * fields to simplify access within tests.
  * </p>
+ *
+ * <h3>Builder Pattern:</h3>
+ * <p>
+ * This extension supports a fluent builder pattern for advanced configuration:
+ * </p>
+ * <pre>
+ * <code>ProcessEngineExtension extension = ProcessEngineExtension.builder()
+ *     .configurationResource("myCustomConfig.xml")
+ *     .ensureCleanAfterTest(true)
+ *     .build();</code>
+ * </pre>
+ * <ul>
+ * <li>{@code configurationResource(String)} - Specifies a custom configuration file.</li>
+ * <li>{@code ensureCleanAfterTest(boolean)} - Ensures a clean database state after each test.</li>
+ * <li>{@code useProcessEngine(ProcessEngine)} - Reuses an existing process engine instance.</li>
+ * <li>{@code manageDeployment(Deployment)} - Adds deployments that will be managed and cleaned up after tests.</li>
+ * </ul>
+ *
+ * <h3>Setting History Level:</h3>
  * <p>
  * If you need the history service for your tests then you can specify the
  * required history level of the test method or class, using the
  * {@link RequiredHistoryLevel} annotation. If the current history level of the
  * process engine is lower than the specified one then the test is skipped.
+ * </p>
+ *
+ * <h3>Test Lifecycle Callbacks:</h3>
+ * <p>
+ * This extension implements multiple JUnit lifecycle callbacks:
+ * <ul>
+ * <li>{@link TestInstancePostProcessor} - Initializes and injects the process engine instance before each test.</li>
+ * <li>{@link BeforeTestExecutionCallback} - Sets up deployment and history level requirements before each test.</li>
+ * <li>{@link AfterTestExecutionCallback} - Cleans up deployments, services, and resets the engine state after each test.</li>
+ * <li>{@link AfterAllCallback} - Clears service references once all tests in a class have been executed.</li>
+ * </ul>
+ * </p>
+ *
+ * <h3>Database and Diagnostics:</h3>
+ * <p>
+ * After each test execution, the extension ensures a clean database state by validating and
+ * cleaning the engine's cache and database if configured to do so.
+ * This feature is particularly useful for tests that rely on database consistency.
+ * The extension also resets the engine’s diagnostic state to maintain a clean testing environment.
  * </p>
  */
 public class ProcessEngineExtension implements TestWatcher,
@@ -216,10 +262,10 @@ public class ProcessEngineExtension implements TestWatcher,
       // allow other extensions to access the engine instance created by this extension
       context.getStore(ExtensionContext.Namespace.create("Operaton")).put(ProcessEngine.class, processEngine);
     }
-    Arrays.stream(testInstance.getClass().getDeclaredFields())
+    getAllFields(testInstance.getClass())
             .filter(field -> field.getType() == ProcessEngine.class)
             .forEach(field -> inject(testInstance, field, processEngine));
-    Arrays.stream(testInstance.getClass().getDeclaredFields())
+    getAllFields(testInstance.getClass())
             .filter(field -> ProcessEngineConfiguration.class.isAssignableFrom(field.getType()))
             .forEach(field -> inject(testInstance, field, processEngine.getProcessEngineConfiguration()));
 
@@ -227,6 +273,15 @@ public class ProcessEngineExtension implements TestWatcher,
             .filter(method -> method.getName().startsWith("get"))
             .map(Method::getReturnType)
             .forEach(serviceType -> injectProcessEngineService(testInstance, serviceType));
+  }
+
+  private Stream<Field> getAllFields(Class<?> clazz) {
+    Stream<Field> fields = Stream.of(clazz.getDeclaredFields());
+    Class<?> superclass = clazz.getSuperclass();
+
+    return superclass != null
+            ? Stream.concat(fields, getAllFields(superclass))
+            : fields;
   }
 
   private void injectProcessEngineService(Object testInstance, Class<?> serviceType) {
@@ -243,7 +298,7 @@ public class ProcessEngineExtension implements TestWatcher,
               });
 
     if (serviceInstance.isPresent()) {
-      Arrays.stream(testInstance.getClass().getDeclaredFields())
+      getAllFields(testInstance.getClass())
               .filter(field -> field.getType().isAssignableFrom(serviceType))
               .forEach(field -> inject(testInstance, field, serviceInstance.get()));
     }

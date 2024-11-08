@@ -17,6 +17,13 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${version.junit5}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
         <!-- Import dependency management from Spring Boot -->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -36,6 +43,7 @@
       <modules>
         <module>starter</module>
         <module>starter-rest</module>
+        <module>starter-security</module>
         <module>starter-test</module>
         <module>starter-client/spring</module>
         <module>starter-client/spring-boot</module>
@@ -72,6 +80,7 @@
         <module>starter-qa</module>
         <module>starter</module>
         <module>starter-rest</module>
+        <module>starter-security</module>
         <module>starter-client/spring-boot</module>
         <module>starter-webapp-core</module>
       </modules>

@@ -18,9 +18,9 @@
   </description>
 
   <properties>
-    <version.quarkus>3.8.5</version.quarkus>
-    <version.spring.framework>5.3.36</version.spring.framework>
-    <version.spring.framework6>6.1.8</version.spring.framework6>
+    <version.quarkus>3.15.0</version.quarkus>
+    <version.spring.framework>5.3.39</version.spring.framework>
+    <version.spring.framework6>6.1.13</version.spring.framework6>
     <version.spring-boot>3.3.5</version.spring-boot>
     <version.resteasy>3.15.6.Final</version.resteasy>
     <version.jersey2>2.34</version.jersey2>
@@ -43,6 +43,7 @@
     <version.xml.jaxb-impl4>4.0.5</version.xml.jaxb-impl4>
     <version.jakarta.xml.bind-api>4.0.2</version.jakarta.xml.bind-api>
     <version.httpclient>4.5.14</version.httpclient>
+    <version.httpclient5>5.3</version.httpclient5>
 
     <version.slf4j>1.7.26</version.slf4j>
     <version.logback>1.2.11</version.logback>
@@ -64,7 +65,7 @@
     <version.wildfly26.core>18.0.4.Final</version.wildfly26.core>
 
     <version.tomcat9>9.0.90</version.tomcat9>
-    <version.tomcat>10.1.25</version.tomcat>
+    <version.tomcat>10.1.30</version.tomcat>
 
     <version.arquillian>1.1.10.Final</version.arquillian>
     <version.shrinkwrap.resolvers>2.2.2</version.shrinkwrap.resolvers>
@@ -76,6 +77,7 @@
 
     <version.nodejs>20.14.0</version.nodejs>
     <version.npm>10.7.0</version.npm>
+    <version.junit5>5.11.3</version.junit5>
 
     <!-- OSGi bundles properties -->
     <operaton.artifact />

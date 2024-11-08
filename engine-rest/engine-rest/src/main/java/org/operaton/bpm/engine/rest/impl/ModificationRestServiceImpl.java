@@ -22,9 +22,11 @@ import javax.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.batch.Batch;
+import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.rest.ModificationRestService;
 import org.operaton.bpm.engine.rest.dto.ModificationDto;
 import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
+import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.runtime.ModificationBuilder;
@@ -72,6 +74,12 @@ public class ModificationRestServiceImpl extends AbstractRestProcessEngineAware 
     if (processInstanceQueryDto != null) {
       ProcessInstanceQuery processInstanceQuery = processInstanceQueryDto.toQuery(getProcessEngine());
       builder.processInstanceQuery(processInstanceQuery);
+    }
+
+    HistoricProcessInstanceQueryDto historicProcessInstanceQueryDto = dto.getHistoricProcessInstanceQuery();
+    if(historicProcessInstanceQueryDto != null) {
+      HistoricProcessInstanceQuery historicProcessInstanceQuery = historicProcessInstanceQueryDto.toQuery(getProcessEngine());
+      builder.historicProcessInstanceQuery(historicProcessInstanceQuery);
     }
 
     if (dto.isSkipCustomListeners()) {

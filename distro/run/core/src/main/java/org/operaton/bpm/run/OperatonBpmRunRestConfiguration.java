@@ -24,6 +24,7 @@ import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
 import org.operaton.bpm.spring.boot.starter.rest.OperatonBpmRestInitializer;
+import org.operaton.bpm.spring.boot.starter.rest.OperatonJerseyResourceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -33,6 +34,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Collections;
 
 @EnableConfigurationProperties(OperatonBpmRunProperties.class)
 @Configuration
@@ -104,6 +107,13 @@ public class OperatonBpmRunRestConfiguration {
                                   operatonBpmRunProperties.getCors().getPreflightMaxAge());
 
     return registration;
+  }
+
+  @Bean
+  public OperatonJerseyResourceConfig operatonRunJerseyResourceConfig() {
+    OperatonJerseyResourceConfig operatonJerseyResourceConfig = new OperatonJerseyResourceConfig();
+    operatonJerseyResourceConfig.setProperties(Collections.singletonMap("jersey.config.server.wadl.disableWadl", operatonBpmRunProperties.getRest().isDisableWadl()));
+    return operatonJerseyResourceConfig;
   }
 
 }

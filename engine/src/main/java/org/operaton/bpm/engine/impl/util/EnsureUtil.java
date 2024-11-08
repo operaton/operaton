@@ -62,16 +62,32 @@ public final class EnsureUtil {
     }
   }
 
+  public static void ensureNotNull(String variableName, String... values) {
+    ensureNotNull(variableName, (Object[]) values);
+  }
+
   public static void ensureNotNull(String variableName, Object... values) {
     ensureNotNull("", variableName, values);
+  }
+
+  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String variableName, String... values) {
+    ensureNotNull(exceptionClass, variableName, (Object[]) values);
   }
 
   public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String variableName, Object... values) {
     ensureNotNull(exceptionClass, null, variableName, values);
   }
 
+  public static void ensureNotNull(String message, String variableName, String... values) {
+    ensureNotNull(message, variableName, (Object[]) values);
+  }
+
   public static void ensureNotNull(String message, String variableName, Object... values) {
     ensureNotNull(NullValueException.class, message, variableName, values);
+  }
+
+  public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, String... values) {
+    ensureNotNull(exceptionClass, message, variableName, (Object[]) values);
   }
 
   public static void ensureNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Object... values) {
@@ -219,8 +235,16 @@ public final class EnsureUtil {
     }
   }
 
+  public static void ensureOnlyOneNotNull(String message, String... values) {
+    ensureOnlyOneNotNull(message, (Object[]) values);
+  }
+
   public static void ensureOnlyOneNotNull(String message, Object... values) {
     ensureOnlyOneNotNull(NullValueException.class, message, values);
+  }
+
+  public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String... values) {
+    ensureOnlyOneNotNull(exceptionClass, message, (Object[]) values);
   }
 
   public static void ensureOnlyOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, Object... values) {
@@ -238,8 +262,16 @@ public final class EnsureUtil {
     }
   }
 
-  public static void ensureAtLeastOneNotNull(String message, Object... values) {
+  public static void ensureAtLeastOneNotNull(String message, String... values) {
+    ensureAtLeastOneNotNull(message, (Object[]) values);
+  }
+
+    public static void ensureAtLeastOneNotNull(String message, Object... values) {
     ensureAtLeastOneNotNull(NullValueException.class, message, values);
+  }
+
+  public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, String... values) {
+    ensureAtLeastOneNotNull(exceptionClass, message, (Object[]) values);
   }
 
   public static void ensureAtLeastOneNotNull(Class<? extends ProcessEngineException> exceptionClass, String message, Object... values) {

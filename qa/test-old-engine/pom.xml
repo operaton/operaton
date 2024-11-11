@@ -13,6 +13,7 @@
 
   <properties>
     <operaton.old.engine.version>7.21.0</operaton.old.engine.version>
+    <surefire.memArgs>-Xmx2g -XX:MetaspaceSize=128m</surefire.memArgs>
   </properties>
 
   <build>
@@ -430,7 +431,6 @@
               </excludes>
               <testFailureIgnore>false</testFailureIgnore>
               <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <argLine>${jacoco.argLine} -Xmx2g -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</argLine>
             </configuration>
           </plugin>
 

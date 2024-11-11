@@ -80,8 +80,8 @@
     <version.junit5>5.11.3</version.junit5>
 
     <jacoco.argLine/>
-    <surefire.memArgs>-Xmx968m -XX:MetaspaceSize=128m</surefire.memArgs>
-    <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof -Xshare:off</surefire.argLine>
+    <surefire.memArgs>-Xmx1024m -XX:MetaspaceSize=128m</surefire.memArgs>
+    <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>
 
     <!-- OSGi bundles properties -->
     <operaton.artifact />
@@ -147,8 +147,6 @@
             <systemPropertyVariables>
               <myWorkingDir>${project.build.directory}</myWorkingDir>
             </systemPropertyVariables>
-            <!-- when configuring argLine in submodules, don't forget to prepend ${surefire.argLine} -->
-            <argLine>${surefire.argLine}</argLine>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
           </configuration>
         </plugin>
@@ -156,7 +154,6 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <configuration>
-            <argLine>${jacoco.argLine} -Xmx968m</argLine>
             <runOrder>hourly</runOrder>
           </configuration>
           <executions>

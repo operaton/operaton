@@ -114,8 +114,7 @@ public class ProcessInstanceModificationCmd extends AbstractModificationCmd<Void
 
       instruction.setProcessInstanceId(processInstanceId);
 
-      if (!(instruction instanceof ActivityCancellationCmd) ||
-          !((ActivityCancellationCmd)instruction).isCancelCurrentActiveActivityInstances()) {
+      if (!(instruction instanceof ActivityCancellationCmd cmd) || !cmd.isCancelCurrentActiveActivityInstances()) {
         operations.add(instruction);
       }
       else {

@@ -116,10 +116,7 @@ public class AcquireJobsCmd implements Command<AcquiredJobs>, OptimisticLockingL
   @Override
   public OptimisticLockingResult failedOperation(DbOperation operation) {
 
-    if (operation instanceof DbEntityOperation) {
-
-      DbEntityOperation entityOperation = (DbEntityOperation) operation;
-
+    if (operation instanceof DbEntityOperation entityOperation) {
       // could not lock the job -> remove it from list of acquired jobs
       acquiredJobs.removeJobId(entityOperation.getEntity().getId());
 

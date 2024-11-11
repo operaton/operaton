@@ -125,8 +125,7 @@ public class FetchExternalTasksCmd implements Command<List<LockedExternalTask>> 
       @Override
       public OptimisticLockingResult failedOperation(DbOperation operation) {
 
-        if (operation instanceof DbEntityOperation) {
-          DbEntityOperation dbEntityOperation = (DbEntityOperation) operation;
+        if (operation instanceof DbEntityOperation dbEntityOperation) {
           DbEntity dbEntity = dbEntityOperation.getEntity();
 
           boolean failedOperationEntityInList = false;

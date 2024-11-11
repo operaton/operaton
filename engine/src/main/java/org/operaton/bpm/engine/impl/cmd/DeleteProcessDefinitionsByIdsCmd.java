@@ -204,9 +204,9 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
 
       List<Deployer> deployers = configuration.getDeployers();
       for (Deployer deployer : deployers) {
-        if (deployer instanceof BpmnDeployer) {
-          ((BpmnDeployer) deployer).addEventSubscriptions(newLatestProcessDefinition);
-          ((BpmnDeployer) deployer).addTimerDeclarations(newLatestProcessDefinition);
+        if (deployer instanceof BpmnDeployer bpmnDeployer) {
+          bpmnDeployer.addEventSubscriptions(newLatestProcessDefinition);
+          bpmnDeployer.addTimerDeclarations(newLatestProcessDefinition);
         }
       }
     }

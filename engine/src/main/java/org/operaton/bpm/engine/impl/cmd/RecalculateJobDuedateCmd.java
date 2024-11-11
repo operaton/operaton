@@ -157,8 +157,8 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
       Map<String, TimerDeclarationImpl> activityTimeouts = timeoutDeclarations.get(job.getActivityId());
       if (activityTimeouts != null && !activityTimeouts.isEmpty()) {
         JobHandlerConfiguration jobHandlerConfiguration = job.getJobHandlerConfiguration();
-        if (jobHandlerConfiguration instanceof TimerJobConfiguration) {
-          return activityTimeouts.get(((TimerJobConfiguration) jobHandlerConfiguration).getTimerElementSecondaryKey());
+        if (jobHandlerConfiguration instanceof TimerJobConfiguration timerJobConfiguration) {
+          return activityTimeouts.get(timerJobConfiguration.getTimerElementSecondaryKey());
         }
       }
     }

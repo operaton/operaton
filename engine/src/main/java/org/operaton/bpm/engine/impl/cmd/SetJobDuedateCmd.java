@@ -65,9 +65,9 @@ public class SetJobDuedateCmd implements Command<Void>, Serializable {
           Collections.singletonList(new PropertyChange("duedate", job.getDuedate(), newDuedate)));
 
       // for timer jobs cascade due date changes
-      if (cascade && newDuedate != null && job instanceof TimerEntity) {
+      if (cascade && newDuedate != null && job instanceof TimerEntity timerEntity) {
         long offset = newDuedate.getTime() - job.getDuedate().getTime();
-        ((TimerEntity) job).setRepeatOffset(((TimerEntity) job).getRepeatOffset() + offset);
+        timerEntity.setRepeatOffset(timerEntity.getRepeatOffset() + offset);
       }
 
       job.setDuedate(newDuedate);

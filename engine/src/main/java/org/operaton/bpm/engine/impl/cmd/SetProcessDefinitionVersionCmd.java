@@ -113,8 +113,8 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
 
     DeploymentCache deploymentCache = configuration.getDeploymentCache();
     ProcessDefinitionEntity currentProcessDefinition;
-    if (currentProcessDefinitionImpl instanceof ProcessDefinitionEntity) {
-      currentProcessDefinition = (ProcessDefinitionEntity) currentProcessDefinitionImpl;
+    if (currentProcessDefinitionImpl instanceof ProcessDefinitionEntity processDefinition) {
+      currentProcessDefinition = processDefinition;
     } else {
       currentProcessDefinition = deploymentCache.findDeployedProcessDefinitionById(currentProcessDefinitionImpl.getId());
     }

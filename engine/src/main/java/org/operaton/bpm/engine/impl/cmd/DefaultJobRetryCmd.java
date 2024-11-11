@@ -180,8 +180,8 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
       LOG.exceptionWhileParsingExpression(jobId, e.getCause().getMessage());
     }
 
-    if (value instanceof String) {
-      return (String) value;
+    if (value instanceof String string) {
+      return string;
     }
     else
     {

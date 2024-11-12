@@ -16,27 +16,27 @@
  */
 package org.operaton.bpm.model.dmn.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.test.GetModelElementTypeRule;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
 
-public class GetDmnModelElementTypeRule extends TestWatcher implements GetModelElementTypeRule {
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class GetDmnModelElementTypeRule implements GetModelElementTypeRule, BeforeAllCallback {
 
   private ModelInstance modelInstance;
   private Model model;
   private ModelElementType modelElementType;
 
   @Override
-  @SuppressWarnings("unchecked")
-  protected void starting(Description description) {
-    String className = description.getClassName();
+  public void beforeAll(ExtensionContext context) {
+    String className = context.getTestClass().orElseThrow().getName();
     assertThat(className).endsWith("Test");
     className = className.substring(0, className.length() - "Test".length());
     Class<? extends ModelElementInstance> instanceClass;

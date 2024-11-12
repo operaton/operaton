@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.model.xml.testmodel;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -42,8 +40,8 @@ public class TestModelInstanceTest {
     ModelInstance cloneInstance = modelInstance.clone();
     getFirstAnimal(cloneInstance).setId("TestId2");
 
-    assertThat(getFirstAnimal(modelInstance).getId(), is(equalTo("TestId")));
-    assertThat(getFirstAnimal(cloneInstance).getId(), is(equalTo("TestId2")));
+    assertThat(getFirstAnimal(modelInstance).getId()).isEqualTo("TestId");
+    assertThat(getFirstAnimal(cloneInstance).getId()).isEqualTo("TestId2");
   }
 
   protected Animal getFirstAnimal(ModelInstance modelInstance) {

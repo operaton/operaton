@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.type.attribute;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.model.xml.ModelInstance;
-import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.impl.type.attribute.AttributeImpl;
 import org.operaton.bpm.model.xml.testmodel.Gender;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
@@ -29,8 +30,7 @@ import org.operaton.bpm.model.xml.testmodel.instance.Animals;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 
@@ -44,17 +44,11 @@ public class AttributeTest extends TestModelTest {
   private Attribute<String> nameAttribute;
   private Attribute<String> fatherAttribute;
 
-  public AttributeTest(String testName, ModelInstance testModelInstance, AbstractModelParser modelParser) {
-    super(testName, testModelInstance, modelParser);
+  static Stream<Arguments> models() {
+    return Stream.of(createModel(), parseModel(AnimalTest.class)).map(Arguments::of);
   }
 
-  @Parameters(name="Model {0}")
-  public static Collection<Object[]> models() {
-    Object[][] models = {createModel(), parseModel(AnimalTest.class)};
-    return Arrays.asList(models);
-  }
-
-  public static Object[] createModel() {
+  public static TestModelArgs createModel() {
     TestModelParser modelParser = new TestModelParser();
     ModelInstance modelInstance = modelParser.getEmptyModel();
 
@@ -63,13 +57,12 @@ public class AttributeTest extends TestModelTest {
 
     createBird(modelInstance, "tweety", Gender.Female);
 
-    return new Object[]{"created", modelInstance, modelParser};
+    return new TestModelArgs("created", modelInstance, modelParser);
   }
 
-  @BeforeEach
-  @SuppressWarnings("unchecked")
-  public void copyModelInstance() {
-    modelInstance = cloneModelInstance();
+  @Override
+  protected void init(TestModelArgs args) {
+    super.init(args);
 
     tweety = modelInstance.getModelElementById("tweety");
 
@@ -79,8 +72,10 @@ public class AttributeTest extends TestModelTest {
     fatherAttribute = (Attribute<String>) animalType.getAttribute("father");
   }
 
-  @Test
-  public void testOwningElementType() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void testOwningElementType(TestModelArgs args) {
+    init(args);
     ModelElementType animalType = modelInstance.getModel().getType(Animal.class);
 
     assertThat(idAttribute).hasOwningElementType(animalType);
@@ -88,22 +83,27 @@ public class AttributeTest extends TestModelTest {
     assertThat(fatherAttribute).hasOwningElementType(animalType);
   }
 
-  @Test
-  public void testSetAttributeValue() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void testSetAttributeValue(TestModelArgs args) {
+    init(args);
     String identifier = "new-" + tweety.getId();
     idAttribute.setValue(tweety, identifier);
     assertThat(idAttribute).hasValue(tweety, identifier);
   }
 
-  @Test
-  public void testSetAttributeValueWithoutUpdateReference() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void testSetAttributeValueWithoutUpdateReference(TestModelArgs args) {
+    init(args);
     String identifier = "new-" + tweety.getId();
     idAttribute.setValue(tweety, identifier, false);
     assertThat(idAttribute).hasValue(tweety, identifier);
   }
 
-  @Test
-  public void testSetDefaultValue() {
+  @MethodSource("models")
+  void testSetDefaultValue(TestModelArgs args) {
+    init(args);
     String defaultName = "default-name";
     assertThat(tweety.getName()).isNull();
     assertThat(nameAttribute).hasNoDefaultValue();
@@ -121,8 +121,9 @@ public class AttributeTest extends TestModelTest {
     assertThat(nameAttribute).hasNoDefaultValue();
   }
 
-  @Test
-  public void testRequired() {
+  @MethodSource("models")
+  void testRequired(TestModelArgs args) {
+    init(args);
     tweety.removeAttribute("name");
     assertThat(nameAttribute).isOptional();
 
@@ -132,8 +133,9 @@ public class AttributeTest extends TestModelTest {
     ((AttributeImpl<String>) nameAttribute).setRequired(false);
   }
 
-  @Test
-  public void testSetNamespaceUri() {
+  @MethodSource("models")
+  void testSetNamespaceUri(TestModelArgs args) {
+    init(args);
     String testNamespace = "http://operaton.org/test";
 
     ((AttributeImpl<String>) idAttribute).setNamespaceUri(testNamespace);
@@ -143,22 +145,25 @@ public class AttributeTest extends TestModelTest {
     assertThat(idAttribute).hasNoNamespaceUri();
   }
 
-  @Test
-  public void testIdAttribute() {
+  @MethodSource("models")
+  void testIdAttribute(TestModelArgs args) {
+    init(args);
     assertThat(idAttribute).isIdAttribute();
     assertThat(nameAttribute).isNotIdAttribute();
     assertThat(fatherAttribute).isNotIdAttribute();
   }
 
-  @Test
-  public void testAttributeName() {
+  @MethodSource("models")
+  void testAttributeName(TestModelArgs args) {
+    init(args);
     assertThat(idAttribute).hasAttributeName("id");
     assertThat(nameAttribute).hasAttributeName("name");
     assertThat(fatherAttribute).hasAttributeName("father");
   }
 
-  @Test
-  public void testRemoveAttribute() {
+  @MethodSource("models")
+  void testRemoveAttribute(TestModelArgs args) {
+    init(args);
     tweety.setName("test");
     assertThat(tweety.getName()).isNotNull();
     assertThat(nameAttribute).hasValue(tweety);
@@ -168,15 +173,17 @@ public class AttributeTest extends TestModelTest {
     assertThat(nameAttribute).hasNoValue(tweety);
   }
 
-  @Test
-  public void testIncomingReferences() {
+  @MethodSource("models")
+  void testIncomingReferences(TestModelArgs args) {
+    init(args);
     assertThat(idAttribute).hasIncomingReferences();
     assertThat(nameAttribute).hasNoIncomingReferences();
     assertThat(fatherAttribute).hasNoIncomingReferences();
   }
 
-  @Test
-  public void testOutgoingReferences() {
+  @MethodSource("models")
+  void testOutgoingReferences(TestModelArgs args) {
+    init(args);
     assertThat(idAttribute).hasNoOutgoingReferences();
     assertThat(nameAttribute).hasNoOutgoingReferences();
     assertThat(fatherAttribute).hasOutgoingReferences();

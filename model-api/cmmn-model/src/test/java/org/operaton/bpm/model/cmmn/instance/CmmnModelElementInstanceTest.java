@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
+
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
 import org.operaton.bpm.model.cmmn.util.GetCmmnModelElementTypeRule;
 import org.operaton.bpm.model.xml.test.AbstractModelElementInstanceTest;
-import org.junit.ClassRule;
 
 /**
  * @author Roman Smirnov
@@ -27,7 +28,7 @@ import org.junit.ClassRule;
  */
 public abstract class CmmnModelElementInstanceTest extends AbstractModelElementInstanceTest {
 
-  @ClassRule
+  @RegisterExtension
   public static final GetCmmnModelElementTypeRule modelElementTypeRule = new GetCmmnModelElementTypeRule();
 
   @BeforeAll

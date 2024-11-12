@@ -149,9 +149,9 @@ public class OperatonExtensionsTest {
   public void initOperatonExtensionsTest(String namespace, BpmnModelInstance modelInstance) {
     this.namespace = namespace;
     this.originalModelInstance = modelInstance;
+    setUp();
   }
 
-  @BeforeEach
   public void setUp(){
     modelInstance = originalModelInstance.clone();
     process = modelInstance.getModelElementById(PROCESS_ID);
@@ -705,7 +705,7 @@ public class OperatonExtensionsTest {
     assertThat(script.getOperatonResource()).isNull();
     assertThat(script.getTextContent()).isEqualTo("println 'Hello World'");
 
-    OperatonScript newScript = modelInstance.newInstance(OperatonScript.class);
+    OperatonScript newScript = this.modelInstance.newInstance(OperatonScript.class);
     newScript.setOperatonScriptFormat("groovy");
     newScript.setOperatonResource("test.groovy");
     sequenceFlowListener.setOperatonScript(newScript);
@@ -933,7 +933,7 @@ public class OperatonExtensionsTest {
     assertThat(script.getOperatonResource()).isEqualTo("test.groovy");
     assertThat(script.getTextContent()).isEmpty();
 
-    OperatonScript newScript = modelInstance.newInstance(OperatonScript.class);
+    OperatonScript newScript = this.modelInstance.newInstance(OperatonScript.class);
     newScript.setOperatonScriptFormat("groovy");
     newScript.setTextContent("println 'Hello World'");
     taskListener.setOperatonScript(newScript);
@@ -1072,7 +1072,7 @@ public class OperatonExtensionsTest {
     assertThat(inputParameter.getTextContent()).isEqualTo("world");
 
     // add new one
-    inputParameter = modelInstance.newInstance(OperatonInputParameter.class);
+    inputParameter = this.modelInstance.newInstance(OperatonInputParameter.class);
     inputParameter.setOperatonName("abc");
     inputParameter.setTextContent("def");
     serviceTask.getExtensionElements().getElementsQuery().filterByType(OperatonInputOutput.class).singleResult()
@@ -1126,13 +1126,13 @@ public class OperatonExtensionsTest {
       assertThat(values.getTextContent()).isIn("a", "b", "c");
     }
 
-    list = modelInstance.newInstance(OperatonList.class);
+    list = this.modelInstance.newInstance(OperatonList.class);
     for (int i = 0; i < 4; i++) {
-      OperatonValue value = modelInstance.newInstance(OperatonValue.class);
+      OperatonValue value = this.modelInstance.newInstance(OperatonValue.class);
       value.setTextContent("test");
       list.getValues().add(value);
     }
-    Collection<OperatonValue> testValues = Arrays.asList(modelInstance.newInstance(OperatonValue.class), modelInstance.newInstance(OperatonValue.class));
+    Collection<OperatonValue> testValues = Arrays.asList(this.modelInstance.newInstance(OperatonValue.class), this.modelInstance.newInstance(OperatonValue.class));
     list.getValues().addAll(testValues);
     inputParameter.setValue(list);
 
@@ -1157,19 +1157,19 @@ public class OperatonExtensionsTest {
     // test standard list interactions
     Collection<BpmnModelElementInstance> elements = list.getValues();
 
-    OperatonValue value = modelInstance.newInstance(OperatonValue.class);
+    OperatonValue value = this.modelInstance.newInstance(OperatonValue.class);
     elements.add(value);
 
     List<OperatonValue> newValues = new ArrayList<OperatonValue>();
-    newValues.add(modelInstance.newInstance(OperatonValue.class));
-    newValues.add(modelInstance.newInstance(OperatonValue.class));
+    newValues.add(this.modelInstance.newInstance(OperatonValue.class));
+    newValues.add(this.modelInstance.newInstance(OperatonValue.class));
     elements.addAll(newValues);
     assertThat(elements).hasSize(3);
 
-    assertThat(elements).doesNotContain(modelInstance.newInstance(OperatonValue.class));
-    assertThat(elements.containsAll(Arrays.asList(modelInstance.newInstance(OperatonValue.class)))).isFalse();
+    assertThat(elements).doesNotContain(this.modelInstance.newInstance(OperatonValue.class));
+    assertThat(elements.containsAll(Arrays.asList(this.modelInstance.newInstance(OperatonValue.class)))).isFalse();
 
-    assertThat(elements.remove(modelInstance.newInstance(OperatonValue.class))).isFalse();
+    assertThat(elements.remove(this.modelInstance.newInstance(OperatonValue.class))).isFalse();
     assertThat(elements).hasSize(3);
 
     assertThat(elements.remove(value)).isTrue();
@@ -1178,7 +1178,7 @@ public class OperatonExtensionsTest {
     assertThat(elements.removeAll(newValues)).isTrue();
     assertThat(elements).isEmpty();
 
-    elements.add(modelInstance.newInstance(OperatonValue.class));
+    elements.add(this.modelInstance.newInstance(OperatonValue.class));
     elements.clear();
     assertThat(elements).isEmpty();
 
@@ -1208,8 +1208,8 @@ public class OperatonExtensionsTest {
       }
     }
 
-    map = modelInstance.newInstance(OperatonMap.class);
-    OperatonEntry entry = modelInstance.newInstance(OperatonEntry.class);
+    map = this.modelInstance.newInstance(OperatonMap.class);
+    OperatonEntry entry = this.modelInstance.newInstance(OperatonEntry.class);
     entry.setOperatonKey("test");
     entry.setTextContent("value");
     map.getOperatonEntries().add(entry);
@@ -1222,7 +1222,7 @@ public class OperatonExtensionsTest {
     assertThat(entry.getTextContent()).isEqualTo("value");
 
     Collection<OperatonEntry> entries = map.getOperatonEntries();
-    entries.add(modelInstance.newInstance(OperatonEntry.class));
+    entries.add(this.modelInstance.newInstance(OperatonEntry.class));
     assertThat(entries).hasSize(2);
 
     inputParameter.removeValue();
@@ -1244,7 +1244,7 @@ public class OperatonExtensionsTest {
     assertThat(script.getOperatonResource()).isNull();
     assertThat(script.getTextContent()).isEqualTo("1 + 1");
 
-    script = modelInstance.newInstance(OperatonScript.class);
+    script = this.modelInstance.newInstance(OperatonScript.class);
     script.setOperatonScriptFormat("python");
     script.setOperatonResource("script.py");
 

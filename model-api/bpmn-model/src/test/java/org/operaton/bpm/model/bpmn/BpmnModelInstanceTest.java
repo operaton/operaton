@@ -19,9 +19,7 @@ package org.operaton.bpm.model.bpmn;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.Definitions;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Filip Hrisafov
@@ -40,8 +38,8 @@ public class BpmnModelInstanceTest {
     BpmnModelInstance cloneInstance = modelInstance.clone();
     cloneInstance.getDefinitions().setId("TestId2");
 
-    assertThat(modelInstance.getDefinitions().getId(), is(equalTo("TestId")));
-    assertThat(cloneInstance.getDefinitions().getId(), is(equalTo("TestId2")));
+    assertThat(modelInstance.getDefinitions().getId()).isEqualTo("TestId");
+    assertThat(cloneInstance.getDefinitions().getId()).isEqualTo("TestId2");
   }
 
 }

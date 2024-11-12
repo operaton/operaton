@@ -16,30 +16,28 @@
  */
 package org.operaton.bpm.model.dmn.util;
 
-import java.io.InputStream;
-
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
 
-public class ParseDmnModelRule extends TestWatcher {
+import java.io.InputStream;
+import java.util.Optional;
+
+public class ParseDmnModelRule implements BeforeEachCallback {
 
   protected DmnModelInstance dmnModelInstance;
 
   @Override
-  protected void starting(Description description) {
-
-    DmnModelResource dmnModelResource = description.getAnnotation(DmnModelResource.class);
-
-    if(dmnModelResource != null) {
-
-      String resourcePath = dmnModelResource.resource();
+  public void beforeEach(ExtensionContext context) {
+    Optional<DmnModelResource> dmnModelResource = context.getTestMethod().map(method -> method.getAnnotation(DmnModelResource.class));
+    if (dmnModelResource.isPresent()) {
+      String resourcePath = dmnModelResource.get().resource();
 
       if (resourcePath.isEmpty()) {
-        Class<?> testClass = description.getTestClass();
-        String methodName = description.getMethodName();
+        Class<?> testClass = context.getTestClass().orElseThrow();
+        String methodName = context.getTestMethod().get().getName();
 
         String resourceFolderName = testClass.getName().replaceAll("\\.", "/");
         resourcePath = resourceFolderName + "." + methodName + ".dmn";
@@ -51,9 +49,7 @@ public class ParseDmnModelRule extends TestWatcher {
       } finally {
         IoUtil.closeSilently(resourceAsStream);
       }
-
     }
-
   }
 
   public DmnModelInstance getDmnModel() {

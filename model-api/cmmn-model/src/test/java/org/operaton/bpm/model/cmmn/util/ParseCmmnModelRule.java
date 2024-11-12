@@ -16,32 +16,32 @@
  */
 package org.operaton.bpm.model.cmmn.util;
 
-import java.io.InputStream;
-
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
+
+import java.io.InputStream;
 
 /**
  * @author Daniel Meyer
  * @author Roman Smirnov
  *
  */
-public class ParseCmmnModelRule extends TestWatcher {
+public class ParseCmmnModelRule implements BeforeEachCallback {
 
   protected CmmnModelInstance CmmnModelInstance;
 
   @Override
-  protected void starting(Description description) {
+  public void beforeEach(ExtensionContext context){
 
-    if(description.getAnnotation(CmmnModelResource.class) != null) {
+    if(context.getTestMethod().map(method -> method.getAnnotation(CmmnModelResource.class)).isPresent()) {
 
-      Class<?> testClass = description.getTestClass();
-      String methodName = description.getMethodName();
+      Class<?> testClass = context.getTestClass().orElseThrow();
+      String methodName = context.getTestMethod().get().getName();
 
-      String resourceFolderName = testClass.getName().replaceAll("\\.", "/");
+      String resourceFolderName = testClass.getName().replace(".", "/");
       String cmmnResourceName = resourceFolderName + "." + methodName + ".cmmn";
 
       InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(cmmnResourceName);
@@ -50,9 +50,7 @@ public class ParseCmmnModelRule extends TestWatcher {
       } finally {
         IoUtil.closeSilently(resourceAsStream);
       }
-
     }
-
   }
 
   public CmmnModelInstance getCmmnModel() {

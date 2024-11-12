@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.bpmn.builder;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -62,6 +63,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import org.assertj.core.api.Assertions;
 import org.operaton.bpm.model.bpmn.AssociationDirection;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelException;
@@ -2634,7 +2637,7 @@ public class ProcessBuilderTest {
 
   @Test
   public void testOnlyOneCompensateBoundaryEventAllowed() {
-    Throwable exception = assertThrows(BpmnModelException.class, () -> {
+    assertThatThrownBy(() -> {
       // given
       UserTaskBuilder builder = Bpmn.createProcess()
         .startEvent()
@@ -2646,25 +2649,25 @@ public class ProcessBuilderTest {
 
       // when
       builder.userTask();
-    });
-    assertTrue(exception.getMessage().contains("Only single compensation handler allowed. Call compensationDone() to continue main flow."));
+    }).isInstanceOf(BpmnModelException.class)
+            .hasMessageContaining("Only single compensation handler allowed. Call compensationDone() to continue main flow.");
   }
 
   @Test
   public void testInvalidCompensationStartCall() {
-    Throwable exception = assertThrows(BpmnModelException.class, () -> {
+    assertThatThrownBy(() -> {
       // given
       StartEventBuilder builder = Bpmn.createProcess().startEvent();
 
       // when
       builder.compensationStart();
-    });
-    assertTrue(exception.getMessage().contains("Compensation can only be started on a boundary event with a compensation event definition"));
+    }).isInstanceOf(BpmnModelException.class)
+                    .hasMessageContaining("Compensation can only be started on a boundary event with a compensation event definition");
   }
 
   @Test
   public void testInvalidCompensationDoneCall() {
-    Throwable exception = assertThrows(BpmnModelException.class, () -> {
+    assertThatThrownBy(() -> {
       // given
       AbstractFlowNodeBuilder builder = Bpmn.createProcess()
         .startEvent()
@@ -2674,8 +2677,8 @@ public class ProcessBuilderTest {
 
       // when
       builder.compensationDone();
-    });
-    assertTrue(exception.getMessage().contains("No compensation in progress. Call compensationStart() first."));
+    }).isInstanceOf(BpmnModelException.class)
+            .hasMessageContaining("No compensation in progress. Call compensationStart() first.");
   }
 
   @Test

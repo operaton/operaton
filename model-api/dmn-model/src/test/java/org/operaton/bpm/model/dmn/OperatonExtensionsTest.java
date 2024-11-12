@@ -42,12 +42,7 @@ public class OperatonExtensionsTest {
 
   public void initOperatonExtensionsTest(DmnModelInstance originalModelInstance) {
     this.originalModelInstance = originalModelInstance;
-  }
-
-  @BeforeEach
-  public void parseModel() {
-    modelInstance = originalModelInstance.clone();
-
+    this.modelInstance = originalModelInstance.clone();
   }
 
   @MethodSource("parameters")

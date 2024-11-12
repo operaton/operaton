@@ -4,7 +4,6 @@
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
-    <relativePath>../</relativePath>
     <version>1.0.0-beta-2</version>
   </parent>
 
@@ -19,37 +18,12 @@
       ${operaton.osgi.export.pkg};${operaton.osgi.version};-noimport:=true
     </operaton.osgi.export>
   </properties>
-  <dependencies>
 
+  <dependencies>
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>
       <artifactId>operaton-xml-model</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-archunit</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
-				</exclusion>
-			</exclusions>
-    </dependency>
-
   </dependencies>
 
   <build>

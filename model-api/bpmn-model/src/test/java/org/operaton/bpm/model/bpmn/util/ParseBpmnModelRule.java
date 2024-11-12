@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.util;
 
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
 
 import java.io.InputStream;
 
@@ -28,19 +28,19 @@ import java.io.InputStream;
  * @author Daniel Meyer
  *
  */
-public class ParseBpmnModelRule extends TestWatcher {
+public class ParseBpmnModelRule implements BeforeEachCallback {
 
   protected BpmnModelInstance bpmnModelInstance;
 
   @Override
-  protected void starting(Description description) {
+  public void beforeEach(ExtensionContext context) {
 
-    if(description.getAnnotation(BpmnModelResource.class) != null) {
+    if(context.getTestMethod().orElseThrow().getAnnotation(BpmnModelResource.class) != null) {
 
-      Class<?> testClass = description.getTestClass();
-      String methodName = description.getMethodName();
+      Class<?> testClass = context.getTestClass().orElseThrow();
+      String methodName = context.getTestMethod().orElseThrow().getName();
 
-      String resourceFolderName = testClass.getName().replaceAll("\\.", "/");
+      String resourceFolderName = testClass.getName().replace(".", "/");
       String bpmnResourceName = resourceFolderName + "." + methodName + ".bpmn";
 
       InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(bpmnResourceName);
@@ -49,9 +49,7 @@ public class ParseBpmnModelRule extends TestWatcher {
       } finally {
         IoUtil.closeSilently(resourceAsStream);
       }
-
     }
-
   }
 
   public BpmnModelInstance getBpmnModel() {

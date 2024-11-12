@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.model.cmmn.util.ParseCmmnModelRule;
-import org.junit.Rule;
 
 /**
  * @author Roman Smirnov
@@ -25,7 +26,7 @@ import org.junit.Rule;
  */
 public abstract class CmmnModelTest {
 
-  @Rule
+  @RegisterExtension
   public final ParseCmmnModelRule parseCmmnModelRule = new ParseCmmnModelRule();
 
   protected CmmnModelInstance cmmnModelInstance;

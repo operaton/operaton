@@ -4,7 +4,6 @@
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
-    <relativePath>../</relativePath>
     <version>1.0.0-beta-2</version>
   </parent>
 
@@ -16,22 +15,18 @@
     <operaton.artifact>org.operaton.bpm.model.xml</operaton.artifact>
     <operaton.osgi.import.additional>
       org.assertj.*;resolution:=optional,
-      org.junit.*;resolution:=optional
+      org.junit.jupiter.api.*;resolution:=optional
     </operaton.osgi.import.additional>
   </properties>
+
   <dependencies>
-
     <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <!-- Required for AbstractModelElementInstanceTest -->
       <scope>provided</scope>
+      <optional>true</optional>
     </dependency>
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
   </dependencies>
 
   <build>

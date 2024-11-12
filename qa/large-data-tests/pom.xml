@@ -77,7 +77,18 @@
         </includes>
       </testResource>
     </testResources>
-   </build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 
   <profiles>
     <profile>
@@ -134,6 +145,5 @@
       </properties>
     </profile>
   </profiles>
-
 
 </project>

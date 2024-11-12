@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.util.BpmnModelResource;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Collection;
 
@@ -37,7 +36,7 @@ public class ReferenceTest extends BpmnModelTest {
   private MessageEventDefinition messageEventDefinition;
   private StartEvent startEvent;
 
-  @Before
+  @BeforeEach
   public void createModel() {
     testBpmnModelInstance = Bpmn.createEmptyModel();
     Definitions definitions = testBpmnModelInstance.newInstance(Definitions.class);

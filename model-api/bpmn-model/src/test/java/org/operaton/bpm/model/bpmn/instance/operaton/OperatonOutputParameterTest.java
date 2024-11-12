@@ -18,12 +18,12 @@ package org.operaton.bpm.model.bpmn.instance.operaton;
 
 import java.util.Arrays;
 import java.util.Collection;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
-import org.junit.Ignore;
-import org.junit.Test;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
@@ -44,7 +44,7 @@ public class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
     );
   }
 
-  @Ignore("Test ignored. CAM-9441: Bug fix needed")
+  @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
   public void testOutputParameterScriptChildAssignment() {
     try {
@@ -61,7 +61,7 @@ public class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
     }
   }
 
-  @Ignore("Test ignored. CAM-9441: Bug fix needed")
+  @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
   public void testOutputParameterListChildAssignment() {
     try {
@@ -76,7 +76,7 @@ public class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
     }
   }
 
-  @Ignore("Test ignored. CAM-9441: Bug fix needed")
+  @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
   public void testOutputParameterMapChildAssignment() {
     try {

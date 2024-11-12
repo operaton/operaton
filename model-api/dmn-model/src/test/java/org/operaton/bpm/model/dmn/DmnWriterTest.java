@@ -18,11 +18,11 @@ package org.operaton.bpm.model.dmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.dmn.instance.Decision;
 import org.operaton.bpm.model.dmn.instance.DecisionTable;
 import org.operaton.bpm.model.dmn.instance.InputEntry;
 import org.operaton.bpm.model.dmn.instance.Rule;
-import org.junit.Test;
 
 public class DmnWriterTest extends DmnModelTest {
 

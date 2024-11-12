@@ -18,13 +18,13 @@ package org.operaton.bpm.model.xml.testmodel;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.testmodel.instance.Animal;
 import org.operaton.bpm.model.xml.testmodel.instance.Animals;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
-import org.junit.Test;
 
 public class TestModelInstanceTest {
 

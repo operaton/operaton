@@ -20,7 +20,7 @@ import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
 import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.testmodel.instance.*;
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -82,7 +82,7 @@ public abstract class TestModelTest {
     return egg;
   }
 
-  @After
+  @AfterEach
   public void validateModel() {
     modelParser.validateModel(modelInstance.getDocument());
   }

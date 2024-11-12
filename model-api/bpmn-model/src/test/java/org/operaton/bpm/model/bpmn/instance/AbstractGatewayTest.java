@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.GatewayDirection;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.junit.Before;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -51,7 +51,7 @@ public abstract class AbstractGatewayTest<G extends Gateway> extends BpmnModelEl
     );
   }
 
-  @Before
+  @BeforeEach
   @SuppressWarnings("unchecked")
   public void getGateway() {
     InputStream inputStream = ReflectUtil.getResourceAsStream("org/operaton/bpm/model/bpmn/GatewaysTest.xml");

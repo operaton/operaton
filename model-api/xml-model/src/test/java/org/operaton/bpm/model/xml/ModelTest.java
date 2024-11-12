@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.testmodel.TestModel;
 import org.operaton.bpm.model.xml.testmodel.instance.*;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Collection;
 
@@ -34,7 +33,7 @@ public class ModelTest {
 
   private Model model;
 
-  @Before
+  @BeforeEach
   public void createModel() {
     model = TestModel.getTestModel();
   }

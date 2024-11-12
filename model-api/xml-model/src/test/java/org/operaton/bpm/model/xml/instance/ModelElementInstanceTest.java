@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.instance;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.testmodel.Gender;
@@ -24,15 +25,12 @@ import org.operaton.bpm.model.xml.testmodel.TestModelTest;
 import org.operaton.bpm.model.xml.testmodel.instance.Animals;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Daniel Meyer
@@ -75,7 +73,7 @@ public class ModelElementInstanceTest extends TestModelTest {
     return new Object[]{"created", modelInstance, modelParser};
   }
 
-  @Before
+  @BeforeEach
   public void copyModelInstance() {
     modelInstance = cloneModelInstance();
 

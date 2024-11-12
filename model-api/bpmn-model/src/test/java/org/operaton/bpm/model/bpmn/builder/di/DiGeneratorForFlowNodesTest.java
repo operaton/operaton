@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.bpmn.builder.di;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.BOUNDARY_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.CALL_ACTIVITY_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.CATCH_ID;
@@ -30,27 +31,23 @@ import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TASK_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_CONDITION;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TRANSACTION_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnDiagram;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
-import org.junit.After;
-import org.junit.Test;
 
 public class DiGeneratorForFlowNodesTest {
 
   private BpmnModelInstance instance;
 
-  @After
+  @AfterEach
   public void validateModel() throws IOException {
     if (instance != null) {
       Bpmn.validateModel(instance);

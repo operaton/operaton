@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.type.child;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.UnsupportedModelOperationException;
 import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
@@ -26,16 +27,13 @@ import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.testmodel.TestModelTest;
 import org.operaton.bpm.model.xml.testmodel.instance.*;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
-import static org.junit.Assert.fail;
-import static org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Sebastian Menski
@@ -80,7 +78,7 @@ public class ChildElementCollectionTest extends TestModelTest {
     return new Object[]{"created", modelInstance, modelParser};
   }
 
-  @Before
+  @BeforeEach
   public void copyModelInstance() {
     modelInstance = cloneModelInstance();
 

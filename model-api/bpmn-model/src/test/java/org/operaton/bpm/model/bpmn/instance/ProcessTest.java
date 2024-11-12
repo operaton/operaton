@@ -21,11 +21,12 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.BpmnTestConstants;
 
 import org.operaton.bpm.model.bpmn.ProcessType;
 import org.operaton.bpm.model.bpmn.impl.instance.Supports;
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski

@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.cmmn.instance.Case;
 import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
@@ -27,7 +28,6 @@ import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.PlanItemDefinition;
 import org.operaton.bpm.model.cmmn.util.CmmnModelResource;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov

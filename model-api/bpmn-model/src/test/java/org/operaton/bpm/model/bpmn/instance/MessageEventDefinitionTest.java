@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.impl.instance.OperationRef;
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collection;

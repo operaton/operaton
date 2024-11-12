@@ -23,7 +23,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.model.dmn.instance.BusinessContextElement;
 import org.operaton.bpm.model.dmn.instance.Decision;
 import org.operaton.bpm.model.dmn.instance.DecisionTable;
@@ -41,19 +42,14 @@ import org.operaton.bpm.model.dmn.instance.OutputEntry;
 import org.operaton.bpm.model.dmn.instance.OutputValues;
 import org.operaton.bpm.model.dmn.instance.Rule;
 import org.operaton.bpm.model.dmn.instance.Text;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.BeforeEach;
 
-@RunWith(Parameterized.class)
 public class ExampleCompatibilityTest extends DmnModelTest {
 
   public static final String EXAMPLE_DMN = "org/operaton/bpm/model/dmn/Example.dmn";
 
-  private final DmnModelInstance originalModelInstance;
+  private DmnModelInstance originalModelInstance;
 
-   @Parameterized.Parameters(name="Namespace: {0}")
    public static Collection<Object[]> parameters(){
      return Arrays.asList(new Object[][]{
          {Dmn.readModelFromStream(ExampleCompatibilityTest.class.getResourceAsStream("Example.dmn"))},
@@ -70,17 +66,20 @@ public class ExampleCompatibilityTest extends DmnModelTest {
      });
    }
 
-  public ExampleCompatibilityTest(DmnModelInstance originalModelInstance) {
+  public void initExampleCompatibilityTest(DmnModelInstance originalModelInstance) {
     this.originalModelInstance = originalModelInstance;
   }
 
-  @Before
+  @BeforeEach
   public void parseModel() {
     modelInstance = originalModelInstance.clone();
   }
 
-  @Test
-  public void shouldGetElements() {
+  @MethodSource("parameters")
+  @ParameterizedTest(name = "Namespace: {0}")
+  public void shouldGetElements(DmnModelInstance originalModelInstance) {
+
+    initExampleCompatibilityTest(originalModelInstance);
 
     // Definitions
     Definitions definitions = modelInstance.getDefinitions();
@@ -219,8 +218,10 @@ public class ExampleCompatibilityTest extends DmnModelTest {
     assertThat(businessContextElements).isEmpty();
   }
 
-  @Test
-  public void shouldWriteElements() throws Exception {
+  @MethodSource("parameters")
+  @ParameterizedTest(name = "Namespace: {0}")
+  public void shouldWriteElements(DmnModelInstance originalModelInstance) throws Exception {
+    initExampleCompatibilityTest(originalModelInstance);
     modelInstance = Dmn.createEmptyModel();
 
     // Definitions

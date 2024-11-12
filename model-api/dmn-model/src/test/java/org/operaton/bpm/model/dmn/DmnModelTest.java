@@ -23,7 +23,8 @@ import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.io.TempDir;
 import org.operaton.bpm.model.dmn.instance.DmnElement;
 import org.operaton.bpm.model.dmn.instance.DmnModelElementInstance;
 import org.operaton.bpm.model.dmn.instance.NamedElement;
@@ -31,9 +32,7 @@ import org.operaton.bpm.model.dmn.util.Java9CDataWhitespaceFilter;
 import org.operaton.bpm.model.dmn.util.ParseDmnModelRule;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
 import org.w3c.dom.Document;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.Diff;
@@ -45,12 +44,12 @@ public abstract class DmnModelTest {
   @Rule
   public final ParseDmnModelRule parseDmnModelRule = new ParseDmnModelRule();
 
-  @Rule
-  public TemporaryFolder tmpFolder = new TemporaryFolder();
+  @TempDir
+  public File tmpFolder;
 
   protected DmnModelInstance modelInstance;
 
-  @Before
+  @BeforeEach
   public void setup() {
     modelInstance = parseDmnModelRule.getDmnModel();
   }
@@ -91,7 +90,7 @@ public abstract class DmnModelTest {
   }
 
   protected void assertModelEqualsFile(String expectedPath) throws Exception {
-    File actualFile = tmpFolder.newFile();
+    File actualFile = File.createTempFile("junit", null, tmpFolder);
     Dmn.writeModelToFile(actualFile, modelInstance);
 
     File expectedFile = ReflectUtil.getResourceAsFile(expectedPath);

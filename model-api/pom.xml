@@ -33,5 +33,17 @@
     <module>dmn-model</module>
     <module>cmmn-model</module>
   </modules>
+	<dependencies>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.operaton.bpm</groupId>
+			<artifactId>operaton-bpm-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 </project>

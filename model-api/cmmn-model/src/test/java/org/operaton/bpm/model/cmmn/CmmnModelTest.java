@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.model.cmmn.util.ParseCmmnModelRule;
-import org.junit.Before;
 import org.junit.Rule;
 
 /**
@@ -31,7 +30,7 @@ public abstract class CmmnModelTest {
 
   protected CmmnModelInstance cmmnModelInstance;
 
-  @Before
+  @BeforeEach
   public void setup() {
     cmmnModelInstance = parseCmmnModelRule.getCmmnModel();
   }

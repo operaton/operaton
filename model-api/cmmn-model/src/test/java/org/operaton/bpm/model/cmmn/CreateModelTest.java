@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.cmmn.instance.Case;
 import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
 import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstance;
@@ -23,9 +25,6 @@ import org.operaton.bpm.model.cmmn.instance.Definitions;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
 import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.Stage;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski
@@ -36,7 +35,7 @@ public class CreateModelTest {
   public Definitions definitions;
   public Process process;
 
-  @Before
+  @BeforeEach
   public void createEmptyModel() {
     modelInstance = Cmmn.createEmptyModel();
     definitions = modelInstance.newInstance(Definitions.class);
@@ -90,7 +89,7 @@ public class CreateModelTest {
     planItem.setDefinition(humanTask);
   }
 
-  @After
+  @AfterEach
   public void validateModel() {
     Cmmn.validateModel(modelInstance);
   }

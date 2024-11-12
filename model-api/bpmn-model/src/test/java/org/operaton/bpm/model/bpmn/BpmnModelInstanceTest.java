@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.model.bpmn;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.Definitions;
-import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author Filip Hrisafov

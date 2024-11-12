@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.model.bpmn.util.ParseBpmnModelRule;
-import org.junit.Before;
 import org.junit.Rule;
 
 /**
@@ -31,7 +30,7 @@ public class BpmnModelTest {
 
   protected BpmnModelInstance bpmnModelInstance;
 
-  @Before
+  @BeforeEach
   public void setup() {
     bpmnModelInstance = parseBpmnModelRule.getBpmnModel();
   }

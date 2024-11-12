@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
+import org.junit.jupiter.api.BeforeAll;
 import org.operaton.bpm.model.bpmn.impl.BpmnModelConstants;
 import org.operaton.bpm.model.bpmn.util.GetBpmnModelElementTypeRule;
 import org.operaton.bpm.model.xml.test.AbstractModelElementInstanceTest;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 /**
@@ -30,7 +29,7 @@ public abstract class BpmnModelElementInstanceTest extends AbstractModelElementI
   @ClassRule
   public static final GetBpmnModelElementTypeRule modelElementTypeRule = new GetBpmnModelElementTypeRule();
 
-  @BeforeClass
+  @BeforeAll
   public static void initModelElementType() {
     initModelElementType(modelElementTypeRule);
   }

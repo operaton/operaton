@@ -18,6 +18,7 @@ package org.operaton.bpm.model.dmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.dmn.instance.Decision;
 import org.operaton.bpm.model.dmn.instance.DecisionTable;
 import org.operaton.bpm.model.dmn.instance.Definitions;
@@ -31,7 +32,6 @@ import org.operaton.bpm.model.dmn.instance.OutputValues;
 import org.operaton.bpm.model.dmn.instance.Rule;
 import org.operaton.bpm.model.dmn.instance.Text;
 import org.operaton.bpm.model.dmn.util.DmnModelResource;
-import org.junit.Test;
 
 public class ExpressionLanguageTest extends DmnModelTest {
 

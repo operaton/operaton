@@ -18,6 +18,8 @@ package org.operaton.bpm.model.bpmn.builder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.BOUNDARY_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.CALL_ACTIVITY_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.CATCH_ID;
@@ -55,7 +57,6 @@ import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_VERSION_TAG;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TRANSACTION_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
-import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -124,11 +125,9 @@ import org.operaton.bpm.model.bpmn.instance.operaton.OperatonTaskListener;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.After;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 
 /**
@@ -142,16 +141,13 @@ public class ProcessBuilderTest {
 
   public static final String FAILED_JOB_RETRY_TIME_CYCLE = "R5/PT1M";
 
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
-
   private BpmnModelInstance modelInstance;
   private static ModelElementType taskType;
   private static ModelElementType gatewayType;
   private static ModelElementType eventType;
   private static ModelElementType processType;
 
-  @BeforeClass
+  @BeforeAll
   public static void getElementTypes() {
     Model model = Bpmn.createEmptyModel().getModel();
     taskType = model.getType(Task.class);
@@ -160,7 +156,7 @@ public class ProcessBuilderTest {
     processType = model.getType(Process.class);
   }
 
-  @After
+  @AfterEach
   public void validateModel() throws IOException {
     if (modelInstance != null) {
       Bpmn.validateModel(modelInstance);
@@ -2638,51 +2634,48 @@ public class ProcessBuilderTest {
 
   @Test
   public void testOnlyOneCompensateBoundaryEventAllowed() {
-    // given
-    UserTaskBuilder builder = Bpmn.createProcess()
-      .startEvent()
-      .userTask("task")
-      .boundaryEvent("boundary")
-      .compensateEventDefinition().compensateEventDefinitionDone()
-      .compensationStart()
-      .userTask("compensate").name("compensate");
+    Throwable exception = assertThrows(BpmnModelException.class, () -> {
+      // given
+      UserTaskBuilder builder = Bpmn.createProcess()
+        .startEvent()
+        .userTask("task")
+        .boundaryEvent("boundary")
+        .compensateEventDefinition().compensateEventDefinitionDone()
+        .compensationStart()
+        .userTask("compensate").name("compensate");
 
-    // then
-    thrown.expect(BpmnModelException.class);
-    thrown.expectMessage("Only single compensation handler allowed. Call compensationDone() to continue main flow.");
-
-    // when
-    builder.userTask();
+      // when
+      builder.userTask();
+    });
+    assertTrue(exception.getMessage().contains("Only single compensation handler allowed. Call compensationDone() to continue main flow."));
   }
 
   @Test
   public void testInvalidCompensationStartCall() {
-    // given
-    StartEventBuilder builder = Bpmn.createProcess().startEvent();
+    Throwable exception = assertThrows(BpmnModelException.class, () -> {
+      // given
+      StartEventBuilder builder = Bpmn.createProcess().startEvent();
 
-    // then
-    thrown.expect(BpmnModelException.class);
-    thrown.expectMessage("Compensation can only be started on a boundary event with a compensation event definition");
-
-    // when
-    builder.compensationStart();
+      // when
+      builder.compensationStart();
+    });
+    assertTrue(exception.getMessage().contains("Compensation can only be started on a boundary event with a compensation event definition"));
   }
 
   @Test
   public void testInvalidCompensationDoneCall() {
-    // given
-    AbstractFlowNodeBuilder builder = Bpmn.createProcess()
-      .startEvent()
-      .userTask("task")
-      .boundaryEvent("boundary")
-      .compensateEventDefinition().compensateEventDefinitionDone();
+    Throwable exception = assertThrows(BpmnModelException.class, () -> {
+      // given
+      AbstractFlowNodeBuilder builder = Bpmn.createProcess()
+        .startEvent()
+        .userTask("task")
+        .boundaryEvent("boundary")
+        .compensateEventDefinition().compensateEventDefinitionDone();
 
-    // then
-    thrown.expect(BpmnModelException.class);
-    thrown.expectMessage("No compensation in progress. Call compensationStart() first.");
-
-    // when
-    builder.compensationDone();
+      // when
+      builder.compensationDone();
+    });
+    assertTrue(exception.getMessage().contains("No compensation in progress. Call compensationStart() first."));
   }
 
   @Test

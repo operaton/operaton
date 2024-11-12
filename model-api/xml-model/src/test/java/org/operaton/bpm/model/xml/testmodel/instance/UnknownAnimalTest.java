@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -24,17 +26,14 @@ import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
@@ -46,7 +45,7 @@ public class UnknownAnimalTest {
   private ModelElementInstance wanda;
   private ModelElementInstance flipper;
 
-  @Before
+  @BeforeEach
   public void parseModel() {
     modelParser = new TestModelParser();
     String testXml = this.getClass().getSimpleName() + ".xml";
@@ -56,7 +55,7 @@ public class UnknownAnimalTest {
     flipper = modelInstance.getModelElementById("flipper");
   }
 
-  @After
+  @AfterEach
   public void validateModel() {
     DomDocument document = modelInstance.getDocument();
     modelParser.validateModel(document);

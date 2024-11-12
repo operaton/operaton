@@ -139,23 +139,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.spec</groupId>
-      <artifactId>jboss-javaee-web-6.0</artifactId>
-      <type>pom</type>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jboss.spec.javax.xml.bind</groupId>
-          <artifactId>jboss-jaxb-api_2.2_spec</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.jboss.spec.javax.servlet.jsp</groupId>
-          <artifactId>jboss-jsp-api_2.2_spec</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
       <groupId>jakarta.transaction</groupId>
       <artifactId>jakarta.transaction-api</artifactId>
       <scope>provided</scope>
@@ -207,12 +190,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
       <scope>test</scope>
@@ -251,13 +228,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-test-utils-testcontainers</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-library</artifactId>
       <scope>test</scope>
@@ -276,51 +246,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jul-to-slf4j</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.wiremock</groupId>
-      <artifactId>wiremock</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.groovy</groupId>
-      <artifactId>groovy-jsr223</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.python</groupId>
-      <artifactId>jython</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>28.2-jre</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jruby</groupId>
-      <artifactId>jruby-complete</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.graalvm.js</groupId>
-      <artifactId>js</artifactId>
       <scope>test</scope>
     </dependency>
 

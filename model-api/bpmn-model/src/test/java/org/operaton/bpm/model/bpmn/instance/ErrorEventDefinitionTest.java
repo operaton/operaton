@@ -18,9 +18,9 @@ package org.operaton.bpm.model.bpmn.instance;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
-import org.junit.Test;
-
 import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;

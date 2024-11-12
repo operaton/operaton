@@ -18,9 +18,9 @@ package org.operaton.bpm.model.xml.testmodel.instance;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -34,9 +34,9 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.testmodel.Gender;
 import org.operaton.bpm.model.xml.testmodel.TestModelConstants;
 import org.operaton.bpm.model.xml.testmodel.TestModelTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runners.Parameterized.Parameters;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -58,7 +58,7 @@ public class AlternativeNsTest extends TestModelTest {
     return Collections.singleton(parseModel(AlternativeNsTest.class));
   }
 
-  @Before
+  @BeforeEach
   public void setUp() {
     modelInstance = cloneModelInstance();
     ModelImpl modelImpl = (ModelImpl) modelInstance.getModel();
@@ -66,7 +66,7 @@ public class AlternativeNsTest extends TestModelTest {
     modelImpl.declareAlternativeNamespace(YET_ANOTHER_NS, TestModelConstants.NEWER_NAMESPACE);
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     ModelImpl modelImpl = (ModelImpl) modelInstance.getModel();
     modelImpl.undeclareAlternativeNamespace(MECHANICAL_NS);
@@ -229,7 +229,7 @@ public class AlternativeNsTest extends TestModelTest {
     for (int i = 0; i < attributes.getLength(); i++) {
       Node item = attributes.item(i);
       String nodeValue = item.getNodeValue();
-      assertNotEquals("Found newer namespace url which shouldn't exist", TestModelConstants.NEWER_NAMESPACE, nodeValue);
+      assertNotEquals(TestModelConstants.NEWER_NAMESPACE, nodeValue, "Found newer namespace url which shouldn't exist");
     }
   }
 

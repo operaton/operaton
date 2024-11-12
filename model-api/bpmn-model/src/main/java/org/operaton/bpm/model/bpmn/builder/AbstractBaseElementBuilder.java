@@ -49,8 +49,8 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
     T instance = createInstance(typeClass);
     if (identifier != null) {
       instance.setId(identifier);
-      if (instance instanceof FlowElement) {
-        ((FlowElement) instance).setName(identifier);
+      if (instance instanceof FlowElement flowElement) {
+        flowElement.setName(identifier);
       }
     }
     return instance;
@@ -330,9 +330,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
       double sourceWidth = sourceBounds.getWidth();
       x = sourceX + sourceWidth + SPACE;
 
-      if (element instanceof FlowNode) {
-
-        FlowNode flowNode = (FlowNode) element;
+      if (element instanceof FlowNode flowNode) {
         Collection<SequenceFlow> outgoing = flowNode.getOutgoing();
 
         if (outgoing.size() == 0) {
@@ -390,16 +388,11 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
 
     FlowNode edgeSource;
     FlowNode edgeTarget;
-    if (bpmnElement instanceof SequenceFlow) {
-
-      SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;
-
+    if (bpmnElement instanceof SequenceFlow sequenceFlow) {
       edgeSource = sequenceFlow.getSource();
       edgeTarget = sequenceFlow.getTarget();
 
-    } else if (bpmnElement instanceof Association){
-      Association association = (Association) bpmnElement;
-
+    } else if (bpmnElement instanceof Association association){
       edgeSource = (FlowNode) association.getSource();
       edgeTarget = (FlowNode) association.getTarget();
     } else {
@@ -493,9 +486,9 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
 
     ModelElementInstance parent = innerElement.getParentElement();
 
-    while (parent instanceof SubProcess) {
+    while (parent instanceof SubProcess subProcess) {
 
-      BpmnShape subProcessShape = findBpmnShape((SubProcess) parent);
+      BpmnShape subProcessShape = findBpmnShape(subProcess);
 
       if (subProcessShape != null) {
 

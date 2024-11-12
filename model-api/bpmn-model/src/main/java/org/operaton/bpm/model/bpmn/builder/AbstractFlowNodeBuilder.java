@@ -61,8 +61,8 @@ public abstract class AbstractFlowNodeBuilder<B extends AbstractFlowNodeBuilder<
     // check if compensation was started
     if (isBoundaryEventWithStartedCompensation()) {
         // the target activity should be marked for compensation
-        if (target instanceof Activity) {
-          ((Activity) target).setForCompensation(true);
+        if (target instanceof Activity activity) {
+          activity.setForCompensation(true);
         }
 
         // connect the target via association instead of sequence flow
@@ -280,8 +280,8 @@ public abstract class AbstractFlowNodeBuilder<B extends AbstractFlowNodeBuilder<
     while (true) {
       try {
         lastGateway = lastGateway.getPreviousNodes().singleResult();
-        if (lastGateway instanceof Gateway) {
-          return (Gateway) lastGateway;
+        if (lastGateway instanceof Gateway gateway) {
+          return gateway;
         }
       } catch (BpmnModelException e) {
         throw new BpmnModelException("Unable to determine an unique previous gateway of " + lastGateway.getId(), e);
@@ -297,8 +297,8 @@ public abstract class AbstractFlowNodeBuilder<B extends AbstractFlowNodeBuilder<
   @SuppressWarnings("rawtypes")
   public AbstractFlowNodeBuilder moveToNode(String identifier) {
     ModelElementInstance instance = modelInstance.getModelElementById(identifier);
-    if (instance != null && instance instanceof FlowNode) {
-      return ((FlowNode) instance).builder();
+    if (instance != null && instance instanceof FlowNode flowNode) {
+      return flowNode.builder();
     } else {
       throw new BpmnModelException("Flow node not found for id " + identifier);
     }
@@ -319,10 +319,9 @@ public abstract class AbstractFlowNodeBuilder<B extends AbstractFlowNodeBuilder<
     ModelElementInstance target = modelInstance.getModelElementById(identifier);
     if (target == null) {
       throw new BpmnModelException("Unable to connect " + element.getId() + " to element " + identifier + " cause it not exists.");
-    } else if (!(target instanceof FlowNode)) {
+    } else if (!(target instanceof FlowNode targetNode)) {
       throw new BpmnModelException("Unable to connect " + element.getId() + " to element " + identifier + " cause its not a flow node.");
     } else {
-      FlowNode targetNode = (FlowNode) target;
       connectTarget(targetNode);
       return targetNode.builder();
     }
@@ -451,8 +450,7 @@ public abstract class AbstractFlowNodeBuilder<B extends AbstractFlowNodeBuilder<
   }
 
   public B compensationStart() {
-    if (element instanceof BoundaryEvent) {
-      BoundaryEvent boundaryEvent = (BoundaryEvent) element;
+    if (element instanceof BoundaryEvent boundaryEvent) {
       for (EventDefinition eventDefinition : boundaryEvent.getEventDefinitions()) {
         if(eventDefinition instanceof CompensateEventDefinition) {
           // if the boundary event contains a compensate event definition then

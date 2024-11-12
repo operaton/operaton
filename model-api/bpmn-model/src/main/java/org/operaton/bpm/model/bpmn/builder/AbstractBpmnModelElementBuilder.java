@@ -58,8 +58,8 @@ public abstract class AbstractBpmnModelElementBuilder<B extends AbstractBpmnMode
    */
   public SubProcessBuilder subProcessDone() {
     BpmnModelElementInstance lastSubProcess = element.getScope();
-    if (lastSubProcess != null && lastSubProcess instanceof SubProcess) {
-      return ((SubProcess) lastSubProcess).builder();
+    if (lastSubProcess != null && lastSubProcess instanceof SubProcess subProcess) {
+      return subProcess.builder();
     }
     else {
       throw new BpmnModelException("Unable to find a parent subProcess.");
@@ -68,8 +68,8 @@ public abstract class AbstractBpmnModelElementBuilder<B extends AbstractBpmnMode
 
   public TransactionBuilder transactionDone() {
     BpmnModelElementInstance lastTransaction = element.getScope();
-    if (lastTransaction != null && lastTransaction instanceof Transaction) {
-      return new TransactionBuilder(modelInstance, (Transaction) lastTransaction);
+    if (lastTransaction != null && lastTransaction instanceof Transaction transaction) {
+      return new TransactionBuilder(modelInstance, transaction);
     }
     else {
       throw new BpmnModelException("Unable to find a parent transaction.");
@@ -78,10 +78,10 @@ public abstract class AbstractBpmnModelElementBuilder<B extends AbstractBpmnMode
 
   public AbstractThrowEventBuilder throwEventDefinitionDone() {
     ModelElementInstance lastEvent = element.getDomElement().getParentElement().getModelElementInstance();
-    if (lastEvent != null && lastEvent instanceof IntermediateThrowEvent) {
-      return new IntermediateThrowEventBuilder(modelInstance, (IntermediateThrowEvent) lastEvent);
-    } else if (lastEvent != null && lastEvent instanceof EndEvent) {
-      return new EndEventBuilder(modelInstance, (EndEvent) lastEvent);
+    if (lastEvent != null && lastEvent instanceof IntermediateThrowEvent intermediateThrowEvent) {
+      return new IntermediateThrowEventBuilder(modelInstance, intermediateThrowEvent);
+    } else if (lastEvent != null && lastEvent instanceof EndEvent endEvent) {
+      return new EndEventBuilder(modelInstance, endEvent);
     }
     else {
       throw new BpmnModelException("Unable to find a parent event.");

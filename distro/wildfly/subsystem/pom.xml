@@ -12,6 +12,10 @@
 
   <name>Operaton - Wildfly Subsystem</name>
 
+  <properties>
+    <surefire.memArgs>-Xmx512m</surefire.memArgs>
+  </properties>
+
   <dependencies>
 
     <dependency>
@@ -93,7 +97,6 @@
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
           <enableAssertions>true</enableAssertions>
-          <argLine>${jacoco.argLine} -Xmx512m</argLine>
           <systemProperties>
             <property>
               <name>jboss.home</name>

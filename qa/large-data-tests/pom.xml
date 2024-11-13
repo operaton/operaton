@@ -13,6 +13,7 @@
   <properties>
     <skipTests>true</skipTests>
     <jdbcBatchProcessing>true</jdbcBatchProcessing>
+    <surefire.memArgs>-Xmx2048m</surefire.memArgs>
   </properties>
 
   <dependencies>
@@ -130,7 +131,6 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <skipTests>${skipTests}</skipTests>
-              <argLine>${jacoco.argLine} -Xmx2048m</argLine>
             </configuration>
           </plugin>
         </plugins>

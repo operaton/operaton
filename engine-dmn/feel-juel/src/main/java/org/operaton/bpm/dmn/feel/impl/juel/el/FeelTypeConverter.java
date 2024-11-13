@@ -31,8 +31,8 @@ public class FeelTypeConverter extends TypeConverterImpl {
 
   @Override
   protected Boolean coerceToBoolean(Object value) {
-    if (value instanceof Boolean) {
-      return (Boolean) value;
+    if (value instanceof Boolean booleanValue) {
+      return booleanValue;
     }
     else {
       throw LOG.unableToConvertValue(value, Boolean.class);
@@ -41,14 +41,14 @@ public class FeelTypeConverter extends TypeConverterImpl {
 
   @Override
   protected BigDecimal coerceToBigDecimal(Object value) {
-    if (value instanceof BigDecimal) {
-      return (BigDecimal)value;
+    if (value instanceof BigDecimal bigDecimalValue) {
+      return bigDecimalValue;
     }
-    else if (value instanceof BigInteger) {
-      return new BigDecimal((BigInteger)value);
+    else if (value instanceof BigInteger bigIntegerValue) {
+      return new BigDecimal(bigIntegerValue);
     }
-    else if (value instanceof Number) {
-      return new BigDecimal(((Number)value).doubleValue());
+    else if (value instanceof Number numberValue) {
+      return new BigDecimal(numberValue.doubleValue());
     }
     else {
       throw LOG.unableToConvertValue(value, BigDecimal.class);
@@ -57,14 +57,14 @@ public class FeelTypeConverter extends TypeConverterImpl {
 
   @Override
   protected BigInteger coerceToBigInteger(Object value) {
-    if (value instanceof BigInteger) {
-      return (BigInteger)value;
+    if (value instanceof BigInteger bigIntegerValue) {
+      return bigIntegerValue;
     }
-    else if (value instanceof BigDecimal) {
-      return ((BigDecimal)value).toBigInteger();
+    else if (value instanceof BigDecimal bigDecimalValue) {
+      return bigDecimalValue.toBigInteger();
     }
-    else if (value instanceof Number) {
-      return BigInteger.valueOf(((Number)value).longValue());
+    else if (value instanceof Number numberValue) {
+      return BigInteger.valueOf(numberValue.longValue());
     }
     else {
       throw LOG.unableToConvertValue(value, BigInteger.class);
@@ -73,11 +73,11 @@ public class FeelTypeConverter extends TypeConverterImpl {
 
   @Override
   protected Double coerceToDouble(Object value) {
-    if (value instanceof Double) {
-      return (Double)value;
+    if (value instanceof Double doubleValue) {
+      return doubleValue;
     }
-    else if (value instanceof Number) {
-      return ((Number) value).doubleValue();
+    else if (value instanceof Number numberValue) {
+      return numberValue.doubleValue();
     }
     else {
       throw LOG.unableToConvertValue(value, Double.class);
@@ -86,11 +86,11 @@ public class FeelTypeConverter extends TypeConverterImpl {
 
   @Override
   protected Long coerceToLong(Object value) {
-    if (value instanceof Long) {
-      return (Long)value;
+    if (value instanceof Long longValue) {
+      return longValue;
     }
-    else if (value instanceof Number && isLong((Number) value)) {
-      return ((Number) value).longValue();
+    else if (value instanceof Number numberValue && isLong(numberValue)) {
+      return numberValue.longValue();
     }
     else {
       throw LOG.unableToConvertValue(value, Long.class);
@@ -99,11 +99,11 @@ public class FeelTypeConverter extends TypeConverterImpl {
 
   @Override
   protected String coerceToString(Object value) {
-    if (value instanceof String) {
-      return (String)value;
+    if (value instanceof String stringValue) {
+      return stringValue;
     }
-    else if (value instanceof Enum<?>) {
-      return ((Enum<?>)value).name();
+    else if (value instanceof Enum<?> enumValue) {
+      return enumValue.name();
     }
     else {
       throw LOG.unableToConvertValue(value, String.class);

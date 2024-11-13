@@ -45,7 +45,7 @@ public class OAuth2Properties {
     private boolean enabled = false;
 
     /**
-     * Enable SSO Logout. Default {@code {baseUrl}}.
+     * URI the user is redirected after SSO logout from the provider. Default {@code {baseUrl}}.
      */
     private String postLogoutRedirectUri = "{baseUrl}";
 
@@ -68,9 +68,9 @@ public class OAuth2Properties {
 
   public static class OAuth2IdentityProviderProperties {
     /**
-     * Enable {@link OAuth2IdentityProvider}.
+     * Enable {@link OAuth2IdentityProvider}. Default {@code true}.
      */
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     /**
      * Name of the attribute (claim) that holds the groups.

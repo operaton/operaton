@@ -28,12 +28,12 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CONDITIONAL_EVENT_DEFINITION;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_VARIABLE_NAME;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_NAME;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import org.operaton.bpm.model.xml.impl.util.StringUtil;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_VARIABLE_EVENTS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_EVENTS;
 
 /**
  * The BPMN conditionalEventDefinition element
@@ -66,11 +66,11 @@ public class ConditionalEventDefinitionImpl extends EventDefinitionImpl implemen
 
     /** operaton extensions */
 
-    operatonVariableName = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VARIABLE_NAME)
+    operatonVariableName = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE_NAME)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonVariableEvents = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VARIABLE_EVENTS)
+    operatonVariableEvents = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE_EVENTS)
       .namespace(OPERATON_NS)
       .build();
 

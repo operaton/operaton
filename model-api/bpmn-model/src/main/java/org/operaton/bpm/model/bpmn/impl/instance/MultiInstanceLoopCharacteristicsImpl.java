@@ -22,11 +22,11 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_I
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_MULTI_INSTANCE_LOOP_CHARACTERISTICS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_NONE_BEHAVIOR_EVENT_REF;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_ONE_BEHAVIOR_EVENT_REF;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_ASYNC_AFTER;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_ASYNC_BEFORE;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_EXCLUSIVE;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_COLLECTION;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_ELEMENT_VARIABLE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ASYNC_AFTER;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ASYNC_BEFORE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_EXCLUSIVE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_COLLECTION;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ELEMENT_VARIABLE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 import java.util.Collection;
@@ -132,26 +132,26 @@ public class MultiInstanceLoopCharacteristicsImpl extends LoopCharacteristicsImp
     completionConditionChild = sequenceBuilder.element(CompletionCondition.class)
       .build();
 
-    operatonAsyncAfter = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_ASYNC_AFTER)
+    operatonAsyncAfter = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC_AFTER)
         .namespace(OPERATON_NS)
         .defaultValue(false)
         .build();
 
-    operatonAsyncBefore = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_ASYNC_BEFORE)
+    operatonAsyncBefore = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC_BEFORE)
         .namespace(OPERATON_NS)
         .defaultValue(false)
         .build();
 
-    operatonExclusive = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_EXCLUSIVE)
+    operatonExclusive = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_EXCLUSIVE)
         .namespace(OPERATON_NS)
         .defaultValue(true)
         .build();
 
-    operatonCollection = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_COLLECTION)
+    operatonCollection = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_COLLECTION)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonElementVariable = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_ELEMENT_VARIABLE)
+    operatonElementVariable = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ELEMENT_VARIABLE)
         .namespace(OPERATON_NS)
         .build();
 

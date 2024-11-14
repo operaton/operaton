@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_KEY;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_ENTRY;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_KEY;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_ENTRY;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonEntry;
@@ -35,7 +35,7 @@ public class OperatonEntryImpl extends OperatonGenericValueElementImpl implement
   protected static Attribute<String> operatonKeyAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonEntry.class, CAMUNDA_ELEMENT_ENTRY)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonEntry.class, OPERATON_ELEMENT_ENTRY)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonEntry>() {
         public OperatonEntry newInstance(ModelTypeInstanceContext instanceContext) {
@@ -43,7 +43,7 @@ public class OperatonEntryImpl extends OperatonGenericValueElementImpl implement
         }
       });
 
-    operatonKeyAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_KEY)
+    operatonKeyAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_KEY)
       .namespace(OPERATON_NS)
       .required()
       .build();

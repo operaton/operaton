@@ -40,7 +40,7 @@ public class OperatonOutImpl extends BpmnModelElementInstanceImpl implements Ope
   protected static Attribute<Boolean> operatonLocalAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonOut.class, CAMUNDA_ELEMENT_OUT)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonOut.class, OPERATON_ELEMENT_OUT)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonOut>() {
         public OperatonOut newInstance(ModelTypeInstanceContext instanceContext) {
@@ -48,23 +48,23 @@ public class OperatonOutImpl extends BpmnModelElementInstanceImpl implements Ope
         }
       });
 
-    operatonSourceAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_SOURCE)
+    operatonSourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonSourceExpressionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_SOURCE_EXPRESSION)
+    operatonSourceExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE_EXPRESSION)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonVariablesAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VARIABLES)
+    operatonVariablesAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLES)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonTargetAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_TARGET)
+    operatonTargetAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_TARGET)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonLocalAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_LOCAL)
+    operatonLocalAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_LOCAL)
       .namespace(OPERATON_NS)
       .build();
 

@@ -22,8 +22,8 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_EXPRESSION;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_ERROR_EVENT_DEFINITION;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_EXPRESSION;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_ERROR_EVENT_DEFINITION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
@@ -32,7 +32,7 @@ public class OperatonErrorEventDefinitionImpl extends ErrorEventDefinitionImpl i
   protected static Attribute<String> operatonExpressionAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonErrorEventDefinition.class, CAMUNDA_ELEMENT_ERROR_EVENT_DEFINITION)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonErrorEventDefinition.class, OPERATON_ELEMENT_ERROR_EVENT_DEFINITION)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonErrorEventDefinition>() {
         public OperatonErrorEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
@@ -40,7 +40,7 @@ public class OperatonErrorEventDefinitionImpl extends ErrorEventDefinitionImpl i
         }
       });
 
-    operatonExpressionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_EXPRESSION)
+    operatonExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EXPRESSION)
         .namespace(OPERATON_NS)
         .build();
 

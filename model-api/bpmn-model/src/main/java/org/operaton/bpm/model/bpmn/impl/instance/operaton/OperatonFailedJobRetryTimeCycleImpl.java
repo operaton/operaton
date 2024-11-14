@@ -22,7 +22,7 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_FAILED_JOB_RETRY_TIME_CYCLE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_FAILED_JOB_RETRY_TIME_CYCLE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
@@ -34,7 +34,7 @@ import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeI
 public class OperatonFailedJobRetryTimeCycleImpl extends BpmnModelElementInstanceImpl implements OperatonFailedJobRetryTimeCycle {
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFailedJobRetryTimeCycle.class, CAMUNDA_ELEMENT_FAILED_JOB_RETRY_TIME_CYCLE)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFailedJobRetryTimeCycle.class, OPERATON_ELEMENT_FAILED_JOB_RETRY_TIME_CYCLE)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonFailedJobRetryTimeCycle>() {
         public OperatonFailedJobRetryTimeCycle newInstance(ModelTypeInstanceContext instanceContext) {

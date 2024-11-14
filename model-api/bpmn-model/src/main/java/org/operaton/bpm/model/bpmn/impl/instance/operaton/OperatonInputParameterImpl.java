@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_NAME;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_INPUT_PARAMETER;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_NAME;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_INPUT_PARAMETER;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputParameter;
@@ -37,7 +37,7 @@ public class OperatonInputParameterImpl extends OperatonGenericValueElementImpl 
   protected static Attribute<String> operatonNameAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputParameter.class, CAMUNDA_ELEMENT_INPUT_PARAMETER)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputParameter.class, OPERATON_ELEMENT_INPUT_PARAMETER)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonInputParameter>() {
         public OperatonInputParameter newInstance(ModelTypeInstanceContext instanceContext) {
@@ -45,7 +45,7 @@ public class OperatonInputParameterImpl extends OperatonGenericValueElementImpl 
         }
       });
 
-    operatonNameAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_NAME)
+    operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)
       .required()
       .build();

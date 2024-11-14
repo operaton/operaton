@@ -28,8 +28,8 @@ import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_ERROR_REF;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_ERROR_EVENT_DEFINITION;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_ERROR_CODE_VARIABLE;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_ERROR_MESSAGE_VARIABLE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ERROR_CODE_VARIABLE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ERROR_MESSAGE_VARIABLE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
@@ -60,11 +60,11 @@ public class ErrorEventDefinitionImpl extends EventDefinitionImpl implements Err
       .qNameAttributeReference(Error.class)
       .build();
     
-    operatonErrorCodeVariableAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_ERROR_CODE_VARIABLE)
+    operatonErrorCodeVariableAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ERROR_CODE_VARIABLE)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonErrorMessageVariableAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_ERROR_MESSAGE_VARIABLE)
+    operatonErrorMessageVariableAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ERROR_MESSAGE_VARIABLE)
       .namespace(OPERATON_NS)
       .build();
     

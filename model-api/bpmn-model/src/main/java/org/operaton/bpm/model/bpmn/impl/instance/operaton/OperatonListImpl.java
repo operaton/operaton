@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_LIST;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_LIST;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 import java.util.Collection;
@@ -40,7 +40,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstance
 public class OperatonListImpl extends BpmnModelElementInstanceImpl implements OperatonList {
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonList.class, CAMUNDA_ELEMENT_LIST)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonList.class, OPERATON_ELEMENT_LIST)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonList>() {
         public OperatonList newInstance(ModelTypeInstanceContext instanceContext) {

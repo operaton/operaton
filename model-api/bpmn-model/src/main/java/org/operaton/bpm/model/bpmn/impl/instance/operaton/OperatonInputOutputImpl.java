@@ -28,7 +28,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstance
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_INPUT_OUTPUT;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_INPUT_OUTPUT;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 /**
@@ -42,7 +42,7 @@ public class OperatonInputOutputImpl extends BpmnModelElementInstanceImpl implem
   protected static ChildElementCollection<OperatonOutputParameter> operatonOutputParameterCollection;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputOutput.class, CAMUNDA_ELEMENT_INPUT_OUTPUT)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputOutput.class, OPERATON_ELEMENT_INPUT_OUTPUT)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonInputOutput>() {
         public OperatonInputOutput newInstance(ModelTypeInstanceContext instanceContext) {

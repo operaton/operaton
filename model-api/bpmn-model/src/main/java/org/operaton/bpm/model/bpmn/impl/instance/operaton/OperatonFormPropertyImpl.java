@@ -51,7 +51,7 @@ public class OperatonFormPropertyImpl extends BpmnModelElementInstanceImpl imple
   protected static ChildElementCollection<OperatonValue> operatonValueCollection;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormProperty.class, CAMUNDA_ELEMENT_FORM_PROPERTY)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormProperty.class, OPERATON_ELEMENT_FORM_PROPERTY)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonFormProperty>() {
         public OperatonFormProperty newInstance(ModelTypeInstanceContext instanceContext) {
@@ -59,46 +59,46 @@ public class OperatonFormPropertyImpl extends BpmnModelElementInstanceImpl imple
         }
       });
 
-    operatonIdAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_ID)
+    operatonIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ID)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonNameAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_NAME)
+    operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonTypeAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_TYPE)
+    operatonTypeAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_TYPE)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonRequiredAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_REQUIRED)
+    operatonRequiredAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_REQUIRED)
       .namespace(OPERATON_NS)
       .defaultValue(false)
       .build();
 
-    operatonReadableAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_READABLE)
+    operatonReadableAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_READABLE)
       .namespace(OPERATON_NS)
       .defaultValue(true)
       .build();
 
-    operatonWriteableAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_WRITEABLE)
+    operatonWriteableAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_WRITEABLE)
       .namespace(OPERATON_NS)
       .defaultValue(true)
       .build();
 
-    operatonVariableAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VARIABLE)
+    operatonVariableAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonExpressionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_EXPRESSION)
+    operatonExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EXPRESSION)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonDatePatternAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DATE_PATTERN)
+    operatonDatePatternAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DATE_PATTERN)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonDefaultAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DEFAULT)
+    operatonDefaultAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DEFAULT)
       .namespace(OPERATON_NS)
       .build();
 

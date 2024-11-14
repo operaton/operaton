@@ -25,7 +25,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_POTENTIAL_STARTER;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_POTENTIAL_STARTER;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
@@ -39,7 +39,7 @@ public class OperatonPotentialStarterImpl extends BpmnModelElementInstanceImpl i
   protected static ChildElement<ResourceAssignmentExpression> resourceAssignmentExpressionChild;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonPotentialStarter.class, CAMUNDA_ELEMENT_POTENTIAL_STARTER)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonPotentialStarter.class, OPERATON_ELEMENT_POTENTIAL_STARTER)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonPotentialStarter>() {
         public OperatonPotentialStarter newInstance(ModelTypeInstanceContext instanceContext) {

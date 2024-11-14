@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.CAMUNDA_ATTRIBUTE_INPUT_VARIABLE;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_ATTRIBUTE_INPUT_VARIABLE;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_INPUT_CLAUSE;
 
@@ -93,8 +93,8 @@ public class InputClauseImpl extends DmnElementImpl implements InputClause {
 
     // operaton extensions
 
-    operatonInputVariableAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_INPUT_VARIABLE)
-      .namespace(CAMUNDA_NS)
+    operatonInputVariableAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_INPUT_VARIABLE)
+      .namespace(OPERATON_NS)
       .build();
 
     typeBuilder.build();

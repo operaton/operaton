@@ -40,11 +40,7 @@ public class ExtensionElementsImpl extends DmnModelElementInstanceImpl implement
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ExtensionElements.class, DMN_ELEMENT_EXTENSION_ELEMENTS)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<ExtensionElements>() {
-        public ExtensionElements newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ExtensionElementsImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ExtensionElementsImpl::new);
 
     typeBuilder.build();
   }
@@ -58,7 +54,7 @@ public class ExtensionElementsImpl extends DmnModelElementInstanceImpl implement
   }
 
   public Query<ModelElementInstance> getElementsQuery() {
-    return new QueryImpl<ModelElementInstance>(getElements());
+    return new QueryImpl<>(getElements());
   }
 
   public ModelElementInstance addExtensionElement(String namespaceUri, String localName) {

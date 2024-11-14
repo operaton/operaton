@@ -53,7 +53,7 @@ public class TaskImpl extends ActivityImpl implements Task {
 
     /** operaton extensions */
 
-    operatonAsyncAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_ASYNC)
+    operatonAsyncAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC)
       .namespace(OPERATON_NS)
       .defaultValue(false)
       .build();

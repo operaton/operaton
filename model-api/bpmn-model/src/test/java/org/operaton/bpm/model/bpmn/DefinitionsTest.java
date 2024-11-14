@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.instance.Process;
+import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.util.BpmnModelResource;
 import org.operaton.bpm.model.xml.ModelParseException;
 import org.operaton.bpm.model.xml.ModelReferenceException;
-import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -106,12 +105,7 @@ public class DefinitionsTest extends BpmnModelTest {
     definitions.getImports().add(importElement);
 
     // validate model
-    try {
-      Bpmn.validateModel(bpmnModelInstance);
-    }
-    catch (ModelValidationException e) {
-      Assertions.fail();
-    }
+    Bpmn.validateModel(bpmnModelInstance);
   }
 
   @Test

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_REPEAT_ON_STANDARD_EVENT;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_REPEAT_ON_STANDARD_EVENT;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_CONTEXT_REF;
@@ -104,7 +104,7 @@ public class RepetitionRuleImpl extends CmmnElementImpl implements RepetitionRul
 
     /** Operaton extensions */
 
-    operatonRepeatOnStandardEventAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_REPEAT_ON_STANDARD_EVENT)
+    operatonRepeatOnStandardEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_REPEAT_ON_STANDARD_EVENT)
       .namespace(CAMUNDA_NS)
       .build();
 

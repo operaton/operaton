@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_VARIABLE_NAME;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ELEMENT_VARIABLE_ON_PART;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_NAME;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_VARIABLE_ON_PART;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 
 import org.operaton.bpm.model.cmmn.VariableTransition;
@@ -43,7 +43,7 @@ public class OperatonVariableOnPartImpl extends CmmnModelElementInstanceImpl imp
 
   public static void registerType(ModelBuilder modelBuilder) {
 
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableOnPart.class, CAMUNDA_ELEMENT_VARIABLE_ON_PART)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableOnPart.class, OPERATON_ELEMENT_VARIABLE_ON_PART)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonVariableOnPart>() {
         public OperatonVariableOnPart newInstance(ModelTypeInstanceContext instanceContext) {
@@ -51,7 +51,7 @@ public class OperatonVariableOnPartImpl extends CmmnModelElementInstanceImpl imp
       }
     });
 
-    operatonVariableNameAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VARIABLE_NAME)
+    operatonVariableNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE_NAME)
       .namespace(CAMUNDA_NS)
       .build();
 

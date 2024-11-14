@@ -37,7 +37,7 @@ public class OperatonConstraintImpl extends BpmnModelElementInstanceImpl impleme
   protected static Attribute<String> operatonConfigAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConstraint.class, CAMUNDA_ELEMENT_CONSTRAINT)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConstraint.class, OPERATON_ELEMENT_CONSTRAINT)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonConstraint>() {
         public OperatonConstraint newInstance(ModelTypeInstanceContext instanceContext) {
@@ -45,11 +45,11 @@ public class OperatonConstraintImpl extends BpmnModelElementInstanceImpl impleme
         }
       });
 
-    operatonNameAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_NAME)
+    operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonConfigAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CONFIG)
+    operatonConfigAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CONFIG)
       .namespace(OPERATON_NS)
       .build();
 

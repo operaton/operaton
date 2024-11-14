@@ -72,55 +72,55 @@ public class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTask {
 
     /** operaton extensions */
 
-    operatonClassAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CLASS)
+    operatonClassAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CLASS)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonDelegateExpressionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DELEGATE_EXPRESSION)
+    operatonDelegateExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DELEGATE_EXPRESSION)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonExpressionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_EXPRESSION)
+    operatonExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EXPRESSION)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonResultVariableAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_RESULT_VARIABLE)
+    operatonResultVariableAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_RESULT_VARIABLE)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonTopicAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_TOPIC)
+    operatonTopicAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_TOPIC)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonTypeAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_TYPE)
+    operatonTypeAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_TYPE)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonDecisionRefAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DECISION_REF)
+    operatonDecisionRefAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DECISION_REF)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonDecisionRefBindingAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DECISION_REF_BINDING)
+    operatonDecisionRefBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DECISION_REF_BINDING)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonDecisionRefVersionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DECISION_REF_VERSION)
+    operatonDecisionRefVersionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DECISION_REF_VERSION)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonDecisionRefVersionTagAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DECISION_REF_VERSION_TAG)
+    operatonDecisionRefVersionTagAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DECISION_REF_VERSION_TAG)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonDecisionRefTenantIdAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DECISION_REF_TENANT_ID)
+    operatonDecisionRefTenantIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DECISION_REF_TENANT_ID)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonMapDecisionResultAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_MAP_DECISION_RESULT)
+    operatonMapDecisionResultAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_MAP_DECISION_RESULT)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonTaskPriorityAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_TASK_PRIORITY)
+    operatonTaskPriorityAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_TASK_PRIORITY)
       .namespace(OPERATON_NS)
       .build();
 

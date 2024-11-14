@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ELEMENT_STRING;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_STRING;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 
 import org.operaton.bpm.model.cmmn.impl.instance.CmmnModelElementInstanceImpl;
@@ -33,7 +33,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstance
 public class OperatonStringImpl extends CmmnModelElementInstanceImpl implements OperatonString {
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonString.class, CAMUNDA_ELEMENT_STRING)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonString.class, OPERATON_ELEMENT_STRING)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonString>() {
         public OperatonString newInstance(ModelTypeInstanceContext instanceContext) {

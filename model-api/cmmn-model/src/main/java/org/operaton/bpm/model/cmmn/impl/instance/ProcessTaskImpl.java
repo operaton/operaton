@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_PROCESS_BINDING;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_PROCESS_VERSION;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_PROCESS_TENANT_ID;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_PROCESS_BINDING;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_PROCESS_VERSION;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_PROCESS_TENANT_ID;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_PROCESS_REF;
@@ -116,15 +116,15 @@ public class ProcessTaskImpl extends TaskImpl implements ProcessTask {
 
     /** operaton extensions */
 
-    operatonProcessBindingAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_PROCESS_BINDING)
+    operatonProcessBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PROCESS_BINDING)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonProcessVersionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_PROCESS_VERSION)
+    operatonProcessVersionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PROCESS_VERSION)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonProcessTenantIdAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_PROCESS_TENANT_ID)
+    operatonProcessTenantIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PROCESS_TENANT_ID)
         .namespace(CAMUNDA_NS)
         .build();
 

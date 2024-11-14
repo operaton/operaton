@@ -54,8 +54,13 @@ public final class DmnModelConstants {
   public static final String FEEL14_NS = "https://www.omg.org/spec/DMN/20211108/FEEL/";
   public static final String FEEL15_NS = "https://www.omg.org/spec/DMN/20230324/FEEL/";
 
+  /**
+   * Backwards compatibility with Camunda DMN files
+   */
+  public static final String CAMUNDA_NS = "http://camunda.org/schema/1.0/dmn";
+
   /** Operaton namespace */
-  public static final String CAMUNDA_NS = "http://operaton.org/schema/1.0/dmn";
+  public static final String OPERATON_NS = "http://operaton.org/schema/1.0/dmn";
 
   /** DMN element */
 
@@ -170,8 +175,8 @@ public final class DmnModelConstants {
 
   /** operaton extensions */
 
-  public static final String CAMUNDA_ATTRIBUTE_INPUT_VARIABLE = "inputVariable";
-  public static final String CAMUNDA_ATTRIBUTE_HISTORY_TIME_TO_LIVE = "historyTimeToLive";
-  public static final String CAMUNDA_ATTRIBUTE_VERSION_TAG = "versionTag";
+  public static final String OPERATON_ATTRIBUTE_INPUT_VARIABLE = "inputVariable";
+  public static final String OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE = "historyTimeToLive";
+  public static final String OPERATON_ATTRIBUTE_VERSION_TAG = "versionTag";
 
 }

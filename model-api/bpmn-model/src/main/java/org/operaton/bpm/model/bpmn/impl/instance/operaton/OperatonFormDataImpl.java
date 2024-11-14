@@ -28,7 +28,7 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import java.util.Collection;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_FORM_DATA;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_FORM_DATA;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
@@ -41,7 +41,7 @@ public class OperatonFormDataImpl extends BpmnModelElementInstanceImpl implement
   protected static ChildElementCollection<OperatonFormField> operatonFormFieldCollection;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormData.class, CAMUNDA_ELEMENT_FORM_DATA)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormData.class, OPERATON_ELEMENT_FORM_DATA)
       .namespaceUri(BpmnModelConstants.OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonFormData>() {
         public OperatonFormData newInstance(ModelTypeInstanceContext instanceContext) {

@@ -63,32 +63,32 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
 
     /** operaton extensions */
 
-    operatonAsyncAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_ASYNC)
+    operatonAsyncAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC)
       .namespace(OPERATON_NS)
       .defaultValue(false)
       .build();
 
-    operatonFormHandlerClassAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_FORM_HANDLER_CLASS)
+    operatonFormHandlerClassAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FORM_HANDLER_CLASS)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonFormKeyAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_FORM_KEY)
+    operatonFormKeyAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FORM_KEY)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonFormRefAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_FORM_REF)
+    operatonFormRefAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FORM_REF)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonFormRefBindingAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_FORM_REF_BINDING)
+    operatonFormRefBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FORM_REF_BINDING)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonFormRefVersionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_FORM_REF_VERSION)
+    operatonFormRefVersionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FORM_REF_VERSION)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonInitiatorAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_INITIATOR)
+    operatonInitiatorAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_INITIATOR)
       .namespace(OPERATON_NS)
       .build();
 

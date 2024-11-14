@@ -27,7 +27,7 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import java.util.Collection;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_VALIDATION;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_VALIDATION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
@@ -41,7 +41,7 @@ public class OperatonValidationImpl extends BpmnModelElementInstanceImpl impleme
   protected static ChildElementCollection<OperatonConstraint> operatonConstraintCollection;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonValidation.class, CAMUNDA_ELEMENT_VALIDATION)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonValidation.class, OPERATON_ELEMENT_VALIDATION)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonValidation>() {
         public OperatonValidation newInstance(ModelTypeInstanceContext instanceContext) {

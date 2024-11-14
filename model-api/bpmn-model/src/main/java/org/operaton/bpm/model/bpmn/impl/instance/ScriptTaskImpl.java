@@ -66,11 +66,11 @@ public class ScriptTaskImpl extends TaskImpl implements ScriptTask {
 
     /** operaton extensions */
 
-    operatonResultVariableAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_RESULT_VARIABLE)
+    operatonResultVariableAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_RESULT_VARIABLE)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonResourceAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_RESOURCE)
+    operatonResourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_RESOURCE)
       .namespace(OPERATON_NS)
       .build();
 

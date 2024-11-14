@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.dmn.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_NS;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,7 +37,7 @@ public class InputClauseTest extends DmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       // operaton extensions
-      new AttributeAssumption(CAMUNDA_NS, "inputVariable")
+      new AttributeAssumption(OPERATON_NS, "inputVariable")
     );
   }
 

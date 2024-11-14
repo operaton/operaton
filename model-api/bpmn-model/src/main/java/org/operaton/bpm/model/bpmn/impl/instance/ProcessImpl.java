@@ -21,13 +21,13 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_IS_EXECUTABLE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_PROCESS_TYPE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_PROCESS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CANDIDATE_STARTER_GROUPS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CANDIDATE_STARTER_USERS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_HISTORY_TIME_TO_LIVE;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_IS_STARTABLE_IN_TASKLIST;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_JOB_PRIORITY;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_TASK_PRIORITY;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_VERSION_TAG;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CANDIDATE_STARTER_GROUPS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CANDIDATE_STARTER_USERS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_IS_STARTABLE_IN_TASKLIST;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_JOB_PRIORITY;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_TASK_PRIORITY;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_VERSION_TAG;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 import java.util.Collection;
@@ -145,32 +145,32 @@ public class ProcessImpl extends CallableElementImpl implements Process {
 
     /** operaton extensions */
 
-    operatonCandidateStarterGroupsAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CANDIDATE_STARTER_GROUPS)
+    operatonCandidateStarterGroupsAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CANDIDATE_STARTER_GROUPS)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonCandidateStarterUsersAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CANDIDATE_STARTER_USERS)
+    operatonCandidateStarterUsersAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CANDIDATE_STARTER_USERS)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonJobPriorityAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_JOB_PRIORITY)
+    operatonJobPriorityAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_JOB_PRIORITY)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonTaskPriorityAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_TASK_PRIORITY)
+    operatonTaskPriorityAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_TASK_PRIORITY)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonHistoryTimeToLiveAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
+    operatonHistoryTimeToLiveAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonIsStartableInTasklistAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_IS_STARTABLE_IN_TASKLIST)
+    operatonIsStartableInTasklistAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_IS_STARTABLE_IN_TASKLIST)
       .defaultValue(true)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonVersionTagAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VERSION_TAG)
+    operatonVersionTagAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VERSION_TAG)
       .namespace(OPERATON_NS)
       .build();
 

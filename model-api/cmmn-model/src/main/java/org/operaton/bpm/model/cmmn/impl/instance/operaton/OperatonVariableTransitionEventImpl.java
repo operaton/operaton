@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ELEMENT_VARIABLE_EVENT;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_VARIABLE_EVENT;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 
 import org.operaton.bpm.model.cmmn.VariableTransition;
@@ -34,7 +34,7 @@ public class OperatonVariableTransitionEventImpl  extends CmmnModelElementInstan
   }
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableTransitionEvent.class, CAMUNDA_ELEMENT_VARIABLE_EVENT)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableTransitionEvent.class, OPERATON_ELEMENT_VARIABLE_EVENT)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonVariableTransitionEvent>() {
         public OperatonVariableTransitionEvent newInstance(ModelTypeInstanceContext instanceContext) {

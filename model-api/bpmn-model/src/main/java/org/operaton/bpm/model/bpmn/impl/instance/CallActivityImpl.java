@@ -19,20 +19,20 @@ package org.operaton.bpm.model.bpmn.impl.instance;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_CALLED_ELEMENT;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CALL_ACTIVITY;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_ASYNC;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CALLED_ELEMENT_BINDING;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CALLED_ELEMENT_TENANT_ID;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CALLED_ELEMENT_VERSION;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CALLED_ELEMENT_VERSION_TAG;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CASE_BINDING;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CASE_REF;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CASE_TENANT_ID;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_CASE_VERSION;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ASYNC;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CALLED_ELEMENT_BINDING;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CALLED_ELEMENT_TENANT_ID;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CALLED_ELEMENT_VERSION;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CALLED_ELEMENT_VERSION_TAG;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CASE_BINDING;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CASE_REF;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CASE_TENANT_ID;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_CASE_VERSION;
 
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.CallActivityBuilder;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_VARIABLE_MAPPING_CLASS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_VARIABLE_MAPPING_DELEGATE_EXPRESSION;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_MAPPING_CLASS;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_VARIABLE_MAPPING_DELEGATE_EXPRESSION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import org.operaton.bpm.model.bpmn.instance.Activity;
 import org.operaton.bpm.model.bpmn.instance.CallActivity;
@@ -82,48 +82,48 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
 
     /** operaton extensions */
 
-    operatonAsyncAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_ASYNC)
+    operatonAsyncAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC)
       .namespace(OPERATON_NS)
       .defaultValue(false)
       .build();
 
-    operatonCalledElementBindingAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CALLED_ELEMENT_BINDING)
+    operatonCalledElementBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CALLED_ELEMENT_BINDING)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonCalledElementVersionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CALLED_ELEMENT_VERSION)
+    operatonCalledElementVersionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CALLED_ELEMENT_VERSION)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonCalledElementVersionTagAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CALLED_ELEMENT_VERSION_TAG)
+    operatonCalledElementVersionTagAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CALLED_ELEMENT_VERSION_TAG)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonCaseRefAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CASE_REF)
+    operatonCaseRefAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CASE_REF)
        .namespace(OPERATON_NS)
        .build();
 
-    operatonCaseBindingAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CASE_BINDING)
+    operatonCaseBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CASE_BINDING)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonCaseVersionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CASE_VERSION)
+    operatonCaseVersionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CASE_VERSION)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonCalledElementTenantIdAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CALLED_ELEMENT_TENANT_ID)
+    operatonCalledElementTenantIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CALLED_ELEMENT_TENANT_ID)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonCaseTenantIdAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CASE_TENANT_ID)
+    operatonCaseTenantIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CASE_TENANT_ID)
         .namespace(OPERATON_NS)
         .build();
 
-    operatonVariableMappingClassAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VARIABLE_MAPPING_CLASS)
+    operatonVariableMappingClassAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE_MAPPING_CLASS)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonVariableMappingDelegateExpressionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VARIABLE_MAPPING_DELEGATE_EXPRESSION)
+    operatonVariableMappingDelegateExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE_MAPPING_DELEGATE_EXPRESSION)
       .namespace(OPERATON_NS)
       .build();
 

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_ASSIGNEE;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_CANDIDATE_GROUPS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_CANDIDATE_USERS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_DUE_DATE;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_FOLLOW_UP_DATE;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_FORM_KEY;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_PRIORITY;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_ASSIGNEE;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_CANDIDATE_GROUPS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_CANDIDATE_USERS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_DUE_DATE;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_FOLLOW_UP_DATE;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_FORM_KEY;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_PRIORITY;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ATTRIBUTE_PERFORMER_REF;
@@ -188,31 +188,31 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
 
     /** operaton extensions */
 
-    operatonAssigneeAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_ASSIGNEE)
+    operatonAssigneeAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ASSIGNEE)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonCandidateGroupsAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CANDIDATE_GROUPS)
+    operatonCandidateGroupsAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CANDIDATE_GROUPS)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonCandidateUsersAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_CANDIDATE_USERS)
+    operatonCandidateUsersAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CANDIDATE_USERS)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonDueDateAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DUE_DATE)
+    operatonDueDateAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DUE_DATE)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonFollowUpDateAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_FOLLOW_UP_DATE)
+    operatonFollowUpDateAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FOLLOW_UP_DATE)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonFormKeyAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_FORM_KEY)
+    operatonFormKeyAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FORM_KEY)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonPriorityAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_PRIORITY)
+    operatonPriorityAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PRIORITY)
       .namespace(CAMUNDA_NS)
       .build();
 

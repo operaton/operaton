@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_CONNECTOR;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_CONNECTOR;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 import org.operaton.bpm.model.bpmn.impl.instance.BpmnModelElementInstanceImpl;
@@ -41,7 +41,7 @@ public class OperatonConnectorImpl extends BpmnModelElementInstanceImpl implemen
   protected static ChildElement<OperatonInputOutput> operatonInputOutputChild;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConnector.class, CAMUNDA_ELEMENT_CONNECTOR)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConnector.class, OPERATON_ELEMENT_CONNECTOR)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonConnector>() {
         public OperatonConnector newInstance(ModelTypeInstanceContext instanceContext) {

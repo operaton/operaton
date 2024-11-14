@@ -51,7 +51,7 @@ public class OperatonFormFieldImpl extends BpmnModelElementInstanceImpl implemen
   protected static ChildElementCollection<OperatonValue> operatonValueCollection;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormField.class, CAMUNDA_ELEMENT_FORM_FIELD)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormField.class, OPERATON_ELEMENT_FORM_FIELD)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonFormField>() {
         public OperatonFormField newInstance(ModelTypeInstanceContext instanceContext) {
@@ -59,23 +59,23 @@ public class OperatonFormFieldImpl extends BpmnModelElementInstanceImpl implemen
         }
       });
 
-    operatonIdAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_ID)
+    operatonIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ID)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonLabelAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_LABEL)
+    operatonLabelAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_LABEL)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonTypeAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_TYPE)
+    operatonTypeAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_TYPE)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonDatePatternAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DATE_PATTERN)
+    operatonDatePatternAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DATE_PATTERN)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonDefaultValueAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_DEFAULT_VALUE)
+    operatonDefaultValueAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DEFAULT_VALUE)
       .namespace(OPERATON_NS)
       .build();
 

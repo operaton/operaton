@@ -182,7 +182,7 @@ public class DecisionDefinitionTest {
     Definitions definitions = modelInstance.newInstance(Definitions.class);
     definitions.setId(DmnModelConstants.DMN_ELEMENT_DEFINITIONS);
     definitions.setName(DmnModelConstants.DMN_ELEMENT_DEFINITIONS);
-    definitions.setNamespace(DmnModelConstants.CAMUNDA_NS);
+    definitions.setNamespace(DmnModelConstants.OPERATON_NS);
     modelInstance.setDefinitions(definitions);
 
     Decision decision = modelInstance.newInstance(Decision.class);

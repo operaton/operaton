@@ -16,9 +16,7 @@
  */
 package org.operaton.connect.plugin;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProcessEnded;
 
@@ -164,7 +162,7 @@ class ConnectProcessEnginePluginTest {
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     //we will only reach the user task if the BPMNError from the script was handled by the boundary event
     Task task = taskService.createTaskQuery().singleResult();
-    assertThat(task.getName(), is("User Task"));
+    assertThat(task.getName()).isEqualTo("User Task");
   }
 
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn")
@@ -177,7 +175,7 @@ class ConnectProcessEnginePluginTest {
     try {
       runtimeService.startProcessInstanceByKey("testProcess", variables);
     } catch(RuntimeException re){
-      assertThat(re.getMessage(), containsString(exceptionMessage));
+      assertThat(re.getMessage()).contains(exceptionMessage);
     }
   }
 
@@ -190,7 +188,7 @@ class ConnectProcessEnginePluginTest {
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     //we will only reach the user task if the BPMNError from the script was handled by the boundary event
     Task task = taskService.createTaskQuery().singleResult();
-    assertThat(task.getName(), is("User Task"));
+    assertThat(task.getName()).isEqualTo("User Task");
   }
 
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn")
@@ -203,7 +201,7 @@ class ConnectProcessEnginePluginTest {
     try {
       runtimeService.startProcessInstanceByKey("testProcess", variables);
     } catch(RuntimeException re){
-      assertThat(re.getMessage(), containsString(exceptionMessage));
+      assertThat(re.getMessage()).contains(exceptionMessage);
     }
   }
 
@@ -216,7 +214,7 @@ class ConnectProcessEnginePluginTest {
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     //we will only reach the user task if the BPMNError from the script was handled by the boundary event
     Task task = taskService.createTaskQuery().singleResult();
-    assertThat(task.getName(), is("User Task"));
+    assertThat(task.getName()).isEqualTo("User Task");
   }
 
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
@@ -229,7 +227,7 @@ class ConnectProcessEnginePluginTest {
     try {
       runtimeService.startProcessInstanceByKey("testProcess", variables);
     } catch(RuntimeException re){
-      assertThat(re.getMessage(), containsString(exceptionMessage));
+      assertThat(re.getMessage()).contains(exceptionMessage);
     }
   }
 
@@ -242,7 +240,7 @@ class ConnectProcessEnginePluginTest {
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     //we will only reach the user task if the BPMNError from the script was handled by the boundary event
     Task task = taskService.createTaskQuery().singleResult();
-    assertThat(task.getName(), is("User Task"));
+    assertThat(task.getName()).isEqualTo("User Task");
   }
 
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
@@ -255,7 +253,7 @@ class ConnectProcessEnginePluginTest {
     try {
       runtimeService.startProcessInstanceByKey("testProcess", variables);
     } catch(RuntimeException re){
-      assertThat(re.getMessage(), containsString(exceptionMessage));
+      assertThat(re.getMessage()).contains(exceptionMessage);
     }
   }
 
@@ -273,10 +271,10 @@ class ConnectProcessEnginePluginTest {
     // then
     // we will only reach the user task if the BPMNError from the script was handled by the boundary event
     Task task = taskService.createTaskQuery().singleResult();
-    assertThat(task.getName(), is("User Task"));
+    assertThat(task.getName()).isEqualTo("User Task");
 
     // no job is created
-    assertThat(managementService.createJobQuery().count(), is(0l));
+    assertThat(managementService.createJobQuery().count()).isEqualTo(0l);
   }
 
   @Deployment
@@ -285,7 +283,7 @@ class ConnectProcessEnginePluginTest {
     try {
       runtimeService.startProcessInstanceByKey("testProcess");
     } catch(RuntimeException re){
-      assertThat(re.getMessage(), containsString("Invalid format"));
+      assertThat(re.getMessage()).contains("Invalid format");
     }
   }
 

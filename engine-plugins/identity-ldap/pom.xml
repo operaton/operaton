@@ -15,6 +15,7 @@
   <properties>
     <ldap.server.port>10389</ldap.server.port>
     <ldap.server.port.posix>5027</ldap.server.port.posix>
+    <surefire.forkCount>1</surefire.forkCount>
   </properties>
 
   <dependencies>

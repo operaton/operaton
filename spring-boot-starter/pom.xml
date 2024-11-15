@@ -14,6 +14,10 @@
 
   <packaging>pom</packaging>
 
+  <properties>
+    <surefire.forkCount>1</surefire.forkCount>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>

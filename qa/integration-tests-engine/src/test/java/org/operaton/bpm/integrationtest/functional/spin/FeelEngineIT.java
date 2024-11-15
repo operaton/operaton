@@ -30,8 +30,7 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Arquillian.class)
 public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
@@ -72,8 +71,8 @@ public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
         .includeOutputs()
         .singleResult();
 
-    assertThat(hdi.getOutputs().size(), is(1));
-    assertThat(hdi.getOutputs().get(0).getValue(), is(true));
+    assertThat(hdi.getOutputs().size()).isEqualTo(1);
+    assertThat(hdi.getOutputs().get(0).getValue()).isEqualTo(true);
   }
 
   @Test
@@ -90,8 +89,8 @@ public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
         .includeOutputs()
         .singleResult();
 
-    assertThat(hdi.getOutputs().size(), is(1));
-    assertThat(hdi.getOutputs().get(0).getValue(), is(true));
+    assertThat(hdi.getOutputs().size()).isEqualTo(1);
+    assertThat(hdi.getOutputs().get(0).getValue()).isEqualTo(true);
   }
 
   // HELPER

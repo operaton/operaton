@@ -265,7 +265,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
     // set auth
     processEngineConfiguration.setAuthorizationEnabled(true);
-    identityService.setAuthentication("admin", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("admin", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     // when
     identityService.unlockUser(lockedUser.getId());

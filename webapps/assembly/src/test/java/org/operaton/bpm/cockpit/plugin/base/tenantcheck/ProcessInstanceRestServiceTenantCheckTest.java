@@ -116,7 +116,7 @@ public class ProcessInstanceRestServiceTenantCheckTest extends AbstractCockpitPl
   @Test
   public void queryCountWithOperatonAdmin() {
 
-    identityService.setAuthentication("user", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     CountResultDto result = resource.queryProcessInstancesCount(queryParameter);
     assertThat(result).isNotNull();
@@ -168,7 +168,7 @@ public class ProcessInstanceRestServiceTenantCheckTest extends AbstractCockpitPl
   @Test
   public void queryWithContainingIncidentsWithOperatonAdmin() {
 
-    identityService.setAuthentication("user", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, null, null);
     assertThat(result).isNotEmpty();

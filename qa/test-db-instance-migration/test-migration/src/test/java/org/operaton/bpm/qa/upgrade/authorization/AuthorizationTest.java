@@ -67,17 +67,17 @@ public class AuthorizationTest {
 
     assertEquals(1, authorizationService.createAuthorizationQuery()
       .resourceType(Resources.TENANT)
-      .groupIdIn(Groups.CAMUNDA_ADMIN)
+      .groupIdIn(Groups.OPERATON_ADMIN)
       .hasPermission(Permissions.ALL).count());
 
     assertEquals(1, authorizationService.createAuthorizationQuery()
       .resourceType(Resources.TENANT_MEMBERSHIP)
-      .groupIdIn(Groups.CAMUNDA_ADMIN)
+      .groupIdIn(Groups.OPERATON_ADMIN)
       .hasPermission(Permissions.ALL).count());
 
     assertEquals(1, authorizationService.createAuthorizationQuery()
       .resourceType(Resources.BATCH)
-      .groupIdIn(Groups.CAMUNDA_ADMIN)
+      .groupIdIn(Groups.OPERATON_ADMIN)
       .hasPermission(Permissions.ALL).count());
 
   }
@@ -90,8 +90,8 @@ public class AuthorizationTest {
   public void testDefaultAuthorizationForOperatonAdminOnUpgrade() {
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertEquals(true,authorizationService.isUserAuthorized(null, Collections.singletonList(Groups.CAMUNDA_ADMIN), Permissions.ALL, Resources.TENANT));
-    assertEquals(true,authorizationService.isUserAuthorized(null, Collections.singletonList(Groups.CAMUNDA_ADMIN), Permissions.ALL, Resources.TENANT_MEMBERSHIP));
-    assertEquals(true,authorizationService.isUserAuthorized(null, Collections.singletonList(Groups.CAMUNDA_ADMIN), Permissions.ALL, Resources.BATCH));
+    assertEquals(true,authorizationService.isUserAuthorized(null, Collections.singletonList(Groups.OPERATON_ADMIN), Permissions.ALL, Resources.TENANT));
+    assertEquals(true,authorizationService.isUserAuthorized(null, Collections.singletonList(Groups.OPERATON_ADMIN), Permissions.ALL, Resources.TENANT_MEMBERSHIP));
+    assertEquals(true,authorizationService.isUserAuthorized(null, Collections.singletonList(Groups.OPERATON_ADMIN), Permissions.ALL, Resources.BATCH));
   }
 }

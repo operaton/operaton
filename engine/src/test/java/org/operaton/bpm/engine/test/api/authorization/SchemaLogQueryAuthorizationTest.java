@@ -40,7 +40,7 @@ public class SchemaLogQueryAuthorizationTest extends AuthorizationTest {
   @Test
   public void testCountQueryWithAuthorization() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // then
     assertThat(managementService.createSchemaLogQuery().count()).isGreaterThan(0);
@@ -49,7 +49,7 @@ public class SchemaLogQueryAuthorizationTest extends AuthorizationTest {
   @Test
   public void testQueryWithAuthorization() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // then
     assertThat(managementService.createSchemaLogQuery().list().size()).isGreaterThan(0);

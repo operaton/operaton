@@ -117,7 +117,7 @@ public class ProcessInstanceResourceTenantCheckTest extends AbstractCockpitPlugi
   @Test
   public void getCalledProcessInstancesByParentProcessInstanceIdWithOperatonAdmin() {
 
-    identityService.setAuthentication("user", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
     assertThat(result).isNotEmpty();

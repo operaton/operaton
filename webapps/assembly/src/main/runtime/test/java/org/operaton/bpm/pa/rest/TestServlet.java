@@ -166,9 +166,9 @@ public class TestServlet extends HttpServlet {
 
     IdentityService identityService = processEngine.getIdentityService();
 
-    identityService.deleteMembership("admin", Groups.CAMUNDA_ADMIN);
+    identityService.deleteMembership("admin", Groups.OPERATON_ADMIN);
 
-    identityService.deleteGroup(Groups.CAMUNDA_ADMIN);
+    identityService.deleteGroup(Groups.OPERATON_ADMIN);
     identityService.deleteUser("admin");
 
   }

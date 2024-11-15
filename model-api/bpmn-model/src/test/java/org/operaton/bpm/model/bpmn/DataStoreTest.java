@@ -17,11 +17,10 @@
 package org.operaton.bpm.model.bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.DataStore;
 import org.operaton.bpm.model.bpmn.instance.DataStoreReference;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  * @author Falko Menge
@@ -30,7 +29,7 @@ public class DataStoreTest {
 
   private static BpmnModelInstance modelInstance;
 
-  @BeforeClass
+  @BeforeAll
   public static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(DataStoreTest.class.getResourceAsStream("DataStoreTest.bpmn"));
   }

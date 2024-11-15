@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.impl.util.ModelUtil;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;

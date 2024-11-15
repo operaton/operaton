@@ -20,13 +20,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.cmmn.impl.instance.CaseFileItemTransitionStandardEventImpl;
 import org.operaton.bpm.model.cmmn.instance.Case;
 import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
 import org.operaton.bpm.model.cmmn.instance.DefaultControl;
 import org.operaton.bpm.model.cmmn.instance.Definitions;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
-import org.junit.Test;
 
 public class GenerateIdTest {
 

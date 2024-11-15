@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.Query;
 import org.operaton.bpm.model.bpmn.impl.QueryImpl;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
-import org.junit.Before;
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -41,7 +41,7 @@ public abstract class AbstractEventDefinitionTest extends BpmnModelElementInstan
     return null;
   }
 
-  @Before
+  @BeforeEach
   public void getEvent() {
     InputStream inputStream = ReflectUtil.getResourceAsStream("org/operaton/bpm/model/bpmn/EventDefinitionsTest.xml");
     IntermediateThrowEvent event = Bpmn.readModelFromStream(inputStream).getModelElementById("event");

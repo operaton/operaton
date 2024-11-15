@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.xml.testmodel;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelBuilder;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAME;

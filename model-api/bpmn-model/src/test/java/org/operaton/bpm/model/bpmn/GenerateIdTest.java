@@ -18,11 +18,11 @@ package org.operaton.bpm.model.bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.Definitions;
 import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.instance.StartEvent;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
-import org.junit.Test;
 
 public class GenerateIdTest {
 

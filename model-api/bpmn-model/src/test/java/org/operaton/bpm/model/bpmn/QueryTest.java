@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.FlowNode;
 import org.operaton.bpm.model.bpmn.instance.Gateway;
 import org.operaton.bpm.model.bpmn.instance.Task;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -37,7 +36,7 @@ public class QueryTest {
   private static Query<FlowNode> gateway1Succeeding;
   private static Query<FlowNode> gateway2Succeeding;
 
-  @BeforeClass
+  @BeforeAll
   public static void createModelInstance() {
     modelInstance = Bpmn.createProcess()
       .startEvent().id("start")
@@ -63,7 +62,7 @@ public class QueryTest {
 
   }
 
-  @AfterClass
+  @AfterAll
   public static void validateModelInstance() {
     Bpmn.validateModel(modelInstance);
   }

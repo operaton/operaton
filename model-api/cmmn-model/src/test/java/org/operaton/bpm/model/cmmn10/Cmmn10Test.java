@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
@@ -44,7 +45,6 @@ import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.TimerEvent;
 import org.operaton.bpm.model.cmmn.instance.UserEvent;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov

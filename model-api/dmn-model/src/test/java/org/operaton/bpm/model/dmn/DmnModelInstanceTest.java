@@ -18,9 +18,9 @@ package org.operaton.bpm.model.dmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.dmn.impl.DmnModelConstants;
 import org.operaton.bpm.model.dmn.instance.Definitions;
-import org.junit.Test;
 
 /**
  * @author Filip Hrisafov

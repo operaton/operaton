@@ -15,24 +15,21 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.instance;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.model.xml.ModelInstance;
-import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.testmodel.Gender;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.testmodel.TestModelTest;
 import org.operaton.bpm.model.xml.testmodel.instance.Animals;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.Before;
-import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Daniel Meyer
@@ -46,17 +43,11 @@ public class ModelElementInstanceTest extends TestModelTest {
   private Bird daisy;
   private Bird hedwig;
 
-  public ModelElementInstanceTest(String testName, ModelInstance testModelInstance, AbstractModelParser modelParser) {
-    super(testName, testModelInstance, modelParser);
+  static Stream<Arguments> models() {
+    return Stream.of(createModel(), parseModel(ModelElementInstanceTest.class)).map(Arguments::of);
   }
 
-  @Parameters(name="Model {0}")
-  public static Collection<Object[]> models() {
-    Object[][] models = {createModel(), parseModel(ModelElementInstanceTest.class)};
-    return Arrays.asList(models);
-  }
-
-  private static Object[] createModel() {
+  private static TestModelArgs createModel() {
     TestModelParser modelParser = new TestModelParser();
     ModelInstance modelInstance = modelParser.getEmptyModel();
 
@@ -72,12 +63,12 @@ public class ModelElementInstanceTest extends TestModelTest {
     daisy.setTextContent("\n        some text content with outer line breaks\n    ");
     hedwig.setTextContent("\n        some text content with inner\n        line breaks\n    ");
 
-    return new Object[]{"created", modelInstance, modelParser};
+    return new TestModelArgs("created", modelInstance, modelParser);
   }
 
-  @Before
-  public void copyModelInstance() {
-    modelInstance = cloneModelInstance();
+  @Override
+  protected void init(TestModelArgs args) {
+    super.init(args);
 
     animals = (Animals) modelInstance.getDocumentElement();
     tweety = modelInstance.getModelElementById("tweety");
@@ -86,8 +77,10 @@ public class ModelElementInstanceTest extends TestModelTest {
     hedwig = modelInstance.getModelElementById("hedwig");
   }
 
-  @Test
-  public void testAttribute() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void testAttribute(TestModelArgs args) {
+    init(args);
     String tweetyName = tweety.getId() + "-name";
     tweety.setAttributeValue("name", tweetyName);
     assertThat(tweety.getAttributeValue("name")).isEqualTo(tweetyName);
@@ -95,8 +88,10 @@ public class ModelElementInstanceTest extends TestModelTest {
     assertThat(tweety.getAttributeValue("name")).isNull();
   }
 
-  @Test
-  public void testAttributeWithNamespace() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void testAttributeWithNamespace(TestModelArgs args) {
+    init(args);
     String tweetyName = tweety.getId() + "-name";
     tweety.setAttributeValueNs(MODEL_NAMESPACE, "name", tweetyName);
     assertThat(tweety.getAttributeValue("name")).isEqualTo(tweetyName);
@@ -106,8 +101,10 @@ public class ModelElementInstanceTest extends TestModelTest {
     assertThat(tweety.getAttributeValueNs(MODEL_NAMESPACE, "name")).isNull();
   }
 
-  @Test
-  public void TestElementType() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void TestElementType(TestModelArgs args) {
+    init(args);
     ModelElementType birdType = modelInstance.getModel().getType(Bird.class);
     assertThat(tweety.getElementType()).isEqualTo(birdType);
     assertThat(donald.getElementType()).isEqualTo(birdType);
@@ -115,8 +112,10 @@ public class ModelElementInstanceTest extends TestModelTest {
     assertThat(hedwig.getElementType()).isEqualTo(birdType);
   }
 
-  @Test
-  public void TestParentElement() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void TestParentElement(TestModelArgs args) {
+    init(args);
     assertThat(tweety.getParentElement()).isEqualTo(animals);
     assertThat(donald.getParentElement()).isEqualTo(animals);
     assertThat(daisy.getParentElement()).isEqualTo(animals);
@@ -128,16 +127,20 @@ public class ModelElementInstanceTest extends TestModelTest {
     assertThat(timmy.getParentElement()).isNull();
   }
 
-  @Test
-  public void TestModelInstance() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void TestModelInstance(TestModelArgs args) {
+    init(args);
     assertThat(tweety.getModelInstance()).isEqualTo(modelInstance);
     assertThat(donald.getModelInstance()).isEqualTo(modelInstance);
     assertThat(daisy.getModelInstance()).isEqualTo(modelInstance);
     assertThat(hedwig.getModelInstance()).isEqualTo(modelInstance);
   }
 
-  @Test
-  public void testReplaceWithElement() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void testReplaceWithElement(TestModelArgs args) {
+    init(args);
     Bird timmy = modelInstance.newInstance(Bird.class);
     timmy.setId("timmy");
     timmy.setGender(Gender.Male);
@@ -153,16 +156,20 @@ public class ModelElementInstanceTest extends TestModelTest {
       .doesNotContain(tweety);
   }
 
-  @Test
-  public void testReplaceRootElement() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void testReplaceRootElement(TestModelArgs args) {
+    init(args);
     assertThat(((Animals) modelInstance.getDocumentElement()).getAnimals()).isNotEmpty();
     Animals newAnimals = modelInstance.newInstance(Animals.class);
     modelInstance.setDocumentElement(newAnimals);
     assertThat(((Animals) modelInstance.getDocumentElement()).getAnimals()).isEmpty();
   }
 
-  @Test
-  public void testTextContent() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void testTextContent(TestModelArgs args) {
+    init(args);
     assertThat(tweety.getTextContent()).isEqualTo("");
     assertThat(donald.getTextContent()).isEqualTo("some text content");
     assertThat(daisy.getTextContent()).isEqualTo("some text content with outer line breaks");
@@ -173,8 +180,10 @@ public class ModelElementInstanceTest extends TestModelTest {
     assertThat(tweety.getTextContent()).isEqualTo(testContent.trim());
   }
 
-  @Test
-  public void testRawTextContent() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void testRawTextContent(TestModelArgs args) {
+    init(args);
     assertThat(tweety.getRawTextContent()).isEqualTo("");
     assertThat(donald.getRawTextContent()).isEqualTo("some text content");
     assertThat(daisy.getRawTextContent()).isEqualTo("\n        some text content with outer line breaks\n    ");

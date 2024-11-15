@@ -28,10 +28,10 @@ import static org.operaton.bpm.model.dmn.HitPolicy.PRIORITY;
 import static org.operaton.bpm.model.dmn.HitPolicy.RULE_ORDER;
 import static org.operaton.bpm.model.dmn.HitPolicy.UNIQUE;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.dmn.impl.instance.InputDataImpl;
 import org.operaton.bpm.model.dmn.instance.*;
 import org.operaton.bpm.model.dmn.util.DmnModelResource;
-import org.junit.Test;
 
 import java.util.Collection;
 

@@ -16,28 +16,28 @@
  */
 package org.operaton.bpm.model.bpmn.util;
 
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.test.GetModelElementTypeRule;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
 
 /**
  * @author Sebastian Menski
  */
-public class GetBpmnModelElementTypeRule extends TestWatcher implements GetModelElementTypeRule {
+public class GetBpmnModelElementTypeRule implements GetModelElementTypeRule, BeforeAllCallback {
 
   private ModelInstance modelInstance;
   private Model model;
   private ModelElementType modelElementType;
 
   @Override
-  @SuppressWarnings("unchecked")
-  protected void starting(Description description) {
-    String className = description.getClassName();
+  public void beforeAll(ExtensionContext context) {
+    String className = context.getTestClass().orElseThrow().getName();
     className =  className.replaceAll("Test", "");
     Class<? extends ModelElementInstance> instanceClass = null;
     try {

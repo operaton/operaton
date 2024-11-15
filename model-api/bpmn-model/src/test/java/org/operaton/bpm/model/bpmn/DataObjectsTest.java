@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import java.util.Collection;
 
@@ -31,7 +30,7 @@ public class DataObjectsTest {
 
   private static BpmnModelInstance modelInstance;
 
-  @BeforeClass
+  @BeforeAll
   public static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(DataObjectsTest.class.getResourceAsStream("DataObjectTest.bpmn"));
   }

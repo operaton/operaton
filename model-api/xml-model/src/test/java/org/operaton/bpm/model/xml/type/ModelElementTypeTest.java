@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.type;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.util.ModelTypeException;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.testmodel.instance.*;
-import org.junit.Before;
-import org.junit.Test;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
@@ -40,7 +39,7 @@ public class ModelElementTypeTest {
   private ModelElementType flyingAnimalType;
   private ModelElementType birdType;
 
-  @Before
+  @BeforeEach
   public void getTypes() {
     TestModelParser modelParser = new TestModelParser();
     modelInstance = modelParser.getEmptyModel();

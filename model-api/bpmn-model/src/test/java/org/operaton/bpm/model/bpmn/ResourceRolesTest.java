@@ -19,14 +19,13 @@ package org.operaton.bpm.model.bpmn;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
-
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.HumanPerformer;
 import org.operaton.bpm.model.bpmn.instance.Performer;
 import org.operaton.bpm.model.bpmn.instance.PotentialOwner;
 import org.operaton.bpm.model.bpmn.instance.ResourceRole;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  * @author Dario Campagna
@@ -35,7 +34,7 @@ public class ResourceRolesTest {
 
   private static BpmnModelInstance modelInstance;
 
-  @BeforeClass
+  @BeforeAll
   public static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(ResourceRolesTest.class.getResourceAsStream("ResourceRolesTest.bpmn"));
   }

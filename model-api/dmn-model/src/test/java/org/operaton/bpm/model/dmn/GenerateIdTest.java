@@ -18,11 +18,11 @@ package org.operaton.bpm.model.dmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.dmn.instance.Decision;
 import org.operaton.bpm.model.dmn.instance.DecisionTable;
 import org.operaton.bpm.model.dmn.instance.Definitions;
 import org.operaton.bpm.model.dmn.instance.Output;
-import org.junit.Test;
 
 public class GenerateIdTest {
 

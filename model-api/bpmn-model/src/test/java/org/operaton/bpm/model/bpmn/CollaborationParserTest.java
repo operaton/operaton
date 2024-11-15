@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.*;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import java.util.Collection;
 
@@ -33,7 +32,7 @@ public class CollaborationParserTest {
   private static BpmnModelInstance modelInstance;
   private static Collaboration collaboration;
 
-  @BeforeClass
+  @BeforeAll
   public static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(CollaborationParserTest.class.getResourceAsStream("CollaborationParserTest.bpmn"));
     collaboration = modelInstance.getModelElementById("collaboration1");
@@ -94,7 +93,7 @@ public class CollaborationParserTest {
   }
 
 
-  @AfterClass
+  @AfterAll
   public static void validateModel() {
     Bpmn.validateModel(modelInstance);
   }

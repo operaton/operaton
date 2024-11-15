@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance.operaton;
-
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.PROCESS_ID;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.OperatonExtensionsTest;
 import org.operaton.bpm.model.bpmn.impl.BpmnModelConstants;
 import org.operaton.bpm.model.bpmn.impl.instance.ProcessImpl;
 import org.operaton.bpm.model.bpmn.instance.ExtensionElements;
-import org.junit.Test;
 
 /**
  * Test to check the interoperability when changing elements and attributes with
@@ -52,7 +51,7 @@ public class CompatabilityTest {
       listener.setOperatonClass(listenerClass);
     }
     for (OperatonExecutionListener listener : listeners) {
-      assertThat(listener.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "class"), is(listenerClass));
+      assertThat(listener.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "class")).isEqualTo(listenerClass);
     }
   }
 
@@ -67,11 +66,11 @@ public class CompatabilityTest {
     process.setOperatonHistoryTimeToLive(historyTimeToLive);
     process.setOperatonIsStartableInTasklist(false);
     process.setOperatonVersionTag("v1.0.0");
-    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "jobPriority"), is(priority));
-    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "taskPriority"), is(priority));
-    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "historyTimeToLive"), is(historyTimeToLive.toString()));
-    assertThat(process.isOperatonStartableInTasklist(), is(false));
-    assertThat(process.getOperatonVersionTag(), is("v1.0.0"));
+    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "jobPriority")).isEqualTo(priority);
+    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "taskPriority")).isEqualTo(priority);
+    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "historyTimeToLive")).isEqualTo(historyTimeToLive.toString());
+    assertThat(process.isOperatonStartableInTasklist()).isEqualTo(false);
+    assertThat(process.getOperatonVersionTag()).isEqualTo("v1.0.0");
   }
 
 }

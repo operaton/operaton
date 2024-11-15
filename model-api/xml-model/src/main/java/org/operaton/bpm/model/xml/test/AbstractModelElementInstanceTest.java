@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.model.xml.test;
 
-import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
-import static org.junit.Assert.fail;
-
-import java.util.Collection;
-
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.type.ModelElementTypeImpl;
@@ -30,9 +26,14 @@ import org.operaton.bpm.model.xml.test.assertions.AttributeAssert;
 import org.operaton.bpm.model.xml.test.assertions.ChildElementAssert;
 import org.operaton.bpm.model.xml.test.assertions.ModelElementTypeAssert;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.Test;
 import org.w3c.dom.DOMException;
 
+import java.util.Collection;
+
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
+
+// TODO Move class to test sources
 public abstract class AbstractModelElementInstanceTest {
 
 

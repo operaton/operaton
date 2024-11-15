@@ -29,6 +29,7 @@ import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
@@ -36,7 +37,6 @@ import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
 import org.operaton.bpm.model.bpmn.instance.di.Waypoint;
-import org.junit.Test;
 
 public class CoordinatesGenerationTest {
 

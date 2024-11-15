@@ -17,7 +17,7 @@
 package org.operaton.spin.plugin.variables;
 
 import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;

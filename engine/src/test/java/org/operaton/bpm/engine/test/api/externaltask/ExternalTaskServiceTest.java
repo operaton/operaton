@@ -226,11 +226,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
 
     // given the same priority, DESC date is applied
-    assertThat(result.get(0).getCreateTime()).isAfterOrEqualsTo(result.get(1).getCreateTime());
+    assertThat(result.get(0).getCreateTime()).isAfterOrEqualTo(result.get(1).getCreateTime());
 
     // given the rest of priorities, DESC date should apply between them
-    assertThat(result.get(2).getCreateTime()).isAfterOrEqualsTo(result.get(3).getCreateTime());
-    assertThat(result.get(3).getCreateTime()).isAfterOrEqualsTo(result.get(4).getCreateTime());
+    assertThat(result.get(2).getCreateTime()).isAfterOrEqualTo(result.get(3).getCreateTime());
+    assertThat(result.get(3).getCreateTime()).isAfterOrEqualTo(result.get(4).getCreateTime());
   }
 
   @Deployment(resources = {
@@ -270,11 +270,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
 
     // given the same priority, ASC date is applied
-    assertThat(result.get(0).getCreateTime()).isBeforeOrEqualsTo(result.get(1).getCreateTime());
+    assertThat(result.get(0).getCreateTime()).isBeforeOrEqualTo(result.get(1).getCreateTime());
 
     // given the rest of priorities, ASC date should apply between them
-    assertThat(result.get(2).getCreateTime()).isBeforeOrEqualsTo(result.get(3).getCreateTime());
-    assertThat(result.get(3).getCreateTime()).isBeforeOrEqualsTo(result.get(4).getCreateTime());
+    assertThat(result.get(2).getCreateTime()).isBeforeOrEqualTo(result.get(3).getCreateTime());
+    assertThat(result.get(3).getCreateTime()).isBeforeOrEqualTo(result.get(4).getCreateTime());
   }
 
   @Deployment(resources = {
@@ -2624,7 +2624,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTaskService.handleFailure(task.getId(), WORKER_ID, ERROR_MESSAGE, 0, 3000L);
     externalTaskService.setRetries(task.getId(), 5);
     ClockUtil.setCurrentTime(nowPlus(3000L));
-    tasks = externalTaskService.fetchAndLock(5, WORKER_ID)
+    externalTaskService.fetchAndLock(5, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
     ClockUtil.setCurrentTime(nowPlus(4000L));
@@ -2969,12 +2969,12 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     LockedExternalTask task = tasks.get(0);
     externalTaskService.handleFailure(task.getId(), WORKER_ID, ERROR_MESSAGE, 2, 3000L);
     ClockUtil.setCurrentTime(nowPlus(3000L));
-    tasks = externalTaskService.fetchAndLock(5, WORKER_ID)
+    externalTaskService.fetchAndLock(5, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
     ClockUtil.setCurrentTime(nowPlus(5000L));
     externalTaskService.handleFailure(task.getId(), WORKER_ID, ERROR_MESSAGE, 1, 3000L);
-    tasks = externalTaskService.fetchAndLock(5, WORKER_ID)
+    externalTaskService.fetchAndLock(5, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
 
@@ -3103,7 +3103,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, "anotherWorkerId", true)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertEquals(externalTasks.get(0).getPriority(), 9);
+    assertThat(externalTasks.get(0).getPriority()).isEqualTo(9);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3126,8 +3126,8 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTasks = externalTaskService.fetchAndLock(1, WORKER_ID, true)
       .topic(TOPIC_NAME, LOCK_TIME)
       .execute();
-    assertEquals(1, externalTasks.size());
-    assertEquals(externalTasks.get(0).getPriority(), 9);
+    assertThat(externalTasks).hasSize(1);
+    assertThat(externalTasks.get(0).getPriority()).isEqualTo(9);
   }
 
   @Deployment

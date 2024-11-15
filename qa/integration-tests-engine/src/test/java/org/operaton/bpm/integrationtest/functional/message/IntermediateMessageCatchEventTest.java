@@ -19,7 +19,6 @@ package org.operaton.bpm.integrationtest.functional.message;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -38,7 +37,7 @@ public class IntermediateMessageCatchEventTest extends AbstractFoxPlatformIntegr
 
   @Test
   public void test() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
+    runtimeService.startProcessInstanceByKey("testProcess");
 
     long eventSubscriptionCount = runtimeService.createEventSubscriptionQuery().count();
     assertEquals(1, eventSubscriptionCount);
@@ -47,7 +46,6 @@ public class IntermediateMessageCatchEventTest extends AbstractFoxPlatformIntegr
 
     assertNotNull(execution);
 
-    //runtimeService.messageEventReceived("Test Message", execution.getId());
     runtimeService.createMessageCorrelation("Test Message").correlate();
 
     eventSubscriptionCount = runtimeService.createEventSubscriptionQuery().count();

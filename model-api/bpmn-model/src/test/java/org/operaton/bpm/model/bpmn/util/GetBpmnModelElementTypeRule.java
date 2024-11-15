@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.bpmn.util;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.xml.Model;
@@ -38,7 +37,7 @@ public class GetBpmnModelElementTypeRule implements GetModelElementTypeRule, Bef
   @Override
   public void beforeAll(ExtensionContext context) {
     String className = context.getTestClass().orElseThrow().getName();
-    className =  className.replaceAll("Test", "");
+    className =  className.replace("Test", "");
     Class<? extends ModelElementInstance> instanceClass = null;
     try {
       instanceClass = (Class<? extends ModelElementInstance>) Class.forName(className);

@@ -70,11 +70,13 @@ public class ByteArrayValueMapper extends PrimitiveValueMapper<BytesValue> {
     }
   }
 
+  @Override
   protected boolean canWriteValue(TypedValue typedValue) {
     Object value = typedValue.getValue();
     return super.canWriteValue(typedValue) || value instanceof InputStream;
   }
 
+  @Override
   protected boolean canReadValue(TypedValueField typedValueField) {
     Object value = typedValueField.getValue();
     return value == null || value instanceof String;

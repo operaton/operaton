@@ -17,7 +17,6 @@
 package org.operaton.bpm.integrationtest.functional.event.beans;
 
 import org.operaton.bpm.application.ProcessApplication;
-import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 
 /**
@@ -30,20 +29,19 @@ public class ExecutionListenerProcessApplication extends org.operaton.bpm.applic
 
   public static final String LISTENER_INVOCATION_COUNT = "listenerInvocationCount";
 
+  @Override
   public ExecutionListener getExecutionListener() {
-    return new ExecutionListener() {
-      public void notify(DelegateExecution execution) throws Exception {
+    return execution -> {
 
-        int listenerInvocationCount = 0;
+      int listenerInvocationCount = 0;
 
-        if(execution.hasVariable(LISTENER_INVOCATION_COUNT)) {
-          listenerInvocationCount = (Integer) execution.getVariable(LISTENER_INVOCATION_COUNT);
-        }
-
-        listenerInvocationCount += 1;
-
-        execution.setVariable(LISTENER_INVOCATION_COUNT, listenerInvocationCount);
+      if(execution.hasVariable(LISTENER_INVOCATION_COUNT)) {
+        listenerInvocationCount = (Integer) execution.getVariable(LISTENER_INVOCATION_COUNT);
       }
+
+      listenerInvocationCount += 1;
+
+      execution.setVariable(LISTENER_INVOCATION_COUNT, listenerInvocationCount);
     };
   }
 

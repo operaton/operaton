@@ -17,12 +17,7 @@
 package org.operaton.bpm.qa.largedata.util;
 
 import com.google.common.collect.Lists;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -35,16 +30,11 @@ import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.operaton.bpm.qa.largedata.util.DmnHelper.createSimpleDmnModel;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static org.operaton.bpm.qa.largedata.util.DmnHelper.createSimpleDmnModel;
 
 public class EngineDataGenerator {
 
@@ -216,8 +206,7 @@ public class EngineDataGenerator {
   }
 
   protected List<Integer> createSequenceNumberList() {
-    return IntStream.range(0, numberOfInstancesToGenerate)
-      .boxed().collect(Collectors.toList());
+    return IntStream.range(0, numberOfInstancesToGenerate).boxed().toList();
   }
 
 

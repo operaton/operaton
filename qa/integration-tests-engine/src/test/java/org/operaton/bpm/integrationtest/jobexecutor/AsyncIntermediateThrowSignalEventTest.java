@@ -38,7 +38,7 @@ public class AsyncIntermediateThrowSignalEventTest extends AbstractFoxPlatformIn
   }
 
   @Test
-  public void testAsyncSignalEvent() throws InterruptedException {
+  public void testAsyncSignalEvent() {
     ProcessInstance piCatchSignal = runtimeService.startProcessInstanceByKey("catchSignal");
 
     ProcessInstance piThrowSignal = runtimeService.startProcessInstanceByKey("throwSignal");

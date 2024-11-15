@@ -51,18 +51,14 @@ public class VariableValue<T extends TypedValue> {
   }
 
   public T getTypedValue(boolean deserializeValue) {
-    if (cachedValue != null && cachedValue instanceof SerializableValue) {
-      SerializableValue serializableValue = (SerializableValue) cachedValue;
-      if(deserializeValue && !serializableValue.isDeserialized()) {
-        cachedValue = null;
-      }
+    if (deserializeValue && cachedValue instanceof SerializableValue serializableValue && !serializableValue.isDeserialized()) {
+      cachedValue = null;
     }
 
     if (cachedValue == null) {
       cachedValue = getSerializer().readValue(typedValueField, deserializeValue);
 
-      if (cachedValue instanceof DeferredFileValueImpl) {
-        DeferredFileValueImpl fileValue = (DeferredFileValueImpl) cachedValue;
+      if (cachedValue instanceof DeferredFileValueImpl fileValue) {
         fileValue.setExecutionId(executionId);
         fileValue.setVariableName(variableName);
       }

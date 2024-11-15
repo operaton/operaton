@@ -35,7 +35,7 @@ import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAME
  * @author Daniel Meyer
  * @author Sebastian Menski
  */
-public class ModelElementInstanceTest extends TestModelTest {
+class ModelElementInstanceTest extends TestModelTest {
 
   private Animals animals;
   private Bird tweety;

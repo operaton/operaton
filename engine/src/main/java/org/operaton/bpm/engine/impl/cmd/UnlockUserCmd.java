@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 /**
- * Allows to unlock users. Only CAMUNDA_ADMIN is authorised to do it.
+ * Allows to unlock users. Only OPERATON_ADMIN is authorised to do it.
  *
  * @author Yana Vasileva
  *

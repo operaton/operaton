@@ -531,7 +531,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldRegisterProcessApplicationAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
     ProcessApplicationReference reference = processApplication.getReference();
@@ -564,7 +564,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldRegisterProcessApplicationWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
     ProcessApplicationReference reference = processApplication.getReference();
@@ -594,7 +594,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldUnregisterProcessApplicationAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
@@ -628,7 +628,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldUnregisterProcessApplicationWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
@@ -660,7 +660,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetProcessApplicationForDeploymentAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
@@ -694,7 +694,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetProcessApplicationForDeploymentWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication();
@@ -726,7 +726,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetRegisteredDeploymentsAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
 
@@ -754,7 +754,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetRegisteredDeploymentsWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
@@ -783,7 +783,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldRegisterDeploymentAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
 
@@ -811,7 +811,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldRegisterDeploymentWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
@@ -843,7 +843,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldUnregisterDeploymentAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();
 
@@ -871,7 +871,7 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldUnregisterDeploymentWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
     String deploymentId = createDeployment(null, FIRST_RESOURCE).getId();

@@ -133,7 +133,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
   @Test
   public void queryIncidentsByProcessInstanceIdsWithOperatonAdmin() {
 
-    identityService.setAuthentication("user", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);

@@ -255,7 +255,7 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
         public Boolean execute() {
           return processEngine.getIdentityService()
               .createUserQuery()
-              .memberOfGroup(Groups.CAMUNDA_ADMIN).count() == 0;
+              .memberOfGroup(Groups.OPERATON_ADMIN).count() == 0;
         }
       }, processEngine);
 

@@ -24,9 +24,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

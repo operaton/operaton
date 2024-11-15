@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
+import org.hamcrest.Matchers;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.batch.Batch;
@@ -38,7 +39,6 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.AbstractAsyncOperationsTest;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.hamcrest.collection.IsIn;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -149,8 +149,8 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     // then batch jobs with different deployment ids exist
     List<Job> batchJobs = managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).list();
     assertThat(batchJobs).hasSize(2);
-    Assert.assertThat(batchJobs.get(0).getDeploymentId(), IsIn.isOneOf(firstDeploymentId, secondDeploymentId));
-    Assert.assertThat(batchJobs.get(1).getDeploymentId(), IsIn.isOneOf(firstDeploymentId, secondDeploymentId));
+    Assert.assertThat(batchJobs.get(0).getDeploymentId(), Matchers.isOneOf(firstDeploymentId, secondDeploymentId));
+    Assert.assertThat(batchJobs.get(1).getDeploymentId(), Matchers.isOneOf(firstDeploymentId, secondDeploymentId));
     assertThat(batchJobs.get(0).getDeploymentId()).isNotEqualTo(batchJobs.get(1).getDeploymentId());
 
     // when the batch jobs for the first deployment are executed

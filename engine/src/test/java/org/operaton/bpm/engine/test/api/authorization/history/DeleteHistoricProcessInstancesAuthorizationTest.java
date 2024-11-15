@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.api.authorization.history;
 
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;

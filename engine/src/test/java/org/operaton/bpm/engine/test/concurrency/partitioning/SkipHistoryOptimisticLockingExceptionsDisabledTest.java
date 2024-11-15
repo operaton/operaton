@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.concurrency.partitioning;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -59,7 +58,7 @@ public class SkipHistoryOptimisticLockingExceptionsDisabledTest extends Abstract
     });
 
     // assume
-    assertThat(historyService.createHistoricVariableInstanceQuery().singleResult(), nullValue());
+    assertThat(historyService.createHistoricVariableInstanceQuery().singleResult()).isNull();
 
     asyncThread.waitUntilDone();
 

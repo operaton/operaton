@@ -23,9 +23,7 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DIS
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENABLED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

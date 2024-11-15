@@ -109,6 +109,8 @@ import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matchers;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -681,7 +683,7 @@ public class ProcessEngineRestServiceTest extends
         .header("Content-Disposition", "attachment; " +
                 "filename=\"" + filename + "\"; " +
                 "filename*=UTF-8''" + filename)
-        .contentType(CoreMatchers.<String>either(equalTo(ContentType.TEXT.toString() + ";charset=UTF-8")).or(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8")))
+        .contentType(Matchers.or(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8")))
       .when()
         .get(HISTORY_BINARY_VARIABLE_INSTANCE_URL);
 
@@ -754,7 +756,7 @@ public class ProcessEngineRestServiceTest extends
         .header("Content-Disposition", "attachment; " +
                 "filename=\"" + filename + "\"; " +
                 "filename*=UTF-8''" + filename)
-        .contentType(CoreMatchers.<String>either(equalTo(ContentType.TEXT.toString() + ";charset=UTF-8")).or(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8")))
+        .contentType(Matchers.or(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8")))
       .when()
         .get(HISTORY_BINARY_DETAIL_URL);
 

@@ -17,11 +17,9 @@
 package org.operaton.bpm.engine.rest.impl;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.notNullValue;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.any;
@@ -340,9 +338,9 @@ public class FetchAndLockRestServiceInteractionTest extends AbstractRestServiceT
     ArgumentCaptor<Authentication> argumentCaptor = ArgumentCaptor.forClass(Authentication.class);
     verify(identityServiceMock, atLeastOnce()).setAuthentication(argumentCaptor.capture());
 
-    assertThat(argumentCaptor.getValue().getUserId(), is(MockProvider.EXAMPLE_USER_ID));
-    assertThat(argumentCaptor.getValue().getGroupIds(), is(groupIds));
-    assertThat(argumentCaptor.getValue().getTenantIds(), is(tenantIds));
+    assertThat(argumentCaptor.getValue().getUserId()).isEqualTo(MockProvider.EXAMPLE_USER_ID);
+    assertThat(argumentCaptor.getValue().getGroupIds()).isEqualTo(groupIds);
+    assertThat(argumentCaptor.getValue().getTenantIds()).isEqualTo(tenantIds);
   }
 
   @Test

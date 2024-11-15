@@ -47,6 +47,8 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matchers;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -299,7 +301,7 @@ public class HistoricVariableInstanceRestServiceInteractionTest extends Abstract
     .when().get(VARIABLE_INSTANCE_BINARY_DATA_URL);
     //due to some problems with wildfly we gotta check this separately
     String contentType = response.getContentType();
-    assertThat(contentType, is(either(CoreMatchers.<Object>equalTo(ContentType.TEXT.toString() + "; charset=UTF-8")).or(CoreMatchers.<Object>equalTo(ContentType.TEXT.toString() + ";charset=UTF-8"))));
+    assertThat(contentType, Matchers.or(CoreMatchers.<Object>equalTo(ContentType.TEXT.toString() + ";charset=UTF-8")));
 
     verify(variableInstanceQueryMock, never()).disableBinaryFetching();
   }

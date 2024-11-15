@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -34,6 +32,8 @@ import static org.mockito.Mockito.when;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 import java.util.ArrayList;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +51,6 @@ import org.operaton.bpm.engine.rest.dto.externaltask.FetchExternalTasksExtendedD
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,6 +59,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import org.hamcrest.Matchers;
 
 /**
  * @author Tassilo Weidner
@@ -143,8 +144,8 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // then
-    verify(asyncResponse).resume(argThat(IsCollectionWithSize.hasSize(1)));
-    assertThat(handler.getPendingRequests().size(), is(0));
+    verify(asyncResponse).resume(argThat(Matchers.hasSize(1)));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
     verify(handler).suspend(Long.MAX_VALUE);
   }
 
@@ -162,7 +163,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse, never()).resume(any());
-    assertThat(handler.getPendingRequests().size(), is(1));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
     verify(handler).suspend(5000L);
   }
 
@@ -177,7 +178,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size(), is(1));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
     verify(handler).suspend(5000L);
 
     List<LockedExternalTask> tasks = new ArrayList<LockedExternalTask>();
@@ -191,8 +192,8 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // then
-    verify(asyncResponse).resume(argThat(IsCollectionWithSize.hasSize(1)));
-    assertThat(handler.getPendingRequests().size(), is(0));
+    verify(asyncResponse).resume(argThat(Matchers.hasSize(1)));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
     verify(handler).suspend(Long.MAX_VALUE);
   }
 
@@ -209,7 +210,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size(), is(1));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
     verify(handler).suspend(4000L);
 
     addSecondsToClock(4);
@@ -218,8 +219,8 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // then
-    verify(asyncResponse).resume(argThat(IsCollectionWithSize.hasSize(0)));
-    assertThat(handler.getPendingRequests().size(), is(0));
+    verify(asyncResponse).resume(argThat(Matchers.hasSize(0)));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
     verify(handler).suspend(Long.MAX_VALUE);
   }
 
@@ -237,7 +238,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size(), is(2));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(2);
     verify(handler).suspend(3000L);
 
     addSecondsToClock(4);
@@ -247,7 +248,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse, times(2)).resume(Collections.emptyList());
-    assertThat(handler.getPendingRequests().size(), is(0));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
     verify(handler).suspend(Long.MAX_VALUE);
   }
 
@@ -262,7 +263,7 @@ public class FetchAndLockHandlerTest {
     handler.addPendingRequest(createDto(5000L), asyncResponse, processEngine);
 
     // Then
-    assertThat(handler.getPendingRequests().size(), is(0));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
     verify(handler, never()).suspend(anyLong());
     verify(asyncResponse).resume(any(ProcessEngineException.class));
   }
@@ -278,7 +279,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size(), is(1));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
     verify(handler).suspend(5000L);
 
     // when
@@ -286,7 +287,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // then
-    assertThat(handler.getPendingRequests().size(), is(0));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
     verify(handler).suspend(Long.MAX_VALUE);
     verify(asyncResponse).resume(any(ProcessEngineException.class));
   }
@@ -296,7 +297,7 @@ public class FetchAndLockHandlerTest {
     // given - no pending requests
 
     // assume
-    assertThat(handler.getPendingRequests().size(), is(0));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
 
     // when
     AsyncResponse asyncResponse = mock(AsyncResponse.class);
@@ -304,12 +305,12 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(handler, never()).suspend(anyLong());
-    assertThat(handler.getPendingRequests().size(), is(0));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
 
     ArgumentCaptor<InvalidRequestException> argumentCaptor = ArgumentCaptor.forClass(InvalidRequestException.class);
     verify(asyncResponse).resume(argumentCaptor.capture());
-    assertThat(argumentCaptor.getValue().getMessage(), is("The asynchronous response timeout cannot " +
-      "be set to a value greater than " + FetchAndLockHandlerImpl.MAX_REQUEST_TIMEOUT +  " milliseconds"));
+    assertThat(argumentCaptor.getValue().getMessage()).isEqualTo("The asynchronous response timeout cannot " +
+      "be set to a value greater than " + FetchAndLockHandlerImpl.MAX_REQUEST_TIMEOUT + " milliseconds");
   }
 
   @Test
@@ -353,7 +354,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse).cancel();
-    assertThat(handler.getPendingRequests().size(), is(1));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
   }
 
   @Test
@@ -374,7 +375,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse, never()).cancel();
-    assertThat(handler.getPendingRequests().size(), is(2));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(2);
   }
 
   @Test
@@ -388,8 +389,8 @@ public class FetchAndLockHandlerTest {
     // then
     ArgumentCaptor<InvalidRequestException> argumentCaptor = ArgumentCaptor.forClass(InvalidRequestException.class);
     verify(asyncResponse).resume(argumentCaptor.capture());
-    assertThat(argumentCaptor.getValue().getMessage(), is("At the moment the server has to handle too " +
-      "many requests at the same time. Please try again later."));
+    assertThat(argumentCaptor.getValue().getMessage()).isEqualTo("At the moment the server has to handle too " +
+      "many requests at the same time. Please try again later.");
   }
 
   @Test
@@ -397,13 +398,13 @@ public class FetchAndLockHandlerTest {
     // given - no pending requests
 
     // assume
-    assertThat(handler.getPendingRequests().size(), is(0));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
 
     // when
     handler.acquire();
 
     // then
-    assertThat(handler.getPendingRequests().size(), is(0));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(0);
     verify(handler).suspend(Long.MAX_VALUE);
   }
 
@@ -415,7 +416,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size(), is(1));
+    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
 
     // when
     handler.rejectPendingRequests();
@@ -424,8 +425,8 @@ public class FetchAndLockHandlerTest {
     ArgumentCaptor<RestException> argumentCaptor = ArgumentCaptor.forClass(RestException.class);
 
     verify(asyncResponse).resume(argumentCaptor.capture());
-    assertThat(argumentCaptor.getValue().getStatus(), is(Status.INTERNAL_SERVER_ERROR));
-    assertThat(argumentCaptor.getValue().getMessage(), is("Request rejected due to shutdown of application server."));
+    assertThat(argumentCaptor.getValue().getStatus()).isEqualTo(Status.INTERNAL_SERVER_ERROR);
+    assertThat(argumentCaptor.getValue().getMessage()).isEqualTo("Request rejected due to shutdown of application server.");
   }
 
   protected FetchExternalTasksExtendedDto createDto(Long responseTimeout, String workerId) {

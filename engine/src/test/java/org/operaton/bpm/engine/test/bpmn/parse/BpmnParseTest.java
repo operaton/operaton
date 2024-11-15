@@ -16,33 +16,10 @@
  */
 package org.operaton.bpm.engine.test.bpmn.parse;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-
-import org.operaton.bpm.engine.ActivityTypes;
-import org.operaton.bpm.engine.ParseException;
-import org.operaton.bpm.engine.Problem;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryConditionalEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.BoundaryEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.CompensationEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessStartConditionalEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessStartEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.IntermediateConditionalEventBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.NoneStartEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.ThrowEscalationEventActivityBehavior;
+import org.junit.*;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
+import org.operaton.bpm.engine.impl.bpmn.behavior.*;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -69,12 +46,15 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
 import org.operaton.commons.testing.WatchLogger;
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.List;
+import java.util.Locale;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -98,16 +78,21 @@ public class BpmnParseTest {
   public RuntimeService runtimeService;
   public ProcessEngineConfigurationImpl processEngineConfiguration;
 
+  private Locale defaultLocale;
+
   @Before
   public void setup() {
     repositoryService = engineRule.getRepositoryService();
     runtimeService = engineRule.getRuntimeService();
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     processEngineConfiguration.setEnableXxeProcessing(false);
+    defaultLocale = Locale.getDefault();
+    Locale.setDefault(Locale.US);
   }
 
   @After
   public void tearDown() {
+    Locale.setDefault(defaultLocale);
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }

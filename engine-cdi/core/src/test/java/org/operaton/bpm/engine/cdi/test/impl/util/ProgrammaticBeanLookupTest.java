@@ -16,16 +16,10 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.util;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.enterprise.inject.Alternative;
 import javax.inject.Named;
-
-import org.operaton.bpm.engine.cdi.impl.ProcessEngineServicesProducer;
-import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
-import org.operaton.bpm.engine.cdi.test.impl.beans.SpecializedTestBean;
 import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -34,6 +28,9 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.engine.cdi.impl.ProcessEngineServicesProducer;
+import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
+import org.operaton.bpm.engine.cdi.test.impl.beans.SpecializedTestBean;
 
 /**
  *
@@ -88,7 +85,7 @@ public class ProgrammaticBeanLookupTest {
   public void testLookupBean() {
     deployer.deploy("normal");
     Object lookup = ProgrammaticBeanLookup.lookup("testOnly");
-    assertThat(lookup, instanceOf(TestBean.class));
+    assertThat(lookup).isInstanceOf(TestBean.class);
     deployer.undeploy("normal");
   }
 
@@ -96,8 +93,7 @@ public class ProgrammaticBeanLookupTest {
   public void testLookupShouldFindAlternative() {
     deployer.deploy("withAlternative");
     Object lookup = ProgrammaticBeanLookup.lookup("testOnly");
-    assertThat(lookup.getClass().getName(),
-        is(equalTo(AlternativeTestBean.class.getName())));
+    assertThat(lookup.getClass().getName()).isEqualTo(AlternativeTestBean.class.getName());
     deployer.undeploy("withAlternative");
   }
 
@@ -105,15 +101,14 @@ public class ProgrammaticBeanLookupTest {
   public void testLookupShouldFindSpecialization() {
     deployer.deploy("withSpecialization");
     Object lookup = ProgrammaticBeanLookup.lookup("testOnly");
-    assertThat(lookup.getClass().getName(),
-        is(equalTo(SpecializedTestBean.class.getName())));
+    assertThat(lookup.getClass().getName()).isEqualTo(SpecializedTestBean.class.getName());
     deployer.undeploy("withSpecialization");
   }
 
   @Test
   public void testLookupShouldSupportProducerMethods() {
     deployer.deploy("withProducerMethod");
-    assertEquals("exampleString", ProgrammaticBeanLookup.lookup("producedString"));
+    assertThat(ProgrammaticBeanLookup.lookup("producedString")).isEqualTo("exampleString");
     deployer.undeploy("withProducerMethod");
   }
 

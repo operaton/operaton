@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.test.api.history;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -28,8 +26,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.assertj.core.api.Assertions;
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.TaskService;
@@ -45,13 +48,6 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.AbstractAsyncOperationsTest;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Askar Akhmerov
@@ -136,12 +132,12 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     assertThat(batchJobs.size()).isEqualTo(2);
     assertThat(batchJobs.get(0).getDeploymentId())
         .satisfiesAnyOf(
-            arg -> assertThat(arg, is(firstDeploymentId)),
+            arg -> assertThat(arg).isEqualTo(firstDeploymentId),
             arg -> assertThat(arg).isNull()
         );
     assertThat(batchJobs.get(1).getDeploymentId())
         .satisfiesAnyOf(
-            arg -> assertThat(arg, is(firstDeploymentId)),
+            arg -> assertThat(arg).isEqualTo(firstDeploymentId),
             arg -> assertThat(arg).isNull()
         );
     assertThat(batchJobs.get(0).getDeploymentId()).isNotEqualTo(batchJobs.get(1).getDeploymentId());
@@ -179,8 +175,8 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     // then batch jobs with different deployment ids exist
     List<Job> batchJobs = managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).list();
     assertThat(batchJobs.size()).isEqualTo(2);
-    assertThat(batchJobs.get(0).getDeploymentId(), Matchers.isOneOf(firstDeploymentId, secondDeploymentId));
-    assertThat(batchJobs.get(1).getDeploymentId(), Matchers.isOneOf(firstDeploymentId, secondDeploymentId));
+    assertThat(batchJobs.get(0).getDeploymentId()).isIn(firstDeploymentId, secondDeploymentId);
+    assertThat(batchJobs.get(1).getDeploymentId()).isIn(firstDeploymentId, secondDeploymentId);
     assertThat(batchJobs.get(0).getDeploymentId()).isNotEqualTo(batchJobs.get(1).getDeploymentId());
     assertThat(historicProcessInstances.size()).isEqualTo(4);
     assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isEqualTo(2L);

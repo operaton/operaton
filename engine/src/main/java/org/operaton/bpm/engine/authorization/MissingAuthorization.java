@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.authorization;
 
+import java.util.Objects;
+
 /**
  * Wrapper containing the missing authorization information. It contains the name of the violated permission,
  * the type of the resouce and the Id of the resource.
@@ -53,5 +55,21 @@ public class MissingAuthorization {
         + ", resourceType=" + resourceType
         + ", resourceId=" + resourceId
         + "]";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    MissingAuthorization that = (MissingAuthorization) o;
+    return Objects.equals(permissionName, that.permissionName) && Objects.equals(resourceType, that.resourceType)
+        && Objects.equals(resourceId, that.resourceId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(permissionName, resourceType, resourceId);
   }
 }

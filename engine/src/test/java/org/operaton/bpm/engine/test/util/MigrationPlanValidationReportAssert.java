@@ -19,14 +19,11 @@ package org.operaton.bpm.engine.test.util;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
-
+import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.migration.MigrationInstructionValidationReport;
 import org.operaton.bpm.engine.migration.MigrationPlanValidationReport;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
 
 public class MigrationPlanValidationReportAssert {
 
@@ -54,7 +51,7 @@ public class MigrationPlanValidationReportAssert {
         .findFirst()
         .ifPresent(entry -> failuresFound.addAll(entry.getValue().getFailures()));
 
-    org.assertj.core.api.Assertions.assertThat(failuresFound)
+    Assertions.assertThat(failuresFound)
         .as("Expected failures for variable name '%s':\n%sBut found failures:\n%s",
             name, joinFailures(expectedFailures), joinFailures(failuresFound.toArray()))
         .containsExactlyInAnyOrder(expectedFailures);
@@ -65,23 +62,24 @@ public class MigrationPlanValidationReportAssert {
   public MigrationPlanValidationReportAssert hasInstructionFailures(String activityId, String... expectedFailures) {
     isNotNull();
 
-    List<String> failuresFound = new ArrayList<String>();
-
+    // Gather all failures for the given activityId
+    List<String> failuresFound = new ArrayList<>();
     for (MigrationInstructionValidationReport instructionReport : actual.getInstructionReports()) {
       String sourceActivityId = instructionReport.getMigrationInstruction().getSourceActivityId();
-      if ((activityId == null && sourceActivityId == null) || (activityId != null && activityId.equals(sourceActivityId))) {
+      if ((activityId == null && sourceActivityId == null) ||
+          (activityId != null && activityId.equals(sourceActivityId))) {
         failuresFound.addAll(instructionReport.getFailures());
       }
     }
 
-    Collection<Matcher<? super String>> matchers = new ArrayList<Matcher<? super String>>();
-    for (String expectedFailure : expectedFailures) {
-      matchers.add(Matchers.containsString(expectedFailure));
-    }
-
-    Assert.assertThat("Expected failures for activity id '" + activityId + "':\n" + joinFailures(expectedFailures) +
-      "But found failures:\n" + joinFailures(failuresFound.toArray()),
-      failuresFound, Matchers.containsInAnyOrder(matchers));
+    // Check that the expected failures are contained in the found failures
+    Assertions.assertThat(failuresFound)
+        .as("Expected failures for activity id '%s':%n%s%nBut found failures:%n%s",
+            activityId,
+            joinFailures(expectedFailures),
+            joinFailures(failuresFound.toArray()))
+        .hasSize(expectedFailures.length)
+        .allMatch(failure -> Arrays.stream(expectedFailures).anyMatch(failure::startsWith));
 
     return this;
   }

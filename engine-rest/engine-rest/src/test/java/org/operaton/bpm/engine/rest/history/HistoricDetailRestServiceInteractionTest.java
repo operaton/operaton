@@ -17,10 +17,9 @@
 package org.operaton.bpm.engine.rest.history;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.either;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -28,8 +27,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import javax.ws.rs.core.Response.Status;
-
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.history.HistoricDetailQuery;
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
@@ -42,16 +46,6 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matchers;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 
 /**
  * @author Daniel Meyer
@@ -323,7 +317,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
     .when().get(VARIABLE_INSTANCE_BINARY_DATA_URL);
     //due to some problems with wildfly we gotta check this separately
     String contentType = response.getContentType();
-    assertThat(contentType, Matchers.or(CoreMatchers.<Object>equalTo(ContentType.TEXT.toString() + ";charset=UTF-8")));
+    assertThat(contentType).isEqualTo(ContentType.TEXT.toString() + ";charset=UTF-8");
 
     verify(historicDetailQueryMock, never()).disableBinaryFetching();
 

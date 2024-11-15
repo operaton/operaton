@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.util;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+import org.junit.Assert;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -31,7 +31,6 @@ import org.operaton.bpm.engine.authorization.MissingAuthorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resource;
-import org.junit.Assert;
 
 /**
  * @author Thorben Lindhauer
@@ -84,7 +83,8 @@ public class AuthorizationScenarioInstance {
       List<MissingAuthorization> actualMissingAuthorizations = getActualMissingAuthorizations(e);
       List<MissingAuthorization> expectedMissingAuthorizations = MissingAuthorizationMatcher.asMissingAuthorizations(missingAuthorizations);
 
-      Assert.assertThat(actualMissingAuthorizations, containsInAnyOrder(MissingAuthorizationMatcher.asMatchers(expectedMissingAuthorizations)));
+      assertThat(actualMissingAuthorizations)
+          .containsExactlyInAnyOrderElementsOf(expectedMissingAuthorizations);
 
       for (Authorization missingAuthorization : missingAuthorizations) {
         Assert.assertTrue(assertionFailureMessage, message.contains(missingAuthorization.getUserId()));

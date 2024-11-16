@@ -176,7 +176,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     // when
     processDefinitions = repositoryService.createProcessDefinitionQuery().deployedAfter(timeAfterDeploymentThree).list();
     // then
-    assertThat(processDefinitions).hasSize(0);
+    assertThat(processDefinitions).isEmpty();
   }
 
   @Test
@@ -219,7 +219,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThatProcessDefinitionsWereDeployedAt(processDefinitions, timeAtDeploymentThree);
 
     processDefinitions = repositoryService.createProcessDefinitionQuery().deployedAt(DateUtils.addSeconds(ClockUtil.getCurrentTime(), 5)).list();
-    assertThat(processDefinitions).hasSize(0);
+    assertThat(processDefinitions).isEmpty();
   }
 
   @Test

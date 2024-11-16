@@ -146,7 +146,7 @@ class UnknownAnimalTest {
 
   @Test
   void testAddChildToUnknownAnimal() {
-    assertThat(wanda.getChildElementsByType(flipper.getElementType())).hasSize(0);
+    assertThat(wanda.getChildElementsByType(flipper.getElementType())).isEmpty();
     wanda.insertElementAfter(flipper, null);
     assertThat(wanda.getChildElementsByType(flipper.getElementType())).hasSize(1);
   }

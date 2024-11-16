@@ -72,7 +72,7 @@ public class LdapQueryToleranceTest {
 
     // then
     // groups with id null were not returned
-    assertThat(groups).hasSize(0);
+    assertThat(groups).isEmpty();
     assertThat(count).isZero();
     List<ILoggingEvent> filteredLog = loggingRule.getFilteredLog("LDAP-00004 LDAP group query returned a group with id null.");
     assertThat(filteredLog).hasSize(12); // 2 queries * 6 roles (groupOfNames)
@@ -92,7 +92,7 @@ public class LdapQueryToleranceTest {
 
     // then
     // groups with id null were not returned
-    assertThat(users).hasSize(0);
+    assertThat(users).isEmpty();
     assertThat(count).isZero();
     List<ILoggingEvent> filteredLog = loggingRule.getFilteredLog("LDAP-00004 LDAP user query returned a user with id null.");
     assertThat(filteredLog).hasSize(24); // 2 queries * 12 users

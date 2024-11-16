@@ -1750,7 +1750,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("userTask");
     List<VariableInstance> list = runtimeService.createVariableInstanceQuery().variableName("foo").list();
-    assertThat(list).hasSize(0);
+    assertThat(list).isEmpty();
   }
 
   @Test
@@ -1975,7 +1975,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("userTask");
     List<VariableInstance> list = runtimeService.createVariableInstanceQuery().variableName("foo").list();
-    assertThat(list).hasSize(0);
+    assertThat(list).isEmpty();
   }
 
   @Test
@@ -2207,7 +2207,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // no error is thrown
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -2229,7 +2229,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // no error is thrown
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test

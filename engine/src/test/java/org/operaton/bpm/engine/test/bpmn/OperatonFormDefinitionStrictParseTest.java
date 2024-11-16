@@ -82,7 +82,7 @@ public class OperatonFormDefinitionStrictParseTest {
     // no form definition was created
     List<OperatonFormDefinition> formDefinitions = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired()
         .execute(new FindOperatonFormDefinitionsCmd());
-    assertThat(formDefinitions).hasSize(0);
+    assertThat(formDefinitions).isEmpty();
 
   }
 
@@ -96,6 +96,6 @@ public class OperatonFormDefinitionStrictParseTest {
       testRule.deploy(FORM);
     }).isInstanceOf(ProcessEngineException.class)
     .hasMessageContaining("ENGINE-09033 Could not parse Operaton Form resource org/operaton/bpm/engine/test/bpmn/OperatonFormDefinitionStrictParseTest.anyForm.form.");
-    assertThat(repositoryService.createDeploymentQuery().list()).hasSize(0);
+    assertThat(repositoryService.createDeploymentQuery().list()).isEmpty();
   }
 }

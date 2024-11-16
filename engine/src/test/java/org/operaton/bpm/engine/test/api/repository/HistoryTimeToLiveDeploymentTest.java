@@ -197,7 +197,7 @@ public class HistoryTimeToLiveDeploymentTest {
         .addClasspathResource("org/operaton/bpm/engine/test/api/repository/version1.bpmn20.xml"));
 
     // then
-    assertThat(loggingRule.getFilteredLog(EXPECTED_DEFAULT_CONFIG_MSG)).hasSize(0);
+    assertThat(loggingRule.getFilteredLog(EXPECTED_DEFAULT_CONFIG_MSG)).isEmpty();
   }
 
   @Test

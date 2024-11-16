@@ -124,7 +124,7 @@ public class BatchJobPriorityRangeTest {
 
     // then
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertThat(acquirableJobs).hasSize(0);
+    assertThat(acquirableJobs).isEmpty();
 
     Job seedJob = helper.getSeedJob(batch);
     assertThat(seedJob.getPriority()).isEqualTo(20L);

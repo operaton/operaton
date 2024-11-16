@@ -694,7 +694,7 @@ public class BatchStatisticsQueryTest {
     assertThat(query1.count()).isEqualTo(1);
 
     assertThat(query2.count()).isZero();
-    assertThat(query2.list()).hasSize(0);
+    assertThat(query2.list()).isEmpty();
   }
 
   @Test
@@ -712,7 +712,7 @@ public class BatchStatisticsQueryTest {
 
     // then
     assertThat(query1.count()).isZero();
-    assertThat(query1.list()).hasSize(0);
+    assertThat(query1.list()).isEmpty();
 
     final List<BatchStatistics> batchStatistics = query2.list();
     assertThat(batchStatistics.get(0).getId()).isEqualTo(batch.getId());
@@ -747,7 +747,7 @@ public class BatchStatisticsQueryTest {
     assertThat(query2.list()).hasSize(1);
     assertThat(query2.count()).isEqualTo(1);
 
-    assertThat(query3.list()).hasSize(0);
+    assertThat(query3.list()).isEmpty();
     assertThat(query3.count()).isZero();
   }
 

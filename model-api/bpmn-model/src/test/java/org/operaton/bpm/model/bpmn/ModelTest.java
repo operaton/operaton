@@ -55,7 +55,7 @@ class ModelTest {
     assertThat(allBaseTypes).hasSize(3);
 
     allBaseTypes = ModelUtil.calculateAllBaseTypes(model.getType(BaseElement.class));
-    assertThat(allBaseTypes).hasSize(0);
+    assertThat(allBaseTypes).isEmpty();
   }
 
   @Test

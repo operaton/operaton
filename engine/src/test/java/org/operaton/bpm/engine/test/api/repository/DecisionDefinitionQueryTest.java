@@ -209,7 +209,7 @@ public class DecisionDefinitionQueryTest {
     // when
     decisionDefinitions = repositoryService.createDecisionDefinitionQuery().deployedAfter(timeAfterDeploymentThree).list();
     // then
-    assertThat(decisionDefinitions).hasSize(0);
+    assertThat(decisionDefinitions).isEmpty();
   }
 
   @Test
@@ -252,7 +252,7 @@ public class DecisionDefinitionQueryTest {
     assertThatDecisionDefinitionsWereDeployedAt(processDefinitions, timeAtDeploymentThree);
 
     processDefinitions = repositoryService.createDecisionDefinitionQuery().deployedAt(DateUtils.addSeconds(ClockUtil.getCurrentTime(), 5)).list();
-    assertThat(processDefinitions).hasSize(0);
+    assertThat(processDefinitions).isEmpty();
   }
 
   @Test

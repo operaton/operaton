@@ -109,7 +109,7 @@ public class HistoryCleanupJobPriorityRangeTest extends AbstractJobExecutorAcqui
 
     // then
     List<AcquirableJobEntity> acquirableJobs = findAcquirableJobs();
-    assertThat(acquirableJobs).hasSize(0);
+    assertThat(acquirableJobs).isEmpty();
     List<Job> historyCleanupJobs = historyService.findHistoryCleanupJobs();
     assertThat(historyCleanupJobs).hasSize(1);
     assertThat(historyCleanupJobs.get(0).getPriority()).isEqualTo(20L);

@@ -486,7 +486,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
     List<ProcessDefinitionDto> result1 = resource.queryCalledProcessDefinitions(queryParameter1);
     assertThat(result1).isEmpty();
-    assertThat(result1).hasSize(0);
+    assertThat(result1).isEmpty();
 
   }
 
@@ -509,7 +509,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
 
     // then
-    assertThat(results).hasSize(0);
+    assertThat(results).isEmpty();
   }
 
   @Test
@@ -574,7 +574,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
 
     // then
-    assertThat(results).hasSize(0);
+    assertThat(results).isEmpty();
   }
 
   @Test
@@ -596,7 +596,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
 
     // then
-    assertThat(results).hasSize(0);
+    assertThat(results).isEmpty();
   }
 
   @Test
@@ -618,7 +618,7 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
 
     // then
-    assertThat(results).hasSize(0);
+    assertThat(results).isEmpty();
   }
 
   @Test

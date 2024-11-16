@@ -144,7 +144,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
 
     //then
     assertThat(query.count()).isEqualTo(0L);
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
 
 
   }
@@ -264,6 +264,6 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
 
     //then
     assertThat(statisticsQuery.count()).isEqualTo(0L);
-    assertThat(statisticsQuery.list()).hasSize(0);
+    assertThat(statisticsQuery.list()).isEmpty();
   }
 }

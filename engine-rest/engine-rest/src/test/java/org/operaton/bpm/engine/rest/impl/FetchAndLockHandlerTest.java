@@ -219,7 +219,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // then
-    verify(asyncResponse).resume(argThat(Matchers.hasSize(0)));
+    verify(asyncResponse).resume(argThat(Matchers.isEmpty()));
     assertThat(handler.getPendingRequests().size()).isZero();
     verify(handler).suspend(Long.MAX_VALUE);
   }

@@ -631,7 +631,7 @@ public class LdapUserQueryTest {
       assertThat(users.get(0).getId()).isEqualTo("daniel");
 
       users = identityService.createUserQuery().listPage(2, 2);
-      assertThat(users).hasSize(0);
+      assertThat(users).isEmpty();
 
     } finally {
       processEngineConfiguration.setAuthorizationEnabled(false);

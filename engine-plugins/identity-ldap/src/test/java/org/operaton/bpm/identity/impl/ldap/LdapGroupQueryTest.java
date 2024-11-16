@@ -320,12 +320,12 @@ public class LdapGroupQueryTest {
       groupNames.add(groups.get(0).getId());
 
       groups = identityService.createGroupQuery().listPage(4, 2);
-      assertThat(groups).hasSize(0);
+      assertThat(groups).isEmpty();
 
       identityService.setAuthenticatedUserId("daniel");
 
       groups = identityService.createGroupQuery().listPage(0, 2);
-      assertThat(groups).hasSize(0);
+      assertThat(groups).isEmpty();
 
     } finally {
       processEngineConfiguration.setAuthorizationEnabled(false);

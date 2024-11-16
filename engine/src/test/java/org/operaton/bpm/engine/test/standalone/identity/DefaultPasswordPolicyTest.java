@@ -75,7 +75,7 @@ public class DefaultPasswordPolicyTest {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, "LongPas$w0rd");
     assertThat(result.getViolatedRules().size()).isEqualTo(0);
     assertThat(result.getFulfilledRules().size()).isEqualTo(6);
-    assertThat(result.isValid()).isEqualTo(true);
+    assertThat(result.isValid()).isTrue();
   }
 
   @Test
@@ -194,7 +194,7 @@ public class DefaultPasswordPolicyTest {
     assertThat(user.getFirstName()).isEqualTo("Jane");
     assertThat(user.getLastName()).isEqualTo("Donnel");
     assertThat(user.getEmail()).isEqualTo("jane@donnel.com");
-    assertThat(identityService.checkPassword("johndoe", "Passw0rds!")).isEqualTo(true);
+    assertThat(identityService.checkPassword("johndoe", "Passw0rds!")).isTrue();
 
     identityService.deleteUser(user.getId());
   }

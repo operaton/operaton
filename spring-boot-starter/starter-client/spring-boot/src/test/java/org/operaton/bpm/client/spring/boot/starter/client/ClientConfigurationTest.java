@@ -48,8 +48,8 @@ public class ClientConfigurationTest extends ParsePropertiesHelper {
     assertThat(properties.getDateFormat()).isEqualTo("date-format");
     assertThat(properties.getAsyncResponseTimeout()).isEqualTo(555);
     assertThat(properties.getLockDuration()).isEqualTo(777);
-    assertThat(properties.getDisableAutoFetching()).isEqualTo(true);
-    assertThat(properties.getDisableBackoffStrategy()).isEqualTo(true);
+    assertThat(properties.getDisableAutoFetching()).isTrue();
+    assertThat(properties.getDisableBackoffStrategy()).isTrue();
     assertThat(basicAuth.getUsername()).isEqualTo("username");
     assertThat(basicAuth.getPassword()).isEqualTo("password");
     assertThat(subscriptions).isEmpty();

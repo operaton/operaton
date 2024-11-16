@@ -618,7 +618,7 @@ public class ProcessBuilderTest {
       .done();
 
     Process process = modelInstance.getModelElementById(PROCESS_ID);
-    assertThat(process.isOperatonStartableInTasklist()).isEqualTo(true);
+    assertThat(process.isOperatonStartableInTasklist()).isTrue();
   }
 
   @Test

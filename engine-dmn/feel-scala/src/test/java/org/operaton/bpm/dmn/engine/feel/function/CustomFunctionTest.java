@@ -228,7 +228,7 @@ public class CustomFunctionTest {
         Object argX = args.get(0);
 
         // then
-        assertThat(argX).isEqualTo(true);
+        assertThat(argX).isTrue();
 
         return "";
       })

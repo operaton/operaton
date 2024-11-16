@@ -63,7 +63,7 @@ class FileValueTypeImplTest {
 
   @Test
   void isPrimitiveValue() {
-    assertThat(type.isPrimitiveValueType()).isEqualTo(true);
+    assertThat(type.isPrimitiveValueType()).isTrue();
   }
 
   @Test

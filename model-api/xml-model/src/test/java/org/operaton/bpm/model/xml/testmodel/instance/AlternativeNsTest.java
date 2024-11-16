@@ -142,7 +142,7 @@ public class AlternativeNsTest extends TestModelTest {
     Boolean extendedWings = donald.canHazExtendedWings();
 
     // then
-    assertThat(extendedWings).isEqualTo(true);
+    assertThat(extendedWings).isTrue();
   }
 
   @ParameterizedTest

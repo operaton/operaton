@@ -72,7 +72,7 @@ public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
         .singleResult();
 
     assertThat(hdi.getOutputs().size()).isEqualTo(1);
-    assertThat(hdi.getOutputs().get(0).getValue()).isEqualTo(true);
+    assertThat(hdi.getOutputs().get(0).getValue()).isTrue();
   }
 
   @Test
@@ -90,7 +90,7 @@ public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
         .singleResult();
 
     assertThat(hdi.getOutputs().size()).isEqualTo(1);
-    assertThat(hdi.getOutputs().get(0).getValue()).isEqualTo(true);
+    assertThat(hdi.getOutputs().get(0).getValue()).isTrue();
   }
 
   // HELPER

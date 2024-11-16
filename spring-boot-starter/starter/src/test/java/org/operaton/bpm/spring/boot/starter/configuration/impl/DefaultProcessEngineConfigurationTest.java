@@ -97,7 +97,7 @@ public class DefaultProcessEngineConfigurationTest {
 
     properties.setJobExecutorAcquireByPriority(true);
     instance.preInit(configuration);
-    assertThat(configuration.isJobExecutorAcquireByPriority()).isEqualTo(true);
+    assertThat(configuration.isJobExecutorAcquireByPriority()).isTrue();
   }
 
   @Test

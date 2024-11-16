@@ -217,7 +217,7 @@ public class FilterPropertiesTest {
     assertThat(map.get("intOutOfRange")).isEqualTo(Integer.MAX_VALUE + 1L);
     assertThat(map.get("long")).isEqualTo(Long.MAX_VALUE);
     assertThat(map.get("double")).isEqualTo(3.14159265359D);
-    assertThat(map.get("boolean")).isEqualTo(true);
+    assertThat(map.get("boolean")).isTrue();
     assertThat(map.get("null")).isNull();
   }
 
@@ -253,7 +253,7 @@ public class FilterPropertiesTest {
     assertThat(list.get(2)).isEqualTo(Integer.MAX_VALUE + 1L);
     assertThat(list.get(3)).isEqualTo(Long.MAX_VALUE);
     assertThat(list.get(4)).isEqualTo(3.14159265359D);
-    assertThat(list.get(5)).isEqualTo(true);
+    assertThat(list.get(5)).isTrue();
     assertThat(list.get(6)).isNull();
   }
 

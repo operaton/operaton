@@ -103,7 +103,7 @@ public class PasswordHashingTest {
     identityService.saveUser(user);
 
     // then
-    assertThat(identityService.checkPassword(USER_NAME, PASSWORD)).isEqualTo(true);
+    assertThat(identityService.checkPassword(USER_NAME, PASSWORD)).isTrue();
   }
 
   @Test

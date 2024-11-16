@@ -72,7 +72,7 @@ public class PasswordPolicyConfigurationTest {
     processEngineConfiguration.initPasswordPolicy();
 
     // then
-    assertThat(processEngineConfiguration.isEnablePasswordPolicy()).isEqualTo(true);
+    assertThat(processEngineConfiguration.isEnablePasswordPolicy()).isTrue();
     assertThat(processEngineConfiguration.getPasswordPolicy()).isInstanceOf(DefaultPasswordPolicyImpl.class);
   }
 
@@ -86,7 +86,7 @@ public class PasswordPolicyConfigurationTest {
     processEngineConfiguration.initPasswordPolicy();
 
     // then
-    assertThat(processEngineConfiguration.isEnablePasswordPolicy()).isEqualTo(true);
+    assertThat(processEngineConfiguration.isEnablePasswordPolicy()).isTrue();
     assertThat(processEngineConfiguration.getPasswordPolicy()).isInstanceOf(DefaultPasswordPolicyImpl.class);
   }
 }

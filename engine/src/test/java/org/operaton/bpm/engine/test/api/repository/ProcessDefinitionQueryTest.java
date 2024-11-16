@@ -89,7 +89,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(processDefinition.getDescription()).isEqualTo("Desc one");
     assertThat(processDefinition.getId()).startsWith("one:1");
     assertThat(processDefinition.getCategory()).isEqualTo("Examples");
-    assertThat(processDefinition.isStartableInTasklist()).isEqualTo(true);
+    assertThat(processDefinition.isStartableInTasklist()).isTrue();
 
     processDefinition = processDefinitions.get(1);
     assertThat(processDefinition.getKey()).isEqualTo("one");
@@ -97,7 +97,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(processDefinition.getDescription()).isEqualTo("Desc one");
     assertThat(processDefinition.getId()).startsWith("one:2");
     assertThat(processDefinition.getCategory()).isEqualTo("Examples");
-    assertThat(processDefinition.isStartableInTasklist()).isEqualTo(true);
+    assertThat(processDefinition.isStartableInTasklist()).isTrue();
 
     processDefinition = processDefinitions.get(2);
     assertThat(processDefinition.getKey()).isEqualTo("two");
@@ -105,7 +105,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(processDefinition.getDescription()).isNull();
     assertThat(processDefinition.getId().startsWith("two:1"));
     assertThat(processDefinition.getCategory()).isEqualTo("Examples2");
-    assertThat(processDefinition.isStartableInTasklist()).isEqualTo(true);
+    assertThat(processDefinition.isStartableInTasklist()).isTrue();
 
     processDefinition = processDefinitions.get(3);
     assertThat(processDefinition.getKey()).isEqualTo("xyz_");

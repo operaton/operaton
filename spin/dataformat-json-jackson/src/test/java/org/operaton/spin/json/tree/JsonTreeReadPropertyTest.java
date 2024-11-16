@@ -302,7 +302,7 @@ public class JsonTreeReadPropertyTest {
 
     assertThat(active.value())
       .isInstanceOf(Boolean.class)
-      .isEqualTo(true);
+      .isTrue();
   }
 
   @Test

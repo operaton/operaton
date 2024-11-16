@@ -16,22 +16,16 @@
  */
 package org.operaton.spin.impl.xml.dom.format;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
+import org.junit.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.SpinFactory;
 import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.xml.JdkUtil;
 import org.operaton.spin.xml.SpinXmlElement;
-import org.junit.Test;
+
+import java.io.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test xml transformation in DomXmlDataFormatWriter
@@ -117,7 +111,7 @@ public class DomXmlDataFormatWriterTest {
     SpinXmlElement spinXmlElement = deserializeValue(serializedValue, dataFormat);
 
     // then
-    assertThat(spinXmlElement.toString()).isEqualTo(getExpectedFormattedXML());
+    assertThat(spinXmlElement).hasToString(getExpectedFormattedXML());
   }
 
   /**
@@ -143,7 +137,7 @@ public class DomXmlDataFormatWriterTest {
     SpinXmlElement spinXmlElement = deserializeValue(serializedValue, dataFormat);
 
     // then
-    assertThat(spinXmlElement.toString()).isEqualTo(getExpectedFormattedXML());
+    assertThat(spinXmlElement).hasToString(getExpectedFormattedXML());
   }
 
   /**
@@ -169,7 +163,7 @@ public class DomXmlDataFormatWriterTest {
     SpinXmlElement spinXmlElement = deserializeValue(serializedValue, dataFormat);
 
     // then
-    assertThat(spinXmlElement.toString()).isEqualTo(xml);
+    assertThat(spinXmlElement).hasToString(xml);
   }
 
   /**
@@ -202,7 +196,7 @@ public class DomXmlDataFormatWriterTest {
     SpinXmlElement spinXmlElement = deserializeValue(serializedValue, dataFormat);
 
     // then
-    assertThat(spinXmlElement.toString()).isEqualTo(expectedXml);
+    assertThat(spinXmlElement).hasToString(expectedXml);
   }
 
   /**
@@ -232,6 +226,6 @@ public class DomXmlDataFormatWriterTest {
     final SpinXmlElement spinXmlElement = deserializeValue(serializedValue, dataFormat);
 
     // then
-    assertThat(spinXmlElement.toString()).isEqualTo(getExpectedFormattedXML(true));
+    assertThat(spinXmlElement).hasToString(getExpectedFormattedXML(true));
   }
 }

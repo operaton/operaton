@@ -16,35 +16,15 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static junit.framework.TestCase.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
-import static org.operaton.bpm.engine.rest.util.QueryParamUtils.arrayAsCommaSeperatedList;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
-
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
 import org.operaton.bpm.ProcessApplicationService;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
@@ -68,16 +48,21 @@ import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
+import java.util.*;
+
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
+import static org.operaton.bpm.engine.rest.util.QueryParamUtils.arrayAsCommaSeperatedList;
 
 public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -195,7 +180,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     assertThat(MockProvider.EXAMPLE_TASK_LAST_UPDATED).isEqualTo(returnedLastUpdated);
     assertThat(MockProvider.EXAMPLE_TASK_DUE_DATE).isEqualTo(returnedDueDate);
     assertThat(MockProvider.EXAMPLE_FOLLOW_UP_DATE).isEqualTo(returnedFollowUpDate);
-    assertThat(MockProvider.EXAMPLE_TASK_DELEGATION_STATE.toString()).isEqualTo(returnedDelegationState);
+    assertThat(MockProvider.EXAMPLE_TASK_DELEGATION_STATE).hasToString(returnedDelegationState);
     assertThat(MockProvider.EXAMPLE_TASK_DESCRIPTION).isEqualTo(returnedDescription);
     assertThat(MockProvider.EXAMPLE_TASK_EXECUTION_ID).isEqualTo(returnedExecutionId);
     assertThat(MockProvider.EXAMPLE_TASK_OWNER).isEqualTo(returnedOwner);

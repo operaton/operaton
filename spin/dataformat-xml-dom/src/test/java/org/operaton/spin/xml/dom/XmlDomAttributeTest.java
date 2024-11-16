@@ -16,17 +16,17 @@
  */
 package org.operaton.spin.xml.dom;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.Spin.XML;
-
-import java.io.StringWriter;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlAttributeException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.XmlTestConstants;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.io.StringWriter;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.spin.Spin.XML;
 
 /**
  * @author Sebastian Menski
@@ -83,7 +83,7 @@ public class XmlDomAttributeTest {
 
   @Test
   public void canWriteToString() {
-    assertThat(attribute.toString()).isEqualTo("order1");
+    assertThat(attribute).hasToString("order1");
   }
 
   @Test

@@ -16,27 +16,24 @@
  */
 package org.operaton.bpm.dmn.engine.feel.function;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.dmn.engine.feel.function.helper.FunctionProvider;
 import org.operaton.bpm.dmn.engine.feel.function.helper.MyPojo;
 import org.operaton.bpm.dmn.engine.feel.helper.FeelRule;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.dmn.feel.impl.scala.function.CustomFunction;
 import org.operaton.bpm.dmn.feel.impl.scala.function.builder.CustomFunctionBuilder;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.RuleChain;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 public class CustomFunctionTest {
 
@@ -228,7 +225,7 @@ public class CustomFunctionTest {
         Object argX = args.get(0);
 
         // then
-        assertThat(argX).isTrue();
+        assertThat(argX).isEqualTo(true);
 
         return "";
       })

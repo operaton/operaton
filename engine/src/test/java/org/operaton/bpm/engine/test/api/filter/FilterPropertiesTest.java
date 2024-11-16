@@ -16,26 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author Sebastian Menski
@@ -139,7 +133,7 @@ public class FilterPropertiesTest {
     // then
     assertThat(deserialisedProperties.size()).isEqualTo(1);
     assertThat(string).isInstanceOf(String.class);
-    assertThat(string.toString()).isEqualTo("bar");
+    assertThat(string).hasToString("bar");
   }
 
   @Test
@@ -160,7 +154,7 @@ public class FilterPropertiesTest {
 
     // then
     assertThat(deserialisedProperties.size()).isEqualTo(1);
-    assertThat(string.toString()).isEqualTo("foo");
+    assertThat(string).hasToString("foo");
   }
 
   @Test
@@ -182,7 +176,7 @@ public class FilterPropertiesTest {
 
     // then
     assertThat(deserialisedProperties.size()).isEqualTo(1);
-    assertThat(string.toString()).isEqualTo("foo");
+    assertThat(string).hasToString("foo");
   }
 
   @Test
@@ -217,7 +211,7 @@ public class FilterPropertiesTest {
     assertThat(map.get("intOutOfRange")).isEqualTo(Integer.MAX_VALUE + 1L);
     assertThat(map.get("long")).isEqualTo(Long.MAX_VALUE);
     assertThat(map.get("double")).isEqualTo(3.14159265359D);
-    assertThat(map.get("boolean")).isTrue();
+    assertThat(map.get("boolean")).isEqualTo(true);
     assertThat(map.get("null")).isNull();
   }
 
@@ -253,7 +247,7 @@ public class FilterPropertiesTest {
     assertThat(list.get(2)).isEqualTo(Integer.MAX_VALUE + 1L);
     assertThat(list.get(3)).isEqualTo(Long.MAX_VALUE);
     assertThat(list.get(4)).isEqualTo(3.14159265359D);
-    assertThat(list.get(5)).isTrue();
+    assertThat(list.get(5)).isEqualTo(true);
     assertThat(list.get(6)).isNull();
   }
 

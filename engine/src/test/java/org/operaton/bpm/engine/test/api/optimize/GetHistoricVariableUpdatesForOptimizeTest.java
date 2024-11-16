@@ -17,11 +17,12 @@
 package org.operaton.bpm.engine.test.api.optimize;
 
 import com.google.common.collect.ImmutableList;
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
 import org.operaton.bpm.engine.identity.Group;
@@ -44,11 +45,6 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.operaton.bpm.engine.variable.value.builder.ObjectValueBuilder;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -156,7 +152,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
 
     // then
     assertThat(variableUpdates.size()).isEqualTo(1);
-    assertThat(variableUpdates.get(0).getValue().toString()).isEqualTo("value2");
+    assertThat(variableUpdates.get(0).getValue()).hasToString("value2");
   }
 
   @Test
@@ -183,7 +179,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
 
     // then
     assertThat(variableUpdates.size()).isEqualTo(1);
-    assertThat(variableUpdates.get(0).getValue().toString()).isEqualTo("value1");
+    assertThat(variableUpdates.get(0).getValue()).hasToString("value1");
   }
 
   @Test

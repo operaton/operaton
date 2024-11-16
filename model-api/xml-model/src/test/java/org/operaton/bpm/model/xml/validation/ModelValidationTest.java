@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.model.xml.validation;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.validation.ModelValidationResultsImpl;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
+
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -85,7 +86,7 @@ class ModelValidationTest {
     StringWriter stringWriter = new StringWriter();
     results.write(stringWriter, new TestResultFormatter());
 
-    assertThat(stringWriter.toString()).isEqualTo("tweety\n\tERROR (20): Bird tweety is illegal\n");
+    assertThat(stringWriter).hasToString("tweety\n\tERROR (20): Bird tweety is illegal\n");
   }
 
   @Test

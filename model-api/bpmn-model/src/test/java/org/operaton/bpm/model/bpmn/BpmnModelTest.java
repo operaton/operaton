@@ -32,7 +32,7 @@ public class BpmnModelTest {
   protected BpmnModelInstance bpmnModelInstance;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     bpmnModelInstance = parseBpmnModelRule.getBpmnModel();
   }
 

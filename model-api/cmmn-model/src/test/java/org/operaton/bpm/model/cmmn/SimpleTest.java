@@ -33,11 +33,11 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
  * @author Roman Smirnov
  *
  */
-public class SimpleTest extends CmmnModelTest {
+class SimpleTest extends CmmnModelTest {
 
   @Test
   @CmmnModelResource
-  public void shouldGetElements() {
+  void shouldGetElements() {
 
     ModelElementInstance modelElementById = cmmnModelInstance.getModelElementById("Case_1");
     assertThat(modelElementById).isNotNull();

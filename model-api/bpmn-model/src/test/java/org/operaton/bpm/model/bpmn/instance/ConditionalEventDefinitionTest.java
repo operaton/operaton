@@ -44,7 +44,7 @@ public class ConditionalEventDefinitionTest extends AbstractEventDefinitionTest 
   }
 
   @Test
-  public void getEventDefinition() {
+  void getEventDefinition() {
     ConditionalEventDefinition eventDefinition = eventDefinitionQuery.filterByType(ConditionalEventDefinition.class).singleResult();
     assertThat(eventDefinition).isNotNull();
     assertThat(eventDefinition.getOperatonVariableEvents()).isNull();

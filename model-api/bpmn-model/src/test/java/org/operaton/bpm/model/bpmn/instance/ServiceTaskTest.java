@@ -52,10 +52,10 @@ public class ServiceTaskTest extends BpmnModelElementInstanceTest {
       new AttributeAssumption(OPERATON_NS, "taskPriority")
     );
   }
-  
-  
+
+
   @Test
-  public void testOperatonTaskPriority() {
+  void testOperatonTaskPriority() {
     //given
     ServiceTask service = modelInstance.newInstance(ServiceTask.class);    
     assertThat(service.getOperatonTaskPriority()).isNull();

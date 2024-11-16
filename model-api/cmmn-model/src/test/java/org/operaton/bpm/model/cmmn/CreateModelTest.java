@@ -36,7 +36,7 @@ public class CreateModelTest {
   public Process process;
 
   @BeforeEach
-  public void createEmptyModel() {
+  void createEmptyModel() {
     modelInstance = Cmmn.createEmptyModel();
     definitions = modelInstance.newInstance(Definitions.class);
     definitions.setTargetNamespace("http://operaton.org/examples");
@@ -51,7 +51,7 @@ public class CreateModelTest {
   }
 
   @Test
-  public void createCaseWithOneHumanTask() {
+  void createCaseWithOneHumanTask() {
     // create process
     Case caseInstance = createElement(definitions, "case-with-one-human-task", Case.class);
 
@@ -69,7 +69,7 @@ public class CreateModelTest {
   }
 
   @Test
-  public void createCaseWithOneStageAndNestedHumanTask() {
+  void createCaseWithOneStageAndNestedHumanTask() {
     // create process
     Case caseInstance = createElement(definitions, "case-with-one-human-task", Case.class);
 
@@ -90,7 +90,7 @@ public class CreateModelTest {
   }
 
   @AfterEach
-  public void validateModel() {
+  void validateModel() {
     Cmmn.validateModel(modelInstance);
   }
 

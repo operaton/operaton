@@ -43,7 +43,7 @@ public class CoordinatesGenerationTest {
   private BpmnModelInstance instance;
 
   @Test
-  public void shouldPlaceStartEvent() {
+  void shouldPlaceStartEvent() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -56,7 +56,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceUserTask() {
+  void shouldPlaceUserTask() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -84,7 +84,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceSendTask() {
+  void shouldPlaceSendTask() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -112,7 +112,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceServiceTask() {
+  void shouldPlaceServiceTask() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -140,7 +140,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceReceiveTask() {
+  void shouldPlaceReceiveTask() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -168,7 +168,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceManualTask() {
+  void shouldPlaceManualTask() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -196,7 +196,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceBusinessRuleTask() {
+  void shouldPlaceBusinessRuleTask() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -224,7 +224,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceScriptTask() {
+  void shouldPlaceScriptTask() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -252,7 +252,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceCatchingIntermediateEvent() {
+  void shouldPlaceCatchingIntermediateEvent() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -280,7 +280,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceThrowingIntermediateEvent() {
+  void shouldPlaceThrowingIntermediateEvent() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -308,7 +308,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceEndEvent() {
+  void shouldPlaceEndEvent() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -336,7 +336,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceCallActivity() {
+  void shouldPlaceCallActivity() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -364,7 +364,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceExclusiveGateway() {
+  void shouldPlaceExclusiveGateway() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -392,7 +392,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceInclusiveGateway() {
+  void shouldPlaceInclusiveGateway() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -420,7 +420,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceParallelGateway() {
+  void shouldPlaceParallelGateway() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -448,7 +448,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceEventBasedGateway() {
+  void shouldPlaceEventBasedGateway() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -477,7 +477,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceBlankSubProcess() {
+  void shouldPlaceBlankSubProcess() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -505,7 +505,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceBoundaryEventForTask() {
+  void shouldPlaceBoundaryEventForTask() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -524,7 +524,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceFollowingFlowNodeProperlyForTask() {
+  void shouldPlaceFollowingFlowNodeProperlyForTask() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -554,7 +554,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceTwoBoundaryEventsForTask() {
+  void shouldPlaceTwoBoundaryEventsForTask() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -578,7 +578,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceThreeBoundaryEventsForTask() {
+  void shouldPlaceThreeBoundaryEventsForTask() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -607,7 +607,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceManyBoundaryEventsForTask() {
+  void shouldPlaceManyBoundaryEventsForTask() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -641,7 +641,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceBoundaryEventForSubProcess() {
+  void shouldPlaceBoundaryEventForSubProcess() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -660,7 +660,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceFollowingFlowNodeForSubProcess() {
+  void shouldPlaceFollowingFlowNodeForSubProcess() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -690,7 +690,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceTwoBoundaryEventsForSubProcess() {
+  void shouldPlaceTwoBoundaryEventsForSubProcess() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -712,7 +712,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceThreeBoundaryEventsForSubProcess() {
+  void shouldPlaceThreeBoundaryEventsForSubProcess() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -738,7 +738,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceManyBoundaryEventsForSubProcess() {
+  void shouldPlaceManyBoundaryEventsForSubProcess() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -769,7 +769,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceTwoBranchesForParallelGateway() {
+  void shouldPlaceTwoBranchesForParallelGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -802,7 +802,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceThreeBranchesForParallelGateway() {
+  void shouldPlaceThreeBranchesForParallelGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -839,7 +839,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceManyBranchesForParallelGateway() {
+  void shouldPlaceManyBranchesForParallelGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -881,7 +881,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceTwoBranchesForExclusiveGateway() {
+  void shouldPlaceTwoBranchesForExclusiveGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -914,7 +914,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceThreeBranchesForExclusiveGateway() {
+  void shouldPlaceThreeBranchesForExclusiveGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -951,7 +951,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceManyBranchesForExclusiveGateway() {
+  void shouldPlaceManyBranchesForExclusiveGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -993,7 +993,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceTwoBranchesForEventBasedGateway() {
+  void shouldPlaceTwoBranchesForEventBasedGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -1027,7 +1027,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceThreeBranchesForEventBasedGateway() {
+  void shouldPlaceThreeBranchesForEventBasedGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -1065,7 +1065,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceManyBranchesForEventBasedGateway() {
+  void shouldPlaceManyBranchesForEventBasedGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -1108,7 +1108,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceTwoBranchesForInclusiveGateway() {
+  void shouldPlaceTwoBranchesForInclusiveGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -1141,7 +1141,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceThreeBranchesForInclusiveGateway() {
+  void shouldPlaceThreeBranchesForInclusiveGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -1178,7 +1178,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceManyBranchesForInclusiveGateway() {
+  void shouldPlaceManyBranchesForInclusiveGateway() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder
@@ -1235,7 +1235,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldAdjustSubProcessWidth() {
+  void shouldAdjustSubProcessWidth() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -1255,7 +1255,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldAdjustSubProcessWidthWithEmbeddedSubProcess() {
+  void shouldAdjustSubProcessWidthWithEmbeddedSubProcess() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -1280,7 +1280,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldAdjustSubProcessHeight() {
+  void shouldAdjustSubProcessHeight() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -1301,7 +1301,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldAdjustSubProcessHeightWithEmbeddedProcess() {
+  void shouldAdjustSubProcessHeightWithEmbeddedProcess() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -1329,7 +1329,7 @@ public class CoordinatesGenerationTest {
   }
 
   @Test
-  public void shouldPlaceCompensation() {
+  void shouldPlaceCompensation() {
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
     instance = builder

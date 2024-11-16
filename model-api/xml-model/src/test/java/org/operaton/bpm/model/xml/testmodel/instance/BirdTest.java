@@ -106,7 +106,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testAddEggsByHelper(TestModelArgs args) {
+  void testAddEggsByHelper(TestModelArgs args) {
     init(args);
     assertThat(tweety.getEggs()).isNotEmpty().hasSize(3).containsOnly(egg1, egg2, egg3);
 
@@ -120,7 +120,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateEggsByIdByHelper(TestModelArgs args) {
+  void testUpdateEggsByIdByHelper(TestModelArgs args) {
 
     init(args);
 
@@ -131,7 +131,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateEggsByIdByAttributeName(TestModelArgs args) {
+  void testUpdateEggsByIdByAttributeName(TestModelArgs args) {
     init(args);
     egg1.setAttributeValue("id", "new-" + egg1.getId(), true);
     egg2.setAttributeValue("id", "new-" + egg2.getId(), true);
@@ -140,7 +140,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateEggsByReplaceElements(TestModelArgs args) {
+  void testUpdateEggsByReplaceElements(TestModelArgs args) {
     init(args);
     Egg egg4 = createEgg(modelInstance, "egg4");
     Egg egg5 = createEgg(modelInstance, "egg5");
@@ -151,7 +151,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateEggsByRemoveElement(TestModelArgs args) {
+  void testUpdateEggsByRemoveElement(TestModelArgs args) {
 
     init(args);
 
@@ -161,7 +161,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testClearEggs(TestModelArgs args) {
+  void testClearEggs(TestModelArgs args) {
 
     init(args);
 
@@ -171,7 +171,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testSetSpouseRefByHelper(TestModelArgs args) {
+  void testSetSpouseRefByHelper(TestModelArgs args) {
 
     init(args);
 
@@ -181,7 +181,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateSpouseByIdHelper(TestModelArgs args) {
+  void testUpdateSpouseByIdHelper(TestModelArgs args) {
 
     init(args);
 
@@ -191,7 +191,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateSpouseByIdByAttributeName(TestModelArgs args) {
+  void testUpdateSpouseByIdByAttributeName(TestModelArgs args) {
 
     init(args);
 
@@ -201,7 +201,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateSpouseByReplaceElement(TestModelArgs args) {
+  void testUpdateSpouseByReplaceElement(TestModelArgs args) {
 
     init(args);
 
@@ -211,7 +211,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateSpouseByRemoveElement(TestModelArgs args) {
+  void testUpdateSpouseByRemoveElement(TestModelArgs args) {
     init(args);
     Animals animals = (Animals) modelInstance.getDocumentElement();
     animals.getAnimals().remove(hedwig);
@@ -220,7 +220,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testClearSpouse(TestModelArgs args) {
+  void testClearSpouse(TestModelArgs args) {
 
     init(args);
 
@@ -230,7 +230,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testSetSpouseRefsByHelper(TestModelArgs args) {
+  void testSetSpouseRefsByHelper(TestModelArgs args) {
     init(args);
     SpouseRef spouseRef = modelInstance.newInstance(SpouseRef.class);
     spouseRef.setTextContent(timmy.getId());
@@ -240,7 +240,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testSpouseRefsByTextContent(TestModelArgs args) {
+  void testSpouseRefsByTextContent(TestModelArgs args) {
 
     init(args);
 
@@ -250,7 +250,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateSpouseRefsByTextContent(TestModelArgs args) {
+  void testUpdateSpouseRefsByTextContent(TestModelArgs args) {
 
     init(args);
 
@@ -261,7 +261,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateSpouseRefsByTextContentWithNamespace(TestModelArgs args) {
+  void testUpdateSpouseRefsByTextContentWithNamespace(TestModelArgs args) {
 
     init(args);
 
@@ -272,7 +272,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testGetMother(TestModelArgs args) {
+  void testGetMother(TestModelArgs args) {
 
     init(args);
 
@@ -285,7 +285,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testSetMotherRefByHelper(TestModelArgs args) {
+  void testSetMotherRefByHelper(TestModelArgs args) {
 
     init(args);
 
@@ -295,7 +295,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateMotherByIdHelper(TestModelArgs args) {
+  void testUpdateMotherByIdHelper(TestModelArgs args) {
 
     init(args);
 
@@ -305,7 +305,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateMotherByIdByAttributeName(TestModelArgs args) {
+  void testUpdateMotherByIdByAttributeName(TestModelArgs args) {
 
     init(args);
 
@@ -315,7 +315,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateMotherByReplaceElement(TestModelArgs args) {
+  void testUpdateMotherByReplaceElement(TestModelArgs args) {
     init(args);
     tweety.replaceWithElement(timmy);
     assertThat(egg1.getMother()).isEqualTo(timmy);
@@ -323,7 +323,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateMotherByRemoveElement(TestModelArgs args) {
+  void testUpdateMotherByRemoveElement(TestModelArgs args) {
     init(args);
     egg1.setMother(hedwig);
     Animals animals = (Animals) modelInstance.getDocumentElement();
@@ -333,7 +333,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testClearMother(TestModelArgs args) {
+  void testClearMother(TestModelArgs args) {
 
     init(args);
 
@@ -343,7 +343,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testSetMotherRefsByHelper(TestModelArgs args) {
+  void testSetMotherRefsByHelper(TestModelArgs args) {
     init(args);
     Mother mother = modelInstance.newInstance(Mother.class);
     mother.setHref("#" + timmy.getId());
@@ -353,7 +353,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testMotherRefsByTextContent(TestModelArgs args) {
+  void testMotherRefsByTextContent(TestModelArgs args) {
 
     init(args);
 
@@ -363,7 +363,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateMotherRefsByTextContent(TestModelArgs args) {
+  void testUpdateMotherRefsByTextContent(TestModelArgs args) {
 
     init(args);
 
@@ -374,7 +374,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testGetGuards(TestModelArgs args) {
+  void testGetGuards(TestModelArgs args) {
     init(args);
     Collection<Animal> guards = egg1.getGuardians();
     assertThat(guards).isNotEmpty().hasSize(2);
@@ -387,7 +387,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testAddGuardianRefsByHelper(TestModelArgs args) {
+  void testAddGuardianRefsByHelper(TestModelArgs args) {
     init(args);
     assertThat(egg1.getGuardianRefs()).isNotEmpty().hasSize(2);
 
@@ -400,7 +400,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testGuardianRefsByTextContent(TestModelArgs args) {
+  void testGuardianRefsByTextContent(TestModelArgs args) {
     init(args);
     Collection<Guardian> guardianRefs = egg1.getGuardianRefs();
     Collection<String> hrefs = new ArrayList<String>();
@@ -414,7 +414,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateGuardianRefsByTextContent(TestModelArgs args) {
+  void testUpdateGuardianRefsByTextContent(TestModelArgs args) {
     init(args);
     List<Guardian> guardianRefs = new ArrayList<Guardian>(egg1.getGuardianRefs());
 
@@ -425,7 +425,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateGuardianRefsByRemoveElements(TestModelArgs args) {
+  void testUpdateGuardianRefsByRemoveElements(TestModelArgs args) {
     init(args);
     List<Guardian> guardianRefs = new ArrayList<Guardian>(egg1.getGuardianRefs());
     egg1.getGuardianRefs().remove(guardianRefs.get(1));
@@ -434,7 +434,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testClearGuardianRefs(TestModelArgs args) {
+  void testClearGuardianRefs(TestModelArgs args) {
     init(args);
     egg1.getGuardianRefs().clear();
     assertThat(egg1.getGuardianRefs()).isEmpty();
@@ -446,7 +446,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testGetGuardedEggs(TestModelArgs args) {
+  void testGetGuardedEggs(TestModelArgs args) {
 
     init(args);
 
@@ -459,7 +459,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testAddGuardedEggRefsByHelper(TestModelArgs args) {
+  void testAddGuardedEggRefsByHelper(TestModelArgs args) {
     init(args);
     assertThat(hedwig.getGuardedEggRefs()).isNotEmpty().hasSize(2);
 
@@ -472,7 +472,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testGuardedEggRefsByTextContent(TestModelArgs args) {
+  void testGuardedEggRefsByTextContent(TestModelArgs args) {
 
     init(args);
 
@@ -488,7 +488,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateGuardedEggRefsByTextContent(TestModelArgs args) {
+  void testUpdateGuardedEggRefsByTextContent(TestModelArgs args) {
     init(args);
     List<GuardEgg> guardianRefs = new ArrayList<GuardEgg>(hedwig.getGuardedEggRefs());
 
@@ -499,7 +499,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testUpdateGuardedEggRefsByRemoveElements(TestModelArgs args) {
+  void testUpdateGuardedEggRefsByRemoveElements(TestModelArgs args) {
 
     init(args);
 
@@ -510,7 +510,7 @@ public class BirdTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void testClearGuardedEggRefs(TestModelArgs args) {
+  void testClearGuardedEggRefs(TestModelArgs args) {
     init(args);
     timmy.getGuardedEggRefs().clear();
     assertThat(timmy.getGuardedEggRefs()).isEmpty();

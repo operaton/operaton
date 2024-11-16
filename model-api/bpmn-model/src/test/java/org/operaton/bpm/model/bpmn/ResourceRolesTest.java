@@ -30,17 +30,17 @@ import org.operaton.bpm.model.bpmn.instance.UserTask;
 /**
  * @author Dario Campagna
  */
-public class ResourceRolesTest {
+class ResourceRolesTest {
 
   private static BpmnModelInstance modelInstance;
 
   @BeforeAll
-  public static void parseModel() {
+  static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(ResourceRolesTest.class.getResourceAsStream("ResourceRolesTest.bpmn"));
   }
 
   @Test
-  public void testGetPerformer() {
+  void testGetPerformer() {
     UserTask userTask = modelInstance.getModelElementById("_3");
     Collection<ResourceRole> resourceRoles = userTask.getResourceRoles();
     assertThat(resourceRoles.size()).isEqualTo(1);
@@ -50,7 +50,7 @@ public class ResourceRolesTest {
   }
 
   @Test
-  public void testGetHumanPerformer() {
+  void testGetHumanPerformer() {
     UserTask userTask = modelInstance.getModelElementById("_7");
     Collection<ResourceRole> resourceRoles = userTask.getResourceRoles();
     assertThat(resourceRoles.size()).isEqualTo(1);
@@ -60,7 +60,7 @@ public class ResourceRolesTest {
   }
 
   @Test
-  public void testGetPotentialOwner() {
+  void testGetPotentialOwner() {
     UserTask userTask = modelInstance.getModelElementById("_9");
     Collection<ResourceRole> resourceRoles = userTask.getResourceRoles();
     assertThat(resourceRoles.size()).isEqualTo(1);

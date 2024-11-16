@@ -24,10 +24,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Filip Hrisafov
  */
-public class BpmnModelInstanceTest {
+class BpmnModelInstanceTest {
 
   @Test
-  public void testClone() throws Exception {
+  void testClone() throws Exception {
 
     BpmnModelInstance modelInstance = Bpmn.createEmptyModel();
 

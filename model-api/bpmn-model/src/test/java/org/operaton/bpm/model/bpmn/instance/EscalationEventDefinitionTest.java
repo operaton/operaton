@@ -23,7 +23,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EscalationEventDefinitionTest extends AbstractEventDefinitionTest {
+class EscalationEventDefinitionTest extends AbstractEventDefinitionTest {
 
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
@@ -32,7 +32,7 @@ public class EscalationEventDefinitionTest extends AbstractEventDefinitionTest {
   }
 
   @Test
-  public void getEventDefinition() {
+  void getEventDefinition() {
     EscalationEventDefinition eventDefinition = eventDefinitionQuery.filterByType(EscalationEventDefinition.class).singleResult();
     assertThat(eventDefinition).isNotNull();
     assertThat(eventDefinition.getEscalation().getName()).isEqualTo("escalation");

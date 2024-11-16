@@ -60,7 +60,7 @@ public class TransactionTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void shouldReadTransaction() {
+  void shouldReadTransaction() {
     InputStream inputStream = ReflectUtil.getResourceAsStream("org/operaton/bpm/model/bpmn/TransactionTest.xml");
     Transaction transaction = Bpmn.readModelFromStream(inputStream).getModelElementById("transaction");
 
@@ -70,7 +70,7 @@ public class TransactionTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void shouldWriteTransaction() throws ParserConfigurationException, SAXException, IOException {
+  void shouldWriteTransaction() throws ParserConfigurationException, SAXException, IOException {
     // given a model
     BpmnModelInstance newModel = Bpmn.createProcess("process").done();
 

@@ -40,7 +40,7 @@ public class OperatonListTest extends BpmnModelElementInstanceTest {
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
-  public void testListValueChildAssignment() {
+  void testListValueChildAssignment() {
     try {
       OperatonList listElement = modelInstance.newInstance(OperatonList.class);
 

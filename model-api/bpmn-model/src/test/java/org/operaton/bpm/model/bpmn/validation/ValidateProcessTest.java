@@ -36,10 +36,10 @@ import static org.assertj.core.api.Assertions.*;
  * @author Daniel Meyer
  *
  */
-public class ValidateProcessTest {
+class ValidateProcessTest {
 
   @Test
-  public void validationFailsIfNoStartEventFound() {
+  void validationFailsIfNoStartEventFound() {
 
     List<ModelElementValidator<?>> validators = new ArrayList<ModelElementValidator<?>>();
     validators.add(new ProcessStartEventValidator());

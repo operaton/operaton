@@ -47,7 +47,7 @@ public class OperatonExtensionsTest {
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
-  public void testOperatonClauseOutput(DmnModelInstance originalModelInstance) {
+  void testOperatonClauseOutput(DmnModelInstance originalModelInstance) {
     initOperatonExtensionsTest(originalModelInstance);
     Input input = modelInstance.getModelElementById("input");
     assertThat(input.getOperatonInputVariable()).isEqualTo("myVariable");
@@ -57,7 +57,7 @@ public class OperatonExtensionsTest {
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
-  public void testOperatonHistoryTimeToLive(DmnModelInstance originalModelInstance) {
+  void testOperatonHistoryTimeToLive(DmnModelInstance originalModelInstance) {
     initOperatonExtensionsTest(originalModelInstance);
     Decision decision = modelInstance.getModelElementById("decision");
     assertThat(decision.getOperatonHistoryTimeToLive()).isEqualTo(5);
@@ -67,7 +67,7 @@ public class OperatonExtensionsTest {
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
-  public void testOperatonVersionTag(DmnModelInstance originalModelInstance) {
+  void testOperatonVersionTag(DmnModelInstance originalModelInstance) {
     initOperatonExtensionsTest(originalModelInstance);
     Decision decision = modelInstance.getModelElementById("decision");
     assertThat(decision.getVersionTag()).isEqualTo("1.0.0");
@@ -76,7 +76,7 @@ public class OperatonExtensionsTest {
   }
 
   @AfterEach
-  public void validateModel() {
+  void validateModel() {
     Dmn.validateModel(modelInstance);
   }
 

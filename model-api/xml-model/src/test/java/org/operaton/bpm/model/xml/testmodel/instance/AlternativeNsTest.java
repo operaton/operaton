@@ -61,7 +61,7 @@ public class AlternativeNsTest extends TestModelTest {
   }
 
   @AfterEach
-  public void tearDown() {
+  void tearDown() {
     if (modelInstance != null) {
       ModelImpl modelImpl = (ModelImpl) modelInstance.getModel();
       modelImpl.undeclareAlternativeNamespace(MECHANICAL_NS);
@@ -147,7 +147,7 @@ public class AlternativeNsTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void modifyingAttributeWithAlternativeNamespaceKeepsAlternativeNamespace(TestModelArgs args) {
+  void modifyingAttributeWithAlternativeNamespaceKeepsAlternativeNamespace(TestModelArgs args) {
     init(args);
     Bird plucky = modelInstance.getModelElementById("plucky");
     assertThat(plucky).isNotNull();
@@ -162,7 +162,7 @@ public class AlternativeNsTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void modifyingAttributeWithSecondAlternativeNamespaceKeepsSecondAlternativeNamespace(TestModelArgs args) {
+  void modifyingAttributeWithSecondAlternativeNamespaceKeepsSecondAlternativeNamespace(TestModelArgs args) {
     init(args);
     // given
     Bird donald = modelInstance.getModelElementById("donald");
@@ -177,7 +177,7 @@ public class AlternativeNsTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void modifyingAttributeWithNewNamespaceKeepsNewNamespace(TestModelArgs args) {
+  void modifyingAttributeWithNewNamespaceKeepsNewNamespace(TestModelArgs args) {
     init(args);
     Bird bird = createBird(modelInstance, "waldo", Gender.Male);
     bird.setCanHazExtendedWings(true);
@@ -187,7 +187,7 @@ public class AlternativeNsTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void modifyingElementWithAlternativeNamespaceKeepsAlternativeNamespace(TestModelArgs args) {
+  void modifyingElementWithAlternativeNamespaceKeepsAlternativeNamespace(TestModelArgs args) {
     init(args);
     Bird birdo = modelInstance.getModelElementById("birdo");
     assertThat(birdo).isNotNull();
@@ -202,7 +202,7 @@ public class AlternativeNsTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void modifyingElementWithSecondAlternativeNamespaceKeepsSecondAlternativeNamespace(TestModelArgs args) {
+  void modifyingElementWithSecondAlternativeNamespaceKeepsSecondAlternativeNamespace(TestModelArgs args) {
     init(args);
     // given
     Bird donald = modelInstance.getModelElementById("donald");
@@ -219,7 +219,7 @@ public class AlternativeNsTest extends TestModelTest {
 
   @ParameterizedTest
   @MethodSource("models")
-  public void modifyingElementWithNewNamespaceKeepsNewNamespace(TestModelArgs args) {
+  void modifyingElementWithNewNamespaceKeepsNewNamespace(TestModelArgs args) {
     init(args);
     Bird bird = createBird(modelInstance, "waldo", Gender.Male);
     bird.setWings(modelInstance.newInstance(Wings.class));

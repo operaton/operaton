@@ -46,7 +46,7 @@ public class BaseElementTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testId() {
+  void testId() {
     Task task = modelInstance.newInstance(Task.class);
     assertThat(task.getId()).isNotNull().startsWith("task");
     task.setId("test");

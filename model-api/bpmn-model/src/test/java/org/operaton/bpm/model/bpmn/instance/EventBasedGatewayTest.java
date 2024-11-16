@@ -25,7 +25,7 @@ import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-public class EventBasedGatewayTest extends AbstractGatewayTest<EventBasedGateway> {
+class EventBasedGatewayTest extends AbstractGatewayTest<EventBasedGateway> {
 
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
@@ -35,17 +35,17 @@ public class EventBasedGatewayTest extends AbstractGatewayTest<EventBasedGateway
   }
 
   @Test
-  public void getInstantiate() {
+  void getInstantiate() {
     assertThat(gateway.isInstantiate()).isTrue();
   }
 
   @Test
-  public void getEventGatewayType() {
+  void getEventGatewayType() {
     assertThat(gateway.getEventGatewayType()).isEqualTo(EventBasedGatewayType.Parallel);
   }
 
   @Test
-  public void shouldFailSetAsyncAfterToEventBasedGateway() {
+  void shouldFailSetAsyncAfterToEventBasedGateway() {
     // fetching should fail
     try {
       gateway.isOperatonAsyncAfter();

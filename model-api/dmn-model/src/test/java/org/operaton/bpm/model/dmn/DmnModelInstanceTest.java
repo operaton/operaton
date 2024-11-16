@@ -25,10 +25,10 @@ import org.operaton.bpm.model.dmn.instance.Definitions;
 /**
  * @author Filip Hrisafov
  */
-public class DmnModelInstanceTest {
+class DmnModelInstanceTest {
 
   @Test
-  public void testClone() throws Exception {
+  void testClone() throws Exception {
 
     DmnModelInstance modelInstance = Dmn.createEmptyModel();
 
@@ -44,7 +44,7 @@ public class DmnModelInstanceTest {
   }
 
   @Test
-  public void shouldExportDmnDiagramWithLatestDmnNamespace() {
+  void shouldExportDmnDiagramWithLatestDmnNamespace() {
     // given
     DmnModelInstance modelInstance = Dmn.createEmptyModel();
     Definitions definitions = modelInstance.newInstance(Definitions.class);

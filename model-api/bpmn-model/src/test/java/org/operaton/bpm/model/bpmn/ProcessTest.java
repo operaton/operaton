@@ -30,11 +30,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
-public class ProcessTest extends BpmnModelTest {
+class ProcessTest extends BpmnModelTest {
 
   @Test
   @BpmnModelResource
-  public void shouldImportProcess() {
+  void shouldImportProcess() {
 
     ModelElementInstance modelElementById = bpmnModelInstance.getModelElementById("exampleProcessId");
     assertThat(modelElementById).isNotNull();

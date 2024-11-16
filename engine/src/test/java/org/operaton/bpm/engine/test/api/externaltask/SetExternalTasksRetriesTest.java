@@ -298,10 +298,8 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
     // then batch jobs with different deployment ids exist
     List<Job> batchJobs = managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).list();
     assertThat(batchJobs).hasSize(2);
-    assertThat(batchJobs.get(0).getDeploymentId())
-        .isIn(firstDeploymentId, secondDeploymentId);
-    assertThat(batchJobs.get(1).getDeploymentId())
-        .isIn(firstDeploymentId, secondDeploymentId);
+    assertThat(batchJobs.get(0).getDeploymentId()).isIn(firstDeploymentId, secondDeploymentId);
+    assertThat(batchJobs.get(1).getDeploymentId()).isIn(firstDeploymentId, secondDeploymentId);
     assertThat(batchJobs.get(0).getDeploymentId()).isNotEqualTo(batchJobs.get(1).getDeploymentId());
 
     // when the batch jobs for the first deployment are executed

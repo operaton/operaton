@@ -1065,28 +1065,28 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
   protected void assertQuerySorting(String property, Query<?, ?> query, Comparable... items) {
     AbstractQuery<?, ?> queryImpl = (AbstractQuery<?, ?>) query;
 
-    // Save order properties to later reverse ordering
+    // save order properties to later reverse ordering
     List<QueryOrderingProperty> orderProperties = queryImpl.getOrderingProperties();
 
     List<? extends Comparable> sortedList = Arrays.asList(items);
     Collections.sort(sortedList);
 
-    // Assert that the sorted list matches the query result
+    // assert that the sorted list matches the query result
     List<?> instances = query.asc().list();
     assertThat(instances)
         .hasSize(sortedList.size())
         .extracting(property)
         .containsExactlyElementsOf(sortedList);
 
-    // Reverse ordering
+    // reverse ordering
     for (QueryOrderingProperty orderingProperty : orderProperties) {
       orderingProperty.setDirection(Direction.DESCENDING);
     }
 
-    // Reverse matchers
+    // reverse matchers
     Collections.reverse(sortedList);
 
-    // Assert again with reversed order
+    // assert again with reversed order
     instances = query.list();
     assertThat(instances)
         .hasSize(sortedList.size())

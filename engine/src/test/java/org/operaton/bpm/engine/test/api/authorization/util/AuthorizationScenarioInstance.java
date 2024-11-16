@@ -83,8 +83,7 @@ public class AuthorizationScenarioInstance {
       List<MissingAuthorization> actualMissingAuthorizations = getActualMissingAuthorizations(e);
       List<MissingAuthorization> expectedMissingAuthorizations = MissingAuthorizationMatcher.asMissingAuthorizations(missingAuthorizations);
 
-      assertThat(actualMissingAuthorizations)
-          .containsExactlyInAnyOrderElementsOf(expectedMissingAuthorizations);
+      assertThat(actualMissingAuthorizations).containsExactlyInAnyOrderElementsOf(expectedMissingAuthorizations);
 
       for (Authorization missingAuthorization : missingAuthorizations) {
         Assert.assertTrue(assertionFailureMessage, message.contains(missingAuthorization.getUserId()));

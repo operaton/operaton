@@ -16,19 +16,7 @@
  */
 package org.operaton.bpm.dmn.engine.type;
 
-import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
-import org.operaton.bpm.dmn.engine.DmnEngineException;
-import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformer;
-import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformerRegistry;
-import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.camunda.feel.syntaxtree.ZonedTime;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,8 +28,19 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.TimeZone;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.camunda.feel.syntaxtree.ZonedTime;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
+import org.operaton.bpm.dmn.engine.DmnEngineException;
+import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
+import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformer;
+import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformerRegistry;
+import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**
  * Tests the build-in {@link DmnDataTypeTransformer}s.
@@ -72,22 +71,22 @@ public class DmnDataTypeTransformerTest extends DmnEngineTest {
   public void stringType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("string");
 
-    assertThat(typeTransformer.transform("abc")).isEqualTo((TypedValue) Variables.stringValue("abc"));
-    assertThat(typeTransformer.transform(true)).isEqualTo((TypedValue) Variables.stringValue("true"));
-    assertThat(typeTransformer.transform(4)).isEqualTo((TypedValue) Variables.stringValue("4"));
-    assertThat(typeTransformer.transform(2L)).isEqualTo((TypedValue) Variables.stringValue("2"));
-    assertThat(typeTransformer.transform(4.2)).isEqualTo((TypedValue) Variables.stringValue("4.2"));
+    assertThat(typeTransformer.transform("abc")).isEqualTo(Variables.stringValue("abc"));
+    assertThat(typeTransformer.transform(true)).isEqualTo(Variables.stringValue("true"));
+    assertThat(typeTransformer.transform(4)).isEqualTo(Variables.stringValue("4"));
+    assertThat(typeTransformer.transform(2L)).isEqualTo(Variables.stringValue("2"));
+    assertThat(typeTransformer.transform(4.2)).isEqualTo(Variables.stringValue("4.2"));
   }
 
   @Test
   public void booleanType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("boolean");
 
-    assertThat(typeTransformer.transform(true)).isEqualTo((TypedValue) Variables.booleanValue(true));
-    assertThat(typeTransformer.transform(false)).isEqualTo((TypedValue) Variables.booleanValue(false));
+    assertThat(typeTransformer.transform(true)).isEqualTo(Variables.booleanValue(true));
+    assertThat(typeTransformer.transform(false)).isEqualTo(Variables.booleanValue(false));
 
-    assertThat(typeTransformer.transform("true")).isEqualTo((TypedValue) Variables.booleanValue(true));
-    assertThat(typeTransformer.transform("false")).isEqualTo((TypedValue) Variables.booleanValue(false));
+    assertThat(typeTransformer.transform("true")).isEqualTo(Variables.booleanValue(true));
+    assertThat(typeTransformer.transform("false")).isEqualTo(Variables.booleanValue(false));
   }
 
   @Test
@@ -103,13 +102,13 @@ public class DmnDataTypeTransformerTest extends DmnEngineTest {
   public void integerType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("integer");
 
-    assertThat(typeTransformer.transform(4)).isEqualTo((TypedValue) Variables.integerValue(4));
-    assertThat(typeTransformer.transform("4")).isEqualTo((TypedValue) Variables.integerValue(4));
-    assertThat(typeTransformer.transform(2L)).isEqualTo((TypedValue) Variables.integerValue(2));
-    assertThat(typeTransformer.transform(4.0)).isEqualTo((TypedValue) Variables.integerValue(4));
+    assertThat(typeTransformer.transform(4)).isEqualTo(Variables.integerValue(4));
+    assertThat(typeTransformer.transform("4")).isEqualTo(Variables.integerValue(4));
+    assertThat(typeTransformer.transform(2L)).isEqualTo(Variables.integerValue(2));
+    assertThat(typeTransformer.transform(4.0)).isEqualTo(Variables.integerValue(4));
 
-    assertThat(typeTransformer.transform(Integer.MIN_VALUE)).isEqualTo((TypedValue) Variables.integerValue(Integer.MIN_VALUE));
-    assertThat(typeTransformer.transform(Integer.MAX_VALUE)).isEqualTo((TypedValue) Variables.integerValue(Integer.MAX_VALUE));
+    assertThat(typeTransformer.transform(Integer.MIN_VALUE)).isEqualTo(Variables.integerValue(Integer.MIN_VALUE));
+    assertThat(typeTransformer.transform(Integer.MAX_VALUE)).isEqualTo(Variables.integerValue(Integer.MAX_VALUE));
   }
 
   @Test
@@ -161,13 +160,13 @@ public class DmnDataTypeTransformerTest extends DmnEngineTest {
   public void longType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("long");
 
-    assertThat(typeTransformer.transform(2L)).isEqualTo((TypedValue) Variables.longValue(2L));
-    assertThat(typeTransformer.transform("2")).isEqualTo((TypedValue) Variables.longValue(2L));
-    assertThat(typeTransformer.transform(4)).isEqualTo((TypedValue) Variables.longValue(4L));
-    assertThat(typeTransformer.transform(4.0)).isEqualTo((TypedValue) Variables.longValue(4L));
+    assertThat(typeTransformer.transform(2L)).isEqualTo(Variables.longValue(2L));
+    assertThat(typeTransformer.transform("2")).isEqualTo(Variables.longValue(2L));
+    assertThat(typeTransformer.transform(4)).isEqualTo(Variables.longValue(4L));
+    assertThat(typeTransformer.transform(4.0)).isEqualTo(Variables.longValue(4L));
 
-    assertThat(typeTransformer.transform(Long.MIN_VALUE)).isEqualTo((TypedValue) Variables.longValue(Long.MIN_VALUE));
-    assertThat(typeTransformer.transform(Long.MAX_VALUE)).isEqualTo((TypedValue) Variables.longValue(Long.MAX_VALUE));
+    assertThat(typeTransformer.transform(Long.MIN_VALUE)).isEqualTo(Variables.longValue(Long.MIN_VALUE));
+    assertThat(typeTransformer.transform(Long.MAX_VALUE)).isEqualTo(Variables.longValue(Long.MAX_VALUE));
   }
 
   @Test
@@ -201,15 +200,15 @@ public class DmnDataTypeTransformerTest extends DmnEngineTest {
   public void doubleType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("double");
 
-    assertThat(typeTransformer.transform(4.2)).isEqualTo((TypedValue) Variables.doubleValue(4.2));
-    assertThat(typeTransformer.transform("4.2")).isEqualTo((TypedValue) Variables.doubleValue(4.2));
-    assertThat(typeTransformer.transform(4)).isEqualTo((TypedValue) Variables.doubleValue(4.0));
-    assertThat(typeTransformer.transform(4L)).isEqualTo((TypedValue) Variables.doubleValue(4.0));
+    assertThat(typeTransformer.transform(4.2)).isEqualTo(Variables.doubleValue(4.2));
+    assertThat(typeTransformer.transform("4.2")).isEqualTo(Variables.doubleValue(4.2));
+    assertThat(typeTransformer.transform(4)).isEqualTo(Variables.doubleValue(4.0));
+    assertThat(typeTransformer.transform(4L)).isEqualTo(Variables.doubleValue(4.0));
 
-    assertThat(typeTransformer.transform(Double.MIN_VALUE)).isEqualTo((TypedValue) Variables.doubleValue(Double.MIN_VALUE));
-    assertThat(typeTransformer.transform(Double.MAX_VALUE)).isEqualTo((TypedValue) Variables.doubleValue(Double.MAX_VALUE));
-    assertThat(typeTransformer.transform(-Double.MAX_VALUE)).isEqualTo((TypedValue) Variables.doubleValue(-Double.MAX_VALUE));
-    assertThat(typeTransformer.transform(Long.MAX_VALUE)).isEqualTo((TypedValue) Variables.doubleValue((double) Long.MAX_VALUE));
+    assertThat(typeTransformer.transform(Double.MIN_VALUE)).isEqualTo(Variables.doubleValue(Double.MIN_VALUE));
+    assertThat(typeTransformer.transform(Double.MAX_VALUE)).isEqualTo(Variables.doubleValue(Double.MAX_VALUE));
+    assertThat(typeTransformer.transform(-Double.MAX_VALUE)).isEqualTo(Variables.doubleValue(-Double.MAX_VALUE));
+    assertThat(typeTransformer.transform(Long.MAX_VALUE)).isEqualTo(Variables.doubleValue((double) Long.MAX_VALUE));
   }
 
   @Test

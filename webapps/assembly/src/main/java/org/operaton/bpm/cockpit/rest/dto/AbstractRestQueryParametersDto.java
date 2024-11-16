@@ -19,7 +19,6 @@ package org.operaton.bpm.cockpit.rest.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.operaton.bpm.cockpit.db.QueryParameters;
-import org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
 import org.operaton.bpm.engine.rest.dto.converter.StringToTypeConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;

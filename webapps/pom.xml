@@ -177,16 +177,6 @@
             </configuration>
           </execution>
           <execution>
-            <id>Install XLTS.dev dependencies</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <phase>generate-resources</phase>
-            <configuration>
-              <arguments>run xlts-install</arguments>
-            </configuration>
-          </execution>
-          <execution>
             <id>License check</id>
             <goals>
               <goal>npm</goal>

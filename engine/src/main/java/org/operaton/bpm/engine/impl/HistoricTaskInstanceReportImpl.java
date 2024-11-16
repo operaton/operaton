@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.DurationReportResult;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceReport;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceReportResult;
-import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.TenantCheck;
 import org.operaton.bpm.engine.impl.interceptor.Command;

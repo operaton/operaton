@@ -20,7 +20,6 @@ import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateD
 
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
-import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.dmn.result.DecisionResultMapper;
 
 /**

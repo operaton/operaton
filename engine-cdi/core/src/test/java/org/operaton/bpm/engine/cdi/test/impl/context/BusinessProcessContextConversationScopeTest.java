@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.cdi.test.impl.context;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
-import org.operaton.bpm.engine.cdi.test.impl.beans.CreditCard;
 import org.operaton.bpm.engine.cdi.test.impl.beans.ProcessScopedMessageBean;
 import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -26,7 +25,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 public class BusinessProcessContextConversationScopeTest extends CdiProcessEngineTestCase {

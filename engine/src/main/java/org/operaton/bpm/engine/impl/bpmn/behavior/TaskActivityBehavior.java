@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 

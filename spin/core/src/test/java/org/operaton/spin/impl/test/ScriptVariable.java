@@ -16,7 +16,10 @@
  */
 package org.operaton.spin.impl.test;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Annotation to define script variable bindings. Either used directly

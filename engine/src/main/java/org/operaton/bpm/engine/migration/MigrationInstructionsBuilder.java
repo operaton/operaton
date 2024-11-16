@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.migration;
 
-import org.operaton.bpm.engine.migration.MigrationInstructionBuilder;
-
 /**
  * @author Thorben Lindhauer
  *

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.filter;
 
-import javax.servlet.*;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.BufferedReader;

@@ -21,7 +21,6 @@ import java.io.File;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 /**

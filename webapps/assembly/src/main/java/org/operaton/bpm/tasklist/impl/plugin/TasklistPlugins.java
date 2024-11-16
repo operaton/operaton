@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.tasklist.impl.plugin;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.operaton.bpm.tasklist.impl.plugin.resources.TasklistPluginsRootResource;

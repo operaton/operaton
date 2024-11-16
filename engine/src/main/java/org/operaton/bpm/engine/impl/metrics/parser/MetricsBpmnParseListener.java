@@ -24,7 +24,6 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 import org.operaton.bpm.engine.management.Metrics;
-import org.operaton.bpm.engine.runtime.Execution;
 
 /**
  * @author Daniel Meyer

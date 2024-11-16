@@ -16,12 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.dto.message;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ExecutionDto;
-import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResultWithVariables;
 
 public class MessageCorrelationResultWithVariableDto extends MessageCorrelationResultDto {

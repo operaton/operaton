@@ -27,8 +27,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 
-import static org.mockito.Mockito.mockStatic;
-
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 

@@ -34,7 +34,6 @@ import org.operaton.bpm.engine.rest.dto.CountResultDto;
 import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
 import org.operaton.bpm.engine.rest.dto.identity.GroupDto;
 import org.operaton.bpm.engine.rest.dto.identity.GroupQueryDto;
-import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
 import org.operaton.bpm.engine.rest.sub.identity.GroupResource;
 
 /**

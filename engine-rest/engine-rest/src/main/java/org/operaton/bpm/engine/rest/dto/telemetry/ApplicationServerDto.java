@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.telemetry;
 
-import static org.operaton.bpm.engine.impl.util.ParseUtil.parseServerVendor;
-
 import org.operaton.bpm.engine.telemetry.ApplicationServer;
 
 public class ApplicationServerDto {

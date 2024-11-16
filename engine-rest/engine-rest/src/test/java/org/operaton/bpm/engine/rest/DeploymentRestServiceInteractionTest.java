@@ -51,10 +51,6 @@ import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyList;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.*;
 
 public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTest {

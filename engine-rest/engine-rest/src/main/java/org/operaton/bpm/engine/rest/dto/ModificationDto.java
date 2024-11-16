@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.rest.dto;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.modification.ProcessInstanceModificationInstructionDto;

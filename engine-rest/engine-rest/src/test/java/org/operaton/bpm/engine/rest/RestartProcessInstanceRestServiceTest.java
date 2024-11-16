@@ -19,8 +19,6 @@ package org.operaton.bpm.engine.rest;
 import static io.restassured.RestAssured.given;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.anyList;
-import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.*;
 
 import io.restassured.http.ContentType;

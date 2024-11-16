@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.sub.task.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;

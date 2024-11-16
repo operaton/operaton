@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.rest;
 
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 import static io.restassured.RestAssured.given;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doThrow;

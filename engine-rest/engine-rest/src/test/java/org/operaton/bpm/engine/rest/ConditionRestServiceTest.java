@@ -41,7 +41,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.ConditionEvaluationBuilderImpl;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerRule;

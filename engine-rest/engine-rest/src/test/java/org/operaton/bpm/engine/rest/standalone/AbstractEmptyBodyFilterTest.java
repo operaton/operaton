@@ -31,12 +31,10 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
 import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Test;
 
 import javax.ws.rs.core.HttpHeaders;

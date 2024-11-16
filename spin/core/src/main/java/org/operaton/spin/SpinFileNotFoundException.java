@@ -16,8 +16,6 @@
  */
 package org.operaton.spin;
 
-import org.operaton.spin.SpinRuntimeException;
-
 /**
  * @author Sebastian Menski
  */

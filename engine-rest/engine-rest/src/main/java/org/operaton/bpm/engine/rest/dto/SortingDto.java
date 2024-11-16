@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.rest.dto;
 
 
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.*;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 import java.util.Map;
 

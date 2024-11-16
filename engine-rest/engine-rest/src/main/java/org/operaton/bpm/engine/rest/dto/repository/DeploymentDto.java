@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.dto.repository;
 
-import java.util.*;
+import java.util.Date;
 
-import org.operaton.bpm.engine.repository.*;
+import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.rest.dto.LinkableDto;
 
 public class DeploymentDto extends LinkableDto {

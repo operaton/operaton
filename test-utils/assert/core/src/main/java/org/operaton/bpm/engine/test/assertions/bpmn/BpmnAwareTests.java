@@ -17,42 +17,26 @@
 package org.operaton.bpm.engine.test.assertions.bpmn;
 
 
-import static java.lang.String.format;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.assertj.core.api.Assertions;
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
-import org.operaton.bpm.engine.runtime.ExecutionQuery;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.JobQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Activity;
 import org.operaton.bpm.model.bpmn.instance.Event;
 import org.operaton.bpm.model.bpmn.instance.Gateway;
+
+import java.util.*;
+
+import static java.lang.String.format;
+import static java.util.Collections.emptyMap;
 
 /**
  * Convenience class to access only operaton *BPMN* related Assertions
@@ -406,10 +390,7 @@ public class BpmnAwareTests extends AbstractAssertions {
   public static Task task(TaskQuery taskQuery) {
     ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
     if (lastAssert == null)
-      throw new IllegalStateException(
-        "Call a process instance assertion first - " +
-          "e.g. assertThat(processInstance)... !"
-      );
+      throw new IllegalStateException("Call a process instance assertion first - e.g. assertThat(processInstance)... !");
     return task(taskQuery, lastAssert.getActual());
   }
 
@@ -952,7 +933,7 @@ public class BpmnAwareTests extends AbstractAssertions {
     if (externalTask == null || variables == null) {
       throw new IllegalArgumentException(format("Illegal call of completeExternalTask(externalTask = '%s', variables = '%s') - both must not be null!", externalTask, variables));
     }
-    complete(externalTask, variables, Collections.EMPTY_MAP);
+    complete(externalTask, variables, emptyMap());
   }
 
   /**
@@ -1039,7 +1020,7 @@ public class BpmnAwareTests extends AbstractAssertions {
     if (lockedExternalTask == null || variables == null) {
       throw new IllegalArgumentException(format("Illegal call of completeExternalTask(lockedExternalTask = '%s', variables = '%s') - both must not be null!", lockedExternalTask, variables));
     }
-    complete(lockedExternalTask, variables, Collections.EMPTY_MAP);
+    complete(lockedExternalTask, variables, emptyMap());
   }
 
   /**

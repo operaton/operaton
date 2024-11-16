@@ -46,8 +46,7 @@ public class OAuth2GrantedAuthoritiesMapper implements GrantedAuthoritiesMapper 
     Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
 
     authorities.forEach(authority -> {
-      if (authority instanceof OAuth2UserAuthority) {
-        var oauth2UserAuthority = (OAuth2UserAuthority) authority;
+      if (authority instanceof OAuth2UserAuthority oauth2UserAuthority) {
         Object groupAttribute = oauth2UserAuthority.getAttributes().get(groupNameAttribute);
 
         if (groupAttribute == null) {
@@ -62,10 +61,9 @@ public class OAuth2GrantedAuthoritiesMapper implements GrantedAuthoritiesMapper 
               .map(SimpleGrantedAuthority::new)
               .collect(Collectors.toSet());
           mappedAuthorities.addAll(grantedAuthorities);
-        } else if (groupAttribute instanceof String) {
+        } else if (groupAttribute instanceof String groupsAttribute) {
           String groupNameDelimiter = identityProviderProperties.getGroupNameDelimiter();
-          String groupsAttribute = (String) groupAttribute;
-
+´
           var grantedAuthorities = Arrays.stream(groupsAttribute.split(groupNameDelimiter))
               .map(SimpleGrantedAuthority::new)
               .collect(Collectors.toSet());

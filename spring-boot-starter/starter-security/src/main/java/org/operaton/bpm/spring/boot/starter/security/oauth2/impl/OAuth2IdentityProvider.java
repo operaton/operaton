@@ -16,13 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
-import org.operaton.bpm.engine.identity.Group;
-import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.identity.NativeUserQuery;
-import org.operaton.bpm.engine.identity.Tenant;
-import org.operaton.bpm.engine.identity.TenantQuery;
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.identity.UserQuery;
+import org.operaton.bpm.engine.identity.*;
 import org.operaton.bpm.engine.impl.GroupQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.TenantQueryImpl;
@@ -72,7 +66,7 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
    */
   protected static boolean nullOrContainsIgnoreCase(String searchLike, String value) {
     return searchLike == null || value == null || value.toLowerCase()
-        .contains(searchLike.replaceAll("%", "").toLowerCase());
+        .contains(searchLike.replace("%", "").toLowerCase());
   }
 
   /**
@@ -95,8 +89,7 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
     String userId = authentication.getName();
     UserEntity user = new UserEntity();
     user.setId(userId);
-    if (principal instanceof OidcUser) {
-      var oidcUser = (OidcUser) principal;
+    if (principal instanceof OidcUser oidcUser) {
       user.setFirstName(oidcUser.getGivenName());
       user.setLastName(oidcUser.getFamilyName());
       user.setEmail(oidcUser.getEmail());
@@ -197,7 +190,7 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
             var user = transformUser();
             return this.userId == null || user == null || this.userId.equals(user.getId());
           })
-          .collect(Collectors.toList());
+          .toList();
     }
   }
 

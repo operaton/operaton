@@ -16,36 +16,16 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -53,11 +33,7 @@ import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.rest.dto.runtime.VariableNameDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
-import org.operaton.bpm.engine.rest.helper.ErrorMessageHelper;
-import org.operaton.bpm.engine.rest.helper.ExampleVariableObject;
-import org.operaton.bpm.engine.rest.helper.MockObjectValue;
-import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.helper.VariableTypeHelper;
+import org.operaton.bpm.engine.rest.helper.*;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsNullValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsObjectValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
@@ -74,17 +50,21 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.BooleanValue;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
+import java.util.*;
+
+import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.*;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
 
 /**
 *
@@ -670,7 +650,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
       .body(is(equalTo(new String(byteContent))))
     .when().get(SINGLE_CASE_INSTANCE_BINARY_VARIABLE_URL);
 
-    String contentType = response.contentType().replaceAll(" ", "");
+    String contentType = response.contentType().replace(" ", "");
     assertThat(contentType).isEqualTo(ContentType.TEXT + ";charset=" + encoding);
   }
 

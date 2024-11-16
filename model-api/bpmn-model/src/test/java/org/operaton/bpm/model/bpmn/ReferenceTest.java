@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Sebastian Menski
  *
  */
-public class ReferenceTest extends BpmnModelTest {
+class ReferenceTest extends BpmnModelTest {
 
   private BpmnModelInstance testBpmnModelInstance;
   private Message message;
@@ -37,7 +37,7 @@ public class ReferenceTest extends BpmnModelTest {
   private StartEvent startEvent;
 
   @BeforeEach
-  public void createModel() {
+  void createModel() {
     testBpmnModelInstance = Bpmn.createEmptyModel();
     Definitions definitions = testBpmnModelInstance.newInstance(Definitions.class);
     testBpmnModelInstance.setDefinitions(definitions);
@@ -63,7 +63,7 @@ public class ReferenceTest extends BpmnModelTest {
   }
 
   @Test
-  public void testShouldUpdateReferenceOnIdChange() {
+  void testShouldUpdateReferenceOnIdChange() {
     assertThat(messageEventDefinition.getMessage()).isEqualTo(message);
     message.setId("changed-message-id");
     assertThat(message.getId()).isEqualTo("changed-message-id");
@@ -75,7 +75,7 @@ public class ReferenceTest extends BpmnModelTest {
   }
 
   @Test
-  public void testShouldRemoveReferenceIfReferencingElementIsRemoved() {
+  void testShouldRemoveReferenceIfReferencingElementIsRemoved() {
     assertThat(messageEventDefinition.getMessage()).isEqualTo(message);
 
     Definitions definitions = testBpmnModelInstance.getDefinitions();
@@ -86,7 +86,7 @@ public class ReferenceTest extends BpmnModelTest {
   }
 
   @Test
-  public void testShouldRemoveReferenceIfReferencingAttributeIsRemoved() {
+  void testShouldRemoveReferenceIfReferencingAttributeIsRemoved() {
     assertThat(messageEventDefinition.getMessage()).isEqualTo(message);
 
     message.removeAttribute("id");
@@ -96,7 +96,7 @@ public class ReferenceTest extends BpmnModelTest {
   }
 
   @Test
-  public void testShouldUpdateReferenceIfReferencingElementIsReplaced() {
+  void testShouldUpdateReferenceIfReferencingElementIsReplaced() {
     assertThat(messageEventDefinition.getMessage()).isEqualTo(message);
     Message newMessage = testBpmnModelInstance.newInstance(Message.class);
     newMessage.setId("new-message-id");
@@ -107,14 +107,14 @@ public class ReferenceTest extends BpmnModelTest {
   }
 
   @Test
-  public void testShouldAddMessageEventDefinitionRef() {
+  void testShouldAddMessageEventDefinitionRef() {
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
     assertThat(eventDefinitionRefs).isNotEmpty();
     assertThat(eventDefinitionRefs).contains(messageEventDefinition);
   }
 
   @Test
-  public void testShouldUpdateMessageEventDefinitionRefOnIdChange() {
+  void testShouldUpdateMessageEventDefinitionRefOnIdChange() {
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
     assertThat(eventDefinitionRefs).contains(messageEventDefinition);
     messageEventDefinition.setId("changed-message-event-definition-id");
@@ -123,7 +123,7 @@ public class ReferenceTest extends BpmnModelTest {
   }
 
   @Test
-  public void testShouldRemoveMessageEventDefinitionRefIfMessageEventDefinitionIsRemoved() {
+  void testShouldRemoveMessageEventDefinitionRefIfMessageEventDefinitionIsRemoved() {
     startEvent.getEventDefinitions().remove(messageEventDefinition);
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
     assertThat(eventDefinitionRefs).doesNotContain(messageEventDefinition);
@@ -131,7 +131,7 @@ public class ReferenceTest extends BpmnModelTest {
   }
 
   @Test
-  public void testShouldReplaceMessageEventDefinitionRefIfMessageEventDefinitionIsReplaced() {
+  void testShouldReplaceMessageEventDefinitionRefIfMessageEventDefinitionIsReplaced() {
     MessageEventDefinition otherMessageEventDefinition = testBpmnModelInstance.newInstance(MessageEventDefinition.class);
     otherMessageEventDefinition.setId("other-message-event-definition-id");
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
@@ -142,7 +142,7 @@ public class ReferenceTest extends BpmnModelTest {
   }
 
   @Test
-  public void testShouldRemoveMessageEventDefinitionRefIfIdIsRemovedOfMessageEventDefinition() {
+  void testShouldRemoveMessageEventDefinitionRefIfIdIsRemovedOfMessageEventDefinition() {
     Collection<EventDefinition> eventDefinitionRefs = startEvent.getEventDefinitionRefs();
     assertThat(eventDefinitionRefs).contains(messageEventDefinition);
     messageEventDefinition.removeAttribute("id");
@@ -152,7 +152,7 @@ public class ReferenceTest extends BpmnModelTest {
 
   @Test
   @BpmnModelResource
-  public void shouldFindReferenceWithNamespace() {
+  void shouldFindReferenceWithNamespace() {
     MessageEventDefinition messageEventDefinition = bpmnModelInstance.getModelElementById("message-event-definition");
     Message message = bpmnModelInstance.getModelElementById("message-id");
     assertThat(messageEventDefinition.getMessage()).isNotNull();

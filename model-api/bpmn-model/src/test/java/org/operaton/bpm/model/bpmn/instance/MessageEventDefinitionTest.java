@@ -51,7 +51,7 @@ public class MessageEventDefinitionTest extends AbstractEventDefinitionTest {
   }
 
   @Test
-  public void getEventDefinition() {
+  void getEventDefinition() {
     MessageEventDefinition eventDefinition = eventDefinitionQuery.filterByType(MessageEventDefinition.class).singleResult();
     assertThat(eventDefinition).isNotNull();
     assertThat(eventDefinition.getMessage().getId()).isEqualTo("message");

@@ -31,12 +31,12 @@ import org.operaton.bpm.model.xml.testmodel.instance.Bird;
 /**
  * @author Daniel Meyer
  */
-public class ModelValidationTest {
+class ModelValidationTest {
 
   protected ModelInstance modelInstance;
 
   @BeforeEach
-  public void parseModel() {
+  void parseModel() {
     TestModelParser modelParser = new TestModelParser();
     String testXml = "org/operaton/bpm/model/xml/testmodel/instance/UnknownAnimalTest.xml";
     InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);
@@ -45,7 +45,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldValidateWithEmptyList() {
+  void shouldValidateWithEmptyList() {
     ValidationResults results = modelInstance.validate(List.of());
 
     assertThat(results).isNotNull();
@@ -53,7 +53,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldCollectWarnings() {
+  void shouldCollectWarnings() {
     List<ModelElementValidator<?>> validators = List.of(new IsAdultWarner());
 
     ValidationResults results = modelInstance.validate(validators);
@@ -65,7 +65,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldCollectErrors() {
+  void shouldCollectErrors() {
     List<ModelElementValidator<?>> validators = List.of(new IllegalBirdValidator("tweety"));
 
     ValidationResults results = modelInstance.validate(validators);
@@ -77,7 +77,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldWriteResults() {
+  void shouldWriteResults() {
     List<ModelElementValidator<?>> validators = List.of(new IllegalBirdValidator("tweety"));
 
     ValidationResults results = modelInstance.validate(validators);
@@ -89,7 +89,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldWriteResultsUntilMaxSize() {
+  void shouldWriteResultsUntilMaxSize() {
     // Given
     int maxSize = 120;
 
@@ -114,7 +114,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldCombineDifferentValidationResults() {
+  void shouldCombineDifferentValidationResults() {
     // Given
     int maxSize = 120;
 
@@ -139,7 +139,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldReturnResults() {
+  void shouldReturnResults() {
     List<ModelElementValidator<?>> validators =
         List.of(new IllegalBirdValidator("tweety"), new IsAdultWarner());
 

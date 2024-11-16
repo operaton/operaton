@@ -18,10 +18,10 @@ package org.operaton.bpm.model.dmn;
 
 import org.junit.jupiter.api.Test;
 
-public class DmnDiTest {
+class DmnDiTest {
 
   @Test
-  public void validateDmnWithOperatonDi() {
+  void validateDmnWithOperatonDi() {
 
     DmnModelInstance modelInstance = Dmn.readModelFromStream(DmnDiTest.class.getResourceAsStream("ExampleWithOperatonDI.dmn"));
 

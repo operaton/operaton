@@ -32,7 +32,7 @@ public class InclusiveGatewayTest extends AbstractGatewayTest<InclusiveGateway> 
   }
 
   @Test
-  public void getDefault() {
+  void getDefault() {
     assertThat(gateway.getDefault().getId()).isEqualTo("flow");
   }
 

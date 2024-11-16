@@ -73,7 +73,7 @@ public class ExampleCompatibilityTest extends DmnModelTest {
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
-  public void shouldGetElements(DmnModelInstance originalModelInstance) {
+  void shouldGetElements(DmnModelInstance originalModelInstance) {
 
     initExampleCompatibilityTest(originalModelInstance);
 
@@ -216,7 +216,7 @@ public class ExampleCompatibilityTest extends DmnModelTest {
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
-  public void shouldWriteElements(DmnModelInstance originalModelInstance) throws Exception {
+  void shouldWriteElements(DmnModelInstance originalModelInstance) throws Exception {
     initExampleCompatibilityTest(originalModelInstance);
     modelInstance = Dmn.createEmptyModel();
 

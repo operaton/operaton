@@ -46,7 +46,7 @@ public class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
-  public void testOutputParameterScriptChildAssignment() {
+  void testOutputParameterScriptChildAssignment() {
     try {
       OperatonOutputParameter outputParamElement = modelInstance.newInstance(OperatonOutputParameter.class);
       outputParamElement.setOperatonName("aVariable");
@@ -63,7 +63,7 @@ public class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
-  public void testOutputParameterListChildAssignment() {
+  void testOutputParameterListChildAssignment() {
     try {
       OperatonOutputParameter outputParamElement = modelInstance.newInstance(OperatonOutputParameter.class);
       outputParamElement.setOperatonName("aVariable");
@@ -78,7 +78,7 @@ public class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
-  public void testOutputParameterMapChildAssignment() {
+  void testOutputParameterMapChildAssignment() {
     try {
       OperatonOutputParameter outputParamElement = modelInstance.newInstance(OperatonOutputParameter.class);
       outputParamElement.setOperatonName("aVariable");

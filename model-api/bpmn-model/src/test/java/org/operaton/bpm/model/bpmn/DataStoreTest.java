@@ -25,17 +25,17 @@ import org.operaton.bpm.model.bpmn.instance.DataStoreReference;
 /**
  * @author Falko Menge
  */
-public class DataStoreTest {
+class DataStoreTest {
 
   private static BpmnModelInstance modelInstance;
 
   @BeforeAll
-  public static void parseModel() {
+  static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(DataStoreTest.class.getResourceAsStream("DataStoreTest.bpmn"));
   }
 
   @Test
-  public void testGetDataStore() {
+  void testGetDataStore() {
     DataStore dataStore = modelInstance.getModelElementById("myDataStore");
     assertThat(dataStore).isNotNull();
     assertThat(dataStore.getName()).isEqualTo("My Data Store");
@@ -44,7 +44,7 @@ public class DataStoreTest {
   }
 
   @Test
-  public void testGetDataStoreReference() {
+  void testGetDataStoreReference() {
     DataStoreReference dataStoreReference = modelInstance.getModelElementById("myDataStoreReference");
     DataStore dataStore = modelInstance.getModelElementById("myDataStore");
     assertThat(dataStoreReference).isNotNull();

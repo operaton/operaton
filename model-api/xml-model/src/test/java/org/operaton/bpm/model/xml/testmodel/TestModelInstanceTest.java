@@ -24,10 +24,10 @@ import org.operaton.bpm.model.xml.testmodel.instance.Animal;
 import org.operaton.bpm.model.xml.testmodel.instance.Animals;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
 
-public class TestModelInstanceTest {
+class TestModelInstanceTest {
 
   @Test
-  public void testClone() throws Exception {
+  void testClone() throws Exception {
     ModelInstance modelInstance = new TestModelParser().getEmptyModel();
 
     Animals animals = modelInstance.newInstance(Animals.class);

@@ -28,10 +28,10 @@ import static org.operaton.bpm.model.xml.impl.util.StringUtil.splitCommaSeparate
 /**
  * @author Sebastian Menski
  */
-public class StringUtilTest {
+class StringUtilTest {
 
   @Test
-  public void testStringListSplit() {
+  void testStringListSplit() {
     assertThat(splitCommaSeparatedList("")).isEmpty();
     assertThat(splitCommaSeparatedList("  ")).isEmpty();
     assertThat(splitCommaSeparatedList("a")).containsExactly("a");
@@ -49,7 +49,7 @@ public class StringUtilTest {
   }
 
   @Test
-  public void testStringListJoin() {
+  void testStringListJoin() {
     assertThat(joinCommaSeparatedList(null)).isNull();
     List<String> testList = new ArrayList<String>();
     assertThat(joinCommaSeparatedList(testList)).isEqualTo("");
@@ -68,12 +68,12 @@ public class StringUtilTest {
   }
 
   @Test
-  public void testNullSplit() {
+  void testNullSplit() {
     assertThat(splitCommaSeparatedList(null)).isEmpty();
   }
 
   @Test
-  public void testNullJoin() {
+  void testNullJoin() {
     assertThat(joinCommaSeparatedList(null)).isNull();
   }
 

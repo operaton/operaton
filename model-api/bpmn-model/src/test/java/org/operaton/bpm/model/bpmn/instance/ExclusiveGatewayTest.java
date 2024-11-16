@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Sebastian Menski
  */
-public class ExclusiveGatewayTest extends AbstractGatewayTest<ExclusiveGateway> {
+class ExclusiveGatewayTest extends AbstractGatewayTest<ExclusiveGateway> {
 
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
@@ -35,7 +35,7 @@ public class ExclusiveGatewayTest extends AbstractGatewayTest<ExclusiveGateway> 
   }
 
   @Test
-  public void getDefault() {
+  void getDefault() {
     assertThat(gateway.getDefault().getId()).isEqualTo("flow");
   }
 

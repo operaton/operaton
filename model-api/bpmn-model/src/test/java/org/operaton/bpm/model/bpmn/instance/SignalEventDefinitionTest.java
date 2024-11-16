@@ -34,7 +34,7 @@ public class SignalEventDefinitionTest extends AbstractEventDefinitionTest {
   }
 
   @Test
-  public void getEventDefinition() {
+  void getEventDefinition() {
     SignalEventDefinition eventDefinition = eventDefinitionQuery.filterByType(SignalEventDefinition.class).singleResult();
     assertThat(eventDefinition).isNotNull();
     assertThat(eventDefinition.isOperatonAsync()).isFalse();

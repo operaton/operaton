@@ -32,19 +32,19 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
 
-public class DiGeneratorForSequenceFlowsTest {
+class DiGeneratorForSequenceFlowsTest {
 
   private BpmnModelInstance instance;
 
   @AfterEach
-  public void validateModel() throws IOException {
+  void validateModel() throws IOException {
     if (instance != null) {
       Bpmn.validateModel(instance);
     }
   }
 
   @Test
-  public void shouldGenerateEdgeForSequenceFlow() {
+  void shouldGenerateEdgeForSequenceFlow() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -61,7 +61,7 @@ public class DiGeneratorForSequenceFlowsTest {
   }
 
   @Test
-  public void shouldGenerateEdgesForSequenceFlowsUsingGateway() {
+  void shouldGenerateEdgesForSequenceFlowsUsingGateway() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -85,7 +85,7 @@ public class DiGeneratorForSequenceFlowsTest {
   }
 
   @Test
-  public void shouldGenerateEdgesWhenUsingMoveToActivity() {
+  void shouldGenerateEdgesWhenUsingMoveToActivity() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -112,7 +112,7 @@ public class DiGeneratorForSequenceFlowsTest {
   }
 
   @Test
-  public void shouldGenerateEdgesWhenUsingMoveToNode() {
+  void shouldGenerateEdgesWhenUsingMoveToNode() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 
@@ -139,7 +139,7 @@ public class DiGeneratorForSequenceFlowsTest {
   }
 
   @Test
-  public void shouldGenerateEdgesWhenUsingConnectTo() {
+  void shouldGenerateEdgesWhenUsingConnectTo() {
 
     ProcessBuilder builder = Bpmn.createExecutableProcess();
 

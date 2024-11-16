@@ -20,10 +20,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DmnTest {
+class DmnTest {
 
   @Test
-  public void testDmn() {
+  void testDmn() {
     assertThat(Dmn.INSTANCE).isNotNull();
   }
 

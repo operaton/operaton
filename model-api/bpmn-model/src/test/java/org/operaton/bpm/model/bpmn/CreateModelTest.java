@@ -31,7 +31,7 @@ public class CreateModelTest {
   public Process process;
 
   @BeforeEach
-  public void createEmptyModel() {
+  void createEmptyModel() {
     modelInstance = Bpmn.createEmptyModel();
     definitions = modelInstance.newInstance(Definitions.class);
     definitions.setTargetNamespace("http://operaton.org/examples");
@@ -56,7 +56,7 @@ public class CreateModelTest {
   }
 
   @Test
-  public void createProcessWithOneTask() {
+  void createProcessWithOneTask() {
     // create process
     Process process = createElement(definitions, "process-with-one-task", Process.class);
 
@@ -71,7 +71,7 @@ public class CreateModelTest {
   }
 
   @Test
-  public void createProcessWithParallelGateway() {
+  void createProcessWithParallelGateway() {
     // create process
     Process process = createElement(definitions, "process-with-parallel-gateway", Process.class);
 
@@ -93,7 +93,7 @@ public class CreateModelTest {
   }
 
   @AfterEach
-  public void validateModel() {
+  void validateModel() {
     Bpmn.validateModel(modelInstance);
   }
 

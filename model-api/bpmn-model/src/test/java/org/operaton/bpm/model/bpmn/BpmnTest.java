@@ -23,10 +23,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Sebastian Menski
  */
-public class BpmnTest {
+class BpmnTest {
 
   @Test
-  public void testBpmn() {
+  void testBpmn() {
     assertThat(Bpmn.INSTANCE).isNotNull();
   }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TimerEventDefinitionTest extends AbstractEventDefinitionTest {
+class TimerEventDefinitionTest extends AbstractEventDefinitionTest {
 
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
@@ -35,7 +35,7 @@ public class TimerEventDefinitionTest extends AbstractEventDefinitionTest {
   }
 
   @Test
-  public void getElementDefinition() {
+  void getElementDefinition() {
     List<TimerEventDefinition> eventDefinitions = eventDefinitionQuery.filterByType(TimerEventDefinition.class).list();
     assertThat(eventDefinitions).hasSize(3);
     for (TimerEventDefinition eventDefinition : eventDefinitions) {

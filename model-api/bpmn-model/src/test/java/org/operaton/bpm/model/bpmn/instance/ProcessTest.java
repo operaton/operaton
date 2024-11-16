@@ -70,7 +70,7 @@ public class ProcessTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testOperatonJobPriority() {
+  void testOperatonJobPriority() {
     Process process = modelInstance.newInstance(Process.class);
     assertThat(process.getOperatonJobPriority()).isNull();
 
@@ -80,7 +80,7 @@ public class ProcessTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testOperatonTaskPriority() {
+  void testOperatonTaskPriority() {
     //given
     Process proc = modelInstance.newInstance(Process.class);
     assertThat(proc.getOperatonTaskPriority()).isNull();
@@ -91,7 +91,7 @@ public class ProcessTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testOperatonHistoryTimeToLive() {
+  void testOperatonHistoryTimeToLive() {
     //given
     Process proc = modelInstance.newInstance(Process.class);
     assertThat(proc.getOperatonHistoryTimeToLive()).isNull();

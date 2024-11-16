@@ -24,7 +24,7 @@ import org.operaton.bpm.model.dmn.instance.DecisionTable;
 import org.operaton.bpm.model.dmn.instance.InputEntry;
 import org.operaton.bpm.model.dmn.instance.Rule;
 
-public class DmnWriterTest extends DmnModelTest {
+class DmnWriterTest extends DmnModelTest {
 
   /**
    * <p>There is an issue in JDK 9+ that changes how CDATA section are serialized:
@@ -57,7 +57,7 @@ public class DmnWriterTest extends DmnModelTest {
    * and the text content method returns the CDATA value only
    */
   @Test
-  public void shouldReadJDK9StyleModel()
+  void shouldReadJDK9StyleModel()
   {
     DmnModelInstance modelInstance =
         Dmn.readModelFromStream(ExampleCompatibilityTest.class.getResourceAsStream("JDK9-style-CDATA.dmn"));

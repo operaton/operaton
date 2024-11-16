@@ -41,7 +41,7 @@ public class ExpressionLanguageTest extends DmnModelTest {
 
   @Test
   @DmnModelResource(resource = EXPRESSION_LANGUAGE_DMN)
-  public void shouldReadExpressionLanguage() {
+  void shouldReadExpressionLanguage() {
     Definitions definitions = modelInstance.getDefinitions();
     assertThat(definitions.getExpressionLanguage()).isEqualTo(EXPRESSION_LANGUAGE);
 
@@ -60,7 +60,7 @@ public class ExpressionLanguageTest extends DmnModelTest {
   }
 
   @Test
-  public void shouldWriteExpressionLanguage() throws Exception {
+  void shouldWriteExpressionLanguage() throws Exception {
     modelInstance = Dmn.createEmptyModel();
     Definitions definitions = generateNamedElement(Definitions.class, "definitions");
     definitions.setNamespace(TEST_NAMESPACE);

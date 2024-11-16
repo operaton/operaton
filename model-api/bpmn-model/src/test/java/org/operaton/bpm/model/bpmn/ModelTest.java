@@ -28,10 +28,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ModelTest {
+class ModelTest {
 
   @Test
-  public void testCreateEmptyModel() {
+  void testCreateEmptyModel() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createEmptyModel();
 
     Definitions definitions = bpmnModelInstance.getDefinitions();
@@ -45,7 +45,7 @@ public class ModelTest {
   }
 
   @Test
-  public void testBaseTypeCalculation() {
+  void testBaseTypeCalculation() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createEmptyModel();
     Model model = bpmnModelInstance.getModel();
     Collection<ModelElementType> allBaseTypes = ModelUtil.calculateAllBaseTypes(model.getType(StartEvent.class));
@@ -59,7 +59,7 @@ public class ModelTest {
   }
 
   @Test
-  public void testExtendingTypeCalculation() {
+  void testExtendingTypeCalculation() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createEmptyModel();
     Model model = bpmnModelInstance.getModel();
     List<ModelElementType> baseInstanceTypes = new ArrayList<ModelElementType>();

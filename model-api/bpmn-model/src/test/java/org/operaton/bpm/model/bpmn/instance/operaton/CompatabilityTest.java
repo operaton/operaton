@@ -38,10 +38,10 @@ import org.operaton.bpm.model.bpmn.instance.ExtensionElements;
  * @author Ronny Bräunlich
  *
  */
-public class CompatabilityTest {
+class CompatabilityTest {
 
   @Test
-  public void modifyingElementWithActivitiNsKeepsIt() {
+  void modifyingElementWithActivitiNsKeepsIt() {
     BpmnModelInstance modelInstance = Bpmn.readModelFromStream(OperatonExtensionsTest.class.getResourceAsStream("OperatonExtensionsCompatabilityTest.xml"));
     ProcessImpl process = modelInstance.getModelElementById(PROCESS_ID);
     ExtensionElements extensionElements = process.getExtensionElements();
@@ -56,7 +56,7 @@ public class CompatabilityTest {
   }
 
   @Test
-  public void modifyingAttributeWithActivitiNsKeepsIt() {
+  void modifyingAttributeWithActivitiNsKeepsIt() {
     BpmnModelInstance modelInstance = Bpmn.readModelFromStream(OperatonExtensionsTest.class.getResourceAsStream("OperatonExtensionsCompatabilityTest.xml"));
     ProcessImpl process = modelInstance.getModelElementById(PROCESS_ID);
     String priority = "9000";

@@ -38,11 +38,11 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.XPATH_NS;
  * @author Daniel Meyer
  *
  */
-public class DefinitionsTest extends BpmnModelTest {
+class DefinitionsTest extends BpmnModelTest {
 
   @Test
   @BpmnModelResource
-  public void shouldImportEmptyDefinitions() {
+  void shouldImportEmptyDefinitions() {
 
     Definitions definitions = bpmnModelInstance.getDefinitions();
     assertThat(definitions).isNotNull();
@@ -65,13 +65,13 @@ public class DefinitionsTest extends BpmnModelTest {
   }
 
   @Test
-  public void shouldNotImportWrongOrderedSequence() {
+  void shouldNotImportWrongOrderedSequence() {
     assertThatThrownBy(() -> Bpmn.readModelFromStream(getClass().getResourceAsStream("DefinitionsTest.shouldNotImportWrongOrderedSequence.bpmn")))
             .isInstanceOf(ModelParseException.class);
   }
 
   @Test
-  public void shouldAddChildElementsInCorrectOrder() {
+  void shouldAddChildElementsInCorrectOrder() {
     // create an empty model
     BpmnModelInstance bpmnModelInstance = Bpmn.createEmptyModel();
 
@@ -110,7 +110,7 @@ public class DefinitionsTest extends BpmnModelTest {
 
   @Test
   @BpmnModelResource
-  public void shouldNotAffectComments() throws IOException {
+  void shouldNotAffectComments() throws IOException {
     Definitions definitions = bpmnModelInstance.getDefinitions();
     assertThat(definitions).isNotNull();
 
@@ -147,7 +147,7 @@ public class DefinitionsTest extends BpmnModelTest {
   }
 
   @Test
-  public void shouldAddMessageAndMessageEventDefinition() {
+  void shouldAddMessageAndMessageEventDefinition() {
     // create empty model
     BpmnModelInstance bpmnModelInstance = Bpmn.createEmptyModel();
 
@@ -211,7 +211,7 @@ public class DefinitionsTest extends BpmnModelTest {
   }
 
   @Test
-  public void shouldAddParentChildElementInCorrectOrder() {
+  void shouldAddParentChildElementInCorrectOrder() {
     // create empty model
     BpmnModelInstance bpmnModelInstance = Bpmn.createEmptyModel();
 

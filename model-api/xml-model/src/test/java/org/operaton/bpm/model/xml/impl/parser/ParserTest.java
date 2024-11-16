@@ -27,12 +27,12 @@ import java.io.InputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ParserTest {
+class ParserTest {
 
   private static final String ACCESS_EXTERNAL_SCHEMA_PROP = "javax.xml.accessExternalSchema";
 
   @Test
-  public void shouldThrowExceptionForTooManyAttributes() {
+  void shouldThrowExceptionForTooManyAttributes() {
     TestModelParser modelParser = new TestModelParser();
     String testXml = "org/operaton/bpm/model/xml/impl/parser/FeatureSecureProcessing.xml";
     InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);
@@ -45,7 +45,7 @@ public class ParserTest {
   }
 
   @Test
-  public void shouldProhibitExternalSchemaAccessViaSystemProperty() {
+  void shouldProhibitExternalSchemaAccessViaSystemProperty() {
     Assertions.assertThatThrownBy(() -> {
       // given
       // the external schema access property is not supported on certain
@@ -71,7 +71,7 @@ public class ParserTest {
   }
 
   @Test
-  public void shouldAllowExternalSchemaAccessViaSystemProperty() {
+  void shouldAllowExternalSchemaAccessViaSystemProperty() {
     // given
     System.setProperty(ACCESS_EXTERNAL_SCHEMA_PROP, "all");
 
@@ -91,7 +91,7 @@ public class ParserTest {
   }
 
   @Test
-  public void shouldThrowExceptionForDoctype() {
+  void shouldThrowExceptionForDoctype() {
     TestModelParser modelParser = new TestModelParser();
     String testXml = "org/operaton/bpm/model/xml/impl/parser/XxeProcessing.xml";
     InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);

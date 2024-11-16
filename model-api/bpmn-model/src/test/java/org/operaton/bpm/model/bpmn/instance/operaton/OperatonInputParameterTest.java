@@ -46,7 +46,7 @@ public class OperatonInputParameterTest extends BpmnModelElementInstanceTest {
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
-  public void testIntputParameterScriptChildAssignment() {
+  void testIntputParameterScriptChildAssignment() {
     try {
       OperatonInputParameter inputParamElement = modelInstance.newInstance(OperatonInputParameter.class);
       inputParamElement.setOperatonName("aVariable");
@@ -63,7 +63,7 @@ public class OperatonInputParameterTest extends BpmnModelElementInstanceTest {
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
-  public void testInputParameterListChildAssignment() {
+  void testInputParameterListChildAssignment() {
     try {
       OperatonInputParameter inputParamElement = modelInstance.newInstance(OperatonInputParameter.class);
       inputParamElement.setOperatonName("aVariable");
@@ -78,7 +78,7 @@ public class OperatonInputParameterTest extends BpmnModelElementInstanceTest {
 
   @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
-  public void testInputParameterMapChildAssignment() {
+  void testInputParameterMapChildAssignment() {
     try {
       OperatonInputParameter inputParamElement = modelInstance.newInstance(OperatonInputParameter.class);
       inputParamElement.setOperatonName("aVariable");

@@ -192,7 +192,7 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void setRequestConfig() {
+  void setRequestConfig() {
     HttpRequest request = connector.createRequest()
         .configOption("throw-http-error", "TRUE")
         .configOption("connection-timeout", "10000")
@@ -209,7 +209,7 @@ public class HttpRequestTest {
   }
 
   @Test
-  public void shouldIgnoreRequestConfigWithNullOrEmptyNameOrValue() {
+  void shouldIgnoreRequestConfigWithNullOrEmptyNameOrValue() {
     HttpRequest request = connector.createRequest().configOption(null, "test");
     assertThat(request.getConfigOptions()).isNull();
 

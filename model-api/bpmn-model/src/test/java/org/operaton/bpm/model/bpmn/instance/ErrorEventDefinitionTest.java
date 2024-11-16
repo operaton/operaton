@@ -16,16 +16,15 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-
-import org.junit.jupiter.api.Test;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
-public class ErrorEventDefinitionTest extends AbstractEventDefinitionTest {
+class ErrorEventDefinitionTest extends AbstractEventDefinitionTest {
 
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
@@ -36,7 +35,7 @@ public class ErrorEventDefinitionTest extends AbstractEventDefinitionTest {
   }
 
   @Test
-  public void getEventDefinition() {
+  void getEventDefinition() {
     ErrorEventDefinition eventDefinition = eventDefinitionQuery.filterByType(ErrorEventDefinition.class).singleResult();
     assertThat(eventDefinition).isNotNull();
     assertThat(eventDefinition.getError().getId()).isEqualTo("error");

@@ -115,7 +115,7 @@ public class CaseDefinitionQueryTest extends AbstractDefinitionQueryTest {
       .caseDefinitionIdIn(ids.toArray(new String[ids.size()]))
       .list();
 
-    assertThat(ids.size()).isEqualTo(caseDefinitions.size());
+    assertThat(ids).hasSize(caseDefinitions.size());
     for (CaseDefinition caseDefinition : caseDefinitions) {
       assertThat(ids).contains(caseDefinition.getId()).withFailMessage("Expected to find case definition " + caseDefinition);
     }
@@ -517,7 +517,7 @@ public class CaseDefinitionQueryTest extends AbstractDefinitionQueryTest {
       .desc();
 
     List<CaseDefinition> caseDefinitions = query.list();
-    assertThat(caseDefinitions.size()).isEqualTo(4);
+    assertThat(caseDefinitions).hasSize(4);
 
     assertThat(caseDefinitions.get(0).getKey()).isEqualTo("one");
     assertThat(caseDefinitions.get(0).getVersion()).isEqualTo(2);

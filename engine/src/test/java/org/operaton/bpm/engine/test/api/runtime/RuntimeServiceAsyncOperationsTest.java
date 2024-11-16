@@ -434,8 +434,8 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     testRule.assertProcessEnded(instanceId1);
     testRule.assertProcessEnded(instanceId2);
 
-    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instanceId1).list().size()).isEqualTo(2);
-    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instanceId2).list().size()).isEqualTo(2);
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instanceId1).list()).hasSize(2);
+    assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instanceId2).list()).hasSize(2);
     assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(2);
   }
 

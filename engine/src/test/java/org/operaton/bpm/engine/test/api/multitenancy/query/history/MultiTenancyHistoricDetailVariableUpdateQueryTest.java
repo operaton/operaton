@@ -190,7 +190,7 @@ public class MultiTenancyHistoricDetailVariableUpdateQueryTest {
         .list();
 
     // then
-    assertThat(historicDetails.size()).isEqualTo(6);
+    assertThat(historicDetails).hasSize(6);
     verifySorting(historicDetails, historicDetailByTenantId());
   }
 
@@ -204,7 +204,7 @@ public class MultiTenancyHistoricDetailVariableUpdateQueryTest {
         .list();
 
     // then
-    assertThat(historicDetails.size()).isEqualTo(6);
+    assertThat(historicDetails).hasSize(6);
     verifySorting(historicDetails, inverted(historicDetailByTenantId()));
   }
 

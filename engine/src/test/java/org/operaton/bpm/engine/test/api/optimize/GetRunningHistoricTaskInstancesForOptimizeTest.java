@@ -111,7 +111,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(null, null, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricTaskInstances).hasSize(1);
     assertThatTasksHaveAllImportantInformation(runningHistoricTaskInstances.get(0));
   }
 
@@ -137,7 +137,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(now, null, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricTaskInstances).hasSize(1);
     assertThat(runningHistoricTaskInstances.get(0).getProcessInstanceId()).isEqualTo(processInstance2.getId());
   }
 
@@ -163,7 +163,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(null, now, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricTaskInstances).hasSize(1);
     assertThat(runningHistoricTaskInstances.get(0).getProcessInstanceId()).isEqualTo(processInstance1.getId());
   }
 
@@ -211,7 +211,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(pastDate(), null, 3);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(3);
+    assertThat(runningHistoricTaskInstances).hasSize(3);
   }
 
   @Test
@@ -240,7 +240,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(3);
+    assertThat(runningHistoricTaskInstances).hasSize(3);
     assertThat(runningHistoricTaskInstances.get(0).getProcessInstanceId()).isEqualTo(processInstance1.getId());
     assertThat(runningHistoricTaskInstances.get(1).getProcessInstanceId()).isEqualTo(processInstance2.getId());
     assertThat(runningHistoricTaskInstances.get(2).getProcessInstanceId()).isEqualTo(processInstance3.getId());
@@ -265,7 +265,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricTaskInstances).hasSize(1);
     assertThat(runningHistoricTaskInstances.get(0).getTaskDefinitionKey()).isEqualTo("userTask2");
   }
 

@@ -1576,7 +1576,7 @@ public class ProcessBuilderTest {
     assertThat(signalEventDefinition.getSignal().getName()).isEqualTo("signal");
 
     List<OperatonIn> operatonInParams = signalEventDefinition.getExtensionElements().getElementsQuery().filterByType(OperatonIn.class).list();
-    assertThat(operatonInParams.size()).isEqualTo(4);
+    assertThat(operatonInParams).hasSize(4);
 
     int paramCounter = 0;
     for (OperatonIn inParam : operatonInParams) {
@@ -1615,7 +1615,7 @@ public class ProcessBuilderTest {
     SignalEventDefinition signalEventDefinition = assertAndGetSingleEventDefinition("throw", SignalEventDefinition.class);
 
     List<OperatonIn> operatonInParams = signalEventDefinition.getExtensionElements().getElementsQuery().filterByType(OperatonIn.class).list();
-    assertThat(operatonInParams.size()).isEqualTo(1);
+    assertThat(operatonInParams).hasSize(1);
 
     assertThat(operatonInParams.get(0).getOperatonVariables()).isEqualTo("all");
   }
@@ -1781,7 +1781,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNotNull();
@@ -1809,7 +1809,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNull();
@@ -1837,7 +1837,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNull();
@@ -1865,7 +1865,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNull();
@@ -1893,7 +1893,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNotNull();
@@ -1921,7 +1921,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNull();
@@ -1949,7 +1949,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNotNull();
@@ -1977,7 +1977,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNull();
@@ -2005,7 +2005,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNull();
@@ -2033,7 +2033,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNotNull();
@@ -2061,7 +2061,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNull();
@@ -2089,7 +2089,7 @@ public class ProcessBuilderTest {
     assertThat(taskListener.getOperatonEvent()).isEqualTo("timeout");
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNull();

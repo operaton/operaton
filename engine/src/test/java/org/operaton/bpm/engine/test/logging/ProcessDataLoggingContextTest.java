@@ -941,7 +941,7 @@ public class ProcessDataLoggingContextTest {
 
   protected void assertBpmnStacktraceLogPresent(ProcessInstance instance) {
     List<ILoggingEvent> bpmnStacktraceLog = loggingRule.getFilteredLog("ENGINE-16006");
-    assertThat(bpmnStacktraceLog.size()).isEqualTo(2);
+    assertThat(bpmnStacktraceLog).hasSize(2);
     for (int i = 0; i < bpmnStacktraceLog.size(); i++) {
       ILoggingEvent logEvent = bpmnStacktraceLog.get(i);
       Map<String, String> mdcPropertyMap = logEvent.getMDCPropertyMap();

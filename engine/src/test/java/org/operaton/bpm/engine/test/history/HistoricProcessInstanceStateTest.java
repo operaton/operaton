@@ -213,7 +213,7 @@ public class HistoricProcessInstanceStateTest {
       //expected
     }
 
-    assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list().size()).isEqualTo(1);
+    assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list()).hasSize(1);
     HistoricProcessInstance entity = getHistoricProcessInstanceWithAssertion(processDefinition);
     assertThat(entity.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
     assertEquals(1, processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().active().count());
@@ -303,7 +303,7 @@ public class HistoricProcessInstanceStateTest {
     List<HistoricProcessInstance> entities = processEngineRule.getHistoryService().createHistoricProcessInstanceQuery()
         .processDefinitionId(processDefinition.getId()).list();
     assertThat(entities).isNotNull();
-    assertThat(entities.size()).isEqualTo(1);
+    assertThat(entities).hasSize(1);
     return entities.get(0);
   }
 

@@ -174,7 +174,7 @@ public class MultiTenancyHistoricTaskInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicTaskInstances.size()).isEqualTo(3);
+    assertThat(historicTaskInstances).hasSize(3);
     verifySorting(historicTaskInstances, historicTaskInstanceByTenantId());
   }
 
@@ -187,7 +187,7 @@ public class MultiTenancyHistoricTaskInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicTaskInstances.size()).isEqualTo(3);
+    assertThat(historicTaskInstances).hasSize(3);
     verifySorting(historicTaskInstances, inverted(historicTaskInstanceByTenantId()));
   }
 

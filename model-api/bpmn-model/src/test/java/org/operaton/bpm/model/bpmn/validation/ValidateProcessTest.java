@@ -51,13 +51,13 @@ class ValidateProcessTest {
     assertThat(validationResults.hasErrors()).isTrue();
 
     Map<ModelElementInstance, List<ValidationResult>> results = validationResults.getResults();
-    assertThat(results.size()).isEqualTo(1);
+    assertThat(results).hasSize(1);
 
     Process process = bpmnModelInstance.getDefinitions().getChildElementsByType(Process.class).iterator().next();
     assertThat(results.containsKey(process)).isTrue();
 
     List<ValidationResult> resultsForProcess = results.get(process);
-    assertThat(resultsForProcess.size()).isEqualTo(1);
+    assertThat(resultsForProcess).hasSize(1);
 
     ValidationResult validationResult = resultsForProcess.get(0);
     assertThat(validationResult.getElement()).isEqualTo(process);

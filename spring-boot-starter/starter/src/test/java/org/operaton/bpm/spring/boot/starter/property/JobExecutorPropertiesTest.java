@@ -24,8 +24,8 @@ public class JobExecutorPropertiesTest extends ParsePropertiesHelper {
 
   @Test
   public void testDefaultJobExecutorProperties() throws Exception {
-    assertThat(jobExecution.getCorePoolSize()).isEqualTo(3);
-    assertThat(jobExecution.getMaxPoolSize()).isEqualTo(10);
+    assertThat(jobExecution.getCorePool).hasSize(3);
+    assertThat(jobExecution.getMaxPool).hasSize(10);
     assertThat(jobExecution.getQueueCapacity()).isEqualTo(3);
   }
 }

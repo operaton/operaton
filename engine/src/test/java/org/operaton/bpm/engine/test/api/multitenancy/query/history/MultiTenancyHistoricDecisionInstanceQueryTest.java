@@ -146,7 +146,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isEqualTo(3);
+    assertThat(historicDecisionInstances).hasSize(3);
     verifySorting(historicDecisionInstances, historicDecisionInstanceByTenantId());
   }
 
@@ -159,7 +159,7 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isEqualTo(3);
+    assertThat(historicDecisionInstances).hasSize(3);
     verifySorting(historicDecisionInstances, inverted(historicDecisionInstanceByTenantId()));
   }
 

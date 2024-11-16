@@ -113,7 +113,7 @@ public class FileSerializationIT {
     ExternalTask task = handler.getHandledTasks().get(0);
 
     // then
-    assertThat(task.getAllVariables().size()).isEqualTo(1);
+    assertThat(task.getAllVariables()).hasSize(1);
     assertThat(IoUtil.inputStreamAsString(task.getVariable(VARIABLE_NAME_FILE)))
       .isEqualTo(new String(VARIABLE_VALUE_FILE_VALUE));
   }
@@ -146,7 +146,7 @@ public class FileSerializationIT {
     ExternalTask task = handler.getHandledTasks().get(0);
 
     // then
-    assertThat(task.getAllVariables().size()).isEqualTo(2);
+    assertThat(task.getAllVariables()).hasSize(2);
     assertThat(IoUtil.inputStreamAsString(task.getVariable(VARIABLE_NAME_FILE)))
         .isEqualTo(new String(VARIABLE_VALUE_FILE_VALUE));
     assertThat(IoUtil.inputStreamAsString(task.getVariable(LOCAL_VARIABLE_NAME_FILE)))
@@ -171,7 +171,7 @@ public class FileSerializationIT {
     ExternalTask task = handler.getHandledTasks().get(0);
 
     // then
-    assertThat(task.getAllVariables().size()).isEqualTo(2);
+    assertThat(task.getAllVariables()).hasSize(2);
     assertThat(IoUtil.inputStreamAsString((InputStream) task.getAllVariables().get(VARIABLE_NAME_FILE)))
       .isEqualTo(new String(VARIABLE_VALUE_FILE_VALUE));
     assertThat(IoUtil.inputStreamAsString((InputStream) task.getAllVariables().get(ANOTHER_VARIABLE_NAME_FILE)))
@@ -585,7 +585,7 @@ public class FileSerializationIT {
 
     // then
     List<VariableInstanceDto> variableInstances = engineRule.getVariablesByProcessInstanceIdAndVariableName(processInstance.getId(), null);
-    assertThat(variableInstances.size()).isEqualTo(2);
+    assertThat(variableInstances).hasSize(2);
 
     List<String> variableNames = new ArrayList<>();
     for (VariableInstanceDto variableInstance : variableInstances) {
@@ -626,7 +626,7 @@ public class FileSerializationIT {
 
     // then
     List<VariableInstanceDto> variableInstances = engineRule.getVariablesByProcessInstanceIdAndVariableName(processInstance.getId(), null);
-    assertThat(variableInstances.size()).isEqualTo(3);
+    assertThat(variableInstances).hasSize(3);
 
     List<String> variableNames = new ArrayList<>();
     for (VariableInstanceDto variableInstance : variableInstances) {

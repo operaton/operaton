@@ -904,7 +904,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
   public void testGetTableMetaData() {
 
     TableMetaData tableMetaData = managementService.getTableMetaData("ACT_RU_TASK");
-    assertThat(tableMetaData.getColumnNames().size()).isEqualTo(tableMetaData.getColumnTypes().size());
+    assertThat(tableMetaData.getColumnNames()).hasSize(tableMetaData.getColumnTypes().size());
     assertThat(tableMetaData.getColumnNames()).contains("ID_", "REV_","NAME_", "PARENT_TASK_ID_",
         "PRIORITY_", "CREATE_TIME_", "LAST_UPDATED_", "OWNER_", "ASSIGNEE_", "DELEGATION_", "EXECUTION_ID_",
         "PROC_DEF_ID_", "PROC_INST_ID_", "CASE_EXECUTION_ID_","CASE_INST_ID_", "CASE_DEF_ID_", "TASK_DEF_KEY_",

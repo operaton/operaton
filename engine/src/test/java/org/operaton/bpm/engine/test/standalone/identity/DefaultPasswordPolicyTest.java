@@ -68,7 +68,7 @@ public class DefaultPasswordPolicyTest {
   public void testGoodPassword() {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, "LongPas$w0rd");
     assertThat(result.getViolatedRules().size()).isZero();
-    assertThat(result.getFulfilledRules().size()).isEqualTo(6);
+    assertThat(result.getFulfilledRules()).hasSize(6);
     assertThat(result.isValid()).isTrue();
   }
 
@@ -253,8 +253,8 @@ public class DefaultPasswordPolicyTest {
   }
 
   private void checkThatPasswordWasInvalid(PasswordPolicyResult result) {
-    assertThat(result.getViolatedRules().size()).isEqualTo(1);
-    assertThat(result.getFulfilledRules().size()).isEqualTo(5);
+    assertThat(result.getViolatedRules()).hasSize(1);
+    assertThat(result.getFulfilledRules()).hasSize(5);
     assertThat(result.isValid()).isFalse();
   }
 }

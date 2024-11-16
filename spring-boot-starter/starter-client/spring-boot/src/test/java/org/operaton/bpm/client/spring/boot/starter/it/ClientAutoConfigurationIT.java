@@ -43,7 +43,7 @@ public class ClientAutoConfigurationIT {
 
   @Test
   public void startup() {
-    assertThat(topicSubscriptions.size()).isEqualTo(2);
+    assertThat(topicSubscriptions).hasSize(2);
     assertThat(topicSubscriptions)
         .extracting("topicName", "autoOpen", "businessKey", "lockDuration", "processDefinitionKey")
         .containsExactlyInAnyOrder(

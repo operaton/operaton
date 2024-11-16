@@ -465,7 +465,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     // Typical use case
     query = repositoryService.createProcessDefinitionQuery().orderByProcessDefinitionKey().asc().orderByProcessDefinitionVersion().desc();
     List<ProcessDefinition> processDefinitions = query.list();
-    assertThat(processDefinitions.size()).isEqualTo(4);
+    assertThat(processDefinitions).hasSize(4);
 
     assertThat(processDefinitions.get(0).getKey()).isEqualTo("one");
     assertThat(processDefinitions.get(0).getVersion()).isEqualTo(2);
@@ -509,7 +509,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     testRule.waitForJobExecutorToProcessAllJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertThat(incidentList.size()).isEqualTo(1);
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -577,7 +577,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     testRule.waitForJobExecutorToProcessAllJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertThat(incidentList.size()).isEqualTo(1);
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 

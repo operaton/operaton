@@ -85,8 +85,8 @@ public class StartManagedThreadPoolStepTest {
 
     //since no jobs will start, remaining capacity is sufficent to check the size
     assertThat(executor.getQueue().remainingCapacity()).isEqualTo(3);
-    assertThat(executor.getCorePoolSize()).isEqualTo(3);
-    assertThat(executor.getMaximumPoolSize()).isEqualTo(10);
+    assertThat(executor.getCorePool).hasSize(3);
+    assertThat(executor.getMaximumPool).hasSize(10);
     assertThat(executor.getKeepAliveTime(TimeUnit.MILLISECONDS)).isEqualTo(0L);
   }
 
@@ -109,8 +109,8 @@ public class StartManagedThreadPoolStepTest {
 
     //since no jobs will start, remaining capacity is sufficent to check the size
     assertThat(executor.getQueue().remainingCapacity()).isEqualTo(Integer.parseInt(queueSize));
-    assertThat(executor.getCorePoolSize()).isEqualTo(Integer.parseInt(corePoolSize));
-    assertThat(executor.getMaximumPoolSize()).isEqualTo(Integer.parseInt(maxPoolSize));
+    assertThat(executor.getCorePool).hasSize(Integer.parseInt(corePoolSize));
+    assertThat(executor.getMaximumPool).hasSize(Integer.parseInt(maxPoolSize));
     assertThat(executor.getKeepAliveTime(TimeUnit.MILLISECONDS)).isEqualTo(Long.parseLong(keepAliveTime));
   }
 

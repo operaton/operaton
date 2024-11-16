@@ -168,7 +168,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
         .list();
 
     // then
-    assertThat(historicJobLogs.size()).isEqualTo(6);
+    assertThat(historicJobLogs).hasSize(6);
     verifySorting(historicJobLogs, historicJobLogByTenantId());
   }
 
@@ -181,7 +181,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
         .list();
 
     // then
-    assertThat(historicJobLogs.size()).isEqualTo(6);
+    assertThat(historicJobLogs).hasSize(6);
     verifySorting(historicJobLogs, inverted(historicJobLogByTenantId()));
   }
 

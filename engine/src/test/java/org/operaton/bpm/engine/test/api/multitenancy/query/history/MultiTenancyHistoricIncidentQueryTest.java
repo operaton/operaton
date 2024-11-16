@@ -167,7 +167,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
         .list();
 
     // then
-    assertThat(historicIncidents.size()).isEqualTo(3);
+    assertThat(historicIncidents).hasSize(3);
     verifySorting(historicIncidents, historicIncidentByTenantId());
   }
 
@@ -180,7 +180,7 @@ public class MultiTenancyHistoricIncidentQueryTest {
         .list();
 
     // then
-    assertThat(historicIncidents.size()).isEqualTo(3);
+    assertThat(historicIncidents).hasSize(3);
     verifySorting(historicIncidents, inverted(historicIncidentByTenantId()));
   }
 

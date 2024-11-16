@@ -161,7 +161,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicCaseActivityInstances.size()).isEqualTo(3);
+    assertThat(historicCaseActivityInstances).hasSize(3);
     verifySorting(historicCaseActivityInstances, historicCaseActivityInstanceByTenantId());
   }
 
@@ -174,7 +174,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicCaseActivityInstances.size()).isEqualTo(3);
+    assertThat(historicCaseActivityInstances).hasSize(3);
     verifySorting(historicCaseActivityInstances, inverted(historicCaseActivityInstanceByTenantId()));
   }
 

@@ -164,7 +164,7 @@ public class MultiTenancyHistoricActivityInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicActivityInstances.size()).isEqualTo(6);
+    assertThat(historicActivityInstances).hasSize(6);
     verifySorting(historicActivityInstances, historicActivityInstanceByTenantId());
   }
 
@@ -177,7 +177,7 @@ public class MultiTenancyHistoricActivityInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicActivityInstances.size()).isEqualTo(6);
+    assertThat(historicActivityInstances).hasSize(6);
     verifySorting(historicActivityInstances, inverted(historicActivityInstanceByTenantId()));
   }
 

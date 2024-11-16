@@ -205,7 +205,7 @@ public class DecisionRequirementsDefinitionQueryTest {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionId().asc().list();
 
-    assertThat(decisionRequirementsDefinitions.size()).isEqualTo(4);
+    assertThat(decisionRequirementsDefinitions).hasSize(4);
     assertThat(decisionRequirementsDefinitions.get(0).getId()).startsWith("dish:1");
     assertThat(decisionRequirementsDefinitions.get(1).getId()).startsWith("dish:2");
     assertThat(decisionRequirementsDefinitions.get(2).getId()).startsWith("score:1");
@@ -225,7 +225,7 @@ public class DecisionRequirementsDefinitionQueryTest {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionKey().asc().list();
 
-    assertThat(decisionRequirementsDefinitions.size()).isEqualTo(4);
+    assertThat(decisionRequirementsDefinitions).hasSize(4);
     assertThat(decisionRequirementsDefinitions.get(0).getKey()).isEqualTo("dish");
     assertThat(decisionRequirementsDefinitions.get(1).getKey()).isEqualTo("dish");
     assertThat(decisionRequirementsDefinitions.get(2).getKey()).isEqualTo("score");
@@ -245,7 +245,7 @@ public class DecisionRequirementsDefinitionQueryTest {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionName().asc().list();
 
-    assertThat(decisionRequirementsDefinitions.size()).isEqualTo(4);
+    assertThat(decisionRequirementsDefinitions).hasSize(4);
     assertThat(decisionRequirementsDefinitions.get(0).getName()).isEqualTo("Dish");
     assertThat(decisionRequirementsDefinitions.get(1).getName()).isEqualTo("Dish");
     assertThat(decisionRequirementsDefinitions.get(2).getName()).isEqualTo("Score");
@@ -265,7 +265,7 @@ public class DecisionRequirementsDefinitionQueryTest {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionCategory().asc().list();
 
-    assertThat(decisionRequirementsDefinitions.size()).isEqualTo(4);
+    assertThat(decisionRequirementsDefinitions).hasSize(4);
     assertThat(decisionRequirementsDefinitions.get(0).getCategory()).isEqualTo("test-drd-1");
     assertThat(decisionRequirementsDefinitions.get(1).getCategory()).isEqualTo("test-drd-2");
     assertThat(decisionRequirementsDefinitions.get(2).getCategory()).isEqualTo("test-drd-2");
@@ -285,7 +285,7 @@ public class DecisionRequirementsDefinitionQueryTest {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDecisionRequirementsDefinitionVersion().asc().list();
 
-    assertThat(decisionRequirementsDefinitions.size()).isEqualTo(4);
+    assertThat(decisionRequirementsDefinitions).hasSize(4);
     assertThat(decisionRequirementsDefinitions.get(0).getVersion()).isEqualTo(1);
     assertThat(decisionRequirementsDefinitions.get(1).getVersion()).isEqualTo(1);
     assertThat(decisionRequirementsDefinitions.get(2).getVersion()).isEqualTo(1);
@@ -304,7 +304,7 @@ public class DecisionRequirementsDefinitionQueryTest {
     List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = repositoryService.createDecisionRequirementsDefinitionQuery()
         .orderByDeploymentId().asc().list();
 
-    assertThat(decisionRequirementsDefinitions.size()).isEqualTo(4);
+    assertThat(decisionRequirementsDefinitions).hasSize(4);
     assertThat(decisionRequirementsDefinitions.get(0).getDeploymentId()).isEqualTo(firstDeploymentId);
     assertThat(decisionRequirementsDefinitions.get(1).getDeploymentId()).isEqualTo(firstDeploymentId);
     assertThat(decisionRequirementsDefinitions.get(2).getDeploymentId()).isEqualTo(secondDeploymentId);

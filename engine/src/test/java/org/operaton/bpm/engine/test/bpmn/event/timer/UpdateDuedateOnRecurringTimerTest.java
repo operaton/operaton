@@ -137,7 +137,7 @@ public class UpdateDuedateOnRecurringTimerTest {
     assertThat(ClockUtil.getCurrentTime()).isAfter(job3.getDuedate());
     assertThat(managementService.createJobQuery().count()).isZero();
     // no duplicates
-    assertThat(new HashSet<String>(Arrays.asList(job1.getId(), job2.getId(), job3.getId())).size()).isEqualTo(3);
+    assertThat(new HashSet<String>(Arrays.asList(job1.getId(), job2.getId(), job3.getId()))).hasSize(3);
     // job1 is due after 45 minutes (30 + 15 offset)
     assertThat(job1.getDuedate().getTime()).isEqualTo(t0.getTime() + minutes(45));
     // job2 is due 25 minutes after job1 (keeps offset due to cascade=true and
@@ -212,7 +212,7 @@ public class UpdateDuedateOnRecurringTimerTest {
 
     // then
     // no duplicate jobs
-    assertThat(new HashSet<String>(Arrays.asList(job1.getId(), job2.getId(), job3.getId())).size()).isEqualTo(3);
+    assertThat(new HashSet<String>(Arrays.asList(job1.getId(), job2.getId(), job3.getId()))).hasSize(3);
     // job1 is due at t=15
     assertThat(job1.getDuedate().getTime()).isEqualTo(t0.getTime() + minutes(15));
     // job2 is due 40 minutes after job1 (keeps offset due to cascade=true at
@@ -256,7 +256,7 @@ public class UpdateDuedateOnRecurringTimerTest {
 
     // then
     // no duplicate jobs
-    assertThat(new HashSet<String>(Arrays.asList(job1.getId(), job2.getId(), job3.getId())).size()).isEqualTo(3);
+    assertThat(new HashSet<String>(Arrays.asList(job1.getId(), job2.getId(), job3.getId()))).hasSize(3);
     // job1 is due at t=15
     assertThat(job1.getDuedate().getTime()).isEqualTo(t0.getTime() + minutes(15));
     // job2 is due 15 minutes after job1 (ignores offset due to cascade=false at

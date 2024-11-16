@@ -224,7 +224,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   @Test
   public void shouldNotFailIfMissingRequiredDecisionAttribute() {
     List<DmnDecision> decisions = parseDecisionsFromFile(MISSING_REQUIRED_DECISION_ATTRIBUTE_DMN);
-    assertThat(decisions.size()).isEqualTo(1);
+    assertThat(decisions).hasSize(1);
     assertThat(decisions.get(0).getRequiredDecisions().size()).isZero();
   }
 

@@ -40,7 +40,7 @@ public class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
     // given
     String resource = "org/operaton/bpm/engine/test/api/repository/processWithNewInvoiceMessage.bpmn20.xml";
     List<ProcessDefinition> processDefinitions = deployProcessDefinitionTwice(resource);
-    assertThat(processDefinitions.size()).isEqualTo(2);
+    assertThat(processDefinitions).hasSize(2);
     deleteProcessDefinitionsSimultaneously(processDefinitions.get(0).getId(), processDefinitions.get(1).getId());
 
     assertThat(repositoryService.createProcessDefinitionQuery().list()).isEmpty();
@@ -59,7 +59,7 @@ public class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
     // given
     String resource = "org/operaton/bpm/engine/test/bpmn/event/timer/StartTimerEventTest.testTimeCycle.bpmn20.xml";
     List<ProcessDefinition> processDefinitions = deployProcessDefinitionTwice(resource);
-    assertThat(processDefinitions.size()).isEqualTo(2);
+    assertThat(processDefinitions).hasSize(2);
     deleteProcessDefinitionsSimultaneously(processDefinitions.get(0).getId(), processDefinitions.get(1).getId());
 
     assertThat(repositoryService.createProcessDefinitionQuery().list()).isEmpty();
@@ -78,7 +78,7 @@ public class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
     // given
     String resource = "org/operaton/bpm/engine/test/api/repository/processWithStartSignalEvent.bpmn20.xml";
     List<ProcessDefinition> processDefinitions = deployProcessDefinitionTwice(resource);
-    assertThat(processDefinitions.size()).isEqualTo(2);
+    assertThat(processDefinitions).hasSize(2);
     deleteProcessDefinitionsSimultaneously(processDefinitions.get(0).getId(), processDefinitions.get(1).getId());
 
     assertThat(repositoryService.createProcessDefinitionQuery().list()).isEmpty();
@@ -100,7 +100,7 @@ public class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
     repositoryService.createDeployment().addClasspathResource(resource).deploy();
     repositoryService.createDeployment().addClasspathResource(resource).deploy();
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().processDefinitionKey("otherMessageProcess").list();
-    assertThat(processDefinitions.size()).isEqualTo(3);
+    assertThat(processDefinitions).hasSize(3);
 
     deleteProcessDefinitionsSimultaneously(processDefinitions.get(1).getId(), processDefinitions.get(2).getId());
 

@@ -442,7 +442,7 @@ public class MigrationUserTaskTest {
     // then
     testHelper.assertTaskListenerTimerJobCreated("userTask2");
     assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isZero();
-    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(1);
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(1);
 
     // and the task listener was able to access the bpmn model instance and set a variable
     testTimeoutListenerCanBeTriggered(processInstance, "userTask2");
@@ -467,7 +467,7 @@ public class MigrationUserTaskTest {
 
     // then
     testHelper.assertTaskListenerTimerJobRemoved("userTask2");
-    assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isEqualTo(1);
+    assertThat(testHelper.snapshotBeforeMigration.getJobs()).hasSize(1);
     assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isZero();
   }
 
@@ -490,8 +490,8 @@ public class MigrationUserTaskTest {
 
     // then
     testHelper.assertTaskListenerTimerJobMigrated("userTask2", "userTask");
-    assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isEqualTo(1);
-    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(1);
+    assertThat(testHelper.snapshotBeforeMigration.getJobs()).hasSize(1);
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(1);
 
     // and the task listener was able to access the bpmn model instance and set a variable
     testTimeoutListenerCanBeTriggered(processInstance, "userTask");
@@ -519,8 +519,8 @@ public class MigrationUserTaskTest {
     // then
     Date newDueDate = new DateTime(ClockUtil.getCurrentTime()).plusHours(3).toDate();
     testHelper.assertTaskListenerTimerJobMigrated("userTask2", "userTask", newDueDate);
-    assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isEqualTo(1);
-    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(1);
+    assertThat(testHelper.snapshotBeforeMigration.getJobs()).hasSize(1);
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(1);
 
     // and the task listener was able to access the bpmn model instance and set a variable
     testTimeoutListenerCanBeTriggered(processInstance, "userTask");
@@ -570,8 +570,8 @@ public class MigrationUserTaskTest {
     testHelper.createProcessInstanceAndMigrate(migrationPlan);
 
     // then
-    assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isEqualTo(2);
-    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(1);
+    assertThat(testHelper.snapshotBeforeMigration.getJobs()).hasSize(2);
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(1);
     JobEntity job = (JobEntity) testHelper.snapshotAfterMigration.getJobs().get(0);
     String jobHandlerConfiguration = job.getJobHandlerConfigurationRaw();
     assertThat(jobHandlerConfiguration).contains("timeout-friendly");
@@ -595,12 +595,12 @@ public class MigrationUserTaskTest {
     testHelper.createProcessInstanceAndMigrate(migrationPlan);
 
     // then
-    assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isEqualTo(1);
+    assertThat(testHelper.snapshotBeforeMigration.getJobs()).hasSize(1);
     JobEntity job = (JobEntity) testHelper.snapshotBeforeMigration.getJobs().get(0);
     String jobHandlerConfiguration = job.getJobHandlerConfigurationRaw();
     assertThat(jobHandlerConfiguration).contains("timeout-friendly");
 
-    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(2);
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(2);
     job = (JobEntity) testHelper.snapshotAfterMigration.getJobs().get(1);
     jobHandlerConfiguration = job.getJobHandlerConfigurationRaw();
     assertThat(jobHandlerConfiguration).contains("timeout-hard");

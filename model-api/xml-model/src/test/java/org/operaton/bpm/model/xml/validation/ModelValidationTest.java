@@ -150,7 +150,7 @@ class ModelValidationTest {
     assertThat(results.getWarinigCount()).isEqualTo(7);
 
     var resultsByElement = results.getResults();
-    assertThat(resultsByElement.size()).isEqualTo(7);
+    assertThat(resultsByElement).hasSize(7);
 
     for (var resultEntry : resultsByElement.entrySet()) {
       Bird element = (Bird) resultEntry.getKey();
@@ -159,14 +159,14 @@ class ModelValidationTest {
       assertThat(validationResults).isNotNull();
 
       if (element.getId().equals("tweety")) {
-        assertThat(validationResults.size()).isEqualTo(2);
+        assertThat(validationResults).hasSize(2);
         ValidationResult error = validationResults.remove(0);
         assertThat(error.getType()).isEqualTo(ValidationResultType.ERROR);
         assertThat(error.getCode()).isEqualTo(20);
         assertThat(error.getMessage()).isEqualTo("Bird tweety is illegal");
         assertThat(error.getElement()).isEqualTo(element);
       } else {
-        assertThat(validationResults.size()).isEqualTo(1);
+        assertThat(validationResults).hasSize(1);
       }
 
       ValidationResult warning = validationResults.get(0);

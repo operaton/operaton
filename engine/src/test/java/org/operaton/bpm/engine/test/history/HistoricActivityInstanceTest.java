@@ -1081,7 +1081,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
       .activityId("parallelJoinEnd")
       .list();
 
-    assertThat(activityInstance.size()).isEqualTo(2);
+    assertThat(activityInstance).hasSize(2);
     assertThat(pi.isEnded()).isTrue();
   }
 

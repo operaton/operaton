@@ -360,7 +360,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
     HistoricDecisionInstanceQuery query =
         historyService.createHistoricDecisionInstanceQuery();
     List<HistoricDecisionInstance> historicDecisionInstances = query.includeInputs().includeOutputs().list();
-    assertThat(historicDecisionInstances.size()).isEqualTo(2);
+    assertThat(historicDecisionInstances).hasSize(2);
 
     // when user has no authorization
     identityService.setAuthentication("user", null, null);

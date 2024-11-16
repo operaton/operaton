@@ -580,7 +580,7 @@ public class TaskQueryExpressionTest {
     // execute query so expression will be evaluated
     taskQuery.count();
 
-    assertThat(taskQuery.getCandidateGroups().size()).isEqualTo(1);
+    assertThat(taskQuery.getCandidateGroups()).hasSize(1);
   }
 
   @Test

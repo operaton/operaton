@@ -2029,16 +2029,16 @@ public class HistoricProcessInstanceTest {
         historyService.createHistoricProcessInstanceQuery().activityIdIn("innerServiceTask", "outerTask").list();
 
     // then
-    assertThat(queryByInnerServiceActivityId.size()).isEqualTo(1);
+    assertThat(queryByInnerServiceActivityId).hasSize(1);
     assertThat(queryByInnerServiceActivityId.get(0).getId()).isEqualTo(processInstance.getId());
 
-    assertThat(queryBySubProcessActivityId.size()).isEqualTo(1);
+    assertThat(queryBySubProcessActivityId).hasSize(1);
     assertThat(queryBySubProcessActivityId.get(0).getId()).isEqualTo(processInstance.getId());
 
-    assertThat(queryByOuterProcessActivityId.size()).isEqualTo(1);
+    assertThat(queryByOuterProcessActivityId).hasSize(1);
     assertThat(queryByOuterProcessActivityId.get(0).getId()).isEqualTo(processInstance2.getId());
 
-    assertThat(queryByOuterAndInnedActivityId.size()).isEqualTo(2);
+    assertThat(queryByOuterAndInnedActivityId).hasSize(2);
     assertThat(queryByOuterAndInnedActivityId.stream()
         .map(HistoricProcessInstance::getId)
         .collect(Collectors.toList()))
@@ -2068,16 +2068,16 @@ public class HistoricProcessInstanceTest {
         historyService.createHistoricProcessInstanceQuery().activityIdIn("innerTask", "outerTask").list();
 
     // then
-    assertThat(queryByInnerServiceActivityId.size()).isEqualTo(1);
+    assertThat(queryByInnerServiceActivityId).hasSize(1);
     assertThat(queryByInnerServiceActivityId.get(0).getId()).isEqualTo(processInstance.getId());
 
-    assertThat(queryBySubProcessActivityId.size()).isEqualTo(1);
+    assertThat(queryBySubProcessActivityId).hasSize(1);
     assertThat(queryBySubProcessActivityId.get(0).getId()).isEqualTo(processInstance.getId());
 
-    assertThat(queryByOuterProcessActivityId.size()).isEqualTo(1);
+    assertThat(queryByOuterProcessActivityId).hasSize(1);
     assertThat(queryByOuterProcessActivityId.get(0).getId()).isEqualTo(processInstance2.getId());
 
-    assertThat(queryByOuterAndInnedActivityId.size()).isEqualTo(2);
+    assertThat(queryByOuterAndInnedActivityId).hasSize(2);
     assertThat(queryByOuterAndInnedActivityId.stream()
         .map(HistoricProcessInstance::getId)
         .collect(Collectors.toList()))
@@ -2227,7 +2227,7 @@ public class HistoricProcessInstanceTest {
 
     // then
     assertThat(query.count()).isEqualTo(6l);
-    assertThat(query.list().size()).isEqualTo(6);
+    assertThat(query.list()).hasSize(6);
   }
 
   @Test

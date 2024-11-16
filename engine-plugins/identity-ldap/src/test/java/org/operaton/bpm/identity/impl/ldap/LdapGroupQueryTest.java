@@ -72,7 +72,7 @@ public class LdapGroupQueryTest {
     GroupQuery groupQuery = identityService.createGroupQuery();
 
     // then
-    assertThat(groupQuery.listPage(0, Integer.MAX_VALUE).size()).isEqualTo(6);
+    assertThat(groupQuery.listPage(0, Integer.MAX_VALUE)).hasSize(6);
     assertThat(groupQuery.count()).isEqualTo(6);
   }
 
@@ -84,7 +84,7 @@ public class LdapGroupQueryTest {
     List<Group> groupList = identityService.createGroupQuery().list();
 
     // then
-    assertThat(groupList.size()).isEqualTo(6);
+    assertThat(groupList).hasSize(6);
   }
 
   @Test
@@ -120,7 +120,7 @@ public class LdapGroupQueryTest {
     List<Group> groups = identityService.createGroupQuery().groupIdIn("external", "management").list();
 
     // then
-    assertThat(groups.size()).isEqualTo(2);
+    assertThat(groups).hasSize(2);
     assertThat(groups).extracting("id").containsOnly("external", "management");
   }
 

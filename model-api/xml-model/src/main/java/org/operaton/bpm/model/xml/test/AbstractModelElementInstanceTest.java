@@ -226,7 +226,7 @@ public abstract class AbstractModelElementInstanceTest {
       assertThatType().hasNoChildElements();
     }
     else {
-      assertThat(modelElementType.getChildElementTypes().size()).isEqualTo(childElementAssumptions.size());
+      assertThat(modelElementType.getChildElementTypes()).hasSize(childElementAssumptions.size());
       for (ChildElementAssumption assumption : childElementAssumptions) {
         assertThatType().hasChildElements(assumption.childElementType);
         if (assumption.namespaceUri != null) {

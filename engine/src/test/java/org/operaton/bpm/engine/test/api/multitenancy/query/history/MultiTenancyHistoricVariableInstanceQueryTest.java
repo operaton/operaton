@@ -174,7 +174,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicVariableInstances.size()).isEqualTo(3); // null-tenant instances are still included
+    assertThat(historicVariableInstances).hasSize(3); // null-tenant instances are still included
     verifySorting(historicVariableInstances, historicVariableInstanceByTenantId());
   }
 
@@ -187,7 +187,7 @@ public class MultiTenancyHistoricVariableInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicVariableInstances.size()).isEqualTo(3); // null-tenant instances are still included
+    assertThat(historicVariableInstances).hasSize(3); // null-tenant instances are still included
     verifySorting(historicVariableInstances, inverted(historicVariableInstanceByTenantId()));
   }
 

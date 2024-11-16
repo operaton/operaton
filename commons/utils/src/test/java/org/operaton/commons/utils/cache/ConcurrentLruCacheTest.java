@@ -40,7 +40,7 @@ class ConcurrentLruCacheTest {
   void getEntry() {
     cache.put("a", "1");
 
-    assertThat(cache.size()).isEqualTo(1);
+    assertThat(cache).hasSize(1);
     assertThat(cache.get("a")).isEqualTo("1");
   }
 
@@ -49,7 +49,7 @@ class ConcurrentLruCacheTest {
     cache.put("a", "1");
     cache.put("a", "2");
 
-    assertThat(cache.size()).isEqualTo(1);
+    assertThat(cache).hasSize(1);
     assertThat(cache.get("a")).isEqualTo("2");
   }
 
@@ -60,7 +60,7 @@ class ConcurrentLruCacheTest {
     cache.put("c", "3");
     cache.put("d", "4");
 
-    assertThat(cache.size()).isEqualTo(3);
+    assertThat(cache).hasSize(3);
     assertThat(cache.get("a")).isNull();
     assertThat(cache.get("b")).isEqualTo("2");
     assertThat(cache.get("c")).isEqualTo("3");
@@ -78,7 +78,7 @@ class ConcurrentLruCacheTest {
 
     cache.put("d", "4");
 
-    assertThat(cache.size()).isEqualTo(3);
+    assertThat(cache).hasSize(3);
     assertThat(cache.get("c")).isNull();
     assertThat(cache.get("a")).isEqualTo("1");
     assertThat(cache.get("b")).isEqualTo("2");

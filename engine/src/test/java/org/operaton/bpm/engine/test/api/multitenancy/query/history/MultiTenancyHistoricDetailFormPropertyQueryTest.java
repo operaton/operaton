@@ -192,7 +192,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
         .list();
 
     // then
-    assertThat(historicDetails.size()).isEqualTo(3);
+    assertThat(historicDetails).hasSize(3);
     verifySorting(historicDetails, historicDetailByTenantId());
   }
 
@@ -206,7 +206,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
         .list();
 
     // then
-    assertThat(historicDetails.size()).isEqualTo(3);
+    assertThat(historicDetails).hasSize(3);
     verifySorting(historicDetails, inverted(historicDetailByTenantId()));
   }
 

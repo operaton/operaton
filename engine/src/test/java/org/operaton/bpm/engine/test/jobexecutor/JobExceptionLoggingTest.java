@@ -91,7 +91,7 @@ public class JobExceptionLoggingTest {
     List<ILoggingEvent> ctxLog = loggingRule.getFilteredLog(CONTEXT_LOGGER, "Exception while closing command context");
 
     // then
-    assertThat(jobLog.size()).isEqualTo(1);
+    assertThat(jobLog).hasSize(1);
     assertThat(ctxLog.size()).isZero();
   }
 
@@ -112,8 +112,8 @@ public class JobExceptionLoggingTest {
     List<ILoggingEvent> ctxLog = loggingRule.getFilteredLog(CONTEXT_LOGGER, "Exception while closing command context");
     
     // then
-    assertThat(jobLog.size()).isEqualTo(1);
-    assertThat(ctxLog.size()).isEqualTo(1);
+    assertThat(jobLog).hasSize(1);
+    assertThat(ctxLog).hasSize(1);
   }
 
   @Test

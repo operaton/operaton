@@ -114,7 +114,7 @@ public abstract class JsonTreeJsonPathScriptTest extends ScriptTest {
 
     SpinList<SpinJsonNode> nodeList2 = script.getVariable("nodeList");
 
-    assertThat(nodeList2.size()).isEqualTo(1);
+    assertThat(nodeList2).hasSize(1);
     assertThat(nodeList2.get(0).prop("name").stringValue()).isEqualTo("Waldo");
   }
 

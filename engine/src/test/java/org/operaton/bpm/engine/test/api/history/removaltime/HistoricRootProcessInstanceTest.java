@@ -108,7 +108,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
     List<HistoricDecisionInstance> historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // assume
-    assertThat(historicDecisionInstances.size()).isEqualTo(3);
+    assertThat(historicDecisionInstances).hasSize(3);
 
     // then
     assertThat(historicDecisionInstances.get(0).getRootProcessInstanceId()).isEqualTo(processInstance.getProcessInstanceId());
@@ -357,7 +357,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
       .list();
 
     // assume
-    assertThat(historicDetails.size()).isEqualTo(2);
+    assertThat(historicDetails).hasSize(2);
 
     // then
     assertThat(historicDetails.get(0).getRootProcessInstanceId()).isEqualTo(processInstance.getProcessInstanceId());
@@ -411,7 +411,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
     // assume
-    assertThat(historicIncidents.size()).isEqualTo(2);
+    assertThat(historicIncidents).hasSize(2);
 
     // then
     assertThat(historicIncidents.get(0).getRootProcessInstanceId()).isEqualTo(processInstance.getProcessInstanceId());
@@ -497,7 +497,7 @@ public class HistoricRootProcessInstanceTest extends AbstractRemovalTimeTest {
     List<HistoricJobLog> jobLog = historyService.createHistoricJobLogQuery().list();
 
     // assume
-    assertThat(jobLog.size()).isEqualTo(2);
+    assertThat(jobLog).hasSize(2);
 
     // then
     assertThat(jobLog.get(0).getRootProcessInstanceId()).isEqualTo(processInstance.getProcessInstanceId());

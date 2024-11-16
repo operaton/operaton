@@ -620,7 +620,7 @@ public class HistoricJobLogQueryTest {
         .asc()
         .list();
 
-    assertThat(jobLogs.size()).isEqualTo(3);
+    assertThat(jobLogs).hasSize(3);
     for (HistoricJobLog log : jobLogs) {
       assertThat(log.getJobPriority() <= 2).isTrue();
     }
@@ -632,7 +632,7 @@ public class HistoricJobLogQueryTest {
         .asc()
         .list();
 
-    assertThat(jobLogs.size()).isEqualTo(2);
+    assertThat(jobLogs).hasSize(2);
     for (HistoricJobLog log : jobLogs) {
       assertThat(log.getJobPriority() >= 3).isTrue();
     }
@@ -645,7 +645,7 @@ public class HistoricJobLogQueryTest {
         .asc()
         .list();
 
-    assertThat(jobLogs.size()).isEqualTo(3);
+    assertThat(jobLogs).hasSize(3);
     for (HistoricJobLog log : jobLogs) {
       assertThat(log.getJobPriority() >= 1 && log.getJobPriority() <= 3).isTrue();
     }
@@ -965,7 +965,7 @@ public class HistoricJobLogQueryTest {
   }
 
   protected void verifyQueryResults(HistoricJobLogQuery query, int countExpected) {
-    assertThat(query.list().size()).isEqualTo(countExpected);
+    assertThat(query.list()).hasSize(countExpected);
     assertThat(query.count()).isEqualTo(countExpected);
 
     if (countExpected == 1) {

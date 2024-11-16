@@ -112,7 +112,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricProcessInstances).hasSize(1);
     assertThatInstanceHasAllImportantInformation(runningHistoricProcessInstances.get(0));
   }
 
@@ -137,7 +137,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(now, null, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricProcessInstances).hasSize(1);
   }
 
   @Test
@@ -162,7 +162,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(null, now, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricProcessInstances).hasSize(1);
     assertThat(runningHistoricProcessInstances.get(0).getId()).isEqualTo(processInstance.getId());
   }
 
@@ -211,7 +211,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(pastDate(), null, 3);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(3);
+    assertThat(runningHistoricProcessInstances).hasSize(3);
   }
 
   @Test
@@ -242,7 +242,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(new Date(now.getTime()), null, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(3);
+    assertThat(runningHistoricProcessInstances).hasSize(3);
     assertThat(runningHistoricProcessInstances.get(0).getId()).isEqualTo(processInstance1.getId());
     assertThat(runningHistoricProcessInstances.get(1).getId()).isEqualTo(processInstance2.getId());
     assertThat(runningHistoricProcessInstances.get(2).getId()).isEqualTo(processInstance3.getId());
@@ -267,7 +267,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricProcessInstances).hasSize(1);
     assertThat(runningHistoricProcessInstances.get(0).getId()).isEqualTo(runningProcessInstance.getId());
   }
 

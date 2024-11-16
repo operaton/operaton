@@ -635,7 +635,7 @@ public class DecisionDefinitionQueryTest {
       .desc();
 
     List<DecisionDefinition> decisionDefinitions = query.list();
-    assertThat(decisionDefinitions.size()).isEqualTo(4);
+    assertThat(decisionDefinitions).hasSize(4);
 
     assertThat(decisionDefinitions.get(0).getKey()).isEqualTo("one");
     assertThat(decisionDefinitions.get(0).getVersion()).isEqualTo(2);
@@ -648,7 +648,7 @@ public class DecisionDefinitionQueryTest {
 
   protected void verifyQueryResults(DecisionDefinitionQuery query, int expectedCount) {
     assertThat(query.count()).isEqualTo(expectedCount);
-    assertThat(query.list().size()).isEqualTo(expectedCount);
+    assertThat(query.list()).hasSize(expectedCount);
   }
 
   @org.operaton.bpm.engine.test.Deployment(resources = {

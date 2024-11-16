@@ -613,13 +613,13 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     NativeHistoricDecisionInstanceQuery nativeQuery = historyService
         .createNativeHistoricDecisionInstanceQuery().sql("SELECT * FROM " + tablePrefix + "ACT_HI_DECINST");
 
-    assertThat(nativeQuery.list().size()).isEqualTo(1);
+    assertThat(nativeQuery.list()).hasSize(1);
 
     NativeHistoricDecisionInstanceQuery nativeQueryWithParameter = historyService
         .createNativeHistoricDecisionInstanceQuery()
         .sql("SELECT * FROM " + tablePrefix + "ACT_HI_DECINST H WHERE H.DEC_DEF_KEY_ = #{decisionDefinitionKey}");
 
-    assertThat(nativeQueryWithParameter.parameter("decisionDefinitionKey", DECISION_DEFINITION_KEY).list().size()).isEqualTo(1);
+    assertThat(nativeQueryWithParameter.parameter("decisionDefinitionKey", DECISION_DEFINITION_KEY).list()).hasSize(1);
     assertThat(nativeQueryWithParameter.parameter("decisionDefinitionKey", "other decision").list().size()).isZero();
   }
 
@@ -649,8 +649,8 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
     NativeHistoricDecisionInstanceQuery nativeQuery = historyService.createNativeHistoricDecisionInstanceQuery()
         .sql("SELECT * FROM " + tablePrefix + "ACT_HI_DECINST");
 
-    assertThat(nativeQuery.listPage(0, 2).size()).isEqualTo(2);
-    assertThat(nativeQuery.listPage(1, 1).size()).isEqualTo(1);
+    assertThat(nativeQuery.listPage(0, 2)).hasSize(2);
+    assertThat(nativeQuery.listPage(1, 1)).hasSize(1);
   }
 
   protected ProcessInstance startProcessInstanceAndEvaluateDecision() {

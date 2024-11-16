@@ -139,7 +139,7 @@ public class TenantQueryTest {
   public void queryOrderById() {
     // ascending
     List<Tenant> tenants = identityService.createTenantQuery().orderByTenantId().asc().list();
-    assertThat(tenants.size()).isEqualTo(2);
+    assertThat(tenants).hasSize(2);
 
     assertThat(tenants.get(0).getId()).isEqualTo(TENANT_ONE);
     assertThat(tenants.get(1).getId()).isEqualTo(TENANT_TWO);
@@ -155,7 +155,7 @@ public class TenantQueryTest {
   public void queryOrderByName() {
     // ascending
     List<Tenant> tenants = identityService.createTenantQuery().orderByTenantName().asc().list();
-    assertThat(tenants.size()).isEqualTo(2);
+    assertThat(tenants).hasSize(2);
 
     assertThat(tenants.get(0).getName()).isEqualTo("Tenant_1");
     assertThat(tenants.get(1).getName()).isEqualTo("Tenant_2");

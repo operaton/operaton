@@ -146,7 +146,7 @@ public class MultiTenancyHistoricCaseInstanceQueryTest {
         .asc()
         .list();
 
-    assertThat(historicCaseInstances.size()).isEqualTo(2);
+    assertThat(historicCaseInstances).hasSize(2);
     assertThat(historicCaseInstances.get(0).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(historicCaseInstances.get(1).getTenantId()).isEqualTo(TENANT_TWO);
   }
@@ -160,7 +160,7 @@ public class MultiTenancyHistoricCaseInstanceQueryTest {
         .desc()
         .list();
 
-    assertThat(historicCaseInstances.size()).isEqualTo(2);
+    assertThat(historicCaseInstances).hasSize(2);
     assertThat(historicCaseInstances.get(0).getTenantId()).isEqualTo(TENANT_TWO);
     assertThat(historicCaseInstances.get(1).getTenantId()).isEqualTo(TENANT_ONE);
   }

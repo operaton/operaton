@@ -203,7 +203,7 @@ public class XmlSerializationIT {
     ExternalTask task = handler.getHandledTasks().get(0);
 
     XmlSerializables variableValue = task.getVariable(VARIABLE_NAME_XML);
-    assertThat(variableValue.size()).isEqualTo(2);
+    assertThat(variableValue).hasSize(2);
     assertThat(variableValue.get(0)).isEqualTo(VARIABLE_VALUE_XML_DESERIALIZED);
     assertThat(variableValue.get(1)).isEqualTo(VARIABLE_VALUE_XML_DESERIALIZED);
   }

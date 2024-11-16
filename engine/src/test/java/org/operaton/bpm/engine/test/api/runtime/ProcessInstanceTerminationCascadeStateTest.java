@@ -204,7 +204,7 @@ public class ProcessInstanceTerminationCascadeStateTest {
 
   protected void assertHistoricProcessInstances() {
     List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery().list();
-    assertThat(historicProcessInstances.size()).isEqualTo(2);
+    assertThat(historicProcessInstances).hasSize(2);
     for (HistoricProcessInstance historicProcessInstance : historicProcessInstances) {
       assertThat(historicProcessInstance.getState())
           .isEqualTo(externallyTerminated ? HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED : HistoricProcessInstance.STATE_INTERNALLY_TERMINATED);

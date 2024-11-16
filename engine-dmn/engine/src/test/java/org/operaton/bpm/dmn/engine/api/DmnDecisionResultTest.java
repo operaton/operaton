@@ -282,7 +282,7 @@ public class DmnDecisionResultTest extends DmnEngineTest {
   }
 
   protected void assertSingleOutputValue(DmnDecisionResultEntries result) {
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     String value = (String) result.get("firstOutput");
     assertThat(value).isEqualTo("singleValue");
@@ -314,7 +314,7 @@ public class DmnDecisionResultTest extends DmnEngineTest {
   }
 
   protected void assertMultipleOutputValues(DmnDecisionResultEntries result) {
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     String value = (String) result.get("firstOutput");
     assertThat(value).isEqualTo("multipleValues1");

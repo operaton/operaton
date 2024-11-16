@@ -828,7 +828,7 @@ public class OperatonExtensionsTest {
     assertThat(field.getOperatonString().getTextContent()).isEqualTo(TEST_STRING_XML);
 
     Collection<TimerEventDefinition> timeouts = taskListener.getTimeouts();
-    assertThat(timeouts.size()).isEqualTo(1);
+    assertThat(timeouts).hasSize(1);
 
     TimerEventDefinition timeout = timeouts.iterator().next();
     assertThat(timeout.getTimeCycle()).isNull();

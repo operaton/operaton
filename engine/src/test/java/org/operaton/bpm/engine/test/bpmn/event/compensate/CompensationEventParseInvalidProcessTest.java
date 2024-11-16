@@ -93,7 +93,7 @@ public class CompensationEventParseInvalidProcessTest {
     } catch (ParseException e) {
       assertExceptionMessageContainsText(e, expectedErrorMessage);
       List<Problem> errors = e.getResorceReports().get(0).getErrors();
-      assertThat(errors.size()).isEqualTo(1);
+      assertThat(errors).hasSize(1);
       assertThat(errors.get(0).getMainElementId()).isEqualTo(bpmnElementIds[0]);
       if (bpmnElementIds.length == 2) {
         assertThat(errors.get(0).getElementIds()).containsExactlyInAnyOrder(bpmnElementIds);

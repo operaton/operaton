@@ -278,14 +278,14 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     List<Task> tasks = query.list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
 
     query = taskService.createTaskQuery();
     query.taskName("TeStTaSk");
 
     tasks = query.list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(6);
+    assertThat(tasks).hasSize(6);
   }
 
   /**
@@ -301,14 +301,14 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
 
     List<Task> tasks = query.list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(10);
+    assertThat(tasks).hasSize(10);
 
     query = taskService.createTaskQuery();
     query.taskNameLike("%Task%");
 
     tasks = query.list();
     assertNotNull(tasks);
-    assertThat(tasks.size()).isEqualTo(10);
+    assertThat(tasks).hasSize(10);
   }
 
   @Test
@@ -5492,7 +5492,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     List<Task> tasks = taskService.createTaskQuery().processInstanceIdIn(instance1, instance2, "nonexisting").list();
 
     // then
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     for (Task task : tasks) {
       assertThat(task.getProcessInstanceId()).isIn(instance1, instance2);
     }

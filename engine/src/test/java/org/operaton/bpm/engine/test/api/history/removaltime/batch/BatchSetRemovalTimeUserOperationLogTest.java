@@ -833,7 +833,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
   // helper ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   protected void assertProperties(List<UserOperationLogEntry> userOperationLogEntries, String... expectedProperties) {
-    assertThat(userOperationLogEntries.size()).isEqualTo(expectedProperties.length);
+    assertThat(userOperationLogEntries).hasSize(expectedProperties.length);
 
     assertThat(userOperationLogEntries)
       .extracting("property", String.class)

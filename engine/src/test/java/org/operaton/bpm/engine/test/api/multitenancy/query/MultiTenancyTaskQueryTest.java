@@ -103,7 +103,7 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
         .endOr();
 
     // then
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
   }
 
   @Test
@@ -136,7 +136,7 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
         .asc()
         .list();
 
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(tasks.get(1).getTenantId()).isEqualTo(TENANT_TWO);
   }

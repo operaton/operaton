@@ -802,7 +802,7 @@ public class HistoricExternalTaskLogQueryTest {
       .list();
 
     // then
-    assertThat(externalTaskLogs.size()).isEqualTo(3);
+    assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
       assertTrue(log.getPriority() <= 2);
     }
@@ -822,7 +822,7 @@ public class HistoricExternalTaskLogQueryTest {
       .list();
 
     // then
-    assertThat(externalTaskLogs.size()).isEqualTo(3);
+    assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
       assertTrue(log.getPriority() >= 2);
     }
@@ -843,7 +843,7 @@ public class HistoricExternalTaskLogQueryTest {
       .list();
 
     // then
-    assertThat(externalTaskLogs.size()).isEqualTo(3);
+    assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
       assertTrue(log.getPriority() <= 3 && log.getPriority() >= 1);
     }

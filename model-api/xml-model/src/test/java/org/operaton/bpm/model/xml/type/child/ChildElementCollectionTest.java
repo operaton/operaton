@@ -186,7 +186,7 @@ public class ChildElementCollectionTest extends TestModelTest {
     Collection<FlightPartnerRef> flightPartners = Arrays.asList(birdoRef, daisyRef, pluckyRef);
 
     // directly test collection methods and not use the appropriate assertion methods
-    assertThat(flightPartnerRefs.size()).isEqualTo(2);
+    assertThat(flightPartnerRefs).hasSize(2);
     assertThat(flightPartnerRefs.isEmpty()).isFalse();
     assertThat(flightPartnerRefs.contains(daisyRef));
     assertThat(flightPartnerRefs.toArray()).isEqualTo(new Object[]{daisyRef, pluckyRef});

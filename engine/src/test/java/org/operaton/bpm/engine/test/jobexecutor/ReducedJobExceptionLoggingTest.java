@@ -80,7 +80,7 @@ public class ReducedJobExceptionLoggingTest {
     List<ILoggingEvent> filteredLogList = loggingRule.getFilteredLog("Exception while executing job");
 
     // then
-    assertThat(filteredLogList.size()).isEqualTo(3);
+    assertThat(filteredLogList).hasSize(3);
   }
 
   @Test
@@ -98,6 +98,6 @@ public class ReducedJobExceptionLoggingTest {
     List<ILoggingEvent> filteredLogList = loggingRule.getFilteredLog("Exception while executing job");
 
     // then
-    assertThat(filteredLogList.size()).isEqualTo(1);
+    assertThat(filteredLogList).hasSize(1);
   }
 }

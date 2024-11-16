@@ -66,7 +66,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
 
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_ASSIGNMENT);
   }
@@ -85,7 +85,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
 
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_COMPLETE);
   }
@@ -106,7 +106,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
 
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
-    assertThat(orderedEvents.size()).isEqualTo(4);
+    assertThat(orderedEvents).hasSize(4);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_UPDATE,
                                               TaskListener.EVENTNAME_ASSIGNMENT,
@@ -136,7 +136,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
 
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
 
     // the TIMEOUT event will always fire after the CREATE event, since the Timer Job can't be
     // picked up by the JobExecutor before it's committed. And it is committed in the same
@@ -174,7 +174,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
     assertThat(runningJobCount).isOne();
     assertThat(completedJobCount).isZero();
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_COMPLETE);
   }
 
@@ -193,7 +193,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
     // create event fired on task creation
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_UPDATE);
   }
@@ -211,7 +211,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(3);
+    assertThat(orderedEvents).hasSize(3);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_UPDATE,
                                               TaskListener.EVENTNAME_ASSIGNMENT);
@@ -235,7 +235,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
     // assignment event should not be processed
-    assertThat(orderedEvents.size()).isEqualTo(3);
+    assertThat(orderedEvents).hasSize(3);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_UPDATE,
                                               TaskListener.EVENTNAME_COMPLETE);
@@ -258,7 +258,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(4);
+    assertThat(orderedEvents).hasSize(4);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_UPDATE,
                                               TaskListener.EVENTNAME_ASSIGNMENT,
@@ -280,7 +280,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     // ASSIGNMENT Event is fired, since the ModifyingTaskListener sets an assignee, and the
     // ASSIGNMENT Event evaluation happens after the CREATE Event evaluation
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
@@ -305,7 +305,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // only the initial, first update event is expected
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(3);
+    assertThat(orderedEvents).hasSize(3);
     // ASSIGNMENT Event is fired, since the ModifyingTaskListener sets an assignee, and the
     // ASSIGNMENT Event evaluation happens after the UPDATE Event evaluation
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
@@ -331,7 +331,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // only one update event is expected, from the initial assignment
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(3);
+    assertThat(orderedEvents).hasSize(3);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_UPDATE,
                                               TaskListener.EVENTNAME_ASSIGNMENT);
@@ -354,7 +354,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_COMPLETE);
   }
@@ -376,7 +376,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     List<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_DELETE);
   }
@@ -396,7 +396,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_COMPLETE);
   }
 
@@ -417,7 +417,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_COMPLETE);
   }
 
@@ -438,7 +438,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_COMPLETE);
   }
 
@@ -463,7 +463,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
       // then
       LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-      assertThat(orderedEvents.size()).isEqualTo(2);
+      assertThat(orderedEvents).hasSize(2);
       assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_COMPLETE);
     }
   }
@@ -485,7 +485,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(3);
+    assertThat(orderedEvents).hasSize(3);
     assertThat(orderedEvents).containsExactly(TaskListener.EVENTNAME_CREATE,
                                               TaskListener.EVENTNAME_COMPLETE,
                                               TaskListener.EVENTNAME_DELETE);
@@ -512,7 +512,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
       // then
       LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-      assertThat(orderedEvents.size()).isEqualTo(2);
+      assertThat(orderedEvents).hasSize(2);
       assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(TaskListener.EVENTNAME_CREATE);
       assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_COMPLETE);
     }
@@ -532,7 +532,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(TaskListener.EVENTNAME_CREATE);
     assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
   }
@@ -553,7 +553,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(TaskListener.EVENTNAME_CREATE);
     assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
   }
@@ -574,7 +574,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(TaskListener.EVENTNAME_CREATE);
     assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
   }
@@ -599,7 +599,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
       // then
       LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-      assertThat(orderedEvents.size()).isEqualTo(2);
+      assertThat(orderedEvents).hasSize(2);
       assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(TaskListener.EVENTNAME_CREATE);
       assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
     }
@@ -625,7 +625,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
       // then
       LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-      assertThat(orderedEvents.size()).isEqualTo(2);
+      assertThat(orderedEvents).hasSize(2);
       assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(TaskListener.EVENTNAME_CREATE);
       assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
     }
@@ -647,7 +647,7 @@ public class TaskListenerEventLifecycleTest extends AbstractTaskListenerTest{
     // then
     LinkedList<String> orderedEvents = RecorderTaskListener.getOrderedEvents();
 
-    assertThat(orderedEvents.size()).isEqualTo(2);
+    assertThat(orderedEvents).hasSize(2);
     assertThat(orderedEvents.getFirst()).isEqualToIgnoringCase(TaskListener.EVENTNAME_CREATE);
     assertThat(orderedEvents.getLast()).isEqualToIgnoringCase(TaskListener.EVENTNAME_DELETE);
   }

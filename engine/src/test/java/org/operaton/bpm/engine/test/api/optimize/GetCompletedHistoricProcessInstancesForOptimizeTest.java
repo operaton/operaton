@@ -112,7 +112,7 @@ public class GetCompletedHistoricProcessInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricProcessInstances(pastDate(), null, 10);
 
     // then
-    assertThat(completedHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(completedHistoricProcessInstances).hasSize(1);
     assertThatInstanceHasAllImportantInformation(completedHistoricProcessInstances.get(0));
   }
 
@@ -136,7 +136,7 @@ public class GetCompletedHistoricProcessInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricProcessInstances(now, null, 10);
 
     // then
-    assertThat(completedHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(completedHistoricProcessInstances).hasSize(1);
   }
 
   @Test
@@ -160,7 +160,7 @@ public class GetCompletedHistoricProcessInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricProcessInstances(null, now, 10);
 
     // then
-    assertThat(completedHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(completedHistoricProcessInstances).hasSize(1);
     assertThat(completedHistoricProcessInstances.get(0).getId()).isEqualTo(processInstance.getId());
   }
 
@@ -206,7 +206,7 @@ public class GetCompletedHistoricProcessInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricProcessInstances(pastDate(), null, 3);
 
     // then
-    assertThat(completedHistoricProcessInstances.size()).isEqualTo(3);
+    assertThat(completedHistoricProcessInstances).hasSize(3);
   }
 
   @Test
@@ -236,7 +236,7 @@ public class GetCompletedHistoricProcessInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricProcessInstances(now, null, 10);
 
     // then
-    assertThat(completedHistoricProcessInstances.size()).isEqualTo(3);
+    assertThat(completedHistoricProcessInstances).hasSize(3);
     assertThat(completedHistoricProcessInstances.get(0).getId()).isEqualTo(processInstance1.getId());
     assertThat(completedHistoricProcessInstances.get(1).getId()).isEqualTo(processInstance2.getId());
     assertThat(completedHistoricProcessInstances.get(2).getId()).isEqualTo(processInstance3.getId());
@@ -262,7 +262,7 @@ public class GetCompletedHistoricProcessInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricProcessInstances(pastDate(), null, 10);
 
     // then
-    assertThat(completedHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(completedHistoricProcessInstances).hasSize(1);
     assertThat(completedHistoricProcessInstances.get(0).getId()).isEqualTo(processInstanceToComplete.getId());
 
   }

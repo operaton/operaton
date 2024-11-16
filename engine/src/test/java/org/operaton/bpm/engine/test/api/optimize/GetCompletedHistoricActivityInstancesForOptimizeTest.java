@@ -118,7 +118,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricActivityInstances(pastDate(), null, 10);
 
     // then
-    assertThat(completedHistoricActivityInstances.size()).isEqualTo(2);
+    assertThat(completedHistoricActivityInstances).hasSize(2);
     assertThatActivitiesHaveAllImportantInformation(completedHistoricActivityInstances);
   }
 
@@ -144,7 +144,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
 
     // then
     Set<String> allowedActivityIds = new HashSet<>(Arrays.asList("userTask", "endEvent"));
-    assertThat(completedHistoricActivityInstances.size()).isEqualTo(2);
+    assertThat(completedHistoricActivityInstances).hasSize(2);
     assertTrue(allowedActivityIds.contains(completedHistoricActivityInstances.get(0).getActivityId()));
     assertTrue(allowedActivityIds.contains(completedHistoricActivityInstances.get(1).getActivityId()));
   }
@@ -170,7 +170,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricActivityInstances(null, now, 10);
 
     // then
-    assertThat(completedHistoricActivityInstances.size()).isEqualTo(1);
+    assertThat(completedHistoricActivityInstances).hasSize(1);
     assertThat(completedHistoricActivityInstances.get(0).getActivityId()).isEqualTo("startEvent");
   }
 
@@ -221,7 +221,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricActivityInstances(pastDate(), null, 3);
 
     // then
-    assertThat(completedHistoricActivityInstances.size()).isEqualTo(3);
+    assertThat(completedHistoricActivityInstances).hasSize(3);
   }
 
   @Test
@@ -251,7 +251,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricActivityInstances(pastDate(), null, 4);
 
     // then
-    assertThat(completedHistoricActivityInstances.size()).isEqualTo(4);
+    assertThat(completedHistoricActivityInstances).hasSize(4);
     assertThat(completedHistoricActivityInstances.get(0).getActivityId()).isEqualTo("startEvent");
     assertThat(completedHistoricActivityInstances.get(1).getActivityId()).isEqualTo("ServiceTask1");
     assertThat(completedHistoricActivityInstances.get(2).getActivityId()).isEqualTo("ServiceTask2");
@@ -274,7 +274,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricActivityInstances(pastDate(), null, 10);
 
     // then
-    assertThat(completedHistoricActivityInstances.size()).isEqualTo(1);
+    assertThat(completedHistoricActivityInstances).hasSize(1);
     assertThat(completedHistoricActivityInstances.get(0).getActivityId()).isEqualTo("startEvent");
   }
 

@@ -110,7 +110,7 @@ public class JsonTreeJsonPathTest {
 
     nodeList = jsonNode.jsonPath("$.customers[?(@.name == 'Waldo')]").elementList();
 
-    assertThat(nodeList.size()).isEqualTo(1);
+    assertThat(nodeList).hasSize(1);
     assertThat(nodeList.get(0).prop("name").stringValue()).isEqualTo("Waldo");
   }
 

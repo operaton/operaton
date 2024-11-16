@@ -124,7 +124,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
       optimizeService.getHistoricVariableUpdates(new Date(1L), null, false, 10);
 
     // then
-    assertThat(historicVariableUpdates.size()).isEqualTo(1);
+    assertThat(historicVariableUpdates).hasSize(1);
     assertThatUpdateHasAllImportantInformation(historicVariableUpdates.get(0));
   }
 
@@ -151,7 +151,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
       optimizeService.getHistoricVariableUpdates(now, null, false, 10);
 
     // then
-    assertThat(variableUpdates.size()).isEqualTo(1);
+    assertThat(variableUpdates).hasSize(1);
     assertThat(variableUpdates.get(0).getValue()).hasToString("value2");
   }
 
@@ -178,7 +178,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
       optimizeService.getHistoricVariableUpdates(null, now, false, 10);
 
     // then
-    assertThat(variableUpdates.size()).isEqualTo(1);
+    assertThat(variableUpdates).hasSize(1);
     assertThat(variableUpdates.get(0).getValue()).hasToString("value1");
   }
 
@@ -289,7 +289,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
       optimizeService.getHistoricVariableUpdates(pastDate(), null, false, 3);
 
     // then
-    assertThat(variableUpdates.size()).isEqualTo(3);
+    assertThat(variableUpdates).hasSize(3);
   }
 
   @Test
@@ -322,7 +322,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
       optimizeService.getHistoricVariableUpdates(now, null, false, 10);
 
     // then
-    assertThat(variableUpdates.size()).isEqualTo(3);
+    assertThat(variableUpdates).hasSize(3);
     assertThat(variableUpdates.get(0).getVariableName()).isEqualTo("var1");
     assertThat(variableUpdates.get(1).getVariableName()).isEqualTo("var2");
     assertThat(variableUpdates.get(2).getVariableName()).isEqualTo("var3");
@@ -351,7 +351,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
       optimizeService.getHistoricVariableUpdates(pastDate(), null, false, 10);
 
     // then
-    assertThat(variableUpdates.size()).isEqualTo(1);
+    assertThat(variableUpdates).hasSize(1);
   }
 
   /**

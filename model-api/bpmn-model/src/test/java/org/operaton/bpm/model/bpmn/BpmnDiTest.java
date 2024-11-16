@@ -92,7 +92,7 @@ class BpmnDiTest {
     Font font = labelStyle.getFont();
     assertThat(font).isNotNull();
     assertThat(font.getName()).isEqualTo("Arial");
-    assertThat(font.getSize()).isEqualTo(8.0);
+    assertThat(font.get).hasSize(8.0);
     assertThat(font.isBold()).isTrue();
     assertThat(font.isItalic()).isFalse();
     assertThat(font.isStrikeThrough()).isFalse();

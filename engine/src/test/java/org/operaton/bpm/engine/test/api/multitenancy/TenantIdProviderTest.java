@@ -119,7 +119,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
 
     // then the tenant id provider is invoked
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.parameters).hasSize(1);
   }
 
   @Test
@@ -162,7 +162,7 @@ public class TenantIdProviderTest {
     assertNotNull(procInstance);
 
     // then the tenant id provider is invoked
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.parameters).hasSize(1);
   }
 
 
@@ -208,7 +208,7 @@ public class TenantIdProviderTest {
 
     //then provider is called
     assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.parameters).hasSize(1);
   }
 
   @Test
@@ -243,7 +243,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, Variables.createVariables().putValue("varName", true));
 
     // then the tenant id provider is passed in the variable
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.parameters).hasSize(1);
     assertThat((Boolean) tenantIdProvider.parameters.get(0).getVariables().get("varName")).isTrue();
   }
 
@@ -315,7 +315,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey("superProcess");
 
     // then the tenant id provider is invoked twice
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(2);
+    assertThat(tenantIdProvider.parameters).hasSize(2);
   }
 
   @Test
@@ -348,7 +348,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey("superProcess", Variables.createVariables().putValue("varName", true));
 
     // then the tenant id provider is passed in the variable
-    assertThat(tenantIdProvider.parameters.get(1).getVariables().size()).isEqualTo(1);
+    assertThat(tenantIdProvider.parameters.get(1).getVariables()).hasSize(1);
     assertThat((Boolean) tenantIdProvider.parameters.get(1).getVariables().get("varName")).isTrue();
   }
 
@@ -467,7 +467,7 @@ public class TenantIdProviderTest {
 
 
     // then the tenant id provider is invoked once for the process instance
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.parameters).hasSize(1);
   }
 
   @Test
@@ -503,10 +503,10 @@ public class TenantIdProviderTest {
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
 
     // then the tenant id provider is passed in the variable
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.parameters).hasSize(1);
 
     VariableMap variables = tenantIdProvider.parameters.get(0).getVariables();
-    assertThat(variables.size()).isEqualTo(1);
+    assertThat(variables).hasSize(1);
     assertThat((Boolean) variables.get("varName")).isTrue();
   }
 
@@ -525,7 +525,7 @@ public class TenantIdProviderTest {
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
 
     // then the tenant id provider is passed in the process definition
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.parameters).hasSize(1);
     assertThat(tenantIdProvider.parameters.get(0).getProcessDefinition()).isNotNull();
   }
 
@@ -544,7 +544,7 @@ public class TenantIdProviderTest {
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
 
     // then the tenant id provider is handed in the super case execution
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.parameters).hasSize(1);
     assertThat(tenantIdProvider.parameters.get(0).getSuperCaseExecution()).isNotNull();
   }
 
@@ -563,7 +563,7 @@ public class TenantIdProviderTest {
     engineRule.getDecisionService().evaluateDecisionTableByKey(DECISION_DEFINITION_KEY).variables(createVariables()).evaluate();
 
     // then the tenant id provider is invoked
-    assertThat(tenantIdProvider.dmnParameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.dmnParameters).hasSize(1);
   }
 
   @Test
@@ -654,7 +654,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, createVariables());
 
     // then the tenant id provider is invoked
-    assertThat(tenantIdProvider.dmnParameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.dmnParameters).hasSize(1);
   }
 
   @Test
@@ -701,7 +701,7 @@ public class TenantIdProviderTest {
     Execution execution = engineRule.getRuntimeService().createExecutionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).singleResult();
 
     // then the tenant id provider is invoked
-    assertThat(tenantIdProvider.dmnParameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.dmnParameters).hasSize(1);
     ExecutionEntity passedExecution = (ExecutionEntity) tenantIdProvider.dmnParameters.get(0).getExecution();
     assertThat(passedExecution).isNotNull();
     assertThat(passedExecution.getParent().getId()).isEqualTo(execution.getId());
@@ -776,7 +776,7 @@ public class TenantIdProviderTest {
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
 
     // then the tenant id provider is invoked
-    assertThat(tenantIdProvider.caseParameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.caseParameters).hasSize(1);
   }
 
   @Test
@@ -807,7 +807,7 @@ public class TenantIdProviderTest {
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).setVariables(Variables.createVariables().putValue("varName", true)).create();
 
     // then the tenant id provider is passed in the variable
-    assertThat(tenantIdProvider.caseParameters.size()).isEqualTo(1);
+    assertThat(tenantIdProvider.caseParameters).hasSize(1);
     assertThat((Boolean) tenantIdProvider.caseParameters.get(0).getVariables().get("varName")).isTrue();
   }
 
@@ -878,7 +878,7 @@ public class TenantIdProviderTest {
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
 
     // then the tenant id provider is invoked twice
-    assertThat(tenantIdProvider.caseParameters.size()).isEqualTo(2);
+    assertThat(tenantIdProvider.caseParameters).hasSize(2);
   }
 
   @Test
@@ -909,7 +909,7 @@ public class TenantIdProviderTest {
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).setVariables(Variables.createVariables().putValue("varName", true)).create();
 
     // then the tenant id provider is passed in the variable
-    assertThat(tenantIdProvider.caseParameters.get(1).getVariables().size()).isEqualTo(1);
+    assertThat(tenantIdProvider.caseParameters.get(1).getVariables()).hasSize(1);
     assertThat((Boolean) tenantIdProvider.caseParameters.get(1).getVariables().get("varName")).isTrue();
   }
 
@@ -1018,7 +1018,7 @@ public class TenantIdProviderTest {
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
 
     // then the tenant id provider is handed in the super case execution
-    assertThat(tenantIdProvider.caseParameters.size()).isEqualTo(2);
+    assertThat(tenantIdProvider.caseParameters).hasSize(2);
     assertThat(tenantIdProvider.caseParameters.get(1).getSuperCaseExecution()).isNotNull();
   }
 

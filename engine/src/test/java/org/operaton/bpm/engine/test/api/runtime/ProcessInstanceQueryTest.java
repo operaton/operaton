@@ -275,7 +275,7 @@ public class ProcessInstanceQueryTest {
 
     // then
     assertThat(query.count()).isEqualTo(5l);
-    assertThat(query.list().size()).isEqualTo(5);
+    assertThat(query.list()).hasSize(5);
   }
 
   @Test
@@ -331,7 +331,7 @@ public class ProcessInstanceQueryTest {
 
     // then
     assertThat(query.count()).isEqualTo(2l);
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
   }
 
   @Test
@@ -342,7 +342,7 @@ public class ProcessInstanceQueryTest {
 
     // then
     assertThat(query.count()).isEqualTo(5l);
-    assertThat(query.list().size()).isEqualTo(5);
+    assertThat(query.list()).hasSize(5);
   }
 
   @Test

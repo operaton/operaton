@@ -164,7 +164,7 @@ public class BoundedNumberOfMaxResultsTest {
                 .list();
 
             // then
-            assertThat(tasks.size()).isEqualTo(1);
+            assertThat(tasks).hasSize(1);
 
             return null;
           }
@@ -247,7 +247,7 @@ public class BoundedNumberOfMaxResultsTest {
     List<ProcessInstance> processInstances = processInstanceQuery.unlimitedList();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(1);
+    assertThat(processInstances).hasSize(1);
   }
 
   @Test
@@ -823,7 +823,7 @@ public class BoundedNumberOfMaxResultsTest {
         historicProcessInstanceQuery.listPage(0, 10);
 
     // then
-    assertThat(historicProcessInstances.size()).isEqualTo(1);
+    assertThat(historicProcessInstances).hasSize(1);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -847,7 +847,7 @@ public class BoundedNumberOfMaxResultsTest {
         historicProcessInstanceQuery.listPage(0, 9);
 
     // then
-    assertThat(historicProcessInstances.size()).isEqualTo(1);
+    assertThat(historicProcessInstances).hasSize(1);
   }
 
   @Test

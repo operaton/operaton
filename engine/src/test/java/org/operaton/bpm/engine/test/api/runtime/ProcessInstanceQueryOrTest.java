@@ -558,7 +558,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
   }
 
   @Test
@@ -597,7 +597,7 @@ public class ProcessInstanceQueryOrTest {
         .list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(2);
+    assertThat(processInstances).hasSize(2);
   }
 
 }

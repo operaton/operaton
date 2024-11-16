@@ -131,7 +131,7 @@ public class FilterPropertiesTest {
     Object string = list.get(0);
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
+    assertThat(deserialisedProperties).hasSize(1);
     assertThat(string).isInstanceOf(String.class);
     assertThat(string).hasToString("bar");
   }
@@ -153,7 +153,7 @@ public class FilterPropertiesTest {
     Object string = map.get("bar");
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
+    assertThat(deserialisedProperties).hasSize(1);
     assertThat(string).hasToString("foo");
   }
 
@@ -175,7 +175,7 @@ public class FilterPropertiesTest {
     Object string = list.get(0);
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
+    assertThat(deserialisedProperties).hasSize(1);
     assertThat(string).hasToString("foo");
   }
 
@@ -205,7 +205,7 @@ public class FilterPropertiesTest {
     Map map = (Map) list.get(0);
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
+    assertThat(deserialisedProperties).hasSize(1);
     assertThat(map.get("string")).isEqualTo("aStringValue");
     assertThat(map.get("int")).isEqualTo(47);
     assertThat(map.get("intOutOfRange")).isEqualTo(Integer.MAX_VALUE + 1L);
@@ -240,7 +240,7 @@ public class FilterPropertiesTest {
     List list = (List) ((Map) deserialisedProperties.get("foo")).get("bar");
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
+    assertThat(deserialisedProperties).hasSize(1);
 
     assertThat(list.get(0)).isEqualTo("aStringValue");
     assertThat(list.get(1)).isEqualTo(47);

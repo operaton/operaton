@@ -127,7 +127,7 @@ public class TelemetryDynamicDataTest {
     taskService.complete(task.getId());
 
     // then
-    assertThat(entries.size()).isEqualTo(4);
+    assertThat(entries).hasSize(4);
     String [] expectedExecutedCommands = {"StartProcessInstanceCmd",
                                          "SetExecutionVariablesCmd",
                                          "TaskQueryImpl",

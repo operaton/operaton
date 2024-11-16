@@ -188,7 +188,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
       .list();
 
     // then
-    assertThat(HistoricExternalTaskLogs.size()).isEqualTo(5);
+    assertThat(HistoricExternalTaskLogs).hasSize(5);
     assertThat(HistoricExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(HistoricExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(HistoricExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
@@ -208,7 +208,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
       .list();
 
     // then
-    assertThat(HistoricExternalTaskLogs.size()).isEqualTo(5);
+    assertThat(HistoricExternalTaskLogs).hasSize(5);
     assertThat(HistoricExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_TWO);
     assertThat(HistoricExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_TWO);
     assertThat(HistoricExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);

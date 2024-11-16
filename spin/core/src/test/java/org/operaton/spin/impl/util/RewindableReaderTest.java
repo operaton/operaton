@@ -38,7 +38,7 @@ public class RewindableReaderTest {
   public void shouldRead() throws IOException {
     // read(char[])
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
-    assertThat(reader.getRewindBufferSize()).isEqualTo(DEFAULT_BUFFER_SIZE);
+    assertThat(reader.getRewindBuffer).hasSize(DEFAULT_BUFFER_SIZE);
     assertThat(reader.getCurrentRewindableCapacity()).isEqualTo(DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];

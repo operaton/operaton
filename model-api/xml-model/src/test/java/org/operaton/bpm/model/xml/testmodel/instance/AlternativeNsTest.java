@@ -100,7 +100,7 @@ public class AlternativeNsTest extends TestModelTest {
     ModelElementInstance birdo = modelInstance.getModelElementById("birdo");
     assertThat(birdo).isNotNull();
     Collection<Wings> elements = birdo.getChildElementsByType(Wings.class);
-    assertThat(elements.size()).isEqualTo(1);
+    assertThat(elements).hasSize(1);
     assertThat(elements.iterator().next().getTextContent()).isEqualTo("zisch");
   }
 
@@ -115,7 +115,7 @@ public class AlternativeNsTest extends TestModelTest {
     Collection<Wings> elements = donald.getChildElementsByType(Wings.class);
 
     // then
-    assertThat(elements.size()).isEqualTo(1);
+    assertThat(elements).hasSize(1);
     assertThat(elements.iterator().next().getTextContent()).isEqualTo("flappy");
   }
 
@@ -194,7 +194,7 @@ public class AlternativeNsTest extends TestModelTest {
     wings.setTextContent("kawusch");
 
     List<DomElement> childElementsByNameNs = birdo.getDomElement().getChildElementsByNameNs(MECHANICAL_NS, "wings");
-    assertThat(childElementsByNameNs.size()).isEqualTo(1);
+    assertThat(childElementsByNameNs).hasSize(1);
     assertThat(childElementsByNameNs.get(0).getTextContent()).isEqualTo("kawusch");
   }
 
@@ -211,7 +211,7 @@ public class AlternativeNsTest extends TestModelTest {
 
     // then
     List<DomElement> childElementsByNameNs = donald.getDomElement().getChildElementsByNameNs(YET_ANOTHER_NS, "wings");
-    assertThat(childElementsByNameNs.size()).isEqualTo(1);
+    assertThat(childElementsByNameNs).hasSize(1);
     assertThat(childElementsByNameNs.get(0).getTextContent()).isEqualTo("kawusch");
   }
 
@@ -223,7 +223,7 @@ public class AlternativeNsTest extends TestModelTest {
     bird.setWings(modelInstance.newInstance(Wings.class));
 
     List<DomElement> childElementsByNameNs = bird.getDomElement().getChildElementsByNameNs(TestModelConstants.NEWER_NAMESPACE, "wings");
-    assertThat(childElementsByNameNs.size()).isEqualTo(1);
+    assertThat(childElementsByNameNs).hasSize(1);
   }
 
   @ParameterizedTest

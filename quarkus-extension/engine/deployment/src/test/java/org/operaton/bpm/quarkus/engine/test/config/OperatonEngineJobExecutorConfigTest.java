@@ -44,8 +44,8 @@ public class OperatonEngineJobExecutorConfigTest {
     // given a custom application.properties file
 
     // then
-    assertThat(config.jobExecutor().threadPool().maxPoolSize()).isEqualTo(12);
-    assertThat(config.jobExecutor().threadPool().queueSize()).isEqualTo(5);
+    assertThat(config.jobExecutor().threadPool().maxPool).hasSize(12);
+    assertThat(config.jobExecutor().threadPool().queue).hasSize(5);
   }
 
   @Test

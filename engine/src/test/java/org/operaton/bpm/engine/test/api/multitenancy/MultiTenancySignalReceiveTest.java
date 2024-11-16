@@ -196,7 +196,7 @@ public class MultiTenancySignalReceiveTest {
     runtimeService.createSignalEvent("signal").withoutTenantId().send();
 
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getTenantId()).isNull();
     assertThat(tasks.get(1).getTenantId()).isNull();
   }

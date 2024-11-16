@@ -163,7 +163,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse, never()).resume(any());
-    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
+    assertThat(handler.getPendingRequests()).hasSize(1);
     verify(handler).suspend(5000L);
   }
 
@@ -178,7 +178,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
+    assertThat(handler.getPendingRequests()).hasSize(1);
     verify(handler).suspend(5000L);
 
     List<LockedExternalTask> tasks = new ArrayList<LockedExternalTask>();
@@ -210,7 +210,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
+    assertThat(handler.getPendingRequests()).hasSize(1);
     verify(handler).suspend(4000L);
 
     addSecondsToClock(4);
@@ -238,7 +238,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size()).isEqualTo(2);
+    assertThat(handler.getPendingRequests()).hasSize(2);
     verify(handler).suspend(3000L);
 
     addSecondsToClock(4);
@@ -279,7 +279,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
+    assertThat(handler.getPendingRequests()).hasSize(1);
     verify(handler).suspend(5000L);
 
     // when
@@ -354,7 +354,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse).cancel();
-    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
+    assertThat(handler.getPendingRequests()).hasSize(1);
   }
 
   @Test
@@ -375,7 +375,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse, never()).cancel();
-    assertThat(handler.getPendingRequests().size()).isEqualTo(2);
+    assertThat(handler.getPendingRequests()).hasSize(2);
   }
 
   @Test
@@ -416,7 +416,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // assume
-    assertThat(handler.getPendingRequests().size()).isEqualTo(1);
+    assertThat(handler.getPendingRequests()).hasSize(1);
 
     // when
     handler.rejectPendingRequests();

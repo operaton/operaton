@@ -23,12 +23,11 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.InjectedProcessEngineBean;
 import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**

@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.el;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 

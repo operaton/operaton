@@ -16,16 +16,13 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.el;
 
-import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;
 import org.operaton.bpm.engine.cdi.test.impl.beans.MessageBean;
-import org.operaton.bpm.engine.cdi.test.impl.beans.ProcessScopedMessageBean;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
 
 @Named
 @Dependent

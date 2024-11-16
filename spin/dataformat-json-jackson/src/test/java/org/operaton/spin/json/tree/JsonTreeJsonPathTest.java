@@ -16,17 +16,17 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.spin.Spin.JSON;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPathException;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.spin.Spin.JSON;
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 
 /**
  * @author Stefan Hentschel
@@ -88,8 +88,8 @@ public class JsonTreeJsonPathTest {
   public void shouldGetSingleArrayEntry() {
     SpinJsonNode node = jsonNode.jsonPath("$.customers[0]").element();
 
-    assertThat(node.isObject());
-    assertThat(node.prop("name").isString());
+    assertThat(node.isObject()).isTrue();
+    assertThat(node.prop("name").isString()).isTrue();
     assertThat(node.prop("name").stringValue()).isEqualTo("Kermit");
   }
 

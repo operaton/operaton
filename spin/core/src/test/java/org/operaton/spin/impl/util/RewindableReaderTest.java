@@ -16,16 +16,16 @@
  */
 package org.operaton.spin.impl.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.junit.After;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
 
-import org.junit.After;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class RewindableReaderTest {
 
@@ -38,7 +38,7 @@ public class RewindableReaderTest {
   public void shouldRead() throws IOException {
     // read(char[])
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
-    assertThat(reader.getRewindBuffer).hasSize(DEFAULT_BUFFER_SIZE);
+    assertThat(reader.getRewindBufferSize()).isEqualTo(DEFAULT_BUFFER_SIZE);
     assertThat(reader.getCurrentRewindableCapacity()).isEqualTo(DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];

@@ -16,22 +16,15 @@
  */
 package org.operaton.connect.httpclient;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.http.client.methods.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.connect.Connectors;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpOptions;
-import org.apache.http.client.methods.HttpPatch;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpTrace;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.operaton.connect.Connectors;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HttpRequestTest {
 
@@ -173,7 +166,7 @@ public class HttpRequestTest {
     assertThat(request.getConfigOption("object-field")).isEqualTo(value);
     assertThat(request.getConfigOption("int-field")).isEqualTo(15);
     assertThat(request.getConfigOption("long-field")).isEqualTo(15l);
-    assertThat(request.getConfigOption("boolean-field")).isTrue();
+    assertThat(request.getConfigOption("boolean-field")).isEqualTo(true);
     assertThat(request.getConfigOption("string-field")).isEqualTo("string-value");
   }
 

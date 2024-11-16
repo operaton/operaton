@@ -16,29 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-
-import java.util.ArrayList;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import javax.ws.rs.container.AsyncResponse;
-import javax.ws.rs.core.Response.Status;
+import org.hamcrest.Matchers;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -51,16 +37,20 @@ import org.operaton.bpm.engine.rest.dto.externaltask.FetchExternalTasksExtendedD
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
 
-import org.hamcrest.Matchers;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.core.Response.Status;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.*;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 /**
  * @author Tassilo Weidner
@@ -219,7 +209,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // then
-    verify(asyncResponse).resume(argThat(Matchers.isEmpty()));
+    verify(asyncResponse).resume(argThat(Matchers.hasSize(0)));
     assertThat(handler.getPendingRequests().size()).isZero();
     verify(handler).suspend(Long.MAX_VALUE);
   }

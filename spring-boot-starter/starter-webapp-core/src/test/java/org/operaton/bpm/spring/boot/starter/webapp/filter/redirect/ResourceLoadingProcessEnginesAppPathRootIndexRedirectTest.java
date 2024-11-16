@@ -29,6 +29,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { FilterTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,

@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JobExecutorPropertiesTest extends ParsePropertiesHelper {
 
   @Test
   public void testDefaultJobExecutorProperties() throws Exception {
-    assertThat(jobExecution.getCorePool).hasSize(3);
-    assertThat(jobExecution.getMaxPool).hasSize(10);
+    assertThat(jobExecution.getCorePoolSize()).isEqualTo(3);
+    assertThat(jobExecution.getMaxPoolSize()).isEqualTo(10);
     assertThat(jobExecution.getQueueCapacity()).isEqualTo(3);
   }
 }

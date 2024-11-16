@@ -16,24 +16,24 @@
  */
 package org.operaton.bpm.quarkus.engine.test.config;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import io.quarkus.test.QuarkusUnitTest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
-import java.sql.SQLException;
-
-import io.quarkus.test.QuarkusUnitTest;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.quarkus.engine.extension.OperatonEngineConfig;
 import org.operaton.bpm.quarkus.engine.extension.QuarkusProcessEngineConfiguration;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
+
+import java.sql.SQLException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OperatonEngineProgrammaticAndConfigFileTest {
 
@@ -88,8 +88,8 @@ public class OperatonEngineProgrammaticAndConfigFileTest {
     assertThat(jobExecutor.getMaxWait()).isEqualTo(65000);
     assertThat(jobExecutor.getBackoffTimeInMillis()).isEqualTo(5);
     // assert correct thread pool config
-    assertThat(config.jobExecutor().threadPool().maxPool).hasSize(12);
-    assertThat(config.jobExecutor().threadPool().queue).hasSize(5);
+    assertThat(config.jobExecutor().threadPool().maxPoolSize()).isEqualTo(12);
+    assertThat(config.jobExecutor().threadPool().queueSize()).isEqualTo(5);
     // assert correct datasource
     assertThat(config.datasource()).hasValue("operaton");
     assertThat(configuration.getDataSource().getConnection()).asString().contains("h2:mem:operaton");

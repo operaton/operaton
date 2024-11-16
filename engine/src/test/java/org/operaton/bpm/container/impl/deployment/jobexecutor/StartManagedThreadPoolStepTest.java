@@ -16,16 +16,9 @@
  */
 package org.operaton.bpm.container.impl.deployment.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import javax.management.ObjectName;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.container.impl.RuntimeContainerDelegateImpl;
 import org.operaton.bpm.container.impl.deployment.Attachments;
 import org.operaton.bpm.container.impl.jmx.MBeanServiceContainer;
@@ -39,9 +32,15 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
 import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import javax.management.ObjectName;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -85,8 +84,8 @@ public class StartManagedThreadPoolStepTest {
 
     //since no jobs will start, remaining capacity is sufficent to check the size
     assertThat(executor.getQueue().remainingCapacity()).isEqualTo(3);
-    assertThat(executor.getCorePool).hasSize(3);
-    assertThat(executor.getMaximumPool).hasSize(10);
+    assertThat(executor.getCorePoolSize()).isEqualTo(3);
+    assertThat(executor.getMaximumPoolSize()).isEqualTo(10);
     assertThat(executor.getKeepAliveTime(TimeUnit.MILLISECONDS)).isEqualTo(0L);
   }
 
@@ -109,8 +108,8 @@ public class StartManagedThreadPoolStepTest {
 
     //since no jobs will start, remaining capacity is sufficent to check the size
     assertThat(executor.getQueue().remainingCapacity()).isEqualTo(Integer.parseInt(queueSize));
-    assertThat(executor.getCorePool).hasSize(Integer.parseInt(corePoolSize));
-    assertThat(executor.getMaximumPool).hasSize(Integer.parseInt(maxPoolSize));
+    assertThat(executor.getCorePoolSize()).isEqualTo(Integer.parseInt(corePoolSize));
+    assertThat(executor.getMaximumPoolSize()).isEqualTo(Integer.parseInt(maxPoolSize));
     assertThat(executor.getKeepAliveTime(TimeUnit.MILLISECONDS)).isEqualTo(Long.parseLong(keepAliveTime));
   }
 

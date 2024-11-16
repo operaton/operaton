@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import org.operaton.bpm.engine.history.HistoricDecisionInstance;
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.spin.Spin;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.engine.history.HistoricDecisionInstance;
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.spin.Spin;
 
 import java.util.Arrays;
 import java.util.List;
@@ -72,7 +72,7 @@ public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
         .singleResult();
 
     assertThat(hdi.getOutputs()).hasSize(1);
-    assertThat(hdi.getOutputs().get(0).getValue()).isTrue();
+    assertThat(hdi.getOutputs().get(0).getValue()).isEqualTo(true);
   }
 
   @Test
@@ -90,7 +90,7 @@ public class FeelEngineIT extends AbstractFoxPlatformIntegrationTest {
         .singleResult();
 
     assertThat(hdi.getOutputs()).hasSize(1);
-    assertThat(hdi.getOutputs().get(0).getValue()).isTrue();
+    assertThat(hdi.getOutputs().get(0).getValue()).isEqualTo(true);
   }
 
   // HELPER

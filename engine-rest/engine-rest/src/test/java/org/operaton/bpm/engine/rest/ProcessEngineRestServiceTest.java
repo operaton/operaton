@@ -31,6 +31,8 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,11 +40,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
-
-import io.restassured.response.Response;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.FilterService;
@@ -100,6 +104,7 @@ import org.operaton.bpm.engine.runtime.ExecutionQuery;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.IncidentQuery;
 import org.operaton.bpm.engine.runtime.MessageCorrelationBuilder;
+import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.runtime.VariableInstance;
@@ -108,15 +113,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.FileValue;
-import org.hamcrest.CoreMatchers;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import io.restassured.http.ContentType;
-import org.operaton.bpm.engine.runtime.MessageCorrelationResult;
 
 public class ProcessEngineRestServiceTest extends
     AbstractRestServiceTest {
@@ -681,7 +677,7 @@ public class ProcessEngineRestServiceTest extends
         .header("Content-Disposition", "attachment; " +
                 "filename=\"" + filename + "\"; " +
                 "filename*=UTF-8''" + filename)
-        .contentType(CoreMatchers.<String>either(equalTo(ContentType.TEXT.toString() + ";charset=UTF-8")).or(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8")))
+        .contentType(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8"))
       .when()
         .get(HISTORY_BINARY_VARIABLE_INSTANCE_URL);
 
@@ -754,7 +750,7 @@ public class ProcessEngineRestServiceTest extends
         .header("Content-Disposition", "attachment; " +
                 "filename=\"" + filename + "\"; " +
                 "filename*=UTF-8''" + filename)
-        .contentType(CoreMatchers.<String>either(equalTo(ContentType.TEXT.toString() + ";charset=UTF-8")).or(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8")))
+        .contentType(equalTo(ContentType.TEXT.toString() + " ;charset=UTF-8"))
       .when()
         .get(HISTORY_BINARY_DETAIL_URL);
 

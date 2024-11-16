@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
-import org.operaton.bpm.webapp.impl.util.HeaderRule;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Rule;
 import org.junit.Test;
-
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import org.operaton.bpm.webapp.impl.util.HeaderRule;
 
 public class ContentTypeOptionsTest {
 
@@ -40,7 +39,7 @@ public class ContentTypeOptionsTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.getHeader(HEADER_NAME), is(HEADER_DEFAULT_VALUE));
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo(HEADER_DEFAULT_VALUE);
   }
 
   @Test
@@ -52,7 +51,7 @@ public class ContentTypeOptionsTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.headerExists(HEADER_NAME), is(false));
+    assertThat(headerRule.headerExists(HEADER_NAME)).isFalse();
   }
 
   @Test
@@ -64,7 +63,7 @@ public class ContentTypeOptionsTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.headerExists(HEADER_NAME), is(false));
+    assertThat(headerRule.headerExists(HEADER_NAME)).isFalse();
   }
 
   @Test
@@ -76,7 +75,7 @@ public class ContentTypeOptionsTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.getHeader(HEADER_NAME), is("aCustomValue"));
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo("aCustomValue");
   }
 
 }

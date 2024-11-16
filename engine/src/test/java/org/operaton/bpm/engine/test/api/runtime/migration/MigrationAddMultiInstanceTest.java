@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 import static org.junit.Assert.fail;
+import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.migration.MigrationPlanValidationException;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.MultiInstanceProcessModels;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 /**
  * @author Thorben Lindhauer
@@ -58,7 +58,7 @@ public class MigrationAddMultiInstanceTest {
       assertThat(e.getValidationReport())
         .hasInstructionFailures("userTask",
           "Target activity 'userTask' is a descendant of multi-instance body 'userTask#multiInstanceBody' "
-          + "that is not mapped from the source process definition"
+          + "that is not mapped from the source process definition."
         );
     }
   }
@@ -80,7 +80,7 @@ public class MigrationAddMultiInstanceTest {
       assertThat(e.getValidationReport())
         .hasInstructionFailures("userTask",
           "Target activity 'userTask' is a descendant of multi-instance body 'userTask#multiInstanceBody' "
-          + "that is not mapped from the source process definition"
+          + "that is not mapped from the source process definition."
         );
     }
   }
@@ -103,7 +103,7 @@ public class MigrationAddMultiInstanceTest {
       assertThat(e.getValidationReport())
         .hasInstructionFailures("userTask",
           "Target activity 'userTask' is a descendant of multi-instance body 'subProcess#multiInstanceBody' "
-          + "that is not mapped from the source process definition"
+          + "that is not mapped from the source process definition."
         );
     }
   }

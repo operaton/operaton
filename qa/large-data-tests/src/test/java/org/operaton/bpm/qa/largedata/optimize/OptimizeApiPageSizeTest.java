@@ -29,8 +29,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
 public class OptimizeApiPageSizeTest {
@@ -58,7 +57,7 @@ public class OptimizeApiPageSizeTest {
     final List<?> pageOfEntries = scenario.getOptimizeServiceFunction().apply(OPTIMIZE_PAGE_SIZE);
 
     // then
-    assertThat(pageOfEntries.size(), is(OPTIMIZE_PAGE_SIZE));
+    assertThat(pageOfEntries.size()).isEqualTo(OPTIMIZE_PAGE_SIZE);
   }
 
   private Object[] optimizeServiceFunctions() {

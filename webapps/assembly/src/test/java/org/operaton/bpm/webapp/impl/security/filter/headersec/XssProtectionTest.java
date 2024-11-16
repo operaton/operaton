@@ -16,17 +16,15 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.webapp.impl.util.HeaderRule;
-import org.junit.Rule;
-import org.junit.Test;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionOption.BLOCK;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionOption.SANITIZE;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionProvider.HEADER_NAME;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertThat;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.webapp.impl.util.HeaderRule;
 
 /**
  * @author Tassilo Weidner
@@ -45,7 +43,7 @@ public class XssProtectionTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.getHeader(HEADER_NAME), is(BLOCK.getHeaderValue()));
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo(BLOCK.getHeaderValue());
   }
 
   @Test
@@ -57,7 +55,7 @@ public class XssProtectionTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.headerExists(HEADER_NAME), is(false));
+    assertThat(headerRule.headerExists(HEADER_NAME)).isEqualTo(false);
   }
 
   @Test
@@ -69,7 +67,7 @@ public class XssProtectionTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.headerExists(HEADER_NAME), is(false));
+    assertThat(headerRule.headerExists(HEADER_NAME)).isEqualTo(false);
   }
 
   @Test
@@ -81,7 +79,7 @@ public class XssProtectionTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.getHeader(HEADER_NAME), is("aCustomValue"));
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo("aCustomValue");
   }
 
   @Test
@@ -93,7 +91,7 @@ public class XssProtectionTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.getHeader(HEADER_NAME), is(SANITIZE.getHeaderValue()));
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo(SANITIZE.getHeaderValue());
   }
 
   @Test
@@ -105,7 +103,7 @@ public class XssProtectionTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.getHeader(HEADER_NAME), is(SANITIZE.getHeaderValue()));
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo(SANITIZE.getHeaderValue());
   }
 
   @Test
@@ -117,7 +115,7 @@ public class XssProtectionTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.getHeader(HEADER_NAME), is(BLOCK.getHeaderValue()));
+    assertThat(headerRule.getHeader(HEADER_NAME)).isEqualTo(BLOCK.getHeaderValue());
   }
 
   @Test
@@ -131,8 +129,8 @@ public class XssProtectionTest {
     Throwable expectedException = headerRule.getException();
 
     // then
-    assertThat(expectedException, instanceOf(ProcessEngineException.class));
-    assertThat(expectedException.getMessage(), is("XssProtectionProvider: cannot set both xssProtectionValue and xssProtectionOption."));
+    assertThat(expectedException).isInstanceOf(ProcessEngineException.class);
+    assertThat(expectedException.getMessage()).isEqualTo("XssProtectionProvider: cannot set both xssProtectionValue and xssProtectionOption.");
   }
 
   @Test
@@ -143,8 +141,8 @@ public class XssProtectionTest {
     Throwable expectedException = headerRule.getException();
 
     // then
-    assertThat(expectedException, instanceOf(ProcessEngineException.class));
-    assertThat(expectedException.getMessage(), is("XssProtectionProvider: cannot set non-existing option foo for xssProtectionOption."));
+    assertThat(expectedException).isInstanceOf(ProcessEngineException.class);
+    assertThat(expectedException.getMessage()).isEqualTo("XssProtectionProvider: cannot set non-existing option foo for xssProtectionOption.");
   }
 
 }

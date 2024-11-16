@@ -16,15 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario.scenario;
 import static org.operaton.bpm.engine.test.api.authorization.util.AuthorizationSpec.grant;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -41,13 +46,6 @@ import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * @author Askar Akhmerov
@@ -141,7 +139,7 @@ public class DeleteHistoricProcessInstancesAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertThat(historyService.createHistoricProcessInstanceQuery().count(), is(0L));
+      assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
     }
   }
 }

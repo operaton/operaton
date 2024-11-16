@@ -17,11 +17,11 @@
 package org.operaton.bpm.engine.rest;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricProcessInstance;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -924,7 +924,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     .when().get(SINGLE_PROCESS_INSTANCE_BINARY_VARIABLE_URL);
 
     String contentType = response.contentType().replaceAll(" ", "");
-    assertThat(contentType, Matchers.is(ContentType.TEXT + ";charset=" + encoding));
+    assertThat(contentType).isEqualTo(ContentType.TEXT + ";charset=" + encoding);
   }
 
   @Test
@@ -2092,10 +2092,10 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     verify(runtimeServiceMock).setVariable(eq(MockProvider.EXAMPLE_TASK_ID), eq(variableKey),
         captor.capture());
     FileValue captured = captor.getValue();
-    assertThat(captured.getEncoding(), Matchers.is(encoding));
-    assertThat(captured.getFilename(), Matchers.is(filename));
-    assertThat(captured.getMimeType(), Matchers.is(mimetype));
-    assertThat(IoUtil.readInputStream(captured.getValue(), null), Matchers.is(value));
+    assertThat(captured.getEncoding()).isEqualTo(encoding);
+    assertThat(captured.getFilename()).isEqualTo(filename);
+    assertThat(captured.getMimeType()).isEqualTo(mimetype);
+    assertThat(IoUtil.readInputStream(captured.getValue(), null)).isEqualTo(value);
   }
 
   @Test
@@ -2120,10 +2120,10 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     verify(runtimeServiceMock).setVariable(eq(MockProvider.EXAMPLE_TASK_ID), eq(variableKey),
         captor.capture());
     FileValue captured = captor.getValue();
-    assertThat(captured.getEncoding(), Matchers.is(Matchers.nullValue()));
-    assertThat(captured.getFilename(), Matchers.is(filename));
-    assertThat(captured.getMimeType(), Matchers.is(mimetype));
-    assertThat(IoUtil.readInputStream(captured.getValue(), null), Matchers.is(value));
+    assertThat(captured.getEncoding()).isNull();
+    assertThat(captured.getFilename()).isEqualTo(filename);
+    assertThat(captured.getMimeType()).isEqualTo(mimetype);
+    assertThat(IoUtil.readInputStream(captured.getValue(), null)).isEqualTo(value);
   }
 
   @Test
@@ -2166,10 +2166,10 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
     verify(runtimeServiceMock).setVariable(eq(MockProvider.EXAMPLE_TASK_ID), eq(variableKey),
         captor.capture());
     FileValue captured = captor.getValue();
-    assertThat(captured.getEncoding(), Matchers.is(Matchers.nullValue()));
-    assertThat(captured.getFilename(), Matchers.is(filename));
-    assertThat(captured.getMimeType(), Matchers.is(MediaType.APPLICATION_OCTET_STREAM));
-    assertThat(captured.getValue().available(), Matchers.is(0));
+    assertThat(captured.getEncoding()).isNull();
+    assertThat(captured.getFilename()).isEqualTo(filename);
+    assertThat(captured.getMimeType()).isEqualTo(MediaType.APPLICATION_OCTET_STREAM);
+    assertThat(captured.getValue().available()).isEqualTo(0);
   }
 
   @Test

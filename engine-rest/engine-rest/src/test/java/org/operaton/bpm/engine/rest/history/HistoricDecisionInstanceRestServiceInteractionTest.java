@@ -18,14 +18,10 @@ package org.operaton.bpm.engine.rest.history;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_DECISION_DEFINITION_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_DECISION_INSTANCE_ID;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.any;
@@ -139,27 +135,27 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
     String returnedDecisionRequirementsDefinitionId = from(content).getString("decisionRequirementsDefinitionId");
     String returnedDecisionRequirementsDefinitionKey = from(content).getString("decisionRequirementsDefinitionKey");
 
-    assertThat(returnedHistoricDecisionInstanceId, is(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID));
-    assertThat(returnedDecisionDefinitionId, is(EXAMPLE_DECISION_DEFINITION_ID));
-    assertThat(returnedDecisionDefinitionKey, is(MockProvider.EXAMPLE_DECISION_DEFINITION_KEY));
-    assertThat(returnedDecisionDefinitionName, is(MockProvider.EXAMPLE_DECISION_DEFINITION_NAME));
-    assertThat(returnedEvaluationTime, is(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_EVALUATION_TIME));
-    assertThat(returnedProcessDefinitionId, is(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID));
-    assertThat(returnedProcessDefinitionKey, is(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY));
-    assertThat(returnedProcessInstanceId, is(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID));
-    assertThat(returnedCaseDefinitionId, is(MockProvider.EXAMPLE_CASE_DEFINITION_ID));
-    assertThat(returnedCaseDefinitionKey, is(MockProvider.EXAMPLE_CASE_DEFINITION_KEY));
-    assertThat(returnedCaseInstanceId, is(MockProvider.EXAMPLE_CASE_INSTANCE_ID));
-    assertThat(returnedActivityId, is(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ACTIVITY_ID));
-    assertThat(returnedActivityInstanceId, is(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ACTIVITY_INSTANCE_ID));
-    assertThat(returnedUserId, is(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_USER_ID));
-    assertThat(returnedInputs, is(nullValue()));
-    assertThat(returnedOutputs, is(nullValue()));
-    assertThat(returnedCollectResultValue, is(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_COLLECT_RESULT_VALUE));
-    assertThat(returnedTenantId, is(MockProvider.EXAMPLE_TENANT_ID));
-    assertThat(returnedRootDecisionInstanceId, is(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID));
-    assertThat(returnedDecisionRequirementsDefinitionId, is(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID));
-    assertThat(returnedDecisionRequirementsDefinitionKey, is(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY));
+    assertThat(returnedHistoricDecisionInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID);
+    assertThat(returnedDecisionDefinitionId).isEqualTo(EXAMPLE_DECISION_DEFINITION_ID);
+    assertThat(returnedDecisionDefinitionKey).isEqualTo(MockProvider.EXAMPLE_DECISION_DEFINITION_KEY);
+    assertThat(returnedDecisionDefinitionName).isEqualTo(MockProvider.EXAMPLE_DECISION_DEFINITION_NAME);
+    assertThat(returnedEvaluationTime).isEqualTo(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_EVALUATION_TIME);
+    assertThat(returnedProcessDefinitionId).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
+    assertThat(returnedProcessDefinitionKey).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
+    assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    assertThat(returnedCaseDefinitionId).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
+    assertThat(returnedCaseDefinitionKey).isEqualTo(MockProvider.EXAMPLE_CASE_DEFINITION_KEY);
+    assertThat(returnedCaseInstanceId).isEqualTo(MockProvider.EXAMPLE_CASE_INSTANCE_ID);
+    assertThat(returnedActivityId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ACTIVITY_ID);
+    assertThat(returnedActivityInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ACTIVITY_INSTANCE_ID);
+    assertThat(returnedUserId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_USER_ID);
+    assertThat(returnedInputs).isNull();
+    assertThat(returnedOutputs).isNull();
+    assertThat(returnedCollectResultValue).isEqualTo(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_COLLECT_RESULT_VALUE);
+    assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(returnedRootDecisionInstanceId).isEqualTo(MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID);
+    assertThat(returnedDecisionRequirementsDefinitionId).isEqualTo(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID);
+    assertThat(returnedDecisionRequirementsDefinitionKey).isEqualTo(MockProvider.EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY);
   }
 
   @Test
@@ -185,9 +181,9 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
     List<Map<String, Object>> returnedInputs = from(content).getList("inputs");
     List<Map<String, Object>> returnedOutputs = from(content).getList("outputs");
-    assertThat(returnedInputs, is(notNullValue()));
-    assertThat(returnedInputs, hasSize(3));
-    assertThat(returnedOutputs, is(nullValue()));
+    assertThat(returnedInputs).isNotNull();
+    assertThat(returnedInputs).hasSize(3);
+    assertThat(returnedOutputs).isNull();
   }
 
   @Test
@@ -213,9 +209,9 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
     List<Map<String, Object>> returnedInputs = from(content).getList("inputs");
     List<Map<String, Object>> returnedOutputs = from(content).getList("outputs");
-    assertThat(returnedInputs, is(nullValue()));
-    assertThat(returnedOutputs, is(notNullValue()));
-    assertThat(returnedOutputs, hasSize(3));
+    assertThat(returnedInputs).isNull();
+    assertThat(returnedOutputs).isNotNull();
+    assertThat(returnedOutputs).hasSize(3);
   }
 
   @Test
@@ -242,10 +238,10 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
     List<Map<String, Object>> returnedInputs = from(content).getList("inputs");
     List<Map<String, Object>> returnedOutputs = from(content).getList("outputs");
-    assertThat(returnedInputs, is(notNullValue()));
-    assertThat(returnedInputs, hasSize(3));
-    assertThat(returnedOutputs, is(notNullValue()));
-    assertThat(returnedOutputs, hasSize(3));
+    assertThat(returnedInputs).isNotNull();
+    assertThat(returnedInputs).hasSize(3);
+    assertThat(returnedOutputs).isNotNull();
+    assertThat(returnedOutputs).hasSize(3);
   }
 
   @Test

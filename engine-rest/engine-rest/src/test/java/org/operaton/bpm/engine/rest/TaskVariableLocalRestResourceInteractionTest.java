@@ -1126,7 +1126,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
     assertThat(captured.getEncoding()).isNull();
     assertThat(captured.getFilename()).isEqualTo(filename);
     assertThat(captured.getMimeType()).isEqualTo(MediaType.APPLICATION_OCTET_STREAM);
-    assertThat(captured.getValue().available()).isEqualTo(0);
+    assertThat(captured.getValue().available()).isZero();
   }
 
   @Test

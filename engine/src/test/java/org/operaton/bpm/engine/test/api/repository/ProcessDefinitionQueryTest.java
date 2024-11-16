@@ -303,7 +303,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
       assertThat(found).withFailMessage("Expected to find process definition " + processDefinition);
     }
 
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeysIn(processDefinitionKeys).count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeysIn(processDefinitionKeys).count()).isZero();
   }
 
   @Test
@@ -492,7 +492,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
 
     assertThat(repositoryService.createProcessDefinitionQuery()
       .messageEventSubscriptionName("bogus")
-      .count()).isEqualTo(0);
+      .count()).isZero();
 
     repositoryService.deleteDeployment(deployment.getId());
   }
@@ -662,7 +662,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
       assertThat(found).withFailMessage("Expected to find process definition " + processDefinition);
     }
 
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionId("dummyId").processDefinitionIdIn(ids).count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionId("dummyId").processDefinitionIdIn(ids).count()).isZero();
   }
 
   @Test
@@ -919,7 +919,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
         .deploymentId(deploymentId1)
         .notStartableInTasklist()
         .count();
-    assertThat(processes).isEqualTo(0);
+    assertThat(processes).isZero();
 
     // deploy second version
     // startable super process

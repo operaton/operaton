@@ -238,7 +238,7 @@ public class HistoricProcessInstanceStateTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricProcessInstanceStateTest.testWithCallActivity.bpmn"})
   public void testWithCallActivity() {
     processEngineRule.getRuntimeService().startProcessInstanceByKey("Main_Process");
-    assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list().size()).isEqualTo(0);
+    assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list().size()).isZero();
 
     HistoricProcessInstance entity1 = processEngineRule.getHistoryService().createHistoricProcessInstanceQuery()
         .processDefinitionKey("Main_Process").singleResult();

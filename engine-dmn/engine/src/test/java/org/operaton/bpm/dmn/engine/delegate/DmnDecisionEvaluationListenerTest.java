@@ -116,7 +116,7 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
     DmnDecisionTableEvaluationEvent decisionResult = (DmnDecisionTableEvaluationEvent) listener.getEvaluationEvent().getDecisionResult();
     assertThat(decisionResult).isNotNull();
     assertThat(decisionResult.getDecisionTable().getKey()).isEqualTo("Dish");
-    assertThat(decisionResult.getMatchingRules().size()).isEqualTo(0);
+    assertThat(decisionResult.getMatchingRules().size()).isZero();
     assertThat(decisionResult.getExecutedDecisionElements()).isEqualTo(12L);
 
   }

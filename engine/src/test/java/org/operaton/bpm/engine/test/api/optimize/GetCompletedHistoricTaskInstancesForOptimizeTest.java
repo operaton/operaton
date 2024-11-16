@@ -203,7 +203,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricTaskInstances(now, now, 10);
 
     // then
-    assertThat(completedHistoricTaskInstances.size()).isEqualTo(0);
+    assertThat(completedHistoricTaskInstances.size()).isZero();
   }
 
   @Test

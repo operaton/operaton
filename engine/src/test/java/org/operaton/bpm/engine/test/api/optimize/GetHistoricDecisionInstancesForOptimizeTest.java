@@ -264,7 +264,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       optimizeService.getHistoricDecisionInstances(now, now, 10);
 
     // then
-    assertThat(decisionInstances.size()).isEqualTo(0);
+    assertThat(decisionInstances.size()).isZero();
   }
 
   @Test

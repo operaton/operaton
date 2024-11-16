@@ -657,7 +657,7 @@ public class HistoricJobLogQueryTest {
         .orderByJobPriority()
         .asc()
         .list();
-    assertThat(jobLogs.size()).isEqualTo(0);
+    assertThat(jobLogs.size()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})

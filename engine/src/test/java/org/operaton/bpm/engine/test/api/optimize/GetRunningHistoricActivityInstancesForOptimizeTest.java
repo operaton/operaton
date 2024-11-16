@@ -192,7 +192,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
       optimizeService.getRunningHistoricActivityInstances(now, now, 10);
 
     // then
-    assertThat(runningHistoricActivityInstances.size()).isEqualTo(0);
+    assertThat(runningHistoricActivityInstances.size()).isZero();
   }
 
   @Test
@@ -278,7 +278,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
       optimizeService.getRunningHistoricActivityInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricActivityInstances.size()).isEqualTo(0);
+    assertThat(runningHistoricActivityInstances.size()).isZero();
   }
 
   private Date pastDate() {

@@ -110,7 +110,7 @@ public abstract class JsonTreeJsonPathScriptTest extends ScriptTest {
   public void shouldGetFilteredResult() {
     SpinList<SpinJsonNode> nodeList = script.getVariable("emptyList");
 
-    assertThat(nodeList.size()).isEqualTo(0);
+    assertThat(nodeList.size()).isZero();
 
     SpinList<SpinJsonNode> nodeList2 = script.getVariable("nodeList");
 

@@ -156,7 +156,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     // then
     assertEquals(0, exceptions.size());
 
-    assertThat(managementService.createJobQuery().withException().list().size()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().withException().list().size()).isZero();
 
     processIds.remove("aFake");
     assertHistoricTaskDeletionPresent(processIds, TESTING_INSTANCE_DELETE, testRule);
@@ -330,7 +330,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   protected void assertProcessInstancesAreDeleted() {
-    assertThat(runtimeService.createProcessInstanceQuery().list().size()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().list().size()).isZero();
   }
 
   @Test
@@ -355,7 +355,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     executeBatchJobs(batch);
 
     // then
-    assertThat(IncrementCounterListener.counter).isEqualTo(0);
+    assertThat(IncrementCounterListener.counter).isZero();
   }
 
   @Test

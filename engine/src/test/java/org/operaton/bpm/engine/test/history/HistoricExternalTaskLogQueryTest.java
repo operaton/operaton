@@ -864,7 +864,7 @@ public class HistoricExternalTaskLogQueryTest {
       .list();
 
     // then
-    assertThat(externalTaskLogs.size()).isEqualTo(0);
+    assertThat(externalTaskLogs.size()).isZero();
   }
 
 

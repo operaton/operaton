@@ -665,7 +665,7 @@ public class SetVariablesBatchTest {
         .operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE)
         .list();
 
-    assertThat(logs.size()).isEqualTo(0);
+    assertThat(logs.size()).isZero();
   }
 
   @Test

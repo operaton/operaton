@@ -402,7 +402,7 @@ public class DeleteProcessDefinitionTest {
       .delete();
 
     // then
-    assertThat(IncrementCounterListener.counter).isEqualTo(0);
+    assertThat(IncrementCounterListener.counter).isZero();
   }
 
   @Test
@@ -425,7 +425,7 @@ public class DeleteProcessDefinitionTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
     // then
-    assertThat(processDefinitions.size()).isEqualTo(0);
+    assertThat(processDefinitions.size()).isZero();
   }
 
   @Test
@@ -541,7 +541,7 @@ public class DeleteProcessDefinitionTest {
       .delete();
 
     // then
-    assertThat(IncrementCounterListener.counter).isEqualTo(0);
+    assertThat(IncrementCounterListener.counter).isZero();
   }
 
   @Test
@@ -565,7 +565,7 @@ public class DeleteProcessDefinitionTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
     // then
-    assertThat(processDefinitions.size()).isEqualTo(0);
+    assertThat(processDefinitions.size()).isZero();
   }
 
   private void deployTwoProcessDefinitions() {

@@ -656,7 +656,7 @@ public class TransientVariableTest {
           .createVariableInstanceQuery()
           .count();
 
-    assertThat(numVariables).isEqualTo(0);
+    assertThat(numVariables).isZero();
   }
 
   @Test

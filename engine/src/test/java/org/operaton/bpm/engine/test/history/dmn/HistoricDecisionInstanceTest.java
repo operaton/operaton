@@ -358,7 +358,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicDecisionInstance.getDecisionDefinitionName()).isEqualTo("Decision with Literal Expression");
     assertThat(historicDecisionInstance.getEvaluationTime()).isNotNull();
 
-    assertThat(historicDecisionInstance.getInputs().size()).isEqualTo(0);
+    assertThat(historicDecisionInstance.getInputs().size()).isZero();
 
     List<HistoricDecisionOutputInstance> outputs = historicDecisionInstance.getOutputs();
     assertThat(outputs.size()).isEqualTo(1);

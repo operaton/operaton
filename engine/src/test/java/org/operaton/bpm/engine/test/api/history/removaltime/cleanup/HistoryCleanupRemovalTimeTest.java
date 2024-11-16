@@ -293,7 +293,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isEqualTo(0);
+    assertThat(historicDecisionInstances.size()).isZero();
   }
 
   @Test
@@ -334,7 +334,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isEqualTo(0);
+    assertThat(historicDecisionInstances.size()).isZero();
   }
 
   @Test
@@ -405,7 +405,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isEqualTo(0);
+    assertThat(historicDecisionInstances.size()).isZero();
   }
 
   @Test
@@ -445,7 +445,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isEqualTo(0);
+    assertThat(historicDecisionInstances.size()).isZero();
   }
 
   @Test
@@ -481,7 +481,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicProcessInstances.size()).isEqualTo(0);
+    assertThat(historicProcessInstances.size()).isZero();
   }
 
   @Test
@@ -554,7 +554,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicProcessInstances.size()).isEqualTo(0);
+    assertThat(historicProcessInstances.size()).isZero();
   }
 
   @Test
@@ -613,7 +613,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicActivityInstances = historyService.createHistoricActivityInstanceQuery().list();
 
     // then
-    assertThat(historicActivityInstances.size()).isEqualTo(0);
+    assertThat(historicActivityInstances.size()).isZero();
   }
 
   @Test
@@ -644,7 +644,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicTaskInstances = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertThat(historicTaskInstances.size()).isEqualTo(0);
+    assertThat(historicTaskInstances.size()).isZero();
   }
 
   @Test
@@ -685,7 +685,7 @@ public class HistoryCleanupRemovalTimeTest {
         .list();
 
     // then
-    assertThat(authorizations.size()).isEqualTo(0);
+    assertThat(authorizations.size()).isZero();
 
     // clear
     clearAuthorization();
@@ -721,7 +721,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
 
     // then
-    assertThat(historicVariableInstances.size()).isEqualTo(0);
+    assertThat(historicVariableInstances.size()).isZero();
   }
 
   @Test
@@ -760,7 +760,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicDetails.size()).isEqualTo(0);
+    assertThat(historicDetails.size()).isZero();
   }
 
   @Test
@@ -799,7 +799,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicIncidents = historyService.createHistoricIncidentQuery().list();
 
     // then
-    assertThat(historicIncidents.size()).isEqualTo(0);
+    assertThat(historicIncidents.size()).isZero();
   }
 
   @Test
@@ -841,7 +841,7 @@ public class HistoryCleanupRemovalTimeTest {
     externalTaskLogs = historyService.createHistoricExternalTaskLogQuery().list();
 
     // then
-    assertThat(externalTaskLogs.size()).isEqualTo(0);
+    assertThat(externalTaskLogs.size()).isZero();
   }
 
   @Test
@@ -885,7 +885,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(jobLogs.size()).isEqualTo(0);
+    assertThat(jobLogs.size()).isZero();
   }
 
   @Test
@@ -966,7 +966,7 @@ public class HistoryCleanupRemovalTimeTest {
     userOperationLogs = historyService.createUserOperationLogQuery().list();
 
     // then
-    assertThat(userOperationLogs.size()).isEqualTo(0);
+    assertThat(userOperationLogs.size()).isZero();
   }
 
   @Test
@@ -999,7 +999,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicIdentityLinkLogs = historyService.createHistoricIdentityLinkLogQuery().list();
 
     // then
-    assertThat(historicIdentityLinkLogs.size()).isEqualTo(0);
+    assertThat(historicIdentityLinkLogs.size()).isZero();
   }
 
   @Test
@@ -1037,7 +1037,7 @@ public class HistoryCleanupRemovalTimeTest {
     comments = taskService.getProcessInstanceComments(processInstanceId);
 
     // then
-    assertThat(comments.size()).isEqualTo(0);
+    assertThat(comments.size()).isZero();
   }
 
   @Test
@@ -1075,7 +1075,7 @@ public class HistoryCleanupRemovalTimeTest {
     attachments = taskService.getProcessInstanceAttachments(processInstanceId);
 
     // then
-    assertThat(attachments.size()).isEqualTo(0);
+    assertThat(attachments.size()).isZero();
   }
 
   @Test
@@ -1173,8 +1173,8 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicBatches.size()).isEqualTo(0);
-    assertThat(historicJobLogs.size()).isEqualTo(0);
+    assertThat(historicBatches.size()).isZero();
+    assertThat(historicJobLogs.size()).isZero();
   }
 
   @Test

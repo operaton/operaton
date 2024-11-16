@@ -79,7 +79,7 @@ public class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEv
     startProcessAndCompleteUserTask();
 
     assertThat(countCustomHistoryEventHandler).isEqualTo(2);
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(0);
+    assertThat(historyService.createHistoricDetailQuery().count()).isZero();
   }
 
   @Test

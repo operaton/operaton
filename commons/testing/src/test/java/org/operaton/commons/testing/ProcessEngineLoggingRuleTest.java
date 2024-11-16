@@ -136,7 +136,7 @@ public class ProcessEngineLoggingRuleTest {
     assertThat(expectedException.getMessage()).contains(ProcessEngineLoggingRule.NOT_WATCHING_ERROR);
     testLogLevel(persistenceLog, Level.DEBUG);
     testLogLevel(processAppLogger, Level.INFO);
-    assertThat(containerLog.size()).isEqualTo(0);
+    assertThat(containerLog.size()).isZero();
   }
 
   @Test

@@ -557,7 +557,7 @@ public class CorrelateAllMessageBatchTest {
       .operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE)
       .list();
 
-    assertThat(logs.size()).isEqualTo(0);
+    assertThat(logs.size()).isZero();
 
     // clear
     managementService.deleteBatch(batch.getId(), true);

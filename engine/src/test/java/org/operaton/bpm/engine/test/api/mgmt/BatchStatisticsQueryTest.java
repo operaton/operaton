@@ -693,7 +693,7 @@ public class BatchStatisticsQueryTest {
     assertThat(batchStatistics).hasSize(1);
     assertThat(query1.count()).isEqualTo(1);
 
-    assertThat(query2.count()).isEqualTo(0);
+    assertThat(query2.count()).isZero();
     assertThat(query2.list()).hasSize(0);
   }
 
@@ -711,7 +711,7 @@ public class BatchStatisticsQueryTest {
     BatchStatisticsQuery query2 = managementService.createBatchStatisticsQuery().startedBefore(oneMinLater);
 
     // then
-    assertThat(query1.count()).isEqualTo(0);
+    assertThat(query1.count()).isZero();
     assertThat(query1.list()).hasSize(0);
 
     final List<BatchStatistics> batchStatistics = query2.list();
@@ -748,7 +748,7 @@ public class BatchStatisticsQueryTest {
     assertThat(query2.count()).isEqualTo(1);
 
     assertThat(query3.list()).hasSize(0);
-    assertThat(query3.count()).isEqualTo(0);
+    assertThat(query3.count()).isZero();
   }
 
   protected void deleteMigrationJobs(Batch batch) {

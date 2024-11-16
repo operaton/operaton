@@ -297,7 +297,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
   }
 
   protected void assertNoOutputValue(DmnDecisionRuleResult decisionRuleResult) {
-    assertThat(decisionRuleResult.size()).isEqualTo(0);
+    assertThat(decisionRuleResult.size()).isZero();
 
     String value = (String) decisionRuleResult.get("firstOutput");
     assertThat(value).isNull();

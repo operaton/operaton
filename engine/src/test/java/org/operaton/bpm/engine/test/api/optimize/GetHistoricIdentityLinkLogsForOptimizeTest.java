@@ -297,7 +297,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       optimizeService.getHistoricIdentityLinkLogs(now, now, 10);
 
     // then
-    assertThat(identityLinkLogs.size()).isEqualTo(0);
+    assertThat(identityLinkLogs.size()).isZero();
   }
 
   @Test

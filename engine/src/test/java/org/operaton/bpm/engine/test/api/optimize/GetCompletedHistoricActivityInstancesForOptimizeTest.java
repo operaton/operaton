@@ -195,7 +195,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricActivityInstances(now, now, 10);
 
     // then
-    assertThat(completedHistoricActivityInstances.size()).isEqualTo(0);
+    assertThat(completedHistoricActivityInstances.size()).isZero();
   }
 
   @Test

@@ -552,7 +552,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(now, now, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(0);
+    assertThat(userOperationsLog.size()).isZero();
   }
 
   @Test
@@ -611,7 +611,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(0);
+    assertThat(userOperationsLog.size()).isZero();
   }
 
   private void createLogEntriesThatShouldNotBeReturned(String processInstanceId) {

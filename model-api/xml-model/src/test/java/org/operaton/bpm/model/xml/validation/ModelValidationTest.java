@@ -60,7 +60,7 @@ class ModelValidationTest {
 
     assertThat(results).isNotNull();
     assertThat(results.hasErrors()).isFalse();
-    assertThat(results.getErrorCount()).isEqualTo(0);
+    assertThat(results.getErrorCount()).isZero();
     assertThat(results.getWarinigCount()).isEqualTo(7);
   }
 
@@ -73,7 +73,7 @@ class ModelValidationTest {
     assertThat(results).isNotNull();
     assertThat(results.hasErrors()).isTrue();
     assertThat(results.getErrorCount()).isEqualTo(1);
-    assertThat(results.getWarinigCount()).isEqualTo(0);
+    assertThat(results.getWarinigCount()).isZero();
   }
 
   @Test

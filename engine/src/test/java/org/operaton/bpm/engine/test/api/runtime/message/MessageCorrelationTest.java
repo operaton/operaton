@@ -1731,7 +1731,7 @@ public class MessageCorrelationTest {
           .createHistoricVariableInstanceQuery()
           .count();
 
-    assertThat(numHistoricVariables).isEqualTo(0);
+    assertThat(numHistoricVariables).isZero();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.waitForMessageProcess.bpmn20.xml",

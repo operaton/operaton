@@ -286,7 +286,7 @@ public class ProcessInstanceQueryTest {
 
     // then
     assertThat(query.count()).isEqualTo(0l);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.list().size()).isZero();
   }
 
   @Test

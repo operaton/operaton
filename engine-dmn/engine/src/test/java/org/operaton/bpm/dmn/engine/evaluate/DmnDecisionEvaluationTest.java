@@ -157,7 +157,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
       .asVariableContext());
 
     List<Map<String, Object>> resultList = results.getResultList();
-    assertThat(resultList.size()).isEqualTo(0);
+    assertThat(resultList.size()).isZero();
 
   }
 

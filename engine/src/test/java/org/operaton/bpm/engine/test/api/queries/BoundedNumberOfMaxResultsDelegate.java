@@ -33,7 +33,7 @@ public class BoundedNumberOfMaxResultsDelegate implements JavaDelegate {
         .createProcessInstanceQuery()
         .list();
 
-    assertThat(processInstances.size()).isEqualTo(0);
+    assertThat(processInstances.size()).isZero();
   }
 
 }

@@ -404,7 +404,7 @@ public class TopicSubscriptionIT {
       assertThat(task.getAllVariables().size()).isEqualTo(1);
       assertThat((String) task.getVariable(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
     } else {
-      assertThat(task.getAllVariables().size()).isEqualTo(0);
+      assertThat(task.getAllVariables().size()).isZero();
     }
   }
 
@@ -424,10 +424,10 @@ public class TopicSubscriptionIT {
     clientRule.waitForFetchAndLockUntil(() -> handler.getHandledTasks().size() == 2);
 
     ExternalTask taskOne = handler.getHandledTasks().get(0);
-    assertThat(taskOne.getAllVariables().size()).isEqualTo(0);
+    assertThat(taskOne.getAllVariables().size()).isZero();
 
     ExternalTask taskTwo = handler.getHandledTasks().get(1);
-    assertThat(taskTwo.getAllVariables().size()).isEqualTo(0);
+    assertThat(taskTwo.getAllVariables().size()).isZero();
   }
 
   @Test
@@ -446,10 +446,10 @@ public class TopicSubscriptionIT {
     clientRule.waitForFetchAndLockUntil(() -> handler.getHandledTasks().size() == 2);
 
     ExternalTask taskOne = handler.getHandledTasks().get(0);
-    assertThat(taskOne.getAllVariables().size()).isEqualTo(0);
+    assertThat(taskOne.getAllVariables().size()).isZero();
 
     ExternalTask taskTwo = handler.getHandledTasks().get(0);
-    assertThat(taskTwo.getAllVariables().size()).isEqualTo(0);
+    assertThat(taskTwo.getAllVariables().size()).isZero();
   }
 
   @Test
@@ -637,7 +637,7 @@ public class TopicSubscriptionIT {
     // then
     clientRule.waitForFetchAndLockUntil(() -> handler.getHandledTasks().isEmpty());
 
-    assertThat(handler.getHandledTasks().size()).isEqualTo(0);
+    assertThat(handler.getHandledTasks().size()).isZero();
   }
 
   @Test
@@ -739,7 +739,7 @@ public class TopicSubscriptionIT {
     // then
     clientRule.waitForFetchAndLockUntil(() -> handler.getHandledTasks().isEmpty());
 
-    assertThat(handler.getHandledTasks().size()).isEqualTo(0);
+    assertThat(handler.getHandledTasks().size()).isZero();
   }
 
 }

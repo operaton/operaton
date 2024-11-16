@@ -235,7 +235,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
 
     assertThat(
         historyService.createHistoricDecisionInstanceStatisticsQuery(
-            NON_EXISTING).list().size()).isEqualTo(0);
+            NON_EXISTING).list().size()).isZero();
 
   }
 

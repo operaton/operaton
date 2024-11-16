@@ -135,7 +135,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(0);
+    assertThat(tenantIdProvider.parameters.size()).isZero();
   }
 
 
@@ -188,7 +188,7 @@ public class TenantIdProviderTest {
     assertNotNull(procInstance);
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(0);
+    assertThat(tenantIdProvider.parameters.size()).isZero();
   }
 
   @Test
@@ -228,7 +228,7 @@ public class TenantIdProviderTest {
 
     //then provider should not be called
     assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(0);
+    assertThat(tenantIdProvider.parameters.size()).isZero();
   }
 
   @Test
@@ -332,7 +332,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey("superProcess");
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(0);
+    assertThat(tenantIdProvider.parameters.size()).isZero();
   }
 
   @Test
@@ -485,7 +485,7 @@ public class TenantIdProviderTest {
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.parameters.size()).isEqualTo(0);
+    assertThat(tenantIdProvider.parameters.size()).isZero();
   }
 
   @Test
@@ -579,7 +579,7 @@ public class TenantIdProviderTest {
     engineRule.getDecisionService().evaluateDecisionTableByKey(DECISION_DEFINITION_KEY).variables(createVariables()).evaluate();
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.dmnParameters.size()).isEqualTo(0);
+    assertThat(tenantIdProvider.dmnParameters.size()).isZero();
   }
 
   @Test
@@ -677,7 +677,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, createVariables());
 
     // then the tenant id providers are not invoked
-    assertThat(tenantIdProvider.dmnParameters.size()).isEqualTo(0);
+    assertThat(tenantIdProvider.dmnParameters.size()).isZero();
   }
 
   @Test
@@ -792,7 +792,7 @@ public class TenantIdProviderTest {
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.caseParameters.size()).isEqualTo(0);
+    assertThat(tenantIdProvider.caseParameters.size()).isZero();
   }
 
   @Test
@@ -894,7 +894,7 @@ public class TenantIdProviderTest {
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.caseParameters.size()).isEqualTo(0);
+    assertThat(tenantIdProvider.caseParameters.size()).isZero();
   }
 
   @Test

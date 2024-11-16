@@ -153,7 +153,7 @@ public class GetOpenHistoricIncidentsForOptimizeTest {
       optimizeService.getOpenHistoricIncidents(now, now, 10);
 
     // then
-    assertThat(openIncidents.size()).isEqualTo(0);
+    assertThat(openIncidents.size()).isZero();
   }
 
   @Test

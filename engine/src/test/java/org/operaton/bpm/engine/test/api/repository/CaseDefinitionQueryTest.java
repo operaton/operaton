@@ -123,7 +123,7 @@ public class CaseDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(repositoryService.createCaseDefinitionQuery()
         .caseDefinitionIdIn(ids.toArray(new String[ids.size()]))
         .caseDefinitionId("nonExistent")
-        .count()).isEqualTo(0);
+        .count()).isZero();
   }
 
   @Test

@@ -159,7 +159,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
       optimizeService.getCompletedHistoricIncidents(now, now, 10);
 
     // then
-    assertThat(completedIncidents.size()).isEqualTo(0);
+    assertThat(completedIncidents.size()).isZero();
   }
 
   @Test

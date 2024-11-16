@@ -189,7 +189,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(now, now, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(0);
+    assertThat(runningHistoricTaskInstances.size()).isZero();
   }
 
   @Test

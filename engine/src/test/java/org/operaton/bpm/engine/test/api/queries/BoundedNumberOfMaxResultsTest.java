@@ -124,7 +124,7 @@ public class BoundedNumberOfMaxResultsTest {
     List<ProcessInstance> processInstances = processInstanceQuery.list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(0);
+    assertThat(processInstances.size()).isZero();
   }
 
   @Test
@@ -139,7 +139,7 @@ public class BoundedNumberOfMaxResultsTest {
     List<ProcessInstance> processInstances = processInstanceQuery.list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(0);
+    assertThat(processInstances.size()).isZero();
   }
 
   @Test

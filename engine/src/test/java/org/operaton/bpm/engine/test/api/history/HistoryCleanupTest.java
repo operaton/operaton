@@ -1401,7 +1401,7 @@ public class HistoryCleanupTest {
     Job cleanupJob = historyService.cleanUpHistoryAsync(true);
 
     //then
-    assertThat(cleanupJob.getRetries()).isEqualTo(0);
+    assertThat(cleanupJob.getRetries()).isZero();
   }
 
 

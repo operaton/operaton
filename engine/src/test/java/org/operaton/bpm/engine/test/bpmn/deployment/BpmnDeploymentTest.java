@@ -117,7 +117,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     assertThatThrownBy(() -> testRule.deploy(deployment))
       .hasMessageContaining("id can be maximum 64 characters");
     // then
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Test
@@ -364,7 +364,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
         .addClasspathResource(bpmnResourceName2)
         .name("duplicateAtTheSameTime")));
     // then
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Test
@@ -474,7 +474,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
       .hasMessageContaining("ENGINE-01009 Error while parsing process")
       .withFailMessage("Expected exception when deploying process with invalid expression.");
     // then
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml"})

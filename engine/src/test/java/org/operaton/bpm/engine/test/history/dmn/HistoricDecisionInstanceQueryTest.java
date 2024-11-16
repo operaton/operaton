@@ -620,7 +620,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
         .sql("SELECT * FROM " + tablePrefix + "ACT_HI_DECINST H WHERE H.DEC_DEF_KEY_ = #{decisionDefinitionKey}");
 
     assertThat(nativeQueryWithParameter.parameter("decisionDefinitionKey", DECISION_DEFINITION_KEY).list().size()).isEqualTo(1);
-    assertThat(nativeQueryWithParameter.parameter("decisionDefinitionKey", "other decision").list().size()).isEqualTo(0);
+    assertThat(nativeQueryWithParameter.parameter("decisionDefinitionKey", "other decision").list().size()).isZero();
   }
 
   @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })

@@ -441,7 +441,7 @@ public class MigrationUserTaskTest {
 
     // then
     testHelper.assertTaskListenerTimerJobCreated("userTask2");
-    assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isEqualTo(0);
+    assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isZero();
     assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(1);
 
     // and the task listener was able to access the bpmn model instance and set a variable
@@ -468,7 +468,7 @@ public class MigrationUserTaskTest {
     // then
     testHelper.assertTaskListenerTimerJobRemoved("userTask2");
     assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isEqualTo(1);
-    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isEqualTo(0);
+    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isZero();
   }
 
   @Test

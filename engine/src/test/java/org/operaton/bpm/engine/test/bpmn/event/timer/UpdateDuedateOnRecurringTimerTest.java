@@ -135,7 +135,7 @@ public class UpdateDuedateOnRecurringTimerTest {
 
     // then
     assertThat(ClockUtil.getCurrentTime()).isAfter(job3.getDuedate());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    assertThat(managementService.createJobQuery().count()).isZero();
     // no duplicates
     assertThat(new HashSet<String>(Arrays.asList(job1.getId(), job2.getId(), job3.getId())).size()).isEqualTo(3);
     // job1 is due after 45 minutes (30 + 15 offset)

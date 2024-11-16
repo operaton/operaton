@@ -800,7 +800,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     assertThat(jobQuery.count()).isEqualTo(1);
 
     moveByHours(2);  // execute second job of the new cycle => no more jobs
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
   }
 
   @Test
@@ -837,7 +837,7 @@ public class BoundaryTimerNonInterruptingEventTest {
     assertThat(jobQuery.count()).isEqualTo(1);
 
     moveByHours(1); // execute second job of the new cycle => no more jobs
-    assertThat(jobQuery.count()).isEqualTo(0);
+    assertThat(jobQuery.count()).isZero();
   }
 
   @Test

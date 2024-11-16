@@ -184,7 +184,7 @@ public class GetCompletedHistoricProcessInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricProcessInstances(now, now, 10);
 
     // then
-    assertThat(completedHistoricProcessInstances.size()).isEqualTo(0);
+    assertThat(completedHistoricProcessInstances.size()).isZero();
   }
 
   @Test

@@ -244,7 +244,7 @@ public class DmnTransformTest extends DmnEngineTest {
     DmnDecision buyElectronicDecision = getDecision(buyComputerRequiredDecision, "buyElectronic");
     assertThat(buyElectronicDecision).isNotNull();
 
-    assertThat(buyElectronicDecision.getRequiredDecisions().size()).isEqualTo(0);
+    assertThat(buyElectronicDecision.getRequiredDecisions().size()).isZero();
   }
 
   @Test
@@ -274,7 +274,7 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(buyElectronicDecision).isNotNull();
 
     Collection<DmnDecision> buyElectronicRequiredDecisions = buyElectronicDecision.getRequiredDecisions();
-    assertThat(buyElectronicRequiredDecisions.size()).isEqualTo(0);
+    assertThat(buyElectronicRequiredDecisions.size()).isZero();
   }
 
   @Test

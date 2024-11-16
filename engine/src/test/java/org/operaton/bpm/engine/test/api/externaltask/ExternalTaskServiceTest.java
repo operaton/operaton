@@ -220,9 +220,9 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     assertThat(result.get(0).getPriority()).isEqualTo(7);
     assertThat(result.get(1).getPriority()).isEqualTo(7);
-    assertThat(result.get(2).getPriority()).isEqualTo(0);
-    assertThat(result.get(3).getPriority()).isEqualTo(0);
-    assertThat(result.get(4).getPriority()).isEqualTo(0);
+    assertThat(result.get(2).getPriority()).isZero();
+    assertThat(result.get(3).getPriority()).isZero();
+    assertThat(result.get(4).getPriority()).isZero();
 
 
     // given the same priority, DESC date is applied
@@ -264,9 +264,9 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertThat(result.get(0).getPriority()).isEqualTo(7);
     assertThat(result.get(1).getPriority()).isEqualTo(7);
 
-    assertThat(result.get(2).getPriority()).isEqualTo(0);
-    assertThat(result.get(3).getPriority()).isEqualTo(0);
-    assertThat(result.get(4).getPriority()).isEqualTo(0);
+    assertThat(result.get(2).getPriority()).isZero();
+    assertThat(result.get(3).getPriority()).isZero();
+    assertThat(result.get(4).getPriority()).isZero();
 
 
     // given the same priority, ASC date is applied

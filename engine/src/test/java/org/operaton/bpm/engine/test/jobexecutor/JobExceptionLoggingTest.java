@@ -92,7 +92,7 @@ public class JobExceptionLoggingTest {
 
     // then
     assertThat(jobLog.size()).isEqualTo(1);
-    assertThat(ctxLog.size()).isEqualTo(0);
+    assertThat(ctxLog.size()).isZero();
   }
 
   @Test
@@ -146,8 +146,8 @@ public class JobExceptionLoggingTest {
     assertThat(expectedException).isNotNull();
     assertThat(expectedException.getMessage()).contains("Expected Exception");
     // ...but not logged
-    assertThat(jobLog.size()).isEqualTo(0);
-    assertThat(ctxLog.size()).isEqualTo(0);
+    assertThat(jobLog.size()).isZero();
+    assertThat(ctxLog.size()).isZero();
   }
 
   @Test
@@ -176,7 +176,7 @@ public class JobExceptionLoggingTest {
     assertThat(expectedException).isNotNull();
     assertThat(expectedException.getMessage()).contains("Expected Exception");
     // ...but not logged
-    assertThat(jobLog.size()).isEqualTo(0);
-    assertThat(ctxLog.size()).isEqualTo(0);
+    assertThat(jobLog.size()).isZero();
+    assertThat(ctxLog.size()).isZero();
   }
 }

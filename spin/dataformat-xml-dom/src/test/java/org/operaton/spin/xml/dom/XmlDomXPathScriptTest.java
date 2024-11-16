@@ -330,7 +330,7 @@ public abstract class XmlDomXPathScriptTest extends ScriptTest {
   public void canQueryNonExistingNumber() {
     SpinXPathQuery query = script.getVariable("query");
     Double count = query.number();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
   }
 
   @Test

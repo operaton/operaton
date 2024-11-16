@@ -298,7 +298,7 @@ public class DmnDecisionResultTest extends DmnEngineTest {
   }
 
   protected void assertNoOutputValue(DmnDecisionResultEntries result) {
-    assertThat(result.size()).isEqualTo(0);
+    assertThat(result.size()).isZero();
 
     String value = (String) result.get("firstOutput");
     assertThat(value).isNull();

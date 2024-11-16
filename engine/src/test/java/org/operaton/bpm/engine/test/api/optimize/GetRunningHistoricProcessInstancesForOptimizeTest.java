@@ -188,7 +188,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(now, now, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(0);
+    assertThat(runningHistoricProcessInstances.size()).isZero();
   }
 
   @Test

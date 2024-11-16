@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.xml.testmodel.instance;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,7 +24,6 @@ import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.ModelImpl;
 import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.operaton.bpm.model.xml.instance.ModelElementInstanceTest;
 import org.operaton.bpm.model.xml.testmodel.Gender;
 import org.operaton.bpm.model.xml.testmodel.TestModelConstants;
 import org.operaton.bpm.model.xml.testmodel.TestModelTest;
@@ -128,7 +126,7 @@ public class AlternativeNsTest extends TestModelTest {
     Bird plucky = modelInstance.getModelElementById("plucky");
     assertThat(plucky).isNotNull();
     Boolean extendedWings = plucky.canHazExtendedWings();
-    assertThat(extendedWings).isEqualTo(false);
+    assertThat(extendedWings).isFalse();
   }
 
   @ParameterizedTest
@@ -153,7 +151,7 @@ public class AlternativeNsTest extends TestModelTest {
     assertThat(plucky).isNotNull();
     //validate old value
     Boolean extendedWings = plucky.canHazExtendedWings();
-    assertThat(extendedWings).isEqualTo(false);
+    assertThat(extendedWings).isFalse();
     //change it
     plucky.setCanHazExtendedWings(true);
     String attributeValueNs = plucky.getAttributeValueNs(MECHANICAL_NS, "canHazExtendedWings");

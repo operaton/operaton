@@ -43,7 +43,7 @@ public class ClientConfigurationTest extends ParsePropertiesHelper {
     assertThat(properties.getBaseUrl()).isEqualTo("base-url");
     assertThat(properties.getWorkerId()).isEqualTo("worker-id");
     assertThat(properties.getMaxTasks()).isEqualTo(111);
-    assertThat(properties.getUsePriority()).isEqualTo(false);
+    assertThat(properties.getUsePriority()).isFalse();
     assertThat(properties.getDefaultSerializationFormat()).isEqualTo("serialization-format");
     assertThat(properties.getDateFormat()).isEqualTo("date-format");
     assertThat(properties.getAsyncResponseTimeout()).isEqualTo(555);

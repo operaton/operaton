@@ -16,29 +16,23 @@
  */
 package org.operaton.bpm.engine.test.standalone.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.assertj.core.api.Assertions;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.identity.PasswordPolicy;
 import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.PasswordPolicyRule;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.identity.DefaultPasswordPolicyImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyDigitRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyLengthRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyLowerCaseRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicySpecialCharacterRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyUpperCaseRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyUserDataRuleImpl;
+import org.operaton.bpm.engine.impl.identity.*;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Miklas Boskamp
@@ -261,6 +255,6 @@ public class DefaultPasswordPolicyTest {
   private void checkThatPasswordWasInvalid(PasswordPolicyResult result) {
     assertThat(result.getViolatedRules().size()).isEqualTo(1);
     assertThat(result.getFulfilledRules().size()).isEqualTo(5);
-    assertThat(result.isValid()).isEqualTo(false);
+    assertThat(result.isValid()).isFalse();
   }
 }

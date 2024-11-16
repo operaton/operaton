@@ -16,104 +16,19 @@
  */
 package org.operaton.bpm.model.bpmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.BUSINESS_RULE_TASK;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.CALL_ACTIVITY_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.END_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.PROCESS_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SCRIPT_TASK_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEND_TASK_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEQUENCE_FLOW_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SERVICE_TASK_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_CLASS_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_CLASS_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_DELEGATE_EXPRESSION_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_DELEGATE_EXPRESSION_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_DUE_DATE_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_DUE_DATE_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_EXECUTION_EVENT_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_EXECUTION_EVENT_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_EXPRESSION_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_EXPRESSION_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_FLOW_NODE_JOB_PRIORITY;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_GROUPS_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_GROUPS_LIST_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_GROUPS_LIST_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_GROUPS_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_HISTORY_TIME_TO_LIVE;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_PRIORITY_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_PRIORITY_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_PROCESS_JOB_PRIORITY;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_PROCESS_TASK_PRIORITY;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_SERVICE_TASK_PRIORITY;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_STRING_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_STRING_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_TASK_EVENT_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_TASK_EVENT_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_TYPE_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_TYPE_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_USERS_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_USERS_LIST_API;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_USERS_LIST_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_USERS_XML;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_NS;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_ERROR_CODE_VARIABLE;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_ERROR_MESSAGE_VARIABLE;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.operaton.bpm.model.bpmn.instance.BaseElement;
-import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstance;
-import org.operaton.bpm.model.bpmn.instance.BusinessRuleTask;
-import org.operaton.bpm.model.bpmn.instance.CallActivity;
-import org.operaton.bpm.model.bpmn.instance.EndEvent;
 import org.operaton.bpm.model.bpmn.instance.Error;
-import org.operaton.bpm.model.bpmn.instance.ErrorEventDefinition;
-import org.operaton.bpm.model.bpmn.instance.Expression;
-import org.operaton.bpm.model.bpmn.instance.MessageEventDefinition;
-import org.operaton.bpm.model.bpmn.instance.ParallelGateway;
 import org.operaton.bpm.model.bpmn.instance.Process;
-import org.operaton.bpm.model.bpmn.instance.ScriptTask;
-import org.operaton.bpm.model.bpmn.instance.SendTask;
-import org.operaton.bpm.model.bpmn.instance.SequenceFlow;
-import org.operaton.bpm.model.bpmn.instance.ServiceTask;
-import org.operaton.bpm.model.bpmn.instance.StartEvent;
-import org.operaton.bpm.model.bpmn.instance.TimerEventDefinition;
-import org.operaton.bpm.model.bpmn.instance.UserTask;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonConnector;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonConnectorId;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonConstraint;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonEntry;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonExecutionListener;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonFailedJobRetryTimeCycle;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonField;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonFormData;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonFormField;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonFormProperty;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonIn;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputOutput;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputParameter;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonList;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonMap;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOut;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOutputParameter;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonPotentialStarter;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonProperties;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonProperty;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonScript;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonTaskListener;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonValue;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.operaton.bpm.model.bpmn.instance.*;
+import org.operaton.bpm.model.bpmn.instance.operaton.*;
+
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
 
 /**
  * @author Sebastian Menski
@@ -270,7 +185,7 @@ public class OperatonExtensionsTest {
   @ParameterizedTest(name = "Namespace: {0}")
   void testIsStartableInTasklist(String namespace, BpmnModelInstance modelInstance) {
     initOperatonExtensionsTest(namespace, modelInstance);
-    assertThat(process.isOperatonStartableInTasklist()).isEqualTo(false);
+    assertThat(process.isOperatonStartableInTasklist()).isFalse();
   }
 
   @MethodSource("parameters")

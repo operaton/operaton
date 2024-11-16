@@ -22,10 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -44,8 +41,9 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import static org.operaton.bpm.engine.authorization.Resources.*;
-import static org.operaton.bpm.engine.authorization.Permissions.*;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
 
 /**
  * @author Daniel Meyer

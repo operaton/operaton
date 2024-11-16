@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestResult;
 import org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants;
 
 /**

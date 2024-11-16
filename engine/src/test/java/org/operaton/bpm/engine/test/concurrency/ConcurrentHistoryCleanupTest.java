@@ -20,12 +20,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assume.assumeTrue;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Connection;
 import java.util.List;
 
-import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.interceptor.Command;

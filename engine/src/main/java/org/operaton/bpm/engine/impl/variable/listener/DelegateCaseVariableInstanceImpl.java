@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.variable.listener;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;

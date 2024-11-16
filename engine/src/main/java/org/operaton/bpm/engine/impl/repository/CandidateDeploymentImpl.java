@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.repository;
 
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.engine.repository.CandidateDeployment;
 import org.operaton.bpm.engine.repository.Resource;
 

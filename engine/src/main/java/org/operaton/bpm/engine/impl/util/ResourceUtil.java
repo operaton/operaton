@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.util;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;

@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.db.PersistenceSession;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
 
 /**
  * @author Tom Baeyens

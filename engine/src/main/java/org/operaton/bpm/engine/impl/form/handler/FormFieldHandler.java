@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
 import org.operaton.bpm.engine.form.FormType;
 import org.operaton.bpm.engine.impl.el.StartProcessVariableScope;
-import org.operaton.bpm.engine.impl.form.FormDataImpl;
 import org.operaton.bpm.engine.impl.form.FormFieldImpl;
 import org.operaton.bpm.engine.impl.form.type.AbstractFormFieldType;
 import org.operaton.bpm.engine.impl.form.validator.FormFieldValidationException;

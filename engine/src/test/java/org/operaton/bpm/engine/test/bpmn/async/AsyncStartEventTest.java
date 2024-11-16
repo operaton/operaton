@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;

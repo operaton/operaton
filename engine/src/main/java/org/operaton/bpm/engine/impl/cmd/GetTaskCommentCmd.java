@@ -19,10 +19,9 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.io.Serializable;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.task.Comment;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.*;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**

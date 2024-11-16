@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.jobexecutor;
 import java.util.Iterator;
 import java.util.List;
 
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;

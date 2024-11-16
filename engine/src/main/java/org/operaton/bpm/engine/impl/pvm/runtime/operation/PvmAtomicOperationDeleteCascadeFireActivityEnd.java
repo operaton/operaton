@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
 import org.operaton.bpm.engine.delegate.ExecutionListener;
-import org.operaton.bpm.engine.impl.bpmn.behavior.EventBasedGatewayActivityBehavior;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;

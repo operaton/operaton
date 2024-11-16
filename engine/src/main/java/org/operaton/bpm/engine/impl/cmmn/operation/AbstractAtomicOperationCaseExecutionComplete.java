@@ -20,8 +20,6 @@ import static org.operaton.bpm.engine.delegate.CaseExecutionListener.COMPLETE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
 import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
 
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnCompositeActivityBehavior;

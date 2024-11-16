@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.task;
 import java.util.Date;
 import java.util.List;
 
-import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 

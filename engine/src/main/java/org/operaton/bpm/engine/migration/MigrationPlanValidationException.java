@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.migration;
 
 import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.migration.MigrationPlanValidationReport;
 
 /**
  * Thrown if a migration plan is not valid, e.g. because it contains instructions that can in general not be executed.

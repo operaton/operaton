@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.Problem;

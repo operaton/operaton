@@ -18,11 +18,7 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import org.operaton.bpm.engine.impl.bpmn.parser.ConditionalEventDefinition;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
-import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 
 /**

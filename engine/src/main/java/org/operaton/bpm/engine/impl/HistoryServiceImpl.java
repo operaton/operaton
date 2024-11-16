@@ -52,8 +52,6 @@ import org.operaton.bpm.engine.history.NativeHistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.history.SetRemovalTimeSelectModeForHistoricBatchesBuilder;
 import org.operaton.bpm.engine.history.SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder;
 import org.operaton.bpm.engine.history.SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder;
-import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricBatchesBuilder;
-import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricDecisionInstancesBuilder;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.impl.batch.history.DeleteHistoricBatchCmd;
 import org.operaton.bpm.engine.impl.batch.history.HistoricBatchQueryImpl;
@@ -73,7 +71,6 @@ import org.operaton.bpm.engine.impl.dmn.cmd.DeleteHistoricDecisionInstanceByDefi
 import org.operaton.bpm.engine.impl.dmn.cmd.DeleteHistoricDecisionInstanceByInstanceIdCmd;
 import org.operaton.bpm.engine.impl.dmn.cmd.DeleteHistoricDecisionInstancesBatchCmd;
 import org.operaton.bpm.engine.impl.dmn.cmd.DeleteHistoricDecisionInstancesBulkCmd;
-import org.operaton.bpm.engine.history.SetRemovalTimeToHistoricProcessInstancesBuilder;
 import org.operaton.bpm.engine.impl.history.SetRemovalTimeToHistoricBatchesBuilderImpl;
 import org.operaton.bpm.engine.impl.history.SetRemovalTimeToHistoricDecisionInstancesBuilderImpl;
 import org.operaton.bpm.engine.impl.history.SetRemovalTimeToHistoricProcessInstancesBuilderImpl;

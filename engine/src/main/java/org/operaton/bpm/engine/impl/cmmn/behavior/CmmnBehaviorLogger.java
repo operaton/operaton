@@ -21,7 +21,6 @@ import org.operaton.bpm.engine.exception.cmmn.CaseIllegalStateTransitionExceptio
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
-import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
 
 /**

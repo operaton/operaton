@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
-import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.core.variable.VariableUtil;

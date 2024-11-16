@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
-import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.MessageCorrelationResult;

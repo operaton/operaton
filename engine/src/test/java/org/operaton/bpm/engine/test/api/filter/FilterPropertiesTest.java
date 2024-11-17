@@ -68,16 +68,16 @@ public class FilterPropertiesTest {
   public void testPropertiesInternalFromNull() {
     // given
     Filter noPropsFilter = filterService.
-        newTaskFilter("no props filter")
-        .setOwner("demo")
-        .setProperties(null);
+            newTaskFilter("no props filter")
+            .setOwner("demo")
+            .setProperties(null);
     filterService.saveFilter(noPropsFilter);
 
     // when
     FilterEntity noPropsFilterEntity = (FilterEntity) filterService
-        .createTaskFilterQuery()
-        .filterOwner("demo")
-        .singleResult();
+            .createTaskFilterQuery()
+            .filterOwner("demo")
+            .singleResult();
 
     // then
     assertThat(noPropsFilterEntity.getPropertiesInternal()).isEqualTo("{}");
@@ -132,8 +132,7 @@ public class FilterPropertiesTest {
 
     // then
     assertThat(deserialisedProperties).hasSize(1);
-    assertThat(string).isInstanceOf(String.class);
-    assertThat(string).hasToString("bar");
+    assertThat(string).isInstanceOf(String.class).hasToString("bar");
   }
 
   @Test
@@ -206,12 +205,12 @@ public class FilterPropertiesTest {
 
     // then
     assertThat(deserialisedProperties).hasSize(1);
-    assertThat(map.get("string")).isEqualTo("aStringValue");
-    assertThat(map.get("int")).isEqualTo(47);
-    assertThat(map.get("intOutOfRange")).isEqualTo(Integer.MAX_VALUE + 1L);
-    assertThat(map.get("long")).isEqualTo(Long.MAX_VALUE);
-    assertThat(map.get("double")).isEqualTo(3.14159265359D);
-    assertThat(map.get("boolean")).isEqualTo(true);
+    assertThat(map).containsEntry("string", "aStringValue")
+            .containsEntry("int", 47)
+            .containsEntry("intOutOfRange", Integer.MAX_VALUE + 1L)
+            .containsEntry("long", Long.MAX_VALUE)
+            .containsEntry("double", 3.14159265359D)
+            .containsEntry("boolean", true);
     assertThat(map.get("null")).isNull();
   }
 

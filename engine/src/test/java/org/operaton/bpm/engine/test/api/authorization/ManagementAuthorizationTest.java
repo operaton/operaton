@@ -382,7 +382,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
 
     // then
       disableAuthorization();
-      assertThat(managementService.getProperties().get(DUMMY_PROPERTY)).isEqualTo(DUMMY_VALUE);
+    assertThat(managementService.getProperties()).containsEntry(DUMMY_PROPERTY, DUMMY_VALUE);
   }
 
   @Test
@@ -395,7 +395,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
 
     // then
     disableAuthorization();
-    assertThat(managementService.getProperties().get(DUMMY_PROPERTY)).isEqualTo(DUMMY_VALUE);
+    assertThat(managementService.getProperties()).containsEntry(DUMMY_PROPERTY, DUMMY_VALUE);
   }
 
   @Test
@@ -409,7 +409,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
 
     // then
     disableAuthorization();
-    assertThat(managementService.getProperties().get(DUMMY_PROPERTY)).isEqualTo(DUMMY_VALUE);
+    assertThat(managementService.getProperties()).containsEntry(DUMMY_PROPERTY, DUMMY_VALUE);
   }
 
   @Test

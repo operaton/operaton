@@ -16,15 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Map;
-
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngines;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.diagnostics.CommandCounter;
@@ -36,11 +33,10 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TelemetryDynamicDataTest {
 

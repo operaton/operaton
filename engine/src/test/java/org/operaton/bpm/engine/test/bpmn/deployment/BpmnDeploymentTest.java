@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.engine.test.bpmn.deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.io.InputStream;
-import java.util.List;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -32,21 +30,19 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.ReadOnlyProcessDefinition;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.bpm.engine.repository.DeploymentBuilder;
-import org.operaton.bpm.engine.repository.DeploymentHandlerFactory;
-import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.repository.Resource;
+import org.operaton.bpm.engine.repository.*;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
 import org.operaton.commons.testing.WatchLogger;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -96,8 +92,8 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     // verify content
     InputStream deploymentInputStream = repositoryService.getResourceAsStream(deploymentId, bpmnResourceName);
     String contentFromDeployment = readInputStreamToString(deploymentInputStream);
-    assertThat(contentFromDeployment.length() > 0).isTrue();
-    assertThat(contentFromDeployment.contains("process id=\"emptyProcess\"")).isTrue();
+    assertThat(contentFromDeployment).isNotEmpty();
+    assertThat(contentFromDeployment).contains("process id=\"emptyProcess\"");
 
     InputStream fileInputStream = ReflectUtil.getResourceAsStream("org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml");
     String contentFromFile = readInputStreamToString(fileInputStream);
@@ -433,7 +429,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
         .getResourceAsStream(processDefinition.getDeploymentId(),
                              "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testProcessDiagramResource.jpg");
     byte[] diagramBytes = IoUtil.readInputStream(diagramStream, "diagram stream");
-    assertThat(diagramBytes.length).isEqualTo(33343);
+    assertThat(diagramBytes).hasSize(33343);
   }
 
   @Deployment(resources={

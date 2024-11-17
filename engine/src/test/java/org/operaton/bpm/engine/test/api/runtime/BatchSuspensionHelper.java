@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import org.operaton.bpm.engine.ProcessEngineProvider;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.management.JobDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 
 public class BatchSuspensionHelper extends BatchHelper {
 
-  public BatchSuspensionHelper(ProcessEngineRule engineRule) {
-    super(engineRule);
+  public BatchSuspensionHelper(ProcessEngineProvider processEngineProvider) {
+    super(processEngineProvider);
   }
 
   @Override

@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.qa.largedata.util;
 
+import org.operaton.bpm.engine.ProcessEngineProvider;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.management.JobDefinition;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.BatchHelper;
 
 public class BatchModificationJobHelper extends BatchHelper {
 
-  public BatchModificationJobHelper(ProcessEngineRule engineRule) {
-    super(engineRule);
+  public BatchModificationJobHelper(ProcessEngineProvider processEngineProvider) {
+    super(processEngineProvider);
   }
 
   @Override
   public JobDefinition getExecutionJobDefinition(Batch batch) {
-    return engineRule.getManagementService()
+    return getManagementService()
         .createJobDefinitionQuery()
         .jobDefinitionId(batch.getBatchJobDefinitionId())
         .jobType(Batch.TYPE_SET_JOB_RETRIES)

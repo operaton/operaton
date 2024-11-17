@@ -16,16 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Date;
-import java.util.List;
-
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.identity.Group;
@@ -42,11 +38,11 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.Date;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetRunningHistoricActivityInstancesForOptimizeTest {
@@ -192,7 +188,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
       optimizeService.getRunningHistoricActivityInstances(now, now, 10);
 
     // then
-    assertThat(runningHistoricActivityInstances.size()).isZero();
+    assertThat(runningHistoricActivityInstances).isEmpty();
   }
 
   @Test
@@ -278,7 +274,7 @@ public class GetRunningHistoricActivityInstancesForOptimizeTest {
       optimizeService.getRunningHistoricActivityInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricActivityInstances.size()).isZero();
+    assertThat(runningHistoricActivityInstances).isEmpty();
   }
 
   private Date pastDate() {

@@ -16,13 +16,8 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-
-import java.io.InputStream;
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
+import org.junit.Test;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
 import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
@@ -32,7 +27,12 @@ import org.operaton.bpm.model.dmn.DmnModelException;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class ParseDecisionTest extends DmnEngineTest {
 
@@ -225,7 +225,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   public void shouldNotFailIfMissingRequiredDecisionAttribute() {
     List<DmnDecision> decisions = parseDecisionsFromFile(MISSING_REQUIRED_DECISION_ATTRIBUTE_DMN);
     assertThat(decisions).hasSize(1);
-    assertThat(decisions.get(0).getRequiredDecisions().size()).isZero();
+    assertThat(decisions.get(0).getRequiredDecisions()).isEmpty();
   }
 
   @Test

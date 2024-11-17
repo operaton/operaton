@@ -106,7 +106,7 @@ public class JsonTreeJsonPathTest {
   public void shouldGetFilteredResult() {
     SpinList<SpinJsonNode> nodeList = jsonNode.jsonPath("$.customers[?(@.name == 'Klo')]").elementList();
 
-    assertThat(nodeList.size()).isZero();
+    assertThat(nodeList).isEmpty();
 
     nodeList = jsonNode.jsonPath("$.customers[?(@.name == 'Waldo')]").elementList();
 

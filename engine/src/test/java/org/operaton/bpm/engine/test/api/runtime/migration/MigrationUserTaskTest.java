@@ -16,16 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
-
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import org.joda.time.DateTime;
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerTaskListenerJobHandler;
@@ -48,11 +43,16 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
 import org.operaton.bpm.model.bpmn.instance.operaton.OperatonTaskListener;
-import org.joda.time.DateTime;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
+import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -441,7 +441,7 @@ public class MigrationUserTaskTest {
 
     // then
     testHelper.assertTaskListenerTimerJobCreated("userTask2");
-    assertThat(testHelper.snapshotBeforeMigration.getJobs().size()).isZero();
+    assertThat(testHelper.snapshotBeforeMigration.getJobs()).isEmpty();
     assertThat(testHelper.snapshotAfterMigration.getJobs()).hasSize(1);
 
     // and the task listener was able to access the bpmn model instance and set a variable
@@ -468,7 +468,7 @@ public class MigrationUserTaskTest {
     // then
     testHelper.assertTaskListenerTimerJobRemoved("userTask2");
     assertThat(testHelper.snapshotBeforeMigration.getJobs()).hasSize(1);
-    assertThat(testHelper.snapshotAfterMigration.getJobs().size()).isZero();
+    assertThat(testHelper.snapshotAfterMigration.getJobs()).isEmpty();
   }
 
   @Test

@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.engine.test.history.dmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.joda.time.DateTime;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
@@ -43,10 +41,12 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.joda.time.DateTime;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Philipp Ossler
@@ -358,7 +358,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicDecisionInstance.getDecisionDefinitionName()).isEqualTo("Decision with Literal Expression");
     assertThat(historicDecisionInstance.getEvaluationTime()).isNotNull();
 
-    assertThat(historicDecisionInstance.getInputs().size()).isZero();
+    assertThat(historicDecisionInstance.getInputs()).isEmpty();
 
     List<HistoricDecisionOutputInstance> outputs = historicDecisionInstance.getOutputs();
     assertThat(outputs).hasSize(1);

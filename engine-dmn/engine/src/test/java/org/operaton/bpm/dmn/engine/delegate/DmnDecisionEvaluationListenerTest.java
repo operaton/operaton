@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.dmn.engine.delegate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -116,7 +116,7 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
     DmnDecisionTableEvaluationEvent decisionResult = (DmnDecisionTableEvaluationEvent) listener.getEvaluationEvent().getDecisionResult();
     assertThat(decisionResult).isNotNull();
     assertThat(decisionResult.getDecisionTable().getKey()).isEqualTo("Dish");
-    assertThat(decisionResult.getMatchingRules().size()).isZero();
+    assertThat(decisionResult.getMatchingRules()).isEmpty();
     assertThat(decisionResult.getExecutedDecisionElements()).isEqualTo(12L);
 
   }

@@ -135,7 +135,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse).resume(argThat(Matchers.hasSize(1)));
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
     verify(handler).suspend(Long.MAX_VALUE);
   }
 
@@ -183,7 +183,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse).resume(argThat(Matchers.hasSize(1)));
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
     verify(handler).suspend(Long.MAX_VALUE);
   }
 
@@ -210,7 +210,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse).resume(argThat(Matchers.hasSize(0)));
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
     verify(handler).suspend(Long.MAX_VALUE);
   }
 
@@ -238,7 +238,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(asyncResponse, times(2)).resume(Collections.emptyList());
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
     verify(handler).suspend(Long.MAX_VALUE);
   }
 
@@ -253,7 +253,7 @@ public class FetchAndLockHandlerTest {
     handler.addPendingRequest(createDto(5000L), asyncResponse, processEngine);
 
     // Then
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
     verify(handler, never()).suspend(anyLong());
     verify(asyncResponse).resume(any(ProcessEngineException.class));
   }
@@ -277,7 +277,7 @@ public class FetchAndLockHandlerTest {
     handler.acquire();
 
     // then
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
     verify(handler).suspend(Long.MAX_VALUE);
     verify(asyncResponse).resume(any(ProcessEngineException.class));
   }
@@ -287,7 +287,7 @@ public class FetchAndLockHandlerTest {
     // given - no pending requests
 
     // assume
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
 
     // when
     AsyncResponse asyncResponse = mock(AsyncResponse.class);
@@ -295,7 +295,7 @@ public class FetchAndLockHandlerTest {
 
     // then
     verify(handler, never()).suspend(anyLong());
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
 
     ArgumentCaptor<InvalidRequestException> argumentCaptor = ArgumentCaptor.forClass(InvalidRequestException.class);
     verify(asyncResponse).resume(argumentCaptor.capture());
@@ -388,13 +388,13 @@ public class FetchAndLockHandlerTest {
     // given - no pending requests
 
     // assume
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
 
     // when
     handler.acquire();
 
     // then
-    assertThat(handler.getPendingRequests().size()).isZero();
+    assertThat(handler.getPendingRequests()).isEmpty();
     verify(handler).suspend(Long.MAX_VALUE);
   }
 

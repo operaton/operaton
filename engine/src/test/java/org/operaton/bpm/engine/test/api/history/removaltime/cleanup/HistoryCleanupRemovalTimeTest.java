@@ -16,35 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime.cleanup;
 
-import static org.apache.commons.lang3.time.DateUtils.addDays;
-import static org.apache.commons.lang3.time.DateUtils.addMinutes;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
-import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.*;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Resources;
@@ -52,31 +26,7 @@ import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.batch.history.HistoricBatchQuery;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
-import org.operaton.bpm.engine.history.CleanableHistoricBatchReportResult;
-import org.operaton.bpm.engine.history.CleanableHistoricDecisionInstanceReportResult;
-import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
-import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
-import org.operaton.bpm.engine.history.HistoricDecisionInstance;
-import org.operaton.bpm.engine.history.HistoricDecisionInstanceQuery;
-import org.operaton.bpm.engine.history.HistoricDetail;
-import org.operaton.bpm.engine.history.HistoricDetailQuery;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLogQuery;
-import org.operaton.bpm.engine.history.HistoricIdentityLinkLog;
-import org.operaton.bpm.engine.history.HistoricIdentityLinkLogQuery;
-import org.operaton.bpm.engine.history.HistoricIncident;
-import org.operaton.bpm.engine.history.HistoricIncidentQuery;
-import org.operaton.bpm.engine.history.HistoricJobLog;
-import org.operaton.bpm.engine.history.HistoricJobLogQuery;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
-import org.operaton.bpm.engine.history.HistoricTaskInstance;
-import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
-import org.operaton.bpm.engine.history.HistoricVariableInstance;
-import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
-import org.operaton.bpm.engine.history.UserOperationLogEntry;
-import org.operaton.bpm.engine.history.UserOperationLogQuery;
+import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.DefaultHistoryRemovalTimeProvider;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -101,12 +51,16 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.time.DateUtils.addDays;
+import static org.apache.commons.lang3.time.DateUtils.addMinutes;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.*;
+import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
 
 /**
  * @author Tassilo Weidner
@@ -293,7 +247,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isZero();
+    assertThat(historicDecisionInstances).isEmpty();
   }
 
   @Test
@@ -334,7 +288,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isZero();
+    assertThat(historicDecisionInstances).isEmpty();
   }
 
   @Test
@@ -405,7 +359,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isZero();
+    assertThat(historicDecisionInstances).isEmpty();
   }
 
   @Test
@@ -445,7 +399,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicDecisionInstances.size()).isZero();
+    assertThat(historicDecisionInstances).isEmpty();
   }
 
   @Test
@@ -481,7 +435,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicProcessInstances.size()).isZero();
+    assertThat(historicProcessInstances).isEmpty();
   }
 
   @Test
@@ -554,7 +508,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicProcessInstances.size()).isZero();
+    assertThat(historicProcessInstances).isEmpty();
   }
 
   @Test
@@ -613,7 +567,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicActivityInstances = historyService.createHistoricActivityInstanceQuery().list();
 
     // then
-    assertThat(historicActivityInstances.size()).isZero();
+    assertThat(historicActivityInstances).isEmpty();
   }
 
   @Test
@@ -644,7 +598,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicTaskInstances = historyService.createHistoricTaskInstanceQuery().list();
 
     // then
-    assertThat(historicTaskInstances.size()).isZero();
+    assertThat(historicTaskInstances).isEmpty();
   }
 
   @Test
@@ -685,7 +639,7 @@ public class HistoryCleanupRemovalTimeTest {
         .list();
 
     // then
-    assertThat(authorizations.size()).isZero();
+    assertThat(authorizations).isEmpty();
 
     // clear
     clearAuthorization();
@@ -721,7 +675,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicVariableInstances = historyService.createHistoricVariableInstanceQuery().list();
 
     // then
-    assertThat(historicVariableInstances.size()).isZero();
+    assertThat(historicVariableInstances).isEmpty();
   }
 
   @Test
@@ -760,7 +714,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicDetails.size()).isZero();
+    assertThat(historicDetails).isEmpty();
   }
 
   @Test
@@ -799,7 +753,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicIncidents = historyService.createHistoricIncidentQuery().list();
 
     // then
-    assertThat(historicIncidents.size()).isZero();
+    assertThat(historicIncidents).isEmpty();
   }
 
   @Test
@@ -841,7 +795,7 @@ public class HistoryCleanupRemovalTimeTest {
     externalTaskLogs = historyService.createHistoricExternalTaskLogQuery().list();
 
     // then
-    assertThat(externalTaskLogs.size()).isZero();
+    assertThat(externalTaskLogs).isEmpty();
   }
 
   @Test
@@ -885,7 +839,7 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(jobLogs.size()).isZero();
+    assertThat(jobLogs).isEmpty();
   }
 
   @Test
@@ -966,7 +920,7 @@ public class HistoryCleanupRemovalTimeTest {
     userOperationLogs = historyService.createUserOperationLogQuery().list();
 
     // then
-    assertThat(userOperationLogs.size()).isZero();
+    assertThat(userOperationLogs).isEmpty();
   }
 
   @Test
@@ -999,7 +953,7 @@ public class HistoryCleanupRemovalTimeTest {
     historicIdentityLinkLogs = historyService.createHistoricIdentityLinkLogQuery().list();
 
     // then
-    assertThat(historicIdentityLinkLogs.size()).isZero();
+    assertThat(historicIdentityLinkLogs).isEmpty();
   }
 
   @Test
@@ -1037,7 +991,7 @@ public class HistoryCleanupRemovalTimeTest {
     comments = taskService.getProcessInstanceComments(processInstanceId);
 
     // then
-    assertThat(comments.size()).isZero();
+    assertThat(comments).isEmpty();
   }
 
   @Test
@@ -1075,7 +1029,7 @@ public class HistoryCleanupRemovalTimeTest {
     attachments = taskService.getProcessInstanceAttachments(processInstanceId);
 
     // then
-    assertThat(attachments.size()).isZero();
+    assertThat(attachments).isEmpty();
   }
 
   @Test
@@ -1173,8 +1127,8 @@ public class HistoryCleanupRemovalTimeTest {
       .list();
 
     // then
-    assertThat(historicBatches.size()).isZero();
-    assertThat(historicJobLogs.size()).isZero();
+    assertThat(historicBatches).isEmpty();
+    assertThat(historicJobLogs).isEmpty();
   }
 
   @Test

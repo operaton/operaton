@@ -16,24 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.transform;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
+import org.junit.Test;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionLiteralExpressionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableInputImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableOutputImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableRuleImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnExpressionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnVariableImpl;
+import org.operaton.bpm.dmn.engine.impl.*;
 import org.operaton.bpm.dmn.engine.impl.hitpolicy.FirstHitPolicyHandler;
 import org.operaton.bpm.dmn.engine.impl.hitpolicy.UniqueHitPolicyHandler;
 import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
@@ -42,7 +29,13 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class DmnTransformTest extends DmnEngineTest {
 
@@ -244,7 +237,7 @@ public class DmnTransformTest extends DmnEngineTest {
     DmnDecision buyElectronicDecision = getDecision(buyComputerRequiredDecision, "buyElectronic");
     assertThat(buyElectronicDecision).isNotNull();
 
-    assertThat(buyElectronicDecision.getRequiredDecisions().size()).isZero();
+    assertThat(buyElectronicDecision.getRequiredDecisions()).isEmpty();
   }
 
   @Test
@@ -274,7 +267,7 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(buyElectronicDecision).isNotNull();
 
     Collection<DmnDecision> buyElectronicRequiredDecisions = buyElectronicDecision.getRequiredDecisions();
-    assertThat(buyElectronicRequiredDecisions.size()).isZero();
+    assertThat(buyElectronicRequiredDecisions).isEmpty();
   }
 
   @Test

@@ -16,24 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.tuple;
-import static java.util.stream.Stream.of;
-import static java.util.stream.Collectors.toSet;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RuntimeService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -54,11 +43,15 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Stream.of;
+import static org.assertj.core.api.Assertions.*;
 
 public class CorrelateAllMessageBatchTest {
 
@@ -557,7 +550,7 @@ public class CorrelateAllMessageBatchTest {
       .operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE)
       .list();
 
-    assertThat(logs.size()).isZero();
+    assertThat(logs).isEmpty();
 
     // clear
     managementService.deleteBatch(batch.getId(), true);

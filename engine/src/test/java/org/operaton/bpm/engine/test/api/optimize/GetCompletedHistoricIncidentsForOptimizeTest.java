@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -31,11 +36,6 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 import java.util.Date;
 import java.util.List;
@@ -159,7 +159,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
       optimizeService.getCompletedHistoricIncidents(now, now, 10);
 
     // then
-    assertThat(completedIncidents.size()).isZero();
+    assertThat(completedIncidents).isEmpty();
   }
 
   @Test

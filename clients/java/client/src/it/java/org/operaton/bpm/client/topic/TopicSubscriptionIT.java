@@ -37,13 +37,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.client.util.ProcessModels.BPMN_ERROR_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
-import static org.operaton.bpm.client.util.ProcessModels.ONE_EXTERNAL_TASK_WITH_OUTPUT_PARAM_PROCESS;
-import static org.operaton.bpm.client.util.ProcessModels.ONE_EXTERNAL_TASK_WITH_VERSION_TAG;
-import static org.operaton.bpm.client.util.ProcessModels.PROCESS_DEFINITION_VERSION_TAG;
-import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY;
-import static org.operaton.bpm.client.util.ProcessModels.PROCESS_KEY_2;
+import static org.operaton.bpm.client.util.ProcessModels.*;
 
 /**
  * @author Tassilo Weidner
@@ -404,7 +398,7 @@ public class TopicSubscriptionIT {
       assertThat(task.getAllVariables()).hasSize(1);
       assertThat((String) task.getVariable(VARIABLE_NAME)).isEqualTo(VARIABLE_VALUE);
     } else {
-      assertThat(task.getAllVariables().size()).isZero();
+      assertThat(task.getAllVariables()).isEmpty();
     }
   }
 
@@ -424,10 +418,10 @@ public class TopicSubscriptionIT {
     clientRule.waitForFetchAndLockUntil(() -> handler.getHandledTasks().size() == 2);
 
     ExternalTask taskOne = handler.getHandledTasks().get(0);
-    assertThat(taskOne.getAllVariables().size()).isZero();
+    assertThat(taskOne.getAllVariables()).isEmpty();
 
     ExternalTask taskTwo = handler.getHandledTasks().get(1);
-    assertThat(taskTwo.getAllVariables().size()).isZero();
+    assertThat(taskTwo.getAllVariables()).isEmpty();
   }
 
   @Test
@@ -446,10 +440,10 @@ public class TopicSubscriptionIT {
     clientRule.waitForFetchAndLockUntil(() -> handler.getHandledTasks().size() == 2);
 
     ExternalTask taskOne = handler.getHandledTasks().get(0);
-    assertThat(taskOne.getAllVariables().size()).isZero();
+    assertThat(taskOne.getAllVariables()).isEmpty();
 
     ExternalTask taskTwo = handler.getHandledTasks().get(0);
-    assertThat(taskTwo.getAllVariables().size()).isZero();
+    assertThat(taskTwo.getAllVariables()).isEmpty();
   }
 
   @Test
@@ -637,7 +631,7 @@ public class TopicSubscriptionIT {
     // then
     clientRule.waitForFetchAndLockUntil(() -> handler.getHandledTasks().isEmpty());
 
-    assertThat(handler.getHandledTasks().size()).isZero();
+    assertThat(handler.getHandledTasks()).isEmpty();
   }
 
   @Test
@@ -739,7 +733,7 @@ public class TopicSubscriptionIT {
     // then
     clientRule.waitForFetchAndLockUntil(() -> handler.getHandledTasks().isEmpty());
 
-    assertThat(handler.getHandledTasks().size()).isZero();
+    assertThat(handler.getHandledTasks()).isEmpty();
   }
 
 }

@@ -16,14 +16,8 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
 import org.assertj.core.api.Fail;
+import org.junit.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionResultException;
@@ -31,7 +25,13 @@ import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class DmnDecisionTableResultTest extends DmnEngineTest {
 
@@ -297,7 +297,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
   }
 
   protected void assertNoOutputValue(DmnDecisionRuleResult decisionRuleResult) {
-    assertThat(decisionRuleResult.size()).isZero();
+    assertThat(decisionRuleResult).isEmpty();
 
     String value = (String) decisionRuleResult.get("firstOutput");
     assertThat(value).isNull();

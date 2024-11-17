@@ -16,16 +16,16 @@
  */
 package org.operaton.commons.testing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import org.junit.Rule;
+import org.junit.Test;
+import org.operaton.commons.testing.util.ExampleProcessEngineLogger;
 
 import java.util.List;
 
-import org.operaton.commons.testing.util.ExampleProcessEngineLogger;
-import org.junit.Rule;
-import org.junit.Test;
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 @SuppressWarnings("unused")
 public class ProcessEngineLoggingRuleTest {
@@ -136,7 +136,7 @@ public class ProcessEngineLoggingRuleTest {
     assertThat(expectedException.getMessage()).contains(ProcessEngineLoggingRule.NOT_WATCHING_ERROR);
     testLogLevel(persistenceLog, Level.DEBUG);
     testLogLevel(processAppLogger, Level.INFO);
-    assertThat(containerLog.size()).isZero();
+    assertThat(containerLog).isEmpty();
   }
 
   @Test

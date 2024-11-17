@@ -16,46 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByAssignee;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCaseExecutionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCaseInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByCreateTime;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByDescription;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByDueDate;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByExecutionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByFollowUpDate;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskById;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByName;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByPriority;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.taskByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -82,9 +45,16 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.*;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
 
 /**
  * @author Joram Barrez
@@ -5508,7 +5478,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     List<Task> tasks = taskService.createTaskQuery().processInstanceIdIn("nonexisting").list();
 
     // then
-    assertThat(tasks.size()).isZero();
+    assertThat(tasks).isEmpty();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/task/TaskQueryTest.shouldContainOperatonFormRefIfInitialized.bpmn")

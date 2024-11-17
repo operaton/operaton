@@ -16,33 +16,12 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByActivityId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByDeploymentId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByExecutionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobDueDate;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobPriority;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByJobRetries;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByProcessDefinitionKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogByTimestamp;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicJobLogPartiallyByOccurence;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RuntimeService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.history.HistoricJobLogQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -54,15 +33,16 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.FailingDelegate;
 import org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil;
-import org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.NullTolerantComparator;
+import org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
 
 /**
  * @author Roman Smirnov
@@ -657,7 +637,7 @@ public class HistoricJobLogQueryTest {
         .orderByJobPriority()
         .asc()
         .list();
-    assertThat(jobLogs.size()).isZero();
+    assertThat(jobLogs).isEmpty();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricJobLogTest.testAsyncContinuation.bpmn20.xml"})

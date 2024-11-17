@@ -205,7 +205,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
       optimizeService.getHistoricVariableUpdates(now, now, false, 10);
 
     // then
-    assertThat(variableUpdates.size()).isZero();
+    assertThat(variableUpdates).isEmpty();
   }
 
   @Test

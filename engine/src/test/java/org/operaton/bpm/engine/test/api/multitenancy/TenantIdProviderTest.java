@@ -16,16 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.variable.Variables.stringValue;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.After;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -39,11 +34,7 @@ import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
@@ -53,11 +44,12 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.operaton.bpm.engine.variable.Variables.stringValue;
 
 /**
  * @author Daniel Meyer
@@ -135,7 +127,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.parameters.size()).isZero();
+    assertThat(tenantIdProvider.parameters).isEmpty();
   }
 
 
@@ -188,7 +180,7 @@ public class TenantIdProviderTest {
     assertNotNull(procInstance);
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.parameters.size()).isZero();
+    assertThat(tenantIdProvider.parameters).isEmpty();
   }
 
   @Test
@@ -228,7 +220,7 @@ public class TenantIdProviderTest {
 
     //then provider should not be called
     assertNotNull(engineRule.getRuntimeService().getActivityInstance(processInstanceId));
-    assertThat(tenantIdProvider.parameters.size()).isZero();
+    assertThat(tenantIdProvider.parameters).isEmpty();
   }
 
   @Test
@@ -332,7 +324,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey("superProcess");
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.parameters.size()).isZero();
+    assertThat(tenantIdProvider.parameters).isEmpty();
   }
 
   @Test
@@ -485,7 +477,7 @@ public class TenantIdProviderTest {
     CaseExecution caseExecution = engineRule.getCaseService().createCaseExecutionQuery().activityId("PI_ProcessTask_1").singleResult();
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.parameters.size()).isZero();
+    assertThat(tenantIdProvider.parameters).isEmpty();
   }
 
   @Test
@@ -579,7 +571,7 @@ public class TenantIdProviderTest {
     engineRule.getDecisionService().evaluateDecisionTableByKey(DECISION_DEFINITION_KEY).variables(createVariables()).evaluate();
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.dmnParameters.size()).isZero();
+    assertThat(tenantIdProvider.dmnParameters).isEmpty();
   }
 
   @Test
@@ -677,7 +669,7 @@ public class TenantIdProviderTest {
     engineRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, createVariables());
 
     // then the tenant id providers are not invoked
-    assertThat(tenantIdProvider.dmnParameters.size()).isZero();
+    assertThat(tenantIdProvider.dmnParameters).isEmpty();
   }
 
   @Test
@@ -792,7 +784,7 @@ public class TenantIdProviderTest {
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.caseParameters.size()).isZero();
+    assertThat(tenantIdProvider.caseParameters).isEmpty();
   }
 
   @Test
@@ -894,7 +886,7 @@ public class TenantIdProviderTest {
     engineRule.getCaseService().withCaseDefinitionByKey(CASE_DEFINITION_KEY).create();
 
     // then the tenant id provider is not invoked
-    assertThat(tenantIdProvider.caseParameters.size()).isZero();
+    assertThat(tenantIdProvider.caseParameters).isEmpty();
   }
 
   @Test

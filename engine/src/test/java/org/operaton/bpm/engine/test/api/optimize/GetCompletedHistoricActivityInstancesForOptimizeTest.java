@@ -16,21 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.delegate.ExecutionListener.EVENTNAME_START;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
 import org.operaton.bpm.engine.identity.Group;
@@ -46,11 +37,12 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.*;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.delegate.ExecutionListener.EVENTNAME_START;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetCompletedHistoricActivityInstancesForOptimizeTest {
@@ -195,7 +187,7 @@ public class GetCompletedHistoricActivityInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricActivityInstances(now, now, 10);
 
     // then
-    assertThat(completedHistoricActivityInstances.size()).isZero();
+    assertThat(completedHistoricActivityInstances).isEmpty();
   }
 
   @Test

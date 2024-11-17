@@ -16,24 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
-import static junit.framework.TestCase.fail;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.repository.RedeploymentTest.DEPLOYMENT_NAME;
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -51,10 +38,17 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.cache.Cache;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static junit.framework.TestCase.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.operaton.bpm.engine.test.api.repository.RedeploymentTest.DEPLOYMENT_NAME;
 
 /**
  *
@@ -425,7 +419,7 @@ public class DeleteProcessDefinitionTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
     // then
-    assertThat(processDefinitions.size()).isZero();
+    assertThat(processDefinitions).isEmpty();
   }
 
   @Test
@@ -565,7 +559,7 @@ public class DeleteProcessDefinitionTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().list();
 
     // then
-    assertThat(processDefinitions.size()).isZero();
+    assertThat(processDefinitions).isEmpty();
   }
 
   private void deployTwoProcessDefinitions() {

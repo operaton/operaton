@@ -16,18 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.batch.Batch;
@@ -47,10 +40,16 @@ import org.operaton.bpm.engine.test.api.runtime.util.IncrementCounterListener;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.*;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 
 /**
@@ -156,7 +155,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     // then
     assertEquals(0, exceptions.size());
 
-    assertThat(managementService.createJobQuery().withException().list().size()).isZero();
+    assertThat(managementService.createJobQuery().withException().list()).isEmpty();
 
     processIds.remove("aFake");
     assertHistoricTaskDeletionPresent(processIds, TESTING_INSTANCE_DELETE, testRule);
@@ -330,7 +329,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   protected void assertProcessInstancesAreDeleted() {
-    assertThat(runtimeService.createProcessInstanceQuery().list().size()).isZero();
+    assertThat(runtimeService.createProcessInstanceQuery().list()).isEmpty();
   }
 
   @Test

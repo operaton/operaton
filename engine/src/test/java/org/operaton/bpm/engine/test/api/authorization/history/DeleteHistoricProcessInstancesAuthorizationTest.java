@@ -139,7 +139,7 @@ public class DeleteHistoricProcessInstancesAuthorizationTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
+      assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     }
   }
 }

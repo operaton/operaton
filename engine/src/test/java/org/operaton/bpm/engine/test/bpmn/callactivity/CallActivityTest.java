@@ -1860,7 +1860,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // and
     long numVariables = runtimeService.createVariableInstanceQuery().count();
-    assertThat(numVariables).isEqualTo(0);
+    assertThat(numVariables).isZero();
   }
 
 
@@ -1893,7 +1893,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // presence of transient variable was asserted in delegate
 
     long numVariables = runtimeService.createVariableInstanceQuery().count();
-    assertThat(numVariables).isEqualTo(0);
+    assertThat(numVariables).isZero();
   }
 
 

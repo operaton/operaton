@@ -16,16 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Date;
-import java.util.List;
-
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.identity.Group;
@@ -41,11 +37,11 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.Date;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -112,7 +108,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricProcessInstances).hasSize(1);
     assertThatInstanceHasAllImportantInformation(runningHistoricProcessInstances.get(0));
   }
 
@@ -137,7 +133,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(now, null, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricProcessInstances).hasSize(1);
   }
 
   @Test
@@ -162,7 +158,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(null, now, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricProcessInstances).hasSize(1);
     assertThat(runningHistoricProcessInstances.get(0).getId()).isEqualTo(processInstance.getId());
   }
 
@@ -188,7 +184,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(now, now, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(0);
+    assertThat(runningHistoricProcessInstances).isEmpty();
   }
 
   @Test
@@ -211,7 +207,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(pastDate(), null, 3);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(3);
+    assertThat(runningHistoricProcessInstances).hasSize(3);
   }
 
   @Test
@@ -242,7 +238,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(new Date(now.getTime()), null, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(3);
+    assertThat(runningHistoricProcessInstances).hasSize(3);
     assertThat(runningHistoricProcessInstances.get(0).getId()).isEqualTo(processInstance1.getId());
     assertThat(runningHistoricProcessInstances.get(1).getId()).isEqualTo(processInstance2.getId());
     assertThat(runningHistoricProcessInstances.get(2).getId()).isEqualTo(processInstance3.getId());
@@ -267,7 +263,7 @@ public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
       optimizeService.getRunningHistoricProcessInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricProcessInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricProcessInstances).hasSize(1);
     assertThat(runningHistoricProcessInstances.get(0).getId()).isEqualTo(runningProcessInstance.getId());
   }
 

@@ -158,7 +158,7 @@ public class TaskListenerDelegateCompletionTest {
     testHelper.waitForJobExecutorToProcessAllJobs(5000L);
 
     // then
-    assertThat(taskQuery.count()).isEqualTo(0L);
+    assertThat(taskQuery.count()).isZero();
   }
 
   @Test

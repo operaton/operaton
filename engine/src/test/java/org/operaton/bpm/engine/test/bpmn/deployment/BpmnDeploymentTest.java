@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.engine.test.bpmn.deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.io.InputStream;
-import java.util.List;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -32,21 +30,19 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.ReadOnlyProcessDefinition;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.bpm.engine.repository.DeploymentBuilder;
-import org.operaton.bpm.engine.repository.DeploymentHandlerFactory;
-import org.operaton.bpm.engine.repository.DeploymentWithDefinitions;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.repository.Resource;
+import org.operaton.bpm.engine.repository.*;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
 import org.operaton.commons.testing.WatchLogger;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -81,7 +77,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
 
     // verify bpmn file name
-    assertThat(deploymentResources.size()).isEqualTo(1);
+    assertThat(deploymentResources).hasSize(1);
     String bpmnResourceName = "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml";
     assertThat(deploymentResources.get(0)).isEqualTo(bpmnResourceName);
 
@@ -96,8 +92,8 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     // verify content
     InputStream deploymentInputStream = repositoryService.getResourceAsStream(deploymentId, bpmnResourceName);
     String contentFromDeployment = readInputStreamToString(deploymentInputStream);
-    assertThat(contentFromDeployment.length() > 0).isTrue();
-    assertThat(contentFromDeployment.contains("process id=\"emptyProcess\"")).isTrue();
+    assertThat(contentFromDeployment).isNotEmpty();
+    assertThat(contentFromDeployment).contains("process id=\"emptyProcess\"");
 
     InputStream fileInputStream = ReflectUtil.getResourceAsStream("org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml");
     String contentFromFile = readInputStreamToString(fileInputStream);
@@ -117,7 +113,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     assertThatThrownBy(() -> testRule.deploy(deployment))
       .hasMessageContaining("id can be maximum 64 characters");
     // then
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Test
@@ -132,7 +128,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
 
     // verify bpmn file name
-    assertThat(deploymentResources.size()).isEqualTo(1);
+    assertThat(deploymentResources).hasSize(1);
     assertThat(deploymentResources.get(0)).isEqualTo(bpmnResourceName);
 
     testRule.deploy(repositoryService.createDeployment()
@@ -155,7 +151,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
         .addClasspathResource(bpmnResourceName));
     // then
     List<org.operaton.bpm.engine.repository.Deployment> deploymentList = repositoryService.createDeploymentQuery().list();
-    assertThat(deploymentList.size()).isEqualTo(2);
+    assertThat(deploymentList).hasSize(2);
   }
 
   @Test
@@ -172,7 +168,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     testRule.deploy(deploymentBuilder);
     
     // then
-    assertThat(loggingRule.getFilteredLog(CMD_LOGGER, "Deployment name set to null. Filtering duplicates will not work properly.").size()).isEqualTo(1);
+    assertThat(loggingRule.getFilteredLog(CMD_LOGGER, "Deployment name set to null. Filtering duplicates will not work properly.")).hasSize(1);
   }
   
   @Test
@@ -192,7 +188,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     testRule.deploy(deploymentBuilder);
     
     // then
-    assertThat(loggingRule.getFilteredLog(CMD_LOGGER, "Deployment name set to null. Filtering duplicates will not work properly.").size()).isEqualTo(1);
+    assertThat(loggingRule.getFilteredLog(CMD_LOGGER, "Deployment name set to null. Filtering duplicates will not work properly.")).hasSize(1);
   }
   
   @Test
@@ -261,7 +257,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
       .name("twice"));
 
     List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deployment1.getId());
-    assertThat(deploymentResources.size()).isEqualTo(2);
+    assertThat(deploymentResources).hasSize(2);
 
     BpmnModelInstance changedModel2 = Bpmn.createExecutableProcess("process2").startEvent().endEvent().done();
 
@@ -271,7 +267,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
       .addModelInstance("process2.bpmn20.xml", changedModel2)
       .name("twice"));
     List<org.operaton.bpm.engine.repository.Deployment> deploymentList = repositoryService.createDeploymentQuery().list();
-    assertThat(deploymentList.size()).isEqualTo(2);
+    assertThat(deploymentList).hasSize(2);
 
     // there should be new versions of both processes
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("process1").count()).isEqualTo(2);
@@ -288,7 +284,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
       .name("thrice"));
 
     List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deployment1.getId());
-    assertThat(deploymentResources.size()).isEqualTo(2);
+    assertThat(deploymentResources).hasSize(2);
 
     BpmnModelInstance changedModel2 = Bpmn.createExecutableProcess("process2").startEvent().endEvent().done();
 
@@ -299,7 +295,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
       .name("thrice"));
 
     List<org.operaton.bpm.engine.repository.Deployment> deploymentList = repositoryService.createDeploymentQuery().list();
-    assertThat(deploymentList.size()).isEqualTo(2);
+    assertThat(deploymentList).hasSize(2);
 
     // there should be only one version of process 1
     ProcessDefinition process1Definition = repositoryService.createProcessDefinitionQuery().processDefinitionKey("process1").singleResult();
@@ -364,7 +360,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
         .addClasspathResource(bpmnResourceName2)
         .name("duplicateAtTheSameTime")));
     // then
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Test
@@ -379,7 +375,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
 
     // verify bpmn file name
-    assertThat(deploymentResources.size()).isEqualTo(1);
+    assertThat(deploymentResources).hasSize(1);
     assertThat(deploymentResources.get(0)).isEqualTo(bpmnResourceName);
 
     bpmnResourceName = "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testProcessDiagramResource.bpmn20.xml";
@@ -388,7 +384,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
         .addClasspathResource(bpmnResourceName)
         .name("twice"));
     List<org.operaton.bpm.engine.repository.Deployment> deploymentList = repositoryService.createDeploymentQuery().list();
-    assertThat(deploymentList.size()).isEqualTo(2);
+    assertThat(deploymentList).hasSize(2);
   }
 
   @Test
@@ -408,11 +404,11 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     });
 
     assertThat(processDefinitionEntity).isNotNull();
-    assertThat(processDefinitionEntity.getActivities().size()).isEqualTo(7);
+    assertThat(processDefinitionEntity.getActivities()).hasSize(7);
 
     // Check that no diagram has been created
     List<String> resourceNames = repositoryService.getDeploymentResourceNames(processDefinitionEntity.getDeploymentId());
-    assertThat(resourceNames.size()).isEqualTo(1);
+    assertThat(resourceNames).hasSize(1);
   }
 
   @Deployment(resources={
@@ -433,7 +429,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
         .getResourceAsStream(processDefinition.getDeploymentId(),
                              "org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testProcessDiagramResource.jpg");
     byte[] diagramBytes = IoUtil.readInputStream(diagramStream, "diagram stream");
-    assertThat(diagramBytes.length).isEqualTo(33343);
+    assertThat(diagramBytes).hasSize(33343);
   }
 
   @Deployment(resources={
@@ -474,7 +470,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
       .hasMessageContaining("ENGINE-01009 Error while parsing process")
       .withFailMessage("Expected exception when deploying process with invalid expression.");
     // then
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(0);
+    assertThat(repositoryService.createDeploymentQuery().count()).isZero();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/deployment/BpmnDeploymentTest.testGetBpmnXmlFileThroughService.bpmn20.xml"})
@@ -483,7 +479,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
 
     List<Resource> resources = repositoryService.getDeploymentResources(deploymentId);
-    assertThat(resources.size()).isEqualTo(1);
+    assertThat(resources).hasSize(1);
 
     Resource resource = resources.get(0);
     assertThat(resource.getDeploymentId()).isEqualTo(deploymentId);
@@ -516,7 +512,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
 
     // then deployment contains deployed process definitions
     List<ProcessDefinition> deployedProcessDefinitions = deployment.getDeployedProcessDefinitions();
-    assertThat(deployedProcessDefinitions.size()).isEqualTo(1);
+    assertThat(deployedProcessDefinitions).hasSize(1);
     assertThat(deployment.getDeployedCaseDefinitions()).isNull();;
     assertThat(deployment.getDeployedDecisionDefinitions()).isNull();;
     assertThat(deployment.getDeployedDecisionRequirementsDefinitions()).isNull();;

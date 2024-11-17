@@ -164,7 +164,7 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
       }
 
       if (authRule.scenarioSucceeded()) {
-        assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0L);
+        assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
       }
     }
   }

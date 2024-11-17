@@ -179,7 +179,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
 
     // then
     disableAuthorization();
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
     enableAuthorization();
 }
 
@@ -195,7 +195,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
 
     // then
     disableAuthorization();
-    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricDecisionInstanceQuery().count()).isZero();
     enableAuthorization();
   }
 

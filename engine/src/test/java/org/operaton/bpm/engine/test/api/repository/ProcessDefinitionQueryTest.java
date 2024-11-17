@@ -16,18 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processDefinitionByDeployTime;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySortingAndCount;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.time.DateUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.Deployment;
@@ -37,9 +29,16 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
 
 
 /**
@@ -89,7 +88,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(processDefinition.getDescription()).isEqualTo("Desc one");
     assertThat(processDefinition.getId()).startsWith("one:1");
     assertThat(processDefinition.getCategory()).isEqualTo("Examples");
-    assertThat(processDefinition.isStartableInTasklist()).isEqualTo(true);
+    assertThat(processDefinition.isStartableInTasklist()).isTrue();
 
     processDefinition = processDefinitions.get(1);
     assertThat(processDefinition.getKey()).isEqualTo("one");
@@ -97,7 +96,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(processDefinition.getDescription()).isEqualTo("Desc one");
     assertThat(processDefinition.getId()).startsWith("one:2");
     assertThat(processDefinition.getCategory()).isEqualTo("Examples");
-    assertThat(processDefinition.isStartableInTasklist()).isEqualTo(true);
+    assertThat(processDefinition.isStartableInTasklist()).isTrue();
 
     processDefinition = processDefinitions.get(2);
     assertThat(processDefinition.getKey()).isEqualTo("two");
@@ -105,7 +104,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(processDefinition.getDescription()).isNull();
     assertThat(processDefinition.getId().startsWith("two:1"));
     assertThat(processDefinition.getCategory()).isEqualTo("Examples2");
-    assertThat(processDefinition.isStartableInTasklist()).isEqualTo(true);
+    assertThat(processDefinition.isStartableInTasklist()).isTrue();
 
     processDefinition = processDefinitions.get(3);
     assertThat(processDefinition.getKey()).isEqualTo("xyz_");
@@ -113,7 +112,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThat(processDefinition.getDescription()).isNull();
     assertThat(processDefinition.getId().startsWith("xyz_:1"));
     assertThat(processDefinition.getCategory()).isEqualTo("xyz_");
-    assertThat(processDefinition.isStartableInTasklist()).isEqualTo(false);
+    assertThat(processDefinition.isStartableInTasklist()).isFalse();
   }
 
   @Test
@@ -177,7 +176,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     // when
     processDefinitions = repositoryService.createProcessDefinitionQuery().deployedAfter(timeAfterDeploymentThree).list();
     // then
-    assertThat(processDefinitions).hasSize(0);
+    assertThat(processDefinitions).isEmpty();
   }
 
   @Test
@@ -220,7 +219,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     assertThatProcessDefinitionsWereDeployedAt(processDefinitions, timeAtDeploymentThree);
 
     processDefinitions = repositoryService.createProcessDefinitionQuery().deployedAt(DateUtils.addSeconds(ClockUtil.getCurrentTime(), 5)).list();
-    assertThat(processDefinitions).hasSize(0);
+    assertThat(processDefinitions).isEmpty();
   }
 
   @Test
@@ -304,7 +303,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
       assertThat(found).withFailMessage("Expected to find process definition " + processDefinition);
     }
 
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeysIn(processDefinitionKeys).count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeysIn(processDefinitionKeys).count()).isZero();
   }
 
   @Test
@@ -466,7 +465,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     // Typical use case
     query = repositoryService.createProcessDefinitionQuery().orderByProcessDefinitionKey().asc().orderByProcessDefinitionVersion().desc();
     List<ProcessDefinition> processDefinitions = query.list();
-    assertThat(processDefinitions.size()).isEqualTo(4);
+    assertThat(processDefinitions).hasSize(4);
 
     assertThat(processDefinitions.get(0).getKey()).isEqualTo("one");
     assertThat(processDefinitions.get(0).getVersion()).isEqualTo(2);
@@ -493,7 +492,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
 
     assertThat(repositoryService.createProcessDefinitionQuery()
       .messageEventSubscriptionName("bogus")
-      .count()).isEqualTo(0);
+      .count()).isZero();
 
     repositoryService.deleteDeployment(deployment.getId());
   }
@@ -510,7 +509,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     testRule.waitForJobExecutorToProcessAllJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertThat(incidentList.size()).isEqualTo(1);
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -578,7 +577,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
     testRule.waitForJobExecutorToProcessAllJobs();
 
     List<Incident> incidentList = runtimeService.createIncidentQuery().list();
-    assertThat(incidentList.size()).isEqualTo(1);
+    assertThat(incidentList).hasSize(1);
 
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -663,7 +662,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
       assertThat(found).withFailMessage("Expected to find process definition " + processDefinition);
     }
 
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionId("dummyId").processDefinitionIdIn(ids).count()).isEqualTo(0);
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionId("dummyId").processDefinitionIdIn(ids).count()).isZero();
   }
 
   @Test
@@ -920,7 +919,7 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
         .deploymentId(deploymentId1)
         .notStartableInTasklist()
         .count();
-    assertThat(processes).isEqualTo(0);
+    assertThat(processes).isZero();
 
     // deploy second version
     // startable super process

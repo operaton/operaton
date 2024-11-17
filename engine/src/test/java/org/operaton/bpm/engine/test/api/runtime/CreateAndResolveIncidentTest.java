@@ -280,7 +280,7 @@ public class CreateAndResolveIncidentTest {
     assertThat(deleteContext.getConfiguration()).isEqualTo("configuration");
 
     long numIncidents = runtimeService.createIncidentQuery().count();
-    assertThat(numIncidents).isEqualTo(0);
+    assertThat(numIncidents).isZero();
   }
 
   @Test
@@ -306,7 +306,7 @@ public class CreateAndResolveIncidentTest {
     assertThat(deleteContext.getConfiguration()).isEqualTo(job.getId());
 
     long numIncidents = runtimeService.createIncidentQuery().count();
-    assertThat(numIncidents).isEqualTo(0);
+    assertThat(numIncidents).isZero();
   }
 
   @Test
@@ -334,7 +334,7 @@ public class CreateAndResolveIncidentTest {
     assertThat(deleteContext.getConfiguration()).isEqualTo(task.getId());
 
     long numIncidents = runtimeService.createIncidentQuery().count();
-    assertThat(numIncidents).isEqualTo(0);
+    assertThat(numIncidents).isZero();
   }
 
   @Test
@@ -359,7 +359,7 @@ public class CreateAndResolveIncidentTest {
     assertThat(deleteContext.getConfiguration()).isEqualTo(job.getId());
 
     long numIncidents = runtimeService.createIncidentQuery().count();
-    assertThat(numIncidents).isEqualTo(0);
+    assertThat(numIncidents).isZero();
   }
 
   @Test
@@ -386,7 +386,7 @@ public class CreateAndResolveIncidentTest {
     assertThat(resolveContext.getConfiguration()).isEqualTo(task.getId());
 
     long numIncidents = runtimeService.createIncidentQuery().count();
-    assertThat(numIncidents).isEqualTo(0);
+    assertThat(numIncidents).isZero();
   }
 
   public static class CustomIncidentHandler implements IncidentHandler {

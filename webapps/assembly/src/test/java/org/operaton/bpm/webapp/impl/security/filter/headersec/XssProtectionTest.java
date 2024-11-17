@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.headersec;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionOption.BLOCK;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionOption.SANITIZE;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionProvider.HEADER_NAME;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.util.HeaderRule;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionOption.BLOCK;
+import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionOption.SANITIZE;
+import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.XssProtectionProvider.HEADER_NAME;
 
 /**
  * @author Tassilo Weidner
@@ -55,7 +55,7 @@ public class XssProtectionTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.headerExists(HEADER_NAME)).isEqualTo(false);
+    assertThat(headerRule.headerExists(HEADER_NAME)).isFalse();
   }
 
   @Test
@@ -67,7 +67,7 @@ public class XssProtectionTest {
     headerRule.performRequest();
 
     // then
-    assertThat(headerRule.headerExists(HEADER_NAME)).isEqualTo(false);
+    assertThat(headerRule.headerExists(HEADER_NAME)).isFalse();
   }
 
   @Test

@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.model.xml.validation;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.validation.ModelValidationResultsImpl;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
+
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
@@ -60,7 +61,7 @@ class ModelValidationTest {
 
     assertThat(results).isNotNull();
     assertThat(results.hasErrors()).isFalse();
-    assertThat(results.getErrorCount()).isEqualTo(0);
+    assertThat(results.getErrorCount()).isZero();
     assertThat(results.getWarinigCount()).isEqualTo(7);
   }
 
@@ -73,7 +74,7 @@ class ModelValidationTest {
     assertThat(results).isNotNull();
     assertThat(results.hasErrors()).isTrue();
     assertThat(results.getErrorCount()).isEqualTo(1);
-    assertThat(results.getWarinigCount()).isEqualTo(0);
+    assertThat(results.getWarinigCount()).isZero();
   }
 
   @Test
@@ -85,7 +86,7 @@ class ModelValidationTest {
     StringWriter stringWriter = new StringWriter();
     results.write(stringWriter, new TestResultFormatter());
 
-    assertThat(stringWriter.toString()).isEqualTo("tweety\n\tERROR (20): Bird tweety is illegal\n");
+    assertThat(stringWriter).hasToString("tweety\n\tERROR (20): Bird tweety is illegal\n");
   }
 
   @Test
@@ -149,7 +150,7 @@ class ModelValidationTest {
     assertThat(results.getWarinigCount()).isEqualTo(7);
 
     var resultsByElement = results.getResults();
-    assertThat(resultsByElement.size()).isEqualTo(7);
+    assertThat(resultsByElement).hasSize(7);
 
     for (var resultEntry : resultsByElement.entrySet()) {
       Bird element = (Bird) resultEntry.getKey();
@@ -158,14 +159,14 @@ class ModelValidationTest {
       assertThat(validationResults).isNotNull();
 
       if (element.getId().equals("tweety")) {
-        assertThat(validationResults.size()).isEqualTo(2);
+        assertThat(validationResults).hasSize(2);
         ValidationResult error = validationResults.remove(0);
         assertThat(error.getType()).isEqualTo(ValidationResultType.ERROR);
         assertThat(error.getCode()).isEqualTo(20);
         assertThat(error.getMessage()).isEqualTo("Bird tweety is illegal");
         assertThat(error.getElement()).isEqualTo(element);
       } else {
-        assertThat(validationResults.size()).isEqualTo(1);
+        assertThat(validationResults).hasSize(1);
       }
 
       ValidationResult warning = validationResults.get(0);

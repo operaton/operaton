@@ -134,7 +134,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
         .tenantIdIn("nonExisting");
 
     // then
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -161,7 +161,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicCaseActivityInstances.size()).isEqualTo(3);
+    assertThat(historicCaseActivityInstances).hasSize(3);
     verifySorting(historicCaseActivityInstances, historicCaseActivityInstanceByTenantId());
   }
 
@@ -174,7 +174,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
         .list();
 
     // then
-    assertThat(historicCaseActivityInstances.size()).isEqualTo(3);
+    assertThat(historicCaseActivityInstances).hasSize(3);
     verifySorting(historicCaseActivityInstances, inverted(historicCaseActivityInstanceByTenantId()));
   }
 
@@ -202,7 +202,7 @@ public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
     assertThat(query.count()).isEqualTo(2L);  // null-tenant instances are still included
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
     assertThat(query.withoutTenantId().count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
   }
 

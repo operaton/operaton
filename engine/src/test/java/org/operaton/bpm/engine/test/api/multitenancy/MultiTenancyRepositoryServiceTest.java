@@ -119,7 +119,7 @@ public class MultiTenancyRepositoryServiceTest {
         .asc()
         .list();
 
-    assertThat(processDefinitions.size()).isEqualTo(3);
+    assertThat(processDefinitions).hasSize(3);
     // process definition was deployed twice for tenant one
     assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
     assertThat(processDefinitions.get(1).getVersion()).isEqualTo(2);

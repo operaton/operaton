@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.xml.testmodel.instance;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,7 +24,6 @@ import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.ModelImpl;
 import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.operaton.bpm.model.xml.instance.ModelElementInstanceTest;
 import org.operaton.bpm.model.xml.testmodel.Gender;
 import org.operaton.bpm.model.xml.testmodel.TestModelConstants;
 import org.operaton.bpm.model.xml.testmodel.TestModelTest;
@@ -102,7 +100,7 @@ public class AlternativeNsTest extends TestModelTest {
     ModelElementInstance birdo = modelInstance.getModelElementById("birdo");
     assertThat(birdo).isNotNull();
     Collection<Wings> elements = birdo.getChildElementsByType(Wings.class);
-    assertThat(elements.size()).isEqualTo(1);
+    assertThat(elements).hasSize(1);
     assertThat(elements.iterator().next().getTextContent()).isEqualTo("zisch");
   }
 
@@ -117,7 +115,7 @@ public class AlternativeNsTest extends TestModelTest {
     Collection<Wings> elements = donald.getChildElementsByType(Wings.class);
 
     // then
-    assertThat(elements.size()).isEqualTo(1);
+    assertThat(elements).hasSize(1);
     assertThat(elements.iterator().next().getTextContent()).isEqualTo("flappy");
   }
 
@@ -128,7 +126,7 @@ public class AlternativeNsTest extends TestModelTest {
     Bird plucky = modelInstance.getModelElementById("plucky");
     assertThat(plucky).isNotNull();
     Boolean extendedWings = plucky.canHazExtendedWings();
-    assertThat(extendedWings).isEqualTo(false);
+    assertThat(extendedWings).isFalse();
   }
 
   @ParameterizedTest
@@ -142,7 +140,7 @@ public class AlternativeNsTest extends TestModelTest {
     Boolean extendedWings = donald.canHazExtendedWings();
 
     // then
-    assertThat(extendedWings).isEqualTo(true);
+    assertThat(extendedWings).isTrue();
   }
 
   @ParameterizedTest
@@ -153,7 +151,7 @@ public class AlternativeNsTest extends TestModelTest {
     assertThat(plucky).isNotNull();
     //validate old value
     Boolean extendedWings = plucky.canHazExtendedWings();
-    assertThat(extendedWings).isEqualTo(false);
+    assertThat(extendedWings).isFalse();
     //change it
     plucky.setCanHazExtendedWings(true);
     String attributeValueNs = plucky.getAttributeValueNs(MECHANICAL_NS, "canHazExtendedWings");
@@ -196,7 +194,7 @@ public class AlternativeNsTest extends TestModelTest {
     wings.setTextContent("kawusch");
 
     List<DomElement> childElementsByNameNs = birdo.getDomElement().getChildElementsByNameNs(MECHANICAL_NS, "wings");
-    assertThat(childElementsByNameNs.size()).isEqualTo(1);
+    assertThat(childElementsByNameNs).hasSize(1);
     assertThat(childElementsByNameNs.get(0).getTextContent()).isEqualTo("kawusch");
   }
 
@@ -213,7 +211,7 @@ public class AlternativeNsTest extends TestModelTest {
 
     // then
     List<DomElement> childElementsByNameNs = donald.getDomElement().getChildElementsByNameNs(YET_ANOTHER_NS, "wings");
-    assertThat(childElementsByNameNs.size()).isEqualTo(1);
+    assertThat(childElementsByNameNs).hasSize(1);
     assertThat(childElementsByNameNs.get(0).getTextContent()).isEqualTo("kawusch");
   }
 
@@ -225,7 +223,7 @@ public class AlternativeNsTest extends TestModelTest {
     bird.setWings(modelInstance.newInstance(Wings.class));
 
     List<DomElement> childElementsByNameNs = bird.getDomElement().getChildElementsByNameNs(TestModelConstants.NEWER_NAMESPACE, "wings");
-    assertThat(childElementsByNameNs.size()).isEqualTo(1);
+    assertThat(childElementsByNameNs).hasSize(1);
   }
 
   @ParameterizedTest

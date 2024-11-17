@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JobExecutorPropertiesTest extends ParsePropertiesHelper {
 

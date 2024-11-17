@@ -40,7 +40,7 @@ class ExponentialErrorBackoffStrategyTest {
   void shouldAdvanceBackoffStrategy() {
     // given
     long initialWaitingTime = backoffStrategy.calculateBackoffTime();
-    assertThat(initialWaitingTime).isEqualTo(0L);
+    assertThat(initialWaitingTime).isZero();
 
     // when
     // in consecutive iterations, an error occurs
@@ -71,14 +71,14 @@ class ExponentialErrorBackoffStrategyTest {
 
     // then
     long waitingTime2 = backoffStrategy.calculateBackoffTime();
-    assertThat(waitingTime2).isEqualTo(0L);
+    assertThat(waitingTime2).isZero();
   }
 
   @Test
   void shouldCapWaitingTime() {
     // given
     long waitingTime = backoffStrategy.calculateBackoffTime();
-    assertThat(waitingTime).isEqualTo(0L);
+    assertThat(waitingTime).isZero();
 
     // when
     // reach maximum waiting time
@@ -97,7 +97,7 @@ class ExponentialErrorBackoffStrategyTest {
   void shouldCapWaitingTime2() {
     // given
     long waitingTime = backoffStrategy.calculateBackoffTime();
-    assertThat(waitingTime).isEqualTo(0L);
+    assertThat(waitingTime).isZero();
 
     // when
     // reach maximum waiting time

@@ -846,8 +846,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     HistoricVariableInstanceQuery variableQuery = historyService.createHistoricVariableInstanceQuery().variableName("timeout-status");
-    assertThat(variableQuery.count()).isEqualTo(0L);
-    assertThat(jobQuery.count()).isEqualTo(0L);
+    assertThat(variableQuery.count()).isZero();
+    assertThat(jobQuery.count()).isZero();
   }
 
   @Test
@@ -866,8 +866,8 @@ public class TaskListenerTest extends AbstractTaskListenerTest {
 
     // then
     HistoricVariableInstanceQuery variableQuery = historyService.createHistoricVariableInstanceQuery().variableName("timeout-status");
-    assertThat(variableQuery.count()).isEqualTo(0L);
-    assertThat(jobQuery.count()).isEqualTo(0L);
+    assertThat(variableQuery.count()).isZero();
+    assertThat(jobQuery.count()).isZero();
   }
 
   @Test

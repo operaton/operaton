@@ -311,7 +311,7 @@ public class MultiTenancyDecisionTableEvaluationTest extends PluggableProcessEng
 
   protected void assertThatDecisionHasResult(DmnDecisionTableResult decisionResult, Object expectedValue) {
     assertThat(decisionResult).isNotNull();
-    assertThat(decisionResult.size()).isEqualTo(1);
+    assertThat(decisionResult).hasSize(1);
     String value = decisionResult.getSingleResult().getFirstEntry();
     assertThat(value).isEqualTo(expectedValue);
   }

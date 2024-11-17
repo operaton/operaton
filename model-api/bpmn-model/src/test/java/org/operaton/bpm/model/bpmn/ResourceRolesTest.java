@@ -43,7 +43,7 @@ class ResourceRolesTest {
   void testGetPerformer() {
     UserTask userTask = modelInstance.getModelElementById("_3");
     Collection<ResourceRole> resourceRoles = userTask.getResourceRoles();
-    assertThat(resourceRoles.size()).isEqualTo(1);
+    assertThat(resourceRoles).hasSize(1);
     ResourceRole resourceRole = resourceRoles.iterator().next();
     assertThat(resourceRole instanceof Performer).isTrue();
     assertThat(resourceRole.getName()).isEqualTo("Task performer");
@@ -53,7 +53,7 @@ class ResourceRolesTest {
   void testGetHumanPerformer() {
     UserTask userTask = modelInstance.getModelElementById("_7");
     Collection<ResourceRole> resourceRoles = userTask.getResourceRoles();
-    assertThat(resourceRoles.size()).isEqualTo(1);
+    assertThat(resourceRoles).hasSize(1);
     ResourceRole resourceRole = resourceRoles.iterator().next();
     assertThat(resourceRole instanceof HumanPerformer).isTrue();
     assertThat(resourceRole.getName()).isEqualTo("Task human performer");
@@ -63,7 +63,7 @@ class ResourceRolesTest {
   void testGetPotentialOwner() {
     UserTask userTask = modelInstance.getModelElementById("_9");
     Collection<ResourceRole> resourceRoles = userTask.getResourceRoles();
-    assertThat(resourceRoles.size()).isEqualTo(1);
+    assertThat(resourceRoles).hasSize(1);
     ResourceRole resourceRole = resourceRoles.iterator().next();
     assertThat(resourceRole instanceof PotentialOwner).isTrue();
     assertThat(resourceRole.getName()).isEqualTo("Task potential owner");

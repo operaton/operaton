@@ -216,13 +216,13 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
 
     assertThat(result.get(0).getPriority()).isEqualTo(7);
     assertThat(result.get(1).getPriority()).isEqualTo(7);
-    assertThat(result.get(2).getPriority()).isEqualTo(0);
-    assertThat(result.get(3).getPriority()).isEqualTo(0);
-    assertThat(result.get(4).getPriority()).isEqualTo(0);
+    assertThat(result.get(2).getPriority()).isZero();
+    assertThat(result.get(3).getPriority()).isZero();
+    assertThat(result.get(4).getPriority()).isZero();
 
 
     // given the same priority, DESC date is applied
@@ -259,14 +259,14 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
 
     assertThat(result.get(0).getPriority()).isEqualTo(7);
     assertThat(result.get(1).getPriority()).isEqualTo(7);
 
-    assertThat(result.get(2).getPriority()).isEqualTo(0);
-    assertThat(result.get(3).getPriority()).isEqualTo(0);
-    assertThat(result.get(4).getPriority()).isEqualTo(0);
+    assertThat(result.get(2).getPriority()).isZero();
+    assertThat(result.get(3).getPriority()).isZero();
+    assertThat(result.get(4).getPriority()).isZero();
 
 
     // given the same priority, ASC date is applied
@@ -303,7 +303,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
     assertThat(result).extracting("createTime", Date.class).isSorted();
   }
 
@@ -333,7 +333,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
     assertThat(result).extracting("createTime", Date.class).isSortedAccordingTo(reverseOrder());
   }
 
@@ -363,7 +363,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
     // create time ordering will be ignored, only priority will be used
     assertThat(result).extracting("priority", Long.class).isSortedAccordingTo(reverseOrder());
   }
@@ -387,7 +387,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
     // create time ordering will be ignored, only priority will be used
     assertThat(result).extracting("priority", Long.class).isSortedAccordingTo(reverseOrder());
   }
@@ -1750,7 +1750,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("userTask");
     List<VariableInstance> list = runtimeService.createVariableInstanceQuery().variableName("foo").list();
-    assertThat(list).hasSize(0);
+    assertThat(list).isEmpty();
   }
 
   @Test
@@ -1975,7 +1975,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("userTask");
     List<VariableInstance> list = runtimeService.createVariableInstanceQuery().variableName("foo").list();
-    assertThat(list).hasSize(0);
+    assertThat(list).isEmpty();
   }
 
   @Test
@@ -2207,7 +2207,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // no error is thrown
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -2229,7 +2229,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // no error is thrown
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -4379,7 +4379,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     //then
     assertThat(totalExternalTasks).isEqualTo(2);
-    assertThat(fetchedExternalTasks.size()).isEqualTo(1);
+    assertThat(fetchedExternalTasks).hasSize(1);
     assertThat(fetchedExternalTasks.get(0).getProcessDefinitionKey()).isEqualTo("testFetchAndLockByProcessDefinitionVersionTag");
     assertThat(fetchedExternalTasks.get(0).getProcessDefinitionVersionTag()).isEqualTo("version X.Y");
   }

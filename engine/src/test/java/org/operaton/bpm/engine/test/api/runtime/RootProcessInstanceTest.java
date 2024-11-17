@@ -195,8 +195,8 @@ public class RootProcessInstanceTest {
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5L);
     assertThat(callingProcessInstance.getProcessInstanceId()).isNotNull();
 
-    assertThat(calledProcessInstances.size()).isEqualTo(2);
-    assertThat(calledAndCallingProcessInstances.size()).isEqualTo(2);
+    assertThat(calledProcessInstances).hasSize(2);
+    assertThat(calledAndCallingProcessInstances).hasSize(2);
 
     // then
     assertThat(callingProcessInstance.getRootProcessInstanceId()).isEqualTo(callingProcessInstance.getProcessInstanceId());

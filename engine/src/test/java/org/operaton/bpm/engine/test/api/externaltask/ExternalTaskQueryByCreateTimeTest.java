@@ -107,7 +107,7 @@ public class ExternalTaskQueryByCreateTimeTest {
     var result = historyService.createHistoricExternalTaskLogQuery().list();
 
     // then
-    assertThat(result.size()).isEqualTo(1);
+    assertThat(result).hasSize(1);
 
     var historyEventTimestamp = result.get(0).getTimestamp();
 
@@ -128,7 +128,7 @@ public class ExternalTaskQueryByCreateTimeTest {
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     var extTask1 = result.get(0);
     var extTask2 = result.get(1);
@@ -151,7 +151,7 @@ public class ExternalTaskQueryByCreateTimeTest {
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(2);
+    assertThat(result).hasSize(2);
 
     var extTask1 = result.get(0);
     var extTask2 = result.get(1);
@@ -180,7 +180,7 @@ public class ExternalTaskQueryByCreateTimeTest {
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(4);
+    assertThat(result).hasSize(4);
 
     assertThat(result.get(0).getActivityId()).isEqualTo("task1");
     assertThat(result.get(1).getActivityId()).isEqualTo("task2");
@@ -206,7 +206,7 @@ public class ExternalTaskQueryByCreateTimeTest {
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(4);
+    assertThat(result).hasSize(4);
 
     assertThat(result.get(0).getActivityId()).isEqualTo("task1"); // due to priority DESC
     assertThat(result.get(1).getActivityId()).isEqualTo("task2");
@@ -235,7 +235,7 @@ public class ExternalTaskQueryByCreateTimeTest {
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(4);
+    assertThat(result).hasSize(4);
 
     assertThat(result.get(0).getActivityId()).isEqualTo("task2"); // due to CreateTime Equality, priority ASC
     assertThat(result.get(1).getActivityId()).isEqualTo("task1");
@@ -265,7 +265,7 @@ public class ExternalTaskQueryByCreateTimeTest {
         .list();
 
     // then
-    assertThat(result.size()).isEqualTo(4);
+    assertThat(result).hasSize(4);
 
     assertThat(result.get(0).getActivityId()).isEqualTo("task1"); // due to CreateTime equality, priority DESC
     assertThat(result.get(1).getActivityId()).isEqualTo("task2");

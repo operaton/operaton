@@ -16,17 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-
-import org.operaton.bpm.engine.ProcessEngine;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
+import org.operaton.bpm.engine.ProcessEngine;
+
+import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 public class CompositeProcessEnginePluginTest {
 
@@ -87,7 +85,7 @@ public class CompositeProcessEnginePluginTest {
 
   @Test
   public void verifyToString() throws Exception {
-    assertThat(new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B).toString()).isEqualTo("CompositeProcessEnginePlugin[PluginA, PluginB]");
+    assertThat(new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B)).hasToString("CompositeProcessEnginePlugin[PluginA, PluginB]");
   }
 
   private static ProcessEnginePlugin processEnginePlugin(final String name) {

@@ -16,24 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.transform;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
+import org.junit.Test;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionLiteralExpressionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableInputImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableOutputImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableRuleImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnExpressionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnVariableImpl;
+import org.operaton.bpm.dmn.engine.impl.*;
 import org.operaton.bpm.dmn.engine.impl.hitpolicy.FirstHitPolicyHandler;
 import org.operaton.bpm.dmn.engine.impl.hitpolicy.UniqueHitPolicyHandler;
 import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
@@ -42,7 +29,13 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class DmnTransformTest extends DmnEngineTest {
 
@@ -233,18 +226,18 @@ public class DmnTransformTest extends DmnEngineTest {
     assertDecision(buyProductDecision, "buyProduct");
 
     Collection<DmnDecision> buyProductrequiredDecisions = buyProductDecision.getRequiredDecisions();
-    assertThat(buyProductrequiredDecisions.size()).isEqualTo(1);
+    assertThat(buyProductrequiredDecisions).hasSize(1);
 
     DmnDecision buyComputerDecision = getDecision(buyProductrequiredDecisions, "buyComputer");
     assertThat(buyComputerDecision).isNotNull();
 
     Collection<DmnDecision> buyComputerRequiredDecision = buyComputerDecision.getRequiredDecisions();
-    assertThat(buyComputerRequiredDecision.size()).isEqualTo(1);
+    assertThat(buyComputerRequiredDecision).hasSize(1);
 
     DmnDecision buyElectronicDecision = getDecision(buyComputerRequiredDecision, "buyElectronic");
     assertThat(buyElectronicDecision).isNotNull();
 
-    assertThat(buyElectronicDecision.getRequiredDecisions().size()).isEqualTo(0);
+    assertThat(buyElectronicDecision.getRequiredDecisions()).isEmpty();
   }
 
   @Test
@@ -257,7 +250,7 @@ public class DmnTransformTest extends DmnEngineTest {
     DmnDecision buyProductDecision = getDecision(decisions, "buyProduct");
     assertThat(buyProductDecision).isNotNull();
     Collection<DmnDecision> requiredProductDecisions = buyProductDecision.getRequiredDecisions();
-    assertThat(requiredProductDecisions.size()).isEqualTo(1);
+    assertThat(requiredProductDecisions).hasSize(1);
 
     DmnDecision requiredProductDecision = getDecision(requiredProductDecisions, "buyComputer");
     assertThat(requiredProductDecision).isNotNull();
@@ -265,7 +258,7 @@ public class DmnTransformTest extends DmnEngineTest {
     DmnDecision buyComputerDecision = getDecision(decisions, "buyComputer");
     assertThat(buyComputerDecision).isNotNull();
     Collection<DmnDecision> buyComputerRequiredDecisions = buyComputerDecision.getRequiredDecisions();
-    assertThat(buyComputerRequiredDecisions.size()).isEqualTo(1);
+    assertThat(buyComputerRequiredDecisions).hasSize(1);
 
     DmnDecision buyComputerRequiredDecision = getDecision(buyComputerRequiredDecisions, "buyElectronic");
     assertThat(buyComputerRequiredDecision).isNotNull();
@@ -274,7 +267,7 @@ public class DmnTransformTest extends DmnEngineTest {
     assertThat(buyElectronicDecision).isNotNull();
 
     Collection<DmnDecision> buyElectronicRequiredDecisions = buyElectronicDecision.getRequiredDecisions();
-    assertThat(buyElectronicRequiredDecisions.size()).isEqualTo(0);
+    assertThat(buyElectronicRequiredDecisions).isEmpty();
   }
 
   @Test
@@ -283,7 +276,7 @@ public class DmnTransformTest extends DmnEngineTest {
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
     DmnDecision decision = dmnEngine.parseDecision("car",modelInstance);
     Collection<DmnDecision> requiredDecisions = decision.getRequiredDecisions();
-    assertThat(requiredDecisions.size()).isEqualTo(2);
+    assertThat(requiredDecisions).hasSize(2);
 
     DmnDecision carPriceDecision = getDecision(requiredDecisions, "carPrice");
     assertThat(carPriceDecision).isNotNull();
@@ -346,7 +339,7 @@ public class DmnTransformTest extends DmnEngineTest {
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
 
     List<DmnDecision> decisions = dmnEngine.parseDecisions(modelInstance);
-    assertThat(decisions.size()).isEqualTo(8);
+    assertThat(decisions).hasSize(8);
   }
 
   @Test

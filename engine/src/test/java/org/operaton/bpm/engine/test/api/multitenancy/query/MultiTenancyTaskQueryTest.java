@@ -103,7 +103,7 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
         .endOr();
 
     // then
-    assertThat(query.list().size()).isEqualTo(3);
+    assertThat(query.list()).hasSize(3);
   }
 
   @Test
@@ -111,7 +111,7 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery()
       .tenantIdIn(TENANT_NON_EXISTING);
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -136,7 +136,7 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
         .asc()
         .list();
 
-    assertThat(tasks.size()).isEqualTo(2);
+    assertThat(tasks).hasSize(2);
     assertThat(tasks.get(0).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(tasks.get(1).getTenantId()).isEqualTo(TENANT_TWO);
   }
@@ -171,7 +171,7 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
 
     assertThat(query.count()).isEqualTo(2L);
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
   }
 

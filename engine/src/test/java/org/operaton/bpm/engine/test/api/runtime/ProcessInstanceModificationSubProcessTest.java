@@ -149,7 +149,7 @@ public class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the process should be finished
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -235,7 +235,7 @@ public class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the process should be finished
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
   }
 
@@ -324,7 +324,7 @@ public class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the process should be finished
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
   }
 
@@ -414,7 +414,7 @@ public class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the process should be finished
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -510,7 +510,7 @@ public class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the process should be finished
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -605,7 +605,7 @@ public class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Test
@@ -655,7 +655,7 @@ public class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Test

@@ -89,7 +89,7 @@ public class BpmPlatformXmlParserTest {
 
     JobExecutorXml jobExecutorXml = bpmPlatformXml.getJobExecutor();
     assertEquals(1, jobExecutorXml.getJobAcquisitions().size());
-    assertThat(jobExecutorXml.getProperties().size()).isEqualTo(2);
+    assertThat(jobExecutorXml.getProperties()).hasSize(2);
 
     JobAcquisitionXml jobAcquisitionXml = jobExecutorXml.getJobAcquisitions().get(0);
     assertEquals("default", jobAcquisitionXml.getName());

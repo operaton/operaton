@@ -96,7 +96,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
         .createHistoricProcessInstanceReport()
         .duration(MONTH);
 
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -148,7 +148,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
         .processDefinitionIdIn(processDefinitionIdOne, processDefinitionIdTwo)
         .duration(MONTH);
 
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test
@@ -209,7 +209,7 @@ public class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
         .processDefinitionKeyIn(PROCESS_DEFINITION_KEY)
         .duration(MONTH);
 
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test

@@ -209,7 +209,7 @@ public class DecisionDefinitionQueryTest {
     // when
     decisionDefinitions = repositoryService.createDecisionDefinitionQuery().deployedAfter(timeAfterDeploymentThree).list();
     // then
-    assertThat(decisionDefinitions).hasSize(0);
+    assertThat(decisionDefinitions).isEmpty();
   }
 
   @Test
@@ -252,7 +252,7 @@ public class DecisionDefinitionQueryTest {
     assertThatDecisionDefinitionsWereDeployedAt(processDefinitions, timeAtDeploymentThree);
 
     processDefinitions = repositoryService.createDecisionDefinitionQuery().deployedAt(DateUtils.addSeconds(ClockUtil.getCurrentTime(), 5)).list();
-    assertThat(processDefinitions).hasSize(0);
+    assertThat(processDefinitions).isEmpty();
   }
 
   @Test
@@ -635,7 +635,7 @@ public class DecisionDefinitionQueryTest {
       .desc();
 
     List<DecisionDefinition> decisionDefinitions = query.list();
-    assertThat(decisionDefinitions.size()).isEqualTo(4);
+    assertThat(decisionDefinitions).hasSize(4);
 
     assertThat(decisionDefinitions.get(0).getKey()).isEqualTo("one");
     assertThat(decisionDefinitions.get(0).getVersion()).isEqualTo(2);
@@ -648,7 +648,7 @@ public class DecisionDefinitionQueryTest {
 
   protected void verifyQueryResults(DecisionDefinitionQuery query, int expectedCount) {
     assertThat(query.count()).isEqualTo(expectedCount);
-    assertThat(query.list().size()).isEqualTo(expectedCount);
+    assertThat(query.list()).hasSize(expectedCount);
   }
 
   @org.operaton.bpm.engine.test.Deployment(resources = {

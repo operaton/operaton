@@ -717,7 +717,7 @@ public class IdentityServiceTest {
     }
 
     // then
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is permanently locked.").size()).isEqualTo(1);
+    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is permanently locked.")).hasSize(1);
   }
 
   @Test
@@ -749,7 +749,7 @@ public class IdentityServiceTest {
     assertFalse(identityService.checkPassword("johndoe", "xxx"));
 
     // assume
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is locked.").size()).isEqualTo(1);
+    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is locked.")).hasSize(1);
 
     // when
     ClockUtil.setCurrentTime(DateUtils.addSeconds(now, 30));
@@ -778,7 +778,7 @@ public class IdentityServiceTest {
     assertFalse(identityService.checkPassword("johndoe", "invalid pwd"));
 
     // then
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The lock will expire at " + expectedLockExpitation).size()).isEqualTo(1);
+    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The lock will expire at " + expectedLockExpitation)).hasSize(1);
   }
 
   @Test

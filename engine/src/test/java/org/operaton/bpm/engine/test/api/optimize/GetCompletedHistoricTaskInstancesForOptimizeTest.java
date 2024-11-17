@@ -114,7 +114,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricTaskInstances(null, null, 10);
 
     // then
-    assertThat(completedHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(completedHistoricTaskInstances).hasSize(1);
     assertThatTasksHaveAllImportantInformation(completedHistoricTaskInstances.get(0));
   }
 
@@ -148,7 +148,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
 
     // then
     Set<String> allowedTaskIds = new HashSet<>(Arrays.asList("userTask2", "userTask3"));
-    assertThat(completedHistoricTaskInstances.size()).isEqualTo(2);
+    assertThat(completedHistoricTaskInstances).hasSize(2);
     assertTrue(allowedTaskIds.contains(completedHistoricTaskInstances.get(0).getTaskDefinitionKey()));
     assertTrue(allowedTaskIds.contains(completedHistoricTaskInstances.get(1).getTaskDefinitionKey()));
   }
@@ -176,7 +176,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricTaskInstances(null, now, 10);
 
     // then
-    assertThat(completedHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(completedHistoricTaskInstances).hasSize(1);
     assertThat(completedHistoricTaskInstances.get(0).getTaskDefinitionKey()).isEqualTo("userTask1");
   }
 
@@ -203,7 +203,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricTaskInstances(now, now, 10);
 
     // then
-    assertThat(completedHistoricTaskInstances.size()).isEqualTo(0);
+    assertThat(completedHistoricTaskInstances).isEmpty();
   }
 
   @Test
@@ -229,7 +229,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricTaskInstances(pastDate(), null, 3);
 
     // then
-    assertThat(completedHistoricTaskInstances.size()).isEqualTo(3);
+    assertThat(completedHistoricTaskInstances).hasSize(3);
   }
 
   @Test
@@ -261,7 +261,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricTaskInstances(pastDate(), null, 4);
 
     // then
-    assertThat(completedHistoricTaskInstances.size()).isEqualTo(3);
+    assertThat(completedHistoricTaskInstances).hasSize(3);
     assertThat(completedHistoricTaskInstances.get(0).getTaskDefinitionKey()).isEqualTo("userTask1");
     assertThat(completedHistoricTaskInstances.get(1).getTaskDefinitionKey()).isEqualTo("userTask2");
     assertThat(completedHistoricTaskInstances.get(2).getTaskDefinitionKey()).isEqualTo("userTask3");
@@ -285,7 +285,7 @@ public class GetCompletedHistoricTaskInstancesForOptimizeTest {
       optimizeService.getCompletedHistoricTaskInstances(pastDate(), null, 10);
 
     // then
-    assertThat(completedHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(completedHistoricTaskInstances).hasSize(1);
     assertThat(completedHistoricTaskInstances.get(0).getTaskDefinitionKey()).isEqualTo("userTask1");
   }
 

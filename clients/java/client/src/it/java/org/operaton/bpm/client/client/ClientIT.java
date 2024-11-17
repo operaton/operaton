@@ -666,7 +666,7 @@ public class ClientIT {
       // then
       EngineException exception = (EngineException) ex.get();
       assertThat(exception).isInstanceOf(EngineException.class);
-      assertThat(exception.getCode()).isEqualTo(0);
+      assertThat(exception.getCode()).isZero();
       assertThat(exception.getType()).isEqualTo("ProcessEngineException");
       assertThat(exception.getMessage()).isEqualTo("TASK/CLIENT-03009 Exception while fetching and locking task: Object values cannot be used to query");
       assertThat(exception.getHttpStatusCode()).isEqualTo(500);

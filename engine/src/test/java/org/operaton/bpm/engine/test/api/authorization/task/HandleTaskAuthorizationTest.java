@@ -143,8 +143,8 @@ public class HandleTaskAuthorizationTest {
     // then
     if (authRule.assertScenario(scenario)) {
       assertNull(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult());
-      assertThat(loggingRule.getFilteredLog(BPMN_BEHAVIOR_LOGGER, "Execution is ended (none end event semantics)").size()).isEqualTo(1);
-      assertThat(loggingRule.getFilteredLog(BPMN_BEHAVIOR_LOGGER, "no catching boundary event was defined").size()).isEqualTo(1);
+      assertThat(loggingRule.getFilteredLog(BPMN_BEHAVIOR_LOGGER, "Execution is ended (none end event semantics)")).hasSize(1);
+      assertThat(loggingRule.getFilteredLog(BPMN_BEHAVIOR_LOGGER, "no catching boundary event was defined")).hasSize(1);
     }
   }
 
@@ -177,7 +177,7 @@ public class HandleTaskAuthorizationTest {
     // then
     if (authRule.assertScenario(scenario)) {
       List<Task> tasks = taskService.createTaskQuery().list();
-      assertThat(tasks.size()).isEqualTo(1);
+      assertThat(tasks).hasSize(1);
       assertThat(tasks.get(0).getTaskDefinitionKey()).isEqualTo("after-catch");
     }
   }

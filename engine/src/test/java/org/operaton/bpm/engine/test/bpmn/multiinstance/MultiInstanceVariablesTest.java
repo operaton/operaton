@@ -67,8 +67,8 @@ public class MultiInstanceVariablesTest {
       engineRule.getTaskService().complete(task.getId());
     }
 
-    assertThat(engineRule.getRuntimeService().createExecutionQuery().processDefinitionKey(SUB_PROCESS_ID).list()).hasSize(0);
-    assertThat(engineRule.getRuntimeService().createExecutionQuery().activityId(CALL_ACTIVITY).list()).hasSize(0);
+    assertThat(engineRule.getRuntimeService().createExecutionQuery().processDefinitionKey(SUB_PROCESS_ID).list()).isEmpty();
+    assertThat(engineRule.getRuntimeService().createExecutionQuery().activityId(CALL_ACTIVITY).list()).isEmpty();
   }
 
   protected void addAllOut(BpmnModelInstance modelInstance, CallActivityBuilder callActivityBuilder) {

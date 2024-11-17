@@ -64,7 +64,7 @@ public abstract class AbstractVariableIgnoreCaseTest<T extends AbstractVariableQ
   }
 
   protected void assertThatListContainsOnlyExpectedElement(List<U> instances, U instance) {
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThatTwoInstancesAreEqual(instances.get(0), instance);
   }
 

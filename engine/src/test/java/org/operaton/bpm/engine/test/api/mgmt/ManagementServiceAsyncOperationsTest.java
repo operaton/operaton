@@ -203,7 +203,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     //then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     assertRetries(getAllJobIds(), RETRIES);
     assertHistoricBatchExists(testRule);
   }
@@ -220,7 +220,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     assertRetries(getAllJobIds(), RETRIES);
     assertHistoricBatchExists(testRule);
   }
@@ -237,7 +237,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     assertRetries(getAllJobIds(), RETRIES);
     assertHistoricBatchExists(testRule);
   }
@@ -253,7 +253,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     assertRetries(ids, RETRIES);
     assertHistoricBatchExists(testRule);
   }
@@ -269,7 +269,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     assertRetries(ids, RETRIES);
     assertHistoricBatchExists(testRule);
   }
@@ -288,7 +288,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     assertRetries(ids, RETRIES);
     assertHistoricBatchExists(testRule);
   }
@@ -311,7 +311,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     assertRetries(ids, RETRIES);
     assertHistoricBatchExists(testRule);
   }
@@ -402,7 +402,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     for (String id : ids) {
       Job job = managementService.createJobQuery().jobId(id).singleResult();
       assertThat(job.getRetries()).isEqualTo(RETRIES);
@@ -423,7 +423,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     for (String id : processInstanceIds) {
       Job job = managementService.createJobQuery().processInstanceId(id).singleResult();
       assertThat(job.getRetries()).isEqualTo(RETRIES);
@@ -442,7 +442,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     for (String id : ids) {
       Job jobResult = managementService.createJobQuery().jobId(id).singleResult();
       assertThat(jobResult.getRetries()).isEqualTo(RETRIES);
@@ -466,7 +466,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     for (String id : ids) {
       Job jobResult = managementService.createJobQuery().jobId(id).singleResult();
       assertThat(jobResult.getRetries()).isEqualTo(RETRIES);
@@ -495,7 +495,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     for (String id : ids) {
       Job jobResult = managementService.createJobQuery().jobId(id).singleResult();
       assertThat(jobResult.getRetries()).isEqualTo(RETRIES);
@@ -513,7 +513,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions).hasSize(0);
+    assertThat(exceptions).isEmpty();
     for (String id : ids) {
       Job jobResult = managementService.createJobQuery().jobId(id).singleResult();
       assertThat(jobResult.getRetries()).isEqualTo(RETRIES);

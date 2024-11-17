@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.dmn.engine.delegate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -92,15 +92,15 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
     assertThat(decisionResult.getDecision().getKey()).isEqualTo("Dish");
 
     List<DmnEvaluatedInput> inputs = decisionResult.getInputs();
-    assertThat(inputs.size()).isEqualTo(2);
+    assertThat(inputs).hasSize(2);
     assertThat(inputs.get(0).getName()).isEqualTo("Season");
     assertThat(inputs.get(0).getValue().getValue()).isEqualTo("Summer");
     assertThat(inputs.get(1).getName()).isEqualTo("How many guests");
     assertThat(inputs.get(1).getValue().getValue()).isEqualTo(15);
 
-    assertThat(decisionResult.getMatchingRules().size()).isEqualTo(1);
+    assertThat(decisionResult.getMatchingRules()).hasSize(1);
     Map<String, DmnEvaluatedOutput> outputEntries = decisionResult.getMatchingRules().get(0).getOutputEntries();
-    assertThat(outputEntries.size()).isEqualTo(1);
+    assertThat(outputEntries).hasSize(1);
     assertThat(outputEntries.containsKey("desiredDish")).isTrue();
     assertThat(outputEntries.get("desiredDish").getValue().getValue()).isEqualTo("Light salad");
     assertThat(decisionResult.getExecutedDecisionElements()).isEqualTo(12L);
@@ -116,7 +116,7 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
     DmnDecisionTableEvaluationEvent decisionResult = (DmnDecisionTableEvaluationEvent) listener.getEvaluationEvent().getDecisionResult();
     assertThat(decisionResult).isNotNull();
     assertThat(decisionResult.getDecisionTable().getKey()).isEqualTo("Dish");
-    assertThat(decisionResult.getMatchingRules().size()).isEqualTo(0);
+    assertThat(decisionResult.getMatchingRules()).isEmpty();
     assertThat(decisionResult.getExecutedDecisionElements()).isEqualTo(12L);
 
   }
@@ -128,26 +128,26 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
 
     assertThat(listener.getEvaluationEvent()).isNotNull();
     Collection<DmnDecisionLogicEvaluationEvent> requiredDecisions = listener.getEvaluationEvent().getRequiredDecisionResults();
-    assertThat(requiredDecisions.size()).isEqualTo(2);
+    assertThat(requiredDecisions).hasSize(2);
 
     DmnDecisionTableEvaluationEvent dmnDecisionTableEvaluationEvent = getDmnDecisionTable(requiredDecisions,"Season");
     assertThat(dmnDecisionTableEvaluationEvent).isNotNull();
     List<DmnEvaluatedInput> inputs = dmnDecisionTableEvaluationEvent.getInputs();
-    assertThat(inputs.size()).isEqualTo(1);
+    assertThat(inputs).hasSize(1);
     assertThat(inputs.get(0).getName()).isEqualTo("Weather in Celsius");
     assertThat(inputs.get(0).getValue().getValue()).isEqualTo(35);
     List<DmnEvaluatedDecisionRule> matchingRules = dmnDecisionTableEvaluationEvent.getMatchingRules();
-    assertThat(matchingRules.size()).isEqualTo(1);
+    assertThat(matchingRules).hasSize(1);
     assertThat(matchingRules.get(0).getOutputEntries().get("season").getValue().getValue()).isEqualTo("Summer");
 
     dmnDecisionTableEvaluationEvent = getDmnDecisionTable(requiredDecisions,"GuestCount");
     assertThat(dmnDecisionTableEvaluationEvent).isNotNull();
     inputs = dmnDecisionTableEvaluationEvent.getInputs();
-    assertThat(inputs.size()).isEqualTo(1);
+    assertThat(inputs).hasSize(1);
     assertThat(inputs.get(0).getName()).isEqualTo("Type of day");
     assertThat(inputs.get(0).getValue().getValue()).isEqualTo("Weekend");
     matchingRules = dmnDecisionTableEvaluationEvent.getMatchingRules();
-    assertThat(matchingRules.size()).isEqualTo(1);
+    assertThat(matchingRules).hasSize(1);
     assertThat(matchingRules.get(0).getOutputEntries().get("guestCount").getValue().getValue()).isEqualTo(15);
 
   }

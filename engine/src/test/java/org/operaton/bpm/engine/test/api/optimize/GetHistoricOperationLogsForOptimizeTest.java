@@ -16,30 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_JOB;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_JOB;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.operaton.bpm.engine.EntityTypes;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.identity.User;
@@ -57,11 +39,12 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetHistoricOperationLogsForOptimizeTest {
@@ -127,7 +110,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(2);
+    assertThat(userOperationsLog).hasSize(2);
     assertThat(userOperationsLog.get(0)).isNotNull();
     assertThat(userOperationsLog.get(0).getId()).isNotNull();
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
@@ -172,7 +155,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(2);
+    assertThat(userOperationsLog).hasSize(2);
     assertThat(userOperationsLog.get(0)).isNotNull();
     assertThat(userOperationsLog.get(0).getId()).isNotNull();
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
@@ -217,7 +200,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(2);
+    assertThat(userOperationsLog).hasSize(2);
     assertThat(userOperationsLog.get(0)).isNotNull();
     assertThat(userOperationsLog.get(0).getId()).isNotNull();
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
@@ -262,7 +245,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(4);
+    assertThat(userOperationsLog).hasSize(4);
     List<String> newPossibleValue = new ArrayList<>(Arrays.asList(
       SuspensionState.SUSPENDED.getName(),
       SuspensionState.ACTIVE.getName(),
@@ -330,7 +313,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(4);
+    assertThat(userOperationsLog).hasSize(4);
     List<String> newPossibleValue = new ArrayList<>(Arrays.asList(
       SuspensionState.SUSPENDED.getName(),
       SuspensionState.ACTIVE.getName(),
@@ -406,7 +389,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(4);
+    assertThat(userOperationsLog).hasSize(4);
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_JOB);
     assertThat(userOperationsLog.get(0).getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
     assertThat(userOperationsLog.get(0).getProcessDefinitionKey()).isNull();
@@ -460,7 +443,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(4);
+    assertThat(userOperationsLog).hasSize(4);
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_JOB);
     assertThat(userOperationsLog.get(0).getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
     assertThat(userOperationsLog.get(0).getProcessDefinitionKey()).isNull();
@@ -509,7 +492,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
 
     // then
     Set<String> allowedOperationsTypes = new HashSet<>(Arrays.asList(OPERATION_TYPE_SUSPEND, OPERATION_TYPE_ACTIVATE));
-    assertThat(userOperationsLog.size()).isEqualTo(2);
+    assertThat(userOperationsLog).hasSize(2);
     assertTrue(allowedOperationsTypes.contains(userOperationsLog.get(0).getOperationType()));
     assertTrue(allowedOperationsTypes.contains(userOperationsLog.get(1).getOperationType()));
   }
@@ -531,7 +514,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(null, now, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(1);
+    assertThat(userOperationsLog).hasSize(1);
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
   }
 
@@ -552,7 +535,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(now, now, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(0);
+    assertThat(userOperationsLog).isEmpty();
   }
 
   @Test
@@ -569,7 +552,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 3);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(3);
+    assertThat(userOperationsLog).hasSize(3);
   }
 
   @Test
@@ -593,7 +576,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 4);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(3);
+    assertThat(userOperationsLog).hasSize(3);
     assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
     assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE);
     assertThat(userOperationsLog.get(2).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND);
@@ -611,7 +594,7 @@ public class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(pastDate(), null, 10);
 
     // then
-    assertThat(userOperationsLog.size()).isEqualTo(0);
+    assertThat(userOperationsLog).isEmpty();
   }
 
   private void createLogEntriesThatShouldNotBeReturned(String processInstanceId) {

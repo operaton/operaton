@@ -152,7 +152,7 @@ public class UserOperationLogAnnotationTest {
         .list();
 
     // assume
-    assertThat(userOperationLogEntries.size()).isEqualTo(2);
+    assertThat(userOperationLogEntries).hasSize(2);
 
     String operationId = userOperationLogEntries.get(0)
         .getOperationId();
@@ -211,7 +211,7 @@ public class UserOperationLogAnnotationTest {
         .list();
 
     // assume
-    assertThat(userOperationLogEntries.size()).isEqualTo(2);
+    assertThat(userOperationLogEntries).hasSize(2);
 
     String operationId = userOperationLogEntries.get(0)
         .getOperationId();

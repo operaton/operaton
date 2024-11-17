@@ -58,7 +58,7 @@ public class DeploymentTest {
      engineRule.getRepositoryService().deleteDeployment(deployment.getId(), true);
 
      long count = engineRule.getRepositoryService().createDeploymentQuery().count();
-     assertThat(count).isEqualTo(0L);
+     assertThat(count).isZero();
   }
 
   @Test
@@ -80,6 +80,6 @@ public class DeploymentTest {
      engineRule.getRepositoryService().deleteDeployment(deployment.getId(), true);
 
      long count = engineRule.getRepositoryService().createDeploymentQuery().count();
-     assertThat(count).isEqualTo(0L);
+     assertThat(count).isZero();
   }
 }

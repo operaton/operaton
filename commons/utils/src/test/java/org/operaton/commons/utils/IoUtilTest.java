@@ -16,13 +16,14 @@
  */
 package org.operaton.commons.utils;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -86,7 +87,7 @@ public class IoUtilTest {
       while((line = reader.readLine()) != null) {
         output.append(line);
       }
-      assertThat(output.toString()).isEqualTo("This is a Test!");
+      assertThat(output).hasToString("This is a Test!");
     } catch(Exception e) {
       fail("Something went wrong while reading the input stream");
     }

@@ -65,7 +65,7 @@ public class ProcessDefinitionQueryWithCustomIdentityProviderTest {
     // when
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startableByUser("pepe").list();
     // then
-    assertThat(processDefinitions).hasSize(0);
+    assertThat(processDefinitions).isEmpty();
   }
 
   @Test

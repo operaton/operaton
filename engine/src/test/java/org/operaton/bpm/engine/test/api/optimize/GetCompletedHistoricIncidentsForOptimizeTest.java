@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -31,11 +36,6 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
 import java.util.Date;
 import java.util.List;
@@ -93,7 +93,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
       optimizeService.getCompletedHistoricIncidents(pastDate(), null, 10);
 
     // then
-    assertThat(completedIncidents.size()).isEqualTo(1);
+    assertThat(completedIncidents).hasSize(1);
     assertThatInstanceHasAllImportantInformation(completedIncidents.get(0));
   }
 
@@ -115,7 +115,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
       optimizeService.getCompletedHistoricIncidents(now, null, 10);
 
     // then
-    assertThat(completedIncidents.size()).isEqualTo(1);
+    assertThat(completedIncidents).hasSize(1);
     assertThat(completedIncidents.get(0).getProcessInstanceId()).isEqualTo(processInstance2.getId());
   }
 
@@ -137,7 +137,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
       optimizeService.getCompletedHistoricIncidents(null, now, 10);
 
     // then
-    assertThat(completedIncidents.size()).isEqualTo(1);
+    assertThat(completedIncidents).hasSize(1);
     assertThat(completedIncidents.get(0).getProcessInstanceId()).isEqualTo(processInstance.getId());
   }
 
@@ -159,7 +159,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
       optimizeService.getCompletedHistoricIncidents(now, now, 10);
 
     // then
-    assertThat(completedIncidents.size()).isEqualTo(0);
+    assertThat(completedIncidents).isEmpty();
   }
 
   @Test
@@ -176,7 +176,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
       optimizeService.getCompletedHistoricIncidents(pastDate(), null, 3);
 
     // then
-    assertThat(completedIncidents.size()).isEqualTo(3);
+    assertThat(completedIncidents).hasSize(3);
   }
 
   @Test
@@ -204,7 +204,7 @@ public class GetCompletedHistoricIncidentsForOptimizeTest {
       optimizeService.getCompletedHistoricIncidents(now, null, 10);
 
     // then
-    assertThat(completedIncidents.size()).isEqualTo(3);
+    assertThat(completedIncidents).hasSize(3);
     assertThat(completedIncidents.get(0).getProcessInstanceId()).isEqualTo(processInstance1.getId());
     assertThat(completedIncidents.get(1).getProcessInstanceId()).isEqualTo(processInstance2.getId());
     assertThat(completedIncidents.get(2).getProcessInstanceId()).isEqualTo(processInstance3.getId());

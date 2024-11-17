@@ -93,8 +93,8 @@ public class LdapUserLargeQueryTest {
     assertThat(query.listPage(91, 1)).hasSize(1);
 
     // Verifying odd usages
-    assertThat(query.listPage(-1, -1)).hasSize(0);
-    assertThat(query.listPage(92, 2)).hasSize(0); // 92 is the last index with a result
+    assertThat(query.listPage(-1, -1)).isEmpty();
+    assertThat(query.listPage(92, 2)).isEmpty(); // 92 is the last index with a result
     assertThat(query.listPage(0, 93)).hasSize(92); // there are only 92 groups
   }
 

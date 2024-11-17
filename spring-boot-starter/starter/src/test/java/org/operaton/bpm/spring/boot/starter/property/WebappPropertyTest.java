@@ -82,7 +82,7 @@ public class WebappPropertyTest extends ParsePropertiesHelper {
     assertThat(webapp.getCsrf().getEntryPoints()).isNotNull();
     assertThat(webapp.getCsrf().getEntryPoints()).isNotEmpty();
     assertThat(webapp.getCsrf().getEntryPoints()).isInstanceOf(List.class);
-    assertThat(webapp.getCsrf().getEntryPoints().size()).isEqualTo(2);
+    assertThat(webapp.getCsrf().getEntryPoints()).hasSize(2);
     assertThat(webapp.getCsrf().getEntryPoints().get(0)).isEqualTo("/api/engine/engine/default/history/task/count");
     assertThat(webapp.getCsrf().getEntryPoints().get(1)).isEqualTo("/api/engine/engine/default/history/variable/count");
   }

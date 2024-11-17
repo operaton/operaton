@@ -2621,7 +2621,7 @@ public class BatchSetRemovalTimeTest {
     CleanableHistoricProcessInstanceReportResult report = historyService.createCleanableHistoricProcessInstanceReport().singleResult();
 
     // then
-    assertThat(report.getFinishedProcessInstanceCount()).isEqualTo(0);
+    assertThat(report.getFinishedProcessInstanceCount()).isZero();
     assertThat(report.getCleanableProcessInstanceCount()).isEqualTo(1);
     assertThat(report.getHistoryTimeToLive()).isNull();
   }
@@ -2700,7 +2700,7 @@ public class BatchSetRemovalTimeTest {
     CleanableHistoricBatchReportResult report = historyService.createCleanableHistoricBatchReport().singleResult();
 
     // then
-    assertThat(report.getFinishedBatchesCount()).isEqualTo(0);
+    assertThat(report.getFinishedBatchesCount()).isZero();
     assertThat(report.getCleanableBatchesCount()).isEqualTo(1);
     assertThat(report.getHistoryTimeToLive()).isNull();
   }

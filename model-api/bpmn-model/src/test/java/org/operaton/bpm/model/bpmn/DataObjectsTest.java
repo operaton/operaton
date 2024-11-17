@@ -60,7 +60,7 @@ class DataObjectsTest {
     DataObjectReference dataObjectReference = modelInstance.getModelElementById("_dataRef_11");
     DataInputAssociation dataInputAssociation = scriptTask.getDataInputAssociations().iterator().next();
     Collection<ItemAwareElement> sources = dataInputAssociation.getSources();
-    assertThat(sources.size()).isEqualTo(1);
+    assertThat(sources).hasSize(1);
     assertThat(sources.iterator().next()).isEqualTo(dataObjectReference);
   }
 

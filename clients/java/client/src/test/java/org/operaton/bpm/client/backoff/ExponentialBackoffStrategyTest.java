@@ -39,7 +39,7 @@ class ExponentialBackoffStrategyTest {
   void shouldAdvanceBackoffStrategy() {
     // given
     long initialWaitingTime = backoffStrategy.calculateBackoffTime();
-    assertThat(initialWaitingTime).isEqualTo(0L);
+    assertThat(initialWaitingTime).isZero();
 
     // when
     // in consecutive iterations, no external tasks are available
@@ -66,14 +66,14 @@ class ExponentialBackoffStrategyTest {
 
     // then
     long waitingTime2 = backoffStrategy.calculateBackoffTime();
-    assertThat(waitingTime2).isEqualTo(0L);
+    assertThat(waitingTime2).isZero();
   }
 
   @Test
   void shouldCapWaitingTime() {
     // given
     long waitingTime = backoffStrategy.calculateBackoffTime();
-    assertThat(waitingTime).isEqualTo(0L);
+    assertThat(waitingTime).isZero();
 
     // when
     // reach maximum waiting time

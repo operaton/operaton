@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.webapp.plugin.resource;
 
-import org.operaton.bpm.engine.rest.exception.RestException;
-import org.operaton.bpm.webapp.AppRuntimeDelegate;
-import org.operaton.bpm.webapp.plugin.AppPluginRegistry;
-import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.mockito.Mockito;
+import org.operaton.bpm.engine.rest.exception.RestException;
+import org.operaton.bpm.webapp.AppRuntimeDelegate;
+import org.operaton.bpm.webapp.plugin.AppPluginRegistry;
+import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -112,11 +112,11 @@ public class AbstractAppPluginRootResourceTest {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         ((StreamingOutput) actual.getEntity()).write(output);
 
-        assertThat(output.toString()).isEqualTo(ASSET_CONTENT);
+        assertThat(output).hasToString(ASSET_CONTENT);
         assertThat(actual.getHeaders()).containsKey(HttpHeaders.CONTENT_TYPE).hasSize(1);
         assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE)).hasSize(1);
         // In IDE it's String, with maven it's MediaType class
-        assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE).get(0).toString()).isEqualTo(assetMediaType);
+        assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE).get(0)).hasToString(assetMediaType);
 
         Mockito.verify(runtimeDelegate).getAppPluginRegistry();
         Mockito.verify(pluginRegistry).getPlugin(PLUGIN_NAME);

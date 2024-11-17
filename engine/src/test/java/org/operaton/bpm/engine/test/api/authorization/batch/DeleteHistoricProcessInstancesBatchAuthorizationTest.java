@@ -166,7 +166,7 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
         HistoricBatch historicBatch = engineRule.getHistoryService().createHistoricBatchQuery().list().get(0);
         assertEquals("userId", historicBatch.getCreateUserId());
       }
-      assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
+      assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     }
   }
 }

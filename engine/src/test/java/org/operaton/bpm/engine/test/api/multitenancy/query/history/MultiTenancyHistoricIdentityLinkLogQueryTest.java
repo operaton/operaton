@@ -135,7 +135,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
         .createHistoricIdentityLinkLogQuery();
 
     // then
-    assertThat(query.list().size()).isEqualTo(2);
+    assertThat(query.list()).hasSize(2);
     assertThat(query.tenantIdIn(TENANT_1).count()).isEqualTo(1L);
     assertThat(query.tenantIdIn(TENANT_2).count()).isEqualTo(1L);
   }
@@ -203,12 +203,12 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
     // then
     // Identity link test
     List<IdentityLink> identityLinks = repositoryService.getIdentityLinksForProcessDefinition(processDefinition1.getId());
-    assertThat(identityLinks.size()).isEqualTo(2);
+    assertThat(identityLinks).hasSize(2);
     assertThat(identityLinks.get(0).getTenantId()).isEqualTo(TENANT_1);
     assertThat(identityLinks.get(1).getTenantId()).isEqualTo(TENANT_1);
 
     identityLinks = repositoryService.getIdentityLinksForProcessDefinition(processDefinition2.getId());
-    assertThat(identityLinks.size()).isEqualTo(2);
+    assertThat(identityLinks).hasSize(2);
     assertThat(identityLinks.get(0).getTenantId()).isEqualTo(TENANT_2);
     assertThat(identityLinks.get(1).getTenantId()).isEqualTo(TENANT_2);
   }

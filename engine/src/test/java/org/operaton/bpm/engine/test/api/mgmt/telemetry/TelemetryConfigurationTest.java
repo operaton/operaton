@@ -16,8 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.telemetry;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -33,11 +36,8 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
 import org.operaton.commons.testing.WatchLogger;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TelemetryConfigurationTest {
 
@@ -94,7 +94,7 @@ public class TelemetryConfigurationTest {
     // given
 
     // then
-    assertThat(loggingRule.getFilteredLog(" telemetry ").size()).isZero();
+    assertThat(loggingRule.getFilteredLog(" telemetry ")).isEmpty();
   }
 
   @Test

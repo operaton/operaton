@@ -94,6 +94,6 @@ public class LoginAttemptsTest {
     }
 
     // then
-    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is permanently locked.").size()).isEqualTo(1);
+    assertThat(loggingRule.getFilteredLog(INDENTITY_LOGGER, "The user with id 'johndoe' is permanently locked.")).hasSize(1);
   }
 }

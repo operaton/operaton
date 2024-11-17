@@ -69,7 +69,7 @@ public class JsonTreeMapJsonToJavaTest {
 
     List<Order> orders = JSON(EXAMPLE_JSON_COLLECTION).mapTo(desiredType.toCanonical());
 
-    assertThat(orders.size()).isEqualTo(1);
+    assertThat(orders).hasSize(1);
     assertIsExampleOrder(orders.get(0));
   }
 

@@ -116,7 +116,7 @@ public class MultiTenancyDeploymentQueryTest extends PluggableProcessEngineTest 
         .createDeploymentQuery()
         .tenantIdIn("nonExisting");
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -174,7 +174,7 @@ public class MultiTenancyDeploymentQueryTest extends PluggableProcessEngineTest 
 
     assertThat(query.count()).isEqualTo(2L);
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).includeDeploymentsWithoutTenantId().count()).isEqualTo(2L);
   }
 

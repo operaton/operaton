@@ -16,16 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -48,6 +38,13 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.AbstractAsyncOperationsTest;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Askar Akhmerov
@@ -97,7 +94,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions.size()).isEqualTo(0);
+    assertThat(exceptions).isEmpty();
     assertNoHistoryForTasks();
     assertHistoricBatchExists(testRule);
     assertAllHistoricProcessInstancesAreDeleted();
@@ -129,20 +126,20 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     // then batch jobs with different deployment ids exist
     JobQuery batchJobQuery = managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId());
     List<Job> batchJobs = batchJobQuery.list();
-    assertThat(batchJobs.size()).isEqualTo(2);
+    assertThat(batchJobs).hasSize(2);
     batchJobs.stream().forEach(job -> assertThat(job.getDeploymentId())
         .satisfiesAnyOf(
             arg -> assertThat(arg).isEqualTo(firstDeploymentId),
             arg -> assertThat(arg).isNull()
         ));
     assertThat(batchJobs.get(0).getDeploymentId()).isNotEqualTo(batchJobs.get(1).getDeploymentId());
-    assertThat(historicProcessInstances.size()).isEqualTo(4);
+    assertThat(historicProcessInstances).hasSize(4);
     assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isEqualTo(2L);
 
     // when the batch jobs for the first deployment are executed
     getJobIdsByDeployment(batchJobs, firstDeploymentId).forEach(managementService::executeJob);
     // then the historic process instances related to the first deployment should be deleted
-    assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isEqualTo(0L);
+    assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isZero();
     // and historic process instances related to the second deployment should not be deleted
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(2L);
 
@@ -169,18 +166,18 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     executeSeedJobs(batch, 2);
     // then batch jobs with different deployment ids exist
     List<Job> batchJobs = managementService.createJobQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).list();
-    assertThat(batchJobs.size()).isEqualTo(2);
+    assertThat(batchJobs).hasSize(2);
     assertThat(batchJobs.get(0).getDeploymentId()).isIn(firstDeploymentId, secondDeploymentId);
     assertThat(batchJobs.get(1).getDeploymentId()).isIn(firstDeploymentId, secondDeploymentId);
     assertThat(batchJobs.get(0).getDeploymentId()).isNotEqualTo(batchJobs.get(1).getDeploymentId());
-    assertThat(historicProcessInstances.size()).isEqualTo(4);
+    assertThat(historicProcessInstances).hasSize(4);
     assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isEqualTo(2L);
     assertThat(getHistoricProcessInstanceCountByDeploymentId(secondDeploymentId)).isEqualTo(2L);
 
     // when the batch jobs for the first deployment are executed
     getJobIdsByDeployment(batchJobs, firstDeploymentId).forEach(managementService::executeJob);
     // then the historic process instances related to the first deployment should be deleted
-    assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isEqualTo(0L);
+    assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isZero();
     // and historic process instances related to the second deployment should not be deleted
     assertThat(getHistoricProcessInstanceCountByDeploymentId(secondDeploymentId)).isEqualTo(2L);
 
@@ -212,7 +209,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     List<Exception> exceptions = executeBatchJobs(batch);
 
     //then
-    assertThat(exceptions.size()).isEqualTo(0);
+    assertThat(exceptions).isEmpty();
     assertHistoricBatchExists(testRule);
   }
 
@@ -229,7 +226,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions.size()).isEqualTo(0);
+    assertThat(exceptions).isEmpty();
     assertNoHistoryForTasks();
     assertHistoricBatchExists(testRule);
     assertAllHistoricProcessInstancesAreDeleted();
@@ -247,7 +244,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     List<Exception> exceptions = executeBatchJobs(batch);
 
     // then
-    assertThat(exceptions.size()).isEqualTo(0);
+    assertThat(exceptions).isEmpty();
     assertNoHistoryForTasks();
     assertHistoricBatchExists(testRule);
     assertAllHistoricProcessInstancesAreDeleted();
@@ -289,7 +286,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     List<Exception> exceptions = executeBatchJobs(batch);
 
     //then
-    assertThat(exceptions.size()).isEqualTo(0);
+    assertThat(exceptions).isEmpty();
     assertNoHistoryForTasks();
     assertHistoricBatchExists(testRule);
     assertAllHistoricProcessInstancesAreDeleted();
@@ -347,7 +344,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   protected void assertAllHistoricProcessInstancesAreDeleted() {
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
   }
 
 }

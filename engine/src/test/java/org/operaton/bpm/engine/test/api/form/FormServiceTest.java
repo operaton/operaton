@@ -1675,7 +1675,7 @@ public class FormServiceTest {
     // then
     assertThat(repositoryService.createDeploymentQuery().list()).hasSize(1);
     assertThat(findAllOperatonFormDefinitionEntities(processEngineConfiguration)).hasSize(1);
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).isEmpty();
     assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(1);
   }
 
@@ -1694,9 +1694,9 @@ public class FormServiceTest {
     // then
     assertThat(repositoryService.createDeploymentQuery().list()).hasSize(1);
     assertThat(findAllOperatonFormDefinitionEntities(processEngineConfiguration)).hasSize(1);
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).isEmpty();
     assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(1);
-    assertThat(taskService.createTaskQuery().list()).hasSize(0);
+    assertThat(taskService.createTaskQuery().list()).isEmpty();
   }
 
   @Deployment(resources = {
@@ -1716,7 +1716,7 @@ public class FormServiceTest {
     assertThat(repositoryService.createDeploymentQuery().list()).hasSize(1);
     assertThat(engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired()
         .execute(new FindOperatonFormDefinitionsCmd())).hasSize(1);
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).isEmpty();
     assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(1);
   }
 
@@ -1736,8 +1736,8 @@ public class FormServiceTest {
     assertThat(repositoryService.createDeploymentQuery().list()).hasSize(1);
     assertThat(engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired()
         .execute(new FindOperatonFormDefinitionsCmd())).hasSize(1);
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(0);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).isEmpty();
     assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).list()).hasSize(1);
-    assertThat(taskService.createTaskQuery().list()).hasSize(0);
+    assertThat(taskService.createTaskQuery().list()).isEmpty();
   }
 }

@@ -89,7 +89,7 @@ public class ProcessInstanceRestServiceTenantCheckTest extends AbstractCockpitPl
 
     CountResultDto result = resource.queryProcessInstancesCount(queryParameter);
     assertThat(result).isNotNull();
-    assertThat(result.getCount()).isEqualTo(0);
+    assertThat(result.getCount()).isZero();
   }
 
   @Test

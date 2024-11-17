@@ -158,7 +158,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
       .tenantIdIn("nonExisting");
 
     // then
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -188,7 +188,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
       .list();
 
     // then
-    assertThat(HistoricExternalTaskLogs.size()).isEqualTo(5);
+    assertThat(HistoricExternalTaskLogs).hasSize(5);
     assertThat(HistoricExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(HistoricExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(HistoricExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
@@ -208,7 +208,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
       .list();
 
     // then
-    assertThat(HistoricExternalTaskLogs.size()).isEqualTo(5);
+    assertThat(HistoricExternalTaskLogs).hasSize(5);
     assertThat(HistoricExternalTaskLogs.get(0).getTenantId()).isEqualTo(TENANT_TWO);
     assertThat(HistoricExternalTaskLogs.get(1).getTenantId()).isEqualTo(TENANT_TWO);
     assertThat(HistoricExternalTaskLogs.get(2).getTenantId()).isEqualTo(TENANT_TWO);
@@ -226,7 +226,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
     HistoricExternalTaskLogQuery query = historyService.createHistoricExternalTaskLogQuery();
 
     // then
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -240,7 +240,7 @@ public class MultiTenancyHistoricExternalTaskLogTest {
     // then
     assertThat(query.count()).isEqualTo(2L);
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(2L);
   }
 
@@ -293,9 +293,9 @@ public class MultiTenancyHistoricExternalTaskLogTest {
     } catch (ProcessEngineException e) {
       // then
       String errorMessage = e.getMessage();
-      assertThat(errorMessage.contains("Cannot get the historic external task log ")).isEqualTo(true);
-      assertThat(errorMessage.contains(failedHistoricExternalTaskLogId)).isEqualTo(true);
-      assertThat(errorMessage.contains("because it belongs to no authenticated tenant.")).isEqualTo(true);
+      assertThat(errorMessage).contains("Cannot get the historic external task log ");
+      assertThat(errorMessage).contains(failedHistoricExternalTaskLogId);
+      assertThat(errorMessage).contains("because it belongs to no authenticated tenant.");
     }
   }
 

@@ -16,16 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Date;
-import java.util.List;
-
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.identity.Group;
@@ -41,11 +37,11 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.Date;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetRunningHistoricTaskInstancesForOptimizeTest {
@@ -111,7 +107,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(null, null, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricTaskInstances).hasSize(1);
     assertThatTasksHaveAllImportantInformation(runningHistoricTaskInstances.get(0));
   }
 
@@ -137,7 +133,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(now, null, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricTaskInstances).hasSize(1);
     assertThat(runningHistoricTaskInstances.get(0).getProcessInstanceId()).isEqualTo(processInstance2.getId());
   }
 
@@ -163,7 +159,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(null, now, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricTaskInstances).hasSize(1);
     assertThat(runningHistoricTaskInstances.get(0).getProcessInstanceId()).isEqualTo(processInstance1.getId());
   }
 
@@ -189,7 +185,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(now, now, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(0);
+    assertThat(runningHistoricTaskInstances).isEmpty();
   }
 
   @Test
@@ -211,7 +207,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(pastDate(), null, 3);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(3);
+    assertThat(runningHistoricTaskInstances).hasSize(3);
   }
 
   @Test
@@ -240,7 +236,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(3);
+    assertThat(runningHistoricTaskInstances).hasSize(3);
     assertThat(runningHistoricTaskInstances.get(0).getProcessInstanceId()).isEqualTo(processInstance1.getId());
     assertThat(runningHistoricTaskInstances.get(1).getProcessInstanceId()).isEqualTo(processInstance2.getId());
     assertThat(runningHistoricTaskInstances.get(2).getProcessInstanceId()).isEqualTo(processInstance3.getId());
@@ -265,7 +261,7 @@ public class GetRunningHistoricTaskInstancesForOptimizeTest {
       optimizeService.getRunningHistoricTaskInstances(pastDate(), null, 10);
 
     // then
-    assertThat(runningHistoricTaskInstances.size()).isEqualTo(1);
+    assertThat(runningHistoricTaskInstances).hasSize(1);
     assertThat(runningHistoricTaskInstances.get(0).getTaskDefinitionKey()).isEqualTo("userTask2");
   }
 

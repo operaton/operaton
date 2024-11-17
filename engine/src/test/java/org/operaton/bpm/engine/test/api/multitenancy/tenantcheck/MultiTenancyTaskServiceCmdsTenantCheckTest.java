@@ -208,7 +208,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     // then
     taskService.complete(task.getId());
-    assertThat(taskService.createTaskQuery().taskId(task.getId()).active().count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskId(task.getId()).active().count()).isZero();
   }
 
   @Test
@@ -231,7 +231,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     // then
     taskService.complete(task.getId());
-    assertThat(taskService.createTaskQuery().taskId(task.getId()).active().count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskId(task.getId()).active().count()).isZero();
   }
 
   // delegate task test
@@ -314,7 +314,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     // then
     taskService.deleteTask(task.getId(), true);
-    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isZero();
   }
 
   @Test
@@ -350,7 +350,7 @@ public class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     // then
     taskService.deleteTask(task.getId(), true);
-    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isZero();
   }
 
   protected Task createTaskforTenant() {

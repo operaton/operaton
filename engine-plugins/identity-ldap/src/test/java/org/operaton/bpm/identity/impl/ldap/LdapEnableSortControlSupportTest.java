@@ -67,7 +67,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(User::getFirstName))
         .collect(Collectors.toList());
 
-    assertThat(orderedUsers.size()).isEqualTo(manualOrderedUsers.size());
+    assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
     for (int i = 0; i < orderedUsers.size(); i++) {
       assertThat(orderedUsers.get(i).getId()).isEqualTo(manualOrderedUsers.get(i).getId());
@@ -84,7 +84,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(User::getFirstName).reversed())
         .collect(Collectors.toList());
 
-    assertThat(orderedUsers.size()).isEqualTo(manualOrderedUsers.size());
+    assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
     for (int i = 0; i < orderedUsers.size(); i++) {
       assertThat(orderedUsers.get(i).getId()).isEqualTo(manualOrderedUsers.get(i).getId());
@@ -104,7 +104,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(User::getLastName))
         .collect(Collectors.toList());
 
-    assertThat(orderedUsers.size()).isEqualTo(manualOrderedUsers.size());
+    assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
     for (int i = 0; i < orderedUsers.size(); i++) {
       assertThat(orderedUsers.get(i).getLastName()).isEqualTo(manualOrderedUsers.get(i).getLastName());
@@ -121,7 +121,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(User::getLastName).reversed())
         .collect(Collectors.toList());
 
-    assertThat(orderedUsers.size()).isEqualTo(manualOrderedUsers.size());
+    assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
     for (int i = 0; i < orderedUsers.size(); i++) {
       assertThat(orderedUsers.get(i).getLastName()).isEqualTo(manualOrderedUsers.get(i).getLastName());
@@ -140,7 +140,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(User::getEmail))
         .collect(Collectors.toList());
 
-    assertThat(orderedUsers.size()).isEqualTo(manualOrderedUsers.size());
+    assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
     for (int i = 0; i < orderedUsers.size(); i++) {
       assertThat(orderedUsers.get(i).getId()).isEqualTo(manualOrderedUsers.get(i).getId());
@@ -157,7 +157,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(User::getEmail).reversed())
         .collect(Collectors.toList());
 
-    assertThat(orderedUsers.size()).isEqualTo(manualOrderedUsers.size());
+    assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
     for (int i = 0; i < orderedUsers.size(); i++) {
       assertThat(orderedUsers.get(i).getId()).isEqualTo(manualOrderedUsers.get(i).getId());
@@ -176,7 +176,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(User::getId))
         .collect(Collectors.toList());
 
-    assertThat(orderedUsers.size()).isEqualTo(manualOrderedUsers.size());
+    assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
     for (int i = 0; i < orderedUsers.size(); i++) {
       assertThat(orderedUsers.get(i).getId()).isEqualTo(manualOrderedUsers.get(i).getId());
@@ -193,7 +193,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(User::getId).reversed())
         .collect(Collectors.toList());
 
-    assertThat(orderedUsers.size()).isEqualTo(manualOrderedUsers.size());
+    assertThat(orderedUsers).hasSize(manualOrderedUsers.size());
 
     for (int i = 0; i < orderedUsers.size(); i++) {
       assertThat(orderedUsers.get(i).getId()).isEqualTo(manualOrderedUsers.get(i).getId());
@@ -212,7 +212,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(Group::getId))
         .collect(Collectors.toList());
 
-    assertThat(orderedGroup.size()).isEqualTo(manualOrderedGroups.size());
+    assertThat(orderedGroup).hasSize(manualOrderedGroups.size());
 
     for (int i = 0; i < orderedGroup.size(); i++) {
       assertThat(orderedGroup.get(i).getId()).isEqualTo(manualOrderedGroups.get(i).getId());
@@ -228,7 +228,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(Group::getId).reversed())
         .collect(Collectors.toList());
 
-    assertThat(orderedGroup.size()).isEqualTo(manualOrderedGroups.size());
+    assertThat(orderedGroup).hasSize(manualOrderedGroups.size());
 
     for (int i = 0; i < orderedGroup.size(); i++) {
       assertThat(orderedGroup.get(i).getId()).isEqualTo(manualOrderedGroups.get(i).getId());
@@ -247,7 +247,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(Group::getName))
         .collect(Collectors.toList());
 
-    assertThat(orderedGroup.size()).isEqualTo(manualOrderedGroups.size());
+    assertThat(orderedGroup).hasSize(manualOrderedGroups.size());
 
     for (int i = 0; i < orderedGroup.size(); i++) {
       assertThat(orderedGroup.get(i).getId()).isEqualTo(manualOrderedGroups.get(i).getId());
@@ -263,7 +263,7 @@ public class LdapEnableSortControlSupportTest {
         .sorted(Comparator.comparing(Group::getName).reversed())
         .collect(Collectors.toList());
 
-    assertThat(orderedGroup.size()).isEqualTo(manualOrderedGroups.size());
+    assertThat(orderedGroup).hasSize(manualOrderedGroups.size());
 
     for (int i = 0; i < orderedGroup.size(); i++) {
       assertThat(orderedGroup.get(i).getId()).isEqualTo(manualOrderedGroups.get(i).getId());

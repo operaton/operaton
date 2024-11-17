@@ -16,17 +16,10 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_EXTERNAL_TASK_NAME;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
-import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
-
-import java.util.LinkedList;
-import java.util.List;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -43,10 +36,14 @@ import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static junit.framework.TestCase.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.*;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricExternalTaskLogQueryTest {
@@ -802,7 +799,7 @@ public class HistoricExternalTaskLogQueryTest {
       .list();
 
     // then
-    assertThat(externalTaskLogs.size()).isEqualTo(3);
+    assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
       assertTrue(log.getPriority() <= 2);
     }
@@ -822,7 +819,7 @@ public class HistoricExternalTaskLogQueryTest {
       .list();
 
     // then
-    assertThat(externalTaskLogs.size()).isEqualTo(3);
+    assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
       assertTrue(log.getPriority() >= 2);
     }
@@ -843,7 +840,7 @@ public class HistoricExternalTaskLogQueryTest {
       .list();
 
     // then
-    assertThat(externalTaskLogs.size()).isEqualTo(3);
+    assertThat(externalTaskLogs).hasSize(3);
     for (HistoricExternalTaskLog log : externalTaskLogs) {
       assertTrue(log.getPriority() <= 3 && log.getPriority() >= 1);
     }
@@ -864,7 +861,7 @@ public class HistoricExternalTaskLogQueryTest {
       .list();
 
     // then
-    assertThat(externalTaskLogs.size()).isEqualTo(0);
+    assertThat(externalTaskLogs).isEmpty();
   }
 
 

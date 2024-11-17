@@ -16,9 +16,13 @@
  */
 package org.operaton.bpm.engine.test.variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
+import org.operaton.bpm.engine.variable.value.FileValue;
+import org.operaton.bpm.engine.variable.value.TypedValue;
+import org.operaton.commons.utils.IoUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -30,13 +34,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.variable.Variables;
-import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
-import org.operaton.bpm.engine.variable.value.FileValue;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.operaton.commons.utils.IoUtil;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * @author Ronny Bräunlich
@@ -63,18 +64,18 @@ class FileValueTypeImplTest {
 
   @Test
   void isPrimitiveValue() {
-    assertThat(type.isPrimitiveValueType()).isEqualTo(true);
+    assertThat(type.isPrimitiveValueType()).isTrue();
   }
 
   @Test
   void isNotAnAbstractType() {
-    assertThat(type.isAbstract()).isEqualTo(false);
+    assertThat(type.isAbstract()).isFalse();
   }
 
   @Test
   void canNotConvertFromAnyValue() {
     // we just use null to make sure false is always returned
-    assertThat(type.canConvertFromTypedValue(null)).isEqualTo(false);
+    assertThat(type.canConvertFromTypedValue(null)).isFalse();
   }
 
   @Test

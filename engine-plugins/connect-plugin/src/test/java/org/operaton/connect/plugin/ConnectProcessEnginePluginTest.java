@@ -274,7 +274,7 @@ class ConnectProcessEnginePluginTest {
     assertThat(task.getName()).isEqualTo("User Task");
 
     // no job is created
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0l);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Deployment

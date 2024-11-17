@@ -891,7 +891,7 @@ public class ProcessDataLoggingContextTest {
 
         if (expectedActivities != null) {
           assertThat(activityIdMdc).isNotNull();
-          assertThat(expectedActivities.contains(activityIdMdc)).isTrue();
+          assertThat(expectedActivities).contains(activityIdMdc);
           passedActivities.add(activityIdMdc);
         } else {
           assertThat(activityIdMdc).isNull();
@@ -929,7 +929,7 @@ public class ProcessDataLoggingContextTest {
 
 
       } else {
-        assertThat(mdcPropertyMap.isEmpty()).isTrue();
+        assertThat(mdcPropertyMap).isEmpty();
       }
       foundLogEntries = true;
     }
@@ -941,25 +941,25 @@ public class ProcessDataLoggingContextTest {
 
   protected void assertBpmnStacktraceLogPresent(ProcessInstance instance) {
     List<ILoggingEvent> bpmnStacktraceLog = loggingRule.getFilteredLog("ENGINE-16006");
-    assertThat(bpmnStacktraceLog.size()).isEqualTo(2);
+    assertThat(bpmnStacktraceLog).hasSize(2);
     for (int i = 0; i < bpmnStacktraceLog.size(); i++) {
       ILoggingEvent logEvent = bpmnStacktraceLog.get(i);
       Map<String, String> mdcPropertyMap = logEvent.getMDCPropertyMap();
-      assertThat(mdcPropertyMap.containsKey("activityId")).isTrue();
+      assertThat(mdcPropertyMap).containsKey("activityId");
       assertThat(mdcPropertyMap.containsKey("applicationName")).isFalse();
-      assertThat(mdcPropertyMap.containsKey("processDefinitionId")).isTrue();
-      assertThat(mdcPropertyMap.containsKey("processInstanceId")).isTrue();
-      assertThat(mdcPropertyMap.containsKey("tenantId")).isTrue();
+      assertThat(mdcPropertyMap).containsKey("processDefinitionId");
+      assertThat(mdcPropertyMap).containsKey("processInstanceId");
+      assertThat(mdcPropertyMap).containsKey("tenantId");
       if (i == 0) {
         // first BPMN stack trace log corresponds to nested service task
         assertThat(mdcPropertyMap.containsKey("businessKey")).isFalse();
-        assertThat(mdcPropertyMap.get("activityId")).isEqualTo("failing_task");
+        assertThat(mdcPropertyMap).containsEntry("activityId", "failing_task");
         assertThat(mdcPropertyMap.get("processDefinitionId")).isNotEqualTo(instance.getProcessDefinitionId());
         assertThat(mdcPropertyMap.get("processInstanceId")).isNotEqualTo(instance.getId());
         assertThat(instance.getTenantId()).isEqualTo(mdcPropertyMap.get("tenantId"));
       } else {
         // second BPMN stack trace log corresponds to outer service task
-        assertThat(mdcPropertyMap.containsKey("businessKey")).isTrue();
+        assertThat(mdcPropertyMap).containsKey("businessKey");
         assertThat("startProcess").isEqualTo(mdcPropertyMap.get("activityId"));
         assertThat(instance.getBusinessKey()).isEqualTo(mdcPropertyMap.get("businessKey"));
         assertThat(instance.getProcessDefinitionId()).isEqualTo(mdcPropertyMap.get("processDefinitionId"));

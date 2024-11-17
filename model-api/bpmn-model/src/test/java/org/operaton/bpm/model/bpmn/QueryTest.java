@@ -87,13 +87,13 @@ class QueryTest {
     ModelElementType gatewayType = modelInstance.getModel().getType(Gateway.class);
 
     assertThat(startSucceeding.filterByType(taskType).list()).hasSize(1);
-    assertThat(startSucceeding.filterByType(gatewayType).list()).hasSize(0);
+    assertThat(startSucceeding.filterByType(gatewayType).list()).isEmpty();
 
     assertThat(gateway1Succeeding.filterByType(taskType).list()).hasSize(1);
     assertThat(gateway1Succeeding.filterByType(gatewayType).list()).hasSize(1);
 
     assertThat(gateway2Succeeding.filterByType(taskType).list()).hasSize(3);
-    assertThat(gateway2Succeeding.filterByType(gatewayType).list()).hasSize(0);
+    assertThat(gateway2Succeeding.filterByType(gatewayType).list()).isEmpty();
   }
 
   @Test

@@ -228,7 +228,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
     externalTaskService.complete(externalTaskId, WORKER_ID);
 
-    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isEqualTo(0L);
+    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isZero();
 
   }
 
@@ -269,7 +269,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
     externalTaskService.complete(externalTaskId, WORKER_ID);
     // then
-    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isEqualTo(0L);
+    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isZero();
   }
 
   // handle failure test cases
@@ -523,7 +523,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
     externalTaskService.unlock(externalTaskId);
 
     // then
-    assertThat(externalTaskService.createExternalTaskQuery().locked().count()).isEqualTo(0L);
+    assertThat(externalTaskService.createExternalTaskQuery().locked().count()).isZero();
   }
 
   @Test
@@ -558,7 +558,7 @@ public class MultiTenancyExternalTaskCmdsTenantCheckTest {
 
     externalTaskService.unlock(externalTaskId);
     // then
-    assertThat(externalTaskService.createExternalTaskQuery().locked().count()).isEqualTo(0L);
+    assertThat(externalTaskService.createExternalTaskQuery().locked().count()).isZero();
   }
 
   // get error details tests

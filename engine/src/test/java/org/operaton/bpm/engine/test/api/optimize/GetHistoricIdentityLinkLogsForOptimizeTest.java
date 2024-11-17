@@ -16,16 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Date;
-import java.util.List;
-
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
@@ -42,11 +38,11 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.Date;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetHistoricIdentityLinkLogsForOptimizeTest {
@@ -121,7 +117,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       optimizeService.getHistoricIdentityLinkLogs(pastDate(), null, 10);
 
     // then
-    assertThat(identityLinkLogs.size()).isEqualTo(1);
+    assertThat(identityLinkLogs).hasSize(1);
     assertThatIdentityLinksHaveAllImportantInformation(identityLinkLogs.get(0), processInstance);
   }
 
@@ -158,7 +154,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       optimizeService.getHistoricIdentityLinkLogs(pastDate(), null, 10);
 
     // then
-    assertThat(identityLinkLogs.size()).isEqualTo(4);
+    assertThat(identityLinkLogs).hasSize(4);
     assertThat(identityLinkLogs.get(0).getUserId()).isEqualTo(userId);
     assertThat(identityLinkLogs.get(0).getOperationType()).isEqualTo(IDENTITY_LINK_ADD);
     assertThat(identityLinkLogs.get(0).getType()).isEqualTo(IdentityLinkType.CANDIDATE);
@@ -197,7 +193,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       optimizeService.getHistoricIdentityLinkLogs(pastDate(), null, 10);
 
     // then
-    assertThat(identityLinkLogs.size()).isEqualTo(2);
+    assertThat(identityLinkLogs).hasSize(2);
     assertThat(identityLinkLogs.get(0).getUserId()).isEqualTo(userId);
     assertThat(identityLinkLogs.get(0).getOperationType()).isEqualTo(IDENTITY_LINK_ADD);
     assertThat(identityLinkLogs.get(0).getType()).isEqualTo(IdentityLinkType.ASSIGNEE);
@@ -235,7 +231,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       optimizeService.getHistoricIdentityLinkLogs(now, null, 10);
 
     // then
-    assertThat(identityLinkLogs.size()).isEqualTo(2);
+    assertThat(identityLinkLogs).hasSize(2);
   }
 
   @Test
@@ -266,7 +262,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       optimizeService.getHistoricIdentityLinkLogs(null, now, 10);
 
     // then
-    assertThat(identityLinkLogs.size()).isEqualTo(1);
+    assertThat(identityLinkLogs).hasSize(1);
   }
 
   @Test
@@ -297,7 +293,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       optimizeService.getHistoricIdentityLinkLogs(now, now, 10);
 
     // then
-    assertThat(identityLinkLogs.size()).isEqualTo(0);
+    assertThat(identityLinkLogs).isEmpty();
   }
 
   @Test
@@ -322,7 +318,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       optimizeService.getHistoricIdentityLinkLogs(pastDate(), null, 3);
 
     // then
-    assertThat(identityLinkLogs.size()).isEqualTo(3);
+    assertThat(identityLinkLogs).hasSize(3);
   }
 
   @Test
@@ -353,7 +349,7 @@ public class GetHistoricIdentityLinkLogsForOptimizeTest {
       optimizeService.getHistoricIdentityLinkLogs(pastDate(), null, 4);
 
     // then
-    assertThat(identityLinkLogs.size()).isEqualTo(3);
+    assertThat(identityLinkLogs).hasSize(3);
     assertThat(identityLinkLogs.get(0).getOperationType()).isEqualTo(IDENTITY_LINK_ADD);
     assertThat(identityLinkLogs.get(1).getOperationType()).isEqualTo(IDENTITY_LINK_DELETE);
     assertThat(identityLinkLogs.get(2).getOperationType()).isEqualTo(IDENTITY_LINK_ADD);

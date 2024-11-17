@@ -64,7 +64,7 @@ public class AsyncJoinTest {
     managementService.executeJob(jobIdNotifyListener.get());
 
     // then
-    Assertions.assertThat(jobQuery.count()).isEqualTo(0);
+    Assertions.assertThat(jobQuery.count()).isZero();
     Assertions.assertThat(engineRule.historicProcessInstance().getState())
         .isEqualTo("COMPLETED");
   }
@@ -90,7 +90,7 @@ public class AsyncJoinTest {
     managementService.executeJob(jobIdNotifyListener.get());
 
     // then
-    Assertions.assertThat(jobQuery.count()).isEqualTo(0);
+    Assertions.assertThat(jobQuery.count()).isZero();
     Assertions.assertThat(engineRule.historicProcessInstance().getState())
         .isEqualTo("COMPLETED");
   }

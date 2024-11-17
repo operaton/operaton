@@ -57,7 +57,7 @@ public class OptimizeApiPageSizeTest {
     final List<?> pageOfEntries = scenario.getOptimizeServiceFunction().apply(OPTIMIZE_PAGE_SIZE);
 
     // then
-    assertThat(pageOfEntries.size()).isEqualTo(OPTIMIZE_PAGE_SIZE);
+    assertThat(pageOfEntries).hasSize(OPTIMIZE_PAGE_SIZE);
   }
 
   private Object[] optimizeServiceFunctions() {

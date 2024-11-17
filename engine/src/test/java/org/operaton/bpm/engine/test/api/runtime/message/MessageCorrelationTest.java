@@ -1731,7 +1731,7 @@ public class MessageCorrelationTest {
           .createHistoricVariableInstanceQuery()
           .count();
 
-    assertThat(numHistoricVariables).isEqualTo(0);
+    assertThat(numHistoricVariables).isZero();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.waitForMessageProcess.bpmn20.xml",
@@ -2095,7 +2095,7 @@ public class MessageCorrelationTest {
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("messageStartEvent")
         .variableValueEquals("aKey", "aValue");
     assertThat(processInstanceQuery.count()).isEqualTo(1);
-    assertThat(result.getVariables().size()).isEqualTo(1);
+    assertThat(result.getVariables()).hasSize(1);
     assertThat(result.getVariables().getValueTyped("aKey").getValue()).isEqualTo("aValue");
   }
 
@@ -2126,7 +2126,7 @@ public class MessageCorrelationTest {
         .variableValueEquals("aKey", "aValue");
     assertThat(processInstanceQuery.count()).isEqualTo(1);
     MessageCorrelationResultWithVariables result = results.get(0);
-    assertThat(result.getVariables().size()).isEqualTo(1);
+    assertThat(result.getVariables()).hasSize(1);
     assertThat(result.getVariables().getValueTyped("aKey").getValue()).isEqualTo("aValue");
   }
 

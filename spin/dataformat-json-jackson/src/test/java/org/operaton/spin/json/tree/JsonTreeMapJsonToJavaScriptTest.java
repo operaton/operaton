@@ -85,7 +85,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
 
     List<Order> orders = script.execute(variables).getVariable("result");
 
-    assertThat(orders.size()).isEqualTo(1);
+    assertThat(orders).hasSize(1);
     assertIsExampleOrder(orders.get(0));
   }
 

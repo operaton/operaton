@@ -108,7 +108,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<String> instances = from(content).getList("");
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
 
     String returnedId = from(content).getString("[0].id");
     String returnedName = from(content).getString("[0].name");

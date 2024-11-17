@@ -113,13 +113,13 @@ public class MultiTenancyTimerStartEventTest {
 
      repositoryService.deleteDeployment(deploymentForTenantOne.getId(), true);
 
-     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(0L);
+     assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
      assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
 
      repositoryService.deleteDeployment(deploymentForTenantTwo.getId(), true);
 
-     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(0L);
-     assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+     assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
+     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
   @Test
@@ -187,7 +187,7 @@ public class MultiTenancyTimerStartEventTest {
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(2L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(0L);
+    assertThat(query.withoutTenantId().count()).isZero();
   }
 
   protected void executeFailingJobs(List<Job> jobs) {

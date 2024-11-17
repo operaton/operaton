@@ -16,26 +16,20 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author Sebastian Menski
@@ -74,16 +68,16 @@ public class FilterPropertiesTest {
   public void testPropertiesInternalFromNull() {
     // given
     Filter noPropsFilter = filterService.
-        newTaskFilter("no props filter")
-        .setOwner("demo")
-        .setProperties(null);
+            newTaskFilter("no props filter")
+            .setOwner("demo")
+            .setProperties(null);
     filterService.saveFilter(noPropsFilter);
 
     // when
     FilterEntity noPropsFilterEntity = (FilterEntity) filterService
-        .createTaskFilterQuery()
-        .filterOwner("demo")
-        .singleResult();
+            .createTaskFilterQuery()
+            .filterOwner("demo")
+            .singleResult();
 
     // then
     assertThat(noPropsFilterEntity.getPropertiesInternal()).isEqualTo("{}");
@@ -137,9 +131,8 @@ public class FilterPropertiesTest {
     Object string = list.get(0);
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
-    assertThat(string).isInstanceOf(String.class);
-    assertThat(string.toString()).isEqualTo("bar");
+    assertThat(deserialisedProperties).hasSize(1);
+    assertThat(string).isInstanceOf(String.class).hasToString("bar");
   }
 
   @Test
@@ -159,8 +152,8 @@ public class FilterPropertiesTest {
     Object string = map.get("bar");
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
-    assertThat(string.toString()).isEqualTo("foo");
+    assertThat(deserialisedProperties).hasSize(1);
+    assertThat(string).hasToString("foo");
   }
 
   @Test
@@ -181,8 +174,8 @@ public class FilterPropertiesTest {
     Object string = list.get(0);
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
-    assertThat(string.toString()).isEqualTo("foo");
+    assertThat(deserialisedProperties).hasSize(1);
+    assertThat(string).hasToString("foo");
   }
 
   @Test
@@ -211,13 +204,13 @@ public class FilterPropertiesTest {
     Map map = (Map) list.get(0);
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
-    assertThat(map.get("string")).isEqualTo("aStringValue");
-    assertThat(map.get("int")).isEqualTo(47);
-    assertThat(map.get("intOutOfRange")).isEqualTo(Integer.MAX_VALUE + 1L);
-    assertThat(map.get("long")).isEqualTo(Long.MAX_VALUE);
-    assertThat(map.get("double")).isEqualTo(3.14159265359D);
-    assertThat(map.get("boolean")).isEqualTo(true);
+    assertThat(deserialisedProperties).hasSize(1);
+    assertThat(map).containsEntry("string", "aStringValue")
+            .containsEntry("int", 47)
+            .containsEntry("intOutOfRange", Integer.MAX_VALUE + 1L)
+            .containsEntry("long", Long.MAX_VALUE)
+            .containsEntry("double", 3.14159265359D)
+            .containsEntry("boolean", true);
     assertThat(map.get("null")).isNull();
   }
 
@@ -246,7 +239,7 @@ public class FilterPropertiesTest {
     List list = (List) ((Map) deserialisedProperties.get("foo")).get("bar");
 
     // then
-    assertThat(deserialisedProperties.size()).isEqualTo(1);
+    assertThat(deserialisedProperties).hasSize(1);
 
     assertThat(list.get(0)).isEqualTo("aStringValue");
     assertThat(list.get(1)).isEqualTo(47);

@@ -106,7 +106,7 @@ public class PartitioningTest {
     });
 
     // assume
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
 
     // when
     runtimeService.deleteProcessInstance(processInstanceId, "aDeleteReason");
@@ -166,7 +166,7 @@ public class PartitioningTest {
     });
 
     // assume
-    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isZero();
 
     // when
     String taskId = taskService.createTaskQuery()
@@ -200,15 +200,15 @@ public class PartitioningTest {
     });
 
     // assume
-    assertThat(historyService.createHistoricIncidentQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricIncidentQuery().count()).isZero();
     assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1L);
 
     // when
     runtimeService.resolveIncident(incidentId);
 
     // then
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(0L);
-    assertThat(historyService.createHistoricIncidentQuery().count()).isEqualTo(0L);
+    assertThat(runtimeService.createIncidentQuery().count()).isZero();
+    assertThat(historyService.createHistoricIncidentQuery().count()).isZero();
   }
 
   @Test
@@ -235,7 +235,7 @@ public class PartitioningTest {
     });
 
     // assume
-    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
 
     // when
     String seedJobDefinitionId = batch.getSeedJobDefinitionId();
@@ -254,8 +254,8 @@ public class PartitioningTest {
     }
 
     // then
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0L);
-    assertThat(managementService.createBatchQuery().count()).isEqualTo(0L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
+    assertThat(managementService.createBatchQuery().count()).isZero();
 
     // cleanup
     cleanUp(processInstanceId);

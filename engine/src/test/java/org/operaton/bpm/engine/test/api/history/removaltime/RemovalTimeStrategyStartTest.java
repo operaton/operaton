@@ -142,7 +142,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     List<HistoricDecisionInstance> historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // assume
-    assertThat(historicDecisionInstances.size()).isEqualTo(3);
+    assertThat(historicDecisionInstances).hasSize(3);
 
     Date removalTime = addDays(START_DATE, 5);
 
@@ -172,7 +172,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     List<HistoricDecisionInstance> historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
 
     // assume
-    assertThat(historicDecisionInstances.size()).isEqualTo(3);
+    assertThat(historicDecisionInstances).hasSize(3);
 
     Date removalTime = addDays(START_DATE, 5);
 
@@ -855,7 +855,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
       .list();
 
     // assume
-    assertThat(historicDetails.size()).isEqualTo(2);
+    assertThat(historicDetails).hasSize(2);
 
     Date removalTime = addDays(START_DATE, 5);
 
@@ -917,7 +917,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
 
     // assume
-    assertThat(historicIncidents.size()).isEqualTo(2);
+    assertThat(historicIncidents).hasSize(2);
 
     Date removalTime = addDays(START_DATE, 5);
 
@@ -1016,7 +1016,7 @@ public class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
     List<HistoricJobLog> jobLog = historyService.createHistoricJobLogQuery().list();
 
     // assume
-    assertThat(jobLog.size()).isEqualTo(2);
+    assertThat(jobLog).hasSize(2);
 
     Date removalTime = addDays(START_DATE, 5);
 

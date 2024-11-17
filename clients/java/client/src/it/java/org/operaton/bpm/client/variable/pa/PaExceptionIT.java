@@ -148,7 +148,7 @@ public class PaExceptionIT {
 
     // then
     NotFoundException px = (NotFoundException) catchThrowable(() -> service.complete(externalTask));
-    assertThat(px.getCode()).isEqualTo(0);
+    assertThat(px.getCode()).isZero();
     assertThat(px.getType()).isEqualTo("RestException");
     assertThat(px.getMessage()).isEqualTo("TASK/CLIENT-01008 Exception while completing the external task: External task with id not-existing-id does not exist");
     assertThat(px.getHttpStatusCode()).isEqualTo(404);
@@ -208,7 +208,7 @@ public class PaExceptionIT {
     // then
     BadRequestException px = (BadRequestException) catchThrowable(() -> service.complete(externalTask));
     assertThat(px).isInstanceOf(BadRequestException.class);
-    assertThat(px.getCode()).isEqualTo(0);
+    assertThat(px.getCode()).isZero();
     assertThat(px.getType()).isEqualTo("RestException");
     assertThat(px.getMessage()).matches("TASK/CLIENT-01007 Exception while completing the external task: "
         + "External Task ([a-z0-9-]*) cannot be completed by worker 'aWorkerId'. "

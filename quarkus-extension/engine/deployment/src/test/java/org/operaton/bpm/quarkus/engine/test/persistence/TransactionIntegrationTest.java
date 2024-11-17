@@ -186,7 +186,7 @@ public class TransactionIntegrationTest {
     // then
     Job job = managementService.createJobQuery().singleResult();
 
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isEqualTo("Unable to commit transaction");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
@@ -205,7 +205,7 @@ public class TransactionIntegrationTest {
     // then
     Job job = managementService.createJobQuery().singleResult();
 
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isEqualTo("Unable to commit transaction");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
@@ -224,7 +224,7 @@ public class TransactionIntegrationTest {
     // then
     Job job = managementService.createJobQuery().singleResult();
 
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isEqualTo("Unable to commit transaction");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());

@@ -83,7 +83,7 @@ public class BasicAuthAndInterceptorConfigurationTest extends ParsePropertiesHel
     verify(clientBuilder, times(3))
         .addInterceptor(interceptorCaptor.capture());
 
-    assertThat(interceptorCaptor.getAllValues().size()).isEqualTo(3);
+    assertThat(interceptorCaptor.getAllValues()).hasSize(3);
     assertThat(interceptorCaptor.getAllValues())
         .containsOnlyOnce(interceptorOne, interceptorTwo);
     assertThat(interceptorCaptor.getAllValues())

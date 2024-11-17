@@ -16,23 +16,19 @@
  */
 package org.operaton.bpm.dmn.engine.evaluate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-
-import java.util.List;
-import java.util.Map;
-
-import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
-import org.operaton.bpm.dmn.engine.DmnDecisionResult;
-import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
-import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
-import org.operaton.bpm.dmn.engine.DmnEngineException;
+import org.junit.Test;
+import org.operaton.bpm.dmn.engine.*;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DmnEvaluationException;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.Test;
+
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
+import static org.operaton.bpm.engine.variable.Variables.createVariables;
 
 public class DmnDecisionEvaluationTest extends DmnEngineTest {
 
@@ -157,7 +153,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
       .asVariableContext());
 
     List<Map<String, Object>> resultList = results.getResultList();
-    assertThat(resultList.size()).isEqualTo(0);
+    assertThat(resultList).isEmpty();
 
   }
 

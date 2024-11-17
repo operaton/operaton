@@ -16,14 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.After;
+import org.junit.Test;
 import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.authorization.SystemPermissions;
@@ -34,8 +28,14 @@ import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.management.TableMetaData;
 import org.operaton.bpm.engine.management.TablePage;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
-import org.junit.After;
-import org.junit.Test;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -889,7 +889,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
     long schemaLog = managementService.createSchemaLogQuery().count();
 
     // then
-    assertThat(schemaLog).isGreaterThan(0);
+    assertThat(schemaLog).isPositive();
   }
 
   @Test
@@ -901,7 +901,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
     long schemaLog = managementService.createSchemaLogQuery().count();
 
     // then
-    assertThat(schemaLog).isGreaterThan(0);
+    assertThat(schemaLog).isPositive();
   }
 
   @Test
@@ -914,7 +914,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
     long schemaLog = managementService.createSchemaLogQuery().count();
 
     // then
-    assertThat(schemaLog).isGreaterThan(0);
+    assertThat(schemaLog).isPositive();
   }
 
   @Test

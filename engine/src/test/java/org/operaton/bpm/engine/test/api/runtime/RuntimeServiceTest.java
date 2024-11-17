@@ -246,7 +246,7 @@ public class RuntimeServiceTest {
     // if we skip the custom listeners,
     runtimeService.deleteProcessInstances(Arrays.asList(processInstance.getId(),processInstance2.getId()), null, false, false);
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0l);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment

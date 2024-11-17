@@ -372,9 +372,9 @@ public class DeleteProcessDefinitionTest {
       .delete();
 
     // then
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0L);
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isZero();
   }
 
   @Test
@@ -512,9 +512,9 @@ public class DeleteProcessDefinitionTest {
       .delete();
 
     // then
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(0L);
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isZero();
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isZero();
   }
 
   @Test

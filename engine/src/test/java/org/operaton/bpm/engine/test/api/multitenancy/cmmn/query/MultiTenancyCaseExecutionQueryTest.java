@@ -95,7 +95,7 @@ public class MultiTenancyCaseExecutionQueryTest extends PluggableProcessEngineTe
         .createCaseExecutionQuery()
         .tenantIdIn("nonExisting");
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -157,7 +157,7 @@ public class MultiTenancyCaseExecutionQueryTest extends PluggableProcessEngineTe
 
     assertThat(query.count()).isEqualTo(4L);
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(2L);
   }
 

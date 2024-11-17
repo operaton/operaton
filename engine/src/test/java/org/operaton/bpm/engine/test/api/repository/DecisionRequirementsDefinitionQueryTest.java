@@ -69,7 +69,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByDecisionRequirementsDefinitionId() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionId("notExisting").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionId("notExisting").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionId(decisionRequirementsDefinitionId).count()).isEqualTo(1L);
     assertThat(query.singleResult().getKey()).isEqualTo("score");
@@ -79,7 +79,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByDecisionRequirementsDefinitionIds() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionIdIn("not", "existing").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionIdIn("not", "existing").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionIdIn(decisionRequirementsDefinitionId, "notExisting").count()).isEqualTo(1L);
     assertThat(query.singleResult().getKey()).isEqualTo("score");
@@ -89,7 +89,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByDecisionRequirementsDefinitionKey() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionKey("notExisting").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionKey("notExisting").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionKey("score").count()).isEqualTo(1L);
     assertThat(query.singleResult().getKey()).isEqualTo("score");
@@ -99,7 +99,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByDecisionRequirementsDefinitionKeyLike() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionKeyLike("%notExisting%").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionKeyLike("%notExisting%").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionKeyLike("%sco%").count()).isEqualTo(1L);
     assertThat(query.decisionRequirementsDefinitionKeyLike("%dis%").count()).isEqualTo(2L);
@@ -110,7 +110,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByDecisionRequirementsDefinitionName() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionName("notExisting").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionName("notExisting").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionName("Score").count()).isEqualTo(1L);
     assertThat(query.singleResult().getKey()).isEqualTo("score");
@@ -120,7 +120,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByDecisionRequirementsDefinitionNameLike() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionNameLike("%notExisting%").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionNameLike("%notExisting%").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionNameLike("%Sco%").count()).isEqualTo(1L);
     assertThat(query.decisionRequirementsDefinitionNameLike("%ish%").count()).isEqualTo(2L);
@@ -130,7 +130,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByDecisionRequirementsDefinitionCategory() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionCategory("notExisting").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionCategory("notExisting").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionCategory("test-drd-1").count()).isEqualTo(1L);
     assertThat(query.singleResult().getKey()).isEqualTo("score");
@@ -140,7 +140,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByDecisionRequirementsDefinitionCategoryLike() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionCategoryLike("%notExisting%").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionCategoryLike("%notExisting%").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionCategoryLike("%test%").count()).isEqualTo(3L);
 
@@ -151,7 +151,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByResourceName() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionResourceName("notExisting").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionResourceName("notExisting").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionResourceName(DRD_SCORE_RESOURCE).count()).isEqualTo(1L);
     assertThat(query.singleResult().getKey()).isEqualTo("score");
@@ -161,7 +161,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByResourceNameLike() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionResourceNameLike("%notExisting%").count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionResourceNameLike("%notExisting%").count()).isZero();
 
     assertThat(query.decisionRequirementsDefinitionResourceNameLike("%.dmn11.xml%").count()).isEqualTo(4L);
   }
@@ -179,7 +179,7 @@ public class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionVersion(1).count()).isEqualTo(3L);
     assertThat(query.decisionRequirementsDefinitionVersion(2).count()).isEqualTo(1L);
-    assertThat(query.decisionRequirementsDefinitionVersion(3).count()).isEqualTo(0L);
+    assertThat(query.decisionRequirementsDefinitionVersion(3).count()).isZero();
   }
 
   @Test
@@ -194,7 +194,7 @@ public class DecisionRequirementsDefinitionQueryTest {
   public void queryByDeploymentId() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.deploymentId("notExisting").count()).isEqualTo(0L);
+    assertThat(query.deploymentId("notExisting").count()).isZero();
 
     assertThat(query.deploymentId(firstDeploymentId).count()).isEqualTo(2L);
     assertThat(query.deploymentId(secondDeploymentId).count()).isEqualTo(1L);

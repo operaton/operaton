@@ -100,7 +100,7 @@ public class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
     HistoricDecisionInstanceStatisticsQuery query = historyService.
         createHistoricDecisionInstanceStatisticsQuery(decisionRequirementsDefinition.getId());
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test

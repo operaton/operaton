@@ -181,7 +181,7 @@ public class ConcurrentJobExecutorTest {
       .hasMessageContaining("DELETE MessageEntity")
       .hasMessageContaining("Entity was updated by another transaction concurrently");
     assertThat(threadTwo.exception).isNull();
-    assertThat(managementService.createJobQuery().count()).isEqualTo(0L);
+    assertThat(managementService.createJobQuery().count()).isZero();
   }
 
   @Test

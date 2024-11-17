@@ -67,7 +67,7 @@ public class PropertyUserOperationLogTest {
   @Test
   public void testCreateProperty() {
     // given
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when
     identityService.setAuthenticatedUserId(USER_ID);
@@ -89,7 +89,7 @@ public class PropertyUserOperationLogTest {
   public void testUpdateProperty() {
     // given
     managementService.setProperty(PROPERTY_NAME, "testValue");
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when
     identityService.setAuthenticatedUserId(USER_ID);
@@ -111,7 +111,7 @@ public class PropertyUserOperationLogTest {
   public void testDeleteProperty() {
     // given
     managementService.setProperty(PROPERTY_NAME, "testValue");
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when
     identityService.setAuthenticatedUserId(USER_ID);
@@ -132,7 +132,7 @@ public class PropertyUserOperationLogTest {
   @Test
   public void testDeletePropertyNonExisting() {
     // given
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when
     identityService.setAuthenticatedUserId(USER_ID);
@@ -140,6 +140,6 @@ public class PropertyUserOperationLogTest {
     identityService.clearAuthentication();
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
   }
 }

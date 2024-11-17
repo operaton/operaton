@@ -142,7 +142,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
         .tenantIdIn("nonExisting");
 
     // then
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -209,7 +209,7 @@ public class MultiTenancyHistoricJobLogQueryTest {
     assertThat(query.count()).isEqualTo(4L);  // null-tenant entries are still included
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(2L);
     assertThat(query.withoutTenantId().count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(2L);
   }
 

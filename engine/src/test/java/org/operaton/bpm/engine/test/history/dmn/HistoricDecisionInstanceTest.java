@@ -416,7 +416,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
     historyService.deleteHistoricDecisionInstanceByDefinitionId(decisionDefinition.getId());
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
@@ -435,7 +435,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricDecisionInstanceByInstanceId(historicDecisionInstance.getId());
 
     // then
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -459,7 +459,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(1L);
 
     repositoryService.deleteDeployment(firstDeploymentId, true);
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Deployment(resources = { DECISION_SINGLE_OUTPUT_DMN })

@@ -87,6 +87,6 @@ public class CustomPasswordPolicyTest {
       .hasMessageContaining("Password does not match policy");
 
     // and
-    assertThat(identityService.createUserQuery().userId(user.getId()).count()).isEqualTo(0L);
+    assertThat(identityService.createUserQuery().userId(user.getId()).count()).isZero();
   }
 }

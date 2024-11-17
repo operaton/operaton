@@ -155,7 +155,7 @@ public class MultiTenancyFilterServiceTest extends PluggableProcessEngineTest {
 
     identityService.setAuthentication("user", null, null);
 
-    assertThat(filterService.count(filterId)).isEqualTo(0L);
+    assertThat(filterService.count(filterId)).isZero();
   }
 
   @Test
@@ -176,7 +176,7 @@ public class MultiTenancyFilterServiceTest extends PluggableProcessEngineTest {
     identityService.setAuthentication("user", null, null);
 
     TaskQuery extendingQuery = taskService.createTaskQuery().tenantIdIn(TENANT_ONE);
-    assertThat(filterService.count(filterId, extendingQuery)).isEqualTo(0L);
+    assertThat(filterService.count(filterId, extendingQuery)).isZero();
   }
 
   @Test

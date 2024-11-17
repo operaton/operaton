@@ -139,7 +139,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     // when the batch jobs for the first deployment are executed
     getJobIdsByDeployment(batchJobs, firstDeploymentId).forEach(managementService::executeJob);
     // then the historic process instances related to the first deployment should be deleted
-    assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isEqualTo(0L);
+    assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isZero();
     // and historic process instances related to the second deployment should not be deleted
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(2L);
 
@@ -177,7 +177,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
     // when the batch jobs for the first deployment are executed
     getJobIdsByDeployment(batchJobs, firstDeploymentId).forEach(managementService::executeJob);
     // then the historic process instances related to the first deployment should be deleted
-    assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isEqualTo(0L);
+    assertThat(getHistoricProcessInstanceCountByDeploymentId(firstDeploymentId)).isZero();
     // and historic process instances related to the second deployment should not be deleted
     assertThat(getHistoricProcessInstanceCountByDeploymentId(secondDeploymentId)).isEqualTo(2L);
 
@@ -344,7 +344,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   protected void assertAllHistoricProcessInstancesAreDeleted() {
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
   }
 
 }

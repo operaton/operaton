@@ -41,7 +41,7 @@ public class IncidentUserOperationLogTest extends PluggableProcessEngineTest {
     // given
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when
     Incident incident = doAuthenticated(() -> runtimeService.createIncident("foo", processInstance.getId(), "aa", "bar"));
@@ -75,13 +75,13 @@ public class IncidentUserOperationLogTest extends PluggableProcessEngineTest {
   @Test
   public void shouldNotLogIncidentCreationFailure() {
     // given
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when/then
     assertThatThrownBy(() -> runtimeService.createIncident("foo", null, "userTask1", "bar"))
       .isInstanceOf(BadUserRequestException.class);
 
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
   }
 
   @Test
@@ -90,7 +90,7 @@ public class IncidentUserOperationLogTest extends PluggableProcessEngineTest {
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process");
     Incident incident = runtimeService.createIncident("foo", processInstance.getId(), "userTask1", "bar");
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when
     doAuthenticated(() -> runtimeService.resolveIncident(incident.getId()));
@@ -113,13 +113,13 @@ public class IncidentUserOperationLogTest extends PluggableProcessEngineTest {
   @Test
   public void shouldNotLogIncidentResolutionFailure() {
     // given
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when/then
     assertThatThrownBy(() -> runtimeService.resolveIncident("foo"))
       .isInstanceOf(NotFoundException.class);
 
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
   }
 
   @Test
@@ -131,7 +131,7 @@ public class IncidentUserOperationLogTest extends PluggableProcessEngineTest {
     Incident incident = runtimeService.createIncident("foo", processInstance.getId(), "userTask1", "bar");
 
     // assume
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when
     doAuthenticated(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), annotation));
@@ -155,7 +155,7 @@ public class IncidentUserOperationLogTest extends PluggableProcessEngineTest {
     Incident incident = runtimeService.createIncident("foo", processInstance.getId(), "userTask1", "bar");
 
     // assume
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isZero();
 
     // when
     doAuthenticated(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));

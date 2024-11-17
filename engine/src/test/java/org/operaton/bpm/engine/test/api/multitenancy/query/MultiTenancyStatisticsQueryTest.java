@@ -215,7 +215,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
 
     ActivityStatisticsQuery query = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId());
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
 
   }
 

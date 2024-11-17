@@ -80,14 +80,14 @@ public class TenantQueryTest {
   public void queryByNonExistingId() {
     TenantQuery query = identityService.createTenantQuery().tenantId("nonExisting");
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
   public void queryByIdIn() {
     TenantQuery query = identityService.createTenantQuery();
 
-    assertThat(query.tenantIdIn("non", "existing").count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn("non", "existing").count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(2L);
   }
 
@@ -95,7 +95,7 @@ public class TenantQueryTest {
   public void queryByName() {
     TenantQuery query = identityService.createTenantQuery();
 
-    assertThat(query.tenantName("nonExisting").count()).isEqualTo(0L);
+    assertThat(query.tenantName("nonExisting").count()).isZero();
     assertThat(query.tenantName("Tenant_1").count()).isEqualTo(1L);
     assertThat(query.tenantName("Tenant_2").count()).isEqualTo(1L);
   }
@@ -104,7 +104,7 @@ public class TenantQueryTest {
   public void queryByNameLike() {
     TenantQuery query = identityService.createTenantQuery();
 
-    assertThat(query.tenantNameLike("%nonExisting%").count()).isEqualTo(0L);
+    assertThat(query.tenantNameLike("%nonExisting%").count()).isZero();
     assertThat(query.tenantNameLike("%Tenant\\_1%").count()).isEqualTo(1L);
     assertThat(query.tenantNameLike("%Tenant%").count()).isEqualTo(2L);
   }
@@ -113,7 +113,7 @@ public class TenantQueryTest {
   public void queryByUser() {
     TenantQuery query = identityService.createTenantQuery();
 
-    assertThat(query.userMember("nonExisting").count()).isEqualTo(0L);
+    assertThat(query.userMember("nonExisting").count()).isZero();
     assertThat(query.userMember(USER).count()).isEqualTo(1L);
     assertThat(query.userMember(USER).tenantId(TENANT_ONE).count()).isEqualTo(1L);
   }
@@ -122,7 +122,7 @@ public class TenantQueryTest {
   public void queryByGroup() {
     TenantQuery query = identityService.createTenantQuery();
 
-    assertThat(query.groupMember("nonExisting").count()).isEqualTo(0L);
+    assertThat(query.groupMember("nonExisting").count()).isZero();
     assertThat(query.groupMember(GROUP).count()).isEqualTo(1L);
     assertThat(query.groupMember(GROUP).tenantId(TENANT_TWO).count()).isEqualTo(1L);
   }

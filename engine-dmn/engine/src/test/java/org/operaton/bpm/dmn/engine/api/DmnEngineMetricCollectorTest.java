@@ -60,13 +60,13 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
   @Test
   public void testInitialExecutedDecisionElementsValue() {
-    assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
+    assertThat(metricCollector.getExecutedDecisionElements()).isZero();
   }
 
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
   public void testExecutedDecisionElementsOfDecisionTable() {
-    assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
+    assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     dmnEngine.evaluateDecisionTable(decision, variables);
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(16L);
@@ -82,7 +82,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
   @Test
   @DecisionResource(resource = DISH_EXAMPLE_DMN, decisionKey = "Dish")
   public void testExecutedDecisionElementsOfDrg() {
-    assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
+    assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     VariableMap variableMap = createVariables()
       .putValue("temperature", 20)
@@ -115,19 +115,19 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
   public void testClearExecutedDecisionElementsValue() {
-    assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
+    assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     dmnEngine.evaluateDecisionTable(decision, variables);
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(16L);
     assertThat(metricCollector.clearExecutedDecisionElements()).isEqualTo(16L);
 
-    assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
+    assertThat(metricCollector.getExecutedDecisionElements()).isZero();
   }
 
   @Test
   @DecisionResource(resource = DISH_EXAMPLE_DMN, decisionKey = "Dish")
   public void testDrdDishDecisionExample() {
-    assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
+    assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     dmnEngine.evaluateDecisionTable(decision, createVariables()
       .putValue("temperature", 20)
@@ -136,7 +136,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(30L);
     assertThat(metricCollector.clearExecutedDecisionElements()).isEqualTo(30L);
 
-    assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(0L);
+    assertThat(metricCollector.getExecutedDecisionElements()).isZero();
   }
 
   @Test

@@ -86,7 +86,7 @@ public class StartManagedThreadPoolStepTest {
     assertThat(executor.getQueue().remainingCapacity()).isEqualTo(3);
     assertThat(executor.getCorePoolSize()).isEqualTo(3);
     assertThat(executor.getMaximumPoolSize()).isEqualTo(10);
-    assertThat(executor.getKeepAliveTime(TimeUnit.MILLISECONDS)).isEqualTo(0L);
+    assertThat(executor.getKeepAliveTime(TimeUnit.MILLISECONDS)).isZero();
   }
 
   @Test

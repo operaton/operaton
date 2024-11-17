@@ -1201,7 +1201,7 @@ public class HistoryCleanupRemovalTimeTest {
     runHistoryCleanup();
 
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(0L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isZero();
   }
 
   @Test
@@ -1935,7 +1935,7 @@ public class HistoryCleanupRemovalTimeTest {
 
     // then
     assertThat(report.getCleanableProcessInstanceCount()).isEqualTo(5L);
-    assertThat(report.getFinishedProcessInstanceCount()).isEqualTo(0L);
+    assertThat(report.getFinishedProcessInstanceCount()).isZero();
   }
 
   @Test
@@ -1963,7 +1963,7 @@ public class HistoryCleanupRemovalTimeTest {
 
     // then
     assertThat(report.getFinishedProcessInstanceCount()).isEqualTo(5L);
-    assertThat(report.getCleanableProcessInstanceCount()).isEqualTo(0L);
+    assertThat(report.getCleanableProcessInstanceCount()).isZero();
   }
 
   @Test
@@ -2056,7 +2056,7 @@ public class HistoryCleanupRemovalTimeTest {
       .singleResult();
 
     // then
-    assertThat(report.getCleanableDecisionInstanceCount()).isEqualTo(0L);
+    assertThat(report.getCleanableDecisionInstanceCount()).isZero();
     assertThat(report.getFinishedDecisionInstanceCount()).isEqualTo(5L);
   }
 
@@ -2085,7 +2085,7 @@ public class HistoryCleanupRemovalTimeTest {
 
     // then
     assertThat(report.getCleanableBatchesCount()).isEqualTo(1L);
-    assertThat(report.getFinishedBatchesCount()).isEqualTo(0L);
+    assertThat(report.getFinishedBatchesCount()).isZero();
 
     // cleanup
     managementService.deleteBatch(batch.getId(), true);
@@ -2115,8 +2115,8 @@ public class HistoryCleanupRemovalTimeTest {
     CleanableHistoricBatchReportResult report = historyService.createCleanableHistoricBatchReport().singleResult();
 
     // then
-    assertThat(report.getCleanableBatchesCount()).isEqualTo(0L);
-    assertThat(report.getFinishedBatchesCount()).isEqualTo(0L);
+    assertThat(report.getCleanableBatchesCount()).isZero();
+    assertThat(report.getFinishedBatchesCount()).isZero();
 
     // cleanup
     managementService.deleteBatch(batch.getId(), true);

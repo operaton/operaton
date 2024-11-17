@@ -266,7 +266,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
     taskService.deleteCandidateUser(task.getId(), "demo");
     // then
-    assertThat(taskService.createTaskQuery().taskCandidateUser("demo").count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskCandidateUser("demo").count()).isZero();
   }
 
   @Test
@@ -294,7 +294,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
     taskService.deleteCandidateUser(task.getId(), "demo");
 
     // then
-    assertThat(taskService.createTaskQuery().taskCandidateUser("demo").count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskCandidateUser("demo").count()).isZero();
   }
 
   // delete candidate groups
@@ -308,7 +308,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
     taskService.deleteCandidateGroup(task.getId(), "demo");
     // then
-    assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isZero();
   }
 
   @Test
@@ -336,7 +336,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
     taskService.deleteCandidateGroup(task.getId(), "demo");
 
     // then
-    assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isZero();
   }
 
   // add user identity link
@@ -424,7 +424,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
     taskService.deleteUserIdentityLink(task.getId(), "demo", IdentityLinkType.ASSIGNEE);
     // then
-    assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isZero();
   }
 
   @Test
@@ -454,7 +454,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
     taskService.deleteUserIdentityLink(task.getId(), "demo", IdentityLinkType.ASSIGNEE);
 
     // then
-    assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isZero();
   }
 
   // delete group identity link
@@ -468,7 +468,7 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
 
     taskService.deleteGroupIdentityLink(task.getId(), "demo", IdentityLinkType.CANDIDATE);
     // then
-    assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isZero();
   }
 
   @Test
@@ -498,6 +498,6 @@ public class MultiTenancyIdentityLinkCmdsTenantCheckTest {
     taskService.deleteGroupIdentityLink(task.getId(), "demo", IdentityLinkType.CANDIDATE);
 
     // then
-    assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isEqualTo(0L);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("demo").count()).isZero();
   }
 }

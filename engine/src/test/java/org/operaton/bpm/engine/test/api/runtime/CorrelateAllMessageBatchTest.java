@@ -130,17 +130,17 @@ public class CorrelateAllMessageBatchTest {
       .processInstanceId(processInstanceIdThree);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
   }
 
   @Test
@@ -169,17 +169,17 @@ public class CorrelateAllMessageBatchTest {
       .processInstanceId(processInstanceIdThree);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
   }
 
   @Test
@@ -208,17 +208,17 @@ public class CorrelateAllMessageBatchTest {
       .processInstanceId(processInstanceIdThree);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
   }
 
   @Test
@@ -246,16 +246,16 @@ public class CorrelateAllMessageBatchTest {
       .processInstanceId(processInstanceIdThree);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
     assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(1L);
   }
 
@@ -279,15 +279,15 @@ public class CorrelateAllMessageBatchTest {
       .processDefinitionKey(PROCESS_THREE_KEY);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
   }
 
   @Test

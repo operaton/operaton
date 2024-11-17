@@ -2215,7 +2215,7 @@ public class HistoricProcessInstanceTest {
       .processDefinitionKeyIn("not-existing-key");
 
     // then
-    assertThat(query.count()).isEqualTo(0l);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
   }
 

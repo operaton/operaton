@@ -143,7 +143,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
         .decisionInstanceId(NON_EXISTING);
 
     //then
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
     assertThat(query.list()).isEmpty();
 
 
@@ -231,7 +231,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   public void testStatisticDoesNotExistForFakeId() throws Exception {
     assertThat(
         historyService.createHistoricDecisionInstanceStatisticsQuery(
-            NON_EXISTING).count()).isEqualTo(0L);
+            NON_EXISTING).count()).isZero();
 
     assertThat(
         historyService.createHistoricDecisionInstanceStatisticsQuery(
@@ -263,7 +263,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
         decisionRequirementsDefinition.getId());
 
     //then
-    assertThat(statisticsQuery.count()).isEqualTo(0L);
+    assertThat(statisticsQuery.count()).isZero();
     assertThat(statisticsQuery.list()).isEmpty();
   }
 }

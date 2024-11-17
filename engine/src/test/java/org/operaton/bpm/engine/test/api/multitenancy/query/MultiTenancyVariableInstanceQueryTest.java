@@ -91,7 +91,7 @@ public class MultiTenancyVariableInstanceQueryTest extends PluggableProcessEngin
         createVariableInstanceQuery()
         .tenantIdIn("nonExisting");
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -134,7 +134,7 @@ public class MultiTenancyVariableInstanceQueryTest extends PluggableProcessEngin
     identityService.setAuthentication("user", null, null);
 
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery();
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -145,7 +145,7 @@ public class MultiTenancyVariableInstanceQueryTest extends PluggableProcessEngin
 
     assertThat(query.count()).isEqualTo(1L);
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
   }
 

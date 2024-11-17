@@ -16,63 +16,57 @@
  */
 package org.operaton.bpm.qa.largedata;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.qa.largedata.util.BatchModificationJobHelper;
 import org.operaton.bpm.qa.largedata.util.EngineDataGenerator;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 
-public class SetJobRetriesAsyncTest {
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class SetJobRetriesAsyncTest {
 
   protected static final String DATA_PREFIX = SetJobRetriesAsyncTest.class.getSimpleName();
   protected static final int GENERATE_PROCESS_INSTANCES_COUNT = 3000;
 
-  protected ProcessEngineRule engineRule = new ProcessEngineRule();
-  protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
-  protected BatchModificationJobHelper helper = new BatchModificationJobHelper(engineRule);
-
-  @Rule
-  public RuleChain chain = RuleChain.outerRule(engineRule).around(testRule);
+  @RegisterExtension
+  static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().build();
+  protected ProcessEngine processEngine;
+  protected BatchModificationJobHelper helper = new BatchModificationJobHelper(() -> processEngine);
 
   protected EngineDataGenerator generator;
   protected RuntimeService runtimeService;
   protected ManagementService managementService;
 
-  @Before
-  public void setUp() {
-    runtimeService = engineRule.getRuntimeService();
-    managementService = engineRule.getManagementService();
-
+  @BeforeEach
+  void setUp() {
     // generate data
-    generator = new EngineDataGenerator(engineRule.getProcessEngine(), GENERATE_PROCESS_INSTANCES_COUNT, DATA_PREFIX);
+    generator = new EngineDataGenerator(processEngine, GENERATE_PROCESS_INSTANCES_COUNT, DATA_PREFIX);
     generator.deployDefinitions();
     generator.generateAsyncTaskProcessInstanceData();
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     helper.removeAllRunningAndHistoricBatches();
   }
 
   /* See https://jira.camunda.com/browse/CAM-12852 for more details */
   @Test
-  public void shouldModifyJobRetriesAsync() {
+  void shouldModifyJobRetriesAsync() {
     // given
     List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
         .processDefinitionKey(generator.getAsyncTaskProcessKey())
@@ -81,7 +75,7 @@ public class SetJobRetriesAsyncTest {
         .map(ProcessInstance::getId)
         .collect(Collectors.toList());
     int newJobRetriesNumber = 10;
-    Batch jobRetriesBatch = engineRule.getManagementService()
+    Batch jobRetriesBatch = managementService
         .setJobRetriesAsync(processInstanceIds, (ProcessInstanceQuery) null, newJobRetriesNumber);
 
     // when

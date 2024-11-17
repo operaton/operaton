@@ -103,14 +103,4 @@ public class PluggableProcessEngineTest implements ProcessEngineProvider {
     return result;
   }
 
-  protected void deleteHistoryCleanupJobs() {
-    final List<Job> jobs = historyService.findHistoryCleanupJobs();
-    for (final Job job: jobs) {
-      processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
-        commandContext.getJobManager().deleteJob((JobEntity) job);
-        return null;
-      });
-    }
-  }
-
 }

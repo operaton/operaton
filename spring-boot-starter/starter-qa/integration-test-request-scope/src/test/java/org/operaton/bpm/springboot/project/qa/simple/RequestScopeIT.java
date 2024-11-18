@@ -29,9 +29,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith({ OutputCaptureExtension.class, SpringExtension.class })
-@SpringBootTest(classes = { Application.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RequestScopeIT {
+@ExtendWith({OutputCaptureExtension.class, SpringExtension.class})
+@SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class RequestScopeIT {
 
   @Autowired
   protected RepositoryService repositoryService;
@@ -40,7 +40,7 @@ public class RequestScopeIT {
   protected RuntimeService runtimeService;
 
   @Test
-  public void shouldEvaluateScript(CapturedOutput logs) {
+  void shouldEvaluateScript(CapturedOutput logs) {
     // given
     repositoryService.createDeployment()
         .addModelInstance("scriptTaskProcess.bpmn", Bpmn.createExecutableProcess("scriptTaskProcess")

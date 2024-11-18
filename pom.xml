@@ -529,6 +529,41 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>openrewrite</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.openrewrite.maven</groupId>
+            <artifactId>rewrite-maven-plugin</artifactId>
+            <version>5.45.0</version>
+            <configuration>
+              <activeRecipes>
+                org.openrewrite.java.RemoveUnusedImports
+              </activeRecipes>
+              <failOnDryRunResults>true</failOnDryRunResults>
+              <exclusions>
+                **/node/**
+              </exclusions>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>org.openrewrite.recipe</groupId>
+                <artifactId>rewrite-static-analysis</artifactId>
+                <version>1.20.0</version>
+              </dependency>
+              <dependency>
+                <groupId>org.openrewrite.recipe</groupId>
+                <artifactId>rewrite-testing-frameworks</artifactId>
+                <version>2.22.0</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
   </profiles>
 
   <repositories>

@@ -666,7 +666,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
     }
 
     public JobDefinition getExecutionJobDefinition(Batch batch) {
-      return engineRule.getManagementService().createJobDefinitionQuery()
+      return getManagementService().createJobDefinitionQuery()
           .jobDefinitionId(batch.getBatchJobDefinitionId())
           .jobType(Batch.TYPE_HISTORIC_DECISION_INSTANCE_DELETION)
           .singleResult();

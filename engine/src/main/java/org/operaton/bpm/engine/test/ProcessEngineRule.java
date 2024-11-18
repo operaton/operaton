@@ -16,34 +16,22 @@
  */
 package org.operaton.bpm.engine.test;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineServices;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.Assume;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.junit.Assume;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -100,7 +88,7 @@ import org.junit.runners.model.Statement;
  *
  * @author Tom Baeyens
  */
-public class ProcessEngineRule extends TestWatcher implements ProcessEngineServices {
+public class ProcessEngineRule extends TestWatcher implements ProcessEngineServices, ProcessEngineProvider {
 
   protected String configurationResource = "operaton.cfg.xml";
   protected String configurationResourceCompat = "activiti.cfg.xml";

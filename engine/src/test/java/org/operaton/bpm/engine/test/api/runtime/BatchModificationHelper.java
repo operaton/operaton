@@ -16,15 +16,14 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BatchModificationHelper extends BatchHelper {
 
@@ -38,11 +37,9 @@ public class BatchModificationHelper extends BatchHelper {
   }
 
   public Batch startAfterAsync(String key, int numberOfProcessInstances, String activityId, String processDefinitionId) {
-    RuntimeService runtimeService = engineRule.getRuntimeService();
-
     List<String> processInstanceIds = startInstances(key, numberOfProcessInstances);
 
-    return runtimeService
+    return getRuntimeService()
       .createModification(processDefinitionId)
       .startAfterActivity(activityId)
       .processInstanceIds(processInstanceIds)
@@ -50,33 +47,27 @@ public class BatchModificationHelper extends BatchHelper {
   }
 
   public Batch startBeforeAsync(String key, int numberOfProcessInstances, String activityId, String processDefinitionId) {
-    RuntimeService runtimeService = engineRule.getRuntimeService();
-
     List<String> processInstanceIds = startInstances(key, numberOfProcessInstances);
 
-    return runtimeService.createModification(processDefinitionId).startBeforeActivity(activityId).processInstanceIds(processInstanceIds).executeAsync();
+    return getRuntimeService().createModification(processDefinitionId).startBeforeActivity(activityId).processInstanceIds(processInstanceIds).executeAsync();
   }
 
   public Batch startTransitionAsync(String key, int numberOfProcessInstances, String transitionId, String processDefinitionId) {
-    RuntimeService runtimeService = engineRule.getRuntimeService();
-
     List<String> processInstanceIds = startInstances(key, numberOfProcessInstances);
 
-    return runtimeService.createModification(processDefinitionId).startTransition(transitionId).processInstanceIds(processInstanceIds).executeAsync();
+    return getRuntimeService().createModification(processDefinitionId).startTransition(transitionId).processInstanceIds(processInstanceIds).executeAsync();
   }
 
   public Batch cancelAllAsync(String key, int numberOfProcessInstances, String activityId, String processDefinitionId) {
-    RuntimeService runtimeService = engineRule.getRuntimeService();
-
     List<String> processInstanceIds = startInstances(key, numberOfProcessInstances);
 
-    return runtimeService.createModification(processDefinitionId).cancelAllForActivity(activityId).processInstanceIds(processInstanceIds).executeAsync();
+    return getRuntimeService().createModification(processDefinitionId).cancelAllForActivity(activityId).processInstanceIds(processInstanceIds).executeAsync();
   }
 
   public List<String> startInstances(String key, int numOfInstances) {
     List<String> instances = new ArrayList<String>();
     for (int i = 0; i < numOfInstances; i++) {
-      ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey(key);
+      ProcessInstance processInstance = getRuntimeService().startProcessInstanceByKey(key);
       instances.add(processInstance.getId());
     }
 
@@ -86,7 +77,7 @@ public class BatchModificationHelper extends BatchHelper {
 
   @Override
   public JobDefinition getExecutionJobDefinition(Batch batch) {
-    return engineRule.getManagementService()
+    return getManagementService()
         .createJobDefinitionQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).jobType(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION).singleResult();
   }
 

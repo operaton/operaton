@@ -16,23 +16,18 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.junit.Assert.assertNotNull;
-
+import org.operaton.bpm.engine.ProcessEngineProvider;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import static org.junit.Assert.assertNotNull;
 
 
 public class BatchRestartHelper extends BatchHelper {
 
-  public BatchRestartHelper(ProcessEngineRule engineRule) {
-    super(engineRule);
-  }
-
-  public BatchRestartHelper(PluggableProcessEngineTest testCase) {
-    super(testCase);
+  public BatchRestartHelper (ProcessEngineProvider processEngineProvider) {
+    super(processEngineProvider);
   }
 
   @Override

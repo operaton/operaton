@@ -84,12 +84,12 @@ public class TaskDecorator {
     if(dueDateExpression != null) {
       Object dueDate = dueDateExpression.getValue(variableScope);
       if(dueDate != null) {
-        if (dueDate instanceof Date) {
-          task.setDueDate((Date) dueDate);
+        if (dueDate instanceof Date date) {
+          task.setDueDate(date);
 
-        } else if (dueDate instanceof String) {
+        } else if (dueDate instanceof String string) {
           BusinessCalendar businessCalendar = getBusinessCalender();
-          task.setDueDate(businessCalendar.resolveDuedate((String) dueDate, task));
+          task.setDueDate(businessCalendar.resolveDuedate(string, task));
         } else {
           throw new ProcessEngineException("Due date expression does not resolve to a Date or Date string: " +
               dueDateExpression.getExpressionText());
@@ -103,12 +103,12 @@ public class TaskDecorator {
     if(followUpDateExpression != null) {
       Object followUpDate = followUpDateExpression.getValue(variableScope);
       if(followUpDate != null) {
-        if (followUpDate instanceof Date) {
-          task.setFollowUpDate((Date) followUpDate);
+        if (followUpDate instanceof Date date) {
+          task.setFollowUpDate(date);
 
-        } else if (followUpDate instanceof String) {
+        } else if (followUpDate instanceof String string) {
           BusinessCalendar businessCalendar = getBusinessCalender();
-          task.setFollowUpDate(businessCalendar.resolveDuedate((String) followUpDate, task));
+          task.setFollowUpDate(businessCalendar.resolveDuedate(string, task));
 
         } else {
           throw new ProcessEngineException("Follow up date expression does not resolve to a Date or Date string: " +
@@ -124,15 +124,15 @@ public class TaskDecorator {
       Object priority = priorityExpression.getValue(variableScope);
 
       if (priority != null) {
-        if (priority instanceof String) {
+        if (priority instanceof String string) {
           try {
-            task.setPriority(Integer.parseInt((String) priority));
+            task.setPriority(Integer.parseInt(string));
 
           } catch (NumberFormatException e) {
             throw new ProcessEngineException("Priority does not resolve to a number: " + priority, e);
           }
-        } else if (priority instanceof Number) {
-          task.setPriority(((Number) priority).intValue());
+        } else if (priority instanceof Number number) {
+          task.setPriority(number.intValue());
 
         } else {
           throw new ProcessEngineException("Priority expression does not resolve to a number: " +
@@ -165,12 +165,12 @@ public class TaskDecorator {
     for (Expression groupIdExpr : candidateGroupIdExpressions) {
       Object value = groupIdExpr.getValue(variableScope);
 
-      if (value instanceof String) {
-        List<String> candiates = extractCandidates((String) value);
+      if (value instanceof String string) {
+        List<String> candiates = extractCandidates(string);
         task.addCandidateGroups(candiates);
 
-      } else if (value instanceof Collection) {
-        task.addCandidateGroups((Collection) value);
+      } else if (value instanceof Collection collection) {
+        task.addCandidateGroups(collection);
 
       } else {
         throw new ProcessEngineException("Expression did not resolve to a string or collection of strings");
@@ -184,12 +184,12 @@ public class TaskDecorator {
     for (Expression userIdExpr : candidateUserIdExpressions) {
       Object value = userIdExpr.getValue(variableScope);
 
-      if (value instanceof String) {
-        List<String> candiates = extractCandidates((String) value);
+      if (value instanceof String string) {
+        List<String> candiates = extractCandidates(string);
         task.addCandidateUsers(candiates);
 
-      } else if (value instanceof Collection) {
-        task.addCandidateUsers((Collection) value);
+      } else if (value instanceof Collection collection) {
+        task.addCandidateUsers(collection);
 
       } else {
         throw new ProcessEngineException("Expression did not resolve to a string or collection of strings");

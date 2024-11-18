@@ -17,7 +17,9 @@
 package org.operaton.bpm.engine.cdi.annotation.event;
 
 
-public class TakeTransitionLiteral extends AnnotationLiteral<TakeTransition> implements TakeTransition {  
+import javax.enterprise.util.AnnotationLiteral;
+
+public class TakeTransitionLiteral extends AnnotationLiteral<TakeTransition> implements TakeTransition {
   
   protected final String transitionName;   
   

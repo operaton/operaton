@@ -17,6 +17,8 @@
 package org.operaton.bpm.engine.cdi.annotation.event;
 
 
+import javax.enterprise.util.AnnotationLiteral;
+
 public class EndActivityLiteral extends AnnotationLiteral<EndActivity> implements EndActivity {
   
   protected final String activityId;   

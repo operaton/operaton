@@ -20,6 +20,7 @@ import org.w3c.dom.CDATASection;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xmlunit.util.Predicate;
 
 /**
  * <p>In Java 8, a CDATA section is serialized with pretty printing as

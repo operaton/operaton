@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
+import javax.enterprise.util.AnnotationLiteral;
+
 
 public class DeleteTaskLiteral extends AnnotationLiteral<DeleteTask> implements DeleteTask {
 

@@ -63,10 +63,8 @@ import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailVariableInstanceUpdateEntity;
-import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
@@ -95,7 +93,6 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.bpm.model.bpmn.builder.AbstractActivityBuilder;
 import org.operaton.bpm.model.bpmn.builder.SubProcessBuilder;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -249,7 +246,7 @@ public class RuntimeServiceTest {
     // if we skip the custom listeners,
     runtimeService.deleteProcessInstances(Arrays.asList(processInstance.getId(),processInstance2.getId()), null, false, false);
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0l);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 
   @Deployment

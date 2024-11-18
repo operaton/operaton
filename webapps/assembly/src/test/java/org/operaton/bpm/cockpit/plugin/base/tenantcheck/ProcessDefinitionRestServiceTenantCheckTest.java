@@ -130,7 +130,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   @Test
   public void queryStatisticsWithOperatonAdmin() {
     // given
-    identityService.setAuthentication("user", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     // when
     List<ProcessDefinitionStatisticsDto> actual = resource.queryStatistics(uriInfo, null, null);
@@ -215,7 +215,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   @Test
   public void getStatisticsCountWithOperatonAdmin() {
     // given
-    identityService.setAuthentication("user", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     // when
     CountResultDto actual = resource.getStatisticsCount(uriInfo);

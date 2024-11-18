@@ -21,11 +21,12 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.BpmnTestConstants;
 
 import org.operaton.bpm.model.bpmn.ProcessType;
 import org.operaton.bpm.model.bpmn.impl.instance.Supports;
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski
@@ -69,7 +70,7 @@ public class ProcessTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testOperatonJobPriority() {
+  void testOperatonJobPriority() {
     Process process = modelInstance.newInstance(Process.class);
     assertThat(process.getOperatonJobPriority()).isNull();
 
@@ -79,7 +80,7 @@ public class ProcessTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testOperatonTaskPriority() {
+  void testOperatonTaskPriority() {
     //given
     Process proc = modelInstance.newInstance(Process.class);
     assertThat(proc.getOperatonTaskPriority()).isNull();
@@ -90,7 +91,7 @@ public class ProcessTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testOperatonHistoryTimeToLive() {
+  void testOperatonHistoryTimeToLive() {
     //given
     Process proc = modelInstance.newInstance(Process.class);
     assertThat(proc.getOperatonHistoryTimeToLive()).isNull();

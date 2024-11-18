@@ -16,24 +16,20 @@
  */
 package org.operaton.bpm.engine.test.standalone.db;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.Before;
+import org.junit.Rule;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import java.io.IOException;
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * @author Miklas Boskamp
@@ -70,7 +66,7 @@ public class SchemaLogTestCase {
     try {
       PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
       Resource[] resources = resolver.getResources("classpath:" + path + "/*");
-      assertThat(resources.length).isGreaterThan(0);
+      assertThat(resources).isNotEmpty();
       for (Resource res : resources) {
         files.add(res.getFilename());
       }

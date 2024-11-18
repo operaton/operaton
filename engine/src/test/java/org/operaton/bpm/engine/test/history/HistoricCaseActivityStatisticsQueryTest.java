@@ -86,7 +86,7 @@ public class HistoricCaseActivityStatisticsQueryTest {
 
     // then
     assertEquals(0, query.count());
-    assertThat(query.list()).hasSize(0);
+    assertThat(query.list()).isEmpty();
   }
 
   @Test

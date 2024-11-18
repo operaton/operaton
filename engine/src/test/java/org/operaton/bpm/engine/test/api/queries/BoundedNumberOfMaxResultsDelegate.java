@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.queries;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoundedNumberOfMaxResultsDelegate implements JavaDelegate {
 
@@ -33,7 +33,7 @@ public class BoundedNumberOfMaxResultsDelegate implements JavaDelegate {
         .createProcessInstanceQuery()
         .list();
 
-    assertThat(processInstances.size()).isEqualTo(0);
+    assertThat(processInstances).isEmpty();
   }
 
 }

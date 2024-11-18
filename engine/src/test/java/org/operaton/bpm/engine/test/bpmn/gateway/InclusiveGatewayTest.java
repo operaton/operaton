@@ -794,7 +794,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(1);
 
     // then
-    Assertions.assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    Assertions.assertThat(managementService.createJobQuery().count()).isZero();
     Assertions.assertThat(historyService.createHistoricProcessInstanceQuery().singleResult().getState())
         .isEqualTo("COMPLETED");
   }
@@ -809,7 +809,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
     testRule.executeAvailableJobs(1);
 
     // then
-    Assertions.assertThat(managementService.createJobQuery().count()).isEqualTo(0);
+    Assertions.assertThat(managementService.createJobQuery().count()).isZero();
     Assertions.assertThat(historyService.createHistoricProcessInstanceQuery().singleResult().getState())
         .isEqualTo("COMPLETED");
   }

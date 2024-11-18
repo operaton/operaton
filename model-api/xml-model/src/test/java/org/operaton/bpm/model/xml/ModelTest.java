@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.testmodel.TestModel;
 import org.operaton.bpm.model.xml.testmodel.instance.*;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Collection;
 
@@ -30,17 +29,17 @@ import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.*;
 /**
  * @author Sebastian Menski
  */
-public class ModelTest {
+class ModelTest {
 
   private Model model;
 
-  @Before
-  public void createModel() {
+  @BeforeEach
+  void createModel() {
     model = TestModel.getTestModel();
   }
 
   @Test
-  public void testGetTypes() {
+  void testGetTypes() {
     Collection<ModelElementType> types = model.getTypes();
     assertThat(types).isNotEmpty();
     assertThat(types).contains(
@@ -53,13 +52,13 @@ public class ModelTest {
   }
 
   @Test
-  public void testGetType() {
+  void testGetType() {
     ModelElementType flyingAnimalType = model.getType(FlyingAnimal.class);
     assertThat(flyingAnimalType.getInstanceType()).isEqualTo(FlyingAnimal.class);
   }
 
   @Test
-  public void testGetTypeForName() {
+  void testGetTypeForName() {
     ModelElementType birdType = model.getTypeForName(ELEMENT_NAME_BIRD);
     assertThat(birdType).isNull();
     birdType = model.getTypeForName(MODEL_NAMESPACE, ELEMENT_NAME_BIRD);
@@ -67,12 +66,12 @@ public class ModelTest {
   }
 
   @Test
-  public void testGetModelName() {
+  void testGetModelName() {
     assertThat(model.getModelName()).isEqualTo(MODEL_NAME);
   }
 
   @Test
-  public void testEqual() {
+  void testEqual() {
     assertThat(model).isNotEqualTo(null);
     assertThat(model).isNotEqualTo(new Object());
     Model otherModel = ModelBuilder.createInstance("Other Model").build();

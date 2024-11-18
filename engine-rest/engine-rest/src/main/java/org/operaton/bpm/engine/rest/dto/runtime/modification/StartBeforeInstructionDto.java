@@ -21,7 +21,6 @@ import javax.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.runtime.InstantiationBuilder;
-import org.operaton.bpm.engine.runtime.ModificationBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstanceModificationBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstanceModificationInstantiationBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;

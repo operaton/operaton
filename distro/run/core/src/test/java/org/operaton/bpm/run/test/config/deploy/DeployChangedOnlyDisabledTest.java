@@ -33,6 +33,6 @@ public class DeployChangedOnlyDisabledTest extends AbstractRestTest {
 
   @Test
   public void shouldEnableDeployChangedOnlyOnOperatonRunProperty() {
-    assertThat(engineConfig.isDeployChangedOnly()).isEqualTo(false);
+    assertThat(engineConfig.isDeployChangedOnly()).isFalse();
   }
 }

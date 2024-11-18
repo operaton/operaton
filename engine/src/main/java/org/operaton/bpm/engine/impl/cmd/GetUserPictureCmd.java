@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoEntity;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.*;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 
 /**

@@ -132,7 +132,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
     CountResultDto actual = resource.getStatisticsCount(uriInfo);
 
     // then
-    assertThat(actual.getCount()).isEqualTo(0);
+    assertThat(actual.getCount()).isZero();
   }
 
   @Test

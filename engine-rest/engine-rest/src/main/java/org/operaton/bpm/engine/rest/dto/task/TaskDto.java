@@ -21,7 +21,6 @@ import java.util.Date;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.rest.dto.converter.DelegationStateConverter;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
 

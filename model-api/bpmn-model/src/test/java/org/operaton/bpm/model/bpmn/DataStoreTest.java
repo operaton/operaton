@@ -17,26 +17,25 @@
 package org.operaton.bpm.model.bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.DataStore;
 import org.operaton.bpm.model.bpmn.instance.DataStoreReference;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  * @author Falko Menge
  */
-public class DataStoreTest {
+class DataStoreTest {
 
   private static BpmnModelInstance modelInstance;
 
-  @BeforeClass
-  public static void parseModel() {
+  @BeforeAll
+  static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(DataStoreTest.class.getResourceAsStream("DataStoreTest.bpmn"));
   }
 
   @Test
-  public void testGetDataStore() {
+  void testGetDataStore() {
     DataStore dataStore = modelInstance.getModelElementById("myDataStore");
     assertThat(dataStore).isNotNull();
     assertThat(dataStore.getName()).isEqualTo("My Data Store");
@@ -45,7 +44,7 @@ public class DataStoreTest {
   }
 
   @Test
-  public void testGetDataStoreReference() {
+  void testGetDataStoreReference() {
     DataStoreReference dataStoreReference = modelInstance.getModelElementById("myDataStoreReference");
     DataStore dataStore = modelInstance.getModelElementById("myDataStore");
     assertThat(dataStoreReference).isNotNull();

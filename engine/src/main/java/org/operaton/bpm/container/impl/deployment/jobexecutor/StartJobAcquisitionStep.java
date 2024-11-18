@@ -30,7 +30,6 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.RuntimeContainerJobExecutor;

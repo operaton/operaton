@@ -40,7 +40,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenario;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationScenarioWithCount;
 import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

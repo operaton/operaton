@@ -62,7 +62,7 @@ public class CaseExecutionQueryVariableIgnoreCaseTest extends AbstractVariableIg
 
   public void assertThatListContainsOnlyExpectedElements(List<CaseExecution> instances, CaseExecution instance) {
     // normally we would only get one result. here we also get the corresponding CaseInstance
-    assertThat(instances.size()).isEqualTo(2);
+    assertThat(instances).hasSize(2);
     assertThat(instances.get(0).getCaseInstanceId()).isEqualTo(instance.getCaseInstanceId());
     assertThat(instances.get(1).getCaseInstanceId()).isEqualTo(instance.getCaseInstanceId());
   }

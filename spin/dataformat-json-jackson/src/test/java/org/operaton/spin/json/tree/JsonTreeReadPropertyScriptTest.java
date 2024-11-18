@@ -232,7 +232,7 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
   public void shouldReadBooleanValue() {
     Boolean value1 = script.getVariable("value1");
 
-    assertThat(value1).isEqualTo(true);
+    assertThat(value1).isTrue();
   }
 
   @Test

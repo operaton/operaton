@@ -16,14 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
+import org.junit.After;
+import org.junit.Test;
 import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.authorization.SystemPermissions;
@@ -34,8 +28,14 @@ import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.management.TableMetaData;
 import org.operaton.bpm.engine.management.TablePage;
 import org.operaton.bpm.engine.telemetry.TelemetryData;
-import org.junit.After;
-import org.junit.Test;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -62,7 +62,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetTableCountAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
     Map<String, Long> tableCount = managementService.getTableCount();
@@ -86,7 +86,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetTableCountWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     // when
@@ -113,7 +113,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetTableNameAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
 
     // when
@@ -139,7 +139,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetTableNameAdminAndWithPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
 
@@ -167,7 +167,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetTableMetaDataAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
     TableMetaData tableMetaData = managementService.getTableMetaData("ACT_RE_PROCDEF");
@@ -191,7 +191,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetTableMetaDataWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     // when
@@ -231,7 +231,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldPerformTablePageQueryAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
 
     // when
@@ -246,7 +246,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetHistoryLevelAsOperatonAdmin() {
     //given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
     int historyLevel = managementService.getHistoryLevel();
@@ -270,7 +270,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetHistoryLevelAdminAndWithPermission() {
     //given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     // when
@@ -311,7 +311,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetPropertiesAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
       Map<String, String> properties = managementService.getProperties();
@@ -335,7 +335,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetPropertiesWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     // when
@@ -375,14 +375,14 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldSetPropertyAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
       managementService.setProperty(DUMMY_PROPERTY, DUMMY_VALUE);
 
     // then
       disableAuthorization();
-      assertThat(managementService.getProperties().get(DUMMY_PROPERTY)).isEqualTo(DUMMY_VALUE);
+    assertThat(managementService.getProperties()).containsEntry(DUMMY_PROPERTY, DUMMY_VALUE);
   }
 
   @Test
@@ -395,13 +395,13 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
 
     // then
     disableAuthorization();
-    assertThat(managementService.getProperties().get(DUMMY_PROPERTY)).isEqualTo(DUMMY_VALUE);
+    assertThat(managementService.getProperties()).containsEntry(DUMMY_PROPERTY, DUMMY_VALUE);
   }
 
   @Test
   public void shouldSetPropertyWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
     // when
@@ -409,7 +409,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
 
     // then
     disableAuthorization();
-    assertThat(managementService.getProperties().get(DUMMY_PROPERTY)).isEqualTo(DUMMY_VALUE);
+    assertThat(managementService.getProperties()).containsEntry(DUMMY_PROPERTY, DUMMY_VALUE);
   }
 
   @Test
@@ -429,7 +429,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldDeletePropertyAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     managementService.setProperty(DUMMY_VALUE, DUMMY_PROPERTY);
 
     // when
@@ -460,7 +460,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldDeletePropertyWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
     managementService.setProperty(DUMMY_VALUE, DUMMY_PROPERTY);
 
@@ -501,7 +501,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetTelemetryDataAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
     TelemetryData telemetryData = managementService.getTelemetryData();
@@ -525,7 +525,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetTelemetryDataWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     // when
@@ -553,7 +553,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetLicenseKeyAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     managementService.setLicenseKey("testLicenseKey");
 
     // when
@@ -582,7 +582,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldGetLicenseKeyWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
     managementService.setLicenseKey("testLicenseKey");
 
@@ -610,7 +610,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldSetLicenseKeyAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
     managementService.setLicenseKey("testLicenseKey");
@@ -636,7 +636,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldSetLicenseKeyWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.SET);
 
     // when
@@ -663,7 +663,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldDeleteLicenseKeyAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     managementService.setLicenseKey("testLicenseKey");
 
     // when
@@ -694,7 +694,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldDeleteLicenseKeyWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
     managementService.setLicenseKey("testLicenseKey");
 
@@ -722,7 +722,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldDeleteMetricsAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     processEngineConfiguration.getDbMetricsReporter().reportValueAtOnce(DUMMY_METRIC, 15);
 
@@ -750,7 +750,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldDeleteMetricsWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
 
     processEngineConfiguration.getDbMetricsReporter().reportValueAtOnce(DUMMY_METRIC, 15);
@@ -779,7 +779,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldDeleteTaskMetricsAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
     managementService.deleteTaskMetrics(null);
@@ -805,7 +805,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldDeleteTaskMetricsWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.DELETE);
 
     // when
@@ -833,7 +833,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldExecuteSchemaLogListAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
     List<SchemaLogEntry> schemaLog = managementService.createSchemaLogQuery().list();
@@ -857,7 +857,7 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldExecuteSchemaLogListWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     // when
@@ -883,13 +883,13 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
   @Test
   public void shouldExecuteSchemaLogCountAsOperatonAdmin() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // when
     long schemaLog = managementService.createSchemaLogQuery().count();
 
     // then
-    assertThat(schemaLog).isGreaterThan(0);
+    assertThat(schemaLog).isPositive();
   }
 
   @Test
@@ -901,20 +901,20 @@ public class ManagementAuthorizationTest extends AuthorizationTest {
     long schemaLog = managementService.createSchemaLogQuery().count();
 
     // then
-    assertThat(schemaLog).isGreaterThan(0);
+    assertThat(schemaLog).isPositive();
   }
 
   @Test
   public void shouldExecuteSchemaLogCountWithAdminAndPermission() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
     createGrantAuthorization(Resources.SYSTEM, "*", userId, SystemPermissions.READ);
 
     // when
     long schemaLog = managementService.createSchemaLogQuery().count();
 
     // then
-    assertThat(schemaLog).isGreaterThan(0);
+    assertThat(schemaLog).isPositive();
   }
 
   @Test

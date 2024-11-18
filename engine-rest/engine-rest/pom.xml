@@ -16,6 +16,7 @@
     <version.tomcat>7.0.50</version.tomcat>
     <rest.http.port>38080</rest.http.port>
     <javax.activation.version>1.1.1</javax.activation.version>
+    <surefire.memArgs>-Xmx2g</surefire.memArgs>
   </properties>
 
   <dependencies>
@@ -294,7 +295,6 @@
           <systemPropertyVariables>
             <restEasyVersion>${version.resteasy}</restEasyVersion>
           </systemPropertyVariables>
-          <argLine>${jacoco.argLine} -Xmx2g</argLine>
         </configuration>
       </plugin>
 
@@ -390,7 +390,7 @@
                 </goals>
                 <configuration>
                   <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. CAM-6983) -->
-                  <argLine>${jacoco.argLine} -Dfile.encoding=ISO-8859-1</argLine>
+                  <argLine>${surefire.argLine} -Dfile.encoding=ISO-8859-1</argLine>
                   <includes>
                     <include>**/ProcessDefinitionRestServiceInteractionTest.java</include>
                     <include>**/TaskRestServiceInteractionTest.java</include>
@@ -488,7 +488,7 @@
                 </goals>
                 <configuration>
                   <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. CAM-6983) -->
-                  <argLine>${jacoco.argLine} -Dfile.encoding=ISO-8859-1</argLine>
+                  <argLine>${surefire.argLine} -Dfile.encoding=ISO-8859-1</argLine>
                   <includes>
                     <include>**/ProcessDefinitionRestServiceInteractionTest.java</include>
                     <include>**/TaskRestServiceInteractionTest.java</include>
@@ -591,7 +591,7 @@
                 </goals>
                 <configuration>
                   <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. CAM-6983) -->
-                  <argLine>${jacoco.argLine} -Dfile.encoding=ISO-8859-1</argLine>
+                  <argLine>${surefire.argLine} -Dfile.encoding=ISO-8859-1</argLine>
                   <includes>
                     <include>**/ProcessDefinitionRestServiceInteractionTest.java</include>
                     <include>**/TaskRestServiceInteractionTest.java</include>

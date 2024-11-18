@@ -41,6 +41,8 @@
     <!-- frontend-sources artifact is for internal use only.
     Artifact generation is skipped when it comes to maven central deployment -->
     <skip-zip-frontend-sources>false</skip-zip-frontend-sources>
+
+    <surefire.forkCount>1</surefire.forkCount>
   </properties>
 
   <dependencyManagement>
@@ -175,16 +177,6 @@
             </configuration>
           </execution>
           <execution>
-            <id>Install XLTS.dev dependencies</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <phase>generate-resources</phase>
-            <configuration>
-              <arguments>run xlts-install</arguments>
-            </configuration>
-          </execution>
-          <execution>
             <id>License check</id>
             <goals>
               <goal>npm</goal>
@@ -217,7 +209,6 @@
             <systemPropertyVariables>
               <myWorkingDir>${project.build.directory}</myWorkingDir>
             </systemPropertyVariables>
-            <argLine>${jacoco.argLine} -XX:MaxMetaspaceSize=128m</argLine>
           </configuration>
         </plugin>
 

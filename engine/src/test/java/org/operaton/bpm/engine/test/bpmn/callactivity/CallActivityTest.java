@@ -24,7 +24,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1861,7 +1860,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
 
     // and
     long numVariables = runtimeService.createVariableInstanceQuery().count();
-    assertThat(numVariables).isEqualTo(0);
+    assertThat(numVariables).isZero();
   }
 
 
@@ -1894,7 +1893,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     // presence of transient variable was asserted in delegate
 
     long numVariables = runtimeService.createVariableInstanceQuery().count();
-    assertThat(numVariables).isEqualTo(0);
+    assertThat(numVariables).isZero();
   }
 
 

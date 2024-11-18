@@ -33,7 +33,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
 import org.operaton.bpm.engine.impl.tree.FlowScopeWalker;

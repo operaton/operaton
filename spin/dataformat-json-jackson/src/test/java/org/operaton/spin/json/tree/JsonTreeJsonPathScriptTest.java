@@ -16,9 +16,7 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
-
+import org.junit.Test;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
@@ -26,7 +24,9 @@ import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPathException;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
 
 /**
  * @author Thorben Lindhauer
@@ -110,11 +110,11 @@ public abstract class JsonTreeJsonPathScriptTest extends ScriptTest {
   public void shouldGetFilteredResult() {
     SpinList<SpinJsonNode> nodeList = script.getVariable("emptyList");
 
-    assertThat(nodeList.size()).isEqualTo(0);
+    assertThat(nodeList).isEmpty();
 
     SpinList<SpinJsonNode> nodeList2 = script.getVariable("nodeList");
 
-    assertThat(nodeList2.size()).isEqualTo(1);
+    assertThat(nodeList2).hasSize(1);
     assertThat(nodeList2.get(0).prop("name").stringValue()).isEqualTo("Waldo");
   }
 

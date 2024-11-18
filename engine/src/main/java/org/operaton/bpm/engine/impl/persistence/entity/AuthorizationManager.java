@@ -494,11 +494,11 @@ public class AuthorizationManager extends AbstractManager {
 
   // predefined authorization checks
 
-  /* MEMBER OF CAMUNDA_ADMIN */
+  /* MEMBER OF OPERATON_ADMIN */
 
   /**
    * Checks if the current authentication contains the group
-   * {@link Groups#CAMUNDA_ADMIN}. The check is ignored if the authorization is
+   * {@link Groups#OPERATON_ADMIN}. The check is ignored if the authorization is
    * disabled or no authentication exists.
    *
    * @throws AuthorizationException
@@ -545,7 +545,7 @@ public class AuthorizationManager extends AbstractManager {
    * @param authentication
    *          authentication to check, cannot be <code>null</code>
    * @return <code>true</code> if the given authentication contains the group
-   *         {@link Groups#CAMUNDA_ADMIN} or the user
+   *         {@link Groups#OPERATON_ADMIN} or the user
    */
   public boolean isOperatonAdmin(Authentication authentication) {
     List<String> groupIds = authentication.getGroupIds();

@@ -90,7 +90,7 @@ class ConcurrentLruCacheTest {
     cache.put("a", "1");
 
     cache.clear();
-    assertThat(cache.size()).isEqualTo(0);
+    assertThat(cache.size()).isZero();
     assertThat(cache.get("a")).isNull();
   }
 

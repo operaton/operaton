@@ -119,7 +119,7 @@ public class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPlu
   @Test
   public void calledProcessDefinitionByParentProcessDefinitionIdWithOperatonAdmin() {
 
-    identityService.setAuthentication("user", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     List<ProcessDefinitionDto> result = resource.queryCalledProcessDefinitions(queryParameter);
     assertThat(result).isNotEmpty();

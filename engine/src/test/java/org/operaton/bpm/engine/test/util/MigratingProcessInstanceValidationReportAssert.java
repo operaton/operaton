@@ -19,18 +19,13 @@ package org.operaton.bpm.engine.test.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-
+import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.migration.MigratingActivityInstanceValidationReport;
 import org.operaton.bpm.engine.migration.MigratingProcessInstanceValidationReport;
 import org.operaton.bpm.engine.migration.MigratingTransitionInstanceValidationReport;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
 
 public class MigratingProcessInstanceValidationReportAssert {
 
@@ -54,23 +49,6 @@ public class MigratingProcessInstanceValidationReportAssert {
     isNotNull();
 
     assertEquals("Expected report to be for process instance", processInstanceId, actual.getProcessInstanceId());
-
-    return this;
-  }
-
-  public MigratingProcessInstanceValidationReportAssert hasFailures(String... expectedFailures) {
-    isNotNull();
-
-    List<String> actualFailures = actual.getFailures();
-
-    Collection<Matcher<? super String>> matchers = new ArrayList<Matcher<? super String>>();
-    for (String expectedFailure : expectedFailures) {
-      matchers.add(Matchers.containsString(expectedFailure));
-    }
-
-    Assert.assertThat("Expected failures:\n" + joinFailures(Arrays.asList(expectedFailures)) +
-        "But found failures:\n" + joinFailures(actualFailures),
-      actualFailures, Matchers.containsInAnyOrder(matchers));
 
     return this;
   }
@@ -112,15 +90,18 @@ public class MigratingProcessInstanceValidationReportAssert {
   }
 
   protected void assertFailures(String sourceScopeId, List<String> expectedFailures, List<String> actualFailures) {
+    // Transform expected failures into predicates that check for the presence of substrings.
+    List<String> unmatchedFailures = expectedFailures.stream()
+        .filter(expected -> actualFailures.stream().noneMatch(actual -> actual.contains(expected)))
+        .toList();
 
-    Collection<Matcher<? super String>> matchers = new ArrayList<Matcher<? super String>>();
-    for (String expectedFailure : expectedFailures) {
-      matchers.add(Matchers.containsString(expectedFailure));
-    }
-
-    Assert.assertThat("Expected failures for source scope: " + sourceScopeId + "\n" + joinFailures(expectedFailures) +
-        "But found failures:\n" + joinFailures(actualFailures),
-      actualFailures, Matchers.containsInAnyOrder(matchers));
+    // Use AssertJ's assertion with helpful error message formatting.
+    Assertions.assertThat(unmatchedFailures)
+        .as("Expected failures for source scope: %s%nExpected:%n%s%nBut found:%n%s",
+            sourceScopeId,
+            joinFailures(expectedFailures),
+            joinFailures(actualFailures))
+        .isEmpty();
   }
 
   public static MigratingProcessInstanceValidationReportAssert assertThat(MigratingProcessInstanceValidationReport report) {

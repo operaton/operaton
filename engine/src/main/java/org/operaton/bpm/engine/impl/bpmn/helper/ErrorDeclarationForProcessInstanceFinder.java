@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.bpmn.helper;
 
 import java.util.List;
 
-import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.bpmn.parser.ErrorEventDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;

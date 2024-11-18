@@ -16,27 +16,28 @@
  */
 package org.operaton.bpm.model.xml.validation;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.validation.ModelValidationResultsImpl;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.testmodel.instance.Bird;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
  */
-public class ModelValidationTest {
+class ModelValidationTest {
 
   protected ModelInstance modelInstance;
 
-  @Before
-  public void parseModel() {
+  @BeforeEach
+  void parseModel() {
     TestModelParser modelParser = new TestModelParser();
     String testXml = "org/operaton/bpm/model/xml/testmodel/instance/UnknownAnimalTest.xml";
     InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);
@@ -45,7 +46,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldValidateWithEmptyList() {
+  void shouldValidateWithEmptyList() {
     ValidationResults results = modelInstance.validate(List.of());
 
     assertThat(results).isNotNull();
@@ -53,19 +54,19 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldCollectWarnings() {
+  void shouldCollectWarnings() {
     List<ModelElementValidator<?>> validators = List.of(new IsAdultWarner());
 
     ValidationResults results = modelInstance.validate(validators);
 
     assertThat(results).isNotNull();
     assertThat(results.hasErrors()).isFalse();
-    assertThat(results.getErrorCount()).isEqualTo(0);
+    assertThat(results.getErrorCount()).isZero();
     assertThat(results.getWarinigCount()).isEqualTo(7);
   }
 
   @Test
-  public void shouldCollectErrors() {
+  void shouldCollectErrors() {
     List<ModelElementValidator<?>> validators = List.of(new IllegalBirdValidator("tweety"));
 
     ValidationResults results = modelInstance.validate(validators);
@@ -73,11 +74,11 @@ public class ModelValidationTest {
     assertThat(results).isNotNull();
     assertThat(results.hasErrors()).isTrue();
     assertThat(results.getErrorCount()).isEqualTo(1);
-    assertThat(results.getWarinigCount()).isEqualTo(0);
+    assertThat(results.getWarinigCount()).isZero();
   }
 
   @Test
-  public void shouldWriteResults() {
+  void shouldWriteResults() {
     List<ModelElementValidator<?>> validators = List.of(new IllegalBirdValidator("tweety"));
 
     ValidationResults results = modelInstance.validate(validators);
@@ -85,11 +86,11 @@ public class ModelValidationTest {
     StringWriter stringWriter = new StringWriter();
     results.write(stringWriter, new TestResultFormatter());
 
-    assertThat(stringWriter.toString()).isEqualTo("tweety\n\tERROR (20): Bird tweety is illegal\n");
+    assertThat(stringWriter).hasToString("tweety\n\tERROR (20): Bird tweety is illegal\n");
   }
 
   @Test
-  public void shouldWriteResultsUntilMaxSize() {
+  void shouldWriteResultsUntilMaxSize() {
     // Given
     int maxSize = 120;
 
@@ -114,7 +115,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldCombineDifferentValidationResults() {
+  void shouldCombineDifferentValidationResults() {
     // Given
     int maxSize = 120;
 
@@ -139,7 +140,7 @@ public class ModelValidationTest {
   }
 
   @Test
-  public void shouldReturnResults() {
+  void shouldReturnResults() {
     List<ModelElementValidator<?>> validators =
         List.of(new IllegalBirdValidator("tweety"), new IsAdultWarner());
 
@@ -149,7 +150,7 @@ public class ModelValidationTest {
     assertThat(results.getWarinigCount()).isEqualTo(7);
 
     var resultsByElement = results.getResults();
-    assertThat(resultsByElement.size()).isEqualTo(7);
+    assertThat(resultsByElement).hasSize(7);
 
     for (var resultEntry : resultsByElement.entrySet()) {
       Bird element = (Bird) resultEntry.getKey();
@@ -158,14 +159,14 @@ public class ModelValidationTest {
       assertThat(validationResults).isNotNull();
 
       if (element.getId().equals("tweety")) {
-        assertThat(validationResults.size()).isEqualTo(2);
+        assertThat(validationResults).hasSize(2);
         ValidationResult error = validationResults.remove(0);
         assertThat(error.getType()).isEqualTo(ValidationResultType.ERROR);
         assertThat(error.getCode()).isEqualTo(20);
         assertThat(error.getMessage()).isEqualTo("Bird tweety is illegal");
         assertThat(error.getElement()).isEqualTo(element);
       } else {
-        assertThat(validationResults.size()).isEqualTo(1);
+        assertThat(validationResults).hasSize(1);
       }
 
       ValidationResult warning = validationResults.get(0);

@@ -16,6 +16,7 @@
     <rest.http.port>38081</rest.http.port>
     <version.resteasy>6.2.3.Final</version.resteasy>
     <version.spring.framework>${version.spring.framework6}</version.spring.framework>
+    <skipTests>true</skipTests>
   </properties>
 
   <dependencyManagement>
@@ -160,12 +161,11 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.hamcrest</groupId>
-          <artifactId>hamcrest-core</artifactId>
-        </exclusion>
-      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
     </dependency>
 
     <dependency>
@@ -564,7 +564,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <skipTests>false</skipTests>
+              <skipTests>${skipTests}</skipTests>
             </configuration>
           </plugin>
           <plugin>

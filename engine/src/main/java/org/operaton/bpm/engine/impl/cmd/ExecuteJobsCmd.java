@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.interceptor.ProcessDataContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutorLogger;
 import org.operaton.bpm.engine.impl.jobexecutor.JobFailureCollector;

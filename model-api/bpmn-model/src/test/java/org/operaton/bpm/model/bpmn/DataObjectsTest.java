@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import java.util.Collection;
 
@@ -27,17 +26,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Dario Campagna
  */
-public class DataObjectsTest {
+class DataObjectsTest {
 
   private static BpmnModelInstance modelInstance;
 
-  @BeforeClass
-  public static void parseModel() {
+  @BeforeAll
+  static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(DataObjectsTest.class.getResourceAsStream("DataObjectTest.bpmn"));
   }
 
   @Test
-  public void testGetDataObject() {
+  void testGetDataObject() {
     DataObject dataObject = modelInstance.getModelElementById("_21");
     ItemDefinition itemDefinition = modelInstance.getModelElementById("_100");
     assertThat(dataObject).isNotNull();
@@ -47,7 +46,7 @@ public class DataObjectsTest {
   }
 
   @Test
-  public void testGetDataObjectReference() {
+  void testGetDataObjectReference() {
     DataObjectReference dataObjectReference = modelInstance.getModelElementById("_dataRef_7");
     DataObject dataObject = modelInstance.getModelElementById("_7");
     assertThat(dataObjectReference).isNotNull();
@@ -56,17 +55,17 @@ public class DataObjectsTest {
   }
 
   @Test
-  public void testDataObjectReferenceAsDataAssociationSource() {
+  void testDataObjectReferenceAsDataAssociationSource() {
     ScriptTask scriptTask = modelInstance.getModelElementById("_3");
     DataObjectReference dataObjectReference = modelInstance.getModelElementById("_dataRef_11");
     DataInputAssociation dataInputAssociation = scriptTask.getDataInputAssociations().iterator().next();
     Collection<ItemAwareElement> sources = dataInputAssociation.getSources();
-    assertThat(sources.size()).isEqualTo(1);
+    assertThat(sources).hasSize(1);
     assertThat(sources.iterator().next()).isEqualTo(dataObjectReference);
   }
 
   @Test
-  public void testDataObjectReferenceAsDataAssociationTarget() {
+  void testDataObjectReferenceAsDataAssociationTarget() {
     ScriptTask scriptTask = modelInstance.getModelElementById("_3");
     DataObjectReference dataObjectReference = modelInstance.getModelElementById("_dataRef_7");
     DataOutputAssociation dataOutputAssociation = scriptTask.getDataOutputAssociations().iterator().next();

@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dependencies": "license-checker --production --json --relativeLicensePath",
-    "xlts-install": "node scripts/xlts install",
     "start": "webpack-dev-server --mode development --config webpack.dev.js",
     "test": "karma start karma.config.js",
     "license-check": "node ./scripts/licenseCheck",
@@ -97,19 +96,5 @@
     "webpack-cli": "5.1.4",
     "webpack-dev-server": "4.15.1",
     "webpack-merge": "5.10.0"
-  },
-  "xlts": {
-    "xltsVersion": "1.9.3",
-    "dependencies": [
-      "angular",
-      "angular-animate",
-      "angular-cookies",
-      "angular-loader",
-      "angular-resource",
-      "angular-route",
-      "angular-sanitize",
-      "angular-touch",
-      "angular-mocks"
-    ]
   }
 }

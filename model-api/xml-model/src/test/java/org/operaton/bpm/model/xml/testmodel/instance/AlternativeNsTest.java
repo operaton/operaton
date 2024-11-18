@@ -16,30 +16,27 @@
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.ModelImpl;
-import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.testmodel.Gender;
 import org.operaton.bpm.model.xml.testmodel.TestModelConstants;
 import org.operaton.bpm.model.xml.testmodel.TestModelTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runners.Parameterized.Parameters;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Ronny Bräunlich
@@ -49,41 +46,42 @@ public class AlternativeNsTest extends TestModelTest {
   private static final String MECHANICAL_NS = "http://operaton.org/mechanical";
   private static final String YET_ANOTHER_NS = "http://operaton.org/yans";
 
-  public AlternativeNsTest(String testName, ModelInstance testModelInstance, AbstractModelParser modelParser) {
-    super(testName, testModelInstance, modelParser);
+  static Stream<Arguments> models() {
+    return Stream.of(parseModel(AlternativeNsTest.class)).map(Arguments::of);
   }
 
-  @Parameters(name = "Model {0}")
-  public static Collection<Object[]> models() {
-    return Collections.singleton(parseModel(AlternativeNsTest.class));
-  }
-
-  @Before
-  public void setUp() {
-    modelInstance = cloneModelInstance();
+  @Override
+  public void init(TestModelArgs args) {
+    super.init(args);
     ModelImpl modelImpl = (ModelImpl) modelInstance.getModel();
     modelImpl.declareAlternativeNamespace(MECHANICAL_NS, TestModelConstants.NEWER_NAMESPACE);
     modelImpl.declareAlternativeNamespace(YET_ANOTHER_NS, TestModelConstants.NEWER_NAMESPACE);
   }
 
-  @After
-  public void tearDown() {
-    ModelImpl modelImpl = (ModelImpl) modelInstance.getModel();
-    modelImpl.undeclareAlternativeNamespace(MECHANICAL_NS);
-    modelImpl.undeclareAlternativeNamespace(YET_ANOTHER_NS);
+  @AfterEach
+  void tearDown() {
+    if (modelInstance != null) {
+      ModelImpl modelImpl = (ModelImpl) modelInstance.getModel();
+      modelImpl.undeclareAlternativeNamespace(MECHANICAL_NS);
+      modelImpl.undeclareAlternativeNamespace(YET_ANOTHER_NS);
+    }
   }
 
-  @Test
-  public void getUniqueChildElementByNameNsForAlternativeNs() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void getUniqueChildElementByNameNsForAlternativeNs(TestModelArgs args) {
+    init(args);
     ModelElementInstance hedwig = modelInstance.getModelElementById("hedwig");
-    assertThat(hedwig, is(notNullValue()));
+    assertThat(hedwig).isNotNull();
     ModelElementInstance childElementByNameNs = hedwig.getUniqueChildElementByNameNs(TestModelConstants.NEWER_NAMESPACE, "wings");
-    assertThat(childElementByNameNs, is(notNullValue()));
-    assertThat(childElementByNameNs.getTextContent(), is("wusch"));
+    assertThat(childElementByNameNs).isNotNull();
+    assertThat(childElementByNameNs.getTextContent()).isEqualTo("wusch");
   }
 
-  @Test
-  public void getUniqueChildElementByNameNsForSecondAlternativeNs() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void getUniqueChildElementByNameNsForSecondAlternativeNs(TestModelArgs args) {
+    init(args);
     // givne
     ModelElementInstance donald = modelInstance.getModelElementById("donald");
 
@@ -91,21 +89,25 @@ public class AlternativeNsTest extends TestModelTest {
     ModelElementInstance childElementByNameNs = donald.getUniqueChildElementByNameNs(TestModelConstants.NEWER_NAMESPACE, "wings");
 
     // then
-    assertThat(childElementByNameNs, is(notNullValue()));
-    assertThat(childElementByNameNs.getTextContent(), is("flappy"));
+    assertThat(childElementByNameNs).isNotNull();
+    assertThat(childElementByNameNs.getTextContent()).isEqualTo("flappy");
   }
 
-  @Test
-  public void getChildElementsByTypeForAlternativeNs() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void getChildElementsByTypeForAlternativeNs(TestModelArgs args) {
+    init(args);
     ModelElementInstance birdo = modelInstance.getModelElementById("birdo");
-    assertThat(birdo, is(notNullValue()));
+    assertThat(birdo).isNotNull();
     Collection<Wings> elements = birdo.getChildElementsByType(Wings.class);
-    assertThat(elements.size(), is(1));
-    assertThat(elements.iterator().next().getTextContent(), is("zisch"));
+    assertThat(elements).hasSize(1);
+    assertThat(elements.iterator().next().getTextContent()).isEqualTo("zisch");
   }
 
-  @Test
-  public void getChildElementsByTypeForSecondAlternativeNs() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void getChildElementsByTypeForSecondAlternativeNs(TestModelArgs args) {
+    init(args);
     // given
     ModelElementInstance donald = modelInstance.getModelElementById("donald");
 
@@ -113,20 +115,24 @@ public class AlternativeNsTest extends TestModelTest {
     Collection<Wings> elements = donald.getChildElementsByType(Wings.class);
 
     // then
-    assertThat(elements.size(), is(1));
-    assertThat(elements.iterator().next().getTextContent(), is("flappy"));
+    assertThat(elements).hasSize(1);
+    assertThat(elements.iterator().next().getTextContent()).isEqualTo("flappy");
   }
 
-  @Test
-  public void getAttributeValueNsForAlternativeNs() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void getAttributeValueNsForAlternativeNs(TestModelArgs args) {
+    init(args);
     Bird plucky = modelInstance.getModelElementById("plucky");
-    assertThat(plucky, is(notNullValue()));
+    assertThat(plucky).isNotNull();
     Boolean extendedWings = plucky.canHazExtendedWings();
-    assertThat(extendedWings, is(false));
+    assertThat(extendedWings).isFalse();
   }
 
-  @Test
-  public void getAttributeValueNsForSecondAlternativeNs() {
+  @ParameterizedTest
+  @MethodSource("models")
+  void getAttributeValueNsForSecondAlternativeNs(TestModelArgs args) {
+    init(args);
     // given
     Bird donald = modelInstance.getModelElementById("donald");
 
@@ -134,24 +140,28 @@ public class AlternativeNsTest extends TestModelTest {
     Boolean extendedWings = donald.canHazExtendedWings();
 
     // then
-    assertThat(extendedWings, is(true));
+    assertThat(extendedWings).isTrue();
   }
 
-  @Test
-  public void modifyingAttributeWithAlternativeNamespaceKeepsAlternativeNamespace(){
+  @ParameterizedTest
+  @MethodSource("models")
+  void modifyingAttributeWithAlternativeNamespaceKeepsAlternativeNamespace(TestModelArgs args) {
+    init(args);
     Bird plucky = modelInstance.getModelElementById("plucky");
-    assertThat(plucky, is(notNullValue()));
+    assertThat(plucky).isNotNull();
     //validate old value
     Boolean extendedWings = plucky.canHazExtendedWings();
-    assertThat(extendedWings, is(false));
+    assertThat(extendedWings).isFalse();
     //change it
     plucky.setCanHazExtendedWings(true);
     String attributeValueNs = plucky.getAttributeValueNs(MECHANICAL_NS, "canHazExtendedWings");
-    assertThat(attributeValueNs, is("true"));
+    assertThat(attributeValueNs).isEqualTo("true");
   }
 
-  @Test
-  public void modifyingAttributeWithSecondAlternativeNamespaceKeepsSecondAlternativeNamespace(){
+  @ParameterizedTest
+  @MethodSource("models")
+  void modifyingAttributeWithSecondAlternativeNamespaceKeepsSecondAlternativeNamespace(TestModelArgs args) {
+    init(args);
     // given
     Bird donald = modelInstance.getModelElementById("donald");
 
@@ -160,32 +170,38 @@ public class AlternativeNsTest extends TestModelTest {
 
     // then
     String attributeValueNs = donald.getAttributeValueNs(YET_ANOTHER_NS, "canHazExtendedWings");
-    assertThat(attributeValueNs, is("false"));
+    assertThat(attributeValueNs).isEqualTo("false");
   }
 
-  @Test
-  public void modifyingAttributeWithNewNamespaceKeepsNewNamespace(){
+  @ParameterizedTest
+  @MethodSource("models")
+  void modifyingAttributeWithNewNamespaceKeepsNewNamespace(TestModelArgs args) {
+    init(args);
     Bird bird = createBird(modelInstance, "waldo", Gender.Male);
     bird.setCanHazExtendedWings(true);
     String attributeValueNs = bird.getAttributeValueNs(TestModelConstants.NEWER_NAMESPACE, "canHazExtendedWings");
-    assertThat(attributeValueNs, is("true"));
+    assertThat(attributeValueNs).isEqualTo("true");
   }
 
-  @Test
-  public void modifyingElementWithAlternativeNamespaceKeepsAlternativeNamespace(){
+  @ParameterizedTest
+  @MethodSource("models")
+  void modifyingElementWithAlternativeNamespaceKeepsAlternativeNamespace(TestModelArgs args) {
+    init(args);
     Bird birdo = modelInstance.getModelElementById("birdo");
-    assertThat(birdo, is(notNullValue()));
+    assertThat(birdo).isNotNull();
     Wings wings = birdo.getWings();
-    assertThat(wings, is(notNullValue()));
+    assertThat(wings).isNotNull();
     wings.setTextContent("kawusch");
 
     List<DomElement> childElementsByNameNs = birdo.getDomElement().getChildElementsByNameNs(MECHANICAL_NS, "wings");
-    assertThat(childElementsByNameNs.size(), is(1));
-    assertThat(childElementsByNameNs.get(0).getTextContent(), is("kawusch"));
+    assertThat(childElementsByNameNs).hasSize(1);
+    assertThat(childElementsByNameNs.get(0).getTextContent()).isEqualTo("kawusch");
   }
 
-  @Test
-  public void modifyingElementWithSecondAlternativeNamespaceKeepsSecondAlternativeNamespace(){
+  @ParameterizedTest
+  @MethodSource("models")
+  void modifyingElementWithSecondAlternativeNamespaceKeepsSecondAlternativeNamespace(TestModelArgs args) {
+    init(args);
     // given
     Bird donald = modelInstance.getModelElementById("donald");
     Wings wings = donald.getWings();
@@ -195,41 +211,45 @@ public class AlternativeNsTest extends TestModelTest {
 
     // then
     List<DomElement> childElementsByNameNs = donald.getDomElement().getChildElementsByNameNs(YET_ANOTHER_NS, "wings");
-    assertThat(childElementsByNameNs.size(), is(1));
-    assertThat(childElementsByNameNs.get(0).getTextContent(), is("kawusch"));
+    assertThat(childElementsByNameNs).hasSize(1);
+    assertThat(childElementsByNameNs.get(0).getTextContent()).isEqualTo("kawusch");
   }
 
-  @Test
-  public void modifyingElementWithNewNamespaceKeepsNewNamespace(){
+  @ParameterizedTest
+  @MethodSource("models")
+  void modifyingElementWithNewNamespaceKeepsNewNamespace(TestModelArgs args) {
+    init(args);
     Bird bird = createBird(modelInstance, "waldo", Gender.Male);
     bird.setWings(modelInstance.newInstance(Wings.class));
 
     List<DomElement> childElementsByNameNs = bird.getDomElement().getChildElementsByNameNs(TestModelConstants.NEWER_NAMESPACE, "wings");
-    assertThat(childElementsByNameNs.size(), is(1));
+    assertThat(childElementsByNameNs).hasSize(1);
   }
 
-  @Test
-  public void useExistingNamespace() {
-    assertThatThereIsNoNewerNamespaceUrl();
+  @ParameterizedTest
+  @MethodSource("models")
+  void useExistingNamespace(TestModelArgs args) {
+    init(args);
+    assertThatThereIsNoNewerNamespaceUrl(modelInstance);
 
     Bird plucky = modelInstance.getModelElementById("plucky");
     plucky.setAttributeValueNs(MECHANICAL_NS, "canHazExtendedWings", "true");
 
     Bird donald = modelInstance.getModelElementById("donald");
     donald.setAttributeValueNs(YET_ANOTHER_NS, "canHazExtendedWings", "false");
-    assertThatThereIsNoNewerNamespaceUrl();
+    assertThatThereIsNoNewerNamespaceUrl(modelInstance);
 
     assertTrue(plucky.canHazExtendedWings());
-    assertThatThereIsNoNewerNamespaceUrl();
+    assertThatThereIsNoNewerNamespaceUrl(modelInstance);
   }
 
-  protected void assertThatThereIsNoNewerNamespaceUrl() {
+  protected void assertThatThereIsNoNewerNamespaceUrl(ModelInstance modelInstance) {
     Node rootElement = modelInstance.getDocument().getDomSource().getNode().getFirstChild();
     NamedNodeMap attributes = rootElement.getAttributes();
     for (int i = 0; i < attributes.getLength(); i++) {
       Node item = attributes.item(i);
       String nodeValue = item.getNodeValue();
-      assertNotEquals("Found newer namespace url which shouldn't exist", TestModelConstants.NEWER_NAMESPACE, nodeValue);
+      assertNotEquals(TestModelConstants.NEWER_NAMESPACE, nodeValue, "Found newer namespace url which shouldn't exist");
     }
   }
 

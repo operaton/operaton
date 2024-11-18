@@ -16,42 +16,12 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionName;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionVersion;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.time.DateUtils;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricActivityInstance;
@@ -81,10 +51,14 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 /**
  * @author Tom Baeyens
@@ -2029,16 +2003,16 @@ public class HistoricProcessInstanceTest {
         historyService.createHistoricProcessInstanceQuery().activityIdIn("innerServiceTask", "outerTask").list();
 
     // then
-    assertThat(queryByInnerServiceActivityId.size()).isEqualTo(1);
+    assertThat(queryByInnerServiceActivityId).hasSize(1);
     assertThat(queryByInnerServiceActivityId.get(0).getId()).isEqualTo(processInstance.getId());
 
-    assertThat(queryBySubProcessActivityId.size()).isEqualTo(1);
+    assertThat(queryBySubProcessActivityId).hasSize(1);
     assertThat(queryBySubProcessActivityId.get(0).getId()).isEqualTo(processInstance.getId());
 
-    assertThat(queryByOuterProcessActivityId.size()).isEqualTo(1);
+    assertThat(queryByOuterProcessActivityId).hasSize(1);
     assertThat(queryByOuterProcessActivityId.get(0).getId()).isEqualTo(processInstance2.getId());
 
-    assertThat(queryByOuterAndInnedActivityId.size()).isEqualTo(2);
+    assertThat(queryByOuterAndInnedActivityId).hasSize(2);
     assertThat(queryByOuterAndInnedActivityId.stream()
         .map(HistoricProcessInstance::getId)
         .collect(Collectors.toList()))
@@ -2068,16 +2042,16 @@ public class HistoricProcessInstanceTest {
         historyService.createHistoricProcessInstanceQuery().activityIdIn("innerTask", "outerTask").list();
 
     // then
-    assertThat(queryByInnerServiceActivityId.size()).isEqualTo(1);
+    assertThat(queryByInnerServiceActivityId).hasSize(1);
     assertThat(queryByInnerServiceActivityId.get(0).getId()).isEqualTo(processInstance.getId());
 
-    assertThat(queryBySubProcessActivityId.size()).isEqualTo(1);
+    assertThat(queryBySubProcessActivityId).hasSize(1);
     assertThat(queryBySubProcessActivityId.get(0).getId()).isEqualTo(processInstance.getId());
 
-    assertThat(queryByOuterProcessActivityId.size()).isEqualTo(1);
+    assertThat(queryByOuterProcessActivityId).hasSize(1);
     assertThat(queryByOuterProcessActivityId.get(0).getId()).isEqualTo(processInstance2.getId());
 
-    assertThat(queryByOuterAndInnedActivityId.size()).isEqualTo(2);
+    assertThat(queryByOuterAndInnedActivityId).hasSize(2);
     assertThat(queryByOuterAndInnedActivityId.stream()
         .map(HistoricProcessInstance::getId)
         .collect(Collectors.toList()))
@@ -2227,7 +2201,7 @@ public class HistoricProcessInstanceTest {
 
     // then
     assertThat(query.count()).isEqualTo(6l);
-    assertThat(query.list().size()).isEqualTo(6);
+    assertThat(query.list()).hasSize(6);
   }
 
   @Test
@@ -2241,8 +2215,8 @@ public class HistoricProcessInstanceTest {
       .processDefinitionKeyIn("not-existing-key");
 
     // then
-    assertThat(query.count()).isEqualTo(0l);
-    assertThat(query.list().size()).isEqualTo(0);
+    assertThat(query.count()).isZero();
+    assertThat(query.list()).isEmpty();
   }
 
   @Test

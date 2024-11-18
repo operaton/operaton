@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DefaultProcessEngineConfigurationTest {
 
@@ -93,11 +93,11 @@ public class DefaultProcessEngineConfigurationTest {
   public void setJobExecutorAcquireByPriority() {
     properties.setJobExecutorAcquireByPriority(null);
     instance.preInit(configuration);
-    assertThat(configuration.isJobExecutorAcquireByPriority()).isEqualTo(false);
+    assertThat(configuration.isJobExecutorAcquireByPriority()).isFalse();
 
     properties.setJobExecutorAcquireByPriority(true);
     instance.preInit(configuration);
-    assertThat(configuration.isJobExecutorAcquireByPriority()).isEqualTo(true);
+    assertThat(configuration.isJobExecutorAcquireByPriority()).isTrue();
   }
 
   @Test

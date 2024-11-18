@@ -18,16 +18,16 @@ package org.operaton.bpm.model.bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.Definitions;
 import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.instance.StartEvent;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
-import org.junit.Test;
 
-public class GenerateIdTest {
+class GenerateIdTest {
 
   @Test
-  public void shouldNotGenerateIdsOnRead() {
+  void shouldNotGenerateIdsOnRead() {
     BpmnModelInstance modelInstance = Bpmn.readModelFromStream(GenerateIdTest.class.getResourceAsStream("GenerateIdTest.bpmn"));
     Definitions definitions = modelInstance.getDefinitions();
     assertThat(definitions.getId()).isNull();
@@ -43,7 +43,7 @@ public class GenerateIdTest {
   }
 
   @Test
-  public void shouldGenerateIdsOnCreate() {
+  void shouldGenerateIdsOnCreate() {
     BpmnModelInstance modelInstance = Bpmn.createEmptyModel();
     Definitions definitions = modelInstance.newInstance(Definitions.class);
     assertThat(definitions.getId()).isNotNull();

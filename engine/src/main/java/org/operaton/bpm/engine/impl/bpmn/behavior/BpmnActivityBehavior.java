@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;

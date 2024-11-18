@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.instance.Process;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski
@@ -31,8 +30,8 @@ public class CreateModelTest {
   public Definitions definitions;
   public Process process;
 
-  @Before
-  public void createEmptyModel() {
+  @BeforeEach
+  void createEmptyModel() {
     modelInstance = Bpmn.createEmptyModel();
     definitions = modelInstance.newInstance(Definitions.class);
     definitions.setTargetNamespace("http://operaton.org/examples");
@@ -57,7 +56,7 @@ public class CreateModelTest {
   }
 
   @Test
-  public void createProcessWithOneTask() {
+  void createProcessWithOneTask() {
     // create process
     Process process = createElement(definitions, "process-with-one-task", Process.class);
 
@@ -72,7 +71,7 @@ public class CreateModelTest {
   }
 
   @Test
-  public void createProcessWithParallelGateway() {
+  void createProcessWithParallelGateway() {
     // create process
     Process process = createElement(definitions, "process-with-parallel-gateway", Process.class);
 
@@ -93,8 +92,8 @@ public class CreateModelTest {
     createSequenceFlow(process, join, endEvent);
   }
 
-  @After
-  public void validateModel() {
+  @AfterEach
+  void validateModel() {
     Bpmn.validateModel(modelInstance);
   }
 

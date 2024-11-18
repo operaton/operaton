@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime.cleanup;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_NONE;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -80,7 +79,7 @@ public class HistoryCleanupStrategyConfigurationTest {
     engineConfiguration.initHistoryCleanup();
 
     // then
-    assertThat(engineConfiguration.getHistoryCleanupStrategy(), is(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED));
+    assertThat(engineConfiguration.getHistoryCleanupStrategy()).isEqualTo(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
   }
 
   @Test
@@ -94,7 +93,7 @@ public class HistoryCleanupStrategyConfigurationTest {
     engineConfiguration.initHistoryCleanup();
 
     // then
-    assertThat(engineConfiguration.getHistoryCleanupStrategy(), is(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED));
+    assertThat(engineConfiguration.getHistoryCleanupStrategy()).isEqualTo(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
   }
 
   @Test
@@ -109,8 +108,8 @@ public class HistoryCleanupStrategyConfigurationTest {
     engineConfiguration.initHistoryCleanup();
 
     // then
-    assertThat(engineConfiguration.getHistoryCleanupStrategy(), is(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED));
-    assertThat(engineConfiguration.getHistoryRemovalTimeStrategy(), is(HISTORY_REMOVAL_TIME_STRATEGY_END));
+    assertThat(engineConfiguration.getHistoryCleanupStrategy()).isEqualTo(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
+    assertThat(engineConfiguration.getHistoryRemovalTimeStrategy()).isEqualTo(HISTORY_REMOVAL_TIME_STRATEGY_END);
   }
 
   @Test
@@ -125,8 +124,8 @@ public class HistoryCleanupStrategyConfigurationTest {
     engineConfiguration.initHistoryCleanup();
 
     // then
-    assertThat(engineConfiguration.getHistoryCleanupStrategy(), is(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED));
-    assertThat(engineConfiguration.getHistoryRemovalTimeStrategy(), is(HISTORY_REMOVAL_TIME_STRATEGY_START));
+    assertThat(engineConfiguration.getHistoryCleanupStrategy()).isEqualTo(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
+    assertThat(engineConfiguration.getHistoryRemovalTimeStrategy()).isEqualTo(HISTORY_REMOVAL_TIME_STRATEGY_START);
   }
 
 
@@ -141,7 +140,7 @@ public class HistoryCleanupStrategyConfigurationTest {
     engineConfiguration.initHistoryCleanup();
 
     // then
-    assertThat(engineConfiguration.getHistoryCleanupStrategy(), is(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED));
+    assertThat(engineConfiguration.getHistoryCleanupStrategy()).isEqualTo(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
   }
 
   @Test

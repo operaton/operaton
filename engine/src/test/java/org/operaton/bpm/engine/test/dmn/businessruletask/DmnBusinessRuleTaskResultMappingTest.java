@@ -190,7 +190,7 @@ public class DmnBusinessRuleTaskResultMappingTest extends PluggableProcessEngine
       fail("expect parse exception");
     } catch (ParseException e) {
       testRule.assertTextPresent("No decision result mapper found for name 'invalid'", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().size()).isEqualTo(1);
+      assertThat(e.getResorceReports().get(0).getErrors()).hasSize(1);
       assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("ruleTask");
     }
   }

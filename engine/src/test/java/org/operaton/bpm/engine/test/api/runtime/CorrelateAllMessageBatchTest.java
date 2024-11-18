@@ -16,24 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.tuple;
-import static java.util.stream.Stream.of;
-import static java.util.stream.Collectors.toSet;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RuntimeService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -41,7 +30,6 @@ import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ExecutionQuery;
 import org.operaton.bpm.engine.runtime.Job;
@@ -55,11 +43,15 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Stream.of;
+import static org.assertj.core.api.Assertions.*;
 
 public class CorrelateAllMessageBatchTest {
 
@@ -138,17 +130,17 @@ public class CorrelateAllMessageBatchTest {
       .processInstanceId(processInstanceIdThree);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
   }
 
   @Test
@@ -177,17 +169,17 @@ public class CorrelateAllMessageBatchTest {
       .processInstanceId(processInstanceIdThree);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
   }
 
   @Test
@@ -216,17 +208,17 @@ public class CorrelateAllMessageBatchTest {
       .processInstanceId(processInstanceIdThree);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
   }
 
   @Test
@@ -254,16 +246,16 @@ public class CorrelateAllMessageBatchTest {
       .processInstanceId(processInstanceIdThree);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceTwo.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceTwo.count()).isZero();
     assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(1L);
   }
 
@@ -287,15 +279,15 @@ public class CorrelateAllMessageBatchTest {
       .processDefinitionKey(PROCESS_THREE_KEY);
 
     // assume
-    assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(0L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceOne.count()).isZero();
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
 
     // when
     rule.syncExec(batch);
 
     // then
     assertThat(taskExecutionQueryInstanceOne.count()).isEqualTo(1L);
-    assertThat(taskExecutionQueryInstanceThree.count()).isEqualTo(0L);
+    assertThat(taskExecutionQueryInstanceThree.count()).isZero();
   }
 
   @Test
@@ -558,7 +550,7 @@ public class CorrelateAllMessageBatchTest {
       .operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE)
       .list();
 
-    assertThat(logs.size()).isEqualTo(0);
+    assertThat(logs).isEmpty();
 
     // clear
     managementService.deleteBatch(batch.getId(), true);

@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestConfiguration;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResult;

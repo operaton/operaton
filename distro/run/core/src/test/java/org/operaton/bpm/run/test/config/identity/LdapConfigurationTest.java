@@ -43,7 +43,7 @@ public class LdapConfigurationTest {
 
   @Test
   public void shouldPickUpConfiguration() {
-    assertThat(props.isEnabled()).isEqualTo(true);
+    assertThat(props.isEnabled()).isTrue();
     assertThat(props.getServerUrl()).isEqualTo(plugin.getServerUrl());
     assertThat(props.getManagerDn()).isEqualTo(plugin.getManagerDn());
     assertThat(props.getManagerPassword()).isEqualTo(plugin.getManagerPassword());

@@ -40,8 +40,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import static org.operaton.bpm.engine.authorization.Resources.*;
-import static org.operaton.bpm.engine.authorization.Permissions.*;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 
 /**
  * @author Daniel Meyer

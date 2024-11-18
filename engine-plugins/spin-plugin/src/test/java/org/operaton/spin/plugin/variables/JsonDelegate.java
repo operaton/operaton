@@ -16,9 +16,8 @@
  */
 package org.operaton.spin.plugin.variables;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -37,7 +36,7 @@ public class JsonDelegate implements JavaDelegate {
     TypedValue typedValue = execution.getVariableTyped("jsonVariable");
 
     // then
-    assertThat(typedValue.isTransient(), is(true));
+    assertThat(typedValue.isTransient()).isTrue();
   }
 
 }

@@ -123,7 +123,7 @@ public class MultiTenancyHistoricCaseInstanceQueryTest {
         .createHistoricCaseInstanceQuery()
         .tenantIdIn("nonExisting");
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -146,7 +146,7 @@ public class MultiTenancyHistoricCaseInstanceQueryTest {
         .asc()
         .list();
 
-    assertThat(historicCaseInstances.size()).isEqualTo(2);
+    assertThat(historicCaseInstances).hasSize(2);
     assertThat(historicCaseInstances.get(0).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(historicCaseInstances.get(1).getTenantId()).isEqualTo(TENANT_TWO);
   }
@@ -160,7 +160,7 @@ public class MultiTenancyHistoricCaseInstanceQueryTest {
         .desc()
         .list();
 
-    assertThat(historicCaseInstances.size()).isEqualTo(2);
+    assertThat(historicCaseInstances).hasSize(2);
     assertThat(historicCaseInstances.get(0).getTenantId()).isEqualTo(TENANT_TWO);
     assertThat(historicCaseInstances.get(1).getTenantId()).isEqualTo(TENANT_ONE);
   }
@@ -181,7 +181,7 @@ public class MultiTenancyHistoricCaseInstanceQueryTest {
 
     assertThat(query.count()).isEqualTo(2L);
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
   }
 

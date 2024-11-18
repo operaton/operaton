@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
@@ -27,7 +28,6 @@ import org.operaton.bpm.model.xml.validation.ModelElementValidator;
 import org.operaton.bpm.model.xml.validation.ValidationResult;
 import org.operaton.bpm.model.xml.validation.ValidationResultType;
 import org.operaton.bpm.model.xml.validation.ValidationResults;
-import org.junit.Test;
 import org.operaton.bpm.model.bpmn.instance.Process;
 
 import static org.assertj.core.api.Assertions.*;
@@ -36,10 +36,10 @@ import static org.assertj.core.api.Assertions.*;
  * @author Daniel Meyer
  *
  */
-public class ValidateProcessTest {
+class ValidateProcessTest {
 
   @Test
-  public void validationFailsIfNoStartEventFound() {
+  void validationFailsIfNoStartEventFound() {
 
     List<ModelElementValidator<?>> validators = new ArrayList<ModelElementValidator<?>>();
     validators.add(new ProcessStartEventValidator());
@@ -51,13 +51,13 @@ public class ValidateProcessTest {
     assertThat(validationResults.hasErrors()).isTrue();
 
     Map<ModelElementInstance, List<ValidationResult>> results = validationResults.getResults();
-    assertThat(results.size()).isEqualTo(1);
+    assertThat(results).hasSize(1);
 
     Process process = bpmnModelInstance.getDefinitions().getChildElementsByType(Process.class).iterator().next();
     assertThat(results.containsKey(process)).isTrue();
 
     List<ValidationResult> resultsForProcess = results.get(process);
-    assertThat(resultsForProcess.size()).isEqualTo(1);
+    assertThat(resultsForProcess).hasSize(1);
 
     ValidationResult validationResult = resultsForProcess.get(0);
     assertThat(validationResult.getElement()).isEqualTo(process);

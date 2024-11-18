@@ -690,8 +690,8 @@ public class ProcessDefinitionStatisticsQueryTest extends PluggableProcessEngine
     assertThat(processDefinitionStatistics.getResourceName()).isEqualTo(resourceName);
     assertThat(processDefinitionStatistics.getDiagramResourceName()).isNull();
     assertThat(processDefinitionStatistics.getVersion()).isEqualTo(1);
-    assertThat(processDefinitionStatistics.getInstances()).isEqualTo(0);
-    assertThat(processDefinitionStatistics.getFailedJobs()).isEqualTo(0);
+    assertThat(processDefinitionStatistics.getInstances()).isZero();
+    assertThat(processDefinitionStatistics.getFailedJobs()).isZero();
     assertThat(processDefinitionStatistics.getIncidentStatistics()).isEmpty();
     assertThat(processDefinitionStatistics.isStartableInTasklist()).isTrue();
   }

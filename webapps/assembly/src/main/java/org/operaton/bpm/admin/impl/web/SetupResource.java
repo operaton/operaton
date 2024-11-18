@@ -102,7 +102,7 @@ public class SetupResource {
 
     // create group membership (add new user to admin group)
     processEngine.getIdentityService()
-      .createMembership(user.getProfile().getId(), Groups.CAMUNDA_ADMIN);
+      .createMembership(user.getProfile().getId(), Groups.OPERATON_ADMIN);
   }
 
   protected ObjectMapper getObjectMapper() {
@@ -121,8 +121,8 @@ public class SetupResource {
     final AuthorizationService authorizationService = processEngine.getAuthorizationService();
 
     // create group
-    if(identityService.createGroupQuery().groupId(Groups.CAMUNDA_ADMIN).count() == 0) {
-      Group operatonAdminGroup = identityService.newGroup(Groups.CAMUNDA_ADMIN);
+    if(identityService.createGroupQuery().groupId(Groups.OPERATON_ADMIN).count() == 0) {
+      Group operatonAdminGroup = identityService.newGroup(Groups.OPERATON_ADMIN);
       operatonAdminGroup.setName("operaton BPM Administrators");
       operatonAdminGroup.setType(Groups.GROUP_TYPE_SYSTEM);
       identityService.saveGroup(operatonAdminGroup);
@@ -130,9 +130,9 @@ public class SetupResource {
 
     // create ADMIN authorizations on all built-in resources
     for (Resource resource : Resources.values()) {
-      if(authorizationService.createAuthorizationQuery().groupIdIn(Groups.CAMUNDA_ADMIN).resourceType(resource).resourceId(ANY).count() == 0) {
+      if(authorizationService.createAuthorizationQuery().groupIdIn(Groups.OPERATON_ADMIN).resourceType(resource).resourceId(ANY).count() == 0) {
         AuthorizationEntity userAdminAuth = new AuthorizationEntity(AUTH_TYPE_GRANT);
-        userAdminAuth.setGroupId(Groups.CAMUNDA_ADMIN);
+        userAdminAuth.setGroupId(Groups.OPERATON_ADMIN);
         userAdminAuth.setResource(resource);
         userAdminAuth.setResourceId(ANY);
         userAdminAuth.addPermission(ALL);
@@ -144,7 +144,7 @@ public class SetupResource {
 
   protected void ensureSetupAvailable(ProcessEngine processEngine) {
     if (processEngine.getIdentityService().isReadOnly()
-        || (processEngine.getIdentityService().createUserQuery().memberOfGroup(Groups.CAMUNDA_ADMIN).count() > 0)) {
+        || (processEngine.getIdentityService().createUserQuery().memberOfGroup(Groups.OPERATON_ADMIN).count() > 0)) {
 
       throw LOGGER.setupActionNotAvailable();
     }

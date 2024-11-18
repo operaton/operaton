@@ -121,7 +121,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
     evaluateDecisionTable(true, "bar", "test", "hello");
     matchingRules = listener.evaluationEvent.getMatchingRules();
-    assertThat(matchingRules).hasSize(0);
+    assertThat(matchingRules).isEmpty();
 
     evaluateDecisionTable(false, "bar", "test", "hello");
     matchingRules = listener.evaluationEvent.getMatchingRules();
@@ -140,7 +140,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
     assertThat(matchedRule.getOutputEntries()).hasSize(1);
     matchedRule = matchingRules.get(1);
     assertThat(matchedRule.getId()).isEqualTo("rule3");
-    assertThat(matchedRule.getOutputEntries()).hasSize(0);
+    assertThat(matchedRule.getOutputEntries()).isEmpty();
     matchedRule = matchingRules.get(2);
     assertThat(matchedRule.getId()).isEqualTo("rule4");
     assertThat(matchedRule.getOutputEntries()).hasSize(1);

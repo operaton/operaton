@@ -74,7 +74,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery().processDefinitionId(processDefinition.getId());
     assertThat(query.active().count()).isEqualTo(1L);
     assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // suspend all instances of process definition
     engineRule.getRepositoryService()
@@ -83,7 +83,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
       .includeProcessInstances(true)
       .suspend();
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(1L);
     assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
   }
@@ -107,7 +107,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery().processDefinitionId(processDefinition.getId());
     assertThat(query.suspended().count()).isEqualTo(1L);
     assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     // activate all instance of process definition
     engineRule.getRepositoryService()
@@ -116,7 +116,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
       .includeProcessInstances(true)
       .activate();
 
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
     assertThat(query.active().count()).isEqualTo(1L);
     assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
   }

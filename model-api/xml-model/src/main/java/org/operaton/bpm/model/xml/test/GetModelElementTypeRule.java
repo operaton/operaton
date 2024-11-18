@@ -19,9 +19,8 @@ package org.operaton.bpm.model.xml.test;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.rules.TestRule;
 
-public interface GetModelElementTypeRule extends TestRule {
+public interface GetModelElementTypeRule {
 
   ModelInstance getModelInstance();
 

@@ -16,13 +16,10 @@
  */
 package org.operaton.bpm.engine.runtime;
 
-import java.util.List;
-import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
-
 /**
  * Fluent builder to update the suspension state of process instances.
  */
-public interface UpdateProcessInstanceSuspensionStateSelectBuilder extends UpdateProcessInstancesRequest{
+public interface UpdateProcessInstanceSuspensionStateSelectBuilder extends UpdateProcessInstancesRequest {
 
   /**
    * Selects the process instance with the given id.

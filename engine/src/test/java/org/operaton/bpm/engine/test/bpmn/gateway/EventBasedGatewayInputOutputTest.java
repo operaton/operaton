@@ -101,9 +101,9 @@ public class EventBasedGatewayInputOutputTest extends PluggableProcessEngineTest
     assertThat(VariableLogDelegate.LOCAL_VARIABLES).isEmpty();
     assertThat(historyService.createHistoricVariableInstanceQuery()
         .variableName("eventOutput")
-        .count()).isEqualTo(0L);
+        .count()).isZero();
     assertThat(historyService.createHistoricVariableInstanceQuery()
         .variableName("variable1")
-        .count()).isEqualTo(0L);
+        .count()).isZero();
   }
 }

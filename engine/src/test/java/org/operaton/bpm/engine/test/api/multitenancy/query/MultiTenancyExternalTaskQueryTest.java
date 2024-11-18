@@ -91,7 +91,7 @@ public class MultiTenancyExternalTaskQueryTest extends PluggableProcessEngineTes
         .createExternalTaskQuery()
         .tenantIdIn("nonExisting");
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -134,7 +134,7 @@ public class MultiTenancyExternalTaskQueryTest extends PluggableProcessEngineTes
     identityService.setAuthentication("user", null, null);
 
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -145,7 +145,7 @@ public class MultiTenancyExternalTaskQueryTest extends PluggableProcessEngineTes
 
     assertThat(query.count()).isEqualTo(1L);
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
   }
 

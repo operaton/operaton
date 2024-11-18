@@ -90,7 +90,7 @@ public class TaskMetricsTest {
     // when
     managementService.deleteTaskMetrics(null);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(0L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isZero();
   }
 
   @Test
@@ -103,7 +103,7 @@ public class TaskMetricsTest {
     // when
     managementService.deleteTaskMetrics(getOneMinuteFromNow());
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(0L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isZero();
   }
 
   @Test
@@ -299,7 +299,7 @@ public class TaskMetricsTest {
     // when
     newTask.setAssignee("kermit");
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(0L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isZero();
   }
 
   @Test

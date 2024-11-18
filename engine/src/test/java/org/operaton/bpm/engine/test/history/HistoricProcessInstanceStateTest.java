@@ -16,12 +16,9 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static junit.framework.TestCase.fail;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
@@ -36,9 +33,12 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.EndEvent;
 import org.operaton.bpm.model.bpmn.instance.TerminateEventDefinition;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.List;
+
+import static junit.framework.TestCase.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Askar Akhmerov
@@ -213,7 +213,7 @@ public class HistoricProcessInstanceStateTest {
       //expected
     }
 
-    assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list().size()).isEqualTo(1);
+    assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list()).hasSize(1);
     HistoricProcessInstance entity = getHistoricProcessInstanceWithAssertion(processDefinition);
     assertThat(entity.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
     assertEquals(1, processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().active().count());
@@ -238,7 +238,7 @@ public class HistoricProcessInstanceStateTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricProcessInstanceStateTest.testWithCallActivity.bpmn"})
   public void testWithCallActivity() {
     processEngineRule.getRuntimeService().startProcessInstanceByKey("Main_Process");
-    assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list().size()).isEqualTo(0);
+    assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list()).isEmpty();
 
     HistoricProcessInstance entity1 = processEngineRule.getHistoryService().createHistoricProcessInstanceQuery()
         .processDefinitionKey("Main_Process").singleResult();
@@ -303,7 +303,7 @@ public class HistoricProcessInstanceStateTest {
     List<HistoricProcessInstance> entities = processEngineRule.getHistoryService().createHistoricProcessInstanceQuery()
         .processDefinitionId(processDefinition.getId()).list();
     assertThat(entities).isNotNull();
-    assertThat(entities.size()).isEqualTo(1);
+    assertThat(entities).hasSize(1);
     return entities.get(0);
   }
 

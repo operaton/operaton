@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
-import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;

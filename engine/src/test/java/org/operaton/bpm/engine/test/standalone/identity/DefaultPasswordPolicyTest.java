@@ -16,32 +16,23 @@
  */
 package org.operaton.bpm.engine.test.standalone.identity;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.hamcrest.core.IsNull.notNullValue;
-
 import org.assertj.core.api.Assertions;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.identity.PasswordPolicy;
 import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.PasswordPolicyRule;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.identity.DefaultPasswordPolicyImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyDigitRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyLengthRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyLowerCaseRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicySpecialCharacterRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyUpperCaseRuleImpl;
-import org.operaton.bpm.engine.impl.identity.PasswordPolicyUserDataRuleImpl;
+import org.operaton.bpm.engine.impl.identity.*;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Miklas Boskamp
@@ -76,9 +67,9 @@ public class DefaultPasswordPolicyTest {
   @Test
   public void testGoodPassword() {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy(policy, "LongPas$w0rd");
-    assertThat(result.getViolatedRules().size(), is(0));
-    assertThat(result.getFulfilledRules().size(), is(6));
-    assertThat(result.isValid(), is(true));
+    assertThat(result.getViolatedRules()).isEmpty();
+    assertThat(result.getFulfilledRules()).hasSize(6);
+    assertThat(result.isValid()).isTrue();
   }
 
   @Test
@@ -89,7 +80,7 @@ public class DefaultPasswordPolicyTest {
     PasswordPolicyResult result = identityService.checkPasswordAgainstPolicy("LongPas$w0rd");
 
     // then
-    assertThat(result, notNullValue());
+    assertThat(result).isNotNull();
   }
 
   @Test
@@ -98,8 +89,8 @@ public class DefaultPasswordPolicyTest {
     checkThatPasswordWasInvalid(result);
 
     PasswordPolicyRule rule = result.getViolatedRules().get(0);
-    assertThat(rule.getPlaceholder(), is(PasswordPolicyLowerCaseRuleImpl.PLACEHOLDER));
-    assertThat(rule, instanceOf(PasswordPolicyLowerCaseRuleImpl.class));
+    assertThat(rule.getPlaceholder()).isEqualTo(PasswordPolicyLowerCaseRuleImpl.PLACEHOLDER);
+    assertThat(rule).isInstanceOf(PasswordPolicyLowerCaseRuleImpl.class);
   }
 
   @Test
@@ -108,8 +99,8 @@ public class DefaultPasswordPolicyTest {
     checkThatPasswordWasInvalid(result);
 
     PasswordPolicyRule rule = result.getViolatedRules().get(0);
-    assertThat(rule.getPlaceholder(), is(PasswordPolicyUpperCaseRuleImpl.PLACEHOLDER));
-    assertThat(rule, instanceOf(PasswordPolicyUpperCaseRuleImpl.class));
+    assertThat(rule.getPlaceholder()).isEqualTo(PasswordPolicyUpperCaseRuleImpl.PLACEHOLDER);
+    assertThat(rule).isInstanceOf(PasswordPolicyUpperCaseRuleImpl.class);
   }
 
   @Test
@@ -118,8 +109,8 @@ public class DefaultPasswordPolicyTest {
     checkThatPasswordWasInvalid(result);
 
     PasswordPolicyRule rule = result.getViolatedRules().get(0);
-    assertThat(rule.getPlaceholder(), is(PasswordPolicySpecialCharacterRuleImpl.PLACEHOLDER));
-    assertThat(rule, instanceOf(PasswordPolicySpecialCharacterRuleImpl.class));
+    assertThat(rule.getPlaceholder()).isEqualTo(PasswordPolicySpecialCharacterRuleImpl.PLACEHOLDER);
+    assertThat(rule).isInstanceOf(PasswordPolicySpecialCharacterRuleImpl.class);
   }
 
   @Test
@@ -128,8 +119,8 @@ public class DefaultPasswordPolicyTest {
     checkThatPasswordWasInvalid(result);
 
     PasswordPolicyRule rule = result.getViolatedRules().get(0);
-    assertThat(rule.getPlaceholder(), is(PasswordPolicyDigitRuleImpl.PLACEHOLDER));
-    assertThat(rule, instanceOf(PasswordPolicyDigitRuleImpl.class));
+    assertThat(rule.getPlaceholder()).isEqualTo(PasswordPolicyDigitRuleImpl.PLACEHOLDER);
+    assertThat(rule).isInstanceOf(PasswordPolicyDigitRuleImpl.class);
   }
 
   @Test
@@ -138,8 +129,8 @@ public class DefaultPasswordPolicyTest {
     checkThatPasswordWasInvalid(result);
 
     PasswordPolicyRule rule = result.getViolatedRules().get(0);
-    assertThat(rule.getPlaceholder(), is(PasswordPolicyLengthRuleImpl.PLACEHOLDER));
-    assertThat(rule, instanceOf(PasswordPolicyLengthRuleImpl.class));
+    assertThat(rule.getPlaceholder()).isEqualTo(PasswordPolicyLengthRuleImpl.PLACEHOLDER);
+    assertThat(rule).isInstanceOf(PasswordPolicyLengthRuleImpl.class);
   }
 
   @Test
@@ -170,7 +161,7 @@ public class DefaultPasswordPolicyTest {
     PasswordPolicy passwordPolicy = identityService.getPasswordPolicy();
 
     // when
-    assertThat(passwordPolicy, notNullValue());
+    assertThat(passwordPolicy).isNotNull();
   }
 
   @Test
@@ -194,10 +185,10 @@ public class DefaultPasswordPolicyTest {
 
     // then
     user = identityService.createUserQuery().userId("johndoe").singleResult();
-    assertThat(user.getFirstName(), is("Jane"));
-    assertThat(user.getLastName(), is("Donnel"));
-    assertThat(user.getEmail(), is("jane@donnel.com"));
-    assertThat(identityService.checkPassword("johndoe", "Passw0rds!"), is(true));
+    assertThat(user.getFirstName()).isEqualTo("Jane");
+    assertThat(user.getLastName()).isEqualTo("Donnel");
+    assertThat(user.getEmail()).isEqualTo("jane@donnel.com");
+    assertThat(identityService.checkPassword("johndoe", "Passw0rds!")).isTrue();
 
     identityService.deleteUser(user.getId());
   }
@@ -262,8 +253,8 @@ public class DefaultPasswordPolicyTest {
   }
 
   private void checkThatPasswordWasInvalid(PasswordPolicyResult result) {
-    assertThat(result.getViolatedRules().size(), is(1));
-    assertThat(result.getFulfilledRules().size(), is(5));
-    assertThat(result.isValid(), is(false));
+    assertThat(result.getViolatedRules()).hasSize(1);
+    assertThat(result.getFulfilledRules()).hasSize(5);
+    assertThat(result.isValid()).isFalse();
   }
 }

@@ -82,7 +82,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
     // given activated job definitions
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // first suspend
     engineRule.getManagementService()
@@ -90,7 +90,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
       .byProcessDefinitionKey(PROCESS_DEFINITION_KEY)
       .suspend();
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     // then activate
@@ -100,7 +100,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
       .activate();
 
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
   }
 
   @Test
@@ -108,7 +108,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
     // given activated job definitions
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getManagementService()
       .updateJobDefinitionSuspensionState()
@@ -126,7 +126,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
     // given activated job definitions
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getManagementService()
       .updateJobDefinitionSuspensionState()
@@ -149,7 +149,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     engineRule.getManagementService()
       .updateJobDefinitionSuspensionState()
@@ -172,7 +172,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     engineRule.getManagementService()
       .updateJobDefinitionSuspensionState()
@@ -190,7 +190,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
     // given activated job definitions
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // first suspend
     engineRule.getManagementService()
@@ -199,7 +199,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
       .includeJobs(true)
       .suspend();
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     // then activate
@@ -210,7 +210,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
       .activate();
 
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
   }
 
   @Test
@@ -218,7 +218,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
     // given activated job definitions
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getManagementService()
       .updateJobDefinitionSuspensionState()
@@ -237,7 +237,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
     // given activated job definitions
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getManagementService()
       .updateJobDefinitionSuspensionState()
@@ -262,7 +262,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
 
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     engineRule.getManagementService()
       .updateJobDefinitionSuspensionState()
@@ -287,7 +287,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
 
     JobQuery query = engineRule.getManagementService().createJobQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     engineRule.getManagementService()
       .updateJobDefinitionSuspensionState()
@@ -313,7 +313,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // when execute the job to suspend the job definitions
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
@@ -322,7 +322,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
 
     engineRule.getManagementService().executeJob(job.getId());
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
   }
 
@@ -339,7 +339,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // when execute the job to suspend the job definitions
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
@@ -368,7 +368,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // when execute the job to suspend the job definitions
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
@@ -399,7 +399,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
       .activate();
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     // when execute the job to activate the job definitions
@@ -409,7 +409,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
 
     engineRule.getManagementService().executeJob(job.getId());
 
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
     assertThat(query.active().count()).isEqualTo(3L);
   }
 
@@ -429,7 +429,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
       .activate();
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     // when execute the job to activate the job definitions
@@ -462,7 +462,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
       .activate();
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     // when execute the job to activate the job definitions
@@ -484,7 +484,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
     // given activated job definitions
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getIdentityService().setAuthentication("user", null, null);
 
@@ -505,7 +505,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
     // given activated job definitions
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
@@ -528,7 +528,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
     // given activated job definitions
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     engineRule.getIdentityService().setAuthentication("user", null, null);
@@ -538,7 +538,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
       .byProcessDefinitionKey(PROCESS_DEFINITION_KEY)
       .suspend();
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
     assertThat(query.suspended().tenantIdIn(TENANT_ONE, TENANT_TWO).includeJobDefinitionsWithoutTenantId().count()).isEqualTo(3L);
   }

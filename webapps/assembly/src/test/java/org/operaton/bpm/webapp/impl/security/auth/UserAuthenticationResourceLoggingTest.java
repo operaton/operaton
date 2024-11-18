@@ -119,7 +119,7 @@ public class UserAuthenticationResourceLoggingTest {
 
     // then
     List<ILoggingEvent> filteredLog = loggingRule.getFilteredLog("jonny");
-    assertThat(filteredLog).hasSize(0);
+    assertThat(filteredLog).isEmpty();
   }
 
   @Test
@@ -160,7 +160,7 @@ public class UserAuthenticationResourceLoggingTest {
 
     // then
     List<ILoggingEvent> filteredLog = loggingRule.getFilteredLog("jonny");
-    assertThat(filteredLog).hasSize(0);
+    assertThat(filteredLog).isEmpty();
   }
 
   @Test
@@ -203,7 +203,7 @@ public class UserAuthenticationResourceLoggingTest {
 
     // then
     List<ILoggingEvent> filteredLog = loggingRule.getFilteredLog("jonny");
-    assertThat(filteredLog).hasSize(0);
+    assertThat(filteredLog).isEmpty();
   }
 
   @Test
@@ -219,7 +219,7 @@ public class UserAuthenticationResourceLoggingTest {
 
     // then
     List<ILoggingEvent> filteredLog = loggingRule.getFilteredLog("jonny");
-    assertThat(filteredLog).hasSize(0);
+    assertThat(filteredLog).isEmpty();
   }
 
   @Test
@@ -291,7 +291,7 @@ public class UserAuthenticationResourceLoggingTest {
 
     // then
     List<ILoggingEvent> filteredLog = loggingRule.getFilteredLog("jonny");
-    assertThat(filteredLog).hasSize(0);
+    assertThat(filteredLog).isEmpty();
   }
 
   protected void setAuthentication(String user, String engineName) {

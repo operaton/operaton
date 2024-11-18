@@ -18,17 +18,17 @@ package org.operaton.bpm.model.dmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.dmn.impl.DmnModelConstants;
 import org.operaton.bpm.model.dmn.instance.Definitions;
-import org.junit.Test;
 
 /**
  * @author Filip Hrisafov
  */
-public class DmnModelInstanceTest {
+class DmnModelInstanceTest {
 
   @Test
-  public void testClone() throws Exception {
+  void testClone() throws Exception {
 
     DmnModelInstance modelInstance = Dmn.createEmptyModel();
 
@@ -44,7 +44,7 @@ public class DmnModelInstanceTest {
   }
 
   @Test
-  public void shouldExportDmnDiagramWithLatestDmnNamespace() {
+  void shouldExportDmnDiagramWithLatestDmnNamespace() {
     // given
     DmnModelInstance modelInstance = Dmn.createEmptyModel();
     Definitions definitions = modelInstance.newInstance(Definitions.class);

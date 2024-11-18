@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.engine.test.history.dmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.joda.time.DateTime;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricDecisionInputInstance;
@@ -43,10 +41,12 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.joda.time.DateTime;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Philipp Ossler
@@ -190,7 +190,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     HistoricDecisionInstance historicDecisionInstance = historyService.createHistoricDecisionInstanceQuery().includeInputs().singleResult();
     List<HistoricDecisionInputInstance> inputs = historicDecisionInstance.getInputs();
     assertThat(inputs).isNotNull();
-    assertThat(inputs.size()).isEqualTo(1);
+    assertThat(inputs).hasSize(1);
 
     HistoricDecisionInputInstance input = inputs.get(0);
     assertThat(input.getDecisionInstanceId()).isEqualTo(historicDecisionInstance.getId());
@@ -211,14 +211,14 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
         .includeInputs()
         .orderByEvaluationTime().asc()
         .list();
-    assertThat(historicDecisionInstances.size()).isEqualTo(2);
+    assertThat(historicDecisionInstances).hasSize(2);
 
     List<HistoricDecisionInputInstance> inputsOfFirstDecision = historicDecisionInstances.get(0).getInputs();
-    assertThat(inputsOfFirstDecision.size()).isEqualTo(1);
+    assertThat(inputsOfFirstDecision).hasSize(1);
     assertThat(inputsOfFirstDecision.get(0).getValue()).isEqualTo((Object) "a");
 
     List<HistoricDecisionInputInstance> inputsOfSecondDecision = historicDecisionInstances.get(1).getInputs();
-    assertThat(inputsOfSecondDecision.size()).isEqualTo(1);
+    assertThat(inputsOfSecondDecision).hasSize(1);
     assertThat(inputsOfSecondDecision.get(0).getValue()).isEqualTo((Object) "b");
   }
 
@@ -233,7 +233,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
 
     HistoricDecisionInstance historicDecisionInstance = historyService.createHistoricDecisionInstanceQuery().includeInputs().singleResult();
     List<HistoricDecisionInputInstance> inputs = historicDecisionInstance.getInputs();
-    assertThat(inputs.size()).isEqualTo(2);
+    assertThat(inputs).hasSize(2);
 
     assertThat(inputs.get(0).getValue()).isEqualTo((Object) "a");
     assertThat(inputs.get(1).getValue()).isEqualTo((Object) 1);
@@ -248,7 +248,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
 
     HistoricDecisionInstance historicDecisionInstance = historyService.createHistoricDecisionInstanceQuery().includeInputs().disableBinaryFetching().singleResult();
     List<HistoricDecisionInputInstance> inputs = historicDecisionInstance.getInputs();
-    assertThat(inputs.size()).isEqualTo(1);
+    assertThat(inputs).hasSize(1);
 
     HistoricDecisionInputInstance input = inputs.get(0);
     assertThat(input.getTypeName()).isEqualTo("bytes");
@@ -264,7 +264,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     HistoricDecisionInstance historicDecisionInstance = historyService.createHistoricDecisionInstanceQuery().includeOutputs().singleResult();
     List<HistoricDecisionOutputInstance> outputs = historicDecisionInstance.getOutputs();
     assertThat(outputs).isNotNull();
-    assertThat(outputs.size()).isEqualTo(1);
+    assertThat(outputs).hasSize(1);
 
     HistoricDecisionOutputInstance output = outputs.get(0);
     assertThat(output.getDecisionInstanceId()).isEqualTo(historicDecisionInstance.getId());
@@ -285,7 +285,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
 
     HistoricDecisionInstance historicDecisionInstance = historyService.createHistoricDecisionInstanceQuery().includeOutputs().singleResult();
     List<HistoricDecisionOutputInstance> outputs = historicDecisionInstance.getOutputs();
-    assertThat(outputs.size()).isEqualTo(2);
+    assertThat(outputs).hasSize(2);
 
     HistoricDecisionOutputInstance firstOutput = outputs.get(0);
     assertThat(firstOutput.getClauseId()).isEqualTo("out1");
@@ -310,7 +310,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
 
     HistoricDecisionInstance historicDecisionInstance = historyService.createHistoricDecisionInstanceQuery().includeOutputs().singleResult();
     List<HistoricDecisionOutputInstance> outputs = historicDecisionInstance.getOutputs();
-    assertThat(outputs.size()).isEqualTo(2);
+    assertThat(outputs).hasSize(2);
 
     HistoricDecisionOutputInstance firstOutput = outputs.get(0);
     assertThat(firstOutput.getClauseId()).isEqualTo("out1");
@@ -358,10 +358,10 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     assertThat(historicDecisionInstance.getDecisionDefinitionName()).isEqualTo("Decision with Literal Expression");
     assertThat(historicDecisionInstance.getEvaluationTime()).isNotNull();
 
-    assertThat(historicDecisionInstance.getInputs().size()).isEqualTo(0);
+    assertThat(historicDecisionInstance.getInputs()).isEmpty();
 
     List<HistoricDecisionOutputInstance> outputs = historicDecisionInstance.getOutputs();
-    assertThat(outputs.size()).isEqualTo(1);
+    assertThat(outputs).hasSize(1);
 
     HistoricDecisionOutputInstance output = outputs.get(0);
     assertThat(output.getVariableName()).isEqualTo("result");
@@ -416,7 +416,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
     historyService.deleteHistoricDecisionInstanceByDefinitionId(decisionDefinition.getId());
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
@@ -435,7 +435,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     historyService.deleteHistoricDecisionInstanceByInstanceId(historicDecisionInstance.getId());
 
     // then
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -459,7 +459,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     assertThat(query.count()).isEqualTo(1L);
 
     repositoryService.deleteDeployment(firstDeploymentId, true);
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Deployment(resources = { DECISION_SINGLE_OUTPUT_DMN })

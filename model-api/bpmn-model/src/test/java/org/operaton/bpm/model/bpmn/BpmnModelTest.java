@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.bpmn;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.model.bpmn.util.ParseBpmnModelRule;
-import org.junit.Before;
-import org.junit.Rule;
 
 /**
  * @author Daniel Meyer
@@ -26,13 +26,13 @@ import org.junit.Rule;
  */
 public class BpmnModelTest {
 
-  @Rule
+  @RegisterExtension
   public final ParseBpmnModelRule parseBpmnModelRule = new ParseBpmnModelRule();
 
   protected BpmnModelInstance bpmnModelInstance;
 
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     bpmnModelInstance = parseBpmnModelRule.getBpmnModel();
   }
 

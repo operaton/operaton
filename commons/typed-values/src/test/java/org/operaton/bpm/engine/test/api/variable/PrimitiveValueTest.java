@@ -64,7 +64,7 @@ public class PrimitiveValueTest {
 
   @MethodSource("data")
   @ParameterizedTest(name = "{index}: {0} = {1}")
-  public void createPrimitiveVariableUntyped(ValueType initValueType, Object initValue, TypedValue initTypedValue, TypedValue initNullValue) {
+  void createPrimitiveVariableUntyped(ValueType initValueType, Object initValue, TypedValue initTypedValue, TypedValue initNullValue) {
     initPrimitiveValueTest(initValueType, initValue, initTypedValue, initNullValue);
     VariableMap variables = createVariables().putValue(variableName, initValue);
 
@@ -83,7 +83,7 @@ public class PrimitiveValueTest {
 
   @MethodSource("data")
   @ParameterizedTest(name = "{index}: {0} = {1}")
-  public void createPrimitiveVariableTyped(ValueType valueType, Object value, TypedValue typedValue, TypedValue nullValue) {
+  void createPrimitiveVariableTyped(ValueType valueType, Object value, TypedValue typedValue, TypedValue nullValue) {
     initPrimitiveValueTest(valueType, value, typedValue, nullValue);
     VariableMap variables = createVariables().putValue(variableName, typedValue);
 
@@ -100,7 +100,7 @@ public class PrimitiveValueTest {
 
   @MethodSource("data")
   @ParameterizedTest(name = "{index}: {0} = {1}")
-  public void createPrimitiveVariableNull(ValueType valueType, Object value, TypedValue typedValue, TypedValue nullValue) {
+  void createPrimitiveVariableNull(ValueType valueType, Object value, TypedValue typedValue, TypedValue nullValue) {
     initPrimitiveValueTest(valueType, value, typedValue, nullValue);
     VariableMap variables = createVariables().putValue(variableName, nullValue);
 

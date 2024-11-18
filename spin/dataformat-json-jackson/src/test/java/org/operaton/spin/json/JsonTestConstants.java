@@ -98,7 +98,7 @@ public class JsonTestConstants {
 
     List<RegularCustomer> customers = order.getCustomers();
     assertThat(customers).isNotNull();
-    assertThat(customers.size()).isEqualTo(3);
+    assertThat(customers).hasSize(3);
 
     assertThat(customers).extracting("name", "contractStartDate")
     .contains(

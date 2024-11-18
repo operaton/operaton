@@ -117,7 +117,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
         .createHistoricProcessInstanceQuery()
         .tenantIdIn("nonExisting");
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -148,7 +148,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
         .asc()
         .list();
 
-    assertThat(historicProcessInstances.size()).isEqualTo(2);
+    assertThat(historicProcessInstances).hasSize(2);
     assertThat(historicProcessInstances.get(0).getTenantId()).isEqualTo(TENANT_ONE);
     assertThat(historicProcessInstances.get(1).getTenantId()).isEqualTo(TENANT_TWO);
   }
@@ -161,7 +161,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
         .desc()
         .list();
 
-    assertThat(historicProcessInstances.size()).isEqualTo(2);
+    assertThat(historicProcessInstances).hasSize(2);
     assertThat(historicProcessInstances.get(0).getTenantId()).isEqualTo(TENANT_TWO);
     assertThat(historicProcessInstances.get(1).getTenantId()).isEqualTo(TENANT_ONE);
   }
@@ -182,7 +182,7 @@ public class MultiTenancyHistoricProcessInstanceQueryTest {
 
     assertThat(query.count()).isEqualTo(2L);
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
   }
 

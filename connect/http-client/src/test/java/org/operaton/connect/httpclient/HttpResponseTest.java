@@ -91,7 +91,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testSuccessfulResponseCode() {
+  void testSuccessfulResponseCode() {
     // given
     testResponse.statusCode(200);
     // when
@@ -101,7 +101,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testResponseErrorCodeForMalformedRequest() {
+  void testResponseErrorCodeForMalformedRequest() {
     // given
     testResponse.statusCode(400);
     // when
@@ -111,7 +111,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testResponseErrorCodeForServerError() {
+  void testResponseErrorCodeForServerError() {
     // given
     testResponse.statusCode(500);
     // when
@@ -121,7 +121,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testServerErrorResponseWithConfigOptionSet() {
+  void testServerErrorResponseWithConfigOptionSet() {
     // given
     testResponse.statusCode(500);
     try {
@@ -135,7 +135,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testMalformedRequestWithConfigOptionSet() {
+  void testMalformedRequestWithConfigOptionSet() {
     // given
     testResponse.statusCode(400);
     try {
@@ -149,7 +149,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testSuccessResponseWithConfigOptionSet() {
+  void testSuccessResponseWithConfigOptionSet() {
     // given
     testResponse.statusCode(200);
     // when
@@ -160,7 +160,7 @@ class HttpResponseTest {
   }
 
   @Test
-  public void testMalformedRequestWithConfigOptionSetToFalse() {
+  void testMalformedRequestWithConfigOptionSetToFalse() {
     // given
     testResponse.statusCode(400);
     // when

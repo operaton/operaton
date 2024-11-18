@@ -18,6 +18,7 @@ package org.operaton.bpm.model.dmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.dmn.instance.Decision;
 import org.operaton.bpm.model.dmn.instance.DecisionTable;
 import org.operaton.bpm.model.dmn.instance.Definitions;
@@ -31,7 +32,6 @@ import org.operaton.bpm.model.dmn.instance.OutputValues;
 import org.operaton.bpm.model.dmn.instance.Rule;
 import org.operaton.bpm.model.dmn.instance.Text;
 import org.operaton.bpm.model.dmn.util.DmnModelResource;
-import org.junit.Test;
 
 public class ExpressionLanguageTest extends DmnModelTest {
 
@@ -41,7 +41,7 @@ public class ExpressionLanguageTest extends DmnModelTest {
 
   @Test
   @DmnModelResource(resource = EXPRESSION_LANGUAGE_DMN)
-  public void shouldReadExpressionLanguage() {
+  void shouldReadExpressionLanguage() {
     Definitions definitions = modelInstance.getDefinitions();
     assertThat(definitions.getExpressionLanguage()).isEqualTo(EXPRESSION_LANGUAGE);
 
@@ -60,7 +60,7 @@ public class ExpressionLanguageTest extends DmnModelTest {
   }
 
   @Test
-  public void shouldWriteExpressionLanguage() throws Exception {
+  void shouldWriteExpressionLanguage() throws Exception {
     modelInstance = Dmn.createEmptyModel();
     Definitions definitions = generateNamedElement(Definitions.class, "definitions");
     definitions.setNamespace(TEST_NAMESPACE);

@@ -324,7 +324,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <argLine>${jacoco.argLine} -XX:MetaspaceSize=128m</argLine>
           <excludes combine.children="append">
             <exclude>**/nashorn/**</exclude>
           </excludes>

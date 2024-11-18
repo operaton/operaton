@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
+import org.operaton.bpm.engine.authorization.Groups;
 
 import java.util.Collections;
 
-import org.operaton.bpm.engine.authorization.Groups;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Miklas Boskamp
@@ -40,18 +40,18 @@ public class SchemaLogQueryAuthorizationTest extends AuthorizationTest {
   @Test
   public void testCountQueryWithAuthorization() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // then
-    assertThat(managementService.createSchemaLogQuery().count()).isGreaterThan(0);
+    assertThat(managementService.createSchemaLogQuery().count()).isPositive();
   }
 
   @Test
   public void testQueryWithAuthorization() {
     // given
-    identityService.setAuthentication(userId, Collections.singletonList(Groups.CAMUNDA_ADMIN));
+    identityService.setAuthentication(userId, Collections.singletonList(Groups.OPERATON_ADMIN));
 
     // then
-    assertThat(managementService.createSchemaLogQuery().list().size()).isGreaterThan(0);
+    assertThat(managementService.createSchemaLogQuery().list().size()).isPositive();
   }
 }

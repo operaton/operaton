@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,7 +44,7 @@ public class ConditionalEventDefinitionTest extends AbstractEventDefinitionTest 
   }
 
   @Test
-  public void getEventDefinition() {
+  void getEventDefinition() {
     ConditionalEventDefinition eventDefinition = eventDefinitionQuery.filterByType(ConditionalEventDefinition.class).singleResult();
     assertThat(eventDefinition).isNotNull();
     assertThat(eventDefinition.getOperatonVariableEvents()).isNull();

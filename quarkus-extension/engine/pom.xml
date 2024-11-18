@@ -15,6 +15,10 @@
 
   <packaging>pom</packaging>
 
+  <properties>
+    <surefire.memArgs>-Xmx2048m</surefire.memArgs>
+  </properties>
+
   <modules>
     <module>deployment</module>
     <module>runtime</module>
@@ -29,7 +33,6 @@
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
           <trimStackTrace>false</trimStackTrace>
-          <argLine>${jacoco.argLine} -Xmx2048m</argLine>
         </configuration>
       </plugin>
     </plugins>

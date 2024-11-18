@@ -217,7 +217,7 @@ public class IdentityServiceTenantTest {
     assertThat(query.count()).isEqualTo(1L);
 
     identityService.deleteTenant(TENANT_ONE);
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -332,7 +332,7 @@ public class IdentityServiceTenantTest {
     assertThat(query.count()).isEqualTo(1L);
 
     identityService.deleteTenantUserMembership(TENANT_ONE, USER_ONE);
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -355,7 +355,7 @@ public class IdentityServiceTenantTest {
     assertThat(query.count()).isEqualTo(1L);
 
     identityService.deleteTenantGroupMembership(TENANT_ONE, GROUP_ONE);
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -372,7 +372,7 @@ public class IdentityServiceTenantTest {
     assertThat(query.count()).isEqualTo(1L);
 
     identityService.deleteUser(USER_ONE);
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -389,7 +389,7 @@ public class IdentityServiceTenantTest {
     assertThat(query.count()).isEqualTo(1L);
 
     identityService.deleteGroup(GROUP_ONE);
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
   }
 
   @Test
@@ -412,8 +412,8 @@ public class IdentityServiceTenantTest {
     assertThat(groupQuery.count()).isEqualTo(1L);
 
     identityService.deleteTenant(TENANT_ONE);
-    assertThat(userQuery.count()).isEqualTo(0L);
-    assertThat(groupQuery.count()).isEqualTo(0L);
+    assertThat(userQuery.count()).isZero();
+    assertThat(groupQuery.count()).isZero();
   }
 
 }

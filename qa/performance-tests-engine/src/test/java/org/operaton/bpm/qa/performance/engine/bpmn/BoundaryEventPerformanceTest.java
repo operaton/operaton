@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.qa.performance.engine.bpmn;
 
-import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.*;
+import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.PROCESS_INSTANCE_ID;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.steps.CorrelateMessageStep;

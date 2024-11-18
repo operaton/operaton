@@ -29,7 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class ProcessEngineExtensionCompatibilityTest {
+class ProcessEngineExtensionCompatibilityTest {
 
   @RegisterExtension
   ProcessEngineExtension extension = ProcessEngineExtension.builder().build();
@@ -37,13 +37,13 @@ public class ProcessEngineExtensionCompatibilityTest {
   RuntimeService runtimeService;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     runtimeService = extension.getRuntimeService();
   }
 
   @Test
   @Deployment(resources = {"simpleProcess.bpmn"})
-  public void shouldRunWithJUnit5Extension() {
+  void shouldRunWithJUnit5Extension() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
 

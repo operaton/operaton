@@ -46,7 +46,7 @@ public class CustomClientTest extends MockedTest {
     verify(clientBuilder).build();
     verifyNoMoreInteractions(clientBuilder);
 
-    assertThat(clients.size()).isEqualTo(1);
+    assertThat(clients).hasSize(1);
   }
 
 }

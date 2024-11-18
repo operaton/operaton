@@ -19,11 +19,11 @@ package org.operaton.bpm.model.bpmn.instance;
 import java.util.Arrays;
 import java.util.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.BpmnTestConstants;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski
@@ -52,10 +52,10 @@ public class ServiceTaskTest extends BpmnModelElementInstanceTest {
       new AttributeAssumption(OPERATON_NS, "taskPriority")
     );
   }
-  
-  
+
+
   @Test
-  public void testOperatonTaskPriority() {
+  void testOperatonTaskPriority() {
     //given
     ServiceTask service = modelInstance.newInstance(ServiceTask.class);    
     assertThat(service.getOperatonTaskPriority()).isNull();

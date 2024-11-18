@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
-import org.operaton.bpm.BpmPlatform;
-
 /**
  * @author Thorben Lindhauer
  *

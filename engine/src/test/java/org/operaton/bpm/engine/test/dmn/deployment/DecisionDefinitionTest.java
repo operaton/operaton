@@ -102,7 +102,7 @@ public class DecisionDefinitionTest {
     DeploymentWithDefinitions deployment = testRule.deploy(builder);
 
     // then
-    assertThat(deployment.getDeployedDecisionDefinitions().size()).isEqualTo(1);
+    assertThat(deployment.getDeployedDecisionDefinitions()).hasSize(1);
     assertThat(deployment.getDeployedDecisionDefinitions().get(0).getHistoryTimeToLive()).isEqualTo(30);
   }
 
@@ -117,7 +117,7 @@ public class DecisionDefinitionTest {
     DeploymentWithDefinitions deployment = testRule.deploy(builder);
 
     // then
-    assertThat(deployment.getDeployedDecisionDefinitions().size()).isEqualTo(1);
+    assertThat(deployment.getDeployedDecisionDefinitions()).hasSize(1);
     assertThat(deployment.getDeployedDecisionDefinitions().get(0).getHistoryTimeToLive()).isEqualTo(10);
   }
 

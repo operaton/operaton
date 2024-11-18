@@ -19,8 +19,6 @@ package org.operaton.bpm.engine.test.api.multitenancy.cmmn;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
-import org.operaton.bpm.engine.repository.CaseDefinition;
-import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.api.multitenancy.listener.AssertingCaseExecutionListener;
 import org.operaton.bpm.engine.test.api.multitenancy.listener.AssertingCaseExecutionListener.DelegateCaseExecutionAsserter;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;

@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CompensateEventDefinitionTest extends AbstractEventDefinitionTest {
+class CompensateEventDefinitionTest extends AbstractEventDefinitionTest {
 
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
@@ -33,7 +33,7 @@ public class CompensateEventDefinitionTest extends AbstractEventDefinitionTest {
   }
 
   @Test
-  public void getEventDefinition() {
+  void getEventDefinition() {
     CompensateEventDefinition eventDefinition = eventDefinitionQuery.filterByType(CompensateEventDefinition.class).singleResult();
     assertThat(eventDefinition).isNotNull();
     assertThat(eventDefinition.isWaitForCompletion()).isTrue();

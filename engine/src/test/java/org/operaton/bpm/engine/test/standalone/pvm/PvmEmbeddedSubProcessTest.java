@@ -27,8 +27,6 @@ import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
 import org.operaton.bpm.engine.impl.pvm.PvmExecution;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
-import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.EmbeddedSubProcess;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.End;

@@ -27,8 +27,6 @@ import java.util.Date;
 import java.util.Map;
 
 import org.junit.Ignore;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;

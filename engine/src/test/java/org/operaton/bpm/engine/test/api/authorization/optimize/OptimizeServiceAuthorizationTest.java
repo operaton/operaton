@@ -17,34 +17,15 @@
 package org.operaton.bpm.engine.test.api.authorization.optimize;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
-import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
-import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.TENANT;
-import static org.operaton.bpm.engine.authorization.Resources.USER;
-import static org.junit.Assert.fail;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.OptimizeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
@@ -62,13 +43,14 @@ import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+
+import java.util.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.*;
+import static org.operaton.bpm.engine.authorization.Resources.*;
 
 @RunWith(Parameterized.class)
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -299,7 +281,7 @@ public class OptimizeServiceAuthorizationTest {
     List<?> instance = methodToTest.apply(optimizeService);
 
     // then
-    assertThat(instance.size()).isGreaterThan(0);
+    assertThat(instance).isNotEmpty();
   }
 
   private void generateTestData() {

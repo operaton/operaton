@@ -99,7 +99,7 @@ public class MultiTenancyExecutionPropagationTest extends PluggableProcessEngine
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     List<Execution> executions = runtimeService.createExecutionQuery().list();
-    assertThat(executions.size()).isEqualTo(3);
+    assertThat(executions).hasSize(3);
     assertThat(executions.get(0).getTenantId()).isEqualTo(TENANT_ID);
     // inherit the tenant id from process instance
     assertThat(executions.get(1).getTenantId()).isEqualTo(TENANT_ID);
@@ -123,7 +123,7 @@ public class MultiTenancyExecutionPropagationTest extends PluggableProcessEngine
     startProcessInstance(PROCESS_DEFINITION_KEY);
 
     List<Execution> executions = runtimeService.createExecutionQuery().list();
-    assertThat(executions.size()).isEqualTo(2);
+    assertThat(executions).hasSize(2);
     assertThat(executions.get(0).getTenantId()).isEqualTo(TENANT_ID);
     // inherit the tenant id from parent execution (e.g. process instance)
     assertThat(executions.get(1).getTenantId()).isEqualTo(TENANT_ID);
@@ -425,7 +425,7 @@ public class MultiTenancyExecutionPropagationTest extends PluggableProcessEngine
     assertThat(externalTask.getTenantId()).isEqualTo(TENANT_ID);
 
     List<LockedExternalTask> externalTasks = externalTaskService.fetchAndLock(1, "test").topic("test", 1000).execute();
-    assertThat(externalTasks.size()).isEqualTo(1);
+    assertThat(externalTasks).hasSize(1);
     assertThat(externalTasks.get(0).getTenantId()).isEqualTo(TENANT_ID);
   }
 

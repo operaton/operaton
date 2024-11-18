@@ -16,14 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.util.Date;
-import java.util.List;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
@@ -47,11 +44,11 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.Date;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class GetHistoricDecisionInstancesForOptimizeTest {
@@ -138,7 +135,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       optimizeService.getHistoricDecisionInstances(pastDate(), null, 10);
 
     // then
-    assertThat(decisionInstances.size(), is(1));
+    assertThat(decisionInstances).hasSize(1);
     assertThatDecisionsHaveAllImportantInformation(decisionInstances);
   }
 
@@ -155,16 +152,16 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       optimizeService.getHistoricDecisionInstances(pastDate(), null, 10);
 
     // then
-    assertThat(decisionInstances.size(), is(1));
+    assertThat(decisionInstances).hasSize(1);
     HistoricDecisionInstance decisionInstance = decisionInstances.get(0);
     List<HistoricDecisionInputInstance> inputs = decisionInstance.getInputs();
-    assertThat(inputs, is(notNullValue()));
-    assertThat(inputs.size(), is(1));
+    assertThat(inputs).isNotNull();
+    assertThat(inputs).hasSize(1);
 
     HistoricDecisionInputInstance input = inputs.get(0);
-    assertThat(input.getDecisionInstanceId(), is(decisionInstance.getId()));
-    assertThat(input.getClauseId(), is("in"));
-    assertThat(input.getClauseName(), is("input"));
+    assertThat(input.getDecisionInstanceId()).isEqualTo(decisionInstance.getId());
+    assertThat(input.getClauseId()).isEqualTo("in");
+    assertThat(input.getClauseName()).isEqualTo("input");
   }
 
   @Test
@@ -180,21 +177,21 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       optimizeService.getHistoricDecisionInstances(pastDate(), null, 10);
 
     // then
-    assertThat(decisionInstances.size(), is(1));
+    assertThat(decisionInstances).hasSize(1);
     HistoricDecisionInstance decisionInstance = decisionInstances.get(0);
     List<HistoricDecisionOutputInstance> outputs = decisionInstance.getOutputs();
-    assertThat(outputs, is(notNullValue()));
-    assertThat(outputs.size(), is(1));
+    assertThat(outputs).isNotNull();
+    assertThat(outputs).hasSize(1);
 
     HistoricDecisionOutputInstance output = outputs.get(0);
-    assertThat(output.getDecisionInstanceId(), is(decisionInstance.getId()));
-    assertThat(output.getClauseId(), is("out"));
-    assertThat(output.getClauseName(), is("output"));
+    assertThat(output.getDecisionInstanceId()).isEqualTo(decisionInstance.getId());
+    assertThat(output.getClauseId()).isEqualTo("out");
+    assertThat(output.getClauseName()).isEqualTo("output");
 
-    assertThat(output.getRuleId(), is("rule"));
-    assertThat(output.getRuleOrder(), is(1));
+    assertThat(output.getRuleId()).isEqualTo("rule");
+    assertThat(output.getRuleOrder()).isEqualTo(1);
 
-    assertThat(output.getVariableName(), is("result"));
+    assertThat(output.getVariableName()).isEqualTo("result");
   }
 
   @Test
@@ -216,9 +213,9 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       optimizeService.getHistoricDecisionInstances(now, null, 10);
 
     // then
-    assertThat(decisionInstances.size(), is(1));
+    assertThat(decisionInstances).hasSize(1);
     HistoricDecisionInstance decisionInstance = decisionInstances.get(0);
-    assertThat(decisionInstance.getProcessInstanceId(), is(secondProcessInstance.getId()));
+    assertThat(decisionInstance.getProcessInstanceId()).isEqualTo(secondProcessInstance.getId());
   }
 
   @Test
@@ -240,9 +237,9 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       optimizeService.getHistoricDecisionInstances(null, now, 10);
 
     // then
-    assertThat(decisionInstances.size(), is(1));
+    assertThat(decisionInstances).hasSize(1);
     HistoricDecisionInstance decisionInstance = decisionInstances.get(0);
-    assertThat(decisionInstance.getProcessInstanceId(), is(firstProcessInstance.getId()));
+    assertThat(decisionInstance.getProcessInstanceId()).isEqualTo(firstProcessInstance.getId());
   }
 
   @Test
@@ -267,7 +264,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       optimizeService.getHistoricDecisionInstances(now, now, 10);
 
     // then
-    assertThat(decisionInstances.size(), is(0));
+    assertThat(decisionInstances).isEmpty();
   }
 
   @Test
@@ -285,7 +282,7 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       optimizeService.getHistoricDecisionInstances(null, null, 2);
 
     // then
-    assertThat(decisionInstances.size(), is(2));
+    assertThat(decisionInstances).hasSize(2);
   }
 
   @Test
@@ -313,10 +310,10 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
       optimizeService.getHistoricDecisionInstances(pastDate(), null, 3);
 
     // then
-    assertThat(decisionInstances.size(), is(3));
-    assertThat(decisionInstances.get(0).getProcessInstanceId(), is(firstProcessInstance.getId()));
-    assertThat(decisionInstances.get(1).getProcessInstanceId(), is(secondProcessInstance.getId()));
-    assertThat(decisionInstances.get(2).getProcessInstanceId(), is(thirdProcessInstance.getId()));
+    assertThat(decisionInstances).hasSize(3);
+    assertThat(decisionInstances.get(0).getProcessInstanceId()).isEqualTo(firstProcessInstance.getId());
+    assertThat(decisionInstances.get(1).getProcessInstanceId()).isEqualTo(secondProcessInstance.getId());
+    assertThat(decisionInstances.get(2).getProcessInstanceId()).isEqualTo(thirdProcessInstance.getId());
   }
 
   private Date pastDate() {
@@ -329,34 +326,34 @@ public class GetHistoricDecisionInstancesForOptimizeTest {
   }
 
   private void assertThatDecisionsHaveAllImportantInformation(List<HistoricDecisionInstance> decisionInstances) {
-    assertThat(decisionInstances.size(), is(1));
+    assertThat(decisionInstances).hasSize(1);
     HistoricDecisionInstance decisionInstance =
       decisionInstances.get(0);
 
 
-    assertThat(decisionInstance, notNullValue());
-    assertThat(decisionInstance.getProcessDefinitionKey(), is("testProcess"));
-    assertThat(decisionInstance.getProcessDefinitionId(), notNullValue());
-    assertThat(decisionInstance.getDecisionDefinitionId(), notNullValue());
-    assertThat(decisionInstance.getDecisionDefinitionKey(), is("testDecision"));
-    assertThat(decisionInstance.getDecisionDefinitionName(), is("sample decision"));
+    assertThat(decisionInstance).isNotNull();
+    assertThat(decisionInstance.getProcessDefinitionKey()).isEqualTo("testProcess");
+    assertThat(decisionInstance.getProcessDefinitionId()).isNotNull();
+    assertThat(decisionInstance.getDecisionDefinitionId()).isNotNull();
+    assertThat(decisionInstance.getDecisionDefinitionKey()).isEqualTo("testDecision");
+    assertThat(decisionInstance.getDecisionDefinitionName()).isEqualTo("sample decision");
 
-    assertThat(decisionInstance.getActivityId(), is("task"));
-    assertThat(decisionInstance.getActivityInstanceId(), notNullValue());
+    assertThat(decisionInstance.getActivityId()).isEqualTo("task");
+    assertThat(decisionInstance.getActivityInstanceId()).isNotNull();
 
-    assertThat(decisionInstance.getProcessInstanceId(), is(notNullValue()));
-    assertThat(decisionInstance.getRootProcessInstanceId(), is(notNullValue()));
+    assertThat(decisionInstance.getProcessInstanceId()).isNotNull();
+    assertThat(decisionInstance.getRootProcessInstanceId()).isNotNull();
 
-    assertThat(decisionInstance.getCaseDefinitionKey(), is(nullValue()));
-    assertThat(decisionInstance.getCaseDefinitionId(), is(nullValue()));
+    assertThat(decisionInstance.getCaseDefinitionKey()).isNull();
+    assertThat(decisionInstance.getCaseDefinitionId()).isNull();
 
-    assertThat(decisionInstance.getCaseInstanceId(), is(nullValue()));
+    assertThat(decisionInstance.getCaseInstanceId()).isNull();
 
-    assertThat(decisionInstance.getRootDecisionInstanceId(), is(nullValue()));
-    assertThat(decisionInstance.getDecisionRequirementsDefinitionId(), is(nullValue()));
-    assertThat(decisionInstance.getDecisionRequirementsDefinitionKey(), is(nullValue()));
+    assertThat(decisionInstance.getRootDecisionInstanceId()).isNull();
+    assertThat(decisionInstance.getDecisionRequirementsDefinitionId()).isNull();
+    assertThat(decisionInstance.getDecisionRequirementsDefinitionKey()).isNull();
 
-    assertThat(decisionInstance.getEvaluationTime(), is(notNullValue()));
+    assertThat(decisionInstance.getEvaluationTime()).isNotNull();
   }
 
 }

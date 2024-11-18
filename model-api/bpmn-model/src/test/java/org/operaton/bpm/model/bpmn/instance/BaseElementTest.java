@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -46,7 +46,7 @@ public class BaseElementTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testId() {
+  void testId() {
     Task task = modelInstance.newInstance(Task.class);
     assertThat(task.getId()).isNotNull().startsWith("task");
     task.setId("test");

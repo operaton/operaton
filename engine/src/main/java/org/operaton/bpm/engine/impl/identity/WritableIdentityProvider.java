@@ -67,7 +67,7 @@ public interface WritableIdentityProvider extends Session {
    * Allows unlocking a {@link User} object.
    * @param userId the id of the User object to delete.
    * @return the operation result object.
-   * @throws AuthorizationException if the user is not CAMUNDA_ADMIN
+   * @throws AuthorizationException if the user is not OPERATON_ADMIN
    */
   public IdentityOperationResult unlockUser(String userId);
 

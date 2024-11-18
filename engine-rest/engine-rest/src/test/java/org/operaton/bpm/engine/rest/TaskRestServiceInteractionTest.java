@@ -146,8 +146,6 @@ import org.mockito.Mockito;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TaskRestServiceInteractionTest extends
     AbstractRestServiceTest {

@@ -30,11 +30,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.TransactionMethod;
 import org.operaton.bpm.model.xml.impl.util.ReflectUtil;
-import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -60,7 +60,7 @@ public class TransactionTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void shouldReadTransaction() {
+  void shouldReadTransaction() {
     InputStream inputStream = ReflectUtil.getResourceAsStream("org/operaton/bpm/model/bpmn/TransactionTest.xml");
     Transaction transaction = Bpmn.readModelFromStream(inputStream).getModelElementById("transaction");
 
@@ -70,7 +70,7 @@ public class TransactionTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void shouldWriteTransaction() throws ParserConfigurationException, SAXException, IOException {
+  void shouldWriteTransaction() throws ParserConfigurationException, SAXException, IOException {
     // given a model
     BpmnModelInstance newModel = Bpmn.createProcess("process").done();
 

@@ -160,7 +160,7 @@ public class XmlDomXPathTest {
 
     // can query not existing number
     count = element.xPath("count(/root/child/nonExisting)").number();
-    assertThat(count).isEqualTo(0);
+    assertThat(count).isZero();
 
     // can query number as document
     count = element.xPath("count(/)").number();

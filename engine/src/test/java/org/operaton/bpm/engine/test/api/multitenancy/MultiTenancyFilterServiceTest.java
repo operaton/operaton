@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -156,7 +155,7 @@ public class MultiTenancyFilterServiceTest extends PluggableProcessEngineTest {
 
     identityService.setAuthentication("user", null, null);
 
-    assertThat(filterService.count(filterId)).isEqualTo(0L);
+    assertThat(filterService.count(filterId)).isZero();
   }
 
   @Test
@@ -177,7 +176,7 @@ public class MultiTenancyFilterServiceTest extends PluggableProcessEngineTest {
     identityService.setAuthentication("user", null, null);
 
     TaskQuery extendingQuery = taskService.createTaskQuery().tenantIdIn(TENANT_ONE);
-    assertThat(filterService.count(filterId, extendingQuery)).isEqualTo(0L);
+    assertThat(filterService.count(filterId, extendingQuery)).isZero();
   }
 
   @Test

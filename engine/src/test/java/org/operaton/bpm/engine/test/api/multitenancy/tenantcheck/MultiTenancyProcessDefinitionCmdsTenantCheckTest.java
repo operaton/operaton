@@ -409,7 +409,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     // then
     identityService.clearAuthentication();
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
     assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
   }
@@ -456,7 +456,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     // then
     identityService.clearAuthentication();
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
     assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
   }
@@ -524,7 +524,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     // then
     identityService.clearAuthentication();
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
     assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
   }
@@ -573,7 +573,7 @@ public class MultiTenancyProcessDefinitionCmdsTenantCheckTest {
 
     // then
     identityService.clearAuthentication();
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(0L);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1L);
     assertThat(repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
   }

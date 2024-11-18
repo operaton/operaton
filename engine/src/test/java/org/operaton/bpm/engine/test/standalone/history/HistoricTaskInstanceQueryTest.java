@@ -764,7 +764,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   private void assertThatListContainsOnlyExpectedElement(List<HistoricTaskInstance> instances, ProcessInstance instance) {
-    assertThat(instances.size()).isEqualTo(1);
+    assertThat(instances).hasSize(1);
     assertThat(instances.get(0).getProcessInstanceId()).isEqualTo(instance.getId());
   }
 

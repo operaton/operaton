@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,7 +34,7 @@ public class SignalEventDefinitionTest extends AbstractEventDefinitionTest {
   }
 
   @Test
-  public void getEventDefinition() {
+  void getEventDefinition() {
     SignalEventDefinition eventDefinition = eventDefinitionQuery.filterByType(SignalEventDefinition.class).singleResult();
     assertThat(eventDefinition).isNotNull();
     assertThat(eventDefinition.isOperatonAsync()).isFalse();

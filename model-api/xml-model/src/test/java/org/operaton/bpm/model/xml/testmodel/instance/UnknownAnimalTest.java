@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -24,30 +26,27 @@ import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
  */
-public class UnknownAnimalTest {
+class UnknownAnimalTest {
 
   private AbstractModelParser modelParser;
   private ModelInstance modelInstance;
   private ModelElementInstance wanda;
   private ModelElementInstance flipper;
 
-  @Before
-  public void parseModel() {
+  @BeforeEach
+  void parseModel() {
     modelParser = new TestModelParser();
     String testXml = this.getClass().getSimpleName() + ".xml";
     InputStream testXmlAsStream = this.getClass().getResourceAsStream(testXml);
@@ -56,14 +55,14 @@ public class UnknownAnimalTest {
     flipper = modelInstance.getModelElementById("flipper");
   }
 
-  @After
-  public void validateModel() {
+  @AfterEach
+  void validateModel() {
     DomDocument document = modelInstance.getDocument();
     modelParser.validateModel(document);
   }
 
   @Test
-  public void testGetUnknownAnimalById() {
+  void testGetUnknownAnimalById() {
     assertThat(wanda).isNotNull();
     assertThat(wanda.getAttributeValue("id")).isEqualTo("wanda");
     assertThat(wanda.getAttributeValue("gender")).isEqualTo("Female");
@@ -76,7 +75,7 @@ public class UnknownAnimalTest {
   }
 
   @Test
-  public void testGetUnknownAnimalByType() {
+  void testGetUnknownAnimalByType() {
     ModelInstanceImpl modelInstanceImpl = (ModelInstanceImpl) modelInstance;
     ModelElementType unknownAnimalType = modelInstanceImpl.registerGenericType(MODEL_NAMESPACE, "unknownAnimal");
     List<ModelElementInstance> unknownAnimals = new ArrayList<ModelElementInstance>(modelInstance.getModelElementsByType(unknownAnimalType));
@@ -94,7 +93,7 @@ public class UnknownAnimalTest {
   }
 
   @Test
-  public void testAddUnknownAnimal() {
+  void testAddUnknownAnimal() {
     ModelInstanceImpl modelInstanceImpl = (ModelInstanceImpl) modelInstance;
     ModelElementType unknownAnimalType = modelInstanceImpl.registerGenericType(MODEL_NAMESPACE, "unknownAnimal");
     ModelElementType animalsType = modelInstance.getModel().getType(Animals.class);
@@ -113,7 +112,7 @@ public class UnknownAnimalTest {
   }
 
   @Test
-  public void testGetUnknownAttribute() {
+  void testGetUnknownAttribute() {
     assertThat(flipper.getAttributeValue("famous")).isEqualTo("true");
 
     assertThat(wanda.getAttributeValue("famous")).isNotEqualTo("true");
@@ -122,7 +121,7 @@ public class UnknownAnimalTest {
   }
 
   @Test
-  public void testAddRelationshipDefinitionToUnknownAnimal() {
+  void testAddRelationshipDefinitionToUnknownAnimal() {
     RelationshipDefinition friendRelationshipDefinition = modelInstance.newInstance(FriendRelationshipDefinition.class);
     friendRelationshipDefinition.setId("friend-relationship");
     friendRelationshipDefinition.setAttributeValue("animalRef", flipper.getAttributeValue("id"));
@@ -146,14 +145,14 @@ public class UnknownAnimalTest {
   }
 
   @Test
-  public void testAddChildToUnknownAnimal() {
-    assertThat(wanda.getChildElementsByType(flipper.getElementType())).hasSize(0);
+  void testAddChildToUnknownAnimal() {
+    assertThat(wanda.getChildElementsByType(flipper.getElementType())).isEmpty();
     wanda.insertElementAfter(flipper, null);
     assertThat(wanda.getChildElementsByType(flipper.getElementType())).hasSize(1);
   }
 
   @Test
-  public void testRemoveChildOfUnknownAnimal() {
+  void testRemoveChildOfUnknownAnimal() {
     assertThat(wanda.removeChildElement(flipper)).isFalse();
     wanda.insertElementAfter(flipper, null);
     assertThat(wanda.removeChildElement(flipper)).isTrue();
@@ -161,7 +160,7 @@ public class UnknownAnimalTest {
   }
 
   @Test
-  public void testReplaceChildOfUnknownAnimal() {
+  void testReplaceChildOfUnknownAnimal() {
     ModelElementInstance yogi = modelInstance.newInstance(flipper.getElementType());
     yogi.setAttributeValue("id", "yogi-bear", true);
     yogi.setAttributeValue("gender", "Male");

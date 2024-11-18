@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.hasItems;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -216,7 +215,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
 
     ActivityStatisticsQuery query = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId());
 
-    assertThat(query.count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
 
   }
 

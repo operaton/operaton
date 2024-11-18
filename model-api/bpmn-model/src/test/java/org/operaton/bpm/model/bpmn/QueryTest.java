@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.FlowNode;
 import org.operaton.bpm.model.bpmn.instance.Gateway;
 import org.operaton.bpm.model.bpmn.instance.Task;
 import org.operaton.bpm.model.xml.type.ModelElementType;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -30,15 +29,15 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * @author Sebastian Menski
  */
-public class QueryTest {
+class QueryTest {
 
   private static BpmnModelInstance modelInstance;
   private static Query<FlowNode> startSucceeding;
   private static Query<FlowNode> gateway1Succeeding;
   private static Query<FlowNode> gateway2Succeeding;
 
-  @BeforeClass
-  public static void createModelInstance() {
+  @BeforeAll
+  static void createModelInstance() {
     modelInstance = Bpmn.createProcess()
       .startEvent().id("start")
       .userTask().id("user")
@@ -63,42 +62,42 @@ public class QueryTest {
 
   }
 
-  @AfterClass
-  public static void validateModelInstance() {
+  @AfterAll
+  static void validateModelInstance() {
     Bpmn.validateModel(modelInstance);
   }
 
   @Test
-  public void testList() {
+  void testList() {
     assertThat(startSucceeding.list()).hasSize(1);
     assertThat(gateway1Succeeding.list()).hasSize(2);
     assertThat(gateway2Succeeding.list()).hasSize(3);
   }
 
   @Test
-  public void testCount() {
+  void testCount() {
     assertThat(startSucceeding.count()).isEqualTo(1);
     assertThat(gateway1Succeeding.count()).isEqualTo(2);
     assertThat(gateway2Succeeding.count()).isEqualTo(3);
   }
 
   @Test
-  public void testFilterByType() {
+  void testFilterByType() {
     ModelElementType taskType = modelInstance.getModel().getType(Task.class);
     ModelElementType gatewayType = modelInstance.getModel().getType(Gateway.class);
 
     assertThat(startSucceeding.filterByType(taskType).list()).hasSize(1);
-    assertThat(startSucceeding.filterByType(gatewayType).list()).hasSize(0);
+    assertThat(startSucceeding.filterByType(gatewayType).list()).isEmpty();
 
     assertThat(gateway1Succeeding.filterByType(taskType).list()).hasSize(1);
     assertThat(gateway1Succeeding.filterByType(gatewayType).list()).hasSize(1);
 
     assertThat(gateway2Succeeding.filterByType(taskType).list()).hasSize(3);
-    assertThat(gateway2Succeeding.filterByType(gatewayType).list()).hasSize(0);
+    assertThat(gateway2Succeeding.filterByType(gatewayType).list()).isEmpty();
   }
 
   @Test
-  public void testSingleResult() {
+  void testSingleResult() {
     assertThat(startSucceeding.singleResult().getId()).isEqualTo("user");
     try {
       gateway1Succeeding.singleResult();

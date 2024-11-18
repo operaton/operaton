@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.migration;
 
 import java.util.List;
 
-import org.operaton.bpm.engine.migration.MigrationInstruction;
-
 /**
  * Collects all failures for a migrating transition instance.
  */

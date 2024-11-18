@@ -31,20 +31,17 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
-import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
 import org.operaton.bpm.engine.runtime.ProcessInstanceWithVariables;
 import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Test;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyBoolean;
@@ -142,7 +139,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
     assertEquals(expectedStatusCode, response.getStatusLine().getStatusCode());
 
     if(assertResponseBody) {
-      assertThat(EntityUtils.toString(response.getEntity(), "UTF-8"), containsString(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID));
+      assertThat(EntityUtils.toString(response.getEntity(), "UTF-8")).contains(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     }
 
     response.close();

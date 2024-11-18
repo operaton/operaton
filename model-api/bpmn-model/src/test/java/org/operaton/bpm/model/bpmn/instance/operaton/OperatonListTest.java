@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.model.bpmn.instance.operaton;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.junit.Assert.fail;
 
 import java.util.Collection;
-
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class OperatonListTest extends BpmnModelElementInstanceTest {
 
@@ -39,9 +38,9 @@ public class OperatonListTest extends BpmnModelElementInstanceTest {
     return null;
   }
 
-  @Ignore("Test ignored. CAM-9441: Bug fix needed")
+  @Disabled("Test ignored. CAM-9441: Bug fix needed")
   @Test
-  public void testListValueChildAssignment() {
+  void testListValueChildAssignment() {
     try {
       OperatonList listElement = modelInstance.newInstance(OperatonList.class);
 

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.qa.performance.engine.sqlstatementlog;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +25,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.operaton.bpm.qa.performance.engine.util.DelegatingSqlSession;
 import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.SerializationConfig.Feature;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 /**
  * <p>This SqlSession wraps an actual SqlSession and logs executed sql statements. (Calls to the

@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.runtime.InstantiationBuilder;
 import org.operaton.bpm.engine.runtime.ModificationBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstanceModificationBuilder;
-import org.operaton.bpm.engine.runtime.ProcessInstantiationBuilder;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.ObjectMapper;

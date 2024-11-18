@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,12 +38,12 @@ public class ComplexGatewayTest extends AbstractGatewayTest<ComplexGateway> {
   }
 
   @Test
-  public void getDefault() {
+  void getDefault() {
     assertThat(gateway.getDefault().getId()).isEqualTo("flow");
   }
 
   @Test
-  public void getActivationCondition() {
+  void getActivationCondition() {
     assertThat(gateway.getActivationCondition().getTextContent()).isEqualTo("${test}");
   }
 

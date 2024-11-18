@@ -137,8 +137,8 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
     identityService.clearAuthentication();
 
     DeploymentQuery query = repositoryService.createDeploymentQuery();
-    assertThat(query.count()).isEqualTo(0L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
   }
 
   @Test
@@ -153,9 +153,9 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
     repositoryService.deleteDeployment(deploymentTwo.getId());
 
     DeploymentQuery query = repositoryService.createDeploymentQuery();
-    assertThat(query.count()).isEqualTo(0L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(0L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
   @Test

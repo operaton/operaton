@@ -19,10 +19,8 @@ package org.operaton.bpm.qa.largedata.optimize;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.operaton.bpm.engine.impl.OptimizeService;
-import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.qa.largedata.util.EngineDataGenerator;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -31,8 +29,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
 public class OptimizeApiPageSizeTest {
@@ -60,7 +57,7 @@ public class OptimizeApiPageSizeTest {
     final List<?> pageOfEntries = scenario.getOptimizeServiceFunction().apply(OPTIMIZE_PAGE_SIZE);
 
     // then
-    assertThat(pageOfEntries.size(), is(OPTIMIZE_PAGE_SIZE));
+    assertThat(pageOfEntries).hasSize(OPTIMIZE_PAGE_SIZE);
   }
 
   private Object[] optimizeServiceFunctions() {

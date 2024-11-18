@@ -436,7 +436,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     List<ProcessInstanceDto> results = resource.queryProcessInstances(parameter, 0, Integer.MAX_VALUE);
 
     // then
-    assertThat(results).hasSize(0);
+    assertThat(results).isEmpty();
   }
 
   @Test
@@ -456,7 +456,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     List<ProcessInstanceDto> results = resource.queryProcessInstances(parameter, 0, Integer.MAX_VALUE);
 
     // then
-    assertThat(results).hasSize(0);
+    assertThat(results).isEmpty();
   }
 
   @Test
@@ -476,7 +476,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     List<ProcessInstanceDto> results = resource.queryProcessInstances(parameter, 0, Integer.MAX_VALUE);
 
     // then
-    assertThat(results).hasSize(0);
+    assertThat(results).isEmpty();
   }
 
   @Test
@@ -496,7 +496,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     List<ProcessInstanceDto> result = resource.queryProcessInstances(parameter, 0, Integer.MAX_VALUE);
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test

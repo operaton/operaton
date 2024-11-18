@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.model.bpmn;
 
-import org.operaton.bpm.model.bpmn.instance.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.Process;
+import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.*;
 import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
 import org.operaton.bpm.model.bpmn.instance.dc.Font;
 import org.operaton.bpm.model.bpmn.instance.di.DiagramElement;
 import org.operaton.bpm.model.bpmn.instance.di.Waypoint;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.Collection;
 
@@ -35,7 +35,7 @@ import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
 /**
  * @author Sebastian Menski
  */
-public class BpmnDiTest {
+class BpmnDiTest {
 
   private BpmnModelInstance modelInstance;
   private Collaboration collaboration;
@@ -50,8 +50,8 @@ public class BpmnDiTest {
   private Association association;
   private EndEvent endEvent;
 
-  @Before
-  public void parseModel() {
+  @BeforeEach
+  void parseModel() {
     modelInstance = Bpmn.readModelFromStream(getClass().getResourceAsStream(getClass().getSimpleName() + ".xml"));
     collaboration = modelInstance.getModelElementById(COLLABORATION_ID);
     participant = modelInstance.getModelElementById(PARTICIPANT_ID + 1);
@@ -67,7 +67,7 @@ public class BpmnDiTest {
   }
 
   @Test
-  public void testBpmnDiagram() {
+  void testBpmnDiagram() {
     Collection<BpmnDiagram> diagrams = modelInstance.getModelElementsByType(BpmnDiagram.class);
     assertThat(diagrams).hasSize(1);
     BpmnDiagram diagram = diagrams.iterator().next();
@@ -77,7 +77,7 @@ public class BpmnDiTest {
   }
 
   @Test
-  public void testBpmnPane() {
+  void testBpmnPane() {
     DiagramElement diagramElement = collaboration.getDiagramElement();
     assertThat(diagramElement)
       .isNotNull()
@@ -88,7 +88,7 @@ public class BpmnDiTest {
   }
 
   @Test
-  public void testBpmnLabelStyle() {
+  void testBpmnLabelStyle() {
     BpmnLabelStyle labelStyle = modelInstance.getModelElementsByType(BpmnLabelStyle.class).iterator().next();
     Font font = labelStyle.getFont();
     assertThat(font).isNotNull();
@@ -101,7 +101,7 @@ public class BpmnDiTest {
   }
 
   @Test
-  public void testBpmnShape() {
+  void testBpmnShape() {
     BpmnShape shape = serviceTask.getDiagramElement();
     assertThat(shape.getBpmnElement()).isEqualTo(serviceTask);
     assertThat(shape.getBpmnLabel()).isNull();
@@ -114,7 +114,7 @@ public class BpmnDiTest {
   }
 
   @Test
-  public void testBpmnLabel() {
+  void testBpmnLabel() {
     BpmnShape shape = startEvent.getDiagramElement();
     assertThat(shape.getBpmnElement()).isEqualTo(startEvent);
     assertThat(shape.getBpmnLabel()).isNotNull();
@@ -125,7 +125,7 @@ public class BpmnDiTest {
   }
 
   @Test
-  public void testBpmnEdge() {
+  void testBpmnEdge() {
     BpmnEdge edge = sequenceFlow.getDiagramElement();
     assertThat(edge.getBpmnElement()).isEqualTo(sequenceFlow);
     assertThat(edge.getBpmnLabel()).isNull();
@@ -137,7 +137,7 @@ public class BpmnDiTest {
   }
 
   @Test
-  public void testDiagramElementTypes() {
+  void testDiagramElementTypes() {
     assertThat(collaboration.getDiagramElement()).isInstanceOf(BpmnPlane.class);
     assertThat(process.getDiagramElement()).isNull();
     assertThat(participant.getDiagramElement()).isInstanceOf(BpmnShape.class);
@@ -153,7 +153,7 @@ public class BpmnDiTest {
   }
 
   @Test
-  public void shouldNotRemoveBpmElementReference() {
+  void shouldNotRemoveBpmElementReference() {
     assertThat(startEvent.getOutgoing()).contains(sequenceFlow);
     assertThat(endEvent.getIncoming()).contains(sequenceFlow);
 
@@ -170,7 +170,7 @@ public class BpmnDiTest {
   }
 
   @Test
-  public void shouldCreateValidBpmnDi() {
+  void shouldCreateValidBpmnDi() {
     modelInstance = Bpmn
       .createProcess("process")
       .startEvent("start")
@@ -245,8 +245,8 @@ public class BpmnDiTest {
     flowEdge.getWaypoints().add(endWaypoint);
   }
 
-  @After
-  public void validateModel() {
+  @AfterEach
+  void validateModel() {
     Bpmn.validateModel(modelInstance);
   }
 

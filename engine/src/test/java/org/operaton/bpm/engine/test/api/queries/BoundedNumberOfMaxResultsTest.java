@@ -16,19 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.queries;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
@@ -46,11 +39,11 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class BoundedNumberOfMaxResultsTest {
 
@@ -124,7 +117,7 @@ public class BoundedNumberOfMaxResultsTest {
     List<ProcessInstance> processInstances = processInstanceQuery.list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(0);
+    assertThat(processInstances).isEmpty();
   }
 
   @Test
@@ -139,7 +132,7 @@ public class BoundedNumberOfMaxResultsTest {
     List<ProcessInstance> processInstances = processInstanceQuery.list();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(0);
+    assertThat(processInstances).isEmpty();
   }
 
   @Test
@@ -164,7 +157,7 @@ public class BoundedNumberOfMaxResultsTest {
                 .list();
 
             // then
-            assertThat(tasks.size()).isEqualTo(1);
+            assertThat(tasks).hasSize(1);
 
             return null;
           }
@@ -247,7 +240,7 @@ public class BoundedNumberOfMaxResultsTest {
     List<ProcessInstance> processInstances = processInstanceQuery.unlimitedList();
 
     // then
-    assertThat(processInstances.size()).isEqualTo(1);
+    assertThat(processInstances).hasSize(1);
   }
 
   @Test
@@ -823,7 +816,7 @@ public class BoundedNumberOfMaxResultsTest {
         historicProcessInstanceQuery.listPage(0, 10);
 
     // then
-    assertThat(historicProcessInstances.size()).isEqualTo(1);
+    assertThat(historicProcessInstances).hasSize(1);
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -847,7 +840,7 @@ public class BoundedNumberOfMaxResultsTest {
         historicProcessInstanceQuery.listPage(0, 9);
 
     // then
-    assertThat(historicProcessInstances.size()).isEqualTo(1);
+    assertThat(historicProcessInstances).hasSize(1);
   }
 
   @Test

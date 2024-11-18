@@ -93,7 +93,7 @@ public class JsonTreeEditListPropertyTest {
   public void readIndexOfExistentValue() {
     Integer i = currencies.indexOf("euro");
 
-    assertThat(i).isEqualTo(0);
+    assertThat(i).isZero();
   }
 
   // ----------------- 2) lastIndexOf ----------------------

@@ -653,9 +653,6 @@
 
     <profile>
       <id>h2-in-memory</id>
-      <properties>
-        <forkCount>0.5C</forkCount>
-      </properties>
       <build>
         <plugins>
           <plugin>
@@ -818,13 +815,6 @@
                 </configuration>
               </execution>
             </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <argLine>${jacoco.argLine} -Xmx968m</argLine>
-            </configuration>
           </plugin>
         </plugins>
       </build>

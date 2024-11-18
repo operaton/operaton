@@ -16,23 +16,20 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.operaton.bpm.model.bpmn.Bpmn;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.operaton.bpm.model.bpmn.Bpmn;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Filip Hrisafov
  */
-public class TextAnnotationTest extends BpmnModelElementInstanceTest {
+class TextAnnotationTest extends BpmnModelElementInstanceTest {
 
   protected static BpmnModelInstance modelInstance;
 
@@ -52,14 +49,14 @@ public class TextAnnotationTest extends BpmnModelElementInstanceTest {
     );
   }
 
-  @BeforeClass
-  public static void parseModel() {
+  @BeforeAll
+  static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(TextAnnotationTest.class
       .getResourceAsStream("TextAnnotationTest.bpmn"));
   }
 
   @Test
-  public void testGetTextAnnotationsByType() {
+  void testGetTextAnnotationsByType() {
     Collection<TextAnnotation> textAnnotations = modelInstance.getModelElementsByType(TextAnnotation.class);
     assertThat(textAnnotations)
       .isNotNull()
@@ -67,7 +64,7 @@ public class TextAnnotationTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testGetTextAnnotationById() {
+  void testGetTextAnnotationById() {
     TextAnnotation textAnnotation = modelInstance.getModelElementById("textAnnotation2");
     assertThat(textAnnotation).isNotNull();
     assertThat(textAnnotation.getTextFormat()).isEqualTo("text/plain");
@@ -76,7 +73,7 @@ public class TextAnnotationTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testTextAnnotationAsAssociationSource() {
+  void testTextAnnotationAsAssociationSource() {
     Association association = modelInstance.getModelElementById("Association_1");
     BaseElement source = association.getSource();
     assertThat(source).isInstanceOf(TextAnnotation.class);
@@ -84,7 +81,7 @@ public class TextAnnotationTest extends BpmnModelElementInstanceTest {
   }
 
   @Test
-  public void testTextAnnotationAsAssociationTarget() {
+  void testTextAnnotationAsAssociationTarget() {
     Association association = modelInstance.getModelElementById("Association_2");
     BaseElement target = association.getTarget();
     assertThat(target).isInstanceOf(TextAnnotation.class);

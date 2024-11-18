@@ -140,7 +140,7 @@ public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTes
     List<ProcessDefinitionDto> calledDefinitions = resource.queryCalledProcessDefinitions(queryParameter);
 
     // then
-    assertThat(calledDefinitions.size()).isEqualTo(1);
+    assertThat(calledDefinitions).hasSize(1);
 
     ProcessDefinitionDto calledProcessDefinition = calledDefinitions.get(0);
     assertThat(calledProcessDefinition.getKey()).isEqualTo(USER_TASK_PROCESS_KEY);

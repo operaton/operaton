@@ -145,7 +145,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
     assertThat(loggingRule
         .getFilteredLog("ENGINE-07018 Unregistering process application for deployment but could " +
                         "not remove process definitions from deployment cache."))
-        .hasSize(0);
+        .isEmpty();
   }
 
   @Test

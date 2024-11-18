@@ -89,7 +89,7 @@ public class ConcurrentDeploymentTest extends ConcurrencyTestCase {
         .asc()
         .list();
 
-    assertThat(processDefinitions.size()).isEqualTo(2);
+    assertThat(processDefinitions).hasSize(2);
     assertThat(processDefinitions.get(0).getVersion()).isEqualTo(1);
     assertThat(processDefinitions.get(1).getVersion()).isEqualTo(2);
   }

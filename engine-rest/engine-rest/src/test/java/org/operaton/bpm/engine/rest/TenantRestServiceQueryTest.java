@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.rest;
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -108,13 +108,13 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
 
     String content = response.asString();
     List<String> instances = from(content).getList("");
-    assertThat(instances.size(), is(1));
+    assertThat(instances).hasSize(1);
 
     String returnedId = from(content).getString("[0].id");
     String returnedName = from(content).getString("[0].name");
 
-    assertThat(returnedId, is(MockProvider.EXAMPLE_TENANT_ID));
-    assertThat(returnedName, is(MockProvider.EXAMPLE_TENANT_NAME));
+    assertThat(returnedId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
+    assertThat(returnedName).isEqualTo(MockProvider.EXAMPLE_TENANT_NAME);
   }
 
   @Test

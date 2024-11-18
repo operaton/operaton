@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
@@ -44,16 +45,15 @@ import org.operaton.bpm.model.cmmn.instance.PlanItem;
 import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.cmmn.instance.TimerEvent;
 import org.operaton.bpm.model.cmmn.instance.UserEvent;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
  *
  */
-public class Cmmn10Test {
+class Cmmn10Test {
 
   @Test
-  public void shouldGetCasePlanModelExitCriterion() {
+  void shouldGetCasePlanModelExitCriterion() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     CasePlanModel casePlanModel = modelInstance.getModelElementsByType(CasePlanModel.class).iterator().next();
 
@@ -68,7 +68,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldGetPlanItemExitCriterion() {
+  void shouldGetPlanItemExitCriterion() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     PlanItem planItem = modelInstance.getModelElementsByType(PlanItem.class).iterator().next();
 
@@ -83,7 +83,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldGetPlanItemEntryCriterion() {
+  void shouldGetPlanItemEntryCriterion() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     PlanItem planItem = modelInstance.getModelElementsByType(PlanItem.class).iterator().next();
 
@@ -98,7 +98,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldGetTaskInputsOutputs() {
+  void shouldGetTaskInputsOutputs() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     HumanTask humanTask = modelInstance.getModelElementsByType(HumanTask.class).iterator().next();
 
@@ -116,7 +116,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldGetEvents() {
+  void shouldGetEvents() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
 
     Event event = modelInstance.getModelElementsByType(Event.class).iterator().next();
@@ -130,7 +130,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldGetDescription() {
+  void shouldGetDescription() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     CasePlanModel casePlanModel = modelInstance.getModelElementsByType(CasePlanModel.class).iterator().next();
 
@@ -142,7 +142,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldGetMultipleIfPartConditions() {
+  void shouldGetMultipleIfPartConditions() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     Sentry sentry = modelInstance.getModelElementsByType(Sentry.class).iterator().next();
 
@@ -157,7 +157,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldGetCaseRoles() {
+  void shouldGetCaseRoles() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     Case _case = modelInstance.getModelElementsByType(Case.class).iterator().next();
 
@@ -169,7 +169,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldGetExpressionTextContent() {
+  void shouldGetExpressionTextContent() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     ConditionExpression expression = modelInstance.getModelElementsByType(ConditionExpression.class).iterator().next();
 
@@ -178,7 +178,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldNotAbleToAddNewElement() {
+  void shouldNotAbleToAddNewElement() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     CasePlanModel casePlanModel = modelInstance.getModelElementsByType(CasePlanModel.class).iterator().next();
 
@@ -195,7 +195,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldReturnCmmn11Namespace() {
+  void shouldReturnCmmn11Namespace() {
     CmmnModelInstance modelInstance = getCmmnModelInstance();
     CasePlanModel casePlanModel = modelInstance.getModelElementsByType(CasePlanModel.class).iterator().next();
 
@@ -203,7 +203,7 @@ public class Cmmn10Test {
   }
 
   @Test
-  public void shouldNotAbleToAddCmmn10Element() {
+  void shouldNotAbleToAddCmmn10Element() {
     CmmnModelInstance modelInstance = Cmmn.readModelFromStream(Cmmn10Test.class.getResourceAsStream("Cmmn11Test.cmmn"));
     CasePlanModel casePlanModel = modelInstance.getModelElementsByType(CasePlanModel.class).iterator().next();
 

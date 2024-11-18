@@ -134,7 +134,7 @@ public class InvoiceApplicationHelper {
         calendar.add(Calendar.DAY_OF_MONTH, 14);
         ClockUtil.setCurrentTime(calendar.getTime());
 
-        processEngine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.CAMUNDA_ADMIN));
+        processEngine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.OPERATON_ADMIN));
         Task task = processEngine.getTaskService().createTaskQuery().processInstanceId(pi.getId()).singleResult();
         processEngine.getTaskService().claim(task.getId(), "demo");
         processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", true));

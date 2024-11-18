@@ -27,7 +27,6 @@ import org.operaton.spin.json.SpinJsonPropertyException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
-import com.jayway.jsonpath.PathNotFoundException;
 
 /**
  * @author Thorben Lindhauer

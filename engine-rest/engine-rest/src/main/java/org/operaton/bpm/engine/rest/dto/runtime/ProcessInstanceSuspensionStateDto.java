@@ -20,7 +20,6 @@ import java.util.List;
 import javax.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.rest.dto.SuspensionStateDto;
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceQueryDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;

@@ -123,7 +123,7 @@ public class MetricsManagerForCleanupTest {
             .findTaskMetricsForCleanup(batchSize, taskMetricHistoryTTL, 0, 59);
 
         // then
-        assertThat(taskMetricIdsForCleanup.size()).isEqualTo(resultCount);
+        assertThat(taskMetricIdsForCleanup).hasSize(resultCount);
 
         return null;
       }

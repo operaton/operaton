@@ -19,13 +19,10 @@ package org.operaton.bpm.engine.rest.sub.batch.impl;
 import javax.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 import org.operaton.bpm.engine.rest.dto.SuspensionStateDto;
 import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
-import org.operaton.bpm.engine.rest.dto.management.JobDefinitionSuspensionStateDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.sub.batch.BatchResource;
 

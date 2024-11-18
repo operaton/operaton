@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_NONE;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.Is.isA;
 import static org.mockito.Mockito.mock;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -80,8 +78,8 @@ public class RemovalTimeStrategyConfigurationTest {
     processEngineConfiguration.initHistoryRemovalTime();
 
     // then
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy(), is(HISTORY_REMOVAL_TIME_STRATEGY_END));
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider(), isA(HistoryRemovalTimeProvider.class));
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy()).isEqualTo(HISTORY_REMOVAL_TIME_STRATEGY_END);
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider()).isInstanceOf(HistoryRemovalTimeProvider.class);
   }
 
   @Test
@@ -96,8 +94,8 @@ public class RemovalTimeStrategyConfigurationTest {
     processEngineConfiguration.initHistoryRemovalTime();
 
     // then
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy(), is(HISTORY_REMOVAL_TIME_STRATEGY_START));
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider(), isA(HistoryRemovalTimeProvider.class));
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy()).isEqualTo(HISTORY_REMOVAL_TIME_STRATEGY_START);
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider()).isInstanceOf(HistoryRemovalTimeProvider.class);
   }
 
   @Test
@@ -112,8 +110,8 @@ public class RemovalTimeStrategyConfigurationTest {
     processEngineConfiguration.initHistoryRemovalTime();
 
     // then
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy(), is(HISTORY_REMOVAL_TIME_STRATEGY_END));
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider(), isA(HistoryRemovalTimeProvider.class));
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy()).isEqualTo(HISTORY_REMOVAL_TIME_STRATEGY_END);
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider()).isInstanceOf(HistoryRemovalTimeProvider.class);
   }
 
   @Test
@@ -128,8 +126,8 @@ public class RemovalTimeStrategyConfigurationTest {
     processEngineConfiguration.initHistoryRemovalTime();
 
     // then
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy(), is(HISTORY_REMOVAL_TIME_STRATEGY_NONE));
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider(), isA(HistoryRemovalTimeProvider.class));
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy()).isEqualTo(HISTORY_REMOVAL_TIME_STRATEGY_NONE);
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider()).isInstanceOf(HistoryRemovalTimeProvider.class);
   }
 
   @Test
@@ -144,8 +142,8 @@ public class RemovalTimeStrategyConfigurationTest {
     processEngineConfiguration.initHistoryRemovalTime();
 
     // then
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy(), is(HISTORY_REMOVAL_TIME_STRATEGY_END));
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider(), isA(HistoryRemovalTimeProvider.class));
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeStrategy()).isEqualTo(HISTORY_REMOVAL_TIME_STRATEGY_END);
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider()).isInstanceOf(HistoryRemovalTimeProvider.class);
   }
 
   @Test
@@ -159,7 +157,7 @@ public class RemovalTimeStrategyConfigurationTest {
       .hasMessageContaining("history removal time strategy must be set to 'start', 'end' or 'none'");
 
     // assume
-    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider(), isA(HistoryRemovalTimeProvider.class));
+    assertThat(processEngineConfiguration.getHistoryRemovalTimeProvider()).isInstanceOf(HistoryRemovalTimeProvider.class);
   }
 
 }

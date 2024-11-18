@@ -301,12 +301,9 @@ public class DeploymentCacheCfgTest {
     ProcessInstance processInstance3 = runtimeService.startProcessInstanceByKey("Process3");
 
     // then
-    assertThat(repositoryService.getIdentityLinksForProcessDefinition(processInstance1.getProcessDefinitionId()).size())
-        .isEqualTo(1);
-    assertThat(repositoryService.getIdentityLinksForProcessDefinition(processInstance2.getProcessDefinitionId()).size())
-        .isEqualTo(1);
-    assertThat(repositoryService.getIdentityLinksForProcessDefinition(processInstance3.getProcessDefinitionId()).size())
-        .isEqualTo(1);
+    assertThat(repositoryService.getIdentityLinksForProcessDefinition(processInstance1.getProcessDefinitionId())).hasSize(1);
+    assertThat(repositoryService.getIdentityLinksForProcessDefinition(processInstance2.getProcessDefinitionId())).hasSize(1);
+    assertThat(repositoryService.getIdentityLinksForProcessDefinition(processInstance3.getProcessDefinitionId())).hasSize(1);
   }
 
   protected List<BpmnModelInstance> createSequentialCallActivityProcess() {

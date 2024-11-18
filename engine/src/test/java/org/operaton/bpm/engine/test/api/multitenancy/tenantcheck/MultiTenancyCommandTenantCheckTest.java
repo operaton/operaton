@@ -115,7 +115,7 @@ public class MultiTenancyCommandTenantCheckTest {
 
   @Test
   public void disableTenantCheckForOperatonAdmin() {
-    identityService.setAuthentication("user", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
 

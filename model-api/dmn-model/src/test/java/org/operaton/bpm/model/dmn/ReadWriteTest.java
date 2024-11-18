@@ -28,10 +28,10 @@ import static org.operaton.bpm.model.dmn.HitPolicy.PRIORITY;
 import static org.operaton.bpm.model.dmn.HitPolicy.RULE_ORDER;
 import static org.operaton.bpm.model.dmn.HitPolicy.UNIQUE;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.dmn.impl.instance.InputDataImpl;
 import org.operaton.bpm.model.dmn.instance.*;
 import org.operaton.bpm.model.dmn.util.DmnModelResource;
-import org.junit.Test;
 
 import java.util.Collection;
 
@@ -43,7 +43,7 @@ public class ReadWriteTest extends DmnModelTest {
 
   @Test
   @DmnModelResource(resource = DECISION_TABLE_ORIENTATION_DMN)
-  public void shouldReadDecisionTableOrientation() {
+  void shouldReadDecisionTableOrientation() {
     // Default
     DecisionTable decisionTable = modelInstance.getModelElementById("decisionTable1");
     assertThat(decisionTable.getPreferredOrientation()).isEqualTo(Rule_as_Row);
@@ -62,7 +62,7 @@ public class ReadWriteTest extends DmnModelTest {
   }
 
   @Test
-  public void shouldWriteDecisionTableOrientation() throws Exception {
+  void shouldWriteDecisionTableOrientation() throws Exception {
     modelInstance = Dmn.createEmptyModel();
     Definitions definitions = generateNamedElement(Definitions.class, "definitions");
     definitions.setNamespace(TEST_NAMESPACE);
@@ -108,7 +108,7 @@ public class ReadWriteTest extends DmnModelTest {
 
   @Test
   @DmnModelResource(resource = HIT_POLICY_DMN)
-  public void shouldReadHitPolicy() {
+  void shouldReadHitPolicy() {
     // Default
     DecisionTable decisionTable = modelInstance.getModelElementById("decisionTable1");
     assertThat(decisionTable.getHitPolicy()).isEqualTo(UNIQUE);
@@ -144,7 +144,7 @@ public class ReadWriteTest extends DmnModelTest {
   }
 
   @Test
-  public void shouldWriteHitPolicy() throws Exception {
+  void shouldWriteHitPolicy() throws Exception {
     modelInstance = Dmn.createEmptyModel();
     Definitions definitions = generateNamedElement(Definitions.class, "definitions");
     definitions.setNamespace(TEST_NAMESPACE);
@@ -227,7 +227,7 @@ public class ReadWriteTest extends DmnModelTest {
 
   @Test
   @DmnModelResource(resource = INPUT_DATA_DMN)
-  public void shouldReadInputData() {
+  void shouldReadInputData() {
 
     Collection<InputData> inputDataCollection = modelInstance.getModelElementsByType(InputData.class);
 

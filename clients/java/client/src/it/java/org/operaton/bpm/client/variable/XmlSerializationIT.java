@@ -39,12 +39,8 @@ import org.operaton.spin.xml.SpinXmlElement;
 import java.util.Arrays;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
-import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
-import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
+import static org.assertj.core.api.Assertions.*;
+import static org.operaton.bpm.client.util.ProcessModels.*;
 import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.XML;
 import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
 

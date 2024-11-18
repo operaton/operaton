@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.test.history;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
@@ -23,16 +30,6 @@ import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DIS
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENABLED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
 import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +38,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
+import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
@@ -66,8 +63,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
-import org.hamcrest.Matcher;
-import org.junit.Test;
 
 /**
  * @author Sebastian Menski
@@ -1076,14 +1071,12 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     List<? extends Comparable> sortedList = Arrays.asList(items);
     Collections.sort(sortedList);
 
-    List<Matcher<Object>> matchers = new ArrayList<Matcher<Object>>();
-    for (Comparable comparable : sortedList) {
-      matchers.add(hasProperty(property, equalTo(comparable)));
-    }
-
+    // assert that the sorted list matches the query result
     List<?> instances = query.asc().list();
-    assertEquals(sortedList.size(), instances.size());
-    assertThat(instances, contains(matchers.toArray(new Matcher[matchers.size()])));
+    assertThat(instances)
+        .hasSize(sortedList.size())
+        .extracting(property)
+        .containsExactlyElementsOf(sortedList);
 
     // reverse ordering
     for (QueryOrderingProperty orderingProperty : orderProperties) {
@@ -1091,11 +1084,14 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     }
 
     // reverse matchers
-    Collections.reverse(matchers);
+    Collections.reverse(sortedList);
 
+    // assert again with reversed order
     instances = query.list();
-    assertEquals(sortedList.size(), instances.size());
-    assertThat(instances, contains(matchers.toArray(new Matcher[matchers.size()])));
+    assertThat(instances)
+        .hasSize(sortedList.size())
+        .extracting(property)
+        .containsExactlyElementsOf(sortedList);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoricCaseActivityInstanceTest.oneStageAndOneTaskCaseWithManualActivation.cmmn"})

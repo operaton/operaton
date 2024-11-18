@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.impl.instance.Source;
 import org.operaton.bpm.model.bpmn.impl.instance.Target;
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LinkEventDefinitionTest extends AbstractEventDefinitionTest {
+class LinkEventDefinitionTest extends AbstractEventDefinitionTest {
 
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
@@ -41,7 +41,7 @@ public class LinkEventDefinitionTest extends AbstractEventDefinitionTest {
   }
 
   @Test
-  public void getEventDefinition() {
+  void getEventDefinition() {
     LinkEventDefinition eventDefinition = eventDefinitionQuery.filterByType(LinkEventDefinition.class).singleResult();
     assertThat(eventDefinition).isNotNull();
     assertThat(eventDefinition.getName()).isEqualTo("link");

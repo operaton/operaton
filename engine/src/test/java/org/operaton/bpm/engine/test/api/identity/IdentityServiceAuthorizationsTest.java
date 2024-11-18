@@ -196,8 +196,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(false);
 
     // then
-    assertThat(query.count()).isEqualTo(0L);
-    assertThat(authorizationService.createAuthorizationQuery().resourceType(TENANT).userIdIn(jonny1Id).count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
+    assertThat(authorizationService.createAuthorizationQuery().resourceType(TENANT).userIdIn(jonny1Id).count()).isZero();
   }
 
   @Test
@@ -265,7 +265,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
 
     // set auth
     processEngineConfiguration.setAuthorizationEnabled(true);
-    identityService.setAuthentication("admin", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("admin", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     // when
     identityService.unlockUser(lockedUser.getId());
@@ -432,8 +432,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
     processEngineConfiguration.setAuthorizationEnabled(false);
 
     // then
-    assertThat(query.count()).isEqualTo(0L);
-    assertThat(authorizationService.createAuthorizationQuery().resourceType(TENANT).groupIdIn("group1").count()).isEqualTo(0L);
+    assertThat(query.count()).isZero();
+    assertThat(authorizationService.createAuthorizationQuery().resourceType(TENANT).groupIdIn("group1").count()).isZero();
   }
 
 

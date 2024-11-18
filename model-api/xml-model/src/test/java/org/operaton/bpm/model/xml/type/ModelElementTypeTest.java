@@ -15,23 +15,22 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.type;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.util.ModelTypeException;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.testmodel.instance.*;
-import org.junit.Before;
-import org.junit.Test;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
  */
-public class ModelElementTypeTest {
+class ModelElementTypeTest {
 
   private ModelInstance modelInstance;
   private Model model;
@@ -40,8 +39,8 @@ public class ModelElementTypeTest {
   private ModelElementType flyingAnimalType;
   private ModelElementType birdType;
 
-  @Before
-  public void getTypes() {
+  @BeforeEach
+  void getTypes() {
     TestModelParser modelParser = new TestModelParser();
     modelInstance = modelParser.getEmptyModel();
     model = modelInstance.getModel();
@@ -52,7 +51,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testTypeName() {
+  void testTypeName() {
     assertThat(animalsType).hasTypeName("animals");
     assertThat(animalType).hasTypeName("animal");
     assertThat(flyingAnimalType).hasTypeName("flyingAnimal");
@@ -60,7 +59,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testTypeNamespace() {
+  void testTypeNamespace() {
     assertThat(animalsType).hasTypeNamespace(MODEL_NAMESPACE);
     assertThat(animalType).hasTypeNamespace(MODEL_NAMESPACE);
     assertThat(flyingAnimalType).hasTypeNamespace(MODEL_NAMESPACE);
@@ -68,7 +67,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testInstanceType() {
+  void testInstanceType() {
     assertThat(animalsType).hasInstanceType(Animals.class);
     assertThat(animalType).hasInstanceType(Animal.class);
     assertThat(flyingAnimalType).hasInstanceType(FlyingAnimal.class);
@@ -76,7 +75,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testAttributes() {
+  void testAttributes() {
     assertThat(animalsType).hasNoAttributes();
     assertThat(animalType).hasAttributes("id", "name", "father", "mother", "isEndangered", "gender", "age");
     assertThat(flyingAnimalType).hasAttributes("wingspan");
@@ -84,7 +83,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testBaseType() {
+  void testBaseType() {
     assertThat(animalsType).extendsNoType();
     assertThat(animalType).extendsNoType();
     assertThat(flyingAnimalType).extendsType(animalType);
@@ -92,7 +91,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testAbstractType() {
+  void testAbstractType() {
     assertThat(animalsType).isNotAbstract();
     assertThat(animalType).isAbstract();
     assertThat(flyingAnimalType).isAbstract();
@@ -100,7 +99,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testExtendingTypes() {
+  void testExtendingTypes() {
     assertThat(animalsType).isNotExtended();
     assertThat(animalType)
       .isExtendedBy(flyingAnimalType)
@@ -110,7 +109,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testModel() {
+  void testModel() {
     assertThat(animalsType).isPartOfModel(model);
     assertThat(animalType).isPartOfModel(model);
     assertThat(flyingAnimalType).isPartOfModel(model);
@@ -118,7 +117,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testInstances() {
+  void testInstances() {
     assertThat(animalsType.getInstances(modelInstance)).isEmpty();
     assertThat(animalType.getInstances(modelInstance)).isEmpty();
     assertThat(flyingAnimalType.getInstances(modelInstance)).isEmpty();
@@ -154,7 +153,7 @@ public class ModelElementTypeTest {
   }
 
   @Test
-  public void testChildElementTypes() {
+  void testChildElementTypes() {
     ModelElementType relationshipDefinitionType = model.getType(RelationshipDefinition.class);
     ModelElementType relationshipDefinitionRefType = model.getType(RelationshipDefinitionRef.class);
     ModelElementType flightPartnerRefType = model.getType(FlightPartnerRef.class);

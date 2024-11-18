@@ -86,7 +86,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated process definitions
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // first suspend
     engineRule.getRepositoryService()
@@ -94,7 +94,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
       .byProcessDefinitionKey(PROCESS_DEFINITION_KEY)
       .suspend();
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     // then activate
@@ -104,7 +104,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
       .activate();
 
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
   }
 
   @Test
@@ -112,7 +112,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated process definitions
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -130,7 +130,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated process definitions
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -153,7 +153,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -176,7 +176,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -194,7 +194,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated process instances
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // first suspend
     engineRule.getRepositoryService()
@@ -203,7 +203,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
       .includeProcessInstances(true)
       .suspend();
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     // then activate
@@ -214,7 +214,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
       .activate();
 
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
   }
 
   @Test
@@ -222,7 +222,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated process instances
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -241,7 +241,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated process instances
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -266,7 +266,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -291,7 +291,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessInstanceQuery query = engineRule.getRuntimeService().createProcessInstanceQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -317,7 +317,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // when execute the job to suspend the process definitions
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
@@ -327,7 +327,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     engineRule.getManagementService().executeJob(job.getId());
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
   }
 
@@ -344,7 +344,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // when execute the job to suspend the process definition
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
@@ -373,7 +373,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     // when execute the job to suspend the process definition
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
@@ -405,7 +405,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     // when execute the job to activate the process definitions
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
@@ -415,7 +415,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     engineRule.getManagementService().executeJob(job.getId());
 
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
     assertThat(query.active().count()).isEqualTo(3L);
   }
 
@@ -436,7 +436,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     // when execute the job to activate the process definition
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
@@ -469,7 +469,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
 
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.suspended().count()).isEqualTo(3L);
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
 
     // when execute the job to activate the process definition
     Job job = engineRule.getManagementService().createJobQuery().timers().singleResult();
@@ -490,14 +490,14 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated jobs
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
       .byProcessDefinitionKey(PROCESS_DEFINITION_KEY)
       .suspend();
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
   }
 
@@ -506,7 +506,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated jobs
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -524,7 +524,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated jobs
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getRepositoryService()
       .updateProcessDefinitionSuspensionState()
@@ -546,7 +546,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
       .suspend();
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     engineRule.getRepositoryService()
@@ -554,7 +554,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
       .byProcessDefinitionKey(PROCESS_DEFINITION_KEY)
       .activate();
 
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
     assertThat(query.active().count()).isEqualTo(3L);
   }
 
@@ -567,7 +567,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
       .suspend();
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     engineRule.getRepositoryService()
@@ -590,7 +590,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
       .suspend();
 
     JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
 
     engineRule.getRepositoryService()
@@ -609,7 +609,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated process definitions
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getIdentityService().setAuthentication("user", null, null);
 
@@ -647,7 +647,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated process definitions
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
@@ -670,7 +670,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
     // given activated process definitions
     ProcessDefinitionQuery query = engineRule.getRepositoryService().createProcessDefinitionQuery();
     assertThat(query.active().count()).isEqualTo(3L);
-    assertThat(query.suspended().count()).isEqualTo(0L);
+    assertThat(query.suspended().count()).isZero();
 
     ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     processEngineConfiguration.setTenantCheckEnabled(false);
@@ -681,7 +681,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTest {
       .byProcessDefinitionKey(PROCESS_DEFINITION_KEY)
       .suspend();
 
-    assertThat(query.active().count()).isEqualTo(0L);
+    assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
     assertThat(query.suspended().tenantIdIn(TENANT_ONE, TENANT_TWO).includeProcessDefinitionsWithoutTenantId().count()).isEqualTo(3L);
   }

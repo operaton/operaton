@@ -80,7 +80,7 @@ public class LdapPosixGroupQueryTest {
     List<User> result = identityService.createUserQuery().memberOfGroup("posix-group-without-members").list();
 
     // then
-    assertThat(result).hasSize(0);
+    assertThat(result).isEmpty();
   }
 
   @Test

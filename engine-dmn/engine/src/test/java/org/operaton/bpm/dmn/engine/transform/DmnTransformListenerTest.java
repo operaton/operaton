@@ -87,7 +87,7 @@ public class DmnTransformListenerTest extends DmnEngineTest {
     assertThat(dmnDecisionRequirementsGraph.getName())
       .isEqualTo(definitions.getName())
       .isEqualTo("Dish");
-    assertThat(dmnDecisionRequirementsGraph.getDecisions().size()).isEqualTo(3);
+    assertThat(dmnDecisionRequirementsGraph.getDecisions()).hasSize(3);
     assertThat(dmnDecisionRequirementsGraph.getDecision("dish-decision")).isNotNull();
     assertThat(dmnDecisionRequirementsGraph.getDecision("season")).isNotNull();
     assertThat(dmnDecisionRequirementsGraph.getDecision("guestCount")).isNotNull();
@@ -115,7 +115,7 @@ public class DmnTransformListenerTest extends DmnEngineTest {
   public void shouldVerifyTransformedDmnDecisions() {
     dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_EXAMPLE_DMN));
     List<DmnDecision> transformedDecisions = listener.getTransformedDecisions();
-    assertThat(transformedDecisions.size()).isEqualTo(3);
+    assertThat(transformedDecisions).hasSize(3);
 
     assertThat(getDmnDecision(transformedDecisions, "dish-decision")).isNotNull();
     assertThat(getDmnDecision(transformedDecisions, "season")).isNotNull();

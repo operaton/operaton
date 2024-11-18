@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.instance.*;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import java.util.Collection;
 
@@ -28,19 +27,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Sebastian Menski
  */
-public class CollaborationParserTest {
+class CollaborationParserTest {
 
   private static BpmnModelInstance modelInstance;
   private static Collaboration collaboration;
 
-  @BeforeClass
-  public static void parseModel() {
+  @BeforeAll
+  static void parseModel() {
     modelInstance = Bpmn.readModelFromStream(CollaborationParserTest.class.getResourceAsStream("CollaborationParserTest.bpmn"));
     collaboration = modelInstance.getModelElementById("collaboration1");
   }
 
   @Test
-  public void testConversations() {
+  void testConversations() {
     assertThat(collaboration.getConversationNodes()).hasSize(1);
 
     ConversationNode conversationNode = collaboration.getConversationNodes().iterator().next();
@@ -51,7 +50,7 @@ public class CollaborationParserTest {
   }
 
   @Test
-  public void testConversationLink() {
+  void testConversationLink() {
     Collection<ConversationLink> conversationLinks = collaboration.getConversationLinks();
     for (ConversationLink conversationLink : conversationLinks) {
       assertThat(conversationLink.getId()).startsWith("conversationLink");
@@ -67,7 +66,7 @@ public class CollaborationParserTest {
   }
 
   @Test
-  public void testMessageFlow() {
+  void testMessageFlow() {
     Collection<MessageFlow> messageFlows = collaboration.getMessageFlows();
     for (MessageFlow messageFlow : messageFlows) {
       assertThat(messageFlow.getId()).startsWith("messageFlow");
@@ -77,7 +76,7 @@ public class CollaborationParserTest {
   }
 
   @Test
-  public void testParticipant() {
+  void testParticipant() {
     Collection<Participant> participants = collaboration.getParticipants();
     for (Participant participant : participants) {
       assertThat(participant.getProcess().getId()).startsWith("process");
@@ -85,7 +84,7 @@ public class CollaborationParserTest {
   }
 
   @Test
-  public void testUnused() {
+  void testUnused() {
     assertThat(collaboration.getCorrelationKeys()).isEmpty();
     assertThat(collaboration.getArtifacts()).isEmpty();
     assertThat(collaboration.getConversationAssociations()).isEmpty();
@@ -94,8 +93,8 @@ public class CollaborationParserTest {
   }
 
 
-  @AfterClass
-  public static void validateModel() {
+  @AfterAll
+  static void validateModel() {
     Bpmn.validateModel(modelInstance);
   }
 

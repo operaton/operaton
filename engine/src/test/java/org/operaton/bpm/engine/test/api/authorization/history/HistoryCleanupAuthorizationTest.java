@@ -84,7 +84,7 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
 
     ClockUtil.setCurrentTime(new Date());
     // when
-    identityService.setAuthentication("user", Collections.singletonList(Groups.CAMUNDA_ADMIN), null);
+    identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
     String jobId = historyService.cleanUpHistoryAsync(true).getId();
 

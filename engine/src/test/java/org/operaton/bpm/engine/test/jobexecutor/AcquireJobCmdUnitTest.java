@@ -104,8 +104,8 @@ public class AcquireJobCmdUnitTest {
     AcquiredJobs acquiredJobs = acquireJobsCmd.execute(commandContext);
 
     List<List<String>> jobIdBatches = acquiredJobs.getJobIdBatches();
-    assertThat(jobIdBatches.size()).isEqualTo(1);
-    assertThat(jobIdBatches.get(0).size()).isEqualTo(2);
+    assertThat(jobIdBatches).hasSize(1);
+    assertThat(jobIdBatches.get(0)).hasSize(2);
     assertThat(jobIdBatches.get(0)).containsExactlyInAnyOrder(JOB_ID_1, JOB_ID_2);
   }
 
@@ -139,9 +139,9 @@ public class AcquireJobCmdUnitTest {
     AcquiredJobs acquiredJobs = acquireJobsCmd.execute(commandContext);
 
     List<List<String>> jobIdBatches = acquiredJobs.getJobIdBatches();
-    assertThat(jobIdBatches.size()).isEqualTo(2);
-    assertThat(jobIdBatches.get(0).size()).isEqualTo(1);
-    assertThat(jobIdBatches.get(1).size()).isEqualTo(1);
+    assertThat(jobIdBatches).hasSize(2);
+    assertThat(jobIdBatches.get(0)).hasSize(1);
+    assertThat(jobIdBatches.get(1)).hasSize(1);
   }
 
 }

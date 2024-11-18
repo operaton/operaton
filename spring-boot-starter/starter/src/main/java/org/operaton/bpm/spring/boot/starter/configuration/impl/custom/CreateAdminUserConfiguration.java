@@ -36,7 +36,7 @@ import java.util.Optional;
 import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Groups.CAMUNDA_ADMIN;
+import static org.operaton.bpm.engine.authorization.Groups.OPERATON_ADMIN;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 
 public class CreateAdminUserConfiguration extends AbstractOperatonConfiguration {
@@ -64,8 +64,8 @@ public class CreateAdminUserConfiguration extends AbstractOperatonConfiguration 
     createUser(identityService, adminUser);
 
     // create group
-    if (identityService.createGroupQuery().groupId(CAMUNDA_ADMIN).count() == 0) {
-      Group operatonAdminGroup = identityService.newGroup(CAMUNDA_ADMIN);
+    if (identityService.createGroupQuery().groupId(OPERATON_ADMIN).count() == 0) {
+      Group operatonAdminGroup = identityService.newGroup(OPERATON_ADMIN);
       operatonAdminGroup.setName("operaton BPM Administrators");
       operatonAdminGroup.setType(Groups.GROUP_TYPE_SYSTEM);
       identityService.saveGroup(operatonAdminGroup);
@@ -73,9 +73,9 @@ public class CreateAdminUserConfiguration extends AbstractOperatonConfiguration 
 
     // create ADMIN authorizations on all built-in resources
     for (Resource resource : Resources.values()) {
-      if (authorizationService.createAuthorizationQuery().groupIdIn(CAMUNDA_ADMIN).resourceType(resource).resourceId(ANY).count() == 0) {
+      if (authorizationService.createAuthorizationQuery().groupIdIn(OPERATON_ADMIN).resourceType(resource).resourceId(ANY).count() == 0) {
         AuthorizationEntity userAdminAuth = new AuthorizationEntity(AUTH_TYPE_GRANT);
-        userAdminAuth.setGroupId(CAMUNDA_ADMIN);
+        userAdminAuth.setGroupId(OPERATON_ADMIN);
         userAdminAuth.setResource(resource);
         userAdminAuth.setResourceId(ANY);
         userAdminAuth.addPermission(ALL);
@@ -83,7 +83,7 @@ public class CreateAdminUserConfiguration extends AbstractOperatonConfiguration 
       }
     }
 
-    identityService.createMembership(adminUser.getId(), CAMUNDA_ADMIN);
+    identityService.createMembership(adminUser.getId(), OPERATON_ADMIN);
     LOG.creatingInitialAdminUser(adminUser);
   }
 

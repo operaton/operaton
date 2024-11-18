@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -105,7 +103,7 @@ public class PasswordHashingTest {
     identityService.saveUser(user);
 
     // then
-    assertThat(identityService.checkPassword(USER_NAME, PASSWORD), is(true));
+    assertThat(identityService.checkPassword(USER_NAME, PASSWORD)).isTrue();
   }
 
   @Test
@@ -121,7 +119,7 @@ public class PasswordHashingTest {
     identityService.saveUser(user2);
 
     // then
-    assertThat(user1.getPassword(), is(not(user2.getPassword())));
+    assertThat(user1.getPassword()).isNotEqualTo(user2.getPassword());
   }
 
   @Test
@@ -138,7 +136,7 @@ public class PasswordHashingTest {
 
     // then
     // obtain the expected value on the command line like so: echo -n password12345678910 | openssl dgst -binary -sha1 | openssl base64
-    assertThat(user.getPassword(), is("{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg="));
+    assertThat(user.getPassword()).isEqualTo("{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=");
   }
 
   @Test
@@ -154,8 +152,8 @@ public class PasswordHashingTest {
 
     // then
     // obtain the expected value on the command line like so: echo -n password12345678910 | openssl dgst -binary -sha512 | openssl base64
-    assertThat(user.getPassword(), is("{SHA-512}sM1U4nCzoDbdUugvJ7dJ6rLc7t1ZPPsnAbUpTqi5nXCYp7PTZCHExuzjoxLLYoUK" +
-      "Gd637jKqT8d9tpsZs3K5+g=="));
+    assertThat(user.getPassword()).isEqualTo("{SHA-512}sM1U4nCzoDbdUugvJ7dJ6rLc7t1ZPPsnAbUpTqi5nXCYp7PTZCHExuzjoxLLYoUK" +
+        "Gd637jKqT8d9tpsZs3K5+g==");
   }
 
   @Test
@@ -199,7 +197,7 @@ public class PasswordHashingTest {
     user = identityService.createUserQuery().userId(USER_NAME).singleResult();
 
     // then
-    assertThat(user.getPassword(), is("{" + ALGORITHM_NAME + "}xxx"));
+    assertThat(user.getPassword()).isEqualTo("{" + ALGORITHM_NAME + "}xxx");
   }
 
   @Test
@@ -230,9 +228,9 @@ public class PasswordHashingTest {
     User user3 = identityService.createUserQuery().userId(userName3).singleResult();
 
     // then
-    assertThat(user1.getPassword(), is("{" + ALGORITHM_NAME + "}xxx"));
-    assertThat(user2.getPassword(), is("{" + anotherAlgorithmName + "}xxx"));
-    assertThat(user3.getPassword(), is("{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg="));
+    assertThat(user1.getPassword()).isEqualTo("{" + ALGORITHM_NAME + "}xxx");
+    assertThat(user2.getPassword()).isEqualTo("{" + anotherAlgorithmName + "}xxx");
+    assertThat(user3.getPassword()).isEqualTo("{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=");
   }
 
   protected void createUserWithEncryptor(String userName, PasswordEncryptor encryptor) {

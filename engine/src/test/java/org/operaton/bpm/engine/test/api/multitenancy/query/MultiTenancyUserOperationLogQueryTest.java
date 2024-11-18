@@ -125,7 +125,7 @@ public class MultiTenancyUserOperationLogQueryTest {
 
     // then
     assertThat(historyService.createUserOperationLogQuery().entityType(EntityTypes.TASK).count()).isEqualTo(2);
-    assertThat(list.size()).isEqualTo(2);
+    assertThat(list).hasSize(2);
     assertThat(list.get(0).getTenantId()).isIn(null, TENANT_TWO);
     assertThat(list.get(1).getTenantId()).isIn(null, TENANT_TWO);
   }
@@ -185,7 +185,7 @@ public class MultiTenancyUserOperationLogQueryTest {
 
     // then
     assertThat(historyService.createUserOperationLogQuery().entityType(EntityTypes.TASK).withoutTenantId().count()).isOne();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     assertThat(list.get(0).getTenantId()).isEqualTo(null);
   }
 
@@ -222,7 +222,7 @@ public class MultiTenancyUserOperationLogQueryTest {
 
     // then
     assertThat(historyService.createUserOperationLogQuery().entityType(EntityTypes.TASK).tenantIdIn(TENANT_TWO).count()).isOne();
-    assertThat(list.size()).isEqualTo(1);
+    assertThat(list).hasSize(1);
     assertThat(list.get(0).getTenantId()).isEqualTo(TENANT_TWO);
   }
 }

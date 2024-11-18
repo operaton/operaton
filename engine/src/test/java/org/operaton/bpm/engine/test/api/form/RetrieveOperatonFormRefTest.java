@@ -200,7 +200,7 @@ public class RetrieveOperatonFormRefTest {
 
     // then
     assertThat(deployments).hasSize(1);
-    assertThat(definitions).hasSize(0);
+    assertThat(definitions).isEmpty();
 
     assertTaskFormData(taskFormData, "myTaskForm", "latest", null);
 
@@ -224,7 +224,7 @@ public class RetrieveOperatonFormRefTest {
 
     // then
     assertThat(deployments).hasSize(1);
-    assertThat(definitions).hasSize(0);
+    assertThat(definitions).isEmpty();
 
     assertTaskFormData(taskFormData, "myTaskForm", "deployment", null);
 
@@ -409,7 +409,7 @@ public class RetrieveOperatonFormRefTest {
 
     // then
     assertThat(deployments).hasSize(1);
-    assertThat(definitions).hasSize(0);
+    assertThat(definitions).isEmpty();
 
     assertThatThrownBy(() -> {
       formService.getDeployedStartForm(processDefinition.getId());
@@ -430,7 +430,7 @@ public class RetrieveOperatonFormRefTest {
 
     // then
     assertThat(deployments).hasSize(1);
-    assertThat(definitions).hasSize(0);
+    assertThat(definitions).isEmpty();
 
     assertThatThrownBy(() -> {
       formService.getDeployedStartForm(processDefinition.getId());

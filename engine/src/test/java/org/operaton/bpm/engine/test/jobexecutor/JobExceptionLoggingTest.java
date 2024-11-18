@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -34,11 +35,10 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JobExceptionLoggingTest {
 
@@ -91,8 +91,8 @@ public class JobExceptionLoggingTest {
     List<ILoggingEvent> ctxLog = loggingRule.getFilteredLog(CONTEXT_LOGGER, "Exception while closing command context");
 
     // then
-    assertThat(jobLog.size()).isEqualTo(1);
-    assertThat(ctxLog.size()).isEqualTo(0);
+    assertThat(jobLog).hasSize(1);
+    assertThat(ctxLog).isEmpty();
   }
 
   @Test
@@ -112,8 +112,8 @@ public class JobExceptionLoggingTest {
     List<ILoggingEvent> ctxLog = loggingRule.getFilteredLog(CONTEXT_LOGGER, "Exception while closing command context");
     
     // then
-    assertThat(jobLog.size()).isEqualTo(1);
-    assertThat(ctxLog.size()).isEqualTo(1);
+    assertThat(jobLog).hasSize(1);
+    assertThat(ctxLog).hasSize(1);
   }
 
   @Test
@@ -146,8 +146,8 @@ public class JobExceptionLoggingTest {
     assertThat(expectedException).isNotNull();
     assertThat(expectedException.getMessage()).contains("Expected Exception");
     // ...but not logged
-    assertThat(jobLog.size()).isEqualTo(0);
-    assertThat(ctxLog.size()).isEqualTo(0);
+    assertThat(jobLog).isEmpty();
+    assertThat(ctxLog).isEmpty();
   }
 
   @Test
@@ -176,7 +176,7 @@ public class JobExceptionLoggingTest {
     assertThat(expectedException).isNotNull();
     assertThat(expectedException.getMessage()).contains("Expected Exception");
     // ...but not logged
-    assertThat(jobLog.size()).isEqualTo(0);
-    assertThat(ctxLog.size()).isEqualTo(0);
+    assertThat(jobLog).isEmpty();
+    assertThat(ctxLog).isEmpty();
   }
 }

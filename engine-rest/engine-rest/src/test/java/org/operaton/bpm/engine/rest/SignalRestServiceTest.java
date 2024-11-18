@@ -37,8 +37,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.anyString;
+
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

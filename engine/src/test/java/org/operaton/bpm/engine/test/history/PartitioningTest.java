@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
 import java.util.List;
@@ -108,13 +106,13 @@ public class PartitioningTest {
     });
 
     // assume
-    assertThat(historyService.createHistoricProcessInstanceQuery().count(), is(0L));
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
 
     // when
     runtimeService.deleteProcessInstance(processInstanceId, "aDeleteReason");
 
     // then
-    assertThat(runtimeService.createProcessInstanceQuery().singleResult(), nullValue());
+    assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
 
     // cleanup
     cleanUp(processInstanceId);
@@ -139,7 +137,7 @@ public class PartitioningTest {
     });
 
     // assume
-    assertThat(historyService.createHistoricTaskInstanceQuery().singleResult(), nullValue());
+    assertThat(historyService.createHistoricTaskInstanceQuery().singleResult()).isNull();
 
     // when
     String taskId = taskService.createTaskQuery()
@@ -149,7 +147,7 @@ public class PartitioningTest {
     taskService.complete(taskId);
 
     // then
-    assertThat(taskService.createTaskQuery().singleResult(), nullValue());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
 
   @Test
@@ -168,7 +166,7 @@ public class PartitioningTest {
     });
 
     // assume
-    assertThat(historyService.createHistoricActivityInstanceQuery().count(), is(0L));
+    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isZero();
 
     // when
     String taskId = taskService.createTaskQuery()
@@ -178,7 +176,7 @@ public class PartitioningTest {
     taskService.complete(taskId);
 
     // then
-    assertThat(historyService.createHistoricActivityInstanceQuery().count(), is(1L));
+    assertThat(historyService.createHistoricActivityInstanceQuery().count()).isEqualTo(1L);
   }
 
   @Test
@@ -202,15 +200,15 @@ public class PartitioningTest {
     });
 
     // assume
-    assertThat(historyService.createHistoricIncidentQuery().count(), is(0L));
-    assertThat(runtimeService.createIncidentQuery().count(), is(1L));
+    assertThat(historyService.createHistoricIncidentQuery().count()).isZero();
+    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1L);
 
     // when
     runtimeService.resolveIncident(incidentId);
 
     // then
-    assertThat(runtimeService.createIncidentQuery().count(), is(0L));
-    assertThat(historyService.createHistoricIncidentQuery().count(), is(0L));
+    assertThat(runtimeService.createIncidentQuery().count()).isZero();
+    assertThat(historyService.createHistoricIncidentQuery().count()).isZero();
   }
 
   @Test
@@ -221,7 +219,7 @@ public class PartitioningTest {
     final Batch batch = runtimeService.deleteProcessInstancesAsync(Collections.singletonList(processInstanceId), "aDeleteReason");
 
     // assume
-    assertThat(historyService.createHistoricBatchQuery().count(), is(1L));
+    assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1L);
 
     commandExecutor.execute(new Command<Void>() {
       public Void execute(CommandContext commandContext) {
@@ -237,7 +235,7 @@ public class PartitioningTest {
     });
 
     // assume
-    assertThat(historyService.createHistoricBatchQuery().count(), is(0L));
+    assertThat(historyService.createHistoricBatchQuery().count()).isZero();
 
     // when
     String seedJobDefinitionId = batch.getSeedJobDefinitionId();
@@ -256,8 +254,8 @@ public class PartitioningTest {
     }
 
     // then
-    assertThat(runtimeService.createProcessInstanceQuery().count(), is(0L));
-    assertThat(managementService.createBatchQuery().count(), is(0L));
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
+    assertThat(managementService.createBatchQuery().count()).isZero();
 
     // cleanup
     cleanUp(processInstanceId);

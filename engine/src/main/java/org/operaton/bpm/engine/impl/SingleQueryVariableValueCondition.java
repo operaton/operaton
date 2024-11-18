@@ -16,7 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.QueryOperator.*;
+import static org.operaton.bpm.engine.impl.QueryOperator.EQUALS;
+import static org.operaton.bpm.engine.impl.QueryOperator.NOT_EQUALS;
 
 import java.util.Arrays;
 import java.util.Collections;

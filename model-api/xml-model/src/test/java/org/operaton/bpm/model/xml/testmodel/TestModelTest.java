@@ -16,45 +16,27 @@
  */
 package org.operaton.bpm.model.xml.testmodel;
 
+import org.junit.jupiter.api.AfterEach;
 import org.operaton.bpm.model.xml.ModelInstance;
-import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
-import org.operaton.bpm.model.xml.impl.parser.AbstractModelParser;
 import org.operaton.bpm.model.xml.testmodel.instance.*;
-import org.junit.After;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.io.InputStream;
 
 /**
  * @author Sebastian Menski
  */
-@RunWith(Parameterized.class)
 public abstract class TestModelTest {
-
-  protected final String testName;
-  private final ModelInstance testModelInstance;
-  private final AbstractModelParser modelParser;
-
-  // cloned model instance for every test method (see subclasses)
   protected ModelInstance modelInstance;
+  protected TestModelParser modelParser;
 
-  public TestModelTest(String testName, ModelInstance testModelInstance, AbstractModelParser modelParser) {
-    this.testName = testName;
-    this.testModelInstance = testModelInstance;
-    this.modelParser = modelParser;
-  }
+  public record TestModelArgs (String name, ModelInstance modelInstance, TestModelParser modelParser) {}
 
-  public ModelInstance cloneModelInstance() {
-    return testModelInstance.clone();
-  }
-
-  protected static Object[] parseModel(Class<?> test) {
+  protected static TestModelArgs parseModel(Class<?> test) {
     TestModelParser modelParser = new TestModelParser();
     String testXml = test.getSimpleName() + ".xml";
     InputStream testXmlAsStream = test.getResourceAsStream(testXml);
     ModelInstance modelInstance = modelParser.parseModelFromStream(testXmlAsStream);
-    return new Object[]{"parsed", modelInstance, modelParser};
+    return new TestModelArgs ("parsed", modelInstance, modelParser);
   }
 
   public static Bird createBird(ModelInstance modelInstance, String id, Gender gender) {
@@ -82,8 +64,17 @@ public abstract class TestModelTest {
     return egg;
   }
 
-  @After
-  public void validateModel() {
-    modelParser.validateModel(modelInstance.getDocument());
+  protected void init (TestModelArgs args) {
+    this.modelInstance = args.modelInstance.clone();
+    this.modelParser = args.modelParser;
+  }
+
+  @AfterEach
+  protected void validateModel() {
+    if (modelParser != null && modelInstance != null) {
+      modelParser.validateModel(modelInstance.getDocument());
+      modelParser = null;
+      modelInstance = null;
+    }
   }
 }

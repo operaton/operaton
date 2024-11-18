@@ -74,7 +74,7 @@ public class AuthorizationLoggingTest {
     String message = "ENGINE-03110 Required admin authenticated group or user or any of the following permissions:";
     List<ILoggingEvent> filteredLog = loggingRule.getFilteredLog(CONTEXT_LOGGER, message);
 
-    assertThat(filteredLog.size()).isEqualTo(1);
+    assertThat(filteredLog).hasSize(1);
     assertThat(filteredLog.get(0).getLevel()).isEqualTo(Level.DEBUG);
   }
 

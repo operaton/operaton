@@ -20,19 +20,15 @@ import static java.util.Comparator.reverseOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.entry;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +40,11 @@ import java.util.Map;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.ibatis.jdbc.RuntimeSqlException;
+import org.joda.time.DateTime;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -78,11 +79,6 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.joda.time.DateTime;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer
@@ -220,13 +216,13 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
 
     assertThat(result.get(0).getPriority()).isEqualTo(7);
     assertThat(result.get(1).getPriority()).isEqualTo(7);
-    assertThat(result.get(2).getPriority()).isEqualTo(0);
-    assertThat(result.get(3).getPriority()).isEqualTo(0);
-    assertThat(result.get(4).getPriority()).isEqualTo(0);
+    assertThat(result.get(2).getPriority()).isZero();
+    assertThat(result.get(3).getPriority()).isZero();
+    assertThat(result.get(4).getPriority()).isZero();
 
 
     // given the same priority, DESC date is applied
@@ -263,14 +259,14 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
 
     assertThat(result.get(0).getPriority()).isEqualTo(7);
     assertThat(result.get(1).getPriority()).isEqualTo(7);
 
-    assertThat(result.get(2).getPriority()).isEqualTo(0);
-    assertThat(result.get(3).getPriority()).isEqualTo(0);
-    assertThat(result.get(4).getPriority()).isEqualTo(0);
+    assertThat(result.get(2).getPriority()).isZero();
+    assertThat(result.get(3).getPriority()).isZero();
+    assertThat(result.get(4).getPriority()).isZero();
 
 
     // given the same priority, ASC date is applied
@@ -307,7 +303,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
     assertThat(result).extracting("createTime", Date.class).isSorted();
   }
 
@@ -337,7 +333,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
     assertThat(result).extracting("createTime", Date.class).isSortedAccordingTo(reverseOrder());
   }
 
@@ -367,7 +363,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
     // create time ordering will be ignored, only priority will be used
     assertThat(result).extracting("priority", Long.class).isSortedAccordingTo(reverseOrder());
   }
@@ -391,7 +387,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .execute();
 
     // then
-    assertThat(result.size()).isEqualTo(5);
+    assertThat(result).hasSize(5);
     // create time ordering will be ignored, only priority will be used
     assertThat(result).extracting("priority", Long.class).isSortedAccordingTo(reverseOrder());
   }
@@ -1754,7 +1750,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("userTask");
     List<VariableInstance> list = runtimeService.createVariableInstanceQuery().variableName("foo").list();
-    assertThat(list).hasSize(0);
+    assertThat(list).isEmpty();
   }
 
   @Test
@@ -1979,7 +1975,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertThat(tasks).hasSize(1);
     assertThat(tasks.get(0).getName()).isEqualTo("userTask");
     List<VariableInstance> list = runtimeService.createVariableInstanceQuery().variableName("foo").list();
-    assertThat(list).hasSize(0);
+    assertThat(list).isEmpty();
   }
 
   @Test
@@ -2211,7 +2207,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // no error is thrown
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -2233,7 +2229,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     // then
     // no error is thrown
     List<Task> tasks = taskService.createTaskQuery().list();
-    assertThat(tasks).hasSize(0);
+    assertThat(tasks).isEmpty();
   }
 
   @Test
@@ -2541,22 +2537,27 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         errorMessage = errorMessage + ":" + e.getMessage();
       }
     }
-    Assert.assertThat(exceptionStackTrace,is(notNullValue()));
-//  make sure that stack trace is longer then errorMessage DB field length
-    Assert.assertThat(exceptionStackTrace.length(),is(greaterThan(4000)));
+    assertThat(exceptionStackTrace).isNotNull();
+
+    // Make sure that stack trace is longer than the errorMessage DB field length
+    assertThat(exceptionStackTrace.length()).isGreaterThan(4000);
+
     externalTaskService.handleFailure(task.getId(), WORKER_ID, errorMessage, exceptionStackTrace, 5, 3000L);
+
     ClockUtil.setCurrentTime(nowPlus(4000L));
     tasks = externalTaskService.fetchAndLock(5, WORKER_ID)
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
-    Assert.assertThat(tasks.size(), is(1));
 
-    // verify that exception is accessible properly
+    assertThat(tasks).hasSize(1);
+
+    // Verify that exception is accessible properly
     task = tasks.get(0);
-    Assert.assertThat(task.getErrorMessage(),is(errorMessage.substring(0,666)));
-    Assert.assertThat(task.getRetries(),is(5));
-    Assert.assertThat(externalTaskService.getExternalTaskErrorDetails(task.getId()),is(exceptionStackTrace));
-    Assert.assertThat(task.getErrorDetails(),is(exceptionStackTrace));
+
+    assertThat(task.getErrorMessage()).isEqualTo(errorMessage.substring(0, 666));
+    assertThat(task.getRetries()).isEqualTo(5);
+    assertThat(externalTaskService.getExternalTaskErrorDetails(task.getId())).isEqualTo(exceptionStackTrace);
+    assertThat(task.getErrorDetails()).isEqualTo(exceptionStackTrace);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -4378,7 +4379,7 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     //then
     assertThat(totalExternalTasks).isEqualTo(2);
-    assertThat(fetchedExternalTasks.size()).isEqualTo(1);
+    assertThat(fetchedExternalTasks).hasSize(1);
     assertThat(fetchedExternalTasks.get(0).getProcessDefinitionKey()).isEqualTo("testFetchAndLockByProcessDefinitionVersionTag");
     assertThat(fetchedExternalTasks.get(0).getProcessDefinitionVersionTag()).isEqualTo("version X.Y");
   }

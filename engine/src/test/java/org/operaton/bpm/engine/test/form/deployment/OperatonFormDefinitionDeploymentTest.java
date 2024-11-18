@@ -21,9 +21,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
 import static org.operaton.bpm.engine.test.util.OperatonFormUtils.writeTempFormFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -187,8 +184,8 @@ public class OperatonFormDefinitionDeploymentTest {
     assertThat(deployments).hasSize(1);
 
     // after deletion of deployment
-    assertThat(findAllOperatonFormDefinitionEntities(processEngineConfiguration)).hasSize(0);
-    assertThat(repositoryService.createDeploymentQuery().list()).hasSize(0);
+    assertThat(findAllOperatonFormDefinitionEntities(processEngineConfiguration)).isEmpty();
+    assertThat(repositoryService.createDeploymentQuery().list()).isEmpty();
   }
 
   @Test

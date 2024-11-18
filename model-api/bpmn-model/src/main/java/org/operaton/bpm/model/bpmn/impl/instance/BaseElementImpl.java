@@ -22,7 +22,6 @@ import org.operaton.bpm.model.bpmn.instance.ExtensionElements;
 import org.operaton.bpm.model.bpmn.instance.di.DiagramElement;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
-import org.operaton.bpm.model.xml.impl.util.ModelUtil;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;

@@ -17,13 +17,7 @@
 package org.operaton.bpm.model.bpmn.builder;
 
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.bpm.model.bpmn.instance.ExtensionElements;
 import org.operaton.bpm.model.bpmn.instance.Task;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonExecutionListener;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputOutput;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputParameter;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOutputParameter;
-import org.operaton.bpm.model.bpmn.instance.operaton.OperatonTaskListener;
 
 /**
  * @author Sebastian Menski

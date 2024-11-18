@@ -16,25 +16,8 @@
  */
 package org.operaton.bpm.pa;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.operaton.bpm.admin.impl.web.SetupResource;
-import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.impl.ServletProcessApplication;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.rest.dto.identity.UserCredentialsDto;
-import org.operaton.bpm.engine.rest.dto.identity.UserDto;
-import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
-import org.operaton.bpm.engine.runtime.CaseExecutionQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 /**
  *

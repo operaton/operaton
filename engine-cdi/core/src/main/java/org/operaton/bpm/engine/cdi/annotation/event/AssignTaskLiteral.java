@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
-import javax.enterprise.util.AnnotationLiteral;
 
+import javax.enterprise.util.AnnotationLiteral;
 
 public class AssignTaskLiteral extends AnnotationLiteral<AssignTask> implements AssignTask {
 

@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.cmmn.instance.operaton;
 
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN11_NS;
 
 import java.util.Arrays;
 import java.util.Collection;

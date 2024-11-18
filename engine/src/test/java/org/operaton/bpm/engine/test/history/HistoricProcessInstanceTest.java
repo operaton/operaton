@@ -1553,7 +1553,7 @@ public class HistoricProcessInstanceTest {
       fail("exception expected");
     }
     catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("activity ids is null");
+      assertThat(e.getMessage()).contains("activity ids contains null value");
     }
   }
 
@@ -1565,7 +1565,7 @@ public class HistoricProcessInstanceTest {
       fail("exception expected");
     }
     catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("activity ids contains null value");
+      assertThat(e.getMessage()).contains("activity ids is null");
     }
   }
 

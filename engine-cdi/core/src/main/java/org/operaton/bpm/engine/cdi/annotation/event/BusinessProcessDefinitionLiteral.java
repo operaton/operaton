@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.cdi.annotation.event;
 
-import javax.enterprise.util.AnnotationLiteral;
-
 public class BusinessProcessDefinitionLiteral extends AnnotationLiteral<BusinessProcessDefinition> implements BusinessProcessDefinition {
   
   protected final String key;   

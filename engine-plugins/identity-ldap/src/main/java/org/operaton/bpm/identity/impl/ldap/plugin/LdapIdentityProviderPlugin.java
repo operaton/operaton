@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.identity.impl.ldap.plugin;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;

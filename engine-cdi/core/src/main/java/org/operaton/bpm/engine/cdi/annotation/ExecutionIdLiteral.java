@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.cdi.annotation;
 
-import javax.enterprise.util.AnnotationLiteral;
-
 /**
  * @author Daniel Meyer
  *

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
-import org.operaton.bpm.engine.impl.cmd.DeleteDeploymentCmd;
 import org.operaton.bpm.engine.impl.cmd.DeployCmd;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;

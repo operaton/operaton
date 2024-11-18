@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.nonpa.service;
 
-import jakarta.transaction.Transactional;
-import jakarta.transaction.Transactional.TxType;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 
 public interface TransactionalTestService {

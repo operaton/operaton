@@ -17,7 +17,7 @@
 package org.operaton.bpm.pa.service;
 
 
-import static org.operaton.bpm.engine.variable.Variables.*;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
 
 import java.util.ArrayList;
 import java.util.Date;

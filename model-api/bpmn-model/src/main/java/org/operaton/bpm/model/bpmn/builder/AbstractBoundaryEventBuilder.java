@@ -17,7 +17,10 @@
 package org.operaton.bpm.model.bpmn.builder;
 
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.bpm.model.bpmn.instance.*;
+import org.operaton.bpm.model.bpmn.instance.BoundaryEvent;
+import org.operaton.bpm.model.bpmn.instance.ErrorEventDefinition;
+import org.operaton.bpm.model.bpmn.instance.EscalationEventDefinition;
+import org.operaton.bpm.model.bpmn.instance.FlowNode;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 import org.operaton.bpm.model.bpmn.instance.dc.Bounds;

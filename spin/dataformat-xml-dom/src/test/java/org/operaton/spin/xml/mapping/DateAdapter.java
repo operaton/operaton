@@ -19,8 +19,6 @@ package org.operaton.spin.xml.mapping;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 /**
  * @author Stefan Hentschel.
  */

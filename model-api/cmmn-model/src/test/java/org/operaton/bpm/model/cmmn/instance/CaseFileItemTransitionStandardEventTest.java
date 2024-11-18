@@ -18,8 +18,6 @@ package org.operaton.bpm.model.cmmn.instance;
 
 import java.util.Collection;
 
-import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
-
 /**
  * @author Roman Smirnov
  *

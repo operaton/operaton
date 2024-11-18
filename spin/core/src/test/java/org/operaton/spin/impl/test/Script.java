@@ -16,8 +16,6 @@
  */
 package org.operaton.spin.impl.test;
 
-import org.junit.rules.TestRule;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -5,14 +5,12 @@ This is a distribution of
 visit
        http://docs.operaton.org/
 
-The Operaton is a dual-license Java-based framework.
-This particular copy of the Operaton is released either
-under the Apache License 2.0 (Community Platform) OR a commercial
-license agreement (Enterprise Platform).
+Operaton is a Java-based framework licensed under the
+Apache License 2.0 license.
 
 License information can be found in the LICENSE file.
  
-The Operaton includes libraries developed by third
+Operaton includes libraries developed by third
 parties. For license and attribution notices for these libraries,
 please refer to the documentation that accompanies this distribution
 (see the LICENSE_BOOK-${project.version} file).

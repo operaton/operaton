@@ -19,19 +19,7 @@ package org.operaton.bpm.engine.test.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
@@ -46,7 +34,7 @@ import org.junit.rules.RuleChain;
 /**
  * Base class for the process engine test cases.
  */
-public class PluggableProcessEngineTest {
+public class PluggableProcessEngineTest implements ProcessEngineProvider {
 
   protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);

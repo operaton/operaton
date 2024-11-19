@@ -17,12 +17,10 @@
 package org.operaton.spin.plugin.variables;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 /**

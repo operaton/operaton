@@ -16,26 +16,19 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import jakarta.el.*;
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElProvider;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.dmn.el.ProcessEngineJuelElProvider;
-import org.operaton.bpm.impl.juel.jakarta.el.ArrayELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.CompositeELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ExpressionFactory;
-import org.operaton.bpm.impl.juel.jakarta.el.FunctionMapper;
-import org.operaton.bpm.impl.juel.jakarta.el.ListELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.MapELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ValueExpression;
-import org.operaton.bpm.impl.juel.ExpressionFactoryImpl;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.test.mock.MockElResolver;
 import org.operaton.bpm.engine.variable.context.VariableContext;
+import org.operaton.bpm.impl.juel.ExpressionFactoryImpl;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * JUEL-specific implementation of an {@link ExpressionManager}.

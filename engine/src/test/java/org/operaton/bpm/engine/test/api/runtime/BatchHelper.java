@@ -16,15 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Date;
-import java.util.List;
-
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.history.HistoricJobLog;
@@ -33,20 +25,18 @@ import org.operaton.bpm.engine.impl.batch.BatchSeedJobHandler;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.Date;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BatchHelper {
 
-  protected ProcessEngineRule engineRule;
-  protected PluggableProcessEngineTest testCase;
+  private final ProcessEngineProvider processEngineProvider;
 
-  public BatchHelper(ProcessEngineRule engineRule) {
-    this.engineRule = engineRule;
-  }
-
-  public BatchHelper(PluggableProcessEngineTest testCase) {
-    this.testCase = testCase;
+  public BatchHelper(ProcessEngineProvider processEngineProvider) {
+    this.processEngineProvider = processEngineProvider;
   }
 
   public Job getJobForDefinition(JobDefinition jobDefinition) {
@@ -65,7 +55,7 @@ public class BatchHelper {
   }
 
   public void executeJob(Job job) {
-    assertNotNull("Job to execute does not exist", job);
+    assertThat(job).withFailMessage(() -> "Job to execute does not exist").isNotNull();
     try {
       getManagementService().executeJob(job.getId());
     }
@@ -123,7 +113,7 @@ public class BatchHelper {
   }
 
   public JobDefinition getExecutionJobDefinition(Batch batch, String jobType) {
-    return engineRule.getManagementService()
+    return processEngineProvider.getProcessEngine().getManagementService()
         .createJobDefinitionQuery()
         .jobDefinitionId(batch.getBatchJobDefinitionId())
         .jobType(jobType)
@@ -152,7 +142,7 @@ public class BatchHelper {
 
   public void completeJobs(Batch batch, int count) {
     List<Job> jobs = getExecutionJobs(batch);
-    assertTrue(jobs.size() >= count);
+    assertThat(jobs).hasSizeGreaterThanOrEqualTo(count);
     for (int i = 0; i < count; i++) {
       executeJob(jobs.get(i));
     }
@@ -164,7 +154,7 @@ public class BatchHelper {
 
   public void setRetries(Batch batch, int count, int retries) {
     List<Job> jobs = getExecutionJobs(batch);
-    assertTrue(jobs.size() >= count);
+    assertThat(jobs).hasSizeGreaterThanOrEqualTo(count);
 
     ManagementService managementService = getManagementService();
     for (int i = 0; i < count; i++) {
@@ -223,7 +213,7 @@ public class BatchHelper {
   }
 
   public Date addSeconds(Date date, int seconds) {
-    return new Date(date.getTime() + seconds * 1000);
+    return new Date(date.getTime() + seconds * 1000L);
   }
 
   public Date addSecondsToClock(int seconds) {
@@ -250,22 +240,24 @@ public class BatchHelper {
 
   }
 
+  protected ProcessEngine getProcessEngine () {
+    return processEngineProvider.getProcessEngine();
+  }
+
+  protected RuntimeService getRuntimeService() {
+    return getProcessEngine().getRuntimeService();
+  }
+
   protected ManagementService getManagementService() {
-    if (engineRule != null) {
-      return engineRule.getManagementService();
-    }
-    else {
-      return testCase.getProcessEngine().getManagementService();
-    }
+    return getProcessEngine().getManagementService();
   }
 
   protected HistoryService getHistoryService() {
-    if (engineRule != null) {
-      return engineRule.getHistoryService();
-    }
-    else {
-      return testCase.getProcessEngine().getHistoryService();
-    }
+    return getProcessEngine().getHistoryService();
+  }
+
+  protected IdentityService getIdentityService () {
+    return getProcessEngine().getIdentityService();
   }
 
 }

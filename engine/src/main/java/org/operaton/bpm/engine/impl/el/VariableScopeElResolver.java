@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
+import jakarta.el.ELContext;
+import jakarta.el.ELResolver;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.bpmn.behavior.ExternalTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
+
 import java.beans.FeatureDescriptor;
 import java.util.Iterator;
 import java.util.List;

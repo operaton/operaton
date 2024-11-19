@@ -1,8 +1,8 @@
 /*
- * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
+ * Copyright itemis AG and/or licensed to itemis AG
  * under one or more contributor license agreements. See the NOTICE file
  * distributed with this work for additional information regarding copyright
- * ownership. Camunda licenses this file to you under the Apache License,
+ * ownership. itemis AG licenses this file to you under the Apache License,
  * Version 2.0; you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -14,26 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.model.cmmn.instance;
+package org.operaton.bpm.engine;
 
-import java.util.Collection;
-
-/**
- * @author Roman Smirnov
- *
- */
-public class CaseFileItemTransitionStandardEventTest extends CmmnModelElementInstanceTest {
-
-  public TypeAssumption getTypeAssumption() {
-    return new TypeAssumption(false);
-  }
-
-  public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return null;
-  }
-
-  public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return null;
-  }
-
+public interface ProcessEngineProvider {
+  ProcessEngine getProcessEngine();
 }

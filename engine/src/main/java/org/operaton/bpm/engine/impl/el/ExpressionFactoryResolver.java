@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
-import org.operaton.bpm.impl.juel.jakarta.el.ExpressionFactory;
+import jakarta.el.ExpressionFactory;
 import org.operaton.bpm.impl.juel.ExpressionFactoryImpl;
 
 

@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.cdi.impl.el;
 
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
-import javax.enterprise.inject.spi.BeanManager;
+import jakarta.el.ELContext;
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
+import jakarta.el.ELResolver;
+
+import javax.enterprise.inject.spi.BeanManager;
+import java.beans.FeatureDescriptor;
+import java.util.Iterator;
 
 
 /**

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.model.bpmn.instance;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**

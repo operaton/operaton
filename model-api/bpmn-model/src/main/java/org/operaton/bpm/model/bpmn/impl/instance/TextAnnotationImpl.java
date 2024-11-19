@@ -21,7 +21,6 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TEXT_ANNOTATION;
 
 import org.operaton.bpm.model.bpmn.instance.Artifact;
-import org.operaton.bpm.model.bpmn.instance.Script;
 import org.operaton.bpm.model.bpmn.instance.Text;
 import org.operaton.bpm.model.bpmn.instance.TextAnnotation;
 import org.operaton.bpm.model.xml.ModelBuilder;

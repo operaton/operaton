@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.model.bpmn.impl.instance;
 
-import org.operaton.bpm.model.bpmn.instance.*;
+import org.operaton.bpm.model.bpmn.instance.BaseElement;
+import org.operaton.bpm.model.bpmn.instance.DataOutput;
+import org.operaton.bpm.model.bpmn.instance.InputSet;
+import org.operaton.bpm.model.bpmn.instance.OutputSet;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;

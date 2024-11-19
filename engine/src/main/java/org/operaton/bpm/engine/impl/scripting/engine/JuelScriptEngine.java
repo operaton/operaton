@@ -16,37 +16,18 @@
  */
 package org.operaton.bpm.engine.impl.scripting.engine;
 
+import jakarta.el.ELContext;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.el.ExpressionFactoryResolver;
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
+import org.operaton.bpm.impl.juel.SimpleResolver;
+import jakarta.el.*;
+
+import javax.script.*;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-
-import javax.script.AbstractScriptEngine;
-import javax.script.Bindings;
-import javax.script.CompiledScript;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
-
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.el.ExpressionFactoryResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ArrayELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.BeanELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.CompositeELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELException;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ExpressionFactory;
-import org.operaton.bpm.impl.juel.jakarta.el.FunctionMapper;
-import org.operaton.bpm.impl.juel.jakarta.el.ListELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.MapELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ResourceBundleELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ValueExpression;
-import org.operaton.bpm.impl.juel.jakarta.el.VariableMapper;
-import org.operaton.bpm.impl.juel.SimpleResolver;
-import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
 
 /**

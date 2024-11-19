@@ -24,8 +24,8 @@ import java.util.ServiceLoader;
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationElResolver;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.impl.juel.jakarta.el.CompositeELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
+import jakarta.el.CompositeELResolver;
+import jakarta.el.ELResolver;
 
 /**
  * @author Daniel Meyer

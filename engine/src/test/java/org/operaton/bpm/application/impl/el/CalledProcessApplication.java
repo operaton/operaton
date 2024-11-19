@@ -22,7 +22,7 @@ import java.util.Map;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.impl.el.ReadOnlyMapELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
+import jakarta.el.ELResolver;
 
 /**
  * @author Thorben Lindhauer

@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
-import java.beans.FeatureDescriptor;
-import java.util.Iterator;
-
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
+import jakarta.el.ELContext;
+import jakarta.el.ELResolver;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import java.beans.FeatureDescriptor;
+import java.util.Iterator;
 
 /**
  * @author Daniel Meyer

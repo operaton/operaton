@@ -19,7 +19,9 @@ package org.operaton.bpm.model.dmn.impl.instance;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_BINDING;
 
-import org.operaton.bpm.model.dmn.instance.*;
+import org.operaton.bpm.model.dmn.instance.Binding;
+import org.operaton.bpm.model.dmn.instance.Expression;
+import org.operaton.bpm.model.dmn.instance.Parameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;

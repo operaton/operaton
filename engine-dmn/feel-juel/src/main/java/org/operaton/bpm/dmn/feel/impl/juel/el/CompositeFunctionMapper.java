@@ -19,7 +19,7 @@ package org.operaton.bpm.dmn.feel.impl.juel.el;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import org.operaton.bpm.impl.juel.jakarta.el.FunctionMapper;
+import jakarta.el.FunctionMapper;
 
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineLogger;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelLogger;

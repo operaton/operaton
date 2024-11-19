@@ -16,19 +16,13 @@
  */
 package org.operaton.bpm.dmn.feel.impl.juel.el;
 
-import java.lang.reflect.Method;
-
-import org.operaton.bpm.impl.juel.jakarta.el.ELContext;
-import org.operaton.bpm.impl.juel.jakarta.el.ELResolver;
-import org.operaton.bpm.impl.juel.jakarta.el.ExpressionFactory;
-import org.operaton.bpm.impl.juel.jakarta.el.FunctionMapper;
-import org.operaton.bpm.impl.juel.jakarta.el.VariableMapper;
-
+import jakarta.el.*;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineLogger;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelLogger;
 import org.operaton.bpm.engine.variable.context.VariableContext;
-
 import org.operaton.bpm.impl.juel.SimpleResolver;
+
+import java.lang.reflect.Method;
 
 public class FeelElContextFactory implements ElContextFactory {
 

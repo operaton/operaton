@@ -29,7 +29,7 @@
     <version.mybatis>3.5.15</version.mybatis>
     <version.joda-time>2.12.5</version.joda-time>
     <version.uuid-generator>4.3.0</version.uuid-generator>
-    <version.feel-scala>1.17.5</version.feel-scala>
+    <version.feel-scala>1.18.1</version.feel-scala>
     <version.java>17</version.java>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>

@@ -47,12 +47,11 @@ public class RequiredValidator implements FormFieldValidator {
 
       return false;
     } else {
-      if (submittedValue instanceof String) {
-        return !((String)submittedValue).isEmpty();
+      if (submittedValue instanceof String string) {
+        return !string.isEmpty();
       } else {
         return true;
       }
     }
   }
-
 }

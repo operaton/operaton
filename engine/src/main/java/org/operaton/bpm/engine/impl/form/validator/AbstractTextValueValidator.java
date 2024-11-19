@@ -32,8 +32,8 @@ public abstract class AbstractTextValueValidator implements FormFieldValidator {
 
     String configuration = validatorContext.getConfiguration();
 
-    if(submittedValue instanceof String) {
-      return validate((String) submittedValue, configuration);
+    if(submittedValue instanceof String string) {
+      return validate(string, configuration);
     }
 
     throw new ProcessEngineException("String validator "+getClass().getSimpleName()+" cannot be used on non-string value of type "+submittedValue.getClass());

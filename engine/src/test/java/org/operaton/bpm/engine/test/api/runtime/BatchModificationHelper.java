@@ -33,7 +33,7 @@ public class BatchModificationHelper extends BatchHelper {
   public BatchModificationHelper(ProcessEngineRule engineRule) {
     super(engineRule);
     this.testRule = new ProcessEngineTestRule(engineRule);
-    currentProcessInstances = new ArrayList<String>();
+    currentProcessInstances = new ArrayList<>();
   }
 
   public Batch startAfterAsync(String key, int numberOfProcessInstances, String activityId, String processDefinitionId) {
@@ -65,7 +65,7 @@ public class BatchModificationHelper extends BatchHelper {
   }
 
   public List<String> startInstances(String key, int numOfInstances) {
-    List<String> instances = new ArrayList<String>();
+    List<String> instances = new ArrayList<>();
     for (int i = 0; i < numOfInstances; i++) {
       ProcessInstance processInstance = getRuntimeService().startProcessInstanceByKey(key);
       instances.add(processInstance.getId());

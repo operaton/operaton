@@ -13,20 +13,6 @@
   <name>Operaton - Spring Boot Starter - QA - Liquibase</name>
 
   <dependencies>
-
-    <dependency>
-      <groupId>org.operaton.bpm.springboot</groupId>
-      <artifactId>operaton-bpm-spring-boot-starter</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.bpm.springboot</groupId>
-      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -41,7 +27,6 @@
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
     </dependency>
-
   </dependencies>
 
   <profiles>

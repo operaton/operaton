@@ -15,23 +15,13 @@
   <name>Operaton - Spring Boot Starter - QA - Plugins</name>
 
   <dependencyManagement>
-
     <dependencies>
-
       <dependency>
         <groupId>org.operaton.bpm.springboot</groupId>
         <artifactId>operaton-bpm-spring-boot-starter</artifactId>
         <version>${project.version}</version>
       </dependency>
-
-      <dependency>
-        <groupId>org.operaton.bpm.springboot</groupId>
-        <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
     </dependencies>
-
   </dependencyManagement>
 
   <modules>

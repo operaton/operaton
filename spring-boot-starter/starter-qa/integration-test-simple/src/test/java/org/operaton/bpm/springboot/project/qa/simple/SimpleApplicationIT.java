@@ -18,21 +18,18 @@ package org.operaton.bpm.springboot.project.qa.simple;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { Application.class },
-                webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class SimpleApplicationIT {
+@SpringBootTest(classes = {Application.class},
+    webEnvironment = SpringBootTest.WebEnvironment.NONE)
+class SimpleApplicationIT {
 
   @Autowired
   RuntimeService runtimeService;
@@ -41,7 +38,7 @@ public class SimpleApplicationIT {
   ProcessEngine processEngine;
 
   @Test
-  public void shouldStartApplicationSuccessfully() {
+  void shouldStartApplicationSuccessfully() {
     // then no exception due to missing classes is thrown
     assertThat(runtimeService).isNotNull();
   }
@@ -51,7 +48,7 @@ public class SimpleApplicationIT {
    * spring-boot-starter-jersey (i.e. without servlet API) still works correctly.
    */
   @Test
-  public void shouldNotDetermineApplicationServer() {
+  void shouldNotDetermineApplicationServer() {
 
     DiagnosticsRegistry diagnosticsRegistry = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getDiagnosticsRegistry();
 

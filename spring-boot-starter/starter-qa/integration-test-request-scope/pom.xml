@@ -28,12 +28,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm.springboot</groupId>
-      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>

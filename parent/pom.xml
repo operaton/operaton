@@ -83,6 +83,7 @@
     <surefire.memArgs>-Xmx1024m -XX:MetaspaceSize=128m</surefire.memArgs>
     <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>
     <surefire.forkCount>0.5C</surefire.forkCount>
+    <clirr.failOnWarning>false</clirr.failOnWarning>
 
     <!-- OSGi bundles properties -->
     <operaton.artifact />

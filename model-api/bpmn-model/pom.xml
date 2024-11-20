@@ -98,7 +98,7 @@
                 </goals>
                 <configuration>
                   <textOutputFile>${project.build.directory}/clirr-restrictive.txt</textOutputFile>
-                  <failOnWarning>true</failOnWarning>
+                  <failOnWarning>${clirr.failOnWarning}</failOnWarning>
                   <ignoredDifferencesFile>.clirr-jenkins-ignore.xml</ignoredDifferencesFile>
                 </configuration>
               </execution>

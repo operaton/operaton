@@ -97,7 +97,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: bash
       run: |
-        ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+        ./mvnw -N org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
         -Dsonar.projectKey=operaton_operaton \
-        -Dsonar.coverage.jacoco.xmlReportPaths=$(find . -name jacoco.xml | paste -sd ',' -)
+        -Dsonar.coverage.jacoco.xmlReportPaths=$(find $(pwd) -name jacoco.xml | paste -sd ',' -)
       continue-on-error: true

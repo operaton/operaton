@@ -76,7 +76,7 @@ jobs:
           fi
         done
         ./mvnw package
-        ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
+        ./mvnw org.jacoco:jacoco-maven-plugin:report-aggregate
     - name: Publish Test Report
       if: always()
       uses: mikepenz/action-junit-report@v4 #https://github.com/marketplace/actions/junit-report-action
@@ -96,5 +96,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: bash
-      run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=operaton_operaton
+      run: |
+        ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+        -Dsonar.projectKey=operaton_operaton \
+        -Dsonar.coverage.jacoco.xmlReportPaths=$(find . -name jacoco.xml | paste -sd ',' -)
       continue-on-error: true

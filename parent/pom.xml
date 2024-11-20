@@ -79,9 +79,8 @@
     <version.npm>10.7.0</version.npm>
     <version.junit5>5.11.3</version.junit5>
 
-    <jacoco.argLine/>
     <surefire.memArgs>-Xmx1024m -XX:MetaspaceSize=128m</surefire.memArgs>
-    <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>
+    <surefire.argLine>${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>
     <surefire.forkCount>0.5C</surefire.forkCount>
 
     <!-- OSGi bundles properties -->
@@ -139,19 +138,6 @@
    <build>
     <pluginManagement>
       <plugins>
-        <!-- test plugins -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <configuration>
-            <runOrder>hourly</runOrder>
-            <systemPropertyVariables>
-              <myWorkingDir>${project.build.directory}</myWorkingDir>
-            </systemPropertyVariables>
-            <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <forkCount>${surefire.forkCount}</forkCount>
-          </configuration>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
@@ -305,6 +291,9 @@
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
+                <configuration>
+                  <propertyName>jacoco.argLine</propertyName>
+                </configuration>
               </execution>
               <execution>
                 <id>report</id>
@@ -313,12 +302,33 @@
                   <goal>report</goal>
                 </goals>
               </execution>
+              <execution>
+                <id>report-aggregate</id>
+                <goals>
+                  <goal>report-aggregate</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
             </executions>
-            <configuration>
-              <propertyName>jacoco.argLine</propertyName>
-            </configuration>
           </plugin>
         </plugins>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <runOrder>hourly</runOrder>
+                <argLine>${jacoco.argLine} ${surefire.argLine}</argLine>
+                <systemPropertyVariables>
+                  <myWorkingDir>${project.build.directory}</myWorkingDir>
+                </systemPropertyVariables>
+                <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                <forkCount>${surefire.forkCount}</forkCount>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
       </build>
     </profile>
     <profile>
@@ -328,9 +338,25 @@
           <missing>target/executeJacoco</missing>
         </file>
       </activation>
-      <properties>
-        <jacoco.argLine/>
-      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <runOrder>hourly</runOrder>
+                <argLine>${surefire.argLine}</argLine>
+                <systemPropertyVariables>
+                  <myWorkingDir>${project.build.directory}</myWorkingDir>
+                </systemPropertyVariables>
+                <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                <forkCount>${surefire.forkCount}</forkCount>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
     </profile>
 
   </profiles>

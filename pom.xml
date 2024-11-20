@@ -35,7 +35,7 @@
     <maven.compiler.target>17</maven.compiler.target>
     <sonar.organization>operaton</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <sonar.coverage.jacoco.xmlReportPaths>**/target/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 
   <build>
@@ -574,6 +574,30 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>sonar</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <fileSets>
+                <fileSet>
+                  <directory>${maven.multiModuleProjectDirectory}</directory>
+                  <includes>
+                    <include>**/target/jacoco-collected/*_jacoco.exec</include>
+                  </includes>
+                </fileSet>
+              </fileSets>
+              <destFile>${maven.multiModuleProjectDirectory}/target/jacoco.exec</destFile>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
   </profiles>
 
   <repositories>

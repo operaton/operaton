@@ -1,0 +1,97 @@
+name: Nightly Build
+
+on:
+  schedule:
+    - cron: "0 3 * * *"     # Runs at 3:00 AM UTC daily
+  workflow_dispatch:        # Allows manual trigger
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Nightly Build and Report Generation
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]     # If needed multi-OS add macos-13, windows-latest
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Maven Build
+        shell: bash
+        run: |
+          echo "Creating a flag file 'executeJacoco' for each module containing tests. \
+          This triggers activation of the 'coverage' profile."
+          find . -type d | while read -r dir; do
+          if [[ -d "$dir/src/test/java" || -d "$dir/target/generated-test-sources/java" ]]; then
+           # Create an empty file target/executeJacoco if the condition is met
+           mkdir -p "$dir/target"
+           touch "$dir/target/executeJacoco"
+          fi
+          done
+          ./mvnw \
+            -Dmaven.repo.local=${{ github.workspace }}/.m2 \
+             clean install \
+             dependency:analyze-report
+
+      - name: Archive Assemblies
+        uses: actions/upload-artifact@v3
+        with:
+          name: assemblies
+          path: |
+            target/*.zip
+            target/*.tar.gz
+
+  report:
+    name: Generate Reports
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Generate Reports
+        run: |
+          ./mvnw \
+            -Dsave=true \  # for sloc-maven-plugin
+            versions:dependency-updates-aggregate-report \
+            versions:plugin-updates-aggregate-report \
+            io.github.orhankupusoglu:sloc-maven-plugin:sloc
+      - name: Archive Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports
+          path: |
+            **/reports/**
+            **/site/**
+            **/sloc.txt

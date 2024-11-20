@@ -107,6 +107,11 @@
           <version>1.11.1</version>
         </plugin>
         <plugin>
+          <groupId>io.github.orhankupusoglu</groupId>
+          <artifactId>sloc-maven-plugin</artifactId>
+          <version>1.0.7</version>
+        </plugin>
+        <plugin>
           <groupId>io.quarkus</groupId>
           <artifactId>quarkus-extension-maven-plugin</artifactId>
           <version>${version.quarkus}</version>
@@ -237,13 +242,18 @@
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>2.4.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
           <artifactId>sql-maven-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
-          <artifactId>license-maven-plugin</artifactId>
-          <version>2.4.0</version>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.18.0</version>
         </plugin>
         <plugin>
           <groupId>org.mortbay.jetty</groupId>
@@ -569,7 +579,6 @@
         </plugins>
       </build>
     </profile>
-
   </profiles>
 
   <repositories>

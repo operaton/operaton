@@ -436,7 +436,7 @@ public class OperatonExtensionsTest {
   void testErrorCodeVariable(String namespace, BpmnModelInstance modelInstance) {
     initOperatonExtensionsTest(namespace, modelInstance);
     ErrorEventDefinition errorEventDefinition = startEvent.getChildElementsByType(ErrorEventDefinition.class).iterator().next();
-    assertThat(errorEventDefinition.getAttributeValueNs(namespace, CAMUNDA_ATTRIBUTE_ERROR_CODE_VARIABLE)).isEqualTo("errorVariable");
+    assertThat(errorEventDefinition.getAttributeValueNs(namespace, OPERATON_ATTRIBUTE_ERROR_CODE_VARIABLE)).isEqualTo("errorVariable");
   }
 
   @MethodSource("parameters")
@@ -444,7 +444,7 @@ public class OperatonExtensionsTest {
   void testErrorMessageVariable(String namespace, BpmnModelInstance modelInstance) {
     initOperatonExtensionsTest(namespace, modelInstance);
     ErrorEventDefinition errorEventDefinition = startEvent.getChildElementsByType(ErrorEventDefinition.class).iterator().next();
-    assertThat(errorEventDefinition.getAttributeValueNs(namespace, CAMUNDA_ATTRIBUTE_ERROR_MESSAGE_VARIABLE)).isEqualTo("errorMessageVariable");
+    assertThat(errorEventDefinition.getAttributeValueNs(namespace, OPERATON_ATTRIBUTE_ERROR_MESSAGE_VARIABLE)).isEqualTo("errorMessageVariable");
   }
 
   @MethodSource("parameters")

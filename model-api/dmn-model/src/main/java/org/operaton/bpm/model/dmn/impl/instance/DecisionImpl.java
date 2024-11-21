@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.model.dmn.impl.instance;
 
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.CAMUNDA_ATTRIBUTE_HISTORY_TIME_TO_LIVE;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.CAMUNDA_ATTRIBUTE_VERSION_TAG;
-import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_ATTRIBUTE_VERSION_TAG;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.LATEST_DMN_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN_ELEMENT_DECISION;
 
@@ -235,12 +235,12 @@ public class DecisionImpl extends DrgElementImpl implements Decision {
 
     // operaton extensions
 
-    operatonHistoryTimeToLiveAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
-        .namespace(CAMUNDA_NS)
+    operatonHistoryTimeToLiveAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
+        .namespace(OPERATON_NS)
         .build();
 
-    operatonVersionTag = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VERSION_TAG)
-      .namespace(CAMUNDA_NS)
+    operatonVersionTag = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VERSION_TAG)
+      .namespace(OPERATON_NS)
       .build();
 
     typeBuilder.build();

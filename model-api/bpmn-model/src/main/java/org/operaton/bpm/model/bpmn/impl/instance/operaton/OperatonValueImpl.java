@@ -37,7 +37,7 @@ public class OperatonValueImpl extends BpmnModelElementInstanceImpl implements O
   protected static Attribute<String> operatonNameAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonValue.class, CAMUNDA_ELEMENT_VALUE)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonValue.class, OPERATON_ELEMENT_VALUE)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonValue>() {
         public OperatonValue newInstance(ModelTypeInstanceContext instanceContext) {
@@ -45,11 +45,11 @@ public class OperatonValueImpl extends BpmnModelElementInstanceImpl implements O
         }
       });
 
-    operatonIdAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_ID)
+    operatonIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ID)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonNameAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_NAME)
+    operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)
       .build();
 

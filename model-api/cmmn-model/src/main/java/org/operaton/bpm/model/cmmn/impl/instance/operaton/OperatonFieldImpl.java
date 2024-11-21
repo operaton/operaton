@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_EXPRESSION;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_NAME;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ATTRIBUTE_STRING_VALUE;
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ELEMENT_FIELD;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_EXPRESSION;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_NAME;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_STRING_VALUE;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_FIELD;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 
 import org.operaton.bpm.model.cmmn.impl.instance.CmmnModelElementInstanceImpl;
@@ -47,7 +47,7 @@ public class OperatonFieldImpl extends CmmnModelElementInstanceImpl implements O
   protected static ChildElement<OperatonString> operatonStringChild;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonField.class, CAMUNDA_ELEMENT_FIELD)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonField.class, OPERATON_ELEMENT_FIELD)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonField>() {
         public OperatonField newInstance(ModelTypeInstanceContext instanceContext) {
@@ -55,15 +55,15 @@ public class OperatonFieldImpl extends CmmnModelElementInstanceImpl implements O
         }
       });
 
-    operatonNameAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_NAME)
+    operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonExpressionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_EXPRESSION)
+    operatonExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EXPRESSION)
       .namespace(CAMUNDA_NS)
       .build();
 
-    operatonStringValueAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_STRING_VALUE)
+    operatonStringValueAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_STRING_VALUE)
       .namespace(CAMUNDA_NS)
       .build();
 

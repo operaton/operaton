@@ -3,9 +3,27 @@ name: build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
+    paths-ignore:
+      - '.github/workflows/**'
+      - '!.github/workflows/build.yml'
+      - '**/*.md'
+      - 'distro/**'
+      - 'settings/**'
+      - '.gitingore'
+      - 'LICENSE'
+      - 'NOTICE'
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
+    paths-ignore:
+      - '.github/workflows/**'
+      - '!.github/workflows/build.yml'
+      - '**/*.md'
+      - 'distro/**'
+      - 'settings/**'
+      - '.gitingore'
+      - 'LICENSE'
+      - 'NOTICE'
 
 permissions:
   contents: read
@@ -15,19 +33,18 @@ permissions:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-  
+
 jobs:
   build:
     name: Build
     strategy:
       fail-fast: true
-      matrix:
-        os: [ubuntu-latest] # If needed multi-OS add macos-13, windows-latest
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 0 # Prevent Shallow Clone to satisfy Sonarqube
+        # Prevent Shallow Clone to satisfy Sonarqube
+        fetch-depth: 0
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:

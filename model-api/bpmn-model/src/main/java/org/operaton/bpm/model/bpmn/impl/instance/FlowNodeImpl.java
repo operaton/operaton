@@ -72,22 +72,22 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 
     /** Operaton Attributes */
 
-    operatonAsyncAfter = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_ASYNC_AFTER)
+    operatonAsyncAfter = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC_AFTER)
       .namespace(OPERATON_NS)
       .defaultValue(false)
       .build();
 
-    operatonAsyncBefore = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_ASYNC_BEFORE)
+    operatonAsyncBefore = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC_BEFORE)
       .namespace(OPERATON_NS)
       .defaultValue(false)
       .build();
 
-    operatonExclusive = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_EXCLUSIVE)
+    operatonExclusive = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_EXCLUSIVE)
       .namespace(OPERATON_NS)
       .defaultValue(true)
       .build();
 
-    operatonJobPriority = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_JOB_PRIORITY)
+    operatonJobPriority = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_JOB_PRIORITY)
        .namespace(OPERATON_NS)
        .build();
 

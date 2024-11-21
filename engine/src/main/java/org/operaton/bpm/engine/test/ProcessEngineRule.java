@@ -95,7 +95,7 @@ public class ProcessEngineRule extends TestWatcher implements ProcessEngineServi
   protected String deploymentId = null;
   protected List<String> additionalDeployments = new ArrayList<>();
 
-  protected boolean ensureCleanAfterTest = false;
+  protected boolean ensureCleanAfterTest;
 
   protected ProcessEngine processEngine;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;

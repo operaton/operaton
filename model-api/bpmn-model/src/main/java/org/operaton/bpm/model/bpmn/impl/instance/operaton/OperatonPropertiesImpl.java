@@ -27,7 +27,7 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import java.util.Collection;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_PROPERTIES;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_PROPERTIES;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
@@ -41,7 +41,7 @@ public class OperatonPropertiesImpl extends BpmnModelElementInstanceImpl impleme
   protected static ChildElementCollection<OperatonProperty> operatonPropertyCollection;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonProperties.class, CAMUNDA_ELEMENT_PROPERTIES)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonProperties.class, OPERATON_ELEMENT_PROPERTIES)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonProperties>() {
         public OperatonProperties newInstance(ModelTypeInstanceContext instanceContext) {

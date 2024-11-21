@@ -13,7 +13,6 @@
   <name>Operaton - Spring Boot Starter - QA - Simple</name>
 
   <dependencies>
-
     <dependency>
       <groupId>org.operaton.bpm.springboot</groupId>
       <artifactId>operaton-bpm-spring-boot-starter</artifactId>
@@ -22,16 +21,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.operaton.bpm.springboot</groupId>
-      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
-
   </dependencies>
 
   <profiles>

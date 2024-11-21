@@ -25,7 +25,7 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CONDITION_EXPRESSION;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_RESOURCE;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_RESOURCE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.XSI_ATTRIBUTE_TYPE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.XSI_NS;
@@ -56,7 +56,7 @@ public class ConditionExpressionImpl extends FormalExpressionImpl implements Con
       .defaultValue("tFormalExpression")
       .build();
 
-    operatonResourceAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_RESOURCE)
+    operatonResourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_RESOURCE)
       .namespace(OPERATON_NS)
       .build();
 

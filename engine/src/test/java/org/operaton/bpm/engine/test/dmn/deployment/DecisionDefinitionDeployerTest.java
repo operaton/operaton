@@ -65,6 +65,8 @@ public class DecisionDefinitionDeployerTest {
 
   protected static final String DMN_DECISION_LITERAL_EXPRESSION = "org/operaton/bpm/engine/test/dmn/deployment/DecisionWithLiteralExpression.dmn";
 
+  protected static final String DMN_DECISION_LEGACY = "org/operaton/bpm/engine/test/dmn/deployment/Example.Legacy.dmn";
+
   protected static final String DRD_SCORE_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdScore.dmn11.xml";
   protected static final String DRD_SCORE_V2_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdScore_v2.dmn11.xml";
   protected static final String DRD_DISH_RESOURCE = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
@@ -154,6 +156,13 @@ public class DecisionDefinitionDeployerTest {
     assertEquals(DMN_DECISION_LITERAL_EXPRESSION, decisionDefinition.getResourceName());
     assertEquals(deploymentId, decisionDefinition.getDeploymentId());
     assertNull(decisionDefinition.getDiagramResourceName());
+  }
+
+  @Test
+  public void dmnDeploymentWithLegacyDmnDefinition() {
+    String deploymentId = testRule.deploy(DMN_DECISION_LEGACY).getId();
+
+    assertNotNull(deploymentId);
   }
 
   @Deployment
@@ -377,7 +386,7 @@ public class DecisionDefinitionDeployerTest {
     Definitions definitions = modelInstance.newInstance(Definitions.class);
     definitions.setId(DmnModelConstants.DMN_ELEMENT_DEFINITIONS);
     definitions.setName(DmnModelConstants.DMN_ELEMENT_DEFINITIONS);
-    definitions.setNamespace(DmnModelConstants.CAMUNDA_NS);
+    definitions.setNamespace(DmnModelConstants.OPERATON_NS);
     modelInstance.setDefinitions(definitions);
 
     Decision decision = modelInstance.newInstance(Decision.class);
@@ -394,7 +403,7 @@ public class DecisionDefinitionDeployerTest {
     Definitions definitions = modelInstance.newInstance(Definitions.class);
     definitions.setId(DmnModelConstants.DMN_ELEMENT_DEFINITIONS);
     definitions.setName(DmnModelConstants.DMN_ELEMENT_DEFINITIONS);
-    definitions.setNamespace(DmnModelConstants.CAMUNDA_NS);
+    definitions.setNamespace(DmnModelConstants.OPERATON_NS);
     modelInstance.setDefinitions(definitions);
 
     Decision decision = modelInstance.newInstance(Decision.class);
@@ -461,7 +470,7 @@ public class DecisionDefinitionDeployerTest {
     Definitions definitions = modelInstance.newInstance(Definitions.class);
     definitions.setId(DmnModelConstants.DMN_ELEMENT_DEFINITIONS);
     definitions.setName(DmnModelConstants.DMN_ELEMENT_DEFINITIONS);
-    definitions.setNamespace(DmnModelConstants.CAMUNDA_NS);
+    definitions.setNamespace(DmnModelConstants.OPERATON_NS);
     modelInstance.setDefinitions(definitions);
 
     // when decision model is deployed

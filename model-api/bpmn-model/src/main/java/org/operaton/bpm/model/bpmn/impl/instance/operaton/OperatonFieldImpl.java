@@ -44,7 +44,7 @@ public class OperatonFieldImpl extends BpmnModelElementInstanceImpl implements O
   protected static ChildElement<OperatonString> operatonStringChild;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonField.class, CAMUNDA_ELEMENT_FIELD)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonField.class, OPERATON_ELEMENT_FIELD)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonField>() {
         public OperatonField newInstance(ModelTypeInstanceContext instanceContext) {
@@ -52,15 +52,15 @@ public class OperatonFieldImpl extends BpmnModelElementInstanceImpl implements O
         }
       });
 
-    operatonNameAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_NAME)
+    operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonExpressionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_EXPRESSION)
+    operatonExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EXPRESSION)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonStringValueAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_STRING_VALUE)
+    operatonStringValueAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_STRING_VALUE)
       .namespace(OPERATON_NS)
       .build();
 

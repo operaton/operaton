@@ -41,7 +41,7 @@ import static org.operaton.bpm.model.bpmn.BpmnTestConstants.PROCESS_ID;
 class CompatabilityTest {
 
   @Test
-  void modifyingElementWithActivitiNsKeepsIt() {
+  void modifyingElementWithCamundaNsKeepsIt() {
     BpmnModelInstance modelInstance = Bpmn.readModelFromStream(OperatonExtensionsTest.class.getResourceAsStream("OperatonExtensionsCompatabilityTest.xml"));
     ProcessImpl process = modelInstance.getModelElementById(PROCESS_ID);
     ExtensionElements extensionElements = process.getExtensionElements();
@@ -56,7 +56,7 @@ class CompatabilityTest {
   }
 
   @Test
-  void modifyingAttributeWithActivitiNsKeepsIt() {
+  void modifyingAttributeWithCamundaNsKeepsIt() {
     BpmnModelInstance modelInstance = Bpmn.readModelFromStream(OperatonExtensionsTest.class.getResourceAsStream("OperatonExtensionsCompatabilityTest.xml"));
     ProcessImpl process = modelInstance.getModelElementById(PROCESS_ID);
     String priority = "9000";
@@ -66,9 +66,9 @@ class CompatabilityTest {
     process.setOperatonHistoryTimeToLive(historyTimeToLive);
     process.setOperatonIsStartableInTasklist(false);
     process.setOperatonVersionTag("v1.0.0");
-    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "jobPriority")).isEqualTo(priority);
-    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "taskPriority")).isEqualTo(priority);
-    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, "historyTimeToLive")).isEqualTo(historyTimeToLive.toString());
+    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, BpmnModelConstants.OPERATON_ATTRIBUTE_JOB_PRIORITY)).isEqualTo(priority);
+    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, BpmnModelConstants.OPERATON_ATTRIBUTE_TASK_PRIORITY)).isEqualTo(priority);
+    assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, BpmnModelConstants.OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE)).isEqualTo(historyTimeToLive.toString());
     assertThat(process.isOperatonStartableInTasklist()).isFalse();
     assertThat(process.getOperatonVersionTag()).isEqualTo("v1.0.0");
   }

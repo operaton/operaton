@@ -41,7 +41,7 @@ public class OperatonMapImpl extends BpmnModelElementInstanceImpl implements Ope
   protected static ChildElementCollection<OperatonEntry> operatonEntryCollection;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonMap.class, BpmnModelConstants.CAMUNDA_ELEMENT_MAP)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonMap.class, BpmnModelConstants.OPERATON_ELEMENT_MAP)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonMap>() {
         public OperatonMap newInstance(ModelTypeInstanceContext instanceContext) {

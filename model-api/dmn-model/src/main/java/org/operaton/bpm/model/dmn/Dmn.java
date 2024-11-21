@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.model.dmn;
 
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.CAMUNDA_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN11_ALTERNATIVE_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN11_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN12_NS;
@@ -23,6 +24,7 @@ import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN13_ALTERNATIV
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN13_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN14_NS;
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.DMN15_NS;
+import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_NS;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -221,13 +223,14 @@ public class Dmn {
    * Register known types of the Dmn model
    */
   protected Dmn() {
-    dmnModelBuilder = ModelBuilder.createInstance("DMN Model");
-    dmnModelBuilder.alternativeNamespace(DMN15_NS, DMN13_NS);
-    dmnModelBuilder.alternativeNamespace(DMN14_NS, DMN13_NS);
-    dmnModelBuilder.alternativeNamespace(DMN13_ALTERNATIVE_NS, DMN13_NS);
-    dmnModelBuilder.alternativeNamespace(DMN12_NS, DMN13_NS);
-    dmnModelBuilder.alternativeNamespace(DMN11_NS, DMN13_NS);
-    dmnModelBuilder.alternativeNamespace(DMN11_ALTERNATIVE_NS, DMN13_NS);
+    dmnModelBuilder = ModelBuilder.createInstance("DMN Model")
+            .alternativeNamespace(CAMUNDA_NS, OPERATON_NS)
+            .alternativeNamespace(DMN15_NS, DMN13_NS)
+            .alternativeNamespace(DMN14_NS, DMN13_NS)
+            .alternativeNamespace(DMN13_ALTERNATIVE_NS, DMN13_NS)
+            .alternativeNamespace(DMN12_NS, DMN13_NS)
+            .alternativeNamespace(DMN11_NS, DMN13_NS)
+            .alternativeNamespace(DMN11_ALTERNATIVE_NS, DMN13_NS);
     doRegisterTypes(dmnModelBuilder);
     dmnModel = dmnModelBuilder.build();
   }

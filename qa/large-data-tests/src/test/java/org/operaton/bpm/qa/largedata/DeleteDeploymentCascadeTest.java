@@ -16,49 +16,48 @@
  */
 package org.operaton.bpm.qa.largedata;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.qa.largedata.util.EngineDataGenerator;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
-public class DeleteDeploymentCascadeTest {
+import java.util.List;
+import java.util.stream.Collectors;
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule("operaton.cfg.xml");
+import static org.assertj.core.api.Assertions.assertThat;
+
+class DeleteDeploymentCascadeTest {
+
+  @RegisterExtension
+  static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().configurationResource("operaton.cfg.xml").build();
 
   protected static final String DATA_PREFIX = DeleteDeploymentCascadeTest.class.getSimpleName();
 
   protected int GENERATE_PROCESS_INSTANCES_COUNT = 2500;
+  protected ProcessEngine processEngine;
   protected RepositoryService repositoryService;
   protected HistoryService historyService;
   protected EngineDataGenerator generator;
-  
-  @Before
-  public void init() {
-    repositoryService = processEngineRule.getProcessEngine().getRepositoryService();
-    historyService = processEngineRule.getProcessEngine().getHistoryService();
 
+  @BeforeEach
+  void init() {
     // generate data
-    generator = new EngineDataGenerator(processEngineRule.getProcessEngine(), GENERATE_PROCESS_INSTANCES_COUNT, DATA_PREFIX);
+    generator = new EngineDataGenerator(processEngine, GENERATE_PROCESS_INSTANCES_COUNT, DATA_PREFIX);
     generator.deployDefinitions();
     generator.generateCompletedProcessInstanceData();
   }
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     Deployment deployment = repositoryService.createDeploymentQuery().deploymentName(generator.getDeploymentName()).singleResult();
     if (deployment != null) {
       List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
@@ -75,7 +74,7 @@ public class DeleteDeploymentCascadeTest {
   }
 
   @Test
-  public void shouldDeleteCascadeWithLargeParameterCount() {
+  void shouldDeleteCascadeWithLargeParameterCount() {
     // given
     Deployment deployment = repositoryService.createDeploymentQuery().deploymentName(generator.getDeploymentName()).singleResult();
 

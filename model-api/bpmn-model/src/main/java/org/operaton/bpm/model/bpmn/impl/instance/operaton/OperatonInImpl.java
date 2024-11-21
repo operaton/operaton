@@ -41,7 +41,7 @@ public class OperatonInImpl extends BpmnModelElementInstanceImpl implements Oper
   protected static Attribute<Boolean> operatonLocalAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonIn.class, CAMUNDA_ELEMENT_IN)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonIn.class, OPERATON_ELEMENT_IN)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonIn>() {
         public OperatonIn newInstance(ModelTypeInstanceContext instanceContext) {
@@ -49,27 +49,27 @@ public class OperatonInImpl extends BpmnModelElementInstanceImpl implements Oper
         }
       });
 
-    operatonSourceAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_SOURCE)
+    operatonSourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonSourceExpressionAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_SOURCE_EXPRESSION)
+    operatonSourceExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE_EXPRESSION)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonVariablesAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VARIABLES)
+    operatonVariablesAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLES)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonTargetAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_TARGET)
+    operatonTargetAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_TARGET)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonBusinessKeyAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_BUSINESS_KEY)
+    operatonBusinessKeyAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_BUSINESS_KEY)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonLocalAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_LOCAL)
+    operatonLocalAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_LOCAL)
       .namespace(OPERATON_NS)
       .build();
 

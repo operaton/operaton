@@ -16,25 +16,36 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.operaton.bpm.engine.*;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.Job;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.RuleChain;
+import org.operaton.bpm.engine.AuthorizationService;
+import org.operaton.bpm.engine.CaseService;
+import org.operaton.bpm.engine.DecisionService;
+import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.FilterService;
+import org.operaton.bpm.engine.FormService;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.IdentityService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineProvider;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.Job;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Base class for the process engine test cases.
  */
-public class PluggableProcessEngineTest implements ProcessEngineProvider {
+public abstract class PluggableProcessEngineTest implements ProcessEngineProvider {
 
   protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
@@ -101,16 +112,6 @@ public class PluggableProcessEngineTest implements ProcessEngineProvider {
       result.addAll(getInstancesForActivityId(childInstance, activityId));
     }
     return result;
-  }
-
-  protected void deleteHistoryCleanupJobs() {
-    final List<Job> jobs = historyService.findHistoryCleanupJobs();
-    for (final Job job: jobs) {
-      processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
-        commandContext.getJobManager().deleteJob((JobEntity) job);
-        return null;
-      });
-    }
   }
 
 }

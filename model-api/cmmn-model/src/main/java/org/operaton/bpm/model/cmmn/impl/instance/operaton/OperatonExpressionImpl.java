@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.model.cmmn.impl.instance.operaton;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_ELEMENT_EXPRESSION;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_EXPRESSION;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 
 import org.operaton.bpm.model.cmmn.impl.instance.CmmnModelElementInstanceImpl;
@@ -33,7 +33,7 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstance
 public class OperatonExpressionImpl extends CmmnModelElementInstanceImpl implements OperatonExpression {
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExpression.class, CAMUNDA_ELEMENT_EXPRESSION)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExpression.class, OPERATON_ELEMENT_EXPRESSION)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonExpression>() {
         public OperatonExpression newInstance(ModelTypeInstanceContext instanceContext) {

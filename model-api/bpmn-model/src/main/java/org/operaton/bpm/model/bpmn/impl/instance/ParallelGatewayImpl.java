@@ -27,7 +27,7 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_PARALLEL_GATEWAY;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ATTRIBUTE_ASYNC;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ASYNC;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
@@ -52,7 +52,7 @@ public class ParallelGatewayImpl extends GatewayImpl implements ParallelGateway 
 
     /** operaton extensions */
 
-    operatonAsyncAttribute = typeBuilder.booleanAttribute(CAMUNDA_ATTRIBUTE_ASYNC)
+    operatonAsyncAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC)
       .namespace(OPERATON_NS)
       .defaultValue(false)
       .build();

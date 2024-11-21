@@ -22,7 +22,7 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_ELEMENT_EXPRESSION;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_EXPRESSION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
@@ -34,7 +34,7 @@ import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeI
 public class OperatonExpressionImpl extends BpmnModelElementInstanceImpl implements OperatonExpression {
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExpression.class, CAMUNDA_ELEMENT_EXPRESSION)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExpression.class, OPERATON_ELEMENT_EXPRESSION)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonExpression>() {
         public OperatonExpression newInstance(ModelTypeInstanceContext instanceContext) {

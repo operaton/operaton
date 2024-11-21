@@ -18,18 +18,15 @@ package org.operaton.bpm.springboot.project.qa.liquibase;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { Application.class },
-                webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class LiquibaseApplicationIT {
+@SpringBootTest(classes = {Application.class},
+    webEnvironment = SpringBootTest.WebEnvironment.NONE)
+class LiquibaseApplicationIT {
 
   @Autowired
   RuntimeService runtimeService;
@@ -38,7 +35,7 @@ public class LiquibaseApplicationIT {
   ProcessEngine processEngine;
 
   @Test
-  public void shouldStartApplicationSuccessfully() {
+  void shouldStartApplicationSuccessfully() {
     // then no exception due to Liquibase changelog not being installable
     assertThat(runtimeService).isNotNull();
   }

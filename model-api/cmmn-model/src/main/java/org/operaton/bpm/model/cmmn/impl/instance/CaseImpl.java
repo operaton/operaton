@@ -131,7 +131,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();
 
-    operatonHistoryTimeToLive = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
+    operatonHistoryTimeToLive = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
         .namespace(CAMUNDA_NS)
         .build();
 

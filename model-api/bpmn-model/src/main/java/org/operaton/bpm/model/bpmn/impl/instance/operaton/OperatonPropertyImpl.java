@@ -38,7 +38,7 @@ public class OperatonPropertyImpl extends BpmnModelElementInstanceImpl implement
   protected static Attribute<String> operatonValueAttribute;
 
   public static void registerType(ModelBuilder modelBuilder) {
-    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonProperty.class, CAMUNDA_ELEMENT_PROPERTY)
+    ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonProperty.class, OPERATON_ELEMENT_PROPERTY)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonProperty>() {
         public OperatonProperty newInstance(ModelTypeInstanceContext instanceContext) {
@@ -46,15 +46,15 @@ public class OperatonPropertyImpl extends BpmnModelElementInstanceImpl implement
         }
       });
 
-    operatonIdAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_ID)
+    operatonIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ID)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonNameAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_NAME)
+    operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)
       .build();
 
-    operatonValueAttribute = typeBuilder.stringAttribute(CAMUNDA_ATTRIBUTE_VALUE)
+    operatonValueAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VALUE)
       .namespace(OPERATON_NS)
       .build();
 

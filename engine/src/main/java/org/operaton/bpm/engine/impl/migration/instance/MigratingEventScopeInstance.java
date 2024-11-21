@@ -161,8 +161,8 @@ public class MigratingEventScopeInstance extends MigratingScopeInstance {
 
   @Override
   public void addChild(MigratingScopeInstance migratingScopeInstance) {
-    if (migratingScopeInstance instanceof MigratingEventScopeInstance) {
-      childInstances.add((MigratingEventScopeInstance) migratingScopeInstance);
+    if (migratingScopeInstance instanceof MigratingEventScopeInstance instance) {
+      childInstances.add(instance);
     }
     else {
       throw MIGRATION_LOGGER.cannotHandleChild(this, migratingScopeInstance);

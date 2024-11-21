@@ -54,8 +54,9 @@ public class CompiledExecutableScript extends ExecutableScript {
       LOG.debugEvaluatingCompiledScript(language);
       return getCompiledScript().eval(bindings);
     } catch (ScriptException e) {
-      if (e.getCause() instanceof BpmnError) {
-        throw (BpmnError) e.getCause();
+      Throwable cause = e.getCause();
+      if (cause instanceof BpmnError bpmnError) {
+        throw bpmnError;
       }
       String activityIdMessage = getActivityIdExceptionMessage(variableScope);
       throw new ScriptEvaluationException("Unable to evaluate script" + activityIdMessage +": " + e.getMessage(), e);

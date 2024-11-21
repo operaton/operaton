@@ -64,8 +64,9 @@ public class SourceExecutableScript extends CompiledExecutableScript {
       try {
         return evaluateScript(engine, bindings);
       } catch (ScriptException e) {
-        if (e.getCause() instanceof BpmnError) {
-          throw (BpmnError) e.getCause();
+        Throwable cause = e.getCause();
+        if (cause instanceof BpmnError bpmnError) {
+          throw bpmnError;
         }
         String activityIdMessage = getActivityIdExceptionMessage(variableScope);
         throw new ScriptEvaluationException("Unable to evaluate script" + activityIdMessage + ":" + e.getMessage(), e);
@@ -98,9 +99,7 @@ public class SourceExecutableScript extends CompiledExecutableScript {
   }
 
   public CompiledScript compile(ScriptEngine scriptEngine, String language, String src) {
-    if(scriptEngine instanceof Compilable && !scriptEngine.getFactory().getLanguageName().equalsIgnoreCase("ecmascript")) {
-      Compilable compilingEngine = (Compilable) scriptEngine;
-
+    if (scriptEngine instanceof Compilable compilingEngine && !scriptEngine.getFactory().getLanguageName().equalsIgnoreCase("ecmascript")) {
       try {
         CompiledScript compiledScript = compilingEngine.compile(src);
 

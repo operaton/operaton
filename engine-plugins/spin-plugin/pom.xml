@@ -16,7 +16,6 @@
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-core</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -36,14 +35,12 @@
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
-      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
-      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -128,7 +125,6 @@
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-testing</artifactId>
-      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 

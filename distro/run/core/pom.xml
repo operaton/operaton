@@ -42,7 +42,6 @@
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-all</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>

@@ -55,13 +55,11 @@
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.spin</groupId>
       <artifactId>operaton-spin-dataformat-xml-dom-jakarta</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -72,13 +70,11 @@
     <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-http-client</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-soap-http-client</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <!-- script engine dependencies -->

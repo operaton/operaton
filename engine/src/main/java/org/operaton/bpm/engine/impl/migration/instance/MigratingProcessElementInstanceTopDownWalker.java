@@ -43,7 +43,9 @@ public class MigratingProcessElementInstanceTopDownWalker extends ReferenceWalke
     MigrationContext currentElement = getCurrentElement();
 
     // continue migration for non-leaf instances (i.e. scopes)
-    if (currentElement.processElementInstance instanceof MigratingScopeInstance) {
+
+    MigratingProcessElementInstance processElementInstance = currentElement.processElementInstance;
+    if (processElementInstance instanceof MigratingScopeInstance scopeInstance) {
       // Child instances share the same scope instance branch;
       // This ensures "once-per-parent" instantiation semantics,
       // i.e. if a new parent scope is added to more than one child, all those children
@@ -52,8 +54,6 @@ public class MigratingProcessElementInstanceTopDownWalker extends ReferenceWalke
       // to implement other strategies, e.g. "once-per-child" semantics
       MigratingScopeInstanceBranch childrenScopeBranch = currentElement.scopeInstanceBranch.copy();
       MigratingScopeInstanceBranch childrenCompensationScopeBranch = currentElement.scopeInstanceBranch.copy();
-
-      MigratingScopeInstance scopeInstance = (MigratingScopeInstance) currentElement.processElementInstance;
 
       childrenScopeBranch.visited(scopeInstance);
       childrenCompensationScopeBranch.visited(scopeInstance);

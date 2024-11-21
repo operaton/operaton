@@ -21,10 +21,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventProcessor;
@@ -228,11 +231,11 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
 
   @Override
   public void addChild(MigratingScopeInstance migratingActivityInstance) {
-    if (migratingActivityInstance instanceof MigratingActivityInstance) {
-      addChild((MigratingActivityInstance) migratingActivityInstance);
+    if (migratingActivityInstance instanceof MigratingActivityInstance instance) {
+      addChild(instance);
     }
-    else if (migratingActivityInstance instanceof MigratingEventScopeInstance) {
-      addChild((MigratingEventScopeInstance) migratingActivityInstance);
+    else if (migratingActivityInstance instanceof MigratingEventScopeInstance instance) {
+      addChild(instance);
     }
     else {
       throw MIGRATION_LOGGER.cannotHandleChild(this, migratingActivityInstance);
@@ -241,11 +244,11 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
 
   @Override
   public void removeChild(MigratingScopeInstance child) {
-    if (child instanceof MigratingActivityInstance) {
-      removeChild((MigratingActivityInstance) child);
+    if (child instanceof MigratingActivityInstance instance) {
+      removeChild(instance);
     }
-    else if (child instanceof MigratingEventScopeInstance) {
-      removeChild((MigratingEventScopeInstance) child);
+    else if (child instanceof MigratingEventScopeInstance instance) {
+      removeChild(instance);
     }
     else {
       throw MIGRATION_LOGGER.cannotHandleChild(this, child);
@@ -572,8 +575,9 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
         currentScopeExecution.setActivity((PvmActivity) targetScope);
       }
 
-      if (sourceScope.getActivityBehavior() instanceof MigrationObserverBehavior) {
-        ((MigrationObserverBehavior) sourceScope.getActivityBehavior()).migrateScope(currentScopeExecution);
+      CoreActivityBehavior<? extends BaseDelegateExecution> activityBehavior = sourceScope.getActivityBehavior();
+      if (activityBehavior instanceof MigrationObserverBehavior migrationBehavior) {
+        migrationBehavior.migrateScope(currentScopeExecution);
       }
 
       migrateHistory(currentScopeExecution);
@@ -639,8 +643,9 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
       ExecutionEntity scopeExecution = resolveRepresentativeExecution();
       ExecutionEntity attachableExecution = scopeExecution;
 
-      if (currentScope.getActivityBehavior() instanceof ModificationObserverBehavior) {
-        ModificationObserverBehavior behavior = (ModificationObserverBehavior) currentScope.getActivityBehavior();
+
+      CoreActivityBehavior<? extends BaseDelegateExecution> activityBehavior = currentScope.getActivityBehavior();
+      if (activityBehavior instanceof ModificationObserverBehavior behavior) {
         attachableExecution = (ExecutionEntity) behavior.createInnerInstance(scopeExecution);
       }
       else {
@@ -656,9 +661,8 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
 
     @Override
     public void destroyAttachableExecution(ExecutionEntity execution) {
-
-      if (currentScope.getActivityBehavior() instanceof ModificationObserverBehavior) {
-        ModificationObserverBehavior behavior = (ModificationObserverBehavior) currentScope.getActivityBehavior();
+      CoreActivityBehavior<? extends BaseDelegateExecution> activityBehavior = currentScope.getActivityBehavior();
+      if (activityBehavior instanceof ModificationObserverBehavior behavior) {
         behavior.destroyInnerInstance(execution);
       }
       else {
@@ -671,5 +675,3 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
     }
   }
 }
-
-

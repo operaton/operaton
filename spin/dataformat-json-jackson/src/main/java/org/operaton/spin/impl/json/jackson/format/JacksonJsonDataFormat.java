@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
+import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.impl.json.jackson.JacksonJsonLogger;
@@ -216,32 +217,32 @@ public class JacksonJsonDataFormat implements DataFormat<SpinJsonNode> {
 
   @SuppressWarnings("unchecked")
   public JsonNode createJsonNode(Object parameter) {
-    if(parameter instanceof SpinJsonNode) {
-      return (JsonNode) ((SpinJsonNode) parameter).unwrap();
+    if (parameter instanceof SpinJsonNode jsonNode) {
+      return (JsonNode) jsonNode.unwrap();
 
-    } else if(parameter instanceof String) {
-      return createJsonNode((String) parameter);
+    } else if(parameter instanceof String string) {
+      return createJsonNode(string);
 
-    } else if(parameter instanceof Integer) {
-      return createJsonNode((Integer) parameter);
+    } else if(parameter instanceof Integer integer) {
+      return createJsonNode(integer);
 
-    } else if(parameter instanceof Boolean) {
-      return createJsonNode((Boolean) parameter);
+    } else if(parameter instanceof Boolean booleanParameter) {
+      return createJsonNode(booleanParameter);
 
-    } else if(parameter instanceof Float) {
-      return createJsonNode((Float) parameter);
+    } else if(parameter instanceof Float floatParameter) {
+      return createJsonNode(floatParameter);
 
-    } else if(parameter instanceof Long) {
-      return createJsonNode((Long) parameter);
+    } else if(parameter instanceof Long longParameter) {
+      return createJsonNode(longParameter);
 
-    } else if(parameter instanceof Number) {
-      return createJsonNode(((Number) parameter).floatValue());
+    } else if(parameter instanceof Number numberParameter) {
+      return createJsonNode(numberParameter.floatValue());
 
-    } else if(parameter instanceof List) {
-      return createJsonNode((List<Object>) parameter);
+    } else if(parameter instanceof List<?> listParameter) {
+      return createJsonNode(listParameter);
 
-    } else if(parameter instanceof Map) {
-      return createJsonNode((Map<String, Object>) parameter);
+    } else if(parameter instanceof Map<?, ?> mapParameter) {
+      return createJsonNode(mapParameter);
 
     } else if (parameter == null) {
       return createNullJsonNode();

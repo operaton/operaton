@@ -105,7 +105,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: release-artifacts
+          name: build-artifacts
       - name: Cache SonarCloud packages
         uses: actions/cache@v4
         with:
@@ -129,6 +129,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
       - name: Publish Test Report
         if: always()
         #https://github.com/marketplace/actions/junit-report-action

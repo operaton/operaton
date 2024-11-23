@@ -125,7 +125,7 @@ jobs:
         continue-on-error: true
 
   publish:
-    name: Publish
+    name: Publish Reports
     needs: build
     runs-on: ubuntu-latest
     steps:

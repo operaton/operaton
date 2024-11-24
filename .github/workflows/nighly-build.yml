@@ -69,7 +69,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set Up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -83,12 +83,13 @@ jobs:
       - name: Generate Reports
         run: |
           ./mvnw \
-            -Dsave=true \  # for sloc-maven-plugin
+            -DskipTests \
+            verify \
             versions:dependency-updates-aggregate-report \
             versions:plugin-updates-aggregate-report \
-            io.github.orhankupusoglu:sloc-maven-plugin:sloc
+            -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc
       - name: Archive Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: reports
           path: |

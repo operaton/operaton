@@ -16,20 +16,17 @@
     <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-core</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-http-client</artifactId>
-      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-soap-http-client</artifactId>
-      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 

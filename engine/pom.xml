@@ -89,13 +89,11 @@
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-logging</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-typed-values</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -246,7 +244,6 @@
     <dependency>
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-testing</artifactId>
-      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -774,7 +771,6 @@
         <dependency>
           <groupId>org.operaton.spin</groupId>
           <artifactId>operaton-spin-dataformat-all</artifactId>
-          <version>${project.version}</version>
         </dependency>
         <dependency>
           <groupId>org.operaton.bpm</groupId>
@@ -783,7 +779,6 @@
         <dependency>
           <groupId>org.operaton.connect</groupId>
           <artifactId>operaton-connect-connectors-all</artifactId>
-          <version>${project.version}</version>
           <exclusions>
             <exclusion>
               <groupId>org.operaton.connect</groupId>

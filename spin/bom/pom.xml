@@ -3,8 +3,8 @@
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
-    <artifactId>operaton-parent</artifactId>
-    <relativePath>../../parent</relativePath>
+    <artifactId>operaton-root</artifactId>
+    <relativePath>../../pom.xml</relativePath>
     <version>1.0.0-beta-2</version>
   </parent>
 
@@ -33,6 +33,25 @@
         <groupId>org.operaton.spin</groupId>
         <artifactId>operaton-spin-dataformat-all</artifactId>
         <version>${project.version}</version>
+        <!-- Excluding dependencies that are shaded in operaton-spin-dataformat-all -->
+        <exclusions>
+          <exclusion>
+            <groupId>org.operaton.spin</groupId>
+            <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.operaton.spin</groupId>
+            <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <dependency>

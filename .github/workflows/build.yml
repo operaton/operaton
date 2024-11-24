@@ -37,7 +37,6 @@ concurrency:
 jobs:
   build:
     name: Build
-    if: secrets.SONAR_TOKEN && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
     strategy:
       fail-fast: true
     runs-on: ubuntu-latest
@@ -59,6 +58,8 @@ jobs:
           key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml')}}
           restore-keys: ${{runner.os}}-m2
       - name: Maven Build
+        id: maven-build
+        if: secrets.SONAR_TOKEN && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
         shell: bash
         run: |
           echo "Creating a flag file 'executeJacoco' for each module containing tests. \

@@ -119,6 +119,7 @@ jobs:
           SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
         shell: bash
         run: |
+          find $(pwd) -name jacoco.xml
           ./mvnw -N org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=operaton_operaton \
           -Dsonar.coverage.jacoco.xmlReportPaths=$(find $(pwd) -name jacoco.xml | paste -sd ',' -)
@@ -133,6 +134,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+      - name: Debug
+        run: find $(pwd) -name *.xml
       - name: Publish Test Report
         if: always()
         #https://github.com/marketplace/actions/junit-report-action

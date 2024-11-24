@@ -18,7 +18,7 @@ package org.operaton.bpm.client.task;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.IncidentDto;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
@@ -52,13 +52,14 @@ import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_AFTER_BPMN_ER
 import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_ID;
 import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclusiveGateway;
 
-@ExtendWith(EngineRule.class)
-@ExtendWith(ClientRule.class)
 public class ExternalTaskHandlerIT {
 
   private static final String BUSINESS_KEY = "aBusinessKey";
-  protected ClientRule clientRule = new ClientRule();
-  protected EngineRule engineRule = new EngineRule();
+
+  @RegisterExtension
+  static ClientRule clientRule = new ClientRule();
+  @RegisterExtension
+  static EngineRule engineRule = new EngineRule();
 
   protected ExternalTaskClient client;
 

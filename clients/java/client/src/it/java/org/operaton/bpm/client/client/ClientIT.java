@@ -18,7 +18,7 @@ package org.operaton.bpm.client.client;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
 import org.operaton.bpm.client.backoff.BackoffStrategy;
@@ -63,8 +63,6 @@ import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
 /**
  * @author Tassilo Weidner
  */
-@ExtendWith(EngineRule.class)
-@ExtendWith(ClientRule.class)
 public class ClientIT {
 
   protected static final String BASE_URL;
@@ -76,8 +74,10 @@ public class ClientIT {
     BASE_URL = engineRest + engineName;
   }
 
-  protected ClientRule clientRule = new ClientRule(() -> ExternalTaskClient.create().baseUrl(BASE_URL)); // without lock duration
-  protected EngineRule engineRule = new EngineRule();
+  @RegisterExtension
+  static ClientRule clientRule = new ClientRule(() -> ExternalTaskClient.create().baseUrl(BASE_URL)); // without lock duration
+  @RegisterExtension
+  static EngineRule engineRule = new EngineRule();
 
   protected ExternalTaskClient client;
 

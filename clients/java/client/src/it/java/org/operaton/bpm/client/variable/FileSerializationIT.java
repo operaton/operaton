@@ -18,7 +18,7 @@ package org.operaton.bpm.client.variable;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -59,8 +60,6 @@ import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_ID;
 import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclusiveGateway;
 import static org.operaton.bpm.engine.variable.type.ValueType.FILE;
 
-@ExtendWith(EngineRule.class)
-@ExtendWith(ClientRule.class)
 public class FileSerializationIT {
 
   protected static final String VARIABLE_NAME_FILE = "fileVariable";
@@ -79,8 +78,10 @@ public class FileSerializationIT {
     .file(VARIABLE_VALUE_FILE_VALUE)
     .create();
 
-  protected ClientRule clientRule = new ClientRule();
-  protected EngineRule engineRule = new EngineRule();
+  @RegisterExtension
+  static ClientRule clientRule = new ClientRule();
+  @RegisterExtension
+  static EngineRule engineRule = new EngineRule();
 
   protected ExternalTaskClient client;
 
@@ -553,7 +554,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldFailWhenCompletingWihtDeferredFileValue() {
+  public void shouldFailWhenCompletingWithDeferredFileValue() {
     // given
     ProcessInstanceDto processInstance = engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_FILE, VARIABLE_VALUE_FILE);
 
@@ -567,32 +568,29 @@ public class FileSerializationIT {
     ExternalTask fooTask = invocation.getExternalTask();
     ExternalTaskService fooService = invocation.getExternalTaskService();
 
-
-    // then
-    assertThatThrownBy(() ->
-            client.subscribe(EXTERNAL_TASK_TOPIC_BAR)
-                    .handler(handler)
-                    .open()).isInstanceOf(ValueMapperException.class);
-
     // when
-    Map<String, Object> variables = new HashMap<>();
     DeferredFileValue deferredFileValue = fooTask.getVariableTyped(VARIABLE_NAME_FILE);
-    variables.put("deferredFile", deferredFileValue);
-    variables.put(ANOTHER_VARIABLE_NAME_FILE, ANOTHER_VARIABLE_VALUE_FILE);
-    fooService.complete(fooTask, variables);
 
-    clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
+    Map<String, Object> variables = Map.of(
+            "deferredFile", deferredFileValue,
+            ANOTHER_VARIABLE_NAME_FILE, ANOTHER_VARIABLE_VALUE_FILE
+    );
 
     // then
-    List<VariableInstanceDto> variableInstances = engineRule.getVariablesByProcessInstanceIdAndVariableName(processInstance.getId(), null);
-    assertThat(variableInstances).hasSize(2);
+    assertThatThrownBy(() -> fooService.complete(fooTask, variables))
+            .isInstanceOf(ValueMapperException.class);
 
-    List<String> variableNames = new ArrayList<>();
-    for (VariableInstanceDto variableInstance : variableInstances) {
-      variableNames.add(variableInstance.getName());
-    }
+    // then
+    assertThat(invocation.getExternalTask().getTopicName()).isEqualTo(EXTERNAL_TASK_TOPIC_FOO); // The process was not progressed further
 
-    assertThat(variableNames).containsExactlyInAnyOrder(VARIABLE_NAME_FILE, ANOTHER_VARIABLE_NAME_FILE); // contains not "deferredFile"
+    // then
+    List<String> variableNames = engineRule
+            .getVariablesByProcessInstanceIdAndVariableName(processInstance.getId(), null)
+            .stream()
+            .map(VariableInstanceDto::getName)
+            .toList();
+
+      assertThat(variableNames).containsExactly(VARIABLE_NAME_FILE); // contains not "deferredFile"
   }
 
   @Test

@@ -31,7 +31,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: ${{github.workflow}}-${{github.ref}}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -55,8 +55,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2
-          key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml')}}
-          restore-keys: ${{runner.os}}-m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
       - name: Maven Build
         id: maven-build
         if: secrets.SONAR_TOKEN && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
@@ -79,8 +79,8 @@ jobs:
         with:
           name: build-artifacts
           path: |
-            ${{github.workspace}}/**/jacoco.xml
-            ${{github.workspace}}/**/target/surefire-reports/*.xml
+            ${{ github.workspace }}/**/jacoco.xml
+            ${{ github.workspace }}/**/target/surefire-reports/*.xml
           retention-days: 30
       - name: Upload Distros
         id: upload-distros
@@ -88,13 +88,13 @@ jobs:
         with:
           name: distros
           path: |
-            ${{github.workspace}}/distro/*/assembly/target/*.gz
+            ${{ github.workspace }}/distro/*/assembly/target/*.gz
 
   static_analysis:
     name: Static Analysis
     needs: build
     runs-on: ubuntu-latest
-    if: secrets.SONAR_TOKEN && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
+    if: github.repository='operaton/operaton' && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
     steps:
       - uses: actions/checkout@v4
         with:
@@ -113,12 +113,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
-          key: ${{runner.os}}-sonar
-          restore-keys: ${{runner.os}}-sonar
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Sonarqube Analysis
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
         run: |
           find $(pwd) -name jacoco.xml
@@ -143,5 +143,5 @@ jobs:
         #https://github.com/marketplace/actions/junit-report-action
         uses: mikepenz/action-junit-report@v4
         with:
-          report_paths: ${{github.workspace}}/**/target/surefire-reports/*.xml
+          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true

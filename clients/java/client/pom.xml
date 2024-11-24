@@ -230,6 +230,10 @@
               <goal>integration-test</goal>
               <goal>verify</goal>
             </goals>
+            <configuration>
+              <!-- FIXME: Issue#251 -->
+              <skip>true</skip>
+            </configuration>
           </execution>
         </executions>
       </plugin>

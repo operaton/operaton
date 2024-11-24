@@ -93,7 +93,7 @@ jobs:
     name: Static Analysis
     needs: build
     runs-on: ubuntu-latest
-    if: github.repository='operaton/operaton' && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
+    if: github.repository == 'operaton/operaton' && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
     steps:
       - uses: actions/checkout@v4
         with:

@@ -61,8 +61,7 @@ public class TypeHelper {
    */
   static JavaType constructType(Object value) {
     TypeFactory typeFactory = TypeFactory.defaultInstance();
-    if (value instanceof Collection<?>) {
-      Collection<?> collection = (Collection<?>) value;
+    if (value instanceof Collection<?> collection) {
       int size = collection.size();
       if (size > 0) {
         Iterator<?> iterator = collection.iterator();
@@ -78,8 +77,7 @@ public class TypeHelper {
           }
         } while (iterator.hasNext() && element == null);
       }
-    } else if (value instanceof Map<?, ?>) {
-      Map<?, ?> map = (Map<?, ?>) value;
+    } else if (value instanceof Map<?, ?> map) {
       int size = map.size();
       if (size > 0) {
         Set<? extends Map.Entry<?, ?>> entries = map.entrySet();

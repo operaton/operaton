@@ -84,7 +84,7 @@ jobs:
           PROJECT_ROOT=$(pwd)
           ./mvnw \
             -DskipTests \
-            verify \
+            verify site \
             versions:dependency-updates-aggregate-report \
             versions:plugin-updates-aggregate-report \
             -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc \

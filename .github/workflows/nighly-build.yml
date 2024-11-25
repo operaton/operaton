@@ -50,14 +50,13 @@ jobs:
           ./mvnw \
             -Dmaven.repo.local=${{ github.workspace }}/.m2 \
              clean install
+          .github/scripts/prepare-distros-archive.sh target/distros
 
       - name: Archive Distros
         uses: actions/upload-artifact@v4
         with:
           name: distros
-          path: |
-            distro/sql-script/target/operaton-sql-scripts-*.tar.gz
-            distro/tomcat/distro/target/operaton-bpm-tomcat-*.tar.gz
+          path: target/distros/**
 
 
   report:
@@ -90,12 +89,10 @@ jobs:
             versions:plugin-updates-aggregate-report \
             -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc \
             -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list
+          .github/scripts/prepare-reports.sh
       - name: Archive Reports
         uses: actions/upload-artifact@v4
         with:
           name: reports
           path: |
             **/target/reports/**
-            **/site/**
-            **/sloc.txt
-            target/reports/buildplan.txt

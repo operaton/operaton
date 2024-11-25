@@ -26,8 +26,6 @@
     <http.ctx-path.webapp>operaton/</http.ctx-path.webapp>
     <http.ctx-path.rest>engine-rest/</http.ctx-path.rest>
 
-    <version.chromedriver>112.0.5615.49</version.chromedriver>
-
     <!-- default os -->
     <os.type>linux64</os.type>
   </properties>
@@ -255,7 +253,7 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://chromedriver.storage.googleapis.com/${version.chromedriver}/chromedriver_${os.type}.zip</url>
+              <url>https://storage.googleapis.com/chrome-for-testing-public/${version.chromedriver}/${os.type}/chromedriver-${os.type}.zip</url>
               <outputFileName>chromedriver.zip</outputFileName>
               <unpack>true</unpack>
               <outputDirectory>${project.build.directory}/chromedriver</outputDirectory>

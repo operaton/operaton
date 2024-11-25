@@ -17,7 +17,6 @@
     <version.h2>1.4.199</version.h2>
     <version.jaxb-api>2.3.1</version.jaxb-api>
     <version.jersey-apache-client>1.15</version.jersey-apache-client>
-    <version.chromedriver>112.0.5615.49</version.chromedriver>
 
     <http.port>58080</http.port>
     <http.ctx-path.webapp>operaton/</http.ctx-path.webapp>

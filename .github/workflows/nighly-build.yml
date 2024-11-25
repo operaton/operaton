@@ -51,13 +51,14 @@ jobs:
             -Dmaven.repo.local=${{ github.workspace }}/.m2 \
              clean install
 
-      - name: Archive Assemblies
-        uses: actions/upload-artifact@v3
+      - name: Archive Distros
+        uses: actions/upload-artifact@v4
         with:
-          name: assemblies
+          name: distros
           path: |
-            target/*.zip
-            target/*.tar.gz
+            distro/sql-script/target/operaton-sql-scripts-*.tar.gz
+            distro/tomcat/distro/target/operaton-bpm-tomcat-*.tar.gz
+
 
   report:
     name: Generate Reports

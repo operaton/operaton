@@ -4,6 +4,7 @@ target
 .project
 .settings
 .editorconfig
+.m2
 build.properties
 bin
 .metadata

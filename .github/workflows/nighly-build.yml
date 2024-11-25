@@ -82,12 +82,14 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Generate Reports
         run: |
+          PROJECT_ROOT=$(pwd)
           ./mvnw \
             -DskipTests \
             verify \
             versions:dependency-updates-aggregate-report \
             versions:plugin-updates-aggregate-report \
-            -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc
+            -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc \
+            -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list
       - name: Archive Reports
         uses: actions/upload-artifact@v4
         with:

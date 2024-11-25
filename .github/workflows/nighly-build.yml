@@ -24,7 +24,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set Up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -49,16 +49,15 @@ jobs:
           done
           ./mvnw \
             -Dmaven.repo.local=${{ github.workspace }}/.m2 \
-             clean install \
-             dependency:analyze-report
+             clean install
+          .github/scripts/prepare-distros-archive.sh target/distros
 
-      - name: Archive Assemblies
-        uses: actions/upload-artifact@v3
+      - name: Archive Distros
+        uses: actions/upload-artifact@v4
         with:
-          name: assemblies
-          path: |
-            target/*.zip
-            target/*.tar.gz
+          name: distros
+          path: target/distros/**
+
 
   report:
     name: Generate Reports
@@ -69,7 +68,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set Up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -82,16 +81,18 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Generate Reports
         run: |
+          PROJECT_ROOT=$(pwd)
           ./mvnw \
-            -Dsave=true \  # for sloc-maven-plugin
+            -DskipTests \
+            verify \
             versions:dependency-updates-aggregate-report \
             versions:plugin-updates-aggregate-report \
-            io.github.orhankupusoglu:sloc-maven-plugin:sloc
+            -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc \
+            -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list
+          .github/scripts/prepare-reports.sh
       - name: Archive Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: reports
           path: |
-            **/reports/**
-            **/site/**
-            **/sloc.txt
+            **/target/reports/**

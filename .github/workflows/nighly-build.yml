@@ -49,8 +49,7 @@ jobs:
           done
           ./mvnw \
             -Dmaven.repo.local=${{ github.workspace }}/.m2 \
-             clean install \
-             dependency:analyze-report
+             clean install
 
       - name: Archive Assemblies
         uses: actions/upload-artifact@v3
@@ -95,6 +94,7 @@ jobs:
         with:
           name: reports
           path: |
-            **/reports/**
+            **/target/reports/**
             **/site/**
             **/sloc.txt
+            target/reports/buildplan.txt

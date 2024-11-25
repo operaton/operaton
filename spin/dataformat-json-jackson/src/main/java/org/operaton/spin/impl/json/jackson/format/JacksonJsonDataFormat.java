@@ -238,11 +238,11 @@ public class JacksonJsonDataFormat implements DataFormat<SpinJsonNode> {
     } else if(parameter instanceof Number numberParameter) {
       return createJsonNode(numberParameter.floatValue());
 
-    } else if(parameter instanceof List<?> listParameter) {
+    } else if(parameter instanceof List listParameter) {
       return createJsonNode(listParameter);
 
-    } else if(parameter instanceof Map<?, ?> mapParameter) {
-      return createJsonNode(mapParameter);
+    } else if(parameter instanceof Map map) {
+      return createJsonNode(map);
 
     } else if (parameter == null) {
       return createNullJsonNode();

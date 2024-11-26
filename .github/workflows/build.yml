@@ -57,25 +57,27 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Cache SonarCloud packages
+        if: github.repository == 'operaton/operaton' && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Maven Build
+      - name: Maven Build w/o Sonarqube Analysis
+        if: github.repository != 'operaton/operaton' || (github.ref != 'refs/heads/main' && github.event_name != 'pull_request')
         id: maven-build
         shell: bash
         run: |
-          .github/scripts/jacoco-create-marker-files.sh
           ./mvnw verify
-      - name: Sonarqube Analysis
+      - name: Maven Build & Sonarqube Analysis
         if: github.repository == 'operaton/operaton' && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
         run: |
-          ./mvnw -Dsonar.projectKey=operaton_operaton org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          .github/scripts/jacoco-create-marker-files.sh
+          ./mvnw -Dsonar.projectKey=operaton_operaton verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         continue-on-error: true
       - name: Upload Build Artifacts
         id: upload-build-artifacts

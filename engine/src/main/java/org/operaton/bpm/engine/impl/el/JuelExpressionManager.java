@@ -86,15 +86,14 @@ public class JuelExpressionManager implements ExpressionManager, ElProviderCompa
   public ELContext getElContext(VariableScope variableScope) {
     ensureInitialized();
     ELContext elContext = null;
-    if (variableScope instanceof AbstractVariableScope) {
-      AbstractVariableScope variableScopeImpl = (AbstractVariableScope) variableScope;
+    if (variableScope instanceof AbstractVariableScope variableScopeImpl) {
       elContext = variableScopeImpl.getCachedElContext();
     }
 
     if (elContext == null) {
       elContext = createElContext(variableScope);
-      if (variableScope instanceof AbstractVariableScope) {
-        ((AbstractVariableScope) variableScope).setCachedElContext(elContext);
+      if (variableScope instanceof AbstractVariableScope abstractVariableScope) {
+        abstractVariableScope.setCachedElContext(elContext);
       }
     }
 

@@ -575,29 +575,6 @@
       </build>
     </profile>
 
-    <profile>
-      <id>sonar</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <configuration>
-              <fileSets>
-                <fileSet>
-                  <directory>${maven.multiModuleProjectDirectory}</directory>
-                  <includes>
-                    <include>**/target/jacoco-collected/*_jacoco.exec</include>
-                  </includes>
-                </fileSet>
-              </fileSets>
-              <destFile>${maven.multiModuleProjectDirectory}/target/jacoco.exec</destFile>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
   </profiles>
 
   <repositories>

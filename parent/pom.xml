@@ -291,9 +291,11 @@
                 <goals>
                   <goal>prepare-agent</goal>
                   <goal>report</goal>
+                  <goal>report-aggregate</goal>
                 </goals>
                 <configuration>
                   <propertyName>jacoco.argLine</propertyName>
+                  <destFile>${maven.multiModuleProjectDirectory}/target/jacoco.exec</destFile>
                 </configuration>
               </execution>
             </executions>

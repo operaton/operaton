@@ -78,6 +78,8 @@ public class OperatonBpmProperties {
 
   private Boolean jobExecutorAcquireByPriority;
 
+  private Boolean jobExecutorAcquireWithSkipLocked;
+
   private Integer defaultNumberOfRetries;
 
   /**
@@ -312,6 +314,14 @@ public class OperatonBpmProperties {
     this.jobExecutorAcquireByPriority = jobExecutorAcquireByPriority;
   }
 
+  public Boolean getJobExecutorAcquireWithSkipLocked() {
+    return jobExecutorAcquireWithSkipLocked;
+  }
+
+  public void setJobExecutorAcquireWithSkipLocked(Boolean jobExecutorAcquireWithSkipLocked) {
+    this.jobExecutorAcquireWithSkipLocked = jobExecutorAcquireWithSkipLocked;
+  }
+
   public Integer getDefaultNumberOfRetries() {
     return defaultNumberOfRetries;
   }
@@ -368,6 +378,7 @@ public class OperatonBpmProperties {
       .add("filter=" + filter)
       .add("idGenerator=" + idGenerator)
       .add("jobExecutorAcquireByPriority=" + jobExecutorAcquireByPriority)
+      .add("jobExecutorAcquireWithSkipLocked= " + jobExecutorAcquireWithSkipLocked)
       .add("defaultNumberOfRetries" + defaultNumberOfRetries)
       .toString();
   }

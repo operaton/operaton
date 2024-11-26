@@ -212,14 +212,11 @@ public class TopicSubscriptionManager implements Runnable {
   protected void runBackoffStrategy(FetchAndLockResponseDto fetchAndLockResponse) {
     try {
       List<ExternalTask> externalTasks = fetchAndLockResponse.getExternalTasks();
-      if (backoffStrategy instanceof ErrorAwareBackoffStrategy) {
-        ErrorAwareBackoffStrategy errorAwareBackoffStrategy = ((ErrorAwareBackoffStrategy) backoffStrategy);
+      if (backoffStrategy instanceof ErrorAwareBackoffStrategy errorAwareBackoffStrategy) {
         ExternalTaskClientException exception = fetchAndLockResponse.getError();
         errorAwareBackoffStrategy.reconfigure(externalTasks, exception);
-
       } else {
         backoffStrategy.reconfigure(externalTasks);
-
       }
 
       long waitTime = backoffStrategy.calculateBackoffTime();

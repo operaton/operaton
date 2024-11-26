@@ -82,8 +82,8 @@ public class DeserializableVariableTest extends AbstractFoxPlatformIntegrationTe
     // custom object deserialization is disabled and a null check is performed
     List<HistoricVariableInstance> variableInstances = historyService.createHistoricVariableInstanceQuery().disableCustomObjectDeserialization().list();
     for (HistoricVariableInstance variable : variableInstances) {
-      if (variable.getProcessInstanceId() != pi.getId() && variable instanceof HistoricVariableInstanceEntity) {
-        Assert.assertNotNull(((HistoricVariableInstanceEntity) variable).getByteArrayValue());
+      if (variable.getProcessInstanceId() != pi.getId() && variable instanceof HistoricVariableInstanceEntity variableEntity) {
+        Assert.assertNotNull(variableEntity.getByteArrayValue());
       }
     }
   }

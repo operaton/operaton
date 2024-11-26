@@ -55,8 +55,8 @@ public class PerfTestBuilder {
     } catch (ExecutionException e) {
       if(e.getCause() != null) {
         Throwable cause = e.getCause();
-        if(cause instanceof RuntimeException) {
-          throw (RuntimeException) cause;
+        if(cause instanceof RuntimeException runtimeException) {
+          throw runtimeException;
         } else {
           throw new PerfTestException(cause);
         }

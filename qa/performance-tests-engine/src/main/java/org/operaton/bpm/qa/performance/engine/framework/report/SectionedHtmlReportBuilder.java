@@ -88,8 +88,7 @@ public class SectionedHtmlReportBuilder {
   protected void addHtmlSection(HtmlDocumentBuilder builder, String title, Object section, int level) {
     // add heading
     builder.startElement(new HtmlElementWriter("h" + level).textContent(title)).endElement();
-    if (section instanceof Map) {
-      Map<String, Object> sections = (Map<String, Object>) section;
+    if (section instanceof Map sections) {
       addHtmlSections(builder, sections, level + 1);
     }
     else {
@@ -120,8 +119,8 @@ public class SectionedHtmlReportBuilder {
       HtmlDocumentBuilder tableRowBuilder = builder.startElement(new HtmlElementWriter("tr"));
 
       for (Object value : resultRow) {
-        if (value instanceof TableCell) {
-          tableRowBuilder.startElement(((TableCell) value).toHtmlElementWriter()).endElement();
+        if (value instanceof TableCell tableCell) {
+          tableRowBuilder.startElement(tableCell.toHtmlElementWriter()).endElement();
         } else {
           tableRowBuilder.startElement(new HtmlElementWriter("td").textContent(String.valueOf(value))).endElement();
         }

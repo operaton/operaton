@@ -69,7 +69,7 @@ public class PerfTestProcessEngine {
     for (String pluginName : processEnginePlugins.split(",")) {
       if(pluginName.length() > 1) {
         Object pluginInstance = ReflectUtil.instantiate(pluginName);
-        if(!(pluginInstance instanceof ProcessEnginePlugin)) {
+        if(!(pluginInstance instanceof ProcessEnginePlugin processEnginePlugin)) {
           throw new PerfTestException("Plugin "+pluginName +" is not an instance of ProcessEnginePlugin");
 
         } else {
@@ -78,7 +78,7 @@ public class PerfTestProcessEngine {
             plugins = new ArrayList<ProcessEnginePlugin>();
             processEngineConfiguration.setProcessEnginePlugins(plugins);
           }
-          plugins.add((ProcessEnginePlugin) pluginInstance);
+          plugins.add(processEnginePlugin);
 
         }
       }

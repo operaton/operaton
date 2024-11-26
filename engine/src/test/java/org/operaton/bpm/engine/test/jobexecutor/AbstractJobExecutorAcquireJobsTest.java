@@ -83,9 +83,10 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
   }
 
   protected List<AcquirableJobEntity> findAcquirableJobs() {
-    return configuration.getCommandExecutorTxRequired().execute(commandContext -> commandContext
-        .getJobManager()
-        .findNextJobsToExecute(new Page(0, 100)));
+    return configuration.getCommandExecutorTxRequired()
+            .execute(commandContext -> commandContext
+            .getJobManager()
+            .findNextJobsToExecute(new Page(0, 100)));
   }
 
   protected String startProcess(String processDefinitionKey, String activity) {

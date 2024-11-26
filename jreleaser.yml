@@ -1,0 +1,183 @@
+project:
+  name: Operaton
+  description: BPMN-Process automation for everyone
+  links:
+    homepage: https://operaton.org
+    help: https://forum.operaton.org/
+    bugTracker: https://{{repoHost}}/{{repoOwner}}/{{repoName}}/issues
+    license: https://github.com/operaton/operaton/blob/main/LICENSE
+    contact: mail (at) operaton.org
+    contribute: https://{{repoHost}}/{{repoOwner}}/{{repoName}}/blob/main/CONTRIBUTING.md
+  inceptionYear: 2024
+  copyright: ©️2024 Operaton
+  license: Apache-2.0
+  authors:
+    - Committers of Operaton
+  vendor: Operaton
+  icons:
+    - url: https://avatars.githubusercontent.com/u/185116948?s=200&v=4
+      width: 200
+      height: 200
+  java:
+    groupId: org.operaton
+    version: 17
+    multiProject: false
+  tags:
+    - 'operaton'
+    - 'bpmn'
+    - 'process automation'
+    - 'java'
+
+platform:
+  replacements:
+    aarch_64: aarch64
+
+files:
+  artifacts:
+    - path: 'distro/**/target/*.gz'
+
+release: # https://jreleaser.org/guide/latest/reference/release/github.html
+  github:
+    overwrite: true
+    sign: true
+    owner: operaton
+    draft: false
+    skipTag: false
+    previousTagName: 1.0.0-beta-1
+    releaseName: Release {{tagName}}
+    prerelease: # TODO Evaluate JRELEASER_PRERELEASE_ENABLED
+      enabled: true
+    issues:
+      enabled: true
+      comment: '🎉 This issue has been resolved in `{{tagName}}` ([Release Notes]({{releaseNotesUrl}}))'
+      applyMilestone: ALWAYS
+    changelog:
+      formatted: ALWAYS
+      preset: conventional-commits
+      enabled: true
+      sort: ASC
+      links: true
+      skipMergeCommits: true
+      contributors:
+        format: '- {{contributorName}}{{#contributorUsernameAsLink}} ({{.}}){{/contributorUsernameAsLink}}'
+      contentTemplate: '.github/jreleaser/changelog.tpl'
+      labelers:
+        - label: 'closes'
+          title: 'closes #.*'
+          order: 100
+        - label: 'i18n'
+          title: 'regex:^(?:i18n(?:\(.*\))?!?):\s.*'
+          order: 120
+        - label: 'dependencies1'
+          title: 'regex:^(?:deps(?:\(.*\))?!?):\s.*'
+          order: 130
+        - label: 'dependencies2'
+          contributor: 'regex:^dependabot.*'
+          order: 131
+        - label: 'dependencies3'
+          title: 'regex:^(?:Bump):\s.*'
+          order: 132
+        - label: 'allcontributors1'
+          title: 'regex:^docs: update .all-contributorsrc.*'
+          order: -1
+        - label: 'allcontributors2'
+          title: 'regex:^docs: update CONTRIBUTORS.md.*'
+          order: -2
+        - label: 'WIP'
+          title: 'regex:.*(?:WIP).*'
+          order: -3
+        - label: 'WIP2'
+          title: 'regex:.*(?:Set up).*'
+          order: -4
+        - label: 'build1'
+          contributor: 'GitHub'
+          order: -5
+        - label: 'release'
+          title: 'regex:\[releng\].*'
+          order: -6
+        - label: 'release2'
+          title: 'regex:.*(?:Set up release).*'
+          order: -7
+      categories:
+        - title: '🚀 Features'
+          key: 'features'
+          labels:
+            - 'feature'
+            - 'enhancement'
+            - 'closes'
+          order: 1
+        - title: '🐛 Bug Fixes'
+          key: 'fixes'
+          labels:
+            - 'bug'
+            - 'fix'
+          order: 2
+        - title: '📖 Documentation'
+          key: 'documentation'
+          labels:
+            - 'documentation'
+          order: 3
+        - title: '⚙️ Dependencies'
+          key: 'dependencies'
+          labels:
+            - 'dependencies1'
+            - 'dependencies2'
+            - 'dependencies3'
+          order: 4
+        - title: '🛠 Build'
+          key: 'build'
+          labels:
+            - 'build1'
+          order: 5
+        - title: '🚧 WIP'
+          key: 'wip'
+          labels:
+            - 'WIP'
+            - 'WIP2'
+          order: 7
+        - title: '🚀 Release'
+          key: 'release'
+          labels:
+            - 'release'
+            - 'release2'
+          order: 8
+      hide:
+        contributors:
+          - '[bot]'
+          - 'GitHub'
+        categories:
+          - 'merge'
+          - 'wip'
+          - 'release'
+      replacers:
+        - search: '^chore[:]?'
+          replace: ''
+        - search: '/CVE-(\d{4})-(\d+)/g'
+          replace: 'https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-$1-$2'
+
+checksum:
+  algorithms:
+    - MD5
+    - SHA-256
+
+deploy:
+  maven:
+    mavenCentral:
+      MavenCentral:
+        active: ALWAYS
+        applyMavenCentralRules: true
+        url: https://central.sonatype.com/api/v1/publisher
+        stagingRepositories:
+          - target/staging-deploy
+
+catalog:
+  sbom:
+    cyclonedx:
+      active: ALWAYS
+  swid:
+    swid-tag:
+      active: ALWAYS
+
+signing:
+  active: ALWAYS
+  armored: true

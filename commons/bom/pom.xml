@@ -3,9 +3,9 @@
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
-    <artifactId>operaton-parent</artifactId>
-    <relativePath>../../parent</relativePath>
+    <artifactId>operaton-root</artifactId>
     <version>1.0.0-beta-2</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <groupId>org.operaton.commons</groupId>

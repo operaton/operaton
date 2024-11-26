@@ -20,15 +20,25 @@
     <!-- We shade artifacts into the jar, so we need to generate
     a dependency BOM for the license book -->
     <skip-third-party-bom>false</skip-third-party-bom>
-    <!-- Using Jakarta Expression Language 4.0 for Java 8 compatibility -->
-    <version.jakarta.el>4.0.0</version.jakarta.el>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-core-internal-dependencies</artifactId>
+        <version>${project.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
       <groupId>jakarta.el</groupId>
       <artifactId>jakarta.el-api</artifactId>
-      <version>${version.jakarta.el}</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 

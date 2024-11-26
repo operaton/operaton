@@ -75,7 +75,7 @@ jobs:
             touch "$dir/target/executeJacoco"
           fi
         done
-        ./mvnw package
+        ./mvnw verify
         ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
     - name: Publish Test Report
       if: always()

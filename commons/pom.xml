@@ -2,12 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.operaton.commons</groupId>
-    <artifactId>operaton-commons-bom</artifactId>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-parent</artifactId>
     <version>1.0.0-beta-2</version>
-    <relativePath>bom</relativePath>
+    <relativePath>../parent</relativePath>
   </parent>
 
+  <groupId>org.operaton.commons</groupId>
   <artifactId>operaton-commons-root</artifactId>
   <name>Operaton - Commons - Root POM</name>
   <packaging>pom</packaging>

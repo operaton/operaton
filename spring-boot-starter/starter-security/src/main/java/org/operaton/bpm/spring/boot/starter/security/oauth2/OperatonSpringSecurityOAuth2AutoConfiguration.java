@@ -54,7 +54,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Map;
 
-@AutoConfigureOrder(OperatonSpringSecurityOAuth2AutoConfiguration.CAMUNDA_OAUTH2_ORDER)
+@AutoConfigureOrder(OperatonSpringSecurityOAuth2AutoConfiguration.OPERATON_OAUTH2_ORDER)
 @AutoConfigureAfter({ OperatonBpmAutoConfiguration.class, SpringProcessEngineServicesConfiguration.class })
 @ConditionalOnBean(OperatonBpmProperties.class)
 @Conditional(ClientsConfiguredCondition.class)
@@ -62,7 +62,7 @@ import java.util.Map;
 public class OperatonSpringSecurityOAuth2AutoConfiguration {
 
   private static final Logger logger = LoggerFactory.getLogger(OperatonSpringSecurityOAuth2AutoConfiguration.class);
-  public static final int CAMUNDA_OAUTH2_ORDER = Ordered.HIGHEST_PRECEDENCE + 100;
+  public static final int OPERATON_OAUTH2_ORDER = Ordered.HIGHEST_PRECEDENCE + 100;
   private final OAuth2Properties oAuth2Properties;
   private final String webappPath;
 

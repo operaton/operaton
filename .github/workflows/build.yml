@@ -60,6 +60,9 @@ jobs:
         id: maven-build
         shell: bash
         run: |
+          which xq
+          apt-get install -y xq
+          which xq
           .github/scripts/jacoco-create-marker-files.sh
           ./mvnw verify
       - name: Upload Build Artifacts

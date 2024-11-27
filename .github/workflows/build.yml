@@ -37,64 +37,121 @@ concurrency:
 jobs:
   build:
     name: Build
-    strategy:
-      fail-fast: true
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
-      with:
-        # Prevent Shallow Clone to satisfy Sonarqube
-        fetch-depth: 0
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: Cache Maven packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.sonar/cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
-    - name: Maven Build
-      shell: bash
-      run: |
-        echo "Creating a flag file 'executeJacoco' for each module containing tests. \
-        This triggers activation of the 'coverage' profile."
-        find . -type d | while read -r dir; do
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Maven Build
+        id: maven-build
+        shell: bash
+        run: |
+          echo "Creating a flag file 'executeJacoco' for each module containing tests. \
+          This triggers activation of the 'coverage' profile."
+          find . -type d | while read -r dir; do
           if [[ -d "$dir/src/test/java" || -d "$dir/target/generated-test-sources/java" ]]; then
             # Create an empty file target/executeJacoco if the condition is met
             mkdir -p "$dir/target"
             touch "$dir/target/executeJacoco"
           fi
-        done
-        ./mvnw verify
-        ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
-    - name: Publish Test Report
-      if: always()
-      uses: mikepenz/action-junit-report@v4 #https://github.com/marketplace/actions/junit-report-action
-      with:
-        report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
-        require_passed_tests: true
-    - name: Upload Surefire Reports
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: surefire-reports
-        path: ${{ github.workspace }}/**/target/surefire-reports/**
-        retention-days: 30
-    - name: Sonarqube Analysis
-      if: env.SONAR_TOKEN && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      shell: bash
-      run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=operaton_operaton
-      continue-on-error: true
+          done
+          ./mvnw verify
+          ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
+      - name: Publish Test Report
+        if: always()
+        #https://github.com/marketplace/actions/junit-report-action
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
+          require_passed_tests: true
+      - name: Upload Surefire Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: ${{ github.workspace }}/**/target/surefire-reports/**
+          retention-days: 30
+      - name: Sonarqube Analysis
+        if: env.SONAR_TOKEN && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        shell: bash
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=operaton_operaton
+        continue-on-error: true
+      - name: Cache build artifacts
+        uses: actions/cache/save@v4
+        if: ${{ matrix.java == 17 }}
+        with:
+          path: |
+            distro/**/target/operaton-*.gz
+            distro/webjar/target/operaton-webapp-webjar-*.jar
+          key: ${{ github.run_id }}-build-artifacts
+
+  publish:
+    name: Publish
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore build artifacts cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            distro/**/target/operaton-*.gz
+            distro/webjar/target/operaton-webapp-webjar-*.jar
+          key: ${{ github.run_id }}-build-artifacts
+          fail-on-cache-miss: true
+      - run: |
+          sudo apt-get update > /dev/null
+          sudo apt-get install -y xq > /dev/null
+          PROJECT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
+          TOMCAT_VERSION=$(xq --xpath project/properties/version.tomcat parent/pom.xml)
+          WILDFLY_VERSION=$(xq --xpath project/properties/version.wildfly parent/pom.xml)
+          echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
+          echo "TOMCAT_VERSION=$TOMCAT_VERSION" >> $GITHUB_ENV
+          echo "WILDFLY_VERSION=$WILDFLY_VERSION" >> $GITHUB_ENV
+      - name: Upload distro Tomcat
+        id: upload-distro-tomcat
+        uses: actions/upload-artifact@v4
+        with:
+          name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
+          path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
+          if-no-files-found: error
+      - name: Upload distro Wildfly
+        id: upload-distro-wildfly
+        uses: actions/upload-artifact@v4
+        with:
+          name: Operaton (Wildfly ${{ env.WILDFLY_VERSION }} Bundle)
+          path: distro/wildfly/distro/target/operaton-bpm-wildfly-${{ env.PROJECT_VERSION }}.tar.gz
+          if-no-files-found: error
+      - name: Upload distro WebJar
+        id: upload-distro-webjar
+        uses: actions/upload-artifact@v4
+        with:
+          name: Operaton (WebJar Bundle)
+          path: distro/webjar/target/operaton-webapp-webjar-${{ env.PROJECT_VERSION }}.jar
+          if-no-files-found: error
+      - name: Upload distro sql-scripts
+        id: upload-distro-sql-scripts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Operaton SQL Scripts
+          path: distro/sql-script/target/operaton-sql-scripts-${{ env.PROJECT_VERSION }}.tar.gz
+          if-no-files-found: error

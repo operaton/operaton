@@ -45,7 +45,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   }
 
   public VariableMapImpl(Map<String, Object> map) {
-    if(map != null) {
+    if (map != null) {
       putAll(map);
     }
   }
@@ -68,14 +68,14 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   @SuppressWarnings("unchecked")
   public <T> T getValue(String name, Class<T> type) {
     Object object = get(name);
-    if(object == null) {
+    if (object == null) {
       return null;
-    }
-    else if (type.isAssignableFrom(object.getClass())) {
+    } else if (type.isAssignableFrom(object.getClass())) {
       return (T) object;
 
     } else {
-      throw new ClassCastException("Cannot cast variable named '"+name+"' with value '"+object+"' to type '"+type+"'.");
+      throw new ClassCastException(
+          "Cannot cast variable named '" + name + "' with value '" + object + "' to type '" + type + "'.");
     }
   }
 
@@ -84,7 +84,8 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     return (T) variables.get(name);
   }
 
-  // java.uitil Map<String, Object> implementation ////////////////////////////////////////
+  // java.uitil Map<String, Object> implementation
+  // ////////////////////////////////////////
 
   public int size() {
     return variables.size();
@@ -100,9 +101,9 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   public boolean containsValue(Object value) {
     for (TypedValue varValue : variables.values()) {
-      if(value == varValue.getValue()) {
+      if (value == varValue.getValue()) {
         return true;
-      } else if(value != null && value.equals(varValue.getValue())) {
+      } else if (value != null && value.equals(varValue.getValue())) {
         return true;
       }
     }
@@ -112,10 +113,9 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   public Object get(Object key) {
     TypedValue typedValue = variables.get(key);
 
-    if(typedValue != null) {
+    if (typedValue != null) {
       return typedValue.getValue();
-    }
-    else {
+    } else {
       return null;
     }
   }
@@ -126,10 +126,9 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
     TypedValue prevValue = variables.put(key, typedValue);
 
-    if(prevValue != null) {
+    if (prevValue != null) {
       return prevValue.getValue();
-    }
-    else {
+    } else {
       return null;
     }
   }
@@ -137,20 +136,18 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   public Object remove(Object key) {
     TypedValue prevValue = variables.remove(key);
 
-    if(prevValue != null) {
+    if (prevValue != null) {
       return prevValue.getValue();
-    }
-    else {
+    } else {
       return null;
     }
   }
 
   public void putAll(Map<? extends String, ? extends Object> m) {
-    if(m != null) {
-      if(m instanceof VariableMapImpl) {
-        variables.putAll(((VariableMapImpl)m).variables);
-      }
-      else {
+    if (m != null) {
+      if (m instanceof VariableMapImpl variableMapImpl) {
+        variables.putAll(variableMapImpl.variables);
+      } else {
         for (java.util.Map.Entry<? extends String, ? extends Object> entry : m.entrySet()) {
           put(entry.getKey(), entry.getValue());
         }
@@ -168,7 +165,8 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   public Collection<Object> values() {
 
-    // NOTE: cannot naively return List of values here. A proper implementation must return a
+    // NOTE: cannot naively return List of values here. A proper implementation must
+    // return a
     // Collection which is backed by the actual variable map
 
     return new AbstractCollection<Object>() {
@@ -182,9 +180,11 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
           public boolean hasNext() {
             return iterator.hasNext();
           }
+
           public Object next() {
             return iterator.next().getValue();
           }
+
           public void remove() {
             iterator.remove();
           }
@@ -203,11 +203,11 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     // NOTE: cannot naively return Set of entries here. A proper implementation must
     // return a Set which is backed by the actual map
 
-    return new AbstractSet<Map.Entry<String,Object>>() {
+    return new AbstractSet<Map.Entry<String, Object>>() {
 
       public Iterator<java.util.Map.Entry<String, Object>> iterator() {
 
-        return new Iterator<Map.Entry<String,Object>>() {
+        return new Iterator<Map.Entry<String, Object>>() {
 
           // wrapped iterator. Must be local to the iterator() method
           final Iterator<java.util.Map.Entry<String, TypedValue>> iterator = variables.entrySet().iterator();
@@ -225,13 +225,16 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
               public String getKey() {
                 return underlyingEntry.getKey();
               }
+
               public Object getValue() {
                 return underlyingEntry.getValue().getValue();
               }
+
               public Object setValue(Object value) {
                 TypedValue typedValue = Variables.untypedValue(value);
                 return underlyingEntry.setValue(typedValue);
               }
+
               public final boolean equals(Object o) {
                 if (!(o instanceof Map.Entry))
                   return false;
@@ -246,6 +249,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
                 }
                 return false;
               }
+
               public final int hashCode() {
                 String key = getKey();
                 Object value = getValue();

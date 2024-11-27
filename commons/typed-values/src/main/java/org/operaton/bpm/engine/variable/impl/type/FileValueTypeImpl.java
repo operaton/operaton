@@ -50,15 +50,16 @@ public class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValu
     }
     Object filename = valueInfo.get(VALUE_INFO_FILE_NAME);
     if (filename == null) {
-      throw new IllegalArgumentException("Cannot create file without filename! Please set a name into ValueInfo with key " + VALUE_INFO_FILE_NAME);
+      throw new IllegalArgumentException(
+          "Cannot create file without filename! Please set a name into ValueInfo with key " + VALUE_INFO_FILE_NAME);
     }
     FileValueBuilder builder = Variables.fileValue(filename.toString());
-    if (value instanceof File) {
-      builder.file((File) value);
-    } else if (value instanceof InputStream) {
-      builder.file((InputStream) value);
-    } else if (value instanceof byte[]) {
-      builder.file((byte[]) value);
+    if (value instanceof File file) {
+      builder.file(file);
+    } else if (value instanceof InputStream inputStream) {
+      builder.file(inputStream);
+    } else if (value instanceof byte[] byteArray) {
+      builder.file(byteArray);
     } else {
       throw new IllegalArgumentException("Provided value is not of File, InputStream or byte[] type.");
     }
@@ -67,7 +68,9 @@ public class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValu
       Object mimeType = valueInfo.get(VALUE_INFO_FILE_MIME_TYPE);
 
       if (mimeType == null) {
-        throw new IllegalArgumentException("The provided mime type is null. Set a non-null value info property with key '" + VALUE_INFO_FILE_NAME + "'");
+        throw new IllegalArgumentException(
+            "The provided mime type is null. Set a non-null value info property with key '" + VALUE_INFO_FILE_NAME
+                + "'");
       }
 
       builder.mimeType(mimeType.toString());
@@ -76,7 +79,9 @@ public class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValu
       Object encoding = valueInfo.get(VALUE_INFO_FILE_ENCODING);
 
       if (encoding == null) {
-        throw new IllegalArgumentException("The provided encoding is null. Set a non-null value info property with key '" + VALUE_INFO_FILE_ENCODING + "'");
+        throw new IllegalArgumentException(
+            "The provided encoding is null. Set a non-null value info property with key '" + VALUE_INFO_FILE_ENCODING
+                + "'");
       }
 
       builder.encoding(encoding.toString());

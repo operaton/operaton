@@ -1205,8 +1205,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (deserializationTypeValidator == null) {
       deserializationTypeValidator = new DefaultDeserializationTypeValidator();
     }
-    if (deserializationTypeValidator instanceof WhitelistingDeserializationTypeValidator) {
-      WhitelistingDeserializationTypeValidator validator = (WhitelistingDeserializationTypeValidator) deserializationTypeValidator;
+    if (deserializationTypeValidator instanceof WhitelistingDeserializationTypeValidator validator) {
       validator.setAllowedClasses(deserializationAllowedClasses);
       validator.setAllowedPackages(deserializationAllowedPackages);
     }
@@ -1635,11 +1634,11 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   protected void initService(Object service) {
-    if (service instanceof ServiceImpl) {
-      ((ServiceImpl) service).setCommandExecutor(commandExecutorTxRequired);
+    if (service instanceof ServiceImpl serviceImpl) {
+      serviceImpl.setCommandExecutor(commandExecutorTxRequired);
     }
-    if (service instanceof RepositoryServiceImpl) {
-      ((RepositoryServiceImpl) service).setDeploymentCharset(getDefaultCharset());
+    if (service instanceof RepositoryServiceImpl repositoryService) {
+      repositoryService.setDeploymentCharset(getDefaultCharset());
     }
   }
 
@@ -1684,9 +1683,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         dataSource = pooledDataSource;
       }
 
-      if (dataSource instanceof PooledDataSource) {
+      if (dataSource instanceof PooledDataSource pooledDataSource) {
         // ACT-233: connection pool of Ibatis is not properely initialized if this is not called!
-        ((PooledDataSource) dataSource).forceCloseAll();
+        pooledDataSource.forceCloseAll();
       }
     }
 
@@ -2677,8 +2676,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
       if (dmnElProvider != null) {
         dmnEngineConfigurationBuilder.elProvider(dmnElProvider);
-      } else if (expressionManager instanceof ElProviderCompatible) {
-        dmnEngineConfigurationBuilder.elProvider(((ElProviderCompatible)expressionManager).toElProvider());
+      } else if (expressionManager instanceof ElProviderCompatible elProviderCompatible) {
+        dmnEngineConfigurationBuilder.elProvider(elProviderCompatible.toElProvider());
       }
 
       dmnEngineConfiguration = dmnEngineConfigurationBuilder.build();
@@ -3938,8 +3937,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public void addIncidentHandler(IncidentHandler incidentHandler) {
     IncidentHandler existsHandler = incidentHandlers.get(incidentHandler.getIncidentHandlerType());
 
-    if (existsHandler instanceof CompositeIncidentHandler) {
-      ((CompositeIncidentHandler) existsHandler).add(incidentHandler);
+    if (existsHandler instanceof CompositeIncidentHandler compositeHandler) {
+      compositeHandler.add(incidentHandler);
     } else {
       incidentHandlers.put(incidentHandler.getIncidentHandlerType(), incidentHandler);
     }
@@ -4412,11 +4411,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   public void close() {
-    if (forceCloseMybatisConnectionPool
-        && dataSource instanceof PooledDataSource) {
-
+    if (forceCloseMybatisConnectionPool && dataSource instanceof PooledDataSource pooledDataSource) {
       // ACT-233: connection pool of Ibatis is not properely initialized if this is not called!
-      ((PooledDataSource) dataSource).forceCloseAll();
+      pooledDataSource.forceCloseAll();
     }
   }
 

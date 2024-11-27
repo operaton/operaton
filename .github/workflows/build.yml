@@ -41,8 +41,9 @@ jobs:
       fail-fast: true
     runs-on: ubuntu-latest
     steps:
-      - name: Install xq
-        run: apt-get update > /dev/null && apt-get install -y xq > /dev/null
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: xq
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0

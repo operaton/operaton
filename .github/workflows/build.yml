@@ -57,7 +57,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Install xq
-        run: sudo apt-get install -y xq
+        run: sudo apt-update && sudo apt-get install -y xq
       - name: Maven Build
         id: maven-build
         shell: bash

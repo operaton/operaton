@@ -92,8 +92,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'operaton/operaton' && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
     steps:
-      - name: Install xq
-        run: apt-get update > /dev/null && apt-get install -y xq > /dev/null
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0

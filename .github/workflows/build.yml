@@ -60,9 +60,11 @@ jobs:
         id: maven-build
         shell: bash
         run: |
-          which xq
+          echo "1"
           apt-get install -y xq
+          echo "2"
           which xq
+          echo "3"
           .github/scripts/jacoco-create-marker-files.sh
           ./mvnw verify
       - name: Upload Build Artifacts
@@ -80,13 +82,13 @@ jobs:
         id: upload-distro-tomcat
         uses: actions/upload-artifact@v4
         with:
-          name: operaton-bpm-tomcat
+          name: Operaton (Tomcat Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-*.tar.gz
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
         uses: actions/upload-artifact@v4
         with:
-          name: sql-scripts
+          name: Operaton SQL Scripts
           path: distro/sql-script/target/operaton-sql-scripts-*.tar.gz
 
   static_analysis:

@@ -56,13 +56,13 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Install xq
+        run: sudo apt-get install -y xq
       - name: Maven Build
         id: maven-build
         shell: bash
         run: |
           echo "1"
-          apt-get install -y xq
-          echo "2"
           which xq
           echo "3"
           .github/scripts/jacoco-create-marker-files.sh

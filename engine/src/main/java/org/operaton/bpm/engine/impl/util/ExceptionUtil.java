@@ -102,8 +102,7 @@ public class ExceptionUtil {
 
   public static SQLException unwrapException(PersistenceException persistenceException) {
     Throwable cause = getPersistenceCauseException(persistenceException);
-    if (cause instanceof SQLException) {
-      SQLException sqlException = (SQLException) cause;
+    if (cause instanceof SQLException sqlException) {
       SQLException nextException = sqlException.getNextException();
       if (nextException != null) {
         return nextException;
@@ -121,19 +120,17 @@ public class ExceptionUtil {
   public static SQLException unwrapException(ProcessEngineException genericPersistenceException) {
     Throwable cause = genericPersistenceException.getCause();
 
-    if (cause instanceof ProcessEngineException) {
-      ProcessEngineException processEngineException = (ProcessEngineException) cause;
-
+    if (cause instanceof ProcessEngineException processEngineException) {
       Throwable processEngineExceptionCause = processEngineException.getCause();
-      if (processEngineExceptionCause instanceof PersistenceException) {
-        return unwrapException((PersistenceException) processEngineExceptionCause);
+      if (processEngineExceptionCause instanceof PersistenceException persistenceException) {
+        return unwrapException(persistenceException);
 
       } else {
         return null;
 
       }
-    } else if (cause instanceof PersistenceException) {
-      return unwrapException((PersistenceException) cause);
+    } else if (cause instanceof PersistenceException persistenceException) {
+      return unwrapException(persistenceException);
 
     } else {
       return null;
@@ -307,8 +304,8 @@ public class ExceptionUtil {
   public static BatchExecutorException findBatchExecutorException(PersistenceException exception) {
     Throwable cause = exception;
     do {
-      if (cause instanceof BatchExecutorException) {
-        return (BatchExecutorException) cause;
+      if (cause instanceof BatchExecutorException batchExecutorException) {
+        return batchExecutorException;
       }
       cause = cause.getCause();
     } while (cause != null);

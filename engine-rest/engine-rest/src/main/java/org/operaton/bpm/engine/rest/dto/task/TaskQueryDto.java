@@ -1765,8 +1765,8 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     List<SortingDto> sortingDtos = new ArrayList<>();
     for (QueryOrderingProperty orderingProperty : orderingProperties) {
       SortingDto sortingDto;
-      if (orderingProperty instanceof VariableOrderProperty) {
-        sortingDto = convertVariableOrderPropertyToSortingDto((VariableOrderProperty) orderingProperty);
+      if (orderingProperty instanceof VariableOrderProperty variableOrderProperty) {
+        sortingDto = convertVariableOrderPropertyToSortingDto(variableOrderProperty);
       }
       else {
         sortingDto = convertQueryOrderingPropertyToSortingDto(orderingProperty);

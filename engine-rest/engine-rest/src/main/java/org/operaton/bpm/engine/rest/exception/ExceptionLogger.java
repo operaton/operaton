@@ -84,7 +84,7 @@ public class ExceptionLogger extends BaseLogger {
 
     Throwable cause = e.getCause().getCause();
 
-    return cause instanceof SQLException ? (SQLException) cause : null;
+    return cause instanceof SQLException sqlException? sqlException : null;
   }
 
 }

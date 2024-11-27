@@ -147,11 +147,11 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
         if (o == null) {
           return false;
         }
-        else if (!(o instanceof ModelElementInstanceImpl)) {
+        else if (!(o instanceof ModelElementInstanceImpl modelElement)) {
           return false;
         }
         else {
-          return getView(referenceSourceParentElement).contains(((ModelElementInstanceImpl)o).getDomElement());
+          return getView(referenceSourceParentElement).contains(modelElement.getDomElement());
         }
       }
 

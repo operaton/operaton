@@ -19,7 +19,7 @@ package org.operaton.bpm.client.variable;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -51,8 +51,6 @@ import static org.operaton.bpm.client.util.ProcessModels.USER_TASK_ID;
 import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclusiveGateway;
 import static org.operaton.bpm.client.variable.ClientValues.JSON;
 
-@ExtendWith(EngineRule.class)
-@ExtendWith(ClientRule.class)
 public class JsonValueIT {
 
   protected static final String VARIABLE_NAME_JSON = "jsonVariable";
@@ -64,8 +62,10 @@ public class JsonValueIT {
 
   protected static final JsonValue VARIABLE_VALUE_JSON_VALUE_BROKEN = ClientValues.jsonValue(VARIABLE_VALUE_JSON_SERIALIZED_BROKEN);
 
-  protected ClientRule clientRule = new ClientRule();
-  protected EngineRule engineRule = new EngineRule();
+  @RegisterExtension
+  static ClientRule clientRule = new ClientRule();
+  @RegisterExtension
+  static EngineRule engineRule = new EngineRule();
 
   protected ExternalTaskClient client;
 

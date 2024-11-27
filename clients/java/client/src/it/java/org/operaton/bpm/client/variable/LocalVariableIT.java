@@ -21,7 +21,7 @@ import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -33,8 +33,6 @@ import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-@ExtendWith(EngineRule.class)
-@ExtendWith(ClientRule.class)
 public class LocalVariableIT {
 
   private static final String GLOBAL_VARIABLE_NAME = "globalVariable";
@@ -50,8 +48,10 @@ public class LocalVariableIT {
       .endEvent("endEvent")
       .done();
 
-  protected ClientRule clientRule = new ClientRule();
-  protected EngineRule engineRule = new EngineRule();
+  @RegisterExtension
+  static ClientRule clientRule = new ClientRule();
+  @RegisterExtension
+  static EngineRule engineRule = new EngineRule();
 
   protected ExternalTaskClient client;
 

@@ -36,8 +36,7 @@ public class OptimizeHistoricVariableUpdateDto extends HistoricVariableUpdateDto
     OptimizeHistoricVariableUpdateDto dto = new OptimizeHistoricVariableUpdateDto();
     fromHistoricVariableUpdate(dto, historicVariableUpdate);
     fromHistoricDetail(historicVariableUpdate, dto);
-    if (historicVariableUpdate instanceof HistoryEvent) {
-      HistoryEvent historyEvent = (HistoryEvent) historicVariableUpdate;
+    if (historicVariableUpdate instanceof HistoryEvent historyEvent) {
       dto.setSequenceCounter(historyEvent.getSequenceCounter());
     }
     return dto;

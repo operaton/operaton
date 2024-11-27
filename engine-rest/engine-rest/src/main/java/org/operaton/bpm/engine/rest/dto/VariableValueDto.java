@@ -84,8 +84,8 @@ public class VariableValueDto {
     ValueTypeResolver valueTypeResolver = processEngine.getProcessEngineConfiguration().getValueTypeResolver();
 
     if (type == null) {
-      if (valueInfo != null && valueInfo.get(ValueType.VALUE_INFO_TRANSIENT) instanceof Boolean) {
-        return Variables.untypedValue(value, (Boolean) valueInfo.get(ValueType.VALUE_INFO_TRANSIENT));
+      if (valueInfo != null && valueInfo.get(ValueType.VALUE_INFO_TRANSIENT) instanceof Boolean booleanValueInfo) {
+        return Variables.untypedValue(value, booleanValueInfo);
       }
       return Variables.untypedValue(value);
     }
@@ -95,8 +95,7 @@ public class VariableValueDto {
       throw new RestException(Status.BAD_REQUEST, String.format("Unsupported value type '%s'", type));
     }
     else {
-      if(valueType instanceof PrimitiveValueType) {
-        PrimitiveValueType primitiveValueType = (PrimitiveValueType) valueType;
+      if(valueType instanceof PrimitiveValueType primitiveValueType) {
         Class<?> javaType = primitiveValueType.getJavaType();
         Object mappedValue = null;
         try {
@@ -116,16 +115,16 @@ public class VariableValueDto {
               String.format("Cannot convert value '%s' of type '%s' to java type %s", value, type, javaType.getName()));
         }
       }
-      else if(valueType instanceof SerializableValueType) {
+      else if(valueType instanceof SerializableValueType serializableValueType) {
         if(value != null && !(value instanceof String)) {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Must provide 'null' or String value for value of SerializableValue type '"+type+"'.");
         }
-        return ((SerializableValueType) valueType).createValueFromSerialized((String) value, valueInfo);
+        return serializableValueType.createValueFromSerialized((String) value, valueInfo);
       }
       else if(valueType instanceof FileValueType) {
 
-        if (value instanceof String) {
-          value = Base64.decodeBase64((String) value);
+        if (value instanceof String stringValue) {
+          value = Base64.decodeBase64(stringValue);
         }
 
         return valueType.createValue(value, valueInfo);
@@ -198,8 +197,7 @@ public class VariableValueDto {
       dto.setValueInfo(type.getValueInfo(typedValue));
     }
 
-    if(typedValue instanceof SerializableValue) {
-      SerializableValue serializableValue = (SerializableValue) typedValue;
+    if(typedValue instanceof SerializableValue serializableValue) {
 
       if(serializableValue.isDeserialized() && !preferSerializedValue) {
         dto.setValue(serializableValue.getValue());

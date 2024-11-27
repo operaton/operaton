@@ -18,7 +18,7 @@ package org.operaton.bpm.client.variable;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -53,8 +53,6 @@ import static org.operaton.bpm.engine.variable.type.ValueType.NULL;
 import static org.operaton.bpm.engine.variable.type.ValueType.SHORT;
 import static org.operaton.bpm.engine.variable.type.ValueType.STRING;
 
-@ExtendWith(EngineRule.class)
-@ExtendWith(ClientRule.class)
 public class PrimitiveVariableIT {
 
   protected static final String VARIABLE_NAME = "foo";
@@ -79,8 +77,10 @@ public class PrimitiveVariableIT {
   protected static final byte[] VARIABLE_VALUE_BYTES = VARIABLE_VALUE_STRING.getBytes();
 //  protected static final InputStream VARIABLE_VALUE_BYTES_INPUTSTREAM = new ByteArrayInputStream(VARIABLE_VALUE_STRING.getBytes());
 
-  protected ClientRule clientRule = new ClientRule();
-  protected EngineRule engineRule = new EngineRule();
+  @RegisterExtension
+  static ClientRule clientRule = new ClientRule();
+  @RegisterExtension
+  static EngineRule engineRule = new EngineRule();
 
   protected ExternalTaskClient client;
 

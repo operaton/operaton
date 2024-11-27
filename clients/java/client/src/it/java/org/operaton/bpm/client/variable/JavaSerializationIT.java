@@ -18,7 +18,7 @@ package org.operaton.bpm.client.variable;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -47,8 +47,6 @@ import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
 import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.JAVA;
 import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
 
-@ExtendWith(EngineRule.class)
-@ExtendWith(ClientRule.class)
 public class JavaSerializationIT {
 
   protected static final String ENGINE_NAME = "/engine/another-engine";
@@ -64,7 +62,8 @@ public class JavaSerializationIT {
       .serializationDataFormat(JAVA)
       .create();
 
-  protected ClientRule clientRule = new ClientRule(() -> {
+  @RegisterExtension
+  static ClientRule clientRule = new ClientRule(() -> {
     Properties properties = loadProperties(DEFAULT_PROPERTIES_PATH);
     String baseUrl = properties.getProperty(CAMUNDA_ENGINE_REST) + ENGINE_NAME;
     return ExternalTaskClient.create()
@@ -73,7 +72,8 @@ public class JavaSerializationIT {
         .lockDuration(LOCK_DURATION);
   });
 
-  protected EngineRule engineRule = new EngineRule(() -> {
+  @RegisterExtension
+  static EngineRule engineRule = new EngineRule(() -> {
     Properties properties = loadProperties(DEFAULT_PROPERTIES_PATH);
     properties.put(CAMUNDA_ENGINE_NAME, ENGINE_NAME);
     return properties;

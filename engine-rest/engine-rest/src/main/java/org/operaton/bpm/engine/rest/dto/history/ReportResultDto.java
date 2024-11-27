@@ -50,8 +50,7 @@ public abstract class ReportResultDto {
 
     ReportResultDto dto = null;
 
-    if (reportResult instanceof DurationReportResult) {
-      DurationReportResult durationReport = (DurationReportResult) reportResult;
+    if (reportResult instanceof DurationReportResult durationReport) {
       dto = DurationReportResultDto.fromDurationReportResult(durationReport);
     }
 

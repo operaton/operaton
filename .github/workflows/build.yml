@@ -41,6 +41,8 @@ jobs:
       fail-fast: true
     runs-on: ubuntu-latest
     steps:
+      - name: Install xq
+        run: apt-get update > /dev/null && apt-get install -y xq > /dev/null
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -56,8 +58,6 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Install xq
-        run: sudo apt-update && sudo apt-get install -y xq
       - name: Maven Build
         id: maven-build
         shell: bash
@@ -97,6 +97,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'operaton/operaton' && (github.ref == 'refs/heads/main' || github.event_name == 'pull_request')
     steps:
+      - name: Install xq
+        run: apt-get update > /dev/null && apt-get install -y xq > /dev/null
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0

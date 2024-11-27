@@ -57,8 +57,8 @@ public class TimerExpressionBean implements Serializable {
     if (timerExpression == null) {
       throw new NullValueException("no variable 'timerExpression' found");
     }
-    if (timerExpression instanceof StringValue) {
-      return ((StringValue) timerExpression).getValue();
+    if (timerExpression instanceof StringValue stringValue) {
+      return stringValue.getValue();
     }
     return String.valueOf(timerExpression.getValue());
   }

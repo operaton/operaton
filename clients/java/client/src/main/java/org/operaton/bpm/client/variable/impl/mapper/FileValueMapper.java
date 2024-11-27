@@ -106,7 +106,7 @@ public class FileValueMapper extends AbstractTypedValueMapper<FileValue> {
   }
 
   protected boolean isDeferred(Object variableValue) {
-    return variableValue instanceof DeferredFileValue && !((DeferredFileValue) variableValue).isLoaded();
+    return variableValue instanceof DeferredFileValue deferredfilevalue && !deferredfilevalue.isLoaded();
   }
 
 }

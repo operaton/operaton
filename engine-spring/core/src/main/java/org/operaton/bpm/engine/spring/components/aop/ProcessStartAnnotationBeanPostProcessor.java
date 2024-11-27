@@ -67,8 +67,8 @@ public class ProcessStartAnnotationBeanPostProcessor extends ProxyConfig impleme
 		}
 		Class<?> targetClass = AopUtils.getTargetClass(bean);
 		if (AopUtils.canApply(this.advisor, targetClass)) {
-			if (bean instanceof Advised) {
-				((Advised) bean).addAdvisor(0, this.advisor);
+			if (bean instanceof Advised advised) {
+				advised.addAdvisor(0, this.advisor);
 				return bean;
 			}
 			else {

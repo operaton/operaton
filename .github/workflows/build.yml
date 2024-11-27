@@ -41,10 +41,6 @@ jobs:
       fail-fast: true
     runs-on: ubuntu-latest
     steps:
-      - run: sudo apt update
-      - uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: xq
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -64,9 +60,6 @@ jobs:
         id: maven-build
         shell: bash
         run: |
-          echo "1"
-          which xq
-          echo "3"
           .github/scripts/jacoco-create-marker-files.sh
           ./mvnw verify
       - name: Upload Build Artifacts
@@ -126,9 +119,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
         run: |
-          apt-get update && apt-get install -y xq
-          .github/scripts/jacoco-create-report-pom.sh target/jacoco-aggregate-report-pom.xml
-          ./mvnw -f target/jacoco-aggregate-report-pom.xml verify
+          ./mvnw -f report-aggregate-pom.xml
           ./mvnw -Dsonar.projectKey=operaton_operaton org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         continue-on-error: true
 

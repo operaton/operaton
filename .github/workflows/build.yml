@@ -41,6 +41,7 @@ jobs:
       fail-fast: true
     runs-on: ubuntu-latest
     steps:
+      - run: sudo apt update
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: xq

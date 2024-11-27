@@ -22,6 +22,36 @@ Take a look at our [Roadmap](https://www.operaton.org/en/#roadmap)
 ### Want to talk to us or other people around Operaton?
 Visit our [Forum](https://forum.operaton.org)
 
+## Building
+Prerequisites:
+
+JDK 17 or newer - check `java -version`
+
+You can use the Maven Wrapper script to execute the build. The script downloads and installs (if necessary) the required Maven version to `~/.m2/wrapper` and runs it from there.
+
+On Linux and MacOS, run
+```shell
+./mvnw
+```
+
+On Windows, run
+```shell
+mvnw
+```
+
+Alternatively, you can use the your own Maven installation (minimal version: 3.9.0) Wrapper and execute
+```shell
+mvn
+```
+
+For a faster build you can add `-DskipTests` to skip test execution and `-Dskip.frontend.build=true` to skip the build of the webapps.
+
+## Get it!
+
+Get the latest release from the [Releases page](https://github.com/operaton/operaton/releases).
+
+To get the latest nightly build visit the [Nightly Build actions](https://github.com/operaton/operaton/actions/workflows/nighly-build.yml?query=branch%3Amain+event%3Aschedule+is%3Asuccess++), click on the latest available build and download from the _Artifacts_ section.
+
 ## Components
 
 Operaton provides a rich set of components centered around the BPM lifecycle.

@@ -108,3 +108,14 @@ Java 17 or higher is required.
 The source files in this repository are made available under the [Apache License Version 2.0](./LICENSE).
 
 Operaton uses and includes third-party dependencies published under various licenses. By downloading and using Operaton artifacts, you agree to their terms and conditions. Refer to our [license-book.txt](./distro/license-book/src/main/resources/license-book.txt) for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->

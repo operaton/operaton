@@ -64,19 +64,19 @@ public class VariableScopeElResolver extends ELResolver {
           context.setPropertyResolved(true);
           return variableScope;
         } else if(EXTERNAL_TASK_KEY.equals(property)
-            && variableScope instanceof ExecutionEntity
-            && ((ExecutionEntity) variableScope).getActivity() != null
-            && ((ExecutionEntity) variableScope).getActivity().getActivityBehavior() instanceof ExternalTaskActivityBehavior) {
-          List<ExternalTaskEntity> externalTasks = ((ExecutionEntity) variableScope).getExternalTasks();
+            && variableScope instanceof ExecutionEntity executionEntity
+            && executionEntity.getActivity() != null
+            && executionEntity.getActivity().getActivityBehavior() instanceof ExternalTaskActivityBehavior) {
+          List<ExternalTaskEntity> externalTasks = executionEntity.getExternalTasks();
           if(externalTasks.size() != 1) {
             throw new ProcessEngineException("Could not resolve expression to single external task entity.");
           }
           context.setPropertyResolved(true);
           return externalTasks.get(0);
 
-        } else if (EXECUTION_KEY.equals(property) && variableScope instanceof TaskEntity) {
+        } else if (EXECUTION_KEY.equals(property) && variableScope instanceof TaskEntity taskEntity) {
           context.setPropertyResolved(true);
-          return ((TaskEntity) variableScope).getExecution();
+          return taskEntity.getExecution();
         } else if(LOGGED_IN_USER_KEY.equals(property)){
           context.setPropertyResolved(true);
           return Context.getCommandContext().getAuthenticatedUserId();

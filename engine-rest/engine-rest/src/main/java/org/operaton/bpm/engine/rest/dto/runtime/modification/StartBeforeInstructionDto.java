@@ -58,8 +58,8 @@ public class StartBeforeInstructionDto extends ProcessInstanceModificationInstru
 
     builder.startBeforeActivity(activityId);
 
-    if (builder instanceof ProcessInstantiationBuilder) {
-      applyVariables((ProcessInstantiationBuilder) builder, engine, mapper);
+    if (builder instanceof ProcessInstantiationBuilder processInstantiationBuilder) {
+      applyVariables(processInstantiationBuilder, engine, mapper);
     }
   }
 

@@ -146,8 +146,8 @@ public class Variables {
    * it is returned as is.
    */
   public static VariableMap fromMap(Map<String, Object> map) {
-    if(map instanceof VariableMap) {
-      return (VariableMap) map;
+    if(map instanceof VariableMap variableMap) {
+      return variableMap;
     }
     else {
       return new VariableMapImpl(map);
@@ -364,8 +364,8 @@ public class Variables {
     if (untypedValue instanceof TypedValueBuilder) {
       untypedValue = ((TypedValueBuilder<?>) untypedValue).create();
     }
-    if (untypedValue instanceof TypedValue) {
-      return untypedValue(untypedValue, ((TypedValue) untypedValue).isTransient());
+    if (untypedValue instanceof TypedValue typedvalue) {
+      return untypedValue(typedvalue, typedvalue.isTransient());
     }
     else return untypedValue(untypedValue, false);
   }
@@ -379,8 +379,7 @@ public class Variables {
       return untypedNullValue(isTransient);
     } else if (value instanceof TypedValueBuilder<?>) {
       return ((TypedValueBuilder<?>) value).setTransient(isTransient).create();
-    } else if (value instanceof TypedValue) {
-      TypedValue transientValue = (TypedValue) value;
+    } else if (value instanceof TypedValue transientValue) {
       if (value instanceof NullValueImpl) {
         transientValue = untypedNullValue(isTransient);
       } else if (value instanceof FileValue) {

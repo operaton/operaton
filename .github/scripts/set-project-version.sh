@@ -42,6 +42,9 @@ POM_FILES=(\
 ./distro/run/modules/oauth2/pom.xml \
 ./distro/run/modules/pom.xml \
 ./distro/run/modules/rest/pom.xml \
+./distro/wildfly26/pom.xml \
+./distro/wildfly26/modules/pom.xml \
+./distro/wildfly26/subsystem/pom.xml \
 )
 
 for POM_FILE in ${POM_FILES[@]}; do

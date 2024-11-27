@@ -14,6 +14,10 @@
   <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Root POM</name>
 
+  <properties>
+    <deploy.skip>true</deploy.skip>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>

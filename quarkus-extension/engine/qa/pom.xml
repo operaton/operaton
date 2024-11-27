@@ -12,6 +12,7 @@
 
   <properties>
     <arquillian.version>1.7.0.Final</arquillian.version>
+    <deploy.skip>true</deploy.skip>
   </properties>
 
   <dependencyManagement>

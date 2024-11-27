@@ -25,6 +25,7 @@
     <maven-plugin-version>1.0.0</maven-plugin-version>
     <javax-annotation-version>1.0</javax-annotation-version>
     <junit-version>4.13.1</junit-version>
+    <surefire.forkCount>1</surefire.forkCount>
   </properties>
 
   <dependencies>

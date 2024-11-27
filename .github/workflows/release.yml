@@ -10,11 +10,12 @@ on:
       next_version:
         description: 'The next development version to set (without -SNAPSHOT suffix)'
         required: true
+        default: '1.0.0-beta-3'
       dry_run:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean
         required: true
-        default: false
+        default: true
 jobs:
   precheck:
     name: Precheck
@@ -42,7 +43,7 @@ jobs:
             echo "⚙ Releasing version '$RELEASE_VERSION'"
             echo "is_prerelease=false" >> $GITHUB_OUTPUT
           fi
-          ./mvnw versions:set -DnewVersion=$RELEASE_VERSION
+          .github/scripts/set-project-version.sh $RELEASE_VERSION
           if ! git diff-index --quiet HEAD --; then
             git config --local user.name "$GITHUB_ACTOR"
             git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -71,15 +72,28 @@ jobs:
 
       - name: Maven Build
         run: |
-          ./mvnw clean deploy -Prelease -DaltDeploymentRepository=local::file:./target/staging-deploy
-          # https://slack-chats.kotlinlang.org/t/16407246/anyone-tried-the-https-central-sonatype-org-publish-publish-
+          PROJECT_ROOT=$(pwd)
+          # Make a verification build. Also the deploy step will need the tomcat distro for building, but we don't want to deploy it.
+          ./mvnw \
+            -Pdistro,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory \
+            install \
+            versions:dependency-updates-aggregate-report \
+            versions:plugin-updates-aggregate-report \
+            -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc \
+            -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list
+          .github/scripts/prepare-reports.sh
+          ./mvnw -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
-      - name: Upload Artifacts
-        id: upload-release-artifacts
-        uses: actions/upload-artifact@v4
+      - name: Cache build artifacts
+        uses: actions/cache@v4
         with:
-          name: release-artifacts
-          path: ./*/staging-deploy/**
+          path: |
+            distro/**/*.tar.gz
+            distro/webjar/target/operaton-webapp-webjar-*.jar
+            ./*/staging-deploy/**
+            **/target/reports/**
+            **/target/surefire-reports/*.xml
+          key: ${{ github.run_id }}-build-artifacts
 
   release:
     name: Release
@@ -94,10 +108,17 @@ jobs:
           fetch-depth: 0
           ref: ${{github.event.inputs.release_branch}}
 
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
+      - name: Restore build artifacts cache
+        uses: actions/cache@v4
         with:
-          name: release-artifacts
+          path: |
+            distro/**/*.tar.gz
+            distro/webjar/target/operaton-webapp-webjar-*.jar
+            ./*/staging-deploy/**
+            **/target/reports/**
+            **/target/surefire-reports/*.xml
+          key: ${{ github.run_id }}-build-artifacts
+          fail-on-cache-miss: true
 
       - name: Release with JReleaser
         uses: jreleaser/release-action@v2
@@ -109,17 +130,31 @@ jobs:
           JRELEASER_GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
           JRELEASER_MAVENCENTRAL_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
-          JRELEASER_NEXUS2_USERNAME: ${{secrets.OSSRH_USERNAME}}
-          JRELEASER_NEXUS2_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{github.event.inputs.dry_run}}
           JRELEASER_PRERELEASE_ENABLED: ${{needs.precheck.outputs.is_prerelease}}
-      - name: Upload Build Reports
+
+      - name: Publish Test Report
         if: always()
+        #https://github.com/marketplace/actions/junit-report-action
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
+          require_passed_tests: true
+
+      - name: Archive Reports
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts
-          path: ${{ github.workspace }}/**/**
-          retention-days: 1
+          name: reports
+          path: |
+            **/target/reports/**
+
+      - name: Archive Staging Repo
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging
+          path: |
+            ./*/staging-deploy/**
+          retention-days: 10
 
   post_release:
     name: Post-Release
@@ -141,7 +176,7 @@ jobs:
       - name: Set next development version
         run: |
           NEXT_VERSION=${{github.event.inputs.next_version}}-SNAPSHOT
-          ./mvnw versions:set -DnewVersion=$NEXT_VERSION
+          .github/scripts/set-project-version.sh $NEXT_VERSION
           if ! git diff-index --quiet HEAD --; then
             git config --local user.name "$GITHUB_ACTOR"
             git config --local user.email "github-actions[bot]@users.noreply.github.com"

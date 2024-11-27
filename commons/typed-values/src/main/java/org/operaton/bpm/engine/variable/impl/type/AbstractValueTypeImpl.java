@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 public abstract class AbstractValueTypeImpl implements ValueType {
 
   private static final long serialVersionUID = 1L;
-
+  
   protected String name;
 
   public AbstractValueTypeImpl(String name) {
@@ -61,8 +61,7 @@ public abstract class AbstractValueTypeImpl implements ValueType {
   }
 
   protected IllegalArgumentException unsupportedConversion(ValueType typeToConvertTo) {
-    return new IllegalArgumentException(
-        "The type " + getName() + " supports no conversion from type: " + typeToConvertTo.getName());
+    return new IllegalArgumentException("The type " + getName() + " supports no conversion from type: " + typeToConvertTo.getName());
   }
 
   @Override

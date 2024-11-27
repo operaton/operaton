@@ -48,7 +48,7 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
   public TypedValue createValue(Object value, Map<String, Object> valueInfo) {
     ObjectValueBuilder builder = Variables.objectValue(value);
 
-    if (valueInfo != null) {
+    if(valueInfo != null) {
       applyValueInfo(builder, valueInfo);
     }
 
@@ -56,7 +56,7 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
   }
 
   public Map<String, Object> getValueInfo(TypedValue typedValue) {
-    if (!(typedValue instanceof ObjectValue)) {
+    if(!(typedValue instanceof ObjectValue)) {
       throw new IllegalArgumentException("Value not of type Object.");
     }
     ObjectValue objectValue = (ObjectValue) typedValue;
@@ -64,12 +64,12 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
     Map<String, Object> valueInfo = new HashMap<String, Object>();
 
     String serializationDataFormat = objectValue.getSerializationDataFormat();
-    if (serializationDataFormat != null) {
+    if(serializationDataFormat != null) {
       valueInfo.put(VALUE_INFO_SERIALIZATION_DATA_FORMAT, serializationDataFormat);
     }
 
     String objectTypeName = objectValue.getObjectTypeName();
-    if (objectTypeName != null) {
+    if(objectTypeName != null) {
       valueInfo.put(VALUE_INFO_OBJECT_TYPE_NAME, objectTypeName);
     }
 
@@ -83,7 +83,7 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
   public SerializableValue createValueFromSerialized(String serializedValue, Map<String, Object> valueInfo) {
     SerializedObjectValueBuilder builder = Variables.serializedObjectValue(serializedValue);
 
-    if (valueInfo != null) {
+    if(valueInfo != null) {
       applyValueInfo(builder, valueInfo);
     }
 
@@ -98,7 +98,7 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
     }
 
     String serializationDataFormat = (String) valueInfo.get(VALUE_INFO_SERIALIZATION_DATA_FORMAT);
-    if (serializationDataFormat != null) {
+    if(serializationDataFormat != null) {
       builder.serializationDataFormat(serializationDataFormat);
     }
 

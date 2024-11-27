@@ -62,10 +62,8 @@ import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuild
 import org.operaton.bpm.engine.variable.value.builder.TypedValueBuilder;
 
 /**
- * <p>
- * This class is the entry point to the process engine's typed variables API.
- * Users can import the methods provided by this class using a static import:
- * </p>
+ * <p>This class is the entry point to the process engine's typed variables API.
+ * Users can import the methods provided by this class using a static import:</p>
  *
  * <code>
  * import static org.operaton.bpm.engine.variable.Variables.*;
@@ -77,74 +75,50 @@ import org.operaton.bpm.engine.variable.value.builder.TypedValueBuilder;
 public class Variables {
 
   /**
-   * <p>
-   * A set of builtin serialization dataformat constants. These constants can be
-   * used to specify
-   * how java object variables should be serialized by the process engine:
-   * </p>
+   * <p>A set of builtin serialization dataformat constants. These constants can be used to specify
+   * how java object variables should be serialized by the process engine:</p>
    *
    * <pre>
    * CustomerData customerData = new CustomerData();
    * // ...
    * ObjectValue customerDataValue = Variables.objectValue(customerData)
-   *     .serializationDataFormat(Variables.SerializationDataFormats.JSON)
-   *     .create();
+   *   .serializationDataFormat(Variables.SerializationDataFormats.JSON)
+   *   .create();
    *
    * execution.setVariable("someVariable", customerDataValue);
    * </pre>
    *
-   * <p>
-   * Note that not all of the formats provided here are supported out of the box.
-   * </p>
+   * <p>Note that not all of the formats provided here are supported out of the box.</p>
    *
    * @author Daniel Meyer
    */
   public enum SerializationDataFormats implements SerializationDataFormat {
 
     /**
-     * <p>
-     * The Java Serialization Data format. If this data format is used for
-     * serializing an object,
-     * the object is serialized using default Java {@link Serializable}.
-     * </p>
+     * <p>The Java Serialization Data format. If this data format is used for serializing an object,
+     * the object is serialized using default Java {@link Serializable}.</p>
      *
-     * <p>
-     * The process engine provides a serializer for this dataformat out of the box.
-     * </p>
+     * <p>The process engine provides a serializer for this dataformat out of the box.</p>
      */
     JAVA("application/x-java-serialized-object"),
 
     /**
-     * <p>
-     * The Json Serialization Data format. If this data format is used for
-     * serializing an object,
-     * the object is serialized as Json text.
-     * </p>
+     * <p>The Json Serialization Data format. If this data format is used for serializing an object,
+     * the object is serialized as Json text.</p>
      *
-     * <p>
-     * <strong>NOTE:</strong> the process does NOT provide a serializer for this
-     * dataformat out of the box.
-     * If you want to serialize objects using the Json dataformat, you need to
-     * provide a serializer. The optinal
-     * operaton Spin process engine plugin provides such a serializer.
-     * </p>
+     * <p><strong>NOTE:</strong> the process does NOT provide a serializer for this dataformat out of the box.
+     * If you want to serialize objects using the Json dataformat, you need to provide a serializer. The optinal
+     * operaton Spin process engine plugin provides such a serializer.</p>
      */
     JSON("application/json"),
 
     /**
-     * <p>
-     * The Xml Serialization Data format. If this data format is used for
-     * serializing an object,
-     * the object is serialized as Xml text.
-     * </p>
+     * <p>The Xml Serialization Data format. If this data format is used for serializing an object,
+     * the object is serialized as Xml text.</p>
      *
-     * <p>
-     * <strong>NOTE:</strong> the process does NOT provide a serializer for this
-     * dataformat out of the box.
-     * If you want to serialize objects using the Xml dataformat, you need to
-     * provide a serializer. The optinal
-     * operaton Spin process engine plugin provides such a serializer.
-     * </p>
+     * <p><strong>NOTE:</strong> the process does NOT provide a serializer for this dataformat out of the box.
+     * If you want to serialize objects using the Xml dataformat, you need to provide a serializer. The optinal
+     * operaton Spin process engine plugin provides such a serializer.</p>
      */
     XML("application/xml");
 
@@ -168,14 +142,14 @@ public class Variables {
 
   /**
    * If the given map is not a variable map, adds all its entries as untyped
-   * values to a new {@link VariableMap}. If the given map is a
-   * {@link VariableMap},
+   * values to a new {@link VariableMap}. If the given map is a {@link VariableMap},
    * it is returned as is.
    */
   public static VariableMap fromMap(Map<String, Object> map) {
-    if (map instanceof VariableMap variablemap) {
-      return variablemap;
-    } else {
+    if(map instanceof VariableMap variableMap) {
+      return variableMap;
+    }
+    else {
       return new VariableMapImpl(map);
     }
   }
@@ -226,72 +200,63 @@ public class Variables {
   }
 
   /**
-   * Shortcut for
-   * {@code Variables.serializedObjectValue().serializedValue(value).setTransient(isTransient)}
+   * Shortcut for {@code Variables.serializedObjectValue().serializedValue(value).setTransient(isTransient)}
    */
   public static SerializedObjectValueBuilder serializedObjectValue(String value, boolean isTransient) {
     return (SerializedObjectValueBuilder) serializedObjectValue().serializedValue(value).setTransient(isTransient);
   }
 
   /**
-   * Creates a new {@link IntegerValue} that encapsulates the given
-   * <code>integer</code>
+   * Creates a new {@link IntegerValue} that encapsulates the given <code>integer</code>
    */
   public static IntegerValue integerValue(Integer integer) {
     return integerValue(integer, false);
   }
 
   /**
-   * Creates a new {@link IntegerValue} that encapsulates the given
-   * <code>integer</code>
+   * Creates a new {@link IntegerValue} that encapsulates the given <code>integer</code>
    */
   public static IntegerValue integerValue(Integer integer, boolean isTransient) {
     return new IntegerValueImpl(integer, isTransient);
   }
 
   /**
-   * Creates a new {@link StringValue} that encapsulates the given
-   * <code>stringValue</code>
+   * Creates a new {@link StringValue} that encapsulates the given <code>stringValue</code>
    */
   public static StringValue stringValue(String stringValue) {
     return stringValue(stringValue, false);
   }
 
   /**
-   * Creates a new {@link StringValue} that encapsulates the given
-   * <code>stringValue</code>
+   * Creates a new {@link StringValue} that encapsulates the given <code>stringValue</code>
    */
   public static StringValue stringValue(String stringValue, boolean isTransient) {
     return new StringValueImpl(stringValue, isTransient);
   }
 
   /**
-   * Creates a new {@link BooleanValue} that encapsulates the given
-   * <code>booleanValue</code>
+   * Creates a new {@link BooleanValue} that encapsulates the given <code>booleanValue</code>
    */
   public static BooleanValue booleanValue(Boolean booleanValue) {
     return booleanValue(booleanValue, false);
   }
 
   /**
-   * Creates a new {@link BooleanValue} that encapsulates the given
-   * <code>booleanValue</code>
+   * Creates a new {@link BooleanValue} that encapsulates the given <code>booleanValue</code>
    */
   public static BooleanValue booleanValue(Boolean booleanValue, boolean isTransient) {
     return new BooleanValueImpl(booleanValue, isTransient);
   }
 
   /**
-   * Creates a new {@link BytesValue} that encapsulates the given
-   * <code>bytes</code>
+   * Creates a new {@link BytesValue} that encapsulates the given <code>bytes</code>
    */
   public static BytesValue byteArrayValue(byte[] bytes) {
     return byteArrayValue(bytes, false);
   }
 
   /**
-   * Creates a new {@link BytesValue} that encapsulates the given
-   * <code>bytes</code>
+   * Creates a new {@link BytesValue} that encapsulates the given <code>bytes</code>
    */
   public static BytesValue byteArrayValue(byte[] bytes, boolean isTransient) {
     return new BytesValueImpl(bytes, isTransient);
@@ -312,58 +277,50 @@ public class Variables {
   }
 
   /**
-   * Creates a new {@link LongValue} that encapsulates the given
-   * <code>longValue</code>
+   * Creates a new {@link LongValue} that encapsulates the given <code>longValue</code>
    */
   public static LongValue longValue(Long longValue) {
     return longValue(longValue, false);
   }
 
   /**
-   * Creates a new {@link LongValue} that encapsulates the given
-   * <code>longValue</code>
+   * Creates a new {@link LongValue} that encapsulates the given <code>longValue</code>
    */
   public static LongValue longValue(Long longValue, boolean isTransient) {
     return new LongValueImpl(longValue, isTransient);
   }
 
   /**
-   * Creates a new {@link ShortValue} that encapsulates the given
-   * <code>shortValue</code>
+   * Creates a new {@link ShortValue} that encapsulates the given <code>shortValue</code>
    */
   public static ShortValue shortValue(Short shortValue) {
     return shortValue(shortValue, false);
   }
 
   /**
-   * Creates a new {@link ShortValue} that encapsulates the given
-   * <code>shortValue</code>
+   * Creates a new {@link ShortValue} that encapsulates the given <code>shortValue</code>
    */
   public static ShortValue shortValue(Short shortValue, boolean isTransient) {
     return new ShortValueImpl(shortValue, isTransient);
   }
 
   /**
-   * Creates a new {@link DoubleValue} that encapsulates the given
-   * <code>doubleValue</code>
+   * Creates a new {@link DoubleValue} that encapsulates the given <code>doubleValue</code>
    */
   public static DoubleValue doubleValue(Double doubleValue) {
     return doubleValue(doubleValue, false);
   }
 
   /**
-   * Creates a new {@link DoubleValue} that encapsulates the given
-   * <code>doubleValue</code>
+   * Creates a new {@link DoubleValue} that encapsulates the given <code>doubleValue</code>
    */
   public static DoubleValue doubleValue(Double doubleValue, boolean isTransient) {
     return new DoubleValueImpl(doubleValue, isTransient);
   }
 
   /**
-   * Creates an abstract Number value. Note that this value cannot be used to set
-   * variables.
-   * Use the specific methods {@link Variables#integerValue(Integer)},
-   * {@link #shortValue(Short)},
+   * Creates an abstract Number value. Note that this value cannot be used to set variables.
+   * Use the specific methods {@link Variables#integerValue(Integer)}, {@link #shortValue(Short)},
    * {@link #longValue(Long)} and {@link #doubleValue(Double)} instead.
    */
   public static NumberValue numberValue(Number numberValue) {
@@ -371,10 +328,8 @@ public class Variables {
   }
 
   /**
-   * Creates an abstract Number value. Note that this value cannot be used to set
-   * variables.
-   * Use the specific methods {@link Variables#integerValue(Integer)},
-   * {@link #shortValue(Short)},
+   * Creates an abstract Number value. Note that this value cannot be used to set variables.
+   * Use the specific methods {@link Variables#integerValue(Integer)}, {@link #shortValue(Short)},
    * {@link #longValue(Long)} and {@link #doubleValue(Double)} instead.
    */
   public static NumberValue numberValue(Number numberValue, boolean isTransient) {
@@ -382,28 +337,26 @@ public class Variables {
   }
 
   /**
-   * Creates a {@link TypedValue} with value {@code null} and type
-   * {@link ValueType#NULL}
+   * Creates a {@link TypedValue} with value {@code null} and type {@link ValueType#NULL}
    */
   public static TypedValue untypedNullValue() {
     return untypedNullValue(false);
   }
 
   /**
-   * Creates a {@link TypedValue} with value {@code null} and type
-   * {@link ValueType#NULL}
+   * Creates a {@link TypedValue} with value {@code null} and type {@link ValueType#NULL}
    */
   public static TypedValue untypedNullValue(boolean isTransient) {
     if (isTransient) {
       return NullValueImpl.INSTANCE_TRANSIENT;
-    } else {
+    }
+    else {
       return NullValueImpl.INSTANCE;
     }
   }
 
   /**
-   * Creates an untyped value, i.e. {@link TypedValue#getType()} returns
-   * <code>null</code>
+   * Creates an untyped value, i.e. {@link TypedValue#getType()} returns <code>null</code>
    * for the returned instance.
    */
   public static TypedValue untypedValue(Object value) {
@@ -411,24 +364,22 @@ public class Variables {
     if (untypedValue instanceof TypedValueBuilder) {
       untypedValue = ((TypedValueBuilder<?>) untypedValue).create();
     }
-    if (untypedValue instanceof TypedValue typedValue) {
-      return untypedValue(untypedValue, typedValue.isTransient());
-    } else
-      return untypedValue(untypedValue, false);
+    if (untypedValue instanceof TypedValue typedvalue) {
+      return untypedValue(typedvalue, typedvalue.isTransient());
+    }
+    else return untypedValue(untypedValue, false);
   }
 
   /**
-   * Creates an untyped value, i.e. {@link TypedValue#getType()} returns
-   * <code>null</code>
+   * Creates an untyped value, i.e. {@link TypedValue#getType()} returns <code>null</code>
    * for the returned instance.
    */
   public static TypedValue untypedValue(Object value, boolean isTransient) {
-    if (value == null) {
+    if(value == null) {
       return untypedNullValue(isTransient);
     } else if (value instanceof TypedValueBuilder<?>) {
       return ((TypedValueBuilder<?>) value).setTransient(isTransient).create();
-    } else if (value instanceof TypedValue typedValue) {
-      TypedValue transientValue = typedValue;
+    } else if (value instanceof TypedValue transientValue) {
       if (value instanceof NullValueImpl) {
         transientValue = untypedNullValue(isTransient);
       } else if (value instanceof FileValue) {
@@ -437,7 +388,8 @@ public class Variables {
         ((AbstractTypedValue<?>) transientValue).setTransient(isTransient);
       }
       return transientValue;
-    } else {
+    }
+    else {
       // unknown value
       return new UntypedValueImpl(value, isTransient);
     }
@@ -460,30 +412,25 @@ public class Variables {
   }
 
   /**
-   * Shortcut for calling
-   * {@code Variables.fileValue(name).file(file).mimeType(type).create()}.
-   * The name is set to the file name and the mime type is detected via
-   * {@link MimetypesFileTypeMap}.
+   * Shortcut for calling {@code Variables.fileValue(name).file(file).mimeType(type).create()}.
+   * The name is set to the file name and the mime type is detected via {@link MimetypesFileTypeMap}.
    */
-  public static FileValue fileValue(File file) {
+  public static FileValue fileValue(File file){
     String contentType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file);
     return new FileValueBuilderImpl(file.getName()).file(file).mimeType(contentType).create();
   }
 
   /**
-   * Shortcut for calling
-   * {@code Variables.fileValue(name).file(file).mimeType(type).setTransient(isTransient).create()}.
-   * The name is set to the file name and the mime type is detected via
-   * {@link MimetypesFileTypeMap}.
+   * Shortcut for calling {@code Variables.fileValue(name).file(file).mimeType(type).setTransient(isTransient).create()}.
+   * The name is set to the file name and the mime type is detected via {@link MimetypesFileTypeMap}.
    */
-  public static FileValue fileValue(File file, boolean isTransient) {
+  public static FileValue fileValue(File file, boolean isTransient){
     String contentType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file);
     return new FileValueBuilderImpl(file.getName()).file(file).mimeType(contentType).setTransient(isTransient).create();
   }
 
   /**
-   * @return an empty {@link VariableContext} (from which no variables can be
-   *         resolved).
+   * @return an empty {@link VariableContext} (from which no variables can be resolved).
    */
   public static VariableContext emptyVariableContext() {
     return EmptyVariableContext.INSTANCE;

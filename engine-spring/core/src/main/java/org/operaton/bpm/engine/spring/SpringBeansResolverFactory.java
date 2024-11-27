@@ -61,8 +61,8 @@ public class SpringBeansResolverFactory implements ResolverFactory, Resolver {
 
   @Override
   public boolean containsKey(Object key) {
-    if (key instanceof String) {
-      return keySet.contains((String) key);
+    if (key instanceof String stringKey) {
+      return keySet.contains(stringKey);
     } else {
       return false;
     }
@@ -70,9 +70,9 @@ public class SpringBeansResolverFactory implements ResolverFactory, Resolver {
 
   @Override
   public Object get(Object key) {
-    if (key instanceof String) {
+    if (key instanceof String stringKey) {
       try {
-        return applicationContext.getBean((String) key);
+        return applicationContext.getBean(stringKey);
       } catch (BeanCreationException ex) {
         // Only swallow exceptions for beans with inactive scope.
         // Unfortunately, we cannot use ScopeNotActiveException directly as

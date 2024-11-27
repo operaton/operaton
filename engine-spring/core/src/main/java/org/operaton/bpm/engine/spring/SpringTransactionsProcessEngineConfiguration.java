@@ -119,8 +119,8 @@ public class SpringTransactionsProcessEngineConfiguration extends ProcessEngineC
       for (Resource resource : deploymentResources) {
         String resourceName = null;
 
-        if (resource instanceof ContextResource) {
-          resourceName = ((ContextResource) resource).getPathWithinContext();
+        if (resource instanceof ContextResource contextResource) {
+          resourceName = contextResource.getPathWithinContext();
 
         } else if (resource instanceof ByteArrayResource) {
           resourceName = resource.getDescription();

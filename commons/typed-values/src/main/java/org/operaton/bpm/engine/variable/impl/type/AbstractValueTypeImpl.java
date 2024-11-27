@@ -91,9 +91,9 @@ public abstract class AbstractValueTypeImpl implements ValueType {
 
   protected Boolean isTransient(Map<String, Object> valueInfo) {
     if (valueInfo != null && valueInfo.containsKey(VALUE_INFO_TRANSIENT)) {
-      Object isTransient = valueInfo.get(VALUE_INFO_TRANSIENT);
-      if (isTransient instanceof Boolean) {
-        return (Boolean) isTransient;
+      Object valueInfoTransient = valueInfo.get(VALUE_INFO_TRANSIENT);
+      if (valueInfoTransient instanceof Boolean isTransient) {
+        return isTransient;
       } else {
         throw new IllegalArgumentException("The property 'transient' should have a value of type 'boolean'.");
       }

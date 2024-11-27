@@ -93,8 +93,8 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
   protected void applyValueInfo(ObjectValueBuilder builder, Map<String, Object> valueInfo) {
 
     String objectValueTypeName = (String) valueInfo.get(VALUE_INFO_OBJECT_TYPE_NAME);
-    if (builder instanceof SerializedObjectValueBuilder) {
-      ((SerializedObjectValueBuilder) builder).objectTypeName(objectValueTypeName);
+    if (builder instanceof SerializedObjectValueBuilder serializedObjectValueBuilder) {
+      serializedObjectValueBuilder.objectTypeName(objectValueTypeName);
     }
 
     String serializationDataFormat = (String) valueInfo.get(VALUE_INFO_SERIALIZATION_DATA_FORMAT);

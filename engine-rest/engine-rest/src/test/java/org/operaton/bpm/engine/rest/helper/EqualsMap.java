@@ -78,8 +78,7 @@ public class EqualsMap extends BaseMatcher<Map<String, Object>> {
     for (String key : argumentMap.keySet()) {
       Matcher<?> matcher = matchers.get(key);
       Object value = null;
-      if (argumentMap instanceof VariableMap) {
-        VariableMap varMap = (VariableMap) argumentMap;
+      if (argumentMap instanceof VariableMap varMap) {
         value = varMap.getValueTyped(key);
       }
       else {

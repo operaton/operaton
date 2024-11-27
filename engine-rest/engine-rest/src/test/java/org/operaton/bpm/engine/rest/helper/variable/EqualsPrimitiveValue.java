@@ -63,26 +63,22 @@ public class EqualsPrimitiveValue extends EqualsTypedValue<EqualsPrimitiveValue>
 
   protected boolean matchesValues(Object otherValue) {
     // explicit matching for byte[]
-    if (value instanceof byte[]) {
-      if (!(otherValue instanceof byte[])) {
-        return false;
+    if (value instanceof byte[] byteValue) {
+      if (otherValue instanceof byte[] otherByteValue) {
+
+        return Arrays.equals(byteValue, otherByteValue);
       }
-
-      byte[] byteValue = (byte[]) value;
-      byte[] otherByteValue = (byte[]) otherValue;
-
-      return Arrays.equals(byteValue, otherByteValue);
+      return false;
+      
     }
 
     if (type == ValueType.NUMBER) {
-      if (!(otherValue instanceof Number)) {
-        return false;
+      if (otherValue instanceof Number otherNumber) {
+        Number thisNumber = (Number) value;
+
+        return thisNumber.doubleValue() == otherNumber.doubleValue();
       }
-
-      Number thisNumer = (Number) value;
-      Number otherNumber = (Number) otherValue;
-
-      return thisNumer.doubleValue() == otherNumber.doubleValue();
+      return false;
     }
 
     return value.equals(otherValue);

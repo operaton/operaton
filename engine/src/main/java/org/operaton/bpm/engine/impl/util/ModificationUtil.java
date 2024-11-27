@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
+import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.delegate.ModificationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -45,10 +47,10 @@ public abstract class ModificationUtil {
     PvmExecutionImpl scopeExecution = removedExecution.getParentScopeExecution(false);
     PvmExecutionImpl executionInParentScope = removedExecution.isConcurrent() ? removedExecution : removedExecution.getParent();
 
-    if (flowScope.getActivityBehavior() != null && flowScope.getActivityBehavior() instanceof ModificationObserverBehavior) {
+    CoreActivityBehavior<? extends BaseDelegateExecution> activityBehavior = flowScope.getActivityBehavior();
+    if (activityBehavior != null && activityBehavior instanceof ModificationObserverBehavior modificationObserverBehavior) {
       // let child removal be handled by the scope itself
-      ModificationObserverBehavior behavior = (ModificationObserverBehavior) flowScope.getActivityBehavior();
-      behavior.destroyInnerInstance(executionInParentScope);
+      modificationObserverBehavior.destroyInnerInstance(executionInParentScope);
     }
     else {
       if (executionInParentScope.isConcurrent()) {

@@ -138,11 +138,11 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
         if(o == null) {
           return false;
 
-        } else if(!(o instanceof ModelElementInstanceImpl)) {
+        } else if(!(o instanceof ModelElementInstanceImpl model)) {
           return false;
 
         } else {
-          return getView(modelElement).contains(((ModelElementInstanceImpl)o).getDomElement());
+          return getView(modelElement).contains(model.getDomElement());
 
         }
       }

@@ -70,7 +70,7 @@ jobs:
         shell: bash
         run: |
           ./mvnw -f report-aggregate-pom.xml
-          ./mvnw -Dsonar.projectKey=operaton_operaton org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          ./mvnw -Dsonar.projectKey=operaton_operaton verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         continue-on-error: true
       - name: Upload Build Artifacts
         id: upload-build-artifacts

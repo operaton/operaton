@@ -34,8 +34,8 @@ public class TestResultFormatter implements ValidationResultFormatter {
   public void formatElement(StringWriter writer, ModelElementInstance element) {
     Formatter formatter = new Formatter(writer);
 
-    if (element instanceof FlyingAnimal) {
-      formatter.format("%s\n", ((FlyingAnimal) element).getId());
+    if (element instanceof FlyingAnimal flyingAnimal) {
+      formatter.format("%s\n", flyingAnimal.getId());
     } else {
       formatter.format("%s\n", element.getElementType().getTypeName());
     }

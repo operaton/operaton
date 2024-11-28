@@ -104,11 +104,11 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
         if (o == null) {
           return false;
         }
-        else if (!(o instanceof ModelElementInstanceImpl)) {
+        else if (!(o instanceof ModelElementInstanceImpl modelElement)) {
           return false;
         }
         else {
-          return getView(referenceSourceElement).contains(((ModelElementInstanceImpl)o).getDomElement());
+          return getView(referenceSourceElement).contains(modelElement.getDomElement());
         }
       }
 

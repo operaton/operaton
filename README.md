@@ -58,7 +58,10 @@ Get the latest release from the [Releases page](https://github.com/operaton/oper
 
 To get the latest nightly build visit the [Nightly Build actions](https://github.com/operaton/operaton/actions/workflows/nighly-build.yml?query=branch%3Amain+event%3Aschedule+is%3Asuccess++), click on the latest available build and download from the _Artifacts_ section.
 
-## Components
+
+## About Operaton
+
+### Components
 
 Operaton provides a rich set of components centered around the BPM lifecycle.
 
@@ -86,10 +89,14 @@ Out of the box, Operaton provides infrastructure-level integration with Java EE 
 
 Most of the components that make up the platform can even be completely embedded inside an application. For instance, you can add the process engine and the REST API as a library to your application and assemble your custom BPM platform configuration.
 
-## Process modelling
+### Process modelling
 
 Operaton is fully backwards compatible to your existing BPMN-, DMN-models and Forms, which were created in Camunda Modeler for Camunda 7. You can download the Camunda Modeler [here](https://camunda.com/download/modeler/) (MIT Licence). 
-Operaton removed the compatibility layer for Activiti. If you need to use Activiti models you will have to convert them (see the following [blog post](https://camunda.com/blog/2016/10/migrate-from-activiti-to-camunda/) for details).
+
+## Documentation
+
+The documentation is currently under construction. Currently, you can use the [Camunda 7 Manual](https://docs.camunda.org/manual/7.22/) as a reference.
+Since Operaton is a fork of Camunda 7, most of the documentation is still valid. We will provide a new manual soon.
 
 ## Contributing
 

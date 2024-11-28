@@ -64,8 +64,8 @@ public class Authorization {
         response.addHeader("X-Authorized-Engine", authentication.getProcessEngineName());
       }
 
-      if (authentication instanceof UserAuthentication) {
-        response.addHeader("X-Authorized-Apps", join(",", ((UserAuthentication) authentication).getAuthorizedApps()));
+      if (authentication instanceof UserAuthentication userAuthentication) {
+        response.addHeader("X-Authorized-Apps", join(",", userAuthentication.getAuthorizedApps()));
       }
     }
 

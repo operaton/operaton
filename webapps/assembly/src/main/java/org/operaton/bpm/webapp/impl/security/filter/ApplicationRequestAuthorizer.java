@@ -60,9 +60,7 @@ public class ApplicationRequestAuthorizer implements RequestAuthorizer {
       }
 
       // check authorization
-      if (engineAuth instanceof UserAuthentication) {
-        UserAuthentication userAuth = (UserAuthentication) engineAuth;
-
+      if (engineAuth instanceof UserAuthentication userAuth) {
         if (userAuth.isAuthorizedForApp(appName)) {
           return Authorization.granted(userAuth).forApplication(appName);
         } else {

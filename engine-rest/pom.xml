@@ -80,4 +80,5 @@
     <module>docs</module>
   </modules>
 
+  <description>${project.name}</description>
 </project>

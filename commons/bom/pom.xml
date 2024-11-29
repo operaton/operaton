@@ -44,4 +44,5 @@
   </dependencyManagement>
 
 
+  <description>${project.name}</description>
 </project>

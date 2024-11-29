@@ -18,4 +18,5 @@
     <module>operaton-bom</module>
   </modules>
 
+  <description>${project.name}</description>
 </project>

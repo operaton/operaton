@@ -19,4 +19,5 @@
     <module>spin-dataformat-all</module>
   </modules>
 
+  <description>${project.name}</description>
 </project>

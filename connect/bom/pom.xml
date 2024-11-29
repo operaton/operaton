@@ -51,4 +51,5 @@
     <tag>HEAD</tag>
   </scm>
 
+  <description>${project.name}</description>
 </project>

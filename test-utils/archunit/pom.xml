@@ -20,4 +20,5 @@
         </dependency>
     </dependencies>
 
+  <description>${project.name}</description>
 </project>

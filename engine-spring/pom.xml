@@ -18,4 +18,5 @@
     <module>core-6</module>
   </modules>
 
+  <description>${project.name}</description>
 </project>

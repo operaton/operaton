@@ -77,4 +77,5 @@
     </profile>
   </profiles>
 
+  <description>${project.name}</description>
 </project>

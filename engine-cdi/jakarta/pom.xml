@@ -384,4 +384,5 @@
     </plugins>
   </build>
 
+  <description>${project.name}</description>
 </project>

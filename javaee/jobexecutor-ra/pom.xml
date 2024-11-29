@@ -59,4 +59,5 @@
   </dependencies>
 
   <groupId>org.operaton.bpm.javaee</groupId>
+  <description>${project.name}</description>
 </project>

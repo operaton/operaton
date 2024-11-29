@@ -19,4 +19,5 @@
     <module>engine-variable-test</module>
   </modules>
 
+  <description>${project.name}</description>
 </project>

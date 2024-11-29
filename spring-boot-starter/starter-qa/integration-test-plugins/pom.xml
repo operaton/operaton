@@ -28,4 +28,5 @@
     <module>spin</module>
   </modules>
 
+  <description>${project.name}</description>
 </project>

@@ -18,4 +18,5 @@
     <module>jakarta</module>
   </modules>
 
+  <description>${project.name}</description>
 </project>

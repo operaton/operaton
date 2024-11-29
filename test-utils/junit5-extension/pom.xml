@@ -65,4 +65,5 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+  <description>${project.name}</description>
 </project>

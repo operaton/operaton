@@ -31,11 +31,11 @@ public class TypeConverterImpl implements TypeConverter {
     if (value == null || "".equals(value)) {
       return Boolean.FALSE;
     }
-    if (value instanceof Boolean) {
-      return (Boolean) value;
+    if (value instanceof Boolean isBoolean) {
+      return isBoolean;
     }
-    if (value instanceof String) {
-      return Boolean.valueOf((String) value);
+    if (value instanceof String string) {
+      return Boolean.valueOf(string);
     }
     throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), Boolean.class));
   }
@@ -343,8 +343,8 @@ public class TypeConverterImpl implements TypeConverter {
     if (value == null || value.getClass() == type || type.isInstance(value)) {
       return value;
     }
-    if (value instanceof String) {
-      return coerceStringToType((String) value, type);
+    if (value instanceof String string) {
+      return coerceStringToType(string, type);
     }
     throw new ELException(LocalMessages.get("error.coerce.type", value.getClass(), type));
   }

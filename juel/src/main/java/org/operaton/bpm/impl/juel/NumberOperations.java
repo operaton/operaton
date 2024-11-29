@@ -29,15 +29,7 @@ public class NumberOperations {
 	private final static Long LONG_ZERO = 0L;
 
 	private final static boolean isDotEe(String value) {
-		int length = value.length();
-		for (int i = 0; i < length; i++) {
-			switch (value.charAt(i)) {
-				case '.':
-				case 'E':
-				case 'e': return true;
-			}
-		}
-		return false;
+    return value.contains(".") || value.contains("E") || value.contains("e");
 	}
 
 	private final static boolean isDotEe(Object value) {

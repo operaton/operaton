@@ -245,8 +245,7 @@ public class Scanner {
 						escaped = true;
 					}
 					break;
-				case '#':
-				case '$':
+				case '#', '$':
 					if (i+1 < l && input.charAt(i+1) == '{') {
 						if (escaped) {
 							builder.append(c);
@@ -397,8 +396,7 @@ public class Scanner {
 					return fixed(Symbol.GE);
 				}
 				return fixed(Symbol.GT);
-			case '"':
-			case '\'': return nextString();
+			case '"', '\'': return nextString();
 		}
 		
 		if (isDigit(c1) || c1 == '.') {

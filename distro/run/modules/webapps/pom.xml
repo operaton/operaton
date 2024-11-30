@@ -6,7 +6,6 @@
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-modules</artifactId>
     <version>1.0.0-beta-2</version>
-    <relativePath>..</relativePath>
   </parent>
 
   <artifactId>operaton-bpm-run-modules-webapps</artifactId>

@@ -6,7 +6,6 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-bom-root</artifactId>
     <version>1.0.0-beta-2</version>
-    <relativePath>../</relativePath>
   </parent>
 
   <artifactId>operaton-bom</artifactId>

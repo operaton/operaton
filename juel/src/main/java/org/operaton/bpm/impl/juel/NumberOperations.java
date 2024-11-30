@@ -29,7 +29,13 @@ public class NumberOperations {
 	private final static Long LONG_ZERO = 0L;
 
 	private final static boolean isDotEe(String value) {
-    return value.contains(".") || value.contains("E") || value.contains("e");
+		int length = value.length();
+		for (int i = 0; i < length; i++) {
+			switch (value.charAt(i)) {
+				case '.', 'E', 'e': return true;
+			}
+		}
+		return false;
 	}
 
 	private final static boolean isDotEe(Object value) {

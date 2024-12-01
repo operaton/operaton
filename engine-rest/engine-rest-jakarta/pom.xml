@@ -459,10 +459,11 @@
         <artifactId>maven-source-plugin</artifactId>
         <executions>
           <execution>
-            <!-- This id must match the -Prelease-profile id value or else sources will be "uploaded" twice, which causes Nexus to fail -->
+            <!-- This id must match the -Psonatype-oss-release profile id value or else sources will be "uploaded"
+            twice, which causes Nexus to fail -->
             <id>attach-sources</id>
             <goals>
-              <goal>jar</goal>
+              <goal>jar-no-fork</goal>
             </goals>
           </execution>
         </executions>

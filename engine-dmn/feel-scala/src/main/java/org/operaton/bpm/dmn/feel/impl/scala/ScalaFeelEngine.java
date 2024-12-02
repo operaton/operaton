@@ -70,8 +70,7 @@ public class ScalaFeelEngine implements FeelEngine {
 
     Either either = feelEngine.evalExpression(expression, context);
 
-    if (either instanceof Right) {
-      Right right = (Right) either;
+    if (either instanceof Right right) {
 
       return (T) right.value();
 
@@ -102,8 +101,7 @@ public class ScalaFeelEngine implements FeelEngine {
 
     Either either = feelEngine.evalUnaryTests(expression, context);
 
-    if (either instanceof Right) {
-      Right right = (Right) either;
+    if (either instanceof Right right) {
       Object value = right.value();
 
       return BoxesRunTime.unboxToBoolean(value);

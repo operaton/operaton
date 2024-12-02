@@ -68,8 +68,8 @@ public class FeelEngineImpl implements FeelEngine {
       throw LOG.unableToConvertValue(simpleUnaryTests, e);
     }
     catch (ELException e) {
-      if (e.getCause() instanceof FeelMethodInvocationException) {
-        throw LOG.unableToInvokeMethod(simpleUnaryTests, (FeelMethodInvocationException) e.getCause());
+      if (e.getCause() instanceof FeelMethodInvocationException feelMethodInvocationException) {
+        throw LOG.unableToInvokeMethod(simpleUnaryTests, feelMethodInvocationException);
       }
       else {
         throw LOG.unableToEvaluateExpression(simpleUnaryTests, e);

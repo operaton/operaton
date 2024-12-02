@@ -94,7 +94,6 @@ jobs:
         continue-on-error: true
       - name: Cache build artifacts
         uses: actions/cache/save@v4
-        if: ${{ matrix.java == 17 }}
         with:
           path: |
             distro/**/target/operaton-*.gz
@@ -123,10 +122,8 @@ jobs:
           sudo apt-get install -y xq > /dev/null
           PROJECT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
           TOMCAT_VERSION=$(xq --xpath project/properties/version.tomcat parent/pom.xml)
-          WILDFLY_VERSION=$(xq --xpath project/properties/version.wildfly parent/pom.xml)
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
           echo "TOMCAT_VERSION=$TOMCAT_VERSION" >> $GITHUB_ENV
-          echo "WILDFLY_VERSION=$WILDFLY_VERSION" >> $GITHUB_ENV
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
         uses: actions/upload-artifact@v4
@@ -134,20 +131,7 @@ jobs:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
           if-no-files-found: error
-      - name: Upload distro Wildfly
-        id: upload-distro-wildfly
-        uses: actions/upload-artifact@v4
-        with:
-          name: Operaton (Wildfly ${{ env.WILDFLY_VERSION }} Bundle)
-          path: distro/wildfly/distro/target/operaton-bpm-wildfly-${{ env.PROJECT_VERSION }}.tar.gz
-          if-no-files-found: error
-      - name: Upload distro WebJar
-        id: upload-distro-webjar
-        uses: actions/upload-artifact@v4
-        with:
-          name: Operaton (WebJar Bundle)
-          path: distro/webjar/target/operaton-webapp-webjar-${{ env.PROJECT_VERSION }}.jar
-          if-no-files-found: error
+          retention-days: 10
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
         uses: actions/upload-artifact@v4
@@ -155,3 +139,4 @@ jobs:
           name: Operaton SQL Scripts
           path: distro/sql-script/target/operaton-sql-scripts-${{ env.PROJECT_VERSION }}.tar.gz
           if-no-files-found: error
+          retention-days: 10

@@ -121,6 +121,7 @@ jobs:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
           if-no-files-found: error
+          retention-days: 30
       - name: Upload distro Wildfly
         id: upload-distro-wildfly
         uses: actions/upload-artifact@v4
@@ -128,6 +129,7 @@ jobs:
           name: Operaton (Wildfly ${{ env.WILDFLY_VERSION }} Bundle)
           path: distro/wildfly/distro/target/operaton-bpm-wildfly-${{ env.PROJECT_VERSION }}.tar.gz
           if-no-files-found: error
+          retention-days: 30
       - name: Upload distro WebJar
         id: upload-distro-webjar
         uses: actions/upload-artifact@v4
@@ -135,6 +137,7 @@ jobs:
           name: Operaton (WebJar Bundle)
           path: distro/webjar/target/operaton-webapp-webjar-${{ env.PROJECT_VERSION }}.jar
           if-no-files-found: error
+          retention-days: 30
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
         uses: actions/upload-artifact@v4
@@ -142,3 +145,4 @@ jobs:
           name: Operaton SQL Scripts
           path: distro/sql-script/target/operaton-sql-scripts-${{ env.PROJECT_VERSION }}.tar.gz
           if-no-files-found: error
+          retention-days: 30

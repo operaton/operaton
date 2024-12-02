@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -11,7 +12,7 @@
   <artifactId>operaton-bpm-run-qa-runtime</artifactId>
   <name>Operaton - Run - QA - Runtime</name>
   <packaging>jar</packaging>
-  
+
   <properties>
     <run-home>${project.build.directory}/run/operaton-bpm-run-distro</run-home>
     <example-plugin-home>${project.build.directory}/run/example-plugin</example-plugin-home>
@@ -146,7 +147,8 @@
               <systemPropertyVariables>
                 <operaton.run.home>${run-home}</operaton.run.home>
                 <example.plugin.home>${example-plugin-home}</example.plugin.home>
-                <selenium.screenshot.directory>${project.build.directory}/selenium-screenshots</selenium.screenshot.directory>
+                <selenium.screenshot.directory>${project.build.directory}/selenium-screenshots
+                </selenium.screenshot.directory>
               </systemPropertyVariables>
             </configuration>
             <executions>
@@ -207,7 +209,8 @@
                   <goal>wget</goal>
                 </goals>
                 <configuration>
-                  <url>https://chromedriver.storage.googleapis.com/${version.chromedriver}/chromedriver_${os.type}.zip</url>
+                  <url>https://chromedriver.storage.googleapis.com/${version.chromedriver}/chromedriver_${os.type}.zip
+                  </url>
                   <outputFileName>chromedriver.zip</outputFileName>
                   <unpack>true</unpack>
                   <outputDirectory>${project.build.directory}/chromedriver</outputDirectory>
@@ -241,6 +244,18 @@
       </properties>
     </profile>
   </profiles>
-
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
   <description>${project.name}</description>
 </project>

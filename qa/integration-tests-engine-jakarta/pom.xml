@@ -356,22 +356,6 @@
             </configuration>
           </execution>
           <execution>
-            <id>copy-test-sources-wildfly</id>
-            <phase>process-sources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/generated-test-sources/java-wildfly</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${basedir}/../integration-tests-engine/src/test/java-wildfly26</directory>
-                  <filtering>false</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          <execution>
             <id>copy-test-sources-wildfly-servlet</id>
             <phase>process-sources</phase>
             <goals>

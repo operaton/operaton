@@ -23,7 +23,6 @@
 
     <!-- wildfly -->
     <wildfly.runtime.location>../wildfly-runtime/target/server/wildfly-${version.wildfly}</wildfly.runtime.location>
-    <wildfly26.runtime.location>../wildfly26-runtime/target/wildfly-${version.wildfly26}</wildfly26.runtime.location>
 
     <jboss.http.port>38080</jboss.http.port>
     <jboss.ajp.port>38009</jboss.ajp.port>
@@ -75,7 +74,6 @@
       </activation>
       <modules>
         <module>wildfly-runtime</module>
-        <module>wildfly26-runtime</module>
         <module>tomcat-runtime</module>
         <module>tomcat9-runtime</module>
         <module>integration-tests-webapps</module>
@@ -101,19 +99,6 @@
       <id>wildfly-domain</id>
       <modules>
         <module>wildfly-runtime</module>
-      </modules>
-    </profile>
-    
-    <profile>
-      <id>wildfly26</id>
-      <modules>
-        <module>wildfly26-runtime</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>wildfly26-domain</id>
-      <modules>
-        <module>wildfly26-runtime</module>
       </modules>
     </profile>
 

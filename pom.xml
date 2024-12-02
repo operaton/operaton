@@ -421,7 +421,6 @@
         <module>javaee/ejb-client-jakarta</module>
         <module>distro/license-book</module>
         <module>distro/wildfly</module>
-        <!--<module>distro/wildfly26</module>-->
       </modules>
     </profile>
 

@@ -4,28 +4,31 @@
   <parent>
     <groupId>org.operaton.bpm.qa.upgrade</groupId>
     <artifactId>operaton-qa-db-instance-migration</artifactId>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <version>7.23.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>operaton-qa-upgrade-test-fixture-722</artifactId>
+  <artifactId>operaton-qa-upgrade-test-fixture-723</artifactId>
   <packaging>jar</packaging>
-  <name>operaton BPM - QA - upgrade - instance migration - test fixture - 7.22.0</name>
+  <name>operaton BPM - QA - upgrade - instance migration - test fixture - 7.23.0</name>
 
   <properties>
+    <!-- delete when 7.23 is released -->
+    <operaton.version.current>${project.version}</operaton.version.current>
     <operaton.version.previous>7.22.0</operaton.version.previous>
   </properties>
 
-   <dependencyManagement>
-     <dependencies>
-       <dependency>
-         <groupId>org.operaton.bpm</groupId>
-         <artifactId>operaton-bom</artifactId>
-         <version>7.22.0</version>
-         <scope>import</scope>
-         <type>pom</type>
-       </dependency>
-     </dependencies>
-   </dependencyManagement>
+  <!-- uncomment when 7.23 is released -->
+<!--   <dependencyManagement> -->
+<!--     <dependencies> -->
+<!--       <dependency> -->
+<!--         <groupId>org.operaton.bpm</groupId> -->
+<!--         <artifactId>operaton-bom</artifactId> -->
+<!--         <version>7.23.0</version> -->
+<!--         <scope>import</scope> -->
+<!--         <type>pom</type> -->
+<!--       </dependency> -->
+<!--     </dependencies> -->
+<!--   </dependencyManagement> -->
 
   <dependencies>
     <dependency>
@@ -103,7 +106,9 @@
                     <artifactItem>
                       <groupId>org.operaton.bpm.distro</groupId>
                       <artifactId>operaton-sql-scripts</artifactId>
-                      <version>7.22.0</version>
+                      <!-- Replace after 7.23.0 release -->
+                      <version>${operaton.version.current}</version>
+                      <!--<version>7.23.0</version>-->
                       <type>test-jar</type>
                       <outputDirectory>${project.build.directory}/scripts-current</outputDirectory>
                       <overWrite>true</overWrite>
@@ -113,7 +118,8 @@
               </execution>
             </executions>
           </plugin>
-          <plugin>
+          <!-- uncomment when 7.23 is released -->
+          <!--<plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <configuration>
@@ -134,11 +140,10 @@
                 </configuration>
               </execution>
             </executions>
-          </plugin>
+          </plugin>-->
         </plugins>
       </build>
     </profile>
   </profiles>
 
-  <description>${project.name}</description>
 </project>

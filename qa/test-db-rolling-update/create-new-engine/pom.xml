@@ -13,7 +13,7 @@
 
   <properties>
     <operaton.version.current>${project.version}</operaton.version.current>
-    <operaton.version.previous>7.21.0</operaton.version.previous>
+    <operaton.version.previous>7.22.0</operaton.version.previous>
   </properties>
 
   <dependencies>

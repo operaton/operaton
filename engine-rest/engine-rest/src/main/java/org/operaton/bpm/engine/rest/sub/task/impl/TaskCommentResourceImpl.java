@@ -20,14 +20,15 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
-
+import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.identity.Authentication;
@@ -79,8 +80,49 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
     return CommentDto.fromComment(comment);
   }
 
-  @Override
-  public CommentDto createComment(UriInfo uriInfo, CommentDto commentDto) {
+  public void deleteComment(String commentId) {
+    ensureHistoryEnabled(Status.FORBIDDEN);
+    ensureTaskExists(Status.NOT_FOUND);
+
+    TaskService taskService = engine.getTaskService();
+    try {
+      taskService.deleteTaskComment(taskId, commentId);
+    } catch (AuthorizationException e) {
+      throw e;
+    } catch (NullValueException e) {
+      throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
+    }
+  }
+
+  public void updateComment(CommentDto comment) {
+    ensureHistoryEnabled(Status.FORBIDDEN);
+    ensureTaskExists(Status.NOT_FOUND);
+
+    try {
+      engine.getTaskService().updateTaskComment(taskId, comment.getId(), comment.getMessage());
+    } catch (AuthorizationException e) {
+      throw e;
+    } catch (NullValueException e) {
+      throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
+    }
+  }
+
+  public void deleteComments() {
+    ensureHistoryEnabled(Status.FORBIDDEN);
+    ensureTaskExists(Status.NOT_FOUND);
+    TaskService taskService = engine.getTaskService();
+
+    try {
+      taskService.deleteTaskComments(taskId);
+    } catch (AuthorizationException e) {
+      throw e;
+    } catch (NullValueException e) {
+      throw new InvalidRequestException(Status.BAD_REQUEST, e.getMessage());
+    }
+  }
+
+    @Override
+    public CommentDto createComment(UriInfo uriInfo, CommentDto commentDto) {
     ensureHistoryEnabled(Status.FORBIDDEN);
     ensureTaskExists(Status.BAD_REQUEST);
 

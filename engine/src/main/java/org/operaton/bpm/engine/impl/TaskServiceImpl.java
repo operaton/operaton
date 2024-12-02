@@ -40,7 +40,9 @@ import org.operaton.bpm.engine.impl.cmd.CreateTaskCmd;
 import org.operaton.bpm.engine.impl.cmd.DelegateTaskCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteAttachmentCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteGroupIdentityLinkCmd;
+import org.operaton.bpm.engine.impl.cmd.DeleteProcessInstanceCommentCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteTaskCmd;
+import org.operaton.bpm.engine.impl.cmd.DeleteTaskCommentCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteUserIdentityLinkCmd;
 import org.operaton.bpm.engine.impl.cmd.GetAttachmentCmd;
 import org.operaton.bpm.engine.impl.cmd.GetAttachmentContentCmd;
@@ -71,6 +73,7 @@ import org.operaton.bpm.engine.impl.cmd.SetTaskNameCmd;
 import org.operaton.bpm.engine.impl.cmd.SetTaskOwnerCmd;
 import org.operaton.bpm.engine.impl.cmd.SetTaskPriorityCmd;
 import org.operaton.bpm.engine.impl.cmd.SetTaskVariablesCmd;
+import org.operaton.bpm.engine.impl.cmd.UpdateCommentCmd;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Comment;
@@ -437,6 +440,30 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
   }
 
   @Override
+  public void deleteTaskComment(String taskId, String commentId) {
+    commandExecutor.execute(new DeleteTaskCommentCmd(taskId, commentId));
+  }
+
+  public void deleteProcessInstanceComment(String processInstanceId, String commentId) {
+    commandExecutor.execute(new DeleteProcessInstanceCommentCmd(processInstanceId, commentId));
+  }
+
+  public void deleteTaskComments(String taskId) {
+    commandExecutor.execute(new DeleteTaskCommentCmd(taskId));
+  }
+
+  public void deleteProcessInstanceComments(String processInstanceId) {
+    commandExecutor.execute(new DeleteProcessInstanceCommentCmd(processInstanceId));
+  }
+
+  public void updateTaskComment(String taskId, String commentId, String message) {
+    commandExecutor.execute(new UpdateCommentCmd(taskId, null, commentId, message));
+  }
+
+  public void updateProcessInstanceComment(String processInstanceId, String commentId, String message) {
+    commandExecutor.execute(new UpdateCommentCmd(null, processInstanceId, commentId, message));
+  }
+
   public List<Comment> getTaskComments(String taskId) {
     return commandExecutor.execute(new GetTaskCommentsCmd(taskId));
   }

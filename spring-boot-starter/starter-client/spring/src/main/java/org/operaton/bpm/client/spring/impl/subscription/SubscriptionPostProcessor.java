@@ -79,8 +79,7 @@ public class SubscriptionPostProcessor implements BeanDefinitionRegistryPostProc
   protected ExternalTaskSubscription findSubscriptionAnnotation(BeanDefinition beanDefinition) {
     ExternalTaskSubscription annotation = null;
 
-    if (beanDefinition instanceof AnnotatedBeanDefinition) {
-      AnnotatedBeanDefinition annotatedBeanDefinition = (AnnotatedBeanDefinition) beanDefinition;
+    if (beanDefinition instanceof AnnotatedBeanDefinition annotatedBeanDefinition) {
       AnnotatedTypeMetadata metadata = annotatedBeanDefinition.getFactoryMethodMetadata();
       if (metadata == null) {
         metadata = annotatedBeanDefinition.getMetadata();

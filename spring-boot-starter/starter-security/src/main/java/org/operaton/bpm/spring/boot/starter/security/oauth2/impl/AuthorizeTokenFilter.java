@@ -68,8 +68,7 @@ public class AuthorizeTokenFilter extends OncePerRequestFilter {
                                   @Nonnull FilterChain filterChain) throws ServletException, IOException {
 
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication instanceof OAuth2AuthenticationToken) {
-      var token = (OAuth2AuthenticationToken) authentication;
+    if (authentication instanceof OAuth2AuthenticationToken token) {
       authorizeToken(token, request, response);
     }
     filterChain.doFilter(request, response);

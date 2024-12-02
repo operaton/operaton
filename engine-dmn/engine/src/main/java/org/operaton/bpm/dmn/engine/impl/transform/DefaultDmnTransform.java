@@ -267,12 +267,12 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
       return null;
     }
 
-    if (expression instanceof DecisionTable) {
-      DmnDecisionTableImpl dmnDecisionTable = transformDecisionTable((DecisionTable) expression);
+    if (expression instanceof DecisionTable decisionTable) {
+      DmnDecisionTableImpl dmnDecisionTable = transformDecisionTable(decisionTable);
       dmnDecision.setDecisionLogic(dmnDecisionTable);
 
-    } else if (expression instanceof LiteralExpression) {
-      DmnDecisionLiteralExpressionImpl dmnDecisionLiteralExpression = transformDecisionLiteralExpression(decision, (LiteralExpression) expression);
+    } else if (expression instanceof LiteralExpression literalExpression) {
+      DmnDecisionLiteralExpressionImpl dmnDecisionLiteralExpression = transformDecisionLiteralExpression(decision, literalExpression);
       dmnDecision.setDecisionLogic(dmnDecisionLiteralExpression);
 
     } else {

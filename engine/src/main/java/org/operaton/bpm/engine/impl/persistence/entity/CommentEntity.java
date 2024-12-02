@@ -19,10 +19,13 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
+import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.db.HistoricEntity;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.task.Comment;
@@ -32,7 +35,7 @@ import org.operaton.bpm.engine.task.Event;
 /**
  * @author Tom Baeyens
  */
-public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, Serializable {
+public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, HistoricEntity, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -40,8 +43,6 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
   public static final String TYPE_COMMENT = "comment";
 
   protected String id;
-
-  // If comments would be removeable, revision needs to be added!
 
   protected String type;
   protected String userId;
@@ -54,10 +55,13 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
   protected String tenantId;
   protected String rootProcessInstanceId;
   protected Date removalTime;
+  protected int revision;
 
   @Override
   public Object getPersistentState() {
-    return CommentEntity.class;
+    Map<String, Object> persistentState = new HashMap<>();
+    persistentState.put("message", message);
+    return persistentState;
   }
 
   public byte[] getFullMessageBytes() {
@@ -214,6 +218,14 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     this.removalTime = removalTime;
   }
 
+  public String toEventMessage(String message) {
+    String eventMessage = message.replaceAll("\\s+", " ");
+    if (eventMessage.length() > 163) {
+      eventMessage = eventMessage.substring(0, 160) + "...";
+    }
+    return eventMessage;
+  }
+
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
@@ -224,11 +236,27 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
            + ", taskId=" + taskId
            + ", processInstanceId=" + processInstanceId
            + ", rootProcessInstanceId=" + rootProcessInstanceId
+           + ", revision= "+ revision
            + ", removalTime=" + removalTime
            + ", action=" + action
            + ", message=" + message
            + ", fullMessage=" + fullMessage
            + ", tenantId=" + tenantId
            + "]";
+  }
+
+  @Override
+  public void setRevision(int revision) {
+    this.revision = revision;
+  }
+
+  @Override
+  public int getRevision() {
+    return revision;
+  }
+
+  @Override
+  public int getRevisionNext() {
+    return revision + 1;
   }
 }

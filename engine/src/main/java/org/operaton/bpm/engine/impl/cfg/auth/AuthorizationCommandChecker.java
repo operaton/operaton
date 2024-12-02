@@ -16,6 +16,36 @@
  */
 package org.operaton.bpm.engine.impl.cfg.auth;
 
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
+import static org.operaton.bpm.engine.authorization.Permissions.CREATE_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_TASK;
+import static org.operaton.bpm.engine.authorization.Permissions.TASK_ASSIGN;
+import static org.operaton.bpm.engine.authorization.Permissions.TASK_WORK;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_TASK;
+import static org.operaton.bpm.engine.authorization.Resources.BATCH;
+import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.DECISION_REQUIREMENTS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+
+import org.operaton.bpm.engine.authorization.Permission;
+import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
+import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
+import org.operaton.bpm.engine.authorization.Resources;
+import org.operaton.bpm.engine.authorization.SystemPermissions;
+import org.operaton.bpm.engine.authorization.TaskPermissions;
+import org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -29,23 +59,19 @@ import org.operaton.bpm.engine.impl.db.PermissionCheckBuilder;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionEntity;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionRequirementsDefinitionEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoricExternalTaskLogEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.*;
+import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
+import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogEventEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.CaseExecution;
-
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.*;
-import static org.operaton.bpm.engine.authorization.Resources.*;
-
-import org.operaton.bpm.engine.authorization.Permission;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.Resources;
-import org.operaton.bpm.engine.authorization.SystemPermissions;
-import org.operaton.bpm.engine.authorization.TaskPermissions;
-import org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions;
 
 /**
  * {@link CommandChecker} that uses the {@link AuthorizationManager} to perform

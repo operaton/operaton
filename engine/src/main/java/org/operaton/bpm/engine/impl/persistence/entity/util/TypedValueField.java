@@ -85,8 +85,7 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
     if (Context.getCommandContext() != null) {
       // in some circumstances we must invalidate the cached value instead of returning it
 
-      if (cachedValue != null && cachedValue instanceof SerializableValue) {
-        SerializableValue serializableValue = (SerializableValue) cachedValue;
+      if (cachedValue != null && cachedValue instanceof SerializableValue serializableValue) {
         if(deserializeValue && !serializableValue.isDeserialized()) {
           // clear cached value in case it is not deserialized and user requests deserialized value
           cachedValue = null;
@@ -122,9 +121,9 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
         Context.getProcessEngineConfiguration().getFallbackSerializerFactory());
     serializerName = serializer.getName();
 
-    if(value instanceof UntypedValueImpl) {
+    if(value instanceof UntypedValueImpl untypedValueImpl) {
       // type has been detected
-      value = serializer.convertToTypedValue((UntypedValueImpl) value);
+      value = serializer.convertToTypedValue(untypedValueImpl);
     }
 
     // set new value
@@ -250,8 +249,8 @@ public class TypedValueField implements DbEntityLifecycleAware, CommandContextLi
         ProcessApplicationInterface processApplicationInterface = processApplicationReference.getProcessApplication();
 
         ProcessApplicationInterface rawPa = processApplicationInterface.getRawObject();
-        if (rawPa instanceof AbstractProcessApplication) {
-          return ((AbstractProcessApplication) rawPa).getVariableSerializers();
+        if (rawPa instanceof AbstractProcessApplication abstractProcessApplication) {
+          return abstractProcessApplication.getVariableSerializers();
         }
         else {
           return null;

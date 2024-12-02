@@ -250,10 +250,10 @@ public class DbOperationManager {
   protected void determineDependencies(List<DbOperation> flush) {
     TreeSet<DbEntityOperation> defaultValue = new TreeSet<DbEntityOperation>();
     for (DbOperation operation : flush) {
-      if (operation instanceof DbEntityOperation) {
-        DbEntity entity = ((DbEntityOperation) operation).getEntity();
-        if (entity instanceof HasDbReferences) {
-          Map<String, Class> dependentEntities = ((HasDbReferences) entity).getDependentEntities();
+      if (operation instanceof DbEntityOperation dbEntityOperation) {
+        DbEntity entity = dbEntityOperation.getEntity();
+        if (entity instanceof HasDbReferences hasDbReferences) {
+          Map<String, Class> dependentEntities = hasDbReferences.getDependentEntities();
 
           if (dependentEntities != null) {
             dependentEntities.forEach((id, type) -> {

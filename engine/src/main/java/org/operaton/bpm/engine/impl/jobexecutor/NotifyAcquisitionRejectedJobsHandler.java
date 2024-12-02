@@ -29,8 +29,8 @@ public class NotifyAcquisitionRejectedJobsHandler implements RejectedJobsHandler
   @Override
   public void jobsRejected(List<String> jobIds, ProcessEngineImpl processEngine, JobExecutor jobExecutor) {
     AcquireJobsRunnable acquireJobsRunnable = jobExecutor.getAcquireJobsRunnable();
-    if (acquireJobsRunnable instanceof SequentialJobAcquisitionRunnable) {
-      JobAcquisitionContext context = ((SequentialJobAcquisitionRunnable) acquireJobsRunnable).getAcquisitionContext();
+    if (acquireJobsRunnable instanceof SequentialJobAcquisitionRunnable sequentialJobAcquisitionRunnable) {
+      JobAcquisitionContext context = sequentialJobAcquisitionRunnable.getAcquisitionContext();
       context.submitRejectedBatch(processEngine.getName(), jobIds);
     }
     else {

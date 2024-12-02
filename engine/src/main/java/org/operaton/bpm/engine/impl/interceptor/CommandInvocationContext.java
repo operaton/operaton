@@ -157,10 +157,10 @@ public class CommandInvocationContext {
 
   public void rethrow() {
     if (throwable != null) {
-      if (throwable instanceof Error) {
-        throw (Error) throwable;
-      } else if (throwable instanceof RuntimeException) {
-        throw (RuntimeException) throwable;
+      if (throwable instanceof Error error) {
+        throw error;
+      } else if (throwable instanceof RuntimeException runtimeException) {
+        throw runtimeException;
       } else {
         throw new ProcessEngineException("exception while executing command " + command, throwable);
       }

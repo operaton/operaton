@@ -117,10 +117,10 @@ public class ActivityInstanceJobHandler implements MigratingDependentInstancePar
 
   protected static boolean isTimeoutListenerJobInTargetScope(JobHandlerConfiguration jobHandlerConfiguration,
       String targetActivity, Map<String, Map<String, TimerDeclarationImpl>> targetTimeoutListenerDeclarationsInEventScope) {
-    return jobHandlerConfiguration instanceof TimerJobConfiguration &&
+    return jobHandlerConfiguration instanceof TimerJobConfiguration timerJobConfiguration &&
         targetTimeoutListenerDeclarationsInEventScope.containsKey(targetActivity) &&
         targetTimeoutListenerDeclarationsInEventScope.get(targetActivity).containsKey(
-            ((TimerJobConfiguration) jobHandlerConfiguration).getTimerElementSecondaryKey());
+        		timerJobConfiguration.getTimerElementSecondaryKey());
   }
 
   protected static TimerDeclarationImpl removeTimeoutListenerJobFromTargetScope(JobHandlerConfiguration jobHandlerConfiguration,

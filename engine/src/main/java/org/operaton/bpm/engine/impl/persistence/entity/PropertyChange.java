@@ -81,8 +81,8 @@ public class PropertyChange {
     if(value == null) {
       return null;
 
-    } else if(value instanceof Date){
-      return String.valueOf(((Date)value).getTime());
+    } else if(value instanceof Date date){
+      return String.valueOf(date.getTime());
 
     } else {
       return value.toString();

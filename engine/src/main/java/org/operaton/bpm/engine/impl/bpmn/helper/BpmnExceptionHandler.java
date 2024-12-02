@@ -81,8 +81,8 @@ public class BpmnExceptionHandler {
    *         BpmnError was found
    */
   protected static BpmnError checkIfCauseOfExceptionIsBpmnError(Throwable e) {
-    if (e instanceof BpmnError) {
-      return (BpmnError) e;
+    if (e instanceof BpmnError bpmnError) {
+      return bpmnError;
     } else if (e.getCause() == null) {
       return null;
     }

@@ -697,10 +697,10 @@ public class Base64 {
      *             if the parameter supplied is not of type byte[]
      */
     public Object decode(Object pObject) {        
-        if (pObject instanceof byte[]) {
-            return decode((byte[]) pObject);
-        } else if (pObject instanceof String) {
-            return decode((String) pObject);
+        if (pObject instanceof byte[] bytes) {
+            return decode(bytes);
+        } else if (pObject instanceof String string) {
+            return decode(string);
         } else {
             throw new RuntimeException("Parameter supplied to Base64 decode is not a byte[] or a String");
         }

@@ -118,8 +118,8 @@ public class JuelScriptEngine extends AbstractScriptEngine {
   private ELContext createElContext(final ScriptContext scriptCtx) {
     // Check if the ELContext is already stored on the ScriptContext
     Object existingELCtx = scriptCtx.getAttribute("elcontext");
-    if (existingELCtx instanceof ELContext) {
-      return (ELContext) existingELCtx;
+    if (existingELCtx instanceof ELContext elContext) {
+      return elContext;
     }
 
     scriptCtx.setAttribute("context", scriptCtx, ScriptContext.ENGINE_SCOPE);
@@ -178,11 +178,11 @@ public class JuelScriptEngine extends AbstractScriptEngine {
 
   public static void importFunctions(ScriptContext ctx, String namespace, Object obj) {
     Class< ? > clazz = null;
-    if (obj instanceof Class) {
-      clazz = (Class< ? >) obj;
-    } else if (obj instanceof String) {
+    if (obj instanceof Class classObj) {
+      clazz = classObj;
+    } else if (obj instanceof String stringObj) {
       try {
-        clazz = ReflectUtil.loadClass((String) obj);
+        clazz = ReflectUtil.loadClass(stringObj);
       } catch (ProcessEngineException ae) {
         throw new ELException(ae);
       }
@@ -241,9 +241,9 @@ public class JuelScriptEngine extends AbstractScriptEngine {
       int scope = scriptContext.getAttributesScope(variableName);
       if (scope != -1) {
         Object value = scriptContext.getAttribute(variableName, scope);
-        if (value instanceof ValueExpression) {
+        if (value instanceof ValueExpression valueExpression) {
           // Just return the existing ValueExpression
-          return (ValueExpression) value;
+          return valueExpression;
         } else {
           // Create a new ValueExpression based on the variable value
           return expressionFactory.createValueExpression(value, Object.class);
@@ -284,7 +284,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
       if (scope != -1) {
         // Methods are added as variables in the ScriptScope
         Object attributeValue = scriptContext.getAttribute(functionName);
-        return (attributeValue instanceof Method) ? (Method) attributeValue : null;
+        return (attributeValue instanceof Method method) ? method : null;
       } else {
         return null;
       }

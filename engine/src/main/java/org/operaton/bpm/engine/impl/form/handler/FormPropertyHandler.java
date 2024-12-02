@@ -66,8 +66,8 @@ public class FormPropertyHandler {
       }
     }
 
-    if (modelValue instanceof String) {
-      formProperty.setValue((String) modelValue);
+    if (modelValue instanceof String string) {
+      formProperty.setValue(string);
     } else if (type != null) {
       String formValue = type.convertModelValueToFormValue(modelValue);
       formProperty.setValue(formValue);

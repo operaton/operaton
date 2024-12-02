@@ -472,8 +472,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
   }
 
   protected void fireForceUpdate(CmmnActivityExecution execution) {
-    if (execution instanceof CaseExecutionEntity) {
-      CaseExecutionEntity entity = (CaseExecutionEntity) execution;
+    if (execution instanceof CaseExecutionEntity entity) {
       entity.forceUpdate();
     }
   }

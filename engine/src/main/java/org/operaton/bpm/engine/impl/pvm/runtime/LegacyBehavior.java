@@ -172,8 +172,8 @@ public class LegacyBehavior {
             PvmActivity flowScopeActivity = (PvmActivity) flowScope;
 
             ActivityBehavior activityBehavior = flowScopeActivity.getActivityBehavior();
-            if (activityBehavior instanceof CompositeActivityBehavior) {
-              ((CompositeActivityBehavior) activityBehavior).concurrentChildExecutionEnded(scopeExecution, endedExecution);
+            if (activityBehavior instanceof CompositeActivityBehavior compositeActivityBehavior) {
+              compositeActivityBehavior.concurrentChildExecutionEnded(scopeExecution, endedExecution);
             }
           }
         }

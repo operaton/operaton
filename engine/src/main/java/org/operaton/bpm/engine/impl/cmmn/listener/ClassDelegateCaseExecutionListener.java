@@ -56,8 +56,8 @@ public class ClassDelegateCaseExecutionListener extends ClassDelegate implements
 
   protected CaseExecutionListener getListenerInstance() {
     Object delegateInstance = instantiateDelegate(className, fieldDeclarations);
-    if (delegateInstance instanceof CaseExecutionListener) {
-      return (CaseExecutionListener) delegateInstance;
+    if (delegateInstance instanceof CaseExecutionListener caseExecutionListener) {
+      return caseExecutionListener;
     } else {
       throw LOG.missingDelegateParentClassException(delegateInstance.getClass().getName(),
         CaseExecutionListener.class.getName());

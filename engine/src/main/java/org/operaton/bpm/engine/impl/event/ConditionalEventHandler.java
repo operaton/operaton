@@ -46,8 +46,7 @@ public class ConditionalEventHandler implements EventHandler {
 
     ActivityImpl activity = eventSubscription.getActivity();
     ActivityBehavior activityBehavior = activity.getActivityBehavior();
-    if (activityBehavior instanceof ConditionalEventBehavior) {
-      ConditionalEventBehavior conditionalBehavior = (ConditionalEventBehavior) activityBehavior;
+    if (activityBehavior instanceof ConditionalEventBehavior conditionalBehavior) {
       conditionalBehavior.leaveOnSatisfiedCondition(eventSubscription, variableEvent);
     } else {
       throw new ProcessEngineException("Conditional Event has not correct behavior: " + activityBehavior);

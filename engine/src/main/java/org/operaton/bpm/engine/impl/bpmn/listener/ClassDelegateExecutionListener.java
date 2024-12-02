@@ -58,11 +58,11 @@ public class ClassDelegateExecutionListener extends ClassDelegate implements Exe
 
   protected ExecutionListener getExecutionListenerInstance() {
     Object delegateInstance = instantiateDelegate(className, fieldDeclarations);
-    if (delegateInstance instanceof ExecutionListener) {
-      return (ExecutionListener) delegateInstance;
+    if (delegateInstance instanceof ExecutionListener executionListener) {
+      return executionListener;
 
-    } else if (delegateInstance instanceof JavaDelegate) {
-      return new ServiceTaskJavaDelegateActivityBehavior((JavaDelegate) delegateInstance);
+    } else if (delegateInstance instanceof JavaDelegate javaDelegate) {
+      return new ServiceTaskJavaDelegateActivityBehavior(javaDelegate);
 
     } else {
       throw LOG.missingDelegateParentClassException(delegateInstance.getClass().getName(),

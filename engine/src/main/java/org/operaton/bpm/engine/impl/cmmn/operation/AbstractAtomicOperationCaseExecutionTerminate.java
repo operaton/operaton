@@ -49,8 +49,7 @@ public abstract class AbstractAtomicOperationCaseExecutionTerminate extends Abst
 
   protected void notifyParent(CmmnExecution parent, CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(parent);
-    if (behavior instanceof CmmnCompositeActivityBehavior) {
-      CmmnCompositeActivityBehavior compositeBehavior = (CmmnCompositeActivityBehavior) behavior;
+    if (behavior instanceof CmmnCompositeActivityBehavior compositeBehavior) {
       compositeBehavior.handleChildTermination(parent, execution);
     }
   }

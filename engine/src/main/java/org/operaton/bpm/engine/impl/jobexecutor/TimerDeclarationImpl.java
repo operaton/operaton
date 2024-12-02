@@ -127,11 +127,11 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
     }
 
     Object dueDateValue = description.getValue(scopeForExpression);
-    if (dueDateValue instanceof String) {
-      dueDateString = (String)dueDateValue;
+    if (dueDateValue instanceof String string) {
+      dueDateString = string;
     }
-    else if (dueDateValue instanceof Date) {
-      duedate = (Date)dueDateValue;
+    else if (dueDateValue instanceof Date date) {
+      duedate = date;
     }
     else {
       throw new ProcessEngineException("Timer '"+context.getActivityId()+"' was not configured with a valid duration/time, either hand in a java.util.Date or a String in format 'yyyy-MM-dd'T'hh:mm:ss'");

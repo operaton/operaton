@@ -79,8 +79,7 @@ public class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityB
     applyFieldDeclaration(fieldDeclarations, delegate);
     final ActivityBehavior activityBehaviorInstance = getActivityBehaviorInstance(execution, delegate);
 
-    if (activityBehaviorInstance instanceof CustomActivityBehavior) {
-      CustomActivityBehavior behavior = (CustomActivityBehavior) activityBehaviorInstance;
+    if (activityBehaviorInstance instanceof CustomActivityBehavior behavior) {
       ActivityBehavior delegateActivityBehavior = behavior.getDelegateActivityBehavior();
 
       if (!(delegateActivityBehavior instanceof SignallableActivityBehavior)) {

@@ -9,9 +9,9 @@
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
-    <artifactId>operaton-database-settings</artifactId>
-    <relativePath>../../database</relativePath>
-    <version>1.0.0-beta-3-SNAPSHOT</version>
+    <artifactId>operaton-parent</artifactId>
+    <relativePath>../../parent</relativePath>
+    <version>1.0.0-beta-2</version>
   </parent>
 
   <dependencyManagement>

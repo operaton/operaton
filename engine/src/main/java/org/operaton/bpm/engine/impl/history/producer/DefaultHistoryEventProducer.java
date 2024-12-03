@@ -442,24 +442,24 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
     ExecutionEntity sourceExecution = null;
     CaseExecutionEntity sourceCaseExecution = null;
-    if (sourceVariableScope instanceof ExecutionEntity) {
-      sourceExecution = (ExecutionEntity) sourceVariableScope;
+    if (sourceVariableScope instanceof ExecutionEntity executionEntity) {
+      sourceExecution = executionEntity;
       sourceActivityInstanceId = sourceExecution.getActivityInstanceId();
 
-    } else if (sourceVariableScope instanceof TaskEntity) {
-      sourceExecution = ((TaskEntity) sourceVariableScope).getExecution();
+    } else if (sourceVariableScope instanceof TaskEntity taskEntity) {
+      sourceExecution = taskEntity.getExecution();
       if (sourceExecution != null) {
         sourceActivityInstanceId = sourceExecution.getActivityInstanceId();
       }
       else {
-        sourceCaseExecution = ((TaskEntity) sourceVariableScope).getCaseExecution();
+        sourceCaseExecution = taskEntity.getCaseExecution();
         if (sourceCaseExecution != null) {
           sourceActivityInstanceId = sourceCaseExecution.getId();
         }
       }
     }
-    else if (sourceVariableScope instanceof CaseExecutionEntity) {
-      sourceCaseExecution = (CaseExecutionEntity) sourceVariableScope;
+    else if (sourceVariableScope instanceof CaseExecutionEntity caseExecutionEntity) {
+      sourceCaseExecution = caseExecutionEntity;
       sourceActivityInstanceId = sourceCaseExecution.getId();
     }
 

@@ -53,14 +53,14 @@ public class DelegateExpressionExecutionListener implements ExecutionListener {
     Object delegate = expression.getValue(execution);
     applyFieldDeclaration(fieldDeclarations, delegate);
 
-    if (delegate instanceof ExecutionListener) {
+    if (delegate instanceof ExecutionListener executionListener) {
       Context.getProcessEngineConfiguration()
         .getDelegateInterceptor()
-        .handleInvocation(new ExecutionListenerInvocation((ExecutionListener) delegate, execution));
-    } else if (delegate instanceof JavaDelegate) {
+        .handleInvocation(new ExecutionListenerInvocation(executionListener, execution));
+    } else if (delegate instanceof JavaDelegate javaDelegate) {
       Context.getProcessEngineConfiguration()
         .getDelegateInterceptor()
-        .handleInvocation(new JavaDelegateInvocation((JavaDelegate) delegate, execution));
+        .handleInvocation(new JavaDelegateInvocation(javaDelegate, execution));
     } else {
       throw LOG.resolveDelegateExpressionException(expression, ExecutionListener.class, JavaDelegate.class);
     }

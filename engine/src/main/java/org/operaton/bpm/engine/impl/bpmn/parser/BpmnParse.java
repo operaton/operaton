@@ -746,8 +746,8 @@ public class BpmnParse extends Parse {
       callback.callback();
     }
 
-    if (parentScope instanceof ProcessDefinition) {
-      parseProcessDefinitionCustomExtensions(scopeElement, (ProcessDefinition) parentScope);
+    if (parentScope instanceof ProcessDefinition processDefinition) {
+      parseProcessDefinitionCustomExtensions(scopeElement, processDefinition);
     }
   }
 
@@ -968,9 +968,9 @@ public class BpmnParse extends Parse {
         addError(parentElement.getTagName() + " must define a startEvent element", parentElement);
       }
     }
-    if (scope instanceof ProcessDefinitionEntity) {
-      selectInitial(startEventActivities, (ProcessDefinitionEntity) scope, parentElement);
-      parseStartFormHandlers(startEventElements, (ProcessDefinitionEntity) scope);
+    if (scope instanceof ProcessDefinitionEntity processDefinitonEntity) {
+      selectInitial(startEventActivities, processDefinitonEntity, parentElement);
+      parseStartFormHandlers(startEventElements, processDefinitonEntity);
     }
 
     // invoke parse listeners
@@ -1782,8 +1782,8 @@ public class BpmnParse extends Parse {
     // find all cancel end events
     for (ActivityImpl childActivity : transaction.getActivities()) {
       ActivityBehavior activityBehavior = childActivity.getActivityBehavior();
-      if (activityBehavior != null && activityBehavior instanceof CancelEndEventActivityBehavior) {
-        ((CancelEndEventActivityBehavior) activityBehavior).setCancelBoundaryEvent(activity);
+      if (activityBehavior != null && activityBehavior instanceof CancelEndEventActivityBehavior cancelEndEventBehavior) {
+        cancelEndEventBehavior.setCancelBoundaryEvent(activity);
       }
     }
 
@@ -4871,8 +4871,8 @@ public class BpmnParse extends Parse {
     if (value == null) {
       return new NullValueProvider();
 
-    } else if (value instanceof String) {
-      Expression expression = expressionManager.createExpression((String) value);
+    } else if (value instanceof String string) {
+      Expression expression = expressionManager.createExpression(string);
       return new ElValueProvider(expression);
 
     } else {

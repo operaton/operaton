@@ -255,8 +255,7 @@ public abstract class AbstractPersistenceSession implements PersistenceSession {
 
 
   protected void fireEntityLoaded(Object result) {
-    if(result != null && result instanceof DbEntity) {
-      DbEntity entity = (DbEntity) result;
+    if(result != null && result instanceof DbEntity entity) {
       for (EntityLoadListener entityLoadListener : listeners) {
         entityLoadListener.onEntityLoaded(entity);
       }

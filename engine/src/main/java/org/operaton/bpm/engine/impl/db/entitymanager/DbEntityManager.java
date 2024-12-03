@@ -183,8 +183,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
 
   public Object selectOne(String statement, Object parameter) {
     Object result = persistenceSession.selectOne(statement, parameter);
-    if (result instanceof DbEntity) {
-      DbEntity loadedObject = (DbEntity) result;
+    if (result instanceof DbEntity loadedObject) {
       result = cacheFilter(loadedObject);
     }
     return result;
@@ -260,8 +259,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
       dbEntityCache.putPersistent(entity);
 
       // invoke postLoad() lifecycle method
-      if (entity instanceof DbEntityLifecycleAware) {
-        DbEntityLifecycleAware lifecycleAware = (DbEntityLifecycleAware) entity;
+      if (entity instanceof DbEntityLifecycleAware lifecycleAware) {
         lifecycleAware.postLoad();
       }
     }
@@ -453,8 +451,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   }
 
   protected boolean isHistoricByteArray(DbEntity dbEntity) {
-    if (dbEntity instanceof ByteArrayEntity) {
-      ByteArrayEntity byteArrayEntity = (ByteArrayEntity) dbEntity;
+    if (dbEntity instanceof ByteArrayEntity byteArrayEntity) {
       return byteArrayEntity.getType().equals(ResourceTypes.HISTORY.getValue());
     } else {
       return false;

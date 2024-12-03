@@ -48,8 +48,7 @@ public class DelegateExpressionCaseExecutionListener implements CaseExecutionLis
     Object delegate = expression.getValue(caseExecution);
     applyFieldDeclaration(fieldDeclarations, delegate);
 
-    if (delegate instanceof CaseExecutionListener) {
-      CaseExecutionListener listenerInstance = (CaseExecutionListener) delegate;
+    if (delegate instanceof CaseExecutionListener listenerInstance) {
       Context
         .getProcessEngineConfiguration()
         .getDelegateInterceptor()

@@ -58,11 +58,11 @@ public class DateFormType extends AbstractFormFieldType {
     if(value == null) {
       return Variables.dateValue(null, propertyValue.isTransient());
     }
-    else if(value instanceof Date) {
-      return Variables.dateValue((Date) value, propertyValue.isTransient());
+    else if(value instanceof Date date) {
+      return Variables.dateValue(date, propertyValue.isTransient());
     }
-    else if(value instanceof String) {
-      String strValue = ((String) value).trim();
+    else if(value instanceof String string) {
+      String strValue = string.trim();
       if (strValue.isEmpty()) {
         return Variables.dateValue(null, propertyValue.isTransient());
       }

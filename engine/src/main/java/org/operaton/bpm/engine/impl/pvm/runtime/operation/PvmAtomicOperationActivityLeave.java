@@ -43,8 +43,7 @@ public class PvmAtomicOperationActivityLeave implements PvmAtomicOperation {
 
     ActivityBehavior activityBehavior = getActivityBehavior(execution);
 
-    if (activityBehavior instanceof FlowNodeActivityBehavior) {
-      FlowNodeActivityBehavior behavior = (FlowNodeActivityBehavior) activityBehavior;
+    if (activityBehavior instanceof FlowNodeActivityBehavior behavior) {
 
       ActivityImpl activity = execution.getActivity();
       String activityInstanceId = execution.getActivityInstanceId();

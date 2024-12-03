@@ -96,10 +96,10 @@ public class BaseCallableElement {
     Object result = versionValueProvider.getValue(variableScope);
 
     if (result != null) {
-      if (result instanceof String) {
-        return Integer.valueOf((String) result);
-      } else if (result instanceof Integer) {
-        return (Integer) result;
+      if (result instanceof String string) {
+        return Integer.valueOf(string);
+      } else if (result instanceof Integer integer) {
+        return integer;
       } else {
         throw new ProcessEngineException("It is not possible to transform '"+result+"' into an integer.");
       }
@@ -120,8 +120,8 @@ public class BaseCallableElement {
     Object result = versionTagValueProvider.getValue(variableScope);
 
     if (result != null) {
-      if (result instanceof String) {
-        return (String) result;
+      if (result instanceof String string) {
+        return string;
       } else {
         throw new ProcessEngineException("It is not possible to transform '"+result+"' into a string.");
       }

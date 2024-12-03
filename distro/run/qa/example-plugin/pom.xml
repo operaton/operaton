@@ -15,7 +15,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
-      <artifactId>operaton-webapp-jakarta</artifactId>
+      <artifactId>operaton-webapp</artifactId>
       <classifier>classes</classifier>
     </dependency>
 

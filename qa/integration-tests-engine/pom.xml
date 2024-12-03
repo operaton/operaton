@@ -12,14 +12,12 @@
 
   <properties>
     <!-- Needs to be updated after a new WildFly release -->
-    <wildfly.container.adapter.groupId>org.wildfly.arquillian</wildfly.container.adapter.groupId>
     <wildfly.container.adapter.version>5.0.1.Final</wildfly.container.adapter.version>
 
     <version.arquillian>1.9.3.Final</version.arquillian>
 
     <redirect.test.output>true</redirect.test.output>
 
-    <weld.version>6.0.1.Final</weld.version>
     <install.skip>true</install.skip>
   </properties>
 
@@ -161,8 +159,8 @@
     <!-- CDI engine & Client -->
 
     <dependency>
-      <groupId>org.operaton.bpm.javaee</groupId>
-      <artifactId>operaton-ejb-client-jakarta</artifactId>
+      <groupId>org.operaton.bpm.jakartaee</groupId>
+      <artifactId>operaton-ejb-client</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -344,18 +342,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>initialize</phase>
-            <goals>
-              <goal>properties</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 
@@ -488,7 +474,7 @@
                 <exclude>**/CallActivityContextSwitchTest.java</exclude>
                 <exclude>**/CdiBeanCallActivityResolutionTest.java</exclude>
 
-                <!-- TODO and weld-servlet-shaded is resolved with integration-tests-engine-jakarta -->
+                <!-- TODO and weld-servlet-shaded is resolved with integration-tests-engine -->
 
               </excludes>
               <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
@@ -793,6 +779,12 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
+              <execution>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>properties</goal>
+                </goals>
+              </execution>
               <execution>
                 <id>unpack-sql-scripts</id>
                 <phase>generate-test-sources</phase>

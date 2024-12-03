@@ -20,7 +20,6 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 import jakarta.servlet.ServletContextEvent;
-
 import org.operaton.bpm.engine.ProcessEngine;
 
 /**

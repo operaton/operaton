@@ -21,6 +21,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Hashtable;
+import java.nio.charset.StandardCharsets;
+
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
@@ -76,7 +78,7 @@ class BpmPlatformXmlLocationTest {
     MockContextFactory.clearCurrentContext();
   }
 
-  @Test
+    @Test
   void checkValidBpmPlatformXmlResourceLocationForUrl() throws MalformedURLException {
     TomcatParseBpmPlatformXmlStep tomcatParseBpmPlatformXmlStep = new TomcatParseBpmPlatformXmlStep();
 
@@ -208,7 +210,6 @@ class BpmPlatformXmlLocationTest {
 
   private static String getBpmPlatformXmlLocationParentDir() {
     String baseDir = BpmPlatformXmlLocationTest.class.getProtectionDomain().getCodeSource().getLocation().getFile();
-    try {
       // replace escaped whitespaces in path
       baseDir = URLDecoder.decode(baseDir, UTF_8);
     } catch (IllegalArgumentException | NullPointerException e) {
@@ -220,16 +221,16 @@ class BpmPlatformXmlLocationTest {
 
   public static class MockContextFactory implements InitialContextFactory {
 	  private static final ThreadLocal<Context> currentContext = new ThreadLocal<>();
-	  
+
 	  @Override
 	  public Context getInitialContext(Hashtable<?, ?> environment) throws NamingException {
 		  return currentContext.get();
 	  }
-	  
+
 	  public static void setCurrentContext(Context context) {
 		  currentContext.set(context);
 	  }
-	  
+
 	  public static void clearCurrentContext() {
 		  currentContext.remove();
 	  }

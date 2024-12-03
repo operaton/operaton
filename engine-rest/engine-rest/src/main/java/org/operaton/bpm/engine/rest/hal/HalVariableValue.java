@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriBuilder;
 import java.util.Map;
 
 /**

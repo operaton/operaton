@@ -33,7 +33,7 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.mockito.InOrder;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.exception;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ParseException;
@@ -124,10 +124,9 @@ public class ExceptionHandlerHelper {
     if (exception instanceof AuthorizationException) {
       responseStatus = Response.Status.FORBIDDEN;
     }
-    else if (exception instanceof MigrationPlanValidationException
-      || exception instanceof MigratingProcessInstanceValidationException
-      || exception instanceof BadUserRequestException
-      || exception instanceof ParseException) {
+    else if (exception instanceof MigratingProcessInstanceValidationException
+            || exception instanceof BadUserRequestException
+            || exception instanceof ParseException) {
       responseStatus = Response.Status.BAD_REQUEST;
     }
     return responseStatus;

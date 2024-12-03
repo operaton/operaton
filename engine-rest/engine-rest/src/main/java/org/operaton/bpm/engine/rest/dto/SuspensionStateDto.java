@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.dto;
 
-import jakarta.ws.rs.core.Response.Status;
-
+import jakarta.ws.rs.core.Response;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.runtime.UpdateProcessInstanceSuspensionStateBuilder;
@@ -49,7 +48,7 @@ public class SuspensionStateDto {
                                                                .byProcessInstanceId(processInstanceId);
     } else {
       String message = "Specify processInstance with processInstanceId";
-      throw new InvalidRequestException(Status.BAD_REQUEST, message);
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, message);
     }
 
     if (getSuspended()) {

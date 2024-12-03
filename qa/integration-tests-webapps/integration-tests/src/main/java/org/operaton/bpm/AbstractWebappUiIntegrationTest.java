@@ -94,11 +94,6 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
-  @After
-  public void after() {
-    testUtil.destroy();
-  }
-
   @AfterClass
   public static void quitDriver() {
     driver.quit();

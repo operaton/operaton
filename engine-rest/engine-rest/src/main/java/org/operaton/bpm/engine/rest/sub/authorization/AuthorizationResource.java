@@ -32,16 +32,15 @@ public interface AuthorizationResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public AuthorizationDto getAuthorization(@Context UriInfo context);
+  AuthorizationDto getAuthorization(@Context UriInfo context);
 
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
-  public void deleteAuthorization();
+  void deleteAuthorization();
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateAuthorization(AuthorizationDto Authorization);
-
+  void updateAuthorization(AuthorizationDto Authorization);
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)
   ResourceOptionsDto availableOperations(@Context UriInfo context);

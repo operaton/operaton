@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
@@ -35,8 +35,8 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
     createClient(getWebappCtxPath());
   }
 
-  @Test(timeout=10000)
-  public void shouldCheckPresenceOfCsrfPreventionCookie() {
+  @Test(timeout = 10000)
+  public void shouldCheckPresenceOfCsrfPreventionCookie() throws Exception {
     // given
     target = client.target(appBasePath + TASKLIST_PATH);
 
@@ -44,19 +44,17 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
     response = target.request().get(Response.class);
 
     // then
-    assertEquals(200, response.getStatus());
+    assertEquals(200, response.statusCode());
     String xsrfTokenHeader = getXsrfTokenHeader(response);
     String xsrfCookieValue = getXsrfCookieValue(response);
-    response.close();
-
     assertNotNull(xsrfTokenHeader);
     assertEquals(32, xsrfTokenHeader.length());
     assertNotNull(xsrfCookieValue);
     assertTrue(xsrfCookieValue.contains(";SameSite=Lax"));
   }
 
-  @Test(timeout=10000)
-  public void shouldRejectModifyingRequest() {
+  @Test(timeout = 10000)
+  public void shouldRejectModifyingRequest() throws Exception {
     // given
     String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
     String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
@@ -68,7 +66,7 @@ public class CsrfPreventionIT extends AbstractWebIntegrationTest {
             .post(null, Response.class);
 
     // then
-    assertEquals(403, response.getStatus());
+    assertEquals(403, response.statusCode());
     assertTrue(getXsrfTokenHeader(response).equals("Required"));
   }
 

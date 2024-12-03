@@ -63,11 +63,18 @@ public class TestProperties {
   }
   
   public String getStringProperty(String propName, String defaultValue) {
-    return properties.getProperty(propName, defaultValue);    
+    String propertyValue = properties.getProperty(propName, defaultValue);
+    if (propertyValue.startsWith("${") && propertyValue.endsWith("}")) {
+      if (defaultValue == null) {
+        throw new RuntimeException("Property " + propName + " is not set.");
+      }
+      return defaultValue;
+    }
+    return propertyValue;
   }
 
   public String getHttpHost() {
-    return properties.getProperty("http.host", "localhost");
+    return getStringProperty("http.host", "localhost");
   }
 
   public static Properties getTestProperties() throws IOException {

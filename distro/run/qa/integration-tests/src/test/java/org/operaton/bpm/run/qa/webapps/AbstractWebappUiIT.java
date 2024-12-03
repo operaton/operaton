@@ -106,11 +106,6 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
-  @AfterEach
-  void after() {
-    testUtil.destroy();
-  }
-
   @AfterAll
   static void quitDriver() {
     driver.quit();

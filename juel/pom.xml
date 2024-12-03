@@ -25,11 +25,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-core-internal-dependencies</artifactId>
-        <version>${project.version}</version>
-        <scope>import</scope>
+        <groupId>jakarta.platform</groupId>
+        <artifactId>jakarta.jakartaee-bom</artifactId>
+        <version>${version.jakarta-ee-spec}</version>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

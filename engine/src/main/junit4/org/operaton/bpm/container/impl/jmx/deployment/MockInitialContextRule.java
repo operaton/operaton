@@ -22,12 +22,18 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import static org.mockito.Mockito.mock;
+
 public class MockInitialContextRule implements TestRule {
   
   private final Context context;
 
   public MockInitialContextRule(Context context) {
     this.context = context;
+  }
+
+  public MockInitialContextRule() {
+    this.context = mock(Context.class);
   }
 
   @Override
@@ -45,6 +51,10 @@ public class MockInitialContextRule implements TestRule {
         }
       }
     };
+  }
+
+  Context getMockedContext() {
+    return context;
   }
 
 }

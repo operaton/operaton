@@ -231,6 +231,13 @@
     </dependency>
 
     <dependency>
+      <groupId>com.github.h-thurow</groupId>
+      <artifactId>simple-jndi</artifactId>
+      <version>0.24.0</version>
+    </dependency>
+
+
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <scope>test</scope>

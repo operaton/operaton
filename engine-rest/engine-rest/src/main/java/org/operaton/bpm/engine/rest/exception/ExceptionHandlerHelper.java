@@ -124,10 +124,9 @@ public class ExceptionHandlerHelper {
     if (exception instanceof AuthorizationException) {
       responseStatus = Response.Status.FORBIDDEN;
     }
-    else if (exception instanceof MigrationPlanValidationException
-      || exception instanceof MigratingProcessInstanceValidationException
-      || exception instanceof BadUserRequestException
-      || exception instanceof ParseException) {
+    else if (exception instanceof MigratingProcessInstanceValidationException
+            || exception instanceof BadUserRequestException
+            || exception instanceof ParseException) {
       responseStatus = Response.Status.BAD_REQUEST;
     }
     return responseStatus;

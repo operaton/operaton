@@ -91,6 +91,20 @@ public class EmptyBodyFilter extends AbstractEmptyBodyFilter {
             return inputStream.markSupported();
           }
 
+          @Override
+          public boolean isFinished() {
+            return this.finished;
+          }
+
+          @Override
+          public boolean isReady() {
+            return true;
+          }
+
+          @Override
+          public void setReadListener(ReadListener readListener) {
+            throw new UnsupportedOperationException();
+          }
         };
       }
 

@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;

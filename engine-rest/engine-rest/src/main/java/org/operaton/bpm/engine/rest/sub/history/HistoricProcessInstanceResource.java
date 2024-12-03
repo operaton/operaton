@@ -18,12 +18,12 @@ package org.operaton.bpm.engine.rest.sub.history;
 
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceDto;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
 
 public interface HistoricProcessInstanceResource {
 

@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.runtime.SignalEventReceivedBuilder;
 
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.Map;
 
 /**

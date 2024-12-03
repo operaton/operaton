@@ -18,8 +18,8 @@ package org.operaton.bpm.engine.rest.sub.metrics;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Date;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriInfo;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.management.Metrics;

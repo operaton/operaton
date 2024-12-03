@@ -178,7 +178,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
 
   public static void importFunctions(ScriptContext ctx, String namespace, Object obj) {
     Class< ? > clazz = null;
-    if (obj instanceof Class classObj) {
+    if (obj instanceof Class<?> classObj) {
       clazz = classObj;
     } else if (obj instanceof String stringObj) {
       try {

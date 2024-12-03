@@ -30,11 +30,11 @@ import org.operaton.bpm.engine.rest.dto.runtime.StartProcessInstanceDto;
 import org.operaton.bpm.engine.rest.dto.task.FormDto;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.Map;
 

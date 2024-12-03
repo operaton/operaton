@@ -20,6 +20,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -64,9 +65,12 @@ public class BpmPlatformXmlLocationTest {
   private static final String BPM_PLATFORM_XML_LOCATION_URL_HTTPS_PROTOCOL = "https://localhost:8080/operaton/" + BPM_PLATFORM_XML_FILE;
 
   @Rule
-  public MockInitialContextRule initialContextRule = new MockInitialContextRule(new SimpleNamingContext());
+  public MockInitialContextRule initialContextRule = new MockInitialContextRule(new InitialContext());
 
-  @Test
+    public BpmPlatformXmlLocationTest() throws NamingException {
+    }
+
+    @Test
   public void checkValidBpmPlatformXmlResourceLocationForUrl() throws MalformedURLException {
     TomcatParseBpmPlatformXmlStep tomcatParseBpmPlatformXmlStep = new TomcatParseBpmPlatformXmlStep();
 
@@ -194,7 +198,6 @@ public class BpmPlatformXmlLocationTest {
   
   private static String getBpmPlatformXmlLocationParentDir() {
     String baseDir = BpmPlatformXmlLocationTest.class.getProtectionDomain().getCodeSource().getLocation().getFile();
-    try {
       // replace escaped whitespaces in path
       baseDir = URLDecoder.decode(baseDir, UTF_8);
     } catch (IllegalArgumentException | NullPointerException e) {

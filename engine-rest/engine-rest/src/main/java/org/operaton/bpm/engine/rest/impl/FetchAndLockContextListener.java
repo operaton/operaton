@@ -19,9 +19,9 @@ package org.operaton.bpm.engine.rest.impl;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.spi.FetchAndLockHandler;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.ws.rs.core.Response;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.ws.rs.core.Response;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 

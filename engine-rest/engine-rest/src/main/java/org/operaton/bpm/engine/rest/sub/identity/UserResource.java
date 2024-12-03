@@ -20,10 +20,10 @@ import org.operaton.bpm.engine.rest.dto.ResourceOptionsDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserCredentialsDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.UriInfo;
 
 /**
  * @author Daniel Meyer

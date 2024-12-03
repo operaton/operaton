@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest.util.container;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.Application;
+import jakarta.ws.rs.core.Application;
 
 import org.operaton.bpm.engine.rest.CustomJacksonDateFormatTest;
 import org.operaton.bpm.engine.rest.ExceptionHandlerTest;
@@ -39,7 +39,7 @@ public class JerseySpecifics implements ContainerSpecifics {
       new EmbeddedServerRuleFactory(new JaxrsApplication());
 
   protected static final Map<Class<?>, TestRuleFactory> TEST_RULE_FACTORIES =
-      new HashMap<>();
+          new HashMap<>();
 
   static {
     TEST_RULE_FACTORIES.put(ExceptionHandlerTest.class, new EmbeddedServerRuleFactory(new TestCustomResourceApplication()));

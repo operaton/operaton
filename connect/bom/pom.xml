@@ -5,12 +5,12 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
     <relativePath>../../pom.xml</relativePath>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-2-SNAPSHOT</version>
   </parent>
 
   <groupId>org.operaton.connect</groupId>
   <artifactId>operaton-connect-bom</artifactId>
-  <version>1.0.0-beta-2</version>
+  <version>1.0.0-beta-2-SNAPSHOT</version>
   <name>Operaton - Connect - BOM</name>
   <packaging>pom</packaging>
 

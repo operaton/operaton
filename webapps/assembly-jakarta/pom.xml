@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.operaton.bpm.webapp</groupId>
     <artifactId>operaton-webapp-root</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-2-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-webapp-jakarta</artifactId>

@@ -172,18 +172,18 @@ checksum:
     - MD5
     - SHA_256
 
-deploy:
-  maven:
-    mavenCentral:
-      MavenCentral:
-        active: ALWAYS
-        applyMavenCentralRules: true
-        url: https://central.sonatype.com/api/v1/publisher
-        stagingRepositories:
-          - target/staging-deploy
-    pomchecker:
-      # Could be enabled when all POMs have <description> tag, see https://github.com/operaton/operaton/issues/293
-      strict: false
+#deploy:
+#  maven:
+#    mavenCentral:
+#      MavenCentral:
+#        active: ALWAYS
+#        applyMavenCentralRules: true
+#        url: https://central.sonatype.com/api/v1/publisher
+#        stagingRepositories:
+#          - target/staging-deploy
+#    pomchecker:
+#      # Could be enabled when all POMs have <description> tag, see https://github.com/operaton/operaton/issues/293
+#      strict: false
 
 catalog:
   sbom:

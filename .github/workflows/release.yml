@@ -43,13 +43,13 @@ jobs:
             echo "⚙ Releasing version '$RELEASE_VERSION'"
             echo "is_prerelease=false" >> $GITHUB_OUTPUT
           fi
-          .github/scripts/set-project-version.sh $RELEASE_VERSION
-          if ! git diff-index --quiet HEAD --; then
-            git config --local user.name "$GITHUB_ACTOR"
-            git config --local user.email "github-actions[bot]@users.noreply.github.com"
-            git commit -am "[releng] Releasing version $RELEASE_VERSION"
-            git push origin ${{github.event.inputs.release_branch}}
-          fi
+#          .github/scripts/set-project-version.sh $RELEASE_VERSION
+#          if ! git diff-index --quiet HEAD --; then
+#            git config --local user.name "$GITHUB_ACTOR"
+#            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+#            git commit -am "[releng] Releasing version $RELEASE_VERSION"
+#            git push origin ${{github.event.inputs.release_branch}}
+#          fi
 
   release_build:
     name: Release Build

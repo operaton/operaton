@@ -210,7 +210,6 @@ class BpmPlatformXmlLocationTest {
 
   private static String getBpmPlatformXmlLocationParentDir() {
     String baseDir = BpmPlatformXmlLocationTest.class.getProtectionDomain().getCodeSource().getLocation().getFile();
-    try {
       // replace escaped whitespaces in path
       baseDir = URLDecoder.decode(baseDir, UTF_8);
     } catch (IllegalArgumentException | NullPointerException e) {

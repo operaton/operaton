@@ -189,6 +189,7 @@
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
               <tarLongFileMode>gnu</tarLongFileMode>
+              <attach>true</attach>
             </configuration>
           </execution>
         </executions>

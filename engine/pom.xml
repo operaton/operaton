@@ -340,6 +340,7 @@
     <test.includes />
     <!-- without a special test profile we don't want to exclude anything, this expressions should never match -->
     <test.excludes>$.</test.excludes>
+    <skipTests.operaton-engine>false</skipTests.operaton-engine>
     <history.level>full</history.level>
     <mail.server.port>5025</mail.server.port>
     <authorizationCheckRevokes>auto</authorizationCheckRevokes>
@@ -419,6 +420,7 @@
           <failIfNoTests>false</failIfNoTests>
           <trimStackTrace>false</trimStackTrace>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <skip>${skipTests.operaton-engine}</skip>
           <includes>
             <include>%regex[.*(${test.includes}).*Test.*.class]</include>
           </includes>

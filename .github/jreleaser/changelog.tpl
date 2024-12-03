@@ -11,7 +11,8 @@
 incompatible with Operaton. If you are running Operaton on an application server, make sure that it supports
 `jakarta-el` in version 4.0.0 or newer (e.g. Wildfly 21 or newer).
 
+{{changelogContributors}}
+
 ## Changelog
 
 {{changelogChanges}}
-{{changelogContributors}}

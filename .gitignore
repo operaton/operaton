@@ -27,3 +27,6 @@ operaton-h2-dbs
 
 .java-version
 pom.xml.versionsBackup
+out/jreleaser
+.env
+

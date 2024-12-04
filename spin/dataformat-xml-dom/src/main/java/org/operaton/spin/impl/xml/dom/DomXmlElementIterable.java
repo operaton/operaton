@@ -74,8 +74,8 @@ public class DomXmlElementIterable implements Iterable<SpinXmlElement> {
       protected SpinXmlElement getCurrent() {
         if (childs != null) {
           Node item = childs.item(index);
-          if (item != null && item instanceof Element) {
-            SpinXmlElement current = dataFormat.createElementWrapper((Element) item);
+          if (item != null && item instanceof Element element) {
+            SpinXmlElement current = dataFormat.createElementWrapper(element);
             if (!validating || (current.hasNamespace(namespace) && name.equals(current.name()))) {
                 return current;
             }

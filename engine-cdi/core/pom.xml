@@ -8,8 +8,7 @@
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
-    <artifactId>operaton-database-settings</artifactId>
-    <relativePath>../../database</relativePath>
+    <artifactId>operaton-cdi-compatibility-root</artifactId>
     <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 

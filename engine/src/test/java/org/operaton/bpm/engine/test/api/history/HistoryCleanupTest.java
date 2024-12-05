@@ -968,7 +968,6 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Ignore("Disabled because of #60")
   public void testLessThanThresholdOutsideBatchWindowAfterMidnight() throws ParseException {
     //given
     prepareData(5);
@@ -1103,7 +1102,6 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Ignore("CAM-10055")
   public void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() throws ParseException {
     //given
     prepareData(5);

@@ -42,7 +42,6 @@ import org.slf4j.Logger;
  * @author Roman Smirnov
  *
  */
-@Ignore
 public class CompetingForkTest {
 
   private static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
@@ -98,7 +97,6 @@ public class CompetingForkTest {
   }
 
   @Deployment
-  @Ignore
   @Test
   public void testCompetingFork() throws Exception {
     runtimeService.startProcessInstanceByKey("process");

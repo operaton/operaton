@@ -58,7 +58,6 @@ public class ProcessEngineRuleParameterizedJunit4Test {
   /**
    * Unnamed @Deployment annotations don't work with parameterized Unit tests
    */
-  @Ignore
   @Test
   @Deployment
   public void ruleUsageExample() {

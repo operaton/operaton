@@ -286,7 +286,6 @@ public class ManagementServiceGetTelemetryDataTest {
   }
 
   @Test
-  @Ignore
   public void shouldSetDataCollectionTimeFrameToEngineStartTimeWhenTelemetryDisabled() {
     // given default telemetry data and empty telemetry registry
     // current time after engine startup but before fetching telemetry data

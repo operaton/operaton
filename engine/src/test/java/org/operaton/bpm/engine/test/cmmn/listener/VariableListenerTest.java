@@ -517,7 +517,6 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
    * TODO: add when history for case execution variables is implemented
    */
   @Deployment
-  @Ignore
   @Test
   public void testListenerDoesNotInterfereWithHistory() {
     CaseInstance caseInstance = caseService

@@ -899,7 +899,6 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     assertEquals(Long.MIN_VALUE + 1, job.getPriority());
   }
 
-  @Ignore
   @Test
   public void testGetTableMetaData() {
 

@@ -826,6 +826,7 @@ public class MixedConditionalEventTest extends AbstractConditionalEventTestCase 
 
   @Ignore
   @Deployment
+  @Test
   public void testCompensationWithConditionalEvents() {
     //given process with compensation and conditional events
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(CONDITIONAL_EVENT_PROCESS_KEY);

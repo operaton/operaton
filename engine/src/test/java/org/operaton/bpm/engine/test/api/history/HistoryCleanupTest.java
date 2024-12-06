@@ -1122,6 +1122,8 @@ public class HistoryCleanupTest {
 
     //job rescheduled till next batch window start
     Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
+    System.out.println(jobEntity.getDuedate().getTime());
+    System.out.println(nextRun.getTime());
     assertTrue(jobEntity.getDuedate().equals(nextRun));
     assertTrue(nextRun.after(ClockUtil.getCurrentTime()));
 

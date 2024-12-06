@@ -6,9 +6,8 @@
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
-    <artifactId>operaton-database-settings</artifactId>
-    <relativePath>../../database</relativePath>
-    <version>1.0.0-beta-2</version>
+    <artifactId>operaton-spring-compatibility-root</artifactId>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <dependencyManagement>
@@ -363,20 +362,8 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>package</phase>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
 
+  <description>${project.name}</description>
 </project>

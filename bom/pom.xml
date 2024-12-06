@@ -5,8 +5,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
-    <version>1.0.0-beta-2</version>
-    <relativePath>../</relativePath>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-bom-root</artifactId>
@@ -18,4 +17,5 @@
     <module>operaton-bom</module>
   </modules>
 
+  <description>${project.name}</description>
 </project>

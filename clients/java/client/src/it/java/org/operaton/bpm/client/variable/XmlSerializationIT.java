@@ -18,7 +18,7 @@ package org.operaton.bpm.client.variable;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
 import org.operaton.bpm.client.dto.ProcessInstanceDto;
@@ -44,8 +44,6 @@ import static org.operaton.bpm.client.util.ProcessModels.*;
 import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.XML;
 import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
 
-@ExtendWith(EngineRule.class)
-@ExtendWith(ClientRule.class)
 public class XmlSerializationIT {
 
   protected static final String VARIABLE_NAME_XML = "xmlVariable";
@@ -77,8 +75,10 @@ public class XmlSerializationIT {
       .serializationDataFormat(XML_DATAFORMAT_NAME)
       .create();
 
-  protected ClientRule clientRule = new ClientRule();
-  protected EngineRule engineRule = new EngineRule();
+  @RegisterExtension
+  static ClientRule clientRule = new ClientRule();
+  @RegisterExtension
+  static EngineRule engineRule = new EngineRule();
 
   protected ExternalTaskClient client;
 
@@ -265,17 +265,19 @@ public class XmlSerializationIT {
 
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, objectValue);
 
-    // when + then
-    assertThatThrownBy(() ->
+    // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
-      .open()
-    ).isInstanceOf(ValueMapperException.class);
+            .handler(handler)
+            .open();
+
 
     clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
 
     ExternalTask task = handler.getHandledTasks().get(0);
-    task.getVariable(VARIABLE_NAME_XML);
+    // then
+    assertThatThrownBy(() ->
+            task.getVariable(VARIABLE_NAME_XML)
+    ).isInstanceOf(ValueMapperException.class);
   }
 
   @Test
@@ -288,17 +290,18 @@ public class XmlSerializationIT {
 
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, objectValue);
 
-    // when + then
-    assertThatThrownBy(() ->
-      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-        .handler(handler)
-        .open()
-    ).isInstanceOf(ValueMapperException.class);
+    // when
+    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
+      .handler(handler)
+      .open();
 
     clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
 
+    //then
     ExternalTask task = handler.getHandledTasks().get(0);
-    task.getVariableTyped(VARIABLE_NAME_XML);
+    assertThatThrownBy(() ->
+            task.getVariable(VARIABLE_NAME_XML)
+    ).isInstanceOf(ValueMapperException.class);
   }
 
   @Test
@@ -372,17 +375,18 @@ public class XmlSerializationIT {
 
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, serializedValue);
 
-    // when + then
-    assertThatThrownBy(() ->
-      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-        .handler(handler)
-        .open()
-    ).isInstanceOf(ValueMapperException.class);
+    // when
+    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
+      .handler(handler)
+      .open();
 
     clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
 
+    // then
     ExternalTask task = handler.getHandledTasks().get(0);
-    task.getVariable(VARIABLE_NAME_XML);
+    assertThatThrownBy(() ->
+            task.getVariable(VARIABLE_NAME_XML)
+    ).isInstanceOf(ValueMapperException.class);
   }
 
   @Test
@@ -399,17 +403,18 @@ public class XmlSerializationIT {
 
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, serializedValue);
 
-    // when + then
-    assertThatThrownBy(() ->
-      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-        .handler(handler)
-        .open()
-    ).isInstanceOf(ValueMapperException.class);
+    // when
+    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
+      .handler(handler)
+      .open();
 
     clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
 
+    // then
     ExternalTask task = handler.getHandledTasks().get(0);
-    task.getVariable(VARIABLE_NAME_XML);
+    assertThatThrownBy(() ->
+            task.getVariable(VARIABLE_NAME_XML)
+    ).isInstanceOf(ValueMapperException.class);
   }
 
   @Test

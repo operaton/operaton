@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.wildfly</groupId>
     <artifactId>operaton-wildfly26</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-wildfly26-modules</artifactId>
@@ -408,4 +408,5 @@
       </plugin>
     </plugins>
   </build>
+  <description>${project.name}</description>
 </project>

@@ -66,8 +66,7 @@ public class ProcessEngineFactoryBean implements FactoryBean<ProcessEngine>, Dis
   }
   
   protected void initializeTransactionExternallyManaged() {
-    if (processEngineConfiguration instanceof SpringProcessEngineConfiguration) { // remark: any config can be injected, so we cannot have SpringConfiguration as member
-      SpringProcessEngineConfiguration engineConfiguration = (SpringProcessEngineConfiguration) processEngineConfiguration;
+    if (processEngineConfiguration instanceof SpringProcessEngineConfiguration engineConfiguration) { // remark: any config can be injected, so we cannot have SpringConfiguration as member
       if (engineConfiguration.getTransactionManager() != null) {
         processEngineConfiguration.setTransactionsExternallyManaged(true);
       }

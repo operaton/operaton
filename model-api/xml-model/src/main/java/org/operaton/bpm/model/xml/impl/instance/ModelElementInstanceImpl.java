@@ -397,10 +397,9 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
       return false;
     } else if(obj == this) {
       return true;
-    } else if(!(obj instanceof ModelElementInstanceImpl)) {
+    } else if(!(obj instanceof ModelElementInstanceImpl other)) {
       return false;
     } else {
-      ModelElementInstanceImpl other = (ModelElementInstanceImpl) obj;
       return other.domElement.equals(domElement);
     }
   }

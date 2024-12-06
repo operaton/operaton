@@ -36,8 +36,8 @@ public class AuthenticationDto {
 
     dto.setUserId(authentication.getIdentityId());
 
-    if (authentication instanceof UserAuthentication) {
-      dto.setAuthorizedApps(new ArrayList<String>(((UserAuthentication) authentication).getAuthorizedApps()));
+    if (authentication instanceof UserAuthentication userAuthentication) {
+      dto.setAuthorizedApps(new ArrayList<String>(userAuthentication.getAuthorizedApps()));
     }
 
     return dto;

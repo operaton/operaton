@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.connect</groupId>
     <artifactId>operaton-connect-root</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-connect-soap-http-client</artifactId>
@@ -112,4 +112,5 @@
     </profile>
   </profiles>
 
+  <description>${project.name}</description>
 </project>

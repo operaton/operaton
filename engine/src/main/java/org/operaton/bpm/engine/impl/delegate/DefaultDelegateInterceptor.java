@@ -115,12 +115,12 @@ public class DefaultDelegateInterceptor implements DelegateInterceptor {
    * @return true if the execution context is modified by this invocation
    */
   protected boolean setExecutionContext(BaseDelegateExecution execution) {
-    if (execution instanceof ExecutionEntity) {
-      Context.setExecutionContext((ExecutionEntity) execution);
+    if (execution instanceof ExecutionEntity executionEntity) {
+      Context.setExecutionContext(executionEntity);
       return true;
     }
-    else if (execution instanceof CaseExecutionEntity) {
-      Context.setExecutionContext((CaseExecutionEntity) execution);
+    else if (execution instanceof CaseExecutionEntity caseExecutionEntity) {
+      Context.setExecutionContext(caseExecutionEntity);
       return true;
     }
     return false;

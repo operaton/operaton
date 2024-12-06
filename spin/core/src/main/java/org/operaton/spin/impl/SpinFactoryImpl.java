@@ -47,11 +47,11 @@ public class SpinFactoryImpl extends SpinFactory {
   public <T extends Spin<?>> T createSpin(Object parameter) {
     ensureNotNull("parameter", parameter);
 
-    if (parameter instanceof String) {
-      return createSpinFromString((String) parameter);
+    if (parameter instanceof String string) {
+      return createSpinFromString(string);
 
-    } else if (parameter instanceof Reader) {
-      return createSpinFromReader((Reader) parameter);
+    } else if (parameter instanceof Reader reader) {
+      return createSpinFromReader(reader);
 
     } else if (parameter instanceof Spin) {
       return createSpinFromSpin((T) parameter);
@@ -66,11 +66,11 @@ public class SpinFactoryImpl extends SpinFactory {
     ensureNotNull("parameter", parameter);
     ensureNotNull("format", format);
 
-    if (parameter instanceof String) {
-      return createSpinFromString((String) parameter, format);
+    if (parameter instanceof String string) {
+      return createSpinFromString(string, format);
 
-    } else if (parameter instanceof Reader) {
-      return createSpinFromReader((Reader) parameter, format);
+    } else if (parameter instanceof Reader reader) {
+      return createSpinFromReader(reader, format);
 
     } else if (parameter instanceof Spin) {
       return createSpinFromSpin((T) parameter, format);

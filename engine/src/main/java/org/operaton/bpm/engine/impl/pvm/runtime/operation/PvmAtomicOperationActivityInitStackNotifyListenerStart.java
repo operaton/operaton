@@ -67,8 +67,7 @@ public class PvmAtomicOperationActivityInitStackNotifyListenerStart extends PvmA
 
     PvmExecutionImpl propagatingExecution = execution;
     ActivityImpl activity = execution.getActivity();
-    if (activity.getActivityBehavior() instanceof ModificationObserverBehavior) {
-      ModificationObserverBehavior behavior = (ModificationObserverBehavior) activity.getActivityBehavior();
+    if (activity.getActivityBehavior() instanceof ModificationObserverBehavior behavior) {
       List<ActivityExecution> concurrentExecutions = behavior.initializeScope(propagatingExecution, 1);
       propagatingExecution = (PvmExecutionImpl) concurrentExecutions.get(0);
     }

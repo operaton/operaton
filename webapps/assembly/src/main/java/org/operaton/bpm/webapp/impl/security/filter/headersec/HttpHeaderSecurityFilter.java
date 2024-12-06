@@ -70,10 +70,7 @@ public class HttpHeaderSecurityFilter implements Filter {
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-    if (response instanceof HttpServletResponse) {
-
-      HttpServletResponse httpResponse = (HttpServletResponse) response;
-
+    if (response instanceof HttpServletResponse httpResponse) {
       for (HeaderSecurityProvider provider : headerSecurityProviders) {
 
         if (!provider.isDisabled()) {

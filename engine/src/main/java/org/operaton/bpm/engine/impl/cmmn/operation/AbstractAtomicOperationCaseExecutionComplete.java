@@ -96,8 +96,7 @@ public abstract class AbstractAtomicOperationCaseExecutionComplete extends Abstr
     CmmnExecution parent = execution.getParent();
     if (parent != null) {
       CmmnActivityBehavior behavior = getActivityBehavior(parent);
-      if (behavior instanceof CmmnCompositeActivityBehavior) {
-        CmmnCompositeActivityBehavior compositeBehavior = (CmmnCompositeActivityBehavior) behavior;
+      if (behavior instanceof CmmnCompositeActivityBehavior compositeBehavior) {
         compositeBehavior.handleChildCompletion(parent, execution);
       }
     }

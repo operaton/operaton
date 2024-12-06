@@ -53,12 +53,12 @@ public class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValu
       throw new IllegalArgumentException("Cannot create file without filename! Please set a name into ValueInfo with key " + VALUE_INFO_FILE_NAME);
     }
     FileValueBuilder builder = Variables.fileValue(filename.toString());
-    if (value instanceof File) {
-      builder.file((File) value);
-    } else if (value instanceof InputStream) {
-      builder.file((InputStream) value);
-    } else if (value instanceof byte[]) {
-      builder.file((byte[]) value);
+    if (value instanceof File file) {
+      builder.file(file);
+    } else if (value instanceof InputStream inputStream) {
+      builder.file(inputStream);
+    } else if (value instanceof byte[] byteArray) {
+      builder.file(byteArray);
     } else {
       throw new IllegalArgumentException("Provided value is not of File, InputStream or byte[] type.");
     }

@@ -3,9 +3,9 @@
 
   <parent>
     <groupId>org.operaton.bpm</groupId>
-    <artifactId>operaton-database-settings</artifactId>
-    <relativePath>../database</relativePath>
-    <version>1.0.0-beta-2</version>
+    <artifactId>operaton-parent</artifactId>
+    <relativePath>../parent</relativePath>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <groupId>org.operaton.bpm.springboot.project</groupId>
@@ -139,4 +139,5 @@
     </pluginManagement>
   </build>
 
+  <description>${project.name}</description>
 </project>

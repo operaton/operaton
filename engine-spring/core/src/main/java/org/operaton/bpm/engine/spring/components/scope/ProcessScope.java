@@ -93,8 +93,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 			Object scopedObject = executionEntity.getVariable(name);
 			if (scopedObject == null) {
 				scopedObject = objectFactory.getObject();
-				if (scopedObject instanceof ScopedObject) {
-					ScopedObject sc = (ScopedObject) scopedObject;
+				if (scopedObject instanceof ScopedObject sc) {
 					scopedObject = sc.getTargetObject();
 					logger.fine("de-referencing " + ScopedObject.class.getName() + "#targetObject before persisting variable");
 				}

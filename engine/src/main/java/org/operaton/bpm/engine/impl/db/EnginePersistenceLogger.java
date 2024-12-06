@@ -169,8 +169,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
         message = "null";
       }
 
-      if(parameter instanceof DbEntity) {
-        DbEntity dbEntity = (DbEntity) parameter;
+      if(parameter instanceof DbEntity dbEntity) {
         message = ClassNameUtil.getClassNameWithoutPackage(dbEntity) + "[id=" + dbEntity.getId() + "]";
       }
 
@@ -813,8 +812,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
     List<SQLException> sqlExceptionList = new ArrayList<>();
     Throwable cause = exception;
     do {
-      if (cause instanceof SQLException) {
-        SQLException sqlEx = (SQLException) cause;
+      if (cause instanceof SQLException sqlEx) {
         sqlExceptionList.add(sqlEx);
         while (sqlEx.getNextException() != null) {
           sqlExceptionList.add(sqlEx.getNextException());

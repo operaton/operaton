@@ -78,13 +78,13 @@ public abstract class DmnModelTest {
 
   public <E extends DmnModelElementInstance> E generateElement(Class<E> elementClass, Integer suffix) {
     E element = modelInstance.newInstance(elementClass);
-    if (element instanceof DmnElement) {
+    if (element instanceof DmnElement dmnElement) {
       String identifier = elementClass.getSimpleName();
       if (suffix != null) {
         identifier += suffix.toString();
       }
       identifier = Character.toLowerCase(identifier.charAt(0)) + identifier.substring(1);
-      ((DmnElement) element).setId(identifier);
+      dmnElement.setId(identifier);
     }
     return element;
   }

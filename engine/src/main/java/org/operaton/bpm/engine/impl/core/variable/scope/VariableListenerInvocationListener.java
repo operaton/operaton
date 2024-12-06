@@ -55,16 +55,15 @@ public class VariableListenerInvocationListener implements VariableInstanceLifec
   protected void handleEvent(VariableEvent event) {
     AbstractVariableScope sourceScope = event.getSourceScope();
 
-    if (sourceScope instanceof ExecutionEntity) {
-      addEventToScopeExecution((ExecutionEntity) sourceScope, event);
-    } else if (sourceScope instanceof TaskEntity) {
-      TaskEntity task = (TaskEntity) sourceScope;
+    if (sourceScope instanceof ExecutionEntity executionEntity) {
+      addEventToScopeExecution(executionEntity, event);
+    } else if (sourceScope instanceof TaskEntity task) {
       ExecutionEntity execution = task.getExecution();
       if (execution != null) {
         addEventToScopeExecution(execution, event);
       }
-    } else if(sourceScope.getParentVariableScope() instanceof ExecutionEntity) {
-      addEventToScopeExecution((ExecutionEntity)sourceScope.getParentVariableScope(), event);
+    } else if(sourceScope.getParentVariableScope() instanceof ExecutionEntity executionEntity) {
+      addEventToScopeExecution(executionEntity, event);
     }
     else {
       throw new ProcessEngineException("BPMN execution scope expected");

@@ -32,8 +32,7 @@ public class OptimizeHistoricActivityInstanceDto extends HistoricActivityInstanc
     OptimizeHistoricActivityInstanceDto dto = new OptimizeHistoricActivityInstanceDto();
     HistoricActivityInstanceDto.fromHistoricActivityInstance(dto, historicActivityInstance);
 
-    if (historicActivityInstance instanceof HistoryEvent) {
-      HistoryEvent historyEvent = (HistoryEvent) historicActivityInstance;
+    if (historicActivityInstance instanceof HistoryEvent historyEvent) {
       dto.sequenceCounter = historyEvent.getSequenceCounter();
     }
 

@@ -6,13 +6,17 @@
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <packaging>pom</packaging>
 
   <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Root POM</name>
+
+  <properties>
+    <deploy.skip>true</deploy.skip>
+  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -92,4 +96,5 @@
     </profile>
   </profiles>
 
+  <description>${project.name}</description>
 </project>

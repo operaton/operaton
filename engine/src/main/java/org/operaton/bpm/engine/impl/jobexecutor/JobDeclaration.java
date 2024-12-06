@@ -79,11 +79,9 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
     job.setJobDefinitionId(jobDefinitionId);
 
     //set batch id for monitor and seed jobs (BatchEntity) and batch execution jobs (BatchJobContext)
-    if (context instanceof BatchEntity) {
-      BatchEntity batch = ((BatchEntity) context);
+    if (context instanceof BatchEntity batch) {
       job.setBatchId(batch.getId());
-    } else if (context instanceof BatchJobContext) {
-      BatchJobContext batchJobContext = (BatchJobContext) context;
+    } else if (context instanceof BatchJobContext batchJobContext) {
       job.setBatchId(batchJobContext.getBatch().getId());
     }
 

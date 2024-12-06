@@ -8,7 +8,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent</relativePath>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -59,4 +59,5 @@
   </dependencies>
 
   <groupId>org.operaton.bpm.javaee</groupId>
+  <description>${project.name}</description>
 </project>

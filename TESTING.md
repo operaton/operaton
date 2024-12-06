@@ -12,7 +12,6 @@
 * **Leverage the `ProcessEngineExtension`**: In the `operaton-engine` project, if you need a process engine object, use the `org.operaton.bpm.engine.test.extension.ProcessEngineExtension`. This extension integrates seamlessly with JUnit 5 and ensures that the process engine object is reused across test cases and that certain integrity checks are performed after every test. Example:
 
   ```java
-  @ExtendWith(ProcessEngineExtension.class)
   public class MyProcessEngineTest {
     // inject ProcessEngine and engine services
     ProcessEngine processEngine;

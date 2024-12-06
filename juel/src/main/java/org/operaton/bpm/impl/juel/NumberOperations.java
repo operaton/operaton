@@ -32,9 +32,7 @@ public class NumberOperations {
 		int length = value.length();
 		for (int i = 0; i < length; i++) {
 			switch (value.charAt(i)) {
-				case '.':
-				case 'E':
-				case 'e': return true;
+				case '.', 'E', 'e': return true;
 			}
 		}
 		return false;

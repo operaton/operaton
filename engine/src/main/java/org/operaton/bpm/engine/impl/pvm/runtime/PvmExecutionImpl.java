@@ -897,8 +897,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     }
 
     PvmExecutionImpl propagatingExecution = null;
-    if (flowScope.getActivityBehavior() instanceof ModificationObserverBehavior) {
-      ModificationObserverBehavior flowScopeBehavior = (ModificationObserverBehavior) flowScope.getActivityBehavior();
+    if (flowScope.getActivityBehavior() instanceof ModificationObserverBehavior flowScopeBehavior) {
       propagatingExecution = (PvmExecutionImpl) flowScopeBehavior.createInnerInstance(this);
     } else {
       propagatingExecution = createConcurrentExecution();

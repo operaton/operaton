@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../../database</relativePath>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
   
   <groupId>org.operaton.bpm.wildfly</groupId>
@@ -42,4 +42,5 @@
     </profile>
   </profiles>
 
+  <description>${project.name}</description>
 </project>

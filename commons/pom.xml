@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
 
@@ -98,4 +98,5 @@
     <tag>HEAD</tag>
   </scm>
 
+  <description>${project.name}</description>
 </project>

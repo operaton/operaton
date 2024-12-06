@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.wildfly</groupId>
     <artifactId>operaton-wildfly</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-wildfly-subsystem</artifactId>
@@ -107,10 +107,10 @@
             <include>**/*TestCase.java</include>
             <include>**/*Test.java</include>
           </includes>
-          <forkMode>once</forkMode>
         </configuration>
       </plugin>
     </plugins>
   </build>
 
+  <description>${project.name}</description>
 </project>

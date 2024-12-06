@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.operaton.bpm.quarkus</groupId>
     <artifactId>operaton-bpm-quarkus-engine-parent</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -12,6 +12,7 @@
 
   <properties>
     <arquillian.version>1.7.0.Final</arquillian.version>
+    <deploy.skip>true</deploy.skip>
   </properties>
 
   <dependencyManagement>
@@ -128,4 +129,5 @@
     </dependency>
   </dependencies>
 
+  <description>${project.name}</description>
 </project>

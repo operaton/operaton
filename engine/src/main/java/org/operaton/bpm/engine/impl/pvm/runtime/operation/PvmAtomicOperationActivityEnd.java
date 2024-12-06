@@ -93,8 +93,7 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
       PvmActivity flowScopeActivity = (PvmActivity) flowScope;
 
       ActivityBehavior activityBehavior = flowScopeActivity.getActivityBehavior();
-      if (activityBehavior instanceof CompositeActivityBehavior) {
-        CompositeActivityBehavior compositeActivityBehavior = (CompositeActivityBehavior) activityBehavior;
+      if (activityBehavior instanceof CompositeActivityBehavior compositeActivityBehavior) {
         // 2.1 Concurrent execution => composite behavior.concurrentExecutionEnded()
         if(propagatingExecution.isConcurrent() && !LegacyBehavior.isConcurrentScope(propagatingExecution)) {
           compositeActivityBehavior.concurrentChildExecutionEnded(propagatingExecution.getParent(), propagatingExecution);

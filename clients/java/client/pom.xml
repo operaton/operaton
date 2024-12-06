@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-external-task-client-root</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -234,10 +234,6 @@
               <goal>integration-test</goal>
               <goal>verify</goal>
             </goals>
-            <configuration>
-              <!-- FIXME: Issue#251 -->
-              <skip>true</skip>
-            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -326,4 +322,5 @@
 
   </build>
 
+  <description>${project.name}</description>
 </project>

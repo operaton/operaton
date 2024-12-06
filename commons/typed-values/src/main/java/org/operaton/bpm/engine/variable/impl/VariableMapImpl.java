@@ -147,8 +147,8 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   public void putAll(Map<? extends String, ? extends Object> m) {
     if(m != null) {
-      if(m instanceof VariableMapImpl) {
-        variables.putAll(((VariableMapImpl)m).variables);
+      if(m instanceof VariableMapImpl variableMapImpl) {
+        variables.putAll(variableMapImpl.variables);
       }
       else {
         for (java.util.Map.Entry<? extends String, ? extends Object> entry : m.entrySet()) {

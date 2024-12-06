@@ -12,11 +12,7 @@
 
 We would love you to contribute to this project. You can do so in various ways.
 
-
-## Contribute your knowledge
-
-Help others by participating in our [forum](https://forum.operaton.org/). 
-
+If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-2v6umjt92-d2DRmsoR1fqDEVlJB5IkNA).
 
 ## File bugs or feature requests
 
@@ -34,13 +30,15 @@ Try to apply our best practices for creating issues:
   * If you raise a bug report, describe the steps to reproduce the problem
   * Specify your environment (e.g. Operaton version, Operaton modules you use, ...)
   * Provide code. For a bug report, create a test that reproduces the problem. For feature requests, create mockup code that shows how the feature might look like. Fork our [unit test Github template](https://github.com/operaton/operaton-engine-unittest) to get started quickly.
-
+  * Your time is valuable, so is ours. Please respect that we might not be able to work on your request immediately. We will try to give you feedback as soon as possible. 
+    Please help us to understand your request fast by providing as much precise as possible.
 
 ## Write code
 
 You can contribute code that fixes bugs and/or implements features. Here is how it works:
 
 1. Select a ticket that you would like to implement. Have a look at [our backlog](https://github.com/operaton/operaton/issues) if you need inspiration. Be aware that some of the issues need good knowledge of the surrounding code.
+1. Looking for some low hanging fruits? Check out the [good first issues](https://github.com/operaton/operaton/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 1. Tell us in the ticket comments that you want to work on your ticket. This is also the place where you can ask questions.
 1. Check your code changes against our [contribution checklist](#contribution-checklist)
 1. [Create a pull request](https://github.com/operaton/operaton/pulls). Note that you can already do this before you have finished your implementation if you would like feedback on your work in progress.
@@ -54,14 +52,22 @@ In this repository, we manage the [issues](https://github.com/operaton/operaton/
 
 We use [labels](https://github.com/operaton/operaton/labels) to mark and group our issues for easier browsing. We define the following label prefixes:
 
-* `bot:` labels that control a github app, workflow, ...
-* `ci:` labels that control the CI for a pull request
-* `group:` Arbitrary labels that we can define to group tickets. If you create this, please add a DRI to the description to make sure someone has ownership, e.g. to decide if we still need the label
-* `potential:` Issues that we are potentially releasing with the given version. This is not a guarantee and does not express high confidence.
-* `scope:` The technical scope in which the ticket makes changes.
-* `type:` Issue type. Every issue should have exactly one of these labels. They are automatically added when you create a new issue from a template.
-* `version:` Issues that will be released (with high confidence) with the given version.
-
+* `idea`: A suggestion for a new feature
+* `bug`: Something isn't working
+* `enhancement`: New feature or request
+* `good first issue`: Good for newcomers
+* `help wanted`: Extra attention is needed
+* `question`: Further information is requested
+* `documentation`: Improvements or additions to documentation
+* `refactor`: Code refactoring
+* `build`: Changes related to the build system, including Maven configurations, GitHub Actions workflows, etc.
+* `dependencies`: Pull requests that update a dependency file
+* `qa`: Tests, quality improvements and assurance
+* `backport-c7`: Changes backported from Camunda 7
+* `backport-cib7`: Changes backported from CIB seven
+* `duplicate`: This issue or pull request already exists
+* `invalid`: This will not be worked on
+* `wontfix`: This will not be worked on
 
 # Build from source
 
@@ -101,6 +107,7 @@ Before submitting your pull request for code review, please go through the follo
 
 # Commit message conventions
 
+We are following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. 
 The messages of all commits must conform to the style:
 
 ```
@@ -122,7 +129,7 @@ feat(engine): Support BPEL
 related to #123
 ```
 
-Have a look at the [commit history](https://github.com/operaton/operaton/commits/master) for real-life examples.
+Have a look at the [commit history](https://github.com/operaton/operaton/commits/master) for real-life examples. 
 
 
 ## \<type\>
@@ -132,7 +139,7 @@ One of the following:
 * feat (feature)
 * fix (bug fix)
 * docs (documentation)
-* style (formatting, missing semi colons, …)
+* style (formatting, missing semicolons, …)
 * refactor
 * test (when adding missing tests)
 * chore (maintain)
@@ -140,6 +147,19 @@ One of the following:
 ## \<scope\>
 
 The scope is the module that is changed by the commit. E.g. `engine` in the case of https://github.com/operaton/operaton/tree/master/engine.
+
+Candidates:
+* engine
+* engine-rest
+* webapps
+* run
+* spin
+* juel
+* tests
+* springboot
+* quarkus
+* client
+* plugin
 
 ## \<subject\>
 

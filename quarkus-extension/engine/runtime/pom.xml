@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.operaton.bpm.quarkus</groupId>
     <artifactId>operaton-bpm-quarkus-engine-parent</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-bpm-quarkus-engine</artifactId>
@@ -75,4 +75,5 @@
       </plugin>
     </plugins>
   </build>
+  <description>${project.name}</description>
 </project>

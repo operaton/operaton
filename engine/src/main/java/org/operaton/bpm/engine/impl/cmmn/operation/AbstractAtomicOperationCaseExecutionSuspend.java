@@ -45,8 +45,7 @@ public abstract class AbstractAtomicOperationCaseExecutionSuspend extends Abstra
 
   protected void notifyParent(CmmnExecution parent, CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(parent);
-    if (behavior instanceof CmmnCompositeActivityBehavior) {
-      CmmnCompositeActivityBehavior compositeBehavior = (CmmnCompositeActivityBehavior) behavior;
+    if (behavior instanceof CmmnCompositeActivityBehavior compositeBehavior) {
       compositeBehavior.handleChildSuspension(parent, execution);
     }
   }

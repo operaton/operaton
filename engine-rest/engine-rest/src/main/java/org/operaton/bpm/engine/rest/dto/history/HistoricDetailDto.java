@@ -124,12 +124,10 @@ public abstract class HistoricDetailDto {
 
     HistoricDetailDto dto = null;
 
-    if (historicDetail instanceof HistoricFormField) {
-      HistoricFormField historicFormField = (HistoricFormField) historicDetail;
+    if (historicDetail instanceof HistoricFormField historicFormField) {
       dto = HistoricFormFieldDto.fromHistoricFormField(historicFormField);
 
-    } else if (historicDetail instanceof HistoricVariableUpdate) {
-      HistoricVariableUpdate historicVariableUpdate = (HistoricVariableUpdate) historicDetail;
+    } else if (historicDetail instanceof HistoricVariableUpdate historicVariableUpdate) {
       dto = HistoricVariableUpdateDto.fromHistoricVariableUpdate(historicVariableUpdate);
     }
 

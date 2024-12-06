@@ -299,10 +299,10 @@ public class ProcessDiagramLayoutFactory {
       NodeList childNodes = shape.getChildNodes();
       for (int j = 0; j < childNodes.getLength(); j++) {
         Node childNode = childNodes.item(j);
-        if (childNode instanceof Element
+        if (childNode instanceof Element element
                 && BpmnParser.BPMN_DC_NS.equals(childNode.getNamespaceURI())
                 && "Bounds".equals(childNode.getLocalName())) {
-          DiagramNode bounds = parseBounds((Element) childNode);
+          DiagramNode bounds = parseBounds(element);
           bounds.setId(bpmnElementId);
           listOfBounds.put(bpmnElementId, bounds);
           break;

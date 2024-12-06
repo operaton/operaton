@@ -8,7 +8,7 @@ project:
     license: https://github.com/operaton/operaton/blob/main/LICENSE
     contact: mail (at) operaton.org
     contribute: https://{{repoHost}}/{{repoOwner}}/{{repoName}}/blob/main/CONTRIBUTING.md
-  inceptionYear: 2024
+  inceptionYear: '2024'
   copyright: ©️2024 Operaton
   license: Apache-2.0
   authors:
@@ -20,7 +20,7 @@ project:
       height: 200
   java:
     groupId: org.operaton
-    version: 17
+    version: '17'
     multiProject: false
   tags:
     - 'operaton'
@@ -34,7 +34,10 @@ platform:
 
 files:
   artifacts:
-    - path: 'distro/**/target/*.gz'
+    - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.tar.gz'
+    - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.tar.gz'
+    - path: 'distro/sql-script/target/operaton-sql-scripts-{{projectVersion}}.tar.gz'
+    - path: 'distro/webjar/target/operaton-webapp-webjar-{{projectVersion}}.jar'
 
 release: # https://jreleaser.org/guide/latest/reference/release/github.html
   github:
@@ -77,6 +80,9 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
         - label: 'dependencies3'
           title: 'regex:^(?:Bump):\s.*'
           order: 132
+        - label: 'backport'
+          body: 'Backported commit'
+          order: 140
         - label: 'allcontributors1'
           title: 'regex:^docs: update .all-contributorsrc.*'
           order: -1
@@ -112,23 +118,28 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
             - 'bug'
             - 'fix'
           order: 2
+        - title: '↪️ Backported Changes'
+          key: 'backports'
+          labels:
+            - 'backport'
+          order: 3
         - title: '📖 Documentation'
           key: 'documentation'
           labels:
             - 'documentation'
-          order: 3
+          order: 4
         - title: '⚙️ Dependencies'
           key: 'dependencies'
           labels:
             - 'dependencies1'
             - 'dependencies2'
             - 'dependencies3'
-          order: 4
+          order: 5
         - title: '🛠 Build'
           key: 'build'
           labels:
             - 'build1'
-          order: 5
+          order: 6
         - title: '🚧 WIP'
           key: 'wip'
           labels:
@@ -140,11 +151,12 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
           labels:
             - 'release'
             - 'release2'
-          order: 8
+          order: 9
       hide:
         contributors:
           - '[bot]'
           - 'GitHub'
+          - 'ageduldig'
         categories:
           - 'merge'
           - 'wip'
@@ -158,7 +170,7 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
 checksum:
   algorithms:
     - MD5
-    - SHA-256
+    - SHA_256
 
 deploy:
   maven:
@@ -169,6 +181,9 @@ deploy:
         url: https://central.sonatype.com/api/v1/publisher
         stagingRepositories:
           - target/staging-deploy
+    pomchecker:
+      # Could be enabled when all POMs have <description> tag, see https://github.com/operaton/operaton/issues/293
+      strict: false
 
 catalog:
   sbom:

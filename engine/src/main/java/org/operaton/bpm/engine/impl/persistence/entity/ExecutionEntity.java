@@ -597,8 +597,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   @SuppressWarnings("deprecation")
   public <T extends CoreExecution> void performOperation(CoreAtomicOperation<T> operation) {
-    if (operation instanceof AtomicOperation) {
-      performOperation((AtomicOperation) operation);
+    if (operation instanceof AtomicOperation atomicOperation) {
+      performOperation(atomicOperation);
     } else {
       super.performOperation(operation);
     }
@@ -607,8 +607,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   @SuppressWarnings("deprecation")
   public <T extends CoreExecution> void performOperationSync(CoreAtomicOperation<T> operation) {
-    if (operation instanceof AtomicOperation) {
-      performOperationSync((AtomicOperation) operation);
+    if (operation instanceof AtomicOperation atomicOperation) {
+      performOperationSync(atomicOperation);
     } else {
       super.performOperationSync(operation);
     }

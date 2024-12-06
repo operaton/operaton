@@ -5,8 +5,7 @@
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-root</artifactId>
-    <version>1.0.0-beta-1</version>
-    <relativePath>..</relativePath>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-bpm-run-modules</artifactId>
@@ -112,4 +111,5 @@
     </pluginManagement>
   </build>
 
+  <description>${project.name}</description>
 </project>

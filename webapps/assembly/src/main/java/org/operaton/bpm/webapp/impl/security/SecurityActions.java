@@ -66,8 +66,7 @@ public class SecurityActions {
       List<String> groupIds = null;
       List<String> tenantIds = null;
 
-      if (authentication instanceof UserAuthentication) {
-        UserAuthentication userAuthentication = (UserAuthentication) authentication;
+      if (authentication instanceof UserAuthentication userAuthentication) {
         groupIds = userAuthentication.getGroupIds();
         tenantIds = userAuthentication.getTenantIds();
       }

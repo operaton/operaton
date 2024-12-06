@@ -114,19 +114,6 @@ public class ComponentAvailabilityIT {
   }
 
   @Test
-  public void shouldFindSwaggerUI() {
-    Response response = when().get(container.getBaseUrl() + "/swaggerui");
-    if (swaggerUIAvailable) {
-      response.then()
-        .statusCode(200)
-        .body("html.head.title", equalTo("Operaton REST API"));
-    } else {
-      response.then()
-        .statusCode(404);
-    }
-  }
-
-  @Test
   public void shouldFindExample() {
     Response response = when().get(container.getBaseUrl() + "/engine-rest/process-definition");
     if (exampleAvailable && restAvailable) {

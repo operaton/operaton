@@ -481,8 +481,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
     // an OptimisticLockingException if different case sentry parts of the
     // same sentry has been satisfied concurrently.
     for (CmmnSentryPart sentryPart : sentryParts) {
-      if (sentryPart instanceof CaseSentryPartEntity) {
-        CaseSentryPartEntity sentryPartEntity = (CaseSentryPartEntity) sentryPart;
+      if (sentryPart instanceof CaseSentryPartEntity sentryPartEntity) {
         sentryPartEntity.forceUpdate();
       }
     }
@@ -535,8 +534,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
       // an OptimisticLockingException if different case sentry parts of the
       // same sentry has been satisfied concurrently.
       for (CmmnSentryPart sentryPart : sentryParts) {
-        if (sentryPart instanceof CaseSentryPartEntity) {
-          CaseSentryPartEntity sentryPartEntity = (CaseSentryPartEntity) sentryPart;
+        if (sentryPart instanceof CaseSentryPartEntity sentryPartEntity) {
           sentryPartEntity.forceUpdate();
         }
       }

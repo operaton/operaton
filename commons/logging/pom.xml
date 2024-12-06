@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.commons</groupId>
     <artifactId>operaton-commons-root</artifactId>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-commons-logging</artifactId>
@@ -48,4 +48,5 @@
     </dependency>
 
   </dependencies>
+  <description>${project.name}</description>
 </project>

@@ -60,12 +60,10 @@ public class HistoryDecisionEvaluationListener implements DmnDecisionEvaluationL
       if (executionContext != null) {
         CoreExecution coreExecution = executionContext.getExecution();
 
-        if (coreExecution instanceof ExecutionEntity) {
-          ExecutionEntity execution = (ExecutionEntity) coreExecution;
+        if (coreExecution instanceof ExecutionEntity execution) {
           return eventProducer.createDecisionEvaluatedEvt(execution, evaluationEvent);
         }
-        else if (coreExecution instanceof CaseExecutionEntity) {
-          CaseExecutionEntity caseExecution = (CaseExecutionEntity) coreExecution;
+        else if (coreExecution instanceof CaseExecutionEntity caseExecution) {
           return eventProducer.createDecisionEvaluatedEvt(caseExecution, evaluationEvent);
         }
 
@@ -79,8 +77,8 @@ public class HistoryDecisionEvaluationListener implements DmnDecisionEvaluationL
   }
 
   protected boolean isDeployedDecisionTable(DmnDecision decision) {
-    if(decision instanceof DecisionDefinition) {
-      return ((DecisionDefinition) decision).getId() != null;
+    if(decision instanceof DecisionDefinition decisionDefinition) {
+      return decisionDefinition.getId() != null;
     } else {
       return false;
     }

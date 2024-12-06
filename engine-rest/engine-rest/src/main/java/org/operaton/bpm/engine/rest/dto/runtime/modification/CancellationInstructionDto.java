@@ -80,14 +80,14 @@ public class CancellationInstructionDto extends ProcessInstanceModificationInstr
   public void applyTo(InstantiationBuilder<?> builder, ProcessEngine engine, ObjectMapper mapper) {
     // cannot be applied to instantiation
 
-    if (builder instanceof ModificationBuilder) {
+    if (builder instanceof ModificationBuilder modificationBuilder) {
       if (activityId == null) {
         throw new InvalidRequestException(Status.BAD_REQUEST, buildErrorMessage("'activityId' must be set"));
       }
       if (cancelCurrentActiveActivityInstances) {
-        ((ModificationBuilder) builder).cancelAllForActivity(activityId, true);
+        modificationBuilder.cancelAllForActivity(activityId, true);
       } else {
-        ((ModificationBuilder) builder).cancelAllForActivity(activityId);
+        modificationBuilder.cancelAllForActivity(activityId);
       }
     }
   }

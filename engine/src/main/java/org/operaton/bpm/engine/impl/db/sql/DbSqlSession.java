@@ -155,13 +155,12 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     } else {
       DbEntity dbEntity = operation.getEntity();
 
-      if (dbEntity instanceof HasDbRevision) {
+      if (dbEntity instanceof HasDbRevision versionedObject) {
         if (rowsAffected != 1) {
           // failed with optimistic locking
           operation.setState(State.FAILED_CONCURRENT_MODIFICATION);
         } else {
           // increment revision of our copy
-          HasDbRevision versionedObject = (HasDbRevision) dbEntity;
           versionedObject.setRevision(versionedObject.getRevisionNext());
           operation.setState(State.APPLIED);
         }
@@ -257,16 +256,16 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       return true;
     } else if (
       isConstraintViolation
-      && failedOperation instanceof DbEntityOperation
-      && ((DbEntityOperation) failedOperation).getEntity() instanceof HasDbReferences
+      && failedOperation instanceof DbEntityOperation dbEntityOperation
+      && dbEntityOperation.getEntity() instanceof HasDbReferences hasDbReferences
       && (failedOperation.getOperationType().equals(DbOperationType.INSERT)
       || failedOperation.getOperationType().equals(DbOperationType.UPDATE))
       ) {
       if (DatabaseUtil.checkDatabaseRollsBackTransactionOnError()) {
         return Context.getCommandContext().getProcessEngineConfiguration().isEnableOptimisticLockingOnForeignKeyViolation();
       }
-      DbEntity entity = ((DbEntityOperation) failedOperation).getEntity();
-      for (Map.Entry<String, Class> reference : ((HasDbReferences)entity).getReferencedEntitiesIdAndClass().entrySet()) {
+      DbEntity entity = dbEntityOperation.getEntity();
+      for (Map.Entry<String, Class> reference : hasDbReferences.getReferencedEntitiesIdAndClass().entrySet()) {
         DbEntity referencedEntity = selectById(reference.getValue(), reference.getKey());
         if (referencedEntity == null) {
           return true;
@@ -312,8 +311,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       configureFailedDbEntityOperation(operation, failure);
     } else {
       // set revision of our copy to 1
-      if (entity instanceof HasDbRevision) {
-        HasDbRevision versionedObject = (HasDbRevision) entity;
+      if (entity instanceof HasDbRevision versionedObject) {
         versionedObject.setRevision(1);
       }
 
@@ -451,8 +449,8 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       if (isMissingTablesException(e)) {
         throw LOG.missingActivitiTablesException();
       } else {
-        if (e instanceof RuntimeException) {
-          throw (RuntimeException) e;
+        if (e instanceof RuntimeException runtimeException) {
+          throw runtimeException;
         } else {
           throw LOG.unableToFetchDbSchemaVersion(e);
         }

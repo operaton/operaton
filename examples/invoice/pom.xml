@@ -8,8 +8,7 @@
   <parent>
     <groupId>org.operaton.bpm.example</groupId>
     <artifactId>operaton-example-root</artifactId>
-    <relativePath>../</relativePath>
-    <version>1.0.0-beta-2</version>
+    <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
   <dependencies>
@@ -30,4 +29,5 @@
     </plugins>
   </build>
 
+  <description>${project.name}</description>
 </project>

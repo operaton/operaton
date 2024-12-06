@@ -23,7 +23,7 @@ public abstract class AbstractTypedValueMapper<T extends TypedValue> implements 
 
   protected ValueType valueType;
 
-  public AbstractTypedValueMapper(ValueType type) {
+  protected AbstractTypedValueMapper(ValueType type) {
     valueType = type;
   }
 

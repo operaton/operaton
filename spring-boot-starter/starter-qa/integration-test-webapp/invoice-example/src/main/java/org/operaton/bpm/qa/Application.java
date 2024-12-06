@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.qa;
 
+import jakarta.annotation.PostConstruct;
 import org.apache.catalina.webresources.TomcatURLStreamHandlerFactory;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.example.invoice.InvoiceProcessApplication;
@@ -26,14 +27,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.event.EventListener;
 
-import jakarta.annotation.PostConstruct;
-
 @SpringBootApplication
 @EnableProcessApplication("myProcessApplication")
 public class Application {
 
-  @Autowired
-  protected ProcessEngine processEngine;
+  protected final ProcessEngine processEngine;
 
   protected InvoiceProcessApplication invoicePa = new InvoiceProcessApplication();
 
@@ -42,6 +40,11 @@ public class Application {
     TomcatURLStreamHandlerFactory.disable();
 
     SpringApplication.run(Application.class, args);
+  }
+
+  @Autowired
+  public Application (ProcessEngine processEngine) {
+    this.processEngine = processEngine;
   }
 
   @PostConstruct

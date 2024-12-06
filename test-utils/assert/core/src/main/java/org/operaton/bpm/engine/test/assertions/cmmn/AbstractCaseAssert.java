@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.assertions.cmmn;
 
-import java.util.Arrays;
-import java.util.Map;
-
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.MapAssert;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -33,6 +30,9 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.test.assertions.bpmn.AbstractProcessAssert;
 import org.operaton.bpm.engine.test.assertions.bpmn.TaskAssert;
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
+
+import java.util.Arrays;
+import java.util.Map;
 
 public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A extends CaseExecution> extends AbstractProcessAssert<S, A> {
 
@@ -594,7 +594,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   protected String toString(A caseExecution) {
     if (caseExecution != null) {
       return !actual.getCaseInstanceId().equals(actual.getId()) ? String.format(
-          "%s {id='%s', activityId='%s' }",
+          "%s {id='%s', activityId='%s', caseInstanceId='%s'}",
           caseExecution.getActivityType(),
           caseExecution.getId(),
           caseExecution.getActivityId(),
@@ -640,7 +640,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     boolean shouldHaveSpecificVariables = names != null && names.length > 0;
 
     Map<String, Object> vars = vars();
-    StringBuffer message = new StringBuffer();
+    StringBuilder message = new StringBuilder();
     message.append("Expecting %s to hold ");
     message.append(shouldHaveVariables ? "case variables" + (shouldHaveSpecificVariables ? " %s, "
         : ", ")

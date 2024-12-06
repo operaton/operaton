@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi.beans;
 
-import javax.inject.Named;
-
 import org.operaton.bpm.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
+
+import javax.inject.Named;
 
 /**
  * @author Daniel Meyer
@@ -29,10 +29,11 @@ import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
 @Named
 public class ExampleSignallableActivityBehaviorBean extends AbstractBpmnActivityBehavior implements SignallableActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
-
   }
 
+  @Override
   public void signal(ActivityExecution execution, String signalEvent, Object signalData) throws Exception {
     leave(execution);
   }

@@ -16,18 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb.request;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.integrationtest.functional.cdi.beans.RequestScopedDelegateBean;
-import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounter;
-import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterDelegateBean;
-import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterDelegateBeanLocal;
-import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterService;
-import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterServiceBean;
-import org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterServiceLocal;
-import org.operaton.bpm.integrationtest.functional.ejb.request.beans.RequestScopedSFSBDelegate;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -36,6 +24,12 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.integrationtest.functional.cdi.beans.RequestScopedDelegateBean;
+import org.operaton.bpm.integrationtest.functional.ejb.request.beans.*;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.TestContainer;
 
 
 /**
@@ -81,7 +75,7 @@ public class JobExecutorRequestContextLocalInvocationTest extends AbstractFoxPla
 
   @Test
   @OperateOnDeployment("pa")
-  public void testRequestContextPropagationEjbLocal() throws Exception{
+  public void testRequestContextPropagationEjbLocal() {
 
     // This fails with  WELD-001303 No active contexts for scope type javax.enterprise.context.RequestScoped as well
 

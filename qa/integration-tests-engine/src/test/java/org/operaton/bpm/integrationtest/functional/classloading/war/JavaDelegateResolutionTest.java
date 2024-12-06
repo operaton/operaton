@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.war;
 
-import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleDelegate;
-import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -27,6 +24,9 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleDelegate;
+import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.TestContainer;
 
 
 /**
@@ -78,7 +78,7 @@ public class JavaDelegateResolutionTest extends AbstractFoxPlatformIntegrationTe
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClassFromJobExecutor() throws InterruptedException {
+  public void testResolveClassFromJobExecutor() {
 
     runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 

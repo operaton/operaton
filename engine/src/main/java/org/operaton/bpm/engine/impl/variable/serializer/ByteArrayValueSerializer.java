@@ -37,8 +37,8 @@ public class ByteArrayValueSerializer extends PrimitiveValueSerializer<BytesValu
 
   public BytesValue convertToTypedValue(UntypedValueImpl untypedValue) {
     Object value = untypedValue.getValue();
-    if (value instanceof byte[]) {
-      return Variables.byteArrayValue((byte[]) value, untypedValue.isTransient());
+    if (value instanceof byte[] bytes) {
+      return Variables.byteArrayValue(bytes, untypedValue.isTransient());
     } else {
       byte[] data = IoUtil.readInputStream((InputStream) value, null);
       return Variables.byteArrayValue(data, untypedValue.isTransient());

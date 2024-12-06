@@ -45,8 +45,7 @@ public class DelegateExpressionCaseVariableListener implements CaseVariableListe
     Object delegate = expression.getValue(variableInstance.getSourceExecution());
     applyFieldDeclaration(fieldDeclarations, delegate);
 
-    if (delegate instanceof CaseVariableListener) {
-      CaseVariableListener listenerInstance = (CaseVariableListener) delegate;
+    if (delegate instanceof CaseVariableListener listenerInstance) {
       Context
         .getProcessEngineConfiguration()
         .getDelegateInterceptor()

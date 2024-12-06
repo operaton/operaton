@@ -496,8 +496,8 @@ public abstract class TestHelper {
   public static void resetIdGenerator(ProcessEngineConfigurationImpl processEngineConfiguration) {
     IdGenerator idGenerator = processEngineConfiguration.getIdGenerator();
 
-    if (idGenerator instanceof DbIdGenerator) {
-      ((DbIdGenerator) idGenerator).reset();
+    if (idGenerator instanceof DbIdGenerator dbIdGenerator) {
+      dbIdGenerator.reset();
     }
   }
 

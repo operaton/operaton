@@ -861,7 +861,6 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   }
 
   @Deployment
-  @Ignore
   @Test
   public void testLongProcessDefinitionKey() {
     String key = "myrealrealrealrealrealrealrealrealrealrealreallongprocessdefinitionkeyawesome";

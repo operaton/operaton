@@ -987,7 +987,6 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     clearDatabase();
   }
 
-  @Ignore("CAM-9888")
   @Test
   public void testQuerySetStandaloneJobRetriesUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given

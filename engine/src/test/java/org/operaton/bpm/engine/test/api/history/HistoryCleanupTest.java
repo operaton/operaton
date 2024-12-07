@@ -91,12 +91,15 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Svetlana Dorokhova
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoryCleanupTest {
-
+  private static final Logger logger = LoggerFactory.getLogger(HistoryCleanupTest.class);
   private static final int PROCESS_INSTANCES_COUNT = 3;
   private static final int DECISIONS_IN_PROCESS_INSTANCES = 3;
   private static final int DECISION_INSTANCES_COUNT = 10;
@@ -968,7 +971,6 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Ignore("Disabled because of #60")
   public void testLessThanThresholdOutsideBatchWindowAfterMidnight() throws ParseException {
     //given
     prepareData(5);
@@ -1103,7 +1105,6 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Ignore("CAM-10055")
   public void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() throws ParseException {
     //given
     prepareData(5);
@@ -1124,6 +1125,10 @@ public class HistoryCleanupTest {
 
     //job rescheduled till next batch window start
     Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
+
+    logger.error(String.valueOf(jobEntity.getDuedate().getTime()));
+    logger.error(String.valueOf(nextRun.getTime()));
+
     assertTrue(jobEntity.getDuedate().equals(nextRun));
     assertTrue(nextRun.after(ClockUtil.getCurrentTime()));
 

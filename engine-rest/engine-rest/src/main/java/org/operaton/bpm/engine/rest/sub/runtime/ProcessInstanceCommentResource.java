@@ -18,9 +18,9 @@ package org.operaton.bpm.engine.rest.sub.runtime;
 
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 import org.operaton.bpm.engine.rest.dto.task.CommentDto;
 

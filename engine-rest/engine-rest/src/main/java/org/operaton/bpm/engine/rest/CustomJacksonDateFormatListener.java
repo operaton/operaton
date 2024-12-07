@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 

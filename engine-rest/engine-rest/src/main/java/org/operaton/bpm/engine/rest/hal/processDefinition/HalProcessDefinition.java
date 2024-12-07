@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.hal.processDefinition;
 
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriBuilder;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.ProcessDefinition;

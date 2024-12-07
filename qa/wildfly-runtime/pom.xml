@@ -18,7 +18,7 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-beans</artifactId>
-        <version>${version.spring.framework6}</version>
+        <version>${version.spring.framework}</version>
       </dependency>
       <dependency>
         <groupId>org.operaton.bpm</groupId>

@@ -42,9 +42,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.HttpMethod;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.AuthorizationService;
@@ -108,7 +108,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedTrue() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);

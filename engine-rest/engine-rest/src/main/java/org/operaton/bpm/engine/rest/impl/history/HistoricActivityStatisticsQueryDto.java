@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.rest.impl.history;
 import java.util.Date;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.history.HistoricActivityStatisticsQuery;

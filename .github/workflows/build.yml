@@ -2,7 +2,6 @@
 name: build
 
 on:
-  workflow_dispatch:        # Allows manual trigger
   push:
     branches: ["main"]
     paths-ignore:

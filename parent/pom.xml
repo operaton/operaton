@@ -60,9 +60,6 @@
     <version.wildfly>33.0.1.Final</version.wildfly>
     <version.wildfly.core>25.0.1.Final</version.wildfly.core>
 
-    <version.wildfly26>26.0.1.Final</version.wildfly26>
-    <version.wildfly26.core>18.0.4.Final</version.wildfly26.core>
-
     <version.tomcat9>9.0.90</version.tomcat9>
     <version.tomcat>10.1.30</version.tomcat>
 

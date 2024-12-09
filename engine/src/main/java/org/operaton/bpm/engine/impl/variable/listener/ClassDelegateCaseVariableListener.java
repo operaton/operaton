@@ -51,8 +51,8 @@ public class ClassDelegateCaseVariableListener extends ClassDelegate implements 
 
   protected CaseVariableListener getVariableListenerInstance() {
     Object delegateInstance = instantiateDelegate(className, fieldDeclarations);
-    if (delegateInstance instanceof CaseVariableListener) {
-      return (CaseVariableListener) delegateInstance;
+    if (delegateInstance instanceof CaseVariableListener caseVariableListener) {
+      return caseVariableListener;
 
     } else {
       throw new ProcessEngineException(delegateInstance.getClass().getName()+" doesn't implement "+CaseVariableListener.class);

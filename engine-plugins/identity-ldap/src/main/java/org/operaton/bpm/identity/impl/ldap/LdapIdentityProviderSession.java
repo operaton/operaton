@@ -650,8 +650,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     List<Control> newControlList = new ArrayList<>();
     boolean newPageDetected = false;
     for (Control control : controls) {
-      if (control instanceof PagedResultsResponseControl) {
-        PagedResultsResponseControl prrc = (PagedResultsResponseControl) control;
+      if (control instanceof PagedResultsResponseControl prrc) {
         byte[] cookie = prrc.getCookie();
 
         // Re-activate paged results

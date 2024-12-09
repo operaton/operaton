@@ -57,8 +57,8 @@ public class ClassDelegateTaskListener extends ClassDelegate implements TaskList
   protected TaskListener getTaskListenerInstance() {
     Object delegateInstance = instantiateDelegate(className, fieldDeclarations);
 
-    if (delegateInstance instanceof TaskListener) {
-      return (TaskListener) delegateInstance;
+    if (delegateInstance instanceof TaskListener taskListener) {
+      return taskListener;
 
     } else {
       throw new ProcessEngineException(delegateInstance.getClass().getName()+" doesn't implement "+TaskListener.class);

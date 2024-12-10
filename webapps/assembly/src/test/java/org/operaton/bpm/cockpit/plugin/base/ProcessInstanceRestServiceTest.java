@@ -1420,7 +1420,6 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
   @Deployment(resources = {
       "processes/user-task-process.bpmn"
     })
@@ -1445,7 +1444,6 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
   @Deployment(resources = {
       "processes/user-task-process.bpmn"
     })
@@ -2002,7 +2000,6 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
   @Deployment(resources = {
       "processes/user-task-process.bpmn"
     })
@@ -2027,7 +2024,6 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
   @Deployment(resources = {
       "processes/user-task-process.bpmn"
     })
@@ -2584,7 +2580,6 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
   @Deployment(resources = {
       "processes/user-task-process.bpmn"
     })
@@ -2609,7 +2604,6 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   }
 
   @Test
-  @Ignore
   @Deployment(resources = {
       "processes/user-task-process.bpmn"
     })

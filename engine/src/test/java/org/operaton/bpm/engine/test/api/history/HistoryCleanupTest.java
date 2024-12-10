@@ -90,13 +90,11 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB;
-
 /**
  * @author Svetlana Dorokhova
  */
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoryCleanupTest {
-
   private static final int PROCESS_INSTANCES_COUNT = 3;
   private static final int DECISIONS_IN_PROCESS_INSTANCES = 3;
   private static final int DECISION_INSTANCES_COUNT = 10;
@@ -968,7 +966,6 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  @Ignore("Disabled because of #60")
   public void testLessThanThresholdOutsideBatchWindowAfterMidnight() throws ParseException {
     //given
     prepareData(5);
@@ -1104,6 +1101,17 @@ public class HistoryCleanupTest {
 
   @Test
   @Ignore("CAM-10055")
+  /*I can't find the corresponding ticket. On my local machine (Windows) it works, but not in github actions
+  It fails because in line 1135 the timestamps are different:
+  Locally the results of both are:
+  Tue May 28 2019 21:00:00 GMT+0000
+
+  On github:
+    Mon May 27 2019 23:10:10 GMT+0000
+    and
+    Tue May 28 2019 22:00:00 GMT+0000
+   */
+
   public void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() throws ParseException {
     //given
     prepareData(5);
@@ -1124,6 +1132,7 @@ public class HistoryCleanupTest {
 
     //job rescheduled till next batch window start
     Date nextRun = getNextRunWithinBatchWindow(ClockUtil.getCurrentTime());
+
     assertTrue(jobEntity.getDuedate().equals(nextRun));
     assertTrue(nextRun.after(ClockUtil.getCurrentTime()));
 

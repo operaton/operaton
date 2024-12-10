@@ -61,7 +61,6 @@ public class MetricsDisabledTest {
   }
 
   // (to run, remove "FAILING" from methodname)
-  @Ignore("CAM-4053")
   @Test
   public void testQueryMetricsIfMetricsIsDisabled() {
 

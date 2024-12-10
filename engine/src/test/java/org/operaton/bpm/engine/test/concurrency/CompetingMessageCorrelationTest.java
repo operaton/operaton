@@ -216,7 +216,6 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
    * Fails at least on mssql; mssql appears to lock more than the actual event subscription row
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
-  @Ignore
   @Test
   public void testConcurrentExclusiveCorrelationToDifferentExecutionsCase2() throws InterruptedException {
     InvocationLogListener.reset();

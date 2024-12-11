@@ -130,8 +130,8 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
   }
 
   public void deployProcessApplication(AbstractProcessApplication processApplication) {
-    if(processApplication instanceof ServletProcessApplication) {
-      deployServletProcessApplication((ServletProcessApplication)processApplication);
+    if(processApplication instanceof ServletProcessApplication servletProcessApplication) {
+      deployServletProcessApplication(servletProcessApplication);
     }
   }
 

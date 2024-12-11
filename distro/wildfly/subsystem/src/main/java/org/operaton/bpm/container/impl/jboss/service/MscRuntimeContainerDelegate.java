@@ -148,8 +148,8 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
 
   @Override
   public void deployProcessApplication(AbstractProcessApplication processApplication) {
-    if(processApplication instanceof JakartaServletProcessApplication) {
-      deployServletProcessApplication((JakartaServletProcessApplication)processApplication);
+    if(processApplication instanceof JakartaServletProcessApplication jakartaServletProcessApplication) {
+      deployServletProcessApplication(jakartaServletProcessApplication);
     }
   }
 

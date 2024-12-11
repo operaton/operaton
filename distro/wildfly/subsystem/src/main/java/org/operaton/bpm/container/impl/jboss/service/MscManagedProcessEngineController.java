@@ -222,8 +222,8 @@ public class MscManagedProcessEngineController extends MscManagedProcessEngine {
 
     Object configurationObject = createInstance(configurationClassName);
 
-    if (configurationObject instanceof JakartaTransactionProcessEngineConfiguration) {
-      return (JakartaTransactionProcessEngineConfiguration) configurationObject;
+    if (configurationObject instanceof JakartaTransactionProcessEngineConfiguration jakartaTransactionProcessEngineConfig) {
+      return jakartaTransactionProcessEngineConfig;
 
     } else {
       throw new ProcessEngineException("Configuration class '"+configurationClassName+"' " +

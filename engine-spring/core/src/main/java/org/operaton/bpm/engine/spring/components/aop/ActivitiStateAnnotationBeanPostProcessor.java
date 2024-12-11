@@ -124,8 +124,7 @@ public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcess
 							ctr += 1;
 
 							for (Annotation pa : paramAnnotations) {
-								if (pa instanceof ProcessVariable) {
-									ProcessVariable pv = (ProcessVariable) pa;
+								if (pa instanceof ProcessVariable pv) {
 									String pvName = pv.value();
 									vars.put(ctr, pvName);
 								} else if (pa instanceof ProcessVariables) {

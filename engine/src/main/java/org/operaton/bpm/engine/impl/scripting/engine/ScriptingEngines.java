@@ -125,8 +125,7 @@ public class ScriptingEngines implements DmnScriptEngineResolver {
       ProcessApplicationInterface processApplication = pa.getProcessApplication();
       ProcessApplicationInterface rawObject = processApplication.getRawObject();
 
-      if (rawObject instanceof AbstractProcessApplication) {
-        AbstractProcessApplication abstractProcessApplication = (AbstractProcessApplication) rawObject;
+      if (rawObject instanceof AbstractProcessApplication abstractProcessApplication) {
         return abstractProcessApplication.getScriptEngineForName(language, enableScriptEngineCaching);
       }
       return null;

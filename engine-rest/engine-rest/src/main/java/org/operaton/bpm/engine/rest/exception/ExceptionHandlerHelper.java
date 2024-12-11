@@ -106,8 +106,8 @@ public class ExceptionHandlerHelper {
     if (exception instanceof ProcessEngineException) {
       responseStatus = getStatus((ProcessEngineException)exception);
     }
-    else if (exception instanceof RestException) {
-      responseStatus = getStatus((RestException) exception);
+    else if (exception instanceof RestException restException) {
+      responseStatus = getStatus(restException);
     }
     else if (exception instanceof WebApplicationException) {
       //we need to check this, as otherwise the logic for processing WebApplicationException will be overridden

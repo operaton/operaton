@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
-
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -66,8 +65,6 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 	public static final String PROCESS_SCOPE_NAME = "process";
 
   private final ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
-
-  private final boolean proxyTargetClass = true;
 
   private final Logger logger = Logger.getLogger(getClass().getName());
 
@@ -196,10 +193,10 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 			BeanDefinition definition = beanFactory.getBeanDefinition(beanName);
 			// Replace this or any of its inner beans with scoped proxy if it has this scope
 			boolean scoped = PROCESS_SCOPE_NAME.equals(definition.getScope());
-			Scopifier scopifier = new Scopifier(registry, PROCESS_SCOPE_NAME, proxyTargetClass, scoped);
+			Scopifier scopifier = new Scopifier(registry, PROCESS_SCOPE_NAME, true, scoped);
 			scopifier.visitBeanDefinition(definition);
 			if (scoped) {
-				Scopifier.createScopedProxy(beanName, definition, registry, proxyTargetClass);
+				Scopifier.createScopedProxy(beanName, definition, registry, true);
 			}
 		}
 
@@ -218,7 +215,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
 	private Object createDirtyCheckingProxy(final String name, final Object scopedObject) throws Throwable {
 		ProxyFactory proxyFactoryBean = new ProxyFactory(scopedObject);
-		proxyFactoryBean.setProxyTargetClass(this.proxyTargetClass);
+		proxyFactoryBean.setProxyTargetClass(true);
 		proxyFactoryBean.addAdvice(new MethodInterceptor() {
 			public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 				Object result = methodInvocation.proceed();

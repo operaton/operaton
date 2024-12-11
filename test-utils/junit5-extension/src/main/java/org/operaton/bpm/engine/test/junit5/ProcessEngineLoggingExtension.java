@@ -68,10 +68,10 @@ public class ProcessEngineLoggingExtension implements BeforeTestExecutionCallbac
   public static final String NOT_WATCHING_ERROR = "not watching any logger with name: ";
   private static final String APPENDER_NAME = "defaultAppender";
 
-  private Map<String, Logger> globallyWatched = new HashMap<>();
+  private final Map<String, Logger> globallyWatched = new HashMap<>();
   private Level globalLevel = Level.DEBUG;
 
-  private Map<String, Logger> allWatched = new HashMap<>();
+  private final Map<String, Logger> allWatched = new HashMap<>();
 
   public ProcessEngineLoggingExtension watch(String... loggerName) {
     for (String logger : loggerName) {

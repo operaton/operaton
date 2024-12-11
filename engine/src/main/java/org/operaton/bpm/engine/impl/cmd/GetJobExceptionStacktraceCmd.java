@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 public class GetJobExceptionStacktraceCmd implements Command<String>, Serializable{
 
   private static final long serialVersionUID = 1L;
-  private String jobId;
+  private final String jobId;
 
   public GetJobExceptionStacktraceCmd(String jobId) {
     this.jobId = jobId;

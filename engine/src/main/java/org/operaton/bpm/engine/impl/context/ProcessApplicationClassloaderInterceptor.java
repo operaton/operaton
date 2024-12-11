@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  */
 public class ProcessApplicationClassloaderInterceptor<T> implements Callable<T> {
 
-  private static ThreadLocal<ClassLoader> PA_CLASSLOADER = new ThreadLocal<ClassLoader>();
+  private static final ThreadLocal<ClassLoader> PA_CLASSLOADER = new ThreadLocal<ClassLoader>();
 
   protected Callable<T> delegate;
 

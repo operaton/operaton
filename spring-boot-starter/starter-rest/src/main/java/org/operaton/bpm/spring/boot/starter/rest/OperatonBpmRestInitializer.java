@@ -44,7 +44,7 @@ public class OperatonBpmRestInitializer implements ServletContextInitializer {
 
   private ServletContext servletContext;
 
-  private JerseyApplicationPath applicationPath;
+  private final JerseyApplicationPath applicationPath;
 
   public OperatonBpmRestInitializer(JerseyApplicationPath applicationPath) {
     this.applicationPath = applicationPath;

@@ -20,11 +20,11 @@ package org.operaton.bpm.engine.rest.dto.task;
  * @author: drobisch
  */
 public class UserDto {
-  private String firstName;
-  private String lastName;
+  private final String firstName;
+  private final String lastName;
   private String displayName;
 
-  private String id;
+  private final String id;
 
   public UserDto(String id, String firstName, String lastName) {
     this.id = id;

@@ -26,8 +26,8 @@ public enum ResourceTypes implements ResourceType {
 
   // implmentation //////////////////////////
 
-  private String name;
-  private Integer id;
+  private final String name;
+  private final Integer id;
 
   private ResourceTypes(String name, Integer id) {
     this.name = name;

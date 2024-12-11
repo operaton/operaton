@@ -40,7 +40,7 @@ import java.util.logging.Logger;
 public class StateHandlerAnnotationBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 
 	private ProcessEngine processEngine ;
-	private Logger log = Logger.getLogger(getClass().getName());
+  private final Logger log = Logger.getLogger(getClass().getName());
 
 	public void setProcessEngine(ProcessEngine processEngine) {
 		this.processEngine = processEngine;

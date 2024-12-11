@@ -32,7 +32,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 public class GetExternalTaskErrorDetailsCmd implements Command<String>, Serializable {
 
   private static final long serialVersionUID = 1L;
-  private String externalTaskId;
+  private final String externalTaskId;
 
   public GetExternalTaskErrorDetailsCmd(String externalTaskId) {
     this.externalTaskId = externalTaskId;

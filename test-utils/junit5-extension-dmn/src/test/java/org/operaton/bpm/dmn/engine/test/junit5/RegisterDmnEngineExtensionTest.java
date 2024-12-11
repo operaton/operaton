@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 class RegisterDmnEngineExtensionTest {
-  private DmnEngineConfiguration customConfiguration = new DefaultDmnEngineConfiguration();
+  private final DmnEngineConfiguration customConfiguration = new DefaultDmnEngineConfiguration();
 
   @RegisterExtension
   private DmnEngineExtension dmnEngineExtension = DmnEngineExtension.forConfiguration(customConfiguration);

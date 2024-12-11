@@ -45,7 +45,7 @@ import org.operaton.bpm.webapp.impl.AbstractAppRuntimeDelegate;
  */
 public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<CockpitPlugin> implements CockpitRuntimeDelegate {
 
-  private  Map<String, CommandExecutor> commandExecutors;
+  private final  Map<String, CommandExecutor> commandExecutors;
 
   public DefaultCockpitRuntimeDelegate() {
     super(CockpitPlugin.class);

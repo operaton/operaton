@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
  */
 public class CdiArtifactFactory implements ArtifactFactory {
 
-  private ArtifactFactory defaultArtifactFactory = new DefaultArtifactFactory();
+  private final ArtifactFactory defaultArtifactFactory = new DefaultArtifactFactory();
 
   @Override
   public <T> T getArtifact(Class<T> clazz) {

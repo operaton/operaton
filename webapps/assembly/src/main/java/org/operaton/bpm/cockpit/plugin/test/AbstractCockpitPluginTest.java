@@ -45,7 +45,7 @@ import org.junit.Rule;
  */
 public abstract class AbstractCockpitPluginTest {
 
-  private static TestCockpitRuntimeDelegate RUNTIME_DELEGATE = new TestCockpitRuntimeDelegate();
+  private static final TestCockpitRuntimeDelegate RUNTIME_DELEGATE = new TestCockpitRuntimeDelegate();
   private static final String DEFAULT_BPMN_RESOURCE_NAME = "process.bpmn20.xml";
 
   static {

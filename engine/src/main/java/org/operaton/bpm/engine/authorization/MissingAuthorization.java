@@ -26,8 +26,8 @@ import java.util.Objects;
  */
 public class MissingAuthorization {
 
-  private String permissionName;
-  private String resourceType;
+  private final String permissionName;
+  private final String resourceType;
   protected String resourceId;
 
   public MissingAuthorization(String permissionName, String resourceType, String resourceId) {

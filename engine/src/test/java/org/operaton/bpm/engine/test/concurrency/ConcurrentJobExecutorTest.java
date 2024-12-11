@@ -67,7 +67,7 @@ import org.slf4j.Logger;
  */
 public class ConcurrentJobExecutorTest {
 
-  private static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);

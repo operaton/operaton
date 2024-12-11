@@ -36,11 +36,11 @@ import org.jboss.threads.ExecutionTimedOutException;
 
 public class MscExecutorService implements Service<MscExecutorService>, ExecutorService {
 
-  private static Logger log = Logger.getLogger(MscExecutorService.class.getName());
+  private static final Logger log = Logger.getLogger(MscExecutorService.class.getName());
   
   private final InjectedValue<ManagedQueueExecutorService> managedQueueInjector = new InjectedValue<ManagedQueueExecutorService>();
-  
-  private long lastWarningLogged = System.currentTimeMillis();
+
+  private final long lastWarningLogged = System.currentTimeMillis();
 
   public MscExecutorService getValue() throws IllegalStateException, IllegalArgumentException {
     return this;

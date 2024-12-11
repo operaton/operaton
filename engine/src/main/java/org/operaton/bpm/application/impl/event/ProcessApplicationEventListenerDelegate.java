@@ -52,7 +52,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  */
 public class ProcessApplicationEventListenerDelegate implements ExecutionListener, TaskListener {
 
-  private static ProcessApplicationLogger LOG = ProcessApplicationLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessApplicationLogger.PROCESS_APPLICATION_LOGGER;
 
   public void notify(final DelegateExecution execution) throws Exception {
     Callable<Void> notification = new Callable<Void>() {

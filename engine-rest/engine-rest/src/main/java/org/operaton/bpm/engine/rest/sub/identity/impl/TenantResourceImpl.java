@@ -40,7 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;;
 
 public class TenantResourceImpl extends AbstractIdentityResource implements TenantResource {
 
-  private String rootResourcePath;
+  private final String rootResourcePath;
 
   public TenantResourceImpl(String processEngineName, String tenantId, String rootResourcePath, ObjectMapper objectMapper) {
     super(processEngineName, TENANT, tenantId, objectMapper);

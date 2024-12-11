@@ -43,7 +43,7 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
   
   public static int START_WORK_TIMEOUT = 1500;
 
-  private static Logger logger = Logger.getLogger(JcaWorkManagerExecutorService.class.getName());
+  private static final Logger logger = Logger.getLogger(JcaWorkManagerExecutorService.class.getName());
   
   protected final JcaExecutorServiceConnector ra;
   protected WorkManager workManager;

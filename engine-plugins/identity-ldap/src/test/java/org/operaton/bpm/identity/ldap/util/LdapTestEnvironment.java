@@ -77,7 +77,7 @@ public class LdapTestEnvironment {
   private int numberOfGroupsCreated = 0;
   private int numberOfRolesCreated = 0;
 
-  private int numberOfUsersCreatedInBerkeleyOffice = 0;
+  private final int numberOfUsersCreatedInBerkeleyOffice = 0;
 
   public LdapTestEnvironment() {
   }

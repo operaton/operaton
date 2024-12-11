@@ -27,9 +27,9 @@ import org.springframework.context.ApplicationContext;
  */
 public class SpringArtifactFactory implements ArtifactFactory {
 
-  private ArtifactFactory defaultArtifactFactory = new DefaultArtifactFactory();
+  private final ArtifactFactory defaultArtifactFactory = new DefaultArtifactFactory();
 
-  private ApplicationContext applicationContext;
+  private final ApplicationContext applicationContext;
 
   public SpringArtifactFactory(ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;

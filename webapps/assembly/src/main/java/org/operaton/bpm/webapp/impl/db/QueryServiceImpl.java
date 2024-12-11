@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.util.QueryMaxResultsLimitUtil;
 
 public class QueryServiceImpl implements QueryService {
 
-  private CommandExecutor commandExecutor;
+  private final CommandExecutor commandExecutor;
 
   public QueryServiceImpl(CommandExecutor commandExecutor) {
     this.commandExecutor = commandExecutor;

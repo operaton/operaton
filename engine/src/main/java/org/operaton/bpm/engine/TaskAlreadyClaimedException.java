@@ -28,11 +28,11 @@ public class TaskAlreadyClaimedException extends ProcessEngineException {
     
     private static final long serialVersionUID = 1L;
 
-    /** the id of the task that is already claimed */
-    private String taskId;
-    
-    /** the assignee of the task that is already claimed */
-    private String taskAssignee;
+  /** the id of the task that is already claimed */
+  private final String taskId;
+
+  /** the assignee of the task that is already claimed */
+  private final String taskAssignee;
     
     public TaskAlreadyClaimedException(String taskId, String taskAssignee) {
         super("Task '" + taskId + "' is already claimed by someone else.");

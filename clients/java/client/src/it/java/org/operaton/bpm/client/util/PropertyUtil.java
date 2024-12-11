@@ -28,7 +28,7 @@ public class PropertyUtil {
   public static final String CAMUNDA_ENGINE_REST = "operaton.engine.rest";
   public static final String CAMUNDA_ENGINE_NAME = "operaton.engine.name";
 
-  private static Logger logger = LoggerFactory.getLogger(PropertyUtil.class);
+  private static final Logger logger = LoggerFactory.getLogger(PropertyUtil.class);
 
   public static Properties loadProperties(String resource) {
     Properties properties = new Properties();

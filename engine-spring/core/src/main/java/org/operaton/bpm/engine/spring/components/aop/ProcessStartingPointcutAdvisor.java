@@ -46,10 +46,10 @@ import org.springframework.aop.support.ComposablePointcut;
 public class ProcessStartingPointcutAdvisor implements PointcutAdvisor, Serializable {
 
 
-	/**
-	 * annotations that shall be scanned
-	 */
-	private Set<Class<? extends Annotation>> annotations = new HashSet<Class<? extends Annotation>>(Arrays.asList(StartProcess.class));
+  /**
+   * annotations that shall be scanned
+   */
+  private final Set<Class<? extends Annotation>> annotations = new HashSet<Class<? extends Annotation>>(Arrays.asList(StartProcess.class));
 
 	/**
 	 * the {@link org.aopalliance.intercept.MethodInterceptor} that handles launching the business process.

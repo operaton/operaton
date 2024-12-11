@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public class JakartaEjbProcessApplicationReference implements ProcessApplicationReference {
 
-  private static ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   /** this is an EjbProxy and can be cached */
   protected ProcessApplicationInterface selfReference;

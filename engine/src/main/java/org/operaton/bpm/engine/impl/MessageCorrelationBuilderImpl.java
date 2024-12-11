@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
  */
 public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected CommandExecutor commandExecutor;
   protected CommandContext commandContext;

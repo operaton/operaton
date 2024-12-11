@@ -61,7 +61,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TestWarDeploymentWithMultiplePasAsSubdeployment4 extends AbstractFoxPlatformIntegrationTest {
   
-  public final static String PROCESSES_XML = 
+  public static final String PROCESSES_XML = 
     "<process-application xmlns=\"http://www.operaton.org/schema/1.0/ProcessApplication\">" +
           
       "<process-archive name=\"pa1\">" +

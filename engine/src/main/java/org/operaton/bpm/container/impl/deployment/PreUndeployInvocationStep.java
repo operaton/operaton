@@ -38,7 +38,7 @@ public class PreUndeployInvocationStep extends DeploymentOperationStep {
 
   private static final String CALLBACK_NAME = "@PreUndeploy";
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public String getName() {
     return "Invoking @PreUndeploy";

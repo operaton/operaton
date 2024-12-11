@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.rest.dto.CountResultDto;
 @Produces(MediaType.APPLICATION_JSON)
 public class IncidentRestService extends AbstractPluginResource {
 
-  public final static String PATH = "/incident";
+  public static final String PATH = "/incident";
 
   public IncidentRestService(String engineName) {
     super(engineName);

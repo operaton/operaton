@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.variable.serializer.AbstractObjectValueSeria
  */
 public class FallbackSpinObjectValueSerializer extends AbstractObjectValueSerializer {
 
-  private final static SpinPluginLogger LOG = SpinPluginLogger.LOGGER;
+  private static final SpinPluginLogger LOG = SpinPluginLogger.LOGGER;
 
   public static final String DESERIALIZED_OBJECTS_EXCEPTION_MESSAGE = "Fallback serializer cannot handle deserialized objects";
 

@@ -63,7 +63,7 @@ import org.joda.time.DateTime;
 @ProcessApplication("operaton-test-processes")
 public class DevProcessApplication extends ServletProcessApplication {
 
-  private final static Logger LOGGER = Logger.getLogger(DevProcessApplication.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(DevProcessApplication.class.getName());
 
   @PostDeploy
   public void startProcesses(final ProcessEngine engine) throws Exception {

@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public class BpmnStackTrace {
 
-  private final static ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
+  private static final ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
 
   protected List<AtomicOperationInvocation> perfromedInvocations = new ArrayList<AtomicOperationInvocation>();
 

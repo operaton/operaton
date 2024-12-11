@@ -37,7 +37,7 @@ import java.util.*;
  */
 public final class ModelUtil {
 
-  private final static String ID_ATTRIBUTE_NAME = "id";
+  private static final String ID_ATTRIBUTE_NAME = "id";
 
   /**
    * Returns the {@link ModelElementInstanceImpl ModelElement} for a DOM element.

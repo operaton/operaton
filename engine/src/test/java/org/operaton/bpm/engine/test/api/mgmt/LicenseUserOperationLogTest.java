@@ -37,7 +37,7 @@ import org.junit.Test;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class LicenseUserOperationLogTest {
 
-  private final static String LICENSE_KEY = "testLicenseKey";
+  private static final String LICENSE_KEY = "testLicenseKey";
   private static final String USER_ID = "testUserId";
 
   @Rule

@@ -36,7 +36,7 @@ import org.junit.Test;
  */
 public class CmmnModelElementInstanceCmdTest extends PluggableProcessEngineTest {
 
-  private final static String CASE_KEY = "oneTaskCase";
+  private static final String CASE_KEY = "oneTaskCase";
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
   @Test

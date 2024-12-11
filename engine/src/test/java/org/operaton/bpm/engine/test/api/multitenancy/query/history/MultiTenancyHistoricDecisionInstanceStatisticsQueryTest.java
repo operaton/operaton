@@ -40,7 +40,7 @@ import org.junit.rules.RuleChain;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class MultiTenancyHistoricDecisionInstanceStatisticsQueryTest {
 
-  protected final static String TENANT_ONE = "tenant1";
+  protected static final String TENANT_ONE = "tenant1";
   protected static final String DISH_DRG_DMN = "org/operaton/bpm/engine/test/dmn/deployment/drdDish.dmn11.xml";
 
   protected static final String DISH_DECISION = "dish-decision";

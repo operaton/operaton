@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class StandaloneTransactionContext implements TransactionContext {
 
-  private final static TransactionLogger LOG = ProcessEngineLogger.TX_LOGGER;
+  private static final TransactionLogger LOG = ProcessEngineLogger.TX_LOGGER;
 
   protected CommandContext commandContext;
   protected Map<TransactionState, List<TransactionListener>> stateTransactionListeners = null;

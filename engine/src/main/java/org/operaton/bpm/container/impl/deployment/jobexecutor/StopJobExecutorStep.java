@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public class StopJobExecutorStep extends DeploymentOperationStep {
 
-  protected final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public String getName() {
     return "Stop managed job acquisitions";

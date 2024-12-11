@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.impl.cmd.CommandLogger;
  */
 public class JtaTransactionInterceptor extends AbstractTransactionInterceptor {
 
-  protected final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected final TransactionManager transactionManager;
 

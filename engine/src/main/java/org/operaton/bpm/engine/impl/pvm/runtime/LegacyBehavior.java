@@ -83,7 +83,7 @@ import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
  */
 public class LegacyBehavior {
 
-  private final static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
+  private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
   // concurrent scopes ///////////////////////////////////////////
 

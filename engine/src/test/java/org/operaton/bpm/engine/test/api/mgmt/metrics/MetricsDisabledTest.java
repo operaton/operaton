@@ -42,7 +42,7 @@ import org.junit.rules.RuleChain;
 public class MetricsDisabledTest {
 
   @ClassRule
-  public final static ProcessEngineBootstrapRule bootstrapRule =
+  public static final ProcessEngineBootstrapRule bootstrapRule =
       new ProcessEngineBootstrapRule("org/operaton/bpm/engine/test/api/mgmt/metrics/metricsDisabledTest.cfg.xml");
 
   protected final ProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);

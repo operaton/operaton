@@ -42,7 +42,7 @@ import org.junit.Test;
  */
 public class DmnEngineConfigurationTest {
 
-  protected final static String CONFIGURATION_XML = "org/operaton/bpm/engine/test/api/cfg/custom-dmn-operaton.cfg.xml";
+  protected static final String CONFIGURATION_XML = "org/operaton/bpm/engine/test/api/cfg/custom-dmn-operaton.cfg.xml";
 
   protected ProcessEngine engine;
 

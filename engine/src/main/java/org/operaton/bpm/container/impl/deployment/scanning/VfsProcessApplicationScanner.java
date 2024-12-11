@@ -44,7 +44,7 @@ import org.jboss.vfs.VirtualFileFilter;
  */
 public class VfsProcessApplicationScanner implements ProcessApplicationScanner {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public Map<String, byte[]> findResources(ClassLoader classLoader, String resourceRootPath, URL processesXml) {
     return findResources(classLoader, resourceRootPath, processesXml, null);

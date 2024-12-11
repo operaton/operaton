@@ -49,7 +49,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class StartProcessEngineStep extends DeploymentOperationStep {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   /** the process engine Xml configuration passed in as a parameter to the operation step */
   protected final ProcessEngineXml processEngineXml;

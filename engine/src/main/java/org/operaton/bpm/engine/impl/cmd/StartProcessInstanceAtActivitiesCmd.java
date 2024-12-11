@@ -49,7 +49,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
  */
 public class StartProcessInstanceAtActivitiesCmd implements Command<ProcessInstanceWithVariables> {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected ProcessInstantiationBuilderImpl instantiationBuilder;
 

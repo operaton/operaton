@@ -30,9 +30,9 @@ import org.junit.Test;
 
 public class SkipHistoryOptimisticLockingExceptionsDisabledTest extends AbstractPartitioningTest {
 
-  final protected String VARIABLE_NAME = "aVariableName";
-  final protected String VARIABLE_VALUE = "aVariableValue";
-  final protected String ANOTHER_VARIABLE_VALUE = "anotherVariableValue";
+  protected final String VARIABLE_NAME = "aVariableName";
+  protected final String VARIABLE_VALUE = "aVariableValue";
+  protected final String ANOTHER_VARIABLE_VALUE = "anotherVariableValue";
 
   @Test
   public void testHistoryOptimisticLockingExceptionsNotSkipped() {

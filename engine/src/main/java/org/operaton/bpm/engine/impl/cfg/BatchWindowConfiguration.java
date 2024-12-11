@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHel
  */
 public class BatchWindowConfiguration {
 
-  protected final static ConfigurationLogger LOG = ConfigurationLogger.CONFIG_LOGGER;
+  protected static final ConfigurationLogger LOG = ConfigurationLogger.CONFIG_LOGGER;
 
   private String startTime;
 

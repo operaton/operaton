@@ -52,7 +52,7 @@ public class ProcessEngineImpl implements ProcessEngine {
   /** external task conditions used to signal long polling in rest API */
   public static final CompositeCondition EXT_TASK_CONDITIONS = new CompositeCondition();
 
-  private final static ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
+  private static final ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 
   protected String name;
 

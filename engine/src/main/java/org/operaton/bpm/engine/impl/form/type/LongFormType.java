@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class LongFormType extends SimpleFormFieldType {
 
-  public final static String TYPE_NAME = "long";
+  public static final String TYPE_NAME = "long";
 
   public String getName() {
     return TYPE_NAME;

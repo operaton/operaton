@@ -21,8 +21,8 @@ import java.util.Comparator;
 
 public class HalResourceCacheEntryComparator implements Comparator<HalResourceCacheEntry> {
 
-  public final static Comparator<HalResourceCacheEntry> INSTANCE = new HalResourceCacheEntryComparator();
-  public final static Comparator<HalResourceCacheEntry> REVERSE = Collections.reverseOrder(INSTANCE);
+  public static final Comparator<HalResourceCacheEntry> INSTANCE = new HalResourceCacheEntryComparator();
+  public static final Comparator<HalResourceCacheEntry> REVERSE = Collections.reverseOrder(INSTANCE);
 
   /** Sort cache entries by ascending create time (oldest first) */
   public static Comparator<HalResourceCacheEntry> getInstance() {

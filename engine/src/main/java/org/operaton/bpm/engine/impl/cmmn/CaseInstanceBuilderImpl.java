@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.variable.Variables;
  */
 public class CaseInstanceBuilderImpl implements CaseInstanceBuilder {
 
-  private final static CmmnOperationLogger LOG = ProcessEngineLogger.CMMN_OPERATION_LOGGER;
+  private static final CmmnOperationLogger LOG = ProcessEngineLogger.CMMN_OPERATION_LOGGER;
 
   protected CommandExecutor commandExecutor;
   protected CommandContext commandContext;

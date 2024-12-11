@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
  */
 public class EscalationHandler {
 
-  private final static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
+  private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
   public static void propagateEscalation(ActivityExecution execution, String escalationCode) {
     EscalationEventDefinition escalationEventDefinition = executeEscalation(execution, escalationCode);

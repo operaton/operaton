@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
 public class SignalEventReceivedBuilderImpl implements SignalEventReceivedBuilder {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected final CommandExecutor commandExecutor;
   protected final String signalName;

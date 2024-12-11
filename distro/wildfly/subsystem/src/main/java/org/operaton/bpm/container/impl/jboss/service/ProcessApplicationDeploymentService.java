@@ -61,7 +61,7 @@ import org.jboss.msc.service.StopContext;
  */
 public class ProcessApplicationDeploymentService implements Service<ProcessApplicationDeploymentService> {
 
-  private final static Logger LOGGER = Logger.getLogger(ProcessApplicationDeploymentService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ProcessApplicationDeploymentService.class.getName());
 
   protected final Supplier<ExecutorService> executorSupplier;
   protected final Supplier<ProcessEngine> processEngineSupplier;

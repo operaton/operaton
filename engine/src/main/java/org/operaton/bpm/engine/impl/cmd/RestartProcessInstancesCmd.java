@@ -53,7 +53,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
  */
 public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCmd<Void> {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   public RestartProcessInstancesCmd(CommandExecutor commandExecutor,
                                     RestartProcessInstanceBuilderImpl builder) {

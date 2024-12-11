@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
  */
 public class SimpleIpBasedProvider implements HostnameProvider {
 
-  private final static ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
+  private static final ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 
   @Override
   public String getHostname(ProcessEngineConfigurationImpl processEngineConfiguration) {

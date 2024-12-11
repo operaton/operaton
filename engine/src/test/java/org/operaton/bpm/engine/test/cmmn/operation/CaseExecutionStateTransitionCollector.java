@@ -32,7 +32,7 @@ import org.slf4j.Logger;
  */
 public class CaseExecutionStateTransitionCollector implements CaseExecutionListener {
 
-  private final static Logger LOG = TestLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = TestLogger.TEST_LOGGER.getLogger();
 
   public List<String> stateTransitions = new ArrayList<String>();
 

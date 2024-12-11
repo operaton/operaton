@@ -52,8 +52,8 @@ public class DelegateTaskTest {
   public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
   public ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 
-  private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-  private final static String FOLLOW_UP_DATE_STRING = "2019-01-01T01:00:00";
+  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final String FOLLOW_UP_DATE_STRING = "2019-01-01T01:00:00";
 
   private static Date FOLLOW_UP_DATE;
 

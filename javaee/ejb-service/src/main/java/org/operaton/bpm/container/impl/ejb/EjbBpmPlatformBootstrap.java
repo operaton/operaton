@@ -54,7 +54,7 @@ import java.util.logging.Logger;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class EjbBpmPlatformBootstrap {
 
-  final private static Logger LOGGER = Logger.getLogger(EjbBpmPlatformBootstrap.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(EjbBpmPlatformBootstrap.class.getName());
 
   @EJB
   protected ExecutorService executorServiceBean;

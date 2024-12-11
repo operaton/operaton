@@ -64,7 +64,7 @@ import jakarta.transaction.TransactionManager;
  */
 public class MscManagedProcessEngineController extends MscManagedProcessEngine {
 
-  private final static Logger LOGGER = Logger.getLogger(MscManagedProcessEngineController.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(MscManagedProcessEngineController.class.getName());
 
   protected Supplier<ExecutorService> executorSupplier;
 

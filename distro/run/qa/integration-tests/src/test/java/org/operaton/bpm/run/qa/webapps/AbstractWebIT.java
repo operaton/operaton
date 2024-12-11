@@ -38,7 +38,7 @@ import java.util.logging.Logger;
  */
 public abstract class AbstractWebIT {
 
-  private final static Logger LOGGER = Logger.getLogger(AbstractWebIT.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AbstractWebIT.class.getName());
 
   protected String TASKLIST_PATH = "app/tasklist/default/";
   public static final String HOST_NAME = "localhost";

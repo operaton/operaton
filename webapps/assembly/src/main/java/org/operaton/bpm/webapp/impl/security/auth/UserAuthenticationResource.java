@@ -47,7 +47,7 @@ import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 @Path(UserAuthenticationResource.PATH)
 public class UserAuthenticationResource {
 
-  protected final static WebappLogger LOGGER = WebappLogger.INSTANCE;
+  protected static final WebappLogger LOGGER = WebappLogger.INSTANCE;
 
   public static final String PATH = "/auth/user";
 

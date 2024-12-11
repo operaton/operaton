@@ -48,7 +48,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  */
 public class SpringProcessApplicationElResolver implements ProcessApplicationElResolver {
 
-  private final static Logger LOGGER = Logger.getLogger(SpringProcessApplicationElResolver.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SpringProcessApplicationElResolver.class.getName());
 
   @Override
   public Integer getPrecedence() {

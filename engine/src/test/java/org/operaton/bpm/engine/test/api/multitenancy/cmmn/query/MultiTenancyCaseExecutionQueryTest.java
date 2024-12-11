@@ -33,10 +33,10 @@ import org.junit.Test;
 
 public class MultiTenancyCaseExecutionQueryTest extends PluggableProcessEngineTest {
 
-  protected final static String CMMN_FILE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
+  protected static final String CMMN_FILE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
 
-  protected final static String TENANT_ONE = "tenant1";
-  protected final static String TENANT_TWO = "tenant2";
+  protected static final String TENANT_ONE = "tenant1";
+  protected static final String TENANT_TWO = "tenant2";
 
   @Before
   public void setUp() {

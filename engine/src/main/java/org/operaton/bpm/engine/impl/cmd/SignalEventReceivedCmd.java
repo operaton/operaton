@@ -47,7 +47,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class SignalEventReceivedCmd implements Command<Void> {
 
-  protected final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected final SignalEventReceivedBuilderImpl builder;
 

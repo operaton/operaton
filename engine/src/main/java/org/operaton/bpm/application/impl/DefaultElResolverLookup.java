@@ -33,9 +33,9 @@ import jakarta.el.ELResolver;
  */
 public class DefaultElResolverLookup {
 
-  private final static ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
-  public final static ELResolver lookupResolver(AbstractProcessApplication processApplication) {
+  public static final ELResolver lookupResolver(AbstractProcessApplication processApplication) {
 
     ServiceLoader<ProcessApplicationElResolver> providers = ServiceLoader.load(ProcessApplicationElResolver.class);
     List<ProcessApplicationElResolver> sortedProviders = new ArrayList<ProcessApplicationElResolver>();

@@ -33,7 +33,7 @@ import org.junit.rules.RuleChain;
 
 public abstract class AbstractDefinitionQueryTest {
 
-  protected final static String FIRST_DEPLOYMENT_NAME = "firstDeployment";
+  protected static final String FIRST_DEPLOYMENT_NAME = "firstDeployment";
   protected static final String SECOND_DEPLOYMENT_NAME = "secondDeployment";
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();

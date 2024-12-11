@@ -38,8 +38,8 @@ public class MultiTenancyProcessDefinitionQueryTest extends PluggableProcessEngi
   protected static final String PROCESS_DEFINITION_KEY = "process";
   protected static final BpmnModelInstance emptyProcess = Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY).startEvent().done();
 
-  protected final static String TENANT_ONE = "tenant1";
-  protected final static String TENANT_TWO = "tenant2";
+  protected static final String TENANT_ONE = "tenant1";
+  protected static final String TENANT_TWO = "tenant2";
 
   @Before
   public void setUp() {

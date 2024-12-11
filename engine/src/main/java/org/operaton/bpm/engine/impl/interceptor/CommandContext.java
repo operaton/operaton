@@ -105,7 +105,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceManager;
  */
 public class CommandContext {
 
-  private final static ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
+  private static final ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
 
   protected boolean authorizationCheckEnabled = true;
   protected boolean userOperationLogEnabled = true;

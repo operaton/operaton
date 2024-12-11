@@ -54,7 +54,7 @@ import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
  */
 public class CommandContextInterceptor extends CommandInterceptor {
 
-  private final static CommandLogger LOG = CommandLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = CommandLogger.CMD_LOGGER;
 
   protected CommandContextFactory commandContextFactory;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;

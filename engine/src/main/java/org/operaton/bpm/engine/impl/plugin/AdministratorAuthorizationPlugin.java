@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
  */
 public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugin {
 
-  private final static AdministratorAuthorizationPluginLogger LOG = ProcessEngineLogger.ADMIN_PLUGIN_LOGGER;
+  private static final AdministratorAuthorizationPluginLogger LOG = ProcessEngineLogger.ADMIN_PLUGIN_LOGGER;
 
   /** The name of the administrator group.
    *

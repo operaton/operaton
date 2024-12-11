@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.impl.telemetry.dto.LicenseKeyDataImpl;
  */
 public class BootstrapEngineCommand implements ProcessEngineBootstrapCommand {
 
-  private final static EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
+  private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected static final String INSTALLATION_PROPERTY_NAME = "operaton.installation.id";
 

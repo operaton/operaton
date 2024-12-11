@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  */
 public class HistoryCleanupSchedulerCmd implements Command<Void> {
 
-  protected final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  protected static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected boolean isRescheduleNow;
   protected HistoryCleanupJobHandlerConfiguration configuration;

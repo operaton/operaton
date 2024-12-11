@@ -41,7 +41,7 @@ import org.jboss.msc.service.StopContext;
 public class ProcessApplicationStopService implements Service<ProcessApplicationStopService> {
 
 
-  private final static Logger LOGGER = Logger.getLogger(ProcessApplicationStopService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ProcessApplicationStopService.class.getName());
 
   // for view-exposing ProcessApplicationComponents
   protected final Supplier<ComponentView> paComponentViewSupplier;

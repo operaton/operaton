@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  */
 public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuationConfiguration> {
 
-  public final static String TYPE = "async-continuation";
+  public static final String TYPE = "async-continuation";
 
   private Map<String, PvmAtomicOperation> supportedOperations;
 

@@ -89,7 +89,7 @@ import org.operaton.bpm.engine.task.IdentityLink;
  */
 public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
-  protected final static ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
+  protected static final ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
 
   protected void initActivityInstanceEvent(HistoricActivityInstanceEventEntity evt, ExecutionEntity execution, HistoryEventType eventType) {
     PvmScope eventSource = execution.getActivity();

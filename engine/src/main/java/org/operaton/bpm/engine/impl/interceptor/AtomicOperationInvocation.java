@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  */
 public class AtomicOperationInvocation {
 
-  private final static ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
+  private static final ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
 
   protected AtomicOperation operation;
 

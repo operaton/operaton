@@ -48,7 +48,7 @@ import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_APP
  */
 public class ParseProcessesXmlStep extends DeploymentOperationStep {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public String getName() {
     return "Parse processes.xml deployment descriptor files.";

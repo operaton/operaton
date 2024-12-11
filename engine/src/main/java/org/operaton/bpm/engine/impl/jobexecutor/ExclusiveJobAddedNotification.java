@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.management.Metrics;
  */
 public class ExclusiveJobAddedNotification implements TransactionListener {
 
-  private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected final String jobId;
   protected final JobExecutorContext jobExecutorContext;

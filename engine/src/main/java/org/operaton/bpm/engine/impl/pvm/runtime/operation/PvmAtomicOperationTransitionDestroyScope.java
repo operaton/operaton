@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperation {
 
-  private final static PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
   public boolean isAsync(PvmExecutionImpl instance) {
     return false;

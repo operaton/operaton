@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.runtime.Execution;
  */
 public class DefaultCorrelationHandler implements CorrelationHandler {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   public CorrelationHandlerResult correlateMessage(CommandContext commandContext, String messageName, CorrelationSet correlationSet) {
 

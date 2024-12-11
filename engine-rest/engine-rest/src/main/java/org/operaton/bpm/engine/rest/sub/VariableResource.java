@@ -37,8 +37,8 @@ import org.operaton.bpm.engine.rest.mapper.MultipartFormData;
 
 public interface VariableResource {
 
-  public final static String DESERIALIZE_VALUE_QUERY_PARAM = "deserializeValue";
-  public final static String DESERIALIZE_VALUES_QUERY_PARAM = DESERIALIZE_VALUE_QUERY_PARAM + "s";
+  public static final String DESERIALIZE_VALUE_QUERY_PARAM = "deserializeValue";
+  public static final String DESERIALIZE_VALUES_QUERY_PARAM = DESERIALIZE_VALUE_QUERY_PARAM + "s";
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)

@@ -32,7 +32,7 @@ import org.operaton.bpm.ProcessApplicationService;
 public interface ProcessApplicationInfo {
   
   /** constant for the servlet context path property */
-  public final static String PROP_SERVLET_CONTEXT_PATH = "servletContextPath";  
+  public static final String PROP_SERVLET_CONTEXT_PATH = "servletContextPath";  
 
   /**
    * @return the name of the process application

@@ -46,7 +46,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class MBeanServiceContainer implements PlatformServiceContainer {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected MBeanServer mBeanServer;
 
@@ -55,7 +55,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   /** set if the current thread is performing a composite deployment operation */
   protected ThreadLocal<Stack<DeploymentOperation>> activeDeploymentOperations = new ThreadLocal<Stack<DeploymentOperation>>();
 
-  public final static String SERVICE_NAME_EXECUTOR = "executor-service";
+  public static final String SERVICE_NAME_EXECUTOR = "executor-service";
 
   public synchronized <S> void startService(ServiceType serviceType, String localName, PlatformService<S> service) {
 

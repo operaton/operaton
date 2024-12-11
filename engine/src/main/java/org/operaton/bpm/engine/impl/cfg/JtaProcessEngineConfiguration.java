@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.interceptor.JtaTransactionInterceptor;
  */
 public class JtaProcessEngineConfiguration extends AbstractTransactionProcessEngineConfiguration {
 
-  private final static ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
+  private static final ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
 
   protected TransactionManager transactionManager;
 

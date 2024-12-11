@@ -28,19 +28,19 @@ import org.jboss.msc.service.ServiceName;
  */
 public class ServiceNames {
 
-  private final static ServiceName BPM_PLATFORM = ServiceName.of("org", "operaton", "bpm", "platform");
+  private static final ServiceName BPM_PLATFORM = ServiceName.of("org", "operaton", "bpm", "platform");
 
-  private final static ServiceName PROCESS_ENGINE = BPM_PLATFORM.append("process-engine");
-  private final static ServiceName JOB_EXECUTOR = BPM_PLATFORM.append("job-executor");
-  private final static ServiceName DEFAULT_PROCESS_ENGINE = PROCESS_ENGINE.append("default");
+  private static final ServiceName PROCESS_ENGINE = BPM_PLATFORM.append("process-engine");
+  private static final ServiceName JOB_EXECUTOR = BPM_PLATFORM.append("job-executor");
+  private static final ServiceName DEFAULT_PROCESS_ENGINE = PROCESS_ENGINE.append("default");
 
-  private final static ServiceName MSC_RUNTIME_CONTAINER_DELEGATE = BPM_PLATFORM.append("runtime-container");
+  private static final ServiceName MSC_RUNTIME_CONTAINER_DELEGATE = BPM_PLATFORM.append("runtime-container");
 
-  private final static ServiceName PROCESS_APPLICATION = BPM_PLATFORM.append("process-application");
+  private static final ServiceName PROCESS_APPLICATION = BPM_PLATFORM.append("process-application");
 
-  private final static ServiceName PROCESS_APPLICATION_MODULE = BPM_PLATFORM.append("process-application-module");
+  private static final ServiceName PROCESS_APPLICATION_MODULE = BPM_PLATFORM.append("process-application-module");
 
-  private final static ServiceName BPM_PLATFORM_PLUGINS = BPM_PLATFORM.append("bpm-platform-plugins");
+  private static final ServiceName BPM_PLATFORM_PLUGINS = BPM_PLATFORM.append("bpm-platform-plugins");
 
   /**
    * Returns the service name for a {@link MscManagedProcessEngine}.

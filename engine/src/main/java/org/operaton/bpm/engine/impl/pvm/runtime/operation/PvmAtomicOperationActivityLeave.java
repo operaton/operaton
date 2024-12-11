@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationActivityLeave implements PvmAtomicOperation {
 
-  private final static PvmLogger LOG = PvmLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
 
   public boolean isAsync(PvmExecutionImpl execution) {
     return false;

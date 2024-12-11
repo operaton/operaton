@@ -77,7 +77,7 @@ import org.jboss.msc.service.StopContext;
  */
 public class ProcessApplicationStartService implements Service<ProcessApplicationStartService> {
 
-  private final static Logger LOGGER = Logger.getLogger(ProcessApplicationStartService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ProcessApplicationStartService.class.getName());
 
   /** the names of the deployment services we depend on; those must be added as
    * declarative dependencies when the service is installed. */

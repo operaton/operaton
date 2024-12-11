@@ -72,7 +72,7 @@ import org.junit.Test;
  */
 public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTest {
 
-  private final static String jonny2 = "jonny2";
+  private static final String jonny2 = "jonny2";
 
   @After
   public void tearDown() throws Exception {

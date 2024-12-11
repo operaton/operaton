@@ -43,7 +43,7 @@ public class ExecuteJobsCmd implements Command<Void>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected String jobId;
 

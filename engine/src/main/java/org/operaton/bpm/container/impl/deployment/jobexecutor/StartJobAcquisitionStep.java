@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.RuntimeContainerJobExecutor;
  */
 public class StartJobAcquisitionStep extends DeploymentOperationStep {
 
-  protected final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected final JobAcquisitionXml jobAcquisitionXml;
 

@@ -31,7 +31,7 @@ public abstract class HistoryCleanupHandler implements TransactionListener {
   /**
    * Maximum allowed batch size.
    */
-  public final static int MAX_BATCH_SIZE = 500;
+  public static final int MAX_BATCH_SIZE = 500;
 
   protected HistoryCleanupJobHandlerConfiguration configuration;
   protected String jobId;

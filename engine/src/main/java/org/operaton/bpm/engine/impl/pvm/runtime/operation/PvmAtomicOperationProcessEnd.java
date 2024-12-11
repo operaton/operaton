@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd {
 
-  private final static PvmLogger LOG = PvmLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
 
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getProcessDefinition();

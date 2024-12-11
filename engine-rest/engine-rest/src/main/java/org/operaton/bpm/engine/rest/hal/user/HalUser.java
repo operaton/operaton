@@ -30,7 +30,7 @@ import javax.ws.rs.core.UriBuilder;
  */
 public class HalUser extends HalResource<HalUser> implements HalIdResource {
 
-  public final static HalRelation REL_SELF =
+  public static final HalRelation REL_SELF =
     HalRelation.build("self", UserRestService.class, UriBuilder.fromPath(UserRestService.PATH).path("{id}"));
 
   protected String id;

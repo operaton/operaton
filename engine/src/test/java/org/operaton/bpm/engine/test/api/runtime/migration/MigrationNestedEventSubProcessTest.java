@@ -47,7 +47,7 @@ public class MigrationNestedEventSubProcessTest {
   protected static final String EVENT_SUB_PROCESS_TASK_ID = "eventSubProcessTask";
   public static final String TIMER_DATE = "2016-02-11T12:13:14Z";
 
-  protected static abstract class MigrationEventSubProcessTestConfiguration {
+  protected abstract static class MigrationEventSubProcessTestConfiguration {
     public abstract BpmnModelInstance getSourceProcess();
 
     public abstract String getEventName();

@@ -32,10 +32,10 @@ abstract class AbstractVariableMap implements VariableMap {
   @Inject
   protected BusinessProcess businessProcess;
 
-  abstract protected Object getVariable(String variableName);
-  abstract protected <T extends TypedValue> T getVariableTyped(String variableName);
+  protected abstract Object getVariable(String variableName);
+  protected abstract <T extends TypedValue> T getVariableTyped(String variableName);
 
-  abstract protected void setVariable(String variableName, Object value);
+  protected abstract void setVariable(String variableName, Object value);
 
   @Override
   public Object get(Object key) {

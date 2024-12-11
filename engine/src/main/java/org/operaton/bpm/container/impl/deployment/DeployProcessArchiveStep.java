@@ -57,7 +57,7 @@ import org.operaton.bpm.engine.repository.ResumePreviousBy;
  */
 public class DeployProcessArchiveStep extends DeploymentOperationStep {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected final ProcessArchiveXml processArchive;
   protected URL metaFileUrl;

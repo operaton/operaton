@@ -29,7 +29,7 @@ import org.subethamail.wiser.Wiser;
  */
 public abstract class EmailTestCase extends PluggableProcessEngineTest {
 
-  private final static Logger LOG = TestLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = TestLogger.TEST_LOGGER.getLogger();
 
   protected Wiser wiser;
 

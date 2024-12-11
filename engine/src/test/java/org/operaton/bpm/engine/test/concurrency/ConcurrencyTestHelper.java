@@ -73,7 +73,7 @@ public abstract class ConcurrencyTestHelper {
   }
 
 
-  public static abstract class ControllableCommand<T> implements Command<T> {
+  public abstract static class ControllableCommand<T> implements Command<T> {
 
     protected final ThreadControl monitor;
 

@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.runtime.ActivityInstance;
  */
 public class ModifyProcessInstanceCmd implements Command<Void> {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected ProcessInstanceModificationBuilderImpl builder;
   protected boolean writeOperationLog;

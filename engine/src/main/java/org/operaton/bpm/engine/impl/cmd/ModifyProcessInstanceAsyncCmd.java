@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  */
 public class ModifyProcessInstanceAsyncCmd implements Command<Batch> {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected ProcessInstanceModificationBuilderImpl builder;
 

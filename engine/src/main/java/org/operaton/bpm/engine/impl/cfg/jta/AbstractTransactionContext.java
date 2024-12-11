@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public abstract class AbstractTransactionContext implements TransactionContext {
 
-  public final static TransactionLogger LOG = ProcessEngineLogger.TX_LOGGER;
+  public static final TransactionLogger LOG = ProcessEngineLogger.TX_LOGGER;
 
   @Override
   public void commit() {

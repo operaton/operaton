@@ -41,7 +41,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public class InjectionUtil {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public static Method detectAnnotatedMethod(Class<?> clazz, Class<? extends Annotation> annotationType) {
 

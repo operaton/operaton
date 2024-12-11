@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class DateFormType extends AbstractFormFieldType {
 
-  public final static String TYPE_NAME = "date";
+  public static final String TYPE_NAME = "date";
 
   protected String datePattern;
   protected DateFormat dateFormat;

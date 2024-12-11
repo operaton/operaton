@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HalRelationCacheBootstrap implements ServletContextListener {
 
-  public final static String CONTEXT_PARAM_NAME = "org.operaton.bpm.engine.rest.hal.cache.config";
+  public static final String CONTEXT_PARAM_NAME = "org.operaton.bpm.engine.rest.hal.cache.config";
 
   protected ObjectMapper objectMapper = new ObjectMapper();
 

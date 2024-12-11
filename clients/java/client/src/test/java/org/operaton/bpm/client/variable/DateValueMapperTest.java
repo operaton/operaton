@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DateValueMapperTest {
 
-  protected final static String DATE_FORMAT = "dd.MM.yyyy - HH:mm:ss.SSSZ";
+  protected static final String DATE_FORMAT = "dd.MM.yyyy - HH:mm:ss.SSSZ";
   protected final Date VARIABLE_VALUE_DATE = new GregorianCalendar(2018, Calendar.JANUARY, 1, 8, 0, 0).getTime();
   protected final String VARIABLE_VALUE_DATE_SERIALIZED = new SimpleDateFormat(DATE_FORMAT).format(VARIABLE_VALUE_DATE);
 

@@ -40,7 +40,7 @@ import com.sun.jersey.client.apache4.config.DefaultApacheHttpClient4Config;
  */
 public abstract class AbstractWebIntegrationTest {
 
-  private final static Logger LOGGER = Logger.getLogger(AbstractWebIntegrationTest.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(AbstractWebIntegrationTest.class.getName());
   
   protected static final String TASKLIST_PATH = "app/tasklist/default/";
   

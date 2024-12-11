@@ -46,7 +46,7 @@ public class CompensationUtil {
   /**
    * name of the signal that is thrown when a compensation handler completed
    */
-  public final static String SIGNAL_COMPENSATION_DONE = "compensationDone";
+  public static final String SIGNAL_COMPENSATION_DONE = "compensationDone";
 
   /**
    * we create a separate execution for each compensation handler invocation.

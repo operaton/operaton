@@ -72,7 +72,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
    * It should be removed once those Test classes are migrated to JUnit 4.
    */
 
-  private final static Logger LOG = TestLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = TestLogger.TEST_LOGGER.getLogger();
 
   static {
     // this ensures that mybatis uses slf4j logging

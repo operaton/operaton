@@ -45,11 +45,11 @@ import org.junit.rules.RuleChain;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
 public class MultiTenancyHistoricCaseActivityInstanceQueryTest {
 
-  protected final static String CMMN_FILE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
+  protected static final String CMMN_FILE = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn";
 
-  protected final static String TENANT_NULL = null;
-  protected final static String TENANT_ONE = "tenant1";
-  protected final static String TENANT_TWO = "tenant2";
+  protected static final String TENANT_NULL = null;
+  protected static final String TENANT_ONE = "tenant1";
+  protected static final String TENANT_TWO = "tenant2";
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 

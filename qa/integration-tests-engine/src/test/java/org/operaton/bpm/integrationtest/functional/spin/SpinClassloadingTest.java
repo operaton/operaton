@@ -36,7 +36,7 @@ import static org.operaton.bpm.engine.variable.Variables.*;
 public class SpinClassloadingTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name="pa")
-  public final static WebArchive createPaDeployment() {
+  public static final WebArchive createPaDeployment() {
 
     return initWebArchiveDeployment()
       .addAsResource("org/operaton/bpm/integrationtest/functional/spin/SpinClassloadingTest.bpmn")
@@ -46,7 +46,7 @@ public class SpinClassloadingTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Deployment(name="client-app")
-  public final static WebArchive createClientAppDeployment() {
+  public static final WebArchive createClientAppDeployment() {
     WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
         .addClass(AbstractFoxPlatformIntegrationTest.class);
 

@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public abstract class AcquireJobsRunnable implements Runnable {
 
-  private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected final JobExecutor jobExecutor;
 

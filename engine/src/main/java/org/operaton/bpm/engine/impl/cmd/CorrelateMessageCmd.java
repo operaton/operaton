@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.impl.runtime.MessageCorrelationResultImpl;
  */
 public class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements Command<MessageCorrelationResultImpl> {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected boolean startMessageOnly;
 

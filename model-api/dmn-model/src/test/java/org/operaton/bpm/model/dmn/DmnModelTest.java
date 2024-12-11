@@ -39,7 +39,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 public abstract class DmnModelTest {
 
-  public final static String TEST_NAMESPACE = "http://operaton.org/schema/1.0/dmn";
+  public static final String TEST_NAMESPACE = "http://operaton.org/schema/1.0/dmn";
 
   @RegisterExtension
   public final ParseDmnModelRule parseDmnModelRule = new ParseDmnModelRule();

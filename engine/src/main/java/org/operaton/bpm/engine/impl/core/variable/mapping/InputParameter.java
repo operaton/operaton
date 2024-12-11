@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
  */
 public class InputParameter extends IoParameter {
 
-  private final static CoreLogger LOG = CoreLogger.CORE_LOGGER;
+  private static final CoreLogger LOG = CoreLogger.CORE_LOGGER;
 
   public InputParameter(String name, ParameterValueProvider valueProvider) {
     super(name, valueProvider);

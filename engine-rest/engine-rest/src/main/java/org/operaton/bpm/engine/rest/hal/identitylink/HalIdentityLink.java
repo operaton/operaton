@@ -27,9 +27,9 @@ import org.operaton.bpm.engine.task.IdentityLink;
 
 public class HalIdentityLink extends HalResource<HalIdentityLink> {
 
-  public final static HalRelation REL_GROUP = HalRelation.build("group", GroupRestService.class, UriBuilder.fromPath(GroupRestService.PATH).path("{id}"));
-  public final static HalRelation REL_USER = HalRelation.build("user", UserRestService.class, UriBuilder.fromPath(UserRestService.PATH).path("{id}"));
-  public final static HalRelation REL_TASK = HalRelation.build("task", TaskRestService.class, UriBuilder.fromPath(TaskRestService.PATH).path("{id}"));
+  public static final HalRelation REL_GROUP = HalRelation.build("group", GroupRestService.class, UriBuilder.fromPath(GroupRestService.PATH).path("{id}"));
+  public static final HalRelation REL_USER = HalRelation.build("user", UserRestService.class, UriBuilder.fromPath(UserRestService.PATH).path("{id}"));
+  public static final HalRelation REL_TASK = HalRelation.build("task", TaskRestService.class, UriBuilder.fromPath(TaskRestService.PATH).path("{id}"));
 
   protected String type;
   protected String userId;

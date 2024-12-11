@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.fail;
  */
 public class IoUtilTest {
 
-  public final static String TEST_FILE_NAME = "org/operaton/commons/utils/testFile.txt";
+  public static final String TEST_FILE_NAME = "org/operaton/commons/utils/testFile.txt";
 
   @Test
   void shouldTransformBetweenInputStreamAndString() {

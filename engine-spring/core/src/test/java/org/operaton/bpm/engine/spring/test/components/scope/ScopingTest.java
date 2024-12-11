@@ -82,9 +82,9 @@ public class ScopingTest {
 	  processInitiatingPojo = null;
 	}
 
-	static public long CUSTOMER_ID_PROC_VAR_VALUE = 343;
+	public static long CUSTOMER_ID_PROC_VAR_VALUE = 343;
 
-	static public String customerIdProcVarName = "customerId";
+	public static String customerIdProcVarName = "customerId";
 
 	/**
 	 * this code instantiates a business process that in turn delegates to a few Spring beans that in turn inject a process scoped object, {@link StatefulObject}.

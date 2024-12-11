@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class BooleanFormType extends SimpleFormFieldType {
 
-  public final static String TYPE_NAME = "boolean";
+  public static final String TYPE_NAME = "boolean";
 
   public String getName() {
     return TYPE_NAME;

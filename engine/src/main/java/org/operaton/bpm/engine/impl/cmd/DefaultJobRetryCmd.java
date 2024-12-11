@@ -51,7 +51,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
       TimerStartEventSubprocessJobHandler.TYPE,
       AsyncContinuationJobHandler.TYPE
   );
-  private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   public DefaultJobRetryCmd(String jobId, Throwable exception) {
     super(jobId, exception);

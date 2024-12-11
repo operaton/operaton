@@ -36,7 +36,7 @@ import java.net.URL;
  */
 public class TomcatParseBpmPlatformXmlStep extends AbstractParseBpmPlatformXmlStep {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public static final String CATALINA_BASE = "catalina.base";
   public static final String CATALINA_HOME = "catalina.home";

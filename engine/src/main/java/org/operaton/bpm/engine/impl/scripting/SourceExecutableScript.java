@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.impl.context.Context;
  */
 public class SourceExecutableScript extends CompiledExecutableScript {
 
-  private final static ScriptLogger LOG = ProcessEngineLogger.SCRIPT_LOGGER;
+  private static final ScriptLogger LOG = ProcessEngineLogger.SCRIPT_LOGGER;
 
   /** The source of the script. */
   protected String scriptSource;

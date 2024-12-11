@@ -68,10 +68,10 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
 
   protected static final String A_USER_ID = "aUserId";
 
-  protected final static String TENANT_NULL = null;
-  protected final static String TENANT_1 = "tenant1";
-  protected final static String TENANT_2 = "tenant2";
-  protected final static String TENANT_3 = "tenant3";
+  protected static final String TENANT_NULL = null;
+  protected static final String TENANT_1 = "tenant1";
+  protected static final String TENANT_2 = "tenant2";
+  protected static final String TENANT_3 = "tenant3";
 
   @Before
   public void init() {

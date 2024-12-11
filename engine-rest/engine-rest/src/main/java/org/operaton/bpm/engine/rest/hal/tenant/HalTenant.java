@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.rest.hal.HalResource;
 
 public class HalTenant extends HalResource<HalTenant> implements HalIdResource {
 
-  public final static HalRelation REL_SELF =
+  public static final HalRelation REL_SELF =
     HalRelation.build("self", TenantRestService.class, UriBuilder.fromPath(TenantRestService.PATH).path("{id}"));
 
   protected String id;

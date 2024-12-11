@@ -62,7 +62,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
  */
 public abstract class ProcessEngines {
 
-  private final static ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
+  private static final ProcessEngineLogger LOG = ProcessEngineLogger.INSTANCE;
 
   public static final String NAME_DEFAULT = "default";
 
@@ -72,14 +72,14 @@ public abstract class ProcessEngines {
   protected static Map<String, ProcessEngineInfo> processEngineInfosByResourceUrl = new HashMap<String, ProcessEngineInfo>();
   protected static List<ProcessEngineInfo> processEngineInfos = new ArrayList<ProcessEngineInfo>();
 
-  public synchronized static void init() {
+  public static synchronized void init() {
     init(true);
   }
 
   /** Initializes all process engines that can be found on the classpath for
    * resources <code>operaton.cfg.xml</code> (plain Activiti style configuration)
    * and for resources <code>activiti-context.xml</code> (Spring style configuration). */
-  public synchronized static void init(boolean forceCreate) {
+  public static synchronized void init(boolean forceCreate) {
     if (!isInitialized) {
       if(processEngines == null) {
         // Create new map to store process-engines if current map is null
@@ -268,7 +268,7 @@ public abstract class ProcessEngines {
   }
 
   /** closes all process engines.  This method should be called when the server shuts down. */
-  public synchronized static void destroy() {
+  public static synchronized void destroy() {
     if (isInitialized) {
       Map<String, ProcessEngine> engines = new HashMap<String, ProcessEngine>(processEngines);
       processEngines = new HashMap<String, ProcessEngine>();

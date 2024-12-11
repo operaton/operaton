@@ -61,7 +61,7 @@ import org.operaton.bpm.webapp.impl.security.SecurityActions.SecurityAction;
 @Path("/setup/{engine}")
 public class SetupResource {
 
-  protected final static WebappLogger LOGGER = WebappLogger.INSTANCE;
+  protected static final WebappLogger LOGGER = WebappLogger.INSTANCE;
 
   @Context
   protected Providers providers;

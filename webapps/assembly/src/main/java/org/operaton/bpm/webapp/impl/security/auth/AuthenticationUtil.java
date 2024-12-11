@@ -38,7 +38,7 @@ import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
 
 public class AuthenticationUtil {
 
-  protected final static WebappLogger LOGGER = WebappLogger.INSTANCE;
+  protected static final WebappLogger LOGGER = WebappLogger.INSTANCE;
 
   protected static final String CAM_AUTH_SESSION_KEY = "authenticatedUser";
 

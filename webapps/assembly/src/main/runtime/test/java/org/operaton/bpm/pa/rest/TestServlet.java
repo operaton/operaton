@@ -61,7 +61,7 @@ import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;
 @WebServlet(urlPatterns= {"/ensureCleanDb/*"})
 public class TestServlet extends HttpServlet {
 
-  public final static Logger log = Logger.getLogger(TestServlet.class.getName());
+  public static final Logger log = Logger.getLogger(TestServlet.class.getName());
 
   private static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = Arrays.asList(
       "ACT_GE_PROPERTY"

@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
  */
 public class ProcessApplicationManager {
 
-  public final static ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
+  public static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   protected Map<String, DefaultProcessApplicationRegistration> registrationsByDeploymentId = new HashMap<String, DefaultProcessApplicationRegistration>();
 

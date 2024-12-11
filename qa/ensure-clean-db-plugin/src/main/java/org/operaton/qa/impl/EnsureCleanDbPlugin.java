@@ -39,7 +39,7 @@ public class EnsureCleanDbPlugin implements BpmPlatformPlugin {
   protected static final String CACHE_IS_NOT_CLEAN = "Cache was not clean!\n";
   protected Logger logger = Logger.getLogger(EnsureCleanDbPlugin.class.getName());
 
-  private AtomicInteger counter = new AtomicInteger();
+  private final AtomicInteger counter = new AtomicInteger();
 
   @Override
   public void postProcessApplicationDeploy(ProcessApplicationInterface processApplication) {

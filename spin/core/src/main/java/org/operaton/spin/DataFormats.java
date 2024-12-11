@@ -40,7 +40,7 @@ import org.operaton.spin.xml.SpinXmlElement;
  */
 public class DataFormats {
 
-  private static SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
 
   public static String JSON_DATAFORMAT_NAME = "application/json";
 

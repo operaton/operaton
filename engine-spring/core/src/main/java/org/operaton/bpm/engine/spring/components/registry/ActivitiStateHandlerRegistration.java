@@ -32,13 +32,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ActivitiStateHandlerRegistration {
 	private Map<Integer, String> processVariablesExpected = new ConcurrentHashMap<Integer, String>();
-	private Method handlerMethod;
-	private Object handler;
-	private String stateName;
-	private String beanName;
+  private final Method handlerMethod;
+  private final Object handler;
+  private final String stateName;
+  private final String beanName;
 	private int processVariablesIndex = -1;
 	private int processIdIndex = -1;
-	private String processName;
+  private final String processName;
 
 	public ActivitiStateHandlerRegistration(
 			Map<Integer, String> processVariablesExpected, Method handlerMethod,

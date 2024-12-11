@@ -34,8 +34,8 @@ import org.operaton.bpm.engine.task.Comment;
 
 public class ProcessInstanceCommentResourceImpl implements ProcessInstanceCommentResource {
 
-  private ProcessEngine engine;
-  private String processInstanceId;
+  private final ProcessEngine engine;
+  private final String processInstanceId;
 
   public ProcessInstanceCommentResourceImpl(ProcessEngine engine, String processInstanceId) {
     this.engine = engine;

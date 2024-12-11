@@ -39,9 +39,9 @@ import org.operaton.bpm.engine.task.Comment;
 
 public class TaskCommentResourceImpl implements TaskCommentResource {
 
-  private ProcessEngine engine;
-  private String taskId;
-  private String rootResourcePath;
+  private final ProcessEngine engine;
+  private final String taskId;
+  private final String rootResourcePath;
 
   public TaskCommentResourceImpl(ProcessEngine engine, String taskId, String rootResourcePath) {
     this.engine = engine;

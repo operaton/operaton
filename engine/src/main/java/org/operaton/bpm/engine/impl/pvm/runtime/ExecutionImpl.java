@@ -53,7 +53,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   private static final long serialVersionUID = 1L;
 
-  private static AtomicInteger idGenerator = new AtomicInteger();
+  private static final AtomicInteger idGenerator = new AtomicInteger();
 
   // current position /////////////////////////////////////////////////////////
 

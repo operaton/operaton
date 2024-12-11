@@ -29,7 +29,7 @@ import org.junit.After;
 
 public abstract class AbstractScriptTaskTest extends PluggableProcessEngineTest {
 
-  private List<String> deploymentIds = new ArrayList<>();
+  private final List<String> deploymentIds = new ArrayList<>();
 
   @After
   public void tearDown() throws Exception {

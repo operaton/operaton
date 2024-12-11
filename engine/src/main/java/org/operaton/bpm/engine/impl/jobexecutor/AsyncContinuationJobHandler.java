@@ -41,7 +41,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
 
   public static final String TYPE = "async-continuation";
 
-  private Map<String, PvmAtomicOperation> supportedOperations;
+  private final Map<String, PvmAtomicOperation> supportedOperations;
 
   public AsyncContinuationJobHandler() {
     supportedOperations = new HashMap<String, PvmAtomicOperation>();

@@ -41,7 +41,7 @@ import static org.operaton.bpm.engine.authorization.Resources.GROUP;
  */
 public class GroupResourceImpl extends AbstractIdentityResource implements GroupResource {
 
-  private String rootResourcePath;
+  private final String rootResourcePath;
 
   public GroupResourceImpl(String processEngineName, String groupId, String rootResourcePath, ObjectMapper objectMapper) {
     super(processEngineName, GROUP, groupId, objectMapper);

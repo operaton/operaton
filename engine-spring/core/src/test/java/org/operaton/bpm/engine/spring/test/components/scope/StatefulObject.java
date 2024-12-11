@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.spring.test.components.scope;
 
+import java.io.Serializable;
+import java.util.logging.Logger;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
-
-import java.io.Serializable;
-import java.util.logging.Logger;
 
 /**
  * dumb object to demonstrate holding scoped state for the duration of a business process
@@ -31,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class StatefulObject implements Serializable,InitializingBean  {
 
-	private transient Logger logger = Logger.getLogger(getClass().getName());
+  private final transient Logger logger = Logger.getLogger(getClass().getName());
 
 	public static final long serialVersionUID = 1L;
 

@@ -27,7 +27,7 @@ import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
  */
 public class JcaExecutorServiceDelegate implements PlatformService<ExecutorService>, JcaExecutorServiceDelegateMBean {
 
-  private ExecutorService executorService;
+  private final ExecutorService executorService;
 
   public JcaExecutorServiceDelegate(ExecutorService executorService) {
     this.executorService = executorService;

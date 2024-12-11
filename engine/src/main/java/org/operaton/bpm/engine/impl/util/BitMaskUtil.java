@@ -41,7 +41,7 @@ public class BitMaskUtil {
   private static final int FLAG_BIT_7 = 64;   // 000...01000000
   private static final int FLAG_BIT_8 = 128;  // 000...10000000
 
-  private static int[] MASKS = {FLAG_BIT_1, FLAG_BIT_2, FLAG_BIT_3, FLAG_BIT_4, FLAG_BIT_5, FLAG_BIT_6, FLAG_BIT_7, FLAG_BIT_8};
+  private static final int[] MASKS = {FLAG_BIT_1, FLAG_BIT_2, FLAG_BIT_3, FLAG_BIT_4, FLAG_BIT_5, FLAG_BIT_6, FLAG_BIT_7, FLAG_BIT_8};
 
   /**
    * Set bit to '1' in the given int.

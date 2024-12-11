@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class ProcessVariables {
 
-  private Logger logger = Logger.getLogger(ProcessVariables.class.getName());
+  private final Logger logger = Logger.getLogger(ProcessVariables.class.getName());
 
   @Inject private BusinessProcess businessProcess;
   @Inject private ProcessVariableMap processVariableMap;

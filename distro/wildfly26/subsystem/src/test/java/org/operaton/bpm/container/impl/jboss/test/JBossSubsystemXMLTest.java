@@ -104,8 +104,8 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   public JBossSubsystemXMLTest() {
     super(ModelConstants.SUBSYSTEM_NAME, new BpmPlatformExtension(), getSubsystemRemoveOrderComparator());
   }
-  
-  private static Map<String, String> EXPRESSION_PROPERTIES = new HashMap<>();
+
+  private static final Map<String, String> EXPRESSION_PROPERTIES = new HashMap<>();
   
   static {
     EXPRESSION_PROPERTIES.put("org.operaton.bpm.jboss.process-engine.test.isDefault", "true");

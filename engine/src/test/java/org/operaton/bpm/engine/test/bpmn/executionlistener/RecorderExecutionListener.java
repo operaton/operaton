@@ -35,7 +35,7 @@ public class RecorderExecutionListener implements ExecutionListener, Serializabl
 
   private FixedValue parameter;
 
-  private static List<RecorderExecutionListener.RecordedEvent> recordedEvents = new ArrayList<RecorderExecutionListener.RecordedEvent>();
+  private static final List<RecorderExecutionListener.RecordedEvent> recordedEvents = new ArrayList<RecorderExecutionListener.RecordedEvent>();
 
   public static class RecordedEvent {
     private final String activityId;

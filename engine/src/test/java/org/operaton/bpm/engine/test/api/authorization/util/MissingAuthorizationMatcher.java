@@ -35,7 +35,7 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
  */
 public class MissingAuthorizationMatcher extends TypeSafeDiagnosingMatcher<MissingAuthorization> {
 
-  private MissingAuthorization missing;
+  private final MissingAuthorization missing;
 
   private MissingAuthorizationMatcher(MissingAuthorization authorization) {
     this.missing = authorization;

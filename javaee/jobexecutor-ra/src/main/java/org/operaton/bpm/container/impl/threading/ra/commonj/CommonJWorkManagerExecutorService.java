@@ -39,7 +39,7 @@ import commonj.work.WorkRejectedException;
  */
 public class CommonJWorkManagerExecutorService implements ExecutorService {
 
-  private static Logger logger = Logger.getLogger(CommonJWorkManagerExecutorService.class.getName());
+  private static final Logger logger = Logger.getLogger(CommonJWorkManagerExecutorService.class.getName());
   
   protected WorkManager workManager;
 

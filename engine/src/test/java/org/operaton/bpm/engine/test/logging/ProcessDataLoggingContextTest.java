@@ -72,7 +72,7 @@ public class ProcessDataLoggingContextTest {
 
   private static final String LOG_IDENT_FAILURE = "ENGINE-16004";
 
-  private RuntimeContainerDelegate runtimeContainerDelegate = RuntimeContainerDelegate.INSTANCE.get();
+  private final RuntimeContainerDelegate runtimeContainerDelegate = RuntimeContainerDelegate.INSTANCE.get();
   private boolean defaultEngineRegistered;
 
   @ClassRule

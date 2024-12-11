@@ -39,7 +39,7 @@ public class SeleniumScreenshotRule implements TestRule {
 
   private static final String OUTPUT_DIR_PROPERTY_NAME = "selenium.screenshot.directory";
 
-  private static Logger log = Logger.getAnonymousLogger();
+  private static final Logger log = Logger.getAnonymousLogger();
 
   protected WebDriver webDriver;
 

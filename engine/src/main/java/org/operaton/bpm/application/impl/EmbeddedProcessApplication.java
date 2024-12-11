@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 public class EmbeddedProcessApplication extends AbstractProcessApplication {
 
   public static final String DEFAULT_NAME = "Process Application";
-  private static ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   protected String autodetectProcessApplicationName() {
     return DEFAULT_NAME;

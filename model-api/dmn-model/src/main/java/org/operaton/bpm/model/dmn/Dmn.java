@@ -134,7 +134,7 @@ public class Dmn {
   public static Dmn INSTANCE = new Dmn();
 
   /** the parser used by the Dmn implementation. */
-  private DmnParser dmnParser = new DmnParser();
+  private final DmnParser dmnParser = new DmnParser();
   private final ModelBuilder dmnModelBuilder;
 
   /** The {@link Model}

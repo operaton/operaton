@@ -34,9 +34,9 @@ public class RecorderTaskListener implements TaskListener, Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private static List<RecorderTaskListener.RecordedTaskEvent> recordedEvents = new ArrayList<>();
-  private static LinkedList<String> orderedEvents = new LinkedList<>();
-  private static Map<String, Integer> eventCounters  = new HashMap<>();
+  private static final List<RecorderTaskListener.RecordedTaskEvent> recordedEvents = new ArrayList<>();
+  private static final LinkedList<String> orderedEvents = new LinkedList<>();
+  private static final Map<String, Integer> eventCounters = new HashMap<>();
 
   public static class RecordedTaskEvent {
 

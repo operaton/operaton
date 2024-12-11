@@ -27,9 +27,9 @@ import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
  *
  */
 public class ProcessesXmlImpl implements ProcessesXml {
-  
-  private List<ProcessEngineXml> processEngineXmls;
-  private List<ProcessArchiveXml> processArchiveXmls;
+
+  private final List<ProcessEngineXml> processEngineXmls;
+  private final List<ProcessArchiveXml> processArchiveXmls;
   
   public ProcessesXmlImpl(List<ProcessEngineXml> processEngineXmls, List<ProcessArchiveXml> processArchiveXmls) {
     this.processEngineXmls = processEngineXmls;

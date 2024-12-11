@@ -39,7 +39,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 public class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Command<Void>, Serializable {
 
   private static final long serialVersionUID = 1L;
-  private String processInstanceId;
+  private final String processInstanceId;
 
   public DeleteHistoricVariableInstancesByProcessInstanceIdCmd(String processInstanceId) {
     this.processInstanceId = processInstanceId;

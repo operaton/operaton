@@ -24,9 +24,9 @@ import org.jboss.vfs.VirtualFile;
  *
  */
 public class ProcessesXmlWrapper {
-  
-  private ProcessesXml processesXml;
-  private VirtualFile processesXmlFile;
+
+  private final ProcessesXml processesXml;
+  private final VirtualFile processesXmlFile;
   
   /**
    * @param processesXml

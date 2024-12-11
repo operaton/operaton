@@ -29,7 +29,7 @@ public class GetTableNameCmd implements Command<String>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private Class<?> entityClass;
+  private final Class<?> entityClass;
 
   public GetTableNameCmd(Class< ? > entityClass) {
     this.entityClass = entityClass;

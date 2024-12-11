@@ -58,8 +58,8 @@ public class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
 
-  private static String PROCESS_DEFINITION_KEY = "oneExternalTaskProcess";
-  private static String PROCESS_DEFINITION_KEY_2 = "twoExternalTaskWithPriorityProcess";
+  private static final String PROCESS_DEFINITION_KEY = "oneExternalTaskProcess";
+  private static final String PROCESS_DEFINITION_KEY_2 = "twoExternalTaskWithPriorityProcess";
 
   protected ExternalTaskService externalTaskService;
 

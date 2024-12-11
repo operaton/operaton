@@ -29,8 +29,8 @@ public class Direction {
 
   public static final Direction ASCENDING = new Direction("asc");
   public static final Direction DESCENDING = new Direction("desc");
-  
-  private String name;
+
+  private final String name;
   
   public Direction(String name) {
     this.name = name;

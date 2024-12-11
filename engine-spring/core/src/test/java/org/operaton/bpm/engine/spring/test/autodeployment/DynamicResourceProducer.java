@@ -27,7 +27,7 @@ import org.springframework.core.io.Resource;
 
 public class DynamicResourceProducer {
 
-  private static List<Resource> resources = new ArrayList<>();
+  private static final List<Resource> resources = new ArrayList<>();
 
   public static void clearResources()
   {

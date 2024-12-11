@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  */
 public class CurrentActivityExecutionListener implements ExecutionListener {
 
-  private static List<CurrentActivity> currentActivities = new ArrayList<CurrentActivity>();
+  private static final List<CurrentActivity> currentActivities = new ArrayList<CurrentActivity>();
 
   public static class CurrentActivity {
     private final String activityId;

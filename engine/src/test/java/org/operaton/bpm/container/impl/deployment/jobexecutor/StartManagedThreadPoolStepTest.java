@@ -49,7 +49,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class StartManagedThreadPoolStepTest {
 
-  private MBeanServiceContainer container = new MBeanServiceContainer();
+  private final MBeanServiceContainer container = new MBeanServiceContainer();
 
   private DeploymentOperation deploymentOperation;
 

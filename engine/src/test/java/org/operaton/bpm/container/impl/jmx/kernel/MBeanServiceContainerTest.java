@@ -49,20 +49,20 @@ public class MBeanServiceContainerTest {
 
   private MBeanServiceContainer serviceContainer;
 
-  private String service1Name = TestServiceType.TYPE1.getTypeName()+ ":type=service1";
-  private String service2Name = TestServiceType.TYPE1.getTypeName()+ ":type=service2";
-  private String service3Name = TestServiceType.TYPE2.getTypeName()+ ":type=service3";
-  private String service4Name = TestServiceType.TYPE2.getTypeName()+ ":type=service4";
+  private final String service1Name = TestServiceType.TYPE1.getTypeName() + ":type=service1";
+  private final String service2Name = TestServiceType.TYPE1.getTypeName() + ":type=service2";
+  private final String service3Name = TestServiceType.TYPE2.getTypeName() + ":type=service3";
+  private final String service4Name = TestServiceType.TYPE2.getTypeName() + ":type=service4";
 
-  private ObjectName service1ObjectName = MBeanServiceContainer.getObjectName(service1Name);
-  private ObjectName service2ObjectName = MBeanServiceContainer.getObjectName(service2Name);
-  private ObjectName service3ObjectName = MBeanServiceContainer.getObjectName(service3Name);
-  private ObjectName service4ObjectName = MBeanServiceContainer.getObjectName(service4Name);
+  private final ObjectName service1ObjectName = MBeanServiceContainer.getObjectName(service1Name);
+  private final ObjectName service2ObjectName = MBeanServiceContainer.getObjectName(service2Name);
+  private final ObjectName service3ObjectName = MBeanServiceContainer.getObjectName(service3Name);
+  private final ObjectName service4ObjectName = MBeanServiceContainer.getObjectName(service4Name);
 
-  private TestService service1 = new TestService();
-  private TestService service2 = new TestService();
-  private TestService service3 = new TestService();
-  private TestService service4 = new TestService();
+  private final TestService service1 = new TestService();
+  private final TestService service2 = new TestService();
+  private final TestService service3 = new TestService();
+  private final TestService service4 = new TestService();
 
   @Before
   public void setUp() throws Exception {

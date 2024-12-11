@@ -67,7 +67,7 @@ import org.slf4j.Logger;
  */
 public abstract class TestHelper {
 
-  private static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   public static final String EMPTY_LINE = "                                                                                           ";
 

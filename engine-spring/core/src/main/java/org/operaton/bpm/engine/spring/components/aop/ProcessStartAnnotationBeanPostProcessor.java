@@ -37,11 +37,11 @@ import org.springframework.util.ClassUtils;
  * are passed to the business process.
  *
  * @author Josh Long
- * @since 5,3
+ * @since 5.3
  */
 public class ProcessStartAnnotationBeanPostProcessor extends ProxyConfig implements BeanPostProcessor, InitializingBean {
 
-	private Log log = LogFactory.getLog(getClass()) ;
+	private final Log log = LogFactory.getLog(getClass()) ;
 
 	/**
 	 * the process engine as created by a {@link org.operaton.bpm.engine.spring.ProcessEngineFactoryBean}

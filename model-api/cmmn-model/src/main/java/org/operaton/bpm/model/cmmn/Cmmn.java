@@ -143,7 +143,7 @@ public class Cmmn {
   public static Cmmn INSTANCE = new Cmmn();
 
   /** the parser used by the Cmmn implementation. */
-  private CmmnParser cmmnParser = new CmmnParser();
+  private final CmmnParser cmmnParser = new CmmnParser();
   private final ModelBuilder cmmnModelBuilder;
 
   /** The {@link Model}

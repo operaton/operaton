@@ -41,7 +41,7 @@ jobs:
             touch "$dir/target/executeJacoco"
           fi
           done
-          ./mvnw -Pdistro,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory verify
+          ./mvnw -Pdistro,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,distro-run,h2-in-memory verify
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
@@ -120,6 +120,14 @@ jobs:
         with:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
+          if-no-files-found: error
+          retention-days: 30
+      - name: Upload distro Run
+        id: upload-distro-run
+        uses: actions/upload-artifact@v4
+        with:
+          name: Operaton Run
+          path: distro/run/distro/target/operaton-bpm-run-${{ env.PROJECT_VERSION }}.tar.gz
           if-no-files-found: error
           retention-days: 30
       - name: Upload distro Wildfly

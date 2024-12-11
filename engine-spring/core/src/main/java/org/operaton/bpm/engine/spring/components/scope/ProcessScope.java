@@ -87,7 +87,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 		try {
 			logger.fine("returning scoped object having beanName '" + name + "' for conversation ID '" + this.getConversationId() + "'. ");
 
-			ProcessInstance processInstance = Context.getExecutionContext().getProcessInstance();
+			ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
 			executionEntity = (ExecutionEntity) processInstance;
 
 			Object scopedObject = executionEntity.getVariable(name);
@@ -115,7 +115,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 	}
 
 	private String getExecutionId() {
-		return Context.getExecutionContext().getExecution().getId();
+		return Context.getBpmnExecutionContext().getExecution().getId();
 	}
 
 	public Object remove(String name) {
@@ -127,13 +127,13 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 	public Object resolveContextualObject(String key) {
 
 		if ("executionId".equalsIgnoreCase(key))
-			return Context.getExecutionContext().getExecution().getId();
+			return Context.getBpmnExecutionContext().getExecution().getId();
 
 		if ("processInstance".equalsIgnoreCase(key))
-			return Context.getExecutionContext().getProcessInstance();
+			return Context.getBpmnExecutionContext().getProcessInstance();
 
 		if ("processInstanceId".equalsIgnoreCase(key))
-			return Context.getExecutionContext().getProcessInstance().getId();
+			return Context.getBpmnExecutionContext().getProcessInstance().getId();
 
 		return null;
 	}
@@ -153,7 +153,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 					return "SharedProcessInstance";
 
 
-				ProcessInstance processInstance = Context.getExecutionContext().getProcessInstance();
+				ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
 				Method method = methodInvocation.getMethod();
 				Object[] args = methodInvocation.getArguments();
 				Object result = method.invoke(processInstance, args);
@@ -175,7 +175,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
 			String varName = (String) o;
 
-			ProcessInstance processInstance = Context.getExecutionContext().getProcessInstance();
+			ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
 			ExecutionEntity executionEntity = (ExecutionEntity) processInstance;
 			if (executionEntity.getVariableNames().contains(varName)) {
 				return executionEntity.getVariable(varName);
@@ -230,7 +230,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 	}
 
 	private void persistVariable(String variableName, Object scopedObject) {
-		ProcessInstance processInstance = Context.getExecutionContext().getProcessInstance();
+		ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
 		ExecutionEntity executionEntity = (ExecutionEntity) processInstance;
 		Assert.isTrue(scopedObject instanceof Serializable, "the scopedObject is not " + Serializable.class.getName() + "!");
 		executionEntity.setVariable(variableName, scopedObject);

@@ -112,7 +112,7 @@ public class Context {
   /**
    * @deprecated since 7.2, use {@link #getBpmnExecutionContext()}
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public static ExecutionContext getExecutionContext() {
     return getBpmnExecutionContext();
   }

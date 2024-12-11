@@ -25,7 +25,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChooseNotExistingDatasourceConfigurationTest {
+class ChooseNotExistingDatasourceConfigurationTest {
 
   @RegisterExtension
   static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -37,7 +37,7 @@ public class ChooseNotExistingDatasourceConfigurationTest {
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
   @Test
-  public void shouldExpectException() {
+  void shouldExpectException() {
     // Exception is raised during application bootstrap.
     // See assertion in the extension registration above.
   }

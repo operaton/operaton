@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class ProcessEngineExtensionRequiredHistoryLevelAuditTest {
+class ProcessEngineExtensionRequiredHistoryLevelAuditTest {
 
   @RegisterExtension
   ProcessEngineExtension extension = ProcessEngineExtension.builder()
@@ -33,13 +33,13 @@ public class ProcessEngineExtensionRequiredHistoryLevelAuditTest {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void testRequiredHistoryIgnored() {
+  void testRequiredHistoryIgnored() {
     fail("the configured history level is too high");
   }
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testRequiredHistoryLevelMatch() {
+  void testRequiredHistoryLevelMatch() {
     assertEquals(extension.getProcessEngineConfiguration().getHistoryLevel().getName(),
         ProcessEngineConfiguration.HISTORY_AUDIT);
   }

@@ -32,7 +32,7 @@ import jakarta.inject.Named;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class BusinessProcessContextTest {
+class BusinessProcessContextTest {
 
   @RegisterExtension
   protected static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -40,7 +40,7 @@ public class BusinessProcessContextTest {
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
   @Test
-  public void shouldThrowUnsupportedOperationExceptionOnInjectableContextDestroy() {
+  void shouldThrowUnsupportedOperationExceptionOnInjectableContextDestroy() {
     InjectableContext businessProcessContext = Arc.container()
         .getActiveContext(BusinessProcessScoped.class);
 
@@ -50,7 +50,7 @@ public class BusinessProcessContextTest {
   }
 
   @Test
-  public void shouldThrowUnsupportedOperationExceptionOnInjectableContextGetState() {
+  void shouldThrowUnsupportedOperationExceptionOnInjectableContextGetState() {
     InjectableContext businessProcessContext = Arc.container()
         .getActiveContext(BusinessProcessScoped.class);
 
@@ -60,7 +60,7 @@ public class BusinessProcessContextTest {
   }
 
   @Test
-  public void shouldThrowUnsupportedOperationExceptionOnInjectableContextDestroyContextual() {
+  void shouldThrowUnsupportedOperationExceptionOnInjectableContextDestroyContextual() {
     Bean<?> bean = Arc.container()
         .beanManager()
         .getBeans(BusinessProcessScopedBean.class)
@@ -77,7 +77,7 @@ public class BusinessProcessContextTest {
   }
 
   @Test
-  public void shouldThrowUnsupportedOperationExceptionOnDestroyInjectableInstance() {
+  void shouldThrowUnsupportedOperationExceptionOnDestroyInjectableInstance() {
     InjectableInstance<BusinessProcessScopedBean> instance = Arc.container()
         .select(BusinessProcessScopedBean.class);
     BusinessProcessScopedBean businessProcessScopedBean = instance.get();

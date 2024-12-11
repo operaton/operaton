@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test is copied and adjusted from the engine-cdi module to work with Quarkus.
  * See https://jira.camunda.com/browse/CAM-13747 for the reasoning.
  */
-public class ProgrammaticBeanLookupTest {
+class ProgrammaticBeanLookupTest {
 
   @RegisterExtension
   static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -50,26 +50,26 @@ public class ProgrammaticBeanLookupTest {
           .addClass(BeanWithProducerMethods.class));
 
   @Test
-  public void shouldLookupBean() {
+  void shouldLookupBean() {
     Object lookup = ProgrammaticBeanLookup.lookup("testBean");
     assertThat(lookup).isInstanceOf(TestBean.class);
   }
 
   @Test
-  public void shouldFindAlternative() {
+  void shouldFindAlternative() {
     Object lookup = ProgrammaticBeanLookup.lookup("otherTestBean");
     assertThat(lookup).isInstanceOf(AlternativeTestBean.class);
   }
 
   @Test
   @Disabled("specialization not supported")
-  public void shouldFindSpecialization() {
+  void shouldFindSpecialization() {
     Object lookup = ProgrammaticBeanLookup.lookup("specializedTestBean");
     assertThat(lookup).isInstanceOf(SpecializedTestBean.class);
   }
 
   @Test
-  public void shouldSupportProducerMethods() {
+  void shouldSupportProducerMethods() {
     assertThat(ProgrammaticBeanLookup.lookup("producedString")).isEqualTo("exampleString");
   }
 

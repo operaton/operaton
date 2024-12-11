@@ -27,7 +27,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import jakarta.inject.Inject;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class NoDefaultDatasourceConfigurationTest {
+class NoDefaultDatasourceConfigurationTest {
 
   @RegisterExtension
   static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -41,7 +41,7 @@ public class NoDefaultDatasourceConfigurationTest {
   protected ProcessEngine processEngine;
 
   @Test
-  public void shouldExpectException() {
+  void shouldExpectException() {
   }
 
 }

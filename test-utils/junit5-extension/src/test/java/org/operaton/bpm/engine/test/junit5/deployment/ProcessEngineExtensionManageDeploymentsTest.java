@@ -32,7 +32,7 @@ public class ProcessEngineExtensionManageDeploymentsTest {
     .build();
 
   @Test
-  public void shouldCleanUpManagedDeployments() {
+  void shouldCleanUpManagedDeployments() {
     // given
     Deployment deployment = extension.getRepositoryService().createDeployment().addClasspathResource(SUB_PROCESS).deploy();
 

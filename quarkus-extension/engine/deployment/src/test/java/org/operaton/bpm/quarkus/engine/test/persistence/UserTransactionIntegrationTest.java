@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class UserTransactionIntegrationTest {
+class UserTransactionIntegrationTest {
 
   @RegisterExtension
   static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -53,7 +53,7 @@ public class UserTransactionIntegrationTest {
 
   @Test
   @Deployment
-  public void shouldSucceed() throws Exception {
+  void shouldSucceed() throws Exception {
 
     try {
       userTransactionManager.begin();
@@ -88,7 +88,7 @@ public class UserTransactionIntegrationTest {
 
   @Test
   @Deployment
-  public void shouldMarkAsRollbackOnly() throws Exception {
+  void shouldMarkAsRollbackOnly() throws Exception {
 
     /* if we start a transaction here and then start
      * a process instance which synchronously invokes a java delegate,
@@ -121,7 +121,7 @@ public class UserTransactionIntegrationTest {
 
   @Test
   @Deployment
-  public void shouldNotStoreProcessInstance() throws Exception {
+  void shouldNotStoreProcessInstance() throws Exception {
 
     /* if we start a transaction here and then successfully start
      * a process instance, if our transaction is rolled back,

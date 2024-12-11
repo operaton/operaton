@@ -40,7 +40,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class ManagedJobExecutorTest {
+class ManagedJobExecutorTest {
 
   @RegisterExtension
   static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -79,13 +79,13 @@ public class ManagedJobExecutorTest {
   }
 
   @Test
-  public void shouldActivateJobExecutorByDefault() {
+  void shouldActivateJobExecutorByDefault() {
     // then
     assertThat(processEngineConfiguration.isJobExecutorActivate()).isTrue();
   }
 
   @Test
-  public void shouldCreateManagedExecutor() {
+  void shouldCreateManagedExecutor() {
     // given a process engine configuration
 
     // then
@@ -96,7 +96,7 @@ public class ManagedJobExecutorTest {
   }
 
   @Test
-  public void shouldUseCustomJobAcquisitionProperties() {
+  void shouldUseCustomJobAcquisitionProperties() {
     // given a custom application.properties file
     JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
 
@@ -112,7 +112,7 @@ public class ManagedJobExecutorTest {
   }
 
   @Test
-  public void shouldNotReuseManagedExecutor() {
+  void shouldNotReuseManagedExecutor() {
     // given a process engine configuration
     ProcessEngineConfigurationImpl configuration =
         (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
@@ -126,7 +126,7 @@ public class ManagedJobExecutorTest {
 
   @Test
   @Deployment
-  public void shouldExecuteJob() {
+  void shouldExecuteJob() {
     // given
     processEngineConfiguration.getJobExecutor().shutdown();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncTaskProcess");

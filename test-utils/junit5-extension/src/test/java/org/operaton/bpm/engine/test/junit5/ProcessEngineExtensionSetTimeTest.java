@@ -24,13 +24,13 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class ProcessEngineExtensionSetTimeTest {
+class ProcessEngineExtensionSetTimeTest {
 
   @RegisterExtension
   ProcessEngineExtension extension = ProcessEngineExtension.builder().build();
 
   @Test
-  public void shouldSetTime() {
+  void shouldSetTime() {
     // when
     extension.setCurrentTime(new Date(0));
 

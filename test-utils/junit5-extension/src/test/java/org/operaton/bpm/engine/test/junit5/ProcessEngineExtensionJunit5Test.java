@@ -30,13 +30,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class ProcessEngineExtensionJunit5Test {
+class ProcessEngineExtensionJunit5Test {
 
   ProcessEngine engine;
 
   @Test
   @Deployment
-  public void extensionUsageExample() {
+  void extensionUsageExample() {
     RuntimeService runtimeService = engine.getRuntimeService();
     runtimeService.startProcessInstanceByKey("extensionUsage");
 
@@ -52,13 +52,13 @@ public class ProcessEngineExtensionJunit5Test {
    * The extension should work with tests that have no deployment annotation
    */
   @Test
-  public void testWithoutDeploymentAnnotation() {
+  void testWithoutDeploymentAnnotation() {
     assertEquals("aString", "aString");
   }
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void requiredHistoryLevelAudit() {
+  void requiredHistoryLevelAudit() {
 
     assertThat(currentHistoryLevel()).isIn(
         ProcessEngineConfiguration.HISTORY_AUDIT, ProcessEngineConfiguration.HISTORY_FULL);
@@ -66,7 +66,7 @@ public class ProcessEngineExtensionJunit5Test {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  public void requiredHistoryLevelActivity() {
+  void requiredHistoryLevelActivity() {
 
     assertThat(currentHistoryLevel()).isIn(
         ProcessEngineConfiguration.HISTORY_ACTIVITY,
@@ -76,7 +76,7 @@ public class ProcessEngineExtensionJunit5Test {
 
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
-  public void requiredHistoryLevelFull() {
+  void requiredHistoryLevelFull() {
 
     assertThat(currentHistoryLevel()).isEqualTo(ProcessEngineConfiguration.HISTORY_FULL);
   }

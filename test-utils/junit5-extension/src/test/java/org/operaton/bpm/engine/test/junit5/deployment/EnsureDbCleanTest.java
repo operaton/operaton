@@ -38,17 +38,17 @@ public class EnsureDbCleanTest {
   public static final String SUB_PROCESS = "processes/subProcess.bpmn";
 
   @BeforeAll
-  public static void setup() {
+  static void setup() {
     ClassUnderTest.isEnabled = true;
   }
 
   @AfterAll
-  public static void tearDown() {
+  static void tearDown() {
     ClassUnderTest.isEnabled = false;
   }
 
   @Test
-  public void shouldFailTestsThatExpectCleanDbWhenDbIsDirty() {
+  void shouldFailTestsThatExpectCleanDbWhenDbIsDirty() {
     EngineExecutionResults results = EngineTestKit
       .engine("junit-jupiter")
       .selectors(
@@ -85,7 +85,7 @@ public class EnsureDbCleanTest {
       .build();
 
     @Test
-    public void shouldRaiseExceptionIfDbNotClean() {
+    void shouldRaiseExceptionIfDbNotClean() {
       // when
       extension.getRepositoryService()
           .createDeployment()

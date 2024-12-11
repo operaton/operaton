@@ -30,7 +30,7 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChooseDatasourceConfigurationTest {
+class ChooseDatasourceConfigurationTest {
 
   @RegisterExtension
   static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -42,7 +42,7 @@ public class ChooseDatasourceConfigurationTest {
   protected ProcessEngine processEngine;
 
   @Test
-  public void shouldChooseDatasource() throws SQLException {
+  void shouldChooseDatasource() throws SQLException {
     ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
     assertThat(configuration.getDataSource().getConnection()).asString().contains("jdbc:h2:mem:secondary");
   }

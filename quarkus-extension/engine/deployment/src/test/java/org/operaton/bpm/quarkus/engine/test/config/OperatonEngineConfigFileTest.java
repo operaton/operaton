@@ -32,7 +32,7 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OperatonEngineConfigFileTest {
+class OperatonEngineConfigFileTest {
 
   @RegisterExtension
   static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -46,7 +46,7 @@ public class OperatonEngineConfigFileTest {
   ProcessEngine processEngine;
 
   @Test
-  public void shouldLoadAllConfigProperties() throws SQLException {
+  void shouldLoadAllConfigProperties() throws SQLException {
     // given
     // a .properties file with process engine and job executor configuration
 

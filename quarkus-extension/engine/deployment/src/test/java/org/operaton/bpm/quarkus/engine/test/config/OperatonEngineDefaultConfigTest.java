@@ -54,7 +54,7 @@ public class OperatonEngineDefaultConfigTest {
   }
 
   @Test
-  public void shouldApplyDefaults() {
+  void shouldApplyDefaults() {
     // given
     // a ProcessEngineConfiguration instance
     QuarkusProcessEngineConfiguration configuration

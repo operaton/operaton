@@ -62,8 +62,8 @@ import org.junit.Test;
  */
 public class ExecutionQueryTest extends PluggableProcessEngineTest {
 
-  private static String CONCURRENT_PROCESS_KEY = "concurrent";
-  private static String SEQUENTIAL_PROCESS_KEY = "oneTaskProcess";
+  private static final String CONCURRENT_PROCESS_KEY = "concurrent";
+  private static final String SEQUENTIAL_PROCESS_KEY = "oneTaskProcess";
 
   private List<String> concurrentProcessInstanceIds;
   private List<String> sequentialProcessInstanceIds;

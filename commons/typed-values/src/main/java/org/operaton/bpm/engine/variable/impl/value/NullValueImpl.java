@@ -29,7 +29,7 @@ public class NullValueImpl implements TypedValue {
 
   private static final long serialVersionUID = 1L;
 
-  private boolean isTransient;
+  private final boolean isTransient;
 
   // null is always null
   public static final NullValueImpl INSTANCE = new NullValueImpl(false);

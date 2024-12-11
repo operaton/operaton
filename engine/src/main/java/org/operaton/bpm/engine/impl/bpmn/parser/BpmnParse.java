@@ -310,8 +310,8 @@ public class BpmnParse extends Parse {
   protected Map<String, String> prefixs = new HashMap<>();
   protected String targetNamespace;
 
-  private Map<String, String> eventLinkTargets = new HashMap<>();
-  private Map<String, String> eventLinkSources = new HashMap<>();
+  private final Map<String, String> eventLinkTargets = new HashMap<>();
+  private final Map<String, String> eventLinkSources = new HashMap<>();
 
   /**
    * Constructor to be called by the {@link BpmnParser}.

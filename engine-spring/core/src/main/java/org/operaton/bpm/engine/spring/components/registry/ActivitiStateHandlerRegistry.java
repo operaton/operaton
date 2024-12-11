@@ -42,7 +42,7 @@ import java.util.logging.Logger;
  */
 public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior implements BeanFactoryAware, BeanNameAware, ActivityBehavior, InitializingBean {
 
-	private Logger logger = Logger.getLogger(getClass().getName());
+  private final Logger logger = Logger.getLogger(getClass().getName());
 
 	private String beanName;
 

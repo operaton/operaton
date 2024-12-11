@@ -31,8 +31,8 @@ import org.springframework.core.io.UrlResource;
  * @author Tom Baeyens
  */
 public class SpringConfigurationHelper {
-  
-  private static Logger log = Logger.getLogger(SpringConfigurationHelper.class.getName());
+
+  private static final Logger log = Logger.getLogger(SpringConfigurationHelper.class.getName());
 
   public static ProcessEngine buildProcessEngine(URL resource) {
     log.fine("==== BUILDING SPRING APPLICATION CONTEXT AND PROCESS ENGINE =========================================");

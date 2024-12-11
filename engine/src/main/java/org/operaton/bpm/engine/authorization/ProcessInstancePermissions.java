@@ -63,8 +63,8 @@ public enum ProcessInstancePermissions implements Permission {
   UPDATE_VARIABLE("UPDATE_VARIABLE", 128);
 
   private static final Resource[] RESOURCES = new Resource[] { Resources.PROCESS_INSTANCE };
-  private String name;
-  private int id;
+  private final String name;
+  private final int id;
 
   private ProcessInstancePermissions(String name, int id) {
     this.name = name;

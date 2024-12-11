@@ -32,8 +32,8 @@ import javax.script.ScriptEngineFactory;
 public class JuelScriptEngineFactory implements ScriptEngineFactory {
 
   public static List<String> names;
-  private static List<String> extensions;
-  private static List<String> mimeTypes;
+  private static final List<String> extensions;
+  private static final List<String> mimeTypes;
 
   static {
     names = Collections.unmodifiableList(Arrays.asList("juel"));

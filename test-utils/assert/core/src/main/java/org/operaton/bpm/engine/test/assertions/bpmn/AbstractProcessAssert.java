@@ -48,7 +48,7 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
 
   protected ProcessEngine engine;
 
-  private static ThreadLocal<Map<Class<?>, AbstractProcessAssert<?, ?>>>
+  private static final ThreadLocal<Map<Class<?>, AbstractProcessAssert<?, ?>>>
     lastAsserts = new ThreadLocal<>();
 
   protected AbstractProcessAssert(ProcessEngine engine, A actual, Class<?> selfType) {

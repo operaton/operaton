@@ -46,8 +46,8 @@ public enum SystemPermissions implements Permission {
 
   private static final Resource[] RESOURCES = new Resource[] { Resources.SYSTEM };
 
-  private String name;
-  private int id;
+  private final String name;
+  private final int id;
 
   private SystemPermissions(String name, int id) {
     this.name = name;

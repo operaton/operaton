@@ -62,8 +62,8 @@ public enum RequestConfigOption {
   TARGET_PREFERRED_AUTH_SCHEMES("target-preferred-auth-schemes",
       (builder, value) -> builder.setTargetPreferredAuthSchemes((Collection<String>) value));
 
-  private String name;
-  private BiConsumer<Builder, Object> consumer;
+  private final String name;
+  private final BiConsumer<Builder, Object> consumer;
 
   private RequestConfigOption(String name, BiConsumer<Builder, Object> consumer) {
     this.name = name;

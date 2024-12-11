@@ -27,8 +27,8 @@ import javax.ws.rs.core.Response.Status;
 
 public class HistoricActivityInstanceResourceImpl implements HistoricActivityInstanceResource {
 
-  private ProcessEngine engine;
-  private String activityInstanceId;
+  private final ProcessEngine engine;
+  private final String activityInstanceId;
 
   public HistoricActivityInstanceResourceImpl(ProcessEngine engine, String activityInstanceId) {
     this.engine = engine;

@@ -27,7 +27,7 @@ import org.operaton.connect.impl.AbstractConnectorResponse;
  */
 public class TestConnectorResponse extends AbstractConnectorResponse {
 
-  private Map<String, Object> responseParameters;
+  private final Map<String, Object> responseParameters;
 
   public TestConnectorResponse(Map<String, Object> responseParameters) {
     this.responseParameters = responseParameters;

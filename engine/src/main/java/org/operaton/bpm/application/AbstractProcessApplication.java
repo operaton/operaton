@@ -45,7 +45,7 @@ import java.util.concurrent.Callable;
  */
 public abstract class AbstractProcessApplication implements ProcessApplicationInterface {
 
-  private static ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   protected ELResolver processApplicationElResolver;
   protected BeanELResolver processApplicationBeanElResolver;

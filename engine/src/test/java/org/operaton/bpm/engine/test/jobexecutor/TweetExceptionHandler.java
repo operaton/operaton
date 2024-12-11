@@ -32,7 +32,7 @@ import org.slf4j.Logger;
  */
 public class TweetExceptionHandler implements JobHandler<JobHandlerConfiguration> {
 
-private static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   public static final String TYPE = "tweet-exception";
 

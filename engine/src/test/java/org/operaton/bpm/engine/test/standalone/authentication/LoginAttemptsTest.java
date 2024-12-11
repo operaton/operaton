@@ -40,7 +40,7 @@ import org.junit.Test;
 
 public class LoginAttemptsTest {
 
-  private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final String INDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
   @ClassRule

@@ -271,7 +271,7 @@ public class Bpmn {
   public static Bpmn INSTANCE = new Bpmn();
 
   /** the parser used by the Bpmn implementation. */
-  private BpmnParser bpmnParser = new BpmnParser();
+  private final BpmnParser bpmnParser = new BpmnParser();
   private final ModelBuilder bpmnModelBuilder;
 
   /** The {@link Model}

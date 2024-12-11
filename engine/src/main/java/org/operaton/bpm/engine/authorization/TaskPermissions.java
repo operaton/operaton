@@ -75,8 +75,8 @@ public enum TaskPermissions implements Permission {
 
   private static final Resource[] RESOURCES = new Resource[] { Resources.TASK };
 
-  private String name;
-  private int id;
+  private final String name;
+  private final int id;
 
   private TaskPermissions(String name, int id) {
     this.name = name;

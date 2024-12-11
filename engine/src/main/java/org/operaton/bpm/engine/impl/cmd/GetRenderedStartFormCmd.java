@@ -43,7 +43,7 @@ public class GetRenderedStartFormCmd implements Command<Object>, Serializable {
   private static final long serialVersionUID = 1L;
   protected String processDefinitionId;
   protected String formEngineName;
-  private static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   public GetRenderedStartFormCmd(String processDefinitionId, String formEngineName) {
     this.processDefinitionId = processDefinitionId;

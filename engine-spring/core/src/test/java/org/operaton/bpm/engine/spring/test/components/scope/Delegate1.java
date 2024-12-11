@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 
 public class Delegate1 implements JavaDelegate,InitializingBean {
 
-	private Logger log = Logger.getLogger( getClass().getName());
+  private final Logger log = Logger.getLogger(getClass().getName());
 
 	@Autowired private ProcessInstance processInstance ;
 

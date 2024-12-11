@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.spring.annotations.StartProcess;
  */
 public class ProcessInitiatingPojo {
 
-	private Logger log = Logger.getLogger(getClass().getName());
+  private final Logger log = Logger.getLogger(getClass().getName());
 
 	private int methodState = 0;
 

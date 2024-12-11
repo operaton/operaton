@@ -65,11 +65,11 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 	public static final String PROCESS_SCOPE_PROCESS_VARIABLES_SINGLETON = "processVariables";
 	public static final String PROCESS_SCOPE_NAME = "process";
 
-	private ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
+  private final ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
 
-	private boolean proxyTargetClass = true;
+  private final boolean proxyTargetClass = true;
 
-	private Logger logger = Logger.getLogger(getClass().getName());
+  private final Logger logger = Logger.getLogger(getClass().getName());
 
 	private ProcessEngine processEngine;
 

@@ -31,7 +31,7 @@ import org.slf4j.Logger;
  */
 public class EventCollector implements ExecutionListener {
 
-private static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   public List<String> events = new ArrayList<String>();
 

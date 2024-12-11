@@ -43,7 +43,7 @@ public abstract class AbstractScriptTaskTest {
 
   private static final String TEST_BEAN_NAME = "name property of testbean";
 
-  private List<String> deploymentIds = new ArrayList<>();
+  private final List<String> deploymentIds = new ArrayList<>();
 
   @After
   public void after() {

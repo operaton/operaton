@@ -28,7 +28,7 @@ import org.slf4j.Logger;
  */
 public class AuthorizationExceptionInterceptor extends CommandInterceptor {
 
-private static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   protected boolean isActive;
   protected AuthorizationException lastException;

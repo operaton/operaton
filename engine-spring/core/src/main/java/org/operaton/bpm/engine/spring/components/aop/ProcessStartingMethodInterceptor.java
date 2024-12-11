@@ -43,7 +43,7 @@ import org.springframework.util.StringUtils;
  */
 public class ProcessStartingMethodInterceptor implements MethodInterceptor {
 
-	private Logger log = Logger.getLogger(getClass().getName());
+  private final Logger log = Logger.getLogger(getClass().getName());
 
 	/**
 	 * injected reference - can be obtained via a {@link org.operaton.bpm.engine.spring.ProcessEngineFactoryBean}

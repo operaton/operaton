@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
  */
 public class ExtendLockOnExternalTaskCmd extends HandleExternalTaskCmd {
 
-  private long newLockTime;
+  private final long newLockTime;
 
   public ExtendLockOnExternalTaskCmd(String externalTaskId, String workerId, long newLockTime) {
     super(externalTaskId, workerId);

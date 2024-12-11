@@ -30,13 +30,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OperatonBpmWebappAutoConfigurationIntegrationTest {
 
-  private String bpmEnabled = OperatonBpmProperties.PREFIX + ".enabled=true";
+  private final String bpmEnabled = OperatonBpmProperties.PREFIX + ".enabled=true";
 
-  private String bpmDisabled = OperatonBpmProperties.PREFIX + ".enabled=false";
+  private final String bpmDisabled = OperatonBpmProperties.PREFIX + ".enabled=false";
 
-  private String webappEnabled = WebappProperty.PREFIX + ".enabled=true";
+  private final String webappEnabled = WebappProperty.PREFIX + ".enabled=true";
 
-  private String webappDisabled = WebappProperty.PREFIX + ".enabled=false";
+  private final String webappDisabled = WebappProperty.PREFIX + ".enabled=false";
 
   private WebApplicationContextRunner contextRunner;
 

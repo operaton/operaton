@@ -44,8 +44,8 @@ public class SpringBeansResolverFactory implements ResolverFactory, Resolver {
 
   protected static String SCOPE_NOT_ACTIVE_EXCEPTION = "org.springframework.beans.factory.support.ScopeNotActiveException";
 
-  private ApplicationContext applicationContext;
-  private Set<String> keySet;
+  private final ApplicationContext applicationContext;
+  private final Set<String> keySet;
 
   public SpringBeansResolverFactory(ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;

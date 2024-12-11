@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVariableInstanceQuery, HistoricVariableInstance> implements
         HistoricVariableInstanceQuery {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   private static final long serialVersionUID = 1L;
 

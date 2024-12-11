@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.management.UpdateJobSuspensionStateTenantBuilder;
 public class UpdateJobSuspensionStateBuilderImpl
     implements UpdateJobSuspensionStateBuilder, UpdateJobSuspensionStateSelectBuilder, UpdateJobSuspensionStateTenantBuilder {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected final CommandExecutor commandExecutor;
 

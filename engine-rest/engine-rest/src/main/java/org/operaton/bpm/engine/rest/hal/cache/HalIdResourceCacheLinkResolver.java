@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.rest.hal.HalResource;
 
 public abstract class HalIdResourceCacheLinkResolver extends HalCachingLinkResolver {
 
-  public final static Comparator<HalResource<?>> ID_COMPARATOR = new HalIdResourceComparator();
+  public static final Comparator<HalResource<?>> ID_COMPARATOR = new HalIdResourceComparator();
 
   protected String getResourceId(HalResource<?> resource) {
     return ((HalIdResource) resource).getId();

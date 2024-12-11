@@ -38,8 +38,8 @@ import org.operaton.bpm.engine.impl.variable.VariableDeclaration;
  */
 public class ProcessApplicationEventParseListener implements BpmnParseListener {
 
-  public final static ExecutionListener EXECUTION_LISTENER = new ProcessApplicationEventListenerDelegate();
-  public final static TaskListener TASK_LISTENER = new ProcessApplicationEventListenerDelegate();
+  public static final ExecutionListener EXECUTION_LISTENER = new ProcessApplicationEventListenerDelegate();
+  public static final TaskListener TASK_LISTENER = new ProcessApplicationEventListenerDelegate();
 
   protected void addEndEventListener(ScopeImpl activity) {
     activity.addExecutionListener(ExecutionListener.EVENTNAME_END, EXECUTION_LISTENER);

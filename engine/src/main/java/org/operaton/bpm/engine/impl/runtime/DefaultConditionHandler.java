@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class DefaultConditionHandler implements ConditionHandler {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   @Override
   public List<ConditionHandlerResult> evaluateStartCondition(CommandContext commandContext, ConditionSet conditionSet) {

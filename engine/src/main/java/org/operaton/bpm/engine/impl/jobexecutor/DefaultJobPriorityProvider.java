@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
  */
 public class DefaultJobPriorityProvider extends DefaultPriorityProvider<JobDeclaration<?, ?>> {
 
-  private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   @Override
   protected Long getSpecificPriority(ExecutionEntity execution, JobDeclaration<?, ?> param, String jobDefinitionId) {

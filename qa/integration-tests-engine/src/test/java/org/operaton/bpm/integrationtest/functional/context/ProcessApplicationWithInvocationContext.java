@@ -36,11 +36,11 @@ public class ProcessApplicationWithInvocationContext extends org.operaton.bpm.ap
     return execute(callable);
   }
 
-  public synchronized static InvocationContext getInvocationContext() {
+  public static synchronized InvocationContext getInvocationContext() {
     return ProcessApplicationWithInvocationContext.invocationContext;
   }
 
-  public synchronized static void clearInvocationContext() {
+  public static synchronized void clearInvocationContext() {
     ProcessApplicationWithInvocationContext.invocationContext = null;
   }
 

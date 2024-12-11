@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.ExecuteJobsRunnable;
  */
 public class SeExecutorService implements ExecutorService {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected ThreadPoolExecutor threadPoolExecutor;
 

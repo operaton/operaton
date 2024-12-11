@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public class DefaultJobExecutor extends ThreadPoolJobExecutor {
 
-  private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected int queueSize = 3;
   protected int corePoolSize = 3;

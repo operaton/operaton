@@ -36,7 +36,7 @@ import org.junit.Test;
  */
 public class BpmnModelInstanceCmdTest extends PluggableProcessEngineTest {
 
-  private final static String PROCESS_KEY = "one";
+  private static final String PROCESS_KEY = "one";
 
   @Deployment(resources = "org/operaton/bpm/engine/test/repository/one.bpmn20.xml")
   @Test

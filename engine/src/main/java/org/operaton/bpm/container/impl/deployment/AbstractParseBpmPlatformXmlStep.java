@@ -45,7 +45,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperationStep {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public static final String BPM_PLATFORM_XML_FILE = "bpm-platform.xml";
 

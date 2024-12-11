@@ -61,12 +61,12 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, ProcessEngineService, ProcessApplicationService {
 
-  protected final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected MBeanServiceContainer serviceContainer = new MBeanServiceContainer();
 
-  public final static String SERVICE_NAME_EXECUTOR = "executor-service";
-  public final static String SERVICE_NAME_PLATFORM_PLUGINS = "bpm-platform-plugins";
+  public static final String SERVICE_NAME_EXECUTOR = "executor-service";
+  public static final String SERVICE_NAME_PLATFORM_PLUGINS = "bpm-platform-plugins";
 
   // runtime container delegate implementation ///////////////////////////////////////////////
 

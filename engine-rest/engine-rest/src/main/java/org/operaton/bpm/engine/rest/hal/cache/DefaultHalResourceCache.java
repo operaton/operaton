@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.rest.cache.Cache;
 
 public class DefaultHalResourceCache implements Cache {
 
-  public final static Comparator<HalResourceCacheEntry> COMPARATOR = HalResourceCacheEntryComparator.getInstance();
+  public static final Comparator<HalResourceCacheEntry> COMPARATOR = HalResourceCacheEntryComparator.getInstance();
 
   protected int capacity;
   protected long secondsToLive;

@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmTransition;
  */
 public class OutgoingExecution {
 
-  private final static PvmLogger LOG = PvmLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
 
   protected PvmExecutionImpl outgoingExecution;
   protected PvmTransition outgoingTransition;

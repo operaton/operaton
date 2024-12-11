@@ -62,8 +62,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 	 * <p/>
 	 * works in any bean - scoped or not
 	 */
-	public final static String PROCESS_SCOPE_PROCESS_VARIABLES_SINGLETON = "processVariables";
-	public final static String PROCESS_SCOPE_NAME = "process";
+	public static final String PROCESS_SCOPE_PROCESS_VARIABLES_SINGLETON = "processVariables";
+	public static final String PROCESS_SCOPE_NAME = "process";
 
 	private ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
 

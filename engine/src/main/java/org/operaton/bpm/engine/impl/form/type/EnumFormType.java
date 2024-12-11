@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class EnumFormType extends SimpleFormFieldType {
 
-  public final static String TYPE_NAME = "enum";
+  public static final String TYPE_NAME = "enum";
 
   protected Map<String, String> values;
 

@@ -51,9 +51,9 @@ public class PasswordHashingTest {
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
-  protected final static String PASSWORD = "password";
-  protected final static String USER_NAME = "johndoe";
-  protected final static String ALGORITHM_NAME = "awesome";
+  protected static final String PASSWORD = "password";
+  protected static final String USER_NAME = "johndoe";
+  protected static final String ALGORITHM_NAME = "awesome";
 
   protected IdentityService identityService;
   protected RuntimeService runtimeService;

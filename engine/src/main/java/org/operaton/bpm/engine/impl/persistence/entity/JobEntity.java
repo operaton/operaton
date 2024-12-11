@@ -64,7 +64,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     implements Serializable, Job, DbEntity,
     HasDbRevision, HasDbReferences, DbEntityLifecycleAware {
 
-  private final static EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
+  private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   public static final int DEFAULT_RETRIES = 3;
 

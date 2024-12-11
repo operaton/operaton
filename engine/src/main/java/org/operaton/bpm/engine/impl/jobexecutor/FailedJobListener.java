@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.management.Metrics;
  */
 public class FailedJobListener implements Command<Void> {
 
-  private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected CommandExecutor commandExecutor;
   protected JobFailureCollector jobFailureCollector;

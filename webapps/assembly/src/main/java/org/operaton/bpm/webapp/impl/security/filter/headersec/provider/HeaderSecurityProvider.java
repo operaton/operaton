@@ -29,11 +29,11 @@ public abstract class HeaderSecurityProvider {
   protected String value = null;
   protected Map<String, String> initParams = new HashMap<>();
 
-  abstract public Map<String, String> initParams();
+  public abstract Map<String, String> initParams();
 
-  abstract public void parseParams();
+  public abstract void parseParams();
 
-  abstract public String getHeaderName();
+  public abstract String getHeaderName();
 
   public String getHeaderValue(final ServletContext servletContext) {
     return value;

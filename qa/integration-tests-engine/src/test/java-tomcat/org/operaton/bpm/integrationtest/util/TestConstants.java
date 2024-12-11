@@ -22,9 +22,9 @@ package org.operaton.bpm.integrationtest.util;
  */
 public class TestConstants {
 
-  public final static String APP_NAME = "";
-  public final static String PROCESS_ENGINE_SERVICE_JNDI_NAME = "java:comp/env/ProcessEngineService";
-  public final static String PROCESS_APPLICATION_SERVICE_JNDI_NAME = "java:comp/env/ProcessApplicationService";
+  public static final String APP_NAME = "";
+  public static final String PROCESS_ENGINE_SERVICE_JNDI_NAME = "java:comp/env/ProcessEngineService";
+  public static final String PROCESS_APPLICATION_SERVICE_JNDI_NAME = "java:comp/env/ProcessApplicationService";
 
   public static String getAppName() {
     return APP_NAME;

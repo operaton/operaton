@@ -33,7 +33,7 @@ import org.junit.Test;
 
 public class DmnModelElementInstanceCmdTest extends PluggableProcessEngineTest {
 
-  private final static String DECISION_KEY = "one";
+  private static final String DECISION_KEY = "one";
 
   @Deployment(resources = "org/operaton/bpm/engine/test/repository/one.dmn")
   @Test

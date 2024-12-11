@@ -41,7 +41,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTest {
 
-  public final static String PROCESSES_XML =
+  public static final String PROCESSES_XML =
       "<process-application xmlns=\"http://www.operaton.org/schema/1.0/ProcessApplication\">" +
 
         "<process-archive name=\"PA_NAME\">" +

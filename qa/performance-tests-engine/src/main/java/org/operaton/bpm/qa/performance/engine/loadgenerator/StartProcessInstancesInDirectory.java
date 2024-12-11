@@ -36,7 +36,7 @@ import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.StartProcessIn
  */
 public class StartProcessInstancesInDirectory {
 
-  public final static String[] DEPLOYABLE_FILE_EXTENSIONS = new String[] {
+  public static final String[] DEPLOYABLE_FILE_EXTENSIONS = new String[] {
       ".bpmn",
       ".bpmn20.xml"
   };

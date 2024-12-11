@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 @SuppressWarnings("unchecked")
 public class BusinessProcessContext implements Context {
 
-  final static Logger logger = Logger.getLogger(BusinessProcessContext.class.getName());
+  static final Logger logger = Logger.getLogger(BusinessProcessContext.class.getName());
   
   protected BeanManager beanManager;
 

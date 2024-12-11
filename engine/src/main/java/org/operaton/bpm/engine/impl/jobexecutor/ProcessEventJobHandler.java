@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
  */
 public class ProcessEventJobHandler implements JobHandler<EventSubscriptionJobConfiguration> {
 
-  public final static String TYPE = "event";
+  public static final String TYPE = "event";
 
   public String getType() {
     return TYPE;

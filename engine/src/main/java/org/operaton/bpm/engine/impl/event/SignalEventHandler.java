@@ -35,7 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class SignalEventHandler extends EventHandlerImpl {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   public SignalEventHandler() {
     super(EventType.SIGNAL);

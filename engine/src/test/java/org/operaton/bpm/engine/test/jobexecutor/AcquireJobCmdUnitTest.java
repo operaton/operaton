@@ -37,8 +37,8 @@ import org.junit.Test;
 
 public class AcquireJobCmdUnitTest {
 
-  protected final static String PROCESS_INSTANCE_ID_1 = "pi_1";
-  protected final static String PROCESS_INSTANCE_ID_2 = "pi_2";
+  protected static final String PROCESS_INSTANCE_ID_1 = "pi_1";
+  protected static final String PROCESS_INSTANCE_ID_2 = "pi_2";
 
   protected static final String JOB_ID_1 = "job_1";
   protected static final String JOB_ID_2 = "job_2";

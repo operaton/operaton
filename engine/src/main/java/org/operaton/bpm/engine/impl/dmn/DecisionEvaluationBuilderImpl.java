@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
 public class DecisionEvaluationBuilderImpl implements DecisionsEvaluationBuilder {
 
-  private final static DecisionLogger LOG = ProcessEngineLogger.DECISION_LOGGER;
+  private static final DecisionLogger LOG = ProcessEngineLogger.DECISION_LOGGER;
 
   protected CommandExecutor commandExecutor;
 

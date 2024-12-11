@@ -61,7 +61,7 @@ import java.util.logging.Logger;
  */
 public class MscManagedProcessEngineController extends MscManagedProcessEngine {
 
-  private final static Logger LOGGER = Logger.getLogger(MscManagedProcessEngineController.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(MscManagedProcessEngineController.class.getName());
 
   protected InjectedValue<ExecutorService> executorInjector = new InjectedValue<ExecutorService>();
 

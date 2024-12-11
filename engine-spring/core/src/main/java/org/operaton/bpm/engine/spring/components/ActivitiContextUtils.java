@@ -29,7 +29,7 @@ public class ActivitiContextUtils {
 	/**
 	 * the name of the default registry used to store all state handling components
 	 */
-	public final static String ACTIVITI_REGISTRY_BEAN_NAME = "activitiComponentRegistry" ;
+	public static final String ACTIVITI_REGISTRY_BEAN_NAME = "activitiComponentRegistry" ;
 
 
 }

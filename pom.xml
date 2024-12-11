@@ -563,7 +563,8 @@
             <configuration>
               <activeRecipes>
                 org.openrewrite.java.RemoveUnusedImports,
-                org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic
+                org.openrewrite.java.testing.cleanup.TestsShouldNotBePublic,
+                org.openrewrite.staticanalysis.ModifierOrder
               </activeRecipes>
               <failOnDryRunResults>true</failOnDryRunResults>
               <exclusions>

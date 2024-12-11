@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class ThrowSignalEventActivityBehavior extends AbstractBpmnActivityBehavior {
 
-  protected final static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
+  protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
   protected final EventSubscriptionDeclaration signalDefinition;
 

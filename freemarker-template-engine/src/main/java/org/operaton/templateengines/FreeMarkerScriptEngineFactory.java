@@ -31,12 +31,12 @@ import javax.script.ScriptEngineFactory;
  */
 public class FreeMarkerScriptEngineFactory implements ScriptEngineFactory {
 
-  public final static String NAME = "freemarker";
-  public final static String VERSION = "2.3.29";
+  public static final String NAME = "freemarker";
+  public static final String VERSION = "2.3.29";
 
-  public final static List<String> names;
-  public final static List<String> extensions;
-  public final static List<String> mimeTypes;
+  public static final List<String> names;
+  public static final List<String> extensions;
+  public static final List<String> mimeTypes;
 
   static {
     names = Collections.unmodifiableList(Arrays.asList(NAME, "Freemarker", "FreeMarker"));

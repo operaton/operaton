@@ -27,8 +27,8 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
  */
 public class HistoryCleanupJobHandlerConfiguration implements JobHandlerConfiguration {
 
-  public final static int START_DELAY = 10;  //10 seconds
-  public final static int MAX_DELAY = 60*60;  //hour
+  public static final int START_DELAY = 10;  //10 seconds
+  public static final int MAX_DELAY = 60*60;  //hour
 
   public static final String JOB_CONFIG_COUNT_EMPTY_RUNS = "countEmptyRuns";
   public static final String JOB_CONFIG_EXECUTE_AT_ONCE = "immediatelyDue";

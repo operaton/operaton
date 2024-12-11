@@ -46,12 +46,12 @@ import org.operaton.bpm.engine.rest.util.QueryUtil;
 
 public class DeploymentRestServiceImpl extends AbstractRestProcessEngineAware implements DeploymentRestService {
 
-  public final static String DEPLOYMENT_NAME = "deployment-name";
-  public final static String DEPLOYMENT_ACTIVATION_TIME = "deployment-activation-time";
-  public final static String ENABLE_DUPLICATE_FILTERING = "enable-duplicate-filtering";
-  public final static String DEPLOY_CHANGED_ONLY = "deploy-changed-only";
-  public final static String DEPLOYMENT_SOURCE = "deployment-source";
-  public final static String TENANT_ID = "tenant-id";
+  public static final String DEPLOYMENT_NAME = "deployment-name";
+  public static final String DEPLOYMENT_ACTIVATION_TIME = "deployment-activation-time";
+  public static final String ENABLE_DUPLICATE_FILTERING = "enable-duplicate-filtering";
+  public static final String DEPLOY_CHANGED_ONLY = "deploy-changed-only";
+  public static final String DEPLOYMENT_SOURCE = "deployment-source";
+  public static final String TENANT_ID = "tenant-id";
 
   protected static final Set<String> RESERVED_KEYWORDS = new HashSet<String>();
 

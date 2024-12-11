@@ -32,8 +32,8 @@ import org.junit.Test;
  */
 public class DmnBusinessRuleTaskTest extends ProcessEnginePerformanceTestCase {
 
-  private final static String BPMN = "org/operaton/bpm/qa/performance/engine/dmn/DmnBusinessRuleTaskTest.businessRuleTask.bpmn";
-  private final static String DMN_DIR = "org/operaton/bpm/qa/performance/engine/dmn/";
+  private static final String BPMN = "org/operaton/bpm/qa/performance/engine/dmn/DmnBusinessRuleTaskTest.businessRuleTask.bpmn";
+  private static final String DMN_DIR = "org/operaton/bpm/qa/performance/engine/dmn/";
 
   private static final String PROCESS_DEFINITION_KEY = "Process";
 

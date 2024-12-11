@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  */
 public class MetricsCollectionTask extends TimerTask {
 
-  private final static MetricsLogger LOG = ProcessEngineLogger.METRICS_LOGGER;
+  private static final MetricsLogger LOG = ProcessEngineLogger.METRICS_LOGGER;
 
   protected MetricsRegistry metricsRegistry;
   protected CommandExecutor commandExecutor;

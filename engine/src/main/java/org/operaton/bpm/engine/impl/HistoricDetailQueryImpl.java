@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.impl.variable.serializer.AbstractTypedValueSerial
  */
 public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, HistoricDetail> implements HistoricDetailQuery {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   private static final long serialVersionUID = 1L;
   protected String detailId;

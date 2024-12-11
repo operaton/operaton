@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
  */
 public class InvoiceDemoDataGenerator {
 
-    private final static Logger LOGGER = Logger.getLogger(InvoiceDemoDataGenerator.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(InvoiceDemoDataGenerator.class.getName());
 
     public void createDemoData(ProcessEngine engine) {
 

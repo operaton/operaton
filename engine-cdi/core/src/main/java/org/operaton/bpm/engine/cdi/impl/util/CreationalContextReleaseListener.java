@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContextListener;
  */
 public class CreationalContextReleaseListener implements CommandContextListener {
 
-  protected final static Logger LOG = Logger.getLogger(CreationalContextReleaseListener.class.getName());
+  protected static final Logger LOG = Logger.getLogger(CreationalContextReleaseListener.class.getName());
 
   protected CreationalContext<?> context;
 

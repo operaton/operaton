@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public class JmxManagedThreadPool extends SeExecutorService implements JmxManagedThreadPoolMBean, PlatformService<JmxManagedThreadPool> {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected final BlockingQueue<Runnable> threadPoolQueue;
 

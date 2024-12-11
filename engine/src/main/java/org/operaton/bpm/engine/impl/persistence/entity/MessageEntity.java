@@ -33,7 +33,7 @@ public class MessageEntity extends JobEntity {
 
   private static final long serialVersionUID = 1L;
 
-  private final static EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
+  private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   private String repeat = null;
 

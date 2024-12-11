@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.runtime.Job;
  */
 public abstract class JobExecutor {
 
-  private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected String name = "JobExecutor["+getClass().getName()+"]";
   protected List<ProcessEngineImpl> processEngines = new CopyOnWriteArrayList<>();

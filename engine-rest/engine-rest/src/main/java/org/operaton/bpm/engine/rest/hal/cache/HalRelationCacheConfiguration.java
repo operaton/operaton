@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HalRelationCacheConfiguration {
 
-  public final static String CONFIG_CACHE_IMPLEMENTATION = "cacheImplementation";
+  public static final String CONFIG_CACHE_IMPLEMENTATION = "cacheImplementation";
   public static final String CONFIG_CACHES = "caches";
 
   protected ObjectMapper objectMapper = new ObjectMapper();

@@ -35,7 +35,7 @@ public abstract class CoreExecution extends AbstractVariableScope implements Bas
 
   private static final long serialVersionUID = 1L;
 
-  private final static CoreLogger LOG = CoreLogger.CORE_LOGGER;
+  private static final CoreLogger LOG = CoreLogger.CORE_LOGGER;
 
   protected String id;
 

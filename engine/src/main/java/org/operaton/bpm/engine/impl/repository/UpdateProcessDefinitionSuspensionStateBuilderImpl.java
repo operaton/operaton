@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.repository.UpdateProcessDefinitionSuspensionState
 public class UpdateProcessDefinitionSuspensionStateBuilderImpl implements UpdateProcessDefinitionSuspensionStateBuilder,
     UpdateProcessDefinitionSuspensionStateSelectBuilder, UpdateProcessDefinitionSuspensionStateTenantBuilder {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected final CommandExecutor commandExecutor;
 

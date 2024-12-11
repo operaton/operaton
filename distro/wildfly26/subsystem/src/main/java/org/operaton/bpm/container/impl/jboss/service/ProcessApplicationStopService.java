@@ -40,7 +40,7 @@ import org.jboss.msc.value.InjectedValue;
 public class ProcessApplicationStopService implements Service<ProcessApplicationStopService> {
 
 
-  private final static Logger LOGGER = Logger.getLogger(ProcessApplicationStopService.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ProcessApplicationStopService.class.getName());
 
   // for view-exposing ProcessApplicationComponents
   protected InjectedValue<ComponentView> paComponentViewInjector = new InjectedValue<ComponentView>();

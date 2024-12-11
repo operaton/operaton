@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.management.UpdateJobDefinitionSuspensionStateTena
 public class UpdateJobDefinitionSuspensionStateBuilderImpl
     implements UpdateJobDefinitionSuspensionStateBuilder, UpdateJobDefinitionSuspensionStateSelectBuilder, UpdateJobDefinitionSuspensionStateTenantBuilder {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected final CommandExecutor commandExecutor;
 

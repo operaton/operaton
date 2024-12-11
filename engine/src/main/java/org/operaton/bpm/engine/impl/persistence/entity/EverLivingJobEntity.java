@@ -29,7 +29,7 @@ public class EverLivingJobEntity extends JobEntity {
 
   private static final long serialVersionUID = 1L;
 
-  private final static EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
+  private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   public static final String TYPE = "ever-living";
 

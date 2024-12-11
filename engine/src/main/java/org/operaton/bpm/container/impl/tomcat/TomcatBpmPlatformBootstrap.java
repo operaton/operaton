@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public class TomcatBpmPlatformBootstrap implements LifecycleListener {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected ProcessEngine processEngine;
 

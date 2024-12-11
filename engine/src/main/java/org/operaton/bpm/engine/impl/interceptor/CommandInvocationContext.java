@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.AtomicOperation;
  */
 public class CommandInvocationContext {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected Throwable throwable;
   protected Command< ? > command;

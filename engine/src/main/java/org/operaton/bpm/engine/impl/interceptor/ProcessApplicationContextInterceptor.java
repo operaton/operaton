@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.context.Context;
  */
 public class ProcessApplicationContextInterceptor extends CommandInterceptor {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 

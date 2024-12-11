@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class StringFormType extends SimpleFormFieldType {
 
-  public final static String TYPE_NAME = "string";
+  public static final String TYPE_NAME = "string";
 
   public String getName() {
     return TYPE_NAME;

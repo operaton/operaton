@@ -36,7 +36,7 @@ import static org.junit.Assert.*;
 
 public abstract class TestHelper {
 
-  public final static String PROCESS_XML =
+  public static final String PROCESS_XML =
           "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:operaton=\"http://operaton.org/schema/1.0/bpmn\"  targetNamespace=\"Examples\"><process id=\"PROCESS_KEY\" isExecutable=\"true\" operaton:historyTimeToLive=\"P180D\"><startEvent id=\"start\"/></process></definitions>";
 
   public static Asset getStringAsAssetWithReplacements(String string, String[][] replacements) {

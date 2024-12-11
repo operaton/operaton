@@ -47,7 +47,7 @@ import org.jboss.msc.service.StopContext;
  */
 public class MscManagedProcessEngine implements Service<ProcessEngine> {
 
-  private final static Logger LOGG = Logger.getLogger(MscManagedProcessEngine.class.getName());
+  private static final Logger LOGG = Logger.getLogger(MscManagedProcessEngine.class.getName());
 
   protected Supplier<MscRuntimeContainerDelegate> runtimeContainerDelegateSupplier;
 

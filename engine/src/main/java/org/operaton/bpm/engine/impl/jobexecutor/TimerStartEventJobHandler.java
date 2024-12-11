@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 public class TimerStartEventJobHandler extends TimerEventJobHandler {
 
-  private final static JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
+  private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   public static final String TYPE = "timer-start-event";
 

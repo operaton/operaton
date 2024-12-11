@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
  */
 public class BpmnExceptionHandler {
 
-  private final static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
+  private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
   /**
    * Decides how to propagate the exception properly, e.g. as bpmn error or "normal" error.

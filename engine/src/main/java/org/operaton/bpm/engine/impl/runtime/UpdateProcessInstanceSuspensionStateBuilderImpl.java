@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.runtime.UpdateProcessInstancesSuspensionStateBuil
 public class UpdateProcessInstanceSuspensionStateBuilderImpl implements UpdateProcessInstanceSuspensionStateBuilder,
     UpdateProcessInstanceSuspensionStateSelectBuilder, UpdateProcessInstanceSuspensionStateTenantBuilder {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected final CommandExecutor commandExecutor;
 

@@ -52,7 +52,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 @SuppressWarnings("serial")
 public class DefaultContextAssociationManager implements ContextAssociationManager, Serializable {
 
-  protected final static Logger log = Logger.getLogger(DefaultContextAssociationManager.class.getName());
+  protected static final Logger log = Logger.getLogger(DefaultContextAssociationManager.class.getName());
 
   @Inject private BeanManager beanManager;
 

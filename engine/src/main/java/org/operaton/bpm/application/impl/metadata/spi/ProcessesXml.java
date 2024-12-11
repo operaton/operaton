@@ -46,7 +46,7 @@ public interface ProcessesXml {
   /**
    * <p>Constant representing the empty processes.xml</p>
    */
-  public final static ProcessesXml EMPTY_PROCESSES_XML = new ProcessesXml() {
+  public static final ProcessesXml EMPTY_PROCESSES_XML = new ProcessesXml() {
 
     public List<ProcessEngineXml> getProcessEngines() {
       return Collections.emptyList();

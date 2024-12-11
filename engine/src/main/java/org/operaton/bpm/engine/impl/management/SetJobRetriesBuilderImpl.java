@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.management.SetJobRetriesBuilder;
 
 public class SetJobRetriesBuilderImpl implements SetJobRetriesBuilder {
 
-  protected final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected final CommandExecutor commandExecutor;
 

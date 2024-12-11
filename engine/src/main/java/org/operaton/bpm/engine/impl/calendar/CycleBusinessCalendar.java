@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.task.Task;
 
 public class CycleBusinessCalendar implements BusinessCalendar {
 
-  private final static EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
+  private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
   public static String NAME = "cycle";
 

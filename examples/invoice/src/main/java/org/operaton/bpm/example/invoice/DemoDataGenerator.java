@@ -57,7 +57,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
  */
 public class DemoDataGenerator {
 
-    private final static Logger LOGGER = Logger.getLogger(DemoDataGenerator.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(DemoDataGenerator.class.getName());
 
     public void createUsers(ProcessEngine engine) {
 

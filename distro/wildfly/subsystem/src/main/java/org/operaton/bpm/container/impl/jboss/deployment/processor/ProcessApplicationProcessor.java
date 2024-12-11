@@ -58,7 +58,7 @@ import org.jboss.metadata.web.spec.ListenerMetaData;
  */
 public class ProcessApplicationProcessor implements DeploymentUnitProcessor {
 
-  private final static Logger log = Logger.getLogger(ProcessApplicationProcessor.class.getName());
+  private static final Logger log = Logger.getLogger(ProcessApplicationProcessor.class.getName());
 
   public static final int PRIORITY = 0x2010; // after PARSE_WEB_MERGE_METADATA
 

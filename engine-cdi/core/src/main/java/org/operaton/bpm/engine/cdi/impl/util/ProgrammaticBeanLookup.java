@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class ProgrammaticBeanLookup {
 
-  public final static Logger LOG = Logger.getLogger(ProgrammaticBeanLookup.class.getName());
+  public static final Logger LOG = Logger.getLogger(ProgrammaticBeanLookup.class.getName());
 
   public static <T> T lookup(Class<T> clazz, BeanManager bm) {
     return lookup(clazz, bm, true);

@@ -51,7 +51,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
   private static final long serialVersionUID = 1L;
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  public final static Map<String, JsonObjectConverter<?>> queryConverter = new HashMap<String, JsonObjectConverter<?>>();
+  public static final Map<String, JsonObjectConverter<?>> queryConverter = new HashMap<String, JsonObjectConverter<?>>();
 
   static {
     queryConverter.put(EntityTypes.TASK, new JsonTaskQueryConverter());

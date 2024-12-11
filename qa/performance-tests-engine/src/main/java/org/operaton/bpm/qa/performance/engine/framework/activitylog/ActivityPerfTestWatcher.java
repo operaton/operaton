@@ -35,7 +35,7 @@ import org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants;
 
 public class ActivityPerfTestWatcher implements PerfTestWatcher {
 
-  public final static List<String> WATCH_ALL_ACTIVITIES = Collections.singletonList("ALL");
+  public static final List<String> WATCH_ALL_ACTIVITIES = Collections.singletonList("ALL");
 
   protected List<String> activityIds;
   protected boolean watchAllActivities;

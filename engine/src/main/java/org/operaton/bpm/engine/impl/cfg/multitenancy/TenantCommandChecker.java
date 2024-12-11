@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.runtime.CaseExecution;
  */
 public class TenantCommandChecker implements CommandChecker {
 
-  protected final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   @Override
   public void checkEvaluateDecision(DecisionDefinition decisionDefinition) {

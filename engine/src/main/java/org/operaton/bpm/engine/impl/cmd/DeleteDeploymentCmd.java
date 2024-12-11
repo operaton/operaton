@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
  */
 public class DeleteDeploymentCmd implements Command<Void>, Serializable {
 
-  private final static TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
+  private static final TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
 
   private static final long serialVersionUID = 1L;
 

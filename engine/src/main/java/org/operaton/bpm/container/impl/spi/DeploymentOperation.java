@@ -45,7 +45,7 @@ import java.util.Map;
  */
 public class DeploymentOperation {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   /** the name of this composite operation */
   protected final String name;

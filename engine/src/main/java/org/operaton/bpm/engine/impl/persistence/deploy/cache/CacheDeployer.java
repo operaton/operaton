@@ -32,7 +32,7 @@ import java.util.concurrent.Callable;
  */
 public class CacheDeployer {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected List<Deployer> deployers;
 

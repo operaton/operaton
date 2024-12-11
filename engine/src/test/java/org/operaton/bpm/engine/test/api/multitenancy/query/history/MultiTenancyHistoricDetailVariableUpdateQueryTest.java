@@ -51,14 +51,14 @@ import org.junit.rules.RuleChain;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class MultiTenancyHistoricDetailVariableUpdateQueryTest {
 
-  protected final static String TENANT_NULL = null;
-  protected final static String TENANT_ONE = "tenant1";
-  protected final static String TENANT_TWO = "tenant2";
+  protected static final String TENANT_NULL = null;
+  protected static final String TENANT_ONE = "tenant1";
+  protected static final String TENANT_TWO = "tenant2";
 
-  protected final static String VARIABLE_NAME = "myVar";
-  protected final static String TENANT_NULL_VAR = "tenantNullVar";
-  protected final static String TENANT_ONE_VAR = "tenant1Var";
-  protected final static String TENANT_TWO_VAR = "tenant2Var";
+  protected static final String VARIABLE_NAME = "myVar";
+  protected static final String TENANT_NULL_VAR = "tenantNullVar";
+  protected static final String TENANT_ONE_VAR = "tenant1Var";
+  protected static final String TENANT_TWO_VAR = "tenant2Var";
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 

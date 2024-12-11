@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class EmptyVariableContext implements VariableContext {
 
-  public final static EmptyVariableContext INSTANCE = new EmptyVariableContext();
+  public static final EmptyVariableContext INSTANCE = new EmptyVariableContext();
 
   private EmptyVariableContext() {
     // hidden

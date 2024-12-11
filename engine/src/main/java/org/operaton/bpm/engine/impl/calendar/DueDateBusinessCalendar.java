@@ -27,7 +27,7 @@ import org.joda.time.format.ISOPeriodFormat;
 
 public class DueDateBusinessCalendar implements BusinessCalendar {
 
-  private final static EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
+  private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
   public static final String NAME = "dueDate";
 

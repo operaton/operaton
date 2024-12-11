@@ -78,7 +78,7 @@ public abstract class TestHelper {
 
   static Map<String, ProcessEngine> processEngines = new HashMap<>();
 
-  public final static List<String> RESOURCE_SUFFIXES = new ArrayList<>();
+  public static final List<String> RESOURCE_SUFFIXES = new ArrayList<>();
 
   static {
     RESOURCE_SUFFIXES.addAll(Arrays.asList(BpmnDeployer.BPMN_RESOURCE_SUFFIXES));

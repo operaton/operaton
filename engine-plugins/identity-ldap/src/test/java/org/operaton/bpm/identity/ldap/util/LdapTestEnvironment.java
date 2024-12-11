@@ -63,7 +63,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LdapTestEnvironment {
 
-  private final static Logger LOG = LoggerFactory.getLogger(LdapTestEnvironment.class.getName());
+  private static final Logger LOG = LoggerFactory.getLogger(LdapTestEnvironment.class.getName());
 
   private static final String BASE_DN = "o=operaton,c=org";
   public static final String OFFICE_BERKELEY = "office-berkeley";

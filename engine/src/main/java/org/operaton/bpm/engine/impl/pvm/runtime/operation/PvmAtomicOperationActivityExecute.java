@@ -30,7 +30,7 @@ import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivity
  */
 public class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
 
-  private final static PvmLogger LOG = PvmLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
 
   public boolean isAsync(PvmExecutionImpl execution) {
     return false;

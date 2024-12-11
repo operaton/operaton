@@ -27,9 +27,9 @@ import java.util.Map;
  */
 public interface JobAcquisitionXml {
 
-  public final static String LOCK_TIME_IN_MILLIS = "lockTimeInMillis";
-  public final static String WAIT_TIME_IN_MILLIS = "waitTimeInMillis";
-  public final static String MAX_JOBS_PER_ACQUISITION = "maxJobsPerAcquisition";
+  public static final String LOCK_TIME_IN_MILLIS = "lockTimeInMillis";
+  public static final String WAIT_TIME_IN_MILLIS = "waitTimeInMillis";
+  public static final String MAX_JOBS_PER_ACQUISITION = "maxJobsPerAcquisition";
 
   /**
    * @return the name of the JobExecutor.

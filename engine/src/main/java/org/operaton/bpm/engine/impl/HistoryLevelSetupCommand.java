@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
 
 public final class HistoryLevelSetupCommand implements Command<Void> {
 
-  private final static EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
+  private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   public Void execute(CommandContext commandContext) {
 

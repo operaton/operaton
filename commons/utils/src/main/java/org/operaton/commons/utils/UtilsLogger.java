@@ -23,8 +23,8 @@ import org.operaton.commons.logging.BaseLogger;
  */
 public class UtilsLogger extends BaseLogger {
 
-  public final static String PROJECT_CODE = "UTILS";
+  public static final String PROJECT_CODE = "UTILS";
 
-  public final static IoUtilLogger IO_UTIL_LOGGER = BaseLogger.createLogger(IoUtilLogger.class, PROJECT_CODE, "org.operaton.commons.utils.io", "01");
-  public final static EnsureUtilLogger ENSURE_UTIL_LOGGER = BaseLogger.createLogger(EnsureUtilLogger.class, PROJECT_CODE, "org.operaton.commons.utils.ensure", "02");
+  public static final IoUtilLogger IO_UTIL_LOGGER = BaseLogger.createLogger(IoUtilLogger.class, PROJECT_CODE, "org.operaton.commons.utils.io", "01");
+  public static final EnsureUtilLogger ENSURE_UTIL_LOGGER = BaseLogger.createLogger(EnsureUtilLogger.class, PROJECT_CODE, "org.operaton.commons.utils.ensure", "02");
 }

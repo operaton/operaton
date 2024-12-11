@@ -1021,7 +1021,7 @@ public class ProcessDataLoggingContextTest {
   public static class NestedLoggingDelegate implements JavaDelegate {
 
     public static final String LOGGER_NAME = "custom-logger";
-    private final static Logger LOGGER = LoggerFactory.getLogger(LOGGER_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LOGGER_NAME);
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
 public class PaDataformatAndPostDeployApp extends org.operaton.bpm.application.impl.ServletProcessApplication {
 
-  public final static String PA_NAME  = "PaDataformatAndPostDeployApp";
+  public static final String PA_NAME  = "PaDataformatAndPostDeployApp";
 
   @PostDeploy
   public void onPaDeployed(ProcessEngine e) throws Exception {

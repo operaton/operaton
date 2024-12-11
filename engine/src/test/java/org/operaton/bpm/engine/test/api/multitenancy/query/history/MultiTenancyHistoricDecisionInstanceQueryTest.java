@@ -49,9 +49,9 @@ public class MultiTenancyHistoricDecisionInstanceQueryTest {
 
   protected static final String DMN = "org/operaton/bpm/engine/test/api/multitenancy/simpleDecisionTable.dmn";
 
-  protected final static String TENANT_NULL = null;
-  protected final static String TENANT_ONE = "tenant1";
-  protected final static String TENANT_TWO = "tenant2";
+  protected static final String TENANT_NULL = null;
+  protected static final String TENANT_ONE = "tenant1";
+  protected static final String TENANT_TWO = "tenant2";
 
   protected ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 

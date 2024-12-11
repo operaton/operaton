@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 public class CompiledExecutableScript extends ExecutableScript {
 
-  private final static ScriptLogger LOG = ProcessEngineLogger.SCRIPT_LOGGER;
+  private static final ScriptLogger LOG = ProcessEngineLogger.SCRIPT_LOGGER;
 
   protected CompiledScript compiledScript;
 

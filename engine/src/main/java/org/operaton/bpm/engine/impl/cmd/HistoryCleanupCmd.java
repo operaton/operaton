@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.runtime.Job;
  */
 public class HistoryCleanupCmd implements Command<Job> {
 
-  private final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   public static final JobDeclaration HISTORY_CLEANUP_JOB_DECLARATION = new HistoryCleanupJobDeclaration();
 

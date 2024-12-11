@@ -33,7 +33,7 @@ import java.util.concurrent.Callable;
 
 public class ProcessApplicationContextUtil {
 
-  private final static ProcessApplicationLogger LOG = ProcessApplicationLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessApplicationLogger.PROCESS_APPLICATION_LOGGER;
 
   public static ProcessApplicationReference getTargetProcessApplication(CoreExecution execution) {
     if (execution instanceof ExecutionEntity executionEntity) {

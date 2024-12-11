@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.impl.util.xml.Parser;
  */
 public abstract class DeploymentMetadataParse extends Parse {
 
-  private final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public DeploymentMetadataParse(Parser parser) {
     super(parser);

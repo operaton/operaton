@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.impl.util.ReflectUtil;
  */
 public class PropertyHelper {
 
-  protected final static ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
+  protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   public static final String KEBAB_CASE = "-";
   public static final String SNAKE_CASE = "_";

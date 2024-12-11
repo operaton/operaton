@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
 
 public class SetJobRetriesByProcessAsyncBuilderImpl implements SetJobRetriesByProcessAsyncBuilder {
 
-  protected final static CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
+  protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected final CommandExecutor commandExecutor;
 

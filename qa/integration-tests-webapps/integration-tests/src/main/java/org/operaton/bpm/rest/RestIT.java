@@ -58,7 +58,7 @@ public class RestIT extends AbstractWebIntegrationTest {
   private static final String SCHEMA_LOG_PATH = ENGINE_DEFAULT_PATH + "/schema/log";
 
 
-  private final static Logger log = Logger.getLogger(RestIT.class.getName());
+  private static final Logger log = Logger.getLogger(RestIT.class.getName());
 
   @Before
   public void createClient() throws Exception {

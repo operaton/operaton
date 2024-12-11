@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 
 public class CustomJacksonDateFormatListener implements ServletContextListener {
 
-  public final static String CONTEXT_PARAM_NAME = "org.operaton.bpm.engine.rest.jackson.dateFormat";
+  public static final String CONTEXT_PARAM_NAME = "org.operaton.bpm.engine.rest.jackson.dateFormat";
 
   public void contextInitialized(ServletContextEvent sce) {
     String dateFormat = sce.getServletContext().getInitParameter(CONTEXT_PARAM_NAME);

@@ -28,7 +28,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class RegisterNewProcessEngineTest {
+class RegisterNewProcessEngineTest {
 
   private static ProcessEngine testEngine = ((ProcessEngineConfigurationImpl)ProcessEngineConfiguration
       .createStandaloneInMemProcessEngineConfiguration())
@@ -45,13 +45,13 @@ public class RegisterNewProcessEngineTest {
       .build();
 
   @AfterAll
-  public static void closeProcessEngine() {
+  static void closeProcessEngine() {
     testEngine.close();
   }
 
   @Test
   @Deployment(resources = "processes/subProcess.bpmn")
-  public void testUseProcessEngine() {
+  void testUseProcessEngine() {
     // given
     RuntimeService runtimeService = testEngine.getRuntimeService();
     runtimeService.startProcessInstanceByKey("subProcess");
@@ -65,7 +65,7 @@ public class RegisterNewProcessEngineTest {
   }
 
   @Test
-  public void shouldUpdateServiceReferences() {
+  void shouldUpdateServiceReferences() {
 
     assertThat(extension.getRuntimeService()).isEqualTo(testEngine.getRuntimeService());
   }

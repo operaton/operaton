@@ -20,10 +20,10 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-public class ProcessEngineExtensionDeploymentIdAccess {
+class ProcessEngineExtensionDeploymentIdAccess {
 
   @Test
-  public void testDeploymentIdWriteableForExtensions() {
+  void testDeploymentIdWriteableForExtensions() {
 
     class ProcessEngineExtensionExtension extends ProcessEngineExtension {
 
@@ -41,7 +41,7 @@ public class ProcessEngineExtensionDeploymentIdAccess {
 
 
   @Test
-  public void testDeploymentIdReadableForExtensionsAndWrappers() {
+  void testDeploymentIdReadableForExtensionsAndWrappers() {
 
     class ProcessEngineExtensionExtension extends ProcessEngineExtension {
 

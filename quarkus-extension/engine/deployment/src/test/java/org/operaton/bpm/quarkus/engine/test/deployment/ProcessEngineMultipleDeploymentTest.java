@@ -85,7 +85,7 @@ public class ProcessEngineMultipleDeploymentTest {
   public ProcessEngine processEngine;
 
   @Test
-  public void shouldHaveDeployedResources() {
+  void shouldHaveDeployedResources() {
     // given
     RepositoryService repositoryService = processEngine.getRepositoryService();
 

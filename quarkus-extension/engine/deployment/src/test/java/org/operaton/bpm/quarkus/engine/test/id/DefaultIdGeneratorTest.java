@@ -46,7 +46,7 @@ public class DefaultIdGeneratorTest {
   protected ProcessEngine processEngine;
 
   @Test
-  public void shouldConfigureStrongIdGenerator() {
+  void shouldConfigureStrongIdGenerator() {
     Task task = taskService.newTask();
     taskService.saveTask(task);
 

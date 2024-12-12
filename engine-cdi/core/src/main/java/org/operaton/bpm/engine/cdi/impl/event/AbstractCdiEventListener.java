@@ -91,7 +91,7 @@ public abstract class AbstractCdiEventListener implements TaskListener, Executio
   }
 
   protected BusinessProcessEvent createEvent(DelegateExecution execution) {
-    ProcessDefinition processDefinition = Context.getExecutionContext().getProcessDefinition();
+    ProcessDefinition processDefinition = Context.getBpmnExecutionContext().getProcessDefinition();
 
     // map type
     String eventName = execution.getEventName();
@@ -108,7 +108,7 @@ public abstract class AbstractCdiEventListener implements TaskListener, Executio
   }
 
   protected BusinessProcessEvent createEvent(DelegateTask task) {
-    ExecutionContext executionContext = Context.getExecutionContext();
+    ExecutionContext executionContext = Context.getBpmnExecutionContext();
     ProcessDefinitionEntity processDefinition = null;
     if (executionContext != null) {
       processDefinition = executionContext.getProcessDefinition();

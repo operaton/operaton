@@ -25,12 +25,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class ProcessEngineExtensionParentClassResourceDeploymentTest extends ProcessEngineExtensionParentClass {
+class ProcessEngineExtensionParentClassResourceDeploymentTest extends ProcessEngineExtensionParentClass {
   
   ProcessEngine processEngine;
 
   @Test
-  public void testSuperClassResourcesDeployment() {
+  void testSuperClassResourcesDeployment() {
     List<ProcessDefinition> processDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().list();
     Assertions.assertThat(processDefinitions).hasSize(2);
   }

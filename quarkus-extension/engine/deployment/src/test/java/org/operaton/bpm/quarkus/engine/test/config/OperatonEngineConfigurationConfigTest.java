@@ -29,7 +29,7 @@ import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OperatonEngineConfigurationConfigTest {
+class OperatonEngineConfigurationConfigTest {
 
   @RegisterExtension
   static final QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -44,7 +44,7 @@ public class OperatonEngineConfigurationConfigTest {
   ProcessEngine processEngine;
 
   @Test
-  public void shouldLoadProcessEngineConfigurationProperties() {
+  void shouldLoadProcessEngineConfigurationProperties() {
     // given a custom application.properties file
 
     // then
@@ -54,7 +54,7 @@ public class OperatonEngineConfigurationConfigTest {
   }
 
   @Test
-  public void shouldApplyProcessEngineConfigurationProperties() {
+  void shouldApplyProcessEngineConfigurationProperties() {
     // given
     // a ProcessEngineConfiguration instance
     QuarkusProcessEngineConfiguration configuration

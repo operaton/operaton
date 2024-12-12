@@ -25,20 +25,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(ProcessEngineExtension.class)
-public class ProcessEngineExtensionRequiredDatabaseTest {
+class ProcessEngineExtensionRequiredDatabaseTest {
 
   ProcessEngine engine;
 
   @Test
   @RequiredDatabase(includes = DbSqlSessionFactory.H2)
-  public void shouldRequireH2() {
+  void shouldRequireH2() {
 
     assertThat(engine.getProcessEngineConfiguration().getDatabaseType()).isEqualTo(DbSqlSessionFactory.H2);
   }
 
   @Test
   @RequiredDatabase(excludes = DbSqlSessionFactory.H2)
-  public void shouldRequireAnyDbButH2() {
+  void shouldRequireAnyDbButH2() {
 
     assertThat(engine.getProcessEngineConfiguration().getDatabaseType()).isNotEqualTo(DbSqlSessionFactory.H2);
     assertThat(engine.getProcessEngineConfiguration().getDatabaseType()).isIn((Object) DbSqlSessionFactory.SUPPORTED_DATABASES);

@@ -57,7 +57,7 @@ import java.sql.Statement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-public class TransactionIntegrationTest {
+class TransactionIntegrationTest {
 
   @RegisterExtension
   static QuarkusUnitTest unitTest = new ProcessEngineAwareExtension()
@@ -84,7 +84,7 @@ public class TransactionIntegrationTest {
   protected ProcessEngineConfigurationImpl configuration;
 
   @BeforeEach
-  public void assignConfig() {
+  void assignConfig() {
     configuration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
   }
 
@@ -94,7 +94,7 @@ public class TransactionIntegrationTest {
    */
   @Test
   @Deployment
-  public void shouldSucceed() {
+  void shouldSucceed() {
     userBean.hello();
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
@@ -107,7 +107,7 @@ public class TransactionIntegrationTest {
    */
   @Test
   @Deployment
-  public void shouldRollbackOnException() {
+  void shouldRollbackOnException() {
     // given
     try {
       try (Connection connection = dataSource.getConnection()) {
@@ -157,12 +157,12 @@ public class TransactionIntegrationTest {
     }
   }
 
-  @Deployment(resources={
-      "org/operaton/bpm/quarkus/engine/test/persistence/TransactionIntegrationTest.shouldPropagateErrorOnException.bpmn20.xml",
-      "org/operaton/bpm/quarkus/engine/test/persistence/TransactionIntegrationTest.shouldThrowException.bpmn20.xml"
+  @Deployment(resources = {
+    "org/operaton/bpm/quarkus/engine/test/persistence/TransactionIntegrationTest.shouldPropagateErrorOnException.bpmn20.xml",
+    "org/operaton/bpm/quarkus/engine/test/persistence/TransactionIntegrationTest.shouldThrowException.bpmn20.xml"
   })
   @Test
-  public void shouldPropagateErrorOnException() {
+  void shouldPropagateErrorOnException() {
     // given
     runtimeService.startProcessInstanceByKey("process");
 
@@ -176,7 +176,7 @@ public class TransactionIntegrationTest {
 
   @Deployment
   @Test
-  public void shouldRollbackInServiceTask() {
+  void shouldRollbackInServiceTask() {
     // given
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
@@ -195,7 +195,7 @@ public class TransactionIntegrationTest {
 
   @Deployment
   @Test
-  public void shouldRollbackInServiceTaskWithCustomRetryCycle() {
+  void shouldRollbackInServiceTaskWithCustomRetryCycle() {
     // given
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 
@@ -214,7 +214,7 @@ public class TransactionIntegrationTest {
 
   @Deployment
   @Test
-  public void shouldRollbackOnExceptionInTransactionListener() {
+  void shouldRollbackOnExceptionInTransactionListener() {
     // given
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 

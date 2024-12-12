@@ -28,22 +28,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(ProcessEngineExtension.class)
 @Deployment(resources = {"processes/superProcess.bpmn", "processes/subProcess.bpmn"})
-public class ProcessEngineExtensionResourcesDeploymentTest {
+class ProcessEngineExtensionResourcesDeploymentTest {
 
   ProcessEngine processEngine;
 
   @Test
   @Deployment(resources = {
-      "processes/superProcess.bpmn",
-      "processes/subProcess.bpmn"
-      })
-  public void testDeployTwoDiagrams() {
+    "processes/superProcess.bpmn",
+    "processes/subProcess.bpmn"
+  })
+  void testDeployTwoDiagrams() {
     List<ProcessDefinition> processDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().list();
     Assertions.assertThat(processDefinitions).hasSize(2);
   }
 
   @Test
-  public void testDeployTwoDiagramsFromClassLevel() {
+  void testDeployTwoDiagramsFromClassLevel() {
     List<ProcessDefinition> processDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().list();
     Assertions.assertThat(processDefinitions).hasSize(2);
   }

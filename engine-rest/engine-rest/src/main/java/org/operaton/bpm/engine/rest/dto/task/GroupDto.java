@@ -20,8 +20,8 @@ package org.operaton.bpm.engine.rest.dto.task;
  * @author: drobisch
  */
 public class GroupDto {
-  private String id;
-  private String name;
+  private final String id;
+  private final String name;
 
   public GroupDto(String id, String name) {
     this.id = id;

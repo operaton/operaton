@@ -25,7 +25,7 @@ import org.hamcrest.Description;
 
 public class EqualsList extends BaseMatcher<List<String>> {
 
-  private List<String> listToCompare;
+  private final List<String> listToCompare;
 
   public EqualsList(List<String> listToCompare) {
     this.listToCompare = listToCompare;

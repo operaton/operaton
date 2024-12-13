@@ -57,7 +57,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
   private static final long serialVersionUID = 1L;
 
   private final String jobId;
-  private boolean creationDateBased;
+  private final boolean creationDateBased;
 
   public RecalculateJobDuedateCmd(String jobId, boolean creationDateBased) {
     ensureNotEmpty("The job id is mandatory", "jobId", jobId);

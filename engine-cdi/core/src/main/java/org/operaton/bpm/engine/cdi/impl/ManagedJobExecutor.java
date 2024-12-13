@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
  */
 public class ManagedJobExecutor extends JobExecutor {
 
-  private ManagedExecutorService managedExecutorService;
+  private final ManagedExecutorService managedExecutorService;
 
   /**
    * Constructs a new ManagedJobExecutor with the provided

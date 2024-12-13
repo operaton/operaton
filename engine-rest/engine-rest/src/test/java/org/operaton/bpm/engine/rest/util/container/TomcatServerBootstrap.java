@@ -39,7 +39,7 @@ public abstract class TomcatServerBootstrap extends AbstractServerBootstrap {
 
   private Tomcat tomcat;
   private String workingDir;
-  private String webXmlPath;
+  private final String webXmlPath;
 
   public TomcatServerBootstrap(String webXmlPath) {
     this.webXmlPath = webXmlPath;

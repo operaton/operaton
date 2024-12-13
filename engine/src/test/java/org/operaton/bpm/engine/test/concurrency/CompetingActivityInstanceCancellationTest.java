@@ -43,7 +43,7 @@ import org.slf4j.Logger;
  */
 public class CompetingActivityInstanceCancellationTest {
 
-  private static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   @ClassRule
   public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule();

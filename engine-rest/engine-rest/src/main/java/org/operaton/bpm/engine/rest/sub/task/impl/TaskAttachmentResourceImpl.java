@@ -43,9 +43,9 @@ import org.operaton.bpm.engine.task.Attachment;
 
 public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
 
-  private ProcessEngine engine;
-  private String taskId;
-  private String rootResourcePath;
+  private final ProcessEngine engine;
+  private final String taskId;
+  private final String rootResourcePath;
 
   public TaskAttachmentResourceImpl(ProcessEngine engine, String taskId, String rootResourcePath) {
     this.engine = engine;

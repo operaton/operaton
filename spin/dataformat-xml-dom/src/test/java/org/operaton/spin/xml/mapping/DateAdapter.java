@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 public class DateAdapter extends XmlAdapter<String, Date> {
 
-  private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+  private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
   @Override
   public Date unmarshal(String v) throws Exception {

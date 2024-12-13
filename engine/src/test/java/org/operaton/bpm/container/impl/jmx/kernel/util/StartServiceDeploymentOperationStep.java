@@ -22,8 +22,8 @@ import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 
 public class StartServiceDeploymentOperationStep extends DeploymentOperationStep {
 
-  private TestService service;
-  private String serviceName;
+  private final TestService service;
+  private final String serviceName;
 
   public StartServiceDeploymentOperationStep(String serviceName, TestService service) {
     this.serviceName = serviceName;

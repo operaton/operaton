@@ -38,7 +38,7 @@ public class SetJobDuedateCmd implements Command<Void>, Serializable {
   private static final long serialVersionUID = 1L;
 
   private final String jobId;
-  private Date newDuedate;
+  private final Date newDuedate;
   private final boolean cascade;
 
   public SetJobDuedateCmd(String jobId, Date newDuedate, boolean cascade) {

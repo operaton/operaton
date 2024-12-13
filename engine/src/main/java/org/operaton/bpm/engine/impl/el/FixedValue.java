@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
  */
 public class FixedValue implements Expression {
 
-  private Object value;
+  private final Object value;
 
   public FixedValue(Object value) {
     this.value = value;

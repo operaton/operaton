@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class Mocks {
 
-  private static ThreadLocal<Map<String, Object>> mockContainer = new ThreadLocal<Map<String, Object>>();
+  private static final ThreadLocal<Map<String, Object>> mockContainer = new ThreadLocal<Map<String, Object>>();
 
   public static Map<String, Object> getMocks() {
     Map<String, Object> mocks = mockContainer.get();

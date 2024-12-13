@@ -79,7 +79,7 @@ import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 public class IdentityServiceImpl extends ServiceImpl implements IdentityService {
 
   /** thread local holding the current authentication */
-  private ThreadLocal<Authentication> currentAuthentication = new ThreadLocal<Authentication>();
+  private final ThreadLocal<Authentication> currentAuthentication = new ThreadLocal<Authentication>();
 
   public boolean isReadOnly() {
     return commandExecutor.execute(new IsIdentityServiceReadOnlyCmd());

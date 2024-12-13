@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.variable.type.SerializableValueType;
  */
 public class VariablesBuilder {
 
-  private Map<String, Object> variables;
+  private final Map<String, Object> variables;
 
   private VariablesBuilder() {
     variables = new HashMap<String, Object>();

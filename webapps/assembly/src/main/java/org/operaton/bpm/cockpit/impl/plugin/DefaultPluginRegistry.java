@@ -29,7 +29,7 @@ import org.operaton.bpm.webapp.plugin.AppPluginRegistry;
  */
 public class DefaultPluginRegistry implements PluginRegistry {
 
-  private AppPluginRegistry<CockpitPlugin> wrappedRegistry;
+  private final AppPluginRegistry<CockpitPlugin> wrappedRegistry;
 
   public DefaultPluginRegistry(AppPluginRegistry<CockpitPlugin> wrappedRegistry) {
     this.wrappedRegistry = wrappedRegistry;

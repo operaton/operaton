@@ -36,8 +36,8 @@ import org.operaton.bpm.engine.runtime.Job;
 
 public class JobResourceImpl implements JobResource {
 
-  private ProcessEngine engine;
-  private String jobId;
+  private final ProcessEngine engine;
+  private final String jobId;
 
   public JobResourceImpl(ProcessEngine engine, String jobId) {
     this.engine = engine;

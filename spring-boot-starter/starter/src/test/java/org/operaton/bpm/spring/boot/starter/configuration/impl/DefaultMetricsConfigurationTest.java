@@ -26,9 +26,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DefaultMetricsConfigurationTest {
-  private DefaultMetricsConfiguration defaultMetricsConfiguration = new DefaultMetricsConfiguration();
-  private OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
-  private SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
+  private final DefaultMetricsConfiguration defaultMetricsConfiguration = new DefaultMetricsConfiguration();
+  private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
+  private final SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
 
   @Before
   public void setUp() {

@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.task.Task;
  */
 public class DefaultBusinessCalendar implements BusinessCalendar {
 
-  private static Map<String, Integer> units = new HashMap<>();
+  private static final Map<String, Integer> units = new HashMap<>();
   static {
     units.put("millis", Calendar.MILLISECOND);
     units.put("seconds", Calendar.SECOND);

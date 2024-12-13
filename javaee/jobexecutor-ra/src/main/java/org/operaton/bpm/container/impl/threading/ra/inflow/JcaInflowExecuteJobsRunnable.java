@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobFailureCollector;
  */
 public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
 
-  private Logger log = Logger.getLogger(JcaInflowExecuteJobsRunnable.class.getName());
+  private final Logger log = Logger.getLogger(JcaInflowExecuteJobsRunnable.class.getName());
 
   protected final JcaExecutorServiceConnector ra;
 

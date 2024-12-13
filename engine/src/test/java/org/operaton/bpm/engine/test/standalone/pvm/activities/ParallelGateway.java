@@ -30,7 +30,7 @@ import org.slf4j.Logger;
  */
 public class ParallelGateway implements ActivityBehavior {
 
-private static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   public void execute(ActivityExecution execution) {
     PvmActivity activity = execution.getActivity();

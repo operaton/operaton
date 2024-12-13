@@ -23,8 +23,8 @@ import java.util.logging.Logger;
  * @author Tom Baeyens
  */
 public class ControllableThread extends Thread {
-  
-  private static Logger log = Logger.getLogger(ControllableThread.class.getName());
+
+  private static final Logger log = Logger.getLogger(ControllableThread.class.getName());
 
   public ControllableThread() {
     String className = getClass().getName();

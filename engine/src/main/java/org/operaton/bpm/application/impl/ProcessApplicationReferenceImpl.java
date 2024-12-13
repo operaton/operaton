@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public class ProcessApplicationReferenceImpl implements ProcessApplicationReference {
 
-  private static ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   /** the weak reference to the process application */
   protected WeakReference<AbstractProcessApplication> processApplication;

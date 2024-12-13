@@ -50,7 +50,7 @@ public class HistoryCleanupCmd implements Command<Job> {
 
   public static final int MAX_THREADS_NUMBER = 8;
 
-  private boolean immediatelyDue;
+  private final boolean immediatelyDue;
 
   public HistoryCleanupCmd(boolean immediatelyDue) {
     this.immediatelyDue = immediatelyDue;

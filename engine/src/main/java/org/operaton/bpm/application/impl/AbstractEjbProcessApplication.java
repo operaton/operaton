@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
 
 public abstract class AbstractEjbProcessApplication extends AbstractProcessApplication {
 
-  private static ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   protected static String MODULE_NAME_PATH  = "java:module/ModuleName";
   protected static String JAVA_APP_APP_NAME_PATH = "java:app/AppName";

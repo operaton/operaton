@@ -22,7 +22,7 @@ import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 
 public class StopServiceDeploymentOperationStep extends DeploymentOperationStep {
 
-  private String serviceName;
+  private final String serviceName;
 
   public StopServiceDeploymentOperationStep(String serviceName) {
     this.serviceName = serviceName;

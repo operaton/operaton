@@ -52,8 +52,8 @@ public enum UserOperationLogCategoryPermissions implements Permission {
 
   private static final Resource[] RESOURCES = new Resource[] { Resources.OPERATION_LOG_CATEGORY };
 
-  private String name;
-  private int id;
+  private final String name;
+  private final int id;
 
   private UserOperationLogCategoryPermissions(String name, int id) {
     this.name = name;

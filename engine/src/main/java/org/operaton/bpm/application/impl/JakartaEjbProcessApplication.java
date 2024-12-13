@@ -97,7 +97,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  */
 public class JakartaEjbProcessApplication extends AbstractEjbProcessApplication {
 
-  private static ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
   private JakartaEjbProcessApplicationReference ejbProcessApplicationReference;
 
   @Override

@@ -103,9 +103,9 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   private String processTaskId;
 
   // normalize timestamps for databases which do not provide millisecond presision.
-  private Date today = new Date((ClockUtil.getCurrentTime().getTime() / 1000) * 1000);
-  private Date tomorrow = new Date(((ClockUtil.getCurrentTime().getTime() + 86400000) / 1000) * 1000);
-  private Date yesterday = new Date(((ClockUtil.getCurrentTime().getTime() - 86400000) / 1000) * 1000);
+  private final Date today = new Date((ClockUtil.getCurrentTime().getTime() / 1000) * 1000);
+  private final Date tomorrow = new Date(((ClockUtil.getCurrentTime().getTime() + 86400000) / 1000) * 1000);
+  private final Date yesterday = new Date(((ClockUtil.getCurrentTime().getTime() - 86400000) / 1000) * 1000);
 
   @After
   public void tearDown() throws Exception {

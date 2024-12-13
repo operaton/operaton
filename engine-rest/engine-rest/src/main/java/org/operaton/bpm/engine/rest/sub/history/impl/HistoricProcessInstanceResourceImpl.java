@@ -29,8 +29,8 @@ import org.operaton.bpm.engine.rest.sub.history.HistoricProcessInstanceResource;
 
 public class HistoricProcessInstanceResourceImpl implements HistoricProcessInstanceResource {
 
-  private ProcessEngine engine;
-  private String processInstanceId;
+  private final ProcessEngine engine;
+  private final String processInstanceId;
 
   public HistoricProcessInstanceResourceImpl(ProcessEngine engine, String processInstanceId) {
     this.engine = engine;

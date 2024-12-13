@@ -28,7 +28,7 @@ public abstract class AbstractRestProcessEngineAware {
    * private to enforce the use of getProcessEngine in subclasses
    * for consistent error handling for unknown process engines
    */
-  private ProcessEngine processEngine;
+  private final ProcessEngine processEngine;
 
   protected ObjectMapper objectMapper;
 

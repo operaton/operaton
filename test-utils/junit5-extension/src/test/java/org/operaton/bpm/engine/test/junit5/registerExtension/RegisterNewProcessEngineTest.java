@@ -30,14 +30,14 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 class RegisterNewProcessEngineTest {
 
-  private static ProcessEngine testEngine = ((ProcessEngineConfigurationImpl)ProcessEngineConfiguration
-      .createStandaloneInMemProcessEngineConfiguration())
-      .setEnforceHistoryTimeToLive(false)
-      .setProcessEngineName("testEngine")
-      // Use a new database to resolve the conflict with existing
-      // in-memory-database. The tables will be removed after the test.
-      .setJdbcUrl("jdbc:h2:mem:operaton-test")
-      .buildProcessEngine();
+  private static final ProcessEngine testEngine = ((ProcessEngineConfigurationImpl) ProcessEngineConfiguration
+    .createStandaloneInMemProcessEngineConfiguration())
+    .setEnforceHistoryTimeToLive(false)
+    .setProcessEngineName("testEngine")
+    // Use a new database to resolve the conflict with existing
+    // in-memory-database. The tables will be removed after the test.
+    .setJdbcUrl("jdbc:h2:mem:operaton-test")
+    .buildProcessEngine();
 
   @RegisterExtension
   ProcessEngineExtension extension = ProcessEngineExtension.builder()

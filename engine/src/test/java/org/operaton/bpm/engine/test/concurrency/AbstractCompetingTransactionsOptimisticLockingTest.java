@@ -45,7 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public abstract class AbstractCompetingTransactionsOptimisticLockingTest {
 
-  private static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
   protected RuntimeService runtimeService;

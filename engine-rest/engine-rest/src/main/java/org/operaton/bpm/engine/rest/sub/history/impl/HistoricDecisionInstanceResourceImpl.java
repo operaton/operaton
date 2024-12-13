@@ -28,8 +28,8 @@ import org.operaton.bpm.engine.rest.sub.history.HistoricDecisionInstanceResource
 
 public class HistoricDecisionInstanceResourceImpl implements HistoricDecisionInstanceResource {
 
-  private ProcessEngine engine;
-  private String decisionInstanceId;
+  private final ProcessEngine engine;
+  private final String decisionInstanceId;
 
   public HistoricDecisionInstanceResourceImpl(ProcessEngine engine, String decisionInstanceId) {
     this.engine = engine;

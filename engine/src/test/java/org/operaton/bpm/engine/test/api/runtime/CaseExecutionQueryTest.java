@@ -51,8 +51,8 @@ import org.junit.Test;
  */
 public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
-  private static String CASE_DEFINITION_KEY = "oneTaskCase";
-  private static String CASE_DEFINITION_KEY_2 = "twoTaskCase";
+  private static final String CASE_DEFINITION_KEY = "oneTaskCase";
+  private static final String CASE_DEFINITION_KEY_2 = "twoTaskCase";
 
   /**
    * Setup starts 4 case instances of oneTaskCase

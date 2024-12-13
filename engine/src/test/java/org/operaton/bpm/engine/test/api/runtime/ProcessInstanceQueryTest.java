@@ -75,8 +75,8 @@ public class ProcessInstanceQueryTest {
   @Rule
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testHelper);
 
-  private static String PROCESS_DEFINITION_KEY = "oneTaskProcess";
-  private static String PROCESS_DEFINITION_KEY_2 = "otherOneTaskProcess";
+  private static final String PROCESS_DEFINITION_KEY = "oneTaskProcess";
+  private static final String PROCESS_DEFINITION_KEY_2 = "otherOneTaskProcess";
 
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;

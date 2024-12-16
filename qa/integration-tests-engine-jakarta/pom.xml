@@ -22,6 +22,7 @@
     <redirect.test.output>true</redirect.test.output>
 
     <weld.version>5.1.0.Final</weld.version>
+    <install.skip>true</install.skip>
   </properties>
 
   <!-- import shrinkwrap and arquillian bom for artifact versions,
@@ -291,18 +292,6 @@
   </dependencies>
 
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

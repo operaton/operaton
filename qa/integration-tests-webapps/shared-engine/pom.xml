@@ -10,6 +10,10 @@
     <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <install.skip>true</install.skip>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm.qa</groupId>
@@ -650,13 +654,6 @@
                 </pluginExecution>
               </pluginExecutions>
             </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
           </configuration>
         </plugin>
       </plugins>

@@ -12,6 +12,10 @@
   <name>Operaton - Run - QA - Integration Tests</name>
   <packaging>jar</packaging>
 
+  <properties>
+    <install.skip>true</install.skip>
+  </properties>
+
   <dependencies>
 
     <dependency>

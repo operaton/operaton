@@ -309,17 +309,13 @@
           any modules that have a dependency to the webapps. See also the referenced POMs,
           they usually define which modules are covered by the distro profile -->
         <module>spring-boot-starter</module>
-
         <module>quarkus-extension</module>
-
         <module>qa</module>
-
         <module>javaee/ejb-service</module>
         <module>javaee/ejb-client</module>
         <module>javaee/ejb-client-jakarta</module>
         <module>javaee/jobexecutor-ra</module>
         <module>javaee/jobexecutor-rar</module>
-
         <module>model-api</module>
         <module>engine-dmn</module>
         <module>connect</module>
@@ -327,32 +323,23 @@
         <module>spin</module>
         <module>commons</module>
         <module>freemarker-template-engine</module>
-
         <module>test-utils/testcontainers</module>
         <module>test-utils/junit5-extension</module>
         <module>test-utils/junit5-extension-dmn</module>
         <module>test-utils/assert</module>
         <module>test-utils/archunit</module>
-
         <module>engine</module>
         <module>engine-cdi</module>
         <module>engine-spring</module>
         <module>engine-rest</module>
-
         <module>webapps</module>
-
         <module>examples</module>
-
         <module>engine-plugins</module>
-
         <module>distro/license-book</module>
         <module>distro/jboss</module>
         <module>distro/tomcat</module>
         <module>distro/sql-script</module>
-        <!-- module>distro/run</module -->
-
         <module>clients/java</module>
-
         <module>internal-dependencies</module>
         <module>database</module>
         <module>parent</module>
@@ -426,7 +413,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <!-- module>distro/run</module -->
+        <module>distro/run</module>
       </modules>
     </profile>
 
@@ -635,20 +622,4 @@
     <system>GitHub</system>
     <url>https://github.com/operaton/operaton/issues/</url>
   </issueManagement>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.9</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>dependency-convergence</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-    </plugins>
-  </reporting>
 </project>

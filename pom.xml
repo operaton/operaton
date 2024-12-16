@@ -14,6 +14,7 @@
   </description>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
 
     <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
@@ -621,5 +622,4 @@
     <system>GitHub</system>
     <url>https://github.com/operaton/operaton/issues/</url>
   </issueManagement>
-
 </project>

@@ -147,8 +147,7 @@
               <systemPropertyVariables>
                 <operaton.run.home>${run-home}</operaton.run.home>
                 <example.plugin.home>${example-plugin-home}</example.plugin.home>
-                <selenium.screenshot.directory>${project.build.directory}/selenium-screenshots
-                </selenium.screenshot.directory>
+                <selenium.screenshot.directory>${project.build.directory}/selenium-screenshots</selenium.screenshot.directory>
               </systemPropertyVariables>
             </configuration>
             <executions>
@@ -209,8 +208,7 @@
                   <goal>wget</goal>
                 </goals>
                 <configuration>
-                  <url>https://chromedriver.storage.googleapis.com/${version.chromedriver}/chromedriver_${os.type}.zip
-                  </url>
+                  <url>https://chromedriver.storage.googleapis.com/${version.chromedriver}/chromedriver_${os.type}.zip</url>
                   <outputFileName>chromedriver.zip</outputFileName>
                   <unpack>true</unpack>
                   <outputDirectory>${project.build.directory}/chromedriver</outputDirectory>
@@ -244,18 +242,6 @@
       </properties>
     </profile>
   </profiles>
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+
   <description>${project.name}</description>
 </project>

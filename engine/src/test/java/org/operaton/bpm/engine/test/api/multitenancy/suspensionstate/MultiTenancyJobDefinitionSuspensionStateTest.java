@@ -66,7 +66,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -561,7 +561,7 @@ public class MultiTenancyJobDefinitionSuspensionStateTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
       public Object execute(CommandContext commandContext) {

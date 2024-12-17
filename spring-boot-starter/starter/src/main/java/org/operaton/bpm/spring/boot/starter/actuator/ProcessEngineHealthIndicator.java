@@ -31,7 +31,7 @@ public class ProcessEngineHealthIndicator extends AbstractHealthIndicator {
   }
 
   @Override
-  protected void doHealthCheck(Builder builder) throws Exception {
+  protected void doHealthCheck(Builder builder) {
     builder.up().withDetail("name", processEngine.getName());
   }
 

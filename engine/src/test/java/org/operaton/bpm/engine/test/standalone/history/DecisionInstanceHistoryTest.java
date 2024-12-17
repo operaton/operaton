@@ -54,7 +54,7 @@ public class DecisionInstanceHistoryTest {
   protected DecisionService decisionService;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     repositoryService = engineRule.getRepositoryService();
     decisionService = engineRule.getDecisionService();
@@ -68,7 +68,7 @@ public class DecisionInstanceHistoryTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         processEngineConfiguration.getDmnEngineConfiguration();
 

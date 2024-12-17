@@ -178,7 +178,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void testBatchWindowXmlConfigParsingException() throws ParseException {
+  public void testBatchWindowXmlConfigParsingException() {
     // when/then
     assertThatThrownBy(() -> ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/history/history-cleanup-batch-window-map-wrong-values.operaton.cfg.xml")
@@ -227,7 +227,7 @@ public class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  public void testHistoryCleanupJobScheduled() throws ParseException {
+  public void testHistoryCleanupJobScheduled() {
 
     final ProcessEngineConfigurationImpl standaloneInMemProcessEngineConfiguration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
     standaloneInMemProcessEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");

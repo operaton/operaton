@@ -38,7 +38,7 @@ import org.junit.Test;
 public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     AssertingJavaDelegate.clear();
 
   }

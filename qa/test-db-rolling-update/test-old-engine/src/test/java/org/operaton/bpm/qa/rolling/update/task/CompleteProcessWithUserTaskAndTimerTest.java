@@ -36,7 +36,7 @@ public class CompleteProcessWithUserTaskAndTimerTest extends AbstractRollingUpda
 
   @Test
   @ScenarioUnderTest("init.1")
-  public void testCompleteProcessWithUserTaskAndTimer() throws InterruptedException {
+  public void testCompleteProcessWithUserTaskAndTimer() {
     //given a process instance with user task and timer boundary event
     Job job = rule.jobQuery().singleResult();
     Assert.assertNotNull(job);

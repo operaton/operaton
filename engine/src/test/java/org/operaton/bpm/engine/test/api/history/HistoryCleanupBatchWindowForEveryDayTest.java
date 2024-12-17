@@ -150,7 +150,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
   }
 
   @Test
-  public void testScheduleJobForBatchWindow() throws ParseException {
+  public void testScheduleJobForBatchWindow() {
     ClockUtil.setCurrentTime(currentDate);
 
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(startTime);

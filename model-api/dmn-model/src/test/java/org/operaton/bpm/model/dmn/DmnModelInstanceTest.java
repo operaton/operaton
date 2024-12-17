@@ -28,7 +28,7 @@ import org.operaton.bpm.model.dmn.instance.Definitions;
 class DmnModelInstanceTest {
 
   @Test
-  void testClone() throws Exception {
+  void testClone() {
 
     DmnModelInstance modelInstance = Dmn.createEmptyModel();
 

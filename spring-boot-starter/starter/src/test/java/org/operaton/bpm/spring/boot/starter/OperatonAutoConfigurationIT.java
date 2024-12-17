@@ -54,7 +54,7 @@ public class OperatonAutoConfigurationIT extends AbstractOperatonAutoConfigurati
   }
 
   @Test
-  public void adminUserCreatedWithDefaultPassword() throws Exception {
+  public void adminUserCreatedWithDefaultPassword() {
     assertThat(identityService.checkPassword("admin", "admin")).isTrue();
   }
 }

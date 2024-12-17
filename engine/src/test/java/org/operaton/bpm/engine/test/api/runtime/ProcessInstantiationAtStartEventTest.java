@@ -35,7 +35,7 @@ public class ProcessInstantiationAtStartEventTest extends PluggableProcessEngine
   protected static final String PROCESS_DEFINITION_KEY = "testProcess";
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
    testRule.deploy(Bpmn.createExecutableProcess(PROCESS_DEFINITION_KEY)
         .startEvent()
         .userTask()

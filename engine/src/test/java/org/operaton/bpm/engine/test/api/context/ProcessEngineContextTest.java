@@ -57,7 +57,7 @@ public class ProcessEngineContextTest {
   }
 
   @Test
-  public void shouldUseFreshCacheOnNewCommandContext() throws Exception {
+  public void shouldUseFreshCacheOnNewCommandContext() {
     /* The test ensures that when `ProcessEngineContext#requiresNew()` is called,
     a fresh cache is used for the new command, and no cached data of the outer command
     cache is available (i.e. only persisted data is available).

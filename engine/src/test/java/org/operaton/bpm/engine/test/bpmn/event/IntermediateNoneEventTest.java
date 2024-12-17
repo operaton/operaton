@@ -38,7 +38,7 @@ public class IntermediateNoneEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testIntermediateNoneTimerEvent() throws Exception {    
+  public void testIntermediateNoneTimerEvent() {    
     assertFalse(listenerExcecuted);    
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("intermediateNoneEventExample");
     testRule.assertProcessEnded(pi.getProcessInstanceId());

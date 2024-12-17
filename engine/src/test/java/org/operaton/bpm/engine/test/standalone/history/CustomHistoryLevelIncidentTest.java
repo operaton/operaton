@@ -121,7 +121,7 @@ public class CustomHistoryLevelIncidentTest {
     .done();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     runtimeService = engineRule.getRuntimeService();
     historyService = engineRule.getHistoryService();
     managementService = engineRule.getManagementService();
@@ -134,7 +134,7 @@ public class CustomHistoryLevelIncidentTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     customHistoryLevelIncident.setEventTypes(null);
     if (deployment != null) {
       repositoryService.deleteDeployment(deployment.getId(), true);

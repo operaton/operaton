@@ -71,7 +71,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticForRootDecisionEvaluation() throws Exception {
+  public void testStatisticForRootDecisionEvaluation() {
     //when
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21).putValue(DAY_TYPE, WEEKEND))
@@ -95,7 +95,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticForRootDecisionWithInstanceConstraintEvaluation() throws Exception {
+  public void testStatisticForRootDecisionWithInstanceConstraintEvaluation() {
     //when
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21).putValue(DAY_TYPE, WEEKEND))
@@ -129,7 +129,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticForRootDecisionWithFakeInstanceConstraintEvaluation() throws Exception {
+  public void testStatisticForRootDecisionWithFakeInstanceConstraintEvaluation() {
     //when
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21).putValue(DAY_TYPE, WEEKEND))
@@ -150,7 +150,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticForRootDecisionWithNullInstanceConstraintEvaluation() throws Exception {
+  public void testStatisticForRootDecisionWithNullInstanceConstraintEvaluation() {
     //when
     decisionService.evaluateDecisionTableByKey(DISH_DECISION)
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21).putValue(DAY_TYPE, WEEKEND))
@@ -178,7 +178,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticForChildDecisionEvaluation() throws Exception {
+  public void testStatisticForChildDecisionEvaluation() {
     //when
     decisionService.evaluateDecisionTableByKey("season")
         .variables(Variables.createVariables().putValue(TEMPERATURE, 21))
@@ -198,7 +198,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticConstrainedToOneDRD() throws Exception {
+  public void testStatisticConstrainedToOneDRD() {
     //given
     testRule.deploy(SCORE_DRG_DMN);
 
@@ -228,7 +228,7 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticDoesNotExistForFakeId() throws Exception {
+  public void testStatisticDoesNotExistForFakeId() {
     assertThat(
         historyService.createHistoricDecisionInstanceStatisticsQuery(
             NON_EXISTING).count()).isZero();
@@ -240,21 +240,21 @@ public class HistoricDecisionInstanceStatisticsQueryTest {
   }
 
   @Test
-  public void testStatisticThrowsExceptionOnNullConstraintsCount() throws Exception {
+  public void testStatisticThrowsExceptionOnNullConstraintsCount() {
     // when/then
     assertThatThrownBy(() -> historyService.createHistoricDecisionInstanceStatisticsQuery(null).count())
       .isInstanceOf(NullValueException.class);
   }
 
   @Test
-  public void testStatisticThrowsExceptionOnNullConstraintsList() throws Exception {
+  public void testStatisticThrowsExceptionOnNullConstraintsList() {
     // when/then
     assertThatThrownBy(() -> historyService.createHistoricDecisionInstanceStatisticsQuery(null).list())
       .isInstanceOf(NullValueException.class);
   }
 
   @Test
-  public void testStatisticForNotEvaluatedDRD() throws Exception {
+  public void testStatisticForNotEvaluatedDRD() {
     //when
     DecisionRequirementsDefinition decisionRequirementsDefinition =
         repositoryService.createDecisionRequirementsDefinitionQuery().singleResult();

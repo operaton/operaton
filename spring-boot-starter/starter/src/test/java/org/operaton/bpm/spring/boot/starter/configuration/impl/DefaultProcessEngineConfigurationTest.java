@@ -35,20 +35,20 @@ public class DefaultProcessEngineConfigurationTest {
   private final OperatonBpmProperties properties = new OperatonBpmProperties();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     ReflectionTestUtils.setField(instance, "operatonBpmProperties", properties);
     initIdGenerator(null);
   }
 
   @Test
-  public void setName_if_not_empty() throws Exception {
+  public void setName_if_not_empty() {
     properties.setProcessEngineName("foo");
     instance.preInit(configuration);
     assertThat(configuration.getProcessEngineName()).isEqualTo("foo");
   }
 
   @Test
-  public void setName_ignore_empty() throws Exception {
+  public void setName_ignore_empty() {
     properties.setProcessEngineName(null);
     instance.preInit(configuration);
     assertThat(configuration.getProcessEngineName()).isEqualTo(ProcessEngines.NAME_DEFAULT);
@@ -59,7 +59,7 @@ public class DefaultProcessEngineConfigurationTest {
   }
 
   @Test
-  public void setName_ignore_hyphen() throws Exception {
+  public void setName_ignore_hyphen() {
     properties.setProcessEngineName("foo-bar");
     instance.preInit(configuration);
     assertThat(configuration.getProcessEngineName()).isEqualTo(ProcessEngines.NAME_DEFAULT);

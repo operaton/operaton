@@ -44,7 +44,7 @@ public class ProcessesXmlParserTest {
   private ProcessesXmlParser parser;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     parser = new ProcessesXmlParser();
   }
 

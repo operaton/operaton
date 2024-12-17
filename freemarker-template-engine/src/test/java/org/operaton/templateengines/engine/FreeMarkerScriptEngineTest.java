@@ -82,35 +82,35 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void javaMethodCall() throws ScriptException {
+  void javaMethodCall() {
     bindings.put("greeter", new Greeter());
     expected = "Hello world!";
     template = "${greeter.hello('world')}";
   }
 
   @Test
-  void javaArrays() throws ScriptException {
+  void javaArrays() {
     bindings.put("myarray", new String[]{"hello", "foo", "world", "bar"});
     expected = "4 hello world!";
     template = "${myarray?size} ${myarray[0]} ${myarray[2]}!";
   }
 
   @Test
-  void javaBoolean() throws ScriptException {
+  void javaBoolean() {
     bindings.put("mybool", false);
     expected = "Hello world!";
     template = "<#if mybool>okey<#else>Hello world!</#if>";
   }
 
   @Test
-  void javaInteger() throws ScriptException {
+  void javaInteger() {
     bindings.put("myint", 6);
     expected = "42";
     template = "<#assign myint = myint + 36>${myint}";
   }
 
   @Test
-  void javaCollection() throws ScriptException {
+  void javaCollection() {
     Collection names = Arrays.asList("tweety", "duffy", "tom");
     bindings.put("names", names);
     expected = "tweety, duffy, tom";
@@ -118,7 +118,7 @@ class FreeMarkerScriptEngineTest {
   }
 
   @Test
-  void defineBlock() throws ScriptException {
+  void defineBlock() {
     bindings.put("who", "world");
     expected = "Hello world!";
     template = "<#macro block>Hello ${who}!</#macro><@block/>";

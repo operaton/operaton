@@ -59,7 +59,7 @@ public class AbstractProcessAssertTest {
   }
 
   @Test
-  public void testConstructorPattern() throws Exception {
+  public void testConstructorPattern() {
     while(allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> newInstanceFromExpectedConstructor = newInstanceFromExpectedConstructor();
@@ -68,7 +68,7 @@ public class AbstractProcessAssertTest {
   }
 
   @Test
-  public void testFactoryMethodPattern() throws Exception {
+  public void testFactoryMethodPattern() {
     while(allAsserts.hasNext()) {
       mockActual(allAsserts.next());
       AbstractProcessAssert<?, ?> newInstanceFromExpectedFactoryMethod = newInstanceFromExpectedFactoryMethod();

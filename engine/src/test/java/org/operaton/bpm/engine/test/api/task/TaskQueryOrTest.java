@@ -1310,7 +1310,7 @@ public class TaskQueryOrTest {
   }
 
   @Test
-  public void shouldReturnTasksByVariableAndActiveProcesses() throws Exception {
+  public void shouldReturnTasksByVariableAndActiveProcesses() {
     // given
     BpmnModelInstance aProcessDefinition = Bpmn.createExecutableProcess("oneTaskProcess")
         .startEvent()

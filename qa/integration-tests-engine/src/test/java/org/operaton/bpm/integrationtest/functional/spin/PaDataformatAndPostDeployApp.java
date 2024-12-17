@@ -34,7 +34,7 @@ public class PaDataformatAndPostDeployApp extends org.operaton.bpm.application.i
   public static final String PA_NAME  = "PaDataformatAndPostDeployApp";
 
   @PostDeploy
-  public void onPaDeployed(ProcessEngine e) throws Exception {
+  public void onPaDeployed(ProcessEngine e) {
 
     assertNotNull(getVariableSerializers());
 

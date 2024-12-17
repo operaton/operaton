@@ -143,7 +143,7 @@ public class InclusiveGatewayTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testParentActivationOnNonJoiningEnd() throws Exception {
+  public void testParentActivationOnNonJoiningEnd() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parentActivationOnNonJoiningEnd");
 
     List<Execution> executionsBefore = runtimeService.createExecutionQuery().list();

@@ -35,12 +35,12 @@ import org.junit.Test;
 public class DisabledJobPrioritizationBpmnTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration.setProducePrioritizedJobs(false);
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.setProducePrioritizedJobs(true);
   }
 

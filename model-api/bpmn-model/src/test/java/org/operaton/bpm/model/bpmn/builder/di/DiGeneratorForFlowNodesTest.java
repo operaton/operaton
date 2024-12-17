@@ -32,7 +32,6 @@ import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TEST_CONDITION;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.TRANSACTION_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import org.junit.jupiter.api.AfterEach;
@@ -48,7 +47,7 @@ class DiGeneratorForFlowNodesTest {
   private BpmnModelInstance instance;
 
   @AfterEach
-  void validateModel() throws IOException {
+  void validateModel() {
     if (instance != null) {
       Bpmn.validateModel(instance);
     }

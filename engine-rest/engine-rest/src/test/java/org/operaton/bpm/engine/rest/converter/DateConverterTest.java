@@ -36,7 +36,7 @@ public class DateConverterTest {
   private DateConverter converter;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     converter = new DateConverter();
   }
 

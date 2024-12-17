@@ -37,7 +37,7 @@ public class MultiTenancyDelegateCaseExecutionTest extends PluggableProcessEngin
   protected static final String TENANT_ID = "tenant1";
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     AssertingCaseExecutionListener.clear();
   }
 

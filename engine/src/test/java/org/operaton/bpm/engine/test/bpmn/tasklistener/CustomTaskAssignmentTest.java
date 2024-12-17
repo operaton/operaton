@@ -39,7 +39,7 @@ import org.junit.Test;
 public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
   
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
     
     identityService.saveUser(identityService.newUser("kermit"));
@@ -52,7 +52,7 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
   }
   
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("fozzie");
     identityService.deleteUser("gonzo");
@@ -117,7 +117,7 @@ public class CustomTaskAssignmentTest extends PluggableProcessEngineTest {
   
   @Deployment
   @Test
-  public void testReleaseTask() throws Exception {
+  public void testReleaseTask() {
     runtimeService.startProcessInstanceByKey("releaseTaskProcess");
     
     Task task = taskService.createTaskQuery().taskAssignee("fozzie").singleResult();

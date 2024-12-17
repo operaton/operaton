@@ -69,7 +69,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
   protected String groupId = "accounting";
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     cleanupAfterTest();
 
   }

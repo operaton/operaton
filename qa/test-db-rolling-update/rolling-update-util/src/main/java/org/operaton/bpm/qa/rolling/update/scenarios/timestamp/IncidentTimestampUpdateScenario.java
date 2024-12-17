@@ -92,7 +92,7 @@ public class IncidentTimestampUpdateScenario extends AbstractTimestampUpdateScen
     public static final String EXCEPTION_MESSAGE = "Expected_exception.";
 
     @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public void execute(DelegateExecution execution) {
 
       Boolean fail = (Boolean) execution.getVariable("fail");
 

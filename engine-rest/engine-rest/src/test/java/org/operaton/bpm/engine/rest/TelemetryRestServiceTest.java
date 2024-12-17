@@ -41,8 +41,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import io.restassured.http.ContentType;
 
 public class TelemetryRestServiceTest extends AbstractRestServiceTest {
@@ -97,7 +95,7 @@ public class TelemetryRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void shouldGetTelemetryData() throws JsonProcessingException {
+  public void shouldGetTelemetryData() {
     when(managementServiceMock.getTelemetryData()).thenReturn(MockProvider.EXAMPLE_TELEMETRY_DATA);
 
     given()

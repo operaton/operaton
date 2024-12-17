@@ -41,7 +41,7 @@ public class MultiTenancyFilterServiceTest extends PluggableProcessEngineTest {
   protected final List<String> taskIds = new ArrayList<String>();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     createTaskWithoutTenantId();
     createTaskForTenant(TENANT_ONE);
     createTaskForTenant(TENANT_TWO);
@@ -226,7 +226,7 @@ public class MultiTenancyFilterServiceTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     filterService.deleteFilter(filterId);
     identityService.clearAuthentication();
     for(String taskId : taskIds) {

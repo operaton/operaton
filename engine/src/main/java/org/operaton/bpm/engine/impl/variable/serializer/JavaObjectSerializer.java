@@ -92,7 +92,7 @@ public class JavaObjectSerializer extends AbstractObjectValueSerializer {
       super(in);
     }
 
-    protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException {
+    protected Class<?> resolveClass(ObjectStreamClass desc) {
       return ReflectUtil.loadClass(desc.getName());
     }
 

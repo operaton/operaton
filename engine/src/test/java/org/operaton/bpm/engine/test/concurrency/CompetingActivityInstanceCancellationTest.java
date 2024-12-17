@@ -96,7 +96,7 @@ public class CompetingActivityInstanceCancellationTest {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingForkTest.testCompetingFork.bpmn20.xml"})
   @Test
-  public void testCompetingCancellation() throws Exception {
+  public void testCompetingCancellation() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstanceId);

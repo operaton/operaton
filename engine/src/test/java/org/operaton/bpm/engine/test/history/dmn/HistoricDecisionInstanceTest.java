@@ -76,7 +76,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
   public static final String DECISION_DEFINITION_KEY = "testDecision";
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         processEngineConfiguration.getDmnEngineConfiguration();
 
@@ -88,7 +88,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         processEngineConfiguration.getDmnEngineConfiguration();
 

@@ -55,7 +55,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
   protected static final String PROCESS_KEY = "oneTaskProcess";
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         processEngineConfiguration.getDmnEngineConfiguration();
 
@@ -67,7 +67,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         processEngineConfiguration.getDmnEngineConfiguration();
 

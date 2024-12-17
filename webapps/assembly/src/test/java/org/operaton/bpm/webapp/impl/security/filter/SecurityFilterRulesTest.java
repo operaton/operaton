@@ -99,7 +99,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldHaveRulesLoaded() throws Exception {
+  public void shouldHaveRulesLoaded() {
     assertThat(FILTER_RULES).hasSize(1);
   }
 
@@ -113,7 +113,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassStaticCockpitPluginResources_GET() throws Exception {
+  public void shouldPassStaticCockpitPluginResources_GET() {
     assertThat(isAuthorized("GET",
       applicationPath + "/api/cockpit/plugin/some-plugin/static/foo.html")).isTrue();
     assertThat(isAuthorized("GET",
@@ -121,7 +121,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldRejectEngineApi_GET() throws Exception {
+  public void shouldRejectEngineApi_GET() {
 
     authenticatedForEngine("otherEngine", new Runnable() {
       @Override
@@ -137,7 +137,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldGrantEngineApi_GET() throws Exception {
+  public void shouldGrantEngineApi_GET() {
 
     authenticatedForEngine("default", new Runnable() {
       @Override
@@ -153,7 +153,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldRejectCockpitPluginApi_GET() throws Exception {
+  public void shouldRejectCockpitPluginApi_GET() {
 
     authenticatedForEngine("otherEngine", new Runnable() {
       @Override
@@ -170,7 +170,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassCockpitPluginApi_GET_LOGGED_IN() throws Exception {
+  public void shouldPassCockpitPluginApi_GET_LOGGED_IN() {
     authenticatedForEngine("default", new Runnable() {
       @Override
       public void run() {
@@ -187,7 +187,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassCockpit_GET_LOGGED_OUT() throws Exception {
+  public void shouldPassCockpit_GET_LOGGED_OUT() {
 
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/app/cockpit/non-existing-engine/foo");
@@ -197,7 +197,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassCockpit_GET_LOGGED_IN() throws Exception {
+  public void shouldPassCockpit_GET_LOGGED_IN() {
 
     authenticatedForApp("default", "cockpit", new Runnable() {
 
@@ -213,7 +213,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassCockpitNonExistingEngine_GET_LOGGED_IN() throws Exception {
+  public void shouldPassCockpitNonExistingEngine_GET_LOGGED_IN() {
 
     authenticatedForApp("default", "cockpit", new Runnable() {
 
@@ -230,7 +230,7 @@ public class SecurityFilterRulesTest {
 
 
   @Test
-  public void shouldRejectTasklistApi_GET() throws Exception {
+  public void shouldRejectTasklistApi_GET() {
 
     authenticatedForEngine("otherEngine", new Runnable() {
       @Override
@@ -247,7 +247,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassTasklistApi_GET_LOGGED_IN() throws Exception {
+  public void shouldPassTasklistApi_GET_LOGGED_IN() {
     authenticatedForEngine("default", new Runnable() {
       @Override
       public void run() {
@@ -263,7 +263,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldRejectTasklistApi_GET_LOGGED_OUT() throws Exception
+  public void shouldRejectTasklistApi_GET_LOGGED_OUT()
   {
     Authorization authorization =
       getAuthorization("POST",
@@ -274,7 +274,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassTasklistPluginResource_GET_LOGGED_IN() throws Exception {
+  public void shouldPassTasklistPluginResource_GET_LOGGED_IN() {
 
     authenticatedForEngine("default", new Runnable() {
       @Override
@@ -291,7 +291,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassTasklistPluginResource_GET_LOGGED_OUT() throws Exception {
+  public void shouldPassTasklistPluginResource_GET_LOGGED_OUT() {
 
     Authorization authorization =
       getAuthorization("GET",
@@ -303,7 +303,7 @@ public class SecurityFilterRulesTest {
 
 
   @Test
-  public void shouldPassTasklist_GET_LOGGED_OUT() throws Exception {
+  public void shouldPassTasklist_GET_LOGGED_OUT() {
 
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/app/tasklist/non-existing-engine");
@@ -313,7 +313,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassTasklist_GET_LOGGED_IN() throws Exception {
+  public void shouldPassTasklist_GET_LOGGED_IN() {
 
     authenticatedForApp("default", "tasklist", new Runnable() {
 
@@ -329,7 +329,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldRejectAdminApi_GET_LOGGED_OUT() throws Exception {
+  public void shouldRejectAdminApi_GET_LOGGED_OUT() {
 
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/api/admin/auth/user/some-engine/");
@@ -345,7 +345,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassAdminApi_GET_LOGGED_IN() throws Exception {
+  public void shouldPassAdminApi_GET_LOGGED_IN() {
 
     authenticatedForApp("default", "admin", new Runnable() {
 
@@ -361,7 +361,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassAdminApi_AnonymousEndpoints_LOGGED_OUT() throws Exception {
+  public void shouldPassAdminApi_AnonymousEndpoints_LOGGED_OUT() {
 
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/api/admin/auth/user/bar");
@@ -390,7 +390,7 @@ public class SecurityFilterRulesTest {
 
 
   @Test
-  public void shouldRejectAdminApiPlugin_GET_LOGGED_OUT() throws Exception {
+  public void shouldRejectAdminApiPlugin_GET_LOGGED_OUT() {
 
     Authorization authorization =
       getAuthorization("GET",
@@ -401,7 +401,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassAdminApiPlugin_GET_LOGGED_IN() throws Exception {
+  public void shouldPassAdminApiPlugin_GET_LOGGED_IN() {
 
     authenticatedForApp("default", "admin", new Runnable() {
 
@@ -418,7 +418,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassAdmin_GET_LOGGED_OUT() throws Exception {
+  public void shouldPassAdmin_GET_LOGGED_OUT() {
 
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/app/admin/default");
@@ -428,7 +428,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassAdmin_GET_LOGGED_IN() throws Exception {
+  public void shouldPassAdmin_GET_LOGGED_IN() {
 
     authenticatedForApp("default", "admin", new Runnable() {
 
@@ -445,7 +445,7 @@ public class SecurityFilterRulesTest {
 
 
   @Test
-  public void shouldPassAdminResources_GET_LOGGED_OUT() throws Exception {
+  public void shouldPassAdminResources_GET_LOGGED_OUT() {
 
     Authorization authorization =
       getAuthorization("GET", applicationPath + "/app/admin/scripts");
@@ -455,7 +455,7 @@ public class SecurityFilterRulesTest {
   }
 
   @Test
-  public void shouldPassAdminResources_GET_LOGGED_IN() throws Exception {
+  public void shouldPassAdminResources_GET_LOGGED_IN() {
 
     authenticatedForApp("default", "admin", new Runnable() {
 

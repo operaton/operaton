@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 public class AnotherChangeVariablesService implements JavaDelegate {
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
     Date now = new Date();
 
     List<String> serializable = new ArrayList<String>();

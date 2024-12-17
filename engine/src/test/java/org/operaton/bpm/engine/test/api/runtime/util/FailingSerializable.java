@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.util;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
@@ -31,7 +30,7 @@ public class FailingSerializable implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+  private void readObject(ObjectInputStream in) throws ClassNotFoundException {
     throw new ClassNotFoundException("Cannot load class FailingSerializable");
   }
 }

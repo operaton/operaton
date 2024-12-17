@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.variable.Variables;
  */
 public class CreateInvoiceDataListener implements ExecutionListener {
 
-  public void notify(DelegateExecution execution) throws Exception {
+  public void notify(DelegateExecution execution) {
     InvoiceData invoiceData = new InvoiceData();
     invoiceData.setAmount((String) execution.getVariable("amount"));
     invoiceData.setCreditor((String) execution.getVariable("creditor"));

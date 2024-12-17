@@ -48,7 +48,7 @@ public abstract class AbstractDefinitionQueryTest {
   protected String deploymentTwoId;
 
   @Before
-  public void before() throws Exception {
+  public void before() {
     repositoryService = engineRule.getRepositoryService();
     runtimeService = engineRule.getRuntimeService();
 
@@ -73,7 +73,7 @@ public abstract class AbstractDefinitionQueryTest {
   protected abstract String getResourceTwoPath();
 
   @After
-  public void after() throws Exception {
+  public void after() {
     repositoryService.deleteDeployment(deploymentOneId, true);
     repositoryService.deleteDeployment(deploymentTwoId, true);
   }

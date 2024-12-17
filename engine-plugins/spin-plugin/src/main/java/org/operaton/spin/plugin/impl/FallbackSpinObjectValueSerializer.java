@@ -45,12 +45,12 @@ public class FallbackSpinObjectValueSerializer extends AbstractObjectValueSerial
   }
 
   @Override
-  protected byte[] serializeToByteArray(Object deserializedObject) throws Exception {
+  protected byte[] serializeToByteArray(Object deserializedObject) {
     throw LOG.fallbackSerializerCannotDeserializeObjects();
   }
 
   @Override
-  protected Object deserializeFromByteArray(byte[] object, String objectTypeName) throws Exception {
+  protected Object deserializeFromByteArray(byte[] object, String objectTypeName) {
     throw LOG.fallbackSerializerCannotDeserializeObjects();
   }
 

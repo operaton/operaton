@@ -113,7 +113,7 @@ public class MultiTenancyHistoricDataCmdsTenantCheckTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.clearAuthentication();
     for(HistoricTaskInstance instance : historyService.createHistoricTaskInstanceQuery().list()) {
       historyService.deleteHistoricTaskInstance(instance.getId());

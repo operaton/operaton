@@ -234,32 +234,32 @@ public class SelfCancellationTest {
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEvent() throws Exception {
+  public void testTriggerParallelTerminateEndEvent() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK);
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEventWithUserTask() throws Exception {
+  public void testTriggerParallelTerminateEndEventWithUserTask() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK_AND_USER_TASK_AFTER_SEND);
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEventWithoutEndAfterSend() throws Exception {
+  public void testTriggerParallelTerminateEndEventWithoutEndAfterSend() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK_WITHOUT_END_AFTER_SEND);
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEventWithSendAsScope() throws Exception {
+  public void testTriggerParallelTerminateEndEventWithSendAsScope() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK_WITH_SEND_AS_SCOPE);
   }
 
   @Test
-  public void testTriggerParallelTerminateEndEventWithSendAsScopeWithoutEnd() throws Exception {
+  public void testTriggerParallelTerminateEndEventWithSendAsScopeWithoutEnd() {
     testParallelTerminationWithSend(PROCESS_WITH_CANCELING_RECEIVE_TASK_WITH_SEND_AS_SCOPE_WITHOUT_END);
   }
 
   @Test
-  public void testSendMessageInSubProcess() throws Exception {
+  public void testSendMessageInSubProcess() {
     // given
     testHelper.deploy(PROCESS_WITH_SUBPROCESS_AND_DELEGATE_MSG_SEND);
     runtimeService.startProcessInstanceByKey("process");
@@ -275,7 +275,7 @@ public class SelfCancellationTest {
   }
 
   @Test
-  public void testParallelSendTaskWithBoundaryRecieveTask() throws Exception {
+  public void testParallelSendTaskWithBoundaryRecieveTask() {
     // given
     testHelper.deploy(PROCESS_WITH_PARALLEL_SEND_TASK_AND_BOUNDARY_EVENT);
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("process");
@@ -291,7 +291,7 @@ public class SelfCancellationTest {
   }
 
   @Test
-  public void testSendTaskWithBoundaryEvent() throws Exception {
+  public void testSendTaskWithBoundaryEvent() {
     // given
     testHelper.deploy(PROCESS_WITH_SEND_TASK_AND_BOUNDARY_EVENT);
     runtimeService.startProcessInstanceByKey("process");

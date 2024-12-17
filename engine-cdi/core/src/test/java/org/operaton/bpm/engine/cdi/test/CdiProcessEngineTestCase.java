@@ -97,7 +97,7 @@ public abstract class CdiProcessEngineTestCase {
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Before
-  public void setUpCdiProcessEngineTestCase() throws Exception {
+  public void setUpCdiProcessEngineTestCase() {
 
     if(BpmPlatform.getProcessEngineService().getDefaultProcessEngine() == null) {
       RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(processEngineRule.getProcessEngine());
@@ -121,7 +121,7 @@ public abstract class CdiProcessEngineTestCase {
   }
 
   @After
-  public void tearDownCdiProcessEngineTestCase() throws Exception {
+  public void tearDownCdiProcessEngineTestCase() {
     RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(processEngine);
     beanManager = null;
     processEngine = null;

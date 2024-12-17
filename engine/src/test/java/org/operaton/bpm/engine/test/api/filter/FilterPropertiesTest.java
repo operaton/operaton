@@ -51,7 +51,7 @@ public class FilterPropertiesTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     for (Filter filter : filterService.createFilterQuery().list()) {
       filterService.deleteFilter(filter.getId());
     }

@@ -919,7 +919,7 @@ public class TaskVariableRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleBinaryVariable() throws Exception {
+  public void testPostSingleBinaryVariable() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -938,7 +938,7 @@ public class TaskVariableRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleBinaryVariableWithValueType() throws Exception {
+  public void testPostSingleBinaryVariableWithValueType() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -958,7 +958,7 @@ public class TaskVariableRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleBinaryVariableWithNoValue() throws Exception {
+  public void testPostSingleBinaryVariableWithNoValue() {
     byte[] bytes = new byte[0];
 
     String variableKey = "aVariableKey";
@@ -1051,7 +1051,7 @@ public class TaskVariableRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleFileVariableWithEncodingAndMimeType() throws Exception {
+  public void testPostSingleFileVariableWithEncodingAndMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -1080,7 +1080,7 @@ public class TaskVariableRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleFileVariableWithMimeType() throws Exception {
+  public void testPostSingleFileVariableWithMimeType() {
 
     byte[] value = "some text".getBytes();
     String base64 = Base64.encodeBase64String(value);
@@ -1109,7 +1109,7 @@ public class TaskVariableRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPostSingleFileVariableWithEncoding() throws Exception {
+  public void testPostSingleFileVariableWithEncoding() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -1155,7 +1155,7 @@ public class TaskVariableRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableFromSerialized() throws Exception {
+  public void testPutSingleVariableFromSerialized() {
     String serializedValue = "{\"prop\" : \"value\"}";
     Map<String, Object> requestJson = VariablesBuilder
         .getObjectValueMap(serializedValue, ValueType.OBJECT.getName(), "aDataFormat", "aRootType");
@@ -1180,7 +1180,7 @@ public class TaskVariableRestResourceInteractionTest extends
   }
 
   @Test
-  public void testPutSingleVariableFromInvalidSerialized() throws Exception {
+  public void testPutSingleVariableFromInvalidSerialized() {
     String serializedValue = "{\"prop\" : \"value\"}";
 
     Map<String, Object> requestJson = VariablesBuilder

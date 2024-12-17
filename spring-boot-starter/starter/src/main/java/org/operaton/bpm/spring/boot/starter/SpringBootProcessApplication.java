@@ -84,7 +84,7 @@ public class SpringBootProcessApplication extends SpringProcessApplication {
   protected ApplicationEventPublisher eventPublisher;
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
     processApplicationNameFromAnnotation(applicationContext)
       .apply(springApplicationName)
       .ifPresent(this::setBeanName);
@@ -103,7 +103,7 @@ public class SpringBootProcessApplication extends SpringProcessApplication {
   }
 
   @Override
-  public void destroy() throws Exception {
+  public void destroy() {
     super.destroy();
     RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(processEngine);
   }

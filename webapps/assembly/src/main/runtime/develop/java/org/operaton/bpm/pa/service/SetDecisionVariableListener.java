@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.variable.Variables;
  */
 public class SetDecisionVariableListener implements CaseExecutionListener {
 
-  public void notify(DelegateCaseExecution caseExecution) throws Exception {
+  public void notify(DelegateCaseExecution caseExecution) {
     VariableMap variables = Variables
         .putValue("amount", 555.00d)
         .putValue("invoiceCategory", "Misc");

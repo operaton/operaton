@@ -41,7 +41,7 @@ public class SpringProcessEnginePluginTest {
   private SpringProcessEnginePlugin plugin;
 
   @Test
-  public void verifyToString() throws Exception {
+  public void verifyToString() {
     Assert.assertEquals(plugin.toString(), "theBeanName");
   }
 }

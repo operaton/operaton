@@ -33,7 +33,7 @@ public class UpdateValueDelegate implements JavaDelegate, Serializable {
 
   public static final String STRING_PROPERTY = "a string value";
 
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
     TypedValue typedValue = execution.getVariableTyped("listVar");
     List<JsonSerializable> var = (List<JsonSerializable>) typedValue.getValue();
     JsonSerializable newElement = new JsonSerializable();

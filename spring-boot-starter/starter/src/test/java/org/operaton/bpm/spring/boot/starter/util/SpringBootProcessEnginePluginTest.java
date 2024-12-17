@@ -49,7 +49,7 @@ public class SpringBootProcessEnginePluginTest {
   }
 
   @Test
-  public void delegate_for_springConfig() throws Exception {
+  public void delegate_for_springConfig() {
     ProcessEngineConfigurationImpl c = new SpringProcessEngineConfiguration();
 
     DummySpringPlugin plugin = new DummySpringPlugin();
@@ -62,7 +62,7 @@ public class SpringBootProcessEnginePluginTest {
   }
 
   @Test
-  public void no_delegate_for_standaloneConfig() throws Exception {
+  public void no_delegate_for_standaloneConfig() {
     ProcessEngineConfigurationImpl c = new StandaloneInMemProcessEngineConfiguration();
 
     DummySpringPlugin plugin = new DummySpringPlugin();

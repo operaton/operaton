@@ -48,12 +48,12 @@ public class ShellTaskTest extends PluggableProcessEngineTest {
   }
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     osType = getSystemOsType();
   }
 
   @Test
-  public void testOsDetection() throws Exception {
+  public void testOsDetection() {
     assertTrue(osType != OsType.UNKOWN);
   }
 

@@ -51,7 +51,7 @@ public class ExternalTaskQueryAuthorizationTest extends AuthorizationTest {
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     deploymentId = testRule.deploy(
         "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
         "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml").getId();

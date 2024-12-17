@@ -46,7 +46,7 @@ import org.junit.Test;
 public class ConcurrentHistoryCleanupTest extends ConcurrencyTestCase {
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
 
       List<Job> jobs = processEngine.getManagementService().createJobQuery().list();

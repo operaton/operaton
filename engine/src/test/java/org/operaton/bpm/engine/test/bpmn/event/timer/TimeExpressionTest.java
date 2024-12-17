@@ -56,7 +56,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 	  
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
   @Test
-	  public void testTimeExpressionComplete() throws Exception {
+	  public void testTimeExpressionComplete() {
 		    Date dt = new Date();
 		    
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dt));
@@ -65,7 +65,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 	  
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
   @Test
-	  public void testTimeExpressionWithoutSeconds() throws Exception {
+	  public void testTimeExpressionWithoutSeconds() {
 		    Date dt = new Date();
 		    
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").format(dt));
@@ -74,7 +74,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 	  
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	 
   @Test
-	  public void testTimeExpressionWithoutMinutes() throws Exception {
+	  public void testTimeExpressionWithoutMinutes() {
 		    Date dt = new Date();
 
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd'T'HH").format(new Date()));
@@ -83,7 +83,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 	  
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
   @Test
-	  public void testTimeExpressionWithoutTime() throws Exception {
+	  public void testTimeExpressionWithoutTime() {
 		    Date dt = new Date();
 
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -92,7 +92,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 	
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
   @Test
-	  public void testTimeExpressionWithoutDay() throws Exception {
+	  public void testTimeExpressionWithoutDay() {
 		    Date dt = new Date();
 
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy-MM").format(new Date()));
@@ -101,7 +101,7 @@ public class TimeExpressionTest extends PluggableProcessEngineTest {
 	  
 	  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpression.bpmn20.xml"})	  
   @Test
-	  public void testTimeExpressionWithoutMonth() throws Exception {
+	  public void testTimeExpressionWithoutMonth() {
 		    Date dt = new Date();
 		    
 		    Date dueDate = testExpression(new SimpleDateFormat("yyyy").format(new Date()));

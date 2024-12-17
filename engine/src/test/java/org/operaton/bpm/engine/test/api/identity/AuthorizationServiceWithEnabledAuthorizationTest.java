@@ -48,13 +48,13 @@ import org.junit.Test;
 public class AuthorizationServiceWithEnabledAuthorizationTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
     processEngineConfiguration.setAuthorizationEnabled(true);
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
 

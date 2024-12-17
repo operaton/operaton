@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 public class CreateIncidentsDelegate implements JavaDelegate {
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
 
     IncidentEntity.createAndInsertIncident("anIncident", createIncidentContext(execution, "test1"), "aMessage");
     IncidentEntity.createAndInsertIncident("anIncident", createIncidentContext(execution, "test2"), "aMessage");

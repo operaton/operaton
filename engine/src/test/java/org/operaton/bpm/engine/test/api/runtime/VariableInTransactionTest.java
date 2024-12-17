@@ -36,7 +36,7 @@ import org.junit.Test;
 public class VariableInTransactionTest extends PluggableProcessEngineTest {
 
   @Test
-  public void testCreateAndDeleteVariableInTransaction() throws Exception {
+  public void testCreateAndDeleteVariableInTransaction() {
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
       @Override

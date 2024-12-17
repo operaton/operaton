@@ -23,7 +23,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -48,7 +47,7 @@ public class DatabaseContainerProviderTest {
   public String dbVersion;
 
   @Parameterized.Parameters(name = "Job DueDate is set: {0}")
-  public static Collection<Object[]> scenarios() throws ParseException {
+  public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       // The Operaton PostgreSQL 13.2 image is compatible with Testcontainers.
       // For older versions, please use the public Docker images (DockerHub repo: postgres).

@@ -52,7 +52,7 @@ public class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpit
   private final MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
 
   @Before
-  public void init() throws Exception {
+  public void init() {
 
     ProcessEngine processEngine = getProcessEngine();
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();

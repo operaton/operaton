@@ -77,7 +77,7 @@ public class MessageStartEventSubscriptionTest {
   protected TaskService taskService;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     repositoryService = engineRule.getRepositoryService();
     runtimeService = engineRule.getRuntimeService();
     taskService = engineRule.getTaskService();

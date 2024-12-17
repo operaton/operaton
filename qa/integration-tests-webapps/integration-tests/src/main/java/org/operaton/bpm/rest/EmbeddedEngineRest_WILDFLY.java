@@ -32,8 +32,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
-
 @RunWith(Arquillian.class)
 public class EmbeddedEngineRest_WILDFLY {
 
@@ -57,7 +55,7 @@ public class EmbeddedEngineRest_WILDFLY {
 
   @Test
   @RunAsClient
-  public void testDeploymentWorks() throws IOException {
+  public void testDeploymentWorks() {
     try {
       deployer.deploy(EMBEDDED_ENGINE_REST);
       deployer.undeploy(EMBEDDED_ENGINE_REST);

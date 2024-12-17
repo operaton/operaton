@@ -54,12 +54,12 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
   protected ProcessEngine otherProcessEngine = null;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration.setJobExecutorDeploymentAware(true);
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.setJobExecutorDeploymentAware(false);
     closeDownProcessEngine();
   }

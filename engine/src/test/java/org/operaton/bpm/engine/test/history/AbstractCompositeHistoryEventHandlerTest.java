@@ -56,7 +56,7 @@ public abstract class AbstractCompositeHistoryEventHandlerTest {
    * Perform common setup.
    */
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     runtimeService = engineRule.getRuntimeService();
     taskService = engineRule.getTaskService();
@@ -69,7 +69,7 @@ public abstract class AbstractCompositeHistoryEventHandlerTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     // reset original history event handler
     processEngineConfiguration.setHistoryEventHandler(originalHistoryEventHandler);
   }

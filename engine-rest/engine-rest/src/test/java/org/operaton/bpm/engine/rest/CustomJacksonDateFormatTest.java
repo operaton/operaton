@@ -90,7 +90,7 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
   }
 
   @Test
-  public void testSetDateVariable() throws Exception {
+  public void testSetDateVariable() {
     String variableValue = testDateFormat.format(testDate);
 
     Map<String, Object> variableJson = VariablesBuilder.getVariableValueMap(variableValue, "Date");

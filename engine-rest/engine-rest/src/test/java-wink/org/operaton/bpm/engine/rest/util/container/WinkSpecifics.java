@@ -70,7 +70,7 @@ public class WinkSpecifics implements ContainerSpecifics {
 
           WinkTomcatServerBootstrap bootstrap = new WinkTomcatServerBootstrap(webXmlResource);
 
-          protected void before() throws Throwable {
+          protected void before() {
             bootstrap.setWorkingDir(tempFolder.getRoot().getAbsolutePath());
             bootstrap.start();
           }

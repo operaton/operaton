@@ -33,7 +33,7 @@ import org.springframework.test.context.ContextConfiguration;
 public class SpringLimitedExpressionsTest extends SpringProcessEngineTestCase {
 
   @Deployment
-  public void testLimitedBeansExposed() throws Exception {
+  public void testLimitedBeansExposed() {
     // Start process, which has a service-task which calls 'bean1', which is exposed
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("limitedExpressionProcess");
     

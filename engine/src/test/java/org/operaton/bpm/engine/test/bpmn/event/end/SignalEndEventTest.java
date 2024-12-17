@@ -35,7 +35,7 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchSignalEndEventInEmbeddedSubprocess() throws Exception {
+  public void testCatchSignalEndEventInEmbeddedSubprocess() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("catchSignalEndEventInEmbeddedSubprocess");
     assertNotNull(processInstance);
 
@@ -58,7 +58,7 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/bpmn/event/end/SignalEndEventTest.processWithSignalEndEvent.bpmn20.xml"
     })
   @Test
-  public void testCatchSignalEndEventInCallActivity() throws Exception {
+  public void testCatchSignalEndEventInCallActivity() {
     // first, start process to wait of the signal event
     ProcessInstance processInstanceCatchEvent = runtimeService.startProcessInstanceByKey("catchSignalEndEvent");
     assertNotNull(processInstanceCatchEvent);

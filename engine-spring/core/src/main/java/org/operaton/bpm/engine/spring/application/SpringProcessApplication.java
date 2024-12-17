@@ -114,12 +114,12 @@ public class SpringProcessApplication extends AbstractProcessApplication impleme
     undeploy();
   }
 
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
     // for backwards compatibility
     start();
   }
 
-  public void destroy() throws Exception {
+  public void destroy() {
     // for backwards compatibility
     stop();
   }

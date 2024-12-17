@@ -49,7 +49,7 @@ public class TaskQueryDisabledAdhocExpressionsTest extends PluggableProcessEngin
   }
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     MUTABLE_FIELD = 0;
   }
 

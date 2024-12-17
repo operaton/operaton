@@ -37,7 +37,7 @@ public abstract class AbstractPartitioningTest extends ConcurrencyTestCase {
   protected CommandExecutor commandExecutor;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     this.commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     processEngine.getProcessEngineConfiguration().setSkipHistoryOptimisticLockingExceptions(true);
   }

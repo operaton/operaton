@@ -60,14 +60,14 @@ public class SampleOperatonRestApplicationIT {
   private OperatonBpmProperties operatonBpmProperties;
 
   @Test
-  public void restApiIsAvailable() throws Exception {
+  public void restApiIsAvailable() {
     ResponseEntity<String> entity = testRestTemplate.getForEntity("/engine-rest/engine/", String.class);
     assertEquals(HttpStatus.OK, entity.getStatusCode());
     assertEquals("[{\"name\":\"testEngine\"}]", entity.getBody());
   }
 
   @Test
-  public void startProcessInstanceByCustomResource() throws Exception {
+  public void startProcessInstanceByCustomResource() {
     ResponseEntity<ProcessInstanceDto> entity = testRestTemplate.postForEntity("/engine-rest/process/start", HttpEntity.EMPTY, ProcessInstanceDto.class);
     assertEquals(HttpStatus.OK, entity.getStatusCode());
     assertNotNull(entity.getBody());
@@ -78,7 +78,7 @@ public class SampleOperatonRestApplicationIT {
   }
 
   @Test
-  public void multipartFileUploadOperatonRestIsWorking() throws Exception {
+  public void multipartFileUploadOperatonRestIsWorking() {
     final String variableName = "testvariable";
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TestProcess");
     LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -101,7 +101,7 @@ public class SampleOperatonRestApplicationIT {
   }
 
   @Test
-  public void fetchAndLockExternalTaskWithLongPollingIsRunning() throws Exception {
+  public void fetchAndLockExternalTaskWithLongPollingIsRunning() {
 
     String requestJson = "{"
       + "  \"workerId\":\"aWorkerId\","

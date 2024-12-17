@@ -53,7 +53,7 @@ public class ProcessDefinitionCandidateTest {
   protected RepositoryService repositoryService;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     repositoryService = engineRule.getRepositoryService();
   }
 

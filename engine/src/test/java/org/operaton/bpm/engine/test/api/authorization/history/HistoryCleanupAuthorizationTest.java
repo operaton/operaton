@@ -61,7 +61,7 @@ import org.junit.Test;
 public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
     super.setUp();
   }

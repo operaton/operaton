@@ -328,7 +328,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Deployment
   @Test
-  public void testTimerWithCycle() throws Exception {
+  public void testTimerWithCycle() {
     runtimeService.startProcessInstanceByKey("nonInterruptingCycle").getId();
     TaskQuery tq = taskService.createTaskQuery().taskDefinitionKey("timerFiredTask");
     assertEquals(0, tq.count());
@@ -768,7 +768,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Test
   @Deployment(resources = {TIMER_NON_INTERRUPTING_EVENT})
-  public void shouldReevaluateLongerTimerCycleWhenDue() throws Exception {
+  public void shouldReevaluateLongerTimerCycleWhenDue() {
     // given
     ClockUtil.setCurrentTime(new Date(1457326800000L));
 
@@ -805,7 +805,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Test
   @Deployment(resources = {TIMER_NON_INTERRUPTING_EVENT})
-  public void shouldReevaluateShorterTimerCycleWhenDue() throws Exception {
+  public void shouldReevaluateShorterTimerCycleWhenDue() {
     // given
     ClockUtil.setCurrentTime(new Date(1457326800000L));
 
@@ -842,7 +842,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Test
   @Deployment(resources = {TIMER_NON_INTERRUPTING_EVENT})
-  public void shouldNotReevaluateTimerCycleIfCycleDoesNotChange() throws Exception {
+  public void shouldNotReevaluateTimerCycleIfCycleDoesNotChange() {
     // given
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R2/PT1H");
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
@@ -864,7 +864,7 @@ public class BoundaryTimerNonInterruptingEventTest {
 
   @Test
   @Deployment(resources = {TIMER_NON_INTERRUPTING_EVENT})
-  public void shouldNotReevaluateTimerCycleWhenNewCycleIsIncorrect() throws Exception {
+  public void shouldNotReevaluateTimerCycleWhenNewCycleIsIncorrect() {
     // given
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R2/PT1H");
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);

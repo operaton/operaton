@@ -39,7 +39,7 @@ import org.junit.Test;
 public class GroupQueryTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
 
     createGroup("muppets", "Muppet show characters_", "user");
@@ -77,7 +77,7 @@ public class GroupQueryTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("fozzie");
     identityService.deleteUser("mispiggy");

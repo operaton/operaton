@@ -36,7 +36,7 @@ public class BusinessProcessContextTest extends CdiProcessEngineTestCase {
   
   @Test
   @Deployment
-  public void testResolution() throws Exception {
+  public void testResolution() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     businessProcess.startProcessByKey("testResolution").getId();
@@ -46,14 +46,14 @@ public class BusinessProcessContextTest extends CdiProcessEngineTestCase {
 
   @Test
   // no @Deployment for this test
-  public void testResolutionBeforeProcessStart() throws Exception {
+  public void testResolutionBeforeProcessStart() {
     // assert that @BusinessProcessScoped beans can be resolved in the absence of an underlying process instance:
     assertNotNull(getBeanInstance(CreditCard.class));
   }
 
   @Test
   @Deployment
-  public void testChangeProcessScopedBeanProperty() throws Exception {
+  public void testChangeProcessScopedBeanProperty() {
     
     // resolve the creditcard bean (@BusinessProcessScoped) and set a value:
     getBeanInstance(CreditCard.class).setCreditcardNumber("123");

@@ -55,7 +55,7 @@ import org.junit.Test;
 public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest {
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
       public Object execute(CommandContext commandContext) {

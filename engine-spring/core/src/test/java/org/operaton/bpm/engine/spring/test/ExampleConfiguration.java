@@ -38,7 +38,7 @@ public class ExampleConfiguration {
   }
 
   @Bean
-  public ProcessEngineFactoryBean processEngine() throws Exception {
+  public ProcessEngineFactoryBean processEngine() {
     ProcessEngineFactoryBean engineFactoryBean = new ProcessEngineFactoryBean();
     engineFactoryBean.setProcessEngineConfiguration((ProcessEngineConfigurationImpl) processEngineConfiguration());
 

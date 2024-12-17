@@ -1082,7 +1082,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDeployment() throws Exception {
+  public void testCreateCompleteDeployment() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1104,7 +1104,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteBpmnDeployment() throws Exception {
+  public void testCreateCompleteBpmnDeployment() {
     // given
     DeploymentWithDefinitions mockDeployment = MockProvider.createMockDeploymentWithDefinitions();
     when(mockDeployment.getDeployedDecisionDefinitions()).thenReturn(null);
@@ -1134,7 +1134,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteCmmnDeployment() throws Exception {
+  public void testCreateCompleteCmmnDeployment() {
     // given
     DeploymentWithDefinitions mockDeployment = MockProvider.createMockDeploymentWithDefinitions();
     when(mockDeployment.getDeployedDecisionDefinitions()).thenReturn(null);
@@ -1164,7 +1164,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDmnDeployment() throws Exception {
+  public void testCreateCompleteDmnDeployment() {
     // given
     DeploymentWithDefinitions mockDeployment = MockProvider.createMockDeploymentWithDefinitions();
     when(mockDeployment.getDeployedCaseDefinitions()).thenReturn(null);
@@ -1194,7 +1194,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDrdDeployment() throws Exception {
+  public void testCreateCompleteDrdDeployment() {
     // given
     DeploymentWithDefinitions mockDeployment = MockProvider.createMockDeploymentWithDefinitions();
     when(mockDeployment.getDeployedCaseDefinitions()).thenReturn(null);
@@ -1223,7 +1223,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithNonExecutableProcess() throws Exception {
+  public void testCreateDeploymentWithNonExecutableProcess() {
 
     // given
     DeploymentWithDefinitions mockDeployment = MockProvider.createMockDeploymentWithDefinitions();
@@ -1255,7 +1255,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDeploymentDeployChangedOnly() throws Exception {
+  public void testCreateCompleteDeploymentDeployChangedOnly() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1272,7 +1272,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateCompleteDeploymentConflictingDuplicateSetting() throws Exception {
+  public void testCreateCompleteDeploymentConflictingDuplicateSetting() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1291,7 +1291,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithDeploymentSource() throws Exception {
+  public void testCreateDeploymentWithDeploymentSource() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1310,7 +1310,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithActivationTime() throws Exception {
+  public void testCreateDeploymentWithActivationTime() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1327,7 +1327,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithTenantId() throws Exception {
+  public void testCreateDeploymentWithTenantId() {
 
     resourceNames.addAll( Arrays.asList("data", "more-data") );
 
@@ -1343,7 +1343,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentOnlyWithBytes() throws Exception {
+  public void testCreateDeploymentOnlyWithBytes() {
 
     resourceNames.addAll(Arrays.asList("data", "more-data"));
 
@@ -1360,7 +1360,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithoutBytes() throws Exception {
+  public void testCreateDeploymentWithoutBytes() {
 
     given()
       .multiPart("deployment-name", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1372,7 +1372,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   @Test
-  public void testCreateDeploymentWithNonExistentPart() throws Exception {
+  public void testCreateDeploymentWithNonExistentPart() {
 
     given()
     .multiPart("non-existent-body-part", MockProvider.EXAMPLE_DEPLOYMENT_ID)

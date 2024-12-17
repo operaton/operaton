@@ -53,13 +53,13 @@ public class PropertiesListenerTest {
   private ArgumentCaptor<PropertiesPropertySource> propertiesPropertySource;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     when(event.getEnvironment()).thenReturn(environment);
     when(environment.getPropertySources()).thenReturn(mutablePropertySources);
   }
 
   @Test
-  public void addPropertiesPropertySource() throws Exception {
+  public void addPropertiesPropertySource() {
     final OperatonBpmVersion version = new OperatonBpmVersion();
 
     new PropertiesListener(version).onApplicationEvent(event);

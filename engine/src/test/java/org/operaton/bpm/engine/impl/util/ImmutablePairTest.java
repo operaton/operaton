@@ -31,7 +31,7 @@ import org.junit.Test;
 public class ImmutablePairTest {
 
   @Test
-  public void shouldReturnBasicValues() throws Exception {
+  public void shouldReturnBasicValues() {
     final ImmutablePair<Integer, String> pair = new ImmutablePair<>(0, "foo");
     assertEquals(0, pair.getLeft().intValue());
     assertEquals("foo", pair.getRight());
@@ -41,7 +41,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldBeCompatibleToMapEntry() throws Exception {
+  public void shouldBeCompatibleToMapEntry() {
     final ImmutablePair<Integer, String> pair = new ImmutablePair<>(0, "foo");
     final HashMap<Integer, String> map = new HashMap<>();
     map.put(0, "foo");
@@ -51,7 +51,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldCompareWithLeftFirst() throws Exception {
+  public void shouldCompareWithLeftFirst() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "D");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("B", "C");
     assertTrue(pair1.compareTo(pair1) == 0);
@@ -61,7 +61,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldCompareWithRightSecond() throws Exception {
+  public void shouldCompareWithRightSecond() {
     final ImmutablePair<String, String> pair1 = new ImmutablePair<>("A", "C");
     final ImmutablePair<String, String> pair2 = new ImmutablePair<>("A", "D");
     assertTrue(pair1.compareTo(pair1) == 0);
@@ -83,7 +83,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldFulfillEqualityRules() throws Exception {
+  public void shouldFulfillEqualityRules() {
     assertEquals(new ImmutablePair<>(null, "foo"), new ImmutablePair<>(null, "foo"));
     assertFalse(new ImmutablePair<>("foo", 0).equals(new ImmutablePair<>("foo", null)));
     assertFalse(new ImmutablePair<>("foo", "bar").equals(new ImmutablePair<>("xyz", "bar")));
@@ -94,7 +94,7 @@ public class ImmutablePairTest {
   }
 
   @Test
-  public void shouldHaveSameHashCodeAsEqualObject() throws Exception {
+  public void shouldHaveSameHashCodeAsEqualObject() {
     assertEquals(new ImmutablePair<>(null, "foo").hashCode(), new ImmutablePair<>(null, "foo").hashCode());
   }
 }

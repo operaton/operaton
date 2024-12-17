@@ -43,7 +43,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchingTimerEvent() throws Exception {
+  public void testCatchingTimerEvent() {
 
     // Set the clock fixed
     Date startTime = new Date();
@@ -94,7 +94,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
   
   @Deployment
   @Test
-  public void testExpressionRecalculateCurrentDateBased() throws Exception {
+  public void testExpressionRecalculateCurrentDateBased() {
     // Set the clock fixed
     HashMap<String, Object> variables = new HashMap<String, Object>();
     variables.put("duration", "PT1H");
@@ -129,7 +129,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
   
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/timer/IntermediateTimerEventTest.testExpressionRecalculateCurrentDateBased.bpmn20.xml")
   @Test
-  public void testExpressionRecalculateCreationDateBased() throws Exception {
+  public void testExpressionRecalculateCreationDateBased() {
     // Set the clock fixed
     HashMap<String, Object> variables = new HashMap<String, Object>();
     variables.put("duration", "PT1H");
@@ -241,7 +241,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
     testRule.assertProcessEnded(processInstanceId);
   }
   
-  private void moveByMinutes(int minutes) throws Exception {
+  private void moveByMinutes(int minutes) {
     ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() + ((minutes * 60 * 1000) + 5000)));
   }
 

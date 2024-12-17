@@ -89,7 +89,7 @@ public class CompetingSignalsTest {
 
   @Deployment
   @Test
-  public void testCompetingSignals() throws Exception {
+  public void testCompetingSignals() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("CompetingSignalsProcess");
     String processInstanceId = processInstance.getId();
 

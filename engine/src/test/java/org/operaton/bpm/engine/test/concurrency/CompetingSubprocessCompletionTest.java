@@ -95,7 +95,7 @@ public class CompetingSubprocessCompletionTest {
    */
   @Deployment
   @Test
-  public void testCompetingSubprocessEnd() throws Exception {
+  public void testCompetingSubprocessEnd() {
     runtimeService.startProcessInstanceByKey("CompetingSubprocessEndProcess");
 
     List<Task> tasks = taskService.createTaskQuery().list();

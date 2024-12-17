@@ -474,7 +474,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testGetRenderedStartFormForDifferentPlatformEncoding() throws NoSuchFieldException, IllegalAccessException, UnsupportedEncodingException {
+  public void testGetRenderedStartFormForDifferentPlatformEncoding() {
     String expectedResult = "<formField>unicode symbol: \u2200</formField>";
     when(formServiceMock.getRenderedStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)).thenReturn(expectedResult);
 
@@ -977,7 +977,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithParameters() throws IOException {
+  public void testProcessInstantiationWithParameters() {
     Map<String, Object> parameters = VariablesBuilder.create()
         .variable("aBoolean", Boolean.TRUE)
         .variable("aString", "aStringVariableValue")
@@ -1004,7 +1004,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithBusinessKey() throws IOException {
+  public void testProcessInstantiationWithBusinessKey() {
     Map<String, Object> json = new HashMap<>();
     json.put("businessKey", "myBusinessKey");
 
@@ -1021,7 +1021,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithBusinessKeyAndParameters() throws IOException {
+  public void testProcessInstantiationWithBusinessKeyAndParameters() {
     Map<String, Object> json = new HashMap<>();
     json.put("businessKey", "myBusinessKey");
 
@@ -1051,7 +1051,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithTransientVariables() throws IOException {
+  public void testProcessInstantiationWithTransientVariables() {
     Map<String, Object> json = new HashMap<>();
 
     json.put("variables", VariablesBuilder.create().variableTransient("foo", "bar", "string").getVariables());
@@ -3155,7 +3155,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithParameters_ByKey() throws IOException {
+  public void testProcessInstantiationWithParameters_ByKey() {
     Map<String, Object> parameters = VariablesBuilder.create()
         .variable("aBoolean", Boolean.TRUE)
         .variable("aString", "aStringVariableValue")
@@ -3182,7 +3182,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithBusinessKey_ByKey() throws IOException {
+  public void testProcessInstantiationWithBusinessKey_ByKey() {
     Map<String, Object> json = new HashMap<>();
     json.put("businessKey", "myBusinessKey");
 
@@ -3199,7 +3199,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithBusinessKeyAndParameters_ByKey() throws IOException {
+  public void testProcessInstantiationWithBusinessKeyAndParameters_ByKey() {
     Map<String, Object> json = new HashMap<>();
     json.put("businessKey", "myBusinessKey");
 
@@ -3868,7 +3868,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithCaseInstanceId() throws IOException {
+  public void testProcessInstantiationWithCaseInstanceId() {
     Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceId", "myCaseInstanceId");
 
@@ -3885,7 +3885,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithCaseInstanceIdAndBusinessKey() throws IOException {
+  public void testProcessInstantiationWithCaseInstanceIdAndBusinessKey() {
     Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceId", "myCaseInstanceId");
     json.put("businessKey", "myBusinessKey");
@@ -3904,7 +3904,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   }
 
   @Test
-  public void testProcessInstantiationWithCaseInstanceIdAndBusinessKeyAndParameters() throws IOException {
+  public void testProcessInstantiationWithCaseInstanceIdAndBusinessKeyAndParameters() {
     Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceId", "myCaseInstanceId");
     json.put("businessKey", "myBusinessKey");

@@ -382,7 +382,7 @@ public class MultiTenancyDeploymentCmdsTenantCheckTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.clearAuthentication();
     for(Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);

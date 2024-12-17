@@ -29,7 +29,7 @@ public class AdminUserPropertyTest {
   public final ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void fillMissingFields_fail_no_id() throws Exception {
+  public void fillMissingFields_fail_no_id() {
     thrown.expect(NullPointerException.class);
     thrown.expectMessage("missing field: operaton.bpm.admin-user.id");
 
@@ -37,7 +37,7 @@ public class AdminUserPropertyTest {
   }
 
   @Test
-  public void fillMissingFields_null() throws Exception {
+  public void fillMissingFields_null() {
     User adminUser = adminUser("admin", "foo", null, null, null).init();
 
     assertThat(adminUser.getId()).isEqualTo("admin");
@@ -48,7 +48,7 @@ public class AdminUserPropertyTest {
   }
 
   @Test
-  public void fillMissingFields_blank() throws Exception {
+  public void fillMissingFields_blank() {
     User adminUser = adminUser("admin", "foo", "", "", "").init();
 
     assertThat(adminUser.getId()).isEqualTo("admin");
@@ -59,7 +59,7 @@ public class AdminUserPropertyTest {
   }
 
   @Test
-  public void paswordDefaultsToUserId() throws Exception {
+  public void paswordDefaultsToUserId() {
     User adminUser = adminUser("admin", null, "", "", "").init();
 
     assertThat(adminUser.getId()).isEqualTo("admin");

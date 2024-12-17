@@ -60,7 +60,7 @@ public class FormAuthorizationTest extends AuthorizationTest {
   protected boolean ensureSpecificVariablePermission;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     deploymentId = testRule.deploy(
         "org/operaton/bpm/engine/test/api/form/DeployedFormsProcess.bpmn20.xml",
         "org/operaton/bpm/engine/test/api/form/start.html",

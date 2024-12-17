@@ -149,7 +149,7 @@ public class FallbackSerializerFactoryTest {
       return ExampleSerializer.FORMAT;
     }
 
-    protected Object deserializeFromByteArray(byte[] bytes, String objectTypeName) throws Exception {
+    protected Object deserializeFromByteArray(byte[] bytes, String objectTypeName) {
       // deserialize everything to a constant string
       return DESERIALIZED_VALUE;
     }

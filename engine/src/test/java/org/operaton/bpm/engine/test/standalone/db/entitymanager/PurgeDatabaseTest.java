@@ -67,7 +67,7 @@ public class PurgeDatabaseTest {
   private String databaseTablePrefix;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     processEngineConfiguration.setDbMetricsReporterActivate(true);
     databaseTablePrefix = processEngineConfiguration.getDatabaseTablePrefix();

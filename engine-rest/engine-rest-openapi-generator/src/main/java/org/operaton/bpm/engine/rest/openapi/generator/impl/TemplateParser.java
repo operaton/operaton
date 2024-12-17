@@ -91,8 +91,7 @@ public class TemplateParser {
 
   }
 
-  protected static Map<String, Object> createTemplateData(String sourceDirectory)
-      throws IOException {
+  protected static Map<String, Object> createTemplateData(String sourceDirectory) {
     Map<String, Object> templateData = new HashMap<>();
 
     resolveVersions(templateData);
@@ -117,7 +116,7 @@ public class TemplateParser {
     return formattedJson;
   }
 
-  protected static String createOutputFile(String debugFile) throws IOException {
+  protected static String createOutputFile(String debugFile) {
     DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("MM-dd-HH-mm-ss");
 
     return debugFile + "/intermediate-openapi-"

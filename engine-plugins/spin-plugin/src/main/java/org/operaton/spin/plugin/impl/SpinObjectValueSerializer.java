@@ -67,7 +67,7 @@ public class SpinObjectValueSerializer extends AbstractObjectValueSerializer {
     return dataFormat.getMapper().getCanonicalTypeName(deserializedObject);
   }
 
-  protected byte[] serializeToByteArray(Object deserializedObject) throws Exception {
+  protected byte[] serializeToByteArray(Object deserializedObject) {
     DataFormatMapper mapper = dataFormat.getMapper();
     DataFormatWriter writer = dataFormat.getWriter();
 
@@ -87,7 +87,7 @@ public class SpinObjectValueSerializer extends AbstractObjectValueSerializer {
     }
   }
 
-  protected Object deserializeFromByteArray(byte[] bytes, String objectTypeName) throws Exception {
+  protected Object deserializeFromByteArray(byte[] bytes, String objectTypeName) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DataFormatMapper mapper = dataFormat.getMapper();
     DataFormatReader reader = dataFormat.getReader();

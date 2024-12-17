@@ -67,7 +67,7 @@ public class BpmPlatformXmlLocationTest {
   public MockInitialContextRule initialContextRule = new MockInitialContextRule(new SimpleNamingContext());
 
   @Test
-  public void checkValidBpmPlatformXmlResourceLocationForUrl() throws NamingException, MalformedURLException {
+  public void checkValidBpmPlatformXmlResourceLocationForUrl() throws MalformedURLException {
     TomcatParseBpmPlatformXmlStep tomcatParseBpmPlatformXmlStep = new TomcatParseBpmPlatformXmlStep();
 
     assertNull(tomcatParseBpmPlatformXmlStep.checkValidUrlLocation(BPM_PLATFORM_XML_FILE_ABSOLUTE_LOCATION));
@@ -83,7 +83,7 @@ public class BpmPlatformXmlLocationTest {
   }
 
   @Test
-  public void checkValidBpmPlatformXmlResourceLocationForFile() throws NamingException, MalformedURLException {
+  public void checkValidBpmPlatformXmlResourceLocationForFile() throws MalformedURLException {
     TomcatParseBpmPlatformXmlStep tomcatParseBpmPlatformXmlStep = new TomcatParseBpmPlatformXmlStep();
 
     URL url = tomcatParseBpmPlatformXmlStep.checkValidFileLocation(BPM_PLATFORM_XML_LOCATION_RELATIVE_PATH);
@@ -100,7 +100,7 @@ public class BpmPlatformXmlLocationTest {
   }
 
   @Test
-  public void checkUrlAutoCompletion() throws NamingException, MalformedURLException {
+  public void checkUrlAutoCompletion() {
     TomcatParseBpmPlatformXmlStep tomcatParseBpmPlatformXmlStep = new TomcatParseBpmPlatformXmlStep();
 
     String correctedUrl = tomcatParseBpmPlatformXmlStep.autoCompleteUrl(BPM_PLATFORM_XML_LOCATION_VALID_PATH_UNIX);
@@ -114,7 +114,7 @@ public class BpmPlatformXmlLocationTest {
   }
 
   @Test
-  public void checkValidBpmPlatformXmlResourceLocation() throws NamingException, MalformedURLException {
+  public void checkValidBpmPlatformXmlResourceLocation() throws MalformedURLException {
     URL url = new TomcatParseBpmPlatformXmlStep().checkValidBpmPlatformXmlResourceLocation(BPM_PLATFORM_XML_FILE_ABSOLUTE_LOCATION);
     assertEquals(new File(BPM_PLATFORM_XML_FILE_ABSOLUTE_LOCATION).toURI().toURL(), url);
   }
@@ -130,7 +130,7 @@ public class BpmPlatformXmlLocationTest {
   }
 
   @Test
-  public void bpmPlatformXmlLocationNotRegisteredInJndi() throws NamingException {
+  public void bpmPlatformXmlLocationNotRegisteredInJndi() {
     URL url = new TomcatParseBpmPlatformXmlStep().lookupBpmPlatformXmlLocationFromJndi();
     assertNull(url);
   }

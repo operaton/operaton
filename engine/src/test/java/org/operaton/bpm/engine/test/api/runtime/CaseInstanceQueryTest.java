@@ -55,7 +55,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
    * and 1 instance of oneTaskCase2
    */
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
     repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
@@ -82,7 +82,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     for (org.operaton.bpm.engine.repository.Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }
@@ -1507,7 +1507,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCaseVariableValueEqualsNumber() throws Exception {
+  public void testCaseVariableValueEqualsNumber() {
     // long
     caseService
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)

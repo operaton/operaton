@@ -32,7 +32,7 @@ public class ExclusiveTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCatchingTimerEvent() throws Exception {
+  public void testCatchingTimerEvent() {
 
     // Set the clock fixed
     Date startTime = new Date();

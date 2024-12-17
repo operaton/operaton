@@ -46,7 +46,7 @@ public class ProcessDefinitionRestServiceAuthorizationTest  extends Authorizatio
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     super.setUp();
 
     resource = new ProcessDefinitionRestService(engineName);

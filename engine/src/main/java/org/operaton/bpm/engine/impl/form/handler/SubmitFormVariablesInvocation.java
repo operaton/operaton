@@ -38,7 +38,7 @@ public class SubmitFormVariablesInvocation extends DelegateInvocation {
     this.variableScope = variableScope;
   }
 
-  protected void invoke() throws Exception {
+  protected void invoke() {
     formHandler.submitFormVariables(properties, variableScope);
   }
 

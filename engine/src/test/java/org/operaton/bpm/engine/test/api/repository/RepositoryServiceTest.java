@@ -580,7 +580,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetCaseModelByInvalidId() throws Exception {
+  public void testGetCaseModelByInvalidId() {
     try {
       repositoryService.getCaseModel("invalid");
     } catch (ProcessEngineException e) {
@@ -678,7 +678,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetDecisionModelByInvalidId() throws Exception {
+  public void testGetDecisionModelByInvalidId() {
     try {
       repositoryService.getDecisionModel("invalid");
     } catch (ProcessEngineException e) {
@@ -713,7 +713,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetDecisionRequirementsModelByInvalidId() throws Exception {
+  public void testGetDecisionRequirementsModelByInvalidId() {
     try {
       repositoryService.getDecisionRequirementsModel("invalid");
     } catch (ProcessEngineException e) {
@@ -731,7 +731,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/drg.dmn",
                            "org/operaton/bpm/engine/test/repository/drg.png" })
   @Test
-  public void testGetDecisionRequirementsDiagram() throws Exception {
+  public void testGetDecisionRequirementsDiagram() {
 
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
@@ -744,7 +744,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetDecisionRequirementsDiagramByInvalidId() throws Exception {
+  public void testGetDecisionRequirementsDiagramByInvalidId() {
     try {
       repositoryService.getDecisionRequirementsDiagram("invalid");
     } catch (ProcessEngineException e) {
@@ -1016,7 +1016,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetProcessModelByInvalidId() throws Exception {
+  public void testGetProcessModelByInvalidId() {
     try {
       repositoryService.getProcessModel("invalid");
       fail();
@@ -1026,7 +1026,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testGetProcessModelByNullId() throws Exception {
+  public void testGetProcessModelByNullId() {
     try {
       repositoryService.getProcessModel(null);
       fail();

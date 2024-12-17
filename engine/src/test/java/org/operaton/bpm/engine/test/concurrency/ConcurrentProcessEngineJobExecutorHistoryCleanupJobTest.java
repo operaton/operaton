@@ -69,7 +69,7 @@ public class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Con
   private static final String PROCESS_ENGINE_NAME = "historyCleanupJobEngine";
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
     // Ensure that current time is outside batch window
     Calendar timeOfDay = Calendar.getInstance();
@@ -104,7 +104,7 @@ public class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Con
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
 
       List<Job> jobs = processEngine.getManagementService().createJobQuery().list();

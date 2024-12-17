@@ -43,7 +43,7 @@ public class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTe
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml");
     super.setUp();

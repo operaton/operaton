@@ -46,7 +46,7 @@ public class ProcessInstanceRestServiceAuthorizationTest extends AuthorizationTe
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     super.setUp();
 
     deploymentId = createDeployment(null, "processes/user-task-process.bpmn").getId();

@@ -62,7 +62,7 @@ public class EjbProcessApplicationReference implements ProcessApplicationReferen
     return selfReference;
   }
 
-  public void processEngineStopping(ProcessEngine processEngine) throws ProcessApplicationUnavailableException {
+  public void processEngineStopping(ProcessEngine processEngine) {
     // do nothing.
   }
 

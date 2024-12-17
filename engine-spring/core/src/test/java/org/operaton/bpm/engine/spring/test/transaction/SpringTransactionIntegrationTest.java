@@ -97,7 +97,7 @@ public class SpringTransactionIntegrationTest extends SpringProcessEngineTestCas
   }
 
   @Deployment
-  public void testTransactionRollbackInServiceTask() throws Exception {
+  public void testTransactionRollbackInServiceTask() {
 
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
@@ -115,7 +115,7 @@ public class SpringTransactionIntegrationTest extends SpringProcessEngineTestCas
   }
 
   @Deployment
-  public void testTransactionRollbackInServiceTaskWithCustomRetryCycle() throws Exception {
+  public void testTransactionRollbackInServiceTaskWithCustomRetryCycle() {
 
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 
@@ -133,7 +133,7 @@ public class SpringTransactionIntegrationTest extends SpringProcessEngineTestCas
   }
 
   @Deployment
-  public void testFailingTransactionListener() throws Exception {
+  public void testFailingTransactionListener() {
 
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 

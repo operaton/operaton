@@ -81,7 +81,7 @@ public class JavaSerializationProhibitedTest {
   //still works for normal objects (not serialized)
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObject() throws Exception {
+  public void testSetJavaObject() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JavaSerializable javaSerializable = new JavaSerializable("foo");

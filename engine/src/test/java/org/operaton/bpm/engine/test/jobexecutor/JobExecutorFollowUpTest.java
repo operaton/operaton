@@ -118,7 +118,7 @@ public class JobExecutorFollowUpTest {
   protected long defaultJobExecutorPriorityRangeMax;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     jobExecutor = (ControllableJobExecutor)
         ((ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration()).getJobExecutor();
     jobExecutor.setMaxJobsPerAcquisition(2);
@@ -216,7 +216,7 @@ public class JobExecutorFollowUpTest {
   }
 
   @Test
-  public void shouldNotExecuteExclusiveFollowUpJobWithOutOfRangePriority() throws InterruptedException {
+  public void shouldNotExecuteExclusiveFollowUpJobWithOutOfRangePriority() {
     // given
     // first job priority = 20, second job priority = 10
     testHelper.deploy(TWO_TASKS_DIFFERENT_PRIORITIES_PROCESS);
@@ -255,7 +255,7 @@ public class JobExecutorFollowUpTest {
     testHelper.assertProcessEnded(processInstance.getId());
   }
 
-  private void acquireAndCompleteJob() throws InterruptedException {
+  private void acquireAndCompleteJob() {
     // job acquisition acquires the job
     acquisitionThread.waitForSync();
     acquisitionThread.makeContinueAndWaitForSync();

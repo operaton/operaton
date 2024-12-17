@@ -65,7 +65,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   protected static final String DISH_DECISION = "dish-decision";
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         processEngineConfiguration.getDmnEngineConfiguration();
 
@@ -77,7 +77,7 @@ public class HistoricDecisionInstanceQueryTest extends PluggableProcessEngineTes
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     DefaultDmnEngineConfiguration dmnEngineConfiguration =
         processEngineConfiguration.getDmnEngineConfiguration();
 

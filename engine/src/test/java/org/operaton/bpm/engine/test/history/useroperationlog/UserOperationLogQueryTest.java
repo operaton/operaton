@@ -108,7 +108,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   private final Date yesterday = new Date(((ClockUtil.getCurrentTime().getTime() - 86400000) / 1000) * 1000);
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     if (userTask != null) {
       historyService.deleteHistoricTaskInstance(userTask.getId());
     }

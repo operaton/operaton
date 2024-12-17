@@ -158,7 +158,7 @@ public class DataFormatLoadingTest {
     when(mockServiceLoader.iterator()).thenAnswer(new Answer<Iterator<DataFormatProvider>>() {
 
       @Override
-      public Iterator<DataFormatProvider> answer(InvocationOnMock invocation) throws Throwable {
+      public Iterator<DataFormatProvider> answer(InvocationOnMock invocation) {
         return Arrays.asList(providers).iterator();
       }
     });
@@ -168,7 +168,7 @@ public class DataFormatLoadingTest {
     when(mockConfiguratorLoader.iterator()).thenAnswer(new Answer<Iterator<DataFormatConfigurator<?>>>() {
 
       @Override
-      public Iterator<DataFormatConfigurator<?>> answer(InvocationOnMock invocation) throws Throwable {
+      public Iterator<DataFormatConfigurator<?>> answer(InvocationOnMock invocation) {
         return Arrays.asList(configurators).iterator();
       }
     });

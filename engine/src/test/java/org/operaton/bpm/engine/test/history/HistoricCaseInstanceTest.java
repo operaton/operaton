@@ -299,7 +299,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")
   @Test
-  public void testCaseVariableValueEqualsNumber() throws Exception {
+  public void testCaseVariableValueEqualsNumber() {
     // long
     caseService
       .withCaseDefinitionByKey("oneTaskCase")

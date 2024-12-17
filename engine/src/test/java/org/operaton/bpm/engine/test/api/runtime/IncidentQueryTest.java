@@ -85,7 +85,7 @@ public class IncidentQueryTest {
    * Setup starts 4 process instances of oneFailingServiceTaskProcess.
    */
   @Before
-  public void startProcessInstances() throws Exception {
+  public void startProcessInstances() {
     testHelper.deploy(FAILING_SERVICE_TASK_MODEL);
 
     processInstanceIds = new ArrayList<>();

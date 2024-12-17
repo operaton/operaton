@@ -34,7 +34,7 @@ public class CreateTaskFormInvocation extends DelegateInvocation {
     this.task = task;
   }
 
-  protected void invoke() throws Exception {
+  protected void invoke() {
     invocationResult = taskFormHandler.createTaskForm(task);
   }
 

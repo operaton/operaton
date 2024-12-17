@@ -34,7 +34,6 @@ import org.operaton.spin.json.mapping.Order;
 import org.operaton.spin.json.mapping.RegularCustomer;
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
@@ -63,7 +62,7 @@ public class JsonTreeMapJsonToJavaTest {
   }
 
   @Test
-  public void shouldMapListByCanonicalString() throws JsonProcessingException {
+  public void shouldMapListByCanonicalString() {
     JavaType desiredType =
         TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, Order.class);
 

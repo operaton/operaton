@@ -966,7 +966,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdOutsideBatchWindowAfterMidnight() throws ParseException {
+  public void testLessThanThresholdOutsideBatchWindowAfterMidnight() {
     //given
     prepareData(5);
 
@@ -1065,7 +1065,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testLessThanThresholdWithinBatchWindowAfterMidnight() throws ParseException {
+  public void testLessThanThresholdWithinBatchWindowAfterMidnight() {
     //given
     prepareData(5);
 
@@ -1255,7 +1255,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongDayOfTheWeekStartTime() throws ParseException {
+  public void testConfigurationFailureWrongDayOfTheWeekStartTime() {
 
     // when/then
     assertThatThrownBy(() -> processEngineConfiguration.getHistoryCleanupBatchWindows()
@@ -1265,7 +1265,7 @@ public class HistoryCleanupTest {
   }
 
   @Test
-  public void testConfigurationFailureWrongDayOfTheWeekEndTime() throws ParseException {
+  public void testConfigurationFailureWrongDayOfTheWeekEndTime() {
 
     // when/then
     assertThatThrownBy(() -> processEngineConfiguration.getHistoryCleanupBatchWindows()

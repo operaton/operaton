@@ -67,7 +67,7 @@ public class ExternalTaskHandlerIT {
   protected ProcessInstanceDto processInstance;
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void setup() {
     client = clientRule.client();
 
     adjustProcessToAddErrorMessageVariable();

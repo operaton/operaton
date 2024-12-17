@@ -119,7 +119,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
         return result;
     }
 
-    protected String processBusinessKey(MethodInvocation invocation) throws Throwable {
+    protected String processBusinessKey(MethodInvocation invocation) {
         Map<BusinessKey, String> businessKeyAnnotations = this.mapOfAnnotationValues(BusinessKey.class, invocation);
         if (businessKeyAnnotations.size() == 1) {
             BusinessKey processId = businessKeyAnnotations.keySet().iterator().next();

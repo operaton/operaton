@@ -73,7 +73,7 @@ public class HistoryTimeToLiveDeploymentTest {
   protected String historyTimeToLive;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngine = engineRule.getProcessEngine();
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     repositoryService = engineRule.getRepositoryService();
@@ -84,7 +84,7 @@ public class HistoryTimeToLiveDeploymentTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.setHistoryTimeToLive(historyTimeToLive);
     processEngineConfiguration.setEnforceHistoryTimeToLive(false);
     ClockUtil.reset();

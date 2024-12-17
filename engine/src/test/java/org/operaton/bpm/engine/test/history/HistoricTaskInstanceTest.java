@@ -269,7 +269,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testHistoricTaskInstanceQueryByProcessVariableValue() throws Exception {
+  public void testHistoricTaskInstanceQueryByProcessVariableValue() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
       Map<String, Object> variables = new HashMap<String, Object>();
@@ -517,7 +517,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricTaskInstanceTest.testHistoricTaskInstance.bpmn20.xml"})
   @Test
-  public void testHistoricTaskInstanceQueryByActivityInstanceId() throws Exception {
+  public void testHistoricTaskInstanceQueryByActivityInstanceId() {
     runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest");
 
     String activityInstanceId = historyService.createHistoricActivityInstanceQuery()
@@ -534,7 +534,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources={"org/operaton/bpm/engine/test/history/HistoricTaskInstanceTest.testHistoricTaskInstance.bpmn20.xml"})
   @Test
-  public void testHistoricTaskInstanceQueryByActivityInstanceIds() throws Exception {
+  public void testHistoricTaskInstanceQueryByActivityInstanceIds() {
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest");
     ProcessInstance pi2 = runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest");
 

@@ -78,7 +78,7 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClassFromJobExecutor() throws InterruptedException {
+  public void testResolveClassFromJobExecutor() {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 

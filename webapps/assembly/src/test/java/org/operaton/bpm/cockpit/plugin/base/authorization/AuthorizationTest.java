@@ -64,7 +64,7 @@ public abstract class AuthorizationTest extends AbstractCockpitPluginTest {
   protected Group group;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     super.before();
 
     processEngine = getProcessEngine();

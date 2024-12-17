@@ -2632,7 +2632,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariable() throws Exception {
+  public void testPutSingleLocalBinaryVariable() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -2652,7 +2652,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleBinaryVariable() throws Exception {
+  public void testPutSingleBinaryVariable() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -2672,7 +2672,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariableWithValueType() throws Exception {
+  public void testPutSingleLocalBinaryVariableWithValueType() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -2714,7 +2714,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleLocalBinaryVariableWithNoValue() throws Exception {
+  public void testPutSingleLocalBinaryVariableWithNoValue() {
     byte[] bytes = new byte[0];
 
     String variableKey = "aVariableKey";
@@ -2735,7 +2735,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPutSingleBinaryVariableWithNoValue() throws Exception {
+  public void testPutSingleBinaryVariableWithNoValue() {
     byte[] bytes = new byte[0];
 
     String variableKey = "aVariableKey";
@@ -2929,7 +2929,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithEncodingAndMimeType() throws Exception {
+  public void testPostSingleLocalFileVariableWithEncodingAndMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -2959,7 +2959,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithMimeType() throws Exception {
+  public void testPostSingleLocalFileVariableWithMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -2988,7 +2988,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPostSingleLocalFileVariableWithEncoding() throws Exception {
+  public void testPostSingleLocalFileVariableWithEncoding() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -3035,7 +3035,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   }
 
   @Test
-  public void testPostSingleFileVariable() throws Exception {
+  public void testPostSingleFileVariable() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";

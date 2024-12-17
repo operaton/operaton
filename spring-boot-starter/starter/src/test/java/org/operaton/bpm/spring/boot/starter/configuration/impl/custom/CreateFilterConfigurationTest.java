@@ -67,12 +67,12 @@ public class CreateFilterConfigurationTest {
       .watch(SpringBootProcessEngineLogger.PACKAGE);
 
   @Test
-  public void createAdminUser() throws Exception {
+  public void createAdminUser() {
     assertThat(processEngineRule.getFilterService().createFilterQuery().filterName("All").singleResult()).isNotNull();
   }
 
   @Test
-  public void fail_if_not_configured_onInit() throws Exception {
+  public void fail_if_not_configured_onInit() {
     thrown.expect(IllegalStateException.class);
     OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
     final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
@@ -81,7 +81,7 @@ public class CreateFilterConfigurationTest {
   }
 
   @Test
-  public void fail_if_not_configured_onExecution() throws Exception {
+  public void fail_if_not_configured_onExecution() {
     thrown.expect(NullPointerException.class);
 
     OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
@@ -95,7 +95,7 @@ public class CreateFilterConfigurationTest {
   }
 
   @Test
-  public void do_not_create_when_already_exist() throws Exception {
+  public void do_not_create_when_already_exist() {
     OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
     operatonBpmProperties.getFilter().setCreate("All");
     final CreateFilterConfiguration configuration = new CreateFilterConfiguration();

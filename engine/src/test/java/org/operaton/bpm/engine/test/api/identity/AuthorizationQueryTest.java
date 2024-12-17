@@ -37,7 +37,7 @@ import org.junit.Test;
 public class AuthorizationQueryTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
 
     Resource resource1 = TestResource.RESOURCE1;
@@ -55,7 +55,7 @@ public class AuthorizationQueryTest extends PluggableProcessEngineTest {
 
   }
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     List<Authorization> list = authorizationService.createAuthorizationQuery().list();
     for (Authorization authorization : list) {
       authorizationService.deleteAuthorization(authorization.getId());

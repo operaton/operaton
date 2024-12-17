@@ -59,7 +59,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
   private static final String jonny2 = "jonny2";
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
 
@@ -203,7 +203,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
   }
 
   @Test
-  public void testSaveAuthorizationAddPermissionWithInvalidResource() throws Exception {
+  public void testSaveAuthorizationAddPermissionWithInvalidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -239,7 +239,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
   }
 
   @Test
-  public void testSaveAuthorizationMultipleResourcesIncludingInvalidResource() throws Exception {
+  public void testSaveAuthorizationMultipleResourcesIncludingInvalidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -260,7 +260,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
   }
 
   @Test
-  public void testSaveAuthorizationRemovePermissionWithInvalidResource() throws Exception {
+  public void testSaveAuthorizationRemovePermissionWithInvalidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
     authorization.setUserId("userId");
@@ -296,7 +296,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
   }
 
   @Test
-  public void testSaveAuthorizationSetPermissionsWithInvalidResource() throws Exception {
+  public void testSaveAuthorizationSetPermissionsWithInvalidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -332,7 +332,7 @@ public class AuthorizationServiceAuthorizationsTest extends PluggableProcessEngi
   }
 
   @Test
-  public void testSaveAuthorizationSetPermissionsWithValidResource() throws Exception {
+  public void testSaveAuthorizationSetPermissionsWithValidResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");

@@ -298,7 +298,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     for(Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }

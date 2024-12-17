@@ -67,12 +67,12 @@ public class ExternalTaskQueryTest extends PluggableProcessEngineTest {
   protected static final String ERROR_MESSAGE = "error";
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     ClockUtil.setCurrentTime(new Date());
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     ClockUtil.reset();
   }
 

@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historic
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +70,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   @Before
-  public void setUp() throws IOException {
+  public void setUp() {
     historyService = engineRule.getHistoryService();
     runtimeService = engineRule.getRuntimeService();
     taskService = engineRule.getTaskService();

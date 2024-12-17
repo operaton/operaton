@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CmmnModelInstanceTest {
 
   @Test
-  void testClone() throws Exception {
+  void testClone() {
 
     CmmnModelInstance modelInstance = Cmmn.createEmptyModel();
 

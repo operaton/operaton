@@ -54,7 +54,7 @@ import org.junit.Test;
 public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
       public Void execute(CommandContext commandContext) {
 
@@ -166,7 +166,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
-  public void testConcurrentExclusiveCorrelationToDifferentExecutions() throws InterruptedException {
+  public void testConcurrentExclusiveCorrelationToDifferentExecutions() {
     InvocationLogListener.reset();
 
     // given a process instance
@@ -217,7 +217,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
-  public void testConcurrentExclusiveCorrelationToDifferentExecutionsCase2() throws InterruptedException {
+  public void testConcurrentExclusiveCorrelationToDifferentExecutionsCase2() {
     InvocationLogListener.reset();
 
     // given a process instance

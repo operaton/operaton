@@ -109,7 +109,7 @@ public class RedeploymentProcessApplicationTest {
   }
 
   @Before
-  public void init() throws Exception {
+  public void init() {
     repositoryService = engineRule.getRepositoryService();
     runtimeService = engineRule.getRuntimeService();
     caseService = engineRule.getCaseService();

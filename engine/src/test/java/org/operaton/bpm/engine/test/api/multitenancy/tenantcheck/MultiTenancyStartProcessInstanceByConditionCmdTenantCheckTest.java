@@ -78,7 +78,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testNoAuthenticatedTenants() throws Exception {
+  public void testNoAuthenticatedTenants() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -109,7 +109,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testWithAuthenticatedTenant() throws Exception {
+  public void testWithAuthenticatedTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -140,7 +140,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testWithAuthenticatedTenant2() throws Exception {
+  public void testWithAuthenticatedTenant2() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -170,7 +170,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
   }
 
   @Test
-  public void testDisabledTenantCheck() throws Exception {
+  public void testDisabledTenantCheck() {
     // given
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);

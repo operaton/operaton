@@ -34,12 +34,12 @@ public class TaskPriorityExtensionsTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testPriorityExtension() throws Exception {
+  public void testPriorityExtension() {
     testPriorityExtension(25);
     testPriorityExtension(75);
   }
 
-  private void testPriorityExtension(int priority) throws Exception {
+  private void testPriorityExtension(int priority) {
     final Map<String, Object> variables = new HashMap<String, Object>();
     variables.put("taskPriority", priority);
 
@@ -53,7 +53,7 @@ public class TaskPriorityExtensionsTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testPriorityExtensionString() throws Exception {
+  public void testPriorityExtensionString() {
     final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskPriorityExtensionString");
     final Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertEquals(42, task.getPriority());

@@ -112,7 +112,7 @@ public abstract class AbstractMetricsIntervalTest {
   }
 
   @Before
-  public void initMetrics() throws Exception {
+  public void initMetrics() {
     runtimeService = ENGINE_RULE.getRuntimeService();
     processEngineConfiguration = ENGINE_RULE.getProcessEngineConfiguration();
     managementService = ENGINE_RULE.getManagementService();

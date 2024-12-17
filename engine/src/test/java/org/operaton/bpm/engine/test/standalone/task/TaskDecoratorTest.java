@@ -63,7 +63,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws InterruptedException {
+  public void tearDown() {
     taskService.deleteTask(task.getId(), true);
   }
 

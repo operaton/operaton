@@ -18,7 +18,6 @@ package org.operaton.bpm.run.qa;
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.is;
-import java.io.IOException;
 import javax.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
@@ -46,7 +45,7 @@ public class ProductionConfigurationIT {
   }
 
   @BeforeClass
-  public static void runStartScript() throws IOException {
+  public static void runStartScript() {
     container = new SpringBootManagedContainer("--production");
 
     container.createConfigurationYml("configuration/production.yml",

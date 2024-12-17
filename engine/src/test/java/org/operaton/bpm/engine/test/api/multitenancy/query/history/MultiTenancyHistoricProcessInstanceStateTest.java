@@ -50,7 +50,7 @@ public class MultiTenancyHistoricProcessInstanceStateTest {
       .around(processEngineRule);
 
   @Test
-  public void testSuspensionWithTenancy() throws Exception {
+  public void testSuspensionWithTenancy() {
     BpmnModelInstance instance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
         .userTask()

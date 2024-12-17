@@ -32,12 +32,12 @@ public class JobExecutorTestCase extends PluggableProcessEngineTest {
   protected TweetHandler tweetHandler = new TweetHandler();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration.getJobHandlers().put(tweetHandler.getType(), tweetHandler);
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.getJobHandlers().remove(tweetHandler.getType());
   }
 

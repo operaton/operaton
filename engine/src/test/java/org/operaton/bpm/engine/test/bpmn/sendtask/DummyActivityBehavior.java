@@ -33,7 +33,7 @@ public class DummyActivityBehavior extends TaskActivityBehavior {
   }
 
   @Override
-  public void performExecution(ActivityExecution execution) throws Exception {
+  public void performExecution(ActivityExecution execution) {
     wasExecuted = true;
   }
 

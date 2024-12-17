@@ -59,7 +59,7 @@ public class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperatio
   protected Task task;
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
 
 
     if (task != null) {

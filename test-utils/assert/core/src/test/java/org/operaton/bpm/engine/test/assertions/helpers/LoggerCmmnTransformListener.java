@@ -34,7 +34,7 @@ import org.operaton.bpm.model.cmmn.instance.Task;
 public class LoggerCmmnTransformListener extends AbstractCmmnTransformListener {
   public static CaseExecutionListener listener = new CaseExecutionListener() {
     @Override
-    public void notify(DelegateCaseExecution var1) throws Exception {
+    public void notify(DelegateCaseExecution var1) {
       System.out.printf("Execution Event: %s %s\n", var1.getEventName(), var1.getActivityId());
     }
 

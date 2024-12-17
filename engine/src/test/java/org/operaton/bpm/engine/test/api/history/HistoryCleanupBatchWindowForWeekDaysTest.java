@@ -155,7 +155,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   }
 
   @Test
-  public void testScheduleJobForBatchWindow() throws ParseException {
+  public void testScheduleJobForBatchWindow() {
 
     ClockUtil.setCurrentTime(currentDate);
     processEngineConfiguration.initHistoryCleanup();
@@ -179,7 +179,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   }
 
   @Test
-  public void testScheduleJobForBatchWindowWithDefaultWindowConfigured() throws ParseException {
+  public void testScheduleJobForBatchWindowWithDefaultWindowConfigured() {
     ClockUtil.setCurrentTime(currentDate);
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("00:00");
@@ -213,7 +213,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   }
 
   @Test
-  public void testScheduleJobForBatchWindowWithShortcutConfiguration() throws ParseException {
+  public void testScheduleJobForBatchWindowWithShortcutConfiguration() {
     ClockUtil.setCurrentTime(currentDate);
     processEngineConfiguration.setThursdayHistoryCleanupBatchWindowStartTime("23:00");
     processEngineConfiguration.setThursdayHistoryCleanupBatchWindowEndTime("00:00");

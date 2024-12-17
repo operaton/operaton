@@ -61,7 +61,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQuerySingleCorrectPermission() throws Exception {
+  public void testQuerySingleCorrectPermission() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -81,7 +81,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQuerySingleIncorrectPermission() throws Exception {
+  public void testQuerySingleIncorrectPermission() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -101,7 +101,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQueryPermissionsWithWrongResource() throws Exception {
+  public void testQueryPermissionsWithWrongResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -137,7 +137,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQueryPermissionWithMixedResource() throws Exception {
+  public void testQueryPermissionWithMixedResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -160,7 +160,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQueryPermissionsWithMixedResource() throws Exception {
+  public void testQueryPermissionsWithMixedResource() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -194,7 +194,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void testQueryCorrectAndIncorrectPersmission() throws Exception {
+  public void testQueryCorrectAndIncorrectPersmission() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");
@@ -218,7 +218,7 @@ public class AuthorizationQueryAuthorizationsTest {
   }
 
   @Test
-  public void shouldNotFindAllAuthorizationsWithRevokedReadPermissionOnOneAuthorization() throws Exception {
+  public void shouldNotFindAllAuthorizationsWithRevokedReadPermissionOnOneAuthorization() {
     // given
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
     authorization.setUserId("userId");

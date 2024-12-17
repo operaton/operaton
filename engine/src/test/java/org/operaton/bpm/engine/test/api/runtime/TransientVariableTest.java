@@ -511,7 +511,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testChangeTransientVariable() throws URISyntaxException {
+  public void testChangeTransientVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -540,7 +540,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testSwitchTransientToNonVariable() throws URISyntaxException {
+  public void testSwitchTransientToNonVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -565,7 +565,7 @@ public class TransientVariableTest {
   }
 
   @Test
-  public void testSwitchNonToTransientVariable() throws URISyntaxException {
+  public void testSwitchNonToTransientVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()
@@ -590,7 +590,7 @@ public class TransientVariableTest {
 
 
   @Test
-  public void testSwitchNonToTransientLocalVariable() throws URISyntaxException {
+  public void testSwitchNonToTransientLocalVariable() {
     // given
     BpmnModelInstance instance = Bpmn.createExecutableProcess("Process")
       .startEvent()

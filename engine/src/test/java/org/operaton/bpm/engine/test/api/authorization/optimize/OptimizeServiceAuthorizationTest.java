@@ -125,7 +125,7 @@ public class OptimizeServiceAuthorizationTest {
   protected ManagementService managementService;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
     identityService = engineRule.getIdentityService();
     repositoryService = engineRule.getRepositoryService();

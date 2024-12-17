@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
@@ -31,7 +30,7 @@ public class FailingJavaSerializable extends JavaSerializable {
 
   private static final long serialVersionUID = 1L;
 
-  private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+  private void readObject(ObjectInputStream ois) {
     throw new RuntimeException("Exception while deserializing object.");
   }
 

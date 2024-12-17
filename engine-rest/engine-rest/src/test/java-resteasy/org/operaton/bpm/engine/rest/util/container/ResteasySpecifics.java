@@ -77,7 +77,7 @@ public class ResteasySpecifics implements ContainerSpecifics {
 
         ResteasyServerBootstrap bootstrap = new ResteasyServerBootstrap(jaxRsApplication);
 
-        protected void before() throws Throwable {
+        protected void before() {
           bootstrap.start();
         }
 
@@ -105,7 +105,7 @@ public class ResteasySpecifics implements ContainerSpecifics {
 
           ResteasyTomcatServerBootstrap bootstrap = new ResteasyTomcatServerBootstrap(webXmlResource);
 
-          protected void before() throws Throwable {
+          protected void before() {
             bootstrap.setWorkingDir(tempFolder.getRoot().getAbsolutePath());
             bootstrap.start();
           }

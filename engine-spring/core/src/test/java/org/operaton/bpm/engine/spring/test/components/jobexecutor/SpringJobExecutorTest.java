@@ -33,7 +33,7 @@ public class SpringJobExecutorTest extends SpringProcessEngineTestCase {
 
   @Deployment(resources={"org/operaton/bpm/engine/spring/test/components/SpringTimersProcess.bpmn20.xml",
           "org/operaton/bpm/engine/spring/test/components/SpringJobExecutorRollBack.bpmn20.xml"})
-	public void testHappyJobExecutorPath()throws Exception {
+	public void testHappyJobExecutorPath() {
 
 		ProcessInstance instance = runtimeService.startProcessInstanceByKey("process1");
 
@@ -47,7 +47,7 @@ public class SpringJobExecutorTest extends SpringProcessEngineTestCase {
 
   @Deployment(resources={"org/operaton/bpm/engine/spring/test/components/SpringTimersProcess.bpmn20.xml",
   "org/operaton/bpm/engine/spring/test/components/SpringJobExecutorRollBack.bpmn20.xml"})
-  public void testRollbackJobExecutorPath()throws Exception {
+  public void testRollbackJobExecutorPath() {
 
     // shutdown job executor first, otherwise waitForJobExecutorToProcessAllJobs will not actually start it....
     processEngineConfiguration.getJobExecutor().shutdown();

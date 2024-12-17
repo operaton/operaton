@@ -86,7 +86,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithList() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithList() {
     //when
     Batch batch = historyService.deleteHistoricProcessInstancesAsync(historicProcessInstances, TEST_REASON);
 
@@ -101,7 +101,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithListForDeletedDeployment() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithListForDeletedDeployment() {
     // given a second deployment
     prepareData();
     ProcessDefinitionQuery definitionQuery = engineRule.getRepositoryService().createProcessDefinitionQuery();
@@ -152,7 +152,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithListInDifferentDeployments() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithListInDifferentDeployments() {
     // given a second deployment
     prepareData();
     ProcessDefinitionQuery definitionQuery = engineRule.getRepositoryService().createProcessDefinitionQuery();
@@ -190,14 +190,14 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithEmptyList() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithEmptyList() {
     // when/then
     assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesAsync(new ArrayList<String>(), TEST_REASON))
       .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithFake() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithFake() {
     //given
     ArrayList<String> processInstanceIds = new ArrayList<>();
     processInstanceIds.add(historicProcessInstances.get(0));
@@ -214,7 +214,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithQueryAndList() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithQueryAndList() {
     //given
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery()
         .processInstanceId(historicProcessInstances.get(0));
@@ -233,7 +233,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithQuery() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithQuery() {
     //given
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery()
         .processInstanceIds(new HashSet<>(historicProcessInstances));
@@ -251,7 +251,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithEmptyQuery() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithEmptyQuery() {
     //given
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().unfinished();
 
@@ -261,7 +261,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithNonExistingIDAsQuery() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithNonExistingIDAsQuery() {
     //given
     ArrayList<String> processInstanceIds = new ArrayList<>();
     processInstanceIds.add(historicProcessInstances.get(0));
@@ -279,7 +279,7 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithoutDeleteReason() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithoutDeleteReason() {
     //when
     Batch batch = historyService.deleteHistoricProcessInstancesAsync(historicProcessInstances, null);
     completeSeedJobs(batch);
@@ -293,14 +293,14 @@ public class HistoryServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithNullList() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithNullList() {
     // when/then
     assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesAsync((List<String>) null, TEST_REASON))
       .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
-  public void testDeleteHistoryProcessInstancesAsyncWithNullQuery() throws Exception {
+  public void testDeleteHistoryProcessInstancesAsyncWithNullQuery() {
     // when/then
     assertThatThrownBy(() -> historyService.deleteHistoricProcessInstancesAsync((HistoricProcessInstanceQuery) null, TEST_REASON))
       .isInstanceOf(ProcessEngineException.class);

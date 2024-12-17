@@ -85,7 +85,7 @@ public class PaSerializationIT {
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void setup() {
     client = clientRule.client();
 
     processInstance = engineRule.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);

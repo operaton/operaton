@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.container.impl.threading.ra.outbound;
 
-import javax.naming.NamingException;
 import javax.naming.Reference;
 import javax.resource.ResourceException;
 import javax.resource.spi.ConnectionManager;
@@ -49,7 +48,7 @@ public class JcaExecutorServiceConnectionFactoryImpl implements JcaExecutorServi
     return (JcaExecutorServiceConnection) connectionManager.allocateConnection(mcf, null);
   }
 
-  public Reference getReference() throws NamingException {
+  public Reference getReference() {
     return reference;
   }
 

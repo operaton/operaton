@@ -119,7 +119,7 @@ public class TransactionIsolationReadCommittedTest extends ConcurrencyTestCase {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
 
     // end interaction with Thread 2
     thread2.waitUntilDone();

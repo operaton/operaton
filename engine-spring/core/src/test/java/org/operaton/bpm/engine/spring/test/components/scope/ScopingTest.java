@@ -59,7 +59,7 @@ public class ScopingTest {
 	private TaskService taskService;
 
 	@Before
-	public void before() throws Throwable {
+	public void before() {
 	  this.repositoryService = this.processEngine.getRepositoryService();
 		this.taskService = this.processEngine.getTaskService();
 
@@ -139,7 +139,7 @@ public class ScopingTest {
 	}
 
 	@Test
-	public void testStartingAProcessWithScopedBeans() throws Throwable {
+	public void testStartingAProcessWithScopedBeans() {
 		this.processInitiatingPojo.startScopedProcess(3243);
 	}
 

@@ -48,7 +48,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
   protected List<String> deploymentIds = new ArrayList<String>();
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     for (String deploymentId : deploymentIds) {
       repositoryService.deleteDeployment(deploymentId, true);
     }

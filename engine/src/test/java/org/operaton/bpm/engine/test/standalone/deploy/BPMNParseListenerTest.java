@@ -89,7 +89,7 @@ public class BPMNParseListenerTest {
   }
 
   @Test
-  public void testAlterProcessDefinitionKeyWhenDeploying() throws Exception {
+  public void testAlterProcessDefinitionKeyWhenDeploying() {
     // given
     DelegatingBpmnParseListener.DELEGATE = new TestBPMNParseListener();
 
@@ -104,7 +104,7 @@ public class BPMNParseListenerTest {
   }
 
   @Test
-  public void testAlterActivityBehaviors() throws Exception {
+  public void testAlterActivityBehaviors() {
 
     // given
     DelegatingBpmnParseListener.DELEGATE = new TestBPMNParseListener();

@@ -49,13 +49,13 @@ public class CustomUserOperationLogTest  {
     private HistoryService historyService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         commandExecutor = ((ProcessEngineConfigurationImpl)bootstrapRule.getProcessEngine().getProcessEngineConfiguration()).getCommandExecutorTxRequired();
         historyService = bootstrapRule.getProcessEngine().getHistoryService();
     }
 
     @Test
-    public void testDoNotOverwriteUserId() throws Exception {
+    public void testDoNotOverwriteUserId() {
         commandExecutor.execute(new Command<Void>(){
             @Override
             public Void execute(final CommandContext commandContext) {

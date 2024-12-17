@@ -50,7 +50,7 @@ public class DecisionInvocation extends DelegateInvocation {
   }
 
   @Override
-  protected void invoke() throws Exception {
+  protected void invoke() {
     final DmnEngine dmnEngine = Context.getProcessEngineConfiguration()
       .getDmnEngine();
 

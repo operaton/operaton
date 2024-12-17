@@ -40,14 +40,14 @@ import org.junit.Test;
 public class StandaloneTaskTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
     identityService.saveUser(identityService.newUser("kermit"));
     identityService.saveUser(identityService.newUser("gonzo"));
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("gonzo");
     List<Task> tasks = taskService.createTaskQuery().list();

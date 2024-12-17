@@ -77,7 +77,7 @@ public class JobExecutorShutdownTest {
   protected static ThreadControl executionThread;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     jobExecutor = (ControllableJobExecutor)
         ((ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration()).getJobExecutor();
     jobExecutor.setMaxJobsPerAcquisition(2);

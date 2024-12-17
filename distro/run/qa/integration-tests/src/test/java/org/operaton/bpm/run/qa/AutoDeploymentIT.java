@@ -63,7 +63,7 @@ public class AutoDeploymentIT {
     }
   }
 
-  public void runStartScript() throws IOException {
+  public void runStartScript() {
     container = new SpringBootManagedContainer();
     container.replaceConfigurationYml(SpringBootManagedContainer.APPLICATION_YML_PATH,
         AutoDeploymentIT.class.getClassLoader().getResourceAsStream("example-disabled.yml"));

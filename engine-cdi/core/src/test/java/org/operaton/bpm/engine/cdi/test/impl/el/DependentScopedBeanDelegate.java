@@ -32,7 +32,7 @@ public class DependentScopedBeanDelegate implements JavaDelegate {
   protected DependentScopedBean dependentScopedBean;
 
   @Override
-  public void execute(DelegateExecution delegateExecution) throws Exception {
+  public void execute(DelegateExecution delegateExecution) {
     dependentScopedBean.invoke();
   }
 

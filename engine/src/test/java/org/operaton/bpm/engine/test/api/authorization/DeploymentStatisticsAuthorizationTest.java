@@ -50,7 +50,7 @@ public class DeploymentStatisticsAuthorizationTest extends AuthorizationTest {
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     firstDeploymentId = createDeployment("first", "org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml").getId();
     secondDeploymentId = createDeployment("second", "org/operaton/bpm/engine/test/api/authorization/timerStartEventProcess.bpmn20.xml").getId();
     thirdDeploymentId = createDeployment("third", "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml").getId();

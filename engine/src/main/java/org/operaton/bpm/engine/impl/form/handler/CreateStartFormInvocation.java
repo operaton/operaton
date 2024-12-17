@@ -34,7 +34,7 @@ public class CreateStartFormInvocation extends DelegateInvocation {
     this.definition = definition;
   }
 
-  protected void invoke() throws Exception {
+  protected void invoke() {
     invocationResult = startFormHandler.createStartFormData(definition);
   }
 

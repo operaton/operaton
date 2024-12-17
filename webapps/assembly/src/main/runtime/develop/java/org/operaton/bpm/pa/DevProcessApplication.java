@@ -66,7 +66,7 @@ public class DevProcessApplication extends ServletProcessApplication {
   private static final Logger LOGGER = Logger.getLogger(DevProcessApplication.class.getName());
 
   @PostDeploy
-  public void startProcesses(final ProcessEngine engine) throws Exception {
+  public void startProcesses(final ProcessEngine engine) {
     createAdminDemoData(engine);
     createTasklistDemoData(engine);
     new Thread() {
@@ -87,7 +87,7 @@ public class DevProcessApplication extends ServletProcessApplication {
     }.start();
   }
 
-  protected void createCockpitDemoData(final ProcessEngine engine) throws Exception {
+  protected void createCockpitDemoData(final ProcessEngine engine) {
     RuntimeService runtimeService = engine.getRuntimeService();
 
     Map<String, Object> vars1 = new HashMap<String, Object>();
@@ -345,7 +345,7 @@ public class DevProcessApplication extends ServletProcessApplication {
 
   }
 
-  private void createAdminDemoData(ProcessEngine engine) throws Exception {
+  private void createAdminDemoData(ProcessEngine engine) {
     UserDto user = new UserDto();
     UserProfileDto profile = new UserProfileDto();
     profile.setId("jonny1");

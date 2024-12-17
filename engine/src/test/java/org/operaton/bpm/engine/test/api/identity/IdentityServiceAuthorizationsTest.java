@@ -75,7 +75,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
   private static final String jonny2 = "jonny2";
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     cleanupAfterTest();
 
@@ -278,9 +278,8 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
   }
 
   @Test
-  public void testUserUnlockWithoutAuthorization() throws ParseException {
-
-    // crate user while still in god-mode:
+  public void testUserUnlockWithoutAuthorization() {
+    // create user while still in god-mode:
     String userId = "jonny";
     User jonny = identityService.newUser(userId);
     jonny.setPassword("xxx");
@@ -1340,7 +1339,7 @@ public class IdentityServiceAuthorizationsTest extends PluggableProcessEngineTes
         );
   }
 
-  protected void lockUser(String userId, String invalidPassword) throws ParseException {
+  protected void lockUser(String userId, String invalidPassword) {
     Date now = ClockUtil.getCurrentTime();
     try {
       for (int i = 0; i <= 11; i++) {

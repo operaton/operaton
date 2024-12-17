@@ -35,7 +35,7 @@ public class ThrowOleWhenDeletingExceptionStacktraceTest extends ConcurrencyTest
   protected AtomicReference<JobEntity> job = new AtomicReference<>();
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     if (job.get() != null) {
       processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
         JobEntity jobEntity = job.get();

@@ -356,7 +356,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployDmnModelInstance() throws Exception {
+  public void testDeployDmnModelInstance() {
     // given
     DmnModelInstance dmnModelInstance = createDmnModelInstance();
 
@@ -369,7 +369,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployDmnModelInstanceNegativeHistoryTimeToLive() throws Exception {
+  public void testDeployDmnModelInstanceNegativeHistoryTimeToLive() {
     // given
     DmnModelInstance dmnModelInstance = createDmnModelInstanceNegativeHistoryTimeToLive();
 
@@ -440,7 +440,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployAndGetDecisionDefinition() throws Exception {
+  public void testDeployAndGetDecisionDefinition() {
 
     // given decision model
     DmnModelInstance dmnModelInstance = createDmnModelInstance();
@@ -463,7 +463,7 @@ public class DecisionDefinitionDeployerTest {
   }
 
   @Test
-  public void testDeployEmptyDecisionDefinition() throws Exception {
+  public void testDeployEmptyDecisionDefinition() {
 
     // given empty decision model
     DmnModelInstance modelInstance = Dmn.createEmptyModel();
@@ -488,7 +488,7 @@ public class DecisionDefinitionDeployerTest {
 
 
   @Test
-  public void testDeployAndGetDRDDefinition() throws Exception {
+  public void testDeployAndGetDRDDefinition() {
 
     // when decision requirement graph is deployed
     DeploymentWithDefinitions deployment = testRule.deploy(DRD_SCORE_RESOURCE);

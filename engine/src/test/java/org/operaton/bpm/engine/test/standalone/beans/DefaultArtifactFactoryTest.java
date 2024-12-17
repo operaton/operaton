@@ -27,7 +27,7 @@ import org.junit.Test;
 public class DefaultArtifactFactoryTest {
 
   @Test
-  public void testDefaultArtifactService() throws Exception {
+  public void testDefaultArtifactService() {
     ArtifactFactory artifactFactory = new DefaultArtifactFactory();
 
     DummyArtifact artifact = artifactFactory.getArtifact(DummyArtifact.class);

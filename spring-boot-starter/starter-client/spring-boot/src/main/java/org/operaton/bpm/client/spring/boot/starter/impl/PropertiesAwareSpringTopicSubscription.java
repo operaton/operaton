@@ -32,7 +32,7 @@ public class PropertiesAwareSpringTopicSubscription extends SpringTopicSubscript
   protected ClientProperties clientProperties;
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
     mergeSubscriptionWithProperties();
     super.afterPropertiesSet();
   }

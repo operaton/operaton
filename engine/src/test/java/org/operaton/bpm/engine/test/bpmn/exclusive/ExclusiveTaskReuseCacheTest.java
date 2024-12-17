@@ -28,12 +28,12 @@ import org.junit.Test;
 public class ExclusiveTaskReuseCacheTest extends ExclusiveTaskTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration.setDbEntityCacheReuseEnabled(true);
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.setDbEntityCacheReuseEnabled(false);
   }
 

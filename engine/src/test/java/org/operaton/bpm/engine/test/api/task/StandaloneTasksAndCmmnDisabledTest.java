@@ -59,7 +59,7 @@ public class StandaloneTasksAndCmmnDisabledTest {
 
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     runtimeService = engineRule.getRuntimeService();
     taskService = engineRule.getTaskService();
     identityService = engineRule.getIdentityService();

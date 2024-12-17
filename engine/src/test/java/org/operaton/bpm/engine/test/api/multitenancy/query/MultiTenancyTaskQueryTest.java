@@ -45,7 +45,7 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
   private final List<String> taskIds = new ArrayList<>();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
     createTaskWithoutTenant();
     createTaskForTenant(TENANT_ONE);
@@ -214,7 +214,7 @@ public class MultiTenancyTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.clearAuthentication();
     for (String taskId : taskIds) {
       taskService.deleteTask(taskId, true);

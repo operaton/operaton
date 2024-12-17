@@ -119,7 +119,7 @@ public abstract class CallableElementActivityBehavior extends AbstractBpmnActivi
     if (varMapping != null) {
       invokeVarMappingDelegation(new DelegateInvocation(execution, null) {
         @Override
-        protected void invoke() throws Exception {
+        protected void invoke() {
           varMapping.mapInputVariables(execution, variables);
         }
       });
@@ -142,7 +142,7 @@ public abstract class CallableElementActivityBehavior extends AbstractBpmnActivi
     if (varMapping != null) {
       invokeVarMappingDelegation(new DelegateInvocation(execution, null) {
         @Override
-        protected void invoke() throws Exception {
+        protected void invoke() {
           varMapping.mapOutputVariables(execution, subInstance);
         }
       });

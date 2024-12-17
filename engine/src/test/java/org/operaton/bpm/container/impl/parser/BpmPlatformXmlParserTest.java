@@ -44,7 +44,7 @@ public class BpmPlatformXmlParserTest {
   private BpmPlatformXmlParser parser;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     parser = new BpmPlatformXmlParser();
   }
 

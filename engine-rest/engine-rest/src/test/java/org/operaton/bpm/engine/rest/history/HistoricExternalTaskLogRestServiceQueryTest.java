@@ -33,7 +33,6 @@ import org.mockito.Mockito;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -64,7 +63,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
   protected HistoricExternalTaskLogQuery mockedQuery;
 
   @Before
-  public void setUpRuntimeData() throws IOException {
+  public void setUpRuntimeData() {
     mockedQuery = setUpMockHistoricExternalTaskLogQuery(MockProvider.createMockHistoricExternalTaskLogs());
   }
 

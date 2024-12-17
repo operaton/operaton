@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.functional.classloading.ear;
+import jakarta.transaction.SystemException;
 
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;

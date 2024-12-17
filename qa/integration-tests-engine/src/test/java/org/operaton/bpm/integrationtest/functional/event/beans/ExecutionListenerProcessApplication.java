@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  */
 @ProcessApplication
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class ExecutionListenerProcessApplication extends org.operaton.bpm.application.impl.ServletProcessApplication {
+public class ExecutionListenerProcessApplication extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
   public static final String LISTENER_INVOCATION_COUNT = "listenerInvocationCount";
 

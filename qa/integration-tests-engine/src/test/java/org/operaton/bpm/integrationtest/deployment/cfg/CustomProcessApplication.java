@@ -26,7 +26,7 @@ import org.operaton.bpm.application.ProcessApplication;
     deploymentDescriptors = {"my/alternate/location/processes.xml"}
 )
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class CustomProcessApplication extends org.operaton.bpm.application.impl.ServletProcessApplication {
+public class CustomProcessApplication extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
   
 
 }

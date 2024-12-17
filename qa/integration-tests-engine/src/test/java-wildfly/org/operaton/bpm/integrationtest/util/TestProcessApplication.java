@@ -16,26 +16,14 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
+import org.operaton.bpm.application.ProcessApplication;
+
 /**
- * @author Thorben Lindhauer
+ * @author meyerd
  *
  */
-public class TestConstants {
-
-  public static final String APP_NAME = "";
-  public static final String PROCESS_ENGINE_SERVICE_JNDI_NAME = "java:comp/env/ProcessEngineService";
-  public static final String PROCESS_APPLICATION_SERVICE_JNDI_NAME = "java:comp/env/ProcessApplicationService";
-
-  public static String getAppName() {
-    return APP_NAME;
-  }
-
-  public String getEngineService() {
-    return PROCESS_ENGINE_SERVICE_JNDI_NAME;
-  }
-
-  public String getProcessApplicationService() {
-    return PROCESS_APPLICATION_SERVICE_JNDI_NAME;
-  }
+@ProcessApplication
+// Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
+public class TestProcessApplication extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
 }

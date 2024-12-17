@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.classloading.beans;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.delegate.DelegateCaseExecution;

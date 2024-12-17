@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb.remote.bean;
 
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
+import jakarta.ejb.Remote;
+import jakarta.ejb.Stateless;
 
 /**
  * A SLSB with a remote business interface 

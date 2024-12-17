@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.integrationtest.deployment.callbacks.apps;
 
-import javax.ejb.ConcurrencyManagement;
-import javax.ejb.ConcurrencyManagementType;
-import javax.ejb.Local;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
+import jakarta.ejb.ConcurrencyManagement;
+import jakarta.ejb.ConcurrencyManagementType;
+import jakarta.ejb.Local;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Startup;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.PreUndeploy;
@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.junit.Assert;
 
 /**
- * Custom {@link org.operaton.bpm.application.impl.EjbProcessApplication} with PA lifecycle callbacks
+ * Custom {@link org.operaton.bpm.application.impl.JakartaEjbProcessApplication} with PA lifecycle callbacks
  *
  * @author Daniel Meyer
  *
@@ -44,7 +44,7 @@ import org.junit.Assert;
 @ProcessApplication
 @Local(ProcessApplicationInterface.class)
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class CustomEjbProcessApplication extends org.operaton.bpm.application.impl.EjbProcessApplication {
+public class CustomEjbProcessApplication extends org.operaton.bpm.application.impl.JakartaEjbProcessApplication {
 
   @PostDeploy
   public void postDeploy(ProcessEngine processEngine) {

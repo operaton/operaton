@@ -22,7 +22,6 @@ import static org.operaton.bpm.model.bpmn.BpmnTestConstants.SEQUENCE_FLOW_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.START_EVENT_ID;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.USER_TASK_ID;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import org.junit.jupiter.api.AfterEach;
@@ -37,7 +36,7 @@ class DiGeneratorForSequenceFlowsTest {
   private BpmnModelInstance instance;
 
   @AfterEach
-  void validateModel() throws IOException {
+  void validateModel() {
     if (instance != null) {
       Bpmn.validateModel(instance);
     }

@@ -25,7 +25,7 @@ import org.springframework.test.context.TestPropertySource;
 public class MetricsPropertiesTest extends ParsePropertiesHelper {
 
   @Test
-  public void verifyCorrectProperties() throws Exception {
+  public void verifyCorrectProperties() {
     assertThat(metrics.isEnabled()).isFalse();
     assertThat(metrics.isDbReporterActivate()).isFalse();
   }

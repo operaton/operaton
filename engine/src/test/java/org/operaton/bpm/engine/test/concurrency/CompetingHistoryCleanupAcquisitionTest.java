@@ -70,7 +70,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
   protected ThreadControl acquisitionThread;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     historyService = engineRule.getHistoryService();
     managementService = engineRule.getManagementService();
@@ -82,7 +82,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     if (jobExecutor.isActive()) {
       jobExecutor.shutdown();
     }

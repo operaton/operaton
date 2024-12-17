@@ -76,7 +76,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithList() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithList() {
     // given
     List<String> processIds = startTestProcesses(2);
 
@@ -95,7 +95,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithLargeList() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithLargeList() {
     // given
     engineRule.getProcessEngineConfiguration().setBatchJobsPerSeed(1010);
     List<String> processIds = startTestProcesses(1100);
@@ -122,7 +122,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithListOnly() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithListOnly() {
     // given
     List<String> processIds = startTestProcesses(2);
 
@@ -141,7 +141,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithFake() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithFake() {
     // given
     List<String> processIds = startTestProcesses(2);
     processIds.add("aFake");
@@ -166,7 +166,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithNullList() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithNullList() {
 
     // when/then
     assertThatThrownBy(() -> runtimeService.deleteProcessInstancesAsync(null, null, TESTING_INSTANCE_DELETE))
@@ -178,7 +178,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithEmptyList() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithEmptyList() {
 
     // when/then
     assertThatThrownBy(() -> runtimeService.deleteProcessInstancesAsync(new ArrayList<String>(), null, TESTING_INSTANCE_DELETE))
@@ -190,7 +190,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithQuery() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithQuery() {
     // given
     List<String> processIds = startTestProcesses(2);
     ProcessInstanceQuery processInstanceQuery = runtimeService
@@ -211,7 +211,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithQueryOnly() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithQueryOnly() {
     // given
     List<String> processIds = startTestProcesses(2);
     ProcessInstanceQuery processInstanceQuery = runtimeService
@@ -232,7 +232,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithQueryWithoutDeleteReason() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithQueryWithoutDeleteReason() {
     // given
     List<String> processIds = startTestProcesses(2);
     ProcessInstanceQuery processInstanceQuery = runtimeService
@@ -304,7 +304,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithNullQueryParameter() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithNullQueryParameter() {
 
     // when/then
     assertThatThrownBy(() -> runtimeService.deleteProcessInstancesAsync(null, null, TESTING_INSTANCE_DELETE))
@@ -315,7 +315,7 @@ public class RuntimeServiceAsyncOperationsTest extends AbstractAsyncOperationsTe
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
-  public void testDeleteProcessInstancesAsyncWithInvalidQueryParameter() throws Exception {
+  public void testDeleteProcessInstancesAsyncWithInvalidQueryParameter() {
     // given
     startTestProcesses(2);
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery()

@@ -176,7 +176,7 @@ public class ClientFactory
   }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
   }
 
   public ClientConfiguration getClientConfiguration() {

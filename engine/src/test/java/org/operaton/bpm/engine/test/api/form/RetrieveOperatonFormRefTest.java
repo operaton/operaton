@@ -83,7 +83,7 @@ public class RetrieveOperatonFormRefTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     List<org.operaton.bpm.engine.repository.Deployment> deployments = repositoryService.createDeploymentQuery().list();
     for (org.operaton.bpm.engine.repository.Deployment deployment : deployments) {
       repositoryService.deleteDeployment(deployment.getId(), true);
@@ -188,7 +188,7 @@ public class RetrieveOperatonFormRefTest {
 
   @Test
   @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.taskFormBindingLatest.bpmn"})
-  public void shouldFailToRetrieveTaskFormBindingLatestUnexistingKey() throws IOException {
+  public void shouldFailToRetrieveTaskFormBindingLatestUnexistingKey() {
     // given BPMN model references missing form
     runtimeService.startProcessInstanceByKey("taskFormBindingLatest");
 
@@ -212,7 +212,7 @@ public class RetrieveOperatonFormRefTest {
 
   @Test
   @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.taskFormBindingDeployment.bpmn"})
-  public void shouldFailToRetrieveTaskFormBindingDeploymentUnexistingKey() throws IOException {
+  public void shouldFailToRetrieveTaskFormBindingDeploymentUnexistingKey() {
     // given BPMN model references missing form
     runtimeService.startProcessInstanceByKey("taskFormBindingDeployment");
 
@@ -238,7 +238,7 @@ public class RetrieveOperatonFormRefTest {
   @org.operaton.bpm.engine.test.Deployment(resources = {
       "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.taskFormBindingVersion2.bpmn",
       "org/operaton/bpm/engine/test/api/form/task.form" })
-  public void shouldFailToRetrieveTaskFormBindingVersionUnexistingVersion() throws IOException {
+  public void shouldFailToRetrieveTaskFormBindingVersionUnexistingVersion() {
     // given BPMN model references missing form
     runtimeService.startProcessInstanceByKey("taskFormBindingVersion");
 
@@ -398,7 +398,7 @@ public class RetrieveOperatonFormRefTest {
 
   @Test
   @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.startFormBindingLatest.bpmn"})
-  public void shouldFailToRetrieveStartFormBindingLatestUnexistingKey() throws IOException {
+  public void shouldFailToRetrieveStartFormBindingLatestUnexistingKey() {
     // given BPMN model references missing form
     runtimeService.startProcessInstanceByKey("startFormBindingLatest");
 
@@ -419,7 +419,7 @@ public class RetrieveOperatonFormRefTest {
 
   @Test
   @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.startFormBindingDeployment.bpmn"})
-  public void shouldFailToRetrieveStartFormBindingDeploymentUnexistingKey() throws IOException {
+  public void shouldFailToRetrieveStartFormBindingDeploymentUnexistingKey() {
     // given BPMN model references missing form
     runtimeService.startProcessInstanceByKey("startFormBindingDeployment");
 
@@ -442,7 +442,7 @@ public class RetrieveOperatonFormRefTest {
   @org.operaton.bpm.engine.test.Deployment(resources = {
       "org/operaton/bpm/engine/test/api/form/RetrieveOperatonFormRefTest.startFormBindingVersion2.bpmn",
       "org/operaton/bpm/engine/test/api/form/start.form" })
-  public void shouldFailToRetrieveStartFormBindingVersionUnexistingVersion() throws IOException {
+  public void shouldFailToRetrieveStartFormBindingVersionUnexistingVersion() {
     // given BPMN model references missing form
     runtimeService.startProcessInstanceByKey("startFormBindingVersion");
 

@@ -54,7 +54,7 @@ public class HistoricExternalTaskLogAuthorizationTest extends AuthorizationTest 
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     BpmnModelInstance defaultModel = createDefaultExternalTaskModel().build();
     BpmnModelInstance modifiedModel = createDefaultExternalTaskModel().processKey(ANOTHER_PROCESS_KEY).build();
     testRule.deploy(defaultModel, modifiedModel);

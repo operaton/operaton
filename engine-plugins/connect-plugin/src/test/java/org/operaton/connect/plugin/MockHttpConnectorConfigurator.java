@@ -16,8 +16,6 @@
  */
 package org.operaton.connect.plugin;
 
-import java.io.IOException;
-
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.ContentType;
@@ -65,7 +63,7 @@ public class MockHttpConnectorConfigurator implements ConnectorConfigurator<Http
       super(HttpVersion.HTTP_1_1, 200, "OK");
     }
 
-    public void close() throws IOException {
+    public void close() {
       // no-op
     }
   }

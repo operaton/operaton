@@ -690,7 +690,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEqualsNumber() throws Exception {
+  public void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS,
         Collections.<String, Object>singletonMap("var", 123L));

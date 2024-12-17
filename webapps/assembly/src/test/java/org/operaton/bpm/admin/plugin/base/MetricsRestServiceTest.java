@@ -53,7 +53,7 @@ public class MetricsRestServiceTest extends AbstractAdminPluginTest {
   private MetricsRegistry metricsRegistry;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     super.before();
 
     var processEngine = getProcessEngine();

@@ -52,7 +52,7 @@ public class JobExecutorBatchTest {
   protected int defaultBatchJobsPerSeed;
 
   @Before
-  public void replaceJobExecutor() throws Exception {
+  public void replaceJobExecutor() {
     ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     defaultJobExecutor = processEngineConfiguration.getJobExecutor();
     jobExecutor = new CountingJobExecutor();

@@ -61,7 +61,7 @@ public class XmlDomDataFormatReaderTest {
   }
 
   @Test
-  public void shouldNotMatchInvalidXml() throws IOException {
+  public void shouldNotMatchInvalidXml() {
     inputReader = stringToReader("prefix " + EXAMPLE_XML);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isFalse();
   }

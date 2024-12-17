@@ -18,7 +18,6 @@ package org.operaton.bpm.run.qa;
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.is;
-import java.io.IOException;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 import org.junit.After;
 import org.junit.Test;
@@ -44,7 +43,7 @@ public class ExampleDisabledIT {
   }
 
   @Before
-  public void runStartScript() throws IOException {
+  public void runStartScript() {
     container = new SpringBootManagedContainer();
 
     container.replaceConfigurationYml(SpringBootManagedContainer.APPLICATION_YML_PATH,

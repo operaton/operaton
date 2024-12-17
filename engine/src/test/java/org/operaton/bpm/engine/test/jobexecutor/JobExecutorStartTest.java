@@ -33,12 +33,12 @@ public class JobExecutorStartTest {
   private JobExecutor jobExecutor;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     jobExecutor = new DefaultJobExecutor();
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     jobExecutor.shutdown();
   }
 

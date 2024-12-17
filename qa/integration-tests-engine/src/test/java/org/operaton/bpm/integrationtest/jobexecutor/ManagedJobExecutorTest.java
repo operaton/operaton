@@ -61,21 +61,21 @@ public class ManagedJobExecutorTest {
   protected RuntimeService runtimeService;
 
   @Before
-  public void setUpCdiProcessEngineTestCase() throws Exception {
+  public void setUpCdiProcessEngineTestCase() {
     processEngine = (ProgrammaticBeanLookup.lookup(ManagedJobExecutorBean.class)).getProcessEngine();
     managementService = processEngine.getManagementService();
     runtimeService = processEngine.getRuntimeService();
   }
 
   @After
-  public void tearDownCdiProcessEngineTestCase() throws Exception {
+  public void tearDownCdiProcessEngineTestCase() {
     processEngine = null;
     managementService = null;
     runtimeService = null;
   }
 
   @Test
-  public void testManagedExecutorUsed() throws InterruptedException {
+  public void testManagedExecutorUsed() {
     org.operaton.bpm.engine.repository.Deployment deployment = processEngine.getRepositoryService().createDeployment()
       .addClasspathResource("org/operaton/bpm/integrationtest/jobexecutor/ManagedJobExecutorTest.testManagedExecutorUsed.bpmn20.xml")
       .deploy();

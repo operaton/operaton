@@ -103,7 +103,7 @@ public class RedeploymentRegistrationTest {
   }
 
   @Before
-  public void init() throws Exception {
+  public void init() {
     repositoryService = engineRule.getRepositoryService();
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
 

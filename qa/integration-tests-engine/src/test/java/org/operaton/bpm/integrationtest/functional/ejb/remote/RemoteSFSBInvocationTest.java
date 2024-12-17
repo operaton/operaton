@@ -73,7 +73,7 @@ public class RemoteSFSBInvocationTest extends AbstractFoxPlatformIntegrationTest
 
   @Test
   @OperateOnDeployment("pa")
-  public void testInvokeBean() throws Exception{
+  public void testInvokeBean(){
 
     // this testcase first resolves the Bean synchronously and then from the JobExecutor
 

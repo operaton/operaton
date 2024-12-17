@@ -63,7 +63,7 @@ public class MultipartPayloadProvider implements MessageBodyReader<MultipartForm
   }
 
   public MultipartFormData readFrom(Class<MultipartFormData> type, Type genericType, Annotation[] annotations, MediaType mediaType,
-      MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException, WebApplicationException {
+      MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws WebApplicationException {
 
     final MultipartFormData multipartFormData = createMultipartFormDataInstance();
     final FileUpload fileUpload = createFileUploadInstance();

@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 public class ChangeVariablesService implements JavaDelegate {
 
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
     Date now = new Date();
 
     List<String> serializable = new ArrayList<String>();

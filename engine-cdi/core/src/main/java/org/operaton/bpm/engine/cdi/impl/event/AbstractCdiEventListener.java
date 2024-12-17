@@ -57,7 +57,7 @@ public abstract class AbstractCdiEventListener implements TaskListener, Executio
   protected abstract void fireEvent(BusinessProcessEvent event, Annotation[] qualifiers);
 
   @Override
-  public void notify(DelegateExecution execution) throws Exception {
+  public void notify(DelegateExecution execution) {
     // test whether cdi is setup correctly. (if not, just do not deliver the event)
     if (!testCdiSetup()) {
       return;

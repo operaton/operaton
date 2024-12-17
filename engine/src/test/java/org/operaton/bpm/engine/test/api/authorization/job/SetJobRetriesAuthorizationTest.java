@@ -120,7 +120,7 @@ public class SetJobRetriesAuthorizationTest {
   protected String deploymentId;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     managementService = engineRule.getManagementService();
     authRule.createUserAndGroup("userId", "groupId");
   }

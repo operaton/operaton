@@ -2200,7 +2200,7 @@ public class TaskServiceTest {
   @Deployment(resources={
   "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
-  public void testDeleteAttachment() throws ParseException {
+  public void testDeleteAttachment() {
     // given
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String taskId = taskService.createTaskQuery().singleResult().getId();

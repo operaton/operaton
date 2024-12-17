@@ -35,13 +35,13 @@ import org.junit.Test;
 public class ProcessEnginesTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     ProcessEngines.destroy();
     ProcessEngines.init();
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     ProcessEngines.destroy();
   }
 

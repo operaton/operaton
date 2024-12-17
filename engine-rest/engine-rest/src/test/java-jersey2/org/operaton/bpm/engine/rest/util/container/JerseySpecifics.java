@@ -69,7 +69,7 @@ public class JerseySpecifics implements ContainerSpecifics {
 
         JerseyServerBootstrap bootstrap = new JerseyServerBootstrap(jaxRsApplication);
 
-        protected void before() throws Throwable {
+        protected void before() {
           bootstrap.start();
         }
 
@@ -101,7 +101,7 @@ public class JerseySpecifics implements ContainerSpecifics {
 
           TomcatServerBootstrap bootstrap = new JerseyTomcatServerBootstrap(webXmlResource);
 
-          protected void before() throws Throwable {
+          protected void before() {
             bootstrap.setWorkingDir(tempFolder.getRoot().getAbsolutePath());
             bootstrap.start();
           }

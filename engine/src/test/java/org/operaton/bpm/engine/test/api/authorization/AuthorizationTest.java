@@ -72,7 +72,7 @@ public abstract class AuthorizationTest extends PluggableProcessEngineTest {
   protected List<String> deploymentIds = new ArrayList<>();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     user = createUser(userId);
     group = createGroup(groupId);
 

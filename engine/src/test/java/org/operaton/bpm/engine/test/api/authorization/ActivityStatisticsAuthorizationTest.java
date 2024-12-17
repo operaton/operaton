@@ -46,7 +46,7 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     testRule.deploy("org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml");
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);
     startProcessAndExecuteJob(ONE_INCIDENT_PROCESS_KEY);

@@ -65,7 +65,7 @@ public class MBeanServiceContainerTest {
   private final TestService service4 = new TestService();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     serviceContainer = new MBeanServiceContainer();
   }
 

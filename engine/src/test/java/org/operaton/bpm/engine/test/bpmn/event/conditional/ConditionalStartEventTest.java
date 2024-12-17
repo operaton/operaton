@@ -84,7 +84,7 @@ public class ConditionalStartEventTest {
   protected RuntimeService runtimeService;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     repositoryService = engineRule.getRepositoryService();
     runtimeService = engineRule.getRuntimeService();
   }

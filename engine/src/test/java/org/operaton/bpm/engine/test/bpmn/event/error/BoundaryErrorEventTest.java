@@ -56,7 +56,7 @@ import org.junit.Test;
 public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
 
     // Normally the UI will do this automatically for us
@@ -64,7 +64,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.clearAuthentication();
 
   }
@@ -341,7 +341,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
           "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
-  public void testCatchErrorThrownByCallActivityOnCallActivity() throws InterruptedException {
+  public void testCatchErrorThrownByCallActivityOnCallActivity() {
       String procId = runtimeService.startProcessInstanceByKey("catchErrorOnCallActivity2ndLevel").getId();
 
       Task task = taskService.createTaskQuery().singleResult();

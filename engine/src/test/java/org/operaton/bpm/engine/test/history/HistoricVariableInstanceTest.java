@@ -312,7 +312,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources={"org/operaton/bpm/engine/test/standalone/history/FullHistoryTest.testVariableUpdatesAreLinkedToActivity.bpmn20.xml"})
   @Test
-  public void testVariableUpdatesLinkedToActivity() throws Exception {
+  public void testVariableUpdatesLinkedToActivity() {
     if (isFullHistoryEnabled()) {
       ProcessInstance pi = runtimeService.startProcessInstanceByKey("ProcessWithSubProcess");
 
@@ -1931,7 +1931,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testSetVariableInSubProcessStartEventWithEndListener () throws Exception {
+  public void testSetVariableInSubProcessStartEventWithEndListener () {
     //given
     BpmnModelInstance topProcess = Bpmn.createExecutableProcess("topProcess")
         .startEvent()
@@ -1962,7 +1962,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testSetVariableInEndListenerOfAsyncStartEvent () throws Exception {
+  public void testSetVariableInEndListenerOfAsyncStartEvent () {
     //given
     BpmnModelInstance subProcess = Bpmn.createExecutableProcess("process")
       .startEvent()
@@ -1985,7 +1985,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testSetVariableInStartListenerOfAsyncStartEvent () throws Exception {
+  public void testSetVariableInStartListenerOfAsyncStartEvent () {
     //given
     BpmnModelInstance subProcess = Bpmn.createExecutableProcess("process")
       .startEvent()

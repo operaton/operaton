@@ -57,7 +57,7 @@ public class MultiTenancyProcessDefinitionSuspensionStateTenantIdProviderTest {
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     testRule.deploy(PROCESS);
   }
 

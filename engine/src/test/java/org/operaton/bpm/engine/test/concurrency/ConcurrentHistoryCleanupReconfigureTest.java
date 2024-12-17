@@ -67,7 +67,7 @@ public class ConcurrentHistoryCleanupReconfigureTest extends ConcurrencyTestHelp
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     testRule.deleteHistoryCleanupJobs();
     clearDatabase();
   }

@@ -112,7 +112,7 @@ public class CustomHistoryLevelUserOperationLogTest {
   protected String processTaskId;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     runtimeService = engineRule.getRuntimeService();
     historyService = engineRule.getHistoryService();
     managementService = (ManagementServiceImpl) engineRule.getManagementService();
@@ -125,7 +125,7 @@ public class CustomHistoryLevelUserOperationLogTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.clearAuthentication();
     List<UserOperationLogEntry> logs = query().list();
     for (UserOperationLogEntry log : logs) {

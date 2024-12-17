@@ -69,7 +69,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDurationStartTimerEvent() throws Exception {
+  public void testDurationStartTimerEvent() {
     // Set the clock fixed
     Date startTime = new Date();
 
@@ -115,7 +115,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Ignore
   @Test
-  public void testCycleDateStartTimerEvent() throws Exception {
+  public void testCycleDateStartTimerEvent() {
     ClockUtil.setCurrentTime(new Date());
 
     // After process start, there should be timer created
@@ -141,13 +141,13 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
   }
 
-  private void moveByMinutes(int minutes) throws Exception {
+  private void moveByMinutes(int minutes) {
     ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() + ((minutes * 60 * 1000) + 5000)));
   }
 
   @Deployment
   @Test
-  public void testCycleWithLimitStartTimerEvent() throws Exception {
+  public void testCycleWithLimitStartTimerEvent() {
     ClockUtil.setCurrentTime(new Date());
 
     // After process start, there should be timer created
@@ -180,7 +180,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testPriorityInTimerCycleEvent() throws Exception {
+  public void testPriorityInTimerCycleEvent() {
     ClockUtil.setCurrentTime(new Date());
 
     // After process start, there should be timer created
@@ -228,7 +228,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testRecalculateExpressionStartTimerEvent() throws Exception {
+  public void testRecalculateExpressionStartTimerEvent() {
     // given
     JobQuery jobQuery = managementService.createJobQuery();
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample");
@@ -265,7 +265,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/timer/StartTimerEventTest.testRecalculateExpressionStartTimerEvent.bpmn20.xml")
   @Test
-  public void testRecalculateUnchangedExpressionStartTimerEventCreationDateBased() throws Exception {
+  public void testRecalculateUnchangedExpressionStartTimerEventCreationDateBased() {
     // given
     JobQuery jobQuery = managementService.createJobQuery();
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample");
@@ -296,7 +296,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testVersionUpgradeShouldCancelJobs() throws Exception {
+  public void testVersionUpgradeShouldCancelJobs() {
     ClockUtil.setCurrentTime(new Date());
 
     // After process start, there should be timer created
@@ -350,7 +350,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
   // Test for ACT-1533
   @Test
-  public void testTimerShouldNotBeRemovedWhenUndeployingOldVersion() throws Exception {
+  public void testTimerShouldNotBeRemovedWhenUndeployingOldVersion() {
     // Deploy test process
     InputStream in = getClass().getResourceAsStream("StartTimerEventTest.testTimerShouldNotBeRemovedWhenUndeployingOldVersion.bpmn20.xml");
     String process = new String(IoUtil.readInputStream(in, ""));
@@ -1344,7 +1344,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testFailingTimeCycle() throws Exception {
+  public void testFailingTimeCycle() {
     // given
     JobQuery query = managementService.createJobQuery();
     JobQuery failedJobQuery = managementService.createJobQuery();
@@ -1556,7 +1556,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testRecalculateNonInterruptingWithChangedDurationExpressionInEventSubprocessCreationDateBased() throws Exception {
+  public void testRecalculateNonInterruptingWithChangedDurationExpressionInEventSubprocessCreationDateBased() {
     // given
     ProcessBuilder processBuilder = Bpmn.createExecutableProcess("process");
 
@@ -1649,7 +1649,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldReevaluateTimerCycleWhenDue() throws Exception {
+  public void shouldReevaluateTimerCycleWhenDue() {
     // given
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R2/PT1H");
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
@@ -1670,7 +1670,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldNotReevaluateTimerCycle() throws Exception {
+  public void shouldNotReevaluateTimerCycle() {
     // given
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R2/PT1H");
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
@@ -1687,7 +1687,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldNotReevaluateTimerCycleWhenFeatureDisabled() throws Exception {
+  public void shouldNotReevaluateTimerCycleWhenFeatureDisabled() {
     // given
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R2/PT1H");
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
@@ -1710,7 +1710,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldReevaluateCronTimerCycleWhenDue() throws Exception {
+  public void shouldReevaluateCronTimerCycleWhenDue() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("0 0 * ? * * *"); // every hour
@@ -1732,7 +1732,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldReevaluateRepeatingToCronTimerCycle() throws Exception {
+  public void shouldReevaluateRepeatingToCronTimerCycle() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R2/PT1H");
@@ -1753,7 +1753,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldReevaluateCronToRepeatingTimerCycle() throws Exception {
+  public void shouldReevaluateCronToRepeatingTimerCycle() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("0 0 * ? * * *"); // every hour
@@ -1788,7 +1788,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldReevaluateCronToRepeatingTimerCycleWithDate() throws Exception {
+  public void shouldReevaluateCronToRepeatingTimerCycleWithDate() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("0 0 * ? * * *"); // every hour
@@ -1823,7 +1823,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldReevaluateRepeatingTimerCycleWithDate() throws Exception {
+  public void shouldReevaluateRepeatingTimerCycleWithDate() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R3/2023-08-18T8:00/PT1H"); // every hour
@@ -1858,7 +1858,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void shouldReevaluateRepeatingTimerCycleToTimerCycleWithDate() throws Exception {
+  public void shouldReevaluateRepeatingTimerCycleToTimerCycleWithDate() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
     MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R3/PT1H"); // every hour

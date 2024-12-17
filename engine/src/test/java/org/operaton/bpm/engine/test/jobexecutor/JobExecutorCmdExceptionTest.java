@@ -49,13 +49,13 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
   protected TweetNestedCommandExceptionHandler nestedCommandExceptionHandler = new TweetNestedCommandExceptionHandler();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration.getJobHandlers().put(tweetExceptionHandler.getType(), tweetExceptionHandler);
     processEngineConfiguration.getJobHandlers().put(nestedCommandExceptionHandler.getType(), nestedCommandExceptionHandler);
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.getJobHandlers().remove(tweetExceptionHandler.getType());
     processEngineConfiguration.getJobHandlers().remove(nestedCommandExceptionHandler.getType());
     clearDatabase();

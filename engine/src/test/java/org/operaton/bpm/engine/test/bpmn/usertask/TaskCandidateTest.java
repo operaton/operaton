@@ -44,7 +44,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
   private static final String GONZO = "gonzo";
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
 
     Group accountants = identityService.newGroup("accountancy");
@@ -66,7 +66,7 @@ public class TaskCandidateTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.deleteUser(KERMIT);
     identityService.deleteUser(GONZO);
     identityService.deleteGroup("sales");

@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 public class FailingDelegate implements JavaDelegate {
 
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
       throw new BpmnError("org.operaton.bpm.qa.upgrade.BuisnessError", "Expected exception");
   }
 }

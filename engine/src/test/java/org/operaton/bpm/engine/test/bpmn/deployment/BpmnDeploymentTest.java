@@ -60,13 +60,13 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   protected DeploymentHandlerFactory customDeploymentHandlerFactory;
   
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     defaultDeploymentHandlerFactory = processEngineConfiguration.getDeploymentHandlerFactory();
     customDeploymentHandlerFactory = new VersionedDeploymentHandlerFactory();
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.setDeploymentHandlerFactory(defaultDeploymentHandlerFactory);
   }
 
@@ -486,7 +486,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployBpmnModelInstance() throws Exception {
+  public void testDeployBpmnModelInstance() {
 
     // given
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo").startEvent().userTask().endEvent().done();
@@ -500,7 +500,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployAndGetProcessDefinition() throws Exception {
+  public void testDeployAndGetProcessDefinition() {
 
     // given process model
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("foo").startEvent().userTask().endEvent().done();
@@ -525,7 +525,7 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployNonExecutableProcess() throws Exception {
+  public void testDeployNonExecutableProcess() {
 
     // given non executable process definition
     final BpmnModelInstance modelInstance = Bpmn.createProcess("foo").startEvent().userTask().endEvent().done();

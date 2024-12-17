@@ -161,12 +161,12 @@ public class DomXmlDataFormatMapper implements DataFormatMapper {
     }
   }
 
-  protected Marshaller getMarshaller(Class<?> parameter) throws JAXBException {
+  protected Marshaller getMarshaller(Class<?> parameter) {
     JaxBContextProvider jaxBContextProvider = dataFormat.getJaxBContextProvider();
     return jaxBContextProvider.createMarshaller(parameter);
   }
 
-  protected Unmarshaller getUnmarshaller(Class<?> parameter) throws JAXBException {
+  protected Unmarshaller getUnmarshaller(Class<?> parameter) {
     JaxBContextProvider jaxBContextProvider = dataFormat.getJaxBContextProvider();
     return jaxBContextProvider.createUnmarshaller(parameter);
   }

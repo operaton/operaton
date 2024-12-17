@@ -35,7 +35,7 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMessageEndEvent() throws Exception {
+  public void testMessageEndEvent() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     assertNotNull(processInstance);
     testRule.assertProcessEnded(processInstance.getId());
@@ -43,7 +43,7 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testMessageEndEventServiceTaskBehavior() throws Exception {
+  public void testMessageEndEventServiceTaskBehavior() {
     Map<String, Object> variables = new HashMap<String, Object>();
 
     // class

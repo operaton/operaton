@@ -61,7 +61,7 @@ public class LocalVariableIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(EXTERNAL_TASK_PROCESS).get(0);
     handler.clear();

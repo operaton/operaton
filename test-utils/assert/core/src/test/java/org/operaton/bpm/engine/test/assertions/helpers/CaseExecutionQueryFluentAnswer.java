@@ -28,7 +28,7 @@ import org.mockito.stubbing.Answer;
 public class CaseExecutionQueryFluentAnswer implements Answer<CaseExecutionQuery> {
 
   @Override
-  public CaseExecutionQuery answer(InvocationOnMock invocationOnMock) throws Throwable {
+  public CaseExecutionQuery answer(InvocationOnMock invocationOnMock) {
     if (invocationOnMock.getMethod().getReturnType().isAssignableFrom(CaseExecutionQuery.class)) {
       return (CaseExecutionQuery) invocationOnMock.getMock();
     } else {

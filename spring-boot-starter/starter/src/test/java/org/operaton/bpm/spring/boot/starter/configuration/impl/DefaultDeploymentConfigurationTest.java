@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,7 +47,7 @@ public class DefaultDeploymentConfigurationTest {
   }
 
   @Test
-  public void deploymentTest() throws IOException {
+  public void deploymentTest() {
     operatonBpmProperties.setAutoDeploymentEnabled(true);
     defaultDeploymentConfiguration.preInit(configuration);
 

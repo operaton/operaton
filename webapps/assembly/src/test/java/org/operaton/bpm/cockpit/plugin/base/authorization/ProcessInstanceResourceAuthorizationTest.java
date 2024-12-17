@@ -50,7 +50,7 @@ public class ProcessInstanceResourceAuthorizationTest extends AuthorizationTest 
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     super.setUp();
 
     runtimeService = processEngine.getRuntimeService();

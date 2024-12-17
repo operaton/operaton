@@ -63,7 +63,7 @@ public class GetProcessApplicationNameFromAnnotationTest {
 
 
   @Test
-  public void getAnnotation() throws Exception {
+  public void getAnnotation() {
 
     assertThat(WithName.class.getAnnotation(EnableProcessApplication.class)).isNotNull();
     assertThat(NoName.class.getAnnotation(EnableProcessApplication.class)).isNotNull();
@@ -82,28 +82,28 @@ public class GetProcessApplicationNameFromAnnotationTest {
   }
 
   @Test
-  public void getProcessApplicationNameFromContext_valuePresent() throws Exception {
+  public void getProcessApplicationNameFromContext_valuePresent() {
     assumeAnnotatedBeans(Variables.putValue("app", new WithName()));
 
     assertThat(function.apply(Optional.empty())).isEqualTo(Optional.of("withNameApplication"));
   }
 
   @Test
-  public void getProcessApplicationNameFromContext_beanName() throws Exception {
+  public void getProcessApplicationNameFromContext_beanName() {
     assumeAnnotatedBeans(Variables.putValue("app2", new NoName()));
 
     assertThat(function.apply(Optional.empty())).isEqualTo(Optional.of("app2"));
   }
 
   @Test
-  public void getProcessApplicationNameFromContext_annotationNotPresent() throws Exception {
+  public void getProcessApplicationNameFromContext_annotationNotPresent() {
     assumeAnnotatedBeans(Variables.createVariables());
 
     assertThat(function.apply(Optional.empty())).isEqualTo(Optional.empty());
   }
 
   @Test
-  public void getProcessApplicationNameFromContext_annotationNotPresent_fallbackProperty() throws Exception {
+  public void getProcessApplicationNameFromContext_annotationNotPresent_fallbackProperty() {
     assumeAnnotatedBeans(Variables.createVariables());
 
     assertThat(function.apply(Optional.of("foo"))).isEqualTo(Optional.of("foo"));

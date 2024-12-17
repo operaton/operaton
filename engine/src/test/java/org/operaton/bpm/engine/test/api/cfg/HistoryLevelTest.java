@@ -30,7 +30,7 @@ public class HistoryLevelTest {
   protected ProcessEngine processEngine;
 
   @Test
-  public void shouldInitHistoryLevelByObject() throws Exception {
+  public void shouldInitHistoryLevelByObject() {
     ProcessEngineConfigurationImpl config = createConfig();
     config.setHistoryLevel(HistoryLevel.HISTORY_LEVEL_FULL);
 
@@ -42,7 +42,7 @@ public class HistoryLevelTest {
   }
 
   @Test
-  public void shouldInitHistoryLevelByString() throws Exception {
+  public void shouldInitHistoryLevelByString() {
     ProcessEngineConfigurationImpl config = createConfig();
     config.setHistory(HistoryLevel.HISTORY_LEVEL_FULL.getName());
 

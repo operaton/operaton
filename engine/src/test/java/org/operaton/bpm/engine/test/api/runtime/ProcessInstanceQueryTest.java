@@ -99,7 +99,7 @@ public class ProcessInstanceQueryTest {
    * and 1 instance of otherOneTaskProcess
    */
   @Before
-  public void deployTestProcesses() throws Exception {
+  public void deployTestProcesses() {
     org.operaton.bpm.engine.repository.Deployment deployment = engineRule.getRepositoryService().createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml")
       .addClasspathResource("org/operaton/bpm/engine/test/api/runtime/otherOneTaskProcess.bpmn20.xml")
@@ -1003,7 +1003,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testBooleanVariable() throws Exception {
+  public void testBooleanVariable() {
 
     // TEST EQUALS
     HashMap<String, Object> vars = new HashMap<>();
@@ -1122,7 +1122,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryNullVariable() throws Exception {
+  public void testQueryNullVariable() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("nullVar", null);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -1202,7 +1202,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryInvalidTypes() throws Exception {
+  public void testQueryInvalidTypes() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("bytesVar", "test".getBytes());
     vars.put("serializableVar",new DummySerializable());
@@ -1278,7 +1278,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testQueryAllVariableTypes() throws Exception {
+  public void testQueryAllVariableTypes() {
     Map<String, Object> vars = new HashMap<>();
     vars.put("nullVar", null);
     vars.put("stringVar", "string");
@@ -1309,7 +1309,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  public void testClashingValues() throws Exception {
+  public void testClashingValues() {
       Map<String, Object> vars = new HashMap<>();
       vars.put("var", 1234L);
 
@@ -1372,7 +1372,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryByActive() throws Exception {
+  public void testQueryByActive() {
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
     assertEquals(5, processInstanceQuery.active().count());
@@ -1387,7 +1387,7 @@ public class ProcessInstanceQueryTest {
   }
 
   @Test
-  public void testQueryBySuspended() throws Exception {
+  public void testQueryBySuspended() {
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
     assertEquals(0, processInstanceQuery.suspended().count());
@@ -1704,7 +1704,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableValueEqualsNumber() throws Exception {
+  public void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.<String, Object>singletonMap("var", 123L));
@@ -1746,7 +1746,7 @@ public class ProcessInstanceQueryTest {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
-  public void testProcessVariableValueNumberComparison() throws Exception {
+  public void testProcessVariableValueNumberComparison() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.<String, Object>singletonMap("var", 123L));

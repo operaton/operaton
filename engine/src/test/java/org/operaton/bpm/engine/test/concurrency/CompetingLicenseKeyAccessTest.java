@@ -32,12 +32,12 @@ public class CompetingLicenseKeyAccessTest extends ConcurrencyTestCase {
   private ThreadControl asyncThread;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     managementService.setLicenseKey("testLicenseKey");
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     managementService.deleteLicenseKey();
   }
 

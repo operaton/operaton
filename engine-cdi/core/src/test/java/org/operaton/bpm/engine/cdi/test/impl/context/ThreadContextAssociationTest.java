@@ -35,7 +35,7 @@ public class ThreadContextAssociationTest extends CdiProcessEngineTestCase {
   
   @Test
   @Deployment
-  public void testBusinessProcessScopedWithJobExecutor() throws InterruptedException {
+  public void testBusinessProcessScopedWithJobExecutor() {
     String pid = runtimeService.startProcessInstanceByKey("processkey").getId();
         
     waitForJobExecutorToProcessAllJobs(5000l, 25l);

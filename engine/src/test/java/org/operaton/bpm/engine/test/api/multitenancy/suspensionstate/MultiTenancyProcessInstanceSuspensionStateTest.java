@@ -64,7 +64,7 @@ public class MultiTenancyProcessInstanceSuspensionStateTest {
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);

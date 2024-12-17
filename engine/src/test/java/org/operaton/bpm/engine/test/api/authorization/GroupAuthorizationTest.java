@@ -55,7 +55,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   public static final List<String> testGroupIds = Arrays.asList("testGroup1", "testGroup2", "testGroup3");
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     createUser(testUserId);
     for (String testGroupId : testGroupIds) {
       createGroupAndAddUser(testGroupId, testUserId);

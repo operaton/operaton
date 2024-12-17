@@ -225,7 +225,7 @@ public class Parser {
 	/**
 	 * get lookahead symbol.
 	 */
-	protected final Scanner.Token lookahead(int index) throws Scanner.ScanException, ParseException {
+	protected final Scanner.Token lookahead(int index) throws Scanner.ScanException {
 		if (lookahead.isEmpty()) {
 			lookahead = new LinkedList<LookaheadToken>();
 		}
@@ -239,7 +239,7 @@ public class Parser {
 	 * consume current token (get next token).
 	 * @return the consumed token (which was the current token when calling this method)
 	 */
-	protected final Scanner.Token consumeToken() throws Scanner.ScanException, ParseException {
+	protected final Scanner.Token consumeToken() throws Scanner.ScanException {
 		Scanner.Token result = token;
 		if (lookahead.isEmpty()) {
 			token = scanner.next();
@@ -305,7 +305,7 @@ public class Parser {
 	/**
 	 * text := &lt;TEXT&gt;
 	 */
-	protected AstNode text() throws Scanner.ScanException, ParseException {
+	protected AstNode text() throws Scanner.ScanException {
 		AstNode v = null;
 		if (token.getSymbol() == Scanner.Symbol.TEXT) {
 			v = new AstText(token.getImage());

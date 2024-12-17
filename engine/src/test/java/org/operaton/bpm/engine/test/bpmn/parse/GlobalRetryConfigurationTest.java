@@ -158,7 +158,7 @@ public class GlobalRetryConfigurationTest {
   }
 
   @Test
-  public void testRetryOnAsyncStartEvent() throws Exception {
+  public void testRetryOnAsyncStartEvent() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
           .operatonAsyncBefore()

@@ -36,7 +36,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testDefaultValue() throws Exception {
+  public void testDefaultValue() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FormPropertyDefaultValueTest.testDefaultValue");
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
@@ -71,7 +71,7 @@ public class FormPropertyDefaultValueTest extends PluggableProcessEngineTest {
   
   @Deployment
   @Test
-  public void testStartFormDefaultValue() throws Exception {
+  public void testStartFormDefaultValue() {
     String processDefinitionId = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("FormPropertyDefaultValueTest.testDefaultValue")
       .latestVersion()

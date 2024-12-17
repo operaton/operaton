@@ -44,7 +44,7 @@ public class DecisionDefinitionAuthorizationTest extends AuthorizationTest {
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/authorization/singleDecision.dmn11.xml",
         "org/operaton/bpm/engine/test/api/authorization/anotherDecision.dmn11.xml");

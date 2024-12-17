@@ -51,7 +51,7 @@ public class DetermineHistoryLevelCmdTest {
 
 
   @Test
-  public void readLevelFullfromDB() throws Exception {
+  public void readLevelFullfromDB() {
     final ProcessEngineConfigurationImpl config = config("true", ProcessEngineConfiguration.HISTORY_FULL);
 
     // init the db with level=full
@@ -64,7 +64,7 @@ public class DetermineHistoryLevelCmdTest {
 
 
   @Test
-  public void useDefaultLevelAudit() throws Exception {
+  public void useDefaultLevelAudit() {
     ProcessEngineConfigurationImpl config = config("true", ProcessEngineConfiguration.HISTORY_AUTO);
 
     // init the db with level=auto -> audit

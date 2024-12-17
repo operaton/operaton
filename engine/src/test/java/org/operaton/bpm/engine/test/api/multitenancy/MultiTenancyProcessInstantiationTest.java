@@ -56,7 +56,7 @@ public class MultiTenancyProcessInstantiationTest extends PluggableProcessEngine
   public BatchRestartHelper batchHelper = new BatchRestartHelper(this);
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
 
     authorizationService.createAuthorizationQuery();
     batchHelper.removeAllRunningAndHistoricBatches();

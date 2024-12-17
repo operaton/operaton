@@ -56,7 +56,7 @@ public class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTes
   private String processInstanceTenantTwo;
 
   @Before
-  public void init() throws Exception {
+  public void init() {
 
     processEngine = getProcessEngine();
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();

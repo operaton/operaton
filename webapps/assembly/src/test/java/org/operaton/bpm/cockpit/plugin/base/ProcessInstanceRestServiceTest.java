@@ -78,7 +78,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
   private ProcessInstanceRestService resource;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     super.before();
 
     processEngine = getProcessEngine();

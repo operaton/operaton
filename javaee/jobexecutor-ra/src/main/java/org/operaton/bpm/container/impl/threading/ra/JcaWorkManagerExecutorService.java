@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.naming.NamingException;
 import javax.naming.Reference;
 import javax.resource.Referenceable;
 import javax.resource.spi.work.WorkException;
@@ -99,7 +98,7 @@ public class JcaWorkManagerExecutorService implements Referenceable, ExecutorSer
 
   protected Reference reference;
   
-  public Reference getReference() throws NamingException {    
+  public Reference getReference() {    
     return reference;
   }
 

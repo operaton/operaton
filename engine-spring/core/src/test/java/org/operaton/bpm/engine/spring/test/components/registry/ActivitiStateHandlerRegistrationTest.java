@@ -56,7 +56,7 @@ public class ActivitiStateHandlerRegistrationTest {
   }
   
   @Test
-  public void shouldHaveDetailledStringRepresentationWithNullValues() throws Exception {
+  public void shouldHaveDetailledStringRepresentationWithNullValues() {
     Map<Integer, String> processVariablesExpected = Collections.singletonMap(34, "testValue");
     Method handlerMethod = null;
     Object handler = null;

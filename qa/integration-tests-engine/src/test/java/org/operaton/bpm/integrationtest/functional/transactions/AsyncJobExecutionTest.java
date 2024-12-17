@@ -77,7 +77,7 @@ public class AsyncJobExecutionTest extends AbstractFoxPlatformIntegrationTest {
   }
 
   @Test
-  public void shouldFailJobWithFailingTransactionListener() throws Exception {
+  public void shouldFailJobWithFailingTransactionListener() {
     // given
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 

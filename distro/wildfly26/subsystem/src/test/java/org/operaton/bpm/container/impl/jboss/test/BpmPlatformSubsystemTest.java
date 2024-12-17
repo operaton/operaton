@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.test;
 
-import java.io.IOException;
 import org.operaton.bpm.container.impl.jboss.extension.BpmPlatformExtension;
 import org.operaton.bpm.container.impl.jboss.extension.ModelConstants;
 import org.jboss.as.subsystem.test.AbstractSubsystemBaseTest;
@@ -32,7 +31,7 @@ public class BpmPlatformSubsystemTest extends AbstractSubsystemBaseTest {
   }
 
   @Override
-  protected String getSubsystemXml() throws IOException {
+  protected String getSubsystemXml() {
     try {
       return FileUtils.readFile(JBossSubsystemXMLTest.SUBSYSTEM_WITH_ALL_OPTIONS);
     } catch (Exception e) {
@@ -46,7 +45,7 @@ public class BpmPlatformSubsystemTest extends AbstractSubsystemBaseTest {
    * Method is only used by WF-10 to validate the subsystem schema. Isn't executed when running WF8.
    */
   @Override
-  protected String getSubsystemXsdPath() throws Exception {
+  protected String getSubsystemXsdPath() {
     return "schema/operatonPlatformSubsystem.xsd";
   }
 }

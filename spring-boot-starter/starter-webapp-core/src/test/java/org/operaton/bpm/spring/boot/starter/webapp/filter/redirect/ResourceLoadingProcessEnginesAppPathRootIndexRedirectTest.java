@@ -26,7 +26,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,7 +47,7 @@ public class ResourceLoadingProcessEnginesAppPathRootIndexRedirectTest {
   public int port;
 
   @Test
-  public void shouldRedirectToTasklist() throws IOException {
+  public void shouldRedirectToTasklist() {
     // when
     // send GET request to /
     HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/");

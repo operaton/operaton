@@ -39,7 +39,7 @@ import org.junit.Test;
 public class EnginesFilterTest {
 
   @Test
-  public void testHTML_FILE_PATTERN() throws Exception {
+  public void testHTML_FILE_PATTERN() {
 
     // given
     Pattern pattern = ProcessEnginesFilter.APP_PREFIX_PATTERN;

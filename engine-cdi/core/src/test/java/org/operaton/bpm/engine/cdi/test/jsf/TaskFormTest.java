@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
 public class TaskFormTest extends CdiProcessEngineTestCase {
 
   @Test
-  public void testTaskFormInjectable() throws Exception {
+  public void testTaskFormInjectable() {
 
     Set<Bean<?>> taskForm = beanManager.getBeans(TaskForm.class);
     try {

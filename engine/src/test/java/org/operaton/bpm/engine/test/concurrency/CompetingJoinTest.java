@@ -85,7 +85,7 @@ public class CompetingJoinTest {
 
   @Deployment
   @Test
-  public void testCompetingJoins() throws Exception {
+  public void testCompetingJoins() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("CompetingJoinsProcess");
     Execution execution1 = runtimeService
       .createExecutionQuery()

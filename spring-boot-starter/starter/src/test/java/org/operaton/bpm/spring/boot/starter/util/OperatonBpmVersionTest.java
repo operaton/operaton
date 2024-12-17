@@ -26,7 +26,6 @@ import static org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion.key;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import org.junit.Ignore;
 
 public class OperatonBpmVersionTest {
@@ -40,7 +39,7 @@ public class OperatonBpmVersionTest {
   }
 
   @BeforeClass
-  public static void setUp() throws IOException {
+  public static void setUp() {
     currentVersion = ProcessEngine.class.getPackage().getImplementationVersion();
   }
 
@@ -60,12 +59,12 @@ public class OperatonBpmVersionTest {
   }
 
   @Test
-  public void isEnterprise_true() throws Exception {
+  public void isEnterprise_true() {
     assertThat(operatonBpmVersion("7.6.0-alpha3-ee").isEnterprise()).isTrue();
   }
 
   @Test
-  public void isEnterprise_false() throws Exception {
+  public void isEnterprise_false() {
     assertThat(operatonBpmVersion("7.6.0-alpha3").isEnterprise()).isFalse();
   }
 }

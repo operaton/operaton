@@ -159,7 +159,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployCmmnModelInstance() throws Exception {
+  public void testDeployCmmnModelInstance() {
     // given
     CmmnModelInstance modelInstance = createCmmnModelInstance();
 
@@ -189,7 +189,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployAndGetCaseDefinition() throws Exception {
+  public void testDeployAndGetCaseDefinition() {
     // given case model
     final CmmnModelInstance modelInstance = createCmmnModelInstance();
 
@@ -210,7 +210,7 @@ public class CmmnDeployerTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testDeployEmptyCaseDefinition() throws Exception {
+  public void testDeployEmptyCaseDefinition() {
 
     // given empty case model
     final CmmnModelInstance modelInstance = Cmmn.createEmptyModel();

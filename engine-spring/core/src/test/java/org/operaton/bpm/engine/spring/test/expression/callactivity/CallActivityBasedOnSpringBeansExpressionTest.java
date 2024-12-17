@@ -36,7 +36,7 @@ public class CallActivityBasedOnSpringBeansExpressionTest extends SpringProcessE
 	@Deployment(resources = {
 			"org/operaton/bpm/engine/spring/test/expression/callactivity/CallActivityBasedOnSpringBeansExpressionTest.testCallActivityByExpression.bpmn20.xml",
 			"org/operaton/bpm/engine/spring/test/expression/callactivity/simpleSubProcess.bpmn20.xml" })
-	public void testCallActivityByExpression() throws Exception {
+	public void testCallActivityByExpression() {
 		// Start process (main)
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testCallActivityByExpression");
 

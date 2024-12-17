@@ -52,17 +52,14 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   public void execute(final ActivityExecution execution) throws Exception {
     ensureConnectorInitialized();
 
-    executeWithErrorPropagation(execution, new Callable<Void>() {
-      @Override
-      public Void call() throws Exception {
-        ConnectorRequest<?> request = connectorInstance.createRequest();
-        applyInputParameters(execution, request);
-        // execute the request and obtain a response:
-        ConnectorResponse response = request.execute();
-        applyOutputParameters(execution, response);
-        leave(execution);
-        return null;
-      }
+    executeWithErrorPropagation(execution, () -> {
+      ConnectorRequest<?> request = connectorInstance.createRequest();
+      applyInputParameters(execution, request);
+      // execute the request and obtain a response:
+      ConnectorResponse response = request.execute();
+      applyOutputParameters(execution, response);
+      leave(execution);
+      return null;
     });
 
   }

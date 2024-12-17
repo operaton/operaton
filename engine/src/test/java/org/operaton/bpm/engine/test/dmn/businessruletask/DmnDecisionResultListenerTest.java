@@ -186,7 +186,7 @@ public class DmnDecisionResultListenerTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     // reset the invoked execution listener
     DecisionResultTestListener.reset();
   }

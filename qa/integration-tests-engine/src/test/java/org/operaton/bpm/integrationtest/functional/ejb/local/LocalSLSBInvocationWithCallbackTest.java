@@ -98,7 +98,7 @@ public class LocalSLSBInvocationWithCallbackTest extends AbstractFoxPlatformInte
 
   @Test
   @OperateOnDeployment("pa")
-  public void testInvokeBean() throws Exception{
+  public void testInvokeBean(){
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInvokeBean");
 

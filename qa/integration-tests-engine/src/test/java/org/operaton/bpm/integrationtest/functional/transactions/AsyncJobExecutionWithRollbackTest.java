@@ -61,7 +61,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
   }
 
   @Test
-  public void shouldRollbackTransactionInServiceTask() throws Exception {
+  public void shouldRollbackTransactionInServiceTask() {
     // given
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
@@ -80,7 +80,7 @@ public class AsyncJobExecutionWithRollbackTest extends AbstractFoxPlatformIntegr
   }
 
   @Test
-  public void shouldRollbackTransactionInServiceTaskWithCustomRetryCycle() throws Exception {
+  public void shouldRollbackTransactionInServiceTaskWithCustomRetryCycle() {
     // given
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 

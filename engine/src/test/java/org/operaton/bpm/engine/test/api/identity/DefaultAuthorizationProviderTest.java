@@ -45,7 +45,7 @@ import org.junit.Test;
 public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     // we are jonny
     identityService.setAuthenticatedUserId("jonny");
     // make sure we can do stuff:
@@ -76,7 +76,7 @@ public class DefaultAuthorizationProviderTest extends PluggableProcessEngineTest
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     processEngineConfiguration.setAuthorizationEnabled(false);
     List<Authorization> jonnysAuths = authorizationService.createAuthorizationQuery().userIdIn("jonny").list();
     for (Authorization authorization : jonnysAuths) {

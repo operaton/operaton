@@ -50,12 +50,12 @@ public class CaseDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     deploymentThreeId = repositoryService.createDeployment().name("thirdDeployment").addClasspathResource(getResourceThreePath()).deploy().getId();
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     repositoryService.deleteDeployment(deploymentThreeId, true);
   }
 

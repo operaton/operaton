@@ -39,7 +39,7 @@ public class ProcessApplicationElResolverTest extends PluggableProcessEngineTest
   CalledProcessApplication calledApp;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     runtimeContainerDelegate = RuntimeContainerDelegate.INSTANCE.get();
     runtimeContainerDelegate.registerProcessEngine(processEngine);
 

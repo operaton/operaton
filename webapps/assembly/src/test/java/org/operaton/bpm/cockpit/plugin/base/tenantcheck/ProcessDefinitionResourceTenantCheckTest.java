@@ -53,7 +53,7 @@ public class ProcessDefinitionResourceTenantCheckTest extends AbstractCockpitPlu
   private ProcessDefinitionQueryDto queryParameter;
 
   @Before
-  public void init() throws Exception {
+  public void init() {
 
     processEngine = getProcessEngine();
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();

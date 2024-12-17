@@ -19,7 +19,6 @@ package org.operaton.bpm.integrationtest.functional.spin.dataformat;
 import java.io.IOException;
 import org.operaton.bpm.integrationtest.functional.spin.XmlSerializable;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
@@ -29,7 +28,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 public class XmlSerializableJsonDeserializer extends JsonDeserializer<XmlSerializable> {
 
   @Override
-  public XmlSerializable deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+  public XmlSerializable deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     XmlSerializable xmlSerializable = new XmlSerializable();
     xmlSerializable.setProperty(p.getValueAsString());
     return xmlSerializable;

@@ -71,13 +71,13 @@ public class ProcessStartingBeanPostProcessorTest {
   }
 
 	@Test
-	public void testReturnedProcessInstance() throws Throwable {
+	public void testReturnedProcessInstance() {
 		String processInstanceId = this.processInitiatingPojo.startProcessA(22);
 		assertNotNull("the process instance id should not be null", processInstanceId);
 	}
 
 	@Test
-	public void testReflectingSideEffects() throws Throwable {
+	public void testReflectingSideEffects() {
 		assertNotNull("the processInitiatingPojo mustn't be null.", this.processInitiatingPojo);
 
 		this.processInitiatingPojo.reset();
@@ -90,7 +90,7 @@ public class ProcessStartingBeanPostProcessorTest {
 	}
 
 	@Test
-	public void testUsingBusinessKey() throws Throwable {
+	public void testUsingBusinessKey() {
 		long id = 5;
 		String businessKey = "usersKey" + System.currentTimeMillis();
 		ProcessInstance pi = processInitiatingPojo.enrollCustomer(businessKey, id);

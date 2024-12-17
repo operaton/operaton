@@ -35,7 +35,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
   protected String instance2Id;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
         "org/operaton/bpm/engine/test/api/externaltask/ExternalTaskServiceTest.testFetchMultipleTopics.bpmn20.xml");

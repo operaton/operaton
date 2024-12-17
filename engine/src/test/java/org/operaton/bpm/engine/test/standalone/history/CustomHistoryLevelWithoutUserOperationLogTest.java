@@ -99,7 +99,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
   protected String processTaskId;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     runtimeService = engineRule.getRuntimeService();
     historyService = engineRule.getHistoryService();
     managementService = (ManagementServiceImpl) engineRule.getManagementService();
@@ -112,7 +112,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.clearAuthentication();
   }
 

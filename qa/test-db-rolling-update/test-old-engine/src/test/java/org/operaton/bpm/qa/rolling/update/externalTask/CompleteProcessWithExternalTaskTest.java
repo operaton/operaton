@@ -54,7 +54,7 @@ public class CompleteProcessWithExternalTaskTest extends AbstractRollingUpdateTe
 
   @Test
   @ScenarioUnderTest("init.fetch.1")
-  public void testCompleteProcessWithFetchedExternalTask() throws InterruptedException {
+  public void testCompleteProcessWithFetchedExternalTask() {
     //given process with locked external task
     String buisnessKey = rule.getBuisnessKey();
     ExternalTask task = rule.getExternalTaskService()

@@ -968,7 +968,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void testPutSingleBinaryVariable() throws Exception {
+  public void testPutSingleBinaryVariable() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -988,7 +988,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void testPutSingleBinaryVariableWithValueType() throws Exception {
+  public void testPutSingleBinaryVariableWithValueType() {
     byte[] bytes = "someContent".getBytes();
 
     String variableKey = "aVariableKey";
@@ -1009,7 +1009,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void testPutSingleBinaryVariableWithNoValue() throws Exception {
+  public void testPutSingleBinaryVariableWithNoValue() {
     byte[] bytes = new byte[0];
 
     String variableKey = "aVariableKey";
@@ -1111,7 +1111,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void testPostSingleFileVariableWithEncodingAndMimeType() throws Exception {
+  public void testPostSingleFileVariableWithEncodingAndMimeType() {
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
     String encoding = "utf-8";
@@ -1138,7 +1138,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void testPostSingleFileVariableWithMimeType() throws Exception {
+  public void testPostSingleFileVariableWithMimeType() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
@@ -1166,7 +1166,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
   }
 
   @Test
-  public void testPostSingleFileVariableWithEncoding() throws Exception {
+  public void testPostSingleFileVariableWithEncoding() {
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";

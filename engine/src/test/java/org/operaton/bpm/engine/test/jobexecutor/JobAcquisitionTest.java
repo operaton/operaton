@@ -59,7 +59,7 @@ public class JobAcquisitionTest {
   public RuleChain ruleChain = RuleChain.outerRule(engineRule).around(testRule);
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     // two job executors with the default settings
     jobExecutor1 = (ControllableJobExecutor)
         ((ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration())
@@ -73,7 +73,7 @@ public class JobAcquisitionTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     jobExecutor1.shutdown();
     jobExecutor2.shutdown();
   }

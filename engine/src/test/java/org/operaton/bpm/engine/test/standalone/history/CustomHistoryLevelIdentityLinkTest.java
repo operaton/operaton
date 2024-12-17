@@ -87,7 +87,7 @@ public class CustomHistoryLevelIdentityLinkTest {
   protected TaskService taskService;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     runtimeService = engineRule.getRuntimeService();
     historyService = engineRule.getHistoryService();
     identityService = engineRule.getIdentityService();

@@ -74,7 +74,7 @@ public class CmmnDisabledTest {
   protected EmbeddedProcessApplication processApplication;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     runtimeService = engineRule.getRuntimeService();
     repositoryService = engineRule.getRepositoryService();
     taskService = engineRule.getTaskService();

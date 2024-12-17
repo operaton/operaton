@@ -230,7 +230,7 @@ public class Scanner {
 	/**
 	 * text token
 	 */
-	protected Token nextText() throws ScanException {
+	protected Token nextText() {
 		builder.setLength(0);
 		int i = position;
 		int l = input.length();
@@ -308,7 +308,7 @@ public class Scanner {
 	/**
 	 * number token
 	 */
-	protected Token nextNumber() throws ScanException {
+	protected Token nextNumber() {
 		int i = position;
 		int l = input.length();
 		while (i < l && isDigit(input.charAt(i))) {

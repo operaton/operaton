@@ -317,7 +317,7 @@ public class HistoricIdentityLinkLogQueryTest extends PluggableProcessEngineTest
   @SuppressWarnings("deprecation")
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
   @Test
-  public void testQueryAddAndRemoveIdentityLinksForProcessDefinition() throws Exception {
+  public void testQueryAddAndRemoveIdentityLinksForProcessDefinition() {
 
     ProcessDefinition latestProcessDef = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_DEFINITION_KEY).singleResult();
     assertNotNull(latestProcessDef);

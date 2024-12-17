@@ -51,7 +51,7 @@ public class SpringServletProcessApplication extends SpringProcessApplication im
   }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
     // for backwards compatibility
     start();
   }

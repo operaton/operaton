@@ -51,7 +51,7 @@ public class IncidentRestServiceTest extends AbstractCockpitPluginTest {
   protected IdentityService identityService;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     super.before();
 
     processEngine = getProcessEngine();

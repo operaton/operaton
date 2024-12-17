@@ -29,7 +29,7 @@ public class PrefixedUuidGeneratorTest {
   public final ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void prefixed_uuid() throws Exception {
+  public void prefixed_uuid() {
 
     final String id = new PrefixedUuidGenerator("foo").getNextId();
     assertThat(id).startsWith("foo-");
@@ -37,7 +37,7 @@ public class PrefixedUuidGeneratorTest {
   }
 
   @Test
-  public void fails_on_null() throws Exception {
+  public void fails_on_null() {
     thrown.expect(NullPointerException.class);
     thrown.expectMessage("spring.application.name");
 

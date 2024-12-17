@@ -100,7 +100,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testProcessEngine() throws Exception {
+  public void testProcessEngine() {
     // When
     ProcessEngine returnedEngine = processEngine();
     // Then
@@ -108,7 +108,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testNoProcessEngine_Failure() throws Exception {
+  public void testNoProcessEngine_Failure() {
     // Given
     processEnginesMockedStatic.when(ProcessEngines::getProcessEngines).thenReturn(new HashMap<String,ProcessEngine>());
     reset();
@@ -123,7 +123,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testMultipleProcessEngine_Failure() throws Exception {
+  public void testMultipleProcessEngine_Failure() {
     // Given
     Map<String,ProcessEngine> multipleEnginesMap = new HashMap<>();
     multipleEnginesMap.put("test1", mock(ProcessEngine.class));
@@ -141,7 +141,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testInit() throws Exception {
+  public void testInit() {
     // Given
     reset();
     // When
@@ -151,7 +151,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testReset() throws Exception {
+  public void testReset() {
     // When
     reset();
     // Then
@@ -159,7 +159,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_ProcessDefinition() throws Exception {
+  public void testAssertThat_ProcessDefinition() {
     // Given
     ProcessDefinition processDefinition = Mockito.mock(ProcessDefinition.class);
     // When
@@ -171,7 +171,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_ProcessInstance() throws Exception {
+  public void testAssertThat_ProcessInstance() {
     // Given
     ProcessInstance processInstance = Mockito.mock(ProcessInstance.class);
     // When
@@ -183,7 +183,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_Task() throws Exception {
+  public void testAssertThat_Task() {
     // Given
     Task task = Mockito.mock(Task.class);
     // When
@@ -195,7 +195,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_Job() throws Exception {
+  public void testAssertThat_Job() {
     // Given
     Job job = Mockito.mock(Job.class);
     // When
@@ -207,7 +207,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_CaseInstance() throws Exception {
+  public void testAssertThat_CaseInstance() {
     //Given
     CaseInstance caseInstance = Mockito.mock(CaseInstance.class);
     // When
@@ -217,7 +217,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_CaseExecution() throws Exception {
+  public void testAssertThat_CaseExecution() {
     //Given
     CaseExecution caseExecution = Mockito.mock(CaseExecution.class);
     // When
@@ -227,7 +227,7 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
-  public void testAssertThat_CaseDefinition() throws Exception {
+  public void testAssertThat_CaseDefinition() {
     //Given
     CaseDefinition caseDefinition = Mockito.mock(CaseDefinition.class);
     // When

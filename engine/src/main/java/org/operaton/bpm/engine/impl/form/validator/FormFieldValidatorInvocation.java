@@ -35,7 +35,7 @@ public class FormFieldValidatorInvocation extends DelegateInvocation {
     this.validatorContext = validatorContext;
   }
 
-  protected void invoke() throws Exception {
+  protected void invoke() {
     invocationResult = formFieldValidator.validate(submittedValue, validatorContext);
   }
 

@@ -71,7 +71,7 @@ public abstract class SpinValueSerializer extends AbstractSerializableValueSeria
     return false;
   }
 
-  protected byte[] serializeToByteArray(Object deserializedObject) throws Exception {
+  protected byte[] serializeToByteArray(Object deserializedObject) {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     OutputStreamWriter outWriter = new OutputStreamWriter(out, Context.getProcessEngineConfiguration().getDefaultCharset());
     BufferedWriter bufferedWriter = new BufferedWriter(outWriter);
@@ -88,7 +88,7 @@ public abstract class SpinValueSerializer extends AbstractSerializableValueSeria
     }
   }
 
-  protected Object deserializeFromByteArray(byte[] object, ValueFields valueFields) throws Exception {
+  protected Object deserializeFromByteArray(byte[] object, ValueFields valueFields) {
     ByteArrayInputStream bais = new ByteArrayInputStream(object);
     InputStreamReader inReader = new InputStreamReader(bais, Context.getProcessEngineConfiguration().getDefaultCharset());
     BufferedReader bufferedReader = new BufferedReader(inReader);

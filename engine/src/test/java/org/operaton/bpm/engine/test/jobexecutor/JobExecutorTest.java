@@ -43,7 +43,7 @@ import org.junit.Test;
 public class JobExecutorTest extends JobExecutorTestCase {
 
   @Test
-  public void testBasicJobExecutorOperation() throws Exception {
+  public void testBasicJobExecutorOperation() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Void>() {
       public Void execute(CommandContext commandContext) {

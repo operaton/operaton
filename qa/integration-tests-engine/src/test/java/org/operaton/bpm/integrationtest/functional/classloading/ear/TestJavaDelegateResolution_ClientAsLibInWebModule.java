@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.functional.classloading.ear;
-import javax.transaction.SystemException;
 
 import org.operaton.bpm.integrationtest.functional.classloading.beans.ExampleDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
@@ -82,7 +81,7 @@ public class TestJavaDelegateResolution_ClientAsLibInWebModule extends AbstractF
 
   @Test
   @OperateOnDeployment("clientDeployment")
-  public void testResolveClassFromJobExecutor() throws InterruptedException, SystemException {
+  public void testResolveClassFromJobExecutor() {
 
     runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 

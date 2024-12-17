@@ -56,7 +56,7 @@ public class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest 
   private final MultivaluedMap<String, String> queryParameters = new MultivaluedHashMap<>();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     super.before();
 
     ProcessEngine processEngine = getProcessEngine();

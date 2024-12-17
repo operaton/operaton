@@ -106,7 +106,7 @@ public class MigrationIncidentTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/migration/calledProcess.bpmn",
                            "org/operaton/bpm/engine/test/api/runtime/migration/callingProcess.bpmn",
                            "org/operaton/bpm/engine/test/api/runtime/migration/callingProcess_v2.bpmn"})
-  public void testCallActivityExternalTaskIncidentMigration() throws Exception {
+  public void testCallActivityExternalTaskIncidentMigration() {
     // Given we create a new process instance
     ProcessDefinition callingProcess = engineRule.getRepositoryService()
         .createProcessDefinitionQuery()
@@ -151,7 +151,7 @@ public class MigrationIncidentTest {
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/migration/calledProcess.bpmn",
                            "org/operaton/bpm/engine/test/api/runtime/migration/calledProcess_v2.bpmn"})
-  public void testExternalTaskIncidentMigration() throws Exception {
+  public void testExternalTaskIncidentMigration() {
 
     // Given we create a new process instance
     ProcessDefinition callingProcess = engineRule.getRepositoryService()

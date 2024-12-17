@@ -86,7 +86,7 @@ public class DecisionRequirementsDefinitionAuthorizationTest {
   }
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     authRule.createUserAndGroup("userId", "groupId");
     repositoryService = engineRule.getRepositoryService();
   }

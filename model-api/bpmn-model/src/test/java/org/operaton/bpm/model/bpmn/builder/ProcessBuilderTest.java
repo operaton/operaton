@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -68,7 +67,7 @@ public class ProcessBuilderTest {
   }
 
   @AfterEach
-  void validateModel() throws IOException {
+  void validateModel() {
     if (modelInstance != null) {
       Bpmn.validateModel(modelInstance);
     }

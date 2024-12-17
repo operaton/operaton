@@ -51,7 +51,7 @@ public class CdiBeanResolutionTwoEnginesTest extends AbstractFoxPlatformIntegrat
 
   @Test
   @OperateOnDeployment("engine1")
-  public void testResolveBean() throws Exception {
+  public void testResolveBean() {
     //given
     final ProcessEngine processEngine1 = processEngineService.getProcessEngine("engine1");
     Assert.assertEquals("engine1", processEngine1.getName());

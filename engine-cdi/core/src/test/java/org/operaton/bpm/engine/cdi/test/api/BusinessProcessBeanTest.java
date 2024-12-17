@@ -49,7 +49,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
   /* General test asserting that the business process bean is functional */
   @Test
   @Deployment
-  public void test() throws Exception {
+  public void test() {
 
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 

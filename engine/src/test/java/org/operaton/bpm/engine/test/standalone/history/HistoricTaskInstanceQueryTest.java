@@ -61,7 +61,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueEqualsNumber() throws Exception {
+  public void testProcessVariableValueEqualsNumber() {
     // long
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Collections.<String, Object>singletonMap("var", 123L));
@@ -110,7 +110,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLike() throws Exception {
+  public void testProcessVariableValueLike() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requester", "vahid alizadeh"));
 
@@ -133,7 +133,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueNotLike() throws Exception {
+  public void testProcessVariableValueNotLike() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requester", "vahid alizadeh"));
 
@@ -154,7 +154,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueGreaterThan() throws Exception {
+  public void testProcessVariableValueGreaterThan() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
@@ -163,7 +163,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueGreaterThanOrEqual() throws Exception {
+  public void testProcessVariableValueGreaterThanOrEqual() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
@@ -173,7 +173,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLessThan() throws Exception {
+  public void testProcessVariableValueLessThan() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
@@ -182,7 +182,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testProcessVariableValueLessThanOrEqual() throws Exception {
+  public void testProcessVariableValueLessThanOrEqual() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess",
             Collections.<String, Object>singletonMap("requestNumber", 123));
 
@@ -341,7 +341,7 @@ public class HistoricTaskInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
-  public void testTaskVariableValueEqualsNumber() throws Exception {
+  public void testTaskVariableValueEqualsNumber() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
     runtimeService.startProcessInstanceByKey("oneTaskProcess");

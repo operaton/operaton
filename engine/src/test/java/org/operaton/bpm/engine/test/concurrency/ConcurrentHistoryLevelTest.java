@@ -42,7 +42,7 @@ import org.junit.Test;
 public class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     TestHelper.deleteHistoryLevel(processEngineConfiguration);
   }
 

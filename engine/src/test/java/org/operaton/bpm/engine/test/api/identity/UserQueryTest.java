@@ -40,7 +40,7 @@ import org.junit.Test;
 public class UserQueryTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
 
     createUser("kermit", "Kermit_", "The_frog", "kermit_@muppetshow.com");
@@ -70,7 +70,7 @@ public class UserQueryTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.deleteUser("kermit");
     identityService.deleteUser("fozzie");
     identityService.deleteUser("gonzo");

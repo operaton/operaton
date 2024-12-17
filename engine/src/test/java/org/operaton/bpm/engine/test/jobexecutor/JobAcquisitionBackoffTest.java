@@ -63,7 +63,7 @@ public class JobAcquisitionBackoffTest {
   protected ThreadControl acquisitionThread2;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     jobExecutor1 = (ControllableJobExecutor)
         ((ProcessEngineConfigurationImpl) engineRule.getProcessEngine().getProcessEngineConfiguration())
           .getJobExecutor();
@@ -82,7 +82,7 @@ public class JobAcquisitionBackoffTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     jobExecutor1.shutdown();
     jobExecutor2.shutdown();
   }

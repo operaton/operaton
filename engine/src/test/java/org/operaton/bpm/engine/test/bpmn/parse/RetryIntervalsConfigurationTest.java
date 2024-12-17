@@ -421,7 +421,7 @@ public class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest
     return job.getRetries();
   }
 
-  private void assertDueDateTime(Date expectedDate) throws ParseException {
+  private void assertDueDateTime(Date expectedDate) {
     Date dueDateTime = managementService.createJobQuery().singleResult().getDuedate();
     assertEquals(expectedDate, dueDateTime);
   }

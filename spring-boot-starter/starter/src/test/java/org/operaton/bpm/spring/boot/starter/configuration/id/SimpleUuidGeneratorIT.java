@@ -37,7 +37,7 @@ public class SimpleUuidGeneratorIT {
   private ProcessEngine processEngine;
 
   @Test
-  public void configured_idGenerator_is_uuid() throws Exception {
+  public void configured_idGenerator_is_uuid() {
     IdGenerator idGenerator = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getIdGenerator();
 
     assertThat(idGenerator).isInstanceOf(DbIdGenerator.class);

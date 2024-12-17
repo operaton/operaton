@@ -62,7 +62,7 @@ public class JakartaEjbProcessApplicationReference implements ProcessApplication
     return selfReference;
   }
 
-  public void processEngineStopping(ProcessEngine processEngine) throws ProcessApplicationUnavailableException {
+  public void processEngineStopping(ProcessEngine processEngine) {
     // do nothing.
   }
 

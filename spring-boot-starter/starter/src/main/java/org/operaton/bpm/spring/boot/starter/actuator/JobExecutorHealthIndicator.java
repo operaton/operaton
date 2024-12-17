@@ -36,7 +36,7 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
   }
 
   @Override
-  protected void doHealthCheck(Builder builder) throws Exception {
+  protected void doHealthCheck(Builder builder) {
     boolean active = jobExecutor.isActive();
     if (active) {
       builder = builder.up();

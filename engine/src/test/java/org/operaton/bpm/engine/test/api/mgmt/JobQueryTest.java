@@ -26,7 +26,6 @@ import static org.junit.Assert.fail;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -114,7 +113,7 @@ public class JobQueryTest {
   public boolean ensureJobDueDateSet;
 
   @Parameterized.Parameters(name = "Job DueDate is set: {0}")
-  public static Collection<Object[]> scenarios() throws ParseException {
+  public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { false },
       { true }
@@ -127,7 +126,7 @@ public class JobQueryTest {
    *   - 1 message
    */
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngineConfiguration = rule.getProcessEngineConfiguration();
     runtimeService = rule.getRuntimeService();
     repositoryService = rule.getRepositoryService();
@@ -186,7 +185,7 @@ public class JobQueryTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     repositoryService.deleteDeployment(deploymentId, true);
     commandExecutor.execute(new DeleteJobsCmd(messageId, true));
     processEngineConfiguration.setEnsureJobDueDateNotNull(defaultEnsureJobDueDateSet);
@@ -628,7 +627,7 @@ public class JobQueryTest {
 
 
   @Test
-  public void testJobQueryWithExceptions() throws Throwable {
+  public void testJobQueryWithExceptions() {
 
     createJobWithoutExceptionMsg();
 

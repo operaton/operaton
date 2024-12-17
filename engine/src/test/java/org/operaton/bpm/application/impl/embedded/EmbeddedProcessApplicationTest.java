@@ -60,7 +60,7 @@ public class EmbeddedProcessApplicationTest extends PluggableProcessEngineTest {
   }
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     defaultEngineRegistered = false;
   }
 

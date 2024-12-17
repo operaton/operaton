@@ -221,7 +221,7 @@ public class DmnDataTypeTransformerTest extends DmnEngineTest {
   }
 
   @Test
-  public void dateType() throws ParseException {
+  public void dateType() {
     DmnDataTypeTransformer typeTransformer = registry.getTransformer("date");
 
     Date date = toDate("2015-09-18T12:00:00", null);

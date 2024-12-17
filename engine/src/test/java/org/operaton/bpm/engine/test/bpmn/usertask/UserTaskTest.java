@@ -38,7 +38,7 @@ import org.junit.Test;
 public class UserTaskTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     identityService.saveUser(identityService.newUser("fozzie"));
     identityService.saveUser(identityService.newUser("kermit"));
 
@@ -50,7 +50,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.deleteUser("fozzie");
     identityService.deleteUser("kermit");
     identityService.deleteGroup("accountancy");
@@ -91,7 +91,7 @@ public class UserTaskTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testCompleteAfterParallelGateway() throws InterruptedException {
+  public void testCompleteAfterParallelGateway() {
 	  // related to http://jira.codehaus.org/browse/ACT-1054
 
 	  // start the process

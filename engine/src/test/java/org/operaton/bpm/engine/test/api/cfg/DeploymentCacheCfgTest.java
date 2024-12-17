@@ -246,7 +246,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testSequentialCallActivityCallAsynchronously() throws InterruptedException {
+  public void testSequentialCallActivityCallAsynchronously() {
 
     // given a number process definitions which call each other by call activities (0->1->2->0->4),
     // which stops after the first repetition of 0 in 4
@@ -270,7 +270,7 @@ public class DeploymentCacheCfgTest {
   }
 
   @Test
-  public void testSequentialCallActivityAsynchronousWithUnfinishedExecution() throws InterruptedException {
+  public void testSequentialCallActivityAsynchronousWithUnfinishedExecution() {
 
     // given a number process definitions which call each other by call activities (0->1->2->0->4),
     // which stops after the first repetition of 0

@@ -64,7 +64,7 @@ public class TopicSubscriptionIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
   @BeforeEach
-  public void setup() throws Exception {
+  public void setup() {
     client = clientRule.client();
     handler.clear();
     processDefinition = engineRule.deploy(BPMN_ERROR_EXTERNAL_TASK_PROCESS).get(0);

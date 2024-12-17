@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 public class VariableSavingDelegate implements JavaDelegate {
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
 
     execution.setVariable("varstring", "FOO");
     execution.setVariable("varstring2", "F_OO");

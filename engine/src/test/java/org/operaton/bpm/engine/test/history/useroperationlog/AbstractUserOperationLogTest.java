@@ -32,12 +32,12 @@ public abstract class AbstractUserOperationLogTest extends PluggableProcessEngin
   public static final String USER_ID = "demo";
 
   @Before
-  public void abstractSetUp() throws Exception {
+  public void abstractSetUp() {
     identityService.setAuthenticatedUserId(USER_ID);
   }
 
   @After
-  public void abstractTearDown() throws Exception {
+  public void abstractTearDown() {
     identityService.clearAuthentication();
   }
 

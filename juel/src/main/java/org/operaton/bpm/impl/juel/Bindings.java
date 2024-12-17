@@ -47,7 +47,7 @@ public class Bindings implements TypeConverter {
 		private MethodWrapper(Method method) {
 			this.method = method;
 		}
-		private void writeObject(ObjectOutputStream out) throws IOException, ClassNotFoundException {
+		private void writeObject(ObjectOutputStream out) throws IOException {
 			out.defaultWriteObject();
 			out.writeObject(method.getDeclaringClass());
 			out.writeObject(method.getName());
@@ -152,7 +152,7 @@ public class Bindings implements TypeConverter {
 		return Arrays.hashCode(functions) ^ Arrays.hashCode(variables) ^ converter.hashCode();
 	}
 
-	private void writeObject(ObjectOutputStream out) throws IOException, ClassNotFoundException {
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
 		MethodWrapper[] wrappers = new MethodWrapper[functions.length];
 		for (int i = 0; i < wrappers.length; i++) {

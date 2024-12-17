@@ -55,7 +55,7 @@ import org.junit.Test;
 public class MessageEventSubprocessTest extends PluggableProcessEngineTest {
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     try {
 
     } finally {

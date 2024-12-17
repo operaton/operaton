@@ -237,7 +237,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = CAPITAL_JUEL_DMN)
-  public void testElResolution () throws Exception {
+  public void testElResolution () {
     DmnEngine juelEngine = createEngineWithDefaultExpressionLanguage(JUEL);
     assertExample(juelEngine, decision);
 

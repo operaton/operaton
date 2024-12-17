@@ -46,7 +46,7 @@ public class UserOperationLogDeploymentTest extends AbstractUserOperationLogTest
   protected static final String PROCESS_KEY = "process";
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
 
 
     List<Deployment> deployments = repositoryService.createDeploymentQuery().list();

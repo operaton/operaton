@@ -30,7 +30,7 @@ public class PropertiesAwareClientFactory extends ClientFactory {
   protected ClientProperties clientProperties;
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
     applyPropertiesFrom(clientProperties);
     addBasicAuthInterceptor();
     super.afterPropertiesSet();

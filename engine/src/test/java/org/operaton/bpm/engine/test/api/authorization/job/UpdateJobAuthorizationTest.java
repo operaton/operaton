@@ -92,7 +92,7 @@ public class UpdateJobAuthorizationTest {
   protected String deploymentId;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     managementService = engineRule.getManagementService();
     runtimeService = engineRule.getRuntimeService();
     authRule.createUserAndGroup("userId", "groupId");

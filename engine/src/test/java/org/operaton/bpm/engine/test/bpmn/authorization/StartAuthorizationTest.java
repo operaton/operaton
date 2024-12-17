@@ -50,7 +50,7 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
   Group group2;
   Group group3;
 
-  protected void setUpUsersAndGroups() throws Exception {
+  protected void setUpUsersAndGroups() {
 
     identityService = processEngine.getIdentityService();
 
@@ -84,7 +84,7 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
     identityService.createMembership(userInGroup3.getId(), group3.getId());
   }
 
-  protected void tearDownUsersAndGroups() throws Exception {
+  protected void tearDownUsersAndGroups() {
     identityService.deleteMembership(userInGroup1.getId(), group1.getId());
     identityService.deleteMembership(userInGroup2.getId(), group2.getId());
     identityService.deleteMembership(userInGroup3.getId(), group3.getId());
@@ -104,7 +104,7 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
   
   @Deployment
   @Test
-  public void testIdentityLinks() throws Exception {
+  public void testIdentityLinks() {
     
     setUpUsersAndGroups();
     
@@ -151,7 +151,7 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
   
   @Deployment
   @Test
-  public void testAddAndRemoveIdentityLinks() throws Exception {
+  public void testAddAndRemoveIdentityLinks() {
     
     setUpUsersAndGroups();
     
@@ -208,7 +208,7 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
-  public void testPotentialStarter() throws Exception {
+  public void testPotentialStarter() {
     // first check an unauthorized user. An exception is expected
 
     setUpUsersAndGroups();
@@ -241,7 +241,7 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
    */
   @Deployment
   @Test
-  public void testPotentialStarterNoDefinition() throws Exception {
+  public void testPotentialStarterNoDefinition() {
     identityService = processEngine.getIdentityService();
 
     identityService.setAuthenticatedUserId("someOneFromMars");
@@ -254,7 +254,7 @@ public class StartAuthorizationTest extends PluggableProcessEngineTest {
   // this test checks the list without user constraint
   @Deployment
   @Test
-	public void testProcessDefinitionList() throws Exception {
+	public void testProcessDefinitionList() {
 	  
     setUpUsersAndGroups();
     try {

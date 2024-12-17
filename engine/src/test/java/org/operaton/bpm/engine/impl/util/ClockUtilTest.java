@@ -32,7 +32,7 @@ public class ClockUtilTest {
   private static final long TWO_DAYS = 172800000L;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     ClockUtil.reset();
   }
 

@@ -56,7 +56,7 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     identityService.deleteGroup("accountancy");
     identityService.deleteGroup("management");
     identityService.deleteUser("gonzo");
@@ -68,7 +68,7 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
    * test for task inclusion/exclusion (no other filters, no sort) 
    */
   @Test
-  public void testQueryExcludeSubtasks() throws Exception {
+  public void testQueryExcludeSubtasks() {
     // query all tasks, including subtasks
     TaskQuery query = taskService.createTaskQuery();
     assertEquals(10, query.count());
@@ -83,7 +83,7 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
    * test for task inclusion/exclusion (no other filters, no sort) 
    */
   @Test
-  public void testQueryWithPagination() throws Exception {
+  public void testQueryWithPagination() {
     // query all tasks, including subtasks
     TaskQuery query = taskService.createTaskQuery();
     assertEquals(10, query.count());
@@ -98,7 +98,7 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
    * test for task inclusion/exclusion (no other filters, order by task assignee ) 
    */
   @Test
-  public void testQueryExcludeSubtasksSorted() throws Exception {
+  public void testQueryExcludeSubtasksSorted() {
     // query all tasks, including subtasks
     TaskQuery query = taskService.createTaskQuery().orderByTaskAssignee().asc();
     assertEquals(10, query.count());
@@ -113,7 +113,7 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
    * test for task inclusion/exclusion when additional filter is specified (like assignee), no order. 
    */ 
   @Test
-  public void testQueryByAssigneeExcludeSubtasks() throws Exception {
+  public void testQueryByAssigneeExcludeSubtasks() {
     // gonzo has 2 root tasks and 3+2 subtasks assigned
     // include subtasks
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo");
@@ -141,7 +141,7 @@ public class SubTaskQueryTest extends PluggableProcessEngineTest {
    * test for task inclusion/exclusion when additional filter is specified (like assignee), no order. 
    */ 
   @Test
-  public void testQueryByAssigneeExcludeSubtasksPaginated() throws Exception {
+  public void testQueryByAssigneeExcludeSubtasksPaginated() {
     // gonzo has 2 root tasks and 3+2 subtasks assigned
     // include subtasks
     TaskQuery query = taskService.createTaskQuery().taskAssignee("gonzo");

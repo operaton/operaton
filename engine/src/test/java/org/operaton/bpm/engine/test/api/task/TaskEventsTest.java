@@ -58,13 +58,13 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
   private Task task;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     task = taskService.newTask();
     taskService.saveTask(task);
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     // delete task
     taskService.deleteTask(task.getId(), true);
   }

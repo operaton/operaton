@@ -42,7 +42,7 @@ public class ProcessDefinitionStatisticsAuthorizationTest extends AuthorizationT
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
         "org/operaton/bpm/engine/test/api/authorization/oneIncidentProcess.bpmn20.xml").getId();

@@ -86,7 +86,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSerializationAsJava() throws Exception {
+  public void testSerializationAsJava() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     JavaSerializable javaSerializable = new JavaSerializable("foo");
@@ -189,7 +189,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObjectNullDeserialized() throws Exception {
+  public void testSetJavaObjectNullDeserialized() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -210,7 +210,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObjectNullSerialized() throws Exception {
+  public void testSetJavaObjectNullSerialized() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -233,7 +233,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetJavaObjectNullSerializedObjectTypeName() throws Exception {
+  public void testSetJavaObjectNullSerializedObjectTypeName() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -269,7 +269,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetUntypedNullForExistingVariable() throws Exception {
+  public void testSetUntypedNullForExistingVariable() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
@@ -295,7 +295,7 @@ public class JavaSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetTypedNullForExistingVariable() throws Exception {
+  public void testSetTypedNullForExistingVariable() {
 
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 

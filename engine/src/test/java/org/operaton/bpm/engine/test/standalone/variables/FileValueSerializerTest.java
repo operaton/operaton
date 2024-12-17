@@ -232,7 +232,7 @@ public class FileValueSerializerTest {
   }
 
   @Test
-  public void testReadFilenameValue() throws IOException {
+  public void testReadFilenameValue() {
     MockValueFields valueFields = new MockValueFields();
     String filename = "file.txt";
     valueFields.setTextValue(filename);

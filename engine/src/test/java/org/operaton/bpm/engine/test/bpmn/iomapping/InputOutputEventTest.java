@@ -47,7 +47,7 @@ import org.junit.Test;
 public class InputOutputEventTest extends PluggableProcessEngineTest {
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
 
     VariableLogDelegate.reset();
@@ -267,7 +267,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
 
 
     VariableLogDelegate.reset();

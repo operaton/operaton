@@ -84,7 +84,7 @@ public class ProcessApplicationDeploymentTest {
   Set<String> registeredDeployments;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     processEngine = engineRule.getProcessEngine();
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();
     repositoryService = engineRule.getRepositoryService();
@@ -100,7 +100,7 @@ public class ProcessApplicationDeploymentTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     clearProcessApplicationDeployments();
     processApplication.undeploy();
     processEngineConfiguration.setDeploymentHandlerFactory(defaultDeploymentHandlerFactory);

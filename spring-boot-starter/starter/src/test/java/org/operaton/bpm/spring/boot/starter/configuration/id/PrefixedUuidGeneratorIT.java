@@ -48,19 +48,19 @@ public class PrefixedUuidGeneratorIT {
   private ProcessEngine processEngine;
 
   @Test
-  public void property_is_set() throws Exception {
+  public void property_is_set() {
     assertThat(properties.getIdGenerator()).isEqualTo(IdGeneratorConfiguration.PREFIXED);
   }
 
   @Test
-  public void configured_idGenerator_is_uuid() throws Exception {
+  public void configured_idGenerator_is_uuid() {
     final IdGenerator idGenerator = OperatonSpringBootUtil.get(processEngine).getIdGenerator();
 
     assertThat(idGenerator).isOfAnyClassIn(PrefixedUuidGenerator.class);
   }
 
   @Test
-  public void nextId_is_uuid() throws Exception {
+  public void nextId_is_uuid() {
     assertThat(idGenerator.getNextId().split("-")).hasSize(6).startsWith("myapp");
   }
 }

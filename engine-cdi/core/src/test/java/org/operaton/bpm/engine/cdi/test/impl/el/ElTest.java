@@ -36,7 +36,7 @@ public class ElTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testSetBeanProperty() throws Exception {
+  public void testSetBeanProperty() {
     MessageBean messageBean = getBeanInstance(MessageBean.class);
     runtimeService.startProcessInstanceByKey("setBeanProperty");
     assertEquals("Greetings from Berlin", messageBean.getMessage());

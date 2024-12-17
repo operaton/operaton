@@ -64,7 +64,7 @@ public class JsonJacksonTreeDataFormatReaderTest {
   }
 
   @Test
-  public void shouldNotMatchInvalidJson() throws IOException {
+  public void shouldNotMatchInvalidJson() {
     inputReader = stringToReader("prefix " + EXAMPLE_JSON);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isFalse();
   }

@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
@@ -45,7 +44,7 @@ public class RequestTrailingSlashIT {
   public int port;
 
   @Test
-  public void shouldRedirectPathWithMissingTrailingSlash() throws IOException {
+  public void shouldRedirectPathWithMissingTrailingSlash() {
     // given
     List<ResponseEntity<String>> responses = new ArrayList<>();
 

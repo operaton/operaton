@@ -46,7 +46,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
   protected long originalDefaultPriorityOnFailure;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     originalDefaultPriority = DefaultJobPriorityProvider.DEFAULT_PRIORITY;
     originalDefaultPriorityOnFailure = DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE;
 
@@ -55,7 +55,7 @@ public class JobPrioritizationBpmnExpressionValueTest extends PluggableProcessEn
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     // reset default priorities
     DefaultJobPriorityProvider.DEFAULT_PRIORITY = originalDefaultPriority;
     DefaultJobPriorityProvider.DEFAULT_PRIORITY_ON_RESOLUTION_FAILURE = originalDefaultPriorityOnFailure;

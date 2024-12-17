@@ -52,7 +52,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
   protected Map<Object, Object> beans = null;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
 
     LogVariableListener.reset();
@@ -790,7 +790,7 @@ public class VariableListenerTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     beans.clear();
 
 

@@ -63,12 +63,12 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     deploymentThreeId = repositoryService.createDeployment().name(THIRD_DEPLOYMENT_NAME).addClasspathResource(getResourceThreePath()).deploy().getId();
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     ClockUtil.reset();
     repositoryService.deleteDeployment(deploymentThreeId, true);
   }

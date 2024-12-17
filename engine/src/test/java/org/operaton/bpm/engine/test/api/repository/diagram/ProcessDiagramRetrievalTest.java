@@ -226,15 +226,19 @@ public class ProcessDiagramRetrievalTest {
     assertLayoutCorrect(processDiagramLayout);
   }
 
-  private void assertLayoutCorrect(DiagramLayout processDiagramLayout) throws IOException {
+  private void assertLayoutCorrect(DiagramLayout processDiagramLayout) {
     String html = generateHtmlCode(imageFileName, processDiagramLayout, highlightedActivityId);
     
     File htmlFile = new File("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName + ".html");
-    if (OVERWRITE_EXPECTED_HTML_FILES) {
-      FileUtils.writeStringToFile(htmlFile, html);
-      fail("The assertions of this test only work if ProcessDiagramRetrievalTest#OVERWRITE_EXPECTED_HTML_FILES is set to false.");
+    try {
+      if (OVERWRITE_EXPECTED_HTML_FILES) {
+        FileUtils.writeStringToFile(htmlFile, html);
+        fail("The assertions of this test only work if ProcessDiagramRetrievalTest#OVERWRITE_EXPECTED_HTML_FILES is set to false.");
+      }
+      assertEquals(FileUtils.readFileToString(htmlFile).replace("\r", ""), html); // remove carriage returns in case the files have been fetched via Git on Windows
+    } catch (IOException e) {
+      fail("Could not read or write file: " + e.getMessage());
     }
-    assertEquals(FileUtils.readFileToString(htmlFile).replace("\r", ""), html); // remove carriage returns in case the files have been fetched via Git on Windows
   }
 
   private static String generateHtmlCode(String imageUrl, DiagramLayout processDiagramLayout, String highlightedActivityId) {

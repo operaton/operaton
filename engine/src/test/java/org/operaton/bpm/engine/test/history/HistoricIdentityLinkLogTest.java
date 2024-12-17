@@ -284,7 +284,7 @@ public class HistoricIdentityLinkLogTest extends PluggableProcessEngineTest {
   @SuppressWarnings("deprecation")
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml" })
   @Test
-  public void testShouldAddAndRemoveIdentityLinksForProcessDefinition() throws Exception {
+  public void testShouldAddAndRemoveIdentityLinksForProcessDefinition() {
 
     // Pre test
     List<HistoricIdentityLinkLog> historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();

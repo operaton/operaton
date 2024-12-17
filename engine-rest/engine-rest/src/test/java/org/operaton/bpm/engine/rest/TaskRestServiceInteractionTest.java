@@ -67,7 +67,6 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -704,7 +703,7 @@ public class TaskRestServiceInteractionTest extends
   }
 
   @Test
-  public void testGetRenderedFormForDifferentPlatformEncoding() throws NoSuchFieldException, IllegalAccessException, UnsupportedEncodingException {
+  public void testGetRenderedFormForDifferentPlatformEncoding() {
     String expectedResult = "<formField>unicode symbol: \u2200</formField>";
     when(formServiceMock.getRenderedTaskForm(MockProvider.EXAMPLE_TASK_ID)).thenReturn(expectedResult);
 

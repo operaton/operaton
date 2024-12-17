@@ -47,7 +47,7 @@ public class EmailSendTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testSimpleTextMail() throws Exception {
+  public void testSimpleTextMail() {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
     List<WiserMessage> messages = wiser.getMessages();
@@ -81,7 +81,7 @@ public class EmailSendTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testTextMailExpressions() throws Exception {
+  public void testTextMailExpressions() {
 
     String sender = "mispiggy@activiti.org";
     String recipient = "fozziebear@activiti.org";
@@ -106,7 +106,7 @@ public class EmailSendTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testCcAndBcc() throws Exception {
+  public void testCcAndBcc() {
     runtimeService.startProcessInstanceByKey("ccAndBcc");
 
     List<WiserMessage> messages = wiser.getMessages();
@@ -120,7 +120,7 @@ public class EmailSendTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testHtmlMail() throws Exception {
+  public void testHtmlMail() {
     runtimeService.startProcessInstanceByKey("htmlMail", CollectionUtil.singletonMap("gender", "male"));
 
     List<WiserMessage> messages = wiser.getMessages();
@@ -130,7 +130,7 @@ public class EmailSendTaskTest extends EmailTestCase {
 
   @Deployment
   @Test
-  public void testSendEmail() throws Exception {
+  public void testSendEmail() throws MessagingException {
 
     String from = "ordershipping@activiti.org";
     boolean male = true;
@@ -163,7 +163,7 @@ public class EmailSendTaskTest extends EmailTestCase {
   // Helper
 
   private void assertEmailSend(WiserMessage emailMessage, boolean htmlMail, String subject, String message,
-          String from, List<String> to, List<String> cc) throws IOException {
+          String from, List<String> to, List<String> cc) {
     try {
       MimeMessage mimeMessage = emailMessage.getMimeMessage();
 
@@ -187,7 +187,7 @@ public class EmailSendTaskTest extends EmailTestCase {
         }
       }
 
-    } catch (MessagingException e) {
+    } catch (MessagingException | IOException e) {
       fail(e.getMessage());
     }
 

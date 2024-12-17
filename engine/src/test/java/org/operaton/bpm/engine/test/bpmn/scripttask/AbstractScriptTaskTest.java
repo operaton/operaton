@@ -32,7 +32,7 @@ public abstract class AbstractScriptTaskTest extends PluggableProcessEngineTest 
   private final List<String> deploymentIds = new ArrayList<>();
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     deploymentIds.forEach(deploymentId -> repositoryService.deleteDeployment(deploymentId, true));
   }
 

@@ -37,13 +37,13 @@ public class ThrowBpmnErrorDelegate implements JavaDelegate, ExecutionListener {
   public static final String DEFAULT_EXCEPTION_MESSAGE = DEFAULT_ERROR_NAME;
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
     throwErrorIfRequested(execution);
     throwExceptionIfRequested(execution);
   }
 
   @Override
-  public void notify(DelegateExecution execution) throws Exception {
+  public void notify(DelegateExecution execution) {
     execute(execution);
   }
 

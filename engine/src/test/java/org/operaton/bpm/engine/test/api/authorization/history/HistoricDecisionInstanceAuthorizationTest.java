@@ -57,7 +57,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     testRule.deploy("org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.processWithBusinessRuleTask.bpmn20.xml",
         "org/operaton/bpm/engine/test/history/HistoricDecisionInstanceTest.decisionSingleOutput.dmn11.xml");
 

@@ -46,7 +46,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   private String deploymentTwoId;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     deploymentOneId = repositoryService
       .createDeployment()
       .name("org/operaton/bpm/engine/test/repository/one.bpmn20.xml")
@@ -66,7 +66,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
 
     repositoryService.deleteDeployment(deploymentOneId, true);
     repositoryService.deleteDeployment(deploymentTwoId, true);
@@ -152,7 +152,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryByDeploymentBefore() throws Exception {
+  public void testQueryByDeploymentBefore() {
     Date later = DateTimeUtil.now().plus(10 * 3600).toDate();
     Date earlier = DateTimeUtil.now().minus(10 * 3600).toDate();
 
@@ -171,7 +171,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryDeploymentAfter() throws Exception {
+  public void testQueryDeploymentAfter() {
     Date later = DateTimeUtil.now().plus(10 * 3600).toDate();
     Date earlier = DateTimeUtil.now().minus(10 * 3600).toDate();
 
@@ -220,7 +220,7 @@ public class DeploymentQueryTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testQueryDeploymentBetween() throws Exception {
+  public void testQueryDeploymentBetween() {
     Date later = DateTimeUtil.now().plus(10 * 3600).toDate();
     Date earlier = DateTimeUtil.now().minus(10 * 3600).toDate();
 

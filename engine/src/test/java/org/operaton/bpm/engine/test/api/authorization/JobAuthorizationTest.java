@@ -54,7 +54,7 @@ public class JobAuthorizationTest extends AuthorizationTest {
 
   @Override
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/authorization/timerStartEventProcess.bpmn20.xml",
         "org/operaton/bpm/engine/test/api/authorization/timerBoundaryEventProcess.bpmn20.xml",

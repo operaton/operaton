@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.jobexecutor;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -43,7 +42,7 @@ public class JobExecutorAcquireJobsDefaultTest extends AbstractJobExecutorAcquir
   public Date currentTime;
 
   @Parameterized.Parameters(name = "Job DueDate is set: {0}")
-  public static Collection<Object[]> scenarios() throws ParseException {
+  public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
       { false, null },
       { true, ClockTestUtil.setClockToDateWithoutMilliseconds() }

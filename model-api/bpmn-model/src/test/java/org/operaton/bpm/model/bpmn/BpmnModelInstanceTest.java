@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BpmnModelInstanceTest {
 
   @Test
-  void testClone() throws Exception {
+  void testClone() {
 
     BpmnModelInstance modelInstance = Bpmn.createEmptyModel();
 

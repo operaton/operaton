@@ -150,7 +150,7 @@ public class ResteasySpecifics implements ContainerSpecifics {
         ResteasyServerBootstrap bootstrap = new ResteasyServerBootstrap(jaxRsApplication);
 
         @Override
-        protected void before() throws Throwable {
+        protected void before() {
           bootstrap.start();
         }
 

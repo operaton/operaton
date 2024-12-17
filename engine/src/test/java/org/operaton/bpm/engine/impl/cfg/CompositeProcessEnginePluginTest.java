@@ -36,7 +36,7 @@ public class CompositeProcessEnginePluginTest {
   private static final ProcessEngine ENGINE = mock(ProcessEngine.class);
 
   @Test
-  public void addPlugin() throws Exception {
+  public void addPlugin() {
     CompositeProcessEnginePlugin composite = new CompositeProcessEnginePlugin(PLUGIN_A);
 
     assertThat(composite.getPlugins()).hasSize(1);
@@ -49,7 +49,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void addPlugins() throws Exception {
+  public void addPlugins() {
     CompositeProcessEnginePlugin composite = new CompositeProcessEnginePlugin(PLUGIN_A);
     composite.addProcessEnginePlugins(Arrays.asList(PLUGIN_B));
 
@@ -60,7 +60,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void allPluginsOnPreInit() throws Exception {
+  public void allPluginsOnPreInit() {
     new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B).preInit(CONFIGURATION);
 
     ORDER.verify(PLUGIN_A).preInit(CONFIGURATION);
@@ -68,7 +68,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void allPluginsOnPostInit() throws Exception {
+  public void allPluginsOnPostInit() {
     new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B).postInit(CONFIGURATION);
 
     ORDER.verify(PLUGIN_A).postInit(CONFIGURATION);
@@ -76,7 +76,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void allPluginsOnPostProcessEngineBuild() throws Exception {
+  public void allPluginsOnPostProcessEngineBuild() {
     new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B).postProcessEngineBuild(ENGINE);
 
     ORDER.verify(PLUGIN_A).postProcessEngineBuild(ENGINE);
@@ -84,7 +84,7 @@ public class CompositeProcessEnginePluginTest {
   }
 
   @Test
-  public void verifyToString() throws Exception {
+  public void verifyToString() {
     assertThat(new CompositeProcessEnginePlugin(PLUGIN_A, PLUGIN_B)).hasToString("CompositeProcessEnginePlugin[PluginA, PluginB]");
   }
 

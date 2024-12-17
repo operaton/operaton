@@ -31,7 +31,7 @@ public class BusinessProcessContextConversationScopeTest extends CdiProcessEngin
 
   @Test
   @Deployment
-  public void testConversationalBeanStoreFlush() throws Exception {
+  public void testConversationalBeanStoreFlush() {
 
     getBeanInstance(BusinessProcess.class).setVariable("testVariable", "testValue");
     String pid =  getBeanInstance(BusinessProcess.class).startProcessByKey("testConversationalBeanStoreFlush").getId();

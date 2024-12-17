@@ -141,7 +141,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
   }
 
   @Test
-  public void shouldAddAndRemoveHistoricIdentityLinksForProcessDefinitionWithTenantId() throws Exception {
+  public void shouldAddAndRemoveHistoricIdentityLinksForProcessDefinitionWithTenantId() {
     // given
     String resourceName = "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml";
     testRule.deployForTenant(TENANT_1, resourceName);
@@ -175,7 +175,7 @@ public class MultiTenancyHistoricIdentityLinkLogQueryTest {
 
   @SuppressWarnings("deprecation")
   @Test
-  public void shouldAddIdentityLinksForProcessDefinitionWithTenantId() throws Exception {
+  public void shouldAddIdentityLinksForProcessDefinitionWithTenantId() {
     // given
     String resourceName = "org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml";
     testRule.deployForTenant(TENANT_1, resourceName);

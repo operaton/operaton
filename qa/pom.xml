@@ -42,10 +42,7 @@
     <tomcat.connector.ajp.port>48009</tomcat.connector.ajp.port>
     <tomcat.connector.ajp.redirectPort>48443</tomcat.connector.ajp.redirectPort>
     <tomcat.server.port>48005</tomcat.server.port>
-
     <tomcat.runtime.location>../tomcat-runtime/target/server/apache-tomcat-${version.tomcat}</tomcat.runtime.location>
-    <tomcat9.runtime.location>../tomcat9-runtime/target/server/apache-tomcat-${version.tomcat9}</tomcat9.runtime.location>
-
   </properties>
 
   <dependencyManagement>
@@ -62,7 +59,6 @@
 
   <modules>
     <module>ensure-clean-db-plugin</module>
-    <module>integration-tests-engine-jakarta</module>
   </modules>
 
   <profiles>
@@ -75,7 +71,6 @@
       <modules>
         <module>wildfly-runtime</module>
         <module>tomcat-runtime</module>
-        <module>tomcat9-runtime</module>
         <module>integration-tests-webapps</module>
         <module>integration-tests-engine</module>
         <!--module>test-db-util</module-->
@@ -99,13 +94,6 @@
       <id>wildfly-domain</id>
       <modules>
         <module>wildfly-runtime</module>
-      </modules>
-    </profile>
-
-    <profile>
-      <id>tomcat9</id>
-      <modules>
-        <module>tomcat9-runtime</module>
       </modules>
     </profile>
 

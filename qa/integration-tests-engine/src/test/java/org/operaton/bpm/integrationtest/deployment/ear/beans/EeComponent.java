@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.deployment.ear.beans;
 
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 
 @Stateless
 public class EeComponent {

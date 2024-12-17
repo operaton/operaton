@@ -18,8 +18,8 @@ package org.operaton.bpm.integrationtest.jobexecutor;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.cdi.BusinessProcess;

@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
-
+import java.nio.charset.StandardCharsets;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
@@ -88,7 +88,7 @@ public class IoUtil {
       IoUtil.closeSilently(inputStream);
       IoUtil.closeSilently(outStream);
     }
-    return new String(result, Charset.forName("UTF-8"));
+    return new String(result, StandardCharsets.UTF_8);
   }
 
   public static File getFile(String filePath) {

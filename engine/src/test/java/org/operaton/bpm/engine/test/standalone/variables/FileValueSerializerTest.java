@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import org.operaton.bpm.engine.impl.variable.serializer.FileValueSerializer;
@@ -115,7 +116,7 @@ public class FileValueSerializerTest {
   public void testWriteMimetypeFilenameBytesValueAndEncoding() throws UnsupportedEncodingException {
     String filename = "test.txt";
     String mimeType = "text/json";
-    Charset encoding = Charset.forName("UTF-8");
+    Charset encoding = StandardCharsets.UTF_8;
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     FileValue fileValue = Variables.fileValue(filename).mimeType(mimeType).encoding(encoding).file(is).create();
     ValueFields valueFields = new MockValueFields();
@@ -184,7 +185,7 @@ public class FileValueSerializerTest {
 
     assertThat(fileValue.getFilename()).isEqualTo(filename);
     assertThat(fileValue.getEncoding()).isEqualTo("UTF-8");
-    assertThat(fileValue.getEncodingAsCharset()).isEqualTo(Charset.forName("UTF-8"));
+    assertThat(fileValue.getEncodingAsCharset()).isEqualTo(StandardCharsets.UTF_8);
     checkStreamFromValue(fileValue, "text");
   }
 
@@ -208,7 +209,7 @@ public class FileValueSerializerTest {
     assertThat(fileValue.getFilename()).isEqualTo(filename);
     assertThat(fileValue.getMimeType()).isEqualTo(mimeType);
     assertThat(fileValue.getEncoding()).isEqualTo("UTF-16");
-    assertThat(fileValue.getEncodingAsCharset()).isEqualTo(Charset.forName("UTF-16"));
+    assertThat(fileValue.getEncodingAsCharset()).isEqualTo(StandardCharsets.UTF_16);
     checkStreamFromValue(fileValue, "text");
   }
 

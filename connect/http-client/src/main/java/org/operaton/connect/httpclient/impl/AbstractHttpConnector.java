@@ -18,6 +18,7 @@ package org.operaton.connect.httpclient.impl;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,7 +53,7 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
   public AbstractHttpConnector(String connectorId) {
     super(connectorId);
     httpClient = createClient();
-    charset = Charset.forName("utf-8");
+    charset = StandardCharsets.UTF_8;
   }
 
   protected CloseableHttpClient createClient() {

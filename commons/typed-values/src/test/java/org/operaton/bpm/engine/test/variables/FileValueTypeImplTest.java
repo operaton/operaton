@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
@@ -203,7 +204,7 @@ class FileValueTypeImplTest {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     String fileName = "simpleFile.txt";
     String fileType = "text/plain";
-    Charset encoding = Charset.forName("UTF-8");
+    Charset encoding = StandardCharsets.UTF_8;
     FileValue fileValue = Variables.fileValue(fileName).file(file).mimeType(fileType).encoding(encoding).setTransient(true).create();
     Map<String, Object> info = type.getValueInfo(fileValue);
 

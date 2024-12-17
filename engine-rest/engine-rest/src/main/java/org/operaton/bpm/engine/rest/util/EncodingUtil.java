@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.util;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author: Johannes Heinemann
@@ -28,7 +29,7 @@ public class EncodingUtil {
   protected static Charset getDefaultEncoding() {
     Charset charset = null;
     try {
-      charset = Charset.forName("UTF-8");
+      charset = StandardCharsets.UTF_8;
     }catch (Exception e){
       charset = Charset.defaultCharset();
     }

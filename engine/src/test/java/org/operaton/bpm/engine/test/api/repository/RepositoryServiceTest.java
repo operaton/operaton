@@ -29,6 +29,7 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -135,7 +136,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
   @Test
   public void testUTF8DeploymentMethod() throws IOException {
     //given utf8 charset
-    Charset utf8Charset = Charset.forName("UTF-8");
+    Charset utf8Charset = StandardCharsets.UTF_8;
     Charset defaultCharset = processEngineConfiguration.getDefaultCharset();
     processEngineConfiguration.setDefaultCharset(utf8Charset);
 

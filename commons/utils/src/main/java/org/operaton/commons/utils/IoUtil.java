@@ -20,6 +20,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Sebastian Menski
@@ -27,7 +28,7 @@ import java.nio.charset.Charset;
 public class IoUtil {
 
   private static final IoUtilLogger LOG = UtilsLogger.IO_UTIL_LOGGER;
-  public static final Charset ENCODING_CHARSET = Charset.forName("UTF-8");
+  public static final Charset ENCODING_CHARSET = StandardCharsets.UTF_8;
 
   /**
    * Returns the input stream as String.

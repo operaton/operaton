@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -60,7 +61,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
     assertThat(value.getFilename()).isEqualTo(filename);
     assertThat(value.getMimeType()).isEqualTo(type);
     assertThat(value.getEncoding()).isEqualTo("UTF-8");
-    assertThat(value.getEncodingAsCharset()).isEqualTo(Charset.forName("UTF-8"));
+    assertThat(value.getEncodingAsCharset()).isEqualTo(StandardCharsets.UTF_8);
     try (Scanner scanner = new Scanner(value.getValue())) {
       assertThat(scanner.nextLine()).isEqualTo("ABC");
     }

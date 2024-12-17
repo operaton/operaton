@@ -24,6 +24,6 @@ import org.operaton.bpm.application.ProcessApplication;
  */
 @ProcessApplication("pa2")
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class ProcessApplication2 extends org.operaton.bpm.application.impl.ServletProcessApplication {
+public class ProcessApplication2 extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
 }

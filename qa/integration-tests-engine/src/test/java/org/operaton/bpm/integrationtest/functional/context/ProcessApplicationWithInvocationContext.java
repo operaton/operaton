@@ -23,7 +23,7 @@ import org.operaton.bpm.application.ProcessApplicationExecutionException;
 
 @ProcessApplication("app")
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class ProcessApplicationWithInvocationContext extends org.operaton.bpm.application.impl.ServletProcessApplication {
+public class ProcessApplicationWithInvocationContext extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
   private static InvocationContext invocationContext = null;
 

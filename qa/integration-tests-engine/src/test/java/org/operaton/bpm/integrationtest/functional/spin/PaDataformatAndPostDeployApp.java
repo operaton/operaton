@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.ProcessEngine;
  */
 @ProcessApplication(PaDataformatAndPostDeployApp.PA_NAME)
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class PaDataformatAndPostDeployApp extends org.operaton.bpm.application.impl.ServletProcessApplication {
+public class PaDataformatAndPostDeployApp extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
   public static final String PA_NAME  = "PaDataformatAndPostDeployApp";
 

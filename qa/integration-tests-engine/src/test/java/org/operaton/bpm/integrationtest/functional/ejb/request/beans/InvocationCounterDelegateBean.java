@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.ejb.request.beans;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 import javax.naming.InitialContext;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;

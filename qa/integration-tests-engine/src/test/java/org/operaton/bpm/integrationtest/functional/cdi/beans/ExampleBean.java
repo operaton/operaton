@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi.beans;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 
 @Named
 @ApplicationScoped

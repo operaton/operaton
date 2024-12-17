@@ -19,8 +19,8 @@ package org.operaton.bpm.engine.rest.sub.repository.impl;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;

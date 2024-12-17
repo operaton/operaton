@@ -24,11 +24,11 @@ import org.operaton.bpm.engine.rest.sub.task.TaskReportResource;
 import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
 import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.Variant;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Request;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Variant;
 import java.util.ArrayList;
 import java.util.List;
 

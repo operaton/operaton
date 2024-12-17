@@ -20,8 +20,8 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -53,7 +53,7 @@ public class JerseyServerBootstrap extends EmbeddedServerBootstrap {
   protected void setupServer(Application application) {
     ResourceConfig rc = ResourceConfig.forApplication(application);
 
-    Map<String, Object> properties = new HashMap<String, Object>();
+    Map<String, Object> properties = new HashMap<>();
     properties.put(ServerProperties.TRACING, "ALL");
     rc.addProperties(properties);
 
@@ -62,9 +62,7 @@ public class JerseyServerBootstrap extends EmbeddedServerBootstrap {
     URI serverUri = UriBuilder.fromPath(ROOT_RESOURCE_PATH).scheme("http").host("localhost").port(port).build();
     try {
       server = GrizzlyHttpServerFactory.createHttpServer(serverUri, rc, false);
-    } catch (IllegalArgumentException e) {
-      throw new ServerBootstrapException(e);
-    } catch (NullPointerException e) {
+    } catch (IllegalArgumentException | NullPointerException e) {
       throw new ServerBootstrapException(e);
     }
   }

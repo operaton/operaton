@@ -20,7 +20,6 @@
     <version.resteasy>6.2.8.Final</version.resteasy>
     <version.jetty>11.0.14</version.jetty>
     <version.jersey2>3.1.1</version.jersey2>
-    <version.spring.framework>${version.spring.framework6}</version.spring.framework>
 
     <web.resources.override>${jakarta.runtime}/default/webapp</web.resources.override>
     <java.resources.override>${jakarta.runtime}/default/resources</java.resources.override>

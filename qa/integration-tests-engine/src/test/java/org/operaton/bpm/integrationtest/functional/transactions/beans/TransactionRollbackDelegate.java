@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.integrationtest.functional.transactions.beans;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.transaction.UserTransaction;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.transaction.UserTransaction;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;

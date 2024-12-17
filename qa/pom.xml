@@ -133,13 +133,6 @@
     </profile>
 
     <profile>
-      <id>engine-integration-jakarta</id>
-      <modules>
-        <module>integration-tests-engine-jakarta</module>
-      </modules>
-    </profile>
-
-    <profile>
       <id>instance-migration</id>
       <modules>
         <module>test-db-util</module>

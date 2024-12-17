@@ -24,7 +24,7 @@ import org.operaton.bpm.application.ProcessApplication;
  */
 @ProcessApplication(name = CustomNameServletPA.NAME)
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class CustomNameServletPA extends org.operaton.bpm.application.impl.ServletProcessApplication {
+public class CustomNameServletPA extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
   public static final String NAME = "fooooooooooooo";
 }

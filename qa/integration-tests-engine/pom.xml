@@ -16,6 +16,7 @@
     <wildfly.container.adapter.version>2.2.0.Final</wildfly.container.adapter.version>
 
     <redirect.test.output>true</redirect.test.output>
+    <install.skip>true</install.skip>
   </properties>
 
   <!-- import shrinkwrap and arquillian bom for artifact versions,
@@ -259,17 +260,6 @@
         </excludes>
       </testResource>
     </testResources>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

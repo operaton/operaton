@@ -11,6 +11,10 @@
     <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <install.skip>true</install.skip>
+  </properties>
+
   <dependencies>
     <!-- managed by spring-boot-dependencies -->
     <dependency>
@@ -58,18 +62,5 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
   <description>${project.name}</description>
 </project>

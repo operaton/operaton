@@ -31,6 +31,8 @@
     <sonar.coverage.jacoco.xmlReportPaths>**/target/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <!-- Set to false for each module that must be deployed -->
     <deploy.skip>true</deploy.skip>
+    <!-- Set to true for each module with packaging default/jar that does not have 'main' sources -->
+    <install.skip>false</install.skip>
   </properties>
 
   <build>
@@ -175,6 +177,9 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
           <version>3.1.3</version>
+          <configuration>
+            <skip>${install.skip}</skip>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

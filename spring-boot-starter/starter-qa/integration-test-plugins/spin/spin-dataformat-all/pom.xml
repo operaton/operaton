@@ -12,6 +12,10 @@
   <artifactId>qa-plugins-spin-dataformat-all</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Plugins - Spin All</name>
 
+  <properties>
+    <install.skip>true</install.skip>
+  </properties>
+
   <dependencies>
 
     <dependency>
@@ -68,20 +72,6 @@
       </build>
     </profile>
   </profiles>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
 
   <description>${project.name}</description>
 </project>

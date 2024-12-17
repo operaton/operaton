@@ -15,6 +15,7 @@
   <properties>
     <run-home>${project.build.directory}/run/operaton-bpm-run-distro</run-home>
     <example-plugin-home>${project.build.directory}/run/example-plugin</example-plugin-home>
+    <install.skip>true</install.skip>
   </properties>
 
   <dependencies>

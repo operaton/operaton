@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,9 +103,9 @@ class FileValueTypeImplTest {
   }
 
   @Test
-  void createValueFromBytes() throws URISyntaxException {
+  void createValueFromBytes() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/variables/simpleFile.txt").toURI());
-    TypedValue value = type.createValue(file, Collections.<String, Object> singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
+    TypedValue value = type.createValue(Files.readAllBytes(file.toPath()), Collections.<String, Object> singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
     assertThat(value).isInstanceOf(FileValue.class);
     assertThat(value.getType()).isInstanceOf(FileValueTypeImpl.class);
     checkStreamFromValue(value, "text");

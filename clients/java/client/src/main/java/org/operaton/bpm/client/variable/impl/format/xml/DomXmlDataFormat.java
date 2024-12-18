@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.client.variable.impl.format.xml;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
 
 import java.beans.Introspector;
@@ -188,7 +189,7 @@ public class DomXmlDataFormat implements DataFormat {
   protected Transformer getTransformer() {
     try {
       Transformer transformer = transformerFactory.newTransformer();
-      transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+      transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
       transformer.setOutputProperty(OutputKeys.INDENT, "yes");
       transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
       return transformer;

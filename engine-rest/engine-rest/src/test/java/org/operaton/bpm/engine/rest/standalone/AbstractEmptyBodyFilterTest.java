@@ -40,7 +40,9 @@ import org.junit.Test;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.any;
@@ -101,7 +103,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
   @Test
   public void testBodyIsEmpty() throws IOException {
-    evaluatePostRequest(new ByteArrayEntity("".getBytes("UTF-8")), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
+    evaluatePostRequest(new ByteArrayEntity("".getBytes(UTF_8)), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 
   @Test
@@ -116,12 +118,12 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
 
   @Test
   public void testBodyIsNullAndContentTypeHasISOCharset() throws IOException {
-    evaluatePostRequest(null, ContentType.create(MediaType.APPLICATION_JSON, "iso-8859-1").toString(), 200, true);
+    evaluatePostRequest(null, ContentType.create(MediaType.APPLICATION_JSON, StandardCharsets.ISO_8859_1).toString(), 200, true);
   }
 
   @Test
   public void testBodyIsEmptyJSONObject() throws IOException {
-    evaluatePostRequest(new ByteArrayEntity(EMPTY_JSON_OBJECT.getBytes("UTF-8")), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
+    evaluatePostRequest(new ByteArrayEntity(EMPTY_JSON_OBJECT.getBytes(UTF_8)), ContentType.create(MediaType.APPLICATION_JSON).toString(), 200, true);
   }
 
   private void evaluatePostRequest(HttpEntity reqBody, String reqContentType, int expectedStatusCode, boolean assertResponseBody) throws IOException {
@@ -139,7 +141,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
     assertEquals(expectedStatusCode, response.getStatusLine().getStatusCode());
 
     if(assertResponseBody) {
-      assertThat(EntityUtils.toString(response.getEntity(), "UTF-8")).contains(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+      assertThat(EntityUtils.toString(response.getEntity(), UTF_8)).contains(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     }
 
     response.close();

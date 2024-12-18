@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,8 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
 
@@ -144,7 +147,7 @@ public class ShellActivityBehavior extends AbstractBpmnActivityBehavior {
 
       char[] buffer = new char[1024];
       try {
-        Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        Reader reader = new BufferedReader(new InputStreamReader(is, UTF_8));
         int n;
         while ((n = reader.read(buffer)) != -1) {
           writer.write(buffer, 0, n);

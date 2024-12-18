@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
@@ -573,7 +574,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     assertNotNull(caseModel);
 
     byte[] readInputStream = IoUtil.readInputStream(caseModel, "caseModel");
-    String model = new String(readInputStream, "UTF-8");
+    String model = new String(readInputStream, UTF_8);
 
     assertTrue(model.contains("<case id=\"one\" name=\"One\">"));
 
@@ -671,7 +672,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     assertNotNull(decisionModel);
 
     byte[] readInputStream = IoUtil.readInputStream(decisionModel, "decisionModel");
-    String model = new String(readInputStream, "UTF-8");
+    String model = new String(readInputStream, UTF_8);
 
     assertTrue(model.contains("<decision id=\"one\" name=\"One\">"));
 
@@ -707,7 +708,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     assertNotNull(decisionRequirementsModel);
 
     byte[] readInputStream = IoUtil.readInputStream(decisionRequirementsModel, "decisionRequirementsModel");
-    String model = new String(readInputStream, "UTF-8");
+    String model = new String(readInputStream, UTF_8);
 
     assertTrue(model.contains("<definitions id=\"dish\" name=\"Dish\" namespace=\"test-drg\""));
     IoUtil.closeSilently(decisionRequirementsModel);

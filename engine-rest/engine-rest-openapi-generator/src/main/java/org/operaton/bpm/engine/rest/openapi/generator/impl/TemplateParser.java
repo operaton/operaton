@@ -44,6 +44,8 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class TemplateParser {
 
   public static void main(String[] args) throws IOException, TemplateException {
@@ -65,7 +67,7 @@ public class TemplateParser {
     Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
 
     cfg.setDirectoryForTemplateLoading(new File(sourceDirectory));
-    cfg.setDefaultEncoding("UTF-8");
+    cfg.setDefaultEncoding(UTF_8.name());
 
     Template template = cfg.getTemplate(mainTemplate);
 

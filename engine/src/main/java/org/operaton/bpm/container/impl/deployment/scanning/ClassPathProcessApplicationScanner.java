@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -129,7 +130,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     }
 
     try {
-      urlPath = URLDecoder.decode(urlPath, "UTF-8");
+      urlPath = URLDecoder.decode(urlPath, StandardCharsets.UTF_8);
     }
     catch (UnsupportedEncodingException e) {
       throw LOG.cannotDecodePathName(e);

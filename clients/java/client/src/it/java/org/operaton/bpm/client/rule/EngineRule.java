@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.client.rule;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
 import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
@@ -172,7 +173,7 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback  {
       String processAsString = Bpmn.convertToString(process);
       builder.addBinaryBody(
           String.format("data %d", i),
-          processAsString.getBytes(StandardCharsets.UTF_8), ContentType.APPLICATION_OCTET_STREAM,
+          processAsString.getBytes(UTF_8), ContentType.APPLICATION_OCTET_STREAM,
           String.format("test%d.bpmn", i));
     }
 

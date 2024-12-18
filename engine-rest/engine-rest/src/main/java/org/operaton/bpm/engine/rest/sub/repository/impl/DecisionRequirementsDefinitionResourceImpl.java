@@ -36,6 +36,8 @@ import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.sub.repository.DecisionRequirementsDefinitionResource;
 import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * 
  * @author Deivarayan Azhagappan
@@ -81,7 +83,7 @@ public class DecisionRequirementsDefinitionResourceImpl implements DecisionRequi
       decisionRequirementsModelInputStream = engine.getRepositoryService().getDecisionRequirementsModel(decisionRequirementsDefinitionId);
 
       byte[] decisionRequirementsModel = IoUtil.readInputStream(decisionRequirementsModelInputStream, "decisionRequirementsModelDmnXml");
-      return DecisionRequirementsDefinitionXmlDto.create(decisionRequirementsDefinitionId, new String(decisionRequirementsModel, "UTF-8"));
+      return DecisionRequirementsDefinitionXmlDto.create(decisionRequirementsDefinitionId, new String(decisionRequirementsModel, UTF_8));
 
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, e.getMessage());

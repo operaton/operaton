@@ -48,6 +48,8 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  *
  * @author Roman Smirnov
@@ -75,16 +77,12 @@ public class CaseDefinitionResourceImpl implements CaseDefinitionResource {
 
     try {
       definition = repositoryService.getCaseDefinition(caseDefinitionId);
-
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, e.getMessage());
-
     } catch (NotValidException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e, e.getMessage());
-
     } catch (ProcessEngineException e) {
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
-
     }
 
     return CaseDefinitionDto.fromCaseDefinition(definition);
@@ -97,11 +95,9 @@ public class CaseDefinitionResourceImpl implements CaseDefinitionResource {
       caseModelInputStream = engine.getRepositoryService().getCaseModel(caseDefinitionId);
 
       byte[] caseModel = IoUtil.readInputStream(caseModelInputStream, "caseModelCmmnXml");
-      return CaseDefinitionDiagramDto.create(caseDefinitionId, new String(caseModel, "UTF-8"));
-
+      return CaseDefinitionDiagramDto.create(caseDefinitionId, new String(caseModel, UTF_8));
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, e.getMessage());
-
     } catch (NotValidException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e, e.getMessage());
 
@@ -110,7 +106,6 @@ public class CaseDefinitionResourceImpl implements CaseDefinitionResource {
 
     } catch (UnsupportedEncodingException e) {
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
-
     } finally {
       IoUtil.closeSilently(caseModelInputStream);
     }

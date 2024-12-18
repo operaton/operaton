@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -204,7 +205,7 @@ class FileValueTypeImplTest {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     String fileName = "simpleFile.txt";
     String fileType = "text/plain";
-    Charset encoding = StandardCharsets.UTF_8;
+    Charset encoding = UTF_8;
     FileValue fileValue = Variables.fileValue(fileName).file(file).mimeType(fileType).encoding(encoding).setTransient(true).create();
     Map<String, Object> info = type.getValueInfo(fileValue);
 
@@ -219,7 +220,7 @@ class FileValueTypeImplTest {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
     String fileName = "simpleFile.txt";
     String fileType = "text/plain";
-    String encoding = "UTF-8";
+    String encoding = UTF_8.name();
     FileValue fileValue = Variables.fileValue(fileName).file(file).mimeType(fileType).encoding(encoding).create();
     Map<String, Object> info = type.getValueInfo(fileValue);
 

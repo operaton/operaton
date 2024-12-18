@@ -48,8 +48,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
@@ -67,7 +67,7 @@ public class FileSerializationIT {
   protected static final byte[] VARIABLE_VALUE_FILE_VALUE = "ABC".getBytes();
   protected static final String LOCAL_VARIABLE_NAME_FILE = "localFileName.txt";
 
-  protected static final String VARIABLE_VALUE_FILE_ENCODING = "UTF-8";
+  protected static final String VARIABLE_VALUE_FILE_ENCODING = UTF_8.name();
   protected static final String VARIABLE_VALUE_FILE_MIME_TYPE = "text/plain";
 
   protected static final String ANOTHER_VARIABLE_NAME_FILE = "anotherFileVariable";

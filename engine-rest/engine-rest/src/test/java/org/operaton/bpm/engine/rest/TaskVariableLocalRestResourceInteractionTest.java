@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest;
 
 import static io.restassured.RestAssured.given;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.NON_EXISTING_ID;
@@ -549,7 +550,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
-    String encoding = "UTF-8";
+    String encoding = UTF_8.name();
     FileValue variableValue = Variables.fileValue(filename).file(byteContent).mimeType(ContentType.TEXT.toString()).encoding(encoding).create();
 
     when(taskServiceMock.getVariableLocalTyped(eq(EXAMPLE_TASK_ID), eq(variableKey), anyBoolean())).thenReturn(variableValue);
@@ -1030,7 +1031,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
-    String encoding = "utf-8";
+    String encoding = UTF_8.name();
     String filename = "test.txt";
     String mimetype = MediaType.TEXT_PLAIN;
 
@@ -1088,7 +1089,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
-    String encoding = "utf-8";
+    String encoding = UTF_8.name();
     String filename = "test.txt";
 
     given()

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.standalone.variables;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.DataInputStream;
@@ -107,7 +108,7 @@ public class FileValueSerializerTest {
 
     serializer.writeValue(fileValue, valueFields);
 
-    assertThat(new String(valueFields.getByteArrayValue(), "UTF-8")).isEqualTo("text");
+    assertThat(new String(valueFields.getByteArrayValue(), UTF_8)).isEqualTo("text");
     assertThat(valueFields.getTextValue()).isEqualTo(filename);
     assertThat(valueFields.getTextValue2()).isEqualTo(mimeType + SEPARATOR);
   }
@@ -116,14 +117,14 @@ public class FileValueSerializerTest {
   public void testWriteMimetypeFilenameBytesValueAndEncoding() throws UnsupportedEncodingException {
     String filename = "test.txt";
     String mimeType = "text/json";
-    Charset encoding = StandardCharsets.UTF_8;
+    Charset encoding = UTF_8;
     InputStream is = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/standalone/variables/simpleFile.txt");
     FileValue fileValue = Variables.fileValue(filename).mimeType(mimeType).encoding(encoding).file(is).create();
     ValueFields valueFields = new MockValueFields();
 
     serializer.writeValue(fileValue, valueFields);
 
-    assertThat(new String(valueFields.getByteArrayValue(), "UTF-8")).isEqualTo("text");
+    assertThat(new String(valueFields.getByteArrayValue(), UTF_8)).isEqualTo("text");
     assertThat(valueFields.getTextValue()).isEqualTo(filename);
     assertThat(valueFields.getTextValue2()).isEqualTo(mimeType + SEPARATOR + encoding.name());
   }
@@ -136,7 +137,7 @@ public class FileValueSerializerTest {
 
     serializer.writeValue(fileValue, valueFields);
 
-    assertThat(new String(valueFields.getByteArrayValue(), "UTF-8")).isEqualTo("text");
+    assertThat(new String(valueFields.getByteArrayValue(), UTF_8)).isEqualTo("text");
     assertThat(valueFields.getTextValue()).isEqualTo("simpleFile.txt");
     assertThat(valueFields.getTextValue2()).isEqualTo("text/plain" + SEPARATOR);
   }
@@ -178,14 +179,14 @@ public class FileValueSerializerTest {
     String filename = "file.txt";
     valueFields.setTextValue(filename);
     valueFields.setByteArrayValue(data);
-    String encoding = SEPARATOR + "UTF-8";
+    String encoding = SEPARATOR + UTF_8;
     valueFields.setTextValue2(encoding);
 
     FileValue fileValue = serializer.readValue(valueFields, true, false);
 
     assertThat(fileValue.getFilename()).isEqualTo(filename);
-    assertThat(fileValue.getEncoding()).isEqualTo("UTF-8");
-    assertThat(fileValue.getEncodingAsCharset()).isEqualTo(StandardCharsets.UTF_8);
+    assertThat(fileValue.getEncoding()).isEqualTo(UTF_8.name());
+    assertThat(fileValue.getEncodingAsCharset()).isEqualTo(UTF_8);
     checkStreamFromValue(fileValue, "text");
   }
 
@@ -279,7 +280,7 @@ public class FileValueSerializerTest {
   @Test
   public void testWriteFilenameAndEncodingValue() {
     String filename = "test.txt";
-    String encoding = "UTF-8";
+    String encoding = UTF_8.name();
     FileValue fileValue = Variables.fileValue(filename).encoding(encoding).create();
     ValueFields valueFields = new MockValueFields();
 

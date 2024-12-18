@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.history;
 
 import static io.restassured.RestAssured.given;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -293,7 +294,7 @@ public class HistoricDetailRestServiceInteractionTest extends AbstractRestServic
   public void testBinaryDataForFileVariable() {
     String filename = "test.txt";
     byte[] byteContent = "test".getBytes();
-    String encoding = "UTF-8";
+    String encoding = UTF_8.name();
     FileValue variableValue = Variables.fileValue(filename).file(byteContent).mimeType(ContentType.TEXT.toString()).encoding(encoding).create();
 
     MockHistoricVariableUpdateBuilder builder = MockProvider.mockHistoricVariableUpdate();

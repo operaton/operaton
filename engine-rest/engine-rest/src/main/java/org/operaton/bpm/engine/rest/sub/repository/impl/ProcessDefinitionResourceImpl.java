@@ -80,6 +80,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource {
 
   protected ProcessEngine engine;
@@ -260,7 +262,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     try {
       processModelIn = engine.getRepositoryService().getProcessModel(processDefinitionId);
       byte[] processModel = IoUtil.readInputStream(processModelIn, "processModelBpmn20Xml");
-      return ProcessDefinitionDiagramDto.create(processDefinitionId, new String(processModel, "UTF-8"));
+      return ProcessDefinitionDiagramDto.create(processDefinitionId, new String(processModel, UTF_8));
     } catch (AuthorizationException e) {
       throw e;
     } catch (NotFoundException e) {

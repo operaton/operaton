@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_FILE;
 import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_LOCATION;
 import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_SYSTEM_PROPERTY;
@@ -196,8 +197,8 @@ public class BpmPlatformXmlLocationTest {
     String baseDir = BpmPlatformXmlLocationTest.class.getProtectionDomain().getCodeSource().getLocation().getFile();
     try {
       // replace escaped whitespaces in path
-      baseDir = URLDecoder.decode(baseDir, "UTF-8");
-    } catch (UnsupportedEncodingException e) {
+      baseDir = URLDecoder.decode(baseDir, UTF_8);
+    } catch (IllegalArgumentException | NullPointerException e) {
       e.printStackTrace();
     }
     return baseDir

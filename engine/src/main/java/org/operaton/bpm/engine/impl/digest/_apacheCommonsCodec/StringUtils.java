@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.digest._apacheCommonsCodec;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Converts String to and from bytes using the encodings required by the Java specification. These encodings are specified in <a
@@ -30,7 +31,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtils {
 
-    public static final String UTF_8 = "UTF-8";
+    public static final String UTF_8 = StandardCharsets.UTF_8.name();
 
     /**
      * Constructs a new <code>String</code> by decoding the specified array of bytes using the given charset.

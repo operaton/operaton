@@ -53,6 +53,8 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class DecisionDefinitionResourceImpl implements DecisionDefinitionResource {
 
   protected ProcessEngine engine;
@@ -97,7 +99,7 @@ public class DecisionDefinitionResourceImpl implements DecisionDefinitionResourc
       decisionModelInputStream = engine.getRepositoryService().getDecisionModel(decisionDefinitionId);
 
       byte[] decisionModel = IoUtil.readInputStream(decisionModelInputStream, "decisionModelDmnXml");
-      return DecisionDefinitionDiagramDto.create(decisionDefinitionId, new String(decisionModel, "UTF-8"));
+      return DecisionDefinitionDiagramDto.create(decisionDefinitionId, new String(decisionModel, UTF_8));
 
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, e.getMessage());

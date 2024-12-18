@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.rest;
 
 import static io.restassured.RestAssured.expect;
 import static io.restassured.RestAssured.given;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
@@ -661,7 +662,7 @@ public class ProcessEngineRestServiceTest extends
     HistoricVariableInstance instance = mock(HistoricVariableInstance.class);
     String filename = "test.txt";
     byte[] byteContent = "test".getBytes();
-    String encoding = "UTF-8";
+    String encoding = UTF_8.name();
     FileValue variableValue = Variables.fileValue(filename).file(byteContent).mimeType(ContentType.TEXT.toString()).encoding(encoding).create();
     when(instance.getTypedValue()).thenReturn(variableValue);
     when(query.singleResult()).thenReturn(instance);
@@ -735,7 +736,7 @@ public class ProcessEngineRestServiceTest extends
     HistoricVariableUpdate instance = mock(HistoricVariableUpdate.class);
     String filename = "test.txt";
     byte[] byteContent = "test".getBytes();
-    String encoding = "UTF-8";
+    String encoding = UTF_8.name();
     FileValue variableValue = Variables.fileValue(filename).file(byteContent).mimeType(ContentType.TEXT.toString()).encoding(encoding).create();
     when(instance.getTypedValue()).thenReturn(variableValue);
     when(query.singleResult()).thenReturn(instance);

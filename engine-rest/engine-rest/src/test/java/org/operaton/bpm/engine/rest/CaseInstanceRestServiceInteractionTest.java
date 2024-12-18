@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest;
 
 import static io.restassured.RestAssured.given;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
@@ -656,7 +657,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
     String variableKey = "aVariableKey";
     final byte[] byteContent = "some bytes".getBytes();
     String filename = "test.txt";
-    String encoding = "UTF-8";
+    String encoding = UTF_8.name();
     FileValue variableValue = Variables.fileValue(filename).file(byteContent).mimeType(ContentType.TEXT.toString()).encoding(encoding).create();
 
     when(caseServiceMock.getVariableTyped(eq(MockProvider.EXAMPLE_CASE_INSTANCE_ID), eq(variableKey), anyBoolean()))
@@ -1114,7 +1115,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
   public void testPostSingleFileVariableWithEncodingAndMimeType() {
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
-    String encoding = "utf-8";
+    String encoding = UTF_8.name();
     String filename = "test.txt";
     String mimetype = MediaType.TEXT_PLAIN;
 
@@ -1170,7 +1171,7 @@ public class CaseInstanceRestServiceInteractionTest extends AbstractRestServiceT
 
     byte[] value = "some text".getBytes();
     String variableKey = "aVariableKey";
-    String encoding = "utf-8";
+    String encoding = UTF_8.name();
     String filename = "test.txt";
 
     given()

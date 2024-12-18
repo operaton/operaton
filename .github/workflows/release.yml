@@ -19,7 +19,7 @@ on:
 jobs:
   precheck:
     name: Precheck
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       version: ${{steps.version.outputs.version}}
       is_prerelease: ${{steps.version.outputs.is_prerelease}}
@@ -29,7 +29,6 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{github.event.inputs.release_branch}}
-
       - name: Version
         id: version
         shell: bash
@@ -54,7 +53,7 @@ jobs:
   release_build:
     name: Release Build
     needs: precheck
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       output1: ${{steps.upload-release-artifacts.outputs.artifact-id}}
     steps:
@@ -75,7 +74,7 @@ jobs:
           PROJECT_ROOT=$(pwd)
           # Make a verification build. Also the deploy step will need the tomcat distro for building, but we don't want to deploy it.
           ./mvnw \
-            -Pdistro,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory \
+            -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory \
             install \
             versions:dependency-updates-aggregate-report \
             versions:plugin-updates-aggregate-report \
@@ -93,6 +92,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
+            target/project-reports.zip
           key: ${{ github.run_id }}-build-artifacts
 
   release:
@@ -100,7 +100,7 @@ jobs:
     needs:
       - precheck
       - release_build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out the code
         uses: actions/checkout@v4
@@ -117,6 +117,7 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
+            target/project-reports.zip
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
 
@@ -131,7 +132,7 @@ jobs:
           JRELEASER_MAVENCENTRAL_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{github.event.inputs.dry_run}}
-          JRELEASER_PRERELEASE_ENABLED: ${{needs.precheck.outputs.is_prerelease}}
+          JRELEASER_PRERELEASE_ENABLED: false
 
       - name: Publish Test Report
         if: always()
@@ -159,7 +160,7 @@ jobs:
   post_release:
     name: Post-Release
     needs: release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out the code
         uses: actions/checkout@v4

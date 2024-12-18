@@ -24,14 +24,6 @@
     </dependencies>
   </dependencyManagement>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.operaton.bpm.javaee</groupId>
-      <artifactId>operaton-jobexecutor-ra</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
       <plugin>

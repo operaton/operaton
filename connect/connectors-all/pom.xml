@@ -11,25 +11,10 @@
   <name>Operaton - Connect - All connectors in one</name>
 
   <properties>
-    <!-- We shade artifacts into the jar, so we need to generate 
+    <!-- We shade artifacts into the jar, so we need to generate
     a dependency BOM for the license book -->
     <skip-third-party-bom>false</skip-third-party-bom>
   </properties>
-
-  <dependencies>
-
-    <dependency>
-      <groupId>org.operaton.connect</groupId>
-      <artifactId>operaton-connect-http-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.operaton.connect</groupId>
-      <artifactId>operaton-connect-soap-http-client</artifactId>
-    </dependency>
-
-  </dependencies>
-
   <build>
     <plugins>
       <plugin>

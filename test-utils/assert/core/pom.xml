@@ -10,7 +10,7 @@
     <artifactId>operaton-bpm-assert-root</artifactId>
     <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
-  
+
   <dependencies>
     <!-- managed by spring-boot-dependencies -->
     <dependency>
@@ -26,18 +26,6 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${version.slf4j}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>${version.slf4j}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${version.junit}</version>
@@ -47,17 +35,6 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>${version.mockito}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.uuid</groupId>
-      <artifactId>java-uuid-generator</artifactId>
-      <version>${version.uuid-generator}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

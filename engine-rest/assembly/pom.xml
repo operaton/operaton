@@ -9,11 +9,11 @@
     <artifactId>operaton-engine-rest-root</artifactId>
     <version>1.0.0-beta-3-SNAPSHOT</version>
   </parent>
-  
+
   <properties>
     <!-- generate a bom of dependencies for the license book.
-    We include compile and provided scope dependencies; 
-    all the dependencies that we include in only one of the 
+    We include compile and provided scope dependencies;
+    all the dependencies that we include in only one of the
     runtime-specific-WARs are in provided scope -->
     <skip-third-party-bom>false</skip-third-party-bom>
     <third-party-bom-scopes>compile|provided</third-party-bom-scopes>
@@ -43,19 +43,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-jaxrs</artifactId>
-      <version>${version.resteasy}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.glassfish.jersey.containers</groupId>
-      <artifactId>jersey-container-servlet</artifactId>
-      <version>${version.jersey2}</version>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-hk2</artifactId>

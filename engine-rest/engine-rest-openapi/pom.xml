@@ -100,12 +100,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>${commons-lang3-version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>javax.annotation</groupId>
       <artifactId>jsr250-api</artifactId>
       <version>${javax-annotation-version}</version>
@@ -236,7 +230,7 @@
               <skip>true</skip>
             </configuration>
           </plugin>
-          
+
           <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
             <executions>

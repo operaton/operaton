@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.delegation.beans;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateVariableMapping;
 import org.operaton.bpm.engine.delegate.VariableScope;

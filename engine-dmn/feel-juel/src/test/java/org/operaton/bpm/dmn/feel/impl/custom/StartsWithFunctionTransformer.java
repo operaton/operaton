@@ -39,6 +39,7 @@ public class StartsWithFunctionTransformer implements FeelToJuelFunctionTransfor
     }
   }
 
+  @Override
   public boolean canTransform(String feelExpression) {
     Matcher startsWithMatcher   = STARTS_WITH_PATTERN.matcher(feelExpression);
 

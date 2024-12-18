@@ -53,10 +53,12 @@ public class ModelInstanceImpl implements ModelInstance {
     this.document = document;
   }
 
+  @Override
   public DomDocument getDocument() {
     return document;
   }
 
+  @Override
   public ModelElementInstance getDocumentElement() {
     DomElement rootElement = document.getRootElement();
     if(rootElement != null) {
@@ -66,16 +68,19 @@ public class ModelInstanceImpl implements ModelInstance {
     }
   }
 
+  @Override
   public void setDocumentElement(ModelElementInstance modelElement) {
     ModelUtil.ensureInstanceOf(modelElement, ModelElementInstanceImpl.class);
     DomElement domElement = modelElement.getDomElement();
     document.setRootElement(domElement);
   }
 
+  @Override
   public <T extends ModelElementInstance> T newInstance(Class<T> type) {
     return newInstance(type, null);
   }
 
+  @Override
   public <T extends ModelElementInstance> T newInstance(Class<T> type, String id) {
     ModelElementType modelElementType = model.getType(type);
     if(modelElementType != null) {
@@ -85,10 +90,12 @@ public class ModelInstanceImpl implements ModelInstance {
     }
   }
 
+  @Override
   public <T extends ModelElementInstance> T newInstance(ModelElementType type) {
     return newInstance(type, null);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends ModelElementInstance> T newInstance(ModelElementType type, String id) {
     ModelElementInstance modelElementInstance = type.newInstance(this);
@@ -100,6 +107,7 @@ public class ModelInstanceImpl implements ModelInstance {
     return (T) modelElementInstance;
   }
 
+  @Override
   public Model getModel() {
     return model;
   }
@@ -113,6 +121,7 @@ public class ModelInstanceImpl implements ModelInstance {
     return elementType;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends ModelElementInstance> T getModelElementById(String id) {
     if (id == null) {
@@ -127,6 +136,7 @@ public class ModelInstanceImpl implements ModelInstance {
     }
   }
 
+  @Override
   public Collection<ModelElementInstance> getModelElementsByType(ModelElementType type) {
     Collection<ModelElementType> extendingTypes = type.getAllExtendingTypes();
 
@@ -139,6 +149,7 @@ public class ModelInstanceImpl implements ModelInstance {
     return instances;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends ModelElementInstance> Collection<T> getModelElementsByType(Class<T> referencingClass) {
     return (Collection<T>) getModelElementsByType(getModel().getType(referencingClass));

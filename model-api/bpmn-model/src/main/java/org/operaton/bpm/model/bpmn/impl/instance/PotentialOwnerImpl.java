@@ -37,7 +37,8 @@ public class PotentialOwnerImpl extends HumanPerformerImpl implements PotentialO
       .namespaceUri(BPMN20_NS)
       .extendsType(HumanPerformer.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<PotentialOwner>() {
-        public PotentialOwner newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public PotentialOwner newInstance(ModelTypeInstanceContext instanceContext) {
           return new PotentialOwnerImpl(instanceContext);
         }
       });

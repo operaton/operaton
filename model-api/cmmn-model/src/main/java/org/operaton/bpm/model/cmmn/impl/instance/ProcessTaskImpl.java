@@ -57,46 +57,57 @@ public class ProcessTaskImpl extends TaskImpl implements ProcessTask {
     super(instanceContext);
   }
 
+  @Override
   public String getProcess() {
     return processRefAttribute.getValue(this);
   }
 
+  @Override
   public void setProcess(String process) {
     processRefAttribute.setValue(this, process);
   }
 
+  @Override
   public ProcessRefExpression getProcessExpression() {
     return processRefExpressionChild.getChild(this);
   }
 
+  @Override
   public void setProcessExpression(ProcessRefExpression processExpression) {
     processRefExpressionChild.setChild(this, processExpression);
   }
 
+  @Override
   public Collection<ParameterMapping> getParameterMappings() {
     return parameterMappingCollection.get(this);
   }
 
+  @Override
   public String getOperatonProcessBinding() {
     return operatonProcessBindingAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonProcessBinding(String operatonProcessBinding) {
     operatonProcessBindingAttribute.setValue(this, operatonProcessBinding);
   }
 
+  @Override
   public String getOperatonProcessVersion() {
     return operatonProcessVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonProcessVersion(String operatonProcessVersion) {
     operatonProcessVersionAttribute.setValue(this, operatonProcessVersion);
   }
 
+  @Override
   public String getOperatonProcessTenantId() {
     return operatonProcessTenantIdAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonProcessTenantId(String operatonProcessTenantId) {
     operatonProcessTenantIdAttribute.setValue(this, operatonProcessTenantId);
   }
@@ -106,7 +117,8 @@ public class ProcessTaskImpl extends TaskImpl implements ProcessTask {
         .namespaceUri(CMMN11_NS)
         .extendsType(Task.class)
         .instanceProvider(new ModelTypeInstanceProvider<ProcessTask>() {
-          public ProcessTask newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ProcessTask newInstance(ModelTypeInstanceContext instanceContext) {
             return new ProcessTaskImpl(instanceContext);
           }
         });

@@ -38,6 +38,7 @@ public class ListImpl extends ExpressionImpl implements List {
     super(instanceContext);
   }
 
+  @Override
   public Collection<Expression> getExpressions() {
     return expressionCollection.get(this);
   }
@@ -47,7 +48,8 @@ public class ListImpl extends ExpressionImpl implements List {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<List>() {
-        public List newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public List newInstance(ModelTypeInstanceContext instanceContext) {
           return new ListImpl(instanceContext);
         }
       });

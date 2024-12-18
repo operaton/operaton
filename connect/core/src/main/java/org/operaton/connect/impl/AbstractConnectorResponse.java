@@ -29,6 +29,7 @@ public abstract class AbstractConnectorResponse implements ConnectorResponse {
 
   protected Map<String, Object> responseParameters;
 
+  @Override
   public Map<String, Object> getResponseParameters() {
     if(responseParameters == null) {
       responseParameters = new HashMap<String, Object>();
@@ -37,6 +38,7 @@ public abstract class AbstractConnectorResponse implements ConnectorResponse {
     return responseParameters;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <V> V getResponseParameter(String name) {
     return (V) getResponseParameters().get(name);

@@ -628,6 +628,7 @@ public class LegacyBehavior {
   protected static PvmExecutionImpl findCompensationThrowingAncestorExecution(PvmExecutionImpl execution) {
     ExecutionWalker walker = new ExecutionWalker(execution);
     walker.walkUntil(new ReferenceWalker.WalkCondition<PvmExecutionImpl>() {
+      @Override
       public boolean isFulfilled(PvmExecutionImpl element) {
         return element == null || CompensationBehavior.isCompensationThrowing(element);
       }

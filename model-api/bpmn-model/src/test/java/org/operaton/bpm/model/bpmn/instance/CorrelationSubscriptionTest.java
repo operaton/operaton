@@ -24,16 +24,19 @@ import java.util.Collection;
  */
 public class CorrelationSubscriptionTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(BaseElement.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(CorrelationPropertyBinding.class)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("correlationKeyRef", false, true)

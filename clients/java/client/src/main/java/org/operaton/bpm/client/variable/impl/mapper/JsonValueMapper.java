@@ -35,6 +35,7 @@ public class JsonValueMapper extends PrimitiveValueMapper<JsonValue> {
     typedValueField.setValue(jsonValue.getValue());
   }
 
+  @Override
   public JsonValue readValue(TypedValueField typedValueField) {
     return ClientValues.jsonValue((String) typedValueField.getValue());
   }

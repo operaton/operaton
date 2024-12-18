@@ -35,15 +35,20 @@ public class SimpleVariableInstance implements CoreVariableInstance {
     this.value = value;
   }
 
+  @Override
   public String getName() {
     return name;
   }
   public void setName(String name) {
     this.name = name;
   }
+
+  @Override
   public TypedValue getTypedValue(boolean deserialize) {
     return value;
   }
+
+  @Override
   public void setValue(TypedValue value) {
     this.value = value;
   }

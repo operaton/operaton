@@ -54,6 +54,7 @@ public class HalUser extends HalResource<HalUser> implements HalIdResource {
 
   }
 
+  @Override
   public String getId() {
     return id;
   }

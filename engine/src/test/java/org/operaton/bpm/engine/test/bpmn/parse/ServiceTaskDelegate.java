@@ -24,6 +24,7 @@ public class ServiceTaskDelegate implements JavaDelegate {
 
   public static boolean firstAttempt = true;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     if (firstAttempt) {
       throw new BpmnError("It is supposed to fail.");

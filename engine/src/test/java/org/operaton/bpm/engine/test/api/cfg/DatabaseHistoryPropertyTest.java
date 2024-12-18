@@ -123,6 +123,7 @@ public class DatabaseHistoryPropertyTest {
 
     boolean executeSchemaOperations;
 
+    @Override
     public ProcessEngine buildProcessEngine() {
       init();
       if (executeSchemaOperations) {

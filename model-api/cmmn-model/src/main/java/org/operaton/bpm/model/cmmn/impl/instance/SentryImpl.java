@@ -49,22 +49,27 @@ public class SentryImpl extends CmmnElementImpl implements Sentry {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public Collection<OnPart> getOnParts() {
     return onPartCollection.get(this);
   }
 
+  @Override
   public IfPart getIfPart() {
     return ifPartChild.getChild(this);
   }
 
+  @Override
   public void setIfPart(IfPart ifPart) {
     ifPartChild.setChild(this, ifPart);
   }
@@ -74,7 +79,8 @@ public class SentryImpl extends CmmnElementImpl implements Sentry {
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<Sentry>() {
-          public Sentry newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Sentry newInstance(ModelTypeInstanceContext instanceContext) {
             return new SentryImpl(instanceContext);
           }
         });

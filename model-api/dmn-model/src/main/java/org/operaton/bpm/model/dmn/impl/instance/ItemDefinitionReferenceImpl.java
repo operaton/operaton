@@ -37,7 +37,8 @@ public class ItemDefinitionReferenceImpl extends DmnElementReferenceImpl impleme
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<ItemDefinitionReference>() {
-        public ItemDefinitionReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ItemDefinitionReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new ItemDefinitionReferenceImpl(instanceContext);
         }
       });

@@ -21,10 +21,12 @@ import org.operaton.connect.spi.ConnectorProvider;
 
 public class SoapHttpConnectorProviderImpl implements ConnectorProvider {
 
+  @Override
   public String getConnectorId() {
     return SoapHttpConnector.ID;
   }
 
+  @Override
   public SoapHttpConnector createConnectorInstance() {
     return new SoapHttpConnectorImpl(SoapHttpConnector.ID);
   }

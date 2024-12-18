@@ -42,7 +42,8 @@ public class OperatonPotentialStarterImpl extends BpmnModelElementInstanceImpl i
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonPotentialStarter.class, OPERATON_ELEMENT_POTENTIAL_STARTER)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonPotentialStarter>() {
-        public OperatonPotentialStarter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonPotentialStarter newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonPotentialStarterImpl(instanceContext);
         }
       });
@@ -59,10 +60,12 @@ public class OperatonPotentialStarterImpl extends BpmnModelElementInstanceImpl i
     super(instanceContext);
   }
 
+  @Override
   public ResourceAssignmentExpression getResourceAssignmentExpression() {
     return resourceAssignmentExpressionChild.getChild(this);
   }
 
+  @Override
   public void setResourceAssignmentExpression(ResourceAssignmentExpression resourceAssignmentExpression) {
     resourceAssignmentExpressionChild.setChild(this, resourceAssignmentExpression);
   }

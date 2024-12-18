@@ -30,14 +30,17 @@ public class ThreadPoolJobExecutor extends JobExecutor {
 
   protected ThreadPoolExecutor threadPoolExecutor;
 
+  @Override
   protected void startExecutingJobs() {
     startJobAcquisitionThread();
   }
 
+  @Override
   protected void stopExecutingJobs() {
     stopJobAcquisitionThread();
   }
 
+  @Override
   public void executeJobs(List<String> jobIds, ProcessEngineImpl processEngine) {
     try {
       threadPoolExecutor.execute(getExecuteJobsRunnable(jobIds, processEngine));

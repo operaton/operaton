@@ -114,6 +114,7 @@ public abstract class Spin<T extends Spin<?>> {
    *
    * @return the string representation
    */
+  @Override
   public abstract String toString();
 
   /**

@@ -26,8 +26,10 @@ import org.operaton.spin.xml.SpinXmlElement;
  */
 public interface XmlValue extends SpinValue {
 
+  @Override
   public SpinXmlElement getValue();
 
+  @Override
   public DataFormat<SpinXmlElement> getDataFormat();
 
 }

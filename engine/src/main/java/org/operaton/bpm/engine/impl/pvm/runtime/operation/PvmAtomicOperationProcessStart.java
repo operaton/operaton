@@ -34,10 +34,12 @@ public class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperat
     return execution.getActivity().isAsyncBefore();
   }
 
+  @Override
   public boolean isAsyncCapable() {
     return true;
   }
 
+  @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getProcessDefinition();
   }
@@ -80,6 +82,7 @@ public class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperat
 
   }
 
+  @Override
   public String getCanonicalName() {
     return "process-start";
   }

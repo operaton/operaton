@@ -30,10 +30,12 @@ public class LongFormType extends SimpleFormFieldType {
 
   public static final String TYPE_NAME = "long";
 
+  @Override
   public String getName() {
     return TYPE_NAME;
   }
 
+  @Override
   public TypedValue convertValue(TypedValue propertyValue) {
     if(propertyValue instanceof LongValue) {
       return propertyValue;
@@ -54,6 +56,7 @@ public class LongFormType extends SimpleFormFieldType {
 
   // deprecated ////////////////////////////////////////////
 
+  @Override
   public Object convertFormValueToModelValue(Object propertyValue) {
     if (propertyValue==null || "".equals(propertyValue)) {
       return null;
@@ -61,6 +64,7 @@ public class LongFormType extends SimpleFormFieldType {
     return Long.valueOf(propertyValue.toString());
   }
 
+  @Override
   public String convertModelValueToFormValue(Object modelValue) {
     if (modelValue==null) {
       return null;

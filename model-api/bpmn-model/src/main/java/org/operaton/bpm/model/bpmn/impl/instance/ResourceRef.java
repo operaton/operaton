@@ -35,7 +35,8 @@ public class ResourceRef extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceRef.class, BPMN_ELEMENT_RESOURCE_REF)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<ResourceRef>() {
-        public ResourceRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ResourceRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new ResourceRef(instanceContext);
         }
       });

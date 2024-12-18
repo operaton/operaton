@@ -37,7 +37,8 @@ public class DataPath extends FormalExpressionImpl {
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
       .instanceProvider(new ModelTypeInstanceProvider<DataPath>() {
-        public DataPath newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DataPath newInstance(ModelTypeInstanceContext instanceContext) {
           return new DataPath(instanceContext);
         }
       });

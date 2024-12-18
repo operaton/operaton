@@ -56,6 +56,7 @@ public class BpmnModelInstanceCache extends ModelInstanceCache<BpmnModelInstance
   protected List<ProcessDefinition> getAllDefinitionsForDeployment(final String deploymentId) {
     final CommandContext commandContext = Context.getCommandContext();
     List<ProcessDefinition> allDefinitionsForDeployment = commandContext.runWithoutAuthorization(new Callable<List<ProcessDefinition>>() {
+      @Override
       public List<ProcessDefinition> call() throws Exception {
         return new ProcessDefinitionQueryImpl()
             .deploymentId(deploymentId)

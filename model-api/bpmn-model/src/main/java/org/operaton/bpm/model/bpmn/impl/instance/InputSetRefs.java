@@ -35,7 +35,8 @@ public class InputSetRefs extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputSetRefs.class, BPMN_ELEMENT_INPUT_SET_REFS)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<InputSetRefs>() {
-        public InputSetRefs newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputSetRefs newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputSetRefs(instanceContext);
         }
       });

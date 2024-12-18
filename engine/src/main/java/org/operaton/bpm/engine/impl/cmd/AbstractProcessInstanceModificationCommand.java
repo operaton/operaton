@@ -198,6 +198,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
 
   protected abstract String describe();
 
+  @Override
   public String toString() {
     return describe();
   }

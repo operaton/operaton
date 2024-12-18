@@ -32,6 +32,7 @@ import org.operaton.bpm.integrationtest.util.TestConstants;
 @Named
 public class InvocationCounterDelegateBean implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     InvocationCounterService invocationCounterService = (InvocationCounterService) new InitialContext().lookup("java:global/" +
         TestConstants.getAppName() +

@@ -60,31 +60,37 @@ public class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuil
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public ProcessInstantiationBuilder startBeforeActivity(String activityId) {
     modificationBuilder.startBeforeActivity(activityId);
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder startAfterActivity(String activityId) {
     modificationBuilder.startAfterActivity(activityId);
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder startTransition(String transitionId) {
     modificationBuilder.startTransition(transitionId);
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder setVariable(String name, Object value) {
     modificationBuilder.setVariable(name, value);
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder setVariableLocal(String name, Object value) {
     modificationBuilder.setVariableLocal(name, value);
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder setVariables(Map<String, Object> variables) {
     if (variables != null) {
       modificationBuilder.setVariables(variables);
@@ -92,6 +98,7 @@ public class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuil
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder setVariablesLocal(Map<String, Object> variables) {
     if (variables != null) {
       modificationBuilder.setVariablesLocal(variables);
@@ -99,11 +106,13 @@ public class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuil
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder businessKey(String businessKey) {
     this.businessKey = businessKey;
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder caseInstanceId(String caseInstanceId) {
     this.caseInstanceId = caseInstanceId;
     return this;
@@ -114,22 +123,26 @@ public class ProcessInstantiationBuilderImpl implements ProcessInstantiationBuil
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder processDefinitionTenantId(String tenantId) {
     this.processDefinitionTenantId = tenantId;
     isProcessDefinitionTenantIdSet = true;
     return this;
   }
 
+  @Override
   public ProcessInstantiationBuilder processDefinitionWithoutTenantId() {
     this.processDefinitionTenantId = null;
     isProcessDefinitionTenantIdSet = true;
     return this;
   }
 
+  @Override
   public ProcessInstance execute() {
     return execute(false, false);
   }
 
+  @Override
   public ProcessInstance execute(boolean skipCustomListeners, boolean skipIoMappings) {
     return executeWithVariablesInReturn(skipCustomListeners, skipIoMappings);
   }

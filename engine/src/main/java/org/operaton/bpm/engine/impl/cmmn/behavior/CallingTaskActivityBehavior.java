@@ -32,6 +32,7 @@ public abstract class CallingTaskActivityBehavior extends TaskActivityBehavior {
 
   protected BaseCallableElement callableElement;
 
+  @Override
   public void onManualCompletion(CmmnActivityExecution execution) {
     // Throw always an exception!
     // It should not be possible to complete a calling

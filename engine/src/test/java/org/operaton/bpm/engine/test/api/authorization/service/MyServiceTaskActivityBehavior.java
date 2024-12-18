@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
  */
 public abstract class MyServiceTaskActivityBehavior extends MyDelegationService implements SignallableActivityBehavior {
 
+  @Override
   public void signal(ActivityExecution execution, String signalEvent, Object signalData) throws Exception {
     logAuthentication(execution);
     logInstancesCount(execution);

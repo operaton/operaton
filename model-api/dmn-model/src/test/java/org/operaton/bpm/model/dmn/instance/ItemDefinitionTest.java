@@ -21,10 +21,12 @@ import java.util.Collection;
 
 public class ItemDefinitionTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(NamedElement.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(TypeRef.class, 0, 1),
@@ -33,6 +35,7 @@ public class ItemDefinitionTest extends DmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("typeLanguage"),

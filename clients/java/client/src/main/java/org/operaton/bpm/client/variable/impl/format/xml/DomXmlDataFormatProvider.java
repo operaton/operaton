@@ -23,10 +23,12 @@ import org.operaton.bpm.client.spi.DataFormatProvider;
 
 public class DomXmlDataFormatProvider implements DataFormatProvider {
 
+  @Override
   public String getDataFormatName() {
     return XML.getName();
   }
 
+  @Override
   public DataFormat createInstance() {
     return new DomXmlDataFormat(XML.getName());
   }

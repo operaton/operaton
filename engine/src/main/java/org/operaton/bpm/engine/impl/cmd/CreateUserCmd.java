@@ -36,7 +36,8 @@ public class CreateUserCmd extends AbstractWritableIdentityServiceCmd<User> impl
     ensureNotNull("userId", userId);
     this.userId = userId;
   }
-  
+
+  @Override
   protected User executeCmd(CommandContext commandContext) {
     return commandContext
       .getWritableIdentityProvider()

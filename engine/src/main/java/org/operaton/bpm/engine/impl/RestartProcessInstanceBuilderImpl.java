@@ -82,10 +82,12 @@ public class RestartProcessInstanceBuilderImpl implements RestartProcessInstance
     return this;
   }
 
+  @Override
   public void execute() {
     commandExecutor.execute(new RestartProcessInstancesCmd(commandExecutor, this));
   }
 
+  @Override
   public Batch executeAsync() {
     return commandExecutor.execute(new RestartProcessInstancesBatchCmd(commandExecutor, this));
   }

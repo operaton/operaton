@@ -25,10 +25,12 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionComplete extends AbstractAtomicOperationCaseExecutionComplete {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-complete";
   }
 
+  @Override
   protected void triggerBehavior(CmmnActivityBehavior behavior, CmmnExecution execution) {
     behavior.onCompletion(execution);
   }

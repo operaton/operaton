@@ -40,6 +40,7 @@ public class DmnDecisionResultImpl implements DmnDecisionResult {
     this.ruleResults = ruleResults;
   }
 
+  @Override
   public DmnDecisionResultEntries getFirstResult() {
     if (size() > 0) {
       return get(0);
@@ -48,6 +49,7 @@ public class DmnDecisionResultImpl implements DmnDecisionResult {
     }
   }
 
+  @Override
   public DmnDecisionResultEntries getSingleResult() {
     if (size() == 1) {
       return get(0);
@@ -58,6 +60,7 @@ public class DmnDecisionResultImpl implements DmnDecisionResult {
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T> List<T> collectEntries(String outputName) {
     List<T> outputValues = new ArrayList<T>();

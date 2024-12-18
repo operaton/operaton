@@ -102,6 +102,7 @@ public class ConcurrentHistoryCleanupReconfigureTest extends ConcurrencyTestHelp
 
   public class EngineOne extends ControllableCommand<Void> {
 
+    @Override
     public Void execute(CommandContext commandContext) {
       new BootstrapEngineCommand().execute(commandContext);
 
@@ -112,6 +113,7 @@ public class ConcurrentHistoryCleanupReconfigureTest extends ConcurrencyTestHelp
 
   public class EngineTwo extends ControllableCommand<Void> {
 
+    @Override
     public Void execute(CommandContext commandContext) {
       historyService.findHistoryCleanupJobs();
 

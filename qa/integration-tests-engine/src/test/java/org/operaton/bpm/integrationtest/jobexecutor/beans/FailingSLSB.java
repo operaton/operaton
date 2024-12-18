@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 @Stateless
 public class FailingSLSB implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) {
     
     // throw an unexpected exception

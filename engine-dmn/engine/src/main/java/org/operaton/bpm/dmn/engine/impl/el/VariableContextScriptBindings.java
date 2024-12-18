@@ -50,6 +50,7 @@ public class VariableContextScriptBindings implements Bindings {
   /**
    * Dedicated implementation which does not fall back on the {@link #calculateBindingMap()} for performance reasons
    */
+  @Override
   public boolean containsKey(Object key) {
     if(wrappedBindings.containsKey(key)) {
       return true;
@@ -65,6 +66,7 @@ public class VariableContextScriptBindings implements Bindings {
   /**
    * Dedicated implementation which does not fall back on the {@link #calculateBindingMap()} for performance reasons
    */
+  @Override
   public Object get(Object key) {
     Object result = null;
 
@@ -84,23 +86,28 @@ public class VariableContextScriptBindings implements Bindings {
   /**
    * Dedicated implementation which does not fall back on the {@link #calculateBindingMap()} for performance reasons
    */
+  @Override
   public Object put(String name, Object value) {
     // only write to the wrapped bindings
     return wrappedBindings.put(name, value);
   }
 
+  @Override
   public Set<Entry<String, Object>> entrySet() {
     return calculateBindingMap().entrySet();
   }
 
+  @Override
   public Set<String> keySet() {
     return calculateBindingMap().keySet();
   }
 
+  @Override
   public int size() {
     return calculateBindingMap().size();
   }
 
+  @Override
   public Collection<Object> values() {
     return calculateBindingMap().values();
   }
@@ -111,18 +118,22 @@ public class VariableContextScriptBindings implements Bindings {
     }
   }
 
+  @Override
   public Object remove(Object key) {
     return wrappedBindings.remove(key);
   }
 
+  @Override
   public void clear() {
     wrappedBindings.clear();
   }
 
+  @Override
   public boolean containsValue(Object value) {
     return calculateBindingMap().containsValue(value);
   }
 
+  @Override
   public boolean isEmpty() {
     return calculateBindingMap().isEmpty();
   }

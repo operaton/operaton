@@ -27,6 +27,7 @@ public class TimerActivateProcessDefinitionHandler extends TimerChangeProcessDef
 
   public static final String TYPE = "activate-processdefinition";
 
+  @Override
   public String getType() {
     return TYPE;
   }

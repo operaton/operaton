@@ -32,18 +32,22 @@ public class ExternalTaskClientImpl implements ExternalTaskClient {
     this.topicSubscriptionManager = topicSubscriptionManager;
   }
 
+  @Override
   public TopicSubscriptionBuilder subscribe(String topicName) {
     return new TopicSubscriptionBuilderImpl(topicName, topicSubscriptionManager);
   }
 
+  @Override
   public void stop() {
     topicSubscriptionManager.stop();
   }
 
+  @Override
   public void start() {
     topicSubscriptionManager.start();
   }
 
+  @Override
   public boolean isActive() {
     return topicSubscriptionManager.isRunning();
   }

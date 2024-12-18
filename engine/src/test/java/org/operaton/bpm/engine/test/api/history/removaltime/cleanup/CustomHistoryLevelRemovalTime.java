@@ -28,14 +28,17 @@ public class CustomHistoryLevelRemovalTime implements HistoryLevel {
 
   private HistoryEventTypes[] eventTypes;
 
+  @Override
   public int getId() {
     return 47;
   }
 
+  @Override
   public String getName() {
     return "customHistoryLevel";
   }
 
+  @Override
   public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
     if (eventTypes != null) {
       for (HistoryEventType historyEventType : this.eventTypes) {

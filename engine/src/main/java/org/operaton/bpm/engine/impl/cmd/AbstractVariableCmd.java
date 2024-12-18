@@ -47,6 +47,7 @@ public abstract class AbstractVariableCmd implements Command<Void>, Serializable
     return this;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     this.commandContext = commandContext;
 

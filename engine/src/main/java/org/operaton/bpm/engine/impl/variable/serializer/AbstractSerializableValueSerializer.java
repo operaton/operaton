@@ -37,6 +37,7 @@ public abstract class AbstractSerializableValueSerializer<T extends Serializable
     this.serializationDataFormat = serializationDataFormat;
   }
 
+  @Override
   public String getSerializationDataformat() {
     return serializationDataFormat;
   }
@@ -71,6 +72,7 @@ public abstract class AbstractSerializableValueSerializer<T extends Serializable
     updateTypedValue(value, serializedStringValue);
   }
 
+  @Override
   public T readValue(ValueFields valueFields, boolean deserializeObjectValue, boolean asTransientValue) {
 
     byte[] serializedByteValue = readSerializedValueFromFields(valueFields);
@@ -130,6 +132,7 @@ public abstract class AbstractSerializableValueSerializer<T extends Serializable
     }
   }
 
+  @Override
   protected boolean canWriteValue(TypedValue typedValue) {
 
     if (!(typedValue instanceof SerializableValue) && !(typedValue instanceof UntypedValueImpl)) {

@@ -43,10 +43,12 @@ public class FeelEngineImpl implements FeelEngine {
     this.transformExpressionCache = transformExpressionCache;
   }
 
+  @Override
   public <T> T evaluateSimpleExpression(String simpleExpression, VariableContext variableContext) {
     throw LOG.simpleExpressionNotSupported();
   }
 
+  @Override
   public boolean evaluateSimpleUnaryTests(String simpleUnaryTests, String inputName, VariableContext variableContext) {
     try {
       ELContext elContext = createContext(variableContext);

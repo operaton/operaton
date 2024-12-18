@@ -37,6 +37,7 @@ public class CaseControlRuleImpl implements CaseControlRule {
     this.expression = expression;
   }
 
+  @Override
   public boolean evaluate(CmmnActivityExecution execution) {
     if (expression == null) {
       return true;

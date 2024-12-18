@@ -43,6 +43,7 @@ public abstract class AbstractPatchVariablesCmd implements Command<Void>, Serial
     this.isLocal = isLocal;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     getSetVariableCmd().disableLogUserOperation().execute(commandContext);
     getRemoveVariableCmd().disableLogUserOperation().execute(commandContext);

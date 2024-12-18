@@ -41,7 +41,8 @@ public class UserEventImpl extends EventImpl implements UserEvent {
         .namespaceUri(CMMN10_NS)
         .extendsType(Event.class)
         .instanceProvider(new ModelTypeInstanceProvider<UserEvent>() {
-          public UserEvent newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public UserEvent newInstance(ModelTypeInstanceContext instanceContext) {
             return new UserEventImpl(instanceContext);
           }
         });

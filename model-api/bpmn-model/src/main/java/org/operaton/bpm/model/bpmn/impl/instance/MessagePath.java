@@ -37,7 +37,8 @@ public class MessagePath extends FormalExpressionImpl {
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
       .instanceProvider(new ModelTypeInstanceProvider<MessagePath>() {
-        public MessagePath newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public MessagePath newInstance(ModelTypeInstanceContext instanceContext) {
           return new MessagePath(instanceContext);
         }
       });

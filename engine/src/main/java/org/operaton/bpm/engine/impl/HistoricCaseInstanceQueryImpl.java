@@ -72,52 +72,62 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
     super(commandExecutor);
   }
 
+  @Override
   public HistoricCaseInstanceQueryImpl caseInstanceId(String caseInstanceId) {
     this.caseInstanceId = caseInstanceId;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery caseInstanceIds(Set<String> caseInstanceIds) {
     ensureNotEmpty("Set of case instance ids", caseInstanceIds);
     this.caseInstanceIds = caseInstanceIds;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQueryImpl caseDefinitionId(String caseDefinitionId) {
     this.caseDefinitionId = caseDefinitionId;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery caseDefinitionKey(String caseDefinitionKey) {
     this.caseDefinitionKey = caseDefinitionKey;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery caseDefinitionName(String caseDefinitionName) {
     this.caseDefinitionName = caseDefinitionName;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery caseDefinitionNameLike(String nameLike) {
     this.caseDefinitionNameLike = nameLike;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery caseInstanceBusinessKey(String businessKey) {
     this.businessKey = businessKey;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery caseInstanceBusinessKeyLike(String businessKeyLike) {
     this.businessKeyLike = businessKeyLike;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery createdBy(String userId) {
     this.createdBy = userId;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery caseDefinitionKeyNotIn(List<String> caseDefinitionKeys) {
     ensureNotContainsNull("caseDefinitionKeys", caseDefinitionKeys);
     ensureNotContainsEmptyString("caseDefinitionKeys", caseDefinitionKeys);
@@ -125,22 +135,26 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery caseActivityIdIn(String... caseActivityIds) {
     ensureNotNull("caseActivityIds", (Object[]) caseActivityIds);
     this.caseActivityIds = caseActivityIds;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery createdAfter(Date date) {
     createdAfter = date;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery createdBefore(Date date) {
     createdBefore = date;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery closedAfter(Date date) {
     if (state!= null && (!state.equals(CaseExecutionState.CLOSED.getStateCode()))) {
       throw new NotValidException("Already querying for case instance state '" + state + "'");
@@ -151,6 +165,7 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery closedBefore(Date date) {
     if (state!= null && (!state.equals(CaseExecutionState.CLOSED.getStateCode()))) {
       throw new NotValidException("Already querying for case instance state '" + state + "'");
@@ -161,26 +176,31 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery superCaseInstanceId(String superCaseInstanceId) {
 	  this.superCaseInstanceId = superCaseInstanceId;
 	  return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery subCaseInstanceId(String subCaseInstanceId) {
     this.subCaseInstanceId = subCaseInstanceId;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery superProcessInstanceId(String superProcessInstanceId) {
     this.superProcessInstanceId = superProcessInstanceId;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery subProcessInstanceId(String subProcessInstanceId) {
     this.subProcessInstanceId = subProcessInstanceId;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -188,24 +208,28 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery withoutTenantId() {
     tenantIds = null;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery active() {
     ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
     this.state = CaseExecutionState.ACTIVE.getStateCode();
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery completed() {
     ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
     this.state = CaseExecutionState.COMPLETED.getStateCode();
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery terminated() {
     ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
     this.state = CaseExecutionState.TERMINATED.getStateCode();
@@ -224,45 +248,55 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery closed() {
     ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
     this.state = CaseExecutionState.CLOSED.getStateCode();
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery notClosed() {
     this.notClosed = true;
     return this;
   }
 
+  @Override
   public HistoricCaseInstanceQuery orderByCaseInstanceBusinessKey() {
     return orderBy(HistoricCaseInstanceQueryProperty.BUSINESS_KEY);
   }
 
+  @Override
   public HistoricCaseInstanceQuery orderByCaseInstanceDuration() {
     return orderBy(HistoricCaseInstanceQueryProperty.DURATION);
   }
 
+  @Override
   public HistoricCaseInstanceQuery orderByCaseInstanceCreateTime() {
     return orderBy(HistoricCaseInstanceQueryProperty.CREATE_TIME);
   }
 
+  @Override
   public HistoricCaseInstanceQuery orderByCaseInstanceCloseTime() {
     return orderBy(HistoricCaseInstanceQueryProperty.CLOSE_TIME);
   }
 
+  @Override
   public HistoricCaseInstanceQuery orderByCaseDefinitionId() {
     return orderBy(HistoricCaseInstanceQueryProperty.PROCESS_DEFINITION_ID);
   }
 
+  @Override
   public HistoricCaseInstanceQuery orderByCaseInstanceId() {
     return orderBy(HistoricCaseInstanceQueryProperty.PROCESS_INSTANCE_ID_);
   }
 
+  @Override
   public HistoricCaseInstanceQuery orderByTenantId() {
     return orderBy(HistoricCaseInstanceQueryProperty.TENANT_ID);
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     ensureVariablesInitialized();
@@ -271,6 +305,7 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
       .findHistoricCaseInstanceCountByQueryCriteria(this);
   }
 
+  @Override
   public List<HistoricCaseInstance> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     ensureVariablesInitialized();

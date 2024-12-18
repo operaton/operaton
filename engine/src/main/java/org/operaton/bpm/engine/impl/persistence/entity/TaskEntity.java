@@ -1398,6 +1398,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.createTime = createTime;
   }
 
+  @Override
   public Date getLastUpdated() {
     return lastUpdated;
   }

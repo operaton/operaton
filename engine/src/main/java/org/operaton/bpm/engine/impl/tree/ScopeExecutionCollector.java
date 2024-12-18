@@ -29,6 +29,7 @@ public class ScopeExecutionCollector implements TreeVisitor<PvmExecutionImpl> {
 
   protected List<PvmExecutionImpl> scopeExecutions = new ArrayList<PvmExecutionImpl>();
 
+  @Override
   public void visit(PvmExecutionImpl obj) {
     if (obj.isScope()) {
       scopeExecutions.add(obj);

@@ -47,18 +47,22 @@ public class DecisionServiceImpl extends NamedElementImpl implements DecisionSer
     super(instanceContext);
   }
 
+  @Override
   public Collection<Decision> getOutputDecisions() {
     return outputDecisionRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<Decision> getEncapsulatedDecisions() {
     return encapsulatedDecisionRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<Decision> getInputDecisions() {
     return inputDecisionRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<InputData> getInputData() {
     return inputDataRefCollection.getReferenceTargetElements(this);
   }
@@ -68,7 +72,8 @@ public class DecisionServiceImpl extends NamedElementImpl implements DecisionSer
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<DecisionService>() {
-        public DecisionService newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DecisionService newInstance(ModelTypeInstanceContext instanceContext) {
           return new DecisionServiceImpl(instanceContext);
         }
       });

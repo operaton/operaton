@@ -139,6 +139,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
     processEngineConfiguration.setHistoryCleanupBatchSize(defaultBatchSize);
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         List<Job> jobs = managementService.createJobQuery().list();

@@ -45,8 +45,10 @@ public class ScriptEngineRule implements TestRule {
   private javax.script.ScriptEngine scriptEngine;
 
 
+  @Override
   public Statement apply(final Statement base, final Description description) {
     return new Statement() {
+      @Override
       public void evaluate() throws Throwable {
         scriptEngine = createScriptEngine(description);
         if (scriptEngine != null) {

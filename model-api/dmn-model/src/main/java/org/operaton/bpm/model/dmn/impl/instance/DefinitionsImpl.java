@@ -60,66 +60,82 @@ public class DefinitionsImpl extends NamedElementImpl implements Definitions {
     super(instanceContext);
   }
 
+  @Override
   public String getExpressionLanguage() {
     return expressionLanguageAttribute.getValue(this);
   }
 
+  @Override
   public void setExpressionLanguage(String expressionLanguage) {
     expressionLanguageAttribute.setValue(this, expressionLanguage);
   }
 
+  @Override
   public String getTypeLanguage() {
     return typeLanguageAttribute.getValue(this);
   }
 
+  @Override
   public void setTypeLanguage(String typeLanguage) {
     typeLanguageAttribute.setValue(this, typeLanguage);
   }
 
+  @Override
   public String getNamespace() {
     return namespaceAttribute.getValue(this);
   }
 
+  @Override
   public void setNamespace(String namespace) {
     namespaceAttribute.setValue(this, namespace);
   }
 
+  @Override
   public String getExporter() {
     return exporterAttribute.getValue(this);
   }
 
+  @Override
   public void setExporter(String exporter) {
     exporterAttribute.setValue(this, exporter);
   }
 
+  @Override
   public String getExporterVersion() {
     return exporterVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setExporterVersion(String exporterVersion) {
     exporterVersionAttribute.setValue(this, exporterVersion);
   }
 
+  @Override
   public Collection<Import> getImports() {
     return importCollection.get(this);
   }
 
+  @Override
   public Collection<ItemDefinition> getItemDefinitions() {
     return itemDefinitionCollection.get(this);
   }
 
+  @Override
   public Collection<DrgElement> getDrgElements() {
     return drgElementCollection.get(this);
   }
 
+  @Override
   public Collection<Artifact> getArtifacts() {
     return artifactCollection.get(this);
   }
 
+  @Override
   public Collection<ElementCollection> getElementCollections() {
     return elementCollectionCollection.get(this);
   }
 
+  @Override
   public Collection<BusinessContextElement> getBusinessContextElements() {
     return businessContextElementCollection.get(this);
   }
@@ -129,7 +145,8 @@ public class DefinitionsImpl extends NamedElementImpl implements Definitions {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<Definitions>() {
-        public Definitions newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Definitions newInstance(ModelTypeInstanceContext instanceContext) {
           return new DefinitionsImpl(instanceContext);
         }
       });

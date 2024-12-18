@@ -55,7 +55,8 @@ public class OperatonCaseExecutionListenerImpl extends CmmnModelElementInstanceI
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonCaseExecutionListener.class, OPERATON_ELEMENT_CASE_EXECUTION_LISTENER)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonCaseExecutionListener>() {
-        public OperatonCaseExecutionListener newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonCaseExecutionListener newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonCaseExecutionListenerImpl(instanceContext);
         }
       });
@@ -91,46 +92,57 @@ public class OperatonCaseExecutionListenerImpl extends CmmnModelElementInstanceI
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonEvent() {
     return operatonEventAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonEvent(String operatonEvent) {
     operatonEventAttribute.setValue(this, operatonEvent);
   }
 
+  @Override
   public String getOperatonClass() {
     return operatonClassAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonClass(String operatonClass) {
     operatonClassAttribute.setValue(this, operatonClass);
   }
 
+  @Override
   public String getOperatonExpression() {
     return operatonExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonExpression(String operatonExpression) {
     operatonExpressionAttribute.setValue(this, operatonExpression);
   }
 
+  @Override
   public String getOperatonDelegateExpression() {
     return operatonDelegateExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDelegateExpression(String operatonDelegateExpression) {
     operatonDelegateExpressionAttribute.setValue(this, operatonDelegateExpression);
   }
 
+  @Override
   public OperatonScript getOperatonScript() {
     return operatonScriptChild.getChild(this);
   }
 
+  @Override
   public void setOperatonScript(OperatonScript operatonScript) {
     operatonScriptChild.setChild(this, operatonScript);
   }
 
+  @Override
   public Collection<OperatonField> getOperatonFields() {
     return operatonFieldCollection.get(this);
   }

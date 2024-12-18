@@ -27,15 +27,18 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionFireExitCriteria implements CmmnAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "trigger-exit-criteria";
   }
 
+  @Override
   public void execute(CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(execution);
     behavior.fireExitCriteria(execution);
   }
 
+  @Override
   public boolean isAsync(CmmnExecution execution) {
     return false;
   }

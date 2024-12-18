@@ -42,6 +42,7 @@ public class CachedDbEntity implements Recyclable {
    */
   protected Set<String> flushRelevantEntityReferences = null;
 
+  @Override
   public void recycle() {
     // clean out state
     dbEntity = null;
@@ -66,6 +67,7 @@ public class CachedDbEntity implements Recyclable {
     copy = dbEntity.getPersistentState();
   }
 
+  @Override
   public String toString() {
     return entityState + " " + dbEntity.getClass().getSimpleName() + "["+dbEntity.getId()+"]";
   }

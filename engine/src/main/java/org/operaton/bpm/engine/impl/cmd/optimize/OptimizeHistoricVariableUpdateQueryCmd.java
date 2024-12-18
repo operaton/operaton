@@ -49,6 +49,7 @@ public class OptimizeHistoricVariableUpdateQueryCmd implements Command<List<Hist
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<HistoricVariableUpdate> execute(CommandContext commandContext) {
     List<HistoricVariableUpdate> historicVariableUpdates =
       commandContext.getOptimizeManager().getHistoricVariableUpdates(occurredAfter, occurredAt, maxResults);

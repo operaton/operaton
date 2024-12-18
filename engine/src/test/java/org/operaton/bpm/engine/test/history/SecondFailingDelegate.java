@@ -28,6 +28,7 @@ public class SecondFailingDelegate implements JavaDelegate {
 
   public static final String SECOND_EXCEPTION_MESSAGE = "Second expected exception.";
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     Boolean fail = (Boolean) execution.getVariable("secondFail");
 

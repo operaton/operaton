@@ -27,6 +27,7 @@ public class MySpecialTaskListener extends MyTaskListener implements TaskListene
 
   private static final long serialVersionUID = 1L;
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     notify(delegateTask, delegateTask.getEventName());
   }

@@ -36,14 +36,17 @@ public class MigratingTransitionInstanceValidationReportImpl implements Migratin
     this.migrationInstruction = migratingTransitionInstance.getMigrationInstruction();
   }
 
+  @Override
   public String getSourceScopeId() {
     return sourceScopeId;
   }
 
+  @Override
   public String getTransitionInstanceId() {
     return transitionInstanceId;
   }
 
+  @Override
   public MigrationInstruction getMigrationInstruction() {
     return migrationInstruction;
   }
@@ -52,10 +55,12 @@ public class MigratingTransitionInstanceValidationReportImpl implements Migratin
     failures.add(failure);
   }
 
+  @Override
   public boolean hasFailures() {
     return !failures.isEmpty();
   }
 
+  @Override
   public List<String> getFailures() {
     return failures;
   }

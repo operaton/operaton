@@ -44,6 +44,7 @@ public class DomXmlDataFormatReader extends TextBasedDataFormatReader {
     this.dataFormat = dataFormat;
   }
 
+  @Override
   public Element readInput(Reader input) {
 
     DocumentBuilder documentBuilder = getDocumentBuilder();

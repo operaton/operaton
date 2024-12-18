@@ -40,14 +40,17 @@ public class QueryPropertyImpl implements QueryProperty {
     this.function = function;
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public String getFunction() {
     return function;
   }
 
+  @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
@@ -56,6 +59,7 @@ public class QueryPropertyImpl implements QueryProperty {
     return result;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
@@ -77,6 +81,7 @@ public class QueryPropertyImpl implements QueryProperty {
     return true;
   }
 
+  @Override
   public String toString() {
     return "QueryProperty["
       + "name=" + name

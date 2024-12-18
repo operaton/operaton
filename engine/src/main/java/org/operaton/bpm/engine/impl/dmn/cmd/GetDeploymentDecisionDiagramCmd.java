@@ -37,6 +37,7 @@ public class GetDeploymentDecisionDiagramCmd implements Command<InputStream>, Se
     this.decisionDefinitionId = decisionDefinitionId;
   }
 
+  @Override
   public InputStream execute(final CommandContext commandContext) {
     DecisionDefinition decisionDefinition = new GetDeploymentDecisionDefinitionCmd(decisionDefinitionId).execute(commandContext);
 

@@ -43,7 +43,8 @@ public class SignalImpl extends BaseElementImpl implements Signal {
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Signal>() {
-        public Signal newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Signal newInstance(ModelTypeInstanceContext instanceContext) {
           return new SignalImpl(instanceContext);
         }
       });
@@ -62,18 +63,22 @@ public class SignalImpl extends BaseElementImpl implements Signal {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public ItemDefinition getStructure() {
     return structureRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setStructure(ItemDefinition structure) {
     structureRefAttribute.setReferenceTargetElement(this, structure);
   }

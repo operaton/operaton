@@ -52,10 +52,12 @@ public abstract class StyleImpl extends BpmnModelElementInstanceImpl implements 
     super(instanceContext);
   }
 
+  @Override
   public String getId() {
     return idAttribute.getValue(this);
   }
 
+  @Override
   public void setId(String id) {
     idAttribute.setValue(this, id);
   }

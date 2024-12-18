@@ -50,7 +50,8 @@ public class Bird extends FlyingAnimal {
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(FlyingAnimal.class)
       .instanceProvider(new ModelTypeInstanceProvider<Bird>() {
-        public Bird newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Bird newInstance(ModelTypeInstanceContext instanceContext) {
           return new Bird(instanceContext);
         }
       });

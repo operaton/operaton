@@ -32,6 +32,7 @@ public class TestRequestInvocation extends AbstractRequestInvocation<Object> {
     super(target, request, interceptorChain);
   }
 
+  @Override
   public Object invokeTarget() throws Exception {
     return null;
   }

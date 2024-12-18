@@ -44,7 +44,8 @@ public class OperatonPropertiesImpl extends BpmnModelElementInstanceImpl impleme
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonProperties.class, OPERATON_ELEMENT_PROPERTIES)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonProperties>() {
-        public OperatonProperties newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonProperties newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonPropertiesImpl(instanceContext);
         }
       });
@@ -61,6 +62,7 @@ public class OperatonPropertiesImpl extends BpmnModelElementInstanceImpl impleme
     super(instanceContext);
   }
 
+  @Override
   public Collection<OperatonProperty> getOperatonProperties() {
     return operatonPropertyCollection.get(this);
   }

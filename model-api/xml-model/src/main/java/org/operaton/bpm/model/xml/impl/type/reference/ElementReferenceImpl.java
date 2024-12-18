@@ -38,6 +38,7 @@ public class ElementReferenceImpl<Target extends ModelElementInstance, Source ex
     return (ChildElement<Source>) getReferenceSourceCollection();
   }
 
+  @Override
   public Source getReferenceSource(ModelElementInstance referenceSourceParent) {
     return getReferenceSourceChild().getChild(referenceSourceParent);
   }
@@ -46,6 +47,7 @@ public class ElementReferenceImpl<Target extends ModelElementInstance, Source ex
     getReferenceSourceChild().setChild(referenceSourceParent, referenceSource);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public Target getReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement) {
     Source referenceSource = getReferenceSource(referenceSourceParentElement);
@@ -64,6 +66,7 @@ public class ElementReferenceImpl<Target extends ModelElementInstance, Source ex
     }
   }
 
+  @Override
   public void setReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement, Target referenceTargetElement) {
     ModelInstanceImpl modelInstance = referenceSourceParentElement.getModelInstance();
     String identifier = referenceTargetAttribute.getValue(referenceTargetElement);
@@ -80,6 +83,7 @@ public class ElementReferenceImpl<Target extends ModelElementInstance, Source ex
     }
   }
 
+  @Override
   public void clearReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement) {
     getReferenceSourceChild().removeChild(referenceSourceParentElement);
   }

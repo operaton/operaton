@@ -44,10 +44,12 @@ public class FreeMarkerScriptEngine extends AbstractScriptEngine implements Comp
     this.scriptEngineFactory = scriptEngineFactory;
   }
 
+  @Override
   public Object eval(String script, ScriptContext context) throws ScriptException {
     return eval(new StringReader(script), context);
   }
 
+  @Override
   public Object eval(Reader script, ScriptContext context) throws ScriptException {
     initConfiguration();
     String filename = getFilename(context);
@@ -65,10 +67,12 @@ public class FreeMarkerScriptEngine extends AbstractScriptEngine implements Comp
     return writer.toString();
   }
 
+  @Override
   public Bindings createBindings() {
     return new SimpleBindings();
   }
 
+  @Override
   public ScriptEngineFactory getFactory() {
     if (scriptEngineFactory == null) {
       synchronized (this) {
@@ -100,10 +104,12 @@ public class FreeMarkerScriptEngine extends AbstractScriptEngine implements Comp
     }
   }
 
+  @Override
   public CompiledScript compile(String script) throws ScriptException {
     return compile(new StringReader(script));
   }
 
+  @Override
   public CompiledScript compile(Reader script) throws ScriptException {
     initConfiguration();
     return new FreeMarkerCompiledScript(this, script, configuration);

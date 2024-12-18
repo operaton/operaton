@@ -55,7 +55,8 @@ public class ServiceTaskImpl extends TaskImpl implements ServiceTask {
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
       .instanceProvider(new ModelTypeInstanceProvider<ServiceTask>() {
-        public ServiceTask newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ServiceTask newInstance(ModelTypeInstanceContext instanceContext) {
           return new ServiceTaskImpl(instanceContext);
         }
       });
@@ -110,68 +111,84 @@ public class ServiceTaskImpl extends TaskImpl implements ServiceTask {
     return new ServiceTaskBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public String getImplementation() {
     return implementationAttribute.getValue(this);
   }
 
+  @Override
   public void setImplementation(String implementation) {
     implementationAttribute.setValue(this, implementation);
   }
 
+  @Override
   public Operation getOperation() {
     return operationRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setOperation(Operation operation) {
     operationRefAttribute.setReferenceTargetElement(this, operation);
   }
 
   /** operaton extensions */
 
+  @Override
   public String getOperatonClass() {
     return operatonClassAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonClass(String operatonClass) {
     operatonClassAttribute.setValue(this, operatonClass);
   }
 
+  @Override
   public String getOperatonDelegateExpression() {
     return operatonDelegateExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDelegateExpression(String operatonExpression) {
     operatonDelegateExpressionAttribute.setValue(this, operatonExpression);
   }
 
+  @Override
   public String getOperatonExpression() {
     return operatonExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonExpression(String operatonExpression) {
     operatonExpressionAttribute.setValue(this, operatonExpression);
   }
 
+  @Override
   public String getOperatonResultVariable() {
     return operatonResultVariableAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonResultVariable(String operatonResultVariable) {
     operatonResultVariableAttribute.setValue(this, operatonResultVariable);
   }
 
+  @Override
   public String getOperatonTopic() {
     return operatonTopicAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonTopic(String operatonTopic) {
     operatonTopicAttribute.setValue(this, operatonTopic);
   }
 
+  @Override
   public String getOperatonType() {
     return operatonTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonType(String operatonType) {
     operatonTypeAttribute.setValue(this, operatonType);
   }

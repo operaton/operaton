@@ -20,10 +20,12 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class DefaultJsonJacksonTypeDetector extends AbstractJacksonJsonTypeDetector {
 
+  @Override
   public boolean canHandle(Object object) {
     return true;
   }
 
+  @Override
   public String detectType(Object object) {
     Class<?> type = object.getClass();
     return TypeFactory.defaultInstance().constructType(type).toCanonical();

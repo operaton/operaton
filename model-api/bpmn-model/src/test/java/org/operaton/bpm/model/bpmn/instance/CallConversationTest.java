@@ -24,16 +24,19 @@ import java.util.Collection;
  */
 public class CallConversationTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(ConversationNode.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(ParticipantAssociation.class)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("calledCollaborationRef")

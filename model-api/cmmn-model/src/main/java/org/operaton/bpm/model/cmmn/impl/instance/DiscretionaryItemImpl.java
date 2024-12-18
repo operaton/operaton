@@ -57,34 +57,42 @@ public class DiscretionaryItemImpl extends TableItemImpl implements Discretionar
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public PlanItemDefinition getDefinition() {
     return definitionRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setDefinition(PlanItemDefinition definition) {
     definitionRefAttribute.setReferenceTargetElement(this, definition);
   }
 
+  @Override
   public ItemControl getItemControl() {
     return itemControlChild.getChild(this);
   }
 
+  @Override
   public void setItemControl(ItemControl itemControl) {
     itemControlChild.setChild(this, itemControl);
   }
 
+  @Override
   public Collection<EntryCriterion> getEntryCriterions() {
     return entryCriterionCollection.get(this);
   }
 
+  @Override
   public Collection<ExitCriterion> getExitCriterions() {
     return exitCriterionCollection.get(this);
   }
@@ -94,7 +102,8 @@ public class DiscretionaryItemImpl extends TableItemImpl implements Discretionar
         .namespaceUri(CMMN11_NS)
         .extendsType(TableItem.class)
         .instanceProvider(new ModelTypeInstanceProvider<DiscretionaryItem>() {
-          public DiscretionaryItem newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DiscretionaryItem newInstance(ModelTypeInstanceContext instanceContext) {
             return new DiscretionaryItemImpl(instanceContext);
           }
         });

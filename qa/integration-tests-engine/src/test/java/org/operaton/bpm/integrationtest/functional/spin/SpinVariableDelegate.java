@@ -26,6 +26,7 @@ import org.junit.Assert;
  */
 public class SpinVariableDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
 
     XmlSerializable xmlSerializable = (XmlSerializable) execution.getVariable("xmlSerializable");

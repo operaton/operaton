@@ -25,6 +25,7 @@ public class CustomJacksonDateFormatListener implements ServletContextListener {
 
   public static final String CONTEXT_PARAM_NAME = "org.operaton.bpm.engine.rest.jackson.dateFormat";
 
+  @Override
   public void contextInitialized(ServletContextEvent sce) {
     String dateFormat = sce.getServletContext().getInitParameter(CONTEXT_PARAM_NAME);
     if (dateFormat != null) {
@@ -32,6 +33,7 @@ public class CustomJacksonDateFormatListener implements ServletContextListener {
     }
   }
 
+  @Override
   public void contextDestroyed(ServletContextEvent sce) {
     // reset to default format
     JacksonConfigurator.setDateFormatString(JacksonConfigurator.DEFAULT_DATE_FORMAT);

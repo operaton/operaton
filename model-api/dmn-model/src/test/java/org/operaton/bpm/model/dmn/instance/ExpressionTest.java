@@ -21,14 +21,17 @@ import java.util.Collection;
 
 public class ExpressionTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(DmnElement.class, true);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("typeRef")

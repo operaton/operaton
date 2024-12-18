@@ -35,7 +35,8 @@ public class Target extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Target.class, BPMN_ELEMENT_TARGET)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Target>() {
-        public Target newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Target newInstance(ModelTypeInstanceContext instanceContext) {
           return new Target(instanceContext);
         }
       });

@@ -28,6 +28,7 @@ public class GetActInstanceDelegate implements JavaDelegate {
 
   public static ActivityInstance activityInstance = null;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     activityInstance = execution.getProcessEngineServices()
       .getRuntimeService()

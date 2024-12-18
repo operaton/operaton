@@ -43,6 +43,7 @@ public class DeleteMetricsCmd implements Command<Void>, Serializable {
     this.reporter = reporter;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkDeleteMetrics);
 

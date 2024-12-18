@@ -41,7 +41,8 @@ public class DocumentationImpl extends BpmnModelElementInstanceImpl implements D
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Documentation.class, BPMN_ELEMENT_DOCUMENTATION)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Documentation>() {
-        public Documentation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Documentation newInstance(ModelTypeInstanceContext instanceContext) {
           return new DocumentationImpl(instanceContext);
         }
       });
@@ -61,18 +62,22 @@ public class DocumentationImpl extends BpmnModelElementInstanceImpl implements D
     super(context);
   }
 
+  @Override
   public String getId() {
     return idAttribute.getValue(this);
   }
 
+  @Override
   public void setId(String id) {
     idAttribute.setValue(this, id);
   }
 
+  @Override
   public String getTextFormat() {
     return textFormatAttribute.getValue(this);
   }
 
+  @Override
   public void setTextFormat(String textFormat) {
     textFormatAttribute.setValue(this, textFormat);
   }

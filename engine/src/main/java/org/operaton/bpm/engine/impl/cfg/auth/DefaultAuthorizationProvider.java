@@ -69,6 +69,7 @@ import org.operaton.bpm.engine.task.Task;
  */
 public class DefaultAuthorizationProvider implements ResourceAuthorizationProvider {
 
+  @Override
   public AuthorizationEntity[] newUser(User user) {
     // create an authorization which gives the user all permissions on himself:
     String userId = user.getId();
@@ -80,6 +81,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return new AuthorizationEntity[]{ resourceOwnerAuthorization };
   }
 
+  @Override
   public AuthorizationEntity[] newGroup(Group group) {
     List<AuthorizationEntity> authorizations = new ArrayList<AuthorizationEntity>();
 
@@ -96,11 +98,13 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return authorizations.toArray(new AuthorizationEntity[0]);
   }
 
+  @Override
   public AuthorizationEntity[] newTenant(Tenant tenant) {
     // no default authorizations on tenants.
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] groupMembershipCreated(String groupId, String userId) {
 
     // no default authorizations on memberships.
@@ -108,6 +112,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] tenantMembershipCreated(Tenant tenant, User user) {
 
     AuthorizationEntity userAuthorization = createGrantAuthorization(user.getId(), null, TENANT, tenant.getId(), READ);
@@ -115,12 +120,14 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return new AuthorizationEntity[]{ userAuthorization };
   }
 
+  @Override
   public AuthorizationEntity[] tenantMembershipCreated(Tenant tenant, Group group) {
     AuthorizationEntity userAuthorization = createGrantAuthorization(null, group.getId(), TENANT, tenant.getId(), READ);
 
     return new AuthorizationEntity[]{ userAuthorization };
   }
 
+  @Override
   public AuthorizationEntity[] newFilter(Filter filter) {
 
     String owner = filter.getOwner();
@@ -143,6 +150,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
 
   // Deployment ///////////////////////////////////////////////
 
+  @Override
   public AuthorizationEntity[] newDeployment(Deployment deployment) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     IdentityService identityService = processEngineConfiguration.getIdentityService();
@@ -160,6 +168,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
 
   // Process Definition //////////////////////////////////////
 
+  @Override
   public AuthorizationEntity[] newProcessDefinition(ProcessDefinition processDefinition) {
     // no default authorizations on process definitions.
     return null;
@@ -167,6 +176,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
 
   // Process Instance ///////////////////////////////////////
 
+  @Override
   public AuthorizationEntity[] newProcessInstance(ProcessInstance processInstance) {
     // no default authorizations on process instances.
     return null;
@@ -174,11 +184,13 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
 
   // Task /////////////////////////////////////////////////
 
+  @Override
   public AuthorizationEntity[] newTask(Task task) {
     // no default authorizations on tasks.
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee) {
     if (newAssignee != null) {
 
@@ -193,6 +205,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newTaskOwner(Task task, String oldOwner, String newOwner) {
     if (newOwner != null) {
 
@@ -207,6 +220,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newTaskUserIdentityLink(Task task, String userId, String type) {
     // create (or update) an authorization for the given user
     // whenever a new user identity link will be added
@@ -217,6 +231,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return createOrUpdateAuthorizationsByUserId(task, userId);
   }
 
+  @Override
   public AuthorizationEntity[] newTaskGroupIdentityLink(Task task, String groupId, String type) {
 
     ensureValidIndividualResourceId("Cannot grant default authorization for identity link to group " + groupId,
@@ -228,21 +243,25 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     return createOrUpdateAuthorizationsByGroupId(task, groupId);
   }
 
+  @Override
   public AuthorizationEntity[] deleteTaskUserIdentityLink(Task task, String userId, String type) {
     // an existing authorization will not be deleted in such a case
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] deleteTaskGroupIdentityLink(Task task, String groupId, String type) {
     // an existing authorization will not be deleted in such a case
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newDecisionDefinition(DecisionDefinition decisionDefinition) {
     // no default authorizations on decision definitions.
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newDecisionRequirementsDefinition(DecisionRequirementsDefinition decisionRequirementsDefinition) {
     // no default authorizations on decision requirements definitions.
     return null;

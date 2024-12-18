@@ -46,6 +46,7 @@ public class CommandInvocationContextTest extends PluggableProcessEngineTest {
       this.innerCommand = innerCommand;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       assertEquals(this, Context.getCommandInvocationContext().getCommand());
 

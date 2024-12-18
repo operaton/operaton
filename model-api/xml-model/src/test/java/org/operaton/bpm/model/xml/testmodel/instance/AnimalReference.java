@@ -46,7 +46,8 @@ public class AnimalReference extends ModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(AnimalReference.class, ELEMENT_NAME_ANIMAL_REFERENCE)
       .namespaceUri(MODEL_NAMESPACE)
       .instanceProvider(new ModelTypeInstanceProvider<AnimalReference>() {
-        public AnimalReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public AnimalReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new AnimalReference(instanceContext);
         }
       });

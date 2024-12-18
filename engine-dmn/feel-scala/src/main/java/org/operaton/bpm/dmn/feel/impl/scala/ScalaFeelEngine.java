@@ -60,9 +60,11 @@ public class ScalaFeelEngine implements FeelEngine {
     feelEngine = buildFeelEngine(customFunctionTransformer, compositeValueMapper);
   }
 
+  @Override
   public <T> T evaluateSimpleExpression(String expression, VariableContext variableContext) {
 
     CustomContext context = new CustomContext() {
+      @Override
       public VariableProvider variableProvider() {
         return new ContextVariableWrapper(variableContext);
       }
@@ -84,6 +86,7 @@ public class ScalaFeelEngine implements FeelEngine {
     }
   }
 
+  @Override
   public boolean evaluateSimpleUnaryTests(String expression,
                                           String inputVariable,
                                           VariableContext variableContext) {
@@ -94,6 +97,7 @@ public class ScalaFeelEngine implements FeelEngine {
     ContextVariableWrapper contextVariableWrapper = new ContextVariableWrapper(variableContext);
 
     CustomContext context = new CustomContext() {
+      @Override
       public VariableProvider variableProvider() {
         return new CompositeVariableProvider(toScalaList(inputVariableContext, contextVariableWrapper));
       }

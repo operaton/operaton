@@ -25,16 +25,19 @@ import java.util.Collection;
  */
 public class CaseRolesTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
         new ChildElementAssumption(Role.class)
       );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

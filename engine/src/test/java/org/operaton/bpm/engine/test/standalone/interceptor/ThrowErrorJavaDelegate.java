@@ -27,6 +27,7 @@ public class ThrowErrorJavaDelegate implements JavaDelegate {
     executed = false;
   }
 
+  @Override
   public void execute(DelegateExecution delegateExecution) throws Exception {
     executed = true;
     throw new StackOverflowError();

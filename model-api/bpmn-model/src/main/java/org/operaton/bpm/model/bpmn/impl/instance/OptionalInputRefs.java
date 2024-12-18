@@ -35,7 +35,8 @@ public class OptionalInputRefs extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OptionalInputRefs.class, BPMN_ELEMENT_OPTIONAL_INPUT_REFS)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OptionalInputRefs>() {
-        public OptionalInputRefs newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OptionalInputRefs newInstance(ModelTypeInstanceContext instanceContext) {
           return new OptionalInputRefs(instanceContext);
         }
       });

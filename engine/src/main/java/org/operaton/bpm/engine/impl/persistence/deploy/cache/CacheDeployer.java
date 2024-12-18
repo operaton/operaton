@@ -46,6 +46,7 @@ public class CacheDeployer {
 
   public void deploy(final DeploymentEntity deployment) {
     Context.getCommandContext().runWithoutAuthorization(new Callable<Void>() {
+      @Override
       public Void call() throws Exception {
         for (Deployer deployer : deployers) {
           deployer.deploy(deployment);
@@ -58,6 +59,7 @@ public class CacheDeployer {
   public void deployOnlyGivenResourcesOfDeployment(final DeploymentEntity deployment, String... resourceNames) {
     initDeployment(deployment, resourceNames);
     Context.getCommandContext().runWithoutAuthorization(new Callable<Void>() {
+      @Override
       public Void call() throws Exception {
         for (Deployer deployer : deployers) {
           deployer.deploy(deployment);

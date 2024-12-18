@@ -35,7 +35,8 @@ public class RelationshipDefinitionRef extends ModelElementInstanceImpl {
       .namespaceUri(MODEL_NAMESPACE)
       .instanceProvider(new ModelTypeInstanceProvider<RelationshipDefinitionRef>() {
 
-        public RelationshipDefinitionRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public RelationshipDefinitionRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new RelationshipDefinitionRef(instanceContext);
         }
       });

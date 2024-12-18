@@ -40,6 +40,7 @@ public class GetDeploymentCaseDefinitionCmd implements Command<CaseDefinition>, 
     this.caseDefinitionId = caseDefinitionId;
   }
 
+  @Override
   public CaseDefinition execute(CommandContext commandContext) {
     ensureNotNull("caseDefinitionId", caseDefinitionId);
 

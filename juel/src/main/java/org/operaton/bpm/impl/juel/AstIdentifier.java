@@ -37,7 +37,8 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		this.index = index;
 	}
 
-	public Class<?> getType(Bindings bindings, ELContext context) {
+  @Override
+  public Class<?> getType(Bindings bindings, ELContext context) {
 		ValueExpression expression = bindings.getVariable(index);
 		if (expression != null) {
 			return expression.getType(context);
@@ -51,19 +52,23 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 	}
 
 
-	public boolean isLeftValue() {
+  @Override
+  public boolean isLeftValue() {
 		return true;
 	}
 
-	public boolean isMethodInvocation() {
-		return false;
-	}
-	
-	public boolean isLiteralText() {
+  @Override
+  public boolean isMethodInvocation() {
 		return false;
 	}
 
-	public ValueReference getValueReference(Bindings bindings, ELContext context) {
+  @Override
+  public boolean isLiteralText() {
+		return false;
+	}
+
+  @Override
+  public ValueReference getValueReference(Bindings bindings, ELContext context) {
 		ValueExpression expression = bindings.getVariable(index);
 		if (expression != null) {
 			return expression.getValueReference(context);
@@ -85,7 +90,8 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		return result;
 	}
 
-	public void setValue(Bindings bindings, ELContext context, Object value) {
+  @Override
+  public void setValue(Bindings bindings, ELContext context, Object value) {
 		ValueExpression expression = bindings.getVariable(index);
 		if (expression != null) {
 			expression.setValue(context, value);
@@ -98,7 +104,8 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		}
 	}
 
-	public boolean isReadOnly(Bindings bindings, ELContext context) {
+  @Override
+  public boolean isReadOnly(Bindings bindings, ELContext context) {
 		ValueExpression expression = bindings.getVariable(index);
 		if (expression != null) {
 			return expression.isReadOnly(context);
@@ -128,12 +135,14 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		throw new MethodNotFoundException(LocalMessages.get("error.identifier.method.notamethod", name, value.getClass()));
 	}
 
-	public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
+  @Override
+  public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
 		Method method = getMethod(bindings, context, returnType, paramTypes);
 		return new MethodInfo(method.getName(), method.getReturnType(), paramTypes);
 	}
 
-	public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] params) {
+  @Override
+  public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] params) {
 		Method method = getMethod(bindings, context, returnType, paramTypes);
 		try {
 			return method.invoke(null, params);
@@ -156,19 +165,23 @@ public class AstIdentifier extends AstNode implements IdentifierNode {
 		b.append(bindings != null && bindings.isVariableBound(index) ? "<var>" : name);
 	}
 
-	public int getIndex() {
+  @Override
+  public int getIndex() {
 		return index;
 	}
 
-	public String getName() {
+  @Override
+  public String getName() {
 		return name;
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return 0;
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return null;
 	}
 }

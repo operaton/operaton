@@ -37,6 +37,7 @@ import jakarta.el.ELResolver;
  */
 public class ProcessApplicationBeanElResolverDelegate extends AbstractElResolverDelegate {
 
+  @Override
   protected ELResolver getElResolverDelegate() {
 
     ProcessApplicationReference processApplicationReference = Context.getCurrentProcessApplication();

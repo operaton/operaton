@@ -32,10 +32,12 @@ public class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
 
   private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
 
+  @Override
   public boolean isAsync(PvmExecutionImpl execution) {
     return false;
   }
 
+  @Override
   public void execute(PvmExecutionImpl execution) {
     execution.activityInstanceStarted();
 
@@ -69,10 +71,12 @@ public class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
     }, execution);
   }
 
+  @Override
   public String getCanonicalName() {
     return "activity-execute";
   }
 
+  @Override
   public boolean isAsyncCapable() {
     return false;
   }

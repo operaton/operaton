@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  */
 public class Noop implements ActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     PvmTransition transition = execution.getActivity().getOutgoingTransitions().get(0);
     execution.leaveActivityViaTransition(transition);

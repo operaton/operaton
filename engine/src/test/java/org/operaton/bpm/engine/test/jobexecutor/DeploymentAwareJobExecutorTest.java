@@ -184,6 +184,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
 
     String messageId = commandExecutor.execute(new Command<String>() {
+      @Override
       public String execute(CommandContext commandContext) {
         MessageEntity message = new MessageEntity();
         commandContext.getJobManager().send(message);

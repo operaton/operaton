@@ -33,6 +33,7 @@ public class CloseCaseExecutionListener implements CaseExecutionListener, Serial
   protected static int COUNTER = 0;
   protected static String ON_CASE_EXECUTION_ID;
 
+  @Override
   public void notify(DelegateCaseExecution caseExecution) throws Exception {
     EVENT = caseExecution.getEventName();
     COUNTER = COUNTER + 1;

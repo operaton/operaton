@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionParentComplete extends AbstractAtomicOperationCaseExecutionTerminate {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-parent-complete";
   }
@@ -33,6 +34,7 @@ public class AtomicOperationCaseExecutionParentComplete extends AbstractAtomicOp
     return "parentComplete";
   }
 
+  @Override
   protected void eventNotificationsCompleted(CmmnExecution execution) {
     execution.remove();
   }

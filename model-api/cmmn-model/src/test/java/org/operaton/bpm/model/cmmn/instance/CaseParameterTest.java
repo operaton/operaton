@@ -25,16 +25,19 @@ import java.util.Collection;
  */
 public class CaseParameterTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(Parameter.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(BindingRefinementExpression.class, 0, 1)
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
           new AttributeAssumption("bindingRef")

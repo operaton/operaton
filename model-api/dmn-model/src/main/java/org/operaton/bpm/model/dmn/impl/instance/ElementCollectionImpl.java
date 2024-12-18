@@ -40,6 +40,7 @@ public class ElementCollectionImpl extends NamedElementImpl implements ElementCo
     super(instanceContext);
   }
 
+  @Override
   public Collection<DrgElement> getDrgElements() {
     return drgElementRefCollection.getReferenceTargetElements(this);
   }
@@ -49,7 +50,8 @@ public class ElementCollectionImpl extends NamedElementImpl implements ElementCo
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<ElementCollection>() {
-        public ElementCollection newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ElementCollection newInstance(ModelTypeInstanceContext instanceContext) {
           return new ElementCollectionImpl(instanceContext);
         }
       });

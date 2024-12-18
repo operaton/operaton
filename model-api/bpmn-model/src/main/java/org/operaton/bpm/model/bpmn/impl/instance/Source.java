@@ -35,7 +35,8 @@ public class Source extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Source.class, BPMN_ELEMENT_SOURCE)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Source>() {
-        public Source newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Source newInstance(ModelTypeInstanceContext instanceContext) {
           return new Source(instanceContext);
         }
       });

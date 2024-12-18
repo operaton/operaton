@@ -47,6 +47,7 @@ public class RewindableReader extends Reader {
     this.rewindable = true;
   }
 
+  @Override
   public int read(char[] cbuf, int off, int len) throws IOException {
     int charactersRead = wrappedReader.read(cbuf, off, len);
 
@@ -66,6 +67,7 @@ public class RewindableReader extends Reader {
     return charactersRead;
   }
 
+  @Override
   public int read() throws IOException {
     int nextCharacter = wrappedReader.read();
 
@@ -81,22 +83,27 @@ public class RewindableReader extends Reader {
     return nextCharacter;
   }
 
+  @Override
   public void close() throws IOException {
     wrappedReader.close();
   }
 
+  @Override
   public synchronized void mark(int readlimit) throws IOException {
     wrappedReader.mark(readlimit);
   }
 
+  @Override
   public boolean markSupported() {
     return wrappedReader.markSupported();
   }
 
+  @Override
   public synchronized void reset() throws IOException {
     wrappedReader.reset();
   }
 
+  @Override
   public long skip(long n) throws IOException {
     return wrappedReader.skip(n);
   }

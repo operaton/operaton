@@ -46,6 +46,7 @@ public class ProcessApplicationDeploymentBuilderImpl extends DeploymentBuilderIm
     source(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
   }
 
+  @Override
   public ProcessApplicationDeploymentBuilder resumePreviousVersions() {
     this.isResumePreviousVersions = true;
     return this;

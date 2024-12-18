@@ -43,34 +43,42 @@ public abstract class DmnElementImpl extends DmnModelElementInstanceImpl impleme
     super(instanceContext);
   }
 
+  @Override
   public String getId() {
     return idAttribute.getValue(this);
   }
 
+  @Override
   public void setId(String id) {
     idAttribute.setValue(this, id);
   }
 
+  @Override
   public String getLabel() {
     return labelAttribute.getValue(this);
   }
 
+  @Override
   public void setLabel(String label) {
     labelAttribute.setValue(this, label);
   }
 
+  @Override
   public Description getDescription() {
     return descriptionChild.getChild(this);
   }
 
+  @Override
   public void setDescription(Description description) {
     descriptionChild.setChild(this, description);
   }
 
+  @Override
   public ExtensionElements getExtensionElements() {
     return extensionElementsChild.getChild(this);
   }
 
+  @Override
   public void setExtensionElements(ExtensionElements extensionElements) {
     extensionElementsChild.setChild(this, extensionElements);
   }

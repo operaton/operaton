@@ -76,6 +76,7 @@ public class JobExecutorCleanupTest {
   @After
   public void resetDatabase() {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         String handlerType = "history-cleanup";
         List<Job> jobsByHandlerType = commandContext.getJobManager()

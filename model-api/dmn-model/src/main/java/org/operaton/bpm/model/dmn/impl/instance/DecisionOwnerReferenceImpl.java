@@ -37,7 +37,8 @@ public class DecisionOwnerReferenceImpl extends DmnElementReferenceImpl implemen
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<DecisionOwnerReference>() {
-        public DecisionOwnerReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DecisionOwnerReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new DecisionOwnerReferenceImpl(instanceContext);
         }
       });

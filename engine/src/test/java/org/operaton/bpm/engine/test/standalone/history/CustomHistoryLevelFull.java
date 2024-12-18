@@ -24,14 +24,17 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
  */
 public class CustomHistoryLevelFull implements HistoryLevel {
 
+  @Override
   public int getId() {
     return 42;
   }
 
+  @Override
   public String getName() {
     return "aCustomHistoryLevel";
   }
 
+  @Override
   public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
     return true;
   }

@@ -77,10 +77,12 @@ public class HistoricDetailEventEntity extends HistoryEvent  {
     this.userOperationId = userOperationId;
   }
 
+  @Override
   public String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
+  @Override
   public void setRootProcessInstanceId(String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }

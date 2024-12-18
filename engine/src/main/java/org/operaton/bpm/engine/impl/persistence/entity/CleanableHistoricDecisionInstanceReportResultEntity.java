@@ -29,6 +29,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
   protected long cleanableDecisionInstanceCount;
   protected String tenantId;
 
+  @Override
   public String getDecisionDefinitionId() {
     return decisionDefinitionId;
   }
@@ -37,6 +38,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     this.decisionDefinitionId = decisionDefinitionId;
   }
 
+  @Override
   public String getDecisionDefinitionKey() {
     return decisionDefinitionKey;
   }
@@ -45,6 +47,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     this.decisionDefinitionKey = decisionDefinitionKey;
   }
 
+  @Override
   public String getDecisionDefinitionName() {
     return decisionDefinitionName;
   }
@@ -53,6 +56,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     this.decisionDefinitionName = decisionDefinitionName;
   }
 
+  @Override
   public int getDecisionDefinitionVersion() {
     return decisionDefinitionVersion;
   }
@@ -61,6 +65,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     this.decisionDefinitionVersion = decisionDefinitionVersion;
   }
 
+  @Override
   public Integer getHistoryTimeToLive() {
     return historyTimeToLive;
   }
@@ -69,6 +74,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     this.historyTimeToLive = historyTimeToLive;
   }
 
+  @Override
   public long getFinishedDecisionInstanceCount() {
     return finishedDecisionInstanceCount;
   }
@@ -77,6 +83,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     this.finishedDecisionInstanceCount = finishedDecisionInstanceCount;
   }
 
+  @Override
   public long getCleanableDecisionInstanceCount() {
     return cleanableDecisionInstanceCount;
   }
@@ -85,6 +92,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     this.cleanableDecisionInstanceCount = cleanableDecisionInstanceCount;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -93,6 +101,7 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
     this.tenantId = tenantId;
   }
 
+  @Override
   public String toString() {
     return this.getClass().getSimpleName()
         + "[decisionDefinitionId = " + decisionDefinitionId

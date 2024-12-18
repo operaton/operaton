@@ -35,6 +35,7 @@ public class DeleteFilterCmd implements Command<Void>, Serializable {
     this.filterId = filterId;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     commandContext.getOperationLogManager().logFilterOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE, filterId);
     

@@ -31,6 +31,7 @@ public class FlowScopeWalker extends SingleReferenceWalker<ScopeImpl> {
     super(startActivity);
   }
 
+  @Override
   protected ScopeImpl nextElement() {
     ScopeImpl currentElement = getCurrentElement();
     if (currentElement != null && ActivityImpl.class.isAssignableFrom(currentElement.getClass())) {

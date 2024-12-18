@@ -27,6 +27,7 @@ public class MapBusinessCalendarManager implements BusinessCalendarManager {
 
   private final Map<String, BusinessCalendar> businessCalendars = new HashMap<String, BusinessCalendar>();
 
+  @Override
   public BusinessCalendar getBusinessCalendar(String businessCalendarRef) {
     return businessCalendars.get(businessCalendarRef);
   }

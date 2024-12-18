@@ -28,6 +28,7 @@ public class CreateNativeUserQueryCmd implements Command<NativeUserQuery>, Seria
 
   private static final long serialVersionUID = 1L;
 
+  @Override
   public NativeUserQuery execute(CommandContext commandContext) {
     return commandContext.getReadOnlyIdentityProvider().createNativeUserQuery();
   }

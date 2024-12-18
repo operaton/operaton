@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public abstract class AbstractAtomicOperationCaseExecutionSuspending implements CmmnAtomicOperation {
 
+  @Override
   public void execute(CmmnExecution execution) {
     execution.setCurrentState(getSuspendingState());
 
@@ -35,6 +36,7 @@ public abstract class AbstractAtomicOperationCaseExecutionSuspending implements 
     triggerBehavior(behavior, execution);
   }
 
+  @Override
   public boolean isAsync(CmmnExecution execution) {
     return false;
   }

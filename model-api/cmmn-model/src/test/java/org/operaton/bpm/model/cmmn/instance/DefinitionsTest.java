@@ -27,10 +27,12 @@ import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
  */
 public class DefinitionsTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(Import.class),
@@ -44,6 +46,7 @@ public class DefinitionsTest extends CmmnModelElementInstanceTest {
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
         new AttributeAssumption("id", true),

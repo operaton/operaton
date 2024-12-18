@@ -77,6 +77,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    */
   protected abstract String convertModelValueToXmlValue(T modelValue);
 
+  @Override
   public ModelElementType getOwningElementType() {
     return owningElementType;
   }
@@ -86,6 +87,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    *
    * @return the value of the attribute.
    */
+  @Override
   public T getValue(ModelElementInstance modelElement) {
     String value;
     if(namespaceUri == null) {
@@ -118,6 +120,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
    *
    *  the value of the attribute.
    */
+  @Override
   public void setValue(ModelElementInstance modelElement, T value) {
     setValue(modelElement, value, true);
   }
@@ -142,6 +145,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
     }
   }
 
+  @Override
   public T getDefaultValue() {
     return defaultValue;
   }
@@ -151,6 +155,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   }
 
 
+  @Override
   public boolean isRequired() {
     return isRequired;
   }
@@ -171,10 +176,12 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   /**
    * @return the namespaceUri
    */
+  @Override
   public String getNamespaceUri() {
     return namespaceUri;
   }
 
+  @Override
   public boolean isIdAttribute() {
     return isIdAttribute;
   }
@@ -190,6 +197,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   /**
    * @return the attributeName
    */
+  @Override
   public String getAttributeName() {
     return attributeName;
   }
@@ -201,6 +209,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
     this.attributeName = attributeName;
   }
 
+  @Override
   public void removeAttribute(ModelElementInstance modelElement) {
     if (namespaceUri == null) {
       modelElement.removeAttribute(attributeName);
@@ -221,6 +230,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   /**
    * @return the incomingReferences
    */
+  @Override
   public List<Reference<?>> getIncomingReferences() {
     return incomingReferences;
   }
@@ -228,6 +238,7 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   /**
    * @return the outgoingReferences
    */
+  @Override
   public List<Reference<?>> getOutgoingReferences() {
     return outgoingReferences;
   }

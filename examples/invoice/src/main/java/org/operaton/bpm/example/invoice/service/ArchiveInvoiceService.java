@@ -31,6 +31,7 @@ public class ArchiveInvoiceService implements JavaDelegate {
 
   private final Logger LOGGER = Logger.getLogger(ArchiveInvoiceService.class.getName());
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
 
     Boolean shouldFail = (Boolean) execution.getVariable("shouldFail");

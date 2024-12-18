@@ -20,14 +20,17 @@ import java.util.Collection;
 
 public class InputExpressionTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(LiteralExpression.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

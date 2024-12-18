@@ -44,7 +44,8 @@ public class AstDot extends AstProperty {
 		b.append(property);
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return 1;
 	}
 }

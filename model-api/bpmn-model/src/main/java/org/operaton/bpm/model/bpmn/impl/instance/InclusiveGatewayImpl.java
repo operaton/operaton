@@ -43,7 +43,8 @@ public class InclusiveGatewayImpl extends GatewayImpl implements InclusiveGatewa
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
       .instanceProvider(new ModelTypeInstanceProvider<InclusiveGateway>() {
-        public InclusiveGateway newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InclusiveGateway newInstance(ModelTypeInstanceContext instanceContext) {
           return new InclusiveGatewayImpl(instanceContext);
         }
       });
@@ -64,10 +65,12 @@ public class InclusiveGatewayImpl extends GatewayImpl implements InclusiveGatewa
     return new InclusiveGatewayBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public SequenceFlow getDefault() {
     return defaultAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setDefault(SequenceFlow defaultFlow) {
     defaultAttribute.setReferenceTargetElement(this, defaultFlow);
   }

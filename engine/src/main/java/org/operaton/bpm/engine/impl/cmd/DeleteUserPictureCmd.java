@@ -34,6 +34,7 @@ public class DeleteUserPictureCmd implements Command<Void> {
     this.userId = userId;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ensureNotNull("UserId", userId);
 

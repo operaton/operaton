@@ -53,6 +53,7 @@ public class CorrelateAllMessageCmd extends AbstractCorrelateMessageCmd implemen
     super(messageCorrelationBuilderImpl, collectVariables, deserializeVariableValues);
   }
 
+  @Override
   public List<MessageCorrelationResultImpl> execute(final CommandContext commandContext) {
     ensureAtLeastOneNotNull(
         "At least one of the following correlation criteria has to be present: " + "messageName, businessKey, correlationKeys, processInstanceId", messageName,
@@ -61,6 +62,7 @@ public class CorrelateAllMessageCmd extends AbstractCorrelateMessageCmd implemen
     final CorrelationHandler correlationHandler = Context.getProcessEngineConfiguration().getCorrelationHandler();
     final CorrelationSet correlationSet = new CorrelationSet(builder);
     List<CorrelationHandlerResult> correlationResults = commandContext.runWithoutAuthorization(new Callable<List<CorrelationHandlerResult>>() {
+      @Override
       public List<CorrelationHandlerResult> call() throws Exception {
         return correlationHandler.correlateMessages(commandContext, messageName, correlationSet);
       }

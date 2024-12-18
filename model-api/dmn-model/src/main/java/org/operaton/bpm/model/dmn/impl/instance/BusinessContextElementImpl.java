@@ -35,10 +35,12 @@ public abstract class BusinessContextElementImpl extends NamedElementImpl implem
     super(instanceContext);
   }
 
+  @Override
   public String getUri() {
     return uriAttribute.getValue(this);
   }
 
+  @Override
   public void setUri(String uri) {
     uriAttribute.setValue(this, uri);
   }

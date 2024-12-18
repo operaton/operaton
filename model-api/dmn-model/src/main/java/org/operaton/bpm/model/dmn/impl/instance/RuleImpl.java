@@ -37,7 +37,8 @@ public class RuleImpl extends DecisionRuleImpl implements Rule {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DecisionRule.class)
       .instanceProvider(new ModelTypeInstanceProvider<Rule>() {
-        public Rule newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Rule newInstance(ModelTypeInstanceContext instanceContext) {
           return new RuleImpl(instanceContext);
         }
       });

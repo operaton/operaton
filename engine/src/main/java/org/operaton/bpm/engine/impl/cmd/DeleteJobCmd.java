@@ -43,6 +43,7 @@ public class DeleteJobCmd implements Command<Object>, Serializable {
     this.jobId = jobId;
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     ensureNotNull("jobId", jobId);
 

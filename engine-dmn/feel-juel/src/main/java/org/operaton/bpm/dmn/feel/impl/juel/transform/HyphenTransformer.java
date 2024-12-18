@@ -18,10 +18,12 @@ package org.operaton.bpm.dmn.feel.impl.juel.transform;
 
 public class HyphenTransformer implements FeelToJuelTransformer {
 
+  @Override
   public boolean canTransform(String feelExpression) {
     return feelExpression.equals("-");
   }
 
+  @Override
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     return "true";
   }

@@ -30,14 +30,17 @@ import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
  */
 public class OperatonOutTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CAMUNDA_NS, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption(CAMUNDA_NS, "source"),

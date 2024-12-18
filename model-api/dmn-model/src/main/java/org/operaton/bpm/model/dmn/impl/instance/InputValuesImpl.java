@@ -37,7 +37,8 @@ public class InputValuesImpl extends UnaryTestsImpl implements InputValues {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(UnaryTests.class)
       .instanceProvider(new ModelTypeInstanceProvider<InputValues>() {
-        public InputValues newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputValues newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputValuesImpl(instanceContext);
         }
       });

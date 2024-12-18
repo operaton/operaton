@@ -43,6 +43,7 @@ public class SetUserPictureCmd implements Command<Void>, Serializable {
     this.picture = picture;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ensureNotNull("userId", userId);
 

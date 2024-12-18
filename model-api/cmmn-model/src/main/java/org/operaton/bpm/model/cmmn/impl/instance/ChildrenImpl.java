@@ -43,6 +43,7 @@ public class ChildrenImpl extends CmmnElementImpl implements Children {
     super(instanceContext);
   }
 
+  @Override
   public Collection<CaseFileItem> getCaseFileItems() {
     return caseFileItemCollection.get(this);
   }
@@ -52,7 +53,8 @@ public class ChildrenImpl extends CmmnElementImpl implements Children {
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<Children>() {
-          public Children newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Children newInstance(ModelTypeInstanceContext instanceContext) {
             return new ChildrenImpl(instanceContext);
           }
         });

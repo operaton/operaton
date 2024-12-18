@@ -44,18 +44,22 @@ public class TextAnnotationImpl extends ArtifactImpl implements TextAnnotation {
     super(instanceContext);
   }
 
+  @Override
   public String getTextFormat() {
     return textFormatAttribute.getValue(this);
   }
 
+  @Override
   public void setTextFormat(String textFormat) {
     textFormatAttribute.setValue(this, textFormat);
   }
 
+  @Override
   public Text getText() {
     return textChild.getChild(this);
   }
 
+  @Override
   public void setText(Text text) {
     textChild.setChild(this, text);
   }
@@ -65,7 +69,8 @@ public class TextAnnotationImpl extends ArtifactImpl implements TextAnnotation {
       .namespaceUri(CMMN11_NS)
       .extendsType(Artifact.class)
       .instanceProvider(new ModelTypeInstanceProvider<TextAnnotation>() {
-        public TextAnnotation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TextAnnotation newInstance(ModelTypeInstanceContext instanceContext) {
           return new TextAnnotationImpl(instanceContext);
         }
       });

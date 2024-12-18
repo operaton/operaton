@@ -38,6 +38,7 @@ public class GetExternalTaskErrorDetailsCmd implements Command<String>, Serializ
     this.externalTaskId = externalTaskId;
   }
 
+  @Override
   public String execute(CommandContext commandContext) {
     ensureNotNull("externalTaskId", externalTaskId);
 

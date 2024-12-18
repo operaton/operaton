@@ -46,6 +46,7 @@ public class SaveUserCmd extends AbstractWritableIdentityServiceCmd<Void> implem
     this.skipPasswordPolicy = skipPasswordPolicy;
   }
 
+  @Override
   protected Void executeCmd(CommandContext commandContext) {
     ensureNotNull("user", user);
     ensureWhitelistedResourceId(commandContext, "User", user.getId());

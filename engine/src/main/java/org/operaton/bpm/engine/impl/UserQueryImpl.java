@@ -48,57 +48,67 @@ public abstract class UserQueryImpl extends AbstractQuery<UserQuery, User> imple
     super(commandExecutor);
   }
 
+  @Override
   public UserQuery userId(String id) {
     ensureNotNull("Provided id", id);
     this.id = id;
     return this;
   }
 
+  @Override
   public UserQuery userIdIn(String... ids) {
     ensureNotNull("Provided ids", ids);
     this.ids = ids;
     return this;
   }
 
+  @Override
   public UserQuery userFirstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
 
+  @Override
   public UserQuery userFirstNameLike(String firstNameLike) {
     ensureNotNull("Provided firstNameLike", firstNameLike);
     this.firstNameLike = firstNameLike;
     return this;
   }
 
+  @Override
   public UserQuery userLastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
 
+  @Override
   public UserQuery userLastNameLike(String lastNameLike) {
     ensureNotNull("Provided lastNameLike", lastNameLike);
     this.lastNameLike = lastNameLike;
     return this;
   }
 
+  @Override
   public UserQuery userEmail(String email) {
     this.email = email;
     return this;
   }
 
+  @Override
   public UserQuery userEmailLike(String emailLike) {
     ensureNotNull("Provided emailLike", emailLike);
     this.emailLike = emailLike;
     return this;
   }
 
+  @Override
   public UserQuery memberOfGroup(String groupId) {
     ensureNotNull("Provided groupId", groupId);
     this.groupId = groupId;
     return this;
   }
 
+  @Override
   public UserQuery potentialStarter(String procDefId) {
     ensureNotNull("Provided processDefinitionId", procDefId);
     this.procDefId = procDefId;
@@ -106,6 +116,7 @@ public abstract class UserQueryImpl extends AbstractQuery<UserQuery, User> imple
 
   }
 
+  @Override
   public UserQuery memberOfTenant(String tenantId) {
     ensureNotNull("Provided tenantId", tenantId);
     this.tenantId = tenantId;
@@ -114,18 +125,22 @@ public abstract class UserQueryImpl extends AbstractQuery<UserQuery, User> imple
 
   //sorting //////////////////////////////////////////////////////////
 
+  @Override
   public UserQuery orderByUserId() {
     return orderBy(UserQueryProperty.USER_ID);
   }
 
+  @Override
   public UserQuery orderByUserEmail() {
     return orderBy(UserQueryProperty.EMAIL);
   }
 
+  @Override
   public UserQuery orderByUserFirstName() {
     return orderBy(UserQueryProperty.FIRST_NAME);
   }
 
+  @Override
   public UserQuery orderByUserLastName() {
     return orderBy(UserQueryProperty.LAST_NAME);
   }

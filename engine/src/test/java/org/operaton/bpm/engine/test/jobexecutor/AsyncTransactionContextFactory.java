@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class AsyncTransactionContextFactory extends StandaloneTransactionContextFactory {
 
+  @Override
   public TransactionContext openTransactionContext(CommandContext commandContext) {
     return new AsyncTransactionContext(commandContext);
   }

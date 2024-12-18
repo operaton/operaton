@@ -48,7 +48,8 @@ public class CurrentActivityExecutionListener implements ExecutionListener {
       return activityName;
     }
   }
-  
+
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     currentActivities.add(new CurrentActivity(execution.getCurrentActivityId(), execution.getCurrentActivityName()));
   }

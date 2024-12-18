@@ -77,6 +77,7 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
     this.jobType = jobDeclaration.getJobHandlerType();
   }
 
+  @Override
   public Object getPersistentState() {
     HashMap<String, Object> state = new HashMap<>();
     state.put("processDefinitionId", processDefinitionId);
@@ -93,6 +94,7 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
 
   // getters / setters /////////////////////////////////
 
+  @Override
   public int getRevisionNext() {
     return revision + 1;
   }
@@ -102,18 +104,22 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public int getRevision() {
     return revision;
   }
 
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
   }
 
+  @Override
   public boolean isSuspended() {
     return SuspensionState.SUSPENDED.getStateCode() == suspensionState;
   }
@@ -171,6 +177,7 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
     this.suspensionState = state;
   }
 
+  @Override
   public Long getOverridingJobPriority() {
     return jobPriority;
   }
@@ -179,6 +186,7 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
     this.jobPriority = jobPriority;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -187,6 +195,7 @@ public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbR
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getDeploymentId() {
     return deploymentId;
   }

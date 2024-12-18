@@ -111,6 +111,7 @@ public abstract class ReferenceWalker<T> {
 
   public static class NullCondition<S> implements ReferenceWalker.WalkCondition<S> {
 
+    @Override
     public boolean isFulfilled(S element) {
       return element == null;
     }

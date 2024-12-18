@@ -68,50 +68,62 @@ public class CaseFileItemImpl extends CmmnElementImpl implements CaseFileItem {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public MultiplicityEnum getMultiplicity() {
     return multiplicityAttribute.getValue(this);
   }
 
+  @Override
   public void setMultiplicity(MultiplicityEnum multiplicity) {
     multiplicityAttribute.setValue(this, multiplicity);
   }
 
+  @Override
   public CaseFileItemDefinition getDefinitionRef() {
     return definitionRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setDefinitionRef(CaseFileItemDefinition caseFileItemDefinition) {
     definitionRefAttribute.setReferenceTargetElement(this, caseFileItemDefinition);
   }
 
+  @Override
   public CaseFileItem getSourceRef() {
     return sourceRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSourceRef(CaseFileItem sourceRef) {
     sourceRefAttribute.setReferenceTargetElement(this, sourceRef);
   }
 
+  @Override
   public Collection<CaseFileItem> getSourceRefs() {
     return sourceRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<CaseFileItem> getTargetRefs() {
     return targetRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Children getChildren() {
     return childrenChild.getChild(this);
   }
 
+  @Override
   public void setChildren(Children children) {
     childrenChild.setChild(this, children);
   }
@@ -122,7 +134,8 @@ public class CaseFileItemImpl extends CmmnElementImpl implements CaseFileItem {
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<CaseFileItem>() {
-          public CaseFileItem newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseFileItem newInstance(ModelTypeInstanceContext instanceContext) {
             return new CaseFileItemImpl(instanceContext);
           }
         });

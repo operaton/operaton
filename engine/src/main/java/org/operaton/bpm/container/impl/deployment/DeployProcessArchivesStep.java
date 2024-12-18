@@ -39,10 +39,12 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
  */
 public class DeployProcessArchivesStep extends DeploymentOperationStep {
 
+  @Override
   public String getName() {
     return "Deploy process archvies";
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
 
     Map<URL, ProcessesXml> processesXmls = operationContext.getAttachment(PROCESSES_XML_RESOURCES);

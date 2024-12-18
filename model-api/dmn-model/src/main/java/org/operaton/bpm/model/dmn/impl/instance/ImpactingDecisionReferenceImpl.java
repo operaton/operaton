@@ -37,7 +37,8 @@ public class ImpactingDecisionReferenceImpl extends DmnElementReferenceImpl impl
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<ImpactingDecisionReference>() {
-        public ImpactingDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ImpactingDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new ImpactingDecisionReferenceImpl(instanceContext);
         }
       });

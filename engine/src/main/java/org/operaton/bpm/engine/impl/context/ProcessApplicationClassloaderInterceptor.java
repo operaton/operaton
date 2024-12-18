@@ -39,6 +39,7 @@ public class ProcessApplicationClassloaderInterceptor<T> implements Callable<T> 
     this.delegate = delegate;
   }
 
+  @Override
   public T call() throws Exception {
     try {
       // record thread context right after context switch

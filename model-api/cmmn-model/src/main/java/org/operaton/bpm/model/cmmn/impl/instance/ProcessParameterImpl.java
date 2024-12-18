@@ -41,7 +41,8 @@ public class ProcessParameterImpl extends ParameterImpl implements ProcessParame
         .namespaceUri(CMMN11_NS)
         .extendsType(Parameter.class)
         .instanceProvider(new ModelTypeInstanceProvider<ProcessParameter>() {
-          public ProcessParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ProcessParameter newInstance(ModelTypeInstanceContext instanceContext) {
             return new ProcessParameterImpl(instanceContext);
           }
         });

@@ -43,6 +43,7 @@ public class SpinFactoryImpl extends SpinFactory {
 
   private static final int READ_SIZE = 256;
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends Spin<?>> T createSpin(Object parameter) {
     ensureNotNull("parameter", parameter);
@@ -61,6 +62,7 @@ public class SpinFactoryImpl extends SpinFactory {
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends Spin<?>> T createSpin(Object parameter, DataFormat<T> format) {
     ensureNotNull("parameter", parameter);
@@ -80,6 +82,7 @@ public class SpinFactoryImpl extends SpinFactory {
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends Spin<?>> T createSpin(Object parameter, String dataFormatName) {
     ensureNotNull("dataFormatName", dataFormatName);

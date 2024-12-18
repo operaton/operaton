@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.impl.util.StringUtil;
 
 public class OnlyOnceMappedActivityInstructionValidator implements MigrationInstructionValidator {
 
+  @Override
   public void validate(ValidatingMigrationInstruction instruction, ValidatingMigrationInstructions instructions, MigrationInstructionValidationReportImpl report) {
     ActivityImpl sourceActivity = instruction.getSourceActivity();
     List<ValidatingMigrationInstruction> instructionsForSourceActivity = instructions.getInstructionsBySourceScope(sourceActivity);
@@ -35,6 +36,7 @@ public class OnlyOnceMappedActivityInstructionValidator implements MigrationInst
   protected void addFailure(String sourceActivityId, List<ValidatingMigrationInstruction> migrationInstructions, MigrationInstructionValidationReportImpl report) {
     report.addFailure("There are multiple mappings for source activity id '" + sourceActivityId +"': " +
       StringUtil.join(new StringUtil.StringIterator<ValidatingMigrationInstruction>(migrationInstructions.iterator()) {
+        @Override
         public String next() {
           return iterator.next().toString();
         }

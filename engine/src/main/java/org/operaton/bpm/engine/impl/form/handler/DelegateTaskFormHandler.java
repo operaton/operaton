@@ -33,8 +33,10 @@ public class DelegateTaskFormHandler extends DelegateFormHandler implements Task
     super(formHandler, deployment.getId());
   }
 
+  @Override
   public TaskFormData createTaskForm(final TaskEntity task) {
     return performContextSwitch(new Callable<TaskFormData> () {
+      @Override
       public TaskFormData call() throws Exception {
         CreateTaskFormInvocation invocation = new CreateTaskFormInvocation((TaskFormHandler) formHandler, task);
         Context.getProcessEngineConfiguration()
@@ -45,6 +47,7 @@ public class DelegateTaskFormHandler extends DelegateFormHandler implements Task
     });
   }
 
+  @Override
   public FormHandler getFormHandler() {
     return (TaskFormHandler) formHandler;
   }

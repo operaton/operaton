@@ -37,14 +37,17 @@ public class PatchExecutionVariablesCmd extends AbstractPatchVariablesCmd {
     super(executionId, modifications, deletions, isLocal);
   }
 
+  @Override
   protected SetExecutionVariablesCmd getSetVariableCmd() {
     return new SetExecutionVariablesCmd(entityId, variables, isLocal);
   }
 
+  @Override
   protected RemoveExecutionVariablesCmd getRemoveVariableCmd() {
     return new RemoveExecutionVariablesCmd(entityId, deletions, isLocal);
   }
 
+  @Override
   public void logVariableOperation(CommandContext commandContext) {
     commandContext.getOperationLogManager().logVariableOperation(getLogEntryOperation(), entityId, null,
       PropertyChange.EMPTY_CHANGE);

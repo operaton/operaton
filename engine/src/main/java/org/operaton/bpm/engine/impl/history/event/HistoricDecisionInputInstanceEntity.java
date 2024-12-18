@@ -199,6 +199,7 @@ public class HistoricDecisionInputInstanceEntity extends HistoryEvent implements
     this.tenantId = tenantId;
   }
 
+  @Override
   public Date getCreateTime() {
     return createTime;
   }
@@ -207,10 +208,12 @@ public class HistoricDecisionInputInstanceEntity extends HistoryEvent implements
     this.createTime = createTime;
   }
 
+  @Override
   public String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
+  @Override
   public void setRootProcessInstanceId(String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }

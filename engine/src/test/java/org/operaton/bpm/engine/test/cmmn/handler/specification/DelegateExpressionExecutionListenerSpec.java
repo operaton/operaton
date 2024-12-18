@@ -36,10 +36,12 @@ public class DelegateExpressionExecutionListenerSpec extends AbstractExecutionLi
     super(eventName);
   }
 
+  @Override
   protected void configureCaseExecutionListener(CmmnModelInstance modelInstance, OperatonCaseExecutionListener listener) {
     listener.setOperatonDelegateExpression(DELEGATE_EXPRESSION);
   }
 
+  @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
     assertTrue(listener instanceof DelegateExpressionCaseExecutionListener);
 

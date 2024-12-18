@@ -26,7 +26,8 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 public class DummyServiceTask implements JavaDelegate {
   
   public static boolean wasExecuted = false;
-  
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     wasExecuted = true;
   }

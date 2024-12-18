@@ -31,6 +31,7 @@ public class GetHistoricExternalTaskLogErrorDetailsCmd implements Command<String
     this.historicExternalTaskLogId = historicExternalTaskLogId;
   }
 
+  @Override
   public String execute(CommandContext commandContext) {
     ensureNotNull("historicExternalTaskLogId", historicExternalTaskLogId);
 

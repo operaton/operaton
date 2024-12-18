@@ -24,6 +24,7 @@ public class TestCockpitPlugin extends AbstractCockpitPlugin {
 
   public static final String ID = "test-cockpit-plugin";
 
+  @Override
   public String getId() {
     return ID;
   }

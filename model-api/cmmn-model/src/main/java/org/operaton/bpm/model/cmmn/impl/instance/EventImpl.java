@@ -41,7 +41,8 @@ public class EventImpl extends PlanItemDefinitionImpl implements Event {
         .namespaceUri(CMMN10_NS)
         .extendsType(PlanItemDefinition.class)
         .instanceProvider(new ModelTypeInstanceProvider<Event>() {
-          public Event newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Event newInstance(ModelTypeInstanceContext instanceContext) {
             return new EventImpl(instanceContext);
           }
         });

@@ -40,6 +40,7 @@ public class GetDeploymentDecisionDefinitionCmd implements Command<DecisionDefin
     this.decisionDefinitionId = decisionDefinitionId;
   }
 
+  @Override
   public DecisionDefinition execute(CommandContext commandContext) {
     ensureNotNull("decisionDefinitionId", decisionDefinitionId);
     DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();

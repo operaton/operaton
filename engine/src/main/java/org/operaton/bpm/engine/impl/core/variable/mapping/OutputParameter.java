@@ -41,6 +41,7 @@ public class OutputParameter extends IoParameter {
     super(name, valueProvider);
   }
 
+  @Override
   protected void execute(AbstractVariableScope innerScope, AbstractVariableScope outerScope) {
 
     // get value from inner scope

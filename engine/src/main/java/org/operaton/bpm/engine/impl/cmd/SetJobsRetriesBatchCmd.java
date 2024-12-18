@@ -42,6 +42,7 @@ public class SetJobsRetriesBatchCmd extends AbstractSetJobsRetriesBatchCmd {
     this.isDueDateSet = isDueDateSet;
   }
 
+  @Override
   protected BatchElementConfiguration collectJobIds(CommandContext commandContext) {
     BatchElementConfiguration elementConfiguration = new BatchElementConfiguration();
 

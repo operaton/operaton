@@ -92,14 +92,17 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
 
     return new Collection<T>() {
 
+      @Override
       public int size() {
         return getView(referenceSourceElement).size();
       }
 
+      @Override
       public boolean isEmpty() {
         return getView(referenceSourceElement).isEmpty();
       }
 
+      @Override
       public boolean contains(Object o) {
         if (o == null) {
           return false;
@@ -112,11 +115,13 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
         }
       }
 
+      @Override
       public Iterator<T> iterator() {
         Collection<T> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceElement), (ModelInstanceImpl) referenceSourceElement.getModelInstance());
         return modelElementCollection.iterator();
       }
 
+      @Override
       public Object[] toArray() {
         Collection<T> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceElement), (ModelInstanceImpl) referenceSourceElement.getModelInstance());
         return modelElementCollection.toArray();
@@ -127,6 +132,7 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
         return modelElementCollection.toArray(a);
       }
 
+      @Override
       public boolean add(T t) {
         if (!contains(t)) {
           performAddOperation(referenceSourceElement, t);
@@ -134,12 +140,14 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
         return true;
       }
 
+      @Override
       public boolean remove(Object o) {
         ModelUtil.ensureInstanceOf(o, ModelElementInstanceImpl.class);
         performRemoveOperation(referenceSourceElement, o);
         return true;
       }
 
+      @Override
       public boolean containsAll(Collection<?> c) {
         Collection<T> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceElement), (ModelInstanceImpl) referenceSourceElement.getModelInstance());
         return modelElementCollection.containsAll(c);
@@ -153,6 +161,7 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
         return result;
       }
 
+      @Override
       public boolean removeAll(Collection<?> c) {
         boolean result = false;
         for (Object o: c) {
@@ -161,10 +170,12 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
         return result;
       }
 
+      @Override
       public boolean retainAll(Collection<?> c) {
         throw new UnsupportedModelOperationException("retainAll()", "not implemented");
       }
 
+      @Override
       public void clear() {
         performClearOperation(referenceSourceElement);
       }

@@ -31,6 +31,7 @@ public class DoubleValueSerializer extends PrimitiveValueSerializer<DoubleValue>
     super(ValueType.DOUBLE);
   }
 
+  @Override
   public DoubleValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.doubleValue((Double) untypedValue.getValue(), untypedValue.isTransient());
   }
@@ -39,6 +40,7 @@ public class DoubleValueSerializer extends PrimitiveValueSerializer<DoubleValue>
     valueFields.setDoubleValue(value.getValue());
   }
 
+  @Override
   public DoubleValue readValue(ValueFields valueFields, boolean asTransientValue) {
     return Variables.doubleValue(valueFields.getDoubleValue(), asTransientValue);
   }

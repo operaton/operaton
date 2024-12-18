@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationActivityNotifyListenerEnd extends PvmAtomicOperationActivityInstanceEnd {
 
+  @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getActivity();
   }
@@ -50,6 +51,7 @@ public class PvmAtomicOperationActivityNotifyListenerEnd extends PvmAtomicOperat
     });
   }
 
+  @Override
   public String getCanonicalName() {
     return "activity-notify-listener-end";
   }

@@ -43,26 +43,32 @@ public class ImportImpl extends CmmnModelElementInstanceImpl implements Import {
     super(instanceContext);
   }
 
+  @Override
   public String getNamespace() {
     return namespaceAttribute.getValue(this);
   }
 
+  @Override
   public void setNamespace(String namespace) {
     namespaceAttribute.setValue(this, namespace);
   }
 
+  @Override
   public String getLocation() {
     return locationAttribute.getValue(this);
   }
 
+  @Override
   public void setLocation(String location) {
     locationAttribute.setValue(this, location);
   }
 
+  @Override
   public String getImportType() {
     return importTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setImportType(String importType) {
     importTypeAttribute.setValue(this, importType);
   }
@@ -71,7 +77,8 @@ public class ImportImpl extends CmmnModelElementInstanceImpl implements Import {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Import.class, CMMN_ELEMENT_IMPORT)
       .namespaceUri(CMMN11_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Import>() {
-        public Import newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Import newInstance(ModelTypeInstanceContext instanceContext) {
           return new ImportImpl(instanceContext);
         }
       });

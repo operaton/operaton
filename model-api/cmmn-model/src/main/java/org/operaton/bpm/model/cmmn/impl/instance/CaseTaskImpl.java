@@ -59,46 +59,57 @@ public class CaseTaskImpl extends TaskImpl implements CaseTask {
     super(instanceContext);
   }
 
+  @Override
   public String getCase() {
     return caseRefAttribute.getValue(this);
   }
 
+  @Override
   public void setCase(String caseInstance) {
     caseRefAttribute.setValue(this, caseInstance);
   }
 
+  @Override
   public CaseRefExpression getCaseExpression() {
     return caseRefExpressionChild.getChild(this);
   }
 
+  @Override
   public void setCaseExpression(CaseRefExpression caseExpression) {
     caseRefExpressionChild.setChild(this, caseExpression);
   }
 
+  @Override
   public Collection<ParameterMapping> getParameterMappings() {
     return parameterMappingCollection.get(this);
   }
 
+  @Override
   public String getOperatonCaseBinding() {
     return operatonCaseBindingAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCaseBinding(String operatonCaseBinding) {
     operatonCaseBindingAttribute.setValue(this, operatonCaseBinding);
   }
 
+  @Override
   public String getOperatonCaseVersion() {
     return operatonCaseVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCaseVersion(String operatonCaseVersion) {
     operatonCaseVersionAttribute.setValue(this, operatonCaseVersion);
   }
 
+  @Override
   public String getOperatonCaseTenantId() {
     return operatonCaseTenantIdAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCaseTenantId(String operatonCaseTenantId) {
     operatonCaseTenantIdAttribute.setValue(this, operatonCaseTenantId);
   }
@@ -108,7 +119,8 @@ public class CaseTaskImpl extends TaskImpl implements CaseTask {
         .extendsType(Task.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<CaseTask>() {
-          public CaseTask newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseTask newInstance(ModelTypeInstanceContext instanceContext) {
             return new CaseTaskImpl(instanceContext);
           }
         });

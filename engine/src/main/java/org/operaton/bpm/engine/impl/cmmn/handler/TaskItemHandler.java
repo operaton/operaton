@@ -42,10 +42,12 @@ public class TaskItemHandler extends ItemHandler {
     activity.setProperty("isBlocking", task.isBlocking());
   }
 
+  @Override
   protected CmmnActivityBehavior getActivityBehavior() {
     return new TaskActivityBehavior();
   }
 
+  @Override
   protected List<String> getStandardEvents(CmmnElement element) {
     return TASK_OR_STAGE_EVENTS;
   }

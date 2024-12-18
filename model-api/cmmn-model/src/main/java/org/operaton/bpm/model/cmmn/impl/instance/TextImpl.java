@@ -39,7 +39,8 @@ public class TextImpl extends CmmnModelElementInstanceImpl implements Text {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Text.class, CMMN_ELEMENT_TEXT)
       .namespaceUri(CMMN11_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Text>() {
-        public Text newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Text newInstance(ModelTypeInstanceContext instanceContext) {
           return new TextImpl(instanceContext);
         }
       });

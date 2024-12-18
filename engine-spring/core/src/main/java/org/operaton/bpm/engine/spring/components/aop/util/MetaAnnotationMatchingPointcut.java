@@ -78,11 +78,13 @@ public class MetaAnnotationMatchingPointcut implements Pointcut {
 	}
 
 
-	public ClassFilter getClassFilter() {
+  @Override
+  public ClassFilter getClassFilter() {
 		return this.classFilter;
 	}
 
-	public MethodMatcher getMethodMatcher() {
+  @Override
+  public MethodMatcher getMethodMatcher() {
 		return this.methodMatcher;
 	}
 }

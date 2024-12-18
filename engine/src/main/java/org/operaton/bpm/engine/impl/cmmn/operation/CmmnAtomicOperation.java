@@ -65,8 +65,10 @@ public interface CmmnAtomicOperation extends CoreAtomicOperation<CmmnExecution> 
   // delete cascade a case execution
   CmmnAtomicOperation CASE_EXECUTION_DELETE_CASCADE = new AtomicOperationCaseExecutionDeleteCascade();
 
+  @Override
   public void execute(CmmnExecution execution);
 
+  @Override
   public boolean isAsync(CmmnExecution execution);
 
 }

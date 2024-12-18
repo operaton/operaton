@@ -28,7 +28,8 @@ public class ToUpperCaseSetterInjected implements JavaDelegate {
   
   private Expression text;
   private boolean setterInvoked = false;
-  
+
+  @Override
   public void execute(DelegateExecution execution) {
     
     if(!setterInvoked) {

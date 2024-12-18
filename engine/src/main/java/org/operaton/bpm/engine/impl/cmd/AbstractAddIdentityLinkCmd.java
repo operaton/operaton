@@ -64,6 +64,7 @@ public abstract class AbstractAddIdentityLinkCmd extends AbstractSetTaskProperty
    * @param context the command context
    * @param task    the task related entity
    */
+  @Override
   protected abstract void logOperation(CommandContext context, TaskEntity task);
 
   @Override

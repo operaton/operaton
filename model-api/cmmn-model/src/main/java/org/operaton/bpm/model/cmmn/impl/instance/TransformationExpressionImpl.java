@@ -40,7 +40,8 @@ public class TransformationExpressionImpl extends ExpressionImpl implements Tran
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<TransformationExpression>() {
-        public TransformationExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TransformationExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new TransformationExpressionImpl(instanceContext);
         }
       });

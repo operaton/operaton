@@ -41,10 +41,12 @@ public class DecisionRuleImpl extends DmnElementImpl implements DecisionRule {
     super(instanceContext);
   }
 
+  @Override
   public Collection<InputEntry> getInputEntries() {
     return inputEntryCollection.get(this);
   }
 
+  @Override
   public Collection<OutputEntry> getOutputEntries() {
     return outputEntryCollection.get(this);
   }
@@ -54,7 +56,8 @@ public class DecisionRuleImpl extends DmnElementImpl implements DecisionRule {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<DecisionRule>() {
-        public DecisionRule newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DecisionRule newInstance(ModelTypeInstanceContext instanceContext) {
           return new DecisionRuleImpl(instanceContext);
         }
       });

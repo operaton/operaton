@@ -35,6 +35,7 @@ public class ErrorEndEventActivityBehavior extends AbstractBpmnActivityBehavior 
     this.errorMessageExpression = errorMessage;
   }
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     String errorMessageValue = errorMessageExpression != null ? (String) errorMessageExpression.getValue(execution) : null;
     BpmnExceptionHandler.propagateError(errorCode, errorMessageValue, null, execution);

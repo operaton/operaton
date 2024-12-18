@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 public class MigrateProcessInstanceDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     RepositoryService repoService = execution.getProcessEngineServices().getRepositoryService();
     ProcessDefinition targetDefinition = repoService.createProcessDefinitionQuery().latestVersion().singleResult();

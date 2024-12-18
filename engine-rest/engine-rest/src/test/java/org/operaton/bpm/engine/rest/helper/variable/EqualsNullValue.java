@@ -27,6 +27,7 @@ import org.hamcrest.Description;
  */
 public class EqualsNullValue extends BaseMatcher<TypedValue> {
 
+  @Override
   public boolean matches(Object argument) {
     if (argument == null || !TypedValue.class.isAssignableFrom(argument.getClass())) {
       return false;
@@ -49,6 +50,7 @@ public class EqualsNullValue extends BaseMatcher<TypedValue> {
     return new EqualsNullValue();
   }
 
+  @Override
   public void describeTo(Description description) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getClass().getSimpleName());

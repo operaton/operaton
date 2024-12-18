@@ -46,6 +46,7 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
  */
 public class DefaultDelegateInterceptor implements DelegateInterceptor {
 
+  @Override
   public void handleInvocation(final DelegateInvocation invocation) throws Exception {
 
     final ProcessApplicationReference processApplication = getProcessApplicationForInvocation(invocation);

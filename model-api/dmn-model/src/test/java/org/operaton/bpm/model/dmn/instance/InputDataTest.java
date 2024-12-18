@@ -21,16 +21,19 @@ import java.util.Collection;
 
 public class InputDataTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(DrgElement.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(InformationItem.class, 0, 1)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

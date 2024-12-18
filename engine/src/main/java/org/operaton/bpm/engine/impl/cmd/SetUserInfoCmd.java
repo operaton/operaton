@@ -55,6 +55,7 @@ public class SetUserInfoCmd implements Command<Object>, Serializable {
     this.accountDetails = accountDetails;
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     commandContext
       .getIdentityInfoManager()

@@ -37,7 +37,8 @@ public class FormalParameterImpl extends InformationItemImpl implements FormalPa
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
       .instanceProvider(new ModelTypeInstanceProvider<FormalParameter>() {
-        public FormalParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public FormalParameter newInstance(ModelTypeInstanceContext instanceContext) {
           return new FormalParameterImpl(instanceContext);
         }
       });

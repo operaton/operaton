@@ -33,6 +33,7 @@ public interface BoundaryEvent extends CatchEvent {
 
   void setAttachedTo(Activity attachedTo);
 
+  @Override
   BoundaryEventBuilder builder();
 
 }

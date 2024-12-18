@@ -34,6 +34,7 @@ public class DynamicResourceExecutableScript extends DynamicExecutableScript {
     super(scriptResourceExpression, language);
   }
 
+  @Override
   public String getScriptSource(VariableScope variableScope) {
     String scriptPath = evaluateExpression(variableScope);
     return ResourceUtil.loadResourceContent(scriptPath, getDeployment());

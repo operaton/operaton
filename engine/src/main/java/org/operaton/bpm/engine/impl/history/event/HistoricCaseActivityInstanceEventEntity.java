@@ -68,6 +68,7 @@ public class HistoricCaseActivityInstanceEventEntity extends HistoricScopeInstan
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   public String getCaseExecutionId() {
     return getId();
   }
@@ -188,6 +189,7 @@ public class HistoricCaseActivityInstanceEventEntity extends HistoricScopeInstan
     return caseActivityInstanceState == TERMINATED.getStateCode();
   }
 
+  @Override
   public String toString() {
     return this.getClass().getSimpleName()
            + "[caseActivityId=" + caseActivityId

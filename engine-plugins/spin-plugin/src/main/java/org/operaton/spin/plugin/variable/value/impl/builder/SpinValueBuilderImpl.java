@@ -39,6 +39,7 @@ public abstract class SpinValueBuilderImpl<T extends SpinValue> implements SpinV
     return variableValue;
   }
 
+  @Override
   public SpinValueBuilder<T> serializationDataFormat(String dataFormatName) {
     ((SpinValueImpl) variableValue).setSerializationDataFormat(dataFormatName);
     return this;

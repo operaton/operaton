@@ -36,10 +36,12 @@ public class PvmAtomicOperationActivityInitStack implements PvmAtomicOperation {
     this.operationOnScopeInitialization = operationOnScopeInitialization;
   }
 
+  @Override
   public String getCanonicalName() {
     return "activity-stack-init";
   }
 
+  @Override
   public void execute(PvmExecutionImpl execution) {
     ScopeInstantiationContext executionStartContext = execution.getScopeInstantiationContext();
 
@@ -62,6 +64,7 @@ public class PvmAtomicOperationActivityInitStack implements PvmAtomicOperation {
     propagatingExecution.performOperation(operationOnScopeInitialization);
   }
 
+  @Override
   public boolean isAsync(PvmExecutionImpl instance) {
     return false;
   }
@@ -70,6 +73,7 @@ public class PvmAtomicOperationActivityInitStack implements PvmAtomicOperation {
     return execution;
   }
 
+  @Override
   public boolean isAsyncCapable() {
     return false;
   }

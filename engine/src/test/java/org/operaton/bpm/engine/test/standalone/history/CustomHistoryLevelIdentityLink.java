@@ -33,10 +33,12 @@ public class CustomHistoryLevelIdentityLink implements HistoryLevel {
     this.eventTypes = eventTypes;
   }
 
+  @Override
   public int getId() {
     return 91;
   }
 
+  @Override
   public String getName() {
     return "aCustomHistoryLevelIL";
   }
@@ -49,6 +51,7 @@ public class CustomHistoryLevelIdentityLink implements HistoryLevel {
     this.eventTypes = eventTypes;
   }
 
+  @Override
   public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
     if (eventTypes != null) {
       for (HistoryEventTypes eventTypeConfig : eventTypes) {

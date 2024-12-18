@@ -41,7 +41,8 @@ public class EventListenerImpl extends PlanItemDefinitionImpl implements EventLi
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanItemDefinition.class)
         .instanceProvider(new ModelTypeInstanceProvider<EventListener>() {
-          public EventListener newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public EventListener newInstance(ModelTypeInstanceContext instanceContext) {
             return new EventListenerImpl(instanceContext);
           }
         });

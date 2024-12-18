@@ -33,6 +33,7 @@ public class ScalaFeelEngineFactory implements FeelEngineFactory {
     this.customFunctionProviders = customFunctionProviders;
   }
 
+  @Override
   public FeelEngine createInstance() {
       return new ScalaFeelEngine(customFunctionProviders);
    }

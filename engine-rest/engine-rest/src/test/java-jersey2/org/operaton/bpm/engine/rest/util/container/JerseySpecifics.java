@@ -46,6 +46,7 @@ public class JerseySpecifics implements ContainerSpecifics {
     TEST_RULE_FACTORIES.put(CustomJacksonDateFormatTest.class, new ServletContainerRuleFactory("custom-date-format-web.xml"));
   }
 
+  @Override
   public TestRule getTestRule(Class<?> testClass) {
     TestRuleFactory ruleFactory = DEFAULT_RULE_FACTORY;
 
@@ -64,6 +65,7 @@ public class JerseySpecifics implements ContainerSpecifics {
       this.jaxRsApplication = jaxRsApplication;
     }
 
+    @Override
     public TestRule createTestRule() {
       return new ExternalResource() {
 
@@ -92,6 +94,7 @@ public class JerseySpecifics implements ContainerSpecifics {
       this.webXmlResource = webXmlResource;
     }
 
+    @Override
     public TestRule createTestRule() {
       final TemporaryFolder tempFolder = new TemporaryFolder();
 

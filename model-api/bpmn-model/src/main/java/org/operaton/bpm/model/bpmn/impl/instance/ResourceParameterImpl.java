@@ -44,7 +44,8 @@ public class ResourceParameterImpl extends BaseElementImpl implements ResourcePa
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<ResourceParameter>() {
-        public ResourceParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ResourceParameter newInstance(ModelTypeInstanceContext instanceContext) {
           return new ResourceParameterImpl(instanceContext);
         }
       });
@@ -66,26 +67,32 @@ public class ResourceParameterImpl extends BaseElementImpl implements ResourcePa
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public ItemDefinition getType() {
     return typeAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setType(ItemDefinition type) {
     typeAttribute.setReferenceTargetElement(this, type);
   }
 
+  @Override
   public boolean isRequired() {
     return isRequiredAttribute.getValue(this);
   }
 
+  @Override
   public void setRequired(boolean isRequired) {
    isRequiredAttribute.setValue(this, isRequired);
   }

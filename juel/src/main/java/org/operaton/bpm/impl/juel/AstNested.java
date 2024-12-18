@@ -42,11 +42,13 @@ public final class AstNested extends AstRightValue {
 		b.append(")");
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return 1;
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return i == 0 ? child : null;
 	}
 }

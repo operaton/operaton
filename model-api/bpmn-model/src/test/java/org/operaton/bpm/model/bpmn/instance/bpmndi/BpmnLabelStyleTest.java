@@ -31,16 +31,19 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DC_NS;
  */
 public class BpmnLabelStyleTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(BPMNDI_NS, Style.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(DC_NS, Font.class, 1, 1)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

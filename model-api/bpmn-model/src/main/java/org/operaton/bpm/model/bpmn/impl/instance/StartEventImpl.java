@@ -52,7 +52,8 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
       .namespaceUri(BPMN20_NS)
       .extendsType(CatchEvent.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<StartEvent>() {
-        public StartEvent newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public StartEvent newInstance(ModelTypeInstanceContext instanceContext) {
           return new StartEventImpl(instanceContext);
         }
       });
@@ -104,10 +105,12 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
     return new StartEventBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public boolean isInterrupting() {
     return isInterruptingAttribute.getValue(this);
   }
 
+  @Override
   public void setInterrupting(boolean isInterrupting) {
     isInterruptingAttribute.setValue(this, isInterrupting);
   }
@@ -118,6 +121,7 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
    * @deprecated use isOperatonAsyncBefore() instead.
    */
   @Deprecated
+  @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
   }
@@ -126,55 +130,68 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
    * @deprecated use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
    */
   @Deprecated
+  @Override
   public void setOperatonAsync(boolean isOperatonAsync) {
     operatonAsyncAttribute.setValue(this, isOperatonAsync);
   }
 
+  @Override
   public String getOperatonFormHandlerClass() {
     return operatonFormHandlerClassAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormHandlerClass(String operatonFormHandlerClass) {
     operatonFormHandlerClassAttribute.setValue(this, operatonFormHandlerClass);
   }
 
+  @Override
   public String getOperatonFormKey() {
     return operatonFormKeyAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormKey(String operatonFormKey) {
     operatonFormKeyAttribute.setValue(this, operatonFormKey);
   }
 
 
+  @Override
   public String getOperatonFormRef() {
     return operatonFormRefAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormRef(String operatonFormRef) {
     operatonFormRefAttribute.setValue(this, operatonFormRef);
   }
 
+  @Override
   public String getOperatonFormRefBinding() {
     return operatonFormRefBindingAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormRefBinding(String operatonFormRefBinding) {
     operatonFormRefBindingAttribute.setValue(this, operatonFormRefBinding);
   }
 
+  @Override
   public String getOperatonFormRefVersion() {
     return operatonFormRefVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormRefVersion(String operatonFormRefVersion) {
     operatonFormRefVersionAttribute.setValue(this, operatonFormRefVersion);
   }
 
+  @Override
   public String getOperatonInitiator() {
     return operatonInitiatorAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonInitiator(String operatonInitiator) {
     operatonInitiatorAttribute.setValue(this, operatonInitiator);
   }

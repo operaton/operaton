@@ -36,7 +36,8 @@ public class DeleteGroupCmd extends AbstractWritableIdentityServiceCmd<Void>  im
   public DeleteGroupCmd(String groupId) {
     this.groupId = groupId;
   }
-  
+
+  @Override
   protected Void executeCmd(CommandContext commandContext) {
     ensureNotNull("groupId", groupId);
     

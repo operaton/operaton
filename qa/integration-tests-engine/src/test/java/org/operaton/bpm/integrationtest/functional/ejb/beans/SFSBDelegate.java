@@ -27,6 +27,7 @@ import javax.inject.Named;
 @Stateless
 public class SFSBDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     execution.setVariable(SFSBDelegate.class.getName(), true);
   }

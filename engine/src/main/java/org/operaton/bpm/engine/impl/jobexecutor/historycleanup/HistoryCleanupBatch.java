@@ -84,6 +84,7 @@ public class HistoryCleanupBatch extends HistoryCleanupHandler {
     return historicProcessInstanceIds.size() + historicDecisionInstanceIds.size() + historicCaseInstanceIds.size() + historicBatchIds.size() + taskMetricIds.size();
   }
 
+  @Override
   public void performCleanup() {
     CommandContext commandContext = Context.getCommandContext();
     HistoryCleanupHelper.prepareNextBatch(this, commandContext);

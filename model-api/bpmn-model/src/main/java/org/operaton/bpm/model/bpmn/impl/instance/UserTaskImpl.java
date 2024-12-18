@@ -78,7 +78,8 @@ public class UserTaskImpl extends TaskImpl implements UserTask {
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
       .instanceProvider(new ModelTypeInstanceProvider<UserTask>() {
-        public UserTask newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public UserTask newInstance(ModelTypeInstanceContext instanceContext) {
           return new UserTaskImpl(instanceContext);
         }
       });
@@ -150,124 +151,153 @@ public class UserTaskImpl extends TaskImpl implements UserTask {
     return new UserTaskBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public String getImplementation() {
     return implementationAttribute.getValue(this);
   }
 
+  @Override
   public void setImplementation(String implementation) {
     implementationAttribute.setValue(this, implementation);
   }
 
+  @Override
   public Collection<Rendering> getRenderings() {
     return renderingCollection.get(this);
   }
 
   /** operaton extensions */
 
+  @Override
   public String getOperatonAssignee() {
     return operatonAssigneeAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonAssignee(String operatonAssignee) {
     operatonAssigneeAttribute.setValue(this, operatonAssignee);
   }
 
+  @Override
   public String getOperatonCandidateGroups() {
     return operatonCandidateGroupsAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCandidateGroups(String operatonCandidateGroups) {
     operatonCandidateGroupsAttribute.setValue(this, operatonCandidateGroups);
   }
 
+  @Override
   public List<String> getOperatonCandidateGroupsList() {
     String candidateGroups = operatonCandidateGroupsAttribute.getValue(this);
     return StringUtil.splitCommaSeparatedList(candidateGroups);
   }
 
+  @Override
   public void setOperatonCandidateGroupsList(List<String> operatonCandidateGroupsList) {
     String candidateGroups = StringUtil.joinCommaSeparatedList(operatonCandidateGroupsList);
     operatonCandidateGroupsAttribute.setValue(this, candidateGroups);
   }
 
+  @Override
   public String getOperatonCandidateUsers() {
     return operatonCandidateUsersAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCandidateUsers(String operatonCandidateUsers) {
     operatonCandidateUsersAttribute.setValue(this, operatonCandidateUsers);
   }
 
+  @Override
   public List<String> getOperatonCandidateUsersList() {
     String candidateUsers = operatonCandidateUsersAttribute.getValue(this);
     return StringUtil.splitCommaSeparatedList(candidateUsers);
   }
 
+  @Override
   public void setOperatonCandidateUsersList(List<String> operatonCandidateUsersList) {
     String candidateUsers = StringUtil.joinCommaSeparatedList(operatonCandidateUsersList);
     operatonCandidateUsersAttribute.setValue(this, candidateUsers);
   }
 
+  @Override
   public String getOperatonDueDate() {
     return operatonDueDateAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDueDate(String operatonDueDate) {
     operatonDueDateAttribute.setValue(this, operatonDueDate);
   }
 
+  @Override
   public String getOperatonFollowUpDate() {
     return operatonFollowUpDateAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFollowUpDate(String operatonFollowUpDate) {
     operatonFollowUpDateAttribute.setValue(this, operatonFollowUpDate);
   }
 
+  @Override
   public String getOperatonFormHandlerClass() {
     return operatonFormHandlerClassAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormHandlerClass(String operatonFormHandlerClass) {
     operatonFormHandlerClassAttribute.setValue(this, operatonFormHandlerClass);
   }
 
+  @Override
   public String getOperatonFormKey() {
     return operatonFormKeyAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormKey(String operatonFormKey) {
     operatonFormKeyAttribute.setValue(this, operatonFormKey);
   }
 
+  @Override
   public String getOperatonFormRef() {
     return operatonFormRefAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormRef(String operatonFormRef) {
     operatonFormRefAttribute.setValue(this, operatonFormRef);
   }
 
+  @Override
   public String getOperatonFormRefBinding() {
     return operatonFormRefBindingAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormRefBinding(String operatonFormRefBinding) {
     operatonFormRefBindingAttribute.setValue(this, operatonFormRefBinding);
   }
 
+  @Override
   public String getOperatonFormRefVersion() {
     return operatonFormRefVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormRefVersion(String operatonFormRefVersion) {
     operatonFormRefVersionAttribute.setValue(this, operatonFormRefVersion);
   }
 
+  @Override
   public String getOperatonPriority() {
     return operatonPriorityAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonPriority(String operatonPriority) {
     operatonPriorityAttribute.setValue(this, operatonPriority);
   }

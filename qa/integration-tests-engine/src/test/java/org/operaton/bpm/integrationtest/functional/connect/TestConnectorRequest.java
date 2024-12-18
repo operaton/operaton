@@ -25,10 +25,12 @@ public class TestConnectorRequest implements ConnectorRequest<TestConnectorRespo
 
   protected Map<String, Object> requestParameters;
 
+  @Override
   public void setRequestParameters(Map<String, Object> parameters) {
     requestParameters = parameters;
   }
 
+  @Override
   public void setRequestParameter(String name, Object value) {
     if (requestParameters == null) {
       requestParameters = new HashMap<String, Object>();
@@ -36,15 +38,18 @@ public class TestConnectorRequest implements ConnectorRequest<TestConnectorRespo
     requestParameters.put(name, value);
   }
 
+  @Override
   public Map<String, Object> getRequestParameters() {
     return requestParameters;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <V> V getRequestParameter(String name) {
     return (V) requestParameters.get(name);
   }
 
+  @Override
   public TestConnectorResponse execute() {
     TestConnectorResponse response = new TestConnectorResponse();
     if (requestParameters != null) {

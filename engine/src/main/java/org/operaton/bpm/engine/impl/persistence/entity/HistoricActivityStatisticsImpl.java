@@ -34,6 +34,7 @@ public class HistoricActivityStatisticsImpl implements HistoricActivityStatistic
   protected long resolvedIncidents;
   protected long deletedIncidents;
 
+  @Override
   public String getId() {
     return id;
   }
@@ -42,6 +43,7 @@ public class HistoricActivityStatisticsImpl implements HistoricActivityStatistic
     this.id = id;
   }
 
+  @Override
   public long getInstances() {
     return instances;
   }
@@ -50,6 +52,7 @@ public class HistoricActivityStatisticsImpl implements HistoricActivityStatistic
     this.instances = instances;
   }
 
+  @Override
   public long getFinished() {
     return finished;
   }
@@ -58,6 +61,7 @@ public class HistoricActivityStatisticsImpl implements HistoricActivityStatistic
     this.finished = finished;
   }
 
+  @Override
   public long getCanceled() {
     return canceled;
   }
@@ -66,6 +70,7 @@ public class HistoricActivityStatisticsImpl implements HistoricActivityStatistic
     this.canceled = canceled;
   }
 
+  @Override
   public long getCompleteScope() {
     return completeScope;
   }
@@ -74,6 +79,7 @@ public class HistoricActivityStatisticsImpl implements HistoricActivityStatistic
     this.completeScope = completeScope;
   }
 
+  @Override
   public long getOpenIncidents() {
     return openIncidents;
   }
@@ -82,6 +88,7 @@ public class HistoricActivityStatisticsImpl implements HistoricActivityStatistic
     this.openIncidents = openIncidents;
   }
 
+  @Override
   public long getResolvedIncidents() {
     return resolvedIncidents;
   }
@@ -90,6 +97,7 @@ public class HistoricActivityStatisticsImpl implements HistoricActivityStatistic
     this.resolvedIncidents = resolvedIncidents;
   }
 
+  @Override
   public long getDeletedIncidents() {
     return deletedIncidents;
   }

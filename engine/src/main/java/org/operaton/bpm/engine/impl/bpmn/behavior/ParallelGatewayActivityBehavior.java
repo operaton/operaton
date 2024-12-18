@@ -55,6 +55,7 @@ public class ParallelGatewayActivityBehavior extends GatewayActivityBehavior {
 
   protected static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
 
     // Join

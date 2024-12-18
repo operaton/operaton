@@ -41,6 +41,7 @@ public class HistoricJobLogResourceImpl implements HistoricJobLogResource {
     this.engine = engine;
   }
 
+  @Override
   public HistoricJobLogDto getHistoricJobLog() {
     HistoryService historyService = engine.getHistoryService();
     HistoricJobLog historicJobLog = historyService
@@ -55,6 +56,7 @@ public class HistoricJobLogResourceImpl implements HistoricJobLogResource {
     return HistoricJobLogDto.fromHistoricJobLog(historicJobLog);
   }
 
+  @Override
   public String getStacktrace() {
     try {
       HistoryService historyService = engine.getHistoryService();

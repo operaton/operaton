@@ -48,6 +48,7 @@ public class GetCaseExecutionVariableTypedCmd implements Command<TypedValue>, Se
     this.deserializeValue = deserializeValue;
   }
 
+  @Override
   public TypedValue execute(CommandContext commandContext) {
     ensureNotNull("caseExecutionId", caseExecutionId);
     ensureNotNull("variableName", variableName);

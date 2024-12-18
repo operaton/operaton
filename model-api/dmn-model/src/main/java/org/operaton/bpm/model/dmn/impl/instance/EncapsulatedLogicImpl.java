@@ -37,7 +37,8 @@ public class EncapsulatedLogicImpl extends FunctionDefinitionImpl implements Enc
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(FunctionDefinition.class)
       .instanceProvider(new ModelTypeInstanceProvider<EncapsulatedLogic>() {
-        public EncapsulatedLogic newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public EncapsulatedLogic newInstance(ModelTypeInstanceContext instanceContext) {
           return new EncapsulatedLogicImpl(instanceContext);
         }
       });

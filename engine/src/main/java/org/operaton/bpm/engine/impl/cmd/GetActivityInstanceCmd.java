@@ -71,6 +71,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
     this.processInstanceId = processInstanceId;
   }
 
+  @Override
   public ActivityInstance execute(CommandContext commandContext) {
 
     ensureNotNull("processInstanceId", processInstanceId);

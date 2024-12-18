@@ -50,10 +50,12 @@ public class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
 
   private String deploymentThreeId;
 
+  @Override
   protected String getResourceOnePath() {
     return "org/operaton/bpm/engine/test/repository/one.bpmn20.xml";
   }
 
+  @Override
   protected String getResourceTwoPath() {
     return "org/operaton/bpm/engine/test/repository/two.bpmn20.xml";
   }

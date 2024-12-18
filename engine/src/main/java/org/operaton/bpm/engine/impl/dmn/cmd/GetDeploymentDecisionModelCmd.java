@@ -36,6 +36,7 @@ public class GetDeploymentDecisionModelCmd implements Command<InputStream>, Seri
     this.decisionDefinitionId = decisionDefinitionId;
   }
 
+  @Override
   public InputStream execute(final CommandContext commandContext) {
     DecisionDefinition decisionDefinition = new GetDeploymentDecisionDefinitionCmd(decisionDefinitionId).execute(commandContext);
 

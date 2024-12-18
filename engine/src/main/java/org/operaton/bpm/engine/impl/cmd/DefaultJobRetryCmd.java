@@ -57,6 +57,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
     super(jobId, exception);
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     JobEntity job = getJob();
 

@@ -22,6 +22,7 @@ package org.operaton.bpm.engine.impl.form.validator;
  */
 public class MaxLengthValidator extends AbstractTextValueValidator {
 
+  @Override
   protected boolean validate(String submittedValue, String configuration) {
     Integer maxLength = null;
     try {

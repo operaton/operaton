@@ -61,10 +61,12 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
     this.javaType = javaType;
   }
 
+  @Override
   public Class<?> getJavaType() {
     return javaType;
   }
 
+  @Override
   public boolean isPrimitiveValueType() {
     return true;
   }
@@ -74,6 +76,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
     return "PrimitiveValueType["+getName()+"]";
   }
 
+  @Override
   public Map<String, Object> getValueInfo(TypedValue typedValue) {
     Map<String, Object> result = new HashMap<String, Object>();
     if (typedValue.isTransient())
@@ -91,6 +94,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super(Boolean.class);
     }
 
+    @Override
     public BooleanValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.booleanValue((Boolean) value, isTransient(valueInfo));
     }
@@ -105,6 +109,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super("bytes", byte[].class);
     }
 
+    @Override
     public BytesValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.byteArrayValue((byte[]) value, isTransient(valueInfo));
     }
@@ -119,6 +124,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super(Date.class);
     }
 
+    @Override
     public DateValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.dateValue((Date) value, isTransient(valueInfo));
     }
@@ -133,6 +139,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super(Double.class);
     }
 
+    @Override
     public DoubleValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.doubleValue((Double) value, isTransient(valueInfo));
     }
@@ -176,6 +183,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super(Integer.class);
     }
 
+    @Override
     public IntegerValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.integerValue((Integer) value, isTransient(valueInfo));
     }
@@ -231,6 +239,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super(Long.class);
     }
 
+    @Override
     public LongValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.longValue((Long) value, isTransient(valueInfo));
     }
@@ -287,6 +296,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super("null", NullType.class);
     }
 
+    @Override
     public TypedValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.untypedNullValue(isTransient(valueInfo));
     }
@@ -301,6 +311,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super(Short.class);
     }
 
+    @Override
     public ShortValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.shortValue((Short) value, isTransient(valueInfo));
     }
@@ -356,6 +367,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super(String.class);
     }
 
+    @Override
     public StringValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.stringValue((String) value, isTransient(valueInfo));
     }
@@ -369,6 +381,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
       super(Number.class);
     }
 
+    @Override
     public NumberValue createValue(Object value, Map<String, Object> valueInfo) {
       return Variables.numberValue((Number) value, isTransient(valueInfo));
     }

@@ -52,7 +52,8 @@ public class BpmnEdgeImpl extends LabeledEdgeImpl implements BpmnEdge {
       .namespaceUri(BPMNDI_NS)
       .extendsType(LabeledEdge.class)
       .instanceProvider(new ModelTypeInstanceProvider<BpmnEdge>() {
-        public BpmnEdge newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public BpmnEdge newInstance(ModelTypeInstanceContext instanceContext) {
           return new BpmnEdgeImpl(instanceContext);
         }
       });
@@ -84,42 +85,52 @@ public class BpmnEdgeImpl extends LabeledEdgeImpl implements BpmnEdge {
     super(instanceContext);
   }
 
+  @Override
   public BaseElement getBpmnElement() {
     return bpmnElementAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setBpmnElement(BaseElement bpmnElement) {
     bpmnElementAttribute.setReferenceTargetElement(this, bpmnElement);
   }
 
+  @Override
   public DiagramElement getSourceElement() {
     return sourceElementAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSourceElement(DiagramElement sourceElement) {
     sourceElementAttribute.setReferenceTargetElement(this, sourceElement);
   }
 
+  @Override
   public DiagramElement getTargetElement() {
     return targetElementAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setTargetElement(DiagramElement targetElement) {
     targetElementAttribute.setReferenceTargetElement(this, targetElement);
   }
 
+  @Override
   public MessageVisibleKind getMessageVisibleKind() {
     return messageVisibleKindAttribute.getValue(this);
   }
 
+  @Override
   public void setMessageVisibleKind(MessageVisibleKind messageVisibleKind) {
     messageVisibleKindAttribute.setValue(this, messageVisibleKind);
   }
 
+  @Override
   public BpmnLabel getBpmnLabel() {
     return bpmnLabelChild.getChild(this);
   }
 
+  @Override
   public void setBpmnLabel(BpmnLabel bpmnLabel) {
     bpmnLabelChild.setChild(this, bpmnLabel);
   }

@@ -39,6 +39,7 @@ public interface ParallelGateway extends Gateway {
   @Deprecated
   void setOperatonAsync(boolean isOperatonAsync);
 
+  @Override
   ParallelGatewayBuilder builder();
 
 }

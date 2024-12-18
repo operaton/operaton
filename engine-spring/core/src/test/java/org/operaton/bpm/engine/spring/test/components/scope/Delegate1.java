@@ -42,7 +42,8 @@ public class Delegate1 implements JavaDelegate, InitializingBean {
     @Autowired
     private StatefulObject statefulObject;
 
-    public void execute(DelegateExecution execution) throws Exception {
+  @Override
+  public void execute(DelegateExecution execution) throws Exception {
 
         String pid = this.processInstance.getId();
 
@@ -56,7 +57,8 @@ public class Delegate1 implements JavaDelegate, InitializingBean {
         this.statefulObject.increment();
     }
 
-    public void afterPropertiesSet() throws Exception {
+  @Override
+  public void afterPropertiesSet() throws Exception {
         Assert.assertNotNull("the processInstance must not be null", this.processInstance);
 
     }

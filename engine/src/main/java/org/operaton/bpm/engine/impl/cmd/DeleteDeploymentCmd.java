@@ -59,6 +59,7 @@ public class DeleteDeploymentCmd implements Command<Void>, Serializable {
     this.skipIoMappings = skipIoMappings;
   }
 
+  @Override
   public Void execute(final CommandContext commandContext) {
     ensureNotNull("deploymentId", deploymentId);
 

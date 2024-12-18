@@ -62,34 +62,42 @@ public abstract class DiagramImpl extends BpmnModelElementInstanceImpl implement
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getDocumentation() {
     return documentationAttribute.getValue(this);
   }
 
+  @Override
   public void setDocumentation(String documentation) {
     documentationAttribute.setValue(this, documentation);
   }
 
+  @Override
   public double getResolution() {
     return resolutionAttribute.getValue(this);
   }
 
+  @Override
   public void setResolution(double resolution) {
     resolutionAttribute.setValue(this, resolution);
   }
 
+  @Override
   public String getId() {
     return idAttribute.getValue(this);
   }
 
+  @Override
   public void setId(String id) {
     idAttribute.setValue(this, id);
   }

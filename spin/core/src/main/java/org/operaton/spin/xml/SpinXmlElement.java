@@ -311,6 +311,7 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @return the string representation
    * @throws SpinXmlElementException if the element cannot be transformed or no new transformer can be created
    */
+  @Override
   public abstract String toString();
 
   /**
@@ -319,5 +320,6 @@ public abstract class SpinXmlElement extends SpinXmlNode<SpinXmlElement> {
    * @param writer the writer to write to
    * @throws SpinXmlElementException if the element cannot be transformed or no new transformer can be created
    */
+  @Override
   public abstract void writeToWriter(Writer writer);
 }

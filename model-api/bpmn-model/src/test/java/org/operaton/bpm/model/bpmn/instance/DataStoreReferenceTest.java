@@ -25,17 +25,20 @@ import java.util.Collections;
  */
 public class DataStoreReferenceTest extends BpmnModelElementInstanceTest {
 
-    public TypeAssumption getTypeAssumption() {
+  @Override
+  public TypeAssumption getTypeAssumption() {
         return new TypeAssumption(FlowElement.class, false);
     }
 
-    public Collection<ChildElementAssumption> getChildElementAssumptions() {
+  @Override
+  public Collection<ChildElementAssumption> getChildElementAssumptions() {
         return Collections.singletonList(
                 new ChildElementAssumption(DataState.class, 0, 1)
         );
     }
 
-    public Collection<AttributeAssumption> getAttributesAssumptions() {
+  @Override
+  public Collection<AttributeAssumption> getAttributesAssumptions() {
         return Arrays.asList(
                 new AttributeAssumption("itemSubjectRef"),
                 new AttributeAssumption("dataStoreRef")

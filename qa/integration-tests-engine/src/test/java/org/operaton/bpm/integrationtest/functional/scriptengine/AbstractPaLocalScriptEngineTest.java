@@ -62,6 +62,7 @@ public abstract class AbstractPaLocalScriptEngineTest extends AbstractFoxPlatfor
 
   protected ProcessApplicationInterface getProcessApplication() {
     ProcessApplicationReference reference = processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<ProcessApplicationReference>() {
+      @Override
       public ProcessApplicationReference execute(CommandContext commandContext) {
         ProcessDefinitionEntity definition = commandContext
             .getProcessDefinitionManager()

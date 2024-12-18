@@ -58,6 +58,7 @@ public class ObjectValueImpl extends AbstractTypedValue<Object> implements Objec
     this.isTransient = isTransient;
   }
 
+  @Override
   public String getSerializationDataFormat() {
     return serializationDataFormat;
   }
@@ -66,6 +67,7 @@ public class ObjectValueImpl extends AbstractTypedValue<Object> implements Objec
     this.serializationDataFormat = serializationDataFormat;
   }
 
+  @Override
   public String getObjectTypeName() {
     return objectTypeName;
   }
@@ -74,6 +76,7 @@ public class ObjectValueImpl extends AbstractTypedValue<Object> implements Objec
     this.objectTypeName = objectTypeName;
   }
 
+  @Override
   public String getValueSerialized() {
     return serializedValue;
   }
@@ -82,6 +85,7 @@ public class ObjectValueImpl extends AbstractTypedValue<Object> implements Objec
     this.serializedValue = serializedValue;
   }
 
+  @Override
   public boolean isDeserialized() {
     return isDeserialized;
   }
@@ -96,6 +100,7 @@ public class ObjectValueImpl extends AbstractTypedValue<Object> implements Objec
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T> T getValue(Class<T> type) {
     Object value = getValue();
@@ -107,6 +112,7 @@ public class ObjectValueImpl extends AbstractTypedValue<Object> implements Objec
     }
   }
 
+  @Override
   public Class<?> getObjectType() {
     Object value = getValue();
 
@@ -123,6 +129,7 @@ public class ObjectValueImpl extends AbstractTypedValue<Object> implements Objec
     return (SerializableValueType) super.getType();
   }
 
+  @Override
   public void setTransient(boolean isTransient) {
     this.isTransient = isTransient;
   }

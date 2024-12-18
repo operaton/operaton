@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class EventScopeCreatingSubprocess implements CompositeActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     List<PvmActivity> startActivities = new ArrayList<PvmActivity>();
     for (PvmActivity activity: execution.getActivity().getActivities()) {
@@ -45,6 +46,7 @@ public class EventScopeCreatingSubprocess implements CompositeActivityBehavior {
     }
   }
 
+  @Override
   public void concurrentChildExecutionEnded(ActivityExecution scopeExecution, ActivityExecution endedExecution) {
     endedExecution.remove();
     scopeExecution.tryPruneLastConcurrentChild();
@@ -54,6 +56,7 @@ public class EventScopeCreatingSubprocess implements CompositeActivityBehavior {
    * Incoming execution is transformed into an event scope,
    * new, non-concurrent execution leaves activity
    */
+  @Override
   public void complete(ActivityExecution execution) {
 
     ActivityExecution outgoingExecution = execution.getParent().createExecution();

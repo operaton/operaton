@@ -80,6 +80,7 @@ public class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
 
   protected static class ControllableUpdateHistoryLevelCommand extends ControllableCommand<Void> {
 
+    @Override
     public Void execute(CommandContext commandContext) {
 
       monitor.sync(); // thread will block here until makeContinue() is called from main thread

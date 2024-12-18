@@ -45,6 +45,7 @@ public class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>>, 
     this.taskId = taskId;
   }
 
+  @Override
   public List<IdentityLink> execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
 

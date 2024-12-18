@@ -27,14 +27,17 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationsTransitionInterruptFlowScope extends PvmAtomicOperationInterruptScope {
 
+  @Override
   public String getCanonicalName() {
     return "transition-interrupt-scope";
   }
 
+  @Override
   protected void scopeInterrupted(PvmExecutionImpl execution) {
     execution.dispatchDelayedEventsAndPerformOperation(TRANSITION_CREATE_SCOPE);
   }
 
+  @Override
   protected PvmActivity getInterruptingActivity(PvmExecutionImpl execution) {
     return execution.getTransition().getDestination();
   }

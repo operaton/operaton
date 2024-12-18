@@ -69,6 +69,7 @@ public class SetJobRetriesCmd implements Command<Void>, Serializable {
     this.isDueDateSet = isDueDateSet;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     if(dueDate == null && commandContext.getProcessEngineConfiguration().isEnsureJobDueDateNotNull()) {
       dueDate = ClockUtil.getCurrentTime();

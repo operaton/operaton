@@ -35,7 +35,8 @@ public class FriendRelationshipDefinition extends RelationshipDefinition {
       .extendsType(RelationshipDefinition.class)
       .instanceProvider(new ModelTypeInstanceProvider<FriendRelationshipDefinition>() {
 
-        public FriendRelationshipDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public FriendRelationshipDefinition newInstance(ModelTypeInstanceContext instanceContext) {
           return new FriendRelationshipDefinition(instanceContext);
         }
       });

@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  */
 public class End implements ActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     execution.end(true);
   }

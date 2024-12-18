@@ -39,32 +39,38 @@ public abstract class AttributeBuilderImpl<T> implements AttributeBuilder<T>, Mo
     attribute.setAttributeName(attributeName);
   }
 
+  @Override
   public AttributeBuilder<T> namespace(String namespaceUri) {
     attribute.setNamespaceUri(namespaceUri);
     return this;
   }
 
+  @Override
   public AttributeBuilder<T> idAttribute() {
     attribute.setId();
     return this;
   }
 
 
+  @Override
   public AttributeBuilder<T> defaultValue(T defaultValue) {
     attribute.setDefaultValue(defaultValue);
     return this;
   }
 
+  @Override
   public AttributeBuilder<T> required() {
     attribute.setRequired(true);
     return this;
   }
 
+  @Override
   public Attribute<T> build() {
     modelType.registerAttribute(attribute);
     return attribute;
   }
 
+  @Override
   public void performModelBuild(Model model) {
     // do nothing
   }

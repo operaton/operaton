@@ -33,6 +33,7 @@ import javax.inject.Named;
 @Stateless
 public class SLSBThrowExceptionDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     throw new MyException("error");
   }

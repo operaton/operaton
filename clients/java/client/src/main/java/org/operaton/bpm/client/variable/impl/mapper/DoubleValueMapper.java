@@ -36,6 +36,7 @@ public class DoubleValueMapper extends NumberValueMapper<DoubleValue> {
     typedValueField.setValue(doubleValue.getValue());
   }
 
+  @Override
   public DoubleValue readValue(TypedValueField typedValueField) {
     Double doubleValue = null;
 

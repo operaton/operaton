@@ -44,6 +44,7 @@ public interface ActivityInstanceState {
       this.name = string;
     }
 
+    @Override
     public int getStateCode() {
       return stateCode;
     }

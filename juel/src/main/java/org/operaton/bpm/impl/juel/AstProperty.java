@@ -43,7 +43,8 @@ public abstract class AstProperty extends AstNode {
 		return prefix;
 	}
 
-	public ValueReference getValueReference(Bindings bindings, ELContext context) {
+  @Override
+  public ValueReference getValueReference(Bindings bindings, ELContext context) {
 		return new ValueReference(prefix.eval(bindings, context), getProperty(bindings, context));
 	}
 	
@@ -65,19 +66,23 @@ public abstract class AstProperty extends AstNode {
 		return result;
 	}
 
-	public final boolean isLiteralText() {
+  @Override
+  public final boolean isLiteralText() {
 		return false;
 	}
 
-	public final boolean isLeftValue() {
+  @Override
+  public final boolean isLeftValue() {
 		return lvalue;
 	}
-	
-	public boolean isMethodInvocation() {
+
+  @Override
+  public boolean isMethodInvocation() {
 		return false;
 	}
 
-	public Class<?> getType(Bindings bindings, ELContext context) {
+  @Override
+  public Class<?> getType(Bindings bindings, ELContext context) {
 		if (!lvalue) {
 			return null;
 		}
@@ -97,7 +102,8 @@ public abstract class AstProperty extends AstNode {
 		return result;
 	}
 
-	public boolean isReadOnly(Bindings bindings, ELContext context) throws ELException {
+  @Override
+  public boolean isReadOnly(Bindings bindings, ELContext context) throws ELException {
 		if (!lvalue) {
 			return true;
 		}
@@ -117,7 +123,8 @@ public abstract class AstProperty extends AstNode {
 		return result;
 	}
 
-	public void setValue(Bindings bindings, ELContext context, Object value) throws ELException {
+  @Override
+  public void setValue(Bindings bindings, ELContext context, Object value) throws ELException {
 		if (!lvalue) {
 			throw new ELException(LocalMessages.get("error.value.set.rvalue", getStructuralId(bindings)));
 		}
@@ -148,8 +155,9 @@ public abstract class AstProperty extends AstNode {
 		}
 		return method;
 	}
-	
-	public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
+
+  @Override
+  public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
 		Object base = prefix.eval(bindings, context);
 		if (base == null) {
 			throw new PropertyNotFoundException(LocalMessages.get("error.property.base.null", prefix));
@@ -163,7 +171,8 @@ public abstract class AstProperty extends AstNode {
 		return new MethodInfo(method.getName(), method.getReturnType(), paramTypes);
 	}
 
-	public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
+  @Override
+  public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
 		Object base = prefix.eval(bindings, context);
 		if (base == null) {
 			throw new PropertyNotFoundException(LocalMessages.get("error.property.base.null", prefix));
@@ -185,7 +194,8 @@ public abstract class AstProperty extends AstNode {
 		}
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return i == 0 ? prefix : null;
 	}
 }

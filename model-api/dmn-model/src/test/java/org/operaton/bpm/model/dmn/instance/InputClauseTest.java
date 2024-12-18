@@ -23,10 +23,12 @@ import java.util.Collection;
 
 public class InputClauseTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(DmnElement.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(InputExpression.class, 1, 1),
@@ -34,6 +36,7 @@ public class InputClauseTest extends DmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       // operaton extensions

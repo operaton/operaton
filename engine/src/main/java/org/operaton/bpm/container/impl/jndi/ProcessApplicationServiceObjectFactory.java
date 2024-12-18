@@ -34,6 +34,7 @@ import org.operaton.bpm.ProcessApplicationService;
  */
 public class ProcessApplicationServiceObjectFactory implements ObjectFactory {
 
+  @Override
   public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment) throws Exception {
     return BpmPlatform.getProcessApplicationService();
   }

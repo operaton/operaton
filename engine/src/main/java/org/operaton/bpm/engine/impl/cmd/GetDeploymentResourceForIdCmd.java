@@ -42,6 +42,7 @@ public class GetDeploymentResourceForIdCmd implements Command<InputStream>, Seri
     this.resourceId = resourceId;
   }
 
+  @Override
   public InputStream execute(CommandContext commandContext) {
     ensureNotNull("deploymentId", deploymentId);
     ensureNotNull("resourceId", resourceId);

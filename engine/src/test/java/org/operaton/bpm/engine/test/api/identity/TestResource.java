@@ -34,10 +34,12 @@ public enum TestResource implements Resource {
     this.id = id;
   }
 
+  @Override
   public String resourceName() {
     return name;
   }
 
+  @Override
   public int resourceType() {
     return id;
   }

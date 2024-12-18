@@ -78,6 +78,7 @@ public abstract class SpringProcessEngineTestCase extends AbstractProcessEngineT
     processEngine = applicationContext.getBean(ProcessEngine.class);
   }
 
+  @Override
   public void setApplicationContext(ApplicationContext applicationContext) {
     this.applicationContext = (ConfigurableApplicationContext) applicationContext;
   }

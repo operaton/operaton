@@ -42,6 +42,7 @@ public class ProcessInstanceCommentResourceImpl implements ProcessInstanceCommen
     this.processInstanceId = processInstanceId;
   }
 
+  @Override
   public List<CommentDto> getComments() {
     if (!isHistoryEnabled()) {
       return Collections.emptyList();

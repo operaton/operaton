@@ -36,10 +36,12 @@ public class DateValueSerializer extends PrimitiveValueSerializer<DateValue> {
     super(ValueType.DATE);
   }
 
+  @Override
   public DateValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.dateValue((Date) untypedValue.getValue(), untypedValue.isTransient());
   }
 
+  @Override
   public DateValue readValue(ValueFields valueFields, boolean asTransientValue) {
     Long longValue = valueFields.getLongValue();
     Date dateValue = null;

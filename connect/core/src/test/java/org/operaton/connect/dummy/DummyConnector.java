@@ -33,6 +33,7 @@ public class DummyConnector extends AbstractConnector<DummyRequest, DummyRespons
     super(connectorId);
   }
 
+  @Override
   public DummyRequest createRequest() {
     return new DummyRequest(this);
   }

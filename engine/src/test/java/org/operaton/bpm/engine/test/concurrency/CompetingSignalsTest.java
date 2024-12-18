@@ -71,6 +71,7 @@ public class CompetingSignalsTest {
       super.startAndWaitUntilControlIsReturned();
     }
 
+    @Override
     public void run() {
       try {
         runtimeService.signal(executionId);
@@ -82,6 +83,7 @@ public class CompetingSignalsTest {
   }
 
   public static class ControlledConcurrencyBehavior implements ActivityBehavior {
+    @Override
     public void execute(ActivityExecution execution) throws Exception {
       activeThread.returnControlToTestThreadAndWait();
     }

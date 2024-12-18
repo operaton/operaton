@@ -29,16 +29,19 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;
  */
 public class BpmnEdgeTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(BPMNDI_NS, LabeledEdge.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(BPMNDI_NS, BpmnLabel.class, 0, 1)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("bpmnElement"),

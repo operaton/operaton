@@ -35,6 +35,7 @@ public class FieldInjectionCaseExecutionListener implements CaseExecutionListene
   protected Expression prefix;
   protected Expression suffix;
 
+  @Override
   public void notify(DelegateCaseExecution caseExecution) {
     caseExecution.setVariable("greeting", "Hello from " + greeter.getValue(caseExecution));
     caseExecution.setVariable("helloWorld", helloWorld.getValue(caseExecution));

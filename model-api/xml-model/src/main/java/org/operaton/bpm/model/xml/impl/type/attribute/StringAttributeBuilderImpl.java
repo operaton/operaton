@@ -69,6 +69,7 @@ public class StringAttributeBuilderImpl extends AttributeBuilderImpl<String> imp
    * @param referenceTargetElement the reference target model element instance
    * @return the new attribute reference builder
    */
+  @Override
   public <V extends ModelElementInstance> AttributeReferenceBuilder<V> qNameAttributeReference(Class<V> referenceTargetElement) {
     AttributeImpl<String> attribute = (AttributeImpl<String>) build();
     AttributeReferenceBuilderImpl<V> referenceBuilder = new QNameAttributeReferenceBuilderImpl<V>(attribute, referenceTargetElement);
@@ -76,6 +77,7 @@ public class StringAttributeBuilderImpl extends AttributeBuilderImpl<String> imp
     return referenceBuilder;
   }
 
+  @Override
   public <V extends ModelElementInstance> AttributeReferenceBuilder<V> idAttributeReference(Class<V> referenceTargetElement) {
     AttributeImpl<String> attribute = (AttributeImpl<String>) build();
     AttributeReferenceBuilderImpl<V> referenceBuilder = new AttributeReferenceBuilderImpl<V>(attribute, referenceTargetElement);
@@ -83,6 +85,7 @@ public class StringAttributeBuilderImpl extends AttributeBuilderImpl<String> imp
     return referenceBuilder;
   }
 
+  @Override
   @SuppressWarnings("rawtypes")
   public <V extends ModelElementInstance> AttributeReferenceCollectionBuilder<V> idAttributeReferenceCollection(Class<V> referenceTargetElement, Class<? extends AttributeReferenceCollection> attributeReferenceCollection) {
     AttributeImpl<String> attribute = (AttributeImpl<String>) build();

@@ -29,14 +29,17 @@ public class CycleBusinessCalendar implements BusinessCalendar {
 
   public static String NAME = "cycle";
 
+  @Override
   public Date resolveDuedate(String duedateDescription, Task task) {
     return resolveDuedate(duedateDescription);
   }
 
+  @Override
   public Date resolveDuedate(String duedateDescription) {
     return resolveDuedate(duedateDescription, (Date)null);
   }
 
+  @Override
   public Date resolveDuedate(String duedateDescription, Date startDate) {
     return resolveDuedate(duedateDescription, startDate, 0L);
   }

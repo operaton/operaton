@@ -51,31 +51,37 @@ public class FetchAndLockBuilderImpl implements FetchAndLockBuilder {
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public FetchAndLockBuilderImpl workerId(String workerId) {
     this.workerId = workerId;
     return this;
   }
 
+  @Override
   public FetchAndLockBuilderImpl maxTasks(int maxTasks) {
     this.maxTasks = maxTasks;
     return this;
   }
 
+  @Override
   public FetchAndLockBuilderImpl usePriority(boolean usePriority) {
     this.usePriority = usePriority;
     return this;
   }
 
+  @Override
   public FetchAndLockBuilderImpl orderByCreateTime() {
     orderingProperties.add(new QueryOrderingProperty(CREATE_TIME, null));
     return this;
   }
 
+  @Override
   public FetchAndLockBuilderImpl asc() throws NotValidException {
     configureLastOrderingPropertyDirection(ASCENDING);
     return this;
   }
 
+  @Override
   public FetchAndLockBuilderImpl desc() throws NotValidException {
     configureLastOrderingPropertyDirection(DESCENDING);
     return this;

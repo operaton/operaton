@@ -46,7 +46,8 @@ public class OperatonVariableOnPartImpl extends CmmnModelElementInstanceImpl imp
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableOnPart.class, OPERATON_ELEMENT_VARIABLE_ON_PART)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonVariableOnPart>() {
-        public OperatonVariableOnPart newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonVariableOnPart newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonVariableOnPartImpl(instanceContext);
       }
     });
@@ -63,20 +64,24 @@ public class OperatonVariableOnPartImpl extends CmmnModelElementInstanceImpl imp
     typeBuilder.build();
   }
 
+  @Override
   public String getVariableName() {
     return operatonVariableNameAttribute.getValue(this);
   }
 
+  @Override
   public void setVariableName(String name) {
     operatonVariableNameAttribute.setValue(this, name);
   }
 
 
+  @Override
   public VariableTransition getVariableEvent() {
     OperatonVariableTransitionEvent child = operatonVariableEventChild.getChild(this);
     return child.getValue();
   }
 
+  @Override
   public void setVariableEvent(VariableTransition variableTransition) {
     OperatonVariableTransitionEvent child = operatonVariableEventChild.getChild(this);
     child.setValue(variableTransition);

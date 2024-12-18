@@ -42,6 +42,7 @@ public class DeleteHistoricCaseInstanceCmd implements Command<Object>, Serializa
     this.caseInstanceId = caseInstanceId;
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     ensureNotNull("caseInstanceId", caseInstanceId);
     // Check if case instance is still running

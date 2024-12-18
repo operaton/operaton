@@ -335,6 +335,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     return dto;
   }
 
+  @Override
   public Response getRenderedForm() {
     FormService formService = engine.getFormService();
 
@@ -351,6 +352,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     throw new InvalidRequestException(Status.NOT_FOUND, "No matching rendered start form for process definition with the id " + processDefinitionId + " found.");
   }
 
+  @Override
   public void updateSuspensionState(ProcessDefinitionSuspensionStateDto dto) {
     try {
       dto.setProcessDefinitionId(processDefinitionId);
@@ -367,6 +369,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     engine.getRepositoryService().updateProcessDefinitionHistoryTimeToLive(processDefinitionId, historyTimeToLiveDto.getHistoryTimeToLive());
   }
 
+  @Override
   public Map<String, VariableValueDto> getFormVariables(String variableNames, boolean deserializeValues) {
 
     final FormService formService = engine.getFormService();
@@ -445,6 +448,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     return builder;
   }
 
+  @Override
   public Response getDeployedStartForm() {
     try {
       InputStream deployedStartForm = engine.getFormService().getDeployedStartForm(processDefinitionId);

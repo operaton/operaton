@@ -59,10 +59,12 @@ public abstract class EventImpl extends FlowNodeImpl implements Event {
     super(context);
   }
 
+  @Override
   public Collection<Property> getProperties() {
     return propertyCollection.get(this);
   }
 
+  @Override
   public BpmnShape getDiagramElement() {
     return (BpmnShape) super.getDiagramElement();
   }

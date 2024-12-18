@@ -40,6 +40,7 @@ public class PerformanceIndicatorImpl extends BusinessContextElementImpl impleme
     super(instanceContext);
   }
 
+  @Override
   public Collection<Decision> getImpactingDecisions() {
     return impactingDecisionRefCollection.getReferenceTargetElements(this);
   }
@@ -49,7 +50,8 @@ public class PerformanceIndicatorImpl extends BusinessContextElementImpl impleme
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(BusinessContextElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<PerformanceIndicator>() {
-        public PerformanceIndicator newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public PerformanceIndicator newInstance(ModelTypeInstanceContext instanceContext) {
           return new PerformanceIndicatorImpl(instanceContext);
         }
       });

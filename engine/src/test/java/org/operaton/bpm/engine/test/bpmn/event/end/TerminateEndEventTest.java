@@ -43,6 +43,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
   public static class CountDelegate implements JavaDelegate {
 
+    @Override
     public void execute(DelegateExecution execution) throws Exception {
       serviceTaskInvokedCount++;
 
@@ -55,6 +56,7 @@ public class TerminateEndEventTest extends PluggableProcessEngineTest {
 
   public static class CountDelegate2 implements JavaDelegate {
 
+    @Override
     public void execute(DelegateExecution execution) throws Exception {
       serviceTaskInvokedCount2++;
     }

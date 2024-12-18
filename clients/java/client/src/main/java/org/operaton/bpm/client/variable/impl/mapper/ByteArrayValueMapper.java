@@ -51,6 +51,7 @@ public class ByteArrayValueMapper extends PrimitiveValueMapper<BytesValue> {
     return Variables.byteArrayValue(byteArr);
   }
 
+  @Override
   public BytesValue readValue(TypedValueField typedValueField) {
     byte[] byteArr = null;
 

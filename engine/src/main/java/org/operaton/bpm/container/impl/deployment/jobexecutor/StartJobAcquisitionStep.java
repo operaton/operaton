@@ -51,10 +51,12 @@ public class StartJobAcquisitionStep extends DeploymentOperationStep {
 
   }
 
+  @Override
   public String getName() {
     return "Start job acquisition '"+jobAcquisitionXml.getName()+"'";
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
 
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();

@@ -134,14 +134,17 @@ public enum Permissions implements Permission {
     return name;
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public int getValue() {
     return id;
   }
 
+  @Override
   public Resource[] getTypes() {
     return resourceTypes;
   }

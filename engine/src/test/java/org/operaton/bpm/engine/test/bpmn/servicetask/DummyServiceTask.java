@@ -24,7 +24,8 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  * @author Joram Barrez
  */
 public class DummyServiceTask implements JavaDelegate {
-  
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     Integer count = (Integer) execution.getVariable("count");
     count = count+1;

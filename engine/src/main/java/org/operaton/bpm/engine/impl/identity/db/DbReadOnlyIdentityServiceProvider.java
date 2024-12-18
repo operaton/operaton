@@ -55,15 +55,18 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
 
   // users /////////////////////////////////////////
 
+  @Override
   public UserEntity findUserById(String userId) {
     checkAuthorization(Permissions.READ, Resources.USER, userId);
     return getDbEntityManager().selectById(UserEntity.class, userId);
   }
 
+  @Override
   public UserQuery createUserQuery() {
     return new DbUserQueryImpl(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
   }
 
+  @Override
   public UserQueryImpl createUserQuery(CommandContext commandContext) {
     return new DbUserQueryImpl();
   }
@@ -90,6 +93,7 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
     return (Long) getDbEntityManager().selectOne("selectUserCountByNativeQuery", parameterMap);
   }
 
+  @Override
   public boolean checkPassword(String userId, String password) {
     UserEntity user = findUserById(userId);
     if ((user != null) && (password != null) && matchPassword(password, user)) {
@@ -108,15 +112,18 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
 
   // groups //////////////////////////////////////////
 
+  @Override
   public GroupEntity findGroupById(String groupId) {
     checkAuthorization(Permissions.READ, Resources.GROUP, groupId);
     return getDbEntityManager().selectById(GroupEntity.class, groupId);
   }
 
+  @Override
   public GroupQuery createGroupQuery() {
     return new DbGroupQueryImpl(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
   }
 
+  @Override
   public GroupQuery createGroupQuery(CommandContext commandContext) {
     return new DbGroupQueryImpl();
   }
@@ -133,15 +140,18 @@ public class DbReadOnlyIdentityServiceProvider extends AbstractManager implement
 
   //tenants //////////////////////////////////////////
 
+  @Override
   public TenantEntity findTenantById(String tenantId) {
     checkAuthorization(Permissions.READ, Resources.TENANT, tenantId);
     return getDbEntityManager().selectById(TenantEntity.class, tenantId);
   }
 
+  @Override
   public TenantQuery createTenantQuery() {
     return new DbTenantQueryImpl(Context.getProcessEngineConfiguration().getCommandExecutorTxRequired());
   }
 
+  @Override
   public TenantQuery createTenantQuery(CommandContext commandContext) {
     return new DbTenantQueryImpl();
   }

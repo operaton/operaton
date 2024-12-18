@@ -34,10 +34,12 @@ public class StringValueSerializer extends PrimitiveValueSerializer<StringValue>
     super(ValueType.STRING);
   }
 
+  @Override
   public StringValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.stringValue((String) untypedValue.getValue(), untypedValue.isTransient());
   }
 
+  @Override
   public StringValue readValue(ValueFields valueFields, boolean asTransientValue) {
     String textValue = valueFields.getTextValue();
     if (textValue == null && EMPTY_STRING.equals(valueFields.getTextValue2())) {

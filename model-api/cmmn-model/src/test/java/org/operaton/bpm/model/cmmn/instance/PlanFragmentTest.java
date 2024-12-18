@@ -25,10 +25,12 @@ import java.util.Collection;
  */
 public class PlanFragmentTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(PlanItemDefinition.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(PlanItem.class),
@@ -36,6 +38,7 @@ public class PlanFragmentTest extends CmmnModelElementInstanceTest {
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

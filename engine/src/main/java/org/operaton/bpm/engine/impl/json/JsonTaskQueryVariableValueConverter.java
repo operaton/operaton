@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
  */
 public class JsonTaskQueryVariableValueConverter extends JsonObjectConverter<TaskQueryVariableValue> {
 
+  @Override
   public JsonObject toJsonObject(TaskQueryVariableValue variable) {
     JsonObject jsonObject = JsonUtil.createObject();
     JsonUtil.addField(jsonObject, "name", variable.getName());
@@ -34,6 +35,7 @@ public class JsonTaskQueryVariableValueConverter extends JsonObjectConverter<Tas
     return jsonObject;
   }
 
+  @Override
   public TaskQueryVariableValue toObject(JsonObject json) {
     String name = JsonUtil.getString(json, "name");
     Object value = JsonUtil.getRawObject(json, "value");

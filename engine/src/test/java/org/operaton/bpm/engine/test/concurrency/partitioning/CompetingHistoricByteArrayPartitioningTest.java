@@ -98,6 +98,7 @@ public class CompetingHistoricByteArrayPartitioningTest extends AbstractPartitio
       this.historicByteArrayId = historicByteArrayId;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       commandContext.getDbEntityManager()
         .selectById(ByteArrayEntity.class, historicByteArrayId); // cache

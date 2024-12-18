@@ -45,34 +45,42 @@ public class OutputClauseImpl extends DmnElementImpl implements OutputClause {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getTypeRef() {
     return typeRefAttribute.getValue(this);
   }
 
+  @Override
   public void setTypeRef(String typeRef) {
     typeRefAttribute.setValue(this, typeRef);
   }
 
+  @Override
   public OutputValues getOutputValues() {
     return outputValuesChild.getChild(this);
   }
 
+  @Override
   public void setOutputValues(OutputValues outputValues) {
     outputValuesChild.setChild(this, outputValues);
   }
 
+  @Override
   public DefaultOutputEntry getDefaultOutputEntry() {
     return defaultOutputEntryChild.getChild(this);
   }
 
+  @Override
   public void setDefaultOutputEntry(DefaultOutputEntry defaultOutputEntry) {
     defaultOutputEntryChild.setChild(this, defaultOutputEntry);
   }
@@ -82,7 +90,8 @@ public class OutputClauseImpl extends DmnElementImpl implements OutputClause {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<OutputClause>() {
-        public OutputClause newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OutputClause newInstance(ModelTypeInstanceContext instanceContext) {
           return new OutputClauseImpl(instanceContext);
         }
       });

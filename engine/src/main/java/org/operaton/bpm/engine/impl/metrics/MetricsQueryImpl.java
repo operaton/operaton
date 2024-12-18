@@ -56,22 +56,26 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
     this.interval = DEFAULT_SELECT_INTERVAL;
   }
 
+  @Override
   public MetricsQueryImpl name(String name) {
     this.name = MetricsUtil.resolveInternalName(name);
     return this;
   }
 
+  @Override
   public MetricsQuery reporter(String reporter) {
     this.reporter = reporter;
     return this;
   }
 
+  @Override
   public MetricsQueryImpl startDate(Date startDate) {
     this.startDate = startDate;
     this.startDateMilliseconds = startDate.getTime();
     return this;
   }
 
+  @Override
   public MetricsQueryImpl endDate(Date endDate) {
     this.endDate = endDate;
     this.endDateMilliseconds = endDate.getTime();
@@ -99,6 +103,7 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
     return interval();
   }
 
+  @Override
   public long sum() {
     callback = new MetricsQuerySumCmd(this);
 

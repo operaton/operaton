@@ -65,6 +65,7 @@ public abstract class TabularResultAggregator {
 
     if(isSortingEnabled) {
       Collections.sort(tabularResultSet.getResults(), new Comparator<List<Object>>() {
+        @Override
         public int compare(List<Object> o1, List<Object> o2) {
           return o1.get(0).toString().compareTo(o2.get(0).toString());
         }

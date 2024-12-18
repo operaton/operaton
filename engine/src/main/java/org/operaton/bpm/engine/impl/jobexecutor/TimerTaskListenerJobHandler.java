@@ -31,10 +31,12 @@ public class TimerTaskListenerJobHandler extends TimerEventJobHandler {
 
   public static final String TYPE = "timer-task-listener";
 
+  @Override
   public String getType() {
     return TYPE;
   }
 
+  @Override
   public void execute(TimerJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     String activityId = configuration.getTimerElementKey();
     TaskEntity targetTask = null;

@@ -47,14 +47,17 @@ public abstract class AbstractRequestInvocation<T> implements ConnectorInvocatio
     currentIndex = -1;
   }
 
+  @Override
   public T getTarget() {
     return target;
   }
 
+  @Override
   public ConnectorRequest<?> getRequest() {
     return request;
   }
 
+  @Override
   public Object proceed() throws Exception {
     currentIndex++;
     if(interceptorChain.size() > currentIndex) {

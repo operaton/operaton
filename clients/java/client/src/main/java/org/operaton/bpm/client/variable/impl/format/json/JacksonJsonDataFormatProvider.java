@@ -23,10 +23,12 @@ import org.operaton.bpm.client.spi.DataFormatProvider;
 
 public class JacksonJsonDataFormatProvider implements DataFormatProvider {
 
+  @Override
   public String getDataFormatName() {
     return JSON.getName();
   }
 
+  @Override
   public DataFormat createInstance() {
     return new JacksonJsonDataFormat(JSON.getName());
   }

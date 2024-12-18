@@ -52,21 +52,25 @@ public class HistoricActivityStatisticsQueryImpl extends AbstractQuery<HistoricA
     this.processDefinitionId = processDefinitionId;
   }
 
+  @Override
   public HistoricActivityStatisticsQuery includeFinished() {
     includeFinished = true;
     return this;
   }
 
+  @Override
   public HistoricActivityStatisticsQuery includeCanceled() {
     includeCanceled = true;
     return this;
   }
 
+  @Override
   public HistoricActivityStatisticsQuery includeCompleteScope() {
     includeCompleteScope = true;
     return this;
   }
 
+  @Override
   public HistoricActivityStatisticsQuery includeIncidents() {
     includeIncidents = true;
     return this;
@@ -103,10 +107,12 @@ public class HistoricActivityStatisticsQueryImpl extends AbstractQuery<HistoricA
     return this;
   }
 
+  @Override
   public HistoricActivityStatisticsQuery orderByActivityId() {
     return orderBy(HistoricActivityStatisticsQueryProperty.ACTIVITY_ID_);
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return
@@ -115,6 +121,7 @@ public class HistoricActivityStatisticsQueryImpl extends AbstractQuery<HistoricA
         .getHistoricStatisticsCountGroupedByActivity(this);
   }
 
+  @Override
   public List<HistoricActivityStatistics> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     return
@@ -123,6 +130,7 @@ public class HistoricActivityStatisticsQueryImpl extends AbstractQuery<HistoricA
         .getHistoricStatisticsGroupedByActivity(this, page);
   }
 
+  @Override
   protected void checkQueryOk() {
     super.checkQueryOk();
     ensureNotNull("No valid process definition id supplied", "processDefinitionId", processDefinitionId);

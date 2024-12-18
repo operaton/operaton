@@ -32,6 +32,7 @@ public class DbSchemaPrune {
     ProcessEngineImpl processEngine = (ProcessEngineImpl) ProcessEngines.getDefaultProcessEngine();
     CommandExecutor commandExecutor = processEngine.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object> (){
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext
           .getSession(PersistenceSession.class)

@@ -115,6 +115,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
     }
   }
 
+  @Override
   public void detachChildren() {
     Set<MigratingActivityInstance> childrenCopy = new HashSet<MigratingActivityInstance>(childActivityInstances);
     // First detach all dependent entities, only then detach the activity instances.
@@ -157,6 +158,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
     return instanceBehavior.isDetached();
   }
 
+  @Override
   public void detachState() {
 
     detachDependentInstances();
@@ -166,6 +168,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
     setParent(null);
   }
 
+  @Override
   public void attachState(MigratingScopeInstance activityInstance) {
 
     this.setParent(activityInstance);
@@ -181,6 +184,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
     throw MIGRATION_LOGGER.cannotAttachToTransitionInstance(this);
   }
 
+  @Override
   public void migrateDependentEntities() {
     for (MigratingInstance migratingInstance : migratingDependentInstances) {
       migratingInstance.migrateState();
@@ -193,10 +197,12 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
     }
   }
 
+  @Override
   public ExecutionEntity resolveRepresentativeExecution() {
     return instanceBehavior.resolveRepresentativeExecution();
   }
 
+  @Override
   public void addMigratingDependentInstance(MigratingInstance migratingInstance) {
     migratingDependentInstances.add(migratingInstance);
   }
@@ -298,6 +304,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
   /**
    * Returns a copy of all children, modifying the returned set does not have any further effect.
    */
+  @Override
   public Set<MigratingProcessElementInstance> getChildren() {
     Set<MigratingProcessElementInstance> childInstances = new HashSet<MigratingProcessElementInstance>();
     childInstances.addAll(childActivityInstances);
@@ -327,16 +334,19 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
     return childCompensationInstances;
   }
 
+  @Override
   public boolean migrates() {
     return targetScope != null;
   }
 
+  @Override
   public void removeUnmappedDependentInstances() {
     for (RemovingInstance removingInstance : removingDependentInstances) {
       removingInstance.remove();
     }
   }
 
+  @Override
   public void remove(boolean skipCustomListeners, boolean skipIoMappings) {
     instanceBehavior.remove(skipCustomListeners, skipIoMappings);
   }

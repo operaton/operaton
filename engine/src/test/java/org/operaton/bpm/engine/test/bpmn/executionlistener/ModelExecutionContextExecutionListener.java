@@ -29,6 +29,7 @@ public class ModelExecutionContextExecutionListener implements ExecutionListener
   public static BpmnModelInstance modelInstance;
   public static FlowElement flowElement;
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     modelInstance = execution.getBpmnModelInstance();
     flowElement = execution.getBpmnModelElementInstance();

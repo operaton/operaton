@@ -664,6 +664,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
       super(engineRule);
     }
 
+    @Override
     public JobDefinition getExecutionJobDefinition(Batch batch) {
       return getManagementService().createJobDefinitionQuery()
           .jobDefinitionId(batch.getBatchJobDefinitionId())

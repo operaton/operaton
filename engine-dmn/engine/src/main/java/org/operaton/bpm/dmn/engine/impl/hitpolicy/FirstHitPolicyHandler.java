@@ -28,6 +28,7 @@ import org.operaton.bpm.model.dmn.HitPolicy;
 public class FirstHitPolicyHandler implements DmnHitPolicyHandler {
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.FIRST, null);
 
+  @Override
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     if (!decisionTableEvaluationEvent.getMatchingRules().isEmpty()) {
       DmnEvaluatedDecisionRule firstMatchedRule = decisionTableEvaluationEvent.getMatchingRules().get(0);

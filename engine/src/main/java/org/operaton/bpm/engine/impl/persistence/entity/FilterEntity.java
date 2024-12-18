@@ -73,10 +73,12 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
     setQueryInternal("{}");
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getId() {
     return id;
   }
@@ -89,29 +91,35 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
     return this;
   }
 
+  @Override
   public String getResourceType() {
     return resourceType;
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public Filter setName(String name) {
     ensureNotEmpty(NotValidException.class, "Filter name must not be null or empty", "name", name);
     this.name = name;
     return this;
   }
 
+  @Override
   public String getOwner() {
     return owner;
   }
 
+  @Override
   public Filter setOwner(String owner) {
     this.owner = owner;
     return this;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends Query<?, ?>> T getQuery() {
     return (T) query;
@@ -122,6 +130,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
     return converter.toJson(query);
   }
 
+  @Override
   public <T extends Query<?, ?>> Filter setQuery(T query) {
     ensureNotNull(NotValidException.class, "query", query);
     this.query = (AbstractQuery<?, ?>) query;
@@ -134,6 +143,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
     this.query = (AbstractQuery<?, ?>) converter.toObject(JsonUtil.asObject(query));
   }
 
+  @Override
   public Map<String, Object> getProperties() {
     return properties;
   }
@@ -142,6 +152,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
     return JsonUtil.asString(properties);
   }
 
+  @Override
   public Filter setProperties(Map<String, Object> properties) {
     this.properties = properties;
     return this;
@@ -157,18 +168,22 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
     }
   }
 
+  @Override
   public int getRevision() {
     return revision;
   }
 
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
   }
 
+  @Override
   public int getRevisionNext() {
     return revision + 1;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends Query<?, ?>> Filter extend(T extendingQuery) {
     ensureNotNull(NotValidException.class, "extendingQuery", extendingQuery);
@@ -194,6 +209,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
     }
   }
 
+  @Override
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<String, Object>();
     persistentState.put("name", this.name);
@@ -212,6 +228,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
     return copy;
   }
 
+  @Override
   public void postLoad() {
     if (query != null) {
       query.addValidator(StoredQueryValidator.get());

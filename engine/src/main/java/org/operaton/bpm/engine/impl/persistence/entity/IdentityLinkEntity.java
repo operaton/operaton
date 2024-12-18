@@ -64,6 +64,7 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
 
   protected ProcessDefinitionEntity processDef;
 
+  @Override
   public Object getPersistentState() {
     return this.type;
   }
@@ -109,14 +110,17 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
     return groupId != null;
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getType() {
     return type;
   }
@@ -125,6 +129,7 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
     this.type = type;
   }
 
+  @Override
   public String getUserId() {
     return userId;
   }
@@ -136,6 +141,7 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
     this.userId = userId;
   }
 
+  @Override
   public String getGroupId() {
     return groupId;
   }
@@ -147,6 +153,7 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
     this.groupId = groupId;
   }
 
+  @Override
   public String getTaskId() {
     return taskId;
   }
@@ -155,6 +162,7 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
     this.taskId = taskId;
   }
 
+  @Override
   public String getProcessDefId() {
     return processDefId;
   }
@@ -163,6 +171,7 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
     this.processDefId = processDefId;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }

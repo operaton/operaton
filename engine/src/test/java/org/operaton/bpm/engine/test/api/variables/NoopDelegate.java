@@ -25,6 +25,7 @@ public class NoopDelegate implements JavaDelegate, Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     // no-op
   }

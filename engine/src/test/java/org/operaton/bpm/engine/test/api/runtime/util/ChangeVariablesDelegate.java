@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.test.history.SerializableVariable;
  */
 public class ChangeVariablesDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
 
     // first set variable to some string

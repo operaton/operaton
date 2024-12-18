@@ -41,10 +41,12 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
     super(TYPE_NAME);
   }
 
+  @Override
   public boolean isPrimitiveValueType() {
     return false;
   }
 
+  @Override
   public TypedValue createValue(Object value, Map<String, Object> valueInfo) {
     ObjectValueBuilder builder = Variables.objectValue(value);
 
@@ -55,6 +57,7 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
     return builder.create();
   }
 
+  @Override
   public Map<String, Object> getValueInfo(TypedValue typedValue) {
     if(!(typedValue instanceof ObjectValue)) {
       throw new IllegalArgumentException("Value not of type Object.");
@@ -80,6 +83,7 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
     return valueInfo;
   }
 
+  @Override
   public SerializableValue createValueFromSerialized(String serializedValue, Map<String, Object> valueInfo) {
     SerializedObjectValueBuilder builder = Variables.serializedObjectValue(serializedValue);
 

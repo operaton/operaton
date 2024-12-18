@@ -44,10 +44,12 @@ public class PlanningTableImpl extends TableItemImpl implements PlanningTable {
     super(instanceContext);
   }
 
+  @Override
   public Collection<TableItem> getTableItems() {
     return tableItemCollection.get(this);
   }
 
+  @Override
   public Collection<ApplicabilityRule> getApplicabilityRules() {
     return applicabilityRuleCollection.get(this);
   }
@@ -57,7 +59,8 @@ public class PlanningTableImpl extends TableItemImpl implements PlanningTable {
         .namespaceUri(CMMN11_NS)
         .extendsType(TableItem.class)
         .instanceProvider(new ModelTypeInstanceProvider<PlanningTable>() {
-          public PlanningTable newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public PlanningTable newInstance(ModelTypeInstanceContext instanceContext) {
             return new PlanningTableImpl(instanceContext);
           }
         });

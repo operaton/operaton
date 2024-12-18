@@ -40,7 +40,8 @@ public class TimerExpressionImpl extends ExpressionImpl implements TimerExpressi
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<TimerExpression>() {
-        public TimerExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TimerExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new TimerExpressionImpl(instanceContext);
         }
       });

@@ -124,6 +124,7 @@ public class ExternalTaskServiceImpl extends ServiceImpl implements ExternalTask
     commandExecutor.execute(new SetExternalTaskPriorityCmd(externalTaskId, priority));
   }
 
+  @Override
   public ExternalTaskQuery createExternalTaskQuery() {
     return new ExternalTaskQueryImpl(commandExecutor);
   }
@@ -138,6 +139,7 @@ public class ExternalTaskServiceImpl extends ServiceImpl implements ExternalTask
     return commandExecutor.execute(new GetTopicNamesCmd(withLockedTasks, withUnlockedTasks, withRetriesLeft));
   }
 
+  @Override
   public String getExternalTaskErrorDetails(String externalTaskId) {
     return commandExecutor.execute(new GetExternalTaskErrorDetailsCmd(externalTaskId));
   }

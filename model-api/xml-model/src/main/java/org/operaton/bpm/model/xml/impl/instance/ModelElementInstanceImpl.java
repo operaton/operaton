@@ -65,14 +65,17 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     this.elementType = instanceContext.getModelType();
   }
 
+  @Override
   public DomElement getDomElement() {
     return domElement;
   }
 
+  @Override
   public ModelInstanceImpl getModelInstance() {
     return modelInstance;
   }
 
+  @Override
   public ModelElementInstance getParentElement() {
     DomElement parentElement = domElement.getParentElement();
     if (parentElement != null) {
@@ -83,26 +86,32 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     }
   }
 
+  @Override
   public ModelElementType getElementType() {
     return elementType;
   }
 
+  @Override
   public String getAttributeValue(String attributeName) {
     return domElement.getAttribute(attributeName);
   }
 
+  @Override
   public String getAttributeValueNs(String namespaceUri, String attributeName) {
     return domElement.getAttribute(namespaceUri, attributeName);
   }
 
+  @Override
   public void setAttributeValue(String attributeName, String xmlValue) {
     setAttributeValue(attributeName, xmlValue, false, true);
   }
 
+  @Override
   public void setAttributeValue(String attributeName, String xmlValue, boolean isIdAttribute) {
     setAttributeValue(attributeName, xmlValue, isIdAttribute, true);
   }
 
+  @Override
   public void setAttributeValue(String attributeName, String xmlValue,
                                 boolean isIdAttribute, boolean withReferenceUpdate) {
     String oldValue = getAttributeValue(attributeName);
@@ -118,14 +127,17 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     }
   }
 
+  @Override
   public void setAttributeValueNs(String namespaceUri, String attributeName, String xmlValue) {
     setAttributeValueNs(namespaceUri, attributeName, xmlValue, false, true);
   }
 
+  @Override
   public void setAttributeValueNs(String namespaceUri, String attributeName, String xmlValue, boolean isIdAttribute) {
     setAttributeValueNs(namespaceUri, attributeName, xmlValue, isIdAttribute, true);
   }
 
+  @Override
   public void setAttributeValueNs(String namespaceUri, String attributeName, String xmlValue,
                                   boolean isIdAttribute, boolean withReferenceUpdate) {
     String namespaceForSetting = determineNamespace(namespaceUri, attributeName);
@@ -165,6 +177,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     }
   }
 
+  @Override
   public void removeAttribute(String attributeName) {
     Attribute<?> attribute = elementType.getAttribute(attributeName);
     if (attribute != null) {
@@ -176,6 +189,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     domElement.removeAttribute(attributeName);
   }
 
+  @Override
   public void removeAttributeNs(String namespaceUri, String attributeName) {
     Attribute<?> attribute = elementType.getAttribute(attributeName);
     if (attribute != null) {
@@ -187,18 +201,22 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     domElement.removeAttribute(namespaceUri, attributeName);
   }
 
+  @Override
   public String getTextContent() {
     return getRawTextContent().trim();
   }
 
+  @Override
   public void setTextContent(String textContent) {
     domElement.setTextContent(textContent);
   }
 
+  @Override
   public String getRawTextContent() {
     return domElement.getTextContent();
   }
 
+  @Override
   public ModelElementInstance getUniqueChildElementByNameNs(String namespaceUri, String elementName) {
     Model model = modelInstance.getModel();
     List<DomElement> childElements = domElement.getChildElementsByNameNs(asSet(namespaceUri, model.getAlternativeNamespaces(namespaceUri)), elementName);
@@ -210,6 +228,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
 
+  @Override
   public ModelElementInstance getUniqueChildElementByType(Class<? extends ModelElementInstance> elementType) {
     List<DomElement> childElements = domElement.getChildElementsByType(modelInstance, elementType);
 
@@ -221,6 +240,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     }
   }
 
+  @Override
   public void setUniqueChildElementByNameNs(ModelElementInstance newChild) {
     ModelUtil.ensureInstanceOf(newChild, ModelElementInstanceImpl.class);
     ModelElementInstanceImpl newChildElement = (ModelElementInstanceImpl) newChild;
@@ -234,6 +254,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     }
   }
 
+  @Override
   public void replaceChildElement(ModelElementInstance existingChild, ModelElementInstance newChild) {
     DomElement existingChildDomElement = existingChild.getDomElement();
     DomElement newChildDomElement = newChild.getDomElement();
@@ -271,6 +292,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
 
   }
 
+  @Override
   public void replaceWithElement(ModelElementInstance newElement) {
     ModelElementInstanceImpl parentElement = (ModelElementInstanceImpl) getParentElement();
     if (parentElement != null) {
@@ -281,12 +303,14 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     }
   }
 
+  @Override
   public void addChildElement(ModelElementInstance newChild) {
     ModelUtil.ensureInstanceOf(newChild, ModelElementInstanceImpl.class);
     ModelElementInstance elementToInsertAfter = findElementToInsertAfter(newChild);
     insertElementAfter(newChild, elementToInsertAfter);
   }
 
+  @Override
   public boolean removeChildElement(ModelElementInstance child) {
     ModelElementInstanceImpl childImpl = (ModelElementInstanceImpl) child;
     childImpl.unlinkAllReferences();
@@ -294,6 +318,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     return domElement.removeChild(child.getDomElement());
   }
 
+  @Override
   public Collection<ModelElementInstance> getChildElementsByType(ModelElementType childElementType) {
     List<ModelElementInstance> instances = new ArrayList<ModelElementInstance>();
     for (ModelElementType extendingType : childElementType.getExtendingTypes()) {
@@ -306,6 +331,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     return instances;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends ModelElementInstance> Collection<T> getChildElementsByType(Class<T> childElementClass) {
     return (Collection<T>) getChildElementsByType(getModelInstance().getModel().getType(childElementClass));
@@ -336,6 +362,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     return insertAfterElement;
   }
 
+  @Override
   public void insertElementAfter(ModelElementInstance elementToInsert, ModelElementInstance insertAfterElement) {
     if (insertAfterElement == null || insertAfterElement.getDomElement() == null) {
       domElement.insertChildElementAfter(elementToInsert.getDomElement(), null);
@@ -345,6 +372,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
     }
   }
 
+  @Override
   public void updateAfterReplacement() {
     // do nothing
   }

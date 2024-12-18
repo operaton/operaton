@@ -30,18 +30,21 @@ import org.operaton.bpm.engine.impl.dmn.DecisionTableEvaluationBuilderImpl;
  */
 public class DecisionServiceImpl extends ServiceImpl implements DecisionService {
 
+  @Override
   public DmnDecisionTableResult evaluateDecisionTableById(String decisionDefinitionId, Map<String, Object> variables) {
     return evaluateDecisionTableById(decisionDefinitionId)
         .variables(variables)
         .evaluate();
   }
 
+  @Override
   public DmnDecisionTableResult evaluateDecisionTableByKey(String decisionDefinitionKey, Map<String, Object> variables) {
     return evaluateDecisionTableByKey(decisionDefinitionKey)
         .variables(variables)
         .evaluate();
   }
 
+  @Override
   public DmnDecisionTableResult evaluateDecisionTableByKeyAndVersion(String decisionDefinitionKey, Integer version, Map<String, Object> variables) {
     return evaluateDecisionTableByKey(decisionDefinitionKey)
         .version(version)
@@ -49,18 +52,22 @@ public class DecisionServiceImpl extends ServiceImpl implements DecisionService 
         .evaluate();
   }
 
+  @Override
   public DecisionEvaluationBuilder evaluateDecisionTableByKey(String decisionDefinitionKey) {
     return DecisionTableEvaluationBuilderImpl.evaluateDecisionTableByKey(commandExecutor, decisionDefinitionKey);
   }
 
+  @Override
   public DecisionEvaluationBuilder evaluateDecisionTableById(String decisionDefinitionId) {
     return DecisionTableEvaluationBuilderImpl.evaluateDecisionTableById(commandExecutor, decisionDefinitionId);
   }
 
+  @Override
   public DecisionsEvaluationBuilder evaluateDecisionByKey(String decisionDefinitionKey) {
     return DecisionEvaluationBuilderImpl.evaluateDecisionByKey(commandExecutor, decisionDefinitionKey);
   }
 
+  @Override
   public DecisionsEvaluationBuilder evaluateDecisionById(String decisionDefinitionId) {
     return DecisionEvaluationBuilderImpl.evaluateDecisionById(commandExecutor, decisionDefinitionId);
   }

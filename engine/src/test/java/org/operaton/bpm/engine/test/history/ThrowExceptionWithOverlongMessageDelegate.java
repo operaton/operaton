@@ -33,6 +33,8 @@ public class ThrowExceptionWithOverlongMessageDelegate implements JavaDelegate, 
   public ThrowExceptionWithOverlongMessageDelegate(String exceptionMessage) {
     this.exceptionMessage = exceptionMessage;
   }
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
 
     throw new RuntimeException(exceptionMessage);

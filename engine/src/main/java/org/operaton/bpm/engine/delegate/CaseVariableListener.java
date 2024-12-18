@@ -35,5 +35,6 @@ public interface CaseVariableListener extends VariableListener<DelegateCaseVaria
   String UPDATE = VariableListener.UPDATE;
   String DELETE = VariableListener.DELETE;
 
+  @Override
   void notify(DelegateCaseVariableInstance variableInstance) throws Exception;
 }

@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class ThrowBpmnErrorDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     Integer executionsBeforeError = (Integer) execution.getVariable("executionsBeforeError");
     Integer executions = (Integer) execution.getVariable("executions");

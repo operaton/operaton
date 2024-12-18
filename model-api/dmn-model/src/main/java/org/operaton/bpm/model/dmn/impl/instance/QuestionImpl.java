@@ -35,7 +35,8 @@ public class QuestionImpl extends DmnModelElementInstanceImpl implements Questio
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Question.class, DMN_ELEMENT_QUESTION)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Question>() {
-        public Question newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Question newInstance(ModelTypeInstanceContext instanceContext) {
           return new QuestionImpl(instanceContext);
         }
       });

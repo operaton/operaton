@@ -36,6 +36,7 @@ public class DeleteUserOperationLogEntryCmd implements Command<Void> {
     this.entryId = entryId;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ensureNotNull(NotValidException.class, "entryId", entryId);
 

@@ -37,7 +37,8 @@ public class ColumnImpl extends InformationItemImpl implements Column {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
       .instanceProvider(new ModelTypeInstanceProvider<Column>() {
-        public Column newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Column newInstance(ModelTypeInstanceContext instanceContext) {
           return new ColumnImpl(instanceContext);
         }
       });

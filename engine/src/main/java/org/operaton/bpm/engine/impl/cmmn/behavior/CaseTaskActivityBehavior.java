@@ -34,6 +34,7 @@ public class CaseTaskActivityBehavior extends ProcessOrCaseTaskActivityBehavior 
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 
+  @Override
   protected void triggerCallableElement(CmmnActivityExecution execution, Map<String, Object> variables, String businessKey) {
     CaseExecutionEntity executionEntity = (CaseExecutionEntity) execution;
 
@@ -42,6 +43,7 @@ public class CaseTaskActivityBehavior extends ProcessOrCaseTaskActivityBehavior 
     caseInstance.create(variables);
   }
 
+  @Override
   protected String getTypeName() {
     return "case task";
   }

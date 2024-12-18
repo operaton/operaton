@@ -38,14 +38,17 @@ public class AbstractTypedValue<T> implements TypedValue {
     this.type = type;
   }
 
+  @Override
   public T getValue() {
     return value;
   }
 
+  @Override
   public ValueType getType() {
     return type;
   }
 
+  @Override
   public String toString() {
     return "Value '" + value + "' of type '" + type + "', isTransient=" + isTransient;
   }

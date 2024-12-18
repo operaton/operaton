@@ -25,10 +25,12 @@ import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
 public class OperatonConnectorTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(OPERATON_NS, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(OPERATON_NS, OperatonConnectorId.class, 1, 1),
@@ -36,6 +38,7 @@ public class OperatonConnectorTest extends BpmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

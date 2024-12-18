@@ -106,6 +106,7 @@ public abstract class TimerEventJobHandler implements JobHandler<TimerJobConfigu
 
   }
 
+  @Override
   public void onDelete(TimerJobConfiguration configuration, JobEntity jobEntity) {
     // do nothing
   }

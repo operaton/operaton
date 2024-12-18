@@ -32,6 +32,7 @@ public abstract class TextBasedDataFormatReader implements DataFormatReader {
 
   private static final SpinCoreLogger LOG = SpinCoreLogger.CORE_LOGGER;
 
+  @Override
   public boolean canRead(Reader input, int readLimit) {
     char[] firstCharacters = new char[readLimit];
 

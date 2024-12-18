@@ -34,6 +34,7 @@ public class CalledProcessDelegate implements JavaDelegate {
   @Inject
   private BusinessProcess businessProcess;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     businessProcess.setVariable("calledDelegate", true);
   }

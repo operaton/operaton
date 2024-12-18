@@ -142,6 +142,7 @@ public class CommandContext {
 
     if(requiresContextSwitch(targetProcessApplication)) {
       Context.executeWithinProcessApplication(new Callable<Void>() {
+        @Override
         public Void call() throws Exception {
           performOperation(executionOperation, execution);
           return null;

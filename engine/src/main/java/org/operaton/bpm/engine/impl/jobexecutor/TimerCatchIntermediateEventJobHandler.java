@@ -28,10 +28,12 @@ public class TimerCatchIntermediateEventJobHandler extends TimerEventJobHandler 
 
   public static final String TYPE = "timer-intermediate-transition";
 
+  @Override
   public String getType() {
     return TYPE;
   }
 
+  @Override
   public void execute(TimerJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     String activityId = configuration.getTimerElementKey();
     ActivityImpl intermediateEventActivity = execution.getProcessDefinition().findActivity(activityId);

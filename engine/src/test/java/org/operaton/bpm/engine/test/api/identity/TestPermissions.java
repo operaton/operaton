@@ -55,6 +55,7 @@ public enum TestPermissions implements Permission {
     return value;
   }
 
+  @Override
   public Resource[] getTypes() {
     return new Resource[] { TestResource.RESOURCE1, TestResource.RESOURCE2 };
   }

@@ -40,7 +40,8 @@ public class OperatonInputParameterImpl extends OperatonGenericValueElementImpl 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputParameter.class, OPERATON_ELEMENT_INPUT_PARAMETER)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonInputParameter>() {
-        public OperatonInputParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonInputParameter newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonInputParameterImpl(instanceContext);
         }
       });
@@ -57,10 +58,12 @@ public class OperatonInputParameterImpl extends OperatonGenericValueElementImpl 
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonName() {
     return operatonNameAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonName(String operatonName) {
     operatonNameAttribute.setValue(this, operatonName);
   }

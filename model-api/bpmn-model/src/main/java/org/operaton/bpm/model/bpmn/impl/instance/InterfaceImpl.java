@@ -47,7 +47,8 @@ public class InterfaceImpl extends RootElementImpl implements Interface {
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Interface>() {
-        public Interface newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Interface newInstance(ModelTypeInstanceContext instanceContext) {
           return new InterfaceImpl(instanceContext);
         }
       });
@@ -72,22 +73,27 @@ public class InterfaceImpl extends RootElementImpl implements Interface {
     super(context);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getImplementationRef() {
     return implementationRefAttribute.getValue(this);
   }
 
+  @Override
   public void setImplementationRef(String implementationRef) {
     implementationRefAttribute.setValue(this, implementationRef);
   }
 
+  @Override
   public Collection<Operation> getOperations() {
     return operationCollection.get(this);
   }

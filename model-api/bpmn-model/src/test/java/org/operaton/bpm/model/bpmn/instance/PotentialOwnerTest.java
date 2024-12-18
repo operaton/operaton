@@ -23,6 +23,7 @@ import java.util.Collection;
  */
 public class PotentialOwnerTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(HumanPerformer.class, false);
   }

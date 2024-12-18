@@ -49,7 +49,8 @@ public class BpmnDiagramImpl extends DiagramImpl implements BpmnDiagram {
       .namespaceUri(BPMNDI_NS)
       .extendsType(Diagram.class)
       .instanceProvider(new ModelTypeInstanceProvider<BpmnDiagram>(){
-        public BpmnDiagram newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public BpmnDiagram newInstance(ModelTypeInstanceContext instanceContext) {
           return new BpmnDiagramImpl(instanceContext);
         }
       });
@@ -70,14 +71,17 @@ public class BpmnDiagramImpl extends DiagramImpl implements BpmnDiagram {
     super(instanceContext);
   }
 
+  @Override
   public BpmnPlane getBpmnPlane() {
     return bpmnPlaneChild.getChild(this);
   }
 
+  @Override
   public void setBpmnPlane(BpmnPlane bpmnPlane) {
     bpmnPlaneChild.setChild(this, bpmnPlane);
   }
 
+  @Override
   public Collection<BpmnLabelStyle> getBpmnLabelStyles() {
     return bpmnLabelStyleCollection.get(this);
   }

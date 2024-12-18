@@ -38,7 +38,8 @@ public class InputDataItemImpl extends DataInputImpl implements InputDataItem {
       .namespaceUri(BPMN20_NS)
       .extendsType(DataInput.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<InputDataItem>() {
-        public InputDataItem newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputDataItem newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputDataItemImpl(instanceContext);
         }
       });

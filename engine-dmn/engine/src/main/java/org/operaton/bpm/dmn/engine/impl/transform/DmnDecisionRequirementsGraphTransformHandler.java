@@ -23,6 +23,7 @@ import org.operaton.bpm.model.dmn.instance.Definitions;
 
 public class DmnDecisionRequirementsGraphTransformHandler implements DmnElementTransformHandler<Definitions, DmnDecisionRequirementsGraphImpl> {
 
+  @Override
   public DmnDecisionRequirementsGraphImpl handleElement(DmnElementTransformContext context, Definitions definitions) {
     return createFromDefinitions(context, definitions);
   }

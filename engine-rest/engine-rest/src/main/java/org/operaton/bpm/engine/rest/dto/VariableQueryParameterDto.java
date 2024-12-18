@@ -42,6 +42,7 @@ public class VariableQueryParameterDto extends ConditionQueryParameterDto {
     this.name = name;
   }
 
+  @Override
   public Object resolveValue(ObjectMapper objectMapper) {
     Object value = super.resolveValue(objectMapper);
 

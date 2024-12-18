@@ -29,6 +29,7 @@ public class OperatonFormRefImpl implements OperatonFormRef {
     this.binding = binding;
   }
 
+  @Override
   public String getKey() {
     return key;
   }
@@ -37,6 +38,7 @@ public class OperatonFormRefImpl implements OperatonFormRef {
     this.key = key;
   }
 
+  @Override
   public String getBinding() {
     return binding;
   }
@@ -45,6 +47,7 @@ public class OperatonFormRefImpl implements OperatonFormRef {
     this.binding = binding;
   }
 
+  @Override
   public Integer getVersion() {
     return version;
   }

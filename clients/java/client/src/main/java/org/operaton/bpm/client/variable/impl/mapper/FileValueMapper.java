@@ -51,6 +51,7 @@ public class FileValueMapper extends AbstractTypedValueMapper<FileValue> {
     throw new UnsupportedOperationException("Currently no automatic conversation from UntypedValue to FileValue");
   }
 
+  @Override
   public FileValue readValue(TypedValueField value, boolean deserializeValue) {
     Map<String, Object> valueInfo = value.getValueInfo();
 

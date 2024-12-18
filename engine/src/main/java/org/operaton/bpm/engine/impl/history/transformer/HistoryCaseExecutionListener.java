@@ -35,6 +35,7 @@ public abstract class HistoryCaseExecutionListener implements CaseExecutionListe
     eventProducer = historyEventProducer;
   }
 
+  @Override
   public void notify(DelegateCaseExecution caseExecution) throws Exception {
     HistoryEvent historyEvent = createHistoryEvent(caseExecution);
 

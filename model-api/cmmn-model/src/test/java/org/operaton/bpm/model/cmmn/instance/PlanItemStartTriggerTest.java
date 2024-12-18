@@ -25,16 +25,19 @@ import java.util.Collection;
  */
 public class PlanItemStartTriggerTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(StartTrigger.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(PlanItemTransitionStandardEvent.class, 0, 1)
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
           new AttributeAssumption("sourceRef")

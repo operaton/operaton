@@ -28,6 +28,7 @@ public class FailingXmlSerializable extends XmlSerializable {
     super(stringProperty, intProperty, booleanProperty);
   }
 
+  @Override
   public String getStringProperty() {
     throw new RuntimeException("I am failing");
   }

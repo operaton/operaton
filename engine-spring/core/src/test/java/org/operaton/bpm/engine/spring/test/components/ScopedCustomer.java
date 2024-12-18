@@ -42,7 +42,8 @@ public class ScopedCustomer implements Serializable, InitializingBean{
 		this.name = name;
 	}
 
-	public void afterPropertiesSet() throws Exception {
+  @Override
+  public void afterPropertiesSet() throws Exception {
 	 System.out.println("starting ..." + this.name) ;
 	}
 }

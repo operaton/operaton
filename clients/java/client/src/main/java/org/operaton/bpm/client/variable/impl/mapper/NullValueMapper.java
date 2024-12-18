@@ -41,6 +41,7 @@ public class NullValueMapper extends AbstractTypedValueMapper<NullValueImpl> {
     typedValueField.setValue(null);
   }
 
+  @Override
   public NullValueImpl readValue(TypedValueField typedValueField, boolean deserialize) {
     return NullValueImpl.INSTANCE;
   }

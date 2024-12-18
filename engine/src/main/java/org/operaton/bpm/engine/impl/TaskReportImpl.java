@@ -52,6 +52,7 @@ public class TaskReportImpl implements Serializable, TaskReport {
     return tenantCheck;
   }
 
+  @Override
   public List<TaskCountByCandidateGroupResult> taskCountByCandidateGroup() {
     return commandExecutor.execute(new TaskCountByCandidateGroupCmd());
   }

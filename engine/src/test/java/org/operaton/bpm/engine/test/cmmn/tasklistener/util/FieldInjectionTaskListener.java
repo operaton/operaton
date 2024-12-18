@@ -35,6 +35,7 @@ public class FieldInjectionTaskListener implements TaskListener, Serializable {
   protected Expression prefix;
   protected Expression suffix;
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     delegateTask.setVariable("greeting", "Hello from " + greeter.getValue(delegateTask));
     delegateTask.setVariable("helloWorld", helloWorld.getValue(delegateTask));

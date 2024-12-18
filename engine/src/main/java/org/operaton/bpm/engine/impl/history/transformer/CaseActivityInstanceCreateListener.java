@@ -30,6 +30,7 @@ public class CaseActivityInstanceCreateListener extends HistoryCaseExecutionList
     super(historyEventProducer);
   }
 
+  @Override
   protected HistoryEvent createHistoryEvent(DelegateCaseExecution caseExecution) {
     ensureHistoryLevelInitialized();
     if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_ACTIVITY_INSTANCE_CREATE, caseExecution)) {

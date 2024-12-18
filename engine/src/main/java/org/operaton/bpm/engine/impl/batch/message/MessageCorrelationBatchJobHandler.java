@@ -44,10 +44,12 @@ public class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler<M
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_CORRELATE_MESSAGE);
 
+  @Override
   public String getType() {
     return Batch.TYPE_CORRELATE_MESSAGE;
   }
 
+  @Override
   public JobDeclaration<BatchJobContext, MessageEntity> getJobDeclaration() {
     return JOB_DECLARATION;
   }

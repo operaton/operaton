@@ -37,18 +37,22 @@ public class FooDataFormat implements DataFormat<FooSpin> {
   public static final String TYPE_NAME = "FooType";
   public static final String NAME = "application/foo";
 
+  @Override
   public String getName() {
     return NAME;
   }
 
+  @Override
   public Class<? extends FooSpin> getWrapperType() {
     return FooSpin.class;
   }
 
+  @Override
   public FooSpin createWrapperInstance(Object parameter) {
     return new FooSpin();
   }
 
+  @Override
   public DataFormatReader getReader() {
     return new TextBasedDataFormatReader() {
 

@@ -45,17 +45,21 @@ public class JmxManagedProcessApplication implements PlatformService<JmxManagedP
     this.processApplicationReference = processApplicationReference;
 	}
 
-	public String getProcessApplicationName() {
+  @Override
+  public String getProcessApplicationName() {
 		return processApplicationInfo.getName();
 	}
 
-	public void start(PlatformServiceContainer mBeanServiceContainer) {
+  @Override
+  public void start(PlatformServiceContainer mBeanServiceContainer) {
 	}
 
-	public void stop(PlatformServiceContainer mBeanServiceContainer) {
+  @Override
+  public void stop(PlatformServiceContainer mBeanServiceContainer) {
 	}
 
-	public JmxManagedProcessApplication getValue() {
+  @Override
+  public JmxManagedProcessApplication getValue() {
 		return this;
 	}
 
@@ -75,6 +79,7 @@ public class JmxManagedProcessApplication implements PlatformService<JmxManagedP
     return deploymentMap;
   }
 
+  @Override
   public List<String> getDeploymentIds() {
     List<String> deploymentIds = new ArrayList<String>();
     for (DeployedProcessArchive registration : deploymentMap.values()) {
@@ -83,6 +88,7 @@ public class JmxManagedProcessApplication implements PlatformService<JmxManagedP
     return deploymentIds;
   }
 
+  @Override
   public List<String> getDeploymentNames() {
     return new ArrayList<String>(deploymentMap.keySet());
   }

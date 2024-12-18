@@ -46,6 +46,7 @@ public class MailActivityBehavior extends AbstractBpmnActivityBehavior {
   protected Expression html;
   protected Expression charset;
 
+  @Override
   public void execute(ActivityExecution execution) {
     String toStr = getStringFromField(to, execution);
     String fromStr = getStringFromField(from, execution);

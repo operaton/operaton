@@ -49,10 +49,12 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  */
 public class StartProcessApplicationServiceStep extends DeploymentOperationStep {
 
+  @Override
   public String getName() {
     return "Start Process Application Service";
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
 
     final AbstractProcessApplication processApplication = operationContext.getAttachment(PROCESS_APPLICATION);

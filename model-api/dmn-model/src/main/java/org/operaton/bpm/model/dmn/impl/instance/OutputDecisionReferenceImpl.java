@@ -37,7 +37,8 @@ public class OutputDecisionReferenceImpl extends DmnElementReferenceImpl impleme
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<OutputDecisionReference>() {
-        public OutputDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OutputDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new OutputDecisionReferenceImpl(instanceContext);
         }
       });

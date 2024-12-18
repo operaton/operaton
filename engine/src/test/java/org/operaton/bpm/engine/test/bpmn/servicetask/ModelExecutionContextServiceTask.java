@@ -30,6 +30,7 @@ public class ModelExecutionContextServiceTask implements JavaDelegate {
   public static BpmnModelInstance modelInstance;
   public static ServiceTask serviceTask;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     modelInstance = execution.getBpmnModelInstance();
     serviceTask = (ServiceTask) execution.getBpmnModelElementInstance();

@@ -119,6 +119,7 @@ public class ProblemImpl implements Problem {
     return elementIds;
   }
 
+  @Override
   public String toString() {
     StringBuilder string = new StringBuilder(); 
     if (line > 0) {

@@ -22,6 +22,7 @@ package org.operaton.bpm.engine.impl.form.validator;
  */
 public class ReadOnlyValidator implements FormFieldValidator {
 
+  @Override
   public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext) {
     // no value was submitted
     return submittedValue == null;

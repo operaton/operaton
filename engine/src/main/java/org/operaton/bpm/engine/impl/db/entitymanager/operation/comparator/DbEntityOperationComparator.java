@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbEntityOperation
  */
 public class DbEntityOperationComparator implements Comparator<DbEntityOperation> {
 
+  @Override
   public int compare(DbEntityOperation firstOperation, DbEntityOperation secondOperation) {
 
     if(firstOperation.equals(secondOperation)) {

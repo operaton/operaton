@@ -37,7 +37,8 @@ public class AllowedValuesImpl extends UnaryTestsImpl implements AllowedValues {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
       .instanceProvider(new ModelTypeInstanceProvider<AllowedValues>() {
-        public AllowedValues newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public AllowedValues newInstance(ModelTypeInstanceContext instanceContext) {
           return new AllowedValuesImpl(instanceContext);
         }
       });

@@ -37,6 +37,7 @@ public class CaseExecutionContext extends CoreExecutionContext<CaseExecutionEnti
     return (CaseDefinitionEntity) execution.getCaseDefinition();
   }
 
+  @Override
   protected String getDeploymentId() {
     return getCaseDefinition().getDeploymentId();
   }

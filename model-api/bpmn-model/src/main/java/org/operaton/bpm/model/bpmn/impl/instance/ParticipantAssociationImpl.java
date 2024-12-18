@@ -44,7 +44,8 @@ public class ParticipantAssociationImpl extends BaseElementImpl implements Parti
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<ParticipantAssociation>() {
-        public ParticipantAssociation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ParticipantAssociation newInstance(ModelTypeInstanceContext instanceContext) {
           return new ParticipantAssociationImpl(instanceContext);
         }
       });
@@ -68,18 +69,22 @@ public class ParticipantAssociationImpl extends BaseElementImpl implements Parti
     super(instanceContext);
   }
 
+  @Override
   public Participant getInnerParticipant() {
     return innerParticipantRefChild.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setInnerParticipant(Participant innerParticipant) {
    innerParticipantRefChild.setReferenceTargetElement(this, innerParticipant);
   }
 
+  @Override
   public Participant getOuterParticipant() {
     return outerParticipantRefChild.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setOuterParticipant(Participant outerParticipant) {
      outerParticipantRefChild.setReferenceTargetElement(this, outerParticipant);
   }

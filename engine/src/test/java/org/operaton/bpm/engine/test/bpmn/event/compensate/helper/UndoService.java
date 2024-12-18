@@ -27,7 +27,8 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 public class UndoService implements JavaDelegate {
   
   private Expression counterName;
-  
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     String variableName = (String) counterName.getValue(execution);
     Object variable = execution.getVariable(variableName);

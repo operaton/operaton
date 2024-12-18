@@ -46,19 +46,23 @@ public class CaseFileItemStartTriggerImpl extends StartTriggerImpl implements Ca
     super(instanceContext);
   }
 
+  @Override
   public CaseFileItem getSource() {
     return sourceRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSource(CaseFileItem source) {
     sourceRefAttribute.setReferenceTargetElement(this, source);
   }
 
+  @Override
   public CaseFileItemTransition getStandardEvent() {
     CaseFileItemTransitionStandardEvent child = standardEventChild.getChild(this);
     return child.getValue();
   }
 
+  @Override
   public void setStandardEvent(CaseFileItemTransition standardEvent) {
     CaseFileItemTransitionStandardEvent child = standardEventChild.getChild(this);
     child.setValue(standardEvent);
@@ -69,7 +73,8 @@ public class CaseFileItemStartTriggerImpl extends StartTriggerImpl implements Ca
         .extendsType(StartTrigger.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<CaseFileItemStartTrigger>() {
-          public CaseFileItemStartTrigger newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseFileItemStartTrigger newInstance(ModelTypeInstanceContext instanceContext) {
             return new CaseFileItemStartTriggerImpl(instanceContext);
           }
         });

@@ -37,7 +37,8 @@ public class OperatonVariableTransitionEventImpl  extends CmmnModelElementInstan
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableTransitionEvent.class, OPERATON_ELEMENT_VARIABLE_EVENT)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonVariableTransitionEvent>() {
-        public OperatonVariableTransitionEvent newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonVariableTransitionEvent newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonVariableTransitionEventImpl(instanceContext);
       }
     });
@@ -45,11 +46,13 @@ public class OperatonVariableTransitionEventImpl  extends CmmnModelElementInstan
     typeBuilder.build();
   }
 
+  @Override
   public VariableTransition getValue() {
     String variableEvent = getTextContent().trim();
     return Enum.valueOf(VariableTransition.class, variableEvent);
   }
 
+  @Override
   public void setValue(VariableTransition value) {
     setTextContent(value.toString());
   }

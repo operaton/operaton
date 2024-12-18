@@ -35,6 +35,7 @@ public enum ServiceTypes implements ServiceType {
     this.serviceRealm = serviceRealm;
   }
 
+  @Override
   public String getTypeName() {
     return serviceRealm;
   }

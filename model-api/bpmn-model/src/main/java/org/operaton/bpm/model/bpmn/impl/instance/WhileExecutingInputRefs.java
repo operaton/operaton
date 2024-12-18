@@ -35,7 +35,8 @@ public class WhileExecutingInputRefs extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(WhileExecutingInputRefs.class, BPMN_ELEMENT_WHILE_EXECUTING_INPUT_REFS)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<WhileExecutingInputRefs>() {
-        public WhileExecutingInputRefs newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public WhileExecutingInputRefs newInstance(ModelTypeInstanceContext instanceContext) {
           return new WhileExecutingInputRefs(instanceContext);
         }
       });

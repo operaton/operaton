@@ -36,7 +36,8 @@ public class ScriptTaskListener implements TaskListener {
     this.script = script;
   }
 
-	public void notify(DelegateTask delegateTask) {
+  @Override
+  public void notify(DelegateTask delegateTask) {
     ScriptInvocation invocation = new ScriptInvocation(script, delegateTask);
     try {
       Context

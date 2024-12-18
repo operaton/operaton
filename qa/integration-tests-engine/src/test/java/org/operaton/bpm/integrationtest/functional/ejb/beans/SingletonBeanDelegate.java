@@ -27,6 +27,7 @@ import javax.inject.Named;
 @Singleton
 public class SingletonBeanDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     execution.setVariable(SingletonBeanDelegate.class.getName(), true);
   }

@@ -19,14 +19,17 @@ package org.operaton.bpm.model.dmn.instance;
 import java.util.Collection;
 
 public abstract class AbstractTextContentElementTest extends DmnModelElementInstanceTest {
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

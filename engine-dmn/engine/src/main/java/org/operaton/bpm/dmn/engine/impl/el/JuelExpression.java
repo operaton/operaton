@@ -35,6 +35,7 @@ public class JuelExpression implements ElExpression {
     this.elContextFactory = elContextFactory;
   }
 
+  @Override
   public Object getValue(VariableContext variableContext) {
     ELContext elContext = elContextFactory.createElContext(variableContext);
     return expression.getValue(elContext);

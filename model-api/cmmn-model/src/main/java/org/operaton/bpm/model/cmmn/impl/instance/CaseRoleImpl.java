@@ -40,7 +40,8 @@ public class CaseRoleImpl extends RoleImpl implements CaseRole {
       .namespaceUri(CMMN10_NS)
       .extendsType(Role.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<CaseRole>() {
-        public CaseRole newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseRole newInstance(ModelTypeInstanceContext instanceContext) {
           return new CaseRoleImpl(instanceContext);
         }
       });

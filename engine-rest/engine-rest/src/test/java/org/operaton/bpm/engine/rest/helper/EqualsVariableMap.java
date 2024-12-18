@@ -78,6 +78,7 @@ public class EqualsVariableMap extends BaseMatcher<Map<String, Object>> {
     return this;
   }
 
+  @Override
   public void describeTo(Description description) {
     description.appendText("EqualsVariableMap: {");
     for (Map.Entry<String, Matcher<?>> matcher : matchers.entrySet()) {

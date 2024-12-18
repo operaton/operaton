@@ -71,30 +71,37 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public PlanItemDefinition getDefinition() {
     return planItemDefinitionRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setDefinition(PlanItemDefinition definition) {
     planItemDefinitionRefAttribute.setReferenceTargetElement(this, definition);
   }
 
+  @Override
   public Collection<Sentry> getEntryCriterias() {
     return entryCriteriaRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<Sentry> getExitCriterias() {
     return exitCriteriaRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<Sentry> getEntryCriteria() {
     if (!isCmmn11()) {
       return Collections.unmodifiableCollection(getEntryCriterias());
@@ -112,6 +119,7 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
     }
   }
 
+  @Override
   public Collection<Sentry> getExitCriteria() {
     if (!isCmmn11()) {
       return Collections.unmodifiableCollection(getExitCriterias());
@@ -129,18 +137,22 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
     }
   }
 
+  @Override
   public Collection<EntryCriterion> getEntryCriterions() {
     return entryCriterionCollection.get(this);
   }
 
+  @Override
   public Collection<ExitCriterion> getExitCriterions() {
     return exitCriterionCollection.get(this);
   }
 
+  @Override
   public ItemControl getItemControl() {
     return itemControlChild.getChild(this);
   }
 
+  @Override
   public void setItemControl(ItemControl itemControl) {
     itemControlChild.setChild(this, itemControl);
   }
@@ -150,7 +162,8 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<PlanItem>() {
-          public PlanItem newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public PlanItem newInstance(ModelTypeInstanceContext instanceContext) {
             return new PlanItemImpl(instanceContext);
           }
         });

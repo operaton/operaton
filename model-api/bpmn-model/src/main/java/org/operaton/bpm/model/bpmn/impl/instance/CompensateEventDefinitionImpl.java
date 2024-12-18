@@ -43,7 +43,8 @@ public class CompensateEventDefinitionImpl extends EventDefinitionImpl implement
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
       .instanceProvider(new ModelTypeInstanceProvider<CompensateEventDefinition>() {
-        public CompensateEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CompensateEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
           return new CompensateEventDefinitionImpl(instanceContext);
         }
       });
@@ -62,18 +63,22 @@ public class CompensateEventDefinitionImpl extends EventDefinitionImpl implement
     super(context);
   }
 
+  @Override
   public boolean isWaitForCompletion() {
     return waitForCompletionAttribute.getValue(this);
   }
 
+  @Override
   public void setWaitForCompletion(boolean isWaitForCompletion) {
     waitForCompletionAttribute.setValue(this, isWaitForCompletion);
   }
 
+  @Override
   public Activity getActivity() {
     return activityRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setActivity(Activity activity) {
     activityRefAttribute.setReferenceTargetElement(this, activity);
   }

@@ -40,7 +40,8 @@ public class PointImpl extends BpmnModelElementInstanceImpl implements Point {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Point.class, DC_ELEMENT_POINT)
       .namespaceUri(DC_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Point>() {
-        public Point newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Point newInstance(ModelTypeInstanceContext instanceContext) {
           return new PointImpl(instanceContext);
         }
       });
@@ -60,18 +61,22 @@ public class PointImpl extends BpmnModelElementInstanceImpl implements Point {
     super(instanceContext);
   }
 
+  @Override
   public Double getX() {
     return xAttribute.getValue(this);
   }
 
+  @Override
   public void setX(double x) {
     xAttribute.setValue(this, x);
   }
 
+  @Override
   public Double getY() {
     return yAttribute.getValue(this);
   }
 
+  @Override
   public void setY(double y) {
     yAttribute.setValue(this, y);
   }

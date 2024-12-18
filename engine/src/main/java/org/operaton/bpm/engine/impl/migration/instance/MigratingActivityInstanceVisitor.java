@@ -44,6 +44,7 @@ public class MigratingActivityInstanceVisitor extends MigratingProcessElementIns
         || instance instanceof MigratingTransitionInstance;
   }
 
+  @Override
   protected void instantiateScopes(
       MigratingScopeInstance ancestorScopeInstance,
       MigratingScopeInstanceBranch executionBranch,

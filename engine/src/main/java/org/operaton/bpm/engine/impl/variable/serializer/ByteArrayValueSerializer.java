@@ -35,6 +35,7 @@ public class ByteArrayValueSerializer extends PrimitiveValueSerializer<BytesValu
     super(ValueType.BYTES);
   }
 
+  @Override
   public BytesValue convertToTypedValue(UntypedValueImpl untypedValue) {
     Object value = untypedValue.getValue();
     if (value instanceof byte[] bytes) {
@@ -45,6 +46,7 @@ public class ByteArrayValueSerializer extends PrimitiveValueSerializer<BytesValu
     }
   }
 
+  @Override
   public BytesValue readValue(ValueFields valueFields, boolean asTransientValue) {
     return Variables.byteArrayValue(valueFields.getByteArrayValue(), asTransientValue);
   }

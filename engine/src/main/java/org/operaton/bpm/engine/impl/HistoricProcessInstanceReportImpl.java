@@ -62,24 +62,28 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
 
   // query parameter ///////////////////////////////////////////////
 
+  @Override
   public HistoricProcessInstanceReport startedAfter(Date startedAfter) {
     ensureNotNull(NotValidException.class, "startedAfter", startedAfter);
     this.startedAfter = startedAfter;
     return this;
   }
 
+  @Override
   public HistoricProcessInstanceReport startedBefore(Date startedBefore) {
     ensureNotNull(NotValidException.class, "startedBefore", startedBefore);
     this.startedBefore = startedBefore;
     return this;
   }
 
+  @Override
   public HistoricProcessInstanceReport processDefinitionIdIn(String... processDefinitionIds) {
     ensureNotNull(NotValidException.class, "", "processDefinitionIdIn", (Object[]) processDefinitionIds);
     this.processDefinitionIdIn = processDefinitionIds;
     return this;
   }
 
+  @Override
   public HistoricProcessInstanceReport processDefinitionKeyIn(String... processDefinitionKeys) {
     ensureNotNull(NotValidException.class, "", "processDefinitionKeyIn", (Object[]) processDefinitionKeys);
     this.processDefinitionKeyIn = processDefinitionKeys;
@@ -88,6 +92,7 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
 
   // report execution /////////////////////////////////////////////
 
+  @Override
   public List<DurationReportResult> duration(PeriodUnit periodUnit) {
     ensureNotNull(NotValidException.class, "periodUnit", periodUnit);
     this.durationPeriodUnit = periodUnit;

@@ -84,11 +84,12 @@ public class Builder implements TreeBuilder {
 	public boolean isEnabled(Feature feature) {
 		return features.contains(feature);
 	}
-	
-	/**
-	 * Parse expression.
-	 */
-	public Tree build(String expression) throws TreeBuilderException {
+
+  /**
+   * Parse expression.
+   */
+  @Override
+  public Tree build(String expression) throws TreeBuilderException {
 		try {
 			return createParser(expression).tree();
 		} catch (Scanner.ScanException e) {

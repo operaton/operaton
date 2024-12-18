@@ -57,18 +57,21 @@ public class TaskListenerProcessEngineServicesAccessTest extends AbstractProcess
   }
 
   public static class AccessServicesListener implements TaskListener {
+    @Override
     public void notify(DelegateTask execution) {
       assertCanAccessServices(execution.getProcessEngineServices());
     }
   }
 
   public static class PerformQueryListener implements TaskListener {
+    @Override
     public void notify(DelegateTask execution) {
       assertCanPerformQuery(execution.getProcessEngineServices());
     }
   }
 
   public static class StartProcessListener implements TaskListener {
+    @Override
     public void notify(DelegateTask execution) {
       assertCanStartProcessInstance(execution.getProcessEngineServices());
     }

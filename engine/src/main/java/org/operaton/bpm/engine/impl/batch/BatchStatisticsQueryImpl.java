@@ -48,6 +48,7 @@ public class BatchStatisticsQueryImpl extends AbstractQuery<BatchStatisticsQuery
     super(commandExecutor);
   }
 
+  @Override
   public BatchStatisticsQuery batchId(String batchId) {
     ensureNotNull("Batch id", batchId);
     this.batchId = batchId;
@@ -58,6 +59,7 @@ public class BatchStatisticsQueryImpl extends AbstractQuery<BatchStatisticsQuery
     return batchId;
   }
 
+  @Override
   public BatchStatisticsQuery type(String type) {
     ensureNotNull("Type", type);
     this.type = type;
@@ -68,6 +70,7 @@ public class BatchStatisticsQueryImpl extends AbstractQuery<BatchStatisticsQuery
     return type;
   }
 
+  @Override
   public BatchStatisticsQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -83,17 +86,20 @@ public class BatchStatisticsQueryImpl extends AbstractQuery<BatchStatisticsQuery
     return isTenantIdSet;
   }
 
+  @Override
   public BatchStatisticsQuery withoutTenantId() {
     this.tenantIds = null;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public BatchStatisticsQuery active() {
     this.suspensionState = SuspensionState.ACTIVE;
     return this;
   }
 
+  @Override
   public BatchStatisticsQuery suspended() {
     this.suspensionState = SuspensionState.SUSPENDED;
     return this;
@@ -133,6 +139,7 @@ public class BatchStatisticsQueryImpl extends AbstractQuery<BatchStatisticsQuery
     return suspensionState;
   }
 
+  @Override
   public BatchStatisticsQuery orderById() {
     return orderBy(BatchQueryProperty.ID);
   }
@@ -147,6 +154,7 @@ public class BatchStatisticsQueryImpl extends AbstractQuery<BatchStatisticsQuery
     return orderBy(BatchQueryProperty.START_TIME);
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return commandContext
@@ -154,6 +162,7 @@ public class BatchStatisticsQueryImpl extends AbstractQuery<BatchStatisticsQuery
       .getStatisticsCountGroupedByBatch(this);
   }
 
+  @Override
   public List<BatchStatistics> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     return commandContext

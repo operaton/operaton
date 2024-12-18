@@ -35,7 +35,8 @@ public class OperationRef extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperationRef.class, BPMN_ELEMENT_OPERATION_REF)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperationRef>() {
-        public OperationRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperationRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperationRef(instanceContext);
         }
       });

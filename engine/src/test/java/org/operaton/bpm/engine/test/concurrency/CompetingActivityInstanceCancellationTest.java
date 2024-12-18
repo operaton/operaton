@@ -76,11 +76,14 @@ public class CompetingActivityInstanceCancellationTest {
       this.processInstanceId = processInstanceId;
       this.activityInstanceId = activityInstanceId;
     }
+
+    @Override
     public synchronized void startAndWaitUntilControlIsReturned() {
       activeThread = this;
       super.startAndWaitUntilControlIsReturned();
     }
 
+    @Override
     public void run() {
       try {
         processEngineConfiguration

@@ -49,6 +49,7 @@ public class SetJobDefinitionPriorityCmd implements Command<Void> {
     this.cascade = cascade;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ensureNotNull(NotValidException.class, "jobDefinitionId", jobDefinitionId);
 

@@ -61,7 +61,8 @@ public class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTask {
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
       .instanceProvider(new ModelTypeInstanceProvider<BusinessRuleTask>() {
-        public BusinessRuleTask newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public BusinessRuleTask newInstance(ModelTypeInstanceContext instanceContext) {
           return new BusinessRuleTaskImpl(instanceContext);
         }
       });
@@ -136,92 +137,114 @@ public class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTask {
     return new BusinessRuleTaskBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public String getImplementation() {
     return implementationAttribute.getValue(this);
   }
 
+  @Override
   public void setImplementation(String implementation) {
     implementationAttribute.setValue(this, implementation);
   }
 
   /** operaton extensions */
 
+  @Override
   public String getOperatonClass() {
     return operatonClassAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonClass(String operatonClass) {
     operatonClassAttribute.setValue(this, operatonClass);
   }
 
+  @Override
   public String getOperatonDelegateExpression() {
     return operatonDelegateExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDelegateExpression(String operatonExpression) {
     operatonDelegateExpressionAttribute.setValue(this, operatonExpression);
   }
 
+  @Override
   public String getOperatonExpression() {
     return operatonExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonExpression(String operatonExpression) {
     operatonExpressionAttribute.setValue(this, operatonExpression);
   }
 
+  @Override
   public String getOperatonResultVariable() {
     return operatonResultVariableAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonResultVariable(String operatonResultVariable) {
     operatonResultVariableAttribute.setValue(this, operatonResultVariable);
   }
 
+  @Override
   public String getOperatonTopic() {
     return operatonTopicAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonTopic(String operatonTopic) {
     operatonTopicAttribute.setValue(this, operatonTopic);
   }
 
+  @Override
   public String getOperatonType() {
     return operatonTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonType(String operatonType) {
     operatonTypeAttribute.setValue(this, operatonType);
   }
 
+  @Override
   public String getOperatonDecisionRef() {
     return operatonDecisionRefAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDecisionRef(String operatonDecisionRef) {
     operatonDecisionRefAttribute.setValue(this, operatonDecisionRef);
   }
 
+  @Override
   public String getOperatonDecisionRefBinding() {
     return operatonDecisionRefBindingAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDecisionRefBinding(String operatonDecisionRefBinding) {
     operatonDecisionRefBindingAttribute.setValue(this, operatonDecisionRefBinding);
   }
 
+  @Override
   public String getOperatonDecisionRefVersion() {
     return operatonDecisionRefVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDecisionRefVersion(String operatonDecisionRefVersion) {
     operatonDecisionRefVersionAttribute.setValue(this, operatonDecisionRefVersion);
   }
 
+  @Override
   public String getOperatonDecisionRefVersionTag() {
     return operatonDecisionRefVersionTagAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDecisionRefVersionTag(String operatonDecisionRefVersionTag) {
     operatonDecisionRefVersionTagAttribute.setValue(this, operatonDecisionRefVersionTag);
   }
@@ -236,10 +259,12 @@ public class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTask {
     operatonMapDecisionResultAttribute.setValue(this, operatonMapDecisionResult);
   }
 
+  @Override
   public String getOperatonDecisionRefTenantId() {
     return operatonDecisionRefTenantIdAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDecisionRefTenantId(String tenantId) {
     operatonDecisionRefTenantIdAttribute.setValue(this, tenantId);
   }

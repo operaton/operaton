@@ -53,11 +53,13 @@ public class AstParameters extends AstRightValue {
 		builder.append(")");
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return nodes.size();
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return nodes.get(i);
 	}
 }

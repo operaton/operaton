@@ -38,7 +38,8 @@ public class ConditionImpl extends ExpressionImpl implements Condition {
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<Condition>() {
-        public Condition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Condition newInstance(ModelTypeInstanceContext instanceContext) {
           return new ConditionImpl(instanceContext);
         }
       });

@@ -53,24 +53,28 @@ public class JavaDelegateProcessEngineServicesAccessTest extends AbstractProcess
   }
 
   public static class AccessServicesJavaDelegate implements JavaDelegate {
+    @Override
     public void execute(DelegateExecution execution) throws Exception {
       assertCanAccessServices(execution.getProcessEngineServices());
     }
   }
 
   public static class PerformQueryJavaDelegate implements JavaDelegate {
+    @Override
     public void execute(DelegateExecution execution) throws Exception {
       assertCanPerformQuery(execution.getProcessEngineServices());
     }
   }
 
   public static class StartProcessJavaDelegate implements JavaDelegate {
+    @Override
     public void execute(DelegateExecution execution) throws Exception {
       assertCanStartProcessInstance(execution.getProcessEngineServices());
     }
   }
 
   public static class ProcessEngineStartProcessJavaDelegate implements JavaDelegate {
+    @Override
     public void execute(DelegateExecution execution) throws Exception {
       assertCanStartProcessInstance(execution.getProcessEngine());
     }

@@ -58,6 +58,7 @@ public class DmnTypeDefinitionImpl implements DmnTypeDefinition {
     }
   }
 
+  @Override
   public String getTypeName() {
     return typeName;
   }

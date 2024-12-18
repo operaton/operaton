@@ -30,6 +30,7 @@ public class CreateGroupQueryCmd implements Command<GroupQuery>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @Override
   public GroupQuery execute(CommandContext commandContext) {
     return commandContext
       .getReadOnlyIdentityProvider()

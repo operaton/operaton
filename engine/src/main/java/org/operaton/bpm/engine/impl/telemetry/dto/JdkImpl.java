@@ -28,6 +28,7 @@ public class JdkImpl implements Jdk {
     this.vendor = vendor;
   }
 
+  @Override
   public String getVersion() {
     return version;
   }
@@ -36,6 +37,7 @@ public class JdkImpl implements Jdk {
     this.version = version;
   }
 
+  @Override
   public String getVendor() {
     return vendor;
   }

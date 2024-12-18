@@ -48,6 +48,7 @@ public class ClassDelegateExecutionListener extends ClassDelegate implements Exe
   }
 
   // Execution listener
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     ExecutionListener executionListenerInstance = getExecutionListenerInstance();
 

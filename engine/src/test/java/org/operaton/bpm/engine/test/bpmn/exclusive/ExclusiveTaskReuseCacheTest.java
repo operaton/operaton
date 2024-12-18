@@ -37,31 +37,36 @@ public class ExclusiveTaskReuseCacheTest extends ExclusiveTaskTest {
     processEngineConfiguration.setDbEntityCacheReuseEnabled(false);
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testNonExclusiveService.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testNonExclusiveService.bpmn20.xml"})
+  @Override
   @Test
   public void testNonExclusiveService() {
     super.testNonExclusiveService();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testExclusiveService.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testExclusiveService.bpmn20.xml"})
+  @Override
   @Test
   public void testExclusiveService() {
     super.testExclusiveService();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testExclusiveServiceConcurrent.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testExclusiveServiceConcurrent.bpmn20.xml"})
+  @Override
   @Test
   public void testExclusiveServiceConcurrent() {
     super.testExclusiveServiceConcurrent();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testExclusiveSequence2.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testExclusiveSequence2.bpmn20.xml"})
+  @Override
   @Test
   public void testExclusiveSequence2() {
     super.testExclusiveSequence2();
   }
 
-  @Deployment(resources={"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testExclusiveSequence3.bpmn20.xml"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/exclusive/ExclusiveTaskTest.testExclusiveSequence3.bpmn20.xml"})
+  @Override
   @Test
   public void testExclusiveSequence3() {
     super.testExclusiveSequence3();

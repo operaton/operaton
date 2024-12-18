@@ -48,26 +48,32 @@ public class ParameterMappingImpl extends CmmnElementImpl implements ParameterMa
     super(instanceContext);
   }
 
+  @Override
   public Parameter getSource() {
     return sourceRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSource(Parameter parameter) {
     sourceRefAttribute.setReferenceTargetElement(this, parameter);
   }
 
+  @Override
   public Parameter getTarget() {
     return targetRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setTarget(Parameter parameter) {
     targetRefAttribute.setReferenceTargetElement(this, parameter);
   }
 
+  @Override
   public TransformationExpression getTransformation() {
     return transformationChild.getChild(this);
   }
 
+  @Override
   public void setTransformation(TransformationExpression transformationExpression) {
     transformationChild.setChild(this, transformationExpression);
   }
@@ -77,7 +83,8 @@ public class ParameterMappingImpl extends CmmnElementImpl implements ParameterMa
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<ParameterMapping>() {
-          public ParameterMapping newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ParameterMapping newInstance(ModelTypeInstanceContext instanceContext) {
             return new ParameterMappingImpl(instanceContext);
           }
         });

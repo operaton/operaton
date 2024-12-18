@@ -31,6 +31,7 @@ public abstract class JacksonAwareStringToTypeConverter<T> implements StringToTy
 
   protected ObjectMapper objectMapper;
 
+  @Override
   public abstract T convertQueryParameterToType(String value);
 
   public void setObjectMapper(ObjectMapper objectMapper) {

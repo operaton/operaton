@@ -25,20 +25,24 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationTransitionCreateScope extends PvmAtomicOperationCreateScope {
 
+  @Override
   public boolean isAsync(PvmExecutionImpl execution) {
     PvmActivity activity = execution.getActivity();
     return activity.isAsyncBefore();
   }
 
+  @Override
   public String getCanonicalName() {
     return "transition-create-scope";
   }
 
+  @Override
   protected void scopeCreated(PvmExecutionImpl execution) {
     execution.performOperation(TRANSITION_NOTIFY_LISTENER_START);
 
   }
 
+  @Override
   public boolean isAsyncCapable() {
     return true;
   }

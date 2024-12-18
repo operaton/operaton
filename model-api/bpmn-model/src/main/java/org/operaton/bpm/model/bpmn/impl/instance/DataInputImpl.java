@@ -41,7 +41,8 @@ public class DataInputImpl extends ItemAwareElementImpl implements DataInput {
       .namespaceUri(BPMN20_NS)
       .extendsType(ItemAwareElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<DataInput>() {
-        public DataInput newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DataInput newInstance(ModelTypeInstanceContext instanceContext) {
           return new DataInputImpl(instanceContext);
         }
       });
@@ -60,18 +61,22 @@ public class DataInputImpl extends ItemAwareElementImpl implements DataInput {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public boolean isCollection() {
     return isCollectionAttribute.getValue(this);
   }
 
+  @Override
   public void setCollection(boolean isCollection) {
     isCollectionAttribute.setValue(this, isCollection);
   }

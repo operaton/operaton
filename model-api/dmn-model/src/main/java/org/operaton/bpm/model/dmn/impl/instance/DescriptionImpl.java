@@ -35,7 +35,8 @@ public class DescriptionImpl extends DmnModelElementInstanceImpl implements Desc
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Description.class, DMN_ELEMENT_DESCRIPTION)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Description>() {
-        public Description newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Description newInstance(ModelTypeInstanceContext instanceContext) {
           return new DescriptionImpl(instanceContext);
         }
       });

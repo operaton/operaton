@@ -36,6 +36,7 @@ public class GetDeploymentDecisionRequirementsModelCmd implements Command<InputS
     this.decisionRequirementsDefinitionId = decisionRequirementsDefinitionId;
   }
 
+  @Override
   public InputStream execute(final CommandContext commandContext) {
     DecisionRequirementsDefinition decisionRequirementsDefinition = new GetDeploymentDecisionRequirementsDefinitionCmd(decisionRequirementsDefinitionId).execute(commandContext);
 

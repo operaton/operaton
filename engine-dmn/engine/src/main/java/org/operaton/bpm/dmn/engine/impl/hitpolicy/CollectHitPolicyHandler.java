@@ -28,6 +28,7 @@ public class CollectHitPolicyHandler implements DmnHitPolicyHandler {
     return HIT_POLICY;
   }
 
+  @Override
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     return decisionTableEvaluationEvent;
   }

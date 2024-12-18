@@ -25,6 +25,7 @@ import org.operaton.bpm.model.bpmn.builder.ComplexGatewayBuilder;
  */
 public interface ComplexGateway extends Gateway {
 
+  @Override
   ComplexGatewayBuilder builder();
 
   SequenceFlow getDefault();

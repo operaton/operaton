@@ -30,6 +30,7 @@ public class CompositeFunctionMapper extends FunctionMapper {
 
   protected List<FunctionMapper> functionMappers = new ArrayList<>();
 
+  @Override
   public Method resolveFunction(String prefix, String localName) {
     for (FunctionMapper functionMapper : functionMappers) {
       Method method = functionMapper.resolveFunction(prefix, localName);

@@ -65,14 +65,17 @@ public class ValueTypeResolverImpl implements ValueTypeResolver {
     addType(FILE);
   }
 
+  @Override
   public void addType(ValueType type) {
     knownTypes.put(type.getName(), type);
   }
 
+  @Override
   public ValueType typeForName(String typeName) {
     return knownTypes.get(typeName);
   }
 
+  @Override
   public Collection<ValueType> getSubTypes(ValueType type) {
     List<ValueType> types = new ArrayList<ValueType>();
 

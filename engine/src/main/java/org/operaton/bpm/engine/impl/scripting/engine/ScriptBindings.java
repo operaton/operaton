@@ -97,6 +97,7 @@ public class ScriptBindings implements Bindings {
     return false;
   }
 
+  @Override
   public boolean containsKey(Object key) {
     for (Resolver scriptResolver: scriptResolvers) {
       if (scriptResolver.containsKey(key)) {
@@ -106,6 +107,7 @@ public class ScriptBindings implements Bindings {
     return wrappedBindings.containsKey(key);
   }
 
+  @Override
   public Object get(Object key) {
     Object result = null;
 
@@ -123,6 +125,7 @@ public class ScriptBindings implements Bindings {
     return result;
   }
 
+  @Override
   public Object put(String name, Object value) {
 
     if(autoStoreScriptVariables) {
@@ -136,28 +139,34 @@ public class ScriptBindings implements Bindings {
     return wrappedBindings.put(name, value);
   }
 
+  @Override
   public Set<java.util.Map.Entry<String, Object>> entrySet() {
     return calculateBindingMap().entrySet();
   }
 
+  @Override
   public Set<String> keySet() {
     return calculateBindingMap().keySet();
   }
 
+  @Override
   public int size() {
     return calculateBindingMap().size();
   }
 
+  @Override
   public Collection<Object> values() {
     return calculateBindingMap().values();
   }
 
+  @Override
   public void putAll(Map< ? extends String, ? extends Object> toMerge) {
     for (java.util.Map.Entry<? extends String, ? extends Object> entry : toMerge.entrySet()) {
       put(entry.getKey(), entry.getValue());
     }
   }
 
+  @Override
   public Object remove(Object key) {
     if (UNSTORED_KEYS.contains(key)) {
       return null;
@@ -165,14 +174,17 @@ public class ScriptBindings implements Bindings {
     return wrappedBindings.remove(key);
   }
 
+  @Override
   public void clear() {
     wrappedBindings.clear();
   }
 
+  @Override
   public boolean containsValue(Object value) {
     return calculateBindingMap().containsValue(value);
   }
 
+  @Override
   public boolean isEmpty() {
     return calculateBindingMap().isEmpty();
   }

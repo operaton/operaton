@@ -34,7 +34,8 @@ public class Delegate2 implements JavaDelegate {
 
 	@Autowired private StatefulObject statefulObject;
 
-	public void execute(DelegateExecution execution) throws Exception {
+  @Override
+  public void execute(DelegateExecution execution) throws Exception {
 
 		this.statefulObject.increment();
 

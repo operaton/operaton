@@ -32,10 +32,12 @@ public class DbEntityManagerFactory implements SessionFactory {
     this.idGenerator = idGenerator;
   }
 
+  @Override
   public Class<?> getSessionType() {
     return DbEntityManager.class;
   }
 
+  @Override
   public DbEntityManager openSession() {
     PersistenceSession persistenceSession = Context.getCommandContext().getSession(PersistenceSession.class);
     return new DbEntityManager(idGenerator, persistenceSession);

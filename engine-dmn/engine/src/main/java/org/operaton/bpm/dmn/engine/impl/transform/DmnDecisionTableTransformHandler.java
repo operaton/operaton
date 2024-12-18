@@ -29,6 +29,7 @@ public class DmnDecisionTableTransformHandler implements DmnElementTransformHand
 
   protected static final DmnTransformLogger LOG = DmnLogger.TRANSFORM_LOGGER;
 
+  @Override
   public DmnDecisionTableImpl handleElement(DmnElementTransformContext context, DecisionTable decisionTable) {
     return createFromDecisionTable(context, decisionTable);
   }

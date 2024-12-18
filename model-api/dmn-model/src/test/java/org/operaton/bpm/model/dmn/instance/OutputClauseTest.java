@@ -21,10 +21,12 @@ import java.util.Collection;
 
 public class OutputClauseTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(DmnElement.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(OutputValues.class, 0, 1),
@@ -32,6 +34,7 @@ public class OutputClauseTest extends DmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("name"),

@@ -180,7 +180,8 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
     final ScriptingEngines scriptingEngines = getScriptingEngines();
     return processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<ScriptEngine>() {
-        public ScriptEngine execute(CommandContext commandContext) {
+      @Override
+      public ScriptEngine execute(CommandContext commandContext) {
           return scriptingEngines.getScriptEngineForLanguage(name);
         }
       });
@@ -189,9 +190,11 @@ public class ScriptEngineCachingTest extends PluggableProcessEngineTest {
   protected ScriptEngine getScriptEngineFromPa(final String name, final ProcessApplicationInterface processApplication) {
     return processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<ScriptEngine>() {
-        public ScriptEngine execute(CommandContext commandContext) {
+      @Override
+      public ScriptEngine execute(CommandContext commandContext) {
           return Context.executeWithinProcessApplication(new Callable<ScriptEngine>() {
 
+            @Override
             public ScriptEngine call() throws Exception {
               return getScriptEngine(name);
             }

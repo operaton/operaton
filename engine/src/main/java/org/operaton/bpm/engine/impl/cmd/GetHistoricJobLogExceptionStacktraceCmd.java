@@ -35,6 +35,7 @@ public class GetHistoricJobLogExceptionStacktraceCmd implements Command<String> 
     this.historicJobLogId = historicJobLogId;
   }
 
+  @Override
   public String execute(CommandContext commandContext) {
     ensureNotNull("historicJobLogId", historicJobLogId);
 

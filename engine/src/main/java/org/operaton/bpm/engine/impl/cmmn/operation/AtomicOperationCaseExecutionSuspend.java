@@ -24,6 +24,7 @@ import static org.operaton.bpm.engine.delegate.CaseExecutionListener.SUSPEND;
  */
 public class AtomicOperationCaseExecutionSuspend extends AbstractAtomicOperationCaseExecutionSuspend {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-suspend";
   }

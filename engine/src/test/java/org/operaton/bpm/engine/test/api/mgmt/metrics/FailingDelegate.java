@@ -22,6 +22,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 public class FailingDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     
     Boolean fail = (Boolean) execution.getVariable("fail");

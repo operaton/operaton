@@ -43,18 +43,22 @@ public class TimerEventListenerImpl extends EventListenerImpl implements TimerEv
     super(instanceContext);
   }
 
+  @Override
   public TimerExpression getTimerExpression() {
     return timerExpressionChild.getChild(this);
   }
 
+  @Override
   public void setTimerExpression(TimerExpression timerExpression) {
     timerExpressionChild.setChild(this, timerExpression);
   }
 
+  @Override
   public StartTrigger getTimerStart() {
     return timerStartChild.getChild(this);
   }
 
+  @Override
   public void setTimerStart(StartTrigger timerStart) {
     timerStartChild.setChild(this, timerStart);
   }
@@ -64,7 +68,8 @@ public class TimerEventListenerImpl extends EventListenerImpl implements TimerEv
         .namespaceUri(CMMN11_NS)
         .extendsType(EventListener.class)
         .instanceProvider(new ModelTypeInstanceProvider<TimerEventListener>() {
-          public TimerEventListener newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TimerEventListener newInstance(ModelTypeInstanceContext instanceContext) {
             return new TimerEventListenerImpl(instanceContext);
           }
         });

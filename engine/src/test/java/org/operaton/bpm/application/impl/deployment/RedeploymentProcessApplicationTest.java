@@ -485,10 +485,12 @@ public class RedeploymentProcessApplicationTest {
   protected static TestProvider processDefinitionTestProvider() {
     return new TestProvider() {
 
+      @Override
       public long countDefinitionsByKey(String definitionKey) {
         return repositoryService.createProcessDefinitionQuery().processDefinitionKey(definitionKey).count();
       }
 
+      @Override
       public void createInstanceByDefinitionKey(String definitionKey) {
         runtimeService.startProcessInstanceByKey(definitionKey, Variables.createVariables()
             .putValue("a", 1).putValue("b", 1));
@@ -500,10 +502,12 @@ public class RedeploymentProcessApplicationTest {
   protected static TestProvider caseDefinitionTestProvider() {
     return new TestProvider() {
 
+      @Override
       public long countDefinitionsByKey(String definitionKey) {
         return repositoryService.createCaseDefinitionQuery().caseDefinitionKey(definitionKey).count();
       }
 
+      @Override
       public void createInstanceByDefinitionKey(String definitionKey) {
         caseService.createCaseInstanceByKey(definitionKey);
       }
@@ -514,10 +518,12 @@ public class RedeploymentProcessApplicationTest {
   protected static TestProvider decisionDefinitionTestProvider() {
     return new TestProvider() {
 
+      @Override
       public long countDefinitionsByKey(String definitionKey) {
         return repositoryService.createDecisionDefinitionQuery().decisionDefinitionKey(definitionKey).count();
       }
 
+      @Override
       public void createInstanceByDefinitionKey(String definitionKey) {
         decisionService.evaluateDecisionTableByKey(definitionKey)
           .variables(Variables.createVariables().putValue("input", "john"))
@@ -530,10 +536,12 @@ public class RedeploymentProcessApplicationTest {
   protected static TestProvider decisionRequirementsDefinitionTestProvider() {
     return new TestProvider() {
 
+      @Override
       public long countDefinitionsByKey(String definitionKey) {
         return repositoryService.createDecisionRequirementsDefinitionQuery().decisionRequirementsDefinitionKey(definitionKey).count();
       }
 
+      @Override
       public void createInstanceByDefinitionKey(String definitionKey) {
         decisionService.evaluateDecisionTableByKey(definitionKey + "-decision")
           .variables(Variables.createVariables()

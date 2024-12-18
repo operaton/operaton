@@ -34,6 +34,7 @@ public class AsyncPersistenceDelegateBean implements JavaDelegate {
   
   private SomeEntity entity;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
 
     // we assert that the entity manager does not contain the entity

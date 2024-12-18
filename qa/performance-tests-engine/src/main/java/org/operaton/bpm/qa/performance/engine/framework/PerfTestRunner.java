@@ -91,6 +91,7 @@ public class PerfTestRunner {
 
     // run a pass for each number of threads
     new Thread() {
+      @Override
       public void run() {
         for (int i = 1; i <= configuration.getNumberOfThreads(); i++) {
           runPassWithThreadCount(i);
@@ -106,16 +107,19 @@ public class PerfTestRunner {
 
     return new Future<PerfTestResults>() {
 
+      @Override
       public boolean isDone() {
         synchronized (doneMonitor) {
           return isDone;
         }
       }
 
+      @Override
       public boolean isCancelled() {
         throw new UnsupportedOperationException("Cannot cancel a performance test.");
       }
 
+      @Override
       public PerfTestResults get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
         synchronized (doneMonitor) {
           if(!isDone) {
@@ -128,6 +132,7 @@ public class PerfTestRunner {
         return results;
       }
 
+      @Override
       public PerfTestResults get() throws InterruptedException, ExecutionException {
         synchronized (doneMonitor) {
           if(!isDone) {
@@ -140,6 +145,7 @@ public class PerfTestRunner {
         return results;
       }
 
+      @Override
       public boolean cancel(boolean mayInterruptIfRunning) {
         throw new UnsupportedOperationException("Cannot cancel a performance test.");
       }
@@ -282,6 +288,7 @@ public class PerfTestRunner {
     if (run.isWaitingForSignal()) {
       // only complete step if the run is already waiting for a signal
       run.getRunner().getExecutor().execute(new Runnable() {
+        @Override
         public void run() {
           run.getRunner().completedStep(run, run.getCurrentStep());
         }

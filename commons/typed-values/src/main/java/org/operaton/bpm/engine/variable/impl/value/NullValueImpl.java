@@ -39,14 +39,17 @@ public class NullValueImpl implements TypedValue {
     this.isTransient = isTransient;
   }
 
+  @Override
   public Object getValue() {
     return null;
   }
 
+  @Override
   public ValueType getType() {
     return ValueType.NULL;
   }
 
+  @Override
   public String toString() {
     return "Untyped 'null' value";
   }

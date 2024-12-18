@@ -44,7 +44,8 @@ public class BpmnLabelImpl extends LabelImpl implements BpmnLabel {
       .namespaceUri(BPMNDI_NS)
       .extendsType(Label.class)
       .instanceProvider(new ModelTypeInstanceProvider<BpmnLabel>() {
-        public BpmnLabel newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public BpmnLabel newInstance(ModelTypeInstanceContext instanceContext) {
           return new BpmnLabelImpl(instanceContext);
         }
       });
@@ -60,10 +61,12 @@ public class BpmnLabelImpl extends LabelImpl implements BpmnLabel {
     super(instanceContext);
   }
 
+  @Override
   public BpmnLabelStyle getLabelStyle() {
     return labelStyleAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setLabelStyle(BpmnLabelStyle labelStyle) {
     labelStyleAttribute.setReferenceTargetElement(this, labelStyle);
   }

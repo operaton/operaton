@@ -50,7 +50,8 @@ public class OutputSetImpl extends BaseElementImpl implements OutputSet {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<OutputSet>() {
-        public OutputSet newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OutputSet newInstance(ModelTypeInstanceContext instanceContext) {
           return new OutputSetImpl(instanceContext);
         }
       });
@@ -83,26 +84,32 @@ public class OutputSetImpl extends BaseElementImpl implements OutputSet {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public Collection<DataOutput> getDataOutputRefs() {
     return dataOutputRefsCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<DataOutput> getOptionalOutputRefs() {
     return optionalOutputRefsCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<DataOutput> getWhileExecutingOutputRefs() {
     return whileExecutingOutputRefsCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<InputSet> getInputSetRefs() {
     return inputSetInputSetRefsCollection.getReferenceTargetElements(this);
   }

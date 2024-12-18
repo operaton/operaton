@@ -29,6 +29,7 @@ import javax.ejb.Stateless;
 @Local(BusinessInterface.class)
 public class LocalSLSBean implements BusinessInterface {
 
+  @Override
   public boolean doBusiness() {
     return true;
   }

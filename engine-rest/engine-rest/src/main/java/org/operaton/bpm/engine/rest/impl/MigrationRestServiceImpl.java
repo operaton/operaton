@@ -49,6 +49,7 @@ public class MigrationRestServiceImpl extends AbstractRestProcessEngineAware imp
     super(engineName, objectMapper);
   }
 
+  @Override
   public MigrationPlanDto generateMigrationPlan(MigrationPlanGenerationDto generationDto) {
     RuntimeService runtimeService = getProcessEngine().getRuntimeService();
 
@@ -77,6 +78,7 @@ public class MigrationRestServiceImpl extends AbstractRestProcessEngineAware imp
     }
   }
 
+  @Override
   public MigrationPlanReportDto validateMigrationPlan(MigrationPlanDto migrationPlanDto) {
     try {
       createMigrationPlan(migrationPlanDto);
@@ -88,10 +90,12 @@ public class MigrationRestServiceImpl extends AbstractRestProcessEngineAware imp
     }
   }
 
+  @Override
   public void executeMigrationPlan(MigrationExecutionDto migrationExecution) {
     createMigrationPlanExecutionBuilder(migrationExecution).execute();
   }
 
+  @Override
   public BatchDto executeMigrationPlanAsync(MigrationExecutionDto migrationExecution) {
     Batch batch = createMigrationPlanExecutionBuilder(migrationExecution).executeAsync();
     return BatchDto.fromBatch(batch);

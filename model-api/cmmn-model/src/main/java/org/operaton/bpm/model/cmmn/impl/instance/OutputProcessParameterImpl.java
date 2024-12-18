@@ -40,7 +40,8 @@ public class OutputProcessParameterImpl extends ProcessParameterImpl implements 
       .namespaceUri(CMMN11_NS)
       .extendsType(ProcessParameter.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<OutputProcessParameter>() {
-        public OutputProcessParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OutputProcessParameter newInstance(ModelTypeInstanceContext instanceContext) {
           return new OutputProcessParameterImpl(instanceContext);
         }
       });

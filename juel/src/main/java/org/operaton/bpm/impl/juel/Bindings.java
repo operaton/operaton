@@ -125,15 +125,16 @@ public class Bindings implements TypeConverter {
 	public boolean isVariableBound(int index) {
 		return index >= 0 && index < variables.length && variables[index] != null;
 	}
-	
-	/**
-	 * Apply type conversion.
-	 * @param value value to convert
-	 * @param type target type
-	 * @return converted value
-	 * @throws ELException
-	 */
-	public <T> T convert(Object value, Class<T> type) {
+
+  /**
+   * Apply type conversion.
+   * @param value value to convert
+   * @param type target type
+   * @return converted value
+   * @throws ELException
+   */
+  @Override
+  public <T> T convert(Object value, Class<T> type) {
 		return converter.convert(value, type);
 	}
 	

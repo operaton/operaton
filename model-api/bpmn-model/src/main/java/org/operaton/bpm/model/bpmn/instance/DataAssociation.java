@@ -40,6 +40,7 @@ public interface DataAssociation extends BaseElement {
 
   Collection<Assignment> getAssignments();
 
+  @Override
   BpmnEdge getDiagramElement();
 
 }

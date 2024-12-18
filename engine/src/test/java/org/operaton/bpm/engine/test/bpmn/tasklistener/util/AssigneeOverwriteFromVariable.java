@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  */
 public class AssigneeOverwriteFromVariable implements TaskListener {
 
+  @Override
   @SuppressWarnings("unchecked")
   public void notify(DelegateTask delegateTask) {
     // get mapping table from variable

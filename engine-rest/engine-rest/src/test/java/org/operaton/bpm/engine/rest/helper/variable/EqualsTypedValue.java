@@ -35,6 +35,7 @@ public class EqualsTypedValue<S extends EqualsTypedValue<S>> extends BaseMatcher
     return (S) this;
   }
 
+  @Override
   public boolean matches(Object argument) {
     if (argument == null || !TypedValue.class.isAssignableFrom(argument.getClass())) {
       return false;
@@ -50,6 +51,7 @@ public class EqualsTypedValue<S extends EqualsTypedValue<S>> extends BaseMatcher
     return true;
   }
 
+  @Override
   public void describeTo(Description description) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getClass().getSimpleName());

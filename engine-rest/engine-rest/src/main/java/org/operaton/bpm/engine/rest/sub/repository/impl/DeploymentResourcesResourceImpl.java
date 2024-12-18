@@ -76,6 +76,7 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public List<DeploymentResourceDto> getDeploymentResources() {
     List<Resource> resources = engine.getRepositoryService().getDeploymentResources(deploymentId);
 
@@ -93,6 +94,7 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
     }
   }
 
+  @Override
   public DeploymentResourceDto getDeploymentResource(String resourceId) {
     List<DeploymentResourceDto> deploymentResources = getDeploymentResources();
     for (DeploymentResourceDto deploymentResource : deploymentResources) {
@@ -105,6 +107,7 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
       "Deployment resource with resource id '" + resourceId + "' for deployment id '" + deploymentId + "' does not exist.");
   }
 
+  @Override
   public Response getDeploymentResourceData(String resourceId) {
     RepositoryService repositoryService = engine.getRepositoryService();
     InputStream resourceAsStream = repositoryService.getResourceAsStreamById(deploymentId, resourceId);

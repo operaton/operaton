@@ -102,6 +102,7 @@ public class ProcessApplicationEventListenerTest {
     final AtomicInteger processDefinitionEventCount = new AtomicInteger();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public ExecutionListener getExecutionListener() {
         // this process application returns an execution listener
         return execution -> {
@@ -127,6 +128,7 @@ public class ProcessApplicationEventListenerTest {
     final AtomicInteger eventCount = new AtomicInteger();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public ExecutionListener getExecutionListener() {
         // this process application returns an execution listener
         return execution -> {
@@ -151,6 +153,7 @@ public class ProcessApplicationEventListenerTest {
     final AtomicInteger eventCount = new AtomicInteger();
     
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public ExecutionListener getExecutionListener() {
         // this process application returns an execution listener
         return execution -> eventCount.incrementAndGet();
@@ -173,6 +176,7 @@ public class ProcessApplicationEventListenerTest {
     final AtomicInteger eventCount = new AtomicInteger();
     
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public ExecutionListener getExecutionListener() {
         return execution -> eventCount.incrementAndGet();
       }
@@ -205,6 +209,7 @@ public class ProcessApplicationEventListenerTest {
     final AtomicInteger eventCount = new AtomicInteger();
     
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public ExecutionListener getExecutionListener() {
         return execution -> eventCount.incrementAndGet();
       }
@@ -245,6 +250,7 @@ public class ProcessApplicationEventListenerTest {
     final AtomicInteger eventCount = new AtomicInteger();
     
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public ExecutionListener getExecutionListener() {
         return execution -> eventCount.incrementAndGet();
       }
@@ -284,6 +290,7 @@ public class ProcessApplicationEventListenerTest {
     final AtomicInteger eventCountForMultiInstanceBody = new AtomicInteger();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public ExecutionListener getExecutionListener() {
         return execution -> {
           if ("miTasks#multiInstanceBody".equals(execution.getCurrentActivityId())
@@ -319,6 +326,7 @@ public class ProcessApplicationEventListenerTest {
     final List<String> events = new ArrayList<>();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public TaskListener getTaskListener() {
         return delegateTask -> events.add(delegateTask.getEventName());
       }
@@ -363,6 +371,7 @@ public class ProcessApplicationEventListenerTest {
     final List<String> timerEvents = new ArrayList<>();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public ExecutionListener getExecutionListener() {
         return delegateExecution -> {
           String currentActivityId = delegateExecution.getCurrentActivityId();
@@ -401,6 +410,7 @@ public class ProcessApplicationEventListenerTest {
     final List<String> timerEvents = new ArrayList<>();
 
     EmbeddedProcessApplication processApplication = new EmbeddedProcessApplication() {
+      @Override
       public ExecutionListener getExecutionListener() {
         return delegateExecution -> {
           String currentActivityId = delegateExecution.getCurrentActivityId();

@@ -83,12 +83,14 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     this.messageName = messageName;
   }
 
+  @Override
   public MessageCorrelationBuilder processInstanceBusinessKey(String businessKey) {
     ensureNotNull("businessKey", businessKey);
     this.businessKey = businessKey;
     return this;
   }
 
+  @Override
   public MessageCorrelationBuilder processInstanceVariableEquals(String variableName, Object variableValue) {
     ensureNotNull("variableName", variableName);
     ensureCorrelationProcessInstanceVariablesInitialized();
@@ -97,6 +99,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     return this;
   }
 
+  @Override
   public MessageCorrelationBuilder processInstanceVariablesEqual(Map<String, Object> variables) {
     ensureNotNull("variables", variables);
     ensureCorrelationProcessInstanceVariablesInitialized();
@@ -105,6 +108,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     return this;
   }
 
+  @Override
   public MessageCorrelationBuilder localVariableEquals(String variableName, Object variableValue) {
     ensureNotNull("variableName", variableName);
     ensureCorrelationLocalVariablesInitialized();
@@ -113,6 +117,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     return this;
   }
 
+  @Override
   public MessageCorrelationBuilder localVariablesEqual(Map<String, Object> variables) {
     ensureNotNull("variables", variables);
     ensureCorrelationLocalVariablesInitialized();
@@ -133,18 +138,21 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     }
   }
 
+  @Override
   public MessageCorrelationBuilder processInstanceId(String id) {
     ensureNotNull("processInstanceId", id);
     this.processInstanceId = id;
     return this;
   }
 
+  @Override
   public MessageCorrelationBuilder processDefinitionId(String processDefinitionId) {
     ensureNotNull("processDefinitionId", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public MessageCorrelationBuilder setVariable(String variableName, Object variableValue) {
     ensureNotNull("variableName", variableName);
     ensurePayloadProcessInstanceVariablesInitialized();
@@ -152,6 +160,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     return this;
   }
 
+  @Override
   public MessageCorrelationBuilder setVariableLocal(String variableName, Object variableValue) {
     ensureNotNull("variableName", variableName);
     ensurePayloadProcessInstanceVariablesLocalInitialized();
@@ -167,6 +176,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     return this;
   }
 
+  @Override
   public MessageCorrelationBuilder setVariables(Map<String, Object> variables) {
     if (variables != null) {
       ensurePayloadProcessInstanceVariablesInitialized();
@@ -211,6 +221,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     }
   }
 
+  @Override
   public MessageCorrelationBuilder tenantId(String tenantId) {
     ensureNotNull(
         "The tenant-id cannot be null. Use 'withoutTenantId()' if you want to correlate the message to a process definition or an execution which has no tenant-id.",
@@ -221,6 +232,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     return this;
   }
 
+  @Override
   public MessageCorrelationBuilder withoutTenantId() {
     isTenantIdSet = true;
     tenantId = null;
@@ -311,6 +323,7 @@ public class MessageCorrelationBuilderImpl implements MessageCorrelationBuilder 
     }
   }
 
+  @Override
   public ProcessInstance correlateStartMessage() {
     startMessageOnly();
     MessageCorrelationResult result = correlateWithResult();

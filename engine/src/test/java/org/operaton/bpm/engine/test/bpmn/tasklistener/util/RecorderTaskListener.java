@@ -70,6 +70,7 @@ public class RecorderTaskListener implements TaskListener, Serializable {
 
   }
 
+  @Override
   public void notify(DelegateTask task) {
     DelegateExecution execution = task.getExecution();
     String eventName = task.getEventName();

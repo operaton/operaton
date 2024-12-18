@@ -96,10 +96,12 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     return (T) this;
   }
 
+  @Override
   public T asc() {
     return direction(Direction.ASCENDING);
   }
 
+  @Override
   public T desc() {
     return direction(Direction.DESCENDING);
   }
@@ -130,18 +132,21 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
 
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public U singleResult() {
     this.resultType = ResultType.SINGLE_RESULT;
     return (U) executeResult(resultType);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<U> list() {
     this.resultType = ResultType.LIST;
     return (List<U>) executeResult(resultType);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<U> listPage(int firstResult, int maxResults) {
     this.firstResult = firstResult;
@@ -171,6 +176,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     }
   }
 
+  @Override
   public long count() {
     this.resultType = ResultType.COUNT;
     if (commandExecutor!=null) {
@@ -179,6 +185,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     return evaluateExpressionsAndExecuteCount(Context.getCommandContext());
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<U> unlimitedList() {
     this.resultType = ResultType.LIST;
@@ -188,6 +195,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     return evaluateExpressionsAndExecuteList(Context.getCommandContext(), null);
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     if (resultType==ResultType.LIST) {
       return evaluateExpressionsAndExecuteList(commandContext, null);

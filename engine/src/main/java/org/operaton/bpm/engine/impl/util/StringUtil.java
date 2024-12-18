@@ -184,6 +184,7 @@ public final class StringUtil {
 
   public static String joinDbEntityIds(Collection<? extends DbEntity> dbEntities) {
     return join(new StringIterator<DbEntity>(dbEntities.iterator()) {
+      @Override
       public String next() {
         return iterator.next().getId();
       }
@@ -193,6 +194,7 @@ public final class StringUtil {
   public static String joinProcessElementInstanceIds(Collection<? extends ProcessElementInstance> processElementInstances) {
     final Iterator<? extends ProcessElementInstance> iterator = processElementInstances.iterator();
     return join(new StringIterator<ProcessElementInstance>(iterator) {
+      @Override
       public String next() {
         return iterator.next().getId();
       }
@@ -228,10 +230,12 @@ public final class StringUtil {
       this.iterator = iterator;
     }
 
+    @Override
     public boolean hasNext() {
       return iterator.hasNext();
     }
 
+    @Override
     public void remove() {
       iterator.remove();
     }

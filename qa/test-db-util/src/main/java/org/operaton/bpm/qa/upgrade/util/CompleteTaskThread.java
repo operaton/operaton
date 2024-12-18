@@ -35,10 +35,12 @@ public class CompleteTaskThread extends ControllableThread {
     this.processEngineConfiguration = processEngineConfiguration;
   }
 
+  @Override
   public synchronized void startAndWaitUntilControlIsReturned() {
     super.startAndWaitUntilControlIsReturned();
   }
 
+  @Override
   public void run() {
     try {
       processEngineConfiguration

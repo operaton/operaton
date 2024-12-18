@@ -225,6 +225,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
   protected void createExampleEventSubscriptions() {
     processEngineConfiguration.getCommandExecutorTxRequired()
     .execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         Calendar calendar = new GregorianCalendar();
 
@@ -258,6 +259,7 @@ public class EventSubscriptionQueryTest extends PluggableProcessEngineTest {
   protected void cleanDb() {
     processEngineConfiguration.getCommandExecutorTxRequired()
     .execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         final List<EventSubscription> subscriptions = new EventSubscriptionQueryImpl().list();
         for (EventSubscription eventSubscriptionEntity : subscriptions) {

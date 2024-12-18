@@ -28,6 +28,7 @@ public class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity 
 
   private static final long serialVersionUID = 1L;
 
+  @Override
   public String getPropertyValue() {
     if(propertyValue != null) {
       return propertyValue.toString();
@@ -36,10 +37,12 @@ public class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity 
     }
   }
 
+  @Override
   public String getFieldId() {
     return propertyId;
   }
 
+  @Override
   public Object getFieldValue() {
     return propertyValue;
   }

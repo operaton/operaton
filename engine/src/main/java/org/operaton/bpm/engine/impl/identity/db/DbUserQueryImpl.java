@@ -42,12 +42,14 @@ public class DbUserQueryImpl extends UserQueryImpl {
 
   // results //////////////////////////////////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     final DbReadOnlyIdentityServiceProvider identityProvider = getIdentityProvider(commandContext);
     return identityProvider.findUserCountByQueryCriteria(this);
   }
 
+  @Override
   public List<User> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     final DbReadOnlyIdentityServiceProvider identityProvider = getIdentityProvider(commandContext);

@@ -33,7 +33,8 @@ public class SpouseRef extends ModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SpouseRef.class, ELEMENT_NAME_SPOUSE_REF)
       .namespaceUri(MODEL_NAMESPACE)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<SpouseRef>() {
-        public SpouseRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public SpouseRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new SpouseRef(instanceContext);
         }
       });

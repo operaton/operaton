@@ -34,6 +34,7 @@ public class XssProtectionProvider extends HeaderSecurityProvider {
   public static final String OPTION_PARAM = "xssProtectionOption";
   public static final String VALUE_PARAM = "xssProtectionValue";
 
+  @Override
   public Map<String, String> initParams() {
     initParams.put(DISABLED_PARAM, null);
     initParams.put(OPTION_PARAM, null);
@@ -42,6 +43,7 @@ public class XssProtectionProvider extends HeaderSecurityProvider {
     return initParams;
   }
 
+  @Override
   public void parseParams() {
 
     String disabled = initParams.get(DISABLED_PARAM);
@@ -88,6 +90,7 @@ public class XssProtectionProvider extends HeaderSecurityProvider {
     throw new ProcessEngineException(this.getClass().getSimpleName() + ": cannot set non-existing option " + optionValue + " for " + OPTION_PARAM + ".");
   }
 
+  @Override
   public String getHeaderName() {
     return HEADER_NAME;
   }

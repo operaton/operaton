@@ -72,10 +72,14 @@ public class CompetingSubprocessCompletionTest {
     public CompleteTaskThread(String taskId) {
       this.taskId = taskId;
     }
+
+    @Override
     public synchronized void startAndWaitUntilControlIsReturned() {
       activeThread = this;
       super.startAndWaitUntilControlIsReturned();
     }
+
+    @Override
     public void run() {
       try {
         processEngineConfiguration

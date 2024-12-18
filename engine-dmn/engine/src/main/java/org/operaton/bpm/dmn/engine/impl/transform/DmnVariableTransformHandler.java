@@ -26,6 +26,7 @@ import org.operaton.bpm.model.dmn.instance.Variable;
 
 public class DmnVariableTransformHandler implements DmnElementTransformHandler<Variable, DmnVariableImpl> {
 
+  @Override
   public DmnVariableImpl handleElement(DmnElementTransformContext context, Variable variable) {
     return createFromVariable(context, variable);
   }

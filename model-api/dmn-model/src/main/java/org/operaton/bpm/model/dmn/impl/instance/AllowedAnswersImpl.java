@@ -35,7 +35,8 @@ public class AllowedAnswersImpl extends DmnModelElementInstanceImpl implements A
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(AllowedAnswers.class, DMN_ELEMENT_ALLOWED_ANSWERS)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<AllowedAnswers>() {
-        public AllowedAnswers newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public AllowedAnswers newInstance(ModelTypeInstanceContext instanceContext) {
           return new AllowedAnswersImpl(instanceContext);
         }
       });

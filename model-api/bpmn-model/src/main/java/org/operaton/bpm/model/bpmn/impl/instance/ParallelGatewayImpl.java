@@ -45,7 +45,8 @@ public class ParallelGatewayImpl extends GatewayImpl implements ParallelGateway 
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
       .instanceProvider(new ModelTypeInstanceProvider<ParallelGateway>() {
-        public ParallelGateway newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ParallelGateway newInstance(ModelTypeInstanceContext instanceContext) {
           return new ParallelGatewayImpl(instanceContext);
         }
       });
@@ -71,6 +72,7 @@ public class ParallelGatewayImpl extends GatewayImpl implements ParallelGateway 
    * @deprecated use isOperatonAsyncBefore() instead.
    */
   @Deprecated
+  @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
   }
@@ -79,6 +81,7 @@ public class ParallelGatewayImpl extends GatewayImpl implements ParallelGateway 
    * @deprecated use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
    */
   @Deprecated
+  @Override
   public void setOperatonAsync(boolean isOperatonAsync) {
     operatonAsyncAttribute.setValue(this, isOperatonAsync);
   }

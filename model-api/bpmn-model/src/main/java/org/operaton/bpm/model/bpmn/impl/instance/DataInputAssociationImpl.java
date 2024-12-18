@@ -38,7 +38,8 @@ public class DataInputAssociationImpl extends DataAssociationImpl implements Dat
       .namespaceUri(BPMN20_NS)
       .extendsType(DataAssociation.class)
       .instanceProvider(new ModelTypeInstanceProvider<DataInputAssociation>() {
-        public DataInputAssociation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DataInputAssociation newInstance(ModelTypeInstanceContext instanceContext) {
           return new DataInputAssociationImpl(instanceContext);
         }
       });

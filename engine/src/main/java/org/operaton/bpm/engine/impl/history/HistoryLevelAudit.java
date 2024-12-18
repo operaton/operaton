@@ -31,10 +31,12 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
  */
 public class HistoryLevelAudit extends HistoryLevelActivity {
 
+  @Override
   public int getId() {
     return 2;
   }
 
+  @Override
   public String getName() {
     return ProcessEngineConfiguration.HISTORY_AUDIT;
   }

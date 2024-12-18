@@ -60,6 +60,7 @@ public class DelegateFormFieldValidator implements FormFieldValidator {
       ProcessApplicationReference processApplicationReference = ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution);
 
       return Context.executeWithinProcessApplication(new Callable<Boolean>() {
+        @Override
         public Boolean call() throws Exception {
           return doValidate(submittedValue, validatorContext);
         }

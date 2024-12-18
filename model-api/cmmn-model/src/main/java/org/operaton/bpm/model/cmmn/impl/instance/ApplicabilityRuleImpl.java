@@ -50,26 +50,32 @@ public class ApplicabilityRuleImpl extends CmmnElementImpl implements Applicabil
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public CaseFileItem getContext() {
     return contextRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setContext(CaseFileItem context) {
     contextRefAttribute.setReferenceTargetElement(this, context);
   }
 
+  @Override
   public ConditionExpression getCondition() {
     return conditionChild.getChild(this);
   }
 
+  @Override
   public void setCondition(ConditionExpression expression) {
     conditionChild.setChild(this, expression);
   }
@@ -79,7 +85,8 @@ public class ApplicabilityRuleImpl extends CmmnElementImpl implements Applicabil
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<ApplicabilityRule>() {
-          public ApplicabilityRule newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ApplicabilityRule newInstance(ModelTypeInstanceContext instanceContext) {
             return new ApplicabilityRuleImpl(instanceContext);
           }
         });

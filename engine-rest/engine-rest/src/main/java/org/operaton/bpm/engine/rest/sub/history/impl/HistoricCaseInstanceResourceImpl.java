@@ -35,6 +35,7 @@ public class HistoricCaseInstanceResourceImpl implements HistoricCaseInstanceRes
     this.caseInstanceId = caseInstanceId;
   }
 
+  @Override
   public HistoricCaseInstanceDto getHistoricCaseInstance() {
     HistoryService historyService = engine.getHistoryService();
     HistoricCaseInstance instance = historyService.createHistoricCaseInstanceQuery().caseInstanceId(caseInstanceId).singleResult();

@@ -30,10 +30,12 @@ import org.operaton.spin.spi.DataFormatProvider;
  */
 public class DomXmlDataFormatProvider implements DataFormatProvider {
 
+  @Override
   public String getDataFormatName() {
     return DataFormats.XML_DATAFORMAT_NAME;
   }
 
+  @Override
   public DataFormat<?> createInstance() {
     return new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
   }

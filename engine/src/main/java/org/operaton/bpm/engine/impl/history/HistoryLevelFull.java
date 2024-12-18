@@ -25,14 +25,17 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
  */
 public class HistoryLevelFull extends AbstractHistoryLevel {
 
+  @Override
   public int getId() {
     return 3;
   }
 
+  @Override
   public String getName() {
     return ProcessEngineConfiguration.HISTORY_FULL;
   }
 
+  @Override
   public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
     return true;
   }

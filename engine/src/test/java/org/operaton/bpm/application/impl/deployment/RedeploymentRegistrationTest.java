@@ -515,6 +515,7 @@ public class RedeploymentRegistrationTest {
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
         return new Command<ProcessApplicationReference>() {
 
+          @Override
           public ProcessApplicationReference execute(CommandContext commandContext) {
             ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
             DeploymentCache deploymentCache = configuration.getDeploymentCache();
@@ -539,6 +540,7 @@ public class RedeploymentRegistrationTest {
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
         return new Command<ProcessApplicationReference>() {
 
+          @Override
           public ProcessApplicationReference execute(CommandContext commandContext) {
             ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
             DeploymentCache deploymentCache = configuration.getDeploymentCache();
@@ -563,6 +565,7 @@ public class RedeploymentRegistrationTest {
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
         return new Command<ProcessApplicationReference>() {
 
+          @Override
           public ProcessApplicationReference execute(CommandContext commandContext) {
             ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
             DeploymentCache deploymentCache = configuration.getDeploymentCache();
@@ -587,6 +590,7 @@ public class RedeploymentRegistrationTest {
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
         return new Command<ProcessApplicationReference>() {
 
+          @Override
           public ProcessApplicationReference execute(CommandContext commandContext) {
             ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
             DeploymentCache deploymentCache = configuration.getDeploymentCache();

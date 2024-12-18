@@ -26,14 +26,17 @@ import org.operaton.bpm.engine.ProcessEngine;
  */
 public class AbstractProcessEnginePlugin implements ProcessEnginePlugin {
 
+  @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
 
   }
 
+  @Override
   public void postInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
 
   }
 
+  @Override
   public void postProcessEngineBuild(ProcessEngine processEngine) {
 
   }

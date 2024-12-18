@@ -37,6 +37,7 @@ public class EqualsPrimitiveValue extends EqualsTypedValue<EqualsPrimitiveValue>
     return this;
   }
 
+  @Override
   public boolean matches(Object argument) {
     if (!super.matches(argument)) {
       return false;
@@ -125,6 +126,7 @@ public class EqualsPrimitiveValue extends EqualsTypedValue<EqualsPrimitiveValue>
     return new EqualsPrimitiveValue().type(ValueType.NUMBER).value(value);
   }
 
+  @Override
   public void describeTo(Description description) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getClass().getSimpleName());

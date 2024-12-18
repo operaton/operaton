@@ -30,10 +30,12 @@ public class CalledProcessInstanceDto extends ProcessInstanceDto {
 
   public CalledProcessInstanceDto() {}
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public String getBusinessKey() {
     return businessKey;
   }
@@ -58,10 +60,12 @@ public class CalledProcessInstanceDto extends ProcessInstanceDto {
     return processDefinitionName;
   }
 
+  @Override
   public List<IncidentStatisticsDto> getIncidents() {
     return incidents;
   }
 
+  @Override
   public void setIncidents(List<IncidentStatisticsDto> incidents) {
     this.incidents = incidents;
   }

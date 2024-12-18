@@ -46,19 +46,23 @@ public class PlanItemStartTriggerImpl extends StartTriggerImpl implements PlanIt
     super(instanceContext);
   }
 
+  @Override
   public PlanItem getSource() {
     return sourceRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSource(PlanItem source) {
     sourceRefAttribute.setReferenceTargetElement(this, source);
   }
 
+  @Override
   public PlanItemTransition getStandardEvent() {
     PlanItemTransitionStandardEvent child = standardEventChild.getChild(this);
     return child.getValue();
   }
 
+  @Override
   public void setStandardEvent(PlanItemTransition standardEvent) {
     PlanItemTransitionStandardEvent child = standardEventChild.getChild(this);
     child.setValue(standardEvent);
@@ -69,7 +73,8 @@ public class PlanItemStartTriggerImpl extends StartTriggerImpl implements PlanIt
         .extendsType(StartTrigger.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<PlanItemStartTrigger>() {
-          public PlanItemStartTrigger newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public PlanItemStartTrigger newInstance(ModelTypeInstanceContext instanceContext) {
             return new PlanItemStartTriggerImpl(instanceContext);
           }
         });

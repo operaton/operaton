@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
  */
 public class CallerRunsRejectedJobsHandler implements RejectedJobsHandler {
 
+  @Override
   public void jobsRejected(List<String> jobIds, ProcessEngineImpl processEngine, JobExecutor jobExecutor) {
     jobExecutor.getExecuteJobsRunnable(jobIds, processEngine).run();
   }

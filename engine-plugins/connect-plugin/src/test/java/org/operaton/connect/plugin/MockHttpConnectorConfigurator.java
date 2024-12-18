@@ -33,9 +33,11 @@ import org.operaton.connect.spi.ConnectorRequestInterceptor;
  */
 public class MockHttpConnectorConfigurator implements ConnectorConfigurator<HttpConnector> {
 
+  @Override
   public void configure(HttpConnector connecor) {
     connecor.addRequestInterceptor(new ConnectorRequestInterceptor() {
 
+      @Override
       public Object handleInvocation(ConnectorInvocation invocation) throws Exception {
 
         // intercept the call. => do not call invocation.proceed()
@@ -53,6 +55,7 @@ public class MockHttpConnectorConfigurator implements ConnectorConfigurator<Http
     });
   }
 
+  @Override
   public Class<HttpConnector> getConnectorClass() {
     return HttpConnector.class;
   }

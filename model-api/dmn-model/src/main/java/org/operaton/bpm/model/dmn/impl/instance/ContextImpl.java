@@ -39,6 +39,7 @@ public class ContextImpl extends ExpressionImpl implements Context {
     super(instanceContext);
   }
 
+  @Override
   public Collection<ContextEntry> getContextEntries() {
     return contextEntryCollection.get(this);
   }
@@ -48,7 +49,8 @@ public class ContextImpl extends ExpressionImpl implements Context {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<Context>() {
-        public Context newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Context newInstance(ModelTypeInstanceContext instanceContext) {
           return new ContextImpl(instanceContext);
         }
       });

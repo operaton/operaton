@@ -30,6 +30,7 @@ public class CustomValidatorWithDetail implements FormFieldValidator {
     System.out.println("CREATED");
   }
 
+  @Override
   public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext) {
     if (submittedValue == null) {
       return true;

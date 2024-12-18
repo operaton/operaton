@@ -69,24 +69,28 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
     super(commandExecutor);
   }
 
+  @Override
   public HistoricDetailQuery detailId(String id) {
     ensureNotNull("detailId", id);
     this.detailId = id;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery variableInstanceId(String variableInstanceId) {
     ensureNotNull("variableInstanceId", variableInstanceId);
     this.variableInstanceId = variableInstanceId;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery variableTypeIn(String... variableTypes) {
     ensureNotNull("Variable types", (Object[]) variableTypes);
     this.variableTypes = lowerCase(variableTypes);
     return this;
   }
 
+  @Override
   public HistoricDetailQuery variableNameLike(String variableNameLike) {
     ensureNotNull("Variable name like", variableNameLike);
     this.variableNameLike = variableNameLike;
@@ -100,58 +104,69 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
     return variableTypes;
   }
 
+  @Override
   public HistoricDetailQuery processInstanceId(String processInstanceId) {
     this.processInstanceId = processInstanceId;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery caseInstanceId(String caseInstanceId) {
     ensureNotNull("Case instance id", caseInstanceId);
     this.caseInstanceId = caseInstanceId;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery executionId(String executionId) {
     this.executionId = executionId;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery caseExecutionId(String caseExecutionId) {
     ensureNotNull("Case execution id", caseExecutionId);
     this.caseExecutionId = caseExecutionId;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery activityId(String activityId) {
     this.activityId = activityId;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery activityInstanceId(String activityInstanceId) {
     this.activityInstanceId = activityInstanceId;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery taskId(String taskId) {
     this.taskId = taskId;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery formProperties() {
     this.type = "FormProperty";
     return this;
   }
 
+  @Override
   public HistoricDetailQuery formFields() {
     this.type = "FormProperty";
     return this;
   }
 
+  @Override
   public HistoricDetailQuery variableUpdates() {
     this.type = "VariableUpdate";
     return this;
   }
 
+  @Override
   public HistoricDetailQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -166,12 +181,14 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
     return this;
   }
 
+  @Override
   public HistoricDetailQuery processInstanceIdIn(String... processInstanceIds) {
     ensureNotNull("Process Instance Ids", (Object[]) processInstanceIds);
     this.processInstanceIds = processInstanceIds;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery userOperationId(String userOperationId) {
     ensureNotNull("userOperationId", userOperationId);
     this.userOperationId = userOperationId;
@@ -183,23 +200,27 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
     return this;
   }
 
+  @Override
   public HistoricDetailQuery excludeTaskDetails() {
     this.excludeTaskRelated = true;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery occurredBefore(Date date) {
     ensureNotNull("occurred before", date);
     occurredBefore = date;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery occurredAfter(Date date) {
     ensureNotNull("occurred after", date);
     occurredAfter = date;
     return this;
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return commandContext
@@ -207,11 +228,13 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
       .findHistoricDetailCountByQueryCriteria(this);
   }
 
+  @Override
   public HistoricDetailQuery disableBinaryFetching() {
     this.isByteArrayFetchingEnabled = false;
     return this;
   }
 
+  @Override
   public HistoricDetailQuery disableCustomObjectDeserialization() {
     this.isCustomObjectDeserializationEnabled = false;
     return this;
@@ -256,41 +279,49 @@ public class HistoricDetailQueryImpl extends AbstractQuery<HistoricDetailQuery, 
 
   // order by /////////////////////////////////////////////////////////////////
 
+  @Override
   public HistoricDetailQuery orderByProcessInstanceId() {
     orderBy(HistoricDetailQueryProperty.PROCESS_INSTANCE_ID);
     return this;
   }
 
+  @Override
   public HistoricDetailQuery orderByTime() {
     orderBy(HistoricDetailQueryProperty.TIME);
     return this;
   }
 
+  @Override
   public HistoricDetailQuery orderByVariableName() {
     orderBy(HistoricDetailQueryProperty.VARIABLE_NAME);
     return this;
   }
 
+  @Override
   public HistoricDetailQuery orderByFormPropertyId() {
     orderBy(HistoricDetailQueryProperty.VARIABLE_NAME);
     return this;
   }
 
+  @Override
   public HistoricDetailQuery orderByVariableRevision() {
     orderBy(HistoricDetailQueryProperty.VARIABLE_REVISION);
     return this;
   }
 
+  @Override
   public HistoricDetailQuery orderByVariableType() {
     orderBy(HistoricDetailQueryProperty.VARIABLE_TYPE);
     return this;
   }
 
+  @Override
   public HistoricDetailQuery orderPartiallyByOccurrence() {
     orderBy(HistoricDetailQueryProperty.SEQUENCE_COUNTER);
     return this;
   }
 
+  @Override
   public HistoricDetailQuery orderByTenantId() {
     return orderBy(HistoricDetailQueryProperty.TENANT_ID);
   }

@@ -32,15 +32,18 @@ public class HumanTaskActivityBehavior extends TaskActivityBehavior {
 
   protected TaskDecorator taskDecorator;
 
+  @Override
   protected void performStart(CmmnActivityExecution execution) {
     execution.createTask(taskDecorator);
   }
 
+  @Override
   protected void performTerminate(CmmnActivityExecution execution) {
     terminating(execution);
     super.performTerminate(execution);
   }
 
+  @Override
   protected void performExit(CmmnActivityExecution execution) {
     terminating(execution);
     super.performExit(execution);
@@ -56,6 +59,7 @@ public class HumanTaskActivityBehavior extends TaskActivityBehavior {
     }
   }
 
+  @Override
   protected void completing(CmmnActivityExecution execution) {
     TaskEntity task = getTask(execution);
     if (task != null) {
@@ -63,6 +67,7 @@ public class HumanTaskActivityBehavior extends TaskActivityBehavior {
     }
   }
 
+  @Override
   protected void manualCompleting(CmmnActivityExecution execution) {
     completing(execution);
   }
@@ -76,6 +81,7 @@ public class HumanTaskActivityBehavior extends TaskActivityBehavior {
       .updateTaskSuspensionStateByCaseExecutionId(id, SuspensionState.SUSPENDED);
   }
 
+  @Override
   protected void resuming(CmmnActivityExecution execution) {
     String id = execution.getId();
 
@@ -92,6 +98,7 @@ public class HumanTaskActivityBehavior extends TaskActivityBehavior {
         .findTaskByCaseExecutionId(execution.getId());
   }
 
+  @Override
   protected String getTypeName() {
     return "human task";
   }

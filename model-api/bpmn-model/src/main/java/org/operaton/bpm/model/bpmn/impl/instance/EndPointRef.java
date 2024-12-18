@@ -35,7 +35,8 @@ public class EndPointRef extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EndPointRef.class, BPMN_ELEMENT_END_POINT_REF)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<EndPointRef>() {
-        public EndPointRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public EndPointRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new EndPointRef(instanceContext);
         }
       });

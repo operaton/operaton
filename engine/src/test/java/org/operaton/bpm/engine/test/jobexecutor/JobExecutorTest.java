@@ -46,6 +46,7 @@ public class JobExecutorTest extends JobExecutorTestCase {
   public void testBasicJobExecutorOperation() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         JobManager jobManager = commandContext.getJobManager();
         jobManager.send(createTweetMessage("message-one"));
@@ -73,6 +74,7 @@ public class JobExecutorTest extends JobExecutorTestCase {
     assertEquals(new TreeSet<String>(expectedMessages), new TreeSet<String>(messages));
 
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         List<HistoricJobLog> historicJobLogs = processEngineConfiguration
             .getHistoryService()

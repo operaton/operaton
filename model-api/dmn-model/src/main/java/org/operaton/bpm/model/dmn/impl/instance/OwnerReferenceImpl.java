@@ -37,7 +37,8 @@ public class OwnerReferenceImpl extends DmnElementReferenceImpl implements Owner
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<OwnerReference>() {
-        public OwnerReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OwnerReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new OwnerReferenceImpl(instanceContext);
         }
       });

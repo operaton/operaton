@@ -81,6 +81,7 @@ public class ModelImpl implements Model {
     actualNsToAlternative.remove(actual);
   }
 
+  @Override
   public Set<String> getAlternativeNamespaces(String actualNs) {
     return actualNsToAlternative.get(actualNs);
   }
@@ -101,22 +102,27 @@ public class ModelImpl implements Model {
     }
   }
 
+  @Override
   public String getActualNamespace(String alternativeNs) {
     return alternativeNsToActual.get(alternativeNs);
   }
 
+  @Override
   public Collection<ModelElementType> getTypes() {
     return new ArrayList<ModelElementType>(typesByName.values());
   }
 
+  @Override
   public ModelElementType getType(Class<? extends ModelElementInstance> instanceClass) {
     return typesByClass.get(instanceClass);
   }
 
+  @Override
   public ModelElementType getTypeForName(String typeName) {
     return getTypeForName(null, typeName);
   }
 
+  @Override
   public ModelElementType getTypeForName(String namespaceUri, String typeName) {
     return typesByName.get(ModelUtil.getQName(namespaceUri, typeName));
   }
@@ -133,6 +139,7 @@ public class ModelImpl implements Model {
     typesByClass.put(instanceType, modelElementType);
   }
 
+  @Override
   public String getModelName() {
     return modelName;
   }

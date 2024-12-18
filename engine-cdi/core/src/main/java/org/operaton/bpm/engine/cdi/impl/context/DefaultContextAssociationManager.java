@@ -198,6 +198,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
     return null;
   }
 
+  @Override
   public Task getTask() {
     ensureCommandContextNotActive();
     return getScopedAssociation().getTask();
@@ -208,16 +209,19 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
     getScopedAssociation().setTask(task);
   }
 
+  @Override
   public VariableMap getCachedVariables() {
     ensureCommandContextNotActive();
     return getScopedAssociation().getCachedVariables();
   }
 
+  @Override
   public VariableMap getCachedLocalVariables() {
     ensureCommandContextNotActive();
     return getScopedAssociation().getCachedVariablesLocal();
   }
 
+  @Override
   public void flushVariableCache() {
     ensureCommandContextNotActive();
     getScopedAssociation().flushVariableCache();

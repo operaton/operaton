@@ -32,6 +32,7 @@ public class BooleanValueMapper extends PrimitiveValueMapper<BooleanValue> {
     return Variables.booleanValue((Boolean) untypedValue.getValue());
   }
 
+  @Override
   public BooleanValue readValue(TypedValueField typedValueField) {
     Boolean boolValue = (Boolean) typedValueField.getValue();
     return Variables.booleanValue(boolValue);

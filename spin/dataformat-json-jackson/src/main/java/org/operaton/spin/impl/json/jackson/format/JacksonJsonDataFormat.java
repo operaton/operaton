@@ -123,14 +123,17 @@ public class JacksonJsonDataFormat implements DataFormat<SpinJsonNode> {
 
   // interface implementation ///////////////////////////////////
 
+  @Override
   public String getName() {
     return DATA_FORMAT_NAME;
   }
 
+  @Override
   public Class<? extends SpinJsonNode> getWrapperType() {
     return JacksonJsonNode.class;
   }
 
+  @Override
   public SpinJsonNode createWrapperInstance(Object parameter) {
     return new JacksonJsonNode((JsonNode) parameter, this);
   }
@@ -173,14 +176,17 @@ public class JacksonJsonDataFormat implements DataFormat<SpinJsonNode> {
     typeDetectors.add(0, typeDetector);
   }
 
+  @Override
   public JacksonJsonDataFormatMapper getMapper() {
     return dataFormatMapper;
   }
 
+  @Override
   public JacksonJsonDataFormatReader getReader() {
     return dataFormatReader;
   }
 
+  @Override
   public JacksonJsonDataFormatWriter getWriter() {
     return dataFormatWriter;
   }

@@ -61,10 +61,12 @@ public class TaskMeterLogEntity implements DbEntity, HasDbReferences, Serializab
   public TaskMeterLogEntity() {
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
@@ -85,6 +87,7 @@ public class TaskMeterLogEntity implements DbEntity, HasDbReferences, Serializab
     this.assigneeHash = assigneeHash;
   }
 
+  @Override
   public Object getPersistentState() {
     // immutable
     return TaskMeterLogEntity.class;

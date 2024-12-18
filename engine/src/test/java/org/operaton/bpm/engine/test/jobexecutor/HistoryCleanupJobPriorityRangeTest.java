@@ -52,6 +52,7 @@ public class HistoryCleanupJobPriorityRangeTest extends AbstractJobExecutorAcqui
 
   private void resetDatabase() {
     configuration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         List<Job> jobs = historyService.findHistoryCleanupJobs();
 

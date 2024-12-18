@@ -26,6 +26,7 @@ import org.junit.Assert;
  */
 public class TransitionInstanceVerifyer extends Assert implements ExecutionListener {
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     
     assertNull(execution.getActivityInstanceId());

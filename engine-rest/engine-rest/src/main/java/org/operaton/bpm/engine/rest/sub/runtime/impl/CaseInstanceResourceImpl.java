@@ -55,6 +55,7 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
     this.objectMapper = objectMapper;
   }
 
+  @Override
   public CaseInstanceDto getCaseInstance() {
     CaseService caseService = engine.getCaseService();
 
@@ -71,6 +72,7 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
     return result;
   }
 
+  @Override
   public void complete(CaseExecutionTriggerDto triggerDto) {
     try {
       CaseService caseService = engine.getCaseService();
@@ -95,6 +97,7 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
     }
   }
 
+  @Override
   public void close(CaseExecutionTriggerDto triggerDto) {
     try {
       CaseService caseService = engine.getCaseService();
@@ -120,6 +123,7 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
 
   }
 
+  @Override
   public void terminate(CaseExecutionTriggerDto triggerDto) {
     try {
       CaseService caseService = engine.getCaseService();
@@ -196,6 +200,7 @@ public class CaseInstanceResourceImpl implements CaseInstanceResource {
     }
   }
 
+  @Override
   public VariableResource getVariablesResource() {
     return new CaseExecutionVariablesResource(engine, caseInstanceId, objectMapper);
   }

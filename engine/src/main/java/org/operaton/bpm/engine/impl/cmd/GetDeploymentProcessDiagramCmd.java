@@ -45,6 +45,7 @@ public class GetDeploymentProcessDiagramCmd implements Command<InputStream>, Ser
     this.processDefinitionId = processDefinitionId;
   }
 
+  @Override
   public InputStream execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
             .getProcessEngineConfiguration()

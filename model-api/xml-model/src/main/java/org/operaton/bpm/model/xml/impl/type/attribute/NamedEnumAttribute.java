@@ -27,6 +27,7 @@ public class NamedEnumAttribute<T extends Enum<T>> extends AttributeImpl<T> {
     this.type = type;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   protected T convertXmlValueToModelValue(String rawValue) {
     T[] enumConstants = type.getEnumConstants();
@@ -40,6 +41,7 @@ public class NamedEnumAttribute<T extends Enum<T>> extends AttributeImpl<T> {
     return null;
   }
 
+  @Override
   protected String convertModelValueToXmlValue(T modelValue) {
     return modelValue.toString();
   }

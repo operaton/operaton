@@ -50,6 +50,7 @@ public abstract class AbstractPvmAtomicOperationTransitionNotifyListenerTake ext
     }
   }
 
+  @Override
   protected CoreModelElement getScope(PvmExecutionImpl execution) {
     return execution.getTransition();
   }

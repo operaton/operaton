@@ -37,10 +37,12 @@ public class BatchSeedJobHandler implements JobHandler<BatchSeedJobConfiguration
 
   public static final String TYPE = "batch-seed-job";
 
+  @Override
   public String getType() {
     return TYPE;
   }
 
+  @Override
   public void execute(BatchSeedJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
 
     String batchId = configuration.getBatchId();
@@ -86,6 +88,7 @@ public class BatchSeedJobHandler implements JobHandler<BatchSeedJobConfiguration
     }
   }
 
+  @Override
   public void onDelete(BatchSeedJobConfiguration configuration, JobEntity jobEntity) {
     // do nothing
   }

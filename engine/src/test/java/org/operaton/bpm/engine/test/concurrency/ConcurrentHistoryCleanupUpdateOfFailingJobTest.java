@@ -106,6 +106,7 @@ public class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyT
 
   public class ControllableBootstrap extends ControllableCommand<Void> {
 
+    @Override
     public Void execute(CommandContext commandContext) {
 
       monitor.sync();
@@ -124,6 +125,7 @@ public class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyT
       this.jobId = jobId;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
 
       commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTING, cc -> monitor.sync());

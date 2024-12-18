@@ -37,7 +37,8 @@ public class ChildLaneSet extends LaneSetImpl {
       .namespaceUri(BPMN20_NS)
       .extendsType(LaneSet.class)
       .instanceProvider(new ModelTypeInstanceProvider<ChildLaneSet>() {
-        public ChildLaneSet newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ChildLaneSet newInstance(ModelTypeInstanceContext instanceContext) {
           return new ChildLaneSet(instanceContext);
         }
       });

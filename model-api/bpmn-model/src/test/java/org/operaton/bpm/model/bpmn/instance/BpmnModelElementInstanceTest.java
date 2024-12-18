@@ -35,6 +35,7 @@ public abstract class BpmnModelElementInstanceTest extends AbstractModelElementI
     initModelElementType(modelElementTypeRule);
   }
 
+  @Override
   public String getDefaultNamespace() {
     return BpmnModelConstants.BPMN20_NS;
   }

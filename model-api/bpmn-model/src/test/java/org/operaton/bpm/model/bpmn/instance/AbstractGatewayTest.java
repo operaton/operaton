@@ -36,14 +36,17 @@ public abstract class AbstractGatewayTest<G extends Gateway> extends BpmnModelEl
 
   protected G gateway;
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(Gateway.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption(OPERATON_NS, "asyncBefore", false, false, false),

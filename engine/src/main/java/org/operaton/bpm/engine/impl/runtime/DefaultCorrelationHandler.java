@@ -43,6 +43,7 @@ public class DefaultCorrelationHandler implements CorrelationHandler {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
+  @Override
   public CorrelationHandlerResult correlateMessage(CommandContext commandContext, String messageName, CorrelationSet correlationSet) {
 
     // first try to correlate to execution
@@ -71,6 +72,7 @@ public class DefaultCorrelationHandler implements CorrelationHandler {
     }
   }
 
+  @Override
   public List<CorrelationHandlerResult> correlateMessages(CommandContext commandContext, String messageName, CorrelationSet correlationSet) {
     List<CorrelationHandlerResult> results = new ArrayList<>();
 

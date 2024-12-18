@@ -25,14 +25,17 @@ import java.util.Collection;
  */
 public class TableItemTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CmmnElement.class, true);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
           new AttributeAssumption("applicabilityRuleRefs"),

@@ -32,6 +32,7 @@ public class JobAcquisitionXmlImpl implements JobAcquisitionXml {
   private String jobExecutorClassName;
   private Map<String, String> properties;
 
+  @Override
   public String getName() {
     return name;
   }
@@ -41,6 +42,7 @@ public class JobAcquisitionXmlImpl implements JobAcquisitionXml {
   }
 
 
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }
@@ -49,6 +51,7 @@ public class JobAcquisitionXmlImpl implements JobAcquisitionXml {
     this.properties = properties;
   }
 
+  @Override
   public String getJobExecutorClassName() {
     return jobExecutorClassName;
   }

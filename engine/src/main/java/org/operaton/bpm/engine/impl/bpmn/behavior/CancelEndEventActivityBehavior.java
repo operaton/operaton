@@ -53,6 +53,7 @@ public class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
 
   }
 
+  @Override
   public void doLeave(ActivityExecution execution) {
     // continue via the appropriate cancel boundary event
     ScopeImpl eventScope = (ScopeImpl) cancelBoundaryEvent.getEventScope();
@@ -61,6 +62,7 @@ public class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
     boundaryEventScopeExecution.executeActivity(cancelBoundaryEvent);
   }
 
+  @Override
   public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
 
     // join compensating executions

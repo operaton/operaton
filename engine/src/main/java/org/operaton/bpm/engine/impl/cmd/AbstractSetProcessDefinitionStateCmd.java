@@ -104,6 +104,7 @@ public abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetSt
     }
 
     commandContext.runWithoutAuthorization(new Callable<Void>() {
+      @Override
       public Void call() throws Exception {
         UpdateJobDefinitionSuspensionStateBuilderImpl jobDefinitionSuspensionStateBuilder = createJobDefinitionCommandBuilder();
         AbstractSetJobDefinitionStateCmd jobDefinitionCmd = getSetJobDefinitionStateCmd(jobDefinitionSuspensionStateBuilder);

@@ -33,11 +33,13 @@ public class JmxManagedProcessEngineController extends JmxManagedProcessEngine i
   public JmxManagedProcessEngineController(ProcessEngineConfiguration processEngineConfiguration) {
     this.processEngineConfiguration = processEngineConfiguration;
   }
-  
+
+  @Override
   public void start(PlatformServiceContainer contanier) {
     processEngine = processEngineConfiguration.buildProcessEngine();
   }
-  
+
+  @Override
   public void stop(PlatformServiceContainer container) {
     processEngine.close();
   }

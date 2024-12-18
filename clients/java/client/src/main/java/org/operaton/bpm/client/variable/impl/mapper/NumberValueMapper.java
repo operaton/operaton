@@ -26,6 +26,7 @@ public abstract class NumberValueMapper<T extends PrimitiveValue<?>> extends Pri
     super(valueType);
   }
 
+  @Override
   protected boolean canReadValue(TypedValueField typedValueField) {
     Object value = typedValueField.getValue();
     return value == null || value instanceof Number;

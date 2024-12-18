@@ -33,6 +33,7 @@ public class ExpressionExecutionListener implements ExecutionListener {
     this.expression = expression;
   }
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     // Return value of expression is ignored
     expression.getValue(execution);

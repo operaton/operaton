@@ -155,6 +155,7 @@ public class ConcurrentDeploymentTest extends ConcurrencyTestCase {
       this.deploymentBuilder = deploymentBuilder;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       monitor.sync();  // thread will block here until makeContinue() is called from main thread
 

@@ -56,10 +56,12 @@ public abstract class ShapeImpl extends NodeImpl implements Shape {
     super(instanceContext);
   }
 
+  @Override
   public Bounds getBounds() {
     return boundsChild.getChild(this);
   }
 
+  @Override
   public void setBounds(Bounds bounds) {
     boundsChild.setChild(this, bounds);
   }

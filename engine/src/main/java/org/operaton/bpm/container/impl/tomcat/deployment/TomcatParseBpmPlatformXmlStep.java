@@ -41,6 +41,7 @@ public class TomcatParseBpmPlatformXmlStep extends AbstractParseBpmPlatformXmlSt
   public static final String CATALINA_BASE = "catalina.base";
   public static final String CATALINA_HOME = "catalina.home";
 
+  @Override
   public URL getBpmPlatformXmlStream(DeploymentOperation operationcontext) {
     URL fileLocation = lookupBpmPlatformXml();
 

@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
  */
 public abstract class ProcessOrCaseTaskActivityBehavior extends CallingTaskActivityBehavior implements TransferVariablesActivityBehavior {
 
+  @Override
   protected void performStart(CmmnActivityExecution execution) {
     VariableMap variables = getInputVariables(execution);
     String businessKey = getBusinessKey(execution);
@@ -39,11 +40,13 @@ public abstract class ProcessOrCaseTaskActivityBehavior extends CallingTaskActiv
     }
   }
 
+  @Override
   public void transferVariables(VariableScope sourceScope, CmmnActivityExecution caseExecution) {
     VariableMap variables = getOutputVariables(sourceScope);
     caseExecution.setVariables(variables);
   }
 
+  @Override
   public CallableElement getCallableElement() {
     return (CallableElement) callableElement;
   }

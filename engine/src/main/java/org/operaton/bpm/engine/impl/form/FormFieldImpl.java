@@ -44,6 +44,7 @@ public class FormFieldImpl implements FormField {
 
   // getters / setters ///////////////////////////////////////////
 
+  @Override
   public String getId() {
     return id;
   }
@@ -52,6 +53,7 @@ public class FormFieldImpl implements FormField {
     this.id = id;
   }
 
+  @Override
   public String getLabel() {
     return label;
   }
@@ -60,10 +62,12 @@ public class FormFieldImpl implements FormField {
     this.label = label;
   }
 
+  @Override
   public FormType getType() {
     return type;
   }
 
+  @Override
   public String getTypeName() {
     return type.getName();
   }
@@ -72,10 +76,12 @@ public class FormFieldImpl implements FormField {
     this.type = type;
   }
 
+  @Override
   public Object getDefaultValue() {
     return defaultValue;
   }
 
+  @Override
   public TypedValue getValue() {
     return value;
   }
@@ -88,6 +94,7 @@ public class FormFieldImpl implements FormField {
     this.value = value;
   }
 
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }
@@ -96,6 +103,7 @@ public class FormFieldImpl implements FormField {
     this.properties = properties;
   }
 
+  @Override
   public List<FormFieldValidationConstraint> getValidationConstraints() {
     return validationConstraints;
   }

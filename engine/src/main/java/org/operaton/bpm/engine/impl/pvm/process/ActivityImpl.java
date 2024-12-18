@@ -81,6 +81,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     return transition;
   }
 
+  @Override
   public TransitionImpl findOutgoingTransition(String transitionId) {
     return namedOutgoingTransitions.get(transitionId);
   }
@@ -102,6 +103,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<PvmTransition> getOutgoingTransitions() {
     return (List) outgoingTransitions;
@@ -116,6 +118,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     this.activityBehavior = activityBehavior;
   }
 
+  @Override
   public ActivityStartBehavior getActivityStartBehavior() {
     return activityStartBehavior;
   }
@@ -124,11 +127,13 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     this.activityStartBehavior = activityStartBehavior;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<PvmTransition> getIncomingTransitions() {
     return (List) incomingTransitions;
   }
 
+  @Override
   public boolean isScope() {
     return isScope;
   }
@@ -137,6 +142,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     this.isScope = isScope;
   }
 
+  @Override
   public boolean isAsyncBefore() {
     return isAsyncBefore;
   }
@@ -151,6 +157,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     this.isAsyncBefore = isAsyncBefore;
   }
 
+  @Override
   public boolean isAsyncAfter() {
     return isAsyncAfter;
   }
@@ -169,10 +176,12 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     return super.getId();
   }
 
+  @Override
   public ScopeImpl getFlowScope() {
     return flowScope;
   }
 
+  @Override
   public ScopeImpl getEventScope() {
     return eventScope;
   }
@@ -189,6 +198,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     }
   }
 
+  @Override
   public PvmScope getLevelOfSubprocessScope() {
     ScopeImpl levelOfSubprocessScope = getFlowScope();
     while(!levelOfSubprocessScope.isSubProcessScope) {
@@ -205,34 +215,42 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   protected int width = -1;
   protected int height = -1;
 
+  @Override
   public int getX() {
     return x;
   }
 
+  @Override
   public void setX(int x) {
     this.x = x;
   }
 
+  @Override
   public int getY() {
     return y;
   }
 
+  @Override
   public void setY(int y) {
     this.y = y;
   }
 
+  @Override
   public int getWidth() {
     return width;
   }
 
+  @Override
   public void setWidth(int width) {
     this.width = width;
   }
 
+  @Override
   public int getHeight() {
     return height;
   }
 
+  @Override
   public void setHeight(int height) {
     this.height = height;
   }

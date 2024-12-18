@@ -133,6 +133,7 @@ public class JdbcStatementTimeoutTest extends ConcurrencyTestHelper {
   private void deleteJobEntities() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
 
+      @Override
       public Void execute(CommandContext commandContext) {
         List<Job> jobs = commandContext.getDbEntityManager().createJobQuery().list();
         for (Job job : jobs) {
@@ -157,6 +158,7 @@ public class JdbcStatementTimeoutTest extends ConcurrencyTestHelper {
       this.lockOwner = lockOwner;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       DbEntityManagerFactory dbEntityManagerFactory = new DbEntityManagerFactory(Context.getProcessEngineConfiguration().getIdGenerator());
       DbEntityManager entityManager = dbEntityManagerFactory.openSession();

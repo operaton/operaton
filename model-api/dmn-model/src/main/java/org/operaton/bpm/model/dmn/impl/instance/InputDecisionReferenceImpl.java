@@ -37,7 +37,8 @@ public class InputDecisionReferenceImpl extends DmnElementReferenceImpl implemen
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<InputDecisionReference>() {
-        public InputDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputDecisionReferenceImpl(instanceContext);
         }
       });

@@ -43,7 +43,8 @@ public class TimerEventDefinitionImpl extends EventDefinitionImpl implements Tim
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
       .instanceProvider(new ModelTypeInstanceProvider<TimerEventDefinition>() {
-        public TimerEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TimerEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
           return new TimerEventDefinitionImpl(instanceContext);
         }
       });
@@ -66,26 +67,32 @@ public class TimerEventDefinitionImpl extends EventDefinitionImpl implements Tim
     super(context);
   }
 
+  @Override
   public TimeDate getTimeDate() {
     return timeDateChild.getChild(this);
   }
 
+  @Override
   public void setTimeDate(TimeDate timeDate) {
     timeDateChild.setChild(this, timeDate);
   }
 
+  @Override
   public TimeDuration getTimeDuration() {
     return timeDurationChild.getChild(this);
   }
 
+  @Override
   public void setTimeDuration(TimeDuration timeDuration) {
     timeDurationChild.setChild(this, timeDuration);
   }
 
+  @Override
   public TimeCycle getTimeCycle() {
     return timeCycleChild.getChild(this);
   }
 
+  @Override
   public void setTimeCycle(TimeCycle timeCycle) {
     timeCycleChild.setChild(this, timeCycle);
   }

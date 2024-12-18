@@ -45,18 +45,22 @@ public class CaseParameterImpl extends ParameterImpl implements CaseParameter {
     super(instanceContext);
   }
 
+  @Override
   public CaseFileItem getBinding() {
     return bindingRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setBinding(CaseFileItem bindingRef) {
     bindingRefAttribute.setReferenceTargetElement(this, bindingRef);
   }
 
+  @Override
   public BindingRefinementExpression getBindingRefinement() {
     return bindingRefinementChild.getChild(this);
   }
 
+  @Override
   public void setBindingRefinement(BindingRefinementExpression bindingRefinement) {
     bindingRefinementChild.setChild(this, bindingRefinement);
   }
@@ -66,7 +70,8 @@ public class CaseParameterImpl extends ParameterImpl implements CaseParameter {
         .namespaceUri(CMMN11_NS)
         .extendsType(Parameter.class)
         .instanceProvider(new ModelTypeInstanceProvider<CaseParameter>() {
-          public CaseParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseParameter newInstance(ModelTypeInstanceContext instanceContext) {
             return new CaseParameterImpl(instanceContext);
           }
         });

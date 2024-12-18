@@ -32,6 +32,7 @@ public class StringValueMapper extends PrimitiveValueMapper<StringValue> {
     return Variables.stringValue((String) untypedValue.getValue());
   }
 
+  @Override
   public StringValue readValue(TypedValueField typedValueField) {
     return Variables.stringValue((String) typedValueField.getValue());
   }

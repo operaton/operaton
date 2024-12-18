@@ -75,6 +75,7 @@ public class XmlSerializable {
     return jsonBuilder.toString();
   }
 
+  @Override
   public String toString() {
     return toExpectedXmlString();
   }

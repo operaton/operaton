@@ -51,29 +51,37 @@ public class FormPropertyAdapter implements FormField {
     }
   }
 
+  @Override
   public String getId() {
     return formProperty.getId();
   }
 
+  @Override
   public String getLabel() {
     return formProperty.getName();
   }
+
+  @Override
   public FormType getType() {
     return formProperty.getType();
   }
 
+  @Override
   public String getTypeName() {
     return formProperty.getType().getName();
   }
 
+  @Override
   public Object getDefaultValue() {
     return formProperty.getValue();
   }
 
+  @Override
   public List<FormFieldValidationConstraint> getValidationConstraints() {
     return validationConstraints;
   }
 
+  @Override
   public Map<String, String> getProperties() {
     return Collections.emptyMap();
   }
@@ -87,6 +95,7 @@ public class FormPropertyAdapter implements FormField {
     return getValue();
   }
 
+  @Override
   public TypedValue getValue() {
     return Variables.stringValue(formProperty.getValue());
   }

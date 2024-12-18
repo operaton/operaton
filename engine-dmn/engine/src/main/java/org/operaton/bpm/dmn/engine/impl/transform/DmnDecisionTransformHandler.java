@@ -23,6 +23,7 @@ import org.operaton.bpm.model.dmn.instance.Decision;
 
 public class DmnDecisionTransformHandler implements DmnElementTransformHandler<Decision, DmnDecisionImpl> {
 
+  @Override
   public DmnDecisionImpl handleElement(DmnElementTransformContext context, Decision decision) {
     return createFromDecision(context, decision);
   }

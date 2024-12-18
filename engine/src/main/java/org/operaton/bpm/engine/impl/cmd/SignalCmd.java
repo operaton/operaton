@@ -47,6 +47,7 @@ public class SignalCmd implements Command<Object>, Serializable {
     this.processVariables = processVariables;
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     ensureNotNull(BadUserRequestException.class, "executionId is null", "executionId", executionId);
 

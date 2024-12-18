@@ -26,10 +26,12 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public abstract class SimpleFormFieldType extends AbstractFormFieldType {
 
+  @Override
   public TypedValue convertToFormValue(TypedValue propertyValue) {
     return convertValue(propertyValue);
   }
 
+  @Override
   public TypedValue convertToModelValue(TypedValue propertyValue) {
     return convertValue(propertyValue);
   }

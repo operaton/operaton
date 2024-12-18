@@ -39,6 +39,7 @@ public class ResourceStreamSource implements StreamSource {
     this.classLoader = classLoader;
   }
 
+  @Override
   public InputStream getInputStream() {
     InputStream inputStream = null;
     if (classLoader == null) {
@@ -50,6 +51,7 @@ public class ResourceStreamSource implements StreamSource {
     return inputStream;
   }
 
+  @Override
   public String toString() {
     return "Resource["+resource+"]";
   }

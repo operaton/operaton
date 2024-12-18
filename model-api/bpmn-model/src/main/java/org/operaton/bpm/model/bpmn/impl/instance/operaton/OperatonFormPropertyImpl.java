@@ -54,7 +54,8 @@ public class OperatonFormPropertyImpl extends BpmnModelElementInstanceImpl imple
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormProperty.class, OPERATON_ELEMENT_FORM_PROPERTY)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonFormProperty>() {
-        public OperatonFormProperty newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonFormProperty newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonFormPropertyImpl(instanceContext);
         }
       });
@@ -114,86 +115,107 @@ public class OperatonFormPropertyImpl extends BpmnModelElementInstanceImpl imple
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonId() {
     return operatonIdAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonId(String operatonId) {
     operatonIdAttribute.setValue(this, operatonId);
   }
 
+  @Override
   public String getOperatonName() {
     return operatonNameAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonName(String operatonName) {
     operatonNameAttribute.setValue(this, operatonName);
   }
 
+  @Override
   public String getOperatonType() {
     return operatonTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonType(String operatonType) {
     operatonTypeAttribute.setValue(this, operatonType);
   }
 
+  @Override
   public boolean isOperatonRequired() {
     return operatonRequiredAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonRequired(boolean isOperatonRequired) {
     operatonRequiredAttribute.setValue(this, isOperatonRequired);
   }
 
+  @Override
   public boolean isOperatonReadable() {
     return operatonReadableAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonReadable(boolean isOperatonReadable) {
     operatonReadableAttribute.setValue(this, isOperatonReadable);
   }
 
+  @Override
   public boolean isOperatonWriteable() {
     return operatonWriteableAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonWriteable(boolean isOperatonWriteable) {
     operatonWriteableAttribute.setValue(this, isOperatonWriteable);
   }
 
+  @Override
   public String getOperatonVariable() {
     return operatonVariableAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonVariable(String operatonVariable) {
     operatonVariableAttribute.setValue(this, operatonVariable);
   }
 
+  @Override
   public String getOperatonExpression() {
     return operatonExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonExpression(String operatonExpression) {
     operatonExpressionAttribute.setValue(this, operatonExpression);
   }
 
+  @Override
   public String getOperatonDatePattern() {
     return operatonDatePatternAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDatePattern(String operatonDatePattern) {
     operatonDatePatternAttribute.setValue(this, operatonDatePattern);
   }
 
+  @Override
   public String getOperatonDefault() {
     return operatonDefaultAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDefault(String operatonDefault) {
     operatonDefaultAttribute.setValue(this, operatonDefault);
   }
 
+  @Override
   public Collection<OperatonValue> getOperatonValues() {
     return operatonValueCollection.get(this);
   }

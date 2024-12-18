@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
  */
 public class NullValueProvider implements ParameterValueProvider {
 
+  @Override
   public Object getValue(VariableScope variableScope) {
     return null;
   }

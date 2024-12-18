@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  */
 public class ExecuteQueryTaskListener extends MyDelegationService implements TaskListener {
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     logAuthentication(delegateTask);
     logInstancesCount(delegateTask);

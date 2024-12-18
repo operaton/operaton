@@ -27,6 +27,7 @@ public class EventListenerActivityBehavior extends EventListenerOrMilestoneActiv
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 
+  @Override
   public void created(CmmnActivityExecution execution) {
     // TODO: implement this:
 
@@ -37,14 +38,17 @@ public class EventListenerActivityBehavior extends EventListenerOrMilestoneActiv
     // on another plan item or case file item happens!
   }
 
+  @Override
   protected String getTypeName() {
     return "event listener";
   }
 
+  @Override
   protected boolean isAtLeastOneEntryCriterionSatisfied(CmmnActivityExecution execution) {
     return false;
   }
 
+  @Override
   public void fireEntryCriteria(CmmnActivityExecution execution) {
     throw LOG.criteriaNotAllowedForEventListenerException("entry", execution.getId());
   }
@@ -53,6 +57,7 @@ public class EventListenerActivityBehavior extends EventListenerOrMilestoneActiv
     // It is not possible to repeat a event listener
   }
 
+  @Override
   protected boolean evaluateRepetitionRule(CmmnActivityExecution execution) {
     // It is not possible to define a repetition rule on an event listener
     return false;

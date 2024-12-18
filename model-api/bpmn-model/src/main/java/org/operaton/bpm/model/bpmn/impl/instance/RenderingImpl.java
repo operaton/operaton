@@ -38,7 +38,8 @@ public class RenderingImpl extends BaseElementImpl implements Rendering {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Rendering>() {
-        public Rendering newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Rendering newInstance(ModelTypeInstanceContext instanceContext) {
           return new RenderingImpl(instanceContext);
         }
       });

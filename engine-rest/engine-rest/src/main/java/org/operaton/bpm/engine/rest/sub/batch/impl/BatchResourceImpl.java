@@ -36,6 +36,7 @@ public class BatchResourceImpl implements BatchResource {
     this.batchId = batchId;
   }
 
+  @Override
   public BatchDto getBatch() {
     Batch batch = processEngine.getManagementService()
       .createBatchQuery()
@@ -49,6 +50,7 @@ public class BatchResourceImpl implements BatchResource {
     return BatchDto.fromBatch(batch);
   }
 
+  @Override
   public void updateSuspensionState(SuspensionStateDto suspensionState) {
     if (suspensionState.getSuspended()) {
       suspendBatch();
@@ -76,6 +78,7 @@ public class BatchResourceImpl implements BatchResource {
     }
   }
 
+  @Override
   public void deleteBatch(boolean cascade) {
     try {
       processEngine.getManagementService()

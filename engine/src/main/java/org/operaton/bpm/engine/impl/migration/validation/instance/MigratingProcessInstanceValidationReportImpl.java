@@ -32,6 +32,7 @@ public class MigratingProcessInstanceValidationReportImpl implements MigratingPr
       new ArrayList<MigratingTransitionInstanceValidationReport>();
   protected List<String> failures = new ArrayList<String>();
 
+  @Override
   public String getProcessInstanceId() {
     return processInstanceId;
   }
@@ -48,6 +49,7 @@ public class MigratingProcessInstanceValidationReportImpl implements MigratingPr
     transitionInstanceReports.add(instanceReport);
   }
 
+  @Override
   public List<MigratingActivityInstanceValidationReport> getActivityInstanceReports() {
     return activityInstanceReports;
   }
@@ -61,10 +63,12 @@ public class MigratingProcessInstanceValidationReportImpl implements MigratingPr
     failures.add(failure);
   }
 
+  @Override
   public List<String> getFailures() {
     return failures;
   }
 
+  @Override
   public boolean hasFailures() {
     return !failures.isEmpty() || !activityInstanceReports.isEmpty() || !transitionInstanceReports.isEmpty();
   }

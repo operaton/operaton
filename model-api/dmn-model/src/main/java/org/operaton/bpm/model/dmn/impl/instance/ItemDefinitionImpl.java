@@ -50,38 +50,47 @@ public class ItemDefinitionImpl extends NamedElementImpl implements ItemDefiniti
     super(instanceContext);
   }
 
+  @Override
   public String getTypeLanguage() {
     return typeLanguageAttribute.getValue(this);
   }
 
+  @Override
   public void setTypeLanguage(String typeLanguage) {
     typeLanguageAttribute.setValue(this, typeLanguage);
   }
 
+  @Override
   public boolean isCollection() {
     return isCollectionAttribute.getValue(this);
   }
 
+  @Override
   public void setCollection(boolean isCollection) {
     isCollectionAttribute.setValue(this, isCollection);
   }
 
+  @Override
   public TypeRef getTypeRef() {
     return typeRefChild.getChild(this);
   }
 
+  @Override
   public void setTypeRef(TypeRef typeRef) {
     typeRefChild.setChild(this, typeRef);
   }
 
+  @Override
   public AllowedValues getAllowedValues() {
     return allowedValuesChild.getChild(this);
   }
 
+  @Override
   public void setAllowedValues(AllowedValues allowedValues) {
     allowedValuesChild.setChild(this, allowedValues);
   }
 
+  @Override
   public Collection<ItemComponent> getItemComponents() {
     return itemComponentCollection.get(this);
   }
@@ -91,7 +100,8 @@ public class ItemDefinitionImpl extends NamedElementImpl implements ItemDefiniti
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<ItemDefinition>() {
-        public ItemDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ItemDefinition newInstance(ModelTypeInstanceContext instanceContext) {
           return new ItemDefinitionImpl(instanceContext);
         }
       });

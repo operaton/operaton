@@ -54,17 +54,21 @@ public abstract class GatewayImpl extends FlowNodeImpl implements Gateway {
     super(context);
   }
 
+  @Override
   @SuppressWarnings("rawtypes")
   public abstract AbstractGatewayBuilder builder();
 
+  @Override
   public GatewayDirection getGatewayDirection() {
     return gatewayDirectionAttribute.getValue(this);
   }
 
+  @Override
   public void setGatewayDirection(GatewayDirection gatewayDirection) {
     gatewayDirectionAttribute.setValue(this, gatewayDirection);
   }
 
+  @Override
   public BpmnShape getDiagramElement() {
     return (BpmnShape) super.getDiagramElement();
   }

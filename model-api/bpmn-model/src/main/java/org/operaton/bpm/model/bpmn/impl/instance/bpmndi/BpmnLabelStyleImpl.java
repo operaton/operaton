@@ -44,7 +44,8 @@ public class BpmnLabelStyleImpl extends StyleImpl implements BpmnLabelStyle {
       .namespaceUri(BPMNDI_NS)
       .extendsType(Style.class)
       .instanceProvider(new ModelTypeInstanceProvider<BpmnLabelStyle>() {
-        public BpmnLabelStyle newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public BpmnLabelStyle newInstance(ModelTypeInstanceContext instanceContext) {
           return new BpmnLabelStyleImpl(instanceContext);
         }
       });
@@ -62,10 +63,12 @@ public class BpmnLabelStyleImpl extends StyleImpl implements BpmnLabelStyle {
     super(instanceContext);
   }
 
+  @Override
   public Font getFont() {
     return fontChild.getChild(this);
   }
 
+  @Override
   public void setFont(Font font) {
     fontChild.setChild(this, font);
   }

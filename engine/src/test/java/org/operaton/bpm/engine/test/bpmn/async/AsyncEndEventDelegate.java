@@ -24,7 +24,8 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  * @author Stefan Hentschel
  */
 public class AsyncEndEventDelegate implements JavaDelegate {
-  
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     execution.setVariable("message", true);
   }

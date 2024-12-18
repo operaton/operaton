@@ -46,6 +46,7 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
     JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
     String jobId = commandExecutor.execute(new Command<String>() {
 
+      @Override
       public String execute(CommandContext commandContext) {
         MessageEntity message = createTweetMessage("i'm coding a test");
         commandContext.getJobManager().send(message);
@@ -86,6 +87,7 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
     String jobId = commandExecutor.execute(new Command<String>() {
 
+      @Override
       public String execute(CommandContext commandContext) {
         TimerEntity timer = createTweetTimer("i'm coding a test", new Date(SOME_TIME + (10 * SECOND)));
         commandContext.getJobManager().schedule(timer);
@@ -122,6 +124,7 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
   protected void clearDatabase() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         List<HistoricJobLog> historicJobLogs = processEngineConfiguration

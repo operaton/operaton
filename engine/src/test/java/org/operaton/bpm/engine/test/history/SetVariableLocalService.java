@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class SetVariableLocalService implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     execution.setVariableLocal("testVar", "testValue");
   }

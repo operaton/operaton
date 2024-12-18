@@ -44,6 +44,7 @@ public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements Varia
     super(taskId, variables, isLocal);
   }
 
+  @Override
   protected TaskEntity getEntity() {
     ensureNotNull("taskId", entityId);
 
@@ -78,6 +79,7 @@ public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements Varia
     return getEntity().getExecution();
   }
 
+  @Override
   protected void logVariableOperation(AbstractVariableScope scope) {
     TaskEntity task = (TaskEntity) scope;
     commandContext.getOperationLogManager().logVariableOperation(getLogEntryOperation(), null, task.getId(),

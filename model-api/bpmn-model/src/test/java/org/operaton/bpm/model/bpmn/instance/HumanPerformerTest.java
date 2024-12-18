@@ -23,6 +23,7 @@ import java.util.Collection;
  */
 public class HumanPerformerTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(Performer.class, false);
   }

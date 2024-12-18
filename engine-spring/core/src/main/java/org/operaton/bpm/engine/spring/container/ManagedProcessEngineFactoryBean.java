@@ -31,7 +31,8 @@ import org.operaton.bpm.engine.spring.ProcessEngineFactoryBean;
  *
  */
 public class ManagedProcessEngineFactoryBean extends ProcessEngineFactoryBean {
-  
+
+  @Override
   public ProcessEngine getObject() throws Exception {
     ProcessEngine processEngine = super.getObject();
     
@@ -44,7 +45,8 @@ public class ManagedProcessEngineFactoryBean extends ProcessEngineFactoryBean {
   protected RuntimeContainerDelegate getRuntimeContainerDelegate() {
     return RuntimeContainerDelegate.INSTANCE.get();
   }
-  
+
+  @Override
   public void destroy() throws Exception {
     
     if(processEngine != null) {

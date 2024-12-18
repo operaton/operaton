@@ -38,7 +38,8 @@ public class MonitoringImpl extends BaseElementImpl implements Monitoring {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Monitoring>() {
-        public Monitoring newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Monitoring newInstance(ModelTypeInstanceContext instanceContext) {
           return new MonitoringImpl(instanceContext);
         }
       });

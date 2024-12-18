@@ -23,6 +23,7 @@ public class DelegateClassNotABean implements JavaDelegate {
 
   private SentenceGenerator sentenceGenerator;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     execution.setVariable("message", "DelegateClassNotABean was called");
     execution.setVariable("injectedFieldIsNull", sentenceGenerator == null);

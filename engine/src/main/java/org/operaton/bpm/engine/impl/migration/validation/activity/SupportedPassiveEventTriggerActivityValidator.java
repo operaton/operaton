@@ -48,6 +48,7 @@ public class SupportedPassiveEventTriggerActivityValidator implements MigrationA
     ActivityTypes.START_EVENT_CONDITIONAL
   );
 
+  @Override
   public boolean valid(ActivityImpl activity) {
     return activity != null && (!isPassivelyWaitingEvent(activity) || isSupportedEventType(activity));
   }

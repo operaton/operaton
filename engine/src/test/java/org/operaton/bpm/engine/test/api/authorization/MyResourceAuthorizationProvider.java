@@ -59,80 +59,97 @@ public class MyResourceAuthorizationProvider implements ResourceAuthorizationPro
   public static String DELETE_GROUP_IDENTITY_LINK_TYPE = null;
   public static String DELETE_GROUP_IDENTITY_LINK_GROUP = null;
 
+  @Override
   public AuthorizationEntity[] newUser(User user) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newGroup(Group group) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newTenant(Tenant tenant) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] groupMembershipCreated(String groupId, String userId) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] tenantMembershipCreated(Tenant tenant, User user) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] tenantMembershipCreated(Tenant tenant, Group group) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newFilter(Filter filter) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newDeployment(Deployment deployment) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newProcessDefinition(ProcessDefinition processDefinition) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newProcessInstance(ProcessInstance processInstance) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newTask(Task task) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee) {
     OLD_ASSIGNEE = oldAssignee;
     NEW_ASSIGNEE = newAssignee;
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newTaskOwner(Task task, String oldOwner, String newOwner) {
     OLD_OWNER = oldOwner;
     NEW_OWNER = newOwner;
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newTaskUserIdentityLink(Task task, String userId, String type) {
     ADD_USER_IDENTITY_LINK_TYPE = type;
     ADD_USER_IDENTITY_LINK_USER = userId;
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newTaskGroupIdentityLink(Task task, String groupId, String type) {
     ADD_GROUP_IDENTITY_LINK_TYPE = type;
     ADD_GROUP_IDENTITY_LINK_GROUP = groupId;
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] deleteTaskUserIdentityLink(Task task, String userId, String type) {
     DELETE_USER_IDENTITY_LINK_TYPE = type;
     DELETE_USER_IDENTITY_LINK_USER = userId;
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] deleteTaskGroupIdentityLink(Task task, String groupId, String type) {
     DELETE_GROUP_IDENTITY_LINK_TYPE = type;
     DELETE_GROUP_IDENTITY_LINK_GROUP = groupId;
@@ -154,10 +171,12 @@ public class MyResourceAuthorizationProvider implements ResourceAuthorizationPro
     DELETE_GROUP_IDENTITY_LINK_GROUP = null;
   }
 
+  @Override
   public AuthorizationEntity[] newDecisionDefinition(DecisionDefinition decisionDefinition) {
     return null;
   }
 
+  @Override
   public AuthorizationEntity[] newDecisionRequirementsDefinition(DecisionRequirementsDefinition decisionRequirementsDefinition) {
     return null;
   }

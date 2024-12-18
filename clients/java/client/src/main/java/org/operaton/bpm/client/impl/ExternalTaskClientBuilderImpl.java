@@ -108,31 +108,37 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
     this.httpClientBuilder = HttpClients.custom().useSystemProperties();
   }
 
+  @Override
   public ExternalTaskClientBuilder baseUrl(String baseUrl) {
     this.baseUrl = baseUrl;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder workerId(String workerId) {
     this.workerId = workerId;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder addInterceptor(ClientRequestInterceptor interceptor) {
     this.interceptors.add(interceptor);
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder maxTasks(int maxTasks) {
     this.maxTasks = maxTasks;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder usePriority(boolean usePriority) {
     this.usePriority = usePriority;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder useCreateTime(boolean useCreateTime) {
     if (useCreateTime) {
       orderingConfig.configureField(CREATE_TIME);
@@ -141,61 +147,73 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder orderByCreateTime() {
     orderingConfig.configureField(CREATE_TIME);
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder asc() {
     orderingConfig.configureDirectionOnLastField(ASC);
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder desc() {
     orderingConfig.configureDirectionOnLastField(DESC);
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder asyncResponseTimeout(long asyncResponseTimeout) {
     this.asyncResponseTimeout = asyncResponseTimeout;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder lockDuration(long lockDuration) {
     this.lockDuration = lockDuration;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder disableAutoFetching() {
     this.isAutoFetchingEnabled = false;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder backoffStrategy(BackoffStrategy backoffStrategy) {
     this.backoffStrategy = backoffStrategy;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder disableBackoffStrategy() {
     this.isBackoffStrategyDisabled = true;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder defaultSerializationFormat(String defaultSerializationFormat) {
     this.defaultSerializationFormat = defaultSerializationFormat;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder dateFormat(String dateFormat) {
     this.dateFormat = dateFormat;
     return this;
   }
 
+  @Override
   public ExternalTaskClientBuilder customizeHttpClient(Consumer<HttpClientBuilder> httpClientConsumer) {
     httpClientConsumer.accept(httpClientBuilder);
     return this;
   }
 
+  @Override
   public ExternalTaskClient build() {
     if (maxTasks <= 0) {
       throw LOG.maxTasksNotGreaterThanZeroException(maxTasks);

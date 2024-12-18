@@ -152,6 +152,7 @@ public class RepositoryAuthorizationQueryPerformanceTest extends AuthorizationPe
   @Test
   public void queryList() {
     performanceTest().step(new PerfTestStepBehavior() {
+      @Override
       public void execute(PerfTestRunContext context) {
         try {
           engine.getIdentityService().setAuthentication(authentication);
@@ -166,6 +167,7 @@ public class RepositoryAuthorizationQueryPerformanceTest extends AuthorizationPe
   @Test
   public void queryCount() {
     performanceTest().step(new PerfTestStepBehavior() {
+      @Override
       public void execute(PerfTestRunContext context) {
         try {
           engine.getIdentityService().setAuthentication(authentication);

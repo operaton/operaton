@@ -62,6 +62,7 @@ public class CmmnActivity extends CoreActivity {
 
   // create a new activity ///////////////////////////////////////
 
+  @Override
   public CmmnActivity createActivity(String activityId) {
     CmmnActivity activity = new CmmnActivity(activityId, caseDefinition);
     if (activityId!=null) {
@@ -74,22 +75,26 @@ public class CmmnActivity extends CoreActivity {
 
   // activities ////////////////////////////////////////////////
 
+  @Override
   public List<CmmnActivity> getActivities() {
     return activities;
   }
 
+  @Override
   public CmmnActivity findActivity(String activityId) {
     return (CmmnActivity) super.findActivity(activityId);
   }
 
   // child activity ////////////////////////////////////////////
 
+  @Override
   public CmmnActivity getChildActivity(String activityId) {
     return namedActivities.get(activityId);
   }
 
   // behavior //////////////////////////////////////////////////
 
+  @Override
   public CmmnActivityBehavior getActivityBehavior() {
     return activityBehavior;
   }

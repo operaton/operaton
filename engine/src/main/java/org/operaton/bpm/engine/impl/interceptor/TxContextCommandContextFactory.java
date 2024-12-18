@@ -31,6 +31,7 @@ public class TxContextCommandContextFactory extends CommandContextFactory {
   public TxContextCommandContextFactory() {
   }
 
+  @Override
   public CommandContext createCommandContext() {
     return new CommandContext(processEngineConfiguration, transactionContextFactory);
   }

@@ -25,14 +25,19 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceBuilder;
  */
 public interface ChildElementBuilder<T extends ModelElementInstance> extends ChildElementCollectionBuilder<T> {
 
+  @Override
   ChildElementBuilder<T> immutable();
 
+  @Override
   ChildElementBuilder<T> required();
 
+  @Override
   ChildElementBuilder<T> minOccurs(int i);
 
+  @Override
   ChildElementBuilder<T> maxOccurs(int i);
 
+  @Override
   ChildElement<T> build();
 
   <V extends ModelElementInstance> ElementReferenceBuilder<V,T> qNameElementReference(Class<V> referenceTargetType);

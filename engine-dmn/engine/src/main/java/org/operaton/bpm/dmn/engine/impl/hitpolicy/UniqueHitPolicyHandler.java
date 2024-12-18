@@ -29,6 +29,7 @@ public class UniqueHitPolicyHandler implements DmnHitPolicyHandler {
   public static final DmnHitPolicyLogger LOG = DmnLogger.HIT_POLICY_LOGGER;
   protected static final HitPolicyEntry HIT_POLICY = new HitPolicyEntry(HitPolicy.UNIQUE, null);
 
+  @Override
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     List<DmnEvaluatedDecisionRule> matchingRules = decisionTableEvaluationEvent.getMatchingRules();
 

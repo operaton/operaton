@@ -38,6 +38,7 @@ public class OperatonGenericValueElementImpl extends BpmnModelElementInstanceImp
     super(instanceContext);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends BpmnModelElementInstance> T getValue() {
     List<DomElement> childElements = getDomElement().getChildElements();
@@ -49,6 +50,7 @@ public class OperatonGenericValueElementImpl extends BpmnModelElementInstanceImp
     }
   }
 
+  @Override
   public void removeValue() {
     DomElement domElement = getDomElement();
     List<DomElement> childElements = domElement.getChildElements();
@@ -57,6 +59,7 @@ public class OperatonGenericValueElementImpl extends BpmnModelElementInstanceImp
     }
   }
 
+  @Override
   public <T extends BpmnModelElementInstance> void setValue(T value) {
     removeValue();
     getDomElement().appendChild(value.getDomElement());

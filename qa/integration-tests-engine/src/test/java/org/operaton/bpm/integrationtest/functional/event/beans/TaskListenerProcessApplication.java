@@ -30,8 +30,10 @@ public class TaskListenerProcessApplication extends org.operaton.bpm.application
 
   public static final String LISTENER_INVOCATION_COUNT = "listenerInvocationCount";
 
+  @Override
   public TaskListener getTaskListener() {
     return new TaskListener() {
+      @Override
       public void notify(DelegateTask delegateTask) {
         delegateTask.setVariable(delegateTask.getEventName(), true);
       }

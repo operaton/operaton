@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  */
 public class NoneEndEventActivityBehavior extends FlowNodeActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     execution.end(true);
   }

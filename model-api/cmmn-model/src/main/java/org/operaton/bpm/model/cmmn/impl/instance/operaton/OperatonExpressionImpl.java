@@ -36,7 +36,8 @@ public class OperatonExpressionImpl extends CmmnModelElementInstanceImpl impleme
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExpression.class, OPERATON_ELEMENT_EXPRESSION)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonExpression>() {
-        public OperatonExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonExpressionImpl(instanceContext);
         }
       });

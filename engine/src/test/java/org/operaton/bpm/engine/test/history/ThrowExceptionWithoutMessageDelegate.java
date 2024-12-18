@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class ThrowExceptionWithoutMessageDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     throw new ProcessEngineException();
   }

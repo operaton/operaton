@@ -46,7 +46,8 @@ public class ConditionExpressionImpl extends FormalExpressionImpl implements Con
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
       .instanceProvider(new ModelTypeInstanceProvider<ConditionExpression>() {
-        public ConditionExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ConditionExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new ConditionExpressionImpl(instanceContext);
         }
       });
@@ -67,18 +68,22 @@ public class ConditionExpressionImpl extends FormalExpressionImpl implements Con
     super(instanceContext);
   }
 
+  @Override
   public String getType() {
     return typeAttribute.getValue(this);
   }
 
+  @Override
   public void setType(String type) {
     typeAttribute.setValue(this, type);
   }
 
+  @Override
   public String getOperatonResource() {
     return operatonResourceAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonResource(String operatonResource) {
     operatonResourceAttribute.setValue(this, operatonResource);
   }

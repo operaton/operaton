@@ -56,42 +56,49 @@ public class DeploymentQueryImpl extends AbstractQuery<DeploymentQuery, Deployme
     super(commandExecutor);
   }
 
+  @Override
   public DeploymentQueryImpl deploymentId(String deploymentId) {
     ensureNotNull("Deployment id", deploymentId);
     this.deploymentId = deploymentId;
     return this;
   }
 
+  @Override
   public DeploymentQueryImpl deploymentName(String deploymentName) {
     ensureNotNull("deploymentName", deploymentName);
     this.name = deploymentName;
     return this;
   }
 
+  @Override
   public DeploymentQueryImpl deploymentNameLike(String nameLike) {
     ensureNotNull("deploymentNameLike", nameLike);
     this.nameLike = nameLike;
     return this;
   }
 
+  @Override
   public DeploymentQuery deploymentSource(String source) {
     sourceQueryParamEnabled = true;
     this.source = source;
     return this;
   }
 
+  @Override
   public DeploymentQuery deploymentBefore(Date before) {
     ensureNotNull("deploymentBefore", before);
     this.deploymentBefore = before;
     return this;
   }
 
+  @Override
   public DeploymentQuery deploymentAfter(Date after) {
     ensureNotNull("deploymentAfter", after);
     this.deploymentAfter = after;
     return this;
   }
 
+  @Override
   public DeploymentQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -99,12 +106,14 @@ public class DeploymentQueryImpl extends AbstractQuery<DeploymentQuery, Deployme
     return this;
   }
 
+  @Override
   public DeploymentQuery withoutTenantId() {
     isTenantIdSet = true;
     this.tenantIds = null;
     return this;
   }
 
+  @Override
   public DeploymentQuery includeDeploymentsWithoutTenantId() {
     this.includeDeploymentsWithoutTenantId  = true;
     return this;
@@ -117,22 +126,27 @@ public class DeploymentQueryImpl extends AbstractQuery<DeploymentQuery, Deployme
 
   //sorting ////////////////////////////////////////////////////////
 
+  @Override
   public DeploymentQuery orderByDeploymentId() {
     return orderBy(DeploymentQueryProperty.DEPLOYMENT_ID);
   }
 
+  @Override
   public DeploymentQuery orderByDeploymenTime() {
     return orderBy(DeploymentQueryProperty.DEPLOY_TIME);
   }
 
+  @Override
   public DeploymentQuery orderByDeploymentTime() {
     return orderBy(DeploymentQueryProperty.DEPLOY_TIME);
   }
 
+  @Override
   public DeploymentQuery orderByDeploymentName() {
     return orderBy(DeploymentQueryProperty.DEPLOYMENT_NAME);
   }
 
+  @Override
   public DeploymentQuery orderByTenantId() {
     return orderBy(DeploymentQueryProperty.TENANT_ID);
   }

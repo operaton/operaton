@@ -35,7 +35,8 @@ public class WhileExecutingOutputRefs extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(WhileExecutingOutputRefs.class, BPMN_ELEMENT_WHILE_EXECUTING_OUTPUT_REFS)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<WhileExecutingOutputRefs>() {
-        public WhileExecutingOutputRefs newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public WhileExecutingOutputRefs newInstance(ModelTypeInstanceContext instanceContext) {
           return new WhileExecutingOutputRefs(instanceContext);
         }
       });

@@ -43,6 +43,7 @@ public class DelegateTaskCmd implements Command<Object>, Serializable {
     this.userId = userId;
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
 

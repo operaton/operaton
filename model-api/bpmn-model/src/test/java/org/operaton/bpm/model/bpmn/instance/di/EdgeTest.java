@@ -28,16 +28,19 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DI_NS;
  */
 public class EdgeTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(DI_NS, DiagramElement.class, true);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(DI_NS, Waypoint.class, 2)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

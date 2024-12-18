@@ -36,6 +36,7 @@ public class SoapHttpConnectorImpl extends AbstractHttpConnector<SoapHttpRequest
     super(connectorId);
   }
 
+  @Override
   public SoapHttpRequest createRequest() {
     return new SoapHttpRequestImpl(this);
   }

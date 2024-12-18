@@ -25,12 +25,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ComplexGatewayTest extends AbstractGatewayTest<ComplexGateway> {
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(ActivationCondition.class, 0, 1)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("default")

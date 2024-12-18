@@ -25,6 +25,7 @@ public class MyHttpConnector extends AbstractConnector<DummyRequest, DummyRespon
     super(connectorId);
   }
 
+  @Override
   public DummyRequest createRequest() {
     return new DummyRequest(this);
   }

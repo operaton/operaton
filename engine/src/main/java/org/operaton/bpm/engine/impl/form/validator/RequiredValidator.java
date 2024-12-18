@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class RequiredValidator implements FormFieldValidator {
 
+  @Override
   public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext) {
     if(submittedValue == null) {
       var variableName = validatorContext.getFormFieldHandler().getId();

@@ -24,10 +24,12 @@ public class TestConnectorResponse implements ConnectorResponse {
 
   protected Map<String, Object> responseParameters;
 
+  @Override
   public Map<String, Object> getResponseParameters() {
     return responseParameters;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <V> V getResponseParameter(String name) {
     return (V) responseParameters.get(name);

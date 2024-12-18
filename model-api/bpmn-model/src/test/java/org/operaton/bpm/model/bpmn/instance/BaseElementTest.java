@@ -28,10 +28,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class BaseElementTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(true);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(Documentation.class),
@@ -39,6 +41,7 @@ public class BaseElementTest extends BpmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("id", true)

@@ -21,10 +21,12 @@ import org.operaton.connect.httpclient.HttpConnectorProvider;
 
 public class HttpConnectorProviderImpl implements HttpConnectorProvider {
 
+  @Override
   public String getConnectorId() {
     return HttpConnector.ID;
   }
 
+  @Override
   public HttpConnector createConnectorInstance() {
     return new HttpConnectorImpl(HttpConnector.ID);
   }

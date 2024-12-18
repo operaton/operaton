@@ -27,10 +27,12 @@ public abstract class AbstractTypedValueMapper<T extends TypedValue> implements 
     valueType = type;
   }
 
+  @Override
   public ValueType getType() {
     return valueType;
   }
 
+  @Override
   public String getSerializationDataformat() {
     // default implementation returns null
     return null;
@@ -41,6 +43,7 @@ public abstract class AbstractTypedValueMapper<T extends TypedValue> implements 
     return (type == null || valueType.getClass().isAssignableFrom(type.getClass())) && canWriteValue(typedValue);
   }
 
+  @Override
   public boolean canHandleTypedValueField(TypedValueField typedValueField) {
     String type = typedValueField.getType();
     return type != null && type.equals(valueType.getName()) && canReadValue(typedValueField);

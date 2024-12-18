@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 public class ErrorEventDefinition implements Serializable {
 
   public static Comparator<ErrorEventDefinition> comparator = new Comparator<ErrorEventDefinition>() {
+    @Override
     public int compare(ErrorEventDefinition o1, ErrorEventDefinition o2) {
       return o2.getPrecedence().compareTo(o1.getPrecedence());
     }

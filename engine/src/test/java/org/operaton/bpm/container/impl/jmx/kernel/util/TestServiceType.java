@@ -29,7 +29,8 @@ public enum TestServiceType implements ServiceType {
       this.serviceRealm = serviceRealm;
     }
 
-    public String getTypeName() {
+  @Override
+  public String getTypeName() {
       return serviceRealm;
     }
 

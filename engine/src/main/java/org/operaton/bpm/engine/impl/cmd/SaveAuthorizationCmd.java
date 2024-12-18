@@ -53,7 +53,8 @@ public class SaveAuthorizationCmd implements Command<Authorization> {
     ensureOnlyOneNotNull("Authorization must either have a 'userId' or a 'groupId'.", authorization.getUserId(), authorization.getGroupId());
     ensureNotNull("Authorization 'resourceType' cannot be null.", "authorization.getResource()", authorization.getResource());
   }
-  
+
+  @Override
   public Authorization execute(CommandContext commandContext) {
     
     final AuthorizationManager authorizationManager = commandContext.getAuthorizationManager();

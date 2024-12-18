@@ -24,6 +24,7 @@ import static org.operaton.bpm.engine.delegate.CaseExecutionListener.PARENT_TERM
  */
 public class AtomicOperationCaseExecutionParentTerminate extends AbstractAtomicOperationCaseExecutionTerminate {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-parent-terminate";
   }

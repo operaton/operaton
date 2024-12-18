@@ -85,18 +85,21 @@ public class HistoricDecisionInstanceQueryImpl extends AbstractQuery<HistoricDec
     super(commandExecutor);
   }
 
+  @Override
   public HistoricDecisionInstanceQuery decisionInstanceId(String decisionInstanceId) {
     ensureNotNull(NotValidException.class, "decisionInstanceId", decisionInstanceId);
     this.decisionInstanceId = decisionInstanceId;
     return this;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery decisionInstanceIdIn(String... decisionInstanceIdIn) {
     ensureNotNull("decisionInstanceIdIn", (Object[]) decisionInstanceIdIn);
     this.decisionInstanceIdIn = decisionInstanceIdIn;
     return this;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery decisionDefinitionId(String decisionDefinitionId) {
     ensureNotNull(NotValidException.class, "decisionDefinitionId", decisionDefinitionId);
     this.decisionDefinitionId = decisionDefinitionId;
@@ -187,24 +190,28 @@ public class HistoricDecisionInstanceQueryImpl extends AbstractQuery<HistoricDec
     return this;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery activityInstanceIdIn(String... activityInstanceIds) {
     ensureNotNull("activityInstanceIds", (Object[]) activityInstanceIds);
     this.activityInstanceIds = activityInstanceIds;
     return this;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery evaluatedBefore(Date evaluatedBefore) {
     ensureNotNull(NotValidException.class, "evaluatedBefore", evaluatedBefore);
     this.evaluatedBefore = evaluatedBefore;
     return this;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery evaluatedAfter(Date evaluatedAfter) {
     ensureNotNull(NotValidException.class, "evaluatedAfter", evaluatedAfter);
     this.evaluatedAfter = evaluatedAfter;
     return this;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -219,6 +226,7 @@ public class HistoricDecisionInstanceQueryImpl extends AbstractQuery<HistoricDec
     return this;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery orderByTenantId() {
     return orderBy(HistoricDecisionInstanceQueryProperty.TENANT_ID);
   }
@@ -308,6 +316,7 @@ public class HistoricDecisionInstanceQueryImpl extends AbstractQuery<HistoricDec
     return tenantIds;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery includeInputs() {
     includeInput = true;
     return this;
@@ -351,6 +360,7 @@ public class HistoricDecisionInstanceQueryImpl extends AbstractQuery<HistoricDec
     return rootDecisionInstanceId;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery rootDecisionInstanceId(String rootDecisionInstanceId) {
     ensureNotNull(NotValidException.class, "rootDecisionInstanceId", rootDecisionInstanceId);
     this.rootDecisionInstanceId = rootDecisionInstanceId;
@@ -361,6 +371,7 @@ public class HistoricDecisionInstanceQueryImpl extends AbstractQuery<HistoricDec
     return rootDecisionInstancesOnly;
   }
 
+  @Override
   public HistoricDecisionInstanceQuery rootDecisionInstancesOnly() {
     this.rootDecisionInstancesOnly = true;
     return this;

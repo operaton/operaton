@@ -44,7 +44,8 @@ public class BpmnPlaneImpl extends PlaneImpl implements BpmnPlane {
       .namespaceUri(BPMNDI_NS)
       .extendsType(Plane.class)
       .instanceProvider(new ModelTypeInstanceProvider<BpmnPlane>() {
-        public BpmnPlane newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public BpmnPlane newInstance(ModelTypeInstanceContext instanceContext) {
           return new BpmnPlaneImpl(instanceContext);
         }
       });
@@ -60,10 +61,12 @@ public class BpmnPlaneImpl extends PlaneImpl implements BpmnPlane {
     super(instanceContext);
   }
 
+  @Override
   public BaseElement getBpmnElement() {
     return bpmnElementAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setBpmnElement(BaseElement bpmnElement) {
     bpmnElementAttribute.setReferenceTargetElement(this, bpmnElement);
   }

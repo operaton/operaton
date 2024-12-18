@@ -27,10 +27,12 @@ public class NotTransformer implements FeelToJuelTransformer {
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
   public static final Pattern NOT_PATTERN = Pattern.compile("^not\\((.+)\\)$");
 
+  @Override
   public boolean canTransform(String feelExpression) {
     return feelExpression.startsWith("not(");
   }
 
+  @Override
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     String simplePositiveUnaryTests = extractInnerExpression(feelExpression);
     String juelExpression = transform.transformSimplePositiveUnaryTests(simplePositiveUnaryTests, inputName);

@@ -27,10 +27,12 @@ import java.util.Collection;
  */
 public class DecisionTaskTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(Task.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(ParameterMapping.class),
@@ -38,6 +40,7 @@ public class DecisionTaskTest extends CmmnModelElementInstanceTest {
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
         new AttributeAssumption("decisionRef"),

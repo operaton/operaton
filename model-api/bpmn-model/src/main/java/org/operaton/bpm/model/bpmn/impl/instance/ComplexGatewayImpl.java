@@ -49,7 +49,8 @@ public class ComplexGatewayImpl extends GatewayImpl implements ComplexGateway {
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
       .instanceProvider(new ModelTypeInstanceProvider<ComplexGateway>() {
-        public ComplexGateway newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ComplexGateway newInstance(ModelTypeInstanceContext instanceContext) {
           return new ComplexGatewayImpl(instanceContext);
         }
       });
@@ -75,18 +76,22 @@ public class ComplexGatewayImpl extends GatewayImpl implements ComplexGateway {
     return new ComplexGatewayBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public SequenceFlow getDefault() {
     return defaultAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setDefault(SequenceFlow defaultFlow) {
     defaultAttribute.setReferenceTargetElement(this, defaultFlow);
   }
 
+  @Override
   public ActivationCondition getActivationCondition() {
     return activationConditionChild.getChild(this);
   }
 
+  @Override
   public void setActivationCondition(ActivationCondition activationCondition) {
     activationConditionChild.setChild(this, activationCondition);
   }

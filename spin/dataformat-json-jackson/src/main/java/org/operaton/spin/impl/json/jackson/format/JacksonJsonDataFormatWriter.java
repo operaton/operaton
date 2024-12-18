@@ -41,6 +41,7 @@ public class JacksonJsonDataFormatWriter implements DataFormatWriter {
     this.dataFormat = dataFormat;
   }
 
+  @Override
   public void writeToWriter(Writer writer, Object input) {
     final ObjectMapper objectMapper = dataFormat.getObjectMapper();
     final JsonFactory factory = objectMapper.getFactory();

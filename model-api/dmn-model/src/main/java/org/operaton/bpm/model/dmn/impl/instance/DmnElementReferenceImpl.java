@@ -35,10 +35,12 @@ public class DmnElementReferenceImpl extends DmnModelElementInstanceImpl impleme
     super(instanceContext);
   }
 
+  @Override
   public String getHref() {
     return hrefAttribute.getValue(this);
   }
 
+  @Override
   public void setHref(String href) {
     hrefAttribute.setValue(this, href);
   }
@@ -47,7 +49,8 @@ public class DmnElementReferenceImpl extends DmnModelElementInstanceImpl impleme
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DmnElementReference.class, DMN_ELEMENT_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<DmnElementReference>() {
-        public DmnElementReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DmnElementReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new DmnElementReferenceImpl(instanceContext);
         }
       });

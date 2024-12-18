@@ -92,6 +92,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     filterService = getProcessEngine().getFilterService();
   }
 
+  @Override
   public FilterDto getFilter(Boolean itemCount) {
     Filter filter = getDbFilter();
     FilterDto dto = FilterDto.fromFilter(filter);
@@ -112,6 +113,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     return dbFilter;
   }
 
+  @Override
   public void deleteFilter() {
     try {
       filterService.deleteFilter(resourceId);
@@ -121,6 +123,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     }
   }
 
+  @Override
   public void updateFilter(FilterDto filterDto) {
     Filter filter = getDbFilter();
 
@@ -134,6 +137,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     filterService.saveFilter(filter);
   }
 
+  @Override
   public Object executeSingleResult(Request request) {
     Variant variant = request.selectVariant(VARIANTS);
     if (variant != null) {
@@ -151,6 +155,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     return queryJsonSingleResult(null);
   }
 
+  @Override
   public Object querySingleResult(Request request, String extendingQuery) {
     Variant variant = request.selectVariant(VARIANTS);
     if (variant != null) {
@@ -205,6 +210,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     }
   }
 
+  @Override
   public Object executeList(Request request, Integer firstResult, Integer maxResults) {
     Variant variant = request.selectVariant(VARIANTS);
     if (variant != null) {
@@ -222,6 +228,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     return queryJsonList(null, firstResult, maxResults);
   }
 
+  @Override
   public Object queryList(Request request, String extendingQuery, Integer firstResult, Integer maxResults) {
     Variant variant = request.selectVariant(VARIANTS);
     if (variant != null) {
@@ -285,10 +292,12 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     }
   }
 
+  @Override
   public CountResultDto executeCount() {
     return queryCount(null);
   }
 
+  @Override
   public CountResultDto queryCount(String extendingQuery) {
     return new CountResultDto(executeFilterCount(extendingQuery));
   }
@@ -305,6 +314,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     }
   }
 
+  @Override
   public ResourceOptionsDto availableOperations(UriInfo context) {
 
     ResourceOptionsDto dto = new ResourceOptionsDto();

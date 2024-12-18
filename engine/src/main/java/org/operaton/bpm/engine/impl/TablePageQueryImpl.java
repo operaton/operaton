@@ -46,16 +46,19 @@ public class TablePageQueryImpl extends ListQueryParameterObject implements Tabl
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public TablePageQueryImpl tableName(String tableName) {
     this.tableName = tableName;
     return this;
   }
 
+  @Override
   public TablePageQueryImpl orderAsc(String column) {
     this.orderingProperties.add(new QueryOrderingProperty(new QueryPropertyImpl(column), Direction.ASCENDING));
     return this;
   }
 
+  @Override
   public TablePageQueryImpl orderDesc(String column) {
     this.orderingProperties.add(new QueryOrderingProperty(new QueryPropertyImpl(column), Direction.DESCENDING));
     return this;
@@ -65,12 +68,14 @@ public class TablePageQueryImpl extends ListQueryParameterObject implements Tabl
     return tableName;
   }
 
+  @Override
   public TablePage listPage(int firstResult, int maxResults) {
     this.firstResult = firstResult;
     this.maxResults = maxResults;
     return commandExecutor.execute(this);
   }
 
+  @Override
   public TablePage execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdmin();
     return commandContext

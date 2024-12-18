@@ -43,6 +43,7 @@ public class CaseFileImpl extends CmmnElementImpl implements CaseFile {
     super(instanceContext);
   }
 
+  @Override
   public Collection<CaseFileItem> getCaseFileItems() {
     return caseFileItemCollection.get(this);
   }
@@ -52,7 +53,8 @@ public class CaseFileImpl extends CmmnElementImpl implements CaseFile {
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<CaseFile>() {
-          public CaseFile newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseFile newInstance(ModelTypeInstanceContext instanceContext) {
             return new CaseFileImpl(instanceContext);
           }
         });

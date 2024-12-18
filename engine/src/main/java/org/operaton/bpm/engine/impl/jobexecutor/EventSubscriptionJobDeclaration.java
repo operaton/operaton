@@ -48,6 +48,7 @@ public class EventSubscriptionJobDeclaration extends JobDeclaration<EventSubscri
   }
 
 
+  @Override
   protected MessageEntity newJobInstance(EventSubscriptionEntity eventSubscription) {
 
     MessageEntity message = new MessageEntity();
@@ -80,14 +81,17 @@ public class EventSubscriptionJobDeclaration extends JobDeclaration<EventSubscri
     return eventSubscriptionDeclaration.getUnresolvedEventName();
   }
 
+  @Override
   public String getActivityId() {
     return eventSubscriptionDeclaration.getActivityId();
   }
 
+  @Override
   protected ExecutionEntity resolveExecution(EventSubscriptionEntity context) {
     return context.getExecution();
   }
 
+  @Override
   protected JobHandlerConfiguration resolveJobHandlerConfiguration(EventSubscriptionEntity context) {
     return new EventSubscriptionJobConfiguration(context.getId());
   }

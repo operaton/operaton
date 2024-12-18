@@ -114,6 +114,7 @@ public class EqualsMap extends BaseMatcher<Map<String, Object>> {
     return this;
   }
 
+  @Override
   public void describeTo(Description description) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getClass().getSimpleName());

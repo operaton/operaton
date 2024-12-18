@@ -26,10 +26,12 @@ public class TaskCountByCandidateGroupResultEntity implements TaskCountByCandida
   protected int taskCount;
   protected String groupName;
 
+  @Override
   public int getTaskCount() {
     return taskCount;
   }
 
+  @Override
   public String getGroupName() {
     return groupName;
   }

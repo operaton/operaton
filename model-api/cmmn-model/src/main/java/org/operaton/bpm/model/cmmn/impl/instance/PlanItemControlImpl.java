@@ -45,26 +45,32 @@ public class PlanItemControlImpl extends CmmnElementImpl implements PlanItemCont
     super(instanceContext);
   }
 
+  @Override
   public RepetitionRule getRepetitionRule() {
     return repetitionRuleChild.getChild(this);
   }
 
+  @Override
   public void setRepetitionRule(RepetitionRule repetitionRule) {
     repetitionRuleChild.setChild(this, repetitionRule);
   }
 
+  @Override
   public RequiredRule getRequiredRule() {
     return requiredRuleChild.getChild(this);
   }
 
+  @Override
   public void setRequiredRule(RequiredRule requiredRule) {
     requiredRuleChild.setChild(this, requiredRule);
   }
 
+  @Override
   public ManualActivationRule getManualActivationRule() {
     return manualActivationRuleChild.getChild(this);
   }
 
+  @Override
   public void setManualActivationRule(ManualActivationRule manualActivationRule) {
     manualActivationRuleChild.setChild(this, manualActivationRule);
   }
@@ -74,7 +80,8 @@ public class PlanItemControlImpl extends CmmnElementImpl implements PlanItemCont
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<PlanItemControl>() {
-          public PlanItemControl newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public PlanItemControl newInstance(ModelTypeInstanceContext instanceContext) {
             return new PlanItemControlImpl(instanceContext);
           }
         });

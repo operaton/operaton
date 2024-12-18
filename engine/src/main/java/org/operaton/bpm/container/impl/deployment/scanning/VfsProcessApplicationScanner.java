@@ -46,10 +46,12 @@ public class VfsProcessApplicationScanner implements ProcessApplicationScanner {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
+  @Override
   public Map<String, byte[]> findResources(ClassLoader classLoader, String resourceRootPath, URL processesXml) {
     return findResources(classLoader, resourceRootPath, processesXml, null);
   }
 
+  @Override
   public Map<String, byte[]> findResources(ClassLoader classLoader, String resourceRootPath, URL processesXml, String[] additionalResourceSuffixes) {
 
     // the map in which we collect the resources

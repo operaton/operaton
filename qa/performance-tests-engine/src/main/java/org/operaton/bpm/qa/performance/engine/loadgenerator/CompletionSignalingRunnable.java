@@ -32,6 +32,7 @@ public class CompletionSignalingRunnable implements Runnable {
     this.latch = latch;
   }
 
+  @Override
   public void run() {
     try {
         delegate.run();

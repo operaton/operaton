@@ -35,7 +35,8 @@ public class InnerParticipantRef extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InnerParticipantRef.class, BPMN_ELEMENT_INNER_PARTICIPANT_REF)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<InnerParticipantRef>() {
-        public InnerParticipantRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InnerParticipantRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new InnerParticipantRef(instanceContext);
         }
       });

@@ -32,10 +32,12 @@ import org.operaton.bpm.model.cmmn.instance.Sentry;
  */
 public class CasePlanModelHandler extends StageItemHandler {
 
+  @Override
   protected PlanItemDefinition getDefinition(CmmnElement element) {
     return (PlanItemDefinition) element;
   }
 
+  @Override
   protected List<String> getStandardEvents(CmmnElement element) {
     return CASE_PLAN_MODEL_EVENTS;
   }

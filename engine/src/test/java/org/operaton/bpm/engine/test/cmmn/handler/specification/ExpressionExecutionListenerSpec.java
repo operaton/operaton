@@ -33,11 +33,13 @@ public class ExpressionExecutionListenerSpec extends AbstractExecutionListenerSp
     super(eventName);
   }
 
+  @Override
   protected void configureCaseExecutionListener(CmmnModelInstance modelInstance, OperatonCaseExecutionListener listener) {
     listener.setOperatonExpression(EXPRESSION);
 
   }
 
+  @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
     assertTrue(listener instanceof ExpressionCaseExecutionListener);
 

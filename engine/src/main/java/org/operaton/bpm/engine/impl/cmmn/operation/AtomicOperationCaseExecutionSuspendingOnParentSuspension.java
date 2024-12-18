@@ -28,14 +28,17 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionSuspendingOnParentSuspension extends AbstractAtomicOperationCaseExecutionSuspending {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-suspending-on-parent-suspension";
   }
 
+  @Override
   protected CaseExecutionState getSuspendingState() {
     return SUSPENDING_ON_PARENT_SUSPENSION;
   }
 
+  @Override
   protected void triggerBehavior(CmmnActivityBehavior behavior, CmmnExecution execution) {
     behavior.onParentSuspension(execution);
   }

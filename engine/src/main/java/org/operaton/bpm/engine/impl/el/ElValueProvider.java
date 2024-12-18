@@ -35,6 +35,7 @@ public class ElValueProvider implements ParameterValueProvider, Comparable<ElVal
     this.expression = expression;
   }
 
+  @Override
   public Object getValue(VariableScope variableScope) {
     EnsureUtil.ensureNotNull("variableScope", variableScope);
     return expression.getValue(variableScope);

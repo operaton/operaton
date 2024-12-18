@@ -29,6 +29,7 @@ import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
 
 public class OperatonVariableTransitionEventTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CAMUNDA_NS,false);
   }

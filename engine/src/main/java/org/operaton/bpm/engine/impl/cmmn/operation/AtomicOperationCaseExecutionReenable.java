@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionReenable extends AbstractCmmnEventAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-re-enable";
   }

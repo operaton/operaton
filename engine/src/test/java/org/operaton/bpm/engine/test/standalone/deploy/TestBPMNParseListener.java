@@ -35,6 +35,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
  */
 public class TestBPMNParseListener extends AbstractBpmnParseListener {
 
+  @Override
   public void parseRootElement(Element rootElement, List<ProcessDefinitionEntity> processDefinitions) {
     // Change the key of all deployed process-definitions
     for (ProcessDefinitionEntity entity : processDefinitions) {
@@ -42,11 +43,13 @@ public class TestBPMNParseListener extends AbstractBpmnParseListener {
     }
   }
 
+  @Override
   public void parseStartEvent(Element startEventElement, ScopeImpl scope, ActivityImpl startEventActivity) {
     // Change activity behavior
     startEventActivity.setActivityBehavior(new TestNoneStartEventActivityBehavior());
   }
 
+  @Override
   public void parseIntermediateThrowEvent(Element intermediateEventElement, ScopeImpl scope, ActivityImpl activity) {
     // Change activity behavior
     Element compensateEventDefinitionElement = intermediateEventElement.element(COMPENSATE_EVENT_DEFINITION);
@@ -60,6 +63,7 @@ public class TestBPMNParseListener extends AbstractBpmnParseListener {
     }
   }
 
+  @Override
   public void parseEndEvent(Element endEventElement, ScopeImpl scope, ActivityImpl activity) {
     // Change activity behavior
     activity.setActivityBehavior(new TestNoneEndEventActivityBehavior());

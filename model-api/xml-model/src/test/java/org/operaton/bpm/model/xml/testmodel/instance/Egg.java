@@ -42,7 +42,8 @@ public class Egg extends ModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Egg.class, ELEMENT_NAME_EGG)
       .namespaceUri(MODEL_NAMESPACE)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<Egg>() {
-        public Egg newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Egg newInstance(ModelTypeInstanceContext instanceContext) {
           return new Egg(instanceContext);
         }
       });

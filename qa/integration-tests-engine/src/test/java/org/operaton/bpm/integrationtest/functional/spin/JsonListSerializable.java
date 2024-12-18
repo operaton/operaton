@@ -47,6 +47,7 @@ public class JsonListSerializable<T> {
     return jsonBuilder.toString();
   }
 
+  @Override
   public String toString() {
     return toExpectedJsonString();
   }

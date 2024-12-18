@@ -43,6 +43,7 @@ public class HalTenant extends HalResource<HalTenant> implements HalIdResource {
     return halTenant;
   }
 
+  @Override
   public String getId() {
     return id;
   }

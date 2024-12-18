@@ -45,6 +45,7 @@ public abstract class AbstractSetVariableCmd extends AbstractVariableCmd {
     this.skipJavaSerializationFormatCheck = skipJavaSerializationFormatCheck;
   }
 
+  @Override
   protected void executeOperation(AbstractVariableScope scope) {
     if (isLocal) {
       scope.setVariablesLocal(variables, skipJavaSerializationFormatCheck);
@@ -53,6 +54,7 @@ public abstract class AbstractSetVariableCmd extends AbstractVariableCmd {
     }
   }
 
+  @Override
   protected String getLogEntryOperation() {
     return UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE;
   }

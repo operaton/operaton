@@ -41,14 +41,17 @@ public class SerializableDataFormat implements DataFormat {
     this.name = name;
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public boolean canMap(Object value) {
     return value instanceof Serializable;
   }
 
+  @Override
   public String writeValue(Object value) {
     ByteArrayOutputStream baos = null;
     ObjectOutputStream ois = null;
@@ -72,10 +75,12 @@ public class SerializableDataFormat implements DataFormat {
     }
   }
 
+  @Override
   public <T> T readValue(String value, String typeIdentifier) {
     return readValue(value);
   }
 
+  @Override
   public <T> T readValue(String value, Class<T> cls) {
     return readValue(value);
   }
@@ -105,6 +110,7 @@ public class SerializableDataFormat implements DataFormat {
     }
   }
 
+  @Override
   public String getCanonicalTypeName(Object value) {
     return value.getClass().getName();
   }

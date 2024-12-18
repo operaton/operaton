@@ -29,6 +29,7 @@ public class MigrationPlanJsonConverter extends JsonObjectConverter<MigrationPla
   public static final String TARGET_PROCESS_DEFINITION_ID = "targetProcessDefinitionId";
   public static final String INSTRUCTIONS = "instructions";
 
+  @Override
   public JsonObject toJsonObject(MigrationPlan migrationPlan) {
     JsonObject json = JsonUtil.createObject();
 
@@ -39,6 +40,7 @@ public class MigrationPlanJsonConverter extends JsonObjectConverter<MigrationPla
     return json;
   }
 
+  @Override
   public MigrationPlan toObject(JsonObject json) {
     MigrationPlanImpl migrationPlan = new MigrationPlanImpl(JsonUtil.getString(json, SOURCE_PROCESS_DEFINITION_ID), JsonUtil.getString(json, TARGET_PROCESS_DEFINITION_ID));
 

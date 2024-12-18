@@ -46,6 +46,7 @@ public class UnlockJobCmd implements Command<Void> {
     return Context.getCommandContext().getJobManager().findJobById(jobId);
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     JobEntity job = getJob();
 

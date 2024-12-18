@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.management.Metrics;
  */
 public class SuccessfulJobListener implements Command<Void> {
 
+  @Override
   public Void execute(CommandContext commandContext) {
     logJobSuccess(commandContext);
 

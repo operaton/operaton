@@ -30,10 +30,12 @@ public class StringAttribute extends AttributeImpl<String> {
     super(owningElementType);
   }
 
+  @Override
   protected String convertXmlValueToModelValue(String rawValue) {
     return rawValue;
   }
 
+  @Override
   protected String convertModelValueToXmlValue(String modelValue) {
     return modelValue;
   }

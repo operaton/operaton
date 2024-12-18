@@ -41,6 +41,7 @@ public class DeleteProcessInstanceCmd extends AbstractDeleteProcessInstanceCmd i
     this.failIfNotExists = failIfNotExists;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     deleteProcessInstance(commandContext, processInstanceId);
     return null;

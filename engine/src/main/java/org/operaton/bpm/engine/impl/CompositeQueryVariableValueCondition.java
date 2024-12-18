@@ -38,6 +38,7 @@ public class CompositeQueryVariableValueCondition extends AbstractQueryVariableV
     super(variableValue);
   }
 
+  @Override
   public void initializeValue(VariableSerializers serializers, String dbType) {
     TypedValue typedValue = wrappedQueryValue.getTypedValue();
 
@@ -54,6 +55,7 @@ public class CompositeQueryVariableValueCondition extends AbstractQueryVariableV
     }
   }
 
+  @Override
   public List<SingleQueryVariableValueCondition> getDisjunctiveConditions() {
     return aggregatedValues;
   }

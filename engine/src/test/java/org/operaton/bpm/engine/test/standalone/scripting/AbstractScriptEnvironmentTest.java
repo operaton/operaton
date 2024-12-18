@@ -62,9 +62,11 @@ public abstract class AbstractScriptEnvironmentTest extends PluggableProcessEngi
   protected void executeScript(final ProcessApplicationInterface processApplication, String language) {
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Void>() {
-        public Void execute(CommandContext commandContext) {
+      @Override
+      public Void execute(CommandContext commandContext) {
           return Context.executeWithinProcessApplication(new Callable<Void>() {
 
+            @Override
             public Void call() throws Exception {
               ScriptingEngines scriptingEngines = processEngineConfiguration.getScriptingEngines();
               ScriptEngine scriptEngine = scriptingEngines.getScriptEngineForLanguage(language);

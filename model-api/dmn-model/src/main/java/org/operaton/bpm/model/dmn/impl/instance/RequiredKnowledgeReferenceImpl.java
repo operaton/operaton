@@ -37,7 +37,8 @@ public class RequiredKnowledgeReferenceImpl extends DmnElementReferenceImpl impl
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<RequiredKnowledgeReference>() {
-        public RequiredKnowledgeReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public RequiredKnowledgeReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new RequiredKnowledgeReferenceImpl(instanceContext);
         }
       });

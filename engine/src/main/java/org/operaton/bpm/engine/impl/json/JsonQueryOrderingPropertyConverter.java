@@ -49,6 +49,7 @@ public class JsonQueryOrderingPropertyConverter extends JsonObjectConverter<Quer
   public static final String RELATION_CONDITIONS = "relationProperties";
 
 
+  @Override
   public JsonObject toJsonObject(QueryOrderingProperty property) {
     JsonObject jsonObject = JsonUtil.createObject();
 
@@ -74,6 +75,7 @@ public class JsonQueryOrderingPropertyConverter extends JsonObjectConverter<Quer
     return jsonObject;
   }
 
+  @Override
   public QueryOrderingProperty toObject(JsonObject jsonObject) {
     String relation = null;
     if (jsonObject.has(RELATION)) {

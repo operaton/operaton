@@ -47,10 +47,12 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
+  @Override
   public Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URL metaFileUrl) {
     return findResources(classLoader, paResourceRootPath, metaFileUrl, null);
   }
 
+  @Override
   public Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URL metaFileUrl, String[] additionalResourceSuffixes) {
 
     final Map<String, byte[]> resourceMap = new HashMap<String, byte[]>();

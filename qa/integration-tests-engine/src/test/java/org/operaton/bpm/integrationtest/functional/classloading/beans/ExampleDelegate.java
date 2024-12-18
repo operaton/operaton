@@ -23,6 +23,7 @@ public class ExampleDelegate implements JavaDelegate {
 
   private static boolean invoked = false;
 
+  @Override
   public void execute(DelegateExecution arg0) throws Exception {
     invoked = true;
   }

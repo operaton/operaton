@@ -23,10 +23,12 @@ import org.operaton.bpm.model.dmn.AssociationDirection;
 
 public class AssociationTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(Artifact.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(SourceRef.class, 1, 1),
@@ -34,6 +36,7 @@ public class AssociationTest extends DmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("associationDirection", false, false, AssociationDirection.None)

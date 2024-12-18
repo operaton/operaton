@@ -163,10 +163,12 @@ public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEv
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
+  @Override
   public void setRootProcessInstanceId(String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }

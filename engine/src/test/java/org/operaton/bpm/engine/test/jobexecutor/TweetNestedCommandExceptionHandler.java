@@ -34,13 +34,16 @@ public class TweetNestedCommandExceptionHandler implements JobHandler<JobHandler
 
   public static final String TYPE = "tweet-exception-nested";
 
+  @Override
   public String getType() {
     return TYPE;
   }
 
+  @Override
   public void execute(JobHandlerConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     Context.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
 
+      @Override
       public Void execute(CommandContext commandContext) {
         throw new RuntimeException("nested command exception");
       }
@@ -58,6 +61,7 @@ public class TweetNestedCommandExceptionHandler implements JobHandler<JobHandler
     };
   }
 
+  @Override
   public void onDelete(JobHandlerConfiguration configuration, JobEntity jobEntity) {
     // do nothing
   }

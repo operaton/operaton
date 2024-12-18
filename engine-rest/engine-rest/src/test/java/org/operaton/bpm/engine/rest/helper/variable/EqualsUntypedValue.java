@@ -33,6 +33,7 @@ public class EqualsUntypedValue extends BaseMatcher<TypedValue> {
     return this;
   }
 
+  @Override
   public boolean matches(Object argument) {
     if (argument == null || !TypedValue.class.isAssignableFrom(argument.getClass())) {
       return false;
@@ -61,6 +62,7 @@ public class EqualsUntypedValue extends BaseMatcher<TypedValue> {
     return new EqualsUntypedValue();
   }
 
+  @Override
   public void describeTo(Description description) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getClass().getSimpleName());

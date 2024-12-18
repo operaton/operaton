@@ -36,6 +36,7 @@ public class TestConnector extends AbstractConnector<TestConnectorRequest, TestC
     super(connectorId);
   }
 
+  @Override
   public TestConnectorRequest createRequest() {
     return new TestConnectorRequest(this);
   }

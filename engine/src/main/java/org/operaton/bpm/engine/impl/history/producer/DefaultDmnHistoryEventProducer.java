@@ -66,27 +66,33 @@ public class DefaultDmnHistoryEventProducer implements DmnHistoryEventProducer {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
+  @Override
   public HistoryEvent createDecisionEvaluatedEvt(final DelegateExecution execution, final DmnDecisionEvaluationEvent evaluationEvent) {
     return createHistoryEvent(evaluationEvent, new HistoricDecisionInstanceSupplier() {
 
+      @Override
       public HistoricDecisionInstanceEntity createHistoricDecisionInstance(DmnDecisionLogicEvaluationEvent evaluationEvent, HistoricDecisionInstanceEntity rootDecisionInstance) {
         return createDecisionEvaluatedEvt(evaluationEvent, (ExecutionEntity) execution);
       }
     });
   }
 
+  @Override
   public HistoryEvent createDecisionEvaluatedEvt(final DelegateCaseExecution execution, final DmnDecisionEvaluationEvent evaluationEvent) {
     return createHistoryEvent(evaluationEvent, new HistoricDecisionInstanceSupplier() {
 
+      @Override
       public HistoricDecisionInstanceEntity createHistoricDecisionInstance(DmnDecisionLogicEvaluationEvent evaluationEvent, HistoricDecisionInstanceEntity rootDecisionInstance) {
         return createDecisionEvaluatedEvt(evaluationEvent, (CaseExecutionEntity) execution);
       }
     });
   }
 
+  @Override
   public HistoryEvent createDecisionEvaluatedEvt(final DmnDecisionEvaluationEvent evaluationEvent) {
     return createHistoryEvent(evaluationEvent, new HistoricDecisionInstanceSupplier() {
 
+      @Override
       public HistoricDecisionInstanceEntity createHistoricDecisionInstance(DmnDecisionLogicEvaluationEvent evaluationEvent, HistoricDecisionInstanceEntity rootDecisionInstance) {
         return createDecisionEvaluatedEvt(evaluationEvent, rootDecisionInstance);
       }

@@ -37,7 +37,8 @@ public class PartitionElement extends BaseElementImpl {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<PartitionElement>() {
-        public PartitionElement newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public PartitionElement newInstance(ModelTypeInstanceContext instanceContext) {
           return new PartitionElement(instanceContext);
         }
       });

@@ -38,7 +38,8 @@ public class DataOutputAssociationImpl extends DataAssociationImpl implements Da
       .namespaceUri(BPMN20_NS)
       .extendsType(DataAssociation.class)
       .instanceProvider(new ModelTypeInstanceProvider<DataOutputAssociation>() {
-        public DataOutputAssociation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DataOutputAssociation newInstance(ModelTypeInstanceContext instanceContext) {
           return new DataOutputAssociationImpl(instanceContext);
         }
       });

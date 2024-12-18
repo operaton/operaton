@@ -40,10 +40,12 @@ public class JmxManagedThreadPool extends SeExecutorService implements JmxManage
     threadPoolQueue = queue;
   }
 
+  @Override
   public void start(PlatformServiceContainer mBeanServiceContainer) {
     // nothing to do
   }
 
+  @Override
   public void stop(PlatformServiceContainer mBeanServiceContainer) {
 
     // clear the queue
@@ -64,18 +66,22 @@ public class JmxManagedThreadPool extends SeExecutorService implements JmxManage
 
   }
 
+  @Override
   public JmxManagedThreadPool getValue() {
     return this;
   }
 
+  @Override
   public void setCorePoolSize(int corePoolSize) {
     threadPoolExecutor.setCorePoolSize(corePoolSize);
   }
 
+  @Override
   public void setMaximumPoolSize(int maximumPoolSize) {
     threadPoolExecutor.setMaximumPoolSize(maximumPoolSize);
   }
 
+  @Override
   public int getMaximumPoolSize() {
     return threadPoolExecutor.getMaximumPoolSize();
   }
@@ -84,30 +90,37 @@ public class JmxManagedThreadPool extends SeExecutorService implements JmxManage
     threadPoolExecutor.setKeepAliveTime(time, unit);
   }
 
+  @Override
   public void purgeThreadPool() {
     threadPoolExecutor.purge();
   }
 
+  @Override
   public int getPoolSize() {
     return threadPoolExecutor.getPoolSize();
   }
 
+  @Override
   public int getActiveCount() {
     return threadPoolExecutor.getActiveCount();
   }
 
+  @Override
   public int getLargestPoolSize() {
     return threadPoolExecutor.getLargestPoolSize();
   }
 
+  @Override
   public long getTaskCount() {
     return threadPoolExecutor.getTaskCount();
   }
 
+  @Override
   public long getCompletedTaskCount() {
     return threadPoolExecutor.getCompletedTaskCount();
   }
 
+  @Override
   public int getQueueCount() {
     return threadPoolQueue.size();
   }

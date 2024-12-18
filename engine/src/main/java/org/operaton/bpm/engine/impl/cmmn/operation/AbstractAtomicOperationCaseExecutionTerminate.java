@@ -36,6 +36,7 @@ public abstract class AbstractAtomicOperationCaseExecutionTerminate extends Abst
     return execution;
   }
 
+  @Override
   protected void postTransitionNotification(CmmnExecution execution) {
     if (!execution.isCaseInstanceExecution()) {
       execution.remove();

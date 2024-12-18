@@ -38,6 +38,7 @@ public abstract class AbstractSetBatchStateCmd implements Command<Void> {
     this.batchId = batchId;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ensureNotNull(BadUserRequestException.class, "Batch id must not be null", "batch id", batchId);
 

@@ -75,94 +75,117 @@ public class DefinitionsImpl extends CmmnModelElementInstanceImpl implements Def
     super(instanceContext);
   }
 
+  @Override
   public String getId() {
     return idAttribute.getValue(this);
   }
 
+  @Override
   public void setId(String id) {
     idAttribute.setValue(this, id);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getTargetNamespace() {
     return targetNamespaceAttribute.getValue(this);
   }
 
+  @Override
   public void setTargetNamespace(String namespace) {
     targetNamespaceAttribute.setValue(this, namespace);
   }
 
+  @Override
   public String getExpressionLanguage() {
     return expressionLanguageAttribute.getValue(this);
   }
 
+  @Override
   public void setExpressionLanguage(String expressionLanguage) {
     expressionLanguageAttribute.setValue(this, expressionLanguage);
   }
 
+  @Override
   public String getExporter() {
     return exporterAttribute.getValue(this);
   }
 
+  @Override
   public void setExporter(String exporter) {
     exporterAttribute.setValue(this, exporter);
   }
 
+  @Override
   public String getExporterVersion() {
     return exporterVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setExporterVersion(String exporterVersion) {
     exporterVersionAttribute.setValue(this, exporterVersion);
   }
 
+  @Override
   public String getAuthor() {
     return authorAttribute.getValue(this);
   }
 
+  @Override
   public void setAuthor(String author) {
     authorAttribute.setValue(this, author);
   }
 
+  @Override
   public Collection<Import> getImports() {
     return importCollection.get(this);
   }
 
+  @Override
   public Collection<CaseFileItemDefinition> getCaseFileItemDefinitions() {
     return caseFileItemDefinitionCollection.get(this);
   }
 
+  @Override
   public Collection<Case> getCases() {
     return caseCollection.get(this);
   }
 
+  @Override
   public Collection<Process> getProcesses() {
     return processCollection.get(this);
   }
 
+  @Override
   public Collection<Decision> getDecisions() {
     return decisionCollection.get(this);
   }
 
+  @Override
   public ExtensionElements getExtensionElements() {
     return extensionElementsChild.getChild(this);
   }
 
+  @Override
   public void setExtensionElements(ExtensionElements extensionElements) {
     extensionElementsChild.setChild(this, extensionElements);
   }
 
+  @Override
   public Collection<Relationship> getRelationships() {
     return relationshipCollection.get(this);
   }
 
+  @Override
   public Collection<Artifact> getArtifacts() {
     return artifactCollection.get(this);
   }
@@ -172,7 +195,8 @@ public class DefinitionsImpl extends CmmnModelElementInstanceImpl implements Def
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Definitions.class, CMMN_ELEMENT_DEFINITIONS)
       .namespaceUri(CMMN11_NS)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<Definitions>() {
-        public Definitions newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Definitions newInstance(ModelTypeInstanceContext instanceContext) {
           return new DefinitionsImpl(instanceContext);
         }
       });

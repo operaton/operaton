@@ -73,6 +73,7 @@ public class JsonSerializable {
     return jsonBuilder.toString();
   }
 
+  @Override
   public String toString() {
     return toExpectedJsonString();
   }

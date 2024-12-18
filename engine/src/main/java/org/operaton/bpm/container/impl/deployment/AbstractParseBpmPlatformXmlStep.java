@@ -54,10 +54,12 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
   public static final String BPM_PLATFORM_XML_SYSTEM_PROPERTY = "bpm.platform.xml";
   public static final String BPM_PLATFORM_XML_RESOURCE_LOCATION = "META-INF/" + BPM_PLATFORM_XML_FILE;
 
+  @Override
   public String getName() {
     return "Parsing bpm-platform.xml file";
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
 
     URL bpmPlatformXmlSource = getBpmPlatformXmlStream(operationContext);

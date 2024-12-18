@@ -47,7 +47,8 @@ public class MessageFlowImpl extends BaseElementImpl implements MessageFlow {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<MessageFlow>() {
-        public MessageFlow newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public MessageFlow newInstance(ModelTypeInstanceContext instanceContext) {
           return new MessageFlowImpl(instanceContext);
         }
       });
@@ -76,38 +77,47 @@ public class MessageFlowImpl extends BaseElementImpl implements MessageFlow {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public InteractionNode getSource() {
     return sourceRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSource(InteractionNode source) {
     sourceRefAttribute.setReferenceTargetElement(this, source);
   }
 
+  @Override
   public InteractionNode getTarget() {
     return targetRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setTarget(InteractionNode target) {
     targetRefAttribute.setReferenceTargetElement(this, target);
   }
 
+  @Override
   public Message getMessage() {
     return messageRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setMessage(Message message) {
     messageRefAttribute.setReferenceTargetElement(this, message);
   }
 
+  @Override
   public BpmnEdge getDiagramElement() {
     return (BpmnEdge) super.getDiagramElement();
   }

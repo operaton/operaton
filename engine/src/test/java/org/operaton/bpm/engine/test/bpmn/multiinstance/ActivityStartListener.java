@@ -24,7 +24,8 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  * @author Joram Barrez
  */
 public class ActivityStartListener implements ExecutionListener {
-  
+
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     Integer counter = (Integer) execution.getVariable("executionListenerCounter");
     if (counter == null) {

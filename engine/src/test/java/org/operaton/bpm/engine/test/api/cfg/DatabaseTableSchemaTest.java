@@ -111,6 +111,7 @@ public class DatabaseTableSchemaTest {
     CommandExecutor commandExecutor = config1.getCommandExecutorTxRequired();
 
     commandExecutor.execute(new Command<Void>(){
+      @Override
       public Void execute(CommandContext commandContext) {
         DbSqlSession sqlSession = commandContext.getSession(DbSqlSession.class);
         assertTrue(sqlSession.isTablePresent("SOME_TABLE"));
@@ -156,6 +157,7 @@ public class DatabaseTableSchemaTest {
   // schema when it's build.
   private static class CustomStandaloneInMemProcessEngineConfiguration extends StandaloneInMemProcessEngineConfiguration {
 
+    @Override
     public ProcessEngine buildProcessEngine() {
       init();
       return new NoSchemaProcessEngineImpl(this);

@@ -32,6 +32,7 @@ public class DeleteHistoricBatchCmd implements Command<Object> {
     this.batchId = batchId;
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     EnsureUtil.ensureNotNull(BadUserRequestException.class, "Historic batch id must not be null", "historic batch id", batchId);
 

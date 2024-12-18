@@ -40,6 +40,7 @@ public class SimpleSerializableBean implements Serializable {
     this.intProperty = intProperty;
   }
 
+  @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
@@ -47,6 +48,7 @@ public class SimpleSerializableBean implements Serializable {
     return result;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;

@@ -36,10 +36,12 @@ public class ProcessesXmlImpl implements ProcessesXml {
     this.processArchiveXmls = processArchiveXmls;
   }
 
+  @Override
   public List<ProcessEngineXml> getProcessEngines() {
     return processEngineXmls;
   }
 
+  @Override
   public List<ProcessArchiveXml> getProcessArchives() {
     return processArchiveXmls;
   }

@@ -35,6 +35,7 @@ public abstract class AbstractValueTypeImpl implements ValueType {
     this.name = name;
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -44,18 +45,22 @@ public abstract class AbstractValueTypeImpl implements ValueType {
     return name;
   }
 
+  @Override
   public boolean isAbstract() {
     return false;
   }
 
+  @Override
   public ValueType getParent() {
     return null;
   }
 
+  @Override
   public boolean canConvertFromTypedValue(TypedValue typedValue) {
     return false;
   }
 
+  @Override
   public TypedValue convertFromTypedValue(TypedValue typedValue) {
     throw unsupportedConversion(typedValue.getType());
   }

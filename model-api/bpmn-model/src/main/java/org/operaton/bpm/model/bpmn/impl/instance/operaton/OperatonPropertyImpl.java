@@ -41,7 +41,8 @@ public class OperatonPropertyImpl extends BpmnModelElementInstanceImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonProperty.class, OPERATON_ELEMENT_PROPERTY)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonProperty>() {
-        public OperatonProperty newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonProperty newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonPropertyImpl(instanceContext);
         }
       });
@@ -65,26 +66,32 @@ public class OperatonPropertyImpl extends BpmnModelElementInstanceImpl implement
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonId() {
     return operatonIdAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonId(String operatonId) {
     operatonIdAttribute.setValue(this, operatonId);
   }
 
+  @Override
   public String getOperatonName() {
     return operatonNameAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonName(String operatonName) {
     operatonNameAttribute.setValue(this, operatonName);
   }
 
+  @Override
   public String getOperatonValue() {
     return operatonValueAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonValue(String operatonValue) {
     operatonValueAttribute.setValue(this, operatonValue);
   }

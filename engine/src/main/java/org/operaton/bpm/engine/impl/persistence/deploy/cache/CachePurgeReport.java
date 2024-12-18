@@ -73,6 +73,7 @@ public class CachePurgeReport implements PurgeReporting<Set<String>> {
     return deletedCache.containsKey(key);
   }
 
+  @Override
   public boolean isEmpty() {
     return deletedCache.isEmpty();
   }

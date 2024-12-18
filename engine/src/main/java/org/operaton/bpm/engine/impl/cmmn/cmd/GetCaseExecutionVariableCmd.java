@@ -44,6 +44,7 @@ public class GetCaseExecutionVariableCmd implements Command<Object>, Serializabl
     this.isLocal = isLocal;
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     ensureNotNull("caseExecutionId", caseExecutionId);
     ensureNotNull("variableName", variableName);

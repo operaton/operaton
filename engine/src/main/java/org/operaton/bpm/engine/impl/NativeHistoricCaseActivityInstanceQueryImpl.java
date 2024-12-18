@@ -37,14 +37,16 @@ public class NativeHistoricCaseActivityInstanceQueryImpl extends AbstractNativeQ
     super(commandExecutor);
   }
 
- //results ////////////////////////////////////////////////////////////////
+  //results ////////////////////////////////////////////////////////////////
   
+  @Override
   public List<HistoricCaseActivityInstance> executeList(CommandContext commandContext, Map<String, Object> parameterMap, int firstResult, int maxResults) {
     return commandContext
       .getHistoricCaseActivityInstanceManager()
       .findHistoricCaseActivityInstancesByNativeQuery(parameterMap, firstResult, maxResults);
   }
-  
+
+  @Override
   public long executeCount(CommandContext commandContext, Map<String, Object> parameterMap) {
     return commandContext
       .getHistoricCaseActivityInstanceManager()

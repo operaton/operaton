@@ -38,18 +38,22 @@ public class ContextEntryImpl extends DmnModelElementInstanceImpl implements Con
     super(instanceContext);
   }
 
+  @Override
   public Variable getVariable() {
     return variableChild.getChild(this);
   }
 
+  @Override
   public void setVariable(Variable variable) {
     variableChild.setChild(this, variable);
   }
 
+  @Override
   public Expression getExpression() {
     return expressionChild.getChild(this);
   }
 
+  @Override
   public void setExpression(Expression expression) {
     expressionChild.setChild(this, expression);
   }
@@ -58,7 +62,8 @@ public class ContextEntryImpl extends DmnModelElementInstanceImpl implements Con
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ContextEntry.class, DMN_ELEMENT_CONTEXT_ENTRY)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<ContextEntry>() {
-        public ContextEntry newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ContextEntry newInstance(ModelTypeInstanceContext instanceContext) {
           return new ContextEntryImpl(instanceContext);
         }
       });

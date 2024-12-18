@@ -35,7 +35,8 @@ public class TargetImpl extends CmmnModelElementInstanceImpl implements Target {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Target.class, CMMN_ELEMENT_TARGET)
       .namespaceUri(CMMN11_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Target>() {
-        public Target newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Target newInstance(ModelTypeInstanceContext instanceContext) {
           return new TargetImpl(instanceContext);
         }
       });

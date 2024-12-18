@@ -34,6 +34,7 @@ public class JobExecutorXmlImpl implements JobExecutorXml {
   protected String jobExecutorClass;
   protected Map<String, String> properties;
 
+  @Override
   public List<JobAcquisitionXml> getJobAcquisitions() {
     return jobAcquisitions;
   }
@@ -53,7 +54,8 @@ public class JobExecutorXmlImpl implements JobExecutorXml {
   public void setProperties(Map<String, String> properties){
     this.properties = properties;
   }
-  
+
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }

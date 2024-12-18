@@ -27,14 +27,17 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DI_NS;
  */
 public class LabeledShapeTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(DI_NS, Shape.class, true);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

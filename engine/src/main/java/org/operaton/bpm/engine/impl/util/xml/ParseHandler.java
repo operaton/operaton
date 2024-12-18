@@ -39,6 +39,7 @@ public class ParseHandler extends DefaultHandler {
     this.parse = parse;
   }
 
+  @Override
   public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
     Element element = new Element(uri, localName, qName, attributes, locator);
     if (elementStack.isEmpty()) {
@@ -49,23 +50,32 @@ public class ParseHandler extends DefaultHandler {
     elementStack.push(element);
   }
 
+  @Override
   public void characters(char[] ch, int start, int length) throws SAXException {
     elementStack.peek().appendText(String.valueOf(ch, start, length));
   }
 
+  @Override
   public void endElement(String uri, String localName, String qName) throws SAXException {
     elementStack.pop();
   }
 
+  @Override
   public void error(SAXParseException e) {
     parse.addError(e);
   }
+
+  @Override
   public void fatalError(SAXParseException e) {
     parse.addError(e);
   }
+
+  @Override
   public void warning(SAXParseException e) {
     parse.addWarning(e);
   }
+
+  @Override
   public void setDocumentLocator(Locator locator) {
     this.locator = locator;
   }

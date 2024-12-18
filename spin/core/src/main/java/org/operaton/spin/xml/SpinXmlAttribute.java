@@ -55,6 +55,7 @@ public abstract class SpinXmlAttribute extends SpinXmlNode<SpinXmlAttribute> {
    *
    * @return the string representation
    */
+  @Override
   public abstract String toString();
 
   /**
@@ -62,6 +63,7 @@ public abstract class SpinXmlAttribute extends SpinXmlNode<SpinXmlAttribute> {
    *
    * @param writer the writer to write to
    */
+  @Override
   public abstract void writeToWriter(Writer writer);
 
 }

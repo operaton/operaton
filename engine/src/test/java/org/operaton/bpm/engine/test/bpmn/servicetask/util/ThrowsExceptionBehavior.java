@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  */
 public class ThrowsExceptionBehavior implements ActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     String var = (String) execution.getVariable("var");
 

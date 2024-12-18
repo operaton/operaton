@@ -30,10 +30,12 @@ public class DmnModelInstanceImpl extends ModelInstanceImpl implements DmnModelI
     super(model, modelBuilder, document);
   }
 
+  @Override
   public Definitions getDefinitions() {
     return (Definitions) getDocumentElement();
   }
 
+  @Override
   public void setDefinitions(Definitions definitions) {
     setDocumentElement(definitions);
   }

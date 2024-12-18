@@ -46,7 +46,8 @@ public class ResourceImpl extends RootElementImpl implements Resource {
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Resource>() {
-        public Resource newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Resource newInstance(ModelTypeInstanceContext instanceContext) {
           return new ResourceImpl(instanceContext);
         }
       });
@@ -67,14 +68,17 @@ public class ResourceImpl extends RootElementImpl implements Resource {
     super(context);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public Collection<ResourceParameter> getResourceParameters() {
     return resourceParameterCollection.get(this);
   }

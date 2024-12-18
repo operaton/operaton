@@ -78,6 +78,7 @@ public class CompetingExternalTaskFetchingTest {
       this.topic = topic;
     }
 
+    @Override
     public void run() {
       Map<String, TopicFetchInstruction> instructions = new HashMap<String, TopicFetchInstruction>();
 

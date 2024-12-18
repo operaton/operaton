@@ -44,7 +44,8 @@ public class OperatonValidationImpl extends BpmnModelElementInstanceImpl impleme
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonValidation.class, OPERATON_ELEMENT_VALIDATION)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonValidation>() {
-        public OperatonValidation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonValidation newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonValidationImpl(instanceContext);
         }
       });
@@ -61,6 +62,7 @@ public class OperatonValidationImpl extends BpmnModelElementInstanceImpl impleme
     super(instanceContext);
   }
 
+  @Override
   public Collection<OperatonConstraint> getOperatonConstraints() {
     return operatonConstraintCollection.get(this);
   }

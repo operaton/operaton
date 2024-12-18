@@ -21,10 +21,12 @@ import java.util.Collection;
 
 public class LiteralExpressionTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(Expression.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(Text.class, 0, 1),
@@ -32,6 +34,7 @@ public class LiteralExpressionTest extends DmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("expressionLanguage")

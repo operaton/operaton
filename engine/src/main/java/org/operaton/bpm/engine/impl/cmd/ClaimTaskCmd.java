@@ -44,6 +44,7 @@ public class ClaimTaskCmd implements Command<Void>, Serializable {
     this.userId = userId;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
 

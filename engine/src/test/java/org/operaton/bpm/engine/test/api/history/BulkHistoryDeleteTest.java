@@ -484,6 +484,7 @@ public class BulkHistoryDeleteTest {
   void assertDataDeleted(final List<String> inputIds, final List<String> inputByteArrayIds, final List<String> outputIds,
     final List<String> outputByteArrayIds) {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         for (String inputId : inputIds) {
           assertNull(commandContext.getDbEntityManager().selectById(HistoricDecisionInputInstanceEntity.class, inputId));
@@ -629,6 +630,7 @@ public class BulkHistoryDeleteTest {
 
   private void verifyByteArraysWereRemoved(final String... errorDetailsByteArrayIds) {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         for (String errorDetailsByteArrayId : errorDetailsByteArrayIds) {
           assertNull(commandContext.getDbEntityManager().selectOne("selectByteArray", errorDetailsByteArrayId));

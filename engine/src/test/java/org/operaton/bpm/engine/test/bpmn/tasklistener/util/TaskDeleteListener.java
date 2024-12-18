@@ -28,6 +28,7 @@ public class TaskDeleteListener implements TaskListener {
   public static String lastTaskDefinitionKey = null;
   public static String lastDeleteReason = null;
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     TaskDeleteListener.eventCounter++;
     TaskDeleteListener.lastTaskDefinitionKey = delegateTask.getTaskDefinitionKey();

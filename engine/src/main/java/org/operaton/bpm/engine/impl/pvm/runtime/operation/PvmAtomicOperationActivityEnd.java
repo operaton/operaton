@@ -38,14 +38,17 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
     return execution.getActivity();
   }
 
+  @Override
   public boolean isAsync(PvmExecutionImpl execution) {
     return execution.getActivity().isAsyncAfter();
   }
 
+  @Override
   public boolean isAsyncCapable() {
     return false;
   }
 
+  @Override
   public void execute(PvmExecutionImpl execution) {
     // restore activity instance id
     if (execution.getActivityInstanceId() == null) {
@@ -113,6 +116,7 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
     }
   }
 
+  @Override
   public String getCanonicalName() {
     return "activity-end";
   }

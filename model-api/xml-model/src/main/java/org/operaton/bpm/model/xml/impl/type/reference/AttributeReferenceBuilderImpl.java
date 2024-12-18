@@ -50,11 +50,13 @@ public class AttributeReferenceBuilderImpl<T extends ModelElementInstance> imple
     this.attributeReferenceImpl = new AttributeReferenceImpl<T>(referenceSourceAttribute);
   }
 
+  @Override
   public AttributeReference<T> build() {
     referenceSourceAttribute.registerOutgoingReference(attributeReferenceImpl);
     return attributeReferenceImpl;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public void performModelBuild(Model model) {
     // register declaring type as a referencing type of referenced type

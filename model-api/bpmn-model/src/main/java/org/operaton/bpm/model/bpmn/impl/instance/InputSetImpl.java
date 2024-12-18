@@ -51,7 +51,8 @@ public class InputSetImpl extends BaseElementImpl implements InputSet {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<InputSet>() {
-        public InputSet newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputSet newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputSetImpl(instanceContext);
         }
       });
@@ -84,26 +85,32 @@ public class InputSetImpl extends BaseElementImpl implements InputSet {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public Collection<DataInput> getDataInputs() {
     return dataInputDataInputRefsCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<DataInput> getOptionalInputs() {
     return optionalInputRefsCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<DataInput> getWhileExecutingInput() {
     return whileExecutingInputRefsCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<OutputSet> getOutputSets() {
     return outputSetOutputSetRefsCollection.getReferenceTargetElements(this);
   }

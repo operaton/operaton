@@ -74,6 +74,7 @@ public abstract class CoreActivity extends CoreModelElement {
     this.ioMapping = ioMapping;
   }
 
+  @Override
   public String toString() {
     return "Activity("+id+")";
   }

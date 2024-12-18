@@ -27,25 +27,32 @@ public class ActivityStatisticsImpl implements ActivityStatistics {
   protected int instances;
   protected int failedJobs;
   protected List<IncidentStatistics> incidentStatistics;
-  
+
+  @Override
   public String getId() {
     return id;
   }
   public void setId(String id) {
     this.id = id;
   }
+
+  @Override
   public int getInstances() {
     return instances;
   }
   public void setInstances(int instances) {
     this.instances = instances;
   }
+
+  @Override
   public int getFailedJobs() {
     return failedJobs;
   }
   public void setFailedJobs(int failedJobs) {
     this.failedJobs = failedJobs;
   }
+
+  @Override
   public List<IncidentStatistics> getIncidentStatistics() {
     return incidentStatistics;
   }

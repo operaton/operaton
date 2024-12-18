@@ -440,6 +440,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
     }
   }
 
+  @Override
   public Batch setVariablesAsync(List<String> processInstanceIds,
                                  ProcessInstanceQuery processInstanceQuery,
                                  HistoricProcessInstanceQuery historicProcessInstanceQuery,
@@ -452,6 +453,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
     ));
   }
 
+  @Override
   public Batch setVariablesAsync(List<String> processInstanceIds,
                                  Map<String, ?> variables) {
     return commandExecutor.execute(new SetVariablesToProcessInstancesBatchCmd(
@@ -462,6 +464,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
     ));
   }
 
+  @Override
   public Batch setVariablesAsync(ProcessInstanceQuery processInstanceQuery,
                                  Map<String, ?> variables) {
     return commandExecutor.execute(new SetVariablesToProcessInstancesBatchCmd(
@@ -472,6 +475,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
     ));
   }
 
+  @Override
   public Batch setVariablesAsync(HistoricProcessInstanceQuery historicProcessInstanceQuery,
                                  Map<String, ?> variables) {
     return commandExecutor.execute(new SetVariablesToProcessInstancesBatchCmd(

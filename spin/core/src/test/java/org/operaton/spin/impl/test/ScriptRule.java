@@ -56,8 +56,10 @@ public class ScriptRule implements TestRule {
    */
   protected final Map<String, Object> variables = new HashMap<>();
 
+  @Override
   public Statement apply(final Statement base, final Description description) {
     return new Statement() {
+      @Override
       public void evaluate() throws Throwable {
         loadScript(description);
         base.evaluate();

@@ -40,6 +40,7 @@ public class FeelFunctionMapper extends FunctionMapper {
     methods.put(JUEL_DATE_AND_TIME_METHOD, getMethod("parseDateAndTime", String.class));
   }
 
+  @Override
   public Method resolveFunction(String prefix, String localName) {
     return methods.get(localName);
   }

@@ -50,6 +50,7 @@ public interface ProcessInstance extends Execution {
   /**
    * returns true if the process instance is suspended
    */
+  @Override
   boolean isSuspended();
 
 }

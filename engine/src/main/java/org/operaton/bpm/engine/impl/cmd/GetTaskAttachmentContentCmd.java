@@ -41,6 +41,7 @@ public class GetTaskAttachmentContentCmd implements Command<InputStream>, Serial
     this.taskId = taskId;
   }
 
+  @Override
   public InputStream execute(CommandContext commandContext) {
     AttachmentEntity attachment = (AttachmentEntity) commandContext
         .getAttachmentManager()

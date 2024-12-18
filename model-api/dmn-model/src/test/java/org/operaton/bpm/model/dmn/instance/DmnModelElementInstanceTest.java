@@ -32,6 +32,7 @@ public abstract class DmnModelElementInstanceTest extends AbstractModelElementIn
     initModelElementType(modelElementTypeRule);
   }
 
+  @Override
   public String getDefaultNamespace() {
     return DmnModelConstants.LATEST_DMN_NS;
   }

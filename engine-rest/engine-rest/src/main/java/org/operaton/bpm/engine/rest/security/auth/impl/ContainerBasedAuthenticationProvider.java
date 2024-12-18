@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
 
 public class ContainerBasedAuthenticationProvider implements AuthenticationProvider {
 
+  @Override
   public AuthenticationResult extractAuthenticatedUser(HttpServletRequest request, ProcessEngine engine) {
     Principal principal = request.getUserPrincipal();
 
@@ -42,6 +43,7 @@ public class ContainerBasedAuthenticationProvider implements AuthenticationProvi
     return AuthenticationResult.successful(name);
   }
 
+  @Override
   public void augmentResponseByAuthenticationChallenge(HttpServletResponse response, ProcessEngine engine) {
     // noop
   }

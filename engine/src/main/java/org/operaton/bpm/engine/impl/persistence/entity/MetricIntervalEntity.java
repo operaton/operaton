@@ -69,6 +69,7 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity, Seri
     this.timestamp = new Date(timestamp);
   }
 
+  @Override
   public String getName() {
     return MetricsUtil.resolvePublicName(name);
   }
@@ -77,6 +78,7 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity, Seri
     this.name = name;
   }
 
+  @Override
   public String getReporter() {
     return reporter;
   }
@@ -85,6 +87,7 @@ public class MetricIntervalEntity implements MetricIntervalValue, DbEntity, Seri
     this.reporter = reporter;
   }
 
+  @Override
   public long getValue() {
     return value;
   }

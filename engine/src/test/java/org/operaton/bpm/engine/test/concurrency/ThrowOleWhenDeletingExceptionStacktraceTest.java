@@ -90,6 +90,7 @@ public class ThrowOleWhenDeletingExceptionStacktraceTest extends ConcurrencyTest
 
   public class ThreadOne extends ControllableCommand<Void> {
 
+    @Override
     public Void execute(CommandContext commandContext) {
       monitor.sync();
 
@@ -103,6 +104,7 @@ public class ThrowOleWhenDeletingExceptionStacktraceTest extends ConcurrencyTest
 
   public class ThreadTwo extends ControllableCommand<Void> {
 
+    @Override
     public Void execute(CommandContext commandContext) {
       monitor.sync();
 

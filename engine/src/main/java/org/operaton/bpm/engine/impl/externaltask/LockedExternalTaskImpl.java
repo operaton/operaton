@@ -55,70 +55,87 @@ public class LockedExternalTaskImpl implements LockedExternalTask {
   protected String businessKey;
   protected Map<String, String> extensionProperties;
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public String getTopicName() {
     return topicName;
   }
 
+  @Override
   public String getWorkerId() {
     return workerId;
   }
 
+  @Override
   public Date getLockExpirationTime() {
     return lockExpirationTime;
   }
 
+  @Override
   public Date getCreateTime() {
     return createTime;
   }
 
+  @Override
   public Integer getRetries() {
     return retries;
   }
 
+  @Override
   public String getErrorMessage() {
     return errorMessage;
   }
 
+  @Override
   public String getProcessInstanceId() {
     return processInstanceId;
   }
 
+  @Override
   public String getExecutionId() {
     return executionId;
   }
 
+  @Override
   public String getActivityId() {
     return activityId;
   }
 
+  @Override
   public String getActivityInstanceId() {
     return activityInstanceId;
   }
 
+  @Override
   public String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
+  @Override
   public String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
 
+  @Override
   public String getProcessDefinitionVersionTag() {
     return processDefinitionVersionTag;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
 
+  @Override
   public VariableMap getVariables() {
     return variables;
   }
 
+  @Override
   public String getErrorDetails() {
     return errorDetails;
   }

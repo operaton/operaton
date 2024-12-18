@@ -148,6 +148,7 @@ public class AcquirableJobCacheTest {
 
   protected JobEntity fetchJobAfterCachedAcquirableJob() {
     return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<JobEntity>() {
+      @Override
       public JobEntity execute(CommandContext commandContext) {
         JobManager jobManager = commandContext.getJobManager();
         List<AcquirableJobEntity> acquirableJobs = jobManager.findNextJobsToExecute(new Page(0, 100));
@@ -159,6 +160,7 @@ public class AcquirableJobCacheTest {
 
   protected TimerEntity fetchTimerJobAfterCachedAcquirableJob(final String executionId) {
     return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<TimerEntity>() {
+      @Override
       public TimerEntity execute(CommandContext commandContext) {
         JobManager jobManager = commandContext.getJobManager();
         jobManager.findNextJobsToExecute(new Page(0, 100));
@@ -170,6 +172,7 @@ public class AcquirableJobCacheTest {
 
   protected AcquirableJobEntity fetchAcquirableJobAfterCachedTimerEntity(final String executionId) {
     return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<AcquirableJobEntity>() {
+      @Override
       public AcquirableJobEntity execute(CommandContext commandContext) {
         JobManager jobManager = commandContext.getJobManager();
         jobManager.findTimersByExecutionId(executionId);
@@ -181,6 +184,7 @@ public class AcquirableJobCacheTest {
 
   protected AcquirableJobEntity fetchAcquirableJobAfterCachedJob(final String processInstanceId) {
     return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<AcquirableJobEntity>() {
+      @Override
       public AcquirableJobEntity execute(CommandContext commandContext) {
         JobManager jobManager = commandContext.getJobManager();
         jobManager.findJobsByProcessInstanceId(processInstanceId);

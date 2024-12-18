@@ -49,22 +49,27 @@ public class IfPartImpl extends CmmnElementImpl implements IfPart {
     super(instanceContext);
   }
 
+  @Override
   public CaseFileItem getContext() {
     return contextRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setContext(CaseFileItem caseFileItem) {
     contextRefAttribute.setReferenceTargetElement(this, caseFileItem);
   }
 
+  @Override
   public Collection<ConditionExpression> getConditions() {
     return conditionChild.get(this);
   }
 
+  @Override
   public ConditionExpression getCondition() {
     return conditionChild.getChild(this);
   }
 
+  @Override
   public void setCondition(ConditionExpression condition) {
     conditionChild.setChild(this, condition);
   }
@@ -74,7 +79,8 @@ public class IfPartImpl extends CmmnElementImpl implements IfPart {
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<IfPart>() {
-          public IfPart newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public IfPart newInstance(ModelTypeInstanceContext instanceContext) {
             return new IfPartImpl(instanceContext);
           }
         });

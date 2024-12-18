@@ -35,6 +35,7 @@ public class RegisterDeploymentCmd implements Command<Void> {
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     Deployment deployment = commandContext.getDeploymentManager().findDeploymentById(deploymentId);
 

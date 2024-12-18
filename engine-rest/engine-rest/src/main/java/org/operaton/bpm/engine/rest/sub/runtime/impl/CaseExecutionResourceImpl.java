@@ -56,6 +56,7 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
     this.objectMapper = objectMapper;
   }
 
+  @Override
   public CaseExecutionDto getCaseExecution() {
     CaseService caseService = engine.getCaseService();
 
@@ -72,6 +73,7 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
     return result;
   }
 
+  @Override
   public void manualStart(CaseExecutionTriggerDto triggerDto) {
     try {
       CaseService caseService = engine.getCaseService();
@@ -97,6 +99,7 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
 
   }
 
+  @Override
   public void disable(CaseExecutionTriggerDto triggerDto) {
     try {
       CaseService caseService = engine.getCaseService();
@@ -122,6 +125,7 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
 
   }
 
+  @Override
   public void reenable(CaseExecutionTriggerDto triggerDto) {
     try {
       CaseService caseService = engine.getCaseService();
@@ -146,6 +150,7 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
     }
   }
 
+  @Override
   public void complete(CaseExecutionTriggerDto triggerDto) {
     try {
       CaseService caseService = engine.getCaseService();
@@ -170,6 +175,7 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
     }
   }
 
+  @Override
   public void terminate(CaseExecutionTriggerDto triggerDto) {
     try {
       CaseService caseService = engine.getCaseService();
@@ -247,10 +253,12 @@ public class CaseExecutionResourceImpl implements CaseExecutionResource {
     }
   }
 
+  @Override
   public VariableResource getVariablesLocal() {
     return new LocalCaseExecutionVariablesResource(engine, caseExecutionId, objectMapper);
   }
 
+  @Override
   public VariableResource getVariables() {
     return new CaseExecutionVariablesResource(engine, caseExecutionId, objectMapper);
   }

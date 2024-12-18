@@ -36,7 +36,8 @@ public class OperatonStringImpl extends CmmnModelElementInstanceImpl implements 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonString.class, OPERATON_ELEMENT_STRING)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonString>() {
-        public OperatonString newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonString newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonStringImpl(instanceContext);
         }
       });

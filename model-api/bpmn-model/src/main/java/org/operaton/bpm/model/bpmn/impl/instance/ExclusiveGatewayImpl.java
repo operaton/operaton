@@ -43,7 +43,8 @@ public class ExclusiveGatewayImpl extends GatewayImpl implements ExclusiveGatewa
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
       .instanceProvider(new ModelTypeInstanceProvider<ExclusiveGateway>() {
-        public ExclusiveGateway newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ExclusiveGateway newInstance(ModelTypeInstanceContext instanceContext) {
           return new ExclusiveGatewayImpl(instanceContext);
         }
       });
@@ -64,10 +65,12 @@ public class ExclusiveGatewayImpl extends GatewayImpl implements ExclusiveGatewa
     return new ExclusiveGatewayBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public SequenceFlow getDefault() {
     return defaultAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setDefault(SequenceFlow defaultFlow) {
     defaultAttribute.setReferenceTargetElement(this, defaultFlow);
   }

@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class IsIdentityServiceReadOnlyCmd implements Command<Boolean> {
 
+  @Override
   public Boolean execute(CommandContext commandContext) {
     
     return !commandContext.getSessionFactories().containsKey(WritableIdentityProvider.class);

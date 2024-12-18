@@ -43,6 +43,7 @@ public class GetDeploymentResourceCmd implements Command<InputStream>, Serializa
     this.resourceName = resourceName;
   }
 
+  @Override
   public InputStream execute(CommandContext commandContext) {
     ensureNotNull("deploymentId", deploymentId);
     ensureNotNull("resourceName", resourceName);

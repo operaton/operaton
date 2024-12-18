@@ -61,18 +61,22 @@ public abstract class DiagramElementImpl extends BpmnModelElementInstanceImpl im
     super(instanceContext);
   }
 
+  @Override
   public String getId() {
     return idAttribute.getValue(this);
   }
 
+  @Override
   public void setId(String id) {
     idAttribute.setValue(this, id);
   }
 
+  @Override
   public Extension getExtension() {
     return extensionChild.getChild(this);
   }
 
+  @Override
   public void setExtension(Extension extension) {
     extensionChild.setChild(this, extension);
   }

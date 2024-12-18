@@ -38,24 +38,29 @@ public class SerializedObjectValueBuilderImpl implements SerializedObjectValueBu
     variableValue = (ObjectValueImpl) value;
   }
 
+  @Override
   public SerializedObjectValueBuilder serializationDataFormat(String dataFormatName) {
     variableValue.setSerializationDataFormat(dataFormatName);
     return this;
   }
 
+  @Override
   public SerializedObjectValueBuilder serializationDataFormat(SerializationDataFormat dataFormat) {
     return serializationDataFormat(dataFormat.getName());
   }
 
+  @Override
   public ObjectValue create() {
     return variableValue;
   }
 
+  @Override
   public SerializedObjectValueBuilder objectTypeName(String typeName) {
     variableValue.setObjectTypeName(typeName);
     return this;
   }
 
+  @Override
   public SerializedObjectValueBuilder serializedValue(String value) {
     variableValue.setSerializedValue(value);
     return this;

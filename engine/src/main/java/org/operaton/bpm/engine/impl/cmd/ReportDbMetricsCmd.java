@@ -33,6 +33,7 @@ public class ReportDbMetricsCmd implements Command<Void>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl engineConfiguration = Context.getProcessEngineConfiguration();
 

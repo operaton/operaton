@@ -20,15 +20,18 @@ import java.util.Collection;
 
 public class ParameterTest extends DmnModelElementInstanceTest {
 
-	public TypeAssumption getTypeAssumption() {
+  @Override
+  public TypeAssumption getTypeAssumption() {
 		return new TypeAssumption(InformationItem.class, false);
 	}
 
-	public Collection<ChildElementAssumption> getChildElementAssumptions() {
+  @Override
+  public Collection<ChildElementAssumption> getChildElementAssumptions() {
 		return null;
 	}
 
-	public Collection<AttributeAssumption> getAttributesAssumptions() {
+  @Override
+  public Collection<AttributeAssumption> getAttributesAssumptions() {
 		return null;
 	}
 

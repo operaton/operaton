@@ -58,35 +58,43 @@ public class PlanItemOnPartImpl extends OnPartImpl implements PlanItemOnPart {
     super(instanceContext);
   }
 
+  @Override
   public Sentry getSentry() {
     return sentryRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSentry(Sentry sentry) {
     sentryRefAttribute.setReferenceTargetElement(this, sentry);
   }
 
+  @Override
   public ExitCriterion getExitCriterion() {
     return exitCriterionRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setExitCriterion(ExitCriterion exitCriterion) {
     exitCriterionRefAttribute.setReferenceTargetElement(this, exitCriterion);
   }
 
+  @Override
   public PlanItem getSource() {
     return sourceRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSource(PlanItem source) {
     sourceRefAttribute.setReferenceTargetElement(this, source);
   }
 
+  @Override
   public PlanItemTransition getStandardEvent() {
     PlanItemTransitionStandardEvent child = standardEventChild.getChild(this);
     return child.getValue();
   }
 
+  @Override
   public void setStandardEvent(PlanItemTransition standardEvent) {
     PlanItemTransitionStandardEvent child = standardEventChild.getChild(this);
     child.setValue(standardEvent);
@@ -97,7 +105,8 @@ public class PlanItemOnPartImpl extends OnPartImpl implements PlanItemOnPart {
         .extendsType(OnPart.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<PlanItemOnPart>() {
-          public PlanItemOnPart newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public PlanItemOnPart newInstance(ModelTypeInstanceContext instanceContext) {
             return new PlanItemOnPartImpl(instanceContext);
           }
         });

@@ -293,6 +293,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
     public DmnDecisionTableEvaluationEvent evaluationEvent;
 
+    @Override
     public void notify(DmnDecisionTableEvaluationEvent evaluationEvent) {
       this.evaluationEvent = evaluationEvent;
     }

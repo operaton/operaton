@@ -37,15 +37,18 @@ public class ReusableSubProcess implements SubProcessActivityBehavior {
     this.processDefinition = processDefinition;
   }
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     PvmProcessInstance subProcessInstance = execution.createSubProcessInstance(processDefinition);
 
     subProcessInstance.start();
   }
 
+  @Override
   public void passOutputVariables(ActivityExecution targetExecution, VariableScope calledElementInstance) {
   }
 
+  @Override
   public void completed(ActivityExecution execution) throws Exception {
     List<PvmTransition> outgoingTransitions = execution.getActivity().getOutgoingTransitions();
     execution.leaveActivityViaTransitions(outgoingTransitions, null);

@@ -38,7 +38,8 @@ public class CancelEventDefinitionImpl extends EventDefinitionImpl implements Ca
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
       .instanceProvider(new ModelTypeInstanceProvider<CancelEventDefinition>() {
-        public CancelEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CancelEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
           return new CancelEventDefinitionImpl(instanceContext);
         }
       });

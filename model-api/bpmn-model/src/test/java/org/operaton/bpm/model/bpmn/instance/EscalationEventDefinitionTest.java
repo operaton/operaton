@@ -25,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class EscalationEventDefinitionTest extends AbstractEventDefinitionTest {
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("escalationRef")

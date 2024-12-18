@@ -27,6 +27,7 @@ public class ProcessEngineAwareListener implements CaseVariableListener {
 
   protected static boolean foundValidRuntimeService = false;
 
+  @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
     if (variableInstance.getProcessEngineServices().getRuntimeService() != null) {
       foundValidRuntimeService = true;

@@ -56,26 +56,32 @@ public class CaseFileItemDefinitionImpl extends CmmnElementImpl implements CaseF
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getDefinitionType() {
     return definitionTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setDefinitionType(String definitionType) {
     definitionTypeAttribute.setValue(this, definitionType);
   }
 
+  @Override
   public String getStructure() {
     return structureAttribute.getValue(this);
   }
 
+  @Override
   public void setStructure(String structureRef) {
     structureAttribute.setValue(this, structureRef);
   }
@@ -88,6 +94,7 @@ public class CaseFileItemDefinitionImpl extends CmmnElementImpl implements CaseF
 //    importRefAttribute.setReferenceTargetElement(this, importRef);
 //  }
 
+  @Override
   public Collection<Property> getProperties() {
     return propertyCollection.get(this);
   }
@@ -97,7 +104,8 @@ public class CaseFileItemDefinitionImpl extends CmmnElementImpl implements CaseF
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<CaseFileItemDefinition>() {
-          public CaseFileItemDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseFileItemDefinition newInstance(ModelTypeInstanceContext instanceContext) {
             return new CaseFileItemDefinitionImpl(instanceContext);
           }
         });

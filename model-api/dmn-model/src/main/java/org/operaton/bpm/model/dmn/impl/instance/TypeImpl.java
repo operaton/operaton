@@ -35,7 +35,8 @@ public class TypeImpl extends DmnModelElementInstanceImpl implements Type {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Type.class, DMN_ELEMENT_TYPE)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Type>() {
-        public Type newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Type newInstance(ModelTypeInstanceContext instanceContext) {
           return new TypeImpl(instanceContext);
         }
       });

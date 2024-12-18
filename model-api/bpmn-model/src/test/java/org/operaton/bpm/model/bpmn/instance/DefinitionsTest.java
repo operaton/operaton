@@ -28,10 +28,12 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;
  */
 public class DefinitionsTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(Import.class),
@@ -42,6 +44,7 @@ public class DefinitionsTest extends BpmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("id", true),

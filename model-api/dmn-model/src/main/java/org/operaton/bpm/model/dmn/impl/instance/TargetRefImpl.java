@@ -37,7 +37,8 @@ public class TargetRefImpl extends DmnElementReferenceImpl implements TargetRef 
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<TargetRef>() {
-        public TargetRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TargetRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new TargetRefImpl(instanceContext);
         }
       });

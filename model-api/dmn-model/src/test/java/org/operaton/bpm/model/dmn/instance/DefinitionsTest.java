@@ -21,10 +21,12 @@ import java.util.Collection;
 
 public class DefinitionsTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(NamedElement.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(Import.class),
@@ -36,6 +38,7 @@ public class DefinitionsTest extends DmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("expressionLanguage", false, false, "http://www.omg.org/spec/FEEL/20140401"),

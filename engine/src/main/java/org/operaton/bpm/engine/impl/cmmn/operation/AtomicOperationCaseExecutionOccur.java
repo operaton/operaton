@@ -25,14 +25,17 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionOccur extends AbstractAtomicOperationCaseExecutionComplete {
 
+  @Override
   protected String getEventName() {
     return "occur";
   }
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-occur";
   }
 
+  @Override
   protected void triggerBehavior(CmmnActivityBehavior behavior, CmmnExecution execution) {
     behavior.onOccur(execution);
   }

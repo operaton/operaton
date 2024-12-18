@@ -72,6 +72,7 @@ public abstract class SpinXmlNode<T extends SpinXmlNode<?>> extends Spin<T> {
    *
    * @throws SpinDataFormatException in case the input cannot be mapped to class for several reasons
    */
+  @Override
   public abstract <C> C mapTo(Class<C> type);
 
   /**
@@ -82,6 +83,7 @@ public abstract class SpinXmlNode<T extends SpinXmlNode<?>> extends Spin<T> {
    *
    * @throws SpinDataFormatException in case the input cannot be mapped to class for several reasons
    */
+  @Override
   public abstract <C> C mapTo(String canonicalName);
 
 }

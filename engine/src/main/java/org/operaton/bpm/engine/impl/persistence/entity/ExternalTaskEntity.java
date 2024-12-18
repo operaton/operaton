@@ -152,6 +152,8 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   public void setProcessDefinitionKey(String processDefinitionKey) {
     this.processDefinitionKey = processDefinitionKey;
   }
+
+  @Override
   public String getProcessDefinitionVersionTag() {
     return processDefinitionVersionTag;
   }
@@ -249,6 +251,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
     this.businessKey = businessKey;
   }
 
+  @Override
   public Map<String, String> getExtensionProperties() {
     return extensionProperties;
   }

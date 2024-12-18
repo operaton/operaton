@@ -53,6 +53,7 @@ public class FreeMarkerCompiledScript extends CompiledScript {
     }
   }
 
+  @Override
   public Object eval(ScriptContext context) throws ScriptException {
     Writer writer = new StringWriter();
     Bindings bindings = context.getBindings(ScriptContext.ENGINE_SCOPE);
@@ -65,6 +66,7 @@ public class FreeMarkerCompiledScript extends CompiledScript {
     return writer.toString();
   }
 
+  @Override
   public ScriptEngine getEngine() {
     return scriptEngine;
   }

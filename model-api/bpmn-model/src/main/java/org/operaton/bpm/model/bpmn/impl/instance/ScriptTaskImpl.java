@@ -51,7 +51,8 @@ public class ScriptTaskImpl extends TaskImpl implements ScriptTask {
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
       .instanceProvider(new ModelTypeInstanceProvider<ScriptTask>() {
-        public ScriptTask newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ScriptTask newInstance(ModelTypeInstanceContext instanceContext) {
           return new ScriptTaskImpl(instanceContext);
         }
       });
@@ -86,36 +87,44 @@ public class ScriptTaskImpl extends TaskImpl implements ScriptTask {
     return new ScriptTaskBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public String getScriptFormat() {
     return scriptFormatAttribute.getValue(this);
   }
 
+  @Override
   public void setScriptFormat(String scriptFormat) {
     scriptFormatAttribute.setValue(this, scriptFormat);
   }
 
+  @Override
   public Script getScript() {
     return scriptChild.getChild(this);
   }
 
+  @Override
   public void setScript(Script script) {
     scriptChild.setChild(this, script);
   }
 
   /** operaton extensions */
 
+  @Override
   public String getOperatonResultVariable() {
     return operatonResultVariableAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonResultVariable(String operatonResultVariable) {
     operatonResultVariableAttribute.setValue(this, operatonResultVariable);
   }
 
+  @Override
   public String getOperatonResource() {
     return operatonResourceAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonResource(String operatonResource) {
     operatonResourceAttribute.setValue(this, operatonResource);
   }

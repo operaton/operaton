@@ -35,6 +35,7 @@ public class OptimizeCompletedHistoricActivityInstanceQueryCmd implements Comman
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<HistoricActivityInstance> execute(CommandContext commandContext) {
     return commandContext.getOptimizeManager().getCompletedHistoricActivityInstances(finishedAfter, finishedAt, maxResults);
   }

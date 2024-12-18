@@ -121,12 +121,14 @@ public class ControllableJobExecutor extends JobExecutor {
     return (RecordingAcquireJobsRunnable) super.getAcquireJobsRunnable();
   }
 
+  @Override
   public void executeJobs(List<String> jobIds, ProcessEngineImpl processEngine) {
     getExecuteJobsRunnable(jobIds, processEngine).run();
   }
 
   public class ControllableJobAcquisitionCommandFactory implements AcquireJobsCommandFactory {
 
+    @Override
     public Command<AcquiredJobs> getCommand(int numJobsToAcquire) {
       return new ControllableAcquisitionCommand(acquisitionThreadControl, numJobsToAcquire);
     }
@@ -141,6 +143,7 @@ public class ControllableJobExecutor extends JobExecutor {
       this.wrappedCommand = new AcquireJobsCmd(ControllableJobExecutor.this, numJobsToAcquire);
     }
 
+    @Override
     public AcquiredJobs execute(CommandContext commandContext) {
 
       if (shouldThrowOle) {

@@ -36,6 +36,7 @@ public class HistoryCleanupJobHandler implements JobHandler<HistoryCleanupJobHan
 
   public static final String TYPE = "history-cleanup";
 
+  @Override
   public void execute(HistoryCleanupJobHandlerConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
 
     HistoryCleanupHandler cleanupHandler = initCleanupHandler(configuration, commandContext);
@@ -84,15 +85,18 @@ public class HistoryCleanupJobHandler implements JobHandler<HistoryCleanupJobHan
     return HistoryCleanupHelper.isWithinBatchWindow(ClockUtil.getCurrentTime(), commandContext.getProcessEngineConfiguration());
   }
 
+  @Override
   public HistoryCleanupJobHandlerConfiguration newConfiguration(String canonicalString) {
     JsonObject jsonObject = JsonUtil.asObject(canonicalString);
     return HistoryCleanupJobHandlerConfiguration.fromJson(jsonObject);
   }
 
+  @Override
   public String getType() {
     return TYPE;
   }
 
+  @Override
   public void onDelete(HistoryCleanupJobHandlerConfiguration configuration, JobEntity jobEntity) {
   }
 

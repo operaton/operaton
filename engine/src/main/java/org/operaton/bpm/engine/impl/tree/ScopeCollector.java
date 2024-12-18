@@ -29,6 +29,7 @@ public class ScopeCollector implements TreeVisitor<ScopeImpl> {
 
   protected List<ScopeImpl> scopes = new ArrayList<ScopeImpl>();
 
+  @Override
   public void visit(ScopeImpl obj) {
     if(obj != null && obj.isScope()) {
       scopes.add(obj);

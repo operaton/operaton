@@ -40,6 +40,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
   // start /////////////////////////////////////////////////////////////////////
 
+  @Override
   protected void performStart(CmmnActivityExecution execution) {
     CmmnActivity activity = execution.getActivity();
     List<CmmnActivity> childActivities = activity.getActivities();
@@ -67,6 +68,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
   // re-activation ////////////////////////////////////////////////////////////
 
+  @Override
   public void onReactivation(CmmnActivityExecution execution) {
     String id = execution.getId();
 
@@ -83,6 +85,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     }
   }
 
+  @Override
   public void reactivated(CmmnActivityExecution execution) {
     if (execution.isCaseInstanceExecution()) {
       CaseExecutionState previousState = execution.getPreviousState();
@@ -98,18 +101,21 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
   // completion //////////////////////////////////////////////////////////////
 
+  @Override
   public void onCompletion(CmmnActivityExecution execution) {
     ensureTransitionAllowed(execution, ACTIVE, COMPLETED, "complete");
     canComplete(execution, true);
     completing(execution);
   }
 
+  @Override
   public void onManualCompletion(CmmnActivityExecution execution) {
     ensureTransitionAllowed(execution, ACTIVE, COMPLETED, "complete");
     canComplete(execution, true, true);
     completing(execution);
   }
 
+  @Override
   protected void completing(CmmnActivityExecution execution) {
     List<? extends CmmnExecution> children = execution.getCaseExecutions();
     for (CmmnExecution child : children) {
@@ -228,6 +234,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     return true;
   }
 
+  @Override
   protected void performTerminate(CmmnActivityExecution execution) {
     if (!isAbleToTerminate(execution)) {
       terminateChildren(execution);
@@ -238,6 +245,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
   }
 
+  @Override
   protected void performExit(CmmnActivityExecution execution) {
     if (!isAbleToTerminate(execution)) {
       terminateChildren(execution);
@@ -277,6 +285,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
   // suspension /////////////////////////////////////////////////////////////////
 
+  @Override
   protected void performSuspension(CmmnActivityExecution execution) {
     if (!isAbleToSuspend(execution)) {
       suspendChildren(execution);
@@ -287,6 +296,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
   }
 
 
+  @Override
   protected void performParentSuspension(CmmnActivityExecution execution) {
     if (!isAbleToSuspend(execution)) {
       suspendChildren(execution);
@@ -339,6 +349,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
   // resume /////////////////////////////////////////////////////////////////////////
 
+  @Override
   public void resumed(CmmnActivityExecution execution) {
     if (execution.isAvailable()) {
       // trigger created() to check whether an exit- or
@@ -378,6 +389,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
   // sentry ///////////////////////////////////////////////////////////////////////////////
 
+  @Override
   protected boolean isAtLeastOneEntryCriterionSatisfied(CmmnActivityExecution execution) {
     if (!execution.isCaseInstanceExecution()) {
       return super.isAtLeastOneEntryCriterionSatisfied(execution);
@@ -386,6 +398,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     return false;
   }
 
+  @Override
   public void fireExitCriteria(CmmnActivityExecution execution) {
     if (!execution.isCaseInstanceExecution()) {
       execution.exit();
@@ -394,6 +407,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     }
   }
 
+  @Override
   public void fireEntryCriteria(CmmnActivityExecution execution) {
     if (!execution.isCaseInstanceExecution()) {
       super.fireEntryCriteria(execution);
@@ -405,6 +419,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
   // handle child state changes ///////////////////////////////////////////////////////////
 
+  @Override
   public void handleChildCompletion(CmmnActivityExecution execution, CmmnActivityExecution child) {
     fireForceUpdate(execution);
 
@@ -413,6 +428,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     }
   }
 
+  @Override
   public void handleChildDisabled(CmmnActivityExecution execution, CmmnActivityExecution child) {
     fireForceUpdate(execution);
 
@@ -421,6 +437,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     }
   }
 
+  @Override
   public void handleChildSuspension(CmmnActivityExecution execution, CmmnActivityExecution child) {
     // if the given execution is not suspending currently, then ignore this notification.
     if (execution.isSuspending() && isAbleToSuspend(execution)) {
@@ -439,6 +456,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     }
   }
 
+  @Override
   public void handleChildTermination(CmmnActivityExecution execution, CmmnActivityExecution child) {
     fireForceUpdate(execution);
 
@@ -477,6 +495,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
     }
   }
 
+  @Override
   protected String getTypeName() {
     return "stage";
   }

@@ -35,8 +35,9 @@ public class BatchRestartHelper extends BatchHelper {
     return getManagementService()
         .createJobDefinitionQuery().jobDefinitionId(batch.getBatchJobDefinitionId()).jobType(Batch.TYPE_PROCESS_INSTANCE_RESTART).singleResult();
   }
-  
-  
+
+
+  @Override
   public void executeJob(Job job) {
     assertNotNull("Job to execute does not exist", job);
     getManagementService().executeJob(job.getId());

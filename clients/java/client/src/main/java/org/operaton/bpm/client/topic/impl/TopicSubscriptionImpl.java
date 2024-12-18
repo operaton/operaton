@@ -56,14 +56,17 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     this.businessKey = businessKey;
   }
 
+  @Override
   public String getTopicName() {
     return topicName;
   }
 
+  @Override
   public Long getLockDuration() {
     return lockDuration;
   }
 
+  @Override
   public ExternalTaskHandler getExternalTaskHandler() {
     return externalTaskHandler;
   }
@@ -73,10 +76,12 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     topicSubscriptionManager.unsubscribe(this);
   }
 
+  @Override
   public List<String> getVariableNames() {
     return variableNames;
   }
 
+  @Override
   public boolean isLocalVariables() {
     return localVariables;
   }
@@ -85,10 +90,12 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     this.localVariables = localVariables;
   }
 
+  @Override
   public String getBusinessKey() {
     return businessKey;
   }
 
+  @Override
   public String getProcessDefinitionId() {
     return processDefinitionId;
   }
@@ -98,6 +105,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     return this;
   }
 
+  @Override
   public List<String> getProcessDefinitionIdIn() {
     return processDefinitionIdIn;
   }
@@ -107,6 +115,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     return this;
   }
 
+  @Override
   public String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
@@ -116,6 +125,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     return this;
   }
 
+  @Override
   public List<String> getProcessDefinitionKeyIn() {
     return processDefinitionKeyIn;
   }
@@ -125,6 +135,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     return this;
   }
 
+  @Override
   public String getProcessDefinitionVersionTag() {
     return processDefinitionVersionTag;
   }
@@ -133,6 +144,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     this.processDefinitionVersionTag = processDefinitionVersionTag;
   }
 
+  @Override
   public HashMap<String, Object> getProcessVariables() {
     return (HashMap<String, Object>) processVariables;
   }
@@ -146,6 +158,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     }
   }
 
+  @Override
   public boolean isWithoutTenantId() {
     return withoutTenantId;
   }
@@ -154,6 +167,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     this.withoutTenantId = withoutTenantId;
   }
 
+  @Override
   public List<String> getTenantIdIn() {
     return tenantIdIn;
   }
@@ -163,6 +177,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     return this;
   }
 
+  @Override
   public boolean isIncludeExtensionProperties() {
     return includeExtensionProperties;
   }
@@ -171,6 +186,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     this.includeExtensionProperties = includeExtensionProperties;
   }
 
+  @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
@@ -178,6 +194,7 @@ public class TopicSubscriptionImpl implements TopicSubscription {
     return result;
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (this == obj) {
       return true;

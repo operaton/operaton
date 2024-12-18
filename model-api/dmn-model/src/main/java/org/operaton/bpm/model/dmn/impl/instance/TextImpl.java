@@ -35,7 +35,8 @@ public class TextImpl extends DmnModelElementInstanceImpl implements Text {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Text.class, DMN_ELEMENT_TEXT)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Text>() {
-        public Text newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Text newInstance(ModelTypeInstanceContext instanceContext) {
           return new TextImpl(instanceContext);
         }
       });

@@ -29,10 +29,12 @@ public class OperatonErrorEventDefinition extends ErrorEventDefinition{
     this.expression = expression;
   }
 
+  @Override
   public String getErrorCode() {
     return errorCode;
   }
 
+  @Override
   public void setErrorCode(String errorCode) {
     this.errorCode = errorCode;
   }

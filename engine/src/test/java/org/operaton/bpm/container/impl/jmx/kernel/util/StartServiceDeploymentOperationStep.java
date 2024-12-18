@@ -30,10 +30,12 @@ public class StartServiceDeploymentOperationStep extends DeploymentOperationStep
     this.service = service;
   }
 
+  @Override
   public String getName() {
     return "start "+serviceName;
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
 

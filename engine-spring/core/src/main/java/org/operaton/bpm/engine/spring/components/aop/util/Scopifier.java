@@ -46,7 +46,8 @@ public class Scopifier extends BeanDefinitionVisitor {
 
 	public Scopifier(BeanDefinitionRegistry registry, String scope, boolean proxyTargetClass, boolean scoped) {
 		super(new StringValueResolver() {
-			public String resolveStringValue(String value) {
+      @Override
+      public String resolveStringValue(String value) {
 				return value;
 			}
 		});

@@ -28,10 +28,12 @@ public class BooleanFormType extends SimpleFormFieldType {
 
   public static final String TYPE_NAME = "boolean";
 
+  @Override
   public String getName() {
     return TYPE_NAME;
   }
 
+  @Override
   public TypedValue convertValue(TypedValue propertyValue) {
     if(propertyValue instanceof BooleanValue) {
       return propertyValue;
@@ -49,8 +51,10 @@ public class BooleanFormType extends SimpleFormFieldType {
       }
     }
   }
+
   // deprecated /////////////////////////////////////////////////
 
+  @Override
   public Object convertFormValueToModelValue(Object propertyValue) {
     if (propertyValue==null || "".equals(propertyValue)) {
       return null;
@@ -58,6 +62,7 @@ public class BooleanFormType extends SimpleFormFieldType {
     return Boolean.valueOf(propertyValue.toString());
   }
 
+  @Override
   public String convertModelValueToFormValue(Object modelValue) {
 
     if (modelValue==null) {

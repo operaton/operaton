@@ -22,14 +22,17 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 
 public class CustomHistoryLevelUserOperationLog implements HistoryLevel {
 
+  @Override
   public int getId() {
     return 89;
   }
 
+  @Override
   public String getName() {
     return "aCustomHistoryLevelUOL";
   }
 
+  @Override
   public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
     if (eventType.equals(HistoryEventTypes.USER_OPERATION_LOG)){
       return true;

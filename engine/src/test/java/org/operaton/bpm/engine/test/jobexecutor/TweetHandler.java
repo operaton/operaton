@@ -31,10 +31,12 @@ public class TweetHandler implements JobHandler<TweetJobConfiguration> {
 
   List<String> messages = new ArrayList<String>();
 
+  @Override
   public String getType() {
     return "tweet";
   }
 
+  @Override
   public void execute(TweetJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     messages.add(configuration.getMessage());
     Assert.assertNotNull(commandContext);
@@ -59,11 +61,13 @@ public class TweetHandler implements JobHandler<TweetJobConfiguration> {
       return message;
     }
 
+    @Override
     public String toCanonicalString() {
       return message;
     }
   }
 
+  @Override
   public void onDelete(TweetJobConfiguration configuration, JobEntity jobEntity) {
     // do nothing
   }

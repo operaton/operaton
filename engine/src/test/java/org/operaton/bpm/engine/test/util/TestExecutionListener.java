@@ -30,6 +30,7 @@ public class TestExecutionListener implements ExecutionListener {
 
   public static List<String> collectedEvents = new ArrayList<String>();
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     String counterKey = execution.getCurrentActivityId() + "-" +execution.getEventName();
     collectedEvents.add(counterKey);

@@ -54,7 +54,8 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
     try {
       
       processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-        
+
+        @Override
         public Void execute(CommandContext commandContext) {         
           commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, rolledBackListener);
           commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);  
@@ -85,7 +86,8 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
     try {
       
       processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-        
+
+        @Override
         public Void execute(CommandContext commandContext) {         
           commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, rolledBackListener);
           commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTED, committedListener);  
@@ -106,7 +108,8 @@ public class TransactionListenerTest extends AbstractFoxPlatformIntegrationTest 
   protected static class TestTransactionListener implements TransactionListener {
 
     protected volatile boolean invoked = false;
-    
+
+    @Override
     public void execute(CommandContext commandContext) {
       invoked = true;
     }

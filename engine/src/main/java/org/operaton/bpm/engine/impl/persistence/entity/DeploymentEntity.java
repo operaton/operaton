@@ -86,6 +86,7 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
     return resources;
   }
 
+  @Override
   public Object getPersistentState() {
     // properties of this entity are immutable
     // so always the same value is returned
@@ -137,14 +138,17 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -157,6 +161,7 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
     this.resources = resources;
   }
 
+  @Override
   public Date getDeploymentTime() {
     return deploymentTime;
   }
@@ -181,6 +186,7 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
     this.isNew = isNew;
   }
 
+  @Override
   public String getSource() {
     return source;
   }
@@ -189,6 +195,7 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
     this.source = source;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }

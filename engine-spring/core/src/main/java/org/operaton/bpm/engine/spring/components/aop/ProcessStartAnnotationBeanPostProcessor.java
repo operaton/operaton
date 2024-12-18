@@ -56,11 +56,13 @@ public class ProcessStartAnnotationBeanPostProcessor extends ProxyConfig impleme
 		this.processEngine = processEngine;
 	}
 
-	public void afterPropertiesSet() throws Exception {
+  @Override
+  public void afterPropertiesSet() throws Exception {
 		this.advisor = new ProcessStartingPointcutAdvisor(this.processEngine);
 	}
 
-	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+  @Override
+  public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 	 	if (bean instanceof AopInfrastructureBean) {
 			// Ignore AOP infrastructure such as scoped proxies.
 			return bean;
@@ -85,7 +87,8 @@ public class ProcessStartAnnotationBeanPostProcessor extends ProxyConfig impleme
 		}
 	}
 
-	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+  @Override
+  public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		return bean;
 	}
 }

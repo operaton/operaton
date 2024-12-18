@@ -45,7 +45,8 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Extension.class, BPMN_ELEMENT_EXTENSION)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Extension>() {
-        public Extension newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Extension newInstance(ModelTypeInstanceContext instanceContext) {
           return new ExtensionImpl(instanceContext);
         }
       });
@@ -70,22 +71,27 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
     super(instanceContext);
   }
 
+  @Override
   public String getDefinition() {
     return definitionAttribute.getValue(this);
   }
 
+  @Override
   public void setDefinition(String Definition) {
     definitionAttribute.setValue(this, Definition);
   }
 
+  @Override
   public boolean mustUnderstand() {
     return mustUnderstandAttribute.getValue(this);
   }
 
+  @Override
   public void setMustUnderstand(boolean mustUnderstand) {
     mustUnderstandAttribute.setValue(this, mustUnderstand);
   }
 
+  @Override
   public Collection<Documentation> getDocumentations() {
     return documentationCollection.get(this);
   }

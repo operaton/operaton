@@ -50,6 +50,7 @@ public class IdGeneratorDataSourceTest {
     List<Thread> threads = new ArrayList<Thread>();
     for (int i=0; i<20; i++) {
       Thread thread = new Thread() {
+        @Override
         public void run() {
           for (int j = 0; j < 5; j++) {
             runtimeService.startProcessInstanceByKey("idGeneratorDataSource");

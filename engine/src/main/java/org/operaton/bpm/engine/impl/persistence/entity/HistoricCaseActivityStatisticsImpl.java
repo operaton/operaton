@@ -32,30 +32,37 @@ public class HistoricCaseActivityStatisticsImpl implements HistoricCaseActivityS
   protected long completed;
   protected long terminated;
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public long getAvailable() {
     return available;
   }
 
+  @Override
   public long getEnabled() {
     return enabled;
   }
 
+  @Override
   public long getDisabled() {
     return disabled;
   }
 
+  @Override
   public long getActive() {
     return active;
   }
 
+  @Override
   public long getCompleted() {
     return completed;
   }
 
+  @Override
   public long getTerminated() {
     return terminated;
   }

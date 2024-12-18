@@ -28,10 +28,12 @@ import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
  */
 public class OperatonVariableListenerTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CAMUNDA_NS, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
         new ChildElementAssumption(CAMUNDA_NS, OperatonField.class),
@@ -39,6 +41,7 @@ public class OperatonVariableListenerTest extends CmmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption(CAMUNDA_NS, "event"),

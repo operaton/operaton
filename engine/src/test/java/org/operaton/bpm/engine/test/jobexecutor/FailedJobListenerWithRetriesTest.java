@@ -140,6 +140,7 @@ public class FailedJobListenerWithRetriesTest {
 
     private Map<String, OLEFoxJobRetryCmd> oleFoxJobRetryCmds = new HashMap<>();
 
+    @Override
     public Command<Object> getCommand(String jobId, Throwable exception) {
       return getOleFoxJobRetryCmds(jobId, exception);
     }

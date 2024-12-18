@@ -27,7 +27,8 @@ public class IncidentStatisticsEntity implements IncidentStatistics {
   protected int incidentCount;
   
   public IncidentStatisticsEntity() {}
-  
+
+  @Override
   public String getIncidentType() {
     return incidentType;
   }
@@ -35,7 +36,8 @@ public class IncidentStatisticsEntity implements IncidentStatistics {
   public void setIncidenType(String incidentType) {
     this.incidentType = incidentType;
   }
-  
+
+  @Override
   public int getIncidentCount() {
     return incidentCount;
   }

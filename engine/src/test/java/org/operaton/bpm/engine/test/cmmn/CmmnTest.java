@@ -120,6 +120,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
 
   protected void exit(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).exit();
       }
@@ -134,6 +135,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
 
   protected void occur(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).occur();
       }
@@ -142,6 +144,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
 
   protected void parentResume(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).parentResume();
       }
@@ -150,6 +153,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
 
   protected void parentSuspend(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).parentSuspend();
 
@@ -159,6 +163,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
 
   protected void parentTerminate(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).parentTerminate();
       }
@@ -167,6 +172,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
 
   protected void reactivate(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).reactivate();
       }
@@ -181,6 +187,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
 
   protected void resume(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).resume();
       }
@@ -189,6 +196,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
 
   protected void suspend(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).suspend();
       }
@@ -197,6 +205,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
 
   protected void terminate(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).terminate();
       }
@@ -218,6 +227,7 @@ public class CmmnTest extends PluggableProcessEngineTest {
         .singleResult();
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       execute();
       return null;

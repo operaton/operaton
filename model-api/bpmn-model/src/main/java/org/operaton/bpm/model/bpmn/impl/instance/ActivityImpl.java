@@ -98,66 +98,82 @@ public abstract class ActivityImpl extends FlowNodeImpl implements Activity {
     super(context);
   }
 
+  @Override
   public boolean isForCompensation() {
     return isForCompensationAttribute.getValue(this);
   }
 
+  @Override
   public void setForCompensation(boolean isForCompensation) {
     isForCompensationAttribute.setValue(this, isForCompensation);
   }
 
+  @Override
   public int getStartQuantity() {
     return startQuantityAttribute.getValue(this);
   }
 
+  @Override
   public void setStartQuantity(int startQuantity) {
     startQuantityAttribute.setValue(this, startQuantity);
   }
 
+  @Override
   public int getCompletionQuantity() {
     return completionQuantityAttribute.getValue(this);
   }
 
+  @Override
   public void setCompletionQuantity(int completionQuantity) {
     completionQuantityAttribute.setValue(this, completionQuantity);
   }
 
+  @Override
   public SequenceFlow getDefault() {
     return defaultAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setDefault(SequenceFlow defaultFlow) {
     defaultAttribute.setReferenceTargetElement(this, defaultFlow);
   }
 
+  @Override
   public IoSpecification getIoSpecification() {
     return ioSpecificationChild.getChild(this);
   }
 
+  @Override
   public void setIoSpecification(IoSpecification ioSpecification) {
     ioSpecificationChild.setChild(this, ioSpecification);
   }
 
+  @Override
   public Collection<Property> getProperties() {
     return propertyCollection.get(this);
   }
 
+  @Override
   public Collection<DataInputAssociation> getDataInputAssociations() {
     return dataInputAssociationCollection.get(this);
   }
 
+  @Override
   public Collection<DataOutputAssociation> getDataOutputAssociations() {
     return dataOutputAssociationCollection.get(this);
   }
 
+  @Override
   public Collection<ResourceRole> getResourceRoles() {
     return resourceRoleCollection.get(this);
   }
 
+  @Override
   public LoopCharacteristics getLoopCharacteristics() {
     return loopCharacteristicsChild.getChild(this);
   }
 
+  @Override
   public void setLoopCharacteristics(LoopCharacteristics loopCharacteristics) {
     loopCharacteristicsChild.setChild(this, loopCharacteristics);
   }

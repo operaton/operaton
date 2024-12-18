@@ -36,6 +36,7 @@ public class RequestScopedSFSBDelegate implements JavaDelegate {
 
   private int invocationCounter = 0;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     invocationCounter++;
     execution.setVariable("invocationCounter", invocationCounter);

@@ -33,6 +33,7 @@ public class GetUniqueTaskWorkerCountCmd implements Command<Long>, Serializable 
     this.endTime = endTime;
   }
 
+  @Override
   public Long execute(CommandContext commandContext) {
     return commandContext.getMeterLogManager().findUniqueTaskWorkerCount(startTime, endTime);
   }

@@ -33,10 +33,12 @@ public class CustomHistoryLevelIncident implements HistoryLevel {
     this.eventTypes = eventTypes;
   }
 
+  @Override
   public int getId() {
     return 92;
   }
 
+  @Override
   public String getName() {
     return "aCustomHistoryLevelIncident";
   }
@@ -49,6 +51,7 @@ public class CustomHistoryLevelIncident implements HistoryLevel {
     this.eventTypes = eventTypes;
   }
 
+  @Override
   public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
     if (eventTypes != null) {
       for (HistoryEventTypes eventTypeConfig : eventTypes) {

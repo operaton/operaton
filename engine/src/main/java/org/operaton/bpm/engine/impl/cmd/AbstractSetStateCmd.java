@@ -44,6 +44,7 @@ public abstract class AbstractSetStateCmd implements Command<Void> {
     this.executionDate = executionDate;
   }
 
+  @Override
   public Void execute(final CommandContext commandContext) {
     checkParameters(commandContext);
     checkAuthorization(commandContext);

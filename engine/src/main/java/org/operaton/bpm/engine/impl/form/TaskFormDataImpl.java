@@ -31,6 +31,7 @@ public class TaskFormDataImpl extends FormDataImpl implements TaskFormData {
 
   // getters and setters //////////////////////////////////////////////////////
   
+  @Override
   public Task getTask() {
     return task;
   }

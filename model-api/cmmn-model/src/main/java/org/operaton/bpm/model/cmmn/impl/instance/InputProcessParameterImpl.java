@@ -40,7 +40,8 @@ public class InputProcessParameterImpl extends ProcessParameterImpl implements I
       .namespaceUri(CMMN11_NS)
       .extendsType(ProcessParameter.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<InputProcessParameter>() {
-        public InputProcessParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputProcessParameter newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputProcessParameterImpl(instanceContext);
         }
       });

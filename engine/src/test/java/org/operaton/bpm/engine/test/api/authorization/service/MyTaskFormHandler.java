@@ -37,10 +37,12 @@ import org.operaton.bpm.engine.variable.VariableMap;
  */
 public class MyTaskFormHandler extends MyDelegationService implements TaskFormHandler {
 
+  @Override
   public void parseConfiguration(Element activityElement, DeploymentEntity deployment, ProcessDefinitionEntity processDefinition, BpmnParse bpmnParse) {
     // do nothing
   }
 
+  @Override
   public void submitFormVariables(VariableMap properties, VariableScope variableScope) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     IdentityService identityService = processEngineConfiguration.getIdentityService();
@@ -50,6 +52,7 @@ public class MyTaskFormHandler extends MyDelegationService implements TaskFormHa
     logInstancesCount(runtimeService);
   }
 
+  @Override
   public TaskFormData createTaskForm(TaskEntity task) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     IdentityService identityService = processEngineConfiguration.getIdentityService();

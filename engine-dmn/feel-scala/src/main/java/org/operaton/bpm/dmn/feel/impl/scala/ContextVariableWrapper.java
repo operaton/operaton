@@ -35,6 +35,7 @@ public class ContextVariableWrapper implements VariableProvider {
     this.context = context;
   }
 
+  @Override
   public Option getVariable(String name) {
     if (context.containsVariable(name)) {
       TypedValue typedValue = context.resolve(name);
@@ -47,6 +48,7 @@ public class ContextVariableWrapper implements VariableProvider {
     }
   }
 
+  @Override
   public Iterable<String> keys() {
     Set<String> strings = context.keySet();
     return SetHasAsScala(strings).asScala();

@@ -36,10 +36,12 @@ public class BooleanValueSerializer extends PrimitiveValueSerializer<BooleanValu
     super(ValueType.BOOLEAN);
   }
 
+  @Override
   public BooleanValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.booleanValue((Boolean) untypedValue.getValue(), untypedValue.isTransient());
   }
 
+  @Override
   public BooleanValue readValue(ValueFields valueFields, boolean asTransientValue) {
     Boolean boolValue = null;
     Long longValue = valueFields.getLongValue();

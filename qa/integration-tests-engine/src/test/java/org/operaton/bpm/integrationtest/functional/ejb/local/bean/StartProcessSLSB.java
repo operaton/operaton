@@ -31,6 +31,7 @@ import org.operaton.bpm.BpmPlatform;
 @Local(StartProcessInterface.class)
 public class StartProcessSLSB implements StartProcessInterface {
 
+  @Override
   public boolean doStartProcess() {
 
     BpmPlatform.getDefaultProcessEngine()

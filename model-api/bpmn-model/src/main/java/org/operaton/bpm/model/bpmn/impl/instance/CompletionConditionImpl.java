@@ -41,6 +41,7 @@ public class CompletionConditionImpl extends ExpressionImpl implements Completio
       .extendsType(Expression.class)
       .instanceProvider(
         new ModelElementTypeBuilder.ModelTypeInstanceProvider<CompletionCondition>() {
+          @Override
           public CompletionCondition newInstance(ModelTypeInstanceContext instanceContext) {
             return new CompletionConditionImpl(instanceContext);
           }

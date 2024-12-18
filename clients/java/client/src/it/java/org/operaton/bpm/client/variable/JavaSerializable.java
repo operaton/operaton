@@ -90,6 +90,7 @@ public class JavaSerializable implements Serializable {
     }
   }
 
+  @Override
   public String toString() {
     return toExpectedByteArrayString();
   }

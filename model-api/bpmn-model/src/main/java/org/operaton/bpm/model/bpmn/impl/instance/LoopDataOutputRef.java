@@ -37,6 +37,7 @@ public class LoopDataOutputRef extends BpmnModelElementInstanceImpl {
       .namespaceUri(BPMN20_NS)
       .instanceProvider(
         new ModelElementTypeBuilder.ModelTypeInstanceProvider<LoopDataOutputRef>() {
+          @Override
           public LoopDataOutputRef newInstance(ModelTypeInstanceContext instanceContext) {
             return new LoopDataOutputRef(instanceContext);
           }

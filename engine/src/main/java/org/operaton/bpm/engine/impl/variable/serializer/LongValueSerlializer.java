@@ -31,10 +31,12 @@ public class LongValueSerlializer extends PrimitiveValueSerializer<LongValue> {
     super(ValueType.LONG);
   }
 
+  @Override
   public LongValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.longValue((Long) untypedValue.getValue(), untypedValue.isTransient());
   }
 
+  @Override
   public LongValue readValue(ValueFields valueFields, boolean asTransientValue) {
     return Variables.longValue(valueFields.getLongValue(), asTransientValue);
   }

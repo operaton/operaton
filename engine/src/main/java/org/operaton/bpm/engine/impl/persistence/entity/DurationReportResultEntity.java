@@ -28,6 +28,7 @@ public class DurationReportResultEntity extends ReportResultEntity implements Du
   protected long maximum;
   protected long average;
 
+  @Override
   public long getMinimum() {
     return minimum;
   }
@@ -36,6 +37,7 @@ public class DurationReportResultEntity extends ReportResultEntity implements Du
     this.minimum = minimum;
   }
 
+  @Override
   public long getMaximum() {
     return maximum;
   }
@@ -44,6 +46,7 @@ public class DurationReportResultEntity extends ReportResultEntity implements Du
     this.maximum = maximum;
   }
 
+  @Override
   public long getAverage() {
     return average;
   }
@@ -52,6 +55,7 @@ public class DurationReportResultEntity extends ReportResultEntity implements Du
     this.average = average;
   }
 
+  @Override
   public String toString() {
     return this.getClass().getSimpleName()
         + "[period=" + period

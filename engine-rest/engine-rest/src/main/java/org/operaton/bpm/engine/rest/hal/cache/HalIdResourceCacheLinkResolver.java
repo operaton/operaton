@@ -25,6 +25,7 @@ public abstract class HalIdResourceCacheLinkResolver extends HalCachingLinkResol
 
   public static final Comparator<HalResource<?>> ID_COMPARATOR = new HalIdResourceComparator();
 
+  @Override
   protected String getResourceId(HalResource<?> resource) {
     return ((HalIdResource) resource).getId();
   }
@@ -36,6 +37,7 @@ public abstract class HalIdResourceCacheLinkResolver extends HalCachingLinkResol
 
   public static class HalIdResourceComparator implements Comparator<HalResource<?>> {
 
+    @Override
     public int compare(HalResource<?> resource1, HalResource<?> resource2) {
       String id1 = ((HalIdResource) resource1).getId();
       String id2 = ((HalIdResource) resource2).getId();

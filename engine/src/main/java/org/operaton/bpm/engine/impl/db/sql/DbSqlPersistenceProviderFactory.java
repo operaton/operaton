@@ -28,10 +28,12 @@ import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
  */
 public class DbSqlPersistenceProviderFactory implements SessionFactory {
 
+  @Override
   public Class<?> getSessionType() {
     return PersistenceSession.class;
   }
 
+  @Override
   public Session openSession() {
     return Context.getCommandContext().getDbSqlSession();
   }

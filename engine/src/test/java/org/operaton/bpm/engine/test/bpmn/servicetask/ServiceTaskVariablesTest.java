@@ -43,6 +43,7 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
   
   public static class Delegate1 implements JavaDelegate {
 
+    @Override
     public void execute(DelegateExecution execution) throws Exception {
       Variable v = new Variable();
       execution.setVariable("variable", v);
@@ -53,6 +54,7 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
   
   public static class Delegate2 implements JavaDelegate {
 
+    @Override
     public void execute(DelegateExecution execution) throws Exception {
       Variable v = (Variable) execution.getVariable("variable");
       synchronized (ServiceTaskVariablesTest.class) {
@@ -66,6 +68,7 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTest {
   
   public static class Delegate3 implements JavaDelegate {
 
+    @Override
     public void execute(DelegateExecution execution) throws Exception {
       Variable v = (Variable) execution.getVariable("variable");
       synchronized (ServiceTaskVariablesTest.class) {

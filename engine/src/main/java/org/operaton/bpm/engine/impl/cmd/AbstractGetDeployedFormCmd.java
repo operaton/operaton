@@ -43,6 +43,7 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
 
   protected CommandContext commandContext;
 
+  @Override
   public InputStream execute(final CommandContext commandContext) {
     this.commandContext = commandContext;
     checkAuthorization();

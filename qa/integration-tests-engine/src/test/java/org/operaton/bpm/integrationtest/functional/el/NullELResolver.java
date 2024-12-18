@@ -29,10 +29,12 @@ public class NullELResolver implements ProcessApplicationElResolver {
   /**
    * Spring and CDI have 100 and 200 respectively
    */
+  @Override
   public Integer getPrecedence() {
     return 300;
   }
 
+  @Override
   public ELResolver getElResolver(AbstractProcessApplication processApplication) {
     return null;
   }

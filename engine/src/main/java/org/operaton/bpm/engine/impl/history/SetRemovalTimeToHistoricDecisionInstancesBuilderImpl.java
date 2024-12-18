@@ -47,16 +47,19 @@ public class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements Set
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public SetRemovalTimeToHistoricDecisionInstancesBuilder byQuery(HistoricDecisionInstanceQuery query) {
     this.query = query;
     return this;
   }
 
+  @Override
   public SetRemovalTimeToHistoricDecisionInstancesBuilder byIds(String... ids) {
     this.ids = ids !=  null ? Arrays.asList(ids) : null;
     return this;
   }
 
+  @Override
   public SetRemovalTimeToHistoricDecisionInstancesBuilder absoluteRemovalTime(Date removalTime) {
     ensureNull(BadUserRequestException.class, "The removal time modes are mutually exclusive","mode", mode);
 
@@ -73,6 +76,7 @@ public class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements Set
     return this;
   }
 
+  @Override
   public SetRemovalTimeToHistoricDecisionInstancesBuilder clearedRemovalTime() {
     ensureNull(BadUserRequestException.class, "The removal time modes are mutually exclusive","mode", mode);
 
@@ -80,11 +84,13 @@ public class SetRemovalTimeToHistoricDecisionInstancesBuilderImpl implements Set
     return this;
   }
 
+  @Override
   public SetRemovalTimeToHistoricDecisionInstancesBuilder hierarchical() {
     isHierarchical = true;
     return this;
   }
 
+  @Override
   public Batch executeAsync() {
     return commandExecutor.execute(new SetRemovalTimeToHistoricDecisionInstancesCmd(this));
   }

@@ -91,6 +91,7 @@ public class JobExecutorFollowUpTest {
       new ProcessEngineBootstrapRule(configuration -> {
         configuration.setJobExecutor(buildControllableJobExecutor());
         configuration.setCommandContextFactory(new CommandContextFactory() {
+          @Override
           public CommandContext createCommandContext() {
             return new ControllableCommandContext(configuration, executionThread, skipFlushControl);
           }

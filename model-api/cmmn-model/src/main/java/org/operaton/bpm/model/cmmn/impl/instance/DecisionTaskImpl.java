@@ -63,54 +63,67 @@ public class DecisionTaskImpl extends TaskImpl implements DecisionTask {
     super(instanceContext);
   }
 
+  @Override
   public String getDecision() {
     return decisionRefAttribute.getValue(this);
   }
 
+  @Override
   public void setDecision(String decision) {
     decisionRefAttribute.setValue(this, decision);
   }
 
+  @Override
   public Collection<ParameterMapping> getParameterMappings() {
     return parameterMappingCollection.get(this);
   }
 
+  @Override
   public DecisionRefExpression getDecisionExpression() {
     return decisionRefExpressionChild.getChild(this);
   }
 
+  @Override
   public void setDecisionExpression(DecisionRefExpression decisionExpression) {
     decisionRefExpressionChild.setChild(this, decisionExpression);
   }
 
+  @Override
   public String getOperatonResultVariable() {
     return operatonResultVariableAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonResultVariable(String operatonResultVariable) {
     operatonResultVariableAttribute.setValue(this, operatonResultVariable);
   }
 
+  @Override
   public String getOperatonDecisionBinding() {
     return operatonDecisionBindingAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDecisionBinding(String operatonDecisionBinding) {
     operatonDecisionBindingAttribute.setValue(this, operatonDecisionBinding);
   }
 
+  @Override
   public String getOperatonDecisionVersion() {
     return operatonDecisionVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDecisionVersion(String operatonDecisionVersion) {
     operatonDecisionVersionAttribute.setValue(this, operatonDecisionVersion);
   }
 
+  @Override
   public String getOperatonDecisionTenantId() {
     return operatonDecisionTenantIdAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDecisionTenantId(String operatonDecisionTenantId) {
     operatonDecisionTenantIdAttribute.setValue(this, operatonDecisionTenantId);
   }
@@ -130,7 +143,8 @@ public class DecisionTaskImpl extends TaskImpl implements DecisionTask {
         .namespaceUri(CMMN11_NS)
         .extendsType(Task.class)
         .instanceProvider(new ModelTypeInstanceProvider<DecisionTask>() {
-          public DecisionTask newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DecisionTask newInstance(ModelTypeInstanceContext instanceContext) {
             return new DecisionTaskImpl(instanceContext);
           }
         });

@@ -30,6 +30,7 @@ public class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListProp
    */
   @Test
   @Ignore
+  @Override
   public void shouldFailInsertAtWithWrongObject() throws Throwable {
   }
 
@@ -39,6 +40,7 @@ public class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListProp
    */
   @Test
   @Ignore
+  @Override
   public void shouldFailInsertWrongObjectAfterSearchObject() throws Throwable {
   }
 
@@ -48,6 +50,7 @@ public class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListProp
    */
   @Test
   @Ignore
+  @Override
   public void shouldFailAppendWrongNode() throws Throwable {
   }
 
@@ -57,6 +60,7 @@ public class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListProp
    */
   @Test
   @Ignore
+  @Override
   public void shouldFailInsertWrongObjectBeforeSearchObject() throws Throwable {
   }
 }

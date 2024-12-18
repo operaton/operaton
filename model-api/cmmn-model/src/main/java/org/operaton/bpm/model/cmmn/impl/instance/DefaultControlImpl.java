@@ -41,7 +41,8 @@ public class DefaultControlImpl extends PlanItemControlImpl implements DefaultCo
       .namespaceUri(CMMN11_NS)
       .extendsType(PlanItemControl.class)
       .instanceProvider(new ModelTypeInstanceProvider<DefaultControl>() {
-        public DefaultControl newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DefaultControl newInstance(ModelTypeInstanceContext instanceContext) {
           return new DefaultControlImpl(instanceContext);
         }
       });

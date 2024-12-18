@@ -236,10 +236,12 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
     this.caseExecutionId = caseExecutionId;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getId() {
     return id;
   }
@@ -270,6 +272,7 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
 
   // persistent object implementation ///////////////
 
+  @Override
   public Object getPersistentState() {
     // events are immutable
     return HistoryEvent.class;

@@ -34,6 +34,7 @@ import org.operaton.bpm.model.cmmn.instance.DecisionTask;
  */
 public class DecisionTaskItemHandler extends CallingTaskItemHandler {
 
+  @Override
   protected void initializeActivity(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     super.initializeActivity(element, activity, context);
 
@@ -57,10 +58,12 @@ public class DecisionTaskItemHandler extends CallingTaskItemHandler {
     behavior.setDecisionTableResultMapper(decisionResultMapper);
   }
 
+  @Override
   protected BaseCallableElement createCallableElement() {
     return new BaseCallableElement();
   }
 
+  @Override
   protected CmmnActivityBehavior getActivityBehavior() {
     return new DmnDecisionTaskActivityBehavior();
   }
@@ -69,6 +72,7 @@ public class DecisionTaskItemHandler extends CallingTaskItemHandler {
     return (DmnDecisionTaskActivityBehavior) activity.getActivityBehavior();
   }
 
+  @Override
   protected String getDefinitionKey(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     DecisionTask definition = getDefinition(element);
     String decision = definition.getDecision();
@@ -83,22 +87,26 @@ public class DecisionTaskItemHandler extends CallingTaskItemHandler {
     return decision;
   }
 
+  @Override
   protected String getBinding(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     DecisionTask definition = getDefinition(element);
     return definition.getOperatonDecisionBinding();
   }
 
+  @Override
   protected String getVersion(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     DecisionTask definition = getDefinition(element);
     return definition.getOperatonDecisionVersion();
   }
 
+  @Override
   protected String getTenantId(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     DecisionTask definition = getDefinition(element);
     return definition.getOperatonDecisionTenantId();
   }
 
 
+  @Override
   protected DecisionTask getDefinition(CmmnElement element) {
     return (DecisionTask) super.getDefinition(element);
   }

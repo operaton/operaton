@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.task.IdentityLink;
 
 public class GetIdentityLinksTaskListener implements TaskListener {
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     TaskService taskService = delegateTask.getProcessEngine().getTaskService();
     List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(delegateTask.getId());

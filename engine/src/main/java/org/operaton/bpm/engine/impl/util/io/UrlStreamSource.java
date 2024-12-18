@@ -34,6 +34,7 @@ public class UrlStreamSource implements StreamSource {
     this.url = url;
   }
 
+  @Override
   public InputStream getInputStream() {
     try {
       return url.openStream();

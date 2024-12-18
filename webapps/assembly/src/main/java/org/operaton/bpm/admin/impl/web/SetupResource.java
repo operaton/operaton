@@ -78,6 +78,7 @@ public class SetupResource {
     }
 
     SecurityActions.runWithoutAuthentication(new SecurityAction<Void>() {
+      @Override
       public Void execute() {
         createInitialUserInternal(processEngineName, user, processEngine);
         return null;

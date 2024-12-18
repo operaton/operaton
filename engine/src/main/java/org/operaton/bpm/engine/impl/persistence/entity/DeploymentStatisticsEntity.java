@@ -28,19 +28,24 @@ public class DeploymentStatisticsEntity extends DeploymentEntity implements Depl
   protected int instances;
   protected int failedJobs;
   protected List<IncidentStatistics> incidentStatistics;
-  
+
+  @Override
   public int getInstances() {
     return instances;
   }
   public void setInstances(int instances) {
     this.instances = instances;
   }
+
+  @Override
   public int getFailedJobs() {
     return failedJobs;
   }
   public void setFailedJobs(int failedJobs) {
     this.failedJobs = failedJobs;
   }
+
+  @Override
   public List<IncidentStatistics> getIncidentStatistics() {
     return incidentStatistics;
   }

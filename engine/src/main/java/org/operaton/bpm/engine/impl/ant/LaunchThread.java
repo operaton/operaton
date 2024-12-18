@@ -65,6 +65,7 @@ public class LaunchThread extends Thread {
     return cmdText.toString();
   }
 
+  @Override
   public void run() {
     task.log("launching cmd '"+cmdString(cmd)+"' in dir '"+dir+"'");
     if (msg!=null) {

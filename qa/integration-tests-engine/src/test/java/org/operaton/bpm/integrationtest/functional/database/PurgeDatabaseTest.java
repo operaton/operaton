@@ -102,7 +102,8 @@ public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
         processEngineConfiguration
           .getCommandExecutorSchemaOperations()
           .execute(new Command<Object>() {
-            public Object execute(CommandContext commandContext) {
+          @Override
+          public Object execute(CommandContext commandContext) {
               PersistenceSession persistenceSession = commandContext.getSession(PersistenceSession.class);
               persistenceSession.dbSchemaDrop();
               persistenceSession.dbSchemaCreate();

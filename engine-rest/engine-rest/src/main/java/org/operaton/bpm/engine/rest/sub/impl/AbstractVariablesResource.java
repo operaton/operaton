@@ -93,6 +93,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
     return value;
   }
 
+  @Override
   public Response getVariableBinary(String variableName) {
     TypedValue typedValue = getTypedValueForVariable(variableName, false);
     return new VariableResponseProvider().getResponseForTypedVariable(typedValue, resourceId);
@@ -119,6 +120,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
     }
   }
 
+  @Override
   public void setBinaryVariable(String variableKey, MultipartFormData payload) {
     FormPart dataPart = payload.getNamedPart("data");
     FormPart objectTypePart = payload.getNamedPart("type");

@@ -34,10 +34,12 @@ public class DmnDecisionTableEvaluationEventImpl implements DmnDecisionTableEval
   protected TypedValue collectResultValue;
   protected long executedDecisionElements;
 
+  @Override
   public DmnDecision getDecisionTable() {
     return getDecision();
   }
 
+  @Override
   public DmnDecision getDecision() {
     return decision;
   }
@@ -46,6 +48,7 @@ public class DmnDecisionTableEvaluationEventImpl implements DmnDecisionTableEval
    this.decision = decision;
   }
 
+  @Override
   public List<DmnEvaluatedInput> getInputs() {
     return inputs;
   }
@@ -54,6 +57,7 @@ public class DmnDecisionTableEvaluationEventImpl implements DmnDecisionTableEval
     this.inputs = inputs;
   }
 
+  @Override
   public List<DmnEvaluatedDecisionRule> getMatchingRules() {
     return matchingRules;
   }
@@ -62,6 +66,7 @@ public class DmnDecisionTableEvaluationEventImpl implements DmnDecisionTableEval
     this.matchingRules = matchingRules;
   }
 
+  @Override
   public String getCollectResultName() {
     return collectResultName;
   }
@@ -70,6 +75,7 @@ public class DmnDecisionTableEvaluationEventImpl implements DmnDecisionTableEval
     this.collectResultName = collectResultName;
   }
 
+  @Override
   public TypedValue getCollectResultValue() {
     return collectResultValue;
   }
@@ -78,6 +84,7 @@ public class DmnDecisionTableEvaluationEventImpl implements DmnDecisionTableEval
     this.collectResultValue = collectResultValue;
   }
 
+  @Override
   public long getExecutedDecisionElements() {
     return executedDecisionElements;
   }

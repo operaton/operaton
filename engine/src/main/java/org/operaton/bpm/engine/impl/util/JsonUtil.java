@@ -728,6 +728,7 @@ public final class JsonUtil {
     return new GsonBuilder()
       .serializeNulls()
       .registerTypeAdapter(Map.class, new JsonDeserializer<Map<String,Object>>() {
+        @Override
         public Map<String, Object> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
 
           Map<String, Object> map = new HashMap<>();

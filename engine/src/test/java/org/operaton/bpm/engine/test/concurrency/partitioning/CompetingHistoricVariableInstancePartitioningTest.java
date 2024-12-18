@@ -73,6 +73,7 @@ public class CompetingHistoricVariableInstancePartitioningTest extends AbstractP
       this.processInstanceId = processInstanceId;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
      historyService.createHistoricVariableInstanceQuery()
         .singleResult()

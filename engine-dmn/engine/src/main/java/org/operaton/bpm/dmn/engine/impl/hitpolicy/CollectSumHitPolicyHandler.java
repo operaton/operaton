@@ -29,6 +29,7 @@ public class CollectSumHitPolicyHandler extends AbstractCollectNumberHitPolicyHa
     return HIT_POLICY;
   }
 
+  @Override
   protected BuiltinAggregator getAggregator() {
     return BuiltinAggregator.SUM;
   }

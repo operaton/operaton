@@ -39,6 +39,7 @@ public class GetJobExceptionStacktraceCmd implements Command<String>, Serializab
   }
 
 
+  @Override
   public String execute(CommandContext commandContext) {
     ensureNotNull("jobId", jobId);
 

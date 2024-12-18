@@ -40,7 +40,8 @@ public class CaseRefExpressionImpl extends ExpressionImpl implements CaseRefExpr
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<CaseRefExpression>() {
-        public CaseRefExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseRefExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new CaseRefExpressionImpl(instanceContext);
         }
       });

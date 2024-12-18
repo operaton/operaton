@@ -40,10 +40,12 @@ public class ChildElementImpl<T extends ModelElementInstance> extends ChildEleme
     modelElement.setUniqueChildElementByNameNs(e);
   }
 
+  @Override
   public void setChild(ModelElementInstance element, T newChildElement) {
     performAddOperation((ModelElementInstanceImpl) element, newChildElement);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public T getChild(ModelElementInstance element) {
     ModelElementInstanceImpl elementInstanceImpl = (ModelElementInstanceImpl)element;
@@ -57,6 +59,7 @@ public class ChildElementImpl<T extends ModelElementInstance> extends ChildEleme
     }
   }
 
+  @Override
   public boolean removeChild(ModelElementInstance element) {
     ModelElementInstanceImpl childElement = (ModelElementInstanceImpl) getChild(element);
     ModelElementInstanceImpl elementInstanceImpl = (ModelElementInstanceImpl) element;

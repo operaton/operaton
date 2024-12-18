@@ -44,7 +44,8 @@ public class OperatonMapImpl extends BpmnModelElementInstanceImpl implements Ope
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonMap.class, BpmnModelConstants.OPERATON_ELEMENT_MAP)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonMap>() {
-        public OperatonMap newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonMap newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonMapImpl(instanceContext);
         }
       });
@@ -61,6 +62,7 @@ public class OperatonMapImpl extends BpmnModelElementInstanceImpl implements Ope
     super(instanceContext);
   }
 
+  @Override
   public Collection<OperatonEntry> getOperatonEntries() {
     return operatonEntryCollection.get(this);
   }

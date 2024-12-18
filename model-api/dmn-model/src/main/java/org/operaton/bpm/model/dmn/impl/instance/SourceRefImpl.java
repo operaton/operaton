@@ -37,7 +37,8 @@ public class SourceRefImpl extends DmnElementReferenceImpl implements SourceRef 
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<SourceRef>() {
-        public SourceRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public SourceRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new SourceRefImpl(instanceContext);
         }
       });

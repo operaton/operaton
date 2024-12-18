@@ -91,6 +91,7 @@ public interface MultiInstanceLoopCharacteristics extends LoopCharacteristics {
 
   void setOperatonExclusive(boolean isOperatonExclusive);
 
+  @Override
   MultiInstanceLoopCharacteristicsBuilder builder();
 
 }

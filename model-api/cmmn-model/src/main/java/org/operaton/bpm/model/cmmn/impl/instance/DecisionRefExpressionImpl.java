@@ -40,7 +40,8 @@ public class DecisionRefExpressionImpl extends ExpressionImpl implements Decisio
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<DecisionRefExpression>() {
-        public DecisionRefExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DecisionRefExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new DecisionRefExpressionImpl(instanceContext);
         }
       });

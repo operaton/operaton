@@ -29,10 +29,12 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationActivityInitStackNotifyListenerReturn extends PvmAtomicOperationActivityInstanceStart {
 
+  @Override
   public String getCanonicalName() {
     return "activity-init-stack-notify-listener-return";
   }
 
+  @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     ActivityImpl activity = execution.getActivity();
 
@@ -51,6 +53,7 @@ public class PvmAtomicOperationActivityInitStackNotifyListenerReturn extends Pvm
     return ExecutionListener.EVENTNAME_START;
   }
 
+  @Override
   protected void eventNotificationsCompleted(PvmExecutionImpl execution) {
     super.eventNotificationsCompleted(execution);
 

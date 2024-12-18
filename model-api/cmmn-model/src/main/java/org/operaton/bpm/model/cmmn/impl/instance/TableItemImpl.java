@@ -45,10 +45,12 @@ public abstract class TableItemImpl extends CmmnElementImpl implements TableItem
     super(instanceContext);
   }
 
+  @Override
   public Collection<ApplicabilityRule> getApplicabilityRule() {
     return applicabilityRuleRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<Role> getAuthorizedRoles() {
     return authorizedRoleRefCollection.getReferenceTargetElements(this);
   }

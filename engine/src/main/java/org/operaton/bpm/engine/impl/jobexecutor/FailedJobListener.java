@@ -43,6 +43,7 @@ public class FailedJobListener implements Command<Void> {
     this.jobFailureCollector = jobFailureCollector;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     if (isJobReacquired(commandContext)) {
       // skip failed listener if job has been already re-acquired

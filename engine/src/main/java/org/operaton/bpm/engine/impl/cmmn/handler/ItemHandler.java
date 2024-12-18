@@ -195,6 +195,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     return null;
   }
 
+  @Override
   public CmmnActivity handleElement(CmmnElement element, CmmnHandlerContext context) {
     // create a new activity
     CmmnActivity newActivity = createActivity(element, context);

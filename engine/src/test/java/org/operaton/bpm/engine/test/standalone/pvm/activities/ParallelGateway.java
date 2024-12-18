@@ -32,6 +32,7 @@ public class ParallelGateway implements ActivityBehavior {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
+  @Override
   public void execute(ActivityExecution execution) {
     PvmActivity activity = execution.getActivity();
 

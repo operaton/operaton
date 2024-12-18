@@ -31,6 +31,7 @@ public class ProcessInstanceEndListener extends HistoryExecutionListener {
     super(historyEventProducer);
   }
 
+  @Override
   protected HistoryEvent createHistoryEvent(DelegateExecution execution) {
     ensureHistoryLevelInitialized();
     if(historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_END, execution)) {

@@ -31,6 +31,7 @@ public class DmnEvaluatedDecisionRuleImpl implements DmnEvaluatedDecisionRule {
     this.id = matchingRule.getId();
   }
 
+  @Override
   public String getId() {
     return id;
   }
@@ -39,6 +40,7 @@ public class DmnEvaluatedDecisionRuleImpl implements DmnEvaluatedDecisionRule {
     this.id = id;
   }
 
+  @Override
   public Map<String, DmnEvaluatedOutput> getOutputEntries() {
     return outputEntries;
   }

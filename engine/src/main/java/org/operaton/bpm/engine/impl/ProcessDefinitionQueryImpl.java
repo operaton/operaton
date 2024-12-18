@@ -104,46 +104,54 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
     super(commandExecutor);
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionId(String processDefinitionId) {
     this.id = processDefinitionId;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionIdIn(String... ids) {
     this.ids = ids;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionCategory(String category) {
     ensureNotNull("category", category);
     this.category = category;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionCategoryLike(String categoryLike) {
     ensureNotNull("categoryLike", categoryLike);
     this.categoryLike = categoryLike;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionName(String name) {
     ensureNotNull("name", name);
     this.name = name;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionNameLike(String nameLike) {
     ensureNotNull("nameLike", nameLike);
     this.nameLike = nameLike;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery deploymentId(String deploymentId) {
     ensureNotNull("deploymentId", deploymentId);
     this.deploymentId = deploymentId;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery deployedAfter(Date deployedAfter) {
     ensureNotNull("deployedAfter", deployedAfter);
     shouldJoinDeploymentTable = true;
@@ -151,6 +159,7 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery deployedAt(Date deployedAt) {
     ensureNotNull("deployedAt", deployedAt);
     shouldJoinDeploymentTable = true;
@@ -158,40 +167,47 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionKey(String key) {
     ensureNotNull("key", key);
     this.key = key;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQueryImpl processDefinitionKeysIn(String... processDefinitionKeys) {
     return (ProcessDefinitionQueryImpl) processDefinitionKeyIn(processDefinitionKeys);
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionKeyIn(String... processDefinitionKeys) {
     ensureNotNull("keys", (Object[]) processDefinitionKeys);
     this.keys = processDefinitionKeys;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionKeyLike(String keyLike) {
     ensureNotNull("keyLike", keyLike);
     this.keyLike = keyLike;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionResourceName(String resourceName) {
     ensureNotNull("resourceName", resourceName);
     this.resourceName = resourceName;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionResourceNameLike(String resourceNameLike) {
     ensureNotNull("resourceNameLike", resourceNameLike);
     this.resourceNameLike = resourceNameLike;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery processDefinitionVersion(Integer version) {
     ensureNotNull("version", version);
     ensurePositive("version", version.longValue());
@@ -199,25 +215,30 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery latestVersion() {
     this.latest = true;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery active() {
     this.suspensionState = SuspensionState.ACTIVE;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery suspended() {
     this.suspensionState = SuspensionState.SUSPENDED;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery messageEventSubscription(String messageName) {
     return eventSubscription(EventType.MESSAGE, messageName);
   }
 
+  @Override
   public ProcessDefinitionQuery messageEventSubscriptionName(String messageName) {
     return eventSubscription(EventType.MESSAGE, messageName);
   }
@@ -235,30 +256,35 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery incidentType(String incidentType) {
     ensureNotNull("incident type", incidentType);
     this.incidentType = incidentType;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery incidentId(String incidentId) {
     ensureNotNull("incident id", incidentId);
     this.incidentId = incidentId;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery incidentMessage(String incidentMessage) {
     ensureNotNull("incident message", incidentMessage);
     this.incidentMessage = incidentMessage;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery incidentMessageLike(String incidentMessageLike) {
     ensureNotNull("incident messageLike", incidentMessageLike);
     this.incidentMessageLike = incidentMessageLike;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -266,17 +292,20 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery withoutTenantId() {
     isTenantIdSet = true;
     this.tenantIds = null;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery includeProcessDefinitionsWithoutTenantId() {
     this.includeDefinitionsWithoutTenantId  = true;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery versionTag(String versionTag) {
     ensureNotNull("versionTag", versionTag);
     this.versionTag = versionTag;
@@ -285,6 +314,7 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery versionTagLike(String versionTagLike) {
     ensureNotNull("versionTagLike", versionTagLike);
     this.versionTagLike = versionTagLike;
@@ -292,6 +322,7 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery withoutVersionTag() {
     this.isVersionTagSet = true;
     this.versionTag = null;
@@ -299,16 +330,19 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery startableInTasklist() {
     this.isStartableInTasklist = true;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery notStartableInTasklist() {
     this.isNotStartableInTasklist = true;
     return this;
   }
 
+  @Override
   public ProcessDefinitionQuery startablePermissionCheck() {
     this.startablePermissionCheck = true;
     return this;
@@ -316,43 +350,53 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
 
   //sorting ////////////////////////////////////////////
 
+  @Override
   public ProcessDefinitionQuery orderByDeploymentId() {
     return orderBy(ProcessDefinitionQueryProperty.DEPLOYMENT_ID);
   }
 
+  @Override
   public ProcessDefinitionQuery orderByDeploymentTime() {
     shouldJoinDeploymentTable = true;
     return orderBy(new QueryOrderingProperty(QueryOrderingProperty.RELATION_DEPLOYMENT, ProcessDefinitionQueryProperty.DEPLOY_TIME));
   }
 
+  @Override
   public ProcessDefinitionQuery orderByProcessDefinitionKey() {
     return orderBy(ProcessDefinitionQueryProperty.PROCESS_DEFINITION_KEY);
   }
 
+  @Override
   public ProcessDefinitionQuery orderByProcessDefinitionCategory() {
     return orderBy(ProcessDefinitionQueryProperty.PROCESS_DEFINITION_CATEGORY);
   }
 
+  @Override
   public ProcessDefinitionQuery orderByProcessDefinitionId() {
     return orderBy(ProcessDefinitionQueryProperty.PROCESS_DEFINITION_ID);
   }
 
+  @Override
   public ProcessDefinitionQuery orderByProcessDefinitionVersion() {
     return orderBy(ProcessDefinitionQueryProperty.PROCESS_DEFINITION_VERSION);
   }
 
+  @Override
   public ProcessDefinitionQuery orderByProcessDefinitionName() {
     return orderBy(ProcessDefinitionQueryProperty.PROCESS_DEFINITION_NAME);
   }
 
+  @Override
   public ProcessDefinitionQuery orderByTenantId() {
     return orderBy(ProcessDefinitionQueryProperty.TENANT_ID);
   }
 
+  @Override
   public ProcessDefinitionQuery orderByVersionTag() {
     return orderBy(ProcessDefinitionQueryProperty.VERSION_TAG);
   }
 
+  @Override
   public ProcessDefinitionQuery startableByUser(String userId) {
     ensureNotNull("userId", userId);
     this.authorizationUserId = userId;

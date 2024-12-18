@@ -40,7 +40,8 @@ public class IntermediateThrowEventImpl extends ThrowEventImpl implements Interm
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(ThrowEvent.class)
       .instanceProvider(new ModelTypeInstanceProvider<IntermediateThrowEvent>() {
-        public IntermediateThrowEvent newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public IntermediateThrowEvent newInstance(ModelTypeInstanceContext instanceContext) {
           return new IntermediateThrowEventImpl(instanceContext);
         }
       });

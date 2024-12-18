@@ -43,26 +43,32 @@ public class LiteralExpressionImpl extends ExpressionImpl implements LiteralExpr
     super(instanceContext);
   }
 
+  @Override
   public String getExpressionLanguage() {
     return expressionLanguageAttribute.getValue(this);
   }
 
+  @Override
   public void setExpressionLanguage(String expressionLanguage) {
     expressionLanguageAttribute.setValue(this, expressionLanguage);
   }
 
+  @Override
   public Text getText() {
     return textChild.getChild(this);
   }
 
+  @Override
   public void setText(Text text) {
     textChild.setChild(this, text);
   }
 
+  @Override
   public ImportedValues getImportValues() {
     return importedValuesChild.getChild(this);
   }
 
+  @Override
   public void setImportValues(ImportedValues importedValues) {
     importedValuesChild.setChild(this, importedValues);
   }
@@ -72,7 +78,8 @@ public class LiteralExpressionImpl extends ExpressionImpl implements LiteralExpr
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<LiteralExpression>() {
-        public LiteralExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public LiteralExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new LiteralExpressionImpl(instanceContext);
         }
       });

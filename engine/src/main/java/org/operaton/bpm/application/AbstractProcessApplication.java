@@ -59,6 +59,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
 
   // deployment /////////////////////////////////////////////////////
 
+  @Override
   public void deploy() {
     if (isDeployed) {
       LOG.alreadyDeployed();
@@ -78,6 +79,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
     }
   }
 
+  @Override
   public void undeploy() {
     if (!isDeployed) {
       LOG.notDeployed();
@@ -88,12 +90,14 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
     }
   }
 
+  @Override
   public void createDeployment(String processArchiveName, DeploymentBuilder deploymentBuilder) {
     // default implementation does nothing
   }
 
   // Runtime ////////////////////////////////////////////
 
+  @Override
   public String getName() {
     Class<? extends AbstractProcessApplication> processApplicationClass = getClass();
     String name = null;
@@ -121,6 +125,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
    */
   protected abstract String autodetectProcessApplicationName();
 
+  @Override
   public <T> T execute(Callable<T> callable) throws ProcessApplicationExecutionException {
     ClassLoader originalClassloader = ClassLoaderUtil.getContextClassloader();
     ClassLoader processApplicationClassloader = getProcessApplicationClassloader();
@@ -137,25 +142,30 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
     }
   }
 
+  @Override
   public <T> T execute(Callable<T> callable, InvocationContext invocationContext) throws ProcessApplicationExecutionException {
     // allows to hook into the invocation
     return execute(callable);
   }
 
+  @Override
   public ClassLoader getProcessApplicationClassloader() {
     // the default implementation uses the classloader that loaded
     // the application-provided subclass of this class.
     return ClassLoaderUtil.getClassloader(getClass());
   }
 
+  @Override
   public ProcessApplicationInterface getRawObject() {
     return this;
   }
 
+  @Override
   public Map<String, String> getProperties() {
     return Collections.<String, String>emptyMap();
   }
 
+  @Override
   public ELResolver getElResolver() {
     if (processApplicationElResolver == null) {
       synchronized (this) {
@@ -168,6 +178,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
 
   }
 
+  @Override
   public BeanELResolver getBeanElResolver() {
     if (processApplicationBeanElResolver == null) {
       synchronized (this) {
@@ -195,10 +206,12 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
 
   }
 
+  @Override
   public ExecutionListener getExecutionListener() {
     return null;
   }
 
+  @Override
   public TaskListener getTaskListener() {
     return null;
   }

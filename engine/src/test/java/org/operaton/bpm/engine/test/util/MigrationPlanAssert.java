@@ -200,6 +200,7 @@ public class MigrationPlanAssert {
       return this;
     }
 
+    @Override
     public String toString() {
       return new MigrationInstructionImpl(sourceActivityId, targetActivityId).toString();
     }

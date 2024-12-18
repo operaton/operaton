@@ -104,6 +104,7 @@ public class MigratingCompensationEventSubscriptionInstance extends MigratingPro
 
   }
 
+  @Override
   public void remove() {
     eventSubscription.delete();
   }

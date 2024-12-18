@@ -36,7 +36,8 @@ public class From extends ExpressionImpl {
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<From>() {
-        public From newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public From newInstance(ModelTypeInstanceContext instanceContext) {
           return new From(instanceContext);
         }
       });

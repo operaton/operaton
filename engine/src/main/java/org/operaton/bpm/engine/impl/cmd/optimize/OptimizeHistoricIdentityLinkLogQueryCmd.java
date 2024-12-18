@@ -35,6 +35,7 @@ public class OptimizeHistoricIdentityLinkLogQueryCmd implements Command<List<Opt
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<OptimizeHistoricIdentityLinkLogEntity> execute(CommandContext commandContext) {
     return commandContext.getOptimizeManager().getHistoricIdentityLinkLogs(occurredAfter, occurredAt, maxResults);
   }

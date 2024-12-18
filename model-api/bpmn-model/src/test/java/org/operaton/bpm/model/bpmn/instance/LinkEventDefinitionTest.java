@@ -27,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LinkEventDefinitionTest extends AbstractEventDefinitionTest {
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(Source.class),
@@ -34,6 +35,7 @@ class LinkEventDefinitionTest extends AbstractEventDefinitionTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("name", false, true)

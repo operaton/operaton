@@ -52,6 +52,7 @@ public class AddCommentCmd implements Command<Comment>, Serializable {
     this.message = message;
   }
 
+  @Override
   public Comment execute(CommandContext commandContext) {
 
     if (processInstanceId == null && taskId == null) {

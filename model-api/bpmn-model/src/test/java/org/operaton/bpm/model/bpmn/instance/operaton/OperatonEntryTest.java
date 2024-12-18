@@ -25,14 +25,17 @@ import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
 public class OperatonEntryTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(OPERATON_NS, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption(OPERATON_NS, "key", false, true)

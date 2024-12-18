@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
  */
 public class EventSubProcessActivityBehavior extends SubProcessActivityBehavior {
 
+  @Override
   public void complete(ActivityExecution scopeExecution) {
     // check whether legacy behavior needs to be performed.
     if(!LegacyBehavior.eventSubprocessComplete(scopeExecution)) {
@@ -33,6 +34,7 @@ public class EventSubProcessActivityBehavior extends SubProcessActivityBehavior 
     }
   }
 
+  @Override
   public void concurrentChildExecutionEnded(ActivityExecution scopeExecution, ActivityExecution endedExecution) {
     // Check whether legacy behavior needs to be performed.
     // Legacy behavior means that the event subprocess is not a scope and as a result does not

@@ -43,18 +43,22 @@ public abstract class CriterionImpl extends CmmnElementImpl implements Criterion
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public Sentry getSentry() {
     return sentryRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSentry(Sentry sentry) {
     sentryRefAttribute.setReferenceTargetElement(this, sentry);
   }

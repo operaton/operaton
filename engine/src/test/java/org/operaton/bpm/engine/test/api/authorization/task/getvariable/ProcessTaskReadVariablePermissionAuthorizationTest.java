@@ -65,6 +65,7 @@ public class ProcessTaskReadVariablePermissionAuthorizationTest extends ProcessT
   }
 
   @Before
+  @Override
   public void setUp() {
     super.setUp();
     ensureSpecificVariablePermission = processEngineConfiguration.isEnforceSpecificVariablePermission();
@@ -73,6 +74,7 @@ public class ProcessTaskReadVariablePermissionAuthorizationTest extends ProcessT
   }
 
   @After
+  @Override
   public void tearDown() {
     super.tearDown();
     processEngineConfiguration.setEnforceSpecificVariablePermission(ensureSpecificVariablePermission);

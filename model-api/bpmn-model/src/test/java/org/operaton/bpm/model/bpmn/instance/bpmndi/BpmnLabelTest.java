@@ -29,14 +29,17 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;
  */
 public class BpmnLabelTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(BPMNDI_NS, Label.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("labelStyle")

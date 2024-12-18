@@ -26,6 +26,7 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
  */
 public class ParallelGatewayTest extends AbstractGatewayTest<ParallelGateway> {
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption(OPERATON_NS, "async", false, false, false)

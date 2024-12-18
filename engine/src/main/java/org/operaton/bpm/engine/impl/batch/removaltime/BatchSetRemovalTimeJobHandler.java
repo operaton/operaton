@@ -119,6 +119,7 @@ public class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler<SetRe
       .findHistoricBatchById(instanceId);
   }
 
+  @Override
   public JobDeclaration<BatchJobContext, MessageEntity> getJobDeclaration() {
     return JOB_DECLARATION;
   }
@@ -133,6 +134,7 @@ public class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler<SetRe
     return SetRemovalTimeJsonConverter.INSTANCE;
   }
 
+  @Override
   public String getType() {
     return Batch.TYPE_BATCH_SET_REMOVAL_TIME;
   }

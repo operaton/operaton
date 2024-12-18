@@ -39,10 +39,12 @@ public enum ResourceTypes implements ResourceType {
     return name;
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public Integer getValue() {
     return id;
   }

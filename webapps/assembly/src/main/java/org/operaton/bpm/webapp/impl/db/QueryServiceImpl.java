@@ -37,6 +37,7 @@ public class QueryServiceImpl implements QueryService {
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public <T> List<T> executeQuery(final String statement, final QueryParameters parameter) {
     return commandExecutor.executeCommand(new ExecuteListQueryCmd<T>(statement, parameter));
   }

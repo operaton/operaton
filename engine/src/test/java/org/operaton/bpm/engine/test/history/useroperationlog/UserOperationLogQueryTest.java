@@ -941,6 +941,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     // Clean up db
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerActivateJobDefinitionHandler.TYPE);
         return null;
@@ -1001,6 +1002,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     // clean up op log
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerSuspendProcessDefinitionHandler.TYPE);
         return null;

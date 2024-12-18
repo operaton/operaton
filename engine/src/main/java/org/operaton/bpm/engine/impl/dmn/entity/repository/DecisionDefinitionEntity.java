@@ -63,22 +63,27 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
 
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public int getRevision() {
     return revision;
   }
 
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
   }
 
+  @Override
   public int getRevisionNext() {
     return revision + 1;
   }
@@ -93,10 +98,12 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
     this.name = name;
   }
 
+  @Override
   public String getCategory() {
     return category;
   }
 
+  @Override
   public void setCategory(String category) {
     this.category = category;
   }
@@ -111,47 +118,58 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
     this.key = key;
   }
 
+  @Override
   public int getVersion() {
     return version;
   }
 
+  @Override
   public void setVersion(int version) {
     this.version = version;
     this.firstVersion = (this.version == 1);
   }
 
+  @Override
   public String getDeploymentId() {
     return deploymentId;
   }
 
+  @Override
   public void setDeploymentId(String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public String getResourceName() {
     return resourceName;
   }
 
+  @Override
   public void setResourceName(String resourceName) {
     this.resourceName = resourceName;
   }
 
+  @Override
   public String getDiagramResourceName() {
     return diagramResourceName;
   }
 
+  @Override
   public void setDiagramResourceName(String diagramResourceName) {
     this.diagramResourceName = diagramResourceName;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
 
+  @Override
   public void setTenantId(String tenantId) {
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getDecisionRequirementsDefinitionId() {
     return decisionRequirementsDefinitionId;
   }
@@ -160,6 +178,7 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
     this.decisionRequirementsDefinitionId = decisionRequirementsDefinitionId;
   }
 
+  @Override
   public String getDecisionRequirementsDefinitionKey() {
     return decisionRequirementsDefinitionKey;
   }
@@ -168,6 +187,7 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
     this.decisionRequirementsDefinitionKey = decisionRequirementsDefinitionKey;
   }
 
+  @Override
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<String, Object>();
     persistentState.put("historyTimeToLive", this.historyTimeToLive);
@@ -191,6 +211,7 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
 
   // previous decision definition //////////////////////////////////////////////
 
+  @Override
   public DecisionDefinitionEntity getPreviousDefinition() {
     DecisionDefinitionEntity previousDecisionDefinition = null;
 
@@ -267,6 +288,7 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
     return historyTimeToLive;
   }
 
+  @Override
   public void setHistoryTimeToLive(Integer historyTimeToLive) {
     this.historyTimeToLive = historyTimeToLive;
   }

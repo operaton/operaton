@@ -47,10 +47,12 @@ public class JuelExpression implements Expression {
     this.expressionText = expressionText;
   }
 
+  @Override
   public Object getValue(VariableScope variableScope) {
     return getValue(variableScope, null);
   }
 
+  @Override
   public Object getValue(VariableScope variableScope, BaseDelegateExecution contextExecution) {
     ELContext elContext = expressionManager.getElContext(variableScope);
     try {
@@ -77,10 +79,12 @@ public class JuelExpression implements Expression {
     }
   }
 
+  @Override
   public void setValue(Object value, VariableScope variableScope) {
     setValue(value, variableScope, null);
   }
 
+  @Override
   public void setValue(Object value, VariableScope variableScope, BaseDelegateExecution contextExecution) {
     ELContext elContext = expressionManager.getElContext(variableScope);
     try {
@@ -106,6 +110,7 @@ public class JuelExpression implements Expression {
     return valueExpression.isLiteralText();
   }
 
+  @Override
   public String getExpressionText() {
     return expressionText;
   }

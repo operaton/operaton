@@ -109,6 +109,7 @@ public class HistoryCleanupHistoricBatchTest {
     migrationHelper.removeAllRunningAndHistoricBatches();
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         List<Job> jobs = managementService.createJobQuery().list();
@@ -453,6 +454,7 @@ public class HistoryCleanupHistoricBatchTest {
 
   private void verifyByteArraysWereRemoved(final String... errorDetailsByteArrayIds) {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         for (String errorDetailsByteArrayId : errorDetailsByteArrayIds) {
           assertNull(commandContext.getDbEntityManager().selectOne("selectByteArray", errorDetailsByteArrayId));

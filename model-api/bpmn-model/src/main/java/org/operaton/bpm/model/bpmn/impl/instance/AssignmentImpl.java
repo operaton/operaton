@@ -43,7 +43,8 @@ public class AssignmentImpl extends BaseElementImpl implements Assignment {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Assignment>() {
-        public Assignment newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Assignment newInstance(ModelTypeInstanceContext instanceContext) {
           return new AssignmentImpl(instanceContext);
         }
       });
@@ -65,18 +66,22 @@ public class AssignmentImpl extends BaseElementImpl implements Assignment {
     super(instanceContext);
   }
 
+  @Override
   public From getFrom() {
     return fromChild.getChild(this);
   }
 
+  @Override
   public void setFrom(From from) {
     fromChild.setChild(this, from);
   }
 
+  @Override
   public To getTo() {
     return toChild.getChild(this);
   }
 
+  @Override
   public void setTo(To to) {
     toChild.setChild(this, to);
   }

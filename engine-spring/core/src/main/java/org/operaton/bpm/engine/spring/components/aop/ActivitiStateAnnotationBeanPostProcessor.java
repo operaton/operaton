@@ -59,24 +59,29 @@ public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcess
 
 	private volatile ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
-	public void setBeanFactory(BeanFactory beanFactory) {
+  @Override
+  public void setBeanFactory(BeanFactory beanFactory) {
 		this.beanFactory = beanFactory;
 	}
 
-	public void setBeanClassLoader(ClassLoader classLoader) {
+  @Override
+  public void setBeanClassLoader(ClassLoader classLoader) {
 		this.beanClassLoader = classLoader;
 	}
 
-	public int getOrder() {
+  @Override
+  public int getOrder() {
 		return this.order;
 	}
 
-	public void afterPropertiesSet() {
+  @Override
+  public void afterPropertiesSet() {
 		Assert.notNull(this.beanClassLoader, "beanClassLoader must not be null");
 		Assert.notNull(this.beanFactory, "beanFactory must not be null");
 	}
 
-	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+  @Override
+  public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		return bean;
 	}
 
@@ -84,7 +89,8 @@ public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcess
 		this.registry = registry;
 	}
 
-	public Object postProcessAfterInitialization(final Object bean,
+  @Override
+  public Object postProcessAfterInitialization(final Object bean,
 																							 final String beanName) throws BeansException {
 		// first sift through and get all the methods
 		// then get all the annotations
@@ -94,8 +100,9 @@ public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcess
 
 		ReflectionUtils.doWithMethods(targetClass,
 				new ReflectionUtils.MethodCallback() {
-					@SuppressWarnings("unchecked")
-					public void doWith(Method method) throws IllegalArgumentException, IllegalAccessException {
+          @Override
+          @SuppressWarnings("unchecked")
+          public void doWith(Method method) throws IllegalArgumentException, IllegalAccessException {
 
 						State state = AnnotationUtils.getAnnotation(method, State.class);
 
@@ -142,7 +149,8 @@ public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcess
 					}
 				},
 				new ReflectionUtils.MethodFilter() {
-					public boolean matches(Method method) {
+          @Override
+          public boolean matches(Method method) {
 						return null != AnnotationUtils.getAnnotation(method,
 								State.class);
 					}

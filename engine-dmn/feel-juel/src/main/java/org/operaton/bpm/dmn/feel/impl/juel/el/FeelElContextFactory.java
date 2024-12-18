@@ -30,6 +30,7 @@ public class FeelElContextFactory implements ElContextFactory {
 
   protected CustomFunctionMapper customFunctionMapper = new CustomFunctionMapper();
 
+  @Override
   public ELContext createContext(ExpressionFactory expressionFactory, VariableContext variableContext) {
     ELResolver elResolver = createElResolver();
     FunctionMapper functionMapper = createFunctionMapper();
@@ -53,6 +54,7 @@ public class FeelElContextFactory implements ElContextFactory {
     return new FeelTypedVariableMapper(expressionFactory, variableContext);
   }
 
+  @Override
   public void addCustomFunction(String name, Method method) {
     customFunctionMapper.addMethod(name, method);
   }

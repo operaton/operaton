@@ -42,6 +42,7 @@ public interface JobState {
       this.name = string;
     }
 
+    @Override
     public int getStateCode() {
       return stateCode;
     }

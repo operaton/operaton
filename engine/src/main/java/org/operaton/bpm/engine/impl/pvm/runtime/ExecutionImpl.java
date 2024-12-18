@@ -89,6 +89,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   }
 
   /** creates a new execution. properties processDefinition, processInstance and activity will be initialized. */
+  @Override
   public ExecutionImpl createExecution() {
     // create the new child execution
     ExecutionImpl createdExecution = newExecution();
@@ -117,14 +118,17 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   }
 
   /** instantiates a new execution.  can be overridden by subclasses */
+  @Override
   protected ExecutionImpl newExecution() {
     return new ExecutionImpl();
   }
 
+  @Override
   public void initialize() {
     return;
   }
 
+  @Override
   public void initializeTimerDeclarations() {
     return;
   }
@@ -132,21 +136,25 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   // parent ///////////////////////////////////////////////////////////////////
 
   /** ensures initialization and returns the parent */
+  @Override
   public ExecutionImpl getParent() {
     return parent;
   }
 
+  @Override
   public void setParentExecution(PvmExecutionImpl parent) {
     this.parent = (ExecutionImpl) parent;
   }
 
   // executions ///////////////////////////////////////////////////////////////
 
+  @Override
   public List<ExecutionImpl> getExecutionsAsCopy() {
     return new ArrayList<ExecutionImpl>(getExecutions());
   }
 
   /** ensures initialization and returns the non-null executions list */
+  @Override
   public List<ExecutionImpl> getExecutions() {
     if(executions == null) {
       executions = new ArrayList<ExecutionImpl>();
@@ -154,10 +162,12 @@ public class ExecutionImpl extends PvmExecutionImpl implements
     return executions;
   }
 
+  @Override
   public ExecutionImpl getSuperExecution() {
     return superExecution;
   }
 
+  @Override
   public void setSuperExecution(PvmExecutionImpl superExecution) {
     this.superExecution = (ExecutionImpl) superExecution;
     if (superExecution != null) {
@@ -165,38 +175,46 @@ public class ExecutionImpl extends PvmExecutionImpl implements
     }
   }
 
+  @Override
   public ExecutionImpl getSubProcessInstance() {
     return subProcessInstance;
   }
 
+  @Override
   public void setSubProcessInstance(PvmExecutionImpl subProcessInstance) {
     this.subProcessInstance = (ExecutionImpl) subProcessInstance;
   }
 
   // super case execution /////////////////////////////////////////////////////
 
+  @Override
   public CaseExecutionImpl getSuperCaseExecution() {
     return superCaseExecution;
   }
 
+  @Override
   public void setSuperCaseExecution(CmmnExecution superCaseExecution) {
     this.superCaseExecution = (CaseExecutionImpl) superCaseExecution;
   }
 
   // sub case execution ////////////////////////////////////////////////////////
 
+  @Override
   public CaseExecutionImpl getSubCaseInstance() {
     return subCaseInstance;
   }
 
+  @Override
   public void setSubCaseInstance(CmmnExecution subCaseInstance) {
     this.subCaseInstance = (CaseExecutionImpl) subCaseInstance;
   }
 
+  @Override
   public CaseExecutionImpl createSubCaseInstance(CmmnCaseDefinition caseDefinition) {
     return createSubCaseInstance(caseDefinition, null);
   }
 
+  @Override
   public CaseExecutionImpl createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey) {
     CaseExecutionImpl caseInstance = (CaseExecutionImpl) caseDefinition.createCaseInstance(businessKey);
 
@@ -209,6 +227,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   // process definition ///////////////////////////////////////////////////////
 
+  @Override
   public String getProcessDefinitionId() {
     return processDefinition.getId();
   }
@@ -216,27 +235,33 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   // process instance /////////////////////////////////////////////////////////
 
   /** ensures initialization and returns the process instance. */
+  @Override
   public ExecutionImpl getProcessInstance() {
     return processInstance;
   }
 
+  @Override
   public String getProcessInstanceId() {
     return getProcessInstance().getId();
   }
 
+  @Override
   public String getBusinessKey() {
     return getProcessInstance().getBusinessKey();
   }
 
+  @Override
   public void setBusinessKey(String businessKey) {
     this.businessKey = businessKey;
   }
 
+  @Override
   public String getProcessBusinessKey() {
     return getProcessInstance().getBusinessKey();
   }
 
   /** for setting the process instance, this setter must be used as subclasses can override */
+  @Override
   public void setProcessInstance(PvmExecutionImpl processInstance) {
     this.processInstance = (ExecutionImpl) processInstance;
   }
@@ -246,6 +271,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   /**
    * generates an activity instance id
    */
+  @Override
   protected String generateActivityInstanceId(String activityId) {
     int nextId = idGenerator.incrementAndGet();
     String compositeId = activityId+":"+nextId;
@@ -258,6 +284,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   // toString /////////////////////////////////////////////////////////////////
 
+  @Override
   public String toString() {
     if (isProcessInstanceExecution()) {
       return "ProcessInstance["+getToStringIdentity()+"]";
@@ -266,12 +293,14 @@ public class ExecutionImpl extends PvmExecutionImpl implements
     }
   }
 
+  @Override
   protected String getToStringIdentity() {
     return Integer.toString(System.identityHashCode(this));
   }
 
   // allow for subclasses to expose a real id /////////////////////////////////
 
+  @Override
   public String getId() {
     return String.valueOf(System.identityHashCode(this));
   }
@@ -292,6 +321,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
     return Collections.emptyList();
   }
 
+  @Override
   public ExecutionImpl getReplacedBy() {
     return (ExecutionImpl) replacedBy;
   }
@@ -300,6 +330,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
     this.executions = executions;
   }
 
+  @Override
   public String getCurrentActivityName() {
     String currentActivityName = null;
     if (this.activity != null) {
@@ -308,31 +339,38 @@ public class ExecutionImpl extends PvmExecutionImpl implements
     return currentActivityName;
   }
 
+  @Override
   public FlowElement getBpmnModelElementInstance() {
     throw new UnsupportedOperationException(BpmnModelExecutionContext.class.getName() +" is unsupported in transient ExecutionImpl");
   }
 
+  @Override
   public BpmnModelInstance getBpmnModelInstance() {
     throw new UnsupportedOperationException(BpmnModelExecutionContext.class.getName() +" is unsupported in transient ExecutionImpl");
   }
 
+  @Override
   public ProcessEngineServices getProcessEngineServices() {
     throw new UnsupportedOperationException(ProcessEngineServicesAware.class.getName() +" is unsupported in transient ExecutionImpl");
   }
 
+  @Override
   public ProcessEngine getProcessEngine() {
     throw new UnsupportedOperationException(ProcessEngineServicesAware.class.getName() +" is unsupported in transient ExecutionImpl");
   }
 
+  @Override
   public void forceUpdate() {
     // nothing to do
   }
 
+  @Override
   public void fireHistoricProcessStartEvent() {
     // do nothing
   }
 
-  protected void removeVariablesLocalInternal(){
+  @Override
+  protected void removeVariablesLocalInternal() {
     // do nothing
   }
 

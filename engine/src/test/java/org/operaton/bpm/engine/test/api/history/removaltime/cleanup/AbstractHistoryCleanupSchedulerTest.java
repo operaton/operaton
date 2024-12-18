@@ -131,6 +131,7 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = engineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
         return null;
@@ -141,7 +142,8 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
   protected void clearJob(final String jobId) {
     engineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Object>() {
-        public Object execute(CommandContext commandContext) {
+      @Override
+      public Object execute(CommandContext commandContext) {
           JobEntity job = commandContext.getJobManager().findJobById(jobId);
           if (job != null) {
             commandContext.getJobManager().delete(job);
@@ -154,7 +156,8 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
   protected void clearMeterLog() {
     engineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Object>() {
-        public Object execute(CommandContext commandContext) {
+      @Override
+      public Object execute(CommandContext commandContext) {
           commandContext.getMeterLogManager().deleteAll();
 
           return null;

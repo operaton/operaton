@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  */
 public class AssignTaskListener implements TaskListener {
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     delegateTask.setAssignee("demo");
   }

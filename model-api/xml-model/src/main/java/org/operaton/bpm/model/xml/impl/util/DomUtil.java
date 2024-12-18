@@ -74,6 +74,7 @@ public final class DomUtil {
    */
   public static class ElementNodeListFilter implements NodeListFilter {
 
+    @Override
     public boolean matches(Node node) {
       return node.getNodeType() == Node.ELEMENT_NODE;
     }
@@ -193,15 +194,18 @@ public final class DomUtil {
         + spe.getLineNumber() + ": " + spe.getMessage();
     }
 
+    @Override
     public void warning(SAXParseException spe) {
       LOGGER.warning(getParseExceptionInfo(spe));
     }
 
+    @Override
     public void error(SAXParseException spe) throws SAXException {
       String message = "Error: " + getParseExceptionInfo(spe);
       throw new SAXException(message);
     }
 
+    @Override
     public void fatalError(SAXParseException spe) throws SAXException {
       String message = "Fatal Error: " + getParseExceptionInfo(spe);
       throw new SAXException(message);

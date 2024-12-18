@@ -22,6 +22,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 
 public class CreateLocalVariableEventListener implements TaskListener {
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     delegateTask.setVariableLocal("var", "foo");
   }

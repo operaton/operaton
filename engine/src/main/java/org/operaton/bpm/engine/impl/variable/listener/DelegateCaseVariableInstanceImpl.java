@@ -47,6 +47,7 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
   protected String name;
   protected TypedValue value;
 
+  @Override
   public String getEventName() {
     return eventName;
   }
@@ -55,6 +56,7 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
     this.eventName = eventName;
   }
 
+  @Override
   public DelegateCaseExecution getSourceExecution() {
     return sourceExecution;
   }
@@ -76,30 +78,37 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
 
   //// methods delegated to wrapped variable ////
 
+  @Override
   public String getId() {
     return variableId;
   }
 
+  @Override
   public String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
+  @Override
   public String getProcessInstanceId() {
     return processInstanceId;
   }
 
+  @Override
   public String getExecutionId() {
     return executionId;
   }
 
+  @Override
   public String getCaseInstanceId() {
     return caseInstanceId;
   }
 
+  @Override
   public String getCaseExecutionId() {
     return caseExecutionId;
   }
 
+  @Override
   public String getTaskId() {
     return taskId;
   }
@@ -109,14 +118,17 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
     return null;
   }
 
+  @Override
   public String getActivityInstanceId() {
     return activityInstanceId;
   }
 
+  @Override
   public String getErrorMessage() {
     return errorMessage;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -125,6 +137,7 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getTypeName() {
     if(value != null) {
       return value.getType().getName();
@@ -134,10 +147,12 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
     }
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public Object getValue() {
     if(value != null) {
       return value.getValue();
@@ -147,14 +162,17 @@ public class DelegateCaseVariableInstanceImpl implements DelegateCaseVariableIns
     }
   }
 
+  @Override
   public TypedValue getTypedValue() {
     return value;
   }
 
+  @Override
   public ProcessEngineServices getProcessEngineServices() {
     return Context.getProcessEngineConfiguration().getProcessEngine();
   }
 
+  @Override
   public ProcessEngine getProcessEngine() {
     return Context.getProcessEngineConfiguration().getProcessEngine();
   }

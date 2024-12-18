@@ -38,6 +38,7 @@ public class GetAttachmentContentCmd implements Command<InputStream>, Serializab
     this.attachmentId = attachmentId;
   }
 
+  @Override
   public InputStream execute(CommandContext commandContext) {
     DbEntityManager dbEntityManger = commandContext.getDbEntityManager();
     AttachmentEntity attachment = dbEntityManger.selectById(AttachmentEntity.class, attachmentId);

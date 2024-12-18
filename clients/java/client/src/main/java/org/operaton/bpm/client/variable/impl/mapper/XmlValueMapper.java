@@ -35,6 +35,7 @@ public class XmlValueMapper extends PrimitiveValueMapper<XmlValue> {
     typedValueField.setValue(xmlValue.getValue());
   }
 
+  @Override
   public XmlValue readValue(TypedValueField typedValueField) {
     return ClientValues.xmlValue((String) typedValueField.getValue());
   }

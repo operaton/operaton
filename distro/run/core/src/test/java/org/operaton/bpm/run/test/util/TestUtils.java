@@ -29,12 +29,15 @@ public class TestUtils {
     SSLContext ctx = SSLContext.getInstance("SSL");
     X509TrustManager tm = new X509TrustManager() {
 
+      @Override
       public void checkClientTrusted(X509Certificate[] xcs, String string) {
       }
 
+      @Override
       public void checkServerTrusted(X509Certificate[] xcs, String string) {
       }
 
+      @Override
       public X509Certificate[] getAcceptedIssuers() {
         return null;
       }

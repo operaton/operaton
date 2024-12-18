@@ -42,6 +42,7 @@ public class JacksonJsonDataFormatReader extends TextBasedDataFormatReader {
     this.format = format;
   }
 
+  @Override
   public Object readInput(Reader input) {
     ObjectMapper mapper = format.getObjectMapper();
 

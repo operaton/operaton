@@ -18,10 +18,12 @@ package org.operaton.bpm.dmn.feel.impl.juel.transform;
 
 public class EqualTransformer implements FeelToJuelTransformer {
 
+  @Override
   public boolean canTransform(String feelExpression) {
     return true;
   }
 
+  @Override
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     String juelEndpoint = transform.transformEndpoint(feelExpression, inputName);
     return String.format("%s == %s", inputName, juelEndpoint);

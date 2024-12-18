@@ -42,7 +42,8 @@ public class MessageImpl extends RootElementImpl implements Message {
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<Message>() {
-        public Message newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Message newInstance(ModelTypeInstanceContext instanceContext) {
           return new MessageImpl(instanceContext);
         }
       });
@@ -61,18 +62,22 @@ public class MessageImpl extends RootElementImpl implements Message {
     super(context);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public ItemDefinition getItem() {
     return itemRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setItem(ItemDefinition item) {
     itemRefAttribute.setReferenceTargetElement(this, item);
   }

@@ -37,6 +37,7 @@ public class DefaultValueMappers<T extends TypedValue> implements Serializable, 
     this.defaultSerializationFormat = defaultSerializationFormat;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public ValueMapper<T> findMapperForTypedValue(T typedValue) {
     ValueType type = typedValue.getType();
@@ -85,6 +86,7 @@ public class DefaultValueMappers<T extends TypedValue> implements Serializable, 
     return (ValueMapper<T>)matchedSerializer;
   }
 
+  @Override
   public ValueMappers addMapper(ValueMapper<T> serializer) {
     serializerList.add(serializer);
     return this;

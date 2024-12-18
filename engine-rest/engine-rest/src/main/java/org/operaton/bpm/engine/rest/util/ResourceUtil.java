@@ -28,10 +28,12 @@ public class ResourceUtil implements Resource {
     this.resourceType = resourceType;
   }
 
+  @Override
   public String resourceName() {
     return resourceName;
   }
 
+  @Override
   public int resourceType() {
     return resourceType;
   }

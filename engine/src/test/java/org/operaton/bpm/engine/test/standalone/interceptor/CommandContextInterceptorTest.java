@@ -42,6 +42,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
   public void testCommandContextGetCurrentAfterException() {
     try {
       processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Object>() {
+        @Override
         public Object execute(CommandContext commandContext) {
           throw new IllegalStateException("here i come!");
         }
@@ -62,6 +63,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
 
     try {
       processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Object>() {
+        @Override
         public Object execute(CommandContext commandContext) {
           CommandExecutor commandExecutor = Context.getProcessEngineConfiguration().getCommandExecutorTxRequired();
 
@@ -86,6 +88,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
     final ExceptionThrowingCmd innerCommand = new ExceptionThrowingCmd(new IdentifiableRuntimeException(1));
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         CommandExecutor commandExecutor = Context.getProcessEngineConfiguration().getCommandExecutorTxRequired();
 
@@ -118,6 +121,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
     boolean errorThrown = false;
     try {
       processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Object>() {
+        @Override
         public Object execute(CommandContext commandContext) {
 
           runtimeService.startProcessInstanceByKey("processThrowingThrowable");
@@ -148,6 +152,7 @@ public class CommandContextInterceptorTest extends PluggableProcessEngineTest {
       exceptionToThrow = e;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       executed = true;
       throw exceptionToThrow;

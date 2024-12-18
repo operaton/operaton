@@ -48,6 +48,7 @@ public class GroupResourceImpl extends AbstractIdentityResource implements Group
     this.rootResourcePath = rootResourcePath;
   }
 
+  @Override
   public GroupDto getGroup(UriInfo context) {
 
     Group dbGroup = findGroupObject();
@@ -60,6 +61,7 @@ public class GroupResourceImpl extends AbstractIdentityResource implements Group
     return group;
   }
 
+  @Override
   public ResourceOptionsDto availableOperations(UriInfo context) {
 
     ResourceOptionsDto dto = new ResourceOptionsDto();
@@ -83,6 +85,7 @@ public class GroupResourceImpl extends AbstractIdentityResource implements Group
   }
 
 
+  @Override
   public void updateGroup(GroupDto group) {
     ensureNotReadOnly();
 
@@ -97,11 +100,13 @@ public class GroupResourceImpl extends AbstractIdentityResource implements Group
   }
 
 
+  @Override
   public void deleteGroup() {
     ensureNotReadOnly();
     identityService.deleteGroup(resourceId);
   }
 
+  @Override
   public GroupMembersResource getGroupMembersResource() {
     return new GroupMembersResourceImpl(getProcessEngine().getName(), resourceId, rootResourcePath, getObjectMapper());
   }

@@ -44,6 +44,7 @@ public class ExecutionContext extends CoreExecutionContext<ExecutionEntity> {
     return (ProcessDefinitionEntity) execution.getProcessDefinition();
   }
 
+  @Override
   protected String getDeploymentId() {
     return getProcessDefinition().getDeploymentId();
   }

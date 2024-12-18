@@ -96,6 +96,7 @@ public class HistoryCleanupJobDeclaration extends JobDeclaration<HistoryCleanupC
     }
   }
 
+  @Override
   public ParameterValueProvider getJobPriorityProvider() {
     ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
     long historyCleanupJobPriority = configuration.getHistoryCleanupJobPriority();

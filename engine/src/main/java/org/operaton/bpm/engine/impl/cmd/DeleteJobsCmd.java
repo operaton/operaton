@@ -54,6 +54,7 @@ public class DeleteJobsCmd implements Command<Void> {
     this.cascade = cascade;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     JobEntity jobToDelete = null;
     for (String jobId: jobIds) {

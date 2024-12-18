@@ -45,6 +45,7 @@ public class JacksonJsonPathQuery implements SpinJsonPathQuery {
     this.dataFormat = dataFormat;
   }
 
+  @Override
   public SpinJsonNode element() {
     try {
       Object result = query.read(spinJsonNode.toString(), dataFormat.getJsonPathConfiguration());
@@ -64,6 +65,7 @@ public class JacksonJsonPathQuery implements SpinJsonPathQuery {
     }
   }
 
+  @Override
   public SpinList<SpinJsonNode> elementList() {
     JacksonJsonNode node = (JacksonJsonNode) element();
     if(node.isArray()) {
@@ -73,6 +75,7 @@ public class JacksonJsonPathQuery implements SpinJsonPathQuery {
     }
   }
 
+  @Override
   public String stringValue() {
     JacksonJsonNode node = (JacksonJsonNode) element();
     if(node.isString()) {
@@ -82,6 +85,7 @@ public class JacksonJsonPathQuery implements SpinJsonPathQuery {
     }
   }
 
+  @Override
   public Number numberValue() {
     JacksonJsonNode node = (JacksonJsonNode) element();
     if(node.isNumber()) {
@@ -91,6 +95,7 @@ public class JacksonJsonPathQuery implements SpinJsonPathQuery {
     }
   }
 
+  @Override
   public Boolean boolValue() {
     JacksonJsonNode node = (JacksonJsonNode) element();
     if(node.isBoolean()) {

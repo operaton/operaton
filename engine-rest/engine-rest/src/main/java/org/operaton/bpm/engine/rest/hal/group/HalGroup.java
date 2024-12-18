@@ -45,6 +45,7 @@ public class HalGroup extends HalResource<HalGroup> implements HalIdResource {
     return halGroup;
   }
 
+  @Override
   public String getId() {
     return id;
   }

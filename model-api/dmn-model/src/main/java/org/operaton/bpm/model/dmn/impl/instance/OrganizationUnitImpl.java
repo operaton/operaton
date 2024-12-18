@@ -42,10 +42,12 @@ public class OrganizationUnitImpl extends BusinessContextElementImpl implements 
     super(instanceContext);
   }
 
+  @Override
   public Collection<Decision> getDecisionsMade() {
     return decisionDecisionMadeRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public Collection<Decision> getDecisionsOwned() {
     return decisionDecisionOwnedRefCollection.getReferenceTargetElements(this);
   }
@@ -55,7 +57,8 @@ public class OrganizationUnitImpl extends BusinessContextElementImpl implements 
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(BusinessContextElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<OrganizationUnit>() {
-        public OrganizationUnit newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OrganizationUnit newInstance(ModelTypeInstanceContext instanceContext) {
           return new OrganizationUnitImpl(instanceContext);
         }
       });

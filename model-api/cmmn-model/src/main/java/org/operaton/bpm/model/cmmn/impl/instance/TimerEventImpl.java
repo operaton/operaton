@@ -64,7 +64,8 @@ public class TimerEventImpl extends EventImpl implements TimerEvent {
         .namespaceUri(CMMN10_NS)
         .extendsType(Event.class)
         .instanceProvider(new ModelTypeInstanceProvider<TimerEvent>() {
-          public TimerEvent newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TimerEvent newInstance(ModelTypeInstanceContext instanceContext) {
             return new TimerEventImpl(instanceContext);
           }
         });

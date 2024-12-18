@@ -27,6 +27,7 @@ public class TimerSuspendProcessDefinitionHandler extends TimerChangeProcessDefi
 
   public static final String TYPE = "suspend-processdefinition";
 
+  @Override
   public String getType() {
     return TYPE;
   }

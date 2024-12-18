@@ -34,6 +34,7 @@ public class SFSBClientDelegate implements JavaDelegate {
   @EJB
   private JavaDelegate bean;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     bean.execute(execution);
   }

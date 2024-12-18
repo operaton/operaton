@@ -28,18 +28,22 @@ public class ActivateBatchCmd extends AbstractSetBatchStateCmd {
     super(batchId);
   }
 
+  @Override
   protected SuspensionState getNewSuspensionState() {
     return SuspensionState.ACTIVE;
   }
 
+  @Override
   protected void checkAccess(CommandChecker checker, BatchEntity batch) {
     checker.checkActivateBatch(batch);
   }
 
+  @Override
   protected AbstractSetJobDefinitionStateCmd createSetJobDefinitionStateCommand(UpdateJobDefinitionSuspensionStateBuilderImpl builder) {
     return new ActivateJobDefinitionCmd(builder);
   }
 
+  @Override
   protected String getUserOperationType() {
     return UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_BATCH;
   }

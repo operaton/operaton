@@ -25,6 +25,7 @@ import org.operaton.bpm.model.bpmn.builder.BusinessRuleTaskBuilder;
  */
 public interface BusinessRuleTask extends Task {
 
+  @Override
   BusinessRuleTaskBuilder builder();
 
   String getImplementation();

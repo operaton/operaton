@@ -28,6 +28,7 @@ public abstract class ReportResultEntity implements ReportResult {
   protected int period;
   protected PeriodUnit periodUnit;
 
+  @Override
   public int getPeriod() {
     return period;
   }
@@ -36,6 +37,7 @@ public abstract class ReportResultEntity implements ReportResult {
     this.period = period;
   }
 
+  @Override
   public PeriodUnit getPeriodUnit() {
     return periodUnit;
   }

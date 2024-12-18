@@ -30,6 +30,7 @@ public class LogAndUpdateVariableListener implements CaseVariableListener {
 
   protected static List<DelegateCaseVariableInstance> invocations = new ArrayList<DelegateCaseVariableInstance>();
 
+  @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
     invocations.add(variableInstance);
 

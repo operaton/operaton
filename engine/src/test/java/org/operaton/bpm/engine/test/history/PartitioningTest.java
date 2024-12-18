@@ -93,6 +93,7 @@ public class PartitioningTest {
     final String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         HistoricProcessInstanceEntity historicProcessInstanceEntity =
@@ -124,6 +125,7 @@ public class PartitioningTest {
     deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         HistoricTaskInstanceEntity historicTaskInstanceEntity =
@@ -156,6 +158,7 @@ public class PartitioningTest {
     final String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         commandContext.getHistoricActivityInstanceManager()
@@ -190,6 +193,7 @@ public class PartitioningTest {
       .createIncident("foo", execution.getId(), execution.getActivityId(), "bar").getId();
 
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         commandContext.getHistoricIncidentManager()
@@ -222,6 +226,7 @@ public class PartitioningTest {
     assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1L);
 
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         HistoricBatchEntity historicBatchEntity = (HistoricBatchEntity) historyService.createHistoricBatchQuery()
@@ -270,6 +275,7 @@ public class PartitioningTest {
 
   protected void cleanUp(final String processInstanceId) {
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         commandContext.getHistoricActivityInstanceManager()

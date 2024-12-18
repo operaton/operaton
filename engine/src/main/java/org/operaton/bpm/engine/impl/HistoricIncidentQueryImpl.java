@@ -67,90 +67,105 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
     super(commandExecutor);
   }
 
+  @Override
   public HistoricIncidentQuery incidentId(String incidentId) {
     ensureNotNull("incidentId", incidentId);
     this.id = incidentId;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery incidentType(String incidentType) {
     ensureNotNull("incidentType", incidentType);
     this.incidentType = incidentType;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery incidentMessage(String incidentMessage) {
     ensureNotNull("incidentMessage", incidentMessage);
     this.incidentMessage = incidentMessage;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery incidentMessageLike(String incidentMessageLike) {
     ensureNotNull("incidentMessageLike", incidentMessageLike);
     this.incidentMessageLike = incidentMessageLike;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery executionId(String executionId) {
     ensureNotNull("executionId", executionId);
     this.executionId = executionId;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery createTimeBefore(Date createTimeBefore) {
     ensureNotNull("createTimeBefore", createTimeBefore);
     this.createTimeBefore = createTimeBefore;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery createTimeAfter(Date createTimeAfter) {
     ensureNotNull("createTimeAfter", createTimeAfter);
     this.createTimeAfter = createTimeAfter;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery endTimeBefore(Date endTimeBefore) {
     ensureNotNull("endTimeBefore", endTimeBefore);
     this.endTimeBefore = endTimeBefore;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery endTimeAfter(Date endTimeAfter) {
     ensureNotNull("endTimeAfter", endTimeAfter);
     this.endTimeAfter = endTimeAfter;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery activityId(String activityId) {
     ensureNotNull("activityId", activityId);
     this.activityId = activityId;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery failedActivityId(String activityId) {
     ensureNotNull("failedActivityId", activityId);
     this.failedActivityId = activityId;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery processInstanceId(String processInstanceId) {
     ensureNotNull("processInstanceId", processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery processDefinitionId(String processDefinitionId) {
     ensureNotNull("processDefinitionId", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery processDefinitionKey(String processDefinitionKey) {
     ensureNotNull("processDefinitionKey", processDefinitionKey);
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery processDefinitionKeyIn(String... processDefinitionKeys) {
     ensureNotNull("processDefinitionKeys", (Object[]) processDefinitionKeys);
     this.processDefinitionKeys = processDefinitionKeys;
@@ -158,18 +173,21 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
   }
 
 
+  @Override
   public HistoricIncidentQuery causeIncidentId(String causeIncidentId) {
     ensureNotNull("causeIncidentId", causeIncidentId);
     this.causeIncidentId = causeIncidentId;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery rootCauseIncidentId(String rootCauseIncidentId) {
     ensureNotNull("rootCauseIncidentId", rootCauseIncidentId);
     this.rootCauseIncidentId = rootCauseIncidentId;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -184,24 +202,28 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery configuration(String configuration) {
     ensureNotNull("configuration", configuration);
     this.configuration = configuration;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery historyConfiguration(String historyConfiguration) {
     ensureNotNull("historyConfiguration", historyConfiguration);
     this.historyConfiguration = historyConfiguration;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery jobDefinitionIdIn(String... jobDefinitionIds) {
     ensureNotNull("jobDefinitionIds", (Object[]) jobDefinitionIds);
     this.jobDefinitionIds = jobDefinitionIds;
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery open() {
     if (incidentState != null) {
       throw new ProcessEngineException("Already querying for incident state <" + incidentState + ">");
@@ -210,6 +232,7 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery resolved() {
     if (incidentState != null) {
       throw new ProcessEngineException("Already querying for incident state <" + incidentState + ">");
@@ -218,6 +241,7 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery deleted() {
     if (incidentState != null) {
       throw new ProcessEngineException("Already querying for incident state <" + incidentState + ">");
@@ -228,6 +252,7 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
 
   // ordering ////////////////////////////////////////////////////
 
+  @Override
   public HistoricIncidentQuery orderByIncidentId() {
     orderBy(HistoricIncidentQueryProperty.INCIDENT_ID);
     return this;
@@ -240,77 +265,92 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
   }
 
 
+  @Override
   public HistoricIncidentQuery orderByCreateTime() {
     orderBy(HistoricIncidentQueryProperty.INCIDENT_CREATE_TIME);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByEndTime() {
     orderBy(HistoricIncidentQueryProperty.INCIDENT_END_TIME);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByIncidentType() {
     orderBy(HistoricIncidentQueryProperty.INCIDENT_TYPE);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByExecutionId() {
     orderBy(HistoricIncidentQueryProperty.EXECUTION_ID);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByActivityId() {
     orderBy(HistoricIncidentQueryProperty.ACTIVITY_ID);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByProcessInstanceId() {
     orderBy(HistoricIncidentQueryProperty.PROCESS_INSTANCE_ID);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByProcessDefinitionKey() {
     orderBy(HistoricIncidentQueryProperty.PROCESS_DEFINITION_KEY);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByProcessDefinitionId() {
     orderBy(HistoricIncidentQueryProperty.PROCESS_DEFINITION_ID);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByCauseIncidentId() {
     orderBy(HistoricIncidentQueryProperty.CAUSE_INCIDENT_ID);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByRootCauseIncidentId() {
     orderBy(HistoricIncidentQueryProperty.ROOT_CAUSE_INCIDENT_ID);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByConfiguration() {
     orderBy(HistoricIncidentQueryProperty.CONFIGURATION);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByHistoryConfiguration() {
     orderBy(HistoricIncidentQueryProperty.HISTORY_CONFIGURATION);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByIncidentState() {
     orderBy(HistoricIncidentQueryProperty.INCIDENT_STATE);
     return this;
   }
 
+  @Override
   public HistoricIncidentQuery orderByTenantId() {
     return orderBy(HistoricIncidentQueryProperty.TENANT_ID);
   }
 
   // results ////////////////////////////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return commandContext
@@ -318,6 +358,7 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
       .findHistoricIncidentCountByQueryCriteria(this);
   }
 
+  @Override
   public List<HistoricIncident> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     return commandContext

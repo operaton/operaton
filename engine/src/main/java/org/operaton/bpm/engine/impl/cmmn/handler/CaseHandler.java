@@ -38,6 +38,7 @@ public class CaseHandler extends CmmnElementHandler<Case, CmmnCaseDefinition> {
 
   protected static final CmmnTransformerLogger LOG = ProcessEngineLogger.CMMN_TRANSFORMER_LOGGER;
 
+  @Override
   public CmmnCaseDefinition handleElement(Case element, CmmnHandlerContext context) {
     CaseDefinitionEntity definition = createActivity(element, context);
 

@@ -367,6 +367,7 @@ public class TaskListenerErrorThrowTest extends AbstractTaskListenerTest {
   public static class ThrowBPMNErrorListener implements TaskListener {
     public static int INVOCATIONS = 0;
 
+    @Override
     public void notify(DelegateTask delegateTask) {
       INVOCATIONS++;
       throw new BpmnError(ERROR_CODE, "business error 208");

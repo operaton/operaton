@@ -38,14 +38,17 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
+  @Override
   public boolean isAsync(PvmExecutionImpl instance) {
     return false;
   }
 
+  @Override
   public boolean isAsyncCapable() {
     return false;
   }
 
+  @Override
   public void execute(PvmExecutionImpl execution) {
 
     // calculate the propagating execution
@@ -136,6 +139,7 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
 
   }
 
+  @Override
   public String getCanonicalName() {
     return "transition-destroy-scope";
   }

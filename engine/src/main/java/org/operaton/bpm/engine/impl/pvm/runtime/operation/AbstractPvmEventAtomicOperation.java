@@ -33,6 +33,7 @@ public abstract class AbstractPvmEventAtomicOperation extends AbstractEventAtomi
 
   protected abstract CoreModelElement getScope(PvmExecutionImpl execution);
 
+  @Override
   public boolean isAsyncCapable() {
     return false;
   }

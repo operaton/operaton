@@ -31,6 +31,7 @@ import org.operaton.bpm.model.cmmn.instance.Stage;
  */
 public class StageItemHandler extends ItemHandler {
 
+  @Override
   protected void initializeAutoComplete(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     PlanItemDefinition definition = getDefinition(element);
     if (definition instanceof Stage) {
@@ -39,10 +40,12 @@ public class StageItemHandler extends ItemHandler {
     }
   }
 
+  @Override
   protected CmmnActivityBehavior getActivityBehavior() {
     return new StageActivityBehavior();
   }
 
+  @Override
   protected List<String> getStandardEvents(CmmnElement element) {
     return TASK_OR_STAGE_EVENTS;
   }

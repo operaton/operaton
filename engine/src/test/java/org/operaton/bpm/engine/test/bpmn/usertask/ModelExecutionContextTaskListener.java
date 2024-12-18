@@ -30,6 +30,7 @@ public class ModelExecutionContextTaskListener implements TaskListener {
   public static BpmnModelInstance modelInstance;
   public static UserTask userTask;
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     modelInstance = delegateTask.getBpmnModelInstance();
     userTask = delegateTask.getBpmnModelElementInstance();

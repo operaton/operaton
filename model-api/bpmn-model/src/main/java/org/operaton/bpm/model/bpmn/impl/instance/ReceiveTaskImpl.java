@@ -48,7 +48,8 @@ public class ReceiveTaskImpl extends TaskImpl implements ReceiveTask {
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
       .instanceProvider(new ModelTypeInstanceProvider<ReceiveTask>() {
-        public ReceiveTask newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ReceiveTask newInstance(ModelTypeInstanceContext instanceContext) {
           return new ReceiveTaskImpl(instanceContext);
         }
       });
@@ -76,38 +77,47 @@ public class ReceiveTaskImpl extends TaskImpl implements ReceiveTask {
     super(context);
   }
 
+  @Override
   public ReceiveTaskBuilder builder() {
     return new ReceiveTaskBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public String getImplementation() {
     return implementationAttribute.getValue(this);
   }
 
+  @Override
   public void setImplementation(String implementation) {
     implementationAttribute.setValue(this, implementation);
   }
 
+  @Override
   public boolean instantiate() {
     return instantiateAttribute.getValue(this);
   }
 
+  @Override
   public void setInstantiate(boolean instantiate) {
     instantiateAttribute.setValue(this, instantiate);
   }
 
+  @Override
   public Message getMessage() {
     return messageRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setMessage(Message message) {
     messageRefAttribute.setReferenceTargetElement(this, message);
   }
 
+  @Override
   public Operation getOperation() {
     return operationRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setOperation(Operation operation) {
     operationRefAttribute.setReferenceTargetElement(this, operation);
   }

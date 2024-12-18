@@ -127,6 +127,7 @@ public class JobResourceImpl implements JobResource {
     }
   }
 
+  @Override
   public void updateSuspensionState(JobSuspensionStateDto dto) {
     dto.setJobId(jobId);
     dto.updateSuspensionState(engine);
@@ -150,6 +151,7 @@ public class JobResourceImpl implements JobResource {
     }
   }
 
+  @Override
   public void deleteJob() {
     try {
       engine.getManagementService()

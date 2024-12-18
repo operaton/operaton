@@ -45,6 +45,7 @@ public class SqlStatementCountAggregator extends TabularResultAggregator {
     super(resultsFolderPath);
   }
 
+  @Override
   protected TabularResultSet createAggregatedResultsInstance() {
     TabularResultSet tabularResultSet = new TabularResultSet();
 
@@ -58,6 +59,7 @@ public class SqlStatementCountAggregator extends TabularResultAggregator {
     return tabularResultSet;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   protected void processResults(PerfTestResults results, TabularResultSet tabularResultSet) {
     ArrayList<Object> row = new ArrayList<Object>();

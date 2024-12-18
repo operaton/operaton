@@ -23,6 +23,7 @@ import org.operaton.bpm.model.dmn.instance.Input;
 
 public class DmnDecisionTableInputTransformHandler implements DmnElementTransformHandler<Input, DmnDecisionTableInputImpl> {
 
+  @Override
   public DmnDecisionTableInputImpl handleElement(DmnElementTransformContext context, Input input) {
     return createFromInput(context, input);
   }

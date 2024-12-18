@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionDeleteCascade implements CmmnAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "delete-cascade";
   }
@@ -39,6 +40,7 @@ public class AtomicOperationCaseExecutionDeleteCascade implements CmmnAtomicOper
    return execution;
  }
 
+  @Override
   public void execute(CmmnExecution execution) {
     CmmnExecution firstLeaf = findFirstLeaf(execution);
 
@@ -50,6 +52,7 @@ public class AtomicOperationCaseExecutionDeleteCascade implements CmmnAtomicOper
     }
   }
 
+  @Override
   public boolean isAsync(CmmnExecution execution) {
     return false;
   }

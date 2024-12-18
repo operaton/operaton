@@ -54,10 +54,12 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
 
   // id ///////////////////////////////////////////////////////////////////
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
@@ -68,6 +70,7 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
     return caseInstanceId;
   }
 
+  @Override
   public CaseExecutionEntity getCaseInstance() {
     ensureCaseInstanceInitialized();
     return caseInstance;
@@ -79,6 +82,7 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
     }
   }
 
+  @Override
   public void setCaseInstance(CmmnExecution caseInstance) {
     this.caseInstance = (CaseExecutionEntity) caseInstance;
 
@@ -95,6 +99,7 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
     return caseExecutionId;
   }
 
+  @Override
   public CaseExecutionEntity getCaseExecution() {
     ensureCaseExecutionInitialized();
     return caseExecution;
@@ -106,6 +111,7 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
     }
   }
 
+  @Override
   public void setCaseExecution(CmmnExecution caseExecution) {
     this.caseExecution = (CaseExecutionEntity) caseExecution;
 
@@ -118,10 +124,12 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
 
   // source case execution id //////////////////////////////////////////////////
 
+  @Override
   public String getSourceCaseExecutionId() {
     return sourceCaseExecutionId;
   }
 
+  @Override
   public CmmnExecution getSourceCaseExecution() {
     ensureSourceCaseExecutionInitialized();
     return sourceCaseExecution;
@@ -133,6 +141,7 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
     }
   }
 
+  @Override
   public void setSourceCaseExecution(CmmnExecution sourceCaseExecution) {
     this.sourceCaseExecution = (CaseExecutionEntity) sourceCaseExecution;
 
@@ -145,14 +154,17 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
 
   // persistence /////////////////////////////////////////////////////////
 
+  @Override
   public int getRevision() {
     return revision;
   }
 
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
   }
 
+  @Override
   public int getRevisionNext() {
     return revision + 1;
   }
@@ -169,6 +181,7 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
     this.forcedUpdate = true;
   }
 
+  @Override
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<String, Object>();
     persistentState.put("satisfied", isSatisfied());

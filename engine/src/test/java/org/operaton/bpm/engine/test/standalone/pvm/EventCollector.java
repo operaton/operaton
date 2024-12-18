@@ -35,12 +35,14 @@ public class EventCollector implements ExecutionListener {
 
   public List<String> events = new ArrayList<String>();
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     PvmExecutionImpl executionImpl = (PvmExecutionImpl) execution;
     LOG.debug("collecting event: "+execution.getEventName()+" on "+executionImpl.getEventSource());
     events.add(execution.getEventName()+" on "+executionImpl.getEventSource());
   }
 
+  @Override
   public String toString() {
     StringBuilder text = new StringBuilder();
     for (String event: events) {

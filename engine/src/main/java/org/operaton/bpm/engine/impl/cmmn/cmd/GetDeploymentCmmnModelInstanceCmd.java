@@ -41,6 +41,7 @@ public class GetDeploymentCmmnModelInstanceCmd implements Command<CmmnModelInsta
     this.caseDefinitionId = caseDefinitionId;
   }
 
+  @Override
   public CmmnModelInstance execute(CommandContext commandContext) {
     ensureNotNull("caseDefinitionId", caseDefinitionId);
 

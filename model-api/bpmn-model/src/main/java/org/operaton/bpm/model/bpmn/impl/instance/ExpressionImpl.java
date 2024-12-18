@@ -38,7 +38,8 @@ public class ExpressionImpl extends BaseElementImpl implements Expression {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Expression>() {
-        public Expression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Expression newInstance(ModelTypeInstanceContext instanceContext) {
           return new ExpressionImpl(instanceContext);
         }
       });

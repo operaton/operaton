@@ -52,6 +52,7 @@ public class InjectCustomProcessEngineTest extends CdiProcessEngineTestCase {
   }
 
   @After
+  @Override
   public void tearDownCdiProcessEngineTestCase() {
     RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(processEngine);
 

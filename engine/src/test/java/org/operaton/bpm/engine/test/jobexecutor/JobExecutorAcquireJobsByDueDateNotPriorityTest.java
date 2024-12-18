@@ -66,6 +66,7 @@ public class JobExecutorAcquireJobsByDueDateNotPriorityTest extends AbstractJobE
   }
 
 
+  @Override
   protected Job findJobById(String id) {
     return managementService.createJobQuery().jobId(id).singleResult();
   }

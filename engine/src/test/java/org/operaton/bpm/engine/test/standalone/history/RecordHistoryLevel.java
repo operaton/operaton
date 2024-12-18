@@ -35,10 +35,12 @@ public class RecordHistoryLevel implements HistoryLevel {
     Collections.addAll(this.recordedHistoryEventTypes, filterHistoryEventType);
   }
 
+  @Override
   public int getId() {
     return 42;
   }
 
+  @Override
   public String getName() {
     return "recordHistoryLevel";
   }
@@ -51,6 +53,7 @@ public class RecordHistoryLevel implements HistoryLevel {
     return producedHistoryEvents;
   }
 
+  @Override
   public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
     if (recordedHistoryEventTypes.isEmpty() || recordedHistoryEventTypes.contains(eventType)) {
       producedHistoryEvents.add(new ProducedHistoryEvent(eventType, entity));

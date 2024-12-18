@@ -29,6 +29,7 @@ public class DmnDecisionLiteralExpressionEvaluationEventImpl implements DmnDecis
 
   protected long executedDecisionElements;
 
+  @Override
   public DmnDecision getDecision() {
     return decision;
   }
@@ -37,6 +38,7 @@ public class DmnDecisionLiteralExpressionEvaluationEventImpl implements DmnDecis
     this.decision = decision;
   }
 
+  @Override
   public String getOutputName() {
     return outputName;
   }
@@ -45,6 +47,7 @@ public class DmnDecisionLiteralExpressionEvaluationEventImpl implements DmnDecis
     this.outputName = outputName;
   }
 
+  @Override
   public TypedValue getOutputValue() {
     return outputValue;
   }
@@ -53,6 +56,7 @@ public class DmnDecisionLiteralExpressionEvaluationEventImpl implements DmnDecis
     this.outputValue = outputValue;
   }
 
+  @Override
   public long getExecutedDecisionElements() {
     return executedDecisionElements;
   }

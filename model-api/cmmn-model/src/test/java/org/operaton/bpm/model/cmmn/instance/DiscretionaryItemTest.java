@@ -25,10 +25,12 @@ import java.util.Collection;
  */
 public class DiscretionaryItemTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(TableItem.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(ItemControl.class, 0, 1),
@@ -37,6 +39,7 @@ public class DiscretionaryItemTest extends CmmnModelElementInstanceTest {
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
           new AttributeAssumption("name"),

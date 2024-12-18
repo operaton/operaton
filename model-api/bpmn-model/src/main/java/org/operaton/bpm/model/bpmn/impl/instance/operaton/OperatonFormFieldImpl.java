@@ -54,7 +54,8 @@ public class OperatonFormFieldImpl extends BpmnModelElementInstanceImpl implemen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormField.class, OPERATON_ELEMENT_FORM_FIELD)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonFormField>() {
-        public OperatonFormField newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonFormField newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonFormFieldImpl(instanceContext);
         }
       });
@@ -97,62 +98,77 @@ public class OperatonFormFieldImpl extends BpmnModelElementInstanceImpl implemen
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonId() {
     return operatonIdAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonId(String operatonId) {
     operatonIdAttribute.setValue(this, operatonId);
   }
 
+  @Override
   public String getOperatonLabel() {
     return operatonLabelAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonLabel(String operatonLabel) {
     operatonLabelAttribute.setValue(this, operatonLabel);
   }
 
+  @Override
   public String getOperatonType() {
     return operatonTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonType(String operatonType) {
     operatonTypeAttribute.setValue(this, operatonType);
   }
 
+  @Override
   public String getOperatonDatePattern() {
     return operatonDatePatternAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDatePattern(String operatonDatePattern) {
     operatonDatePatternAttribute.setValue(this, operatonDatePattern);
   }
 
+  @Override
   public String getOperatonDefaultValue() {
     return operatonDefaultValueAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDefaultValue(String operatonDefaultValue) {
     operatonDefaultValueAttribute.setValue(this, operatonDefaultValue);
   }
 
+  @Override
   public OperatonProperties getOperatonProperties() {
     return operatonPropertiesChild.getChild(this);
   }
 
+  @Override
   public void setOperatonProperties(OperatonProperties operatonProperties) {
     operatonPropertiesChild.setChild(this, operatonProperties);
   }
 
+  @Override
   public OperatonValidation getOperatonValidation() {
     return operatonValidationChild.getChild(this);
   }
 
+  @Override
   public void setOperatonValidation(OperatonValidation operatonValidation) {
     operatonValidationChild.setChild(this, operatonValidation);
   }
 
+  @Override
   public Collection<OperatonValue> getOperatonValues() {
     return operatonValueCollection.get(this);
   }

@@ -36,6 +36,7 @@ public class HistoryCleanupRemovalTime extends HistoryCleanupHandler {
 
   protected Map<Class<? extends DbEntity>, DbOperation> deleteOperations = new HashMap<>();
 
+  @Override
   public void performCleanup() {
     deleteOperations.putAll(performProcessCleanup());
 
@@ -84,6 +85,7 @@ public class HistoryCleanupRemovalTime extends HistoryCleanupHandler {
             configuration.getMinuteFrom(), configuration.getMinuteTo(), getBatchSize());
   }
 
+  @Override
   protected Map<String, Long> reportMetrics() {
     Map<String, Long> reports = new HashMap<>();
 
@@ -122,6 +124,7 @@ public class HistoryCleanupRemovalTime extends HistoryCleanupHandler {
         .getParsedTaskMetricsTimeToLive();
   }
 
+  @Override
   protected boolean shouldRescheduleNow() {
     int batchSize = getBatchSize();
 

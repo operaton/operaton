@@ -31,10 +31,12 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  */
 public class StopProcessApplicationServiceStep extends DeploymentOperationStep {
 
+  @Override
   public String getName() {
     return "Removing process application";
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
 
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();

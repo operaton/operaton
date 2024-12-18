@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
  */
 public class EmbeddedSubProcess implements CompositeActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     List<PvmActivity> startActivities = new ArrayList<PvmActivity>();
     for (PvmActivity activity: execution.getActivity().getActivities()) {
@@ -44,11 +45,13 @@ public class EmbeddedSubProcess implements CompositeActivityBehavior {
     }
   }
 
+  @Override
   public void concurrentChildExecutionEnded(ActivityExecution scopeExecution, ActivityExecution endedExecution) {
     endedExecution.remove();
     scopeExecution.tryPruneLastConcurrentChild();
   }
 
+  @Override
   public void complete(ActivityExecution execution) {
     List<PvmTransition> outgoingTransitions = execution.getActivity().getOutgoingTransitions();
     if(outgoingTransitions.isEmpty()) {

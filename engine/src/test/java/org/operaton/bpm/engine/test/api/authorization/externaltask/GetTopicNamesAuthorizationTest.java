@@ -35,6 +35,7 @@ public class GetTopicNamesAuthorizationTest extends AuthorizationTest {
   protected String instance2Id;
 
   @Before
+  @Override
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",

@@ -35,6 +35,7 @@ public class ApplicationServerImpl implements ApplicationServer {
     this.version = version;
   }
 
+  @Override
   public String getVendor() {
     return vendor;
   }
@@ -43,6 +44,7 @@ public class ApplicationServerImpl implements ApplicationServer {
     this.vendor = vendor;
   }
 
+  @Override
   public String getVersion() {
     return version;
   }

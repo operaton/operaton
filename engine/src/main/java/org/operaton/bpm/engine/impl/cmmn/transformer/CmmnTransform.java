@@ -95,6 +95,7 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
     return this;
   }
 
+  @Override
   public List<CaseDefinitionEntity> transform() {
     // get name of resource
     String resourceName = resource.getName();

@@ -51,26 +51,32 @@ public class DecisionImpl extends CmmnElementImpl implements Decision {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getImplementationType() {
     return implementationTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setImplementationType(String implementationType) {
     implementationTypeAttribute.setValue(this, implementationType);
   }
 
+  @Override
   public Collection<InputDecisionParameter> getInputs() {
     return inputCollection.get(this);
   }
 
+  @Override
   public Collection<OutputDecisionParameter> getOutputs() {
     return outputCollection.get(this);
   }
@@ -80,7 +86,8 @@ public class DecisionImpl extends CmmnElementImpl implements Decision {
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<Decision>() {
-          public Decision newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Decision newInstance(ModelTypeInstanceContext instanceContext) {
             return new DecisionImpl(instanceContext);
           }
         });

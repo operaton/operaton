@@ -86,6 +86,7 @@ public class EntityTypeComparatorForModifications implements Comparator<Class<?>
 
   }
 
+  @Override
   public int compare(Class<?> firstEntityType, Class<?> secondEntityType) {
 
     if(firstEntityType == secondEntityType) {

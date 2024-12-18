@@ -27,6 +27,7 @@ public class LogInterceptor extends CommandInterceptor {
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
+  @Override
   public <T> T execute(Command<T> command) {
     LOG.debugStartingCommand(command);
     try {

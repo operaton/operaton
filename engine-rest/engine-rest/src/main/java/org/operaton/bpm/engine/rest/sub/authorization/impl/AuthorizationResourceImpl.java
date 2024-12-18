@@ -51,6 +51,7 @@ public class AuthorizationResourceImpl extends AbstractAuthorizedRestResource im
     authorizationService = getProcessEngine().getAuthorizationService();
   }
 
+  @Override
   public AuthorizationDto getAuthorization(UriInfo context) {
 
     Authorization dbAuthorization = getDbAuthorization();
@@ -59,11 +60,13 @@ public class AuthorizationResourceImpl extends AbstractAuthorizedRestResource im
 
   }
 
+  @Override
   public void deleteAuthorization() {
     Authorization dbAuthorization = getDbAuthorization();
     authorizationService.deleteAuthorization(dbAuthorization.getId());
   }
 
+  @Override
   public void updateAuthorization(AuthorizationDto dto) {
     // get db auth
     Authorization dbAuthorization = getDbAuthorization();
@@ -73,6 +76,7 @@ public class AuthorizationResourceImpl extends AbstractAuthorizedRestResource im
     authorizationService.saveAuthorization(dbAuthorization);
   }
 
+  @Override
   public ResourceOptionsDto availableOperations(UriInfo context) {
 
     ResourceOptionsDto dto = new ResourceOptionsDto();

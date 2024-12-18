@@ -89,6 +89,7 @@ public abstract class PluggableProcessEngineTest implements ProcessEngineProvide
     decisionService = processEngine.getDecisionService();
   }
 
+  @Override
   public ProcessEngine getProcessEngine() {
     return processEngine;
   }

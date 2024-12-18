@@ -54,6 +54,7 @@ public class ExecuteJobsCmd implements Command<Void>, Serializable {
     this.jobFailureCollector = jobFailureCollector;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ensureNotNull("jobId", jobId);
 

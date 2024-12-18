@@ -20,10 +20,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +32,8 @@ import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.deployment.scanning.spi.ProcessApplicationScanner;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * <p>Scans for bpmn20.xml files in the classpath of the given classloader.</p>
@@ -130,9 +130,9 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     }
 
     try {
-      urlPath = URLDecoder.decode(urlPath, StandardCharsets.UTF_8);
+      urlPath = URLDecoder.decode(urlPath, UTF_8);
     }
-    catch (UnsupportedEncodingException e) {
+    catch (IllegalArgumentException e) {
       throw LOG.cannotDecodePathName(e);
     }
 

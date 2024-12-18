@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.sub.repository.impl;
 
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -84,19 +83,12 @@ public class DecisionRequirementsDefinitionResourceImpl implements DecisionRequi
 
       byte[] decisionRequirementsModel = IoUtil.readInputStream(decisionRequirementsModelInputStream, "decisionRequirementsModelDmnXml");
       return DecisionRequirementsDefinitionXmlDto.create(decisionRequirementsDefinitionId, new String(decisionRequirementsModel, UTF_8));
-
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, e.getMessage());
-
     } catch (NotValidException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e, e.getMessage());
-
     } catch (ProcessEngineException e) {
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
-
-    } catch (UnsupportedEncodingException e) {
-      throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
-
     } finally {
       IoUtil.closeSilently(decisionRequirementsModelInputStream);
     }

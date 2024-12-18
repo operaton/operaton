@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.digest;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -47,13 +46,8 @@ public abstract class Base64EncodedHashDigest {
 
   protected byte[] createByteHash(String password) {
     MessageDigest digest = createDigestInstance();
-    try {
-      digest.update(password.getBytes(UTF_8));
-      return digest.digest();
-
-    } catch (UnsupportedEncodingException e) {
-      throw new ProcessEngineException("UnsupportedEncodingException while calculating password digest");
-    }
+    digest.update(password.getBytes(UTF_8));
+    return digest.digest();
   }
 
   protected MessageDigest createDigestInstance() {

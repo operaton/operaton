@@ -45,7 +45,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -100,11 +99,7 @@ public class CaseDefinitionResourceImpl implements CaseDefinitionResource {
       throw new InvalidRequestException(Status.NOT_FOUND, e, e.getMessage());
     } catch (NotValidException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e, e.getMessage());
-
     } catch (ProcessEngineException e) {
-      throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
-
-    } catch (UnsupportedEncodingException e) {
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
     } finally {
       IoUtil.closeSilently(caseModelInputStream);

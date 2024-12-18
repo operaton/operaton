@@ -73,7 +73,6 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -267,8 +266,6 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       throw e;
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, "No matching definition with id " + processDefinitionId);
-    } catch (UnsupportedEncodingException e) {
-      throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
     } finally {
       IoUtil.closeSilently(processModelIn);
     }

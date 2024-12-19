@@ -7,6 +7,7 @@ on:
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/build.yml'
+      - '.github/jreleaser/changelog.tpl'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -18,6 +19,7 @@ on:
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/build.yml'
+      - '.github/jreleaser/changelog.tpl'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -59,15 +61,7 @@ jobs:
         id: maven-build
         shell: bash
         run: |
-          echo "Creating a flag file 'executeJacoco' for each module containing tests. \
-          This triggers activation of the 'coverage' profile."
-          find . -type d | while read -r dir; do
-          if [[ -d "$dir/src/test/java" || -d "$dir/target/generated-test-sources/java" ]]; then
-            # Create an empty file target/executeJacoco if the condition is met
-            mkdir -p "$dir/target"
-            touch "$dir/target/executeJacoco"
-          fi
-          done
+          .github/scripts/jacoco-create-flag-files.sh
           ./mvnw verify
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report

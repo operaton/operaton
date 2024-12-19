@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.repository;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -40,7 +29,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.assertj.core.groups.Tuple;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -90,11 +85,17 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.engine.test.util.TestExecutionListener;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Frederik Heremans
@@ -563,7 +564,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.cmmn" })
   @Test
-  public void testGetCaseModel() throws Exception {
+  public void testGetCaseModel() {
     CaseDefinitionQuery query = repositoryService.createCaseDefinitionQuery();
 
     CaseDefinition caseDefinition = query.singleResult();
@@ -661,7 +662,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.dmn" })
   @Test
-  public void testGetDecisionModel() throws Exception {
+  public void testGetDecisionModel() {
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
 
     DecisionDefinition decisionDefinition = query.singleResult();
@@ -697,7 +698,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/drg.dmn" })
   @Test
-  public void testGetDecisionRequirementsModel() throws Exception {
+  public void testGetDecisionRequirementsModel() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     DecisionRequirementsDefinition decisionRequirementsDefinition = query.singleResult();

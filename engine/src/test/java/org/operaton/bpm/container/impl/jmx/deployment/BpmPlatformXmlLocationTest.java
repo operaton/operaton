@@ -16,29 +16,28 @@
  */
 package org.operaton.bpm.container.impl.jmx.deployment;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_FILE;
-import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_LOCATION;
-import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_SYSTEM_PROPERTY;
-import static org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep.CATALINA_HOME;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
-
-import org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep;
 import org.junit.Rule;
 import org.junit.Test;
+import org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep;
 import org.springframework.mock.jndi.SimpleNamingContext;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_FILE;
+import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_LOCATION;
+import static org.operaton.bpm.container.impl.deployment.AbstractParseBpmPlatformXmlStep.BPM_PLATFORM_XML_SYSTEM_PROPERTY;
+import static org.operaton.bpm.container.impl.tomcat.deployment.TomcatParseBpmPlatformXmlStep.CATALINA_HOME;
 
 /**
  * Checks the correct retrieval of bpm-platform.xml file through JNDI,

@@ -26,8 +26,8 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 

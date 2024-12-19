@@ -53,12 +53,16 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
   public void saveJobExecutor() {
     processEngine = engineRule.getProcessEngine();
     defaultJobExecutor = processEngineConfiguration.getJobExecutor();
+
+    //Deletes all Metrics
+    processEngine.getManagementService().deleteMetrics(null);
   }
 
   @After
   public void restoreJobExecutor() {
     processEngineConfiguration.setJobExecutor(defaultJobExecutor);
   }
+
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/metrics/asyncServiceTaskProcess.bpmn20.xml")
   @Test

@@ -42,7 +42,7 @@ public class TaskFollowUpDateExtensionsTest extends PluggableProcessEngineTest {
   public void testUserTaskFollowUpDateExtension() throws Exception {
 
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("01-01-2015 12:10:00");
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", date);
 
     // Start process-instance, passing date that should be used as followUpDate
@@ -58,7 +58,7 @@ public class TaskFollowUpDateExtensionsTest extends PluggableProcessEngineTest {
   @Test
   public void testUserTaskFollowUpDateStringExtension() throws Exception {
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "2015-01-01T12:10:00");
 
     // Start process-instance, passing date that should be used as followUpDate
@@ -74,7 +74,7 @@ public class TaskFollowUpDateExtensionsTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/usertask/TaskFollowUpDateExtensionsTest.testUserTaskFollowUpDate.bpmn20.xml"})
   @Test
   public void testUserTaskRelativeFollowUpDate() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "P2DT2H30M");
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);

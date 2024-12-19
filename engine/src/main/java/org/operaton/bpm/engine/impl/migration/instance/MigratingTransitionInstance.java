@@ -39,7 +39,7 @@ public class MigratingTransitionInstance extends MigratingProcessElementInstance
 
   protected TransitionInstance transitionInstance;
   protected MigratingAsyncJobInstance jobInstance;
-  protected List<MigratingInstance> migratingDependentInstances = new ArrayList<MigratingInstance>();
+  protected List<MigratingInstance> migratingDependentInstances = new ArrayList<>();
   protected boolean activeState;
 
 

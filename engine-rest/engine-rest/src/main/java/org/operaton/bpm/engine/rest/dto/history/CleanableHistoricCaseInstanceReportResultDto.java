@@ -100,7 +100,7 @@ public class CleanableHistoricCaseInstanceReportResultDto implements Serializabl
   }
 
   public static List<CleanableHistoricCaseInstanceReportResultDto> convert(List<CleanableHistoricCaseInstanceReportResult> reportResult) {
-    List<CleanableHistoricCaseInstanceReportResultDto> dtos = new ArrayList<CleanableHistoricCaseInstanceReportResultDto>();
+    List<CleanableHistoricCaseInstanceReportResultDto> dtos = new ArrayList<>();
     for (CleanableHistoricCaseInstanceReportResult current : reportResult) {
       CleanableHistoricCaseInstanceReportResultDto dto = new CleanableHistoricCaseInstanceReportResultDto();
       dto.setCaseDefinitionId(current.getCaseDefinitionId());

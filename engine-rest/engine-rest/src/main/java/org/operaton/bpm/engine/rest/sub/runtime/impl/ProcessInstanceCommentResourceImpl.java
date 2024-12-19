@@ -52,7 +52,7 @@ public class ProcessInstanceCommentResourceImpl implements ProcessInstanceCommen
 
     List<Comment> processInstanceComments = engine.getTaskService().getProcessInstanceComments(processInstanceId);
 
-    List<CommentDto> comments = new ArrayList<CommentDto>();
+    List<CommentDto> comments = new ArrayList<>();
     for (Comment comment : processInstanceComments) {
       comments.add(CommentDto.fromComment(comment));
     }

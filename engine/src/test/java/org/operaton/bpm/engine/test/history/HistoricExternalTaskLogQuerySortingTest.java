@@ -550,7 +550,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   protected List<ExternalTask> startProcesses(int count) {
-    List<ExternalTask> list = new LinkedList<ExternalTask>();
+    List<ExternalTask> list = new LinkedList<>();
     for (int ithPrio = 0; ithPrio < count; ithPrio++) {
       list.add(startExternalTaskProcessGivenPriority(ithPrio));
       ensureEnoughTimePassedByForTimestampOrdering();
@@ -559,7 +559,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   protected List<ExternalTask> startProcessesByTopicName(int count) {
-    List<ExternalTask> list = new LinkedList<ExternalTask>();
+    List<ExternalTask> list = new LinkedList<>();
     for (Integer ithTopic = 0; ithTopic < count; ithTopic++) {
       list.add(startExternalTaskProcessGivenTopicName(ithTopic.toString()));
     }
@@ -567,7 +567,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   protected List<ExternalTask> startProcessesByActivityId(int count) {
-    List<ExternalTask> list = new LinkedList<ExternalTask>();
+    List<ExternalTask> list = new LinkedList<>();
     for (Integer ithTopic = 0; ithTopic < count; ithTopic++) {
       list.add(startExternalTaskProcessGivenActivityId("Activity" + ithTopic.toString()));
     }
@@ -575,7 +575,7 @@ public class HistoricExternalTaskLogQuerySortingTest {
   }
 
   protected List<ExternalTask> startProcessesByProcessDefinitionKey(int count) {
-    List<ExternalTask> list = new LinkedList<ExternalTask>();
+    List<ExternalTask> list = new LinkedList<>();
     for (Integer ithTopic = 0; ithTopic < count; ithTopic++) {
       list.add(startExternalTaskProcessGivenProcessDefinitionKey("ProcessKey" + ithTopic.toString()));
     }

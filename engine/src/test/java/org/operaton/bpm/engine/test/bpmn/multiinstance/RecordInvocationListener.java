@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  */
 public class RecordInvocationListener implements ExecutionListener {
 
-  public static final Map<String, Integer> INVOCATIONS = new HashMap<String, Integer>();
+  public static final Map<String, Integer> INVOCATIONS = new HashMap<>();
 
   @Override
   public void notify(DelegateExecution execution) throws Exception {

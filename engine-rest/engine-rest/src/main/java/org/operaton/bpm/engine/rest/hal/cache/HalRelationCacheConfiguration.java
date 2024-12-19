@@ -37,7 +37,7 @@ public class HalRelationCacheConfiguration {
   protected Map<Class<?>, Map<String, Object>> cacheConfigurations;
 
   public HalRelationCacheConfiguration() {
-    cacheConfigurations = new HashMap<Class<?>, Map<String, Object>>();
+    cacheConfigurations = new HashMap<>();
   }
 
   public HalRelationCacheConfiguration(String configuration) {

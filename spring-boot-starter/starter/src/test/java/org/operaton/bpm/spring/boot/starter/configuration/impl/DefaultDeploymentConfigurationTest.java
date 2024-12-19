@@ -61,7 +61,7 @@ public class DefaultDeploymentConfigurationTest {
   }
 
   private Set<String> filenames(Resource[] resources) {
-    Set<String> filenames = new HashSet<String>();
+    Set<String> filenames = new HashSet<>();
     for (Resource resource : resources) {
       filenames.add(resource.getFilename());
     }

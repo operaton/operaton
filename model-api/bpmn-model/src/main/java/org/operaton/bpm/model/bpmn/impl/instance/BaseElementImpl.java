@@ -114,7 +114,7 @@ public abstract class BaseElementImpl extends BpmnModelElementInstanceImpl imple
 
   @SuppressWarnings("rawtypes")
   public Collection<Reference> getIncomingReferencesByType(Class<? extends ModelElementInstance> referenceSourceTypeClass) {
-    Collection<Reference> references = new ArrayList<Reference>();
+    Collection<Reference> references = new ArrayList<>();
     // we traverse all incoming references in reverse direction
     for (Reference<?> reference : idAttribute.getIncomingReferences()) {
 

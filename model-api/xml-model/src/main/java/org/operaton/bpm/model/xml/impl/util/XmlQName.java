@@ -32,7 +32,7 @@ public class XmlQName {
   public static final Map<String, String> KNOWN_PREFIXES;
   static
   {
-    KNOWN_PREFIXES = new HashMap<String, String>();
+    KNOWN_PREFIXES = new HashMap<>();
     KNOWN_PREFIXES.put("http://www.operaton.com/fox", "fox");
     KNOWN_PREFIXES.put("http://activiti.org/bpmn", "operaton");
     KNOWN_PREFIXES.put("http://operaton.org/schema/1.0/bpmn", "operaton");

@@ -65,7 +65,7 @@ public final class OperatonSpringBootUtil {
    * @return new non-null list containing all elements of existing and add.
    */
   public static <T> List<T> join(final List<? extends T> existing, final List<? extends T> add) {
-    final List<T> target = new ArrayList<T>();
+    final List<T> target = new ArrayList<>();
     if (!CollectionUtils.isEmpty(existing)) {
       target.addAll(existing);
     }

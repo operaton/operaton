@@ -100,7 +100,7 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testEmptyQueryAsPost() {
-    Map<String, String> params = new HashMap<String, String>();
+    Map<String, String> params = new HashMap<>();
     params.put("caseExecutionId", "");
 
     given()
@@ -229,7 +229,7 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
   @Test
   public void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("caseExecutionId").desc()
       .orderBy("caseDefinitionId").asc()
@@ -354,7 +354,7 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
   public void testCaseExecutionRetrievalAsPost() {
     String queryCaseExecutionId = "aCaseExecutionId";
 
-    Map<String, String> queryParameter = new HashMap<String, String>();
+    Map<String, String> queryParameter = new HashMap<>();
     queryParameter.put("caseExecutionId", queryCaseExecutionId);
 
     Response response = given()
@@ -408,7 +408,7 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testMultipleParameters() {
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, String> queryParameters = new HashMap<>();
 
     queryParameters.put("caseExecutionId", "aCaseExecutionId");
     queryParameters.put("caseDefinitionKey", "aCaseDefId");
@@ -453,7 +453,7 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
     String aBusinessKey = "aBusinessKey";
     String anActivityId = "anActivityId";
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
 
     queryParameters.put("caseExecutionId", aCaseExecutionId);
     queryParameters.put("caseDefinitionKey", aCaseDefKey);
@@ -592,15 +592,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
     String variableName = "varName";
     String variableValue = "varValue";
 
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", variableName);
     variableJson.put("operator", "eq");
     variableJson.put("value", variableValue);
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceVariables", variables);
 
     given()
@@ -730,21 +730,21 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
     String anotherVariableName = "anotherVarName";
     Integer anotherVariableValue = 30;
 
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", variableName);
     variableJson.put("operator", "eq");
     variableJson.put("value", variableValue);
 
-    Map<String, Object> anotherVariableJson = new HashMap<String, Object>();
+    Map<String, Object> anotherVariableJson = new HashMap<>();
     anotherVariableJson.put("name", anotherVariableName);
     anotherVariableJson.put("operator", "neq");
     anotherVariableJson.put("value", anotherVariableValue);
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     variables.add(anotherVariableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceVariables", variables);
 
     given()
@@ -1070,15 +1070,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValueEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1095,15 +1095,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValueGreaterThanAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "gt");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1120,15 +1120,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValueGreaterThanEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "gteq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1145,15 +1145,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValueLessThanAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "lt");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1170,15 +1170,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValueLessThanEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "lteq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1195,15 +1195,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValueLikeAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1220,15 +1220,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValueNotEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1245,15 +1245,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValuesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1272,15 +1272,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValuesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1299,15 +1299,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableValuesLikeIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1327,15 +1327,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableNamesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableNamesIgnoreCase", true);
     
@@ -1354,15 +1354,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testVariableNamesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableNamesIgnoreCase", true);
     
@@ -1381,15 +1381,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testCaseInstanceVariableValuesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceVariables", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1408,15 +1408,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
   
   @Test
   public void testCaseInstanceVariableValuesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceVariables", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1435,15 +1435,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
   
   @Test
   public void testCaseInstanceVariableValuesLikeIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceVariables", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1463,15 +1463,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
   
   @Test
   public void testCaseInstanceVariableNamesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceVariables", variables);
     json.put("variableNamesIgnoreCase", true);
     
@@ -1490,15 +1490,15 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
   
   @Test
   public void testCaseInstanceVariableNamesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceVariables", variables);
     json.put("variableNamesIgnoreCase", true);
     
@@ -1546,21 +1546,21 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
     String anotherVariableName = "anotherVarName";
     Integer anotherVariableValue = 30;
 
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", variableName);
     variableJson.put("operator", "eq");
     variableJson.put("value", variableValue);
 
-    Map<String, Object> anotherVariableJson = new HashMap<String, Object>();
+    Map<String, Object> anotherVariableJson = new HashMap<>();
     anotherVariableJson.put("name", anotherVariableName);
     anotherVariableJson.put("operator", "neq");
     anotherVariableJson.put("value", anotherVariableValue);
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     variables.add(anotherVariableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1631,7 +1631,7 @@ public class CaseExecutionRestServiceQueryTest extends AbstractRestServiceTest {
   public void testTenantIdListPostParameter() {
     mockedQuery = setUpMockCaseExecutionQuery(createMockCaseExecutionsTwoTenants());
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("tenantIdIn", MockProvider.EXAMPLE_TENANT_ID_LIST.split(","));
 
     Response response = given()

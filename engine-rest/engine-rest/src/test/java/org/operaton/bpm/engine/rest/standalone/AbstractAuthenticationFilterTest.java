@@ -103,7 +103,7 @@ public abstract class AbstractAuthenticationFilterTest extends AbstractRestServi
     when(mockGroupQuery.groupMember(anyString())).thenReturn(mockGroupQuery);
     when(mockGroupQuery.list()).thenReturn(groups);
 
-    List<String> groupIds = new ArrayList<String>();
+    List<String> groupIds = new ArrayList<>();
     for (Group groupMock : groups) {
       groupIds.add(groupMock.getId());
     }
@@ -118,7 +118,7 @@ public abstract class AbstractAuthenticationFilterTest extends AbstractRestServi
     when(mockTenantQuery.includingGroupsOfUser(anyBoolean())).thenReturn(mockTenantQuery);
     when(mockTenantQuery.list()).thenReturn(tenants);
 
-    List<String> tenantIds = new ArrayList<String>();
+    List<String> tenantIds = new ArrayList<>();
     for(Tenant tenant: tenants) {
       tenantIds.add(tenant.getId());
     }

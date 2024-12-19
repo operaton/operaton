@@ -56,7 +56,7 @@ public class ExecutionTreeProcessDefinitionIdAssertion implements ExecutionTreeA
    */
   protected List<Execution> matches(ExecutionTree tree) {
     ExecutionEntity executionEntity = (ExecutionEntity) tree.getExecution();
-    List<Execution> unmatchedExecutions = new ArrayList<Execution>();
+    List<Execution> unmatchedExecutions = new ArrayList<>();
 
     if (!expectedProcessDefinitionId.equals(executionEntity.getProcessDefinitionId())) {
       unmatchedExecutions.add(tree.getExecution());

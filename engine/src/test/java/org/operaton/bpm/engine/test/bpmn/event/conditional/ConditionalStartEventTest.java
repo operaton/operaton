@@ -560,7 +560,7 @@ public class ConditionalStartEventTest {
       assertEquals(EventType.CONDITONAL.name(), eventSubscription.getEventType());
     }
 
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", 1);
     variableMap.put("bar", true);
 
@@ -587,7 +587,7 @@ public class ConditionalStartEventTest {
 
     assertEquals(5, eventSubscriptions.size());
 
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", 1);
     variableMap.put("bar", true);
 
@@ -611,7 +611,7 @@ public class ConditionalStartEventTest {
 
     assertEquals(5, eventSubscriptions.size());
 
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", 1);
 
     // when, it should not throw PropertyNotFoundException

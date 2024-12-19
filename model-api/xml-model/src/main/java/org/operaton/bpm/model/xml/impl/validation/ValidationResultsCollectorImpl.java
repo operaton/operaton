@@ -35,7 +35,7 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
 
   protected ModelElementInstance currentElement;
 
-  protected Map<ModelElementInstance, List<ValidationResult>> collectedResults = new HashMap<ModelElementInstance, List<ValidationResult>>();
+  protected Map<ModelElementInstance, List<ValidationResult>> collectedResults = new HashMap<>();
 
   protected int errorCount = 0;
   protected int warningCount = 0;
@@ -68,7 +68,7 @@ public class ValidationResultsCollectorImpl implements ValidationResultCollector
     List<ValidationResult> resultsByElement = collectedResults.get(currentElement);
 
     if(resultsByElement == null) {
-      resultsByElement = new ArrayList<ValidationResult>();
+      resultsByElement = new ArrayList<>();
       collectedResults.put(currentElement, resultsByElement);
     }
     return resultsByElement;

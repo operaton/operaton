@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  */
 public class TestExecutionListener implements ExecutionListener {
 
-  public static List<String> collectedEvents = new ArrayList<String>();
+  public static List<String> collectedEvents = new ArrayList<>();
 
   @Override
   public void notify(DelegateExecution execution) throws Exception {

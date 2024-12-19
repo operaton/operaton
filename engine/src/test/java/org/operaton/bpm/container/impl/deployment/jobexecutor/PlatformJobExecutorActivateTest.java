@@ -32,7 +32,6 @@ import org.operaton.bpm.container.impl.metadata.JobAcquisitionXmlImpl;
 import org.operaton.bpm.container.impl.metadata.JobExecutorXmlImpl;
 import org.operaton.bpm.container.impl.metadata.ProcessEngineXmlImpl;
 import org.operaton.bpm.container.impl.metadata.spi.JobAcquisitionXml;
-import org.operaton.bpm.container.impl.metadata.spi.ProcessEnginePluginXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -105,10 +104,10 @@ public class PlatformJobExecutorActivateTest {
 
   private ProcessEngineXmlImpl defineProcessEngine() {
     ProcessEngineXmlImpl processEngineXml = new ProcessEngineXmlImpl();
-    HashMap<String, String> properties = new HashMap<String, String>();
+    HashMap<String, String> properties = new HashMap<>();
     properties.put("jdbcUrl", "jdbc:h2:mem:PlatformJobExecutorActivateTest-db");
     processEngineXml.setProperties(properties);
-    processEngineXml.setPlugins(new ArrayList<ProcessEnginePluginXml>());
+    processEngineXml.setPlugins(new ArrayList<>());
     processEngineXml.setName(ENGINE_NAME);
     processEngineXml.setJobAcquisitionName(ACQUISITION_NAME);
     processEngineXml.setConfigurationClass(StandaloneInMemProcessEngineConfiguration.class.getName());
@@ -119,10 +118,10 @@ public class PlatformJobExecutorActivateTest {
 
   private JobExecutorXmlImpl defineJobExecutor() {
     JobAcquisitionXmlImpl jobAcquisition = new JobAcquisitionXmlImpl();
-    jobAcquisition.setProperties(new HashMap<String, String>());
+    jobAcquisition.setProperties(new HashMap<>());
     jobAcquisition.setName(ACQUISITION_NAME);
     JobExecutorXmlImpl jobExecutorXml = new JobExecutorXmlImpl();
-    jobExecutorXml.setProperties(new HashMap<String, String>());
+    jobExecutorXml.setProperties(new HashMap<>());
     jobExecutorXml.setJobAcquisitions(Collections.<JobAcquisitionXml>singletonList(jobAcquisition));
     return jobExecutorXml;
   }

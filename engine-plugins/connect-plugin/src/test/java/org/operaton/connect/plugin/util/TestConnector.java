@@ -30,7 +30,7 @@ public class TestConnector extends AbstractConnector<TestConnectorRequest, TestC
   public static final String ID = "testConnector";
 
   public static Map<String, Object> requestParameters;
-  public static Map<String, Object> responseParameters = new HashMap<String, Object>();
+  public static Map<String, Object> responseParameters = new HashMap<>();
 
   public TestConnector(String connectorId) {
     super(connectorId);

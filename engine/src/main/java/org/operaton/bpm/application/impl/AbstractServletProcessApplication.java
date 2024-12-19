@@ -56,7 +56,7 @@ public class AbstractServletProcessApplication extends AbstractProcessApplicatio
 
   @Override
   public Map<String, String> getProperties() {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
 
     // set the servlet context path as property
     properties.put(ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH, servletContextPath);

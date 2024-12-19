@@ -42,7 +42,7 @@ import org.operaton.bpm.application.ProcessApplicationInterface;
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
 public class DefaultEjbProcessApplication extends org.operaton.bpm.application.impl.EjbProcessApplication {
   
-  protected Map<String, String> properties = new HashMap<String, String>();
+  protected Map<String, String> properties = new HashMap<>();
   
   @PostConstruct
   public void start() {

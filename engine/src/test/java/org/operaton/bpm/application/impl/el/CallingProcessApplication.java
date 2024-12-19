@@ -35,7 +35,7 @@ import jakarta.el.ELResolver;
 public class CallingProcessApplication extends EmbeddedProcessApplication {
 
   protected ELResolver initProcessApplicationElResolver() {
-    Map<Object, Object> resolvableValues = new HashMap<Object, Object>();
+    Map<Object, Object> resolvableValues = new HashMap<>();
     resolvableValues.put("shouldTakeFlow", true);
 
     return new ReadOnlyMapELResolver(resolvableValues);

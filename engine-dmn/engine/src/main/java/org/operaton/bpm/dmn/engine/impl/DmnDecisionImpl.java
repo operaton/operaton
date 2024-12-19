@@ -30,7 +30,7 @@ public class DmnDecisionImpl implements DmnDecision {
 
   protected DmnDecisionLogic decisionLogic;
 
-  protected Collection<DmnDecision> requiredDecision = new ArrayList<DmnDecision>();
+  protected Collection<DmnDecision> requiredDecision = new ArrayList<>();
 
   @Override
   public String getKey() {

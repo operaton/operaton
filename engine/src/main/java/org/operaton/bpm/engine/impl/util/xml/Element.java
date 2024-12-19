@@ -43,12 +43,12 @@ public class Element {
    *
    * if namespace is empty, key is 'attributeName'
    */
-  protected Map<String, Attribute> attributeMap = new HashMap<String, Attribute>();
+  protected Map<String, Attribute> attributeMap = new HashMap<>();
 
   protected int line;
   protected int column;
   protected StringBuilder text = new StringBuilder();
-  protected List<Element> elements = new ArrayList<Element>();
+  protected List<Element> elements = new ArrayList<>();
 
   public Element(String uri, String localName, String qName, Attributes attributes, Locator locator) {
     this.uri = uri;
@@ -83,7 +83,7 @@ public class Element {
   }
 
   protected List<Element> elementsNS(String nameSpaceUri, String tagName) {
-    List<Element> selectedElements = new ArrayList<Element>();
+    List<Element> selectedElements = new ArrayList<>();
     for (Element element: elements) {
       if (tagName.equals(element.getTagName())) {
         if (nameSpaceUri  == null

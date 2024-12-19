@@ -27,7 +27,7 @@ public class CockpitVariable implements Serializable {
 
   protected String name;
   protected String value;
-  protected List<Date> dates = new ArrayList<Date>();
+  protected List<Date> dates = new ArrayList<>();
 
   public CockpitVariable() {
   }

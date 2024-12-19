@@ -44,7 +44,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
 
   protected PerfTestRunner runner;
 
-  protected Map<String, Object> runContext = new HashMap<String, Object>();
+  protected Map<String, Object> runContext = new HashMap<>();
 
   public PerfTestRun(PerfTestRunner runner, String runId, PerfTestStep firstStep) {
     this.runner = runner;

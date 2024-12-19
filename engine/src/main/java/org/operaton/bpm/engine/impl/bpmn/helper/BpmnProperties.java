@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class BpmnProperties {
 
-  public static final PropertyKey<String> TYPE = new PropertyKey<String>("type");
+  public static final PropertyKey<String> TYPE = new PropertyKey<>("type");
 
   public static final PropertyListKey<EscalationEventDefinition> ESCALATION_EVENT_DEFINITIONS = new PropertyListKey<>("escalationEventDefinitions");
 

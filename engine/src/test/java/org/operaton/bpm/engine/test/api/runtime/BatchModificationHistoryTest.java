@@ -119,7 +119,7 @@ public class BatchModificationHistoryTest {
 
   @After
   public void removeInstanceIds() {
-    helper.currentProcessInstances = new ArrayList<String>();
+    helper.currentProcessInstances = new ArrayList<>();
   }
 
   @After

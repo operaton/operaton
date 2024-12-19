@@ -30,7 +30,7 @@ public class AddVariablesService implements JavaDelegate {
   @Override
   public void execute(DelegateExecution execution) throws Exception {
     Date now = new Date();
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -38,7 +38,7 @@ public class AddVariablesService implements JavaDelegate {
 
     byte aByte = Byte.parseByte("1", 2); // 2 for binary;
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("shortVar", (short) 123);
     variables.put("longVar", 928374L);
     variables.put("integerVar", 1234);

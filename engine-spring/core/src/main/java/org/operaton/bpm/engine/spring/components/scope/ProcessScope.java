@@ -170,7 +170,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         return getExecutionId();
     }
 
-    private final ConcurrentHashMap<String, Object> processVariablesMap = new ConcurrentHashMap<String, Object>() {
+    private final ConcurrentHashMap<String, Object> processVariablesMap = new ConcurrentHashMap<>() {
         @Override
         public java.lang.Object get(java.lang.Object o) {
 

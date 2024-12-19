@@ -128,7 +128,7 @@ public class DecisionRequirementsDefinitionQueryAuthorizationTest {
   }
 
   protected List<String> getDefinitionKeys(List<DecisionRequirementsDefinition> definitions) {
-    List<String> definitionKeys = new ArrayList<String>();
+    List<String> definitionKeys = new ArrayList<>();
     for (DecisionRequirementsDefinition definition : definitions) {
       definitionKeys.add(definition.getKey());
     }

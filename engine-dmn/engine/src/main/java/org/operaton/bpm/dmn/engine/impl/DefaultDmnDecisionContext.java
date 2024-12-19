@@ -55,7 +55,7 @@ public class DefaultDmnDecisionContext {
   public DefaultDmnDecisionContext(DefaultDmnEngineConfiguration configuration) {
     evaluationListeners = configuration.getDecisionEvaluationListeners();
 
-    evaluationHandlers = new HashMap<Class<? extends DmnDecisionLogic>, DmnDecisionLogicEvaluationHandler>();
+    evaluationHandlers = new HashMap<>();
     evaluationHandlers.put(DmnDecisionTableImpl.class, new DecisionTableEvaluationHandler(configuration));
     evaluationHandlers.put(DmnDecisionLiteralExpressionImpl.class, new DecisionLiteralExpressionEvaluationHandler(configuration));
   }
@@ -74,10 +74,10 @@ public class DefaultDmnDecisionContext {
     }
     VariableMap variableMap = buildVariableMapFromVariableContext(variableContext);
 
-    List<DmnDecision> requiredDecisions = new ArrayList<DmnDecision>();
+    List<DmnDecision> requiredDecisions = new ArrayList<>();
     buildDecisionTree(decision, requiredDecisions);
 
-    List<DmnDecisionLogicEvaluationEvent> evaluatedEvents = new ArrayList<DmnDecisionLogicEvaluationEvent>();
+    List<DmnDecisionLogicEvaluationEvent> evaluatedEvents = new ArrayList<>();
     DmnDecisionResult evaluatedResult = null;
 
     for (DmnDecision evaluateDecision : requiredDecisions) {
@@ -137,7 +137,7 @@ public class DefaultDmnDecisionContext {
     } else if (resultList.size() == 1 && !isDecisionTableWithCollectOrRuleOrderHitPolicy(evaluatedDecision)) {
       variableMap.putAll(evaluatedResult.getSingleResult());
     } else {
-      Set<String> outputs = new HashSet<String>();
+      Set<String> outputs = new HashSet<>();
 
       for (Map<String, Object> resultMap : resultList) {
         outputs.addAll(resultMap.keySet());

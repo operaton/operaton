@@ -50,7 +50,7 @@ public class DefaultAppPluginRegistry<T extends AppPlugin> implements AppPluginR
 
     Iterator<T> iterator = loader.iterator();
 
-    Map<String, T> map = new HashMap<String, T>();
+    Map<String, T> map = new HashMap<>();
 
     while (iterator.hasNext()) {
       T plugin = iterator.next();
@@ -66,7 +66,7 @@ public class DefaultAppPluginRegistry<T extends AppPlugin> implements AppPluginR
       loadPlugins();
     }
 
-    return new ArrayList<T>(pluginsMap.values());
+    return new ArrayList<>(pluginsMap.values());
   }
 
   @Override

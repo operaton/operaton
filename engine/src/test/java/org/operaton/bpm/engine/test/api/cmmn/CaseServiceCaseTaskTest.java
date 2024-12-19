@@ -131,7 +131,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     assertNull(subCaseInstance);
 
     // variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -228,7 +228,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
   public void testStartWithVariables() {
     // given
     // variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -346,7 +346,7 @@ public class CaseServiceCaseTaskTest extends PluggableProcessEngineTest {
     assertNull(subCaseInstance);
 
     // variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 

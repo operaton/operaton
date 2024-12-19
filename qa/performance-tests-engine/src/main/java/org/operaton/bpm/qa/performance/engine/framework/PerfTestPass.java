@@ -54,7 +54,7 @@ public class PerfTestPass {
   }
 
   public void createRuns(PerfTestRunner runner, PerfTestStep firstStep, int numberOfRuns) {
-    runs = new HashMap<String, PerfTestRun>();
+    runs = new HashMap<>();
     for (int i = 0; i < numberOfRuns; i++) {
       String runId = idGenerator.getNextId();
       runs.put(runId, new PerfTestRun(runner, runId, firstStep));

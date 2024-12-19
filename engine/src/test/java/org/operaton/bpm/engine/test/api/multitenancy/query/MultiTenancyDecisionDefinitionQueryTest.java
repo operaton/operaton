@@ -335,7 +335,7 @@ public class MultiTenancyDecisionDefinitionQueryTest extends PluggableProcessEng
   }
 
   protected Map<String, DecisionDefinition> getDecisionDefinitionsForTenant(List<DecisionDefinition> decisionDefinitions) {
-    Map<String, DecisionDefinition> definitionsForTenant = new HashMap<String, DecisionDefinition>();
+    Map<String, DecisionDefinition> definitionsForTenant = new HashMap<>();
 
     for (DecisionDefinition definition : decisionDefinitions) {
       definitionsForTenant.put(definition.getTenantId(), definition);

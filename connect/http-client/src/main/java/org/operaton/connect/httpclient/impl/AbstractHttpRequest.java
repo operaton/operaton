@@ -69,7 +69,7 @@ public class AbstractHttpRequest<Q extends HttpBaseRequest<?, ?>, R extends Http
       Map<String, String> headers = getRequestParameter(HttpBaseRequest.PARAM_NAME_REQUEST_HEADERS);
 
       if (headers == null) {
-        headers = new HashMap<String, String>();
+        headers = new HashMap<>();
         setRequestParameter(HttpBaseRequest.PARAM_NAME_REQUEST_HEADERS, headers);
       }
       headers.put(field, value);
@@ -163,7 +163,7 @@ public class AbstractHttpRequest<Q extends HttpBaseRequest<?, ?>, R extends Http
       Map<String, Object> config = getConfigOptions();
 
       if (config == null) {
-        config = new HashMap<String, Object>();
+        config = new HashMap<>();
         setRequestParameter(HttpBaseRequest.PARAM_NAME_REQUEST_CONFIG, config);
       }
       config.put(field, value);

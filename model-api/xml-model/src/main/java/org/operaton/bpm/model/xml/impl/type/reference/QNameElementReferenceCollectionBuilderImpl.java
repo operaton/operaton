@@ -26,7 +26,7 @@ public class QNameElementReferenceCollectionBuilderImpl<Target extends ModelElem
 
   public QNameElementReferenceCollectionBuilderImpl(Class<Source> childElementType, Class<Target> referenceTargetClass, ChildElementCollectionImpl<Source> collection) {
     super(childElementType, referenceTargetClass, collection);
-    this.elementReferenceCollectionImpl = new QNameElementReferenceCollectionImpl<Target, Source>(collection);
+    this.elementReferenceCollectionImpl = new QNameElementReferenceCollectionImpl<>(collection);
   }
 
 }

@@ -79,7 +79,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     mockInstanceBuilder = MockProvider.mockHistoricVariableInstance();
     mockInstance = mockInstanceBuilder.build();
 
-    List<HistoricVariableInstance> mocks = new ArrayList<HistoricVariableInstance>();
+    List<HistoricVariableInstance> mocks = new ArrayList<>();
     mocks.add(mockInstance);
 
     mockedQuery = setUpMockHistoricVariableInstanceQuery(mocks);
@@ -244,7 +244,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   @Test
   public void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("instanceId").desc()
       .orderBy("variableName").asc()
@@ -382,11 +382,11 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     String aVariableType = "string";
     String anotherVariableType = "integer";
 
-    List<String> variableTypeIn= new ArrayList<String>();
+    List<String> variableTypeIn= new ArrayList<>();
     variableTypeIn.add(aVariableType);
     variableTypeIn.add(anotherVariableType);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableTypeIn", variableTypeIn);
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(json)
@@ -443,7 +443,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
             .create())
             .objectTypeName(String.class.getName()));
 
-    List<HistoricVariableInstance> mockInstances = new ArrayList<HistoricVariableInstance>();
+    List<HistoricVariableInstance> mockInstances = new ArrayList<>();
     mockInstances.add(builder.build());
 
     mockedQuery = setUpMockHistoricVariableInstanceQuery(mockInstances);
@@ -471,7 +471,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
             .objectTypeName("aRootType")
             .create());
 
-    List<HistoricVariableInstance> mockInstances = new ArrayList<HistoricVariableInstance>();
+    List<HistoricVariableInstance> mockInstances = new ArrayList<>();
     mockInstances.add(builder.build());
 
     mockedQuery = setUpMockHistoricVariableInstanceQuery(mockInstances);
@@ -506,7 +506,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   private Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("processInstanceId", MockProvider.EXAMPLE_VARIABLE_INSTANCE_PROC_INST_ID);
     parameters.put("variableName", MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME);
@@ -608,18 +608,18 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     String anExecutionId = "anExecutionId";
     String anotherExecutionId = "anotherExecutionId";
 
-    List<String> executionIdIn= new ArrayList<String>();
+    List<String> executionIdIn= new ArrayList<>();
     executionIdIn.add(anExecutionId);
     executionIdIn.add(anotherExecutionId);
 
     String aTaskId = "aTaskId";
     String anotherTaskId = "anotherTaskId";
 
-    List<String> taskIdIn= new ArrayList<String>();
+    List<String> taskIdIn= new ArrayList<>();
     taskIdIn.add(aTaskId);
     taskIdIn.add(anotherTaskId);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("executionIdIn", executionIdIn);
     json.put("taskIdIn", taskIdIn);
 
@@ -649,12 +649,12 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     String aProcessInstanceId = "aProcessInstanceId";
     String anotherProcessInstanceId = "anotherProcessInstanceId";
 
-    List<String> processInstanceIdIn= new ArrayList<String>();
+    List<String> processInstanceIdIn= new ArrayList<>();
     processInstanceIdIn.add(aProcessInstanceId);
     processInstanceIdIn.add(anotherProcessInstanceId);
     processInstanceIdIn.add(null);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("processInstanceIdIn", processInstanceIdIn);
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(json)
@@ -682,11 +682,11 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
     String anActivityInstanceId = "anActivityInstanceId";
     String anotherActivityInstanceId = "anotherActivityInstanceId";
 
-    List<String> activityInstanceIdIn= new ArrayList<String>();
+    List<String> activityInstanceIdIn= new ArrayList<>();
     activityInstanceIdIn.add(anActivityInstanceId);
     activityInstanceIdIn.add(anotherActivityInstanceId);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("activityInstanceIdIn", activityInstanceIdIn);
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(json)
@@ -711,7 +711,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
 
   @Test
   public void testHistoricVariableQueryByCaseInstanceIdAsPost() {
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseInstanceId", MockProvider.EXAMPLE_CASE_INSTANCE_ID);
 
     given()
@@ -742,7 +742,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
 
   @Test
   public void testHistoricVariableQueryByCaseExecutionIdsAsPost() {
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseExecutionIdIn", Arrays.asList(MockProvider.EXAMPLE_CASE_EXECUTION_ID, MockProvider.ANOTHER_EXAMPLE_CASE_EXECUTION_ID));
 
     given()
@@ -785,7 +785,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   public void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricVariableInstanceQuery(createMockHistoricVariableInstancesTwoTenants());
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("tenantIdIn", MockProvider.EXAMPLE_TENANT_ID_LIST.split(","));
 
     Response response = given()
@@ -885,7 +885,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
 
   @Test
   public void testHistoricVariableQueryByCaseActivityIdsAsPost() {
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("caseActivityIdIn", Arrays.asList(MockProvider.EXAMPLE_CASE_ACTIVITY_ID, MockProvider.ANOTHER_EXAMPLE_CASE_ACTIVITY_ID));
 
     given()
@@ -917,7 +917,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   @Test
   public void testHistoricVariableQueryByProcessDefinitionIdAsPost() {
     when(mockedQuery.processDefinitionId(anyString())).thenReturn(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
 
     given()
@@ -948,7 +948,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   @Test
   public void testHistoricVariableQueryByProcessDefinitionKeyAsPost() {
     when(mockedQuery.processDefinitionKey(anyString())).thenReturn(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("processDefinitionKey", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY);
 
     given()
@@ -985,7 +985,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   @Test
   public void testHistoricVariableQueryByVariableNameAndValueIgnoreCaseAsPost() {
     when(mockedQuery.processDefinitionKey(anyString())).thenReturn(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableName", "aVariableName");
     json.put("variableValue", "aVariableValue");
     json.put("variableNamesIgnoreCase", true);
@@ -1008,7 +1008,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   @Test
   public void testHistoricVariableQueryByVariableNameLikeIgnoreCaseAsPost() {
     when(mockedQuery.processDefinitionKey(anyString())).thenReturn(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableNameLike", "aVariableName");
     json.put("variableNamesIgnoreCase", true);
     

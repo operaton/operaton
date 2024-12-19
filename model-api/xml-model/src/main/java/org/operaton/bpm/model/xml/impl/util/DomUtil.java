@@ -137,7 +137,7 @@ public final class DomUtil {
    */
   public static List<DomElement> filterNodeList(NodeList nodeList, NodeListFilter filter) {
 
-    List<DomElement> filteredList = new ArrayList<DomElement>();
+    List<DomElement> filteredList = new ArrayList<>();
     for(int i = 0; i< nodeList.getLength(); i++) {
       Node node = nodeList.item(i);
       if(filter.matches(node)) {

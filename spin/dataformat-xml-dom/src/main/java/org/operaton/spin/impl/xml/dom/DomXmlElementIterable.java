@@ -64,7 +64,7 @@ public class DomXmlElementIterable implements Iterable<SpinXmlElement> {
 
   @Override
   public Iterator<SpinXmlElement> iterator() {
-    return new DomXmlNodeIterator<SpinXmlElement>() {
+    return new DomXmlNodeIterator<>() {
 
       private NodeList childs = nodeList;
 

@@ -67,7 +67,7 @@ public class HistoricBatchManager extends AbstractManager {
 
   @SuppressWarnings("unchecked")
   public List<String> findHistoricBatchIdsForCleanup(Integer batchSize, Map<String, Integer> batchOperationsForHistoryCleanup, int minuteFrom, int minuteTo) {
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("currentTimestamp", ClockUtil.getCurrentTime());
     queryParameters.put("map", batchOperationsForHistoryCleanup);
     if (minuteTo - minuteFrom + 1 < 60) {

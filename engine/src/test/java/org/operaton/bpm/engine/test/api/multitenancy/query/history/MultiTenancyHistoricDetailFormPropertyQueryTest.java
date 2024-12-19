@@ -275,7 +275,7 @@ public class MultiTenancyHistoricDetailFormPropertyQueryTest {
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(task).isNotNull();
 
-    Map<String, Object> properties = new HashMap<String, Object>();
+    Map<String, Object> properties = new HashMap<>();
     properties.put("myFormField", "myFormFieldValue");
     formService.submitTaskForm(task.getId(), properties);
   }

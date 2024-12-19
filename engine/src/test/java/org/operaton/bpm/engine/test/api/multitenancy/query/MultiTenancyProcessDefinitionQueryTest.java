@@ -294,7 +294,7 @@ public class MultiTenancyProcessDefinitionQueryTest extends PluggableProcessEngi
   }
 
   protected Map<String, ProcessDefinition> getProcessDefinitionsForTenant(List<ProcessDefinition> processDefinitions) {
-    Map<String, ProcessDefinition> definitionsForTenant = new HashMap<String, ProcessDefinition>();
+    Map<String, ProcessDefinition> definitionsForTenant = new HashMap<>();
 
     for (ProcessDefinition definition : processDefinitions) {
       definitionsForTenant.put(definition.getTenantId(), definition);

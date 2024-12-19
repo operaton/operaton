@@ -107,7 +107,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
   public void testDeploymentStatisticsQueryWithFailedJobs() {
 
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
 
     runtimeService.startProcessInstanceByKey("MIExampleProcess");
@@ -127,7 +127,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
   public void testDeploymentStatisticsQueryWithIncidents() {
 
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
 
     runtimeService.startProcessInstanceByKey("MIExampleProcess");
@@ -157,7 +157,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
   public void testDeploymentStatisticsQueryWithIncidentType() {
 
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
 
     runtimeService.startProcessInstanceByKey("MIExampleProcess");
@@ -190,7 +190,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
   public void testDeploymentStatisticsQueryWithInvalidIncidentType() {
 
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
 
     runtimeService.startProcessInstanceByKey("MIExampleProcess");
@@ -218,7 +218,7 @@ public class DeploymentStatisticsQueryTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml"})
   public void testDeploymentStatisticsQueryWithIncidentsAndFailedJobs() {
 
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
 
     runtimeService.startProcessInstanceByKey("MIExampleProcess");

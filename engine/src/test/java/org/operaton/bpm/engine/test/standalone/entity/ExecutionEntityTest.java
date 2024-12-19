@@ -56,7 +56,7 @@ public class ExecutionEntityTest {
   @Test
   public void testRestoreProcessInstance() {
     //given parent execution
-    List<ExecutionEntity> entities = new ArrayList<ExecutionEntity>();
+    List<ExecutionEntity> entities = new ArrayList<>();
     ExecutionEntity parent = new ExecutionEntity();
     parent.setId("parent");
     entities.add(parent);

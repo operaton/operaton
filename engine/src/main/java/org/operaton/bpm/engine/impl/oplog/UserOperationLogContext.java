@@ -38,7 +38,7 @@ public class UserOperationLogContext {
   protected List<UserOperationLogContextEntry> entries;
 
   public UserOperationLogContext() {
-    this.entries = new ArrayList<UserOperationLogContextEntry>();
+    this.entries = new ArrayList<>();
   }
 
   public String getUserId() {

@@ -327,7 +327,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
   @Test
   public void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("processInstanceId").desc()
       .orderBy("timestamp").asc()
@@ -444,7 +444,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
   public void testSimpleHistoricJobLogQueryAsPost() {
     String processInstanceId = MockProvider.EXAMPLE_HISTORIC_JOB_LOG_PROC_INST_ID;
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("processInstanceId", processInstanceId);
 
     Response response = given()
@@ -552,7 +552,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   protected Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("logId", MockProvider.EXAMPLE_HISTORIC_JOB_LOG_ID);
     parameters.put("jobId", MockProvider.EXAMPLE_HISTORIC_JOB_LOG_JOB_ID);
@@ -619,7 +619,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
     String anExecutionId = "anExecutionId";
     String anotherExecutionId = "anotherExecutionId";
 
-    Map<String, List<String>> json = new HashMap<String, List<String>>();
+    Map<String, List<String>> json = new HashMap<>();
     json.put("activityIdIn", Arrays.asList(anActId, anotherActId));
     json.put("executionIdIn", Arrays.asList(anExecutionId, anotherExecutionId));
     json.put("failedActivityIdIn", Arrays.asList(anActId, anotherActId));
@@ -672,7 +672,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   protected Map<String, Boolean> getCompleteBooleanQueryParameters() {
-    Map<String, Boolean> parameters = new HashMap<String, Boolean>();
+    Map<String, Boolean> parameters = new HashMap<>();
 
     parameters.put("creationLog", MockProvider.EXAMPLE_HISTORIC_JOB_LOG_IS_CREATION_LOG);
     parameters.put("failureLog", MockProvider.EXAMPLE_HISTORIC_JOB_LOG_IS_FAILURE_LOG);
@@ -723,7 +723,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   protected Map<String, Object> getCompleteIntegerQueryParameters() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
 
     parameters.put("jobPriorityLowerThanOrEquals", JOB_LOG_QUERY_MAX_PRIORITY);
     parameters.put("jobPriorityHigherThanOrEquals", JOB_LOG_QUERY_MIN_PRIORITY);
@@ -767,7 +767,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
   public void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricJobLogQuery(createMockHistoricJobLogsTwoTenants());
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("tenantIdIn", MockProvider.EXAMPLE_TENANT_ID_LIST.split(","));
 
     Response response = given()

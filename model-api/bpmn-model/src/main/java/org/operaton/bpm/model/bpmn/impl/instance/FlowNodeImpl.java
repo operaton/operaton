@@ -139,20 +139,20 @@ public abstract class FlowNodeImpl extends FlowElementImpl implements FlowNode {
 
   @Override
   public Query<FlowNode> getPreviousNodes() {
-    Collection<FlowNode> previousNodes = new HashSet<FlowNode>();
+    Collection<FlowNode> previousNodes = new HashSet<>();
     for (SequenceFlow sequenceFlow : getIncoming()) {
       previousNodes.add(sequenceFlow.getSource());
     }
-    return new QueryImpl<FlowNode>(previousNodes);
+    return new QueryImpl<>(previousNodes);
   }
 
   @Override
   public Query<FlowNode> getSucceedingNodes() {
-    Collection<FlowNode> succeedingNodes = new HashSet<FlowNode>();
+    Collection<FlowNode> succeedingNodes = new HashSet<>();
     for (SequenceFlow sequenceFlow : getOutgoing()) {
       succeedingNodes.add(sequenceFlow.getTarget());
     }
-    return new QueryImpl<FlowNode>(succeedingNodes);
+    return new QueryImpl<>(succeedingNodes);
   }
 
   /** Operaton Attributes */

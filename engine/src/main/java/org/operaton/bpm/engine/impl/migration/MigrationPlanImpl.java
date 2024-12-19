@@ -39,7 +39,7 @@ public class MigrationPlanImpl implements MigrationPlan {
   public MigrationPlanImpl(String sourceProcessDefinitionId, String targetProcessDefinitionId) {
     this.sourceProcessDefinitionId = sourceProcessDefinitionId;
     this.targetProcessDefinitionId = targetProcessDefinitionId;
-    this.instructions = new ArrayList<MigrationInstruction>();
+    this.instructions = new ArrayList<>();
   }
 
   @Override

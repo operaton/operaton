@@ -31,8 +31,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
  */
 public class PermissionCheckBuilder {
 
-  protected List<PermissionCheck> atomicChecks = new ArrayList<PermissionCheck>();
-  protected List<CompositePermissionCheck> compositeChecks = new ArrayList<CompositePermissionCheck>();
+  protected List<PermissionCheck> atomicChecks = new ArrayList<>();
+  protected List<CompositePermissionCheck> compositeChecks = new ArrayList<>();
   protected boolean disjunctive = true;
 
   protected PermissionCheckBuilder parent;

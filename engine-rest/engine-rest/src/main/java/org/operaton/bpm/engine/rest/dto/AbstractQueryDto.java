@@ -47,7 +47,7 @@ public abstract class AbstractQueryDto<T extends Query<?, ?>>  extends AbstractS
 
   public static final List<String> VALID_SORT_ORDER_VALUES;
   static {
-    VALID_SORT_ORDER_VALUES = new ArrayList<String>();
+    VALID_SORT_ORDER_VALUES = new ArrayList<>();
     VALID_SORT_ORDER_VALUES.add(SORT_ORDER_ASC_VALUE);
     VALID_SORT_ORDER_VALUES.add(SORT_ORDER_DESC_VALUE);
   }
@@ -57,7 +57,7 @@ public abstract class AbstractQueryDto<T extends Query<?, ?>>  extends AbstractS
 
   protected List<SortingDto> sortings;
 
-  protected Map<String, String> expressions = new HashMap<String, String>();
+  protected Map<String, String> expressions = new HashMap<>();
 
   // required for populating via jackson
   public AbstractQueryDto() {

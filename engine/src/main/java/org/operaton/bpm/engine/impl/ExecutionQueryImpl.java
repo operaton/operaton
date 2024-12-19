@@ -129,7 +129,7 @@ public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery
       ensureNotNull("event name", eventName);
     }
     if(eventSubscriptions == null) {
-      eventSubscriptions = new ArrayList<EventSubscriptionQueryValue>();
+      eventSubscriptions = new ArrayList<>();
     }
     eventSubscriptions.add(new EventSubscriptionQueryValue(eventName, eventType.name()));
     return this;

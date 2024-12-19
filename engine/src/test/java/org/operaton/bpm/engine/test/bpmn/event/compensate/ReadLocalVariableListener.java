@@ -31,7 +31,7 @@ public class ReadLocalVariableListener implements Serializable, ExecutionListene
 
   private static final long serialVersionUID = 1L;
 
-  protected List<VariableEvent> variableEvents = new ArrayList<VariableEvent>();
+  protected List<VariableEvent> variableEvents = new ArrayList<>();
   protected String variableName;
 
   public ReadLocalVariableListener(String variableName) {

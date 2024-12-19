@@ -37,8 +37,8 @@ public class EqualsListTest {
 
   @Before
   public void setUp() {
-    list1 = new ArrayList<String>();
-    list2 = new ArrayList<String>();
+    list1 = new ArrayList<>();
+    list2 = new ArrayList<>();
   }
 
   @Test

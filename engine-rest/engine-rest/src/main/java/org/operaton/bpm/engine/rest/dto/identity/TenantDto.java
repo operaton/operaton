@@ -50,7 +50,7 @@ public class TenantDto {
   }
 
   public static List<TenantDto> fromTenantList(List<Tenant> tenants) {
-    List<TenantDto> dtos = new ArrayList<TenantDto>();
+    List<TenantDto> dtos = new ArrayList<>();
     for (Tenant tenant : tenants) {
       dtos.add(fromTenant(tenant));
     }

@@ -271,7 +271,7 @@ public class DeleteProcessDefinitionAuthorizationTest {
   private String[] findProcessDefinitionIdsByKey(String processDefinitionKey) {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey(processDefinitionKey).list();
-    List<String> processDefinitionIds = new ArrayList<String>();
+    List<String> processDefinitionIds = new ArrayList<>();
     for (ProcessDefinition processDefinition: processDefinitions) {
       processDefinitionIds.add(processDefinition.getId());
     }

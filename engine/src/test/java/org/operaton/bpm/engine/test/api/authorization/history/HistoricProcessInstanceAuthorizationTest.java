@@ -916,7 +916,7 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     Date oldCurrentTime = ClockUtil.getCurrentTime();
     ClockUtil.setCurrentTime(DateUtils.addDays(new Date(), daysInThePast));
 
-    List<String> processInstanceIds = new ArrayList<String>();
+    List<String> processInstanceIds = new ArrayList<>();
     for (int i = 0; i < instanceCount; i++) {
       ProcessInstance processInstance = startProcessInstanceByKey(key);
       processInstanceIds.add(processInstance.getId());

@@ -62,7 +62,7 @@ public class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior 
   // Activity Behavior
   @Override
   public void execute(final ActivityExecution execution) throws Exception {
-    this.executeWithErrorPropagation(execution, new Callable<Void>() {
+    this.executeWithErrorPropagation(execution, new Callable<>() {
       @Override
       public Void call() throws Exception {
         getActivityBehaviorInstance(execution).execute(execution);
@@ -99,7 +99,7 @@ public class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior 
         throw LOG.incorrectlyUsedSignalException(SignallableActivityBehavior.class.getName() );
       }
     }
-    executeWithErrorPropagation(execution, new Callable<Void>() {
+    executeWithErrorPropagation(execution, new Callable<>() {
       @Override
       public Void call() throws Exception {
         ((SignallableActivityBehavior) activityBehaviorInstance).signal(execution, signalName, signalData);

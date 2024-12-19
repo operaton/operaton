@@ -96,7 +96,7 @@ public class Lane implements HasDIBounds {
   
   public List<String> getFlowNodeIds() {
     if(flowNodeIds == null) {
-      flowNodeIds = new ArrayList<String>();
+      flowNodeIds = new ArrayList<>();
     }
     return flowNodeIds;
   }

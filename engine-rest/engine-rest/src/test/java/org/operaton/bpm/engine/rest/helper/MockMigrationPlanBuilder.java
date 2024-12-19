@@ -33,7 +33,7 @@ public class MockMigrationPlanBuilder {
 
   protected String sourceProcessDefinitionId;
   protected String targetProcessDefinitionId;
-  protected List<MigrationInstruction> instructions = new ArrayList<MigrationInstruction>();
+  protected List<MigrationInstruction> instructions = new ArrayList<>();
   protected VariableMap variables;
 
   public MockMigrationPlanBuilder sourceProcessDefinitionId(String sourceProcessDefinitionId) {

@@ -57,7 +57,7 @@ public class EvaluateStartConditionCmd implements Command<List<ProcessInstance>>
       checkAuthorization(commandContext, ConditionHandlerResult);
     }
 
-    List<ProcessInstance> processInstances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> processInstances = new ArrayList<>();
     for (ConditionHandlerResult ConditionHandlerResult : results) {
       processInstances.add(instantiateProcess(commandContext, ConditionHandlerResult));
     }

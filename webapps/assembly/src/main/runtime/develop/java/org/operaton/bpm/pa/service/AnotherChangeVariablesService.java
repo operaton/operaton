@@ -34,17 +34,17 @@ public class AnotherChangeVariablesService implements JavaDelegate {
   public void execute(DelegateExecution execution) {
     Date now = new Date();
 
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("seven");
     serializable.add("eight");
     serializable.add("nine");
 
-    List<Date> dateList = new ArrayList<Date>();
+    List<Date> dateList = new ArrayList<>();
     dateList.add(new Date());
     dateList.add(new Date());
     dateList.add(new Date());
 
-    List<CockpitVariable> cockpitVariableList = new ArrayList<CockpitVariable>();
+    List<CockpitVariable> cockpitVariableList = new ArrayList<>();
     cockpitVariableList.add(new CockpitVariable("foo", "bar"));
     cockpitVariableList.add(new CockpitVariable("foo2", "bar"));
     cockpitVariableList.add(new CockpitVariable("foo3", "bar"));
@@ -53,9 +53,9 @@ public class AnotherChangeVariablesService implements JavaDelegate {
 
     FailingSerializable failingSerializable = new FailingSerializable();
 
-    Map<String, Integer> mapVariable = new HashMap<String, Integer>();
+    Map<String, Integer> mapVariable = new HashMap<>();
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     variables.put("shortVar", (short) 789);
     variables.put("longVar", 555555L);

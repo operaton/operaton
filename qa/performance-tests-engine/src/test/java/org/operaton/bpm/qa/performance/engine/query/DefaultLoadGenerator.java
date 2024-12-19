@@ -78,7 +78,7 @@ public class DefaultLoadGenerator {
 
   static List<BpmnModelInstance> createProcesses(int numberOfProcesses) {
 
-    List<BpmnModelInstance> result = new ArrayList<BpmnModelInstance>(numberOfProcesses);
+    List<BpmnModelInstance> result = new ArrayList<>(numberOfProcesses);
 
     System.out.println("Number of Processes: " + numberOfProcesses);
     for(int i=0; i<NUMBER_OF_PROCESSES; i++) {

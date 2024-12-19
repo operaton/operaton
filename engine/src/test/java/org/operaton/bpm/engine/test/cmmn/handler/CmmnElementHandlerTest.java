@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.impl.cmmn.handler.CmmnHandlerContext;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
 import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
-import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.Case;
@@ -58,7 +57,7 @@ public abstract class CmmnElementHandlerTest {
     context = new CmmnHandlerContext();
 
     CaseDefinitionEntity caseDefinition = new CaseDefinitionEntity();
-    caseDefinition.setTaskDefinitions(new HashMap<String, TaskDefinition>());
+    caseDefinition.setTaskDefinitions(new HashMap<>());
     context.setCaseDefinition(caseDefinition);
 
     ExpressionManager expressionManager = new JuelExpressionManager();

@@ -36,9 +36,9 @@ public class JobAcquisitionContext {
   protected boolean isJobAdded;
 
   public JobAcquisitionContext() {
-    this.rejectedJobBatchesByEngine = new HashMap<String, List<List<String>>>();
-    this.additionalJobBatchesByEngine = new HashMap<String, List<List<String>>>();
-    this.acquiredJobsByEngine = new HashMap<String, AcquiredJobs>();
+    this.rejectedJobBatchesByEngine = new HashMap<>();
+    this.additionalJobBatchesByEngine = new HashMap<>();
+    this.acquiredJobsByEngine = new HashMap<>();
   }
 
   public void submitRejectedBatch(String engineName, List<String> jobIds) {

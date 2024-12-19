@@ -37,7 +37,7 @@ public class TasklistPlugins extends AbstractTasklistPlugin {
 
   @Override
   public Set<Class<?>> getResourceClasses() {
-    HashSet<Class<?>> classes = new HashSet<Class<?>>();
+    HashSet<Class<?>> classes = new HashSet<>();
 
     classes.add(TasklistPluginsRootResource.class);
 

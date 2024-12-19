@@ -42,7 +42,7 @@ public class AcquirableJobEntity implements DbEntity, HasDbRevision {
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("lockOwner", lockOwner);
     persistentState.put("lockExpirationTime", lockExpirationTime);
     persistentState.put("duedate", duedate);

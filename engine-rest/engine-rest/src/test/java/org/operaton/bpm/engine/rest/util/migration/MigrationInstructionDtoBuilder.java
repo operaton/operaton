@@ -31,7 +31,7 @@ public class MigrationInstructionDtoBuilder {
   protected final Map<String, Object> migrationInstruction;
 
   public MigrationInstructionDtoBuilder() {
-    migrationInstruction = new HashMap<String, Object>();
+    migrationInstruction = new HashMap<>();
   }
 
   public MigrationInstructionDtoBuilder migrate(String sourceActivityId, String targetActivityId) {

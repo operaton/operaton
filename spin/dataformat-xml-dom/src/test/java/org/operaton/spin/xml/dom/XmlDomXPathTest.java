@@ -194,7 +194,7 @@ public class XmlDomXPathTest {
 
   @Test
   public void canQueryElementWithNamespaceMap() {
-    Map<String, String> namespaces = new HashMap<String, String>();
+    Map<String, String> namespaces = new HashMap<>();
     namespaces.put("a", "http://operaton.com");
     namespaces.put("b", "http://operaton.org");
 

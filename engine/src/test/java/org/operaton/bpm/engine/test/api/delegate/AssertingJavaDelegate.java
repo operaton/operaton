@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class AssertingJavaDelegate implements JavaDelegate {
 
-  public static List<DelegateExecutionAsserter> asserts = new ArrayList<DelegateExecutionAsserter>();
+  public static List<DelegateExecutionAsserter> asserts = new ArrayList<>();
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

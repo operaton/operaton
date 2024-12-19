@@ -127,7 +127,7 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     assertNull(processInstance);
 
     // variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 

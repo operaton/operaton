@@ -67,10 +67,10 @@ public abstract class ProcessEngines {
   public static final String NAME_DEFAULT = "default";
 
   protected static boolean isInitialized = false;
-  protected static Map<String, ProcessEngine> processEngines = new HashMap<String, ProcessEngine>();
-  protected static Map<String, ProcessEngineInfo> processEngineInfosByName = new HashMap<String, ProcessEngineInfo>();
-  protected static Map<String, ProcessEngineInfo> processEngineInfosByResourceUrl = new HashMap<String, ProcessEngineInfo>();
-  protected static List<ProcessEngineInfo> processEngineInfos = new ArrayList<ProcessEngineInfo>();
+  protected static Map<String, ProcessEngine> processEngines = new HashMap<>();
+  protected static Map<String, ProcessEngineInfo> processEngineInfosByName = new HashMap<>();
+  protected static Map<String, ProcessEngineInfo> processEngineInfosByResourceUrl = new HashMap<>();
+  protected static List<ProcessEngineInfo> processEngineInfos = new ArrayList<>();
 
   public static synchronized void init() {
     init(true);
@@ -83,7 +83,7 @@ public abstract class ProcessEngines {
     if (!isInitialized) {
       if(processEngines == null) {
         // Create new map to store process-engines if current map is null
-        processEngines = new HashMap<String, ProcessEngine>();
+        processEngines = new HashMap<>();
       }
       ClassLoader classLoader = ReflectUtil.getClassLoader();
       Enumeration<URL> resources = null;
@@ -102,7 +102,7 @@ public abstract class ProcessEngines {
       }
 
       // Remove duplicated configuration URL's using set. Some classloaders may return identical URL's twice, causing duplicate startups
-      Set<URL> configUrls = new HashSet<URL>();
+      Set<URL> configUrls = new HashSet<>();
       while (resources.hasMoreElements()) {
         configUrls.add( resources.nextElement() );
       }
@@ -270,8 +270,8 @@ public abstract class ProcessEngines {
   /** closes all process engines.  This method should be called when the server shuts down. */
   public static synchronized void destroy() {
     if (isInitialized) {
-      Map<String, ProcessEngine> engines = new HashMap<String, ProcessEngine>(processEngines);
-      processEngines = new HashMap<String, ProcessEngine>();
+      Map<String, ProcessEngine> engines = new HashMap<>(processEngines);
+      processEngines = new HashMap<>();
 
       for (String processEngineName: engines.keySet()) {
         ProcessEngine processEngine = engines.get(processEngineName);

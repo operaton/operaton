@@ -48,7 +48,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
 
     private BeanFactory beanFactory;
 
-    private volatile ConcurrentHashMap<String, ActivitiStateHandlerRegistration> registrations = new ConcurrentHashMap<String, ActivitiStateHandlerRegistration>();
+    private volatile ConcurrentHashMap<String, ActivitiStateHandlerRegistration> registrations = new ConcurrentHashMap<>();
 
     private ProcessEngine processEngine;
 
@@ -93,7 +93,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
      */
     public Collection<ActivitiStateHandlerRegistration> findRegistrationsForProcessAndState(
             String processName, String stateName) {
-        Collection<ActivitiStateHandlerRegistration> registrationCollection = new ArrayList<ActivitiStateHandlerRegistration>();
+        Collection<ActivitiStateHandlerRegistration> registrationCollection = new ArrayList<>();
         String regKeyFull = registrationKey(processName, stateName);
         String regKeyWithJustState = registrationKey(null, stateName);
 

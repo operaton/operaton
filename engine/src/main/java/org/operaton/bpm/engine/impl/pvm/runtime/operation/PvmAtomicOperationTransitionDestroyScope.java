@@ -94,7 +94,7 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
     else {
       propagatingExecution.inactivate();
 
-      List<OutgoingExecution> outgoingExecutions = new ArrayList<OutgoingExecution>();
+      List<OutgoingExecution> outgoingExecutions = new ArrayList<>();
 
       for (int i = 0; i < transitionsToTake.size(); i++) {
         PvmTransition transition = transitionsToTake.get(i);

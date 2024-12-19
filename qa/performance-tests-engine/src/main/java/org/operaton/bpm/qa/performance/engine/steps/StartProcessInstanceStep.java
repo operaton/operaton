@@ -47,7 +47,7 @@ public class StartProcessInstanceStep extends ProcessEngineAwareStep {
 
   @Override
   public void execute(PerfTestRunContext context) {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     if (processVariables != null) {
       variables.putAll(processVariables);
     }

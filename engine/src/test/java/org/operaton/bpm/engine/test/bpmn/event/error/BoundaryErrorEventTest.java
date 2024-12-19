@@ -365,7 +365,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     assertEquals(5, tasks.size());
 
     // Complete two subprocesses, just to make it a bit more complex
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("throwError", false);
     taskService.complete(tasks.get(2).getId(), vars);
     taskService.complete(tasks.get(3).getId(), vars);
@@ -384,7 +384,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorOnSequentialMi").getId();
 
     // complete one task
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("throwError", false);
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId(), vars);
@@ -415,7 +415,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnServiceTask").getId();
     assertThatErrorHasBeenCaught(procId);
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("exceptionType", true);
     procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnServiceTask", variables).getId();
     assertThatExceptionHasBeenCaught(procId);
@@ -441,7 +441,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnEmbeddedSubProcess").getId();
     assertThatErrorHasBeenCaught(procId);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("exceptionType", true);
     procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnEmbeddedSubProcess", variables).getId();
     assertThatExceptionHasBeenCaught(procId);
@@ -463,7 +463,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-parent").getId();
     assertThatErrorHasBeenCaught(procId);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("exceptionType", true);
     procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-parent", variables).getId();
     assertThatExceptionHasBeenCaught(procId);
@@ -717,7 +717,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskSequential() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("executionsBeforeError", 2);
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskSequential", variables).getId();
     assertThatErrorHasBeenCaught(procId);
@@ -731,7 +731,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskParallel() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("executionsBeforeError", 2);
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnMultiInstanceServiceTaskParallel", variables).getId();
     assertThatErrorHasBeenCaught(procId);
@@ -789,7 +789,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchErrorThrownByExpressionOnServiceTask() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchErrorThrownByExpressionOnServiceTask", variables).getId();
     assertThatErrorHasBeenCaught(procId);
@@ -798,7 +798,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchErrorThrownByDelegateExpressionOnServiceTask() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchErrorThrownByDelegateExpressionOnServiceTask", variables).getId();
     assertThatErrorHasBeenCaught(procId);
@@ -811,7 +811,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchErrorThrownByJavaDelegateProvidedByDelegateExpressionOnServiceTask() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchErrorThrownByJavaDelegateProvidedByDelegateExpressionOnServiceTask", variables).getId();
     assertThatErrorHasBeenCaught(procId);
@@ -820,7 +820,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchExceptionThrownByExpressionOnServiceTask() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchExceptionThrownByExpressionOnServiceTask", variables).getId();
     assertThatExceptionHasBeenCaught(procId);
@@ -829,7 +829,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchExceptionThrownByScriptTask() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     String procId = runtimeService.startProcessInstanceByKey("testCatchExceptionThrownByScriptTask", variables).getId();
     assertThatExceptionHasBeenCaught(procId);
   }
@@ -837,7 +837,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCatchSpecializedExceptionThrownByDelegate() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("bpmnErrorBean", new BpmnErrorBean());
     String procId = runtimeService.startProcessInstanceByKey("testCatchSpecializedExceptionThrownByDelegate", variables).getId();
     assertThatExceptionHasBeenCaught(procId);
@@ -981,7 +981,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
   public void testReviewSalesLeadProcess() {
 
     // After starting the process, a task should be assigned to the 'initiator' (normally set by GUI)
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("details", "very interesting");
     variables.put("customerName", "Alfresco");
     String procId = runtimeService.startProcessInstanceByKey("reviewSaledLead", variables).getId();
@@ -997,7 +997,7 @@ public class BoundaryErrorEventTest extends PluggableProcessEngineTest {
 
     // Complete the management task by stating that not enough info was provided
     // This should throw the error event, which closes the subprocess
-    variables = new HashMap<String, Object>();
+    variables = new HashMap<>();
     variables.put("notEnoughInformation", true);
     taskService.complete(profitabilityTask.getId(), variables);
 

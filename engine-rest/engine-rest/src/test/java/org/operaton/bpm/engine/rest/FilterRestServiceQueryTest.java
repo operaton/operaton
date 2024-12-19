@@ -234,7 +234,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   protected Map<String, String> getQueryParameters() {
-    Map<String, String> params = new HashMap<String, String>();
+    Map<String, String> params = new HashMap<>();
 
     params.put("filterId", MockProvider.EXAMPLE_FILTER_ID);
     params.put("resourceType", MockProvider.EXAMPLE_FILTER_RESOURCE_TYPE);
@@ -265,7 +265,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
     Map<String, Object> returnedQuery = from(content).getJsonObject("[0].query");
     Map<String, Object> returnedProperties = from(content).getJsonObject("[0].properties");
 
-    Map<String, String> expectedVariable = new HashMap<String, String>();
+    Map<String, String> expectedVariable = new HashMap<>();
     expectedVariable.put("name", "foo");
     expectedVariable.put("value", "bar");
     expectedVariable.put("operator", "eq");
@@ -306,7 +306,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   protected void executeAndVerifySorting(String sortBy, String sortOrder, Status expectedStatus) {
-    Map<String, String> params = new HashMap<String, String>();
+    Map<String, String> params = new HashMap<>();
     params.put("sortBy", sortBy);
     params.put("sortOrder", sortOrder);
 
@@ -346,7 +346,7 @@ public class FilterRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   protected void executeAndVerifyPagination(Integer firstResult, Integer maxResults, Status expectedStatus) {
-    Map<String, String> params = new HashMap<String, String>();
+    Map<String, String> params = new HashMap<>();
     if (firstResult != null) {
       params.put("firstResult", firstResult.toString());
     }

@@ -87,7 +87,7 @@ public class JobExecutorExceptionLoggingHandlerTest {
 
   static class CollectingHandler implements ExecuteJobHelper.ExceptionLoggingHandler {
 
-    Map<String, Throwable> collectedExceptions = new HashMap<String, Throwable>();
+    Map<String, Throwable> collectedExceptions = new HashMap<>();
 
     @Override
     public void exceptionWhileExecutingJob(String jobId, Throwable exception) {

@@ -50,7 +50,7 @@ public class ListTransformer implements FeelToJuelTransformer {
 
   protected List<String> transformExpressions(FeelToJuelTransform transform, String feelExpression, String inputName) {
     List<String> expressions = collectExpressions(feelExpression);
-    List<String> juelExpressions = new ArrayList<String>();
+    List<String> juelExpressions = new ArrayList<>();
     for (String expression : expressions) {
       if (!expression.trim().isEmpty()) {
         String juelExpression = transform.transformSimplePositiveUnaryTest(expression, inputName);

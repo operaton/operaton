@@ -42,7 +42,7 @@ public class DecisionRequirementsDefinitionRestServiceImpl extends AbstractRestP
   @Override
   public List<DecisionRequirementsDefinitionDto> getDecisionRequirementsDefinitions(UriInfo uriInfo, Integer firstResult, Integer maxResults) {
     DecisionRequirementsDefinitionQueryDto queryDto = new DecisionRequirementsDefinitionQueryDto(getObjectMapper(), uriInfo.getQueryParameters());
-    List<DecisionRequirementsDefinitionDto> dtos = new ArrayList<DecisionRequirementsDefinitionDto>();
+    List<DecisionRequirementsDefinitionDto> dtos = new ArrayList<>();
 
     ProcessEngine engine = getProcessEngine();
     DecisionRequirementsDefinitionQuery query = queryDto.toQuery(engine);

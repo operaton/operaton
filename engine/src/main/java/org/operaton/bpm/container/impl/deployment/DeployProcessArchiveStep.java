@@ -83,7 +83,7 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
     ProcessEngine processEngine = getProcessEngine(serviceContainer, processApplication.getDefaultDeployToEngineName());
 
     // start building deployment map
-    Map<String, byte[]> deploymentMap = new HashMap<String, byte[]>();
+    Map<String, byte[]> deploymentMap = new HashMap<>();
 
     // add all processes listed in the processes.xml
     List<String> listedProcessResources = processArchive.getProcessResourceNames();
@@ -148,7 +148,7 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
       // add attachment
       Map<String, DeployedProcessArchive> processArchiveDeploymentMap = operationContext.getAttachment(Attachments.PROCESS_ARCHIVE_DEPLOYMENT_MAP);
       if(processArchiveDeploymentMap == null) {
-        processArchiveDeploymentMap = new HashMap<String, DeployedProcessArchive>();
+        processArchiveDeploymentMap = new HashMap<>();
         operationContext.addAttachment(Attachments.PROCESS_ARCHIVE_DEPLOYMENT_MAP, processArchiveDeploymentMap);
       }
       processArchiveDeploymentMap.put(processArchive.getName(), new DeployedProcessArchive(deployment));

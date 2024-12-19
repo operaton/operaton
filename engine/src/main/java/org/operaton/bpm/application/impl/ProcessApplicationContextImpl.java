@@ -23,7 +23,7 @@ package org.operaton.bpm.application.impl;
 public class ProcessApplicationContextImpl {
 
   protected static ThreadLocal<ProcessApplicationIdentifier> currentProcessApplication =
-      new ThreadLocal<ProcessApplicationIdentifier>();
+      new ThreadLocal<>();
 
   public static ProcessApplicationIdentifier get() {
     return currentProcessApplication.get();

@@ -106,7 +106,7 @@ public class CleanableHistoricProcessInstanceReportResultDto {
   }
 
   public static List<CleanableHistoricProcessInstanceReportResultDto> convert(List<CleanableHistoricProcessInstanceReportResult> reportResult) {
-    List<CleanableHistoricProcessInstanceReportResultDto> dtos = new ArrayList<CleanableHistoricProcessInstanceReportResultDto>();
+    List<CleanableHistoricProcessInstanceReportResultDto> dtos = new ArrayList<>();
     for (CleanableHistoricProcessInstanceReportResult current : reportResult) {
       CleanableHistoricProcessInstanceReportResultDto dto = new CleanableHistoricProcessInstanceReportResultDto();
       dto.setProcessDefinitionId(current.getProcessDefinitionId());

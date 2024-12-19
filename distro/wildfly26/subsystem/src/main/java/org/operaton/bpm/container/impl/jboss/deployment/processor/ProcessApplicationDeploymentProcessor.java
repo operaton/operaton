@@ -217,7 +217,7 @@ public class ProcessApplicationDeploymentProcessor implements DeploymentUnitProc
 
     final Module module = deploymentUnit.getAttachment(MODULE);
 
-    Map<String, byte[]> resources = new HashMap<String, byte[]>();
+    Map<String, byte[]> resources = new HashMap<>();
 
     // first, add all resources listed in the processe.xml
     List<String> process = processArchive.getProcessResourceNames();

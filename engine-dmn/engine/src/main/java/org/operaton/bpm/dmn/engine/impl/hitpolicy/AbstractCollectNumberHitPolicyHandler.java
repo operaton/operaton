@@ -65,7 +65,7 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
   }
 
   protected List<TypedValue> collectSingleValues(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
-    List<TypedValue> values = new ArrayList<TypedValue>();
+    List<TypedValue> values = new ArrayList<>();
     for (DmnEvaluatedDecisionRule matchingRule : decisionTableEvaluationEvent.getMatchingRules()) {
       Map<String, DmnEvaluatedOutput> outputEntries = matchingRule.getOutputEntries();
       if (outputEntries.size() > 1) {
@@ -126,7 +126,7 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
   protected abstract Double aggregateDoubleValues(List<Double> doubleValues);
 
   protected List<Integer> convertValuesToInteger(List<TypedValue> typedValues) throws IllegalArgumentException {
-    List<Integer> intValues = new ArrayList<Integer>();
+    List<Integer> intValues = new ArrayList<>();
     for (TypedValue typedValue : typedValues) {
 
       if (ValueType.INTEGER.equals(typedValue.getType())) {
@@ -153,7 +153,7 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
   }
 
   protected List<Long> convertValuesToLong(List<TypedValue> typedValues) throws IllegalArgumentException {
-    List<Long> longValues = new ArrayList<Long>();
+    List<Long> longValues = new ArrayList<>();
     for (TypedValue typedValue : typedValues) {
 
       if (ValueType.LONG.equals(typedValue.getType())) {
@@ -182,7 +182,7 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
 
 
   protected List<Double> convertValuesToDouble(List<TypedValue> typedValues) throws IllegalArgumentException {
-    List<Double> doubleValues = new ArrayList<Double>();
+    List<Double> doubleValues = new ArrayList<>();
     for (TypedValue typedValue : typedValues) {
 
       if (ValueType.DOUBLE.equals(typedValue.getType())) {

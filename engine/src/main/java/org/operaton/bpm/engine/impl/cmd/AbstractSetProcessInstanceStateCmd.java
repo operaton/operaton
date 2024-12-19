@@ -157,7 +157,7 @@ public abstract class AbstractSetProcessInstanceStateCmd extends AbstractSetStat
     } else {
       query.processDefinitionKey(processDefinitionKey);
     }
-    List<ProcessInstance> result = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> result = new ArrayList<>();
     result.addAll(commandContext.getExecutionManager().findProcessInstancesByQueryCriteria(query,null));
     return result;
   }

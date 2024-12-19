@@ -51,7 +51,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
  */
 public class SpringProcessApplication extends AbstractProcessApplication implements ApplicationContextAware, BeanNameAware, ApplicationListener<ApplicationContextEvent> {
 
-  protected Map<String, String> properties = new HashMap<String, String>();
+  protected Map<String, String> properties = new HashMap<>();
   protected ApplicationContext applicationContext;
   protected String beanName;
 

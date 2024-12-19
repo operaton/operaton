@@ -123,7 +123,7 @@ class FileValueTypeImplTest {
   void createValueWithProperties() {
     // given
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
-    Map<String, Object> properties = new HashMap<String, Object>();
+    Map<String, Object> properties = new HashMap<>();
     properties.put("filename", "someFileName");
     properties.put("mimeType", "someMimeType");
     properties.put("encoding", "someEncoding");
@@ -142,7 +142,7 @@ class FileValueTypeImplTest {
   void createValueWithNullProperties() {
     // given
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
-    Map<String, Object> properties = new HashMap<String, Object>();
+    Map<String, Object> properties = new HashMap<>();
     properties.put("filename", "someFileName");
     properties.put("mimeType", null);
     properties.put("encoding", "someEncoding");
@@ -189,7 +189,7 @@ class FileValueTypeImplTest {
   @Test
   void cannotCreateFileWithInvalidTransientFlag() {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
-    Map<String, Object> info = new HashMap<String, Object>();
+    Map<String, Object> info = new HashMap<>();
     info.put("filename", "bar");
     info.put("transient", "foo");
     try {

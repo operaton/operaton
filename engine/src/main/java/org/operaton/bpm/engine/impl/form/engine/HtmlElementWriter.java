@@ -38,7 +38,7 @@ public class HtmlElementWriter {
    * inline */
   protected boolean isSelfClosing;
   protected String textContent;
-  protected Map<String, String> attributes = new LinkedHashMap<String, String>();
+  protected Map<String, String> attributes = new LinkedHashMap<>();
 
   public HtmlElementWriter(String tagName) {
     this.tagName = tagName;

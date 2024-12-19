@@ -35,7 +35,7 @@ public class SequenceBuilderImpl implements SequenceBuilder, ModelBuildOperation
 
   private final ModelElementTypeImpl elementType;
 
-  private final List<ModelBuildOperation> modelBuildOperations = new ArrayList<ModelBuildOperation>();
+  private final List<ModelBuildOperation> modelBuildOperations = new ArrayList<>();
 
   public SequenceBuilderImpl(ModelElementTypeImpl modelType) {
     this.elementType = modelType;
@@ -43,14 +43,14 @@ public class SequenceBuilderImpl implements SequenceBuilder, ModelBuildOperation
 
   @Override
   public <T extends ModelElementInstance> ChildElementBuilder<T> element(Class<T> childElementType) {
-    ChildElementBuilderImpl<T> builder = new ChildElementBuilderImpl<T>(childElementType, elementType);
+    ChildElementBuilderImpl<T> builder = new ChildElementBuilderImpl<>(childElementType, elementType);
     modelBuildOperations.add(builder);
     return builder;
   }
 
   @Override
   public <T extends ModelElementInstance> ChildElementCollectionBuilder<T> elementCollection(Class<T> childElementType) {
-    ChildElementCollectionBuilderImpl<T> builder = new ChildElementCollectionBuilderImpl<T>(childElementType, elementType);
+    ChildElementCollectionBuilderImpl<T> builder = new ChildElementCollectionBuilderImpl<>(childElementType, elementType);
     modelBuildOperations.add(builder);
     return builder;
   }

@@ -25,7 +25,7 @@ package org.operaton.bpm.qa.performance.engine.framework;
  */
 public interface PerfTestRunContext {
 
-  public static ThreadLocal<PerfTestRunContext> currentContext = new ThreadLocal<PerfTestRunContext>();
+  public static ThreadLocal<PerfTestRunContext> currentContext = new ThreadLocal<>();
 
   void setVariable(String name, Object value);
 

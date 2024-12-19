@@ -84,7 +84,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void testConditionEvaluationOnlyVariables() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
         .variable("foo", "bar")
@@ -105,7 +105,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
     checkResult(content);
 
     verify(runtimeServiceMock).createConditionEvaluation();
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("foo", "bar");
     verify(conditionEvaluationBuilderMock).setVariables(expectedVariables);
     verify(conditionEvaluationBuilderMock).evaluateStartConditions();
@@ -114,7 +114,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void testConditionEvaluationWithProcessDefinition() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
         .variable("foo", "bar")
@@ -137,7 +137,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void testConditionEvaluationWithBusinessKey() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
         .variable("foo", "bar")
@@ -159,7 +159,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void testConditionEvaluationWithTenantId() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
         .variable("foo", "bar")
@@ -182,7 +182,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void testConditionEvaluationWithoutTenantId() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
         .variable("foo", "bar")
@@ -205,7 +205,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void testConditionEvaluationFailingInvalidTenantParameters() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
         .variable("foo", "bar")
@@ -227,7 +227,7 @@ public class ConditionRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void testConditionEvaluationThrowsAuthorizationException() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     Map<String, Object> variables = VariablesBuilder
         .create()
         .variable("foo", "bar")

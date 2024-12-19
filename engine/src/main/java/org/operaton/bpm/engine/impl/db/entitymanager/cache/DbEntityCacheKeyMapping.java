@@ -43,7 +43,7 @@ public class DbEntityCacheKeyMapping {
   protected Map<Class<?>, Class<?>> entityCacheKeys;
 
   public DbEntityCacheKeyMapping() {
-    this.entityCacheKeys = new HashMap<Class<?>, Class<?>>();
+    this.entityCacheKeys = new HashMap<>();
   }
 
   public Class<?> getEntityCacheKey(Class<?> entityType) {

@@ -913,7 +913,7 @@ public class HistoricExternalTaskLogQueryTest {
   }
 
   protected List<ExternalTask> startExternalTaskProcesses(int count) {
-    List<ExternalTask> list = new LinkedList<ExternalTask>();
+    List<ExternalTask> list = new LinkedList<>();
     for (int ithPrio = 0; ithPrio < count; ithPrio++) {
       list.add(startExternalTaskProcessGivenPriority(ithPrio));
     }

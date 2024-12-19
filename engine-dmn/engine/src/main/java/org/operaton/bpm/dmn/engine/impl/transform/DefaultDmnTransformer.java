@@ -32,7 +32,7 @@ import org.operaton.bpm.dmn.engine.impl.type.DefaultDataTypeTransformerRegistry;
 public class DefaultDmnTransformer implements DmnTransformer {
 
   protected DmnTransformFactory transformFactory = new DefaultTransformFactory();
-  protected List<DmnTransformListener> transformListeners = new ArrayList<DmnTransformListener>();
+  protected List<DmnTransformListener> transformListeners = new ArrayList<>();
   protected DmnElementTransformHandlerRegistry elementTransformHandlerRegistry = new DefaultElementTransformHandlerRegistry();
   protected DmnDataTypeTransformerRegistry dataTypeTransformerRegistry = new DefaultDataTypeTransformerRegistry();
   protected DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry = new DefaultHitPolicyHandlerRegistry();

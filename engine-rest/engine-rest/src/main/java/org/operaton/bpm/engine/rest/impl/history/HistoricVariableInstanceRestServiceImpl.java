@@ -66,7 +66,7 @@ public class HistoricVariableInstanceRestServiceImpl implements HistoricVariable
 
     List<HistoricVariableInstance> matchingHistoricVariableInstances = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricVariableInstanceDto> historicVariableInstanceDtoResults = new ArrayList<HistoricVariableInstanceDto>();
+    List<HistoricVariableInstanceDto> historicVariableInstanceDtoResults = new ArrayList<>();
     for (HistoricVariableInstance historicVariableInstance : matchingHistoricVariableInstances) {
       HistoricVariableInstanceDto resultHistoricVariableInstance = HistoricVariableInstanceDto.fromHistoricVariableInstance(historicVariableInstance);
       historicVariableInstanceDtoResults.add(resultHistoricVariableInstance);

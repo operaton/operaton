@@ -36,7 +36,7 @@ public class ServiceTaskPerformanceTest extends ProcessEnginePerformanceTestCase
   @Test
   public void threeServiceTasksAndAGateway() {
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("approved", true);
 
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")

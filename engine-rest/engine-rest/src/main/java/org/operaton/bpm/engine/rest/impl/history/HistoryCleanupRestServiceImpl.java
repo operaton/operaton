@@ -64,7 +64,7 @@ public class HistoryCleanupRestServiceImpl implements HistoryCleanupRestService 
     if (jobs == null || jobs.isEmpty()) {
       throw new RestException(Status.NOT_FOUND, "History cleanup jobs are empty");
     }
-    List<JobDto> dtos = new ArrayList<JobDto>();
+    List<JobDto> dtos = new ArrayList<>();
     for (Job job : jobs) {
       JobDto dto = JobDto.fromJob(job);
       dtos.add(dto);

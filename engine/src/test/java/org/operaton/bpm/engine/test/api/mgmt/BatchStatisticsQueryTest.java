@@ -629,7 +629,7 @@ public class BatchStatisticsQueryTest {
     Assert.assertEquals(2, query.count());
     Assert.assertEquals(2, query.list().size());
 
-    List<String> foundIds = new ArrayList<String>();
+    List<String> foundIds = new ArrayList<>();
     for (Batch batch : query.list()) {
       foundIds.add(batch.getId());
     }

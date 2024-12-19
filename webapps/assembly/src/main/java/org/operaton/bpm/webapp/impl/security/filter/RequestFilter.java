@@ -78,7 +78,7 @@ public class RequestFilter {
       return null;
     }
 
-    HashMap<String, String> attributes = new HashMap<String, String>();
+    HashMap<String, String> attributes = new HashMap<>();
 
     for (int i = 0; i < matcher.groupCount(); i++) {
       attributes.put(groups[i], matcher.group(i + 1));
@@ -95,7 +95,7 @@ public class RequestFilter {
 
     String[] parts = pattern.split("/");
 
-    ArrayList<String> groupList = new ArrayList<String>();
+    ArrayList<String> groupList = new ArrayList<>();
 
     StringBuilder regexBuilder = new StringBuilder();
 

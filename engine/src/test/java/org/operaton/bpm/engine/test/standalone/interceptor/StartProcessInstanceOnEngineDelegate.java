@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class StartProcessInstanceOnEngineDelegate implements JavaDelegate {
 
-  public static Map<String, ProcessEngine> ENGINES = new HashMap<String, ProcessEngine>();
+  public static Map<String, ProcessEngine> ENGINES = new HashMap<>();
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

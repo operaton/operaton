@@ -67,7 +67,7 @@ public class PropertyHelperTest {
   public void testProcessEngineConfigurationProperties() {
     ProcessEngineConfiguration engineConfiguration = new StandaloneProcessEngineConfiguration();
 
-    Map<String, String> propertiesToSet = new HashMap<String, String>();
+    Map<String, String> propertiesToSet = new HashMap<>();
     propertiesToSet.put(JOB_EXECUTOR_DEPLOYMENT_AWARE_PROP, "true");
     propertiesToSet.put(JOB_EXECUTOR_PREFER_TIMER_JOBS, "true");
     propertiesToSet.put(JOB_EXECUTOR_ACQUIRE_BY_DUE_DATE, "true");
@@ -88,7 +88,7 @@ public class PropertyHelperTest {
     // given
     JobExecutor jobExecutor = new DefaultJobExecutor();
 
-    Map<String, String> propertiesToSet = new HashMap<String, String>();
+    Map<String, String> propertiesToSet = new HashMap<>();
     propertiesToSet.put(MAX_JOBS_PER_ACQUISITION, Integer.toString(Integer.MAX_VALUE));
     propertiesToSet.put(MAX_WAIT, Long.toString(Long.MAX_VALUE));
     propertiesToSet.put(WAIT_INCREASE_FACTOR, Float.toString(Float.MAX_VALUE));
@@ -112,7 +112,7 @@ public class PropertyHelperTest {
   public void testConfigurationPropertiesWithMismatchingFieldAndSetter() {
     ProcessEngineConfigurationImpl engineConfiguration = new StandaloneProcessEngineConfiguration();
 
-    Map<String, String> propertiesToSet = new HashMap<String, String>();
+    Map<String, String> propertiesToSet = new HashMap<>();
     propertiesToSet.put(DB_IDENTITY_USED_PROP, "false");
     PropertyHelper.applyProperties(engineConfiguration, propertiesToSet);
 
@@ -127,7 +127,7 @@ public class PropertyHelperTest {
   @Test
   public void testNonExistingPropertyForProcessEngineConfiguration() {
     ProcessEngineConfiguration engineConfiguration = new StandaloneProcessEngineConfiguration();
-    Map<String, String> propertiesToSet = new HashMap<String, String>();
+    Map<String, String> propertiesToSet = new HashMap<>();
     propertiesToSet.put("aNonExistingProperty", "someValue");
 
     try {

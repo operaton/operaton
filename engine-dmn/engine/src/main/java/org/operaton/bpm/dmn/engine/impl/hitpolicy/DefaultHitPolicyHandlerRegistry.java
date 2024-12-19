@@ -29,7 +29,7 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
   protected static final Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = getDefaultHandlers();
 
   protected static Map<HitPolicyEntry, DmnHitPolicyHandler> getDefaultHandlers() {
-    Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = new HashMap<HitPolicyEntry, DmnHitPolicyHandler>();
+    Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = new HashMap<>();
 
     handlers.put(new HitPolicyEntry(HitPolicy.UNIQUE, null), new UniqueHitPolicyHandler());
     handlers.put(new HitPolicyEntry(HitPolicy.FIRST, null), new FirstHitPolicyHandler());

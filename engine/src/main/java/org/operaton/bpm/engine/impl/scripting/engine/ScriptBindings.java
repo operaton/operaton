@@ -58,7 +58,7 @@ public class ScriptBindings implements Bindings {
    * This list contains the keywords for JUEL, Javascript and Groovy.
    */
   protected static final Set<String> UNSTORED_KEYS =
-    new HashSet<String>(Arrays.asList(
+    new HashSet<>(Arrays.asList(
       "out",
       "out:print",
       "lang:import",
@@ -191,7 +191,7 @@ public class ScriptBindings implements Bindings {
 
   protected Map<String, Object> calculateBindingMap() {
 
-    Map<String, Object> bindingMap = new HashMap<String, Object>();
+    Map<String, Object> bindingMap = new HashMap<>();
 
     for (Resolver resolver : scriptResolvers) {
       for (String key : resolver.keySet()) {

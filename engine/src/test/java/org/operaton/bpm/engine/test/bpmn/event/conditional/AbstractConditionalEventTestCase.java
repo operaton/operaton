@@ -129,7 +129,7 @@ public abstract class AbstractConditionalEventTestCase {
 
 
   public static void assertTaskNames(List<Task> actualTasks, String ... expectedTaskNames ) {
-    List<String> expectedNames = new ArrayList<String>(Arrays.asList(expectedTaskNames));
+    List<String> expectedNames = new ArrayList<>(Arrays.asList(expectedTaskNames));
     for (Task task : actualTasks) {
       String actualTaskName = task.getName();
       if (expectedNames.contains(actualTaskName)) {

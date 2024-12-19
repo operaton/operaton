@@ -99,7 +99,7 @@ public class OperatonBpmAutoConfigurationIT {
   }
 
   private List<Class<?>> getProcessEngineServicesClasses() {
-    List<Class<?>> classes = new ArrayList<Class<?>>();
+    List<Class<?>> classes = new ArrayList<>();
     for (Method method : ProcessEngineServices.class.getMethods()) {
       classes.add(method.getReturnType());
     }

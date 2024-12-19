@@ -45,7 +45,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
   @Test
   public void testOrderByPriority() {
     // given five jobs with priorities from 1 to 5
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("jobPrioExpressionProcess",
@@ -61,7 +61,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
   @Test
   public void testFilterByJobPriorityLowerThanOrEquals() {
     // given five jobs with priorities from 1 to 5
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("jobPrioExpressionProcess",
@@ -73,7 +73,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     List<Job> jobs = managementService.createJobQuery().priorityLowerThanOrEquals(2).list();
     assertEquals(3, jobs.size());
 
-    Set<String> processInstanceIds = new HashSet<String>();
+    Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add(instances.get(0).getId());
     processInstanceIds.add(instances.get(1).getId());
     processInstanceIds.add(instances.get(2).getId());
@@ -88,7 +88,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
   @Test
   public void testFilterByJobPriorityLowerThanOrEqualsAndHigherThanOrEqual() {
     // given five jobs with priorities from 1 to 5
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("jobPrioExpressionProcess",
@@ -104,7 +104,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
   @Test
   public void testFilterByJobPriorityHigherThanOrEquals() {
     // given five jobs with priorities from 1 to 5
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("jobPrioExpressionProcess",
@@ -116,7 +116,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
     List<Job> jobs = managementService.createJobQuery().priorityHigherThanOrEquals(2L).list();
     assertEquals(3, jobs.size());
 
-    Set<String> processInstanceIds = new HashSet<String>();
+    Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add(instances.get(2).getId());
     processInstanceIds.add(instances.get(3).getId());
     processInstanceIds.add(instances.get(4).getId());
@@ -131,7 +131,7 @@ public class JobQueryByPriorityTest extends PluggableProcessEngineTest {
   @Test
   public void testFilterByJobPriorityLowerAndHigher() {
     // given five jobs with priorities from 1 to 5
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("jobPrioExpressionProcess",

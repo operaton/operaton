@@ -94,7 +94,7 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
   protected boolean isNotStartableInTasklist = false;
   protected boolean startablePermissionCheck = false;
   // for internal use
-  protected List<PermissionCheck> processDefinitionCreatePermissionChecks = new ArrayList<PermissionCheck>();
+  protected List<PermissionCheck> processDefinitionCreatePermissionChecks = new ArrayList<>();
   private boolean shouldJoinDeploymentTable = false;
 
   public ProcessDefinitionQueryImpl() {
@@ -450,7 +450,7 @@ public class ProcessDefinitionQueryImpl extends AbstractQuery<ProcessDefinitionQ
       ModelElementInstance processElement = bpmnModelInstance.getModelElementById(processDefinition.getKey());
       if (processElement != null) {
         Collection<Documentation> documentations = processElement.getChildElementsByType(Documentation.class);
-        List<String> docStrings = new ArrayList<String>();
+        List<String> docStrings = new ArrayList<>();
         for (Documentation documentation : documentations) {
           docStrings.add(documentation.getTextContent());
         }

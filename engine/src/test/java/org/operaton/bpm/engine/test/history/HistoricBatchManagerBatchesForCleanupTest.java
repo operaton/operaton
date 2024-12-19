@@ -137,7 +137,7 @@ public class HistoricBatchManagerBatchesForCleanupTest {
     Date startDate = ClockUtil.getCurrentTime();
     ClockUtil.setCurrentTime(DateUtils.addDays(startDate, daysInThePast));
 
-    List<Batch> list = new ArrayList<Batch>();
+    List<Batch> list = new ArrayList<>();
     for (int i = 0; i < batchesCount; i++) {
       list.add(helper.migrateProcessInstancesAsync(1));
     }

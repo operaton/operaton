@@ -59,7 +59,7 @@ public class HistoricActivityInstanceRestServiceImpl implements HistoricActivity
 
     List<HistoricActivityInstance> matchingHistoricActivityInstances = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricActivityInstanceDto> historicActivityInstanceResults = new ArrayList<HistoricActivityInstanceDto>();
+    List<HistoricActivityInstanceDto> historicActivityInstanceResults = new ArrayList<>();
     for (HistoricActivityInstance historicActivityInstance : matchingHistoricActivityInstances) {
       HistoricActivityInstanceDto resultHistoricActivityInstance = new HistoricActivityInstanceDto();
       HistoricActivityInstanceDto.fromHistoricActivityInstance(resultHistoricActivityInstance, historicActivityInstance);

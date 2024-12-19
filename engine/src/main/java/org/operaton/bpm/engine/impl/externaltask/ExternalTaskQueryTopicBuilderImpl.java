@@ -123,7 +123,7 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
     // don't use plain Arrays.asList since this returns an instance of a different list class
     // that is private and may mess mybatis queries up
     if (variables != null) {
-      currentInstruction.setVariablesToFetch(new ArrayList<String>(Arrays.asList(variables)));
+      currentInstruction.setVariablesToFetch(new ArrayList<>(Arrays.asList(variables)));
     }
     return this;
   }

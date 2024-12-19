@@ -63,7 +63,7 @@ public class PermissionConverter {
       return new String[] { Permissions.ALL.getName() };
     }
 
-    List<String> names = new ArrayList<String>();
+    List<String> names = new ArrayList<>();
 
     for (Permission permission : permissions) {
       String name = permission.getName();

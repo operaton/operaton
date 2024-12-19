@@ -65,7 +65,7 @@ public class StartManagedThreadPoolStep extends DeploymentOperationStep {
     long keepAliveTime = getKeepAliveTime(jobExecutorXml);
 
     // initialize Queue & Executor services
-    BlockingQueue<Runnable> threadPoolQueue = new ArrayBlockingQueue<Runnable>(queueSize);
+    BlockingQueue<Runnable> threadPoolQueue = new ArrayBlockingQueue<>(queueSize);
 
     ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveTime, TimeUnit.MILLISECONDS, threadPoolQueue);
     threadPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());

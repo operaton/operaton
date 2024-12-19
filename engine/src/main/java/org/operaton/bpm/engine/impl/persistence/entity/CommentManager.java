@@ -71,19 +71,19 @@ public class CommentManager extends AbstractHistoricManager {
   }
 
   public void deleteCommentsByProcessInstanceIds(List<String> processInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("processInstanceIds", processInstanceIds);
     deleteComments(parameters);
   }
 
   public void deleteCommentsByTaskProcessInstanceIds(List<String> processInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("taskProcessInstanceIds", processInstanceIds);
     deleteComments(parameters);
   }
 
   public void deleteCommentsByTaskCaseInstanceIds(List<String> caseInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("taskCaseInstanceIds", caseInstanceIds);
     deleteComments(parameters);
   }
@@ -101,7 +101,7 @@ public class CommentManager extends AbstractHistoricManager {
   public CommentEntity findCommentByTaskIdAndCommentId(String taskId, String commentId) {
     checkHistoryEnabled();
 
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("taskId", taskId);
     parameters.put("id", commentId);
 

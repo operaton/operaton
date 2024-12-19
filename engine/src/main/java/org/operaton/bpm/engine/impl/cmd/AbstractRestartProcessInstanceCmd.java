@@ -46,7 +46,7 @@ public abstract class AbstractRestartProcessInstanceCmd<T> implements Command<T>
 
   protected Collection<String> collectProcessInstanceIds() {
 
-    Set<String> collectedProcessInstanceIds = new HashSet<String>();
+    Set<String> collectedProcessInstanceIds = new HashSet<>();
 
     List<String> processInstanceIds = builder.getProcessInstanceIds();
     if (processInstanceIds != null) {
@@ -67,7 +67,7 @@ public abstract class AbstractRestartProcessInstanceCmd<T> implements Command<T>
       int numInstances,
       boolean async) {
 
-    List<PropertyChange> propertyChanges = new ArrayList<PropertyChange>();
+    List<PropertyChange> propertyChanges = new ArrayList<>();
     propertyChanges.add(new PropertyChange("nrOfInstances",
         null,
         numInstances));

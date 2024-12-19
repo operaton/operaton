@@ -107,7 +107,7 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
       return Collections.unmodifiableCollection(getEntryCriterias());
     }
     else {
-      List<Sentry> sentries = new ArrayList<Sentry>();
+      List<Sentry> sentries = new ArrayList<>();
       Collection<EntryCriterion> entryCriterions = getEntryCriterions();
       for (EntryCriterion entryCriterion : entryCriterions) {
         Sentry sentry = entryCriterion.getSentry();
@@ -125,7 +125,7 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
       return Collections.unmodifiableCollection(getExitCriterias());
     }
     else {
-      List<Sentry> sentries = new ArrayList<Sentry>();
+      List<Sentry> sentries = new ArrayList<>();
       Collection<ExitCriterion> exitCriterions = getExitCriterions();
       for (ExitCriterion exitCriterion : exitCriterions) {
         Sentry sentry = exitCriterion.getSentry();

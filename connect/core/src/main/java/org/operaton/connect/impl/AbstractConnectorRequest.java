@@ -32,7 +32,7 @@ public abstract class AbstractConnectorRequest<R extends ConnectorResponse> impl
 
   protected Connector connector;
 
-  protected Map<String, Object> requestParameters = new HashMap<String, Object>();
+  protected Map<String, Object> requestParameters = new HashMap<>();
 
   public AbstractConnectorRequest(Connector connector) {
     this.connector = connector;

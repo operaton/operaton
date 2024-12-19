@@ -65,7 +65,7 @@ public class BpmPlatformParser1_1 extends AbstractParser {
   }
 
   protected void parseProcessEngines(final XMLExtendedStreamReader reader, final List<ModelNode> operations, final ModelNode parentAddress) throws XMLStreamException, ParserException {
-    List<String> discoveredEngineNames = new ArrayList<String>();
+    List<String> discoveredEngineNames = new ArrayList<>();
 
     while (reader.hasNext() && reader.nextTag() != END_ELEMENT) {
       final Element element = Element.forName(reader.getLocalName());

@@ -108,7 +108,7 @@ public class HistoricIncidentManager extends AbstractHistoricManager {
   }
 
   public DbOperation deleteHistoricIncidentsByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("removalTime", removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
       parameters.put("minuteFrom", minuteFrom);

@@ -57,14 +57,14 @@ public class DeploymentOperation {
   protected final List<DeploymentOperationStep> steps;
 
   /** a list of steps that completed successfully */
-  protected final List<DeploymentOperationStep> successfulSteps = new ArrayList<DeploymentOperationStep>();
+  protected final List<DeploymentOperationStep> successfulSteps = new ArrayList<>();
 
   /** the list of services installed by this operation. The {@link #rollbackOperation()} must make sure
    * all these services are removed if the operation fails. */
-  protected List<String> installedServices = new ArrayList<String>();
+  protected List<String> installedServices = new ArrayList<>();
 
   /** a list of attachments allows to pass state from one operation to another */
-  protected Map<String, Object> attachments = new HashMap<String, Object>();
+  protected Map<String, Object> attachments = new HashMap<>();
 
   protected boolean isRollbackOnFailure = true;
 
@@ -179,8 +179,8 @@ public class DeploymentOperation {
     protected PlatformServiceContainer container;
     protected String name;
     protected boolean isUndeploymentOperation = false;
-    protected List<DeploymentOperationStep> steps = new ArrayList<DeploymentOperationStep>();
-    protected Map<String, Object> initialAttachments = new HashMap<String, Object>();
+    protected List<DeploymentOperationStep> steps = new ArrayList<>();
+    protected Map<String, Object> initialAttachments = new HashMap<>();
 
     public DeploymentOperationBuilder(PlatformServiceContainer container, String name) {
       this.container = container;

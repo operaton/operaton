@@ -92,7 +92,7 @@ public class DemoDelegate implements JavaDelegate {
     demoVariableClass.setLongObjectProperty(Long.valueOf(Long.MIN_VALUE));
     demoVariableClass.setLongProperty(Long.MAX_VALUE);
     
-    HashMap<Object,Object> demoHashMap= new HashMap<Object,Object>();
+    HashMap<Object,Object> demoHashMap= new HashMap<>();
     demoHashMap.put("key1", "value1");
     demoHashMap.put("key2", "value2");
     demoVariableClass.setMapProperty(demoHashMap);

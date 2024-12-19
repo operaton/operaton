@@ -39,7 +39,7 @@ public class VariableInstanceManager extends AbstractManager {
 
   @SuppressWarnings("unchecked")
   public List<VariableInstanceEntity> findVariableInstancesByTaskIdAndVariableNames(String taskId, Collection<String> variableNames) {
-    Map<String, Object> parameter = new HashMap<String, Object>();
+    Map<String, Object> parameter = new HashMap<>();
     parameter.put("taskId", taskId);
     parameter.put("variableNames", variableNames);
     return getDbEntityManager().selectList("selectVariablesByTaskId", parameter);
@@ -51,7 +51,7 @@ public class VariableInstanceManager extends AbstractManager {
 
   @SuppressWarnings("unchecked")
   public List<VariableInstanceEntity> findVariableInstancesByExecutionIdAndVariableNames(String executionId, Collection<String> variableNames) {
-    Map<String, Object> parameter = new HashMap<String, Object>();
+    Map<String, Object> parameter = new HashMap<>();
     parameter.put("executionId", executionId);
     parameter.put("variableNames", variableNames);
     return getDbEntityManager().selectList("selectVariablesByExecutionId", parameter);
@@ -68,7 +68,7 @@ public class VariableInstanceManager extends AbstractManager {
 
   @SuppressWarnings("unchecked")
   public List<VariableInstanceEntity> findVariableInstancesByCaseExecutionIdAndVariableNames(String caseExecutionId, Collection<String> variableNames) {
-    Map<String, Object> parameter = new HashMap<String, Object>();
+    Map<String, Object> parameter = new HashMap<>();
     parameter.put("caseExecutionId", caseExecutionId);
     parameter.put("variableNames", variableNames);
     return getDbEntityManager().selectList("selectVariablesByCaseExecutionId", parameter);

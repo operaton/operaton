@@ -42,7 +42,7 @@ public class TaskDueDateExtensionsTest extends PluggableProcessEngineTest {
   public void testDueDateExtension() throws Exception {
     
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("06-07-1986 12:10:00");
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", date);
     
     // Start process-instance, passing date that should be used as dueDate
@@ -58,7 +58,7 @@ public class TaskDueDateExtensionsTest extends PluggableProcessEngineTest {
   @Test
   public void testDueDateStringExtension() throws Exception {
     
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "1986-07-06T12:10:00");
     
     // Start process-instance, passing date that should be used as dueDate
@@ -74,7 +74,7 @@ public class TaskDueDateExtensionsTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testRelativeDueDate() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "P2DT2H30M");
     
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("dueDateExtension", variables);

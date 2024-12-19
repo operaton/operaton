@@ -44,7 +44,7 @@ public class TransactionalTestServiceImpl implements TransactionalTestService {
     TestEntity entity = new TestEntity();
     entity.setText("text");
     TestEntity testEntity = testEntityRepository.save(entity);
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("test", testEntity);
     return runtimeService.startProcessInstanceByKey("TestProcess", variables);
   }

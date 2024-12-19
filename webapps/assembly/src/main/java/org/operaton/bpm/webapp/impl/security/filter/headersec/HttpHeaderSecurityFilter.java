@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public class HttpHeaderSecurityFilter implements Filter {
 
-  protected final List<HeaderSecurityProvider> headerSecurityProviders = new ArrayList<HeaderSecurityProvider>() {{
+  protected final List<HeaderSecurityProvider> headerSecurityProviders = new ArrayList<>() {{
 
     add(new XssProtectionProvider());
     add(new ContentSecurityPolicyProvider());

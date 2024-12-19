@@ -48,7 +48,7 @@ public abstract class AbstractEventDefinitionTest extends BpmnModelElementInstan
   public void getEvent() {
     InputStream inputStream = ReflectUtil.getResourceAsStream("org/operaton/bpm/model/bpmn/EventDefinitionsTest.xml");
     IntermediateThrowEvent event = Bpmn.readModelFromStream(inputStream).getModelElementById("event");
-    eventDefinitionQuery = new QueryImpl<EventDefinition>(event.getEventDefinitions());
+    eventDefinitionQuery = new QueryImpl<>(event.getEventDefinitions());
   }
 
 }

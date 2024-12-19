@@ -224,7 +224,7 @@ public class HistoricCaseInstanceTest extends CmmnTest {
     assertCount(1, historicQuery().caseInstanceId(oneTaskCase.getId()));
     assertCount(1, historicQuery().caseInstanceId(twoTaskCase.getId()));
 
-    Set<String> caseInstanceIds = new HashSet<String>();
+    Set<String> caseInstanceIds = new HashSet<>();
     caseInstanceIds.add(oneTaskCase.getId());
     caseInstanceIds.add("unknown1");
     caseInstanceIds.add(twoTaskCase.getId());

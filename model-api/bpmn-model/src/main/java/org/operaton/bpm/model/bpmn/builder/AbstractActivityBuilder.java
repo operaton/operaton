@@ -106,7 +106,7 @@ public abstract class AbstractActivityBuilder<B extends AbstractActivityBuilder<
       Bounds attachedToBounds = attachedToElement.getBounds();
 
       Collection<BoundaryEvent> boundaryEvents = element.getParentElement().getChildElementsByType(BoundaryEvent.class);
-      Collection<BoundaryEvent> attachedBoundaryEvents = new ArrayList<BoundaryEvent>();
+      Collection<BoundaryEvent> attachedBoundaryEvents = new ArrayList<>();
 
       Iterator<BoundaryEvent> iterator = boundaryEvents.iterator();
       while (iterator.hasNext()) {

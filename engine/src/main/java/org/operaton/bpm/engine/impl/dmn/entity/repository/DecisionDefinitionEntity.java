@@ -189,7 +189,7 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("historyTimeToLive", this.historyTimeToLive);
     return persistentState;
   }

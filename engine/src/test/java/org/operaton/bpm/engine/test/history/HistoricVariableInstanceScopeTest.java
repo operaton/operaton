@@ -50,7 +50,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   public void testSetVariableOnProcessInstanceStart() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("testVar", "testValue");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
@@ -97,7 +97,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   public void testSetVariableOnProcessIntanceStartAndSetVariableLocalOnUserTask() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("testVar", "testValue");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
 
@@ -272,7 +272,7 @@ public class HistoricVariableInstanceScopeTest extends PluggableProcessEngineTes
   @Test
   public void testHistoricCaseVariableInstanceQuery() {
     // start case instance with variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("foo", "bar");
     String caseInstanceId =  caseService.createCaseInstanceByKey("oneTaskCase", variables).getId();
 

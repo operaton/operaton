@@ -56,13 +56,13 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   private ModelElementTypeImpl baseType;
 
-  private final List<ModelElementType> extendingTypes = new ArrayList<ModelElementType>();
+  private final List<ModelElementType> extendingTypes = new ArrayList<>();
 
-  private final List<Attribute<?>> attributes = new ArrayList<Attribute<?>>();
+  private final List<Attribute<?>> attributes = new ArrayList<>();
 
-  private final List<ModelElementType> childElementTypes = new ArrayList<ModelElementType>();
+  private final List<ModelElementType> childElementTypes = new ArrayList<>();
 
-  private final List<ChildElementCollection<?>> childElementCollections = new ArrayList<ChildElementCollection<?>>();
+  private final List<ChildElementCollection<?>> childElementCollections = new ArrayList<>();
 
   private ModelTypeInstanceProvider<?> instanceProvider;
 
@@ -174,7 +174,7 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   @Override
   public Collection<ModelElementType> getAllExtendingTypes() {
-    HashSet<ModelElementType> extendingTypes = new HashSet<ModelElementType>();
+    HashSet<ModelElementType> extendingTypes = new HashSet<>();
     extendingTypes.add(this);
     resolveExtendingTypes(extendingTypes);
     return extendingTypes;
@@ -225,7 +225,7 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   @Override
   public List<ModelElementType> getAllChildElementTypes() {
-    List<ModelElementType> allChildElementTypes = new ArrayList<ModelElementType>();
+    List<ModelElementType> allChildElementTypes = new ArrayList<>();
     if (baseType != null) {
       allChildElementTypes.addAll(baseType.getAllChildElementTypes());
     }
@@ -238,7 +238,7 @@ public class ModelElementTypeImpl implements ModelElementType {
   }
 
   public List<ChildElementCollection<?>> getAllChildElementCollections() {
-    List<ChildElementCollection<?>> allChildElementCollections = new ArrayList<ChildElementCollection<?>>();
+    List<ChildElementCollection<?>> allChildElementCollections = new ArrayList<>();
     if (baseType != null) {
       allChildElementCollections.addAll(baseType.getAllChildElementCollections());
     }
@@ -253,7 +253,7 @@ public class ModelElementTypeImpl implements ModelElementType {
 
     List<DomElement> elements = getElementsByNameNs(document, typeNamespace);
 
-    List<ModelElementInstance> resultList = new ArrayList<ModelElementInstance>();
+    List<ModelElementInstance> resultList = new ArrayList<>();
     for (DomElement element : elements) {
       resultList.add(ModelUtil.getModelElement(element, modelInstanceImpl, this));
     }
@@ -300,7 +300,7 @@ public class ModelElementTypeImpl implements ModelElementType {
    * @return the list of all attributes
    */
   public Collection<Attribute<?>> getAllAttributes() {
-    List<Attribute<?>> allAttributes = new ArrayList<Attribute<?>>();
+    List<Attribute<?>> allAttributes = new ArrayList<>();
     allAttributes.addAll(getAttributes());
     Collection<ModelElementType> baseTypes = ModelUtil.calculateAllBaseTypes(this);
     for (ModelElementType baseType : baseTypes) {

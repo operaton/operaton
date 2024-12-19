@@ -234,13 +234,13 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<String>();
+    Set<String> referencedEntityIds = new HashSet<>();
     return referencedEntityIds;
   }
 
   @Override
   public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<String, Class>();
+    Map<String, Class> referenceIdAndClass = new HashMap<>();
 
     if (processDefId != null) {
       referenceIdAndClass.put(processDefId, ProcessDefinitionEntity.class);

@@ -803,7 +803,7 @@ public class ProcessInstanceModificationSubProcessTest {
 
 
   private List<String> collectIds(List<ProcessInstance> processInstances) {
-    List<String> supbrocessIds = new ArrayList<String>();
+    List<String> supbrocessIds = new ArrayList<>();
     for (ProcessInstance processInstance: processInstances) {
       supbrocessIds.add(processInstance.getId());
     }

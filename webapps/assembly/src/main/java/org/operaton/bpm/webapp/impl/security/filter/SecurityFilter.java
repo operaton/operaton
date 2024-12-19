@@ -50,7 +50,7 @@ import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
  */
 public class SecurityFilter implements Filter {
 
-  public List<SecurityFilterRule> filterRules = new ArrayList<SecurityFilterRule>();
+  public List<SecurityFilterRule> filterRules = new ArrayList<>();
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

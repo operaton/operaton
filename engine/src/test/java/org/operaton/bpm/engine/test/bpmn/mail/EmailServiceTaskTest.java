@@ -69,7 +69,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
     assertEquals(3, messages.size());
 
     // sort recipients for easy assertion
-    List<String> recipients = new ArrayList<String>();
+    List<String> recipients = new ArrayList<>();
     for (WiserMessage message : messages) {
       recipients.add(message.getEnvelopeReceiver());
     }
@@ -89,7 +89,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
     String recipientName = "Mr. Fozzie";
     String subject = "Fozzie, you should see this!";
 
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("sender", sender);
     vars.put("recipient", recipient);
     vars.put("recipientName", recipientName);
@@ -140,7 +140,7 @@ public class EmailServiceTaskTest extends EmailTestCase {
     Date now = new Date();
     String orderId = "123456";
 
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("sender", from);
     vars.put("recipient", recipient);
     vars.put("recipientName", recipientName);

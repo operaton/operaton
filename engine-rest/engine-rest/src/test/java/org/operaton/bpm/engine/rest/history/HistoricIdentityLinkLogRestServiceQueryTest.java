@@ -461,7 +461,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
     verifyStringParameterQueryInvocations();
   }
   protected Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("assignerId", MockProvider.EXAMPLE_HIST_IDENTITY_LINK_ASSIGNER_ID);
     parameters.put("dateBefore", MockProvider.EXAMPLE_HIST_IDENTITY_LINK_DATE_BEFORE);
     parameters.put("dateAfter", MockProvider.EXAMPLE_HIST_IDENTITY_LINK_DATE_AFTER);

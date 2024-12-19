@@ -38,7 +38,7 @@ import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeI
  */
 public class ModelBuilderImpl extends ModelBuilder {
 
-  private final List<ModelElementTypeBuilderImpl> typeBuilders = new ArrayList<ModelElementTypeBuilderImpl>();
+  private final List<ModelElementTypeBuilderImpl> typeBuilders = new ArrayList<>();
   private final ModelImpl model;
 
   public ModelBuilderImpl(String modelName) {

@@ -66,7 +66,7 @@ public class PaSpinSupportTest extends AbstractFoxPlatformIntegrationTest {
 
     ObjectValue objectValue = runtimeService.getVariableTyped(pi.getId(), "serializedObject", true);
 
-    HashMap<String, String> expected = new HashMap<String, String>();
+    HashMap<String, String> expected = new HashMap<>();
     expected.put("foo", "bar");
 
     Assert.assertEquals(expected, objectValue.getValue());

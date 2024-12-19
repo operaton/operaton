@@ -66,7 +66,7 @@ public class CleanableHistoricBatchReportResultDto {
     return engine.getHistoryService().createCleanableHistoricBatchReport();
   }
   public static List<CleanableHistoricBatchReportResultDto> convert(List<CleanableHistoricBatchReportResult> reportResult) {
-    List<CleanableHistoricBatchReportResultDto> dtos = new ArrayList<CleanableHistoricBatchReportResultDto>();
+    List<CleanableHistoricBatchReportResultDto> dtos = new ArrayList<>();
     for (CleanableHistoricBatchReportResult current : reportResult) {
       CleanableHistoricBatchReportResultDto dto = new CleanableHistoricBatchReportResultDto();
       dto.setBatchType(current.getBatchType());

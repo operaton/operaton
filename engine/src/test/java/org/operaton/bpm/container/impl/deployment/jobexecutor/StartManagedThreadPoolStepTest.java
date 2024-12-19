@@ -75,7 +75,7 @@ public class StartManagedThreadPoolStepTest {
 
   @Test
   public void performOperationStepWithDefaultProperties() {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     jobExecutorXml.setProperties(properties);
     step.performOperationStep(deploymentOperation);
 
@@ -91,7 +91,7 @@ public class StartManagedThreadPoolStepTest {
 
   @Test
   public void performOperationStepWithPropertiesInXml() {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     String queueSize = "5";
     String corePoolSize = "12";
     String maxPoolSize = "20";

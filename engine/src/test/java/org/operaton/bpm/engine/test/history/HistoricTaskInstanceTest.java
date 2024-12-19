@@ -272,7 +272,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
   public void testHistoricTaskInstanceQueryByProcessVariableValue() {
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      Map<String, Object> variables = new HashMap<String, Object>();
+      Map<String, Object> variables = new HashMap<>();
       variables.put("hallo", "steffen");
 
       String processInstanceId = runtimeService.startProcessInstanceByKey("HistoricTaskInstanceTest", variables).getId();
@@ -328,7 +328,7 @@ public class HistoricTaskInstanceTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testHistoricTaskInstanceAssignmentListener() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("assignee", "jonny");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
 

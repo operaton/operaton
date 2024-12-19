@@ -106,7 +106,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
     when(anotherReportResult.getCleanableProcessInstanceCount()).thenReturn(0l);
     when(anotherReportResult.getTenantId()).thenReturn(ANOTHER_EXAMPLE_TENANT_ID);
 
-    List<CleanableHistoricProcessInstanceReportResult> mocks = new ArrayList<CleanableHistoricProcessInstanceReportResult>();
+    List<CleanableHistoricProcessInstanceReportResult> mocks = new ArrayList<>();
     mocks.add(reportResult);
     mocks.add(anotherReportResult);
 
@@ -365,7 +365,7 @@ public class CleanableHistoricProcessInstanceReportServiceTest extends AbstractR
   }
 
   protected Map<String, Object> getCompleteQueryParameters() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
 
     parameters.put("processDefinitionIdIn", EXAMPLE_PROCESS_DEFINITION_ID + "," + ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID);
     parameters.put("processDefinitionKeyIn", EXAMPLE_PD_KEY + "," + ANOTHER_EXAMPLE_PD_KEY);

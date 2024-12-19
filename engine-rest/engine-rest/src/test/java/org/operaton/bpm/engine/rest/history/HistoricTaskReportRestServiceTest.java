@@ -593,7 +593,7 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
 
 
   private Map<String, String> getCompleteStartDateAsStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("completedBefore", EXAMPLE_HISTORIC_TASK_INST_START_TIME);
     parameters.put("completedAfter", EXAMPLE_HISTORIC_TASK_INST_END_TIME);

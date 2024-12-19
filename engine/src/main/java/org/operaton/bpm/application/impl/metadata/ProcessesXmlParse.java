@@ -67,8 +67,8 @@ public class ProcessesXmlParse extends DeploymentMetadataParse {
   @Override
   protected void parseRootElement() {
 
-    List<ProcessEngineXml> processEngines = new ArrayList<ProcessEngineXml>();
-    List<ProcessArchiveXml> processArchives = new ArrayList<ProcessArchiveXml>();
+    List<ProcessEngineXml> processEngines = new ArrayList<>();
+    List<ProcessArchiveXml> processArchives = new ArrayList<>();
 
     for (Element element : rootElement.elements()) {
 
@@ -96,9 +96,9 @@ public class ProcessesXmlParse extends DeploymentMetadataParse {
     processArchive.setName(element.attribute(NAME));
     processArchive.setTenantId(element.attribute(TENANT_ID));
 
-    List<String> processResourceNames = new ArrayList<String>();
+    List<String> processResourceNames = new ArrayList<>();
 
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     for (Element childElement : element.elements()) {
       if(PROCESS_ENGINE.equals(childElement.getTagName())) {
         processArchive.setProcessEngineName(childElement.getText());

@@ -544,7 +544,7 @@ public class AnimalTest extends TestModelTest {
   void testRelationshipDefinitionRefElementsByTextContent(TestModelArgs args) {
     init(args);
     Collection<RelationshipDefinitionRef> relationshipDefinitionRefElements = tweety.getRelationshipDefinitionRefElements();
-    Collection<String> textContents = new ArrayList<String>();
+    Collection<String> textContents = new ArrayList<>();
     for (RelationshipDefinitionRef relationshipDefinitionRef : relationshipDefinitionRefElements) {
       String textContent = relationshipDefinitionRef.getTextContent();
       assertThat(textContent).isNotEmpty();
@@ -560,7 +560,7 @@ public class AnimalTest extends TestModelTest {
   @MethodSource("models")
   void testUpdateRelationshipDefinitionRefElementsByTextContent(TestModelArgs args) {
     init(args);
-    List<RelationshipDefinitionRef> relationshipDefinitionRefs = new ArrayList<RelationshipDefinitionRef>(tweety.getRelationshipDefinitionRefElements());
+    List<RelationshipDefinitionRef> relationshipDefinitionRefs = new ArrayList<>(tweety.getRelationshipDefinitionRefElements());
 
     addRelationshipDefinition(tweety, timmyRelationship);
     relationshipDefinitionRefs.get(0).setTextContent(timmyRelationship.getId());
@@ -577,7 +577,7 @@ public class AnimalTest extends TestModelTest {
   @MethodSource("models")
   void testUpdateRelationshipDefinitionRefElementsByTextContentWithNamespace(TestModelArgs args) {
     init(args);
-    List<RelationshipDefinitionRef> relationshipDefinitionRefs = new ArrayList<RelationshipDefinitionRef>(tweety.getRelationshipDefinitionRefElements());
+    List<RelationshipDefinitionRef> relationshipDefinitionRefs = new ArrayList<>(tweety.getRelationshipDefinitionRefElements());
 
     addRelationshipDefinition(tweety, timmyRelationship);
     relationshipDefinitionRefs.get(0).setTextContent("tns:" + timmyRelationship.getId());
@@ -594,7 +594,7 @@ public class AnimalTest extends TestModelTest {
   @MethodSource("models")
   void testUpdateRelationshipDefinitionRefElementsByRemoveElements(TestModelArgs args) {
     init(args);
-    List<RelationshipDefinitionRef> relationshipDefinitionRefs = new ArrayList<RelationshipDefinitionRef>(tweety.getRelationshipDefinitionRefElements());
+    List<RelationshipDefinitionRef> relationshipDefinitionRefs = new ArrayList<>(tweety.getRelationshipDefinitionRefElements());
     tweety.getRelationshipDefinitionRefElements().remove(relationshipDefinitionRefs.get(1));
     tweety.getRelationshipDefinitionRefElements().remove(relationshipDefinitionRefs.get(3));
     assertThat(tweety.getRelationshipDefinitionRefs())

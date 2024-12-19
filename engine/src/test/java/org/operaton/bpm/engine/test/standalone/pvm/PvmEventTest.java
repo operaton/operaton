@@ -68,7 +68,7 @@ public class PvmEventTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    List<String> expectedEvents = new ArrayList<String>();
+    List<String> expectedEvents = new ArrayList<>();
     expectedEvents.add("start on ProcessDefinition(events)");
     expectedEvents.add("start on Activity(start)");
     expectedEvents.add("end on Activity(start)");
@@ -129,7 +129,7 @@ public class PvmEventTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    List<String> expectedEvents = new ArrayList<String>();
+    List<String> expectedEvents = new ArrayList<>();
     expectedEvents.add("start on ProcessDefinition(events)");
     expectedEvents.add("start on Activity(start)");
     expectedEvents.add("end on Activity(start)");
@@ -209,7 +209,7 @@ public class PvmEventTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    List<String> expectedEvents = new ArrayList<String>();
+    List<String> expectedEvents = new ArrayList<>();
     expectedEvents.add("start on ProcessDefinition(events)");
     expectedEvents.add("start on Activity(start)");
     expectedEvents.add("end on Activity(start)");
@@ -287,7 +287,7 @@ public class PvmEventTest {
 
     processInstance.deleteCascade("");
 
-    List<String> expectedEvents = new ArrayList<String>();
+    List<String> expectedEvents = new ArrayList<>();
     expectedEvents.add("start on ProcessDefinition(events)");
     expectedEvents.add("start on Activity(start)");
     expectedEvents.add("end on Activity(start)");

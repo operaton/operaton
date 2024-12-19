@@ -50,7 +50,7 @@ public class IdsElementReferenceCollectionImpl<Target extends ModelElementInstan
   protected Collection<DomElement> getView(ModelElementInstanceImpl referenceSourceParentElement) {
     DomDocument document = referenceSourceParentElement.getModelInstance().getDocument();
     Collection<Source> referenceSourceElements = getReferenceSourceCollection().get(referenceSourceParentElement);
-    Collection<DomElement> referenceTargetElements = new ArrayList<DomElement>();
+    Collection<DomElement> referenceTargetElements = new ArrayList<>();
     for (Source referenceSourceElement : referenceSourceElements) {
       List<String> identifiers = getReferenceIdentifiers(referenceSourceElement);
       for (String identifier : identifiers) {

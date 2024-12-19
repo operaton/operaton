@@ -408,7 +408,7 @@ public class HistoricProcessInstanceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testHistoricProcessInstanceQueryIncidentStatusOpen() {
     //given a processes instance, which will fail
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
     runtimeService.startProcessInstanceByKey("failingProcessWithUserTask", parameters);
 
@@ -424,7 +424,7 @@ public class HistoricProcessInstanceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testHistoricProcessInstanceQueryIncidentStatusResolved() {
     //given a incident processes instance
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("failingProcessWithUserTask", parameters);
     testHelper.executeAvailableJobs();
@@ -444,7 +444,7 @@ public class HistoricProcessInstanceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   public void testHistoricProcessInstanceQueryIncidentStatusOpenWithTwoProcesses() {
     //given two processes, which will fail, are started
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("failingProcessWithUserTask", parameters);
     runtimeService.startProcessInstanceByKey("failingProcessWithUserTask", parameters);
@@ -525,7 +525,7 @@ public class HistoricProcessInstanceTest {
     assertEquals(1, historyService.createHistoricProcessInstanceQuery().processDefinitionNameLike("%One Task\\_Process").count());
     assertEquals(1, historyService.createHistoricProcessInstanceQuery().processDefinitionNameLike("%One Task%").count());
 
-    List<String> exludeIds = new ArrayList<String>();
+    List<String> exludeIds = new ArrayList<>();
     exludeIds.add("unexistingProcessDefinition");
 
     assertEquals(1, historyService.createHistoricProcessInstanceQuery().processDefinitionKeyNotIn(exludeIds).count());

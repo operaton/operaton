@@ -49,7 +49,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testDefaultExternalScriptAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
@@ -73,7 +73,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testDefaultExternalScriptAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptResourceBean", new ScriptResourceBean());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
@@ -95,7 +95,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testScriptInClasspathAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "classpath://org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
@@ -107,7 +107,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testScriptInClasspathAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptResourceBean", new ScriptResourceBean());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
@@ -162,7 +162,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   })
   @Test
   public void testScriptInDeploymentAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "deployment://org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
@@ -177,7 +177,7 @@ public class ExternalScriptTaskTest extends PluggableProcessEngineTest {
   })
   @Test
   public void testScriptInDeploymentAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptResourceBean", new ScriptResourceBean());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 

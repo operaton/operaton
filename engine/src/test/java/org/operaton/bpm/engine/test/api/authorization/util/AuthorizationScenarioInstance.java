@@ -40,8 +40,8 @@ public class AuthorizationScenarioInstance {
 
   protected AuthorizationScenario scenario;
 
-  protected List<Authorization> createdAuthorizations = new ArrayList<Authorization>();
-  protected List<Authorization> missingAuthorizations = new ArrayList<Authorization>();
+  protected List<Authorization> createdAuthorizations = new ArrayList<>();
+  protected List<Authorization> missingAuthorizations = new ArrayList<>();
 
   public AuthorizationScenarioInstance(AuthorizationScenario scenario, AuthorizationService authorizationService,
       Map<String, String> resourceBindings) {
@@ -63,7 +63,7 @@ public class AuthorizationScenarioInstance {
   }
 
   public void tearDown(AuthorizationService authorizationService) {
-    Set<String> activeAuthorizations = new HashSet<String>();
+    Set<String> activeAuthorizations = new HashSet<>();
     for (Authorization activeAuthorization : authorizationService.createAuthorizationQuery().list()) {
       activeAuthorizations.add(activeAuthorization.getId());
     }

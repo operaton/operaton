@@ -78,7 +78,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     execute = false
   )
   public void shouldMapListByCanonicalString() throws Throwable {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("input", EXAMPLE_JSON_COLLECTION);
     variables.put("collectionType", ArrayList.class);
     variables.put("mapToType", Order.class);
@@ -103,7 +103,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
   }
 
   protected Map<String, Object> newMap(String key, Object value) {
-    Map<String, Object> result = new HashMap<String, Object>();
+    Map<String, Object> result = new HashMap<>();
     result.put(key, value);
 
     return result;

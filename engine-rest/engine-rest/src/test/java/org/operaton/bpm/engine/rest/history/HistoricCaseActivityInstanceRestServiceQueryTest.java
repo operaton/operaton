@@ -408,7 +408,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   protected Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("caseActivityInstanceId", MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_ID);
     parameters.put("caseInstanceId", MockProvider.EXAMPLE_CASE_INSTANCE_ID);
@@ -436,7 +436,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   protected Map<String, Boolean> getCompleteBooleanQueryParameters() {
-    Map<String, Boolean> parameters = new HashMap<String, Boolean>();
+    Map<String, Boolean> parameters = new HashMap<>();
 
     parameters.put("required", MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_IS_REQUIRED);
     parameters.put("finished", MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_IS_FINISHED);
@@ -563,7 +563,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   protected Map<String, Date> getCompleteCreateDateQueryParameters() {
-    Map<String, Date> parameters = new HashMap<String, Date>();
+    Map<String, Date> parameters = new HashMap<>();
 
     parameters.put("createdAfter", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_CREATED_AFTER));
     parameters.put("createdBefore", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_CREATED_BEFORE));
@@ -594,7 +594,7 @@ public class HistoricCaseActivityInstanceRestServiceQueryTest extends AbstractRe
   }
 
   protected Map<String, Date> getCompleteEndedDateQueryParameters() {
-    Map<String, Date> parameters = new HashMap<String, Date>();
+    Map<String, Date> parameters = new HashMap<>();
 
     parameters.put("endedAfter", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_ENDED_AFTER));
     parameters.put("endedBefore", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_CASE_ACTIVITY_INSTANCE_ENDED_BEFORE));

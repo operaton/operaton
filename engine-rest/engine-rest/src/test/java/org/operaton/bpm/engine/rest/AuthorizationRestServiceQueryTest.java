@@ -200,7 +200,7 @@ public class AuthorizationRestServiceQueryTest extends AbstractRestServiceTest {
 
 
   private Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("id", MockProvider.EXAMPLE_AUTHORIZATION_ID);
     parameters.put("type", MockProvider.EXAMPLE_AUTHORIZATION_TYPE_STRING);

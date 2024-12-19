@@ -48,11 +48,11 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   protected boolean isSubProcessScope = false;
 
   /** The activities for which the flow scope is this scope  */
-  protected List<ActivityImpl> flowActivities = new ArrayList<ActivityImpl>();
-  protected Map<String, ActivityImpl> namedFlowActivities = new HashMap<String, ActivityImpl>();
+  protected List<ActivityImpl> flowActivities = new ArrayList<>();
+  protected Map<String, ActivityImpl> namedFlowActivities = new HashMap<>();
 
   /** activities for which this is the event scope **/
-  protected Set<ActivityImpl> eventActivities = new HashSet<ActivityImpl>();
+  protected Set<ActivityImpl> eventActivities = new HashSet<>();
 
   protected ProcessDefinitionImpl processDefinition;
 
@@ -124,7 +124,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
    * The value is the error callback, which is called if the activity is not
    * read till the end of parsing.
    */
-  protected final Map<String, BacklogErrorCallback> BACKLOG = new HashMap<String, BacklogErrorCallback>();
+  protected final Map<String, BacklogErrorCallback> BACKLOG = new HashMap<>();
 
   /**
    * Returns the backlog error callback's.

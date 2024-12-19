@@ -43,7 +43,7 @@ public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivity
     // initialize the scope and create the desired number of child executions
     prepareScopeExecution(execution, nrOfInstances);
 
-    List<ActivityExecution> concurrentExecutions = new ArrayList<ActivityExecution>();
+    List<ActivityExecution> concurrentExecutions = new ArrayList<>();
     for (int i = 0; i < nrOfInstances; i++) {
       concurrentExecutions.add(createConcurrentExecution(execution));
     }
@@ -92,7 +92,7 @@ public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivity
     if(completionConditionSatisfied(endedExecution) ||
         allExecutionsEnded(scopeExecution, endedExecution)) {
 
-      ArrayList<ActivityExecution> childExecutions = new ArrayList<ActivityExecution>(((PvmExecutionImpl) scopeExecution).getNonEventScopeExecutions());
+      ArrayList<ActivityExecution> childExecutions = new ArrayList<>(((PvmExecutionImpl) scopeExecution).getNonEventScopeExecutions());
       for (ActivityExecution childExecution : childExecutions) {
         // delete all not-ended instances; these are either active (for non-scope tasks) or inactive but have no activity id (for subprocesses, etc.)
         if (childExecution.isActive() || childExecution.getActivity() == null) {
@@ -130,7 +130,7 @@ public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivity
 
     prepareScopeExecution(scopeExecution, numberOfInstances);
 
-    List<ActivityExecution> executions = new ArrayList<ActivityExecution>();
+    List<ActivityExecution> executions = new ArrayList<>();
     for (int i = 0; i < numberOfInstances; i++) {
       ActivityExecution concurrentChild = createConcurrentExecution(scopeExecution);
       setLoopVariable(concurrentChild, LOOP_COUNTER, i);

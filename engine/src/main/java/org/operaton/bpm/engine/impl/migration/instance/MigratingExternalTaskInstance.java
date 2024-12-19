@@ -37,7 +37,7 @@ public class MigratingExternalTaskInstance implements MigratingInstance {
   protected ExternalTaskEntity externalTask;
   protected MigratingActivityInstance migratingActivityInstance;
 
-  protected List<MigratingInstance> dependentInstances = new ArrayList<MigratingInstance>();
+  protected List<MigratingInstance> dependentInstances = new ArrayList<>();
 
   public MigratingExternalTaskInstance(ExternalTaskEntity externalTask, MigratingActivityInstance migratingActivityInstance) {
     this.externalTask = externalTask;

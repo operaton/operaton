@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 public class AddMapVariableListener implements TaskListener {
   
   public void notify(DelegateTask task) {
-    Map<String, Object> map = new HashMap<String, Object>();
+    Map<String, Object> map = new HashMap<>();
     map.put("demo", "Demo");
     map.put("john", "Jonny Boy");
     map.put("peter", "Peter Meter");

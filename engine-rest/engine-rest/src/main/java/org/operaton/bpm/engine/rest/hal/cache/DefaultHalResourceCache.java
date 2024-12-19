@@ -42,7 +42,7 @@ public class DefaultHalResourceCache implements Cache {
   public DefaultHalResourceCache(int capacity, long secondsToLive) {
     this.capacity = capacity;
     this.secondsToLive = secondsToLive;
-    cache = new HashMap<String, HalResourceCacheEntry>();
+    cache = new HashMap<>();
   }
 
   public int getCapacity() {
@@ -99,8 +99,8 @@ public class DefaultHalResourceCache implements Cache {
 
   protected void ensureCapacityLimit() {
     if (size() > getCapacity()) {
-      List<HalResourceCacheEntry> resources = new ArrayList<HalResourceCacheEntry>(cache.values());
-      NavigableSet<HalResourceCacheEntry> remainingResources = new TreeSet<HalResourceCacheEntry>(COMPARATOR);
+      List<HalResourceCacheEntry> resources = new ArrayList<>(cache.values());
+      NavigableSet<HalResourceCacheEntry> remainingResources = new TreeSet<>(COMPARATOR);
 
       // remove expired resources
       for (HalResourceCacheEntry resource : resources) {

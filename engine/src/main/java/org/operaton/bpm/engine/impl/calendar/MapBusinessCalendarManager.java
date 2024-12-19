@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class MapBusinessCalendarManager implements BusinessCalendarManager {
 
-  private final Map<String, BusinessCalendar> businessCalendars = new HashMap<String, BusinessCalendar>();
+  private final Map<String, BusinessCalendar> businessCalendars = new HashMap<>();
 
   @Override
   public BusinessCalendar getBusinessCalendar(String businessCalendarRef) {

@@ -44,7 +44,7 @@ public class VariablesPerformanceTest extends ProcessEnginePerformanceTestCase {
   @Deployment(resources =
     {"org/operaton/bpm/qa/performance/engine/bpmn/StartEventPerformanceTest.noneStartEvent.bpmn"})
   public void noneStartEventStringVar() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put(VARIABLE1, "someValue");
 
     performanceTest()
@@ -56,7 +56,7 @@ public class VariablesPerformanceTest extends ProcessEnginePerformanceTestCase {
   @Deployment(resources =
     {"org/operaton/bpm/qa/performance/engine/bpmn/StartEventPerformanceTest.noneStartEvent.bpmn"})
   public void noneStartEvent10StringVars() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put(VARIABLE1, "someValue");
     variables.put(VARIABLE2, "someValue");
     variables.put(VARIABLE3, "someValue");
@@ -77,7 +77,7 @@ public class VariablesPerformanceTest extends ProcessEnginePerformanceTestCase {
   @Deployment(resources =
     {"org/operaton/bpm/qa/performance/engine/bpmn/StartEventPerformanceTest.noneStartEvent.bpmn"})
   public void noneStartEventStringVar2() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put(VARIABLE1, "Some Text which is considerably longer than the first one.");
 
     performanceTest()
@@ -89,7 +89,7 @@ public class VariablesPerformanceTest extends ProcessEnginePerformanceTestCase {
   @Deployment(resources =
     {"org/operaton/bpm/qa/performance/engine/bpmn/StartEventPerformanceTest.noneStartEvent.bpmn"})
   public void noneStartEventDoubleVar() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put(VARIABLE1, 2d);
 
     performanceTest()
@@ -101,7 +101,7 @@ public class VariablesPerformanceTest extends ProcessEnginePerformanceTestCase {
   @Deployment(resources =
     {"org/operaton/bpm/qa/performance/engine/bpmn/StartEventPerformanceTest.noneStartEvent.bpmn"})
   public void noneStartEventByteVar() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put(VARIABLE1, "This string will be saved as a byte array.".getBytes());
 
     performanceTest()
@@ -113,7 +113,7 @@ public class VariablesPerformanceTest extends ProcessEnginePerformanceTestCase {
   @Deployment(resources =
     {"org/operaton/bpm/qa/performance/engine/bpmn/StartEventPerformanceTest.noneStartEvent.bpmn"})
   public void noneStartEvent10ByteVars() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put(VARIABLE1, "This string will be saved as a byte array.".getBytes());
     variables.put(VARIABLE2, "This string will be saved as a byte array.".getBytes());
     variables.put(VARIABLE3, "This string will be saved as a byte array.".getBytes());
@@ -134,7 +134,7 @@ public class VariablesPerformanceTest extends ProcessEnginePerformanceTestCase {
   @Deployment(resources =
     {"org/operaton/bpm/qa/performance/engine/bpmn/StartEventPerformanceTest.noneStartEvent.bpmn"})
   public void noneStartEventLargeByteVar() {
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     byte[] bytes = new byte[5*1024];
     variables.put(VARIABLE1, bytes);
 

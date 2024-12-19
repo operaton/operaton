@@ -73,7 +73,7 @@ public class TaskReportResourceImpl implements TaskReportResource {
 
   protected List<TaskCountByCandidateGroupResultDto> getTaskCountByCandidateGroupResultAsJson() {
     List<TaskCountByCandidateGroupResult> reports = queryTaskCountByCandidateGroupReport();
-    List<TaskCountByCandidateGroupResultDto> result = new ArrayList<TaskCountByCandidateGroupResultDto>();
+    List<TaskCountByCandidateGroupResultDto> result = new ArrayList<>();
     for (TaskCountByCandidateGroupResult report : reports) {
       result.add(TaskCountByCandidateGroupResultDto.fromTaskCountByCandidateGroupResultDto(report));
     }

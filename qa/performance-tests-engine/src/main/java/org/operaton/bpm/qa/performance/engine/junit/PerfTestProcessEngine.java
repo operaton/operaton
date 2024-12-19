@@ -75,7 +75,7 @@ public class PerfTestProcessEngine {
         } else {
           List<ProcessEnginePlugin> plugins = processEngineConfiguration.getProcessEnginePlugins();
           if(plugins == null) {
-            plugins = new ArrayList<ProcessEnginePlugin>();
+            plugins = new ArrayList<>();
             processEngineConfiguration.setProcessEnginePlugins(plugins);
           }
           plugins.add(processEnginePlugin);

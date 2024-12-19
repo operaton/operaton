@@ -123,7 +123,7 @@ public class MigrationMultiInstanceTest {
       .startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
 
     List<Task> tasksBeforeMigration = rule.getTaskService().createTaskQuery().list();
-    Map<String, Integer> loopCounterDistribution = new HashMap<String, Integer>();
+    Map<String, Integer> loopCounterDistribution = new HashMap<>();
     for (Task task : tasksBeforeMigration) {
       Integer loopCounter = (Integer) rule.getTaskService().getVariable(task.getId(), LOOP_COUNTER);
       loopCounterDistribution.put(task.getId(), loopCounter);

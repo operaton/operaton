@@ -28,7 +28,7 @@ public class SectionedHtmlReportBuilder {
 
   protected String reportName;
 
-  protected Map<String, Object> sections = new TreeMap<String, Object>();
+  protected Map<String, Object> sections = new TreeMap<>();
 
   public SectionedHtmlReportBuilder(String reportName) {
     this.reportName = reportName;

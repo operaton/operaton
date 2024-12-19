@@ -46,7 +46,7 @@ public class PvmAtomicOperationTransitionNotifyListenerEnd extends PvmAtomicOper
       execution.setProcessInstanceStarting(false);
     }
 
-    execution.dispatchDelayedEventsAndPerformOperation(new Callback<PvmExecutionImpl, Void>() {
+    execution.dispatchDelayedEventsAndPerformOperation(new Callback<>() {
 
       @Override
       public Void callback(PvmExecutionImpl execution) {

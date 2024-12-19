@@ -57,7 +57,7 @@ public class HistoricCaseDefinitionRestServiceImpl implements HistoricCaseDefini
     List<HistoricCaseActivityStatistics> statistics =
         historicCaseActivityStatisticsQuery.unlimitedList();
 
-    List<HistoricCaseActivityStatisticsDto> result = new ArrayList<HistoricCaseActivityStatisticsDto>();
+    List<HistoricCaseActivityStatisticsDto> result = new ArrayList<>();
     for (HistoricCaseActivityStatistics currentStatistics : statistics) {
       result.add(HistoricCaseActivityStatisticsDto.fromHistoricCaseActivityStatistics(currentStatistics));
     }

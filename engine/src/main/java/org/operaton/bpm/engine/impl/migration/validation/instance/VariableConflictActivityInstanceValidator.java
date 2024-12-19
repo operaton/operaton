@@ -58,7 +58,7 @@ public class VariableConflictActivityInstanceValidator implements MigratingActiv
   }
 
   protected Map<String, List<MigratingVariableInstance>> getMigratingVariableInstancesByName(MigratingActivityInstance activityInstance) {
-    Map<String, List<MigratingVariableInstance>> result = new HashMap<String, List<MigratingVariableInstance>>();
+    Map<String, List<MigratingVariableInstance>> result = new HashMap<>();
 
     for (MigratingInstance migratingInstance : activityInstance.getMigratingDependentInstances()) {
       if (migratingInstance instanceof MigratingVariableInstance migratingVariableInstance) {

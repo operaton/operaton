@@ -62,7 +62,7 @@ public class ExtensionElementsImpl extends CmmnModelElementInstanceImpl implemen
 
   @Override
   public Query<ModelElementInstance> getElementsQuery() {
-    return new QueryImpl<ModelElementInstance>(getElements());
+    return new QueryImpl<>(getElements());
   }
 
   @Override

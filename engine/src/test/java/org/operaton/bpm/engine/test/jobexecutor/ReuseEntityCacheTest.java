@@ -143,11 +143,11 @@ public class ReuseEntityCacheTest {
     public void execute(DelegateExecution execution) throws Exception {
       ExecutionEntity execution1 = new ExecutionEntity();
       execution1.setId(ENTITY_ID1);
-      execution1.setExecutions(new ArrayList<ExecutionEntity>());
+      execution1.setExecutions(new ArrayList<>());
 
       ExecutionEntity execution2 = new ExecutionEntity();
       execution2.setId(ENTITY_ID2);
-      execution2.setExecutions(new ArrayList<ExecutionEntity>());
+      execution2.setExecutions(new ArrayList<>());
       execution2.setParent(execution1);
 
       ExecutionManager executionManager = Context.getCommandContext().getExecutionManager();

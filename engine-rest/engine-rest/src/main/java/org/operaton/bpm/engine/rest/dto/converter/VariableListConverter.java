@@ -42,7 +42,7 @@ public class VariableListConverter extends
   public List<VariableQueryParameterDto> convertQueryParameterToType(String value) {
     String[] expressions = value.split(EXPRESSION_DELIMITER);
 
-    List<VariableQueryParameterDto> queryVariables = new ArrayList<VariableQueryParameterDto>();
+    List<VariableQueryParameterDto> queryVariables = new ArrayList<>();
 
     for (String expression : expressions) {
       String[] valueTriple = expression.split(ATTRIBUTE_DELIMITER);

@@ -39,7 +39,7 @@ public class PvmAtomicOperationActivityNotifyListenerEnd extends PvmAtomicOperat
   protected void eventNotificationsCompleted(PvmExecutionImpl execution) {
 
     // perform activity end behavior
-    execution.dispatchDelayedEventsAndPerformOperation(new Callback<PvmExecutionImpl, Void>() {
+    execution.dispatchDelayedEventsAndPerformOperation(new Callback<>() {
 
       @Override
       public Void callback(PvmExecutionImpl execution) {

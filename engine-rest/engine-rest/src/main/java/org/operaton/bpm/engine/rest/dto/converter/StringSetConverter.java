@@ -24,6 +24,6 @@ public class StringSetConverter extends JacksonAwareStringToTypeConverter<Set<St
 
   @Override
   public Set<String> convertQueryParameterToType(String value) {
-    return new HashSet<String>(Arrays.asList(value.split(",")));
+    return new HashSet<>(Arrays.asList(value.split(",")));
   }
 }

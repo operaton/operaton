@@ -50,7 +50,7 @@ public class SoapHttpConnectorSystemPropertiesTest {
 
   @BeforeEach
   void setUp() {
-    updatedSystemProperties = new HashSet<String>();
+    updatedSystemProperties = new HashSet<>();
     stubFor(get(urlEqualTo("/")).willReturn(aResponse().withStatus(200)));
   }
 

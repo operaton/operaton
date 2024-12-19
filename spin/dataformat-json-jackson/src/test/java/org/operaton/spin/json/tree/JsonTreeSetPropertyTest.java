@@ -224,9 +224,9 @@ public class JsonTreeSetPropertyTest {
 
   @Test
   public void setArrayProperty() {
-    ArrayList<Object> list1 = new ArrayList<Object>();
-    ArrayList<Object> list2 = new ArrayList<Object>();
-    Map<String, Object> map = new HashMap<String, Object>();
+    ArrayList<Object> list1 = new ArrayList<>();
+    ArrayList<Object> list2 = new ArrayList<>();
+    Map<String, Object> map = new HashMap<>();
 
     map.put("id1", "object1");
     map.put("id2", 1337);
@@ -260,9 +260,9 @@ public class JsonTreeSetPropertyTest {
     assertThat(active.boolValue()).isTrue();
 
     // Build new values
-    ArrayList<Object> list1 = new ArrayList<Object>();
-    ArrayList<Object> list2 = new ArrayList<Object>();
-    Map<String, Object> map = new HashMap<String, Object>();
+    ArrayList<Object> list1 = new ArrayList<>();
+    ArrayList<Object> list2 = new ArrayList<>();
+    Map<String, Object> map = new HashMap<>();
 
     map.put("id1", "object1");
     map.put("id2", 1337);
@@ -298,7 +298,7 @@ public class JsonTreeSetPropertyTest {
 
   @Test
   public void setObjectProperty() {
-    Map<String, Object> map = new HashMap<String, Object>();
+    Map<String, Object> map = new HashMap<>();
     map.put("id1", "object1");
     map.put("id2", 1337);
 
@@ -318,7 +318,7 @@ public class JsonTreeSetPropertyTest {
 
     assertThat(oldValue).isEqualTo("operatonBPM");
 
-    Map<String, Object> map = new HashMap<String, Object>();
+    Map<String, Object> map = new HashMap<>();
     map.put("id1", "object1");
     map.put("id2", 1337);
 
@@ -357,7 +357,7 @@ public class JsonTreeSetPropertyTest {
   @Test
   public void failWhileSettingObjectWithMap() {
     Date date = new Date();
-    Map<String, Object> map = new HashMap<String, Object>();
+    Map<String, Object> map = new HashMap<>();
     map.put("date", date);
 
     try {
@@ -371,7 +371,7 @@ public class JsonTreeSetPropertyTest {
   @Test
   public void failWhileSettingObjectWithList() {
     Date date = new Date();
-    ArrayList<Object> list = new ArrayList<Object>();
+    ArrayList<Object> list = new ArrayList<>();
     list.add(date);
 
     try {

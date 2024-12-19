@@ -89,7 +89,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   }
 
   protected List<VariableInstance> createMockVariableInstanceList(VariableInstance mockInstance) {
-    List<VariableInstance> mocks = new ArrayList<VariableInstance>();
+    List<VariableInstance> mocks = new ArrayList<>();
 
     mocks.add(mockInstance);
     return mocks;
@@ -233,7 +233,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   @Test
   public void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("variableName").desc()
       .orderBy("activityInstanceId").asc()
@@ -346,7 +346,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
   @Test
   public void testVariableInstanceRetrievalAsPost() {
     String queryVariableName = "aVariableInstanceName";
-    Map<String, String> queryParameter = new HashMap<String, String>();
+    Map<String, String> queryParameter = new HashMap<>();
     queryParameter.put("variableName", queryVariableName);
 
     Response response = given().contentType(POST_JSON_CONTENT_TYPE).body(queryParameter)
@@ -388,7 +388,7 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testAdditionalParametersExcludingVariableValues() {
-    Map<String, String> queryParameters = new HashMap<String, String>();
+    Map<String, String> queryParameters = new HashMap<>();
 
     queryParameters.put("variableName", "aVariableName");
     queryParameters.put("variableNameLike", "aVariableNameLike");
@@ -440,28 +440,28 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     String aCaseExecutionId = "aCaseExecutionId";
     String aTenantId = "aTenantId";
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
 
     queryParameters.put("variableName", aVariableName);
     queryParameters.put("variableNameLike", aVariableNameLike);
 
-    List<String> executionIdIn = new ArrayList<String>();
+    List<String> executionIdIn = new ArrayList<>();
     executionIdIn.add(anExecutionId);
     queryParameters.put("executionIdIn", executionIdIn);
 
-    List<String> processInstanceIdIn = new ArrayList<String>();
+    List<String> processInstanceIdIn = new ArrayList<>();
     processInstanceIdIn.add(aProcessInstanceId);
     queryParameters.put("processInstanceIdIn", processInstanceIdIn);
 
-    List<String> caseExecutionIdIn = new ArrayList<String>();
+    List<String> caseExecutionIdIn = new ArrayList<>();
     caseExecutionIdIn.add(aCaseExecutionId);
     queryParameters.put("caseExecutionIdIn", caseExecutionIdIn);
 
-    List<String> caseInstanceIdIn = new ArrayList<String>();
+    List<String> caseInstanceIdIn = new ArrayList<>();
     caseInstanceIdIn.add(aCaseInstanceId);
     queryParameters.put("caseInstanceIdIn", caseInstanceIdIn);
 
-    List<String> taskIdIn = new ArrayList<String>();
+    List<String> taskIdIn = new ArrayList<>();
     taskIdIn.add(aTaskId);
     queryParameters.put("taskIdIn", taskIdIn);
 
@@ -469,15 +469,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     batchIdIn.add(aBatchId);
     queryParameters.put("batchIdIn", batchIdIn);
 
-    List<String> variableScopeIdIn = new ArrayList<String>();
+    List<String> variableScopeIdIn = new ArrayList<>();
     variableScopeIdIn.add(aVariableScopeId);
     queryParameters.put("variableScopeIdIn", variableScopeIdIn);
 
-    List<String> activityInstanceIdIn = new ArrayList<String>();
+    List<String> activityInstanceIdIn = new ArrayList<>();
     activityInstanceIdIn.add(anActivityInstanceId);
     queryParameters.put("activityInstanceIdIn", activityInstanceIdIn);
 
-    List<String> tenantIdIn = new ArrayList<String>();
+    List<String> tenantIdIn = new ArrayList<>();
     tenantIdIn.add(aTenantId);
     queryParameters.put("tenantIdIn", tenantIdIn);
 
@@ -702,15 +702,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValueEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
 
     given()
@@ -732,15 +732,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValueGreaterThanAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "gt");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
 
     given()
@@ -762,15 +762,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValueGreaterThanEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "gteq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
 
     given()
@@ -792,15 +792,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValueLessThanAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "lt");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
 
     given()
@@ -822,15 +822,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValueLessThanEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "lteq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
 
     given()
@@ -852,15 +852,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValueLikeAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
 
     given()
@@ -882,15 +882,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValueNotEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
 
     given()
@@ -912,15 +912,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValuesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -944,15 +944,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValuesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -976,15 +976,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableValuesLikeIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1009,15 +1009,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableNamesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableNamesIgnoreCase", true);
     
@@ -1041,15 +1041,15 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
 
   @Test
   public void testVariableNamesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
     json.put("variableNamesIgnoreCase", true);
     
@@ -1103,21 +1103,21 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     String anotherVariableName = "anotherVarName";
     Integer anotherVariableValue = 30;
 
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", variableName);
     variableJson.put("operator", "eq");
     variableJson.put("value", variableValue);
 
-    Map<String, Object> anotherVariableJson = new HashMap<String, Object>();
+    Map<String, Object> anotherVariableJson = new HashMap<>();
     anotherVariableJson.put("name", anotherVariableName);
     anotherVariableJson.put("operator", "neq");
     anotherVariableJson.put("value", anotherVariableValue);
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     variables.add(anotherVariableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variableValues", variables);
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(json)
@@ -1176,39 +1176,39 @@ public class VariableInstanceRestServiceQueryTest extends AbstractRestServiceTes
     String aProcessInstanceId = "aProcessInstanceId";
     String anotherProcessInstanceId = "anotherProcessInstanceId";
 
-    List<String> processDefinitionIdIn= new ArrayList<String>();
+    List<String> processDefinitionIdIn= new ArrayList<>();
     processDefinitionIdIn.add(aProcessInstanceId);
     processDefinitionIdIn.add(anotherProcessInstanceId);
 
     String anExecutionId = "anExecutionId";
     String anotherExecutionId = "anotherExecutionId";
 
-    List<String> executionIdIn= new ArrayList<String>();
+    List<String> executionIdIn= new ArrayList<>();
     executionIdIn.add(anExecutionId);
     executionIdIn.add(anotherExecutionId);
 
     String aTaskId = "aTaskId";
     String anotherTaskId = "anotherTaskId";
 
-    List<String> taskIdIn= new ArrayList<String>();
+    List<String> taskIdIn= new ArrayList<>();
     taskIdIn.add(aTaskId);
     taskIdIn.add(anotherTaskId);
 
     String aVariableScopeId = "aVariableScopeId";
     String anotherVariableScopeId = "anotherVariableScopeId";
 
-    List<String> variableScopeIdIn= new ArrayList<String>();
+    List<String> variableScopeIdIn= new ArrayList<>();
     variableScopeIdIn.add(aVariableScopeId);
     variableScopeIdIn.add(anotherVariableScopeId);
 
     String anActivityInstanceId = "anActivityInstanceId";
     String anotherActivityInstanceId = "anotherActivityInstanceId";
 
-    List<String> activityInstanceIdIn= new ArrayList<String>();
+    List<String> activityInstanceIdIn= new ArrayList<>();
     activityInstanceIdIn.add(anActivityInstanceId);
     activityInstanceIdIn.add(anotherActivityInstanceId);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("processInstanceIdIn", processDefinitionIdIn);
     json.put("executionIdIn", executionIdIn);
     json.put("taskIdIn", taskIdIn);

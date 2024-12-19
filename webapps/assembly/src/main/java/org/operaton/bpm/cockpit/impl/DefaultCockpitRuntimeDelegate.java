@@ -49,7 +49,7 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
 
   public DefaultCockpitRuntimeDelegate() {
     super(CockpitPlugin.class);
-    this.commandExecutors = new HashMap<String, CommandExecutor>();
+    this.commandExecutors = new HashMap<>();
   }
 
   @Override
@@ -88,7 +88,7 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
   protected List<String> getMappingFiles() {
     List<CockpitPlugin> cockpitPlugins = pluginRegistry.getPlugins();
 
-    List<String> mappingFiles = new ArrayList<String>();
+    List<String> mappingFiles = new ArrayList<>();
     for (CockpitPlugin plugin: cockpitPlugins) {
       mappingFiles.addAll(plugin.getMappingFiles());
     }

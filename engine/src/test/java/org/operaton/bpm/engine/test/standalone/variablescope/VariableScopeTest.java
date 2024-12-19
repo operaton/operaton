@@ -50,7 +50,7 @@ public class VariableScopeTest extends PluggableProcessEngineTest {
   public void testVariableNamesScope() {
 
     // After starting the process, the task in the subprocess should be active
-    Map<String, Object> varMap = new HashMap<String, Object>();
+    Map<String, Object> varMap = new HashMap<>();
     varMap.put("test", "test");
     varMap.put("helloWorld", "helloWorld");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("simpleSubProcess", varMap);
@@ -138,9 +138,9 @@ public class VariableScopeTest extends PluggableProcessEngineTest {
 
       List<String> executionVariables;
       if (isLocal) {
-        executionVariables = new ArrayList<String>(execution.getVariableNamesLocal());
+        executionVariables = new ArrayList<>(execution.getVariableNamesLocal());
       } else {
-        executionVariables = new ArrayList<String>(execution.getVariableNames());
+        executionVariables = new ArrayList<>(execution.getVariableNames());
       }
 
       return executionVariables;

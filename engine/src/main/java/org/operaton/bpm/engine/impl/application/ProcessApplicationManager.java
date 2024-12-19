@@ -45,7 +45,7 @@ public class ProcessApplicationManager {
 
   public static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
-  protected Map<String, DefaultProcessApplicationRegistration> registrationsByDeploymentId = new HashMap<String, DefaultProcessApplicationRegistration>();
+  protected Map<String, DefaultProcessApplicationRegistration> registrationsByDeploymentId = new HashMap<>();
 
   public ProcessApplicationReference getProcessApplicationForDeployment(String deploymentId) {
     DefaultProcessApplicationRegistration registration = registrationsByDeploymentId.get(deploymentId);
@@ -154,8 +154,8 @@ public class ProcessApplicationManager {
       builder.append(deploymentIds);
       builder.append(". ");
 
-      List<ProcessDefinition> processDefinitions = new ArrayList<ProcessDefinition>();
-      List<CaseDefinition> caseDefinitions = new ArrayList<CaseDefinition>();
+      List<ProcessDefinition> processDefinitions = new ArrayList<>();
+      List<CaseDefinition> caseDefinitions = new ArrayList<>();
 
       CommandContext commandContext = Context.getCommandContext();
       ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();

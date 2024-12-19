@@ -266,7 +266,7 @@ public class FlyingAnimalTest extends TestModelTest {
   void testFlightPartnerRefElementsByTextContent(TestModelArgs args) {
     init(args);
     Collection<FlightPartnerRef> flightPartnerRefElements = tweety.getFlightPartnerRefElements();
-    Collection<String> textContents = new ArrayList<String>();
+    Collection<String> textContents = new ArrayList<>();
     for (FlightPartnerRef flightPartnerRefElement : flightPartnerRefElements) {
       String textContent = flightPartnerRefElement.getTextContent();
       assertThat(textContent).isNotEmpty();
@@ -282,7 +282,7 @@ public class FlyingAnimalTest extends TestModelTest {
   @MethodSource("models")
   void testUpdateFlightPartnerRefElementsByTextContent(TestModelArgs args) {
     init(args);
-    List<FlightPartnerRef> flightPartnerRefs = new ArrayList<FlightPartnerRef>(tweety.getFlightPartnerRefElements());
+    List<FlightPartnerRef> flightPartnerRefs = new ArrayList<>(tweety.getFlightPartnerRefElements());
 
     flightPartnerRefs.get(0).setTextContent(timmy.getId());
     flightPartnerRefs.get(2).setTextContent(daisy.getId());
@@ -296,7 +296,7 @@ public class FlyingAnimalTest extends TestModelTest {
   @MethodSource("models")
   void testUpdateFlightPartnerRefElementsByRemoveElements(TestModelArgs args) {
     init(args);
-    List<FlightPartnerRef> flightPartnerRefs = new ArrayList<FlightPartnerRef>(tweety.getFlightPartnerRefElements());
+    List<FlightPartnerRef> flightPartnerRefs = new ArrayList<>(tweety.getFlightPartnerRefElements());
     tweety.getFlightPartnerRefElements().remove(flightPartnerRefs.get(1));
     tweety.getFlightPartnerRefElements().remove(flightPartnerRefs.get(3));
     assertThat(tweety.getFlightPartnerRefs())

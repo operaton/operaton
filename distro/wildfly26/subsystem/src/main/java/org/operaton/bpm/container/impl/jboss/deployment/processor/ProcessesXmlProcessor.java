@@ -91,7 +91,7 @@ public class ProcessesXmlProcessor implements DeploymentUnitProcessor {
   }
 
   protected List<URL> getDeploymentDescriptorUrls(final Module module, String[] deploymentDescriptors) throws DeploymentUnitProcessingException {
-    List<URL> deploymentDescriptorURLs = new ArrayList<URL>();
+    List<URL> deploymentDescriptorURLs = new ArrayList<>();
     for (String deploymentDescriptor : deploymentDescriptors) {
       Enumeration<URL> resources = null;
       try {

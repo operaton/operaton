@@ -94,7 +94,7 @@ public class ModificationInstructionBuilder {
   }
 
   public Map<String, Object> getJson() {
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
 
     json.put("type", type);
     json.put("activityId", activityId);

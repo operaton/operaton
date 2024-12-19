@@ -48,7 +48,7 @@ public class DefaultJobExecutor extends ThreadPoolJobExecutor {
   protected void startExecutingJobs() {
 
     if (threadPoolExecutor==null || threadPoolExecutor.isShutdown()) {
-      BlockingQueue<Runnable> threadPoolQueue = new ArrayBlockingQueue<Runnable>(queueSize);
+      BlockingQueue<Runnable> threadPoolQueue = new ArrayBlockingQueue<>(queueSize);
       threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 0L, TimeUnit.MILLISECONDS, threadPoolQueue);
       threadPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
     }

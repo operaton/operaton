@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class LeafActivityInstanceExecutionCollector implements TreeVisitor<PvmExecutionImpl> {
 
-  protected List<PvmExecutionImpl> leaves = new ArrayList<PvmExecutionImpl>();
+  protected List<PvmExecutionImpl> leaves = new ArrayList<>();
 
   @Override
   public void visit(PvmExecutionImpl obj) {

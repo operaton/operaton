@@ -230,7 +230,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   @Test
   public void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("businessKey").desc()
       .orderBy("closeTime").asc()
@@ -500,7 +500,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testCaseQueryActiveAsPost() {
-    Map<String, Boolean> body = new HashMap<String, Boolean>();
+    Map<String, Boolean> body = new HashMap<>();
     body.put("active", true);
 
     given()
@@ -532,7 +532,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testCaseQueryCompletedAsPost() {
-    Map<String, Boolean> body = new HashMap<String, Boolean>();
+    Map<String, Boolean> body = new HashMap<>();
     body.put("completed", true);
 
     given()
@@ -564,7 +564,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testCaseQueryTerminatedAsPost() {
-    Map<String, Boolean> body = new HashMap<String, Boolean>();
+    Map<String, Boolean> body = new HashMap<>();
     body.put("terminated", true);
 
     given()
@@ -596,7 +596,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testCaseQueryClosedAsPost() {
-    Map<String, Boolean> body = new HashMap<String, Boolean>();
+    Map<String, Boolean> body = new HashMap<>();
     body.put("closed", true);
 
     given()
@@ -649,7 +649,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     when(mockedHistoricCaseInstanceQuery.list()).thenReturn(mockedHistoricCaseInstances);
     when(processEngine.getHistoryService().createHistoricCaseInstanceQuery()).thenReturn(mockedHistoricCaseInstanceQuery);
 
-    Map<String, Boolean> body = new HashMap<String, Boolean>();
+    Map<String, Boolean> body = new HashMap<>();
     body.put("notClosed", true);
 
     Response response = given()
@@ -870,15 +870,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValueEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -895,15 +895,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValueGreaterThanAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "gt");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -920,15 +920,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValueGreaterThanEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "gteq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -945,15 +945,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValueLessThanAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "lt");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -970,15 +970,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValueLessThanEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "lteq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -995,15 +995,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValueLikeAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1020,15 +1020,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValueNotEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1045,15 +1045,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValuesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1072,15 +1072,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValuesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1099,15 +1099,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableValuesLikeIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
     
@@ -1127,15 +1127,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableNamesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableNamesIgnoreCase", true);
     
@@ -1154,15 +1154,15 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   public void testVariableNamesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
     
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableNamesIgnoreCase", true);
     
@@ -1209,21 +1209,21 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
     String anotherVariableName = "anotherVarName";
     Integer anotherVariableValue = 30;
 
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", variableName);
     variableJson.put("operator", "eq");
     variableJson.put("value", variableValue);
 
-    Map<String, Object> anotherVariableJson = new HashMap<String, Object>();
+    Map<String, Object> anotherVariableJson = new HashMap<>();
     anotherVariableJson.put("name", anotherVariableName);
     anotherVariableJson.put("operator", "neq");
     anotherVariableJson.put("value", anotherVariableValue);
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     variables.add(anotherVariableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -1267,7 +1267,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   public void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricCaseInstanceQuery(createMockHistoricCaseInstancesTwoTenants());
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("tenantIdIn", MockProvider.EXAMPLE_TENANT_ID_LIST.split(","));
 
     Response response = given()
@@ -1318,7 +1318,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   public void testWithoutTenantIdPostParameter() {
     mockedQuery = setUpMockHistoricCaseInstanceQuery(Arrays.asList(MockProvider.createMockHistoricCaseInstance(null)));
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withoutTenantId", true);
 
     Response response = given()
@@ -1367,7 +1367,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   @Test
   public void testCaseActivityIdListPostParameter() {
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("caseActivityIdIn", MockProvider.EXAMPLE_CASE_ACTIVITY_ID_LIST.split(","));
 
     Response response = given()
@@ -1397,7 +1397,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   protected Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("caseInstanceId", MockProvider.EXAMPLE_CASE_INSTANCE_ID);
     parameters.put("caseInstanceBusinessKey", MockProvider.EXAMPLE_CASE_INSTANCE_BUSINESS_KEY);
@@ -1436,7 +1436,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   protected Map<String, Date> getCompleteCreateDateQueryParameters() {
-    Map<String, Date> parameters = new HashMap<String, Date>();
+    Map<String, Date> parameters = new HashMap<>();
 
     parameters.put("createdAfter", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATED_AFTER));
     parameters.put("createdBefore", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATED_BEFORE));
@@ -1454,7 +1454,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   protected Map<String, String> getCompleteCreateDateAsStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("createdAfter", MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATED_AFTER);
     parameters.put("createdBefore", MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CREATED_BEFORE);
@@ -1472,7 +1472,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   protected Map<String, Date> getCompleteClosedDateQueryParameters() {
-    Map<String, Date> parameters = new HashMap<String, Date>();
+    Map<String, Date> parameters = new HashMap<>();
 
     parameters.put("closedAfter", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CLOSED_AFTER));
     parameters.put("closedBefore", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CLOSED_BEFORE));
@@ -1490,7 +1490,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   protected Map<String, String> getCompleteClosedDateAsStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("closedAfter", MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CLOSED_AFTER);
     parameters.put("closedBefore", MockProvider.EXAMPLE_HISTORIC_CASE_INSTANCE_CLOSED_BEFORE);
@@ -1508,9 +1508,9 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   protected Map<String, Set<String>> getCompleteCaseInstanceIdSetQueryParameters() {
-    Map<String, Set<String>> parameters = new HashMap<String, Set<String>>();
+    Map<String, Set<String>> parameters = new HashMap<>();
 
-    Set<String> caseInstanceIds = new HashSet<String>();
+    Set<String> caseInstanceIds = new HashSet<>();
     caseInstanceIds.add("firstCaseInstanceId");
     caseInstanceIds.add("secondCaseInstanceId");
 
@@ -1527,9 +1527,9 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   protected Map<String, List<String>> getCompleteCaseDefinitionKeyNotInListQueryParameters() {
-    Map<String, List<String>> parameters = new HashMap<String, List<String>>();
+    Map<String, List<String>> parameters = new HashMap<>();
 
-    List<String> caseInstanceIds = new ArrayList<String>();
+    List<String> caseInstanceIds = new ArrayList<>();
     caseInstanceIds.add("firstCaseInstanceKey");
     caseInstanceIds.add("secondCaseInstanceKey");
 

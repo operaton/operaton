@@ -351,7 +351,7 @@ public class MultiTenancyDecisionRequirementsDefinitionQueryTest {
   }
 
   protected Map<String, DecisionRequirementsDefinition> getDecisionRequirementsDefinitionsForTenant(List<DecisionRequirementsDefinition> definitions) {
-    Map<String, DecisionRequirementsDefinition> definitionsForTenant = new HashMap<String, DecisionRequirementsDefinition>();
+    Map<String, DecisionRequirementsDefinition> definitionsForTenant = new HashMap<>();
 
     for (DecisionRequirementsDefinition definition : definitions) {
       definitionsForTenant.put(definition.getTenantId(), definition);

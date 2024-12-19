@@ -41,7 +41,7 @@ public class CompensationEventSubscriptionWalker extends ReferenceWalker<EventSu
   }
 
   protected static List<EventSubscriptionEntity> collectCompensationEventSubscriptions(Collection<MigratingActivityInstance> activityInstances) {
-    List<EventSubscriptionEntity> eventSubscriptions = new ArrayList<EventSubscriptionEntity>();
+    List<EventSubscriptionEntity> eventSubscriptions = new ArrayList<>();
     for (MigratingActivityInstance activityInstance : activityInstances) {
       if (activityInstance.getSourceScope().isScope()) {
         ExecutionEntity scopeExecution = activityInstance.resolveRepresentativeExecution();

@@ -131,7 +131,7 @@ public class XmlTestConstants {
     Customer customer2 = new Customer();
     Customer customer3 = new Customer();
 
-    LinkedList<Customer> customers = new LinkedList<Customer>();
+    LinkedList<Customer> customers = new LinkedList<>();
     customers.add(customer1);
     customers.add(customer2);
     customers.add(customer3);

@@ -62,7 +62,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
       .addClasspathResource("org/operaton/bpm/engine/test/api/cmmn/oneTaskCase2.cmmn")
       .deploy();
 
-    caseInstanceIds = new ArrayList<String>();
+    caseInstanceIds = new ArrayList<>();
     for (int i = 0; i < 4; i++) {
       String id = caseService
           .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
@@ -488,7 +488,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableValueEquals() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -627,7 +627,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableValueNotEquals() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -790,7 +790,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableGreaterThan() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -989,7 +989,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableGreaterThanOrEqual() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -1152,7 +1152,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableLessThan() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -1351,7 +1351,7 @@ public class CaseInstanceQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableLessThanOrEqual() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");

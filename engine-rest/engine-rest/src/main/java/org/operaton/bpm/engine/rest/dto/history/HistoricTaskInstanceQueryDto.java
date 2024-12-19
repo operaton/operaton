@@ -72,7 +72,7 @@ public class HistoricTaskInstanceQueryDto extends AbstractQueryDto<HistoricTaskI
 
   private static final List<String> VALID_SORT_BY_VALUES;
   static {
-    VALID_SORT_BY_VALUES = new ArrayList<String>();
+    VALID_SORT_BY_VALUES = new ArrayList<>();
     VALID_SORT_BY_VALUES.add(SORT_BY_TASK_ID);
     VALID_SORT_BY_VALUES.add(SORT_BY_ACT_INSTANCE_ID);
     VALID_SORT_BY_VALUES.add(SORT_BY_PROC_DEF_ID);

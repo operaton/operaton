@@ -37,7 +37,7 @@ public class CalledProcessApplication extends EmbeddedProcessApplication {
   public static final String STRING_VARIABLE_VALUE = "aVariableValue";
 
   protected ELResolver initProcessApplicationElResolver() {
-    Map<Object, Object> resolvableValues = new HashMap<Object, Object>();
+    Map<Object, Object> resolvableValues = new HashMap<>();
     resolvableValues.put("aStringValue", STRING_VARIABLE_VALUE);
 
     return new ReadOnlyMapELResolver(resolvableValues);

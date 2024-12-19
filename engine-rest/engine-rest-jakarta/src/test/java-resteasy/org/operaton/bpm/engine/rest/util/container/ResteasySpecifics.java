@@ -45,7 +45,7 @@ public class ResteasySpecifics implements ContainerSpecifics {
 
   protected static final TestRuleFactory DEFAULT_RULE_FACTORY = new EmbeddedServerRuleFactory(new JaxrsApplication());
 
-  protected static final Map<Class<?>, TestRuleFactory> TEST_RULE_FACTORIES = new HashMap<Class<?>, TestRuleFactory>();
+  protected static final Map<Class<?>, TestRuleFactory> TEST_RULE_FACTORIES = new HashMap<>();
 
   static {
     TEST_RULE_FACTORIES.put(ExceptionHandlerTest.class,

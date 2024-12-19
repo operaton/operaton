@@ -47,7 +47,7 @@ public class IdGeneratorDataSourceTest {
   @Deployment
   @Test
   public void testIdGeneratorDataSource() {
-    List<Thread> threads = new ArrayList<Thread>();
+    List<Thread> threads = new ArrayList<>();
     for (int i=0; i<20; i++) {
       Thread thread = new Thread() {
         @Override

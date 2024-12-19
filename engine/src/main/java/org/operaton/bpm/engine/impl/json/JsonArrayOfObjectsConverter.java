@@ -48,7 +48,7 @@ public class JsonArrayOfObjectsConverter<T> extends JsonArrayConverter<List<T>> 
 
   @Override
   public List<T> toObject(JsonArray jsonArray) {
-    List<T> result = new ArrayList<T>();
+    List<T> result = new ArrayList<>();
     for (JsonElement jsonElement : jsonArray) {
       T object = objectConverter.toObject(JsonUtil.getObject(jsonElement));
       result.add(object);

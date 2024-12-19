@@ -117,7 +117,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   // associated entities /////////////////////////////////////////////////////
 
   @SuppressWarnings({ "unchecked" })
-  protected VariableStore<VariableInstanceEntity> variableStore = new VariableStore<VariableInstanceEntity>(
+  protected VariableStore<VariableInstanceEntity> variableStore = new VariableStore<>(
       this, new CaseExecutionEntityReferencer(this));
 
   // Persistence //////////////////////////////////////////////////////////////
@@ -217,9 +217,9 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
     CaseExecutionEntity caseInstance = null;
 
-    Map<String, CaseExecutionEntity> executionMap = new HashMap<String, CaseExecutionEntity>();
+    Map<String, CaseExecutionEntity> executionMap = new HashMap<>();
     for (CaseExecutionEntity execution : executions) {
-      execution.caseExecutions = new ArrayList<CaseExecutionEntity>();
+      execution.caseExecutions = new ArrayList<>();
       executionMap.put(execution.getId(), execution);
       if(execution.isCaseInstanceExecution()) {
         caseInstance = execution;
@@ -321,7 +321,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
   @Override
   public List<CaseExecutionEntity> getCaseExecutions() {
-    return new ArrayList<CaseExecutionEntity>(getCaseExecutionsInternal());
+    return new ArrayList<>(getCaseExecutionsInternal());
   }
 
   protected List<CaseExecutionEntity> getCaseExecutionsInternal() {
@@ -678,7 +678,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
       // create a map sentries: sentryId -> caseSentryParts
       // for simple select to get all parts for one sentry
-      sentries = new HashMap<String, List<CmmnSentryPart>>();
+      sentries = new HashMap<>();
 
       for (CaseSentryPartEntity sentryPart : caseSentryParts) {
 
@@ -686,7 +686,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
         List<CmmnSentryPart> parts = sentries.get(sentryId);
 
         if (parts == null) {
-          parts = new ArrayList<CmmnSentryPart>();
+          parts = new ArrayList<>();
           sentries.put(sentryId, parts);
         }
 
@@ -704,7 +704,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
     List<CmmnSentryPart> parts = sentries.get(sentryId);
 
     if (parts == null) {
-      parts = new ArrayList<CmmnSentryPart>();
+      parts = new ArrayList<>();
       sentries.put(sentryId, parts);
     }
 
@@ -840,7 +840,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referenceIds = new HashSet<String>();
+    Set<String> referenceIds = new HashSet<>();
 
     if (parentId != null) {
       referenceIds.add(parentId);
@@ -854,7 +854,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
   @Override
   public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<String, Class>();
+    Map<String, Class> referenceIdAndClass = new HashMap<>();
 
     if (parentId != null) {
       referenceIdAndClass.put(parentId, CaseExecutionEntity.class);
@@ -871,7 +871,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("caseDefinitionId", caseDefinitionId);
     persistentState.put("businessKey", businessKey);
     persistentState.put("activityId", activityId);

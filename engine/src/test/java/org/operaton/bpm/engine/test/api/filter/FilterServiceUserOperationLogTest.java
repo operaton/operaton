@@ -77,7 +77,7 @@ public class FilterServiceUserOperationLogTest {
         .setName("name")
         .setOwner("owner")
         .setQuery(taskService.createTaskQuery())
-        .setProperties(new HashMap<String, Object>());
+        .setProperties(new HashMap<>());
 
     // when
     identityService.setAuthenticatedUserId("userId");
@@ -101,7 +101,7 @@ public class FilterServiceUserOperationLogTest {
         .setName("name")
         .setOwner("owner")
         .setQuery(taskService.createTaskQuery())
-        .setProperties(new HashMap<String, Object>());
+        .setProperties(new HashMap<>());
     filterService.saveFilter(filter);
 
     // when
@@ -127,7 +127,7 @@ public class FilterServiceUserOperationLogTest {
         .setName("name")
         .setOwner("owner")
         .setQuery(taskService.createTaskQuery())
-        .setProperties(new HashMap<String, Object>());
+        .setProperties(new HashMap<>());
     filterService.saveFilter(filter);
 
     // when

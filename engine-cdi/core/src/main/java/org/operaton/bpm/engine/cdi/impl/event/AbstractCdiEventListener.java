@@ -134,7 +134,7 @@ public abstract class AbstractCdiEventListener implements TaskListener, Executio
 
   protected Annotation[] getQualifiers(BusinessProcessEvent event) {
     ProcessDefinition processDefinition = event.getProcessDefinition();
-    List<Annotation> annotations = new ArrayList<Annotation>();
+    List<Annotation> annotations = new ArrayList<>();
     if (processDefinition != null) {
       annotations.add(new BusinessProcessDefinitionLiteral(processDefinition.getKey()));
     }

@@ -342,7 +342,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   @Test
   public void testCreateCaseInstanceByCaseDefinitionIdWithBusinessKey() {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("businessKey", MockProvider.EXAMPLE_CASE_INSTANCE_BUSINESS_KEY);
 
     given()
@@ -365,7 +365,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   @Test
   public void testCreateCaseInstanceByCaseDefinitionKeyWithBusinessKey() {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("businessKey", MockProvider.EXAMPLE_CASE_INSTANCE_BUSINESS_KEY);
 
     given()
@@ -387,11 +387,11 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   @Test
   public void testCreateCaseInstanceByCaseDefinitionIdWithVariables() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", VariablesBuilder.getVariableValueMap("abc", ValueType.STRING.getName()));
     variables.put("anotherVariableName", VariablesBuilder.getVariableValueMap(900, ValueType.INTEGER.getName()));
 
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("variables", variables);
 
     given()
@@ -416,11 +416,11 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   @Test
   public void testCreateCaseInstanceByCaseDefinitionKeyWithVariables() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", VariablesBuilder.getVariableValueMap("abc", null));
     variables.put("anotherVariableName", VariablesBuilder.getVariableValueMap(900, null));
 
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("variables", variables);
 
     given()
@@ -434,7 +434,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
     .when()
       .post(CREATE_INSTANCE_BY_KEY_URL);
 
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("aVariableName", "abc");
     expectedVariables.put("anotherVariableName", 999);
 
@@ -448,11 +448,11 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   @Test
   public void testCreateCaseInstanceByCaseDefinitionIdWithBusinessKeyAndVariables() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", VariablesBuilder.getVariableValueMap("abc", null));
     variables.put("anotherVariableName", VariablesBuilder.getVariableValueMap(900, null));
 
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("variables", variables);
     params.put("businessKey", "aBusinessKey");
 
@@ -467,7 +467,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
     .when()
       .post(CREATE_INSTANCE_URL);
 
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("aVariableName", "abc");
     expectedVariables.put("anotherVariableName", 999);
 
@@ -482,11 +482,11 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
   @Test
   public void testCreateCaseInstanceByCaseDefinitionKeyWithBusinessKeyAndVariables() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", VariablesBuilder.getVariableValueMap("abc", null));
     variables.put("anotherVariableName", VariablesBuilder.getVariableValueMap(900, null));
 
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("variables", variables);
     params.put("businessKey", "aBusinessKey");
 
@@ -501,7 +501,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
     .when()
       .post(CREATE_INSTANCE_BY_KEY_URL);
 
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("aVariableName", "abc");
     expectedVariables.put("anotherVariableName", 999);
 

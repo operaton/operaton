@@ -285,7 +285,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   @Test
   public void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("definitionId").desc()
       .orderBy("instanceId").asc()
@@ -498,7 +498,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   private Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("activityInstanceId", MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_ID);
     parameters.put("processInstanceId", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
@@ -514,7 +514,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   private Map<String, Boolean> getCompleteBooleanQueryParameters() {
-    Map<String, Boolean> parameters = new HashMap<String, Boolean>();
+    Map<String, Boolean> parameters = new HashMap<>();
 
     parameters.put("canceled", MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_IS_CANCELED);
     parameters.put("completeScope", MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_IS_COMPLETE_SCOPE);
@@ -583,7 +583,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
 
   @Test
   public void testFinishedHistoricActivityQueryAsPost() {
-    Map<String, Boolean> body = new HashMap<String, Boolean>();
+    Map<String, Boolean> body = new HashMap<>();
     body.put("finished", true);
 
     Response response = given()
@@ -651,7 +651,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
     when(mockedhistoricActivityInstanceQuery.list()).thenReturn(mockedHistoricActivityInstances);
     when(processEngine.getHistoryService().createHistoricActivityInstanceQuery()).thenReturn(mockedhistoricActivityInstanceQuery);
 
-    Map<String, Boolean> body = new HashMap<String, Boolean>();
+    Map<String, Boolean> body = new HashMap<>();
     body.put("unfinished", true);
 
     Response response = given()
@@ -710,7 +710,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   private Map<String, Date> getCompleteStartDateQueryParameters() {
-    Map<String, Date> parameters = new HashMap<String, Date>();
+    Map<String, Date> parameters = new HashMap<>();
 
     parameters.put("startedAfter", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_STARTED_AFTER));
     parameters.put("startedBefore", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_STARTED_BEFORE));
@@ -758,7 +758,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   private Map<String, Date> getCompleteFinishedDateQueryParameters() {
-    Map<String, Date> parameters = new HashMap<String, Date>();
+    Map<String, Date> parameters = new HashMap<>();
 
     parameters.put("finishedAfter", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_FINISHED_AFTER));
     parameters.put("finishedBefore", DateTimeUtil.parseDate(MockProvider.EXAMPLE_HISTORIC_ACTIVITY_INSTANCE_FINISHED_BEFORE));
@@ -804,7 +804,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   public void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricActivityInstanceQuery(createMockHistoricActivityInstancesTwoTenants());
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("tenantIdIn", MockProvider.EXAMPLE_TENANT_ID_LIST.split(","));
 
     Response response = given()

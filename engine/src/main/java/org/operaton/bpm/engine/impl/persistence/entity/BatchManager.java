@@ -50,7 +50,7 @@ public class BatchManager extends AbstractManager {
   }
 
   public void updateBatchSuspensionStateById(String batchId, SuspensionState suspensionState) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("batchId", batchId);
     parameters.put("suspensionState", suspensionState.getStateCode());
 

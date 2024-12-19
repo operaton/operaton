@@ -55,7 +55,7 @@ public class IncidentManager extends AbstractManager {
 
   @SuppressWarnings("unchecked")
   public List<Incident> findIncidentByConfigurationAndIncidentType(String configuration, String incidentType) {
-    Map<String,Object> params = new HashMap<String, Object>();
+    Map<String,Object> params = new HashMap<>();
     params.put("configuration", configuration);
     params.put("incidentType", incidentType);
     return getDbEntityManager().selectList("selectIncidentsByConfiguration", params);

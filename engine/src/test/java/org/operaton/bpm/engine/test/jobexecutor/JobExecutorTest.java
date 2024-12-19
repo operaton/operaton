@@ -62,8 +62,8 @@ public class JobExecutorTest extends JobExecutorTestCase {
 
     testRule.executeAvailableJobs();
 
-    Set<String> messages = new HashSet<String>(tweetHandler.getMessages());
-    Set<String> expectedMessages = new HashSet<String>();
+    Set<String> messages = new HashSet<>(tweetHandler.getMessages());
+    Set<String> expectedMessages = new HashSet<>();
     expectedMessages.add("message-one");
     expectedMessages.add("message-two");
     expectedMessages.add("message-three");
@@ -114,9 +114,9 @@ public class JobExecutorTest extends JobExecutorTestCase {
 
   @Test
   public void testAcquiredJobs() {
-    List<String> firstBatch = new ArrayList<String>(Arrays.asList("a", "b", "c"));
-    List<String> secondBatch = new ArrayList<String>(Arrays.asList("d", "e", "f"));
-    List<String> thirdBatch = new ArrayList<String>(Arrays.asList("g"));
+    List<String> firstBatch = new ArrayList<>(Arrays.asList("a", "b", "c"));
+    List<String> secondBatch = new ArrayList<>(Arrays.asList("d", "e", "f"));
+    List<String> thirdBatch = new ArrayList<>(Arrays.asList("g"));
 
     AcquiredJobs acquiredJobs = new AcquiredJobs(0);
     acquiredJobs.addJobIdBatch(firstBatch);

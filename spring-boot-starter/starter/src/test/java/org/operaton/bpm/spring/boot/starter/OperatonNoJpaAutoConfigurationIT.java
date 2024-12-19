@@ -51,7 +51,7 @@ public class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfig
   @Test
   public void jpaDisabledTest() {
     TestEntity testEntity = testEntityRepository.save(new TestEntity());
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("test", testEntity);
     try {
       runtimeService.startProcessInstanceByKey("TestProcess", variables);
@@ -63,7 +63,7 @@ public class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfig
 
   @Test
   public void pojoTest() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     Pojo pojo = new Pojo();
     variables.put("test", pojo);
     assertNotNull(runtimeService.startProcessInstanceByKey("TestProcess", variables));

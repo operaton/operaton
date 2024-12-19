@@ -246,7 +246,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
 
   @Override
   public Set<String> getVariableNames() {
-    return collectVariableNames(new HashSet<String>());
+    return collectVariableNames(new HashSet<>());
   }
 
   @Override

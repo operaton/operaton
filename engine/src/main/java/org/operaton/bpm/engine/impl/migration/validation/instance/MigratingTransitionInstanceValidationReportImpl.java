@@ -28,7 +28,7 @@ public class MigratingTransitionInstanceValidationReportImpl implements Migratin
   protected String transitionInstanceId;
   protected String sourceScopeId;
   protected MigrationInstruction migrationInstruction;
-  protected List<String> failures = new ArrayList<String>();
+  protected List<String> failures = new ArrayList<>();
 
   public MigratingTransitionInstanceValidationReportImpl(MigratingTransitionInstance migratingTransitionInstance) {
     this.transitionInstanceId = migratingTransitionInstance.getTransitionInstance().getId();

@@ -55,7 +55,7 @@ public enum Namespace {
   private static final Map<String, Namespace> MAP;
 
   static {
-    final Map<String, Namespace> map = new HashMap<String, Namespace>();
+    final Map<String, Namespace> map = new HashMap<>();
     for (Namespace element : values()) {
       final String name = element.getUriString();
       if (name != null) {

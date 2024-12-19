@@ -81,7 +81,7 @@ public class SchemaLogUpgradeScriptPatternTest extends SchemaLogTestCase {
   }
 
   private Object[] getPossibleNextVersions(String version) {
-    List<String> versions = new ArrayList<String>();
+    List<String> versions = new ArrayList<>();
     String[] versionParts = version.split("\\.");
     if (isPatchLevel(version)) {
       // next patch version

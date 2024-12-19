@@ -53,15 +53,18 @@ public class JuelScriptEngine extends AbstractScriptEngine {
     this(null);
   }
 
+  @Override
   public Object eval(String script, ScriptContext scriptContext) throws ScriptException {
     ValueExpression expr = parse(script, scriptContext);
     return evaluateExpression(expr, scriptContext);
   }
 
+  @Override
   public Object eval(Reader reader, ScriptContext scriptContext) throws ScriptException {
     return eval(readFully(reader), scriptContext);
   }
 
+  @Override
   public ScriptEngineFactory getFactory() {
     synchronized (this) {
       if (scriptEngineFactory == null) {
@@ -71,6 +74,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
     return scriptEngineFactory;
   }
 
+  @Override
   public Bindings createBindings() {
     return new SimpleBindings();
   }
@@ -212,11 +216,13 @@ public class JuelScriptEngine extends AbstractScriptEngine {
       this.valueExpression = valueExpression;
     }
 
+    @Override
     public ScriptEngine getEngine() {
       // Return outer class instance
       return JuelScriptEngine.this;
     }
 
+    @Override
     public Object eval(ScriptContext ctx) throws ScriptException {
       return evaluateExpression(valueExpression, ctx);
     }

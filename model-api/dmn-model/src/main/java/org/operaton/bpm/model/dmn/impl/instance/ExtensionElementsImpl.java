@@ -49,14 +49,17 @@ public class ExtensionElementsImpl extends DmnModelElementInstanceImpl implement
     super(context);
   }
 
+  @Override
   public Collection<ModelElementInstance> getElements() {
     return ModelUtil.getModelElementCollection(getDomElement().getChildElements(), modelInstance);
   }
 
+  @Override
   public Query<ModelElementInstance> getElementsQuery() {
     return new QueryImpl<>(getElements());
   }
 
+  @Override
   public ModelElementInstance addExtensionElement(String namespaceUri, String localName) {
     ModelElementType extensionElementType = modelInstance.registerGenericType(namespaceUri, localName);
     ModelElementInstance extensionElement = extensionElementType.newInstance(modelInstance);
@@ -64,6 +67,7 @@ public class ExtensionElementsImpl extends DmnModelElementInstanceImpl implement
     return extensionElement;
   }
 
+  @Override
   public <T extends ModelElementInstance> T addExtensionElement(Class<T> extensionElementClass) {
     ModelElementInstance extensionElement = modelInstance.newInstance(extensionElementClass);
     addChildElement(extensionElement);

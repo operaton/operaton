@@ -35,6 +35,7 @@ public class HistoricActivityInstanceResourceImpl implements HistoricActivityIns
     this.activityInstanceId = activityInstanceId;
   }
 
+  @Override
   public HistoricActivityInstanceDto getHistoricActivityInstance() {
     HistoryService historyService = engine.getHistoryService();
     HistoricActivityInstance instance = historyService.createHistoricActivityInstanceQuery()

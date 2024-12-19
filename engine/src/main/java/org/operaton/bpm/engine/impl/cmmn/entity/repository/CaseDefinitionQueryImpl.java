@@ -66,59 +66,69 @@ public class CaseDefinitionQueryImpl extends AbstractQuery<CaseDefinitionQuery, 
 
   // Query parameter //////////////////////////////////////////////////////////////
 
+  @Override
   public CaseDefinitionQuery caseDefinitionId(String caseDefinitionId) {
     ensureNotNull(NotValidException.class, "caseDefinitionId", caseDefinitionId);
     this.id = caseDefinitionId;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionIdIn(String... ids) {
     this.ids = ids;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionCategory(String caseDefinitionCategory) {
     ensureNotNull(NotValidException.class, "category", caseDefinitionCategory);
     this.category = caseDefinitionCategory;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionCategoryLike(String caseDefinitionCategoryLike) {
     ensureNotNull(NotValidException.class, "categoryLike", caseDefinitionCategoryLike);
     this.categoryLike = caseDefinitionCategoryLike;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionName(String caseDefinitionName) {
     ensureNotNull(NotValidException.class, "name", caseDefinitionName);
     this.name = caseDefinitionName;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionNameLike(String caseDefinitionNameLike) {
     ensureNotNull(NotValidException.class, "nameLike", caseDefinitionNameLike);
     this.nameLike = caseDefinitionNameLike;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionKey(String caseDefinitionKey) {
     ensureNotNull(NotValidException.class, "key", caseDefinitionKey);
     this.key = caseDefinitionKey;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionKeyLike(String caseDefinitionKeyLike) {
     ensureNotNull(NotValidException.class, "keyLike", caseDefinitionKeyLike);
     this.keyLike = caseDefinitionKeyLike;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery deploymentId(String deploymentId) {
     ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
     this.deploymentId = deploymentId;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionVersion(Integer caseDefinitionVersion) {
     ensureNotNull(NotValidException.class, "version", caseDefinitionVersion);
     ensurePositive(NotValidException.class, "version", caseDefinitionVersion.longValue());
@@ -126,23 +136,27 @@ public class CaseDefinitionQueryImpl extends AbstractQuery<CaseDefinitionQuery, 
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery latestVersion() {
     this.latest = true;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionResourceName(String resourceName) {
     ensureNotNull(NotValidException.class, "resourceName", resourceName);
     this.resourceName = resourceName;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery caseDefinitionResourceNameLike(String resourceNameLike) {
     ensureNotNull(NotValidException.class, "resourceNameLike", resourceNameLike);
     this.resourceNameLike = resourceNameLike;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -150,47 +164,56 @@ public class CaseDefinitionQueryImpl extends AbstractQuery<CaseDefinitionQuery, 
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery withoutTenantId() {
     isTenantIdSet = true;
     this.tenantIds = null;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery includeCaseDefinitionsWithoutTenantId() {
     this.includeDefinitionsWithoutTenantId  = true;
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery orderByCaseDefinitionCategory() {
     orderBy(CaseDefinitionQueryProperty.CASE_DEFINITION_CATEGORY);
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery orderByCaseDefinitionKey() {
     orderBy(CaseDefinitionQueryProperty.CASE_DEFINITION_KEY);
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery orderByCaseDefinitionId() {
     orderBy(CaseDefinitionQueryProperty.CASE_DEFINITION_ID);
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery orderByCaseDefinitionVersion() {
     orderBy(CaseDefinitionQueryProperty.CASE_DEFINITION_VERSION);
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery orderByCaseDefinitionName() {
     orderBy(CaseDefinitionQueryProperty.CASE_DEFINITION_NAME);
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery orderByDeploymentId() {
     orderBy(CaseDefinitionQueryProperty.DEPLOYMENT_ID);
     return this;
   }
 
+  @Override
   public CaseDefinitionQuery orderByTenantId() {
     return orderBy(CaseDefinitionQueryProperty.TENANT_ID);
   }

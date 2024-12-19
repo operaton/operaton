@@ -48,15 +48,18 @@ public class DomXmlAttributeMapIterable implements Iterable<SpinXmlAttribute> {
     validating = true;
   }
 
+  @Override
   public Iterator<SpinXmlAttribute> iterator() {
     return new DomXmlNodeIterator<SpinXmlAttribute>() {
 
       private NamedNodeMap attributes = domElement.getAttributes();
 
+      @Override
       protected int getLength() {
         return attributes.getLength();
       }
 
+      @Override
       protected SpinXmlAttribute getCurrent() {
         if (attributes != null) {
           Attr attribute = (Attr) attributes.item(index);

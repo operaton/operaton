@@ -43,18 +43,22 @@ public abstract class PlanItemDefinitionImpl extends CmmnElementImpl implements 
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public DefaultControl getDefaultControl() {
     return defaultControlChild.getChild(this);
   }
 
+  @Override
   public void setDefaultControl(DefaultControl defaultControl) {
     defaultControlChild.setChild(this, defaultControl);
   }

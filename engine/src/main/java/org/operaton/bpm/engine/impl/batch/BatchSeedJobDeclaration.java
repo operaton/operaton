@@ -55,6 +55,7 @@ public class BatchSeedJobDeclaration extends JobDeclaration<BatchEntity, Message
     return batch.getSeedJobDefinitionId();
   }
 
+  @Override
   public ParameterValueProvider getJobPriorityProvider() {
     long batchJobPriority = Context.getProcessEngineConfiguration()
       .getBatchJobPriority();

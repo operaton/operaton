@@ -61,12 +61,14 @@ import org.junit.Test;
 public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
 
   @Before
+  @Override
   public void setUp() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_END_TIME_BASED);
     super.setUp();
   }
 
   @After
+  @Override
   public void tearDown() {
     processEngineConfiguration.setHistoryCleanupStrategy(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED);
 
@@ -176,6 +178,7 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
     processEngineConfiguration.setHistoryCleanupBatchSize(defaultBatchSize);
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         List<Job> jobs = managementService.createJobQuery().list();

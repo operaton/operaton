@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  * @author Tom Baeyens
  */
 public class Buzzz implements ActivityBehavior {
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     throw new ProcessEngineException("Buzzz");
   }

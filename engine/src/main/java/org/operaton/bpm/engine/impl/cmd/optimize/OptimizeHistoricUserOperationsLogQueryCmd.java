@@ -35,6 +35,7 @@ public class OptimizeHistoricUserOperationsLogQueryCmd implements Command<List<U
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<UserOperationLogEntry> execute(CommandContext commandContext) {
     return commandContext.getOptimizeManager().getHistoricUserOperationLogs(occurredAfter, occurredAt, maxResults);
   }

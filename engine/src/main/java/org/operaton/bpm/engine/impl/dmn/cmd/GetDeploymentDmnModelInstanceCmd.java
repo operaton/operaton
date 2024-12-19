@@ -39,6 +39,7 @@ public class GetDeploymentDmnModelInstanceCmd implements Command<DmnModelInstanc
     this.decisionDefinitionId = decisionDefinitionId;
   }
 
+  @Override
   public DmnModelInstance execute(CommandContext commandContext) {
     ensureNotNull("decisionDefinitionId", decisionDefinitionId);
 

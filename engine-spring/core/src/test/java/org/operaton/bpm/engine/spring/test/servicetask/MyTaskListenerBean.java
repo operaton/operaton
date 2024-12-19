@@ -28,7 +28,8 @@ import org.operaton.bpm.engine.impl.el.FixedValue;
 public class MyTaskListenerBean implements TaskListener {
   
   private FixedValue someField;
-  
+
+  @Override
   public void notify(DelegateTask delegateTask) {
     delegateTask.getExecution().setVariable("taskListenerVar", "working");
     if (someField!=null) {

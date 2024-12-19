@@ -33,10 +33,12 @@ public class AttributeReferenceImpl<T extends ModelElementInstance> extends Refe
     this.referenceSourceAttribute = referenceSourceAttribute;
   }
 
+  @Override
   public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     return referenceSourceAttribute.getValue(referenceSourceElement);
   }
 
+  @Override
   protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, String referenceIdentifier) {
     referenceSourceAttribute.setValue(referenceSourceElement, referenceIdentifier);
   }
@@ -46,14 +48,17 @@ public class AttributeReferenceImpl<T extends ModelElementInstance> extends Refe
    *
    * @return the reference source attribute
    */
+  @Override
   public Attribute<String> getReferenceSourceAttribute() {
     return referenceSourceAttribute;
   }
 
+  @Override
   public ModelElementType getReferenceSourceElementType() {
     return referenceSourceAttribute.getOwningElementType();
   }
 
+  @Override
   protected void updateReference(ModelElementInstance referenceSourceElement, String oldIdentifier, String newIdentifier) {
     String referencingAttributeValue = getReferenceIdentifier(referenceSourceElement);
     if(oldIdentifier != null && oldIdentifier.equals(referencingAttributeValue)) {
@@ -61,6 +66,7 @@ public class AttributeReferenceImpl<T extends ModelElementInstance> extends Refe
     }
   }
 
+  @Override
   protected void removeReference(ModelElementInstance referenceSourceElement, ModelElementInstance referenceTargetElement) {
     referenceSourceAttribute.removeAttribute(referenceSourceElement);
   }

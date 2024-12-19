@@ -60,14 +60,17 @@ public class SpringProcessApplication extends AbstractProcessApplication impleme
     return beanName;
   }
 
+  @Override
   public ProcessApplicationReference getReference() {
     return new ProcessApplicationReferenceImpl(this);
   }
 
+  @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
   }
 
+  @Override
   public void setBeanName(String name) {
     this.beanName = name;
   }

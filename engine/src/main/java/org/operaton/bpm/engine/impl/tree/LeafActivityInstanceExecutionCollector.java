@@ -34,6 +34,7 @@ public class LeafActivityInstanceExecutionCollector implements TreeVisitor<PvmEx
 
   protected List<PvmExecutionImpl> leaves = new ArrayList<PvmExecutionImpl>();
 
+  @Override
   public void visit(PvmExecutionImpl obj) {
     if (obj.getNonEventScopeExecutions().isEmpty() || (obj.getActivity() != null && !LegacyBehavior.hasInvalidIntermediaryActivityId(obj))) {
       leaves.add(obj);

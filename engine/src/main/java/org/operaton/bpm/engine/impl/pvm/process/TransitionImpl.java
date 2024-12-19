@@ -47,6 +47,7 @@ public class TransitionImpl extends CoreModelElement implements PvmTransition {
     this.processDefinition = processDefinition;
   }
 
+  @Override
   public ActivityImpl getSource() {
     return source;
   }
@@ -74,12 +75,14 @@ public class TransitionImpl extends CoreModelElement implements PvmTransition {
     }
   }
 
+  @Override
   public String toString() {
     return "("+source.getId()+")--"+(id!=null?id+"-->(":">(")+destination.getId()+")";
   }
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   public PvmProcessDefinition getProcessDefinition() {
     return processDefinition;
   }
@@ -88,6 +91,7 @@ public class TransitionImpl extends CoreModelElement implements PvmTransition {
     this.source = source;
   }
 
+  @Override
   public PvmActivity getDestination() {
     return destination;
   }

@@ -50,7 +50,8 @@ public class DataAssociationImpl extends BaseElementImpl implements DataAssociat
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<DataAssociation>() {
-        public DataAssociation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DataAssociation newInstance(ModelTypeInstanceContext instanceContext) {
           return new DataAssociationImpl(instanceContext);
         }
       });
@@ -79,30 +80,37 @@ public class DataAssociationImpl extends BaseElementImpl implements DataAssociat
     super(instanceContext);
   }
 
+  @Override
   public Collection<ItemAwareElement> getSources() {
     return sourceRefCollection.getReferenceTargetElements(this);
   }
 
+  @Override
   public ItemAwareElement getTarget() {
     return targetRefChild.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setTarget(ItemAwareElement target) {
     targetRefChild.setReferenceTargetElement(this, target);
   }
 
+  @Override
   public FormalExpression getTransformation() {
     return transformationChild.getChild(this);
   }
 
+  @Override
   public void setTransformation(Transformation transformation) {
     transformationChild.setChild(this, transformation);
   }
 
+  @Override
   public Collection<Assignment> getAssignments() {
     return assignmentCollection.get(this);
   }
 
+  @Override
   public BpmnEdge getDiagramElement() {
     return (BpmnEdge) super.getDiagramElement();
   }

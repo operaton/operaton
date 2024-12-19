@@ -435,6 +435,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
      this.decorator = decorator;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       decorator.decorate(task, task);
       return null;
@@ -450,6 +451,7 @@ public class TaskDecoratorTest extends PluggableProcessEngineTest {
      this.task = task;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       commandContext
         .getTaskManager()

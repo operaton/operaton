@@ -35,7 +35,8 @@ public class Incoming extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Incoming.class, BPMN_ELEMENT_INCOMING)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Incoming>() {
-        public Incoming newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Incoming newInstance(ModelTypeInstanceContext instanceContext) {
           return new Incoming(instanceContext);
         }
       });

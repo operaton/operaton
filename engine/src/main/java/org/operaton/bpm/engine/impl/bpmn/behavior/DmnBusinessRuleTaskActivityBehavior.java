@@ -52,6 +52,7 @@ public class DmnBusinessRuleTaskActivityBehavior extends AbstractBpmnActivityBeh
   public void execute(final ActivityExecution execution) throws Exception {
     executeWithErrorPropagation(execution, new Callable<Void>() {
 
+      @Override
       public Void call() throws Exception {
         ExecutionEntity executionEntity = (ExecutionEntity) execution;
 

@@ -38,6 +38,7 @@ public class SingleVariableContext implements VariableContext {
     this.typedValue = typedValue;
   }
 
+  @Override
   public TypedValue resolve(String variableName) {
     if(containsVariable(variableName)) {
       return typedValue;
@@ -47,6 +48,7 @@ public class SingleVariableContext implements VariableContext {
     }
   }
 
+  @Override
   public boolean containsVariable(String name) {
     if(this.name == null) {
       return name == null;
@@ -56,6 +58,7 @@ public class SingleVariableContext implements VariableContext {
     }
   }
 
+  @Override
   public Set<String> keySet() {
     return Collections.singleton(name);
   }

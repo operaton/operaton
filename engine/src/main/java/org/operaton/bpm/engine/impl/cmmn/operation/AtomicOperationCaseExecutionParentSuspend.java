@@ -24,6 +24,7 @@ import static org.operaton.bpm.engine.delegate.CaseExecutionListener.PARENT_SUSP
  */
 public class AtomicOperationCaseExecutionParentSuspend extends AbstractAtomicOperationCaseExecutionSuspend {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-parent-suspend";
   }

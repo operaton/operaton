@@ -35,49 +35,58 @@ public abstract class EventListenerOrMilestoneActivityBehavior extends PlanItemD
 
   // enable /////////////////////////////////////////////////////////////
 
+  @Override
   public void onEnable(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("enable", execution);
   }
 
   // re-enable //////////////////////////////////////////////////////////
 
+  @Override
   public void onReenable(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("reenable", execution);
   }
 
   // disable ///////////////////////////////////////////////////////////
 
+  @Override
   public void onDisable(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("disable", execution);
   }
 
   // start /////////////////////////////////////////////////////////////
 
+  @Override
   public void onStart(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("start", execution);
   }
 
+  @Override
   public void onManualStart(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("manualStart", execution);
   }
 
   // completion /////////////////////////////////////////////////////////
 
+  @Override
   public void onCompletion(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("complete", execution);
   }
 
+  @Override
   public void onManualCompletion(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("complete", execution);
   }
 
   // termination ////////////////////////////////////////////////////////
 
+  @Override
   public void onTermination(CmmnActivityExecution execution) {
     ensureTransitionAllowed(execution, AVAILABLE, TERMINATED, "terminate");
     performTerminate(execution);
   }
 
+  @Override
   public void onParentTermination(CmmnActivityExecution execution) {
 
     if (execution.isCompleted()) {
@@ -88,29 +97,34 @@ public abstract class EventListenerOrMilestoneActivityBehavior extends PlanItemD
     performParentTerminate(execution);
   }
 
+  @Override
   public void onExit(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("exit", execution);
   }
 
   // occur /////////////////////////////////////////////////////////////////
 
+  @Override
   public void onOccur(CmmnActivityExecution execution) {
     ensureTransitionAllowed(execution, AVAILABLE, COMPLETED, "occur");
   }
 
   // suspension ////////////////////////////////////////////////////////////
 
+  @Override
   public void onSuspension(CmmnActivityExecution execution) {
     ensureTransitionAllowed(execution, AVAILABLE, SUSPENDED, "suspend");
     performSuspension(execution);
   }
 
+  @Override
   public void onParentSuspension(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("parentSuspend", execution);
   }
 
   // resume ////////////////////////////////////////////////////////////////
 
+  @Override
   public void onResume(CmmnActivityExecution execution) {
     ensureTransitionAllowed(execution, SUSPENDED, AVAILABLE, "resume");
 
@@ -125,12 +139,14 @@ public abstract class EventListenerOrMilestoneActivityBehavior extends PlanItemD
     resuming(execution);
   }
 
+  @Override
   public void onParentResume(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("parentResume", execution);
   }
 
   // re-activation ////////////////////////////////////////////////////////
 
+  @Override
   public void onReactivation(CmmnActivityExecution execution) {
     throw createIllegalStateTransitionException("reactivate", execution);
   }
@@ -141,6 +157,7 @@ public abstract class EventListenerOrMilestoneActivityBehavior extends PlanItemD
     return false;
   }
 
+  @Override
   public void fireExitCriteria(CmmnActivityExecution execution) {
     throw LOG.criteriaNotAllowedForEventListenerOrMilestonesException("exit", execution.getId());
   }

@@ -37,6 +37,7 @@ public abstract class HistoryCleanupHandler implements TransactionListener {
   protected String jobId;
   protected CommandExecutor commandExecutor;
 
+  @Override
   public void execute(CommandContext commandContext) {
     // passed commandContext may be in an inconsistent state
     commandExecutor.execute(new HistoryCleanupHandlerCmd());

@@ -50,38 +50,47 @@ public class StartProcessVariableScope implements VariableScope {
     return INSTANCE;
   }
 
+  @Override
   public String getVariableScopeKey() {
     return "scope";
   }
 
+  @Override
   public VariableMap getVariables() {
     return EMPTY_VARIABLE_MAP;
   }
 
+  @Override
   public VariableMap getVariablesLocal() {
     return EMPTY_VARIABLE_MAP;
   }
 
+  @Override
   public Object getVariable(String variableName) {
     return null;
   }
 
+  @Override
   public Object getVariableLocal(String variableName) {
     return null;
   }
 
+  @Override
   public VariableMap getVariablesTyped(boolean deserializeObjectValues) {
     return getVariables();
   }
 
+  @Override
   public VariableMap getVariablesLocalTyped() {
     return getVariablesLocalTyped(true);
   }
 
+  @Override
   public VariableMap getVariablesTyped() {
     return getVariablesTyped(true);
   }
 
+  @Override
   public VariableMap getVariablesLocalTyped(boolean deserializeObjectValues) {
     return getVariablesLocal();
   }
@@ -94,83 +103,103 @@ public class StartProcessVariableScope implements VariableScope {
     return null;
   }
 
+  @Override
   public <T extends TypedValue> T getVariableTyped(String variableName) {
     return null;
   }
 
+  @Override
   public <T extends TypedValue> T getVariableTyped(String variableName, boolean deserializeObjectValue) {
     return null;
   }
 
+  @Override
   public <T extends TypedValue> T getVariableLocalTyped(String variableName) {
     return null;
   }
 
+  @Override
   public <T extends TypedValue> T getVariableLocalTyped(String variableName, boolean deserializeObjectValue) {
     return null;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public Set<String> getVariableNames() {
     return Collections.EMPTY_SET;
   }
 
+  @Override
   public Set<String> getVariableNamesLocal() {
     return null;
   }
 
+  @Override
   public void setVariable(String variableName, Object value) {
     throw new UnsupportedOperationException("No execution active, no variables can be set");
   }
 
+  @Override
   public void setVariableLocal(String variableName, Object value) {
     throw new UnsupportedOperationException("No execution active, no variables can be set");
   }
 
+  @Override
   public void setVariables(Map<String, ? extends Object> variables) {
     throw new UnsupportedOperationException("No execution active, no variables can be set");
   }
 
+  @Override
   public void setVariablesLocal(Map<String, ? extends Object> variables) {
     throw new UnsupportedOperationException("No execution active, no variables can be set");
   }
 
+  @Override
   public boolean hasVariables() {
     return false;
   }
 
+  @Override
   public boolean hasVariablesLocal() {
     return false;
   }
 
+  @Override
   public boolean hasVariable(String variableName) {
     return false;
   }
 
+  @Override
   public boolean hasVariableLocal(String variableName) {
     return false;
   }
 
+  @Override
   public void removeVariable(String variableName) {
     throw new UnsupportedOperationException("No execution active, no variables can be removed");
   }
 
+  @Override
   public void removeVariableLocal(String variableName) {
     throw new UnsupportedOperationException("No execution active, no variables can be removed");
   }
 
+  @Override
   public void removeVariables() {
     throw new UnsupportedOperationException("No execution active, no variables can be removed");
   }
 
+  @Override
   public void removeVariablesLocal() {
     throw new UnsupportedOperationException("No execution active, no variables can be removed");
   }
 
+  @Override
   public void removeVariables(Collection<String> variableNames) {
     throw new UnsupportedOperationException("No execution active, no variables can be removed");
   }
 
+  @Override
   public void removeVariablesLocal(Collection<String> variableNames) {
     throw new UnsupportedOperationException("No execution active, no variables can be removed");
   }

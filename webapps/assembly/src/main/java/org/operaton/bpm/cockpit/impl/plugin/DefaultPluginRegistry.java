@@ -35,10 +35,12 @@ public class DefaultPluginRegistry implements PluginRegistry {
     this.wrappedRegistry = wrappedRegistry;
   }
 
+  @Override
   public List<CockpitPlugin> getPlugins() {
     return wrappedRegistry.getPlugins();
   }
 
+  @Override
   public CockpitPlugin getPlugin(String id) {
     return wrappedRegistry.getPlugin(id);
   }

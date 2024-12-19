@@ -23,6 +23,7 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
  */
 public interface ElementReferenceBuilder<Target extends ModelElementInstance, Source extends ModelElementInstance> extends ElementReferenceCollectionBuilder<Target,Source> {
 
+  @Override
   ElementReference<Target, Source> build();
 
 }

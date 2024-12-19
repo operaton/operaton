@@ -47,6 +47,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
     super(instanceContext);
   }
 
+  @Override
   public String getText() {
     if (isCmmn11()) {
       return getTextContent();
@@ -56,6 +57,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
     }
   }
 
+  @Override
   public void setText(String text) {
     if (isCmmn11()) {
       setTextContent(text);
@@ -65,6 +67,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
     }
   }
 
+  @Override
   public String getBody() {
     Body body = bodyChild.getChild(this);
     if (body != null) {
@@ -73,14 +76,17 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
     return null;
   }
 
+  @Override
   public void setBody(String body) {
     bodyChild.getChild(this).setTextContent(body);
   }
 
+  @Override
   public String getLanguage() {
     return languageAttribute.getValue(this);
   }
 
+  @Override
   public void setLanguage(String language) {
     languageAttribute.setValue(this, language);
   }
@@ -90,7 +96,8 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<Expression>() {
-          public Expression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Expression newInstance(ModelTypeInstanceContext instanceContext) {
             return new ExpressionImpl(instanceContext);
           }
         });

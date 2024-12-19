@@ -58,6 +58,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
   public static final String DEFAULT_PROCESS_KEY = "process";
 
   @Before
+  @Override
   public void setUp() {
     MyDelegationService.clearProperties();
     processEngineConfiguration.setAuthorizationEnabledForCustomCode(false);

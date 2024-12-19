@@ -40,42 +40,49 @@ public abstract class TenantQueryImpl extends AbstractQuery<TenantQuery, Tenant>
     super(commandExecutor);
   }
 
+  @Override
   public TenantQuery tenantId(String id) {
     ensureNotNull("tenant ud", id);
     this.id = id;
     return this;
   }
 
+  @Override
   public TenantQuery tenantIdIn(String... ids) {
     ensureNotNull("tenant ids", (Object[]) ids);
     this.ids = ids;
     return this;
   }
 
+  @Override
   public TenantQuery tenantName(String name) {
     ensureNotNull("tenant name", name);
     this.name = name;
     return this;
   }
 
+  @Override
   public TenantQuery tenantNameLike(String nameLike) {
     ensureNotNull("tenant name like", nameLike);
     this.nameLike = nameLike;
     return this;
   }
 
+  @Override
   public TenantQuery userMember(String userId) {
     ensureNotNull("user id", userId);
     this.userId = userId;
     return this;
   }
 
+  @Override
   public TenantQuery groupMember(String groupId) {
     ensureNotNull("group id", groupId);
     this.groupId = groupId;
     return this;
   }
 
+  @Override
   public TenantQuery includingGroupsOfUser(boolean includingGroups) {
     this.includingGroups = includingGroups;
     return this;
@@ -83,10 +90,12 @@ public abstract class TenantQueryImpl extends AbstractQuery<TenantQuery, Tenant>
 
   //sorting ////////////////////////////////////////////////////////
 
+  @Override
   public TenantQuery orderByTenantId() {
     return orderBy(TenantQueryProperty.GROUP_ID);
   }
 
+  @Override
   public TenantQuery orderByTenantName() {
     return orderBy(TenantQueryProperty.NAME);
   }

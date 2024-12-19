@@ -73,6 +73,7 @@ public abstract class DeleteIdentityLinkCmd implements Command<Void>, Serializab
     }
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
 

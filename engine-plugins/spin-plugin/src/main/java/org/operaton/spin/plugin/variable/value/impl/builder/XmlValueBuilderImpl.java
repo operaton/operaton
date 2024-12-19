@@ -44,6 +44,7 @@ public class XmlValueBuilderImpl extends SpinValueBuilderImpl<XmlValue> implemen
     return (XmlValueBuilder) super.serializationDataFormat(dataFormat);
   }
 
+  @Override
   public XmlValueBuilder serializationDataFormat(String dataFormatName) {
     return (XmlValueBuilder) super.serializationDataFormat(dataFormatName);
   }

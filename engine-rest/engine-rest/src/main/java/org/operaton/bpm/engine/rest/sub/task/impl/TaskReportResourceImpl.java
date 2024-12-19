@@ -44,6 +44,7 @@ public class TaskReportResourceImpl implements TaskReportResource {
     this.engine = engine;
   }
 
+  @Override
   public Response getTaskCountByCandidateGroupReport(Request request) {
     Variant variant = request.selectVariant(VARIANTS);
     if (variant != null) {

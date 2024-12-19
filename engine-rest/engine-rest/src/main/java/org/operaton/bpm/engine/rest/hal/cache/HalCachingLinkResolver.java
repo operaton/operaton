@@ -32,6 +32,7 @@ public abstract class HalCachingLinkResolver implements HalLinkResolver {
   /**
    * Resolve resources for linked ids, if configured uses a cache.
    */
+  @Override
   public List<HalResource<?>> resolveLinks(String[] linkedIds, ProcessEngine processEngine) {
     Cache cache = getCache();
 

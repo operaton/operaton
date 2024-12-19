@@ -50,10 +50,12 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
+  @Override
   public String getName() {
     return "Parse processes.xml deployment descriptor files.";
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
 
     final AbstractProcessApplication processApplication = operationContext.getAttachment(PROCESS_APPLICATION);

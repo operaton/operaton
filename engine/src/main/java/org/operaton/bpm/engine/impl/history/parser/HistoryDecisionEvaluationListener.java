@@ -39,6 +39,7 @@ public class HistoryDecisionEvaluationListener implements DmnDecisionEvaluationL
     this.eventProducer = historyEventProducer;
   }
 
+  @Override
   public void notify(DmnDecisionEvaluationEvent evaluationEvent) {
    HistoryEvent historyEvent = createHistoryEvent(evaluationEvent);
 

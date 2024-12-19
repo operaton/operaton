@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public abstract class PvmAtomicOperationCancelActivity implements PvmAtomicOperation {
 
+  @Override
   public void execute(PvmExecutionImpl execution) {
 
     // Assumption: execution is scope
@@ -70,6 +71,7 @@ public abstract class PvmAtomicOperationCancelActivity implements PvmAtomicOpera
 
   protected abstract void activityCancelled(PvmExecutionImpl execution);
 
+  @Override
   public boolean isAsync(PvmExecutionImpl execution) {
     return false;
   }

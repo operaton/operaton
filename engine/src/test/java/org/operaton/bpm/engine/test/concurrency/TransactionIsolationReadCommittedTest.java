@@ -92,6 +92,7 @@ public class TransactionIsolationReadCommittedTest extends ConcurrencyTestCase {
       this.id = id;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       DbEntityManagerFactory dbEntityManagerFactory = new DbEntityManagerFactory(Context.getProcessEngineConfiguration().getIdGenerator());
       DbEntityManager newEntityManager = dbEntityManagerFactory.openSession();

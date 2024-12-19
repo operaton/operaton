@@ -97,9 +97,12 @@ public class EnginesFilterTest {
         return null;
       }
 
+      @Override
       public Set<String> getProcessEngineNames() {
         return Collections.singleton("foo");
       }
+
+      @Override
       public ProcessEngine getDefaultProcessEngine() {
         return null;
       }
@@ -118,9 +121,12 @@ public class EnginesFilterTest {
         return null;
       }
 
+      @Override
       public Set<String> getProcessEngineNames() {
         return Collections.emptySet();
       }
+
+      @Override
       public ProcessEngine getDefaultProcessEngine() {
         return null;
       }

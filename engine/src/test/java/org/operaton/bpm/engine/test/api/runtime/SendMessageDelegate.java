@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 public class SendMessageDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     RuntimeService runtimeService = execution.getProcessEngineServices().getRuntimeService();
     Boolean allFlag = (Boolean) execution.getVariable("allFlag");

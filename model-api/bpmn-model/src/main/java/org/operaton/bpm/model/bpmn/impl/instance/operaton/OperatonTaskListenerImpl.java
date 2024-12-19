@@ -58,7 +58,8 @@ public class OperatonTaskListenerImpl extends BpmnModelElementInstanceImpl imple
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonTaskListener.class, OPERATON_ELEMENT_TASK_LISTENER)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonTaskListener>() {
-        public OperatonTaskListener newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonTaskListener newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonTaskListenerImpl(instanceContext);
         }
       });
@@ -97,50 +98,62 @@ public class OperatonTaskListenerImpl extends BpmnModelElementInstanceImpl imple
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonEvent() {
     return operatonEventAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonEvent(String operatonEvent) {
     operatonEventAttribute.setValue(this, operatonEvent);
   }
 
+  @Override
   public String getOperatonClass() {
     return operatonClassAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonClass(String operatonClass) {
     operatonClassAttribute.setValue(this, operatonClass);
   }
 
+  @Override
   public String getOperatonExpression() {
     return operatonExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonExpression(String operatonExpression) {
     operatonExpressionAttribute.setValue(this, operatonExpression);
   }
 
+  @Override
   public String getOperatonDelegateExpression() {
     return operatonDelegateExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDelegateExpression(String operatonDelegateExpression) {
     operatonDelegateExpressionAttribute.setValue(this, operatonDelegateExpression);
   }
 
+  @Override
   public Collection<OperatonField> getOperatonFields() {
     return operatonFieldCollection.get(this);
   }
 
+  @Override
   public OperatonScript getOperatonScript() {
     return operatonScriptChild.getChild(this);
   }
 
+  @Override
   public void setOperatonScript(OperatonScript operatonScript) {
     operatonScriptChild.setChild(this, operatonScript);
   }
 
+  @Override
   public Collection<TimerEventDefinition> getTimeouts() {
     return timeoutCollection.get(this);
   }

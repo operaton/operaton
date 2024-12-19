@@ -75,6 +75,7 @@ public class CommandContextInterceptor extends CommandInterceptor {
     this.alwaysOpenNew = alwaysOpenNew;
   }
 
+  @Override
   public <T> T execute(Command<T> command) {
     CommandContext context = null;
 

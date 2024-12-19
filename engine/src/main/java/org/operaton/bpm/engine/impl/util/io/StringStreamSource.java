@@ -31,10 +31,12 @@ public class StringStreamSource implements StreamSource {
     this.string = string;
   }
 
+  @Override
   public InputStream getInputStream() {
     return new ByteArrayInputStream(string.getBytes());
   }
 
+  @Override
   public String toString() {
     return "String";
   }

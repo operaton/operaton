@@ -90,19 +90,22 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
       throw LOG.engineAuthorizationTypeException(authorizationType, AUTH_TYPE_GLOBAL, AUTH_TYPE_GRANT, AUTH_TYPE_REVOKE);
     }
   }
-  
+
   // grant / revoke methods ////////////////////////////
 
+  @Override
   public void addPermission(Permission p) {
     cachedPermissions.add(p);
     permissions |= p.getValue();
   }
-  
+
+  @Override
   public void removePermission(Permission p) {
     cachedPermissions.add(p);
     permissions &= ~p.getValue();
   }
-  
+
+  @Override
   public boolean isPermissionGranted(Permission p) {
     if(AUTH_TYPE_REVOKE == authorizationType) {
       throw LOG.permissionStateException("isPermissionGranted", "REVOKE");
@@ -115,7 +118,8 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
     }
     return (permissions & p.getValue()) == p.getValue();    
   }
-  
+
+  @Override
   public boolean isPermissionRevoked(Permission p) {
     if(AUTH_TYPE_GRANT == authorizationType) {
       throw LOG.permissionStateException("isPermissionRevoked", "GRANT");
@@ -129,6 +133,7 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
     return (permissions & p.getValue()) != p.getValue();    
   }
 
+  @Override
   public boolean isEveryPermissionGranted() {
     if(AUTH_TYPE_REVOKE == authorizationType) {
       throw LOG.permissionStateException("isEveryPermissionGranted", "REVOKE");
@@ -136,6 +141,7 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
     return permissions == Permissions.ALL.getValue();
   }
 
+  @Override
   public boolean isEveryPermissionRevoked() {
     if (authorizationType == AUTH_TYPE_GRANT) {
       throw LOG.permissionStateException("isEveryPermissionRevoked", "GRANT");
@@ -143,6 +149,7 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
     return permissions == 0;
   }
 
+  @Override
   public Permission[] getPermissions(Permission[] permissions) {
 
     List<Permission> result = new ArrayList<Permission>();
@@ -162,7 +169,8 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
     }
     return result.toArray(new Permission[ result.size() ]);
   }
-  
+
+  @Override
   public void setPermissions(Permission[] permissions) {
     resetPermissions();
     for (Permission permission : permissions) {
@@ -175,9 +183,10 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
       }
     }    
   }
-  
+
   // getters setters ///////////////////////////////
 
+  @Override
   public int getAuthorizationType() {
     return authorizationType;
   }
@@ -185,22 +194,26 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
   public void setAuthorizationType(int authorizationType) {
     this.authorizationType = authorizationType;
   }
-  
+
+  @Override
   public String getGroupId() {
     return groupId;
   }
-  
+
+  @Override
   public void setGroupId(String groupId) {
     if(groupId != null && authorizationType == AUTH_TYPE_GLOBAL) {
       throw LOG.notUsableGroupIdForGlobalAuthorizationException();
     }
     this.groupId = groupId;
   }
-  
+
+  @Override
   public String getUserId() {
     return userId;
   }
 
+  @Override
   public void setUserId(String userId) {
     if(userId != null && authorizationType == AUTH_TYPE_GLOBAL && !ANY.equals(userId)) {
       throw LOG.illegalValueForUserIdException(userId, ANY);
@@ -208,10 +221,12 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
     this.userId = userId;
   }
 
+  @Override
   public int getResourceType() {
     return resourceType;
   }
-  
+
+  @Override
   public void setResourceType(int type) {
     this.resourceType = type;
   }
@@ -220,28 +235,37 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
     return resourceType;
   }
 
+  @Override
   public void setResource(Resource resource) {
     this.resourceType = resource.resourceType();
   }
 
+  @Override
   public String getResourceId() {
     return resourceId;
   }
 
+  @Override
   public void setResourceId(String resourceId) {
     this.resourceId = resourceId;
   }
 
+  @Override
   public String getId() {
     return id;
   }
-  
+
+  @Override
   public void setId(String id) {
     this.id = id;
   }
+
+  @Override
   public int getRevision() {
     return revision;
   }
+
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
   }
@@ -258,10 +282,12 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
     return cachedPermissions;
   }
 
+  @Override
   public int getRevisionNext() {
     return revision + 1;
   }
 
+  @Override
   public Object getPersistentState() {
         
     HashMap<String, Object> state = new HashMap<String, Object>();

@@ -30,13 +30,16 @@ public class ProcessEnginePluginXmlImpl implements ProcessEnginePluginXml {
   
   protected String pluginClass;
   protected Map<String, String> properties;
-  
+
+  @Override
   public String getPluginClass() {
     return pluginClass;
   }
   public void setPluginClass(String pluginClass) {
     this.pluginClass = pluginClass;
   }
+
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }

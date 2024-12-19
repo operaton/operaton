@@ -65,60 +65,70 @@ public class CaseInstanceQueryImpl extends AbstractVariableQueryImpl<CaseInstanc
     super(commandExecutor);
   }
 
+  @Override
   public CaseInstanceQuery caseInstanceId(String caseInstanceId) {
     ensureNotNull(NotValidException.class, "caseInstanceId", caseInstanceId);
     caseExecutionId = caseInstanceId;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery caseInstanceBusinessKey(String caseInstanceBusinessKey) {
     ensureNotNull(NotValidException.class, "businessKey", caseInstanceBusinessKey);
     this.businessKey = caseInstanceBusinessKey;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery caseDefinitionKey(String caseDefinitionKey) {
     ensureNotNull(NotValidException.class, "caseDefinitionKey", caseDefinitionKey);
     this.caseDefinitionKey = caseDefinitionKey;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery caseDefinitionId(String caseDefinitionId) {
     ensureNotNull(NotValidException.class, "caseDefinitionId", caseDefinitionId);
     this.caseDefinitionId = caseDefinitionId;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery deploymentId(String deploymentId) {
     ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
     this.deploymentId = deploymentId;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery superProcessInstanceId(String superProcessInstanceId) {
     ensureNotNull(NotValidException.class, "superProcessInstanceId", superProcessInstanceId);
     this.superProcessInstanceId = superProcessInstanceId;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery subProcessInstanceId(String subProcessInstanceId) {
     ensureNotNull(NotValidException.class, "subProcessInstanceId", subProcessInstanceId);
     this.subProcessInstanceId = subProcessInstanceId;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery superCaseInstanceId(String superCaseInstanceId) {
     ensureNotNull(NotValidException.class, "superCaseInstanceId", superCaseInstanceId);
     this.superCaseInstanceId = superCaseInstanceId;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery subCaseInstanceId(String subCaseInstanceId) {
     ensureNotNull(NotValidException.class, "subCaseInstanceId", subCaseInstanceId);
     this.subCaseInstanceId = subCaseInstanceId;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -126,22 +136,26 @@ public class CaseInstanceQueryImpl extends AbstractVariableQueryImpl<CaseInstanc
     return this;
   }
 
+  @Override
   public CaseInstanceQuery withoutTenantId() {
     tenantIds = null;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery active() {
     state = CaseExecutionState.ACTIVE;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery completed() {
     state = CaseExecutionState.COMPLETED;
     return this;
   }
 
+  @Override
   public CaseInstanceQuery terminated() {
     state = CaseExecutionState.TERMINATED;
     return this;
@@ -149,22 +163,26 @@ public class CaseInstanceQueryImpl extends AbstractVariableQueryImpl<CaseInstanc
 
   //ordering /////////////////////////////////////////////////////////////////
 
+  @Override
   public CaseInstanceQuery orderByCaseInstanceId() {
     orderBy(CaseInstanceQueryProperty.CASE_INSTANCE_ID);
     return this;
   }
 
+  @Override
   public CaseInstanceQuery orderByCaseDefinitionKey() {
     orderBy(new QueryOrderingProperty(QueryOrderingProperty.RELATION_CASE_DEFINITION,
         CaseInstanceQueryProperty.CASE_DEFINITION_KEY));
     return this;
   }
 
+  @Override
   public CaseInstanceQuery orderByCaseDefinitionId() {
     orderBy(CaseInstanceQueryProperty.CASE_DEFINITION_ID);
     return this;
   }
 
+  @Override
   public CaseInstanceQuery orderByTenantId() {
     orderBy(CaseInstanceQueryProperty.TENANT_ID);
     return this;
@@ -172,6 +190,7 @@ public class CaseInstanceQueryImpl extends AbstractVariableQueryImpl<CaseInstanc
 
   //results /////////////////////////////////////////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     ensureVariablesInitialized();
@@ -180,6 +199,7 @@ public class CaseInstanceQueryImpl extends AbstractVariableQueryImpl<CaseInstanc
       .findCaseInstanceCountByQueryCriteria(this);
   }
 
+  @Override
   public List<CaseInstance> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     ensureVariablesInitialized();

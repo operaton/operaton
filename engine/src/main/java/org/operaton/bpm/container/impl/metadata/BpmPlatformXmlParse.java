@@ -50,12 +50,14 @@ public class BpmPlatformXmlParse extends DeploymentMetadataParse {
     super(parser);
   }
 
+  @Override
   public BpmPlatformXmlParse execute() {
     super.execute();
     return this;
   }
 
   /** We know this is a <code>&lt;bpm-platform ../&gt;</code> element */
+  @Override
   protected void parseRootElement() {
 
     JobExecutorXmlImpl jobExecutor = new JobExecutorXmlImpl();
@@ -135,6 +137,7 @@ public class BpmPlatformXmlParse extends DeploymentMetadataParse {
     return bpmPlatformXml;
   }
 
+  @Override
   public BpmPlatformXmlParse sourceUrl(URL url) {
     super.sourceUrl(url);
     return this;

@@ -45,48 +45,56 @@ public abstract class GroupQueryImpl extends AbstractQuery<GroupQuery, Group> im
     super(commandExecutor);
   }
 
+  @Override
   public GroupQuery groupId(String id) {
     ensureNotNull("Provided id", id);
     this.id = id;
     return this;
   }
 
+  @Override
   public GroupQuery groupIdIn(String... ids) {
     ensureNotNull("Provided ids", (Object[]) ids);
     this.ids = ids;
     return this;
   }
 
+  @Override
   public GroupQuery groupName(String name) {
     ensureNotNull("Provided name", name);
     this.name = name;
     return this;
   }
 
+  @Override
   public GroupQuery groupNameLike(String nameLike) {
     ensureNotNull("Provided nameLike", nameLike);
     this.nameLike = nameLike;
     return this;
   }
 
+  @Override
   public GroupQuery groupType(String type) {
     ensureNotNull("Provided type", type);
     this.type = type;
     return this;
   }
 
+  @Override
   public GroupQuery groupMember(String userId) {
     ensureNotNull("Provided userId", userId);
     this.userId = userId;
     return this;
   }
 
+  @Override
   public GroupQuery potentialStarter(String procDefId) {
     ensureNotNull("Provided processDefinitionId", procDefId);
     this.procDefId = procDefId;
     return this;
   }
 
+  @Override
   public GroupQuery memberOfTenant(String tenantId) {
     ensureNotNull("Provided tenantId", tenantId);
     this.tenantId = tenantId;
@@ -95,14 +103,17 @@ public abstract class GroupQueryImpl extends AbstractQuery<GroupQuery, Group> im
 
   //sorting ////////////////////////////////////////////////////////
 
+  @Override
   public GroupQuery orderByGroupId() {
     return orderBy(GroupQueryProperty.GROUP_ID);
   }
 
+  @Override
   public GroupQuery orderByGroupName() {
     return orderBy(GroupQueryProperty.NAME);
   }
 
+  @Override
   public GroupQuery orderByGroupType() {
     return orderBy(GroupQueryProperty.TYPE);
   }

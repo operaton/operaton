@@ -50,6 +50,7 @@ public abstract class ConcurrencyTestCase extends ConcurrencyTestHelper {
   protected ExternalTaskService externalTaskService;
 
   @Before
+  @Override
   public void init() {
     processEngine = engineRule.getProcessEngine();
     processEngineConfiguration = engineRule.getProcessEngineConfiguration();

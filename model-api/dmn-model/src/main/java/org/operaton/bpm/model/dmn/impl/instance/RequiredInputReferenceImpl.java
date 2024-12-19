@@ -37,7 +37,8 @@ public class RequiredInputReferenceImpl extends DmnElementReferenceImpl implemen
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<RequiredInputReference>() {
-        public RequiredInputReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public RequiredInputReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new RequiredInputReferenceImpl(instanceContext);
         }
       });

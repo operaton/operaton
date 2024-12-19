@@ -42,7 +42,8 @@ public class TransactionImpl extends SubProcessImpl implements Transaction {
       .namespaceUri(BPMN20_NS)
       .extendsType(SubProcess.class)
       .instanceProvider(new ModelTypeInstanceProvider<Transaction>() {
-        public Transaction newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Transaction newInstance(ModelTypeInstanceContext instanceContext) {
           return new TransactionImpl(instanceContext);
         }
       });

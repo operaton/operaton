@@ -255,7 +255,8 @@ public class JobEntityTest {
   protected void cleanupJobLog() {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired()
       .execute(new Command<Void>() {
-        public Void execute(CommandContext commandContext) {
+      @Override
+      public Void execute(CommandContext commandContext) {
           for (String jobId : jobIds) {
             commandContext.getHistoricJobLogManager()
               .deleteHistoricJobLogByJobId(jobId);

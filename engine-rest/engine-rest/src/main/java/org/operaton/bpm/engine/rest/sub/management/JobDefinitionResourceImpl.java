@@ -44,6 +44,7 @@ public class JobDefinitionResourceImpl implements JobDefinitionResource {
     this.jobDefinitionId = jobDefinitionId;
   }
 
+  @Override
   public JobDefinitionDto getJobDefinition() {
     ManagementService managementService = engine.getManagementService();
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().jobDefinitionId(jobDefinitionId).singleResult();
@@ -55,6 +56,7 @@ public class JobDefinitionResourceImpl implements JobDefinitionResource {
     return JobDefinitionDto.fromJobDefinition(jobDefinition);
   }
 
+  @Override
   public void updateSuspensionState(JobDefinitionSuspensionStateDto dto) {
     try {
       dto.setJobDefinitionId(jobDefinitionId);
@@ -67,6 +69,7 @@ public class JobDefinitionResourceImpl implements JobDefinitionResource {
 
   }
 
+  @Override
   public void setJobRetries(RetriesDto dto) {
     try {
       SetJobRetriesBuilder builder = engine.getManagementService()

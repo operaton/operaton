@@ -27,6 +27,7 @@ public class DoubleAttribute extends AttributeImpl<Double> {
     super(owningElementType);
   }
 
+  @Override
   protected Double convertXmlValueToModelValue(String rawValue) {
     if (rawValue != null) {
       try {
@@ -41,6 +42,7 @@ public class DoubleAttribute extends AttributeImpl<Double> {
     }
   }
 
+  @Override
   protected String convertModelValueToXmlValue(Double modelValue) {
     return modelValue.toString();
   }

@@ -35,6 +35,7 @@ public class FeelToJuelTransformImpl implements FeelToJuelTransform {
   public static final FeelToJuelTransformer ENDPOINT_TRANSFORMER = new EndpointTransformer();
   public static final List<FeelToJuelTransformer> CUSTOM_FUNCTION_TRANSFORMERS = new ArrayList<FeelToJuelTransformer>();
 
+  @Override
   public String transformSimpleUnaryTests(String simpleUnaryTests, String inputName) {
     simpleUnaryTests = simpleUnaryTests.trim();
     String juelExpression;
@@ -51,6 +52,7 @@ public class FeelToJuelTransformImpl implements FeelToJuelTransform {
     return "${" + juelExpression + "}";
   }
 
+  @Override
   public String transformSimplePositiveUnaryTests(String simplePositiveUnaryTests, String inputName) {
     simplePositiveUnaryTests = simplePositiveUnaryTests.trim();
     if (LIST_TRANSFORMER.canTransform(simplePositiveUnaryTests)) {
@@ -61,6 +63,7 @@ public class FeelToJuelTransformImpl implements FeelToJuelTransform {
     }
   }
 
+  @Override
   public String transformSimplePositiveUnaryTest(String simplePositiveUnaryTest, String inputName) {
     simplePositiveUnaryTest = simplePositiveUnaryTest.trim();
 
@@ -81,11 +84,13 @@ public class FeelToJuelTransformImpl implements FeelToJuelTransform {
     }
   }
 
+  @Override
   public String transformEndpoint(String endpoint, String inputName) {
     endpoint = endpoint.trim();
     return ENDPOINT_TRANSFORMER.transform(this, endpoint, inputName);
   }
 
+  @Override
   public void addCustomFunctionTransformer(FeelToJuelTransformer functionTransformer) {
     CUSTOM_FUNCTION_TRANSFORMERS.add(functionTransformer);
   }

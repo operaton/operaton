@@ -40,7 +40,8 @@ public class OutputCaseParameterImpl extends CaseParameterImpl implements Output
       .namespaceUri(CMMN11_NS)
       .extendsType(CaseParameter.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<OutputCaseParameter>() {
-        public OutputCaseParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OutputCaseParameter newInstance(ModelTypeInstanceContext instanceContext) {
           return new OutputCaseParameterImpl(instanceContext);
         }
       });

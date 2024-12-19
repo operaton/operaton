@@ -75,59 +75,69 @@ public class DecisionDefinitionQueryImpl extends AbstractQuery<DecisionDefinitio
 
   // Query parameter //////////////////////////////////////////////////////////////
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionId(String decisionDefinitionId) {
     ensureNotNull(NotValidException.class, "decisionDefinitionId", decisionDefinitionId);
     this.id = decisionDefinitionId;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionIdIn(String... ids) {
     this.ids = ids;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionCategory(String decisionDefinitionCategory) {
     ensureNotNull(NotValidException.class, "category", decisionDefinitionCategory);
     this.category = decisionDefinitionCategory;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionCategoryLike(String decisionDefinitionCategoryLike) {
     ensureNotNull(NotValidException.class, "categoryLike", decisionDefinitionCategoryLike);
     this.categoryLike = decisionDefinitionCategoryLike;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionName(String decisionDefinitionName) {
     ensureNotNull(NotValidException.class, "name", decisionDefinitionName);
     this.name = decisionDefinitionName;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionNameLike(String decisionDefinitionNameLike) {
     ensureNotNull(NotValidException.class, "nameLike", decisionDefinitionNameLike);
     this.nameLike = decisionDefinitionNameLike;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionKey(String decisionDefinitionKey) {
     ensureNotNull(NotValidException.class, "key", decisionDefinitionKey);
     this.key = decisionDefinitionKey;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionKeyLike(String decisionDefinitionKeyLike) {
     ensureNotNull(NotValidException.class, "keyLike", decisionDefinitionKeyLike);
     this.keyLike = decisionDefinitionKeyLike;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery deploymentId(String deploymentId) {
     ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
     this.deploymentId = deploymentId;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery deployedAfter(Date deployedAfter) {
     ensureNotNull(NotValidException.class, "deployedAfter", deployedAfter);
     shouldJoinDeploymentTable = true;
@@ -135,6 +145,7 @@ public class DecisionDefinitionQueryImpl extends AbstractQuery<DecisionDefinitio
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery deployedAt(Date deployedAt) {
     ensureNotNull(NotValidException.class, "deployedAt", deployedAt);
     shouldJoinDeploymentTable = true;
@@ -142,6 +153,7 @@ public class DecisionDefinitionQueryImpl extends AbstractQuery<DecisionDefinitio
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionVersion(Integer decisionDefinitionVersion) {
     ensureNotNull(NotValidException.class, "version", decisionDefinitionVersion);
     ensurePositive(NotValidException.class, "version", decisionDefinitionVersion.longValue());
@@ -149,29 +161,34 @@ public class DecisionDefinitionQueryImpl extends AbstractQuery<DecisionDefinitio
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery latestVersion() {
     this.latest = true;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionResourceName(String resourceName) {
     ensureNotNull(NotValidException.class, "resourceName", resourceName);
     this.resourceName = resourceName;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionDefinitionResourceNameLike(String resourceNameLike) {
     ensureNotNull(NotValidException.class, "resourceNameLike", resourceNameLike);
     this.resourceNameLike = resourceNameLike;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionRequirementsDefinitionId(String decisionRequirementsDefinitionId) {
     ensureNotNull(NotValidException.class, "decisionRequirementsDefinitionId", decisionRequirementsDefinitionId);
     this.decisionRequirementsDefinitionId = decisionRequirementsDefinitionId;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery decisionRequirementsDefinitionKey(String decisionRequirementsDefinitionKey) {
     ensureNotNull(NotValidException.class, "decisionRequirementsDefinitionKey", decisionRequirementsDefinitionKey);
     this.decisionRequirementsDefinitionKey = decisionRequirementsDefinitionKey;
@@ -192,11 +209,13 @@ public class DecisionDefinitionQueryImpl extends AbstractQuery<DecisionDefinitio
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery withoutDecisionRequirementsDefinition() {
     withoutDecisionRequirementsDefinition = true;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -204,57 +223,68 @@ public class DecisionDefinitionQueryImpl extends AbstractQuery<DecisionDefinitio
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery withoutTenantId() {
     isTenantIdSet = true;
     this.tenantIds = null;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery includeDecisionDefinitionsWithoutTenantId() {
     this.includeDefinitionsWithoutTenantId  = true;
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery orderByDecisionDefinitionCategory() {
     orderBy(DecisionDefinitionQueryProperty.DECISION_DEFINITION_CATEGORY);
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery orderByDecisionDefinitionKey() {
     orderBy(DecisionDefinitionQueryProperty.DECISION_DEFINITION_KEY);
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery orderByDecisionDefinitionId() {
     orderBy(DecisionDefinitionQueryProperty.DECISION_DEFINITION_ID);
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery orderByDecisionDefinitionVersion() {
     orderBy(DecisionDefinitionQueryProperty.DECISION_DEFINITION_VERSION);
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery orderByDecisionDefinitionName() {
     orderBy(DecisionDefinitionQueryProperty.DECISION_DEFINITION_NAME);
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery orderByDeploymentId() {
     orderBy(DecisionDefinitionQueryProperty.DEPLOYMENT_ID);
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery orderByDeploymentTime() {
     shouldJoinDeploymentTable = true;
     orderBy(new QueryOrderingProperty(QueryOrderingProperty.RELATION_DEPLOYMENT, DecisionDefinitionQueryProperty.DEPLOY_TIME));
     return this;
   }
 
+  @Override
   public DecisionDefinitionQuery orderByTenantId() {
     return orderBy(DecisionDefinitionQueryProperty.TENANT_ID);
   }
 
+  @Override
   public DecisionDefinitionQuery orderByDecisionRequirementsDefinitionKey() {
     return orderBy(DecisionDefinitionQueryProperty.DECISION_REQUIREMENTS_DEFINITION_KEY);
   }

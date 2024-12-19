@@ -28,46 +28,57 @@ public class ValueFieldsImpl implements ValueFields {
   protected Double doubleValue;
   protected byte[] byteArrayValue;
 
+  @Override
   public String getName() {
     return null;
   }
 
+  @Override
   public String getTextValue() {
     return text;
   }
 
+  @Override
   public void setTextValue(String textValue) {
     this.text = textValue;
   }
 
+  @Override
   public String getTextValue2() {
     return text2;
   }
 
+  @Override
   public void setTextValue2(String textValue2) {
     this.text2 = textValue2;
   }
 
+  @Override
   public Long getLongValue() {
     return longValue;
   }
 
+  @Override
   public void setLongValue(Long longValue) {
     this.longValue = longValue;
   }
 
+  @Override
   public Double getDoubleValue() {
     return doubleValue;
   }
 
+  @Override
   public void setDoubleValue(Double doubleValue) {
     this.doubleValue = doubleValue;
   }
 
+  @Override
   public byte[] getByteArrayValue() {
     return byteArrayValue;
   }
 
+  @Override
   public void setByteArrayValue(byte[] bytes) {
     this.byteArrayValue = bytes;
   }

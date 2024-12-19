@@ -24,14 +24,17 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationDeleteCascade implements PvmAtomicOperation {
 
+  @Override
   public boolean isAsync(PvmExecutionImpl execution) {
     return false;
   }
 
+  @Override
   public boolean isAsyncCapable() {
     return false;
   }
 
+  @Override
   public void execute(PvmExecutionImpl execution) {
     PvmExecutionImpl nextLeaf;
     do {
@@ -86,6 +89,7 @@ public class PvmAtomicOperationDeleteCascade implements PvmAtomicOperation {
     }
   }
 
+  @Override
   public String getCanonicalName() {
     return "delete-cascade";
   }

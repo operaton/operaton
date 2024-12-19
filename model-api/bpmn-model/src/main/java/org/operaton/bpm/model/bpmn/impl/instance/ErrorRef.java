@@ -35,7 +35,8 @@ public class ErrorRef extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ErrorRef.class, BPMN_ELEMENT_ERROR_REF)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<ErrorRef>() {
-        public ErrorRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ErrorRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new ErrorRef(instanceContext);
         }
       });

@@ -47,7 +47,8 @@ public class CallConversationImpl extends ConversationNodeImpl implements CallCo
       .namespaceUri(BPMN20_NS)
       .extendsType(ConversationNode.class)
       .instanceProvider(new ModelTypeInstanceProvider<CallConversation>() {
-        public CallConversation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CallConversation newInstance(ModelTypeInstanceContext instanceContext) {
           return new CallConversationImpl(instanceContext);
         }
       });
@@ -68,14 +69,17 @@ public class CallConversationImpl extends ConversationNodeImpl implements CallCo
     super(instanceContext);
   }
 
+  @Override
   public GlobalConversation getCalledCollaboration() {
     return calledCollaborationRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setCalledCollaboration(GlobalConversation calledCollaboration) {
     calledCollaborationRefAttribute.setReferenceTargetElement(this, calledCollaboration);
   }
 
+  @Override
   public Collection<ParticipantAssociation> getParticipantAssociations() {
     return participantAssociationCollection.get(this);
   }

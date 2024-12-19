@@ -35,6 +35,7 @@ public class OptimizeCompletedHistoricProcessInstanceQueryCmd implements Command
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<HistoricProcessInstance> execute(CommandContext commandContext) {
     return commandContext.getOptimizeManager().getCompletedHistoricProcessInstances(finishedAfter, finishedAt, maxResults);
   }

@@ -32,6 +32,7 @@ public class ProcessApplicationInfoImpl implements ProcessApplicationInfo {
   protected List<ProcessApplicationDeploymentInfo> deploymentInfo;
   protected Map<String, String> properties;
 
+  @Override
   public String getName() {
     return name;
   }
@@ -40,6 +41,7 @@ public class ProcessApplicationInfoImpl implements ProcessApplicationInfo {
     this.name = name;
   }
 
+  @Override
   public List<ProcessApplicationDeploymentInfo> getDeploymentInfo() {
     return deploymentInfo;
   }
@@ -48,6 +50,7 @@ public class ProcessApplicationInfoImpl implements ProcessApplicationInfo {
     this.deploymentInfo = deploymentInfo;
   }
 
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }

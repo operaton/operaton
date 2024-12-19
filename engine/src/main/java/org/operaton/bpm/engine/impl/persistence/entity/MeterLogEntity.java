@@ -60,10 +60,12 @@ public class MeterLogEntity implements DbEntity, HasDbReferences, Serializable {
   public MeterLogEntity() {
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
@@ -108,6 +110,7 @@ public class MeterLogEntity implements DbEntity, HasDbReferences, Serializable {
     this.reporter = reporter;
   }
 
+  @Override
   public Object getPersistentState() {
     // immutable
     return MeterLogEntity.class;

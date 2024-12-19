@@ -44,7 +44,8 @@ public class Animals extends ModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Animals.class, ELEMENT_NAME_ANIMALS)
       .namespaceUri(MODEL_NAMESPACE)
       .instanceProvider(new ModelTypeInstanceProvider<Animals>() {
-        public Animals newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Animals newInstance(ModelTypeInstanceContext instanceContext) {
           return new Animals(instanceContext);
         }
       });

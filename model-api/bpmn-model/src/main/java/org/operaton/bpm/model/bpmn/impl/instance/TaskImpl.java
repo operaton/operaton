@@ -46,7 +46,8 @@ public class TaskImpl extends ActivityImpl implements Task {
       .namespaceUri(BPMN20_NS)
       .extendsType(Activity.class)
       .instanceProvider(new ModelTypeInstanceProvider<Task>() {
-        public Task newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Task newInstance(ModelTypeInstanceContext instanceContext) {
           return new TaskImpl(instanceContext);
         }
       });
@@ -65,6 +66,7 @@ public class TaskImpl extends ActivityImpl implements Task {
     super(context);
   }
 
+  @Override
   @SuppressWarnings("rawtypes")
   public AbstractTaskBuilder builder() {
     throw new ModelTypeException("No builder implemented.");
@@ -76,6 +78,7 @@ public class TaskImpl extends ActivityImpl implements Task {
    * @deprecated use isOperatonAsyncBefore() instead.
    */
   @Deprecated
+  @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
   }
@@ -84,11 +87,13 @@ public class TaskImpl extends ActivityImpl implements Task {
    * @deprecated use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
    */
   @Deprecated
+  @Override
   public void setOperatonAsync(boolean isOperatonAsync) {
     operatonAsyncAttribute.setValue(this, isOperatonAsync);
   }
 
 
+  @Override
   public BpmnShape getDiagramElement() {
     return (BpmnShape) super.getDiagramElement();
   }

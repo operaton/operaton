@@ -31,6 +31,7 @@ public class AssertingJavaDelegate implements JavaDelegate {
 
   public static List<DelegateExecutionAsserter> asserts = new ArrayList<DelegateExecutionAsserter>();
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     for (DelegateExecutionAsserter a : asserts) {
       a.doAssert(execution);

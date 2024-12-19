@@ -192,7 +192,8 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Void>() {
-        public Void execute(CommandContext commandContext) {
+      @Override
+      public Void execute(CommandContext commandContext) {
 
           IncidentContext incidentContext = new IncidentContext();
           incidentContext.setExecutionId(execution.getId());
@@ -222,7 +223,8 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
 
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Void>() {
-        public Void execute(CommandContext commandContext) {
+      @Override
+      public Void execute(CommandContext commandContext) {
 
           IncidentContext incidentContext = new IncidentContext();
           incidentContext.setExecutionId(execution.getId());

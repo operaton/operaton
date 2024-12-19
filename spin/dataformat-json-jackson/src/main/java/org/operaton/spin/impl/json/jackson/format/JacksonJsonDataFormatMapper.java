@@ -40,16 +40,19 @@ public class JacksonJsonDataFormatMapper implements DataFormatMapper {
     this.format = format;
   }
 
+  @Override
   public boolean canMap(Object parameter) {
     // Jackson ObjectMapper#canSerialize() method was removed
     // due to causing performance issues in high load scenarios
     return parameter != null;
   }
 
+  @Override
   public String getCanonicalTypeName(Object object) {
     return format.getCanonicalTypeName(object);
   }
 
+  @Override
   public Object mapJavaToInternal(Object parameter) {
     ObjectMapper mapper = format.getObjectMapper();
     try {
@@ -59,6 +62,7 @@ public class JacksonJsonDataFormatMapper implements DataFormatMapper {
     }
   }
 
+  @Override
   public <T> T mapInternalToJava(Object parameter, Class<T> type) {
     return mapInternalToJava(parameter, type, null);
   }
@@ -69,6 +73,7 @@ public class JacksonJsonDataFormatMapper implements DataFormatMapper {
     return mapInternalToJava(parameter, javaType, validator);
   }
 
+  @Override
   public <T> T mapInternalToJava(Object parameter, String typeIdentifier) {
     return mapInternalToJava(parameter, typeIdentifier, null);
   }

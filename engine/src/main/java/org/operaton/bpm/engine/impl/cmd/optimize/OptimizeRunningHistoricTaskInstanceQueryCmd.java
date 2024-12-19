@@ -35,6 +35,7 @@ public class OptimizeRunningHistoricTaskInstanceQueryCmd implements Command<List
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<HistoricTaskInstance> execute(CommandContext commandContext) {
     return commandContext.getOptimizeManager().getRunningHistoricTaskInstances(startedAfter, startedAt, maxResults);
   }

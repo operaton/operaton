@@ -23,6 +23,7 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
  */
 public class PvmAtomicOperationStartTransitionNotifyListenerTake extends AbstractPvmAtomicOperationTransitionNotifyListenerTake {
 
+  @Override
   public String getCanonicalName() {
     return "start-transition-notify-listener-take";
   }

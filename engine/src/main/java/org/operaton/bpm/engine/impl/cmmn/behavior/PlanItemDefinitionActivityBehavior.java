@@ -47,6 +47,7 @@ public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivity
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 
+  @Override
   public void execute(CmmnActivityExecution execution) throws Exception {
     // nothing to do!
   }
@@ -90,6 +91,7 @@ public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivity
 
   // creation ///////////////////////////////////////////////////////////////
 
+  @Override
   public void onCreate(CmmnActivityExecution execution) {
     ensureTransitionAllowed(execution, NEW, AVAILABLE, "create");
     creating(execution);
@@ -102,6 +104,7 @@ public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivity
 
   // start /////////////////////////////////////////////////////////////////
 
+  @Override
   public void started(CmmnActivityExecution execution) {
     // noop
   }
@@ -118,6 +121,7 @@ public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivity
 
   // close ///////////////////////////////////////////////////////////////////
 
+  @Override
   public void onClose(CmmnActivityExecution execution) {
     String id = execution.getId();
     if (execution.isCaseInstanceExecution()) {
@@ -165,6 +169,7 @@ public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivity
     // noop
   }
 
+  @Override
   public void resumed(CmmnActivityExecution execution) {
     if (execution.isAvailable()) {
       // trigger created() to check whether an exit- or
@@ -175,12 +180,14 @@ public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivity
 
   // re-activation ///////////////////////////////////////////////////////////
 
+  @Override
   public void reactivated(CmmnActivityExecution execution) {
     // noop
   }
 
   // repetition ///////////////////////////////////////////////////////////////
 
+  @Override
   public void repeat(CmmnActivityExecution execution, String standardEvent) {
     CmmnActivity activity = execution.getActivity();
     boolean repeat = false;

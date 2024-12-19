@@ -41,6 +41,7 @@ public class CaseRolesImpl extends CmmnElementImpl implements CaseRoles {
     super(instanceContext);
   }
 
+  @Override
   public Collection<Role> getRoles() {
     return roleCollection.get(this);
   }
@@ -49,7 +50,8 @@ public class CaseRolesImpl extends CmmnElementImpl implements CaseRoles {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseRoles.class, CMMN_ELEMENT_CASE_ROLES)
       .namespaceUri(CMMN11_NS)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<CaseRoles>() {
-        public CaseRoles newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseRoles newInstance(ModelTypeInstanceContext instanceContext) {
           return new CaseRolesImpl(instanceContext);
         }
       });

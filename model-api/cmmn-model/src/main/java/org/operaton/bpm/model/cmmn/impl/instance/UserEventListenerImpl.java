@@ -43,6 +43,7 @@ public class UserEventListenerImpl extends EventListenerImpl implements UserEven
     super(instanceContext);
   }
 
+  @Override
   public Collection<Role> getAuthorizedRoles() {
     return authorizedRoleRefCollection.getReferenceTargetElements(this);
   }
@@ -53,7 +54,8 @@ public class UserEventListenerImpl extends EventListenerImpl implements UserEven
         .namespaceUri(CMMN11_NS)
         .extendsType(EventListener.class)
         .instanceProvider(new ModelTypeInstanceProvider<UserEventListener>() {
-          public UserEventListener newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public UserEventListener newInstance(ModelTypeInstanceContext instanceContext) {
             return new UserEventListenerImpl(instanceContext);
           }
         });

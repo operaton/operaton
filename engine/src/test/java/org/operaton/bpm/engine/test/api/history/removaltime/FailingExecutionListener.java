@@ -26,6 +26,7 @@ public class FailingExecutionListener implements ExecutionListener {
 
   protected static boolean shouldFail = true;
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     if (shouldFail) {
       shouldFail = false;

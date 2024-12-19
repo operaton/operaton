@@ -133,31 +133,37 @@ public class AstFunction extends AstRightValue implements FunctionNode {
 		params.appendStructure(b, bindings);
 	}
 
-	public int getIndex() {
+  @Override
+  public int getIndex() {
 		return index;
 	}
 
-	public String getName() {
+  @Override
+  public String getName() {
 		return name;
 	}
 
-	public boolean isVarArgs() {
+  @Override
+  public boolean isVarArgs() {
 		return varargs;
 	}
 
-	public int getParamCount() {
+  @Override
+  public int getParamCount() {
 		return params.getCardinality();
 	}
 
 	protected AstNode getParam(int i) {
 		return params.getChild(i);
-	}	
-	
-	public int getCardinality() {
+	}
+
+  @Override
+  public int getCardinality() {
 		return 1;
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return i == 0 ? params : null;
 	}
 }

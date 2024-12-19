@@ -29,10 +29,12 @@ public class StringFormType extends SimpleFormFieldType {
 
   public static final String TYPE_NAME = "string";
 
+  @Override
   public String getName() {
     return TYPE_NAME;
   }
 
+  @Override
   public TypedValue convertValue(TypedValue propertyValue) {
     if(propertyValue instanceof StringValue) {
       return propertyValue;
@@ -50,10 +52,12 @@ public class StringFormType extends SimpleFormFieldType {
 
   // deprecated ////////////////////////////////////////////////////////////
 
+  @Override
   public Object convertFormValueToModelValue(Object propertyValue) {
     return propertyValue.toString();
   }
 
+  @Override
   public String convertModelValueToFormValue(Object modelValue) {
     return (String) modelValue;
   }

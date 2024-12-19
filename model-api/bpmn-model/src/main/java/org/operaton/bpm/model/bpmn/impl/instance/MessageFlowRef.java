@@ -35,7 +35,8 @@ public class MessageFlowRef extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(MessageFlowRef.class, BPMN_ELEMENT_MESSAGE_FLOW_REF)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<MessageFlowRef>() {
-        public MessageFlowRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public MessageFlowRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new MessageFlowRef(instanceContext);
         }
       });

@@ -27,6 +27,7 @@ import org.operaton.bpm.model.dmn.instance.InputExpression;
 
 public class DmnDecisionTableInputExpressionTransformHandler implements DmnElementTransformHandler<InputExpression, DmnExpressionImpl> {
 
+  @Override
   public DmnExpressionImpl handleElement(DmnElementTransformContext context, InputExpression inputExpression) {
     return createFromInputExpression(context, inputExpression);
   }

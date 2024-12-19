@@ -42,7 +42,8 @@ public class OperatonScriptImpl extends CmmnModelElementInstanceImpl implements 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonScript.class, OPERATON_ELEMENT_SCRIPT)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonScript>() {
-        public OperatonScript newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonScript newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonScriptImpl(instanceContext);
         }
       });
@@ -62,18 +63,22 @@ public class OperatonScriptImpl extends CmmnModelElementInstanceImpl implements 
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonScriptFormat() {
     return operatonScriptFormatAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonScriptFormat(String scriptFormat) {
     operatonScriptFormatAttribute.setValue(this, scriptFormat);
   }
 
+  @Override
   public String getOperatonResource() {
     return operatonResourceAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonResoure(String resource) {
     operatonResourceAttribute.setValue(this, resource);
   }

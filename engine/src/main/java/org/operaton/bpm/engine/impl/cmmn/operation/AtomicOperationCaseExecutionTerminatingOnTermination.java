@@ -28,14 +28,17 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionTerminatingOnTermination extends AbstractAtomicOperationCaseExecutionTerminating {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-terminating-on-termination";
   }
 
+  @Override
   protected void triggerBehavior(CmmnActivityBehavior behavior, CmmnExecution execution) {
     behavior.onTermination(execution);
   }
 
+  @Override
   protected CaseExecutionState getTerminatingState() {
     return TERMINATING_ON_TERMINATION;
   }

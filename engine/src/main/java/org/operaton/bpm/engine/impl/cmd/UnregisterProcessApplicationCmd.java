@@ -43,6 +43,7 @@ public class UnregisterProcessApplicationCmd implements Command<Void> {
     this.removeProcessesFromCache = removeProcessesFromCache;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
 
     if(deploymentIds == null) {

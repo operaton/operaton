@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionReactivate extends AbstractCmmnEventAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-re-activate";
   }
@@ -46,6 +47,7 @@ public class AtomicOperationCaseExecutionReactivate extends AbstractCmmnEventAto
     return execution;
   }
 
+  @Override
   protected void postTransitionNotification(CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(execution);
     behavior.reactivated(execution);

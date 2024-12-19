@@ -44,7 +44,8 @@ public class OperatonFormDataImpl extends BpmnModelElementInstanceImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormData.class, OPERATON_ELEMENT_FORM_DATA)
       .namespaceUri(BpmnModelConstants.OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonFormData>() {
-        public OperatonFormData newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonFormData newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonFormDataImpl(instanceContext);
         }
       });
@@ -61,6 +62,7 @@ public class OperatonFormDataImpl extends BpmnModelElementInstanceImpl implement
     super(instanceContext);
   }
 
+  @Override
   public Collection<OperatonFormField> getOperatonFormFields() {
     return operatonFormFieldCollection.get(this);
   }

@@ -42,10 +42,12 @@ public class DateFormType extends AbstractFormFieldType {
     this.dateFormat = new SimpleDateFormat(datePattern);
   }
 
+  @Override
   public String getName() {
     return TYPE_NAME;
   }
 
+  @Override
   public Object getInformation(String key) {
     if ("datePattern".equals(key)) {
       return datePattern;
@@ -53,6 +55,7 @@ public class DateFormType extends AbstractFormFieldType {
     return null;
   }
 
+  @Override
   public TypedValue convertToModelValue(TypedValue propertyValue) {
     Object value = propertyValue.getValue();
     if(value == null) {
@@ -77,6 +80,7 @@ public class DateFormType extends AbstractFormFieldType {
     }
   }
 
+  @Override
   public TypedValue convertToFormValue(TypedValue modelValue) {
     if(modelValue.getValue() == null) {
       return Variables.stringValue("", modelValue.isTransient());
@@ -90,6 +94,7 @@ public class DateFormType extends AbstractFormFieldType {
 
   // deprecated //////////////////////////////////////////////////////////
 
+  @Override
   public Object convertFormValueToModelValue(Object propertyValue) {
     if (propertyValue==null || "".equals(propertyValue)) {
       return null;
@@ -101,6 +106,7 @@ public class DateFormType extends AbstractFormFieldType {
     }
   }
 
+  @Override
   public String convertModelValueToFormValue(Object modelValue) {
     if (modelValue==null) {
       return null;

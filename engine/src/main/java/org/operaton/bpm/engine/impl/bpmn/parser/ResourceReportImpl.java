@@ -42,10 +42,12 @@ public class ResourceReportImpl implements ResourceReport {
     return resourceName;
   }
 
+  @Override
   public List<Problem> getErrors() {
     return errors;
   }
 
+  @Override
   public List<Problem> getWarnings() {
     return warnings;
   }

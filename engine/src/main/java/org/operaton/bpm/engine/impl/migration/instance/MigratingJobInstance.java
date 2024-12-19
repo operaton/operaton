@@ -57,6 +57,7 @@ public abstract class MigratingJobInstance implements MigratingInstance, Removin
     return jobEntity.getExecutionId() == null;
   }
 
+  @Override
   public void detachState() {
     jobEntity.setExecution(null);
 
@@ -65,6 +66,7 @@ public abstract class MigratingJobInstance implements MigratingInstance, Removin
     }
   }
 
+  @Override
   public void attachState(MigratingScopeInstance newOwningInstance) {
     attachTo(newOwningInstance.resolveRepresentativeExecution());
 
@@ -73,6 +75,7 @@ public abstract class MigratingJobInstance implements MigratingInstance, Removin
     }
   }
 
+  @Override
   public void attachState(MigratingTransitionInstance targetTransitionInstance) {
     attachTo(targetTransitionInstance.resolveRepresentativeExecution());
 
@@ -85,6 +88,7 @@ public abstract class MigratingJobInstance implements MigratingInstance, Removin
     jobEntity.setExecution(execution);
   }
 
+  @Override
   public void migrateState() {
     // update activity reference
     String activityId = targetScope.getId();
@@ -104,12 +108,14 @@ public abstract class MigratingJobInstance implements MigratingInstance, Removin
     jobEntity.setDeploymentId(processDefinition.getDeploymentId());
   }
 
+  @Override
   public void migrateDependentEntities() {
     for (MigratingInstance migratingDependentInstance : migratingDependentInstances) {
       migratingDependentInstance.migrateState();
     }
   }
 
+  @Override
   public void remove() {
     jobEntity.delete();
   }

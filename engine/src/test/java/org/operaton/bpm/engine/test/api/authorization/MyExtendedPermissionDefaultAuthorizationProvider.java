@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.task.Task;
  */
 public class MyExtendedPermissionDefaultAuthorizationProvider extends DefaultAuthorizationProvider{
 
+  @Override
   public AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee) {
     AuthorizationEntity[] authorizations = super.newTaskAssignee(task, oldAssignee, newAssignee);
     authorizations[0].addPermission(Permissions.DELETE);

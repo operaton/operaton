@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 final class SchemaOperationProcessEngineClose implements Command<Object> {
 
+  @Override
   public Object execute(CommandContext commandContext) {
     String databaseSchemaUpdate = Context.getProcessEngineConfiguration().getDatabaseSchemaUpdate();
     if (ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP.equals(databaseSchemaUpdate)) {

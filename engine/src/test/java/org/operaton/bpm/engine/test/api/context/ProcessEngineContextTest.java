@@ -191,6 +191,7 @@ public class ProcessEngineContextTest {
     OuterCommand outerCommand;
     protected ProcessInstance nestedPiObject;
 
+    @Override
     public abstract T call();
 
     @Override

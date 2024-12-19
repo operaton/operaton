@@ -205,6 +205,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
   protected void createJob(final String handlerType) {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<String>() {
 
+      @Override
       public String execute(CommandContext commandContext) {
         MessageEntity message = createMessage(handlerType);
         commandContext.getJobManager().send(message);
@@ -221,6 +222,7 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
 
   protected void clearDatabase() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         List<Job> jobs = processEngineConfiguration

@@ -80,6 +80,7 @@ public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity
   public T findDeployedDefinitionByKeyVersionAndTenantId(final String definitionKey, final Integer definitionVersion, final String tenantId) {
     final CommandContext commandContext = Context.getCommandContext();
     T definition = commandContext.runWithoutAuthorization(new Callable<T>() {
+      @Override
       public T call() throws Exception {
         return getManager().findDefinitionByKeyVersionAndTenantId(definitionKey, definitionVersion, tenantId);
       }
@@ -92,6 +93,7 @@ public abstract class ResourceDefinitionCache<T extends ResourceDefinitionEntity
   public T findDeployedDefinitionByKeyVersionTagAndTenantId(final String definitionKey, final String definitionVersionTag, final String tenantId) {
     final CommandContext commandContext = Context.getCommandContext();
     T definition = commandContext.runWithoutAuthorization(new Callable<T>() {
+      @Override
       public T call() throws Exception {
         return getManager().findDefinitionByKeyVersionTagAndTenantId(definitionKey, definitionVersionTag, tenantId);
       }

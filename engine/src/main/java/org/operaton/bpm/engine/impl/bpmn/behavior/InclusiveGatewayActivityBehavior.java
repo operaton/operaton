@@ -43,6 +43,7 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
 
   protected static BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
 
     execution.inactivate();

@@ -43,6 +43,7 @@ public class BatchQueryImpl extends AbstractQuery<BatchQuery, Batch> implements 
     super(commandExecutor);
   }
 
+  @Override
   public BatchQuery batchId(String batchId) {
     ensureNotNull("Batch id", batchId);
     this.batchId = batchId;
@@ -53,6 +54,7 @@ public class BatchQueryImpl extends AbstractQuery<BatchQuery, Batch> implements 
     return batchId;
   }
 
+  @Override
   public BatchQuery type(String type) {
     ensureNotNull("Type", type);
     this.type = type;
@@ -63,6 +65,7 @@ public class BatchQueryImpl extends AbstractQuery<BatchQuery, Batch> implements 
     return type;
   }
 
+  @Override
   public BatchQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -78,17 +81,20 @@ public class BatchQueryImpl extends AbstractQuery<BatchQuery, Batch> implements 
     return isTenantIdSet;
   }
 
+  @Override
   public BatchQuery withoutTenantId() {
     this.tenantIds = null;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public BatchQuery active() {
     this.suspensionState = SuspensionState.ACTIVE;
     return this;
   }
 
+  @Override
   public BatchQuery suspended() {
     this.suspensionState = SuspensionState.SUSPENDED;
     return this;
@@ -98,6 +104,7 @@ public class BatchQueryImpl extends AbstractQuery<BatchQuery, Batch> implements 
     return suspensionState;
   }
 
+  @Override
   public BatchQuery orderById() {
     return orderBy(BatchQueryProperty.ID);
   }
@@ -107,12 +114,14 @@ public class BatchQueryImpl extends AbstractQuery<BatchQuery, Batch> implements 
     return orderBy(BatchQueryProperty.TENANT_ID);
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return commandContext.getBatchManager()
       .findBatchCountByQueryCriteria(this);
   }
 
+  @Override
   public List<Batch> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     return commandContext.getBatchManager()

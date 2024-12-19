@@ -55,6 +55,7 @@ public class DebugRequestInterceptor implements ConnectorRequestInterceptor {
     this.proceed = false;
   }
 
+  @Override
   public Object handleInvocation(ConnectorInvocation invocation) throws Exception {
     request = invocation.getRequest();
     target = invocation.getTarget();

@@ -24,7 +24,8 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  * @author Joram Barrez
  */
 public class MultiInstanceDelegate implements JavaDelegate {
-  
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     Integer result = (Integer) execution.getVariable("result");
     

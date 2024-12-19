@@ -45,6 +45,7 @@ public class ActivityInstanceCancellationCmd extends AbstractInstanceCancellatio
     return activityInstanceId;
   }
 
+  @Override
   protected ExecutionEntity determineSourceInstanceExecution(final CommandContext commandContext) {
     ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
 
@@ -63,6 +64,7 @@ public class ActivityInstanceCancellationCmd extends AbstractInstanceCancellatio
     return scopeExecution;
   }
 
+  @Override
   protected String describe() {
     return "Cancel activity instance '" + activityInstanceId + "'";
   }

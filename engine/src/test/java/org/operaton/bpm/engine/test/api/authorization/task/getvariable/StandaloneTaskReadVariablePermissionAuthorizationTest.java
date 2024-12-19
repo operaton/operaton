@@ -56,6 +56,7 @@ public class StandaloneTaskReadVariablePermissionAuthorizationTest extends Stand
   }
 
   @Before
+  @Override
   public void setUp() {
     super.setUp();
     ensureSpecificVariablePermission = processEngineConfiguration.isEnforceSpecificVariablePermission();
@@ -64,6 +65,7 @@ public class StandaloneTaskReadVariablePermissionAuthorizationTest extends Stand
   }
 
   @After
+  @Override
   public void tearDown() {
     super.tearDown();
     processEngineConfiguration.setEnforceSpecificVariablePermission(ensureSpecificVariablePermission);

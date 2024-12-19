@@ -82,6 +82,7 @@ public class EndEventTest extends PluggableProcessEngineTest {
       return succeeded;
     }
 
+    @Override
     public void run() {
       try {
         taskService.complete(taskId);

@@ -41,6 +41,7 @@ public interface MessageFlow extends BaseElement {
 
   void setMessage(Message message);
 
+  @Override
   BpmnEdge getDiagramElement();
 
 }

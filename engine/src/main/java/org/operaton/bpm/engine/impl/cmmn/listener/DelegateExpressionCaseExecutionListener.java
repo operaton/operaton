@@ -42,6 +42,7 @@ public class DelegateExpressionCaseExecutionListener implements CaseExecutionLis
     this.fieldDeclarations = fieldDeclarations;
   }
 
+  @Override
   public void notify(DelegateCaseExecution caseExecution) throws Exception {
     // Note: we can't cache the result of the expression, because the
     // caseExecution can change: eg. delegateExpression='${mySpringBeanFactory.randomSpringBean()}'

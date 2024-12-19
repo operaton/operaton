@@ -52,6 +52,7 @@ public class DeploymentResourceImpl extends AbstractRestProcessEngineAware imple
     this.relativeRootResourcePath = rootResourcePath;
   }
 
+  @Override
   public DeploymentDto getDeployment() {
     RepositoryService repositoryService = getProcessEngine().getRepositoryService();
     Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(deploymentId).singleResult();
@@ -63,10 +64,12 @@ public class DeploymentResourceImpl extends AbstractRestProcessEngineAware imple
     return DeploymentDto.fromDeployment(deployment);
   }
 
+  @Override
   public DeploymentResourcesResource getDeploymentResources() {
     return new DeploymentResourcesResourceImpl(getProcessEngine(), deploymentId);
   }
 
+  @Override
   public DeploymentDto redeploy(UriInfo uriInfo, RedeploymentDto redeployment) {
     DeploymentWithDefinitions deployment = null;
     try {

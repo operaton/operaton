@@ -37,7 +37,8 @@ public class InputImpl extends InputClauseImpl implements Input {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InputClause.class)
       .instanceProvider(new ModelTypeInstanceProvider<Input>() {
-        public Input newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Input newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputImpl(instanceContext);
         }
       });

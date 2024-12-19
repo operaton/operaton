@@ -26,6 +26,7 @@ public class DummyActivityBehavior extends TaskActivityBehavior {
   public static String currentActivityId = null;
   public static String currentActivityName = null;
 
+  @Override
   public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
     currentActivityName = execution.getCurrentActivityName();
     currentActivityId = execution.getCurrentActivityId();

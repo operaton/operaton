@@ -38,6 +38,7 @@ public abstract class AbstractInstanceCancellationCmd extends AbstractProcessIns
     this.cancellationReason = cancellationReason;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ExecutionEntity sourceInstanceExecution = determineSourceInstanceExecution(commandContext);
 

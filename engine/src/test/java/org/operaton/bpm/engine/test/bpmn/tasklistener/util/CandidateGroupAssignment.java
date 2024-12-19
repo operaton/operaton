@@ -24,7 +24,8 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  * @author Joram Barrez
  */
 public class CandidateGroupAssignment implements TaskListener {
-  
+
+  @Override
   public void notify(DelegateTask delegateTask) {
     delegateTask.addCandidateGroup("management");
   }

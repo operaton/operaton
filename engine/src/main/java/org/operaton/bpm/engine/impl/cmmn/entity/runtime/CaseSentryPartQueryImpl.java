@@ -141,6 +141,7 @@ public class CaseSentryPartQueryImpl extends AbstractQuery<CaseSentryPartQueryIm
 
   // results ////////////////////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return commandContext
@@ -148,6 +149,7 @@ public class CaseSentryPartQueryImpl extends AbstractQuery<CaseSentryPartQueryIm
       .findCaseSentryPartCountByQueryCriteria(this);
   }
 
+  @Override
   public List<CaseSentryPartEntity> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     List<CaseSentryPartEntity> result = commandContext

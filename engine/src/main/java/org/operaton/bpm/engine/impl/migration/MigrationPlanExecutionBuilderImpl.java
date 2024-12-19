@@ -45,6 +45,7 @@ public class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecution
     return migrationPlan;
   }
 
+  @Override
   public MigrationPlanExecutionBuilder processInstanceIds(List<String> processInstanceIds) {
     this.processInstanceIds = processInstanceIds;
     return this;
@@ -65,6 +66,7 @@ public class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecution
     return processInstanceIds;
   }
 
+  @Override
   public MigrationPlanExecutionBuilder processInstanceQuery(ProcessInstanceQuery processInstanceQuery) {
     this.processInstanceQuery = processInstanceQuery;
     return this;
@@ -74,6 +76,7 @@ public class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecution
     return processInstanceQuery;
   }
 
+  @Override
   public MigrationPlanExecutionBuilder skipCustomListeners() {
     this.skipCustomListeners = true;
     return this;
@@ -83,6 +86,7 @@ public class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecution
     return skipCustomListeners;
   }
 
+  @Override
   public MigrationPlanExecutionBuilder skipIoMappings() {
     this.skipIoMappings = true;
     return this;
@@ -92,10 +96,12 @@ public class MigrationPlanExecutionBuilderImpl implements MigrationPlanExecution
     return skipIoMappings;
   }
 
+  @Override
   public void execute() {
     commandExecutor.execute(new MigrateProcessInstanceCmd(this, false));
   }
 
+  @Override
   public Batch executeAsync() {
     return commandExecutor.execute(new MigrateProcessInstanceBatchCmd(this));
   }

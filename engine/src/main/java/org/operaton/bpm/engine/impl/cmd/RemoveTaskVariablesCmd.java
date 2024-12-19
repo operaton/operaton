@@ -38,6 +38,7 @@ public class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd {
     super(taskId, variableNames, isLocal);
   }
 
+  @Override
   protected TaskEntity getEntity() {
     ensureNotNull("taskId", entityId);
 
@@ -57,6 +58,7 @@ public class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd {
     return getEntity().getExecution();
   }
 
+  @Override
   protected void logVariableOperation(AbstractVariableScope scope) {
     TaskEntity task = (TaskEntity) scope;
     commandContext.getOperationLogManager().logVariableOperation(getLogEntryOperation(), null, task.getId(), PropertyChange.EMPTY_CHANGE);

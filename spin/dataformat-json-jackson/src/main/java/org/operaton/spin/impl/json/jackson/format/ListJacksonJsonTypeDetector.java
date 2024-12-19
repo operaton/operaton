@@ -24,10 +24,12 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class ListJacksonJsonTypeDetector extends AbstractJacksonJsonTypeDetector {
 
+  @Override
   public boolean canHandle(Object object) {
     return object instanceof List;
   }
 
+  @Override
   public String detectType(Object object) {
     return constructType(object).toCanonical();
   }

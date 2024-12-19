@@ -38,6 +38,7 @@ public class ExecuteFilterListCmd extends AbstractExecuteFilterCmd implements Co
     super(filterId, extendingQuery);
   }
 
+  @Override
   public List<?> execute(CommandContext commandContext) {
     Query<?, ?> query = getFilterQuery(commandContext);
     ((AbstractQuery) query).enableMaxResultsLimit();

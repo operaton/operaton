@@ -57,6 +57,7 @@ public class MultipartPayloadProvider implements MessageBodyReader<MultipartForm
   public static final String TYPE_NAME = "multipart";
   public static final String SUB_TYPE_NAME = "form-data";
 
+  @Override
   public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
     return TYPE_NAME.equals(mediaType.getType().toLowerCase())
         && SUB_TYPE_NAME.equals(mediaType.getSubtype().toLowerCase());
@@ -117,18 +118,22 @@ public class MultipartPayloadProvider implements MessageBodyReader<MultipartForm
       this.contentType = contentType;
     }
 
+    @Override
     public String getCharacterEncoding() {
       return null;
     }
 
+    @Override
     public String getContentType() {
       return contentType;
     }
 
+    @Override
     public int getContentLength() {
       return -1;
     }
 
+    @Override
     public InputStream getInputStream() throws IOException {
       return inputStream;
     }

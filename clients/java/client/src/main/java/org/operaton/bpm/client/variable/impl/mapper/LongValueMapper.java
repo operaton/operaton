@@ -36,6 +36,7 @@ public class LongValueMapper extends NumberValueMapper<LongValue> {
     typedValueField.setValue(longValue.getValue());
   }
 
+  @Override
   public LongValue readValue(TypedValueField typedValueField) {
     Long longValue = null;
 

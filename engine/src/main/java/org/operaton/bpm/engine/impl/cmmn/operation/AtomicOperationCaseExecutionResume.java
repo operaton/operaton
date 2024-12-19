@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionResume extends AbstractAtomicOperationCaseExecutionResume {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-resume";
   }
@@ -35,6 +36,7 @@ public class AtomicOperationCaseExecutionResume extends AbstractAtomicOperationC
     return RESUME;
   }
 
+  @Override
   protected void triggerBehavior(CmmnActivityBehavior behavior, CmmnExecution execution) {
     behavior.onResume(execution);
   }

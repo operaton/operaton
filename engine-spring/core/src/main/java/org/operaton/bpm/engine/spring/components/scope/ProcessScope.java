@@ -78,7 +78,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         this.processEngine = processEngine;
     }
 
-    public Object get(String name, ObjectFactory<?> objectFactory) {
+  @Override
+  public Object get(String name, ObjectFactory<?> objectFactory) {
 
         ExecutionEntity executionEntity = null;
         try {
@@ -107,7 +108,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         return null;
     }
 
-    public void registerDestructionCallback(String name, Runnable callback) {
+  @Override
+  public void registerDestructionCallback(String name, Runnable callback) {
         logger.fine("no support for registering descruction callbacks implemented currently. registerDestructionCallback('" + name + "',callback) will do nothing.");
     }
 
@@ -115,13 +117,15 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         return Context.getBpmnExecutionContext().getExecution().getId();
     }
 
-    public Object remove(String name) {
+  @Override
+  public Object remove(String name) {
 
         logger.fine("remove '" + name + "'");
         return runtimeService.getVariable(getExecutionId(), name);
     }
 
-    public Object resolveContextualObject(String key) {
+  @Override
+  public Object resolveContextualObject(String key) {
 
         if ("executionId".equalsIgnoreCase(key))
             return Context.getBpmnExecutionContext().getExecution().getId();
@@ -142,7 +146,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
      */
     private Object createSharedProcessInstance() {
         ProxyFactory proxyFactoryBean = new ProxyFactory(ProcessInstance.class, new MethodInterceptor() {
-            public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+          @Override
+          public Object invoke(MethodInvocation methodInvocation) throws Throwable {
                 String methodName = methodInvocation.getMethod().getName();
 
                 logger.info("method invocation for " + methodName + ".");
@@ -160,7 +165,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         return proxyFactoryBean.getProxy(this.classLoader);
     }
 
-    public String getConversationId() {
+  @Override
+  public String getConversationId() {
         return getExecutionId();
     }
 
@@ -181,7 +187,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         }
     };
 
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+  @Override
+  public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 
         beanFactory.registerScope(ProcessScope.PROCESS_SCOPE_NAME, this);
 
@@ -204,11 +211,13 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         beanFactory.registerResolvableDependency(ProcessInstance.class, createSharedProcessInstance());
     }
 
-    public void destroy() throws Exception {
+  @Override
+  public void destroy() throws Exception {
         logger.info(ProcessScope.class.getName() + "#destroy() called ...");
     }
 
-    public void afterPropertiesSet() throws Exception {
+  @Override
+  public void afterPropertiesSet() throws Exception {
         Assert.notNull(this.processEngine, "the 'processEngine' must not be null!");
         this.runtimeService = this.processEngine.getRuntimeService();
     }
@@ -217,7 +226,8 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         ProxyFactory proxyFactoryBean = new ProxyFactory(scopedObject);
         proxyFactoryBean.setProxyTargetClass(true);
         proxyFactoryBean.addAdvice(new MethodInterceptor() {
-            public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+          @Override
+          public Object invoke(MethodInvocation methodInvocation) throws Throwable {
                 Object result = methodInvocation.proceed();
                 persistVariable(name, scopedObject);
                 return result;

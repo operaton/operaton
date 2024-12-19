@@ -58,10 +58,12 @@ public class DefaultElementTransformHandlerRegistry implements DmnElementTransfo
     return handlers;
   }
 
+  @Override
   public <Source extends DmnModelElementInstance, Target> void addHandler(Class<Source> sourceClass, DmnElementTransformHandler<Source, Target> handler) {
     handlers.put(sourceClass, handler);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <Source extends DmnModelElementInstance, Target> DmnElementTransformHandler<Source, Target> getHandler(Class<Source> sourceClass) {
     return handlers.get(sourceClass);

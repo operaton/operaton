@@ -26,6 +26,7 @@ public class TimerActivateJobDefinitionHandler extends TimerChangeJobDefinitionS
 
   public static final String TYPE = "activate-job-definition";
 
+  @Override
   public String getType() {
     return TYPE;
   }

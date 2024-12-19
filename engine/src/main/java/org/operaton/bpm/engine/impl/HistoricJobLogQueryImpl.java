@@ -69,42 +69,49 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
 
   // query parameter ////////////////////////////////////////////
 
+  @Override
   public HistoricJobLogQuery logId(String historicJobLogId) {
     ensureNotNull(NotValidException.class, "historicJobLogId", historicJobLogId);
     this.id = historicJobLogId;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery jobId(String jobId) {
     ensureNotNull(NotValidException.class, "jobId", jobId);
     this.jobId = jobId;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery jobExceptionMessage(String jobExceptionMessage) {
     ensureNotNull(NotValidException.class, "jobExceptionMessage", jobExceptionMessage);
     this.jobExceptionMessage = jobExceptionMessage;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery jobDefinitionId(String jobDefinitionId) {
     ensureNotNull(NotValidException.class, "jobDefinitionId", jobDefinitionId);
     this.jobDefinitionId = jobDefinitionId;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery jobDefinitionType(String jobDefinitionType) {
     ensureNotNull(NotValidException.class, "jobDefinitionType", jobDefinitionType);
     this.jobDefinitionType = jobDefinitionType;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery jobDefinitionConfiguration(String jobDefinitionConfiguration) {
     ensureNotNull(NotValidException.class, "jobDefinitionConfiguration", jobDefinitionConfiguration);
     this.jobDefinitionConfiguration = jobDefinitionConfiguration;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery activityIdIn(String... activityIds) {
     List<String> activityIdList = CollectionUtil.asArrayList(activityIds);
     ensureNotContainsNull("activityIds", activityIdList);
@@ -113,6 +120,7 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery failedActivityIdIn(String... activityIds) {
     List<String> activityIdList = CollectionUtil.asArrayList(activityIds);
     ensureNotContainsNull("activityIds", activityIdList);
@@ -121,6 +129,7 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery executionIdIn(String... executionIds) {
     List<String> executionIdList = CollectionUtil.asArrayList(executionIds);
     ensureNotContainsNull("executionIds", executionIdList);
@@ -129,40 +138,47 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery processInstanceId(String processInstanceId) {
     ensureNotNull(NotValidException.class, "processInstanceId", processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery processDefinitionId(String processDefinitionId) {
     ensureNotNull(NotValidException.class, "processDefinitionId", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery processDefinitionKey(String processDefinitionKey) {
     ensureNotNull(NotValidException.class, "processDefinitionKey", processDefinitionKey);
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery deploymentId(String deploymentId) {
     ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
     this.deploymentId = deploymentId;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery jobPriorityHigherThanOrEquals(long priority) {
     this.jobPriorityHigherThanOrEqual = priority;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery jobPriorityLowerThanOrEquals(long priority) {
     this.jobPriorityLowerThanOrEqual = priority;
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -184,21 +200,25 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery creationLog() {
     setState(JobState.CREATED);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery failureLog() {
     setState(JobState.FAILED);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery successLog() {
     setState(JobState.SUCCESSFUL);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery deletionLog() {
     setState(JobState.DELETED);
     return this;
@@ -212,71 +232,85 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
 
   // order by //////////////////////////////////////////////
 
+  @Override
   public HistoricJobLogQuery orderByTimestamp() {
     orderBy(HistoricJobLogQueryProperty.TIMESTAMP);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByJobId() {
     orderBy(HistoricJobLogQueryProperty.JOB_ID);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByJobDueDate() {
     orderBy(HistoricJobLogQueryProperty.DUEDATE);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByJobRetries() {
     orderBy(HistoricJobLogQueryProperty.RETRIES);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByJobPriority() {
     orderBy(HistoricJobLogQueryProperty.PRIORITY);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByJobDefinitionId() {
     orderBy(HistoricJobLogQueryProperty.JOB_DEFINITION_ID);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByActivityId() {
     orderBy(HistoricJobLogQueryProperty.ACTIVITY_ID);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByExecutionId() {
     orderBy(HistoricJobLogQueryProperty.EXECUTION_ID);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByProcessInstanceId() {
     orderBy(HistoricJobLogQueryProperty.PROCESS_INSTANCE_ID);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByProcessDefinitionId() {
     orderBy(HistoricJobLogQueryProperty.PROCESS_DEFINITION_ID);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByProcessDefinitionKey() {
     orderBy(HistoricJobLogQueryProperty.PROCESS_DEFINITION_KEY);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByDeploymentId() {
     orderBy(HistoricJobLogQueryProperty.DEPLOYMENT_ID);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderPartiallyByOccurrence() {
     orderBy(HistoricJobLogQueryProperty.SEQUENCE_COUNTER);
     return this;
   }
 
+  @Override
   public HistoricJobLogQuery orderByTenantId() {
     return orderBy(HistoricJobLogQueryProperty.TENANT_ID);
   }
@@ -288,6 +322,7 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
 
   // results //////////////////////////////////////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return commandContext
@@ -295,6 +330,7 @@ public class HistoricJobLogQueryImpl extends AbstractQuery<HistoricJobLogQuery, 
       .findHistoricJobLogsCountByQueryCriteria(this);
   }
 
+  @Override
   public List<HistoricJobLog> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     return commandContext

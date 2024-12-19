@@ -30,6 +30,7 @@ public interface Event extends FlowNode, InteractionNode {
 
   Collection<Property> getProperties();
 
+  @Override
   BpmnShape getDiagramElement();
 
 }

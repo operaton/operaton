@@ -37,7 +37,8 @@ public class OperatonFailedJobRetryTimeCycleImpl extends BpmnModelElementInstanc
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFailedJobRetryTimeCycle.class, OPERATON_ELEMENT_FAILED_JOB_RETRY_TIME_CYCLE)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonFailedJobRetryTimeCycle>() {
-        public OperatonFailedJobRetryTimeCycle newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonFailedJobRetryTimeCycle newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonFailedJobRetryTimeCycleImpl(instanceContext);
         }
       });

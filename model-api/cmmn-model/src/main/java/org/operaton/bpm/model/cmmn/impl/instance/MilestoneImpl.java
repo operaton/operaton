@@ -41,7 +41,8 @@ public class MilestoneImpl extends PlanItemDefinitionImpl implements Milestone {
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanItemDefinition.class)
         .instanceProvider(new ModelTypeInstanceProvider<Milestone>() {
-          public Milestone newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Milestone newInstance(ModelTypeInstanceContext instanceContext) {
             return new MilestoneImpl(instanceContext);
           }
         });

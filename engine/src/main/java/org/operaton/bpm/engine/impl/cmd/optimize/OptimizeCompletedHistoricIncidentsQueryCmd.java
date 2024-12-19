@@ -35,6 +35,7 @@ public class OptimizeCompletedHistoricIncidentsQueryCmd implements Command<List<
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<HistoricIncidentEntity> execute(CommandContext commandContext) {
     return commandContext.getOptimizeManager().getCompletedHistoricIncidents(finishedAfter, finishedAt, maxResults);
   }

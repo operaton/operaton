@@ -43,7 +43,8 @@ public class FormalExpressionImpl extends ExpressionImpl implements FormalExpres
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<FormalExpression>() {
-        public FormalExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public FormalExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new FormalExpressionImpl(instanceContext);
         }
       });
@@ -62,18 +63,22 @@ public class FormalExpressionImpl extends ExpressionImpl implements FormalExpres
     super(instanceContext);
   }
 
+  @Override
   public String getLanguage() {
     return languageAttribute.getValue(this);
   }
 
+  @Override
   public void setLanguage(String language) {
     languageAttribute.setValue(this, language);
   }
 
+  @Override
   public ItemDefinition getEvaluatesToType() {
     return evaluatesToTypeRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setEvaluatesToType(ItemDefinition evaluatesToType) {
     evaluatesToTypeRefAttribute.setReferenceTargetElement(this, evaluatesToType);
   }

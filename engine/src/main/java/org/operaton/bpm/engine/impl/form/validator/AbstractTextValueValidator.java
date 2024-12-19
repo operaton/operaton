@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public abstract class AbstractTextValueValidator implements FormFieldValidator {
 
+  @Override
   public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext) {
 
     if(submittedValue == null) {

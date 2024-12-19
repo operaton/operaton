@@ -41,6 +41,7 @@ public class GetDeploymentCaseModelCmd implements Command<InputStream>, Serializ
     this.caseDefinitionId = caseDefinitionId;
   }
 
+  @Override
   public InputStream execute(final CommandContext commandContext) {
     ensureNotNull("caseDefinitionId", caseDefinitionId);
 

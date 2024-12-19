@@ -23,6 +23,7 @@ public class BatchStatisticsEntity extends BatchEntity implements BatchStatistic
   protected int remainingJobs;
   protected int failedJobs;
 
+  @Override
   public int getRemainingJobs() {
     return remainingJobs + getJobsToCreate();
   }
@@ -31,10 +32,12 @@ public class BatchStatisticsEntity extends BatchEntity implements BatchStatistic
     this.remainingJobs = remainingJobs;
   }
 
+  @Override
   public int getCompletedJobs() {
     return totalJobs - getRemainingJobs();
   }
 
+  @Override
   public int getFailedJobs() {
     return failedJobs;
   }
@@ -47,6 +50,7 @@ public class BatchStatisticsEntity extends BatchEntity implements BatchStatistic
     return totalJobs - jobsCreated;
   }
 
+  @Override
   public String toString() {
     return "BatchStatisticsEntity{" +
       "batchHandler=" + batchJobHandler +

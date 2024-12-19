@@ -24,10 +24,12 @@ import org.operaton.bpm.model.dmn.HitPolicy;
 
 public class DecisionTableTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(Expression.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(Input.class),
@@ -36,6 +38,7 @@ public class DecisionTableTest extends DmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("hitPolicy", false, false, HitPolicy.UNIQUE),

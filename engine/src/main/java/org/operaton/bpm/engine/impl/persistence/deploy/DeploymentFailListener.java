@@ -39,6 +39,7 @@ public class DeploymentFailListener implements TransactionListener {
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public void execute(CommandContext commandContext) {
     //unregister deployment without authorization
     commandExecutor.execute(new DeleteDeploymentListenerCmd());

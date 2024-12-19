@@ -60,15 +60,18 @@ public class XmlValueImpl extends SpinValueImpl implements XmlValue {
     super(value, serializedValue, dataFormatName, isDeserialized, SpinValueType.XML, isTransient);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public DataFormat<SpinXmlElement> getDataFormat() {
     return (DataFormat<SpinXmlElement>) super.getDataFormat();
   }
 
+  @Override
   public XmlValueType getType() {
     return (XmlValueType) super.getType();
   }
 
+  @Override
   public SpinXmlElement getValue() {
     return (SpinXmlElement) super.getValue();
   }

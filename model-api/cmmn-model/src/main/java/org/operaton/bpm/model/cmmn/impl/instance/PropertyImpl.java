@@ -42,18 +42,22 @@ public class PropertyImpl extends CmmnElementImpl implements Property {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getType() {
     return typeAttribte.getValue(this);
   }
 
+  @Override
   public void setType(String type) {
     typeAttribte.setValue(this, type);
   }
@@ -63,7 +67,8 @@ public class PropertyImpl extends CmmnElementImpl implements Property {
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<Property>() {
-          public Property newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Property newInstance(ModelTypeInstanceContext instanceContext) {
             return new PropertyImpl(instanceContext);
           }
         });

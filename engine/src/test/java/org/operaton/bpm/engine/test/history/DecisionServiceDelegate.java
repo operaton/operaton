@@ -37,6 +37,7 @@ public class DecisionServiceDelegate implements JavaDelegate, CaseExecutionListe
     evaluateDecision(decisionService, execution);
   }
 
+  @Override
   public void notify(DelegateCaseExecution caseExecution) throws Exception {
     DecisionService decisionService = caseExecution.getProcessEngineServices().getDecisionService();
     evaluateDecision(decisionService, caseExecution);

@@ -36,6 +36,7 @@ public class GetTaskAttachmentsCmd implements Command<List<Attachment>>, Seriali
     this.taskId = taskId;
   }
 
+  @Override
   public List<Attachment> execute(CommandContext commandContext) {
     return commandContext
       .getAttachmentManager()

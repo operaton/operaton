@@ -53,6 +53,7 @@ public class SpringTransactionInterceptor extends CommandInterceptor {
     this.processEngineConfiguration = processEngineConfiguration;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T> T execute(final Command<T> command) {
     TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);

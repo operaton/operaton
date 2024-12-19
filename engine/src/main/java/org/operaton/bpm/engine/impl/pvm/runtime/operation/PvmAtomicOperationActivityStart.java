@@ -37,10 +37,12 @@ public class PvmAtomicOperationActivityStart extends PvmAtomicOperationActivityI
     return ExecutionListener.EVENTNAME_START;
   }
 
+  @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getActivity();
   }
 
+  @Override
   public String getCanonicalName() {
     return "activity-start";
   }

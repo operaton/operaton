@@ -39,6 +39,7 @@ public abstract class TimerChangeProcessDefinitionSuspensionStateJobHandler impl
 
   protected static final String JOB_HANDLER_CFG_INCLUDE_PROCESS_INSTANCES = "includeProcessInstances";
 
+  @Override
   public void execute(ProcessDefinitionSuspensionStateConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     AbstractSetProcessDefinitionStateCmd cmd = getCommand(configuration);
     cmd.disableLogUserOperation();
@@ -167,6 +168,7 @@ public abstract class TimerChangeProcessDefinitionSuspensionStateJobHandler impl
 
   }
 
+  @Override
   public void onDelete(ProcessDefinitionSuspensionStateConfiguration configuration, JobEntity jobEntity) {
     // do nothing
   }

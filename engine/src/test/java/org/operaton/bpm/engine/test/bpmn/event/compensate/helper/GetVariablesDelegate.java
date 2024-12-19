@@ -32,6 +32,7 @@ public class GetVariablesDelegate implements JavaDelegate {
   private Expression variable;
   public static List<String> values = new ArrayList<String>();
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
 
     String variableName = (String) variable.getValue(execution);

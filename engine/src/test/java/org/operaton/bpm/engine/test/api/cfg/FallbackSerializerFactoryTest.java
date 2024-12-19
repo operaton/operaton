@@ -111,10 +111,12 @@ public class FallbackSerializerFactoryTest {
 
   public static class ExampleSerializerFactory implements VariableSerializerFactory {
 
+    @Override
     public TypedValueSerializer<?> getSerializer(String serializerName) {
       return new ExampleSerializer();
     }
 
+    @Override
     public TypedValueSerializer<?> getSerializer(TypedValue value) {
       return new ExampleSerializer();
     }
@@ -130,6 +132,7 @@ public class FallbackSerializerFactoryTest {
       this.serializationDataFormat = FORMAT;
     }
 
+    @Override
     public String getName() {
       return FORMAT;
     }
@@ -145,6 +148,7 @@ public class FallbackSerializerFactoryTest {
       this.serializationDataFormat = ExampleSerializer.FORMAT;
     }
 
+    @Override
     public String getName() {
       return ExampleSerializer.FORMAT;
     }

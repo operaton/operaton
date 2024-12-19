@@ -44,26 +44,32 @@ public class FormPropertyImpl implements FormProperty {
     this.isWritable = formPropertyHandler.isWritable();
   }
 
+  @Override
   public String getId() {
     return id;
   }
-  
+
+  @Override
   public String getName() {
     return name;
   }
-  
+
+  @Override
   public FormType getType() {
     return type;
   }
-  
+
+  @Override
   public String getValue() {
     return value;
   }
-  
+
+  @Override
   public boolean isRequired() {
     return isRequired;
   }
-  
+
+  @Override
   public boolean isReadable() {
     return isReadable;
   }
@@ -72,6 +78,7 @@ public class FormPropertyImpl implements FormProperty {
     this.value = value;
   }
 
+  @Override
   public boolean isWritable() {
     return isWritable;
   }

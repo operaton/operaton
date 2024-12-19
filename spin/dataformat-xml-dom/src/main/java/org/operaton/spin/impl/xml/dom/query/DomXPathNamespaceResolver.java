@@ -45,6 +45,7 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
     this.element = element;
   }
 
+  @Override
   public String getNamespaceURI(String prefix) {
     ensureNotNull("Prefix", prefix);
 
@@ -71,6 +72,7 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
     }
   }
 
+  @Override
   public String getPrefix(String namespaceURI) {
     ensureNotNull("Namespace URI", namespaceURI);
 
@@ -102,6 +104,7 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
 
   }
 
+  @Override
   public Iterator getPrefixes(String namespaceURI) {
     ensureNotNull("Namespace URI", namespaceURI);
 

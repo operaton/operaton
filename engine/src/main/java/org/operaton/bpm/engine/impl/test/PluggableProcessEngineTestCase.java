@@ -47,6 +47,7 @@ public class PluggableProcessEngineTestCase extends AbstractProcessEngineTestCas
 
   protected static ProcessEngine cachedProcessEngine;
 
+  @Override
   protected void initializeProcessEngine() {
     processEngine = getOrInitializeCachedProcessEngine();
   }

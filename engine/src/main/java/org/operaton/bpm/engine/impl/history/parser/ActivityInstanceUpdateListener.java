@@ -32,6 +32,7 @@ public class ActivityInstanceUpdateListener extends HistoryTaskListener {
     super(historyEventProducer);
   }
 
+  @Override
   protected HistoryEvent createHistoryEvent(DelegateTask task, ExecutionEntity execution) {
     ensureHistoryLevelInitialized();
     if(historyLevel.isHistoryEventProduced(HistoryEventTypes.ACTIVITY_INSTANCE_UPDATE, execution)) {

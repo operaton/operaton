@@ -33,6 +33,7 @@ public class LogExecutionContextListener implements CaseVariableListener {
   protected static List<CaseExecutionContext> executionContexts = new ArrayList<CaseExecutionContext>();
 
 
+  @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
     executionContexts.add(Context.getCaseExecutionContext());
   }

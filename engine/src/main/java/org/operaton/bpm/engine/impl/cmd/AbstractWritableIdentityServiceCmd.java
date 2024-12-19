@@ -30,6 +30,7 @@ public abstract class AbstractWritableIdentityServiceCmd<T> implements Command<T
 
   private static final long serialVersionUID = 1L;
 
+  @Override
   public final T execute(CommandContext commandContext) {
     
     // check identity service implementation

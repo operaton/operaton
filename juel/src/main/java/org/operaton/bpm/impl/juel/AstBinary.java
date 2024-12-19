@@ -23,7 +23,8 @@ public class AstBinary extends AstRightValue {
 		public Object eval(Bindings bindings, ELContext context, AstNode left, AstNode right);		
 	}
 	public abstract static class SimpleOperator implements Operator {
-		public Object eval(Bindings bindings, ELContext context, AstNode left, AstNode right) {
+    @Override
+    public Object eval(Bindings bindings, ELContext context, AstNode left, AstNode right) {
 			return apply(bindings, left.eval(bindings, context), right.eval(bindings, context));
 		}
 
@@ -34,7 +35,8 @@ public class AstBinary extends AstRightValue {
 		@Override public String toString() { return "+"; }
 	};
 	public static final Operator AND = new Operator() {
-		public Object eval(Bindings bindings, ELContext context, AstNode left, AstNode right) {
+    @Override
+    public Object eval(Bindings bindings, ELContext context, AstNode left, AstNode right) {
 			Boolean l = bindings.convert(left.eval(bindings, context), Boolean.class);
 			return Boolean.TRUE.equals(l) ? bindings.convert(right.eval(bindings, context), Boolean.class) : Boolean.FALSE;
 		}
@@ -77,7 +79,8 @@ public class AstBinary extends AstRightValue {
 		@Override public String toString() { return "!="; }
 	};
 	public static final Operator OR = new Operator() {
-		public Object eval(Bindings bindings, ELContext context, AstNode left, AstNode right) {
+    @Override
+    public Object eval(Bindings bindings, ELContext context, AstNode left, AstNode right) {
 			Boolean l = bindings.convert(left.eval(bindings, context), Boolean.class);
 			return Boolean.TRUE.equals(l) ? Boolean.TRUE : bindings.convert(right.eval(bindings, context), Boolean.class);
 		}
@@ -120,11 +123,13 @@ public class AstBinary extends AstRightValue {
 		right.appendStructure(b, bindings);
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return 2;
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return i == 0 ? left : i == 1 ? right : null;
 	}
 }

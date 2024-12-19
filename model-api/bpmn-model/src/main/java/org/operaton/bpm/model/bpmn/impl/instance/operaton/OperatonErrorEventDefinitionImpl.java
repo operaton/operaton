@@ -35,7 +35,8 @@ public class OperatonErrorEventDefinitionImpl extends ErrorEventDefinitionImpl i
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonErrorEventDefinition.class, OPERATON_ELEMENT_ERROR_EVENT_DEFINITION)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonErrorEventDefinition>() {
-        public OperatonErrorEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonErrorEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonErrorEventDefinitionImpl(instanceContext);
         }
       });
@@ -51,10 +52,12 @@ public class OperatonErrorEventDefinitionImpl extends ErrorEventDefinitionImpl i
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonExpression() {
     return operatonExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonExpression(String operatonExpression) {
     operatonExpressionAttribute.setValue(this, operatonExpression);
   }

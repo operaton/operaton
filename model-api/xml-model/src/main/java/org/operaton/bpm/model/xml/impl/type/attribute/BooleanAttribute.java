@@ -32,10 +32,12 @@ public class BooleanAttribute extends AttributeImpl<Boolean> {
     super(owningElementType);
   }
 
+  @Override
   protected Boolean convertXmlValueToModelValue(String rawValue) {
     return ModelUtil.valueAsBoolean(rawValue);
   }
 
+  @Override
   protected String convertModelValueToXmlValue(Boolean modelValue) {
     return ModelUtil.valueAsString(modelValue);
   }

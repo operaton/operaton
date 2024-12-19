@@ -36,6 +36,7 @@ public class LogInjectedValuesListener implements CaseVariableListener {
   protected static List<Object> resolvedJuelExpressions = new ArrayList<Object>();
 
 
+  @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
     resolvedJuelExpressions.add(juelExpression.getValue(variableInstance.getSourceExecution()));
     resolvedStringValueExpressions.add(stringValueExpression.getValue(variableInstance.getSourceExecution()));

@@ -22,10 +22,12 @@ import org.operaton.connect.spi.ConnectorProvider;
 
 public class MyHttpConnectorProvider implements ConnectorProvider {
 
+  @Override
   public String getConnectorId() {
     return Connectors.HTTP_CONNECTOR_ID;
   }
 
+  @Override
   public Connector<?> createConnectorInstance() {
     return new MyHttpConnector(Connectors.HTTP_CONNECTOR_ID);
   }

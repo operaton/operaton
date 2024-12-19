@@ -28,32 +28,38 @@ import org.operaton.bpm.model.cmmn.instance.ProcessTask;
  */
 public class ProcessTaskItemHandler extends ProcessOrCaseTaskItemHandler {
 
+  @Override
   protected CmmnActivityBehavior getActivityBehavior() {
     return new ProcessTaskActivityBehavior();
   }
 
+  @Override
   protected ProcessTask getDefinition(CmmnElement element) {
     return (ProcessTask) super.getDefinition(element);
   }
 
+  @Override
   protected String getDefinitionKey(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     ProcessTask definition = getDefinition(element);
 
     return definition.getProcess();
   }
 
+  @Override
   protected String getBinding(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     ProcessTask definition = getDefinition(element);
 
     return definition.getOperatonProcessBinding();
   }
 
+  @Override
   protected String getVersion(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     ProcessTask definition = getDefinition(element);
 
     return definition.getOperatonProcessVersion();
   }
 
+  @Override
   protected String getTenantId(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     ProcessTask definition = getDefinition(element);
 

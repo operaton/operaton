@@ -26,6 +26,7 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
 public class SignalEventDefinitionTest extends AbstractEventDefinitionTest {
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("signalRef"),

@@ -32,10 +32,12 @@ public class ValidatingMigrationInstructionImpl implements ValidatingMigrationIn
     this.updateEventTrigger = updateEventTrigger;
   }
 
+  @Override
   public ActivityImpl getSourceActivity() {
     return sourceActivity;
   }
 
+  @Override
   public ActivityImpl getTargetActivity() {
     return targetActivity;
   }
@@ -45,10 +47,12 @@ public class ValidatingMigrationInstructionImpl implements ValidatingMigrationIn
     return updateEventTrigger;
   }
 
+  @Override
   public MigrationInstruction toMigrationInstruction() {
     return new MigrationInstructionImpl(sourceActivity.getId(), targetActivity.getId(), updateEventTrigger);
   }
 
+  @Override
   public String toString() {
     return "ValidatingMigrationInstructionImpl{" +
       "sourceActivity=" + sourceActivity +

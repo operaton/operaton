@@ -58,6 +58,7 @@ public class CompleteTaskCmd implements Command<VariableMap>, Serializable {
     this.deserializeReturnedVariables = deserializeReturnedVariables;
   }
 
+  @Override
   public VariableMap execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
 

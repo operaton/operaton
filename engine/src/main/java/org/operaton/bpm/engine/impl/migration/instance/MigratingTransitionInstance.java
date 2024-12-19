@@ -104,6 +104,7 @@ public class MigratingTransitionInstance extends MigratingProcessElementInstance
     }
   }
 
+  @Override
   public ExecutionEntity resolveRepresentativeExecution() {
     if (representativeExecution.getReplacedBy() != null) {
       return representativeExecution.resolveReplacedBy();
@@ -123,6 +124,7 @@ public class MigratingTransitionInstance extends MigratingProcessElementInstance
     this.jobInstance = jobInstance;
   }
 
+  @Override
   public void addMigratingDependentInstance(MigratingInstance migratingInstance) {
     migratingDependentInstances.add(migratingInstance);
   }

@@ -36,6 +36,7 @@ public class SpringBeanFactoryProxyMap implements Map<Object, Object> {
     this.beanFactory = beanFactory;
   }
 
+  @Override
   public Object get(Object key) {
     if ( (key==null) || (!String.class.isAssignableFrom(key.getClass())) ) {
       return null;
@@ -43,6 +44,7 @@ public class SpringBeanFactoryProxyMap implements Map<Object, Object> {
     return beanFactory.getBean((String) key);
   }
 
+  @Override
   public boolean containsKey(Object key) {
     if ( (key==null) || (!String.class.isAssignableFrom(key.getClass())) ) {
       return false;
@@ -50,26 +52,32 @@ public class SpringBeanFactoryProxyMap implements Map<Object, Object> {
     return beanFactory.containsBean((String) key);
   }
 
+  @Override
   public Set<Object> keySet() {
     return Collections.emptySet();
   }
 
+  @Override
   public void clear() {
     throw new ProcessEngineException("can't clear configuration beans");
   }
 
+  @Override
   public boolean containsValue(Object value) {
     throw new ProcessEngineException("can't search values in configuration beans");
   }
 
+  @Override
   public Set<java.util.Map.Entry<Object, Object>> entrySet() {
     throw new ProcessEngineException("unsupported operation on configuration beans");
   }
 
+  @Override
   public boolean isEmpty() {
     throw new ProcessEngineException("unsupported operation on configuration beans");
   }
 
+  @Override
   public Object put(Object key, Object value) {
     throw new ProcessEngineException("unsupported operation on configuration beans");
   }
@@ -78,14 +86,17 @@ public class SpringBeanFactoryProxyMap implements Map<Object, Object> {
     throw new ProcessEngineException("unsupported operation on configuration beans");
   }
 
+  @Override
   public Object remove(Object key) {
     throw new ProcessEngineException("unsupported operation on configuration beans");
   }
 
+  @Override
   public int size() {
     throw new ProcessEngineException("unsupported operation on configuration beans");
   }
 
+  @Override
   public Collection<Object> values() {
     throw new ProcessEngineException("unsupported operation on configuration beans");
   }

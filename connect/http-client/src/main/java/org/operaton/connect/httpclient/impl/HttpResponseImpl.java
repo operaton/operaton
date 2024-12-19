@@ -37,18 +37,22 @@ public class HttpResponseImpl extends AbstractCloseableConnectorResponse impleme
     this.httpResponse = httpResponse;
   }
 
+  @Override
   public Integer getStatusCode() {
     return getResponseParameter(PARAM_NAME_STATUS_CODE);
   }
 
+  @Override
   public String getResponse() {
     return getResponseParameter(PARAM_NAME_RESPONSE);
   }
 
+  @Override
   public Map<String, String> getHeaders() {
     return getResponseParameter(PARAM_NAME_RESPONSE_HEADERS);
   }
 
+  @Override
   public String getHeader(String field) {
     Map<String, String> headers = getHeaders();
     if (headers != null) {

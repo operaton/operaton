@@ -41,6 +41,7 @@ public class MetricsExecutionListener implements ExecutionListener {
     this.condition = condition;
   }
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     if (condition.apply(execution)) {
       Context.getProcessEngineConfiguration()

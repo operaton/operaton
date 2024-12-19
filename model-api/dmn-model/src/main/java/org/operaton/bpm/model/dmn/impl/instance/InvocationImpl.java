@@ -41,14 +41,17 @@ public class InvocationImpl extends ExpressionImpl implements Invocation {
     super(instanceContext);
   }
 
+  @Override
   public Expression getExpression() {
     return expressionChild.getChild(this);
   }
 
+  @Override
   public void setExpression(Expression expression) {
     expressionChild.setChild(this, expression);
   }
 
+  @Override
   public Collection<Binding> getBindings() {
     return bindingCollection.get(this);
   }
@@ -58,7 +61,8 @@ public class InvocationImpl extends ExpressionImpl implements Invocation {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<Invocation>() {
-        public Invocation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Invocation newInstance(ModelTypeInstanceContext instanceContext) {
           return new InvocationImpl(instanceContext);
         }
       });

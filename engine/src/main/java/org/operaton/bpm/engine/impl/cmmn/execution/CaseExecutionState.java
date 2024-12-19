@@ -67,6 +67,7 @@ public interface CaseExecutionState {
       return CASE_EXECUTION_STATES.get(stateCode);
     }
 
+    @Override
     public int getStateCode() {
       return stateCode;
     }

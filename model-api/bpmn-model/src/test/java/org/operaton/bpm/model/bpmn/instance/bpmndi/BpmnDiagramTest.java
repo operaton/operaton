@@ -29,10 +29,12 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;
  */
 public class BpmnDiagramTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(BPMNDI_NS, Diagram.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(BPMNDI_NS, BpmnPlane.class, 1, 1),
@@ -40,6 +42,7 @@ public class BpmnDiagramTest extends BpmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

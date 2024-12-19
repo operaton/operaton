@@ -40,10 +40,12 @@ public class ElementReferenceCollectionBuilderImpl<Target extends ModelElementIn
     this.elementReferenceCollectionImpl = new ElementReferenceCollectionImpl<Target, Source>(collection);
   }
 
+  @Override
   public ElementReferenceCollection<Target, Source> build() {
     return elementReferenceCollectionImpl;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public void performModelBuild(Model model) {
     ModelElementTypeImpl referenceTargetType = (ModelElementTypeImpl) model.getType(referenceTargetClass);

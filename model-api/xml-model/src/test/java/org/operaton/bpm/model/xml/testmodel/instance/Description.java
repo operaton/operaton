@@ -35,7 +35,8 @@ public class Description extends ModelElementInstanceImpl {
       ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Description.class, ELEMENT_NAME_DESCRIPTION)
         .namespaceUri(MODEL_NAMESPACE)
         .instanceProvider(new ModelTypeInstanceProvider<Description>() {
-          public Description newInstance(ModelTypeInstanceContext instanceContext) {
+        @Override
+        public Description newInstance(ModelTypeInstanceContext instanceContext) {
             return new Description(instanceContext);
           }
         });

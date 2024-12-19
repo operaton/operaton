@@ -27,16 +27,19 @@ import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
  */
 public class ExpressionTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CmmnElement.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(CmmnModelConstants.CMMN10_NS, Body.class, 0, 1)
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
           new AttributeAssumption("language", false, false, CmmnModelConstants.XPATH_NS)

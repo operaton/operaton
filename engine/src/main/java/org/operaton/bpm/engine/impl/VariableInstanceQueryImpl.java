@@ -62,47 +62,56 @@ public class VariableInstanceQueryImpl extends AbstractVariableQueryImpl<Variabl
     super(commandExecutor);
   }
 
+  @Override
   public VariableInstanceQuery variableId(String id) {
     ensureNotNull("id", id);
     this.variableId = id;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery variableName(String variableName) {
     this.variableName = variableName;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery variableNameIn(String... variableNames) {
     this.variableNames = variableNames;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery variableNameLike(String variableNameLike) {
     this.variableNameLike = variableNameLike;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery executionIdIn(String... executionIds) {
     this.executionIds = executionIds;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery processInstanceIdIn(String... processInstanceIds) {
     this.processInstanceIds = processInstanceIds;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery caseExecutionIdIn(String... caseExecutionIds) {
     this.caseExecutionIds = caseExecutionIds;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery caseInstanceIdIn(String... caseInstanceIds) {
     this.caseInstanceIds = caseInstanceIds;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery taskIdIn(String... taskIds) {
     this.taskIds = taskIds;
     return this;
@@ -114,26 +123,31 @@ public class VariableInstanceQueryImpl extends AbstractVariableQueryImpl<Variabl
     return this;
   }
 
+  @Override
   public VariableInstanceQuery variableScopeIdIn(String... variableScopeIds) {
     this.variableScopeIds = variableScopeIds;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery activityInstanceIdIn(String... activityInstanceIds) {
     this.activityInstanceIds = activityInstanceIds;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery disableBinaryFetching() {
     this.isByteArrayFetchingEnabled = false;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery disableCustomObjectDeserialization() {
     this.isCustomObjectDeserializationEnabled = false;
     return this;
   }
 
+  @Override
   public VariableInstanceQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -142,21 +156,25 @@ public class VariableInstanceQueryImpl extends AbstractVariableQueryImpl<Variabl
 
   // ordering ////////////////////////////////////////////////////
 
+  @Override
   public VariableInstanceQuery orderByVariableName() {
     orderBy(VariableInstanceQueryProperty.VARIABLE_NAME);
     return this;
   }
 
+  @Override
   public VariableInstanceQuery orderByVariableType() {
     orderBy(VariableInstanceQueryProperty.VARIABLE_TYPE);
     return this;
   }
 
+  @Override
   public VariableInstanceQuery orderByActivityInstanceId() {
     orderBy(VariableInstanceQueryProperty.ACTIVITY_INSTANCE_ID);
     return this;
   }
 
+  @Override
   public VariableInstanceQuery orderByTenantId() {
     orderBy(VariableInstanceQueryProperty.TENANT_ID);
     return this;

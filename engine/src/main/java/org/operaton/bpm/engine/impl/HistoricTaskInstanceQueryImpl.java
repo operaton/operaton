@@ -134,6 +134,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   }
 
 
+  @Override
   public HistoricTaskInstanceQueryImpl processInstanceId(String processInstanceId) {
     this.processInstanceId = processInstanceId;
     return this;
@@ -145,6 +146,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery processInstanceBusinessKey(String processInstanceBusinessKey) {
     this.processInstanceBusinessKey = processInstanceBusinessKey;
     return this;
@@ -163,131 +165,158 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl executionId(String executionId) {
     this.executionId = executionId;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery activityInstanceIdIn(String... activityInstanceIds) {
     ensureNotNull("activityInstanceIds", (Object[]) activityInstanceIds);
     this.activityInstanceIds = activityInstanceIds;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl processDefinitionId(String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery processDefinitionKey(String processDefinitionKey) {
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery processDefinitionName(String processDefinitionName) {
     this.processDefinitionName = processDefinitionName;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskId(String taskId) {
     this.taskId = taskId;
     return this;
   }
+
+  @Override
   public HistoricTaskInstanceQueryImpl taskName(String taskName) {
     this.taskName = taskName;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskNameLike(String taskNameLike) {
     this.taskNameLike = taskNameLike;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskParentTaskId(String parentTaskId) {
     this.taskParentTaskId = parentTaskId;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskDescription(String taskDescription) {
     this.taskDescription = taskDescription;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskDescriptionLike(String taskDescriptionLike) {
     this.taskDescriptionLike = taskDescriptionLike;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskDeleteReason(String taskDeleteReason) {
     this.taskDeleteReason = taskDeleteReason;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskDeleteReasonLike(String taskDeleteReasonLike) {
     this.taskDeleteReasonLike = taskDeleteReasonLike;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskAssigned() {
     this.assigned = true;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskUnassigned() {
     this.unassigned = true;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskAssignee(String taskAssignee) {
     this.taskAssignee = taskAssignee;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskAssigneeLike(String taskAssigneeLike) {
     this.taskAssigneeLike = taskAssigneeLike;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskOwner(String taskOwner) {
     this.taskOwner = taskOwner;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskOwnerLike(String taskOwnerLike) {
     this.taskOwnerLike = taskOwnerLike;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery caseDefinitionId(String caseDefinitionId) {
     this.caseDefinitionId = caseDefinitionId;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery caseDefinitionKey(String caseDefinitionKey) {
     this.caseDefinitionKey = caseDefinitionKey;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery caseDefinitionName(String caseDefinitionName) {
     this.caseDefinitionName = caseDefinitionName;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery caseInstanceId(String caseInstanceId) {
     this.caseInstanceId = caseInstanceId;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery caseExecutionId(String caseExecutionId) {
     this.caseExecutionId = caseExecutionId;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl finished() {
     this.finished = true;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl unfinished() {
     this.unfinished = true;
     return this;
@@ -311,11 +340,13 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl taskVariableValueEquals(String variableName, Object variableValue) {
     addVariable(variableName, variableValue, QueryOperator.EQUALS, true, false);
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery processVariableValueEquals(String variableName, Object variableValue) {
     addVariable(variableName, variableValue, QueryOperator.EQUALS, false, true);
     return this;
@@ -327,11 +358,13 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery processVariableValueLike(String variableName, Object variableValue) {
     addVariable(variableName, variableValue, QueryOperator.LIKE, false, true);
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery processVariableValueNotLike(String variableName, Object variableValue) {
     addVariable(variableName, variableValue, QueryOperator.NOT_LIKE, false, true);
     return this;
@@ -361,46 +394,55 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskDefinitionKey(String taskDefinitionKey) {
     return taskDefinitionKeyIn(taskDefinitionKey);
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskDefinitionKeyIn(String... taskDefinitionKeys) {
     ensureNotNull(NotValidException.class, "taskDefinitionKeys", (Object[]) taskDefinitionKeys);
     this.taskDefinitionKeys = taskDefinitionKeys;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskPriority(Integer taskPriority) {
     this.taskPriority = taskPriority;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery processFinished() {
     this.processFinished = true;
     return this;
   }
 
-  public HistoricTaskInstanceQuery taskInvolvedUser(String userId){
+  @Override
+  public HistoricTaskInstanceQuery taskInvolvedUser(String userId) {
     this.taskInvolvedUser = userId;
     return this;
   }
 
-  public HistoricTaskInstanceQuery taskInvolvedGroup(String groupId){
+  @Override
+  public HistoricTaskInstanceQuery taskInvolvedGroup(String groupId) {
     this.taskInvolvedGroup = groupId;
     return this;
   }
 
-  public HistoricTaskInstanceQuery taskHadCandidateUser(String userId){
+  @Override
+  public HistoricTaskInstanceQuery taskHadCandidateUser(String userId) {
     this.taskHadCandidateUser = userId;
     return this;
   }
 
-  public HistoricTaskInstanceQuery taskHadCandidateGroup(String groupId){
+  @Override
+  public HistoricTaskInstanceQuery taskHadCandidateGroup(String groupId) {
     this.taskHadCandidateGroup = groupId;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery withCandidateGroups() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set withCandidateGroups() within 'or' query");
@@ -410,6 +452,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery withoutCandidateGroups() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set withoutCandidateGroups() within 'or' query");
@@ -419,6 +462,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery processUnfinished() {
     this.processUnfinished = true;
     return this;
@@ -478,6 +522,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return Boolean.class.isAssignableFrom(value.getClass()) || boolean.class.isAssignableFrom(value.getClass());
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskDueDate(Date dueDate) {
     // The taskDueDate filter can't be used in an AND query with
     // the withoutTaskDueDate filter. They can be combined in an OR query
@@ -491,6 +536,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskDueAfter(Date dueAfter) {
     // The taskDueAfter filter can't be used in an AND query with
     // the withoutTaskDueDate filter. They can be combined in an OR query
@@ -504,6 +550,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskDueBefore(Date dueBefore) {
     // The taskDueBefore filter can't be used in an AND query with
     // the withoutTaskDueDate filter. They can be combined in an OR query
@@ -531,21 +578,25 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskFollowUpDate(Date followUpDate) {
     this.followUpDate = followUpDate;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskFollowUpBefore(Date followUpBefore) {
     this.followUpBefore = followUpBefore;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery taskFollowUpAfter(Date followUpAfter) {
     this.followUpAfter = followUpAfter;
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -598,6 +649,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
 
   // ordering /////////////////////////////////////////////////////////////////
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByTaskId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskId() within 'or' query");
@@ -607,6 +659,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByHistoricActivityInstanceId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByHistoricActivityInstanceId() within 'or' query");
@@ -616,6 +669,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByProcessDefinitionId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessDefinitionId() within 'or' query");
@@ -625,6 +679,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByProcessInstanceId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessInstanceId() within 'or' query");
@@ -634,6 +689,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByExecutionId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByExecutionId() within 'or' query");
@@ -643,6 +699,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByHistoricTaskInstanceDuration() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByHistoricTaskInstanceDuration() within 'or' query");
@@ -652,6 +709,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByHistoricTaskInstanceEndTime() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByHistoricTaskInstanceEndTime() within 'or' query");
@@ -661,6 +719,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByHistoricActivityInstanceStartTime() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByHistoricActivityInstanceStartTime() within 'or' query");
@@ -670,6 +729,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByTaskName() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskName() within 'or' query");
@@ -679,6 +739,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByTaskDescription() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskDescription() within 'or' query");
@@ -688,6 +749,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByTaskAssignee() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskAssignee() within 'or' query");
@@ -697,6 +759,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByTaskOwner() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskOwner() within 'or' query");
@@ -706,6 +769,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByTaskDueDate() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskDueDate() within 'or' query");
@@ -715,6 +779,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByTaskFollowUpDate() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskFollowUpDate() within 'or' query");
@@ -724,6 +789,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQueryImpl orderByDeleteReason() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByDeleteReason() within 'or' query");
@@ -733,6 +799,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByTaskDefinitionKey() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskDefinitionKey() within 'or' query");
@@ -742,6 +809,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByTaskPriority() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTaskPriority() within 'or' query");
@@ -751,6 +819,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByCaseDefinitionId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseDefinitionId() within 'or' query");
@@ -760,6 +829,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByCaseInstanceId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseInstanceId() within 'or' query");
@@ -769,6 +839,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByCaseExecutionId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByCaseExecutionId() within 'or' query");
@@ -778,6 +849,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
     return this;
   }
 
+  @Override
   public HistoricTaskInstanceQuery orderByTenantId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTenantId() within 'or' query");

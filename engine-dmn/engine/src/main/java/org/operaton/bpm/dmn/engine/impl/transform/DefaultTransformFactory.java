@@ -22,6 +22,7 @@ import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformer;
 
 public class DefaultTransformFactory implements DmnTransformFactory {
 
+  @Override
   public DmnTransform createTransform(DmnTransformer transformer) {
     return new DefaultDmnTransform(transformer);
   }

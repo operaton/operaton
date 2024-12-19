@@ -71,6 +71,7 @@ public class HalCaseDefinition extends HalResource<HalCaseDefinition> implements
     return halCaseDefinition;
   }
 
+  @Override
   public String getId() {
     return id;
   }

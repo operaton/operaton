@@ -35,6 +35,7 @@ public class OptimizeOpenHistoricIncidentsQueryCmd implements Command<List<Histo
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<HistoricIncidentEntity> execute(CommandContext commandContext) {
     return commandContext.getOptimizeManager().getOpenHistoricIncidents(createdAfter, createdAt, maxResults);
   }

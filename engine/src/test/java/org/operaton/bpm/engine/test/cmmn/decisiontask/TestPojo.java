@@ -38,6 +38,7 @@ public class TestPojo implements Serializable {
     return bar;
   }
 
+  @Override
   public String toString() {
     return "TestPojo{" +
       "foo='" + foo + '\'' +

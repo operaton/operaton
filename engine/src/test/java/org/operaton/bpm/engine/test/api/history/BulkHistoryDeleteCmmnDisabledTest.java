@@ -74,6 +74,7 @@ public class BulkHistoryDeleteCmmnDisabledTest {
   @After
   public void clearDatabase() {
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         List<Job> jobs = engineRule.getManagementService().createJobQuery().list();

@@ -38,6 +38,7 @@ public class DeleteAuthorizationCmd implements Command<Void> {
     this.authorizationId = authorizationId;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
 
     final AuthorizationManager authorizationManager = commandContext.getAuthorizationManager();

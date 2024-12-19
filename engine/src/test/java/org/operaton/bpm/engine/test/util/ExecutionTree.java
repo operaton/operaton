@@ -53,6 +53,7 @@ public class ExecutionTree implements Execution {
     CommandExecutor commandExecutor = configuration.getCommandExecutorTxRequired();
 
     ExecutionTree executionTree = commandExecutor.execute(new Command<ExecutionTree>() {
+      @Override
       public ExecutionTree execute(CommandContext commandContext) {
         ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(executionId);
         return ExecutionTree.forExecution(execution);
@@ -96,18 +97,22 @@ public class ExecutionTree implements Execution {
     return executions;
   }
 
+  @Override
   public String getId() {
     return wrappedExecution.getId();
   }
 
+  @Override
   public boolean isSuspended() {
     return wrappedExecution.isSuspended();
   }
 
+  @Override
   public boolean isEnded() {
     return wrappedExecution.isEnded();
   }
 
+  @Override
   public String getProcessInstanceId() {
     return wrappedExecution.getProcessInstanceId();
   }
@@ -132,6 +137,7 @@ public class ExecutionTree implements Execution {
     return ((PvmExecutionImpl) wrappedExecution).isEventScope();
   }
 
+  @Override
   public String getTenantId() {
     return wrappedExecution.getTenantId();
   }
@@ -140,6 +146,7 @@ public class ExecutionTree implements Execution {
     return wrappedExecution;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     appendString("", sb);

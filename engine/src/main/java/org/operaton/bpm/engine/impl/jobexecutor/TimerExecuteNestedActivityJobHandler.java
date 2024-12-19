@@ -32,10 +32,12 @@ public class TimerExecuteNestedActivityJobHandler extends TimerEventJobHandler {
 
   public static final String TYPE = "timer-transition";
 
+  @Override
   public String getType() {
     return TYPE;
   }
 
+  @Override
   public void execute(TimerJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     String activityId = configuration.getTimerElementKey();
     ActivityImpl activity = execution.getProcessDefinition().findActivity(activityId);

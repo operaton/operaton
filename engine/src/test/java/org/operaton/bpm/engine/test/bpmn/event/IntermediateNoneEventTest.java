@@ -31,6 +31,7 @@ public class IntermediateNoneEventTest extends PluggableProcessEngineTest {
   private static boolean listenerExcecuted = false;
   
   public static class MyExecutionListener implements ExecutionListener {
+    @Override
     public void notify(DelegateExecution execution) throws Exception {
       listenerExcecuted = true;
     }    

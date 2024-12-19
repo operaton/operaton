@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseInstanceClose extends AbstractCmmnEventAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "case-instance-close";
   }
@@ -46,6 +47,7 @@ public class AtomicOperationCaseInstanceClose extends AbstractCmmnEventAtomicOpe
     return execution;
   }
 
+  @Override
   protected void postTransitionNotification(CmmnExecution execution) {
     execution.deleteCascade();
   }

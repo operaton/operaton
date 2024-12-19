@@ -83,6 +83,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     this.repositoryService = repositoryService;
   }
 
+  @Override
   public DeploymentBuilder addInputStream(String resourceName, InputStream inputStream) {
     ensureNotNull("inputStream for resource '" + resourceName + "' is null", "inputStream", inputStream);
     byte[] bytes = IoUtil.readInputStream(inputStream, resourceName);
@@ -90,12 +91,14 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return addBytes(resourceName, bytes);
   }
 
+  @Override
   public DeploymentBuilder addClasspathResource(String resource) {
     InputStream inputStream = ReflectUtil.getResourceAsStream(resource);
     ensureNotNull("resource '" + resource + "' not found", "inputStream", inputStream);
     return addInputStream(resource, inputStream);
   }
 
+  @Override
   public DeploymentBuilder addString(String resourceName, String text) {
     ensureNotNull("text", text);
 
@@ -106,6 +109,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return addBytes(resourceName, bytes);
   }
 
+  @Override
   public DeploymentBuilder addModelInstance(String resourceName, CmmnModelInstance modelInstance) {
     ensureNotNull("modelInstance", modelInstance);
 
@@ -117,6 +121,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return addBytes(resourceName, outputStream.toByteArray());
   }
 
+  @Override
   public DeploymentBuilder addModelInstance(String resourceName, BpmnModelInstance modelInstance) {
     ensureNotNull("modelInstance", modelInstance);
 
@@ -128,6 +133,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return addBytes(resourceName, outputStream.toByteArray());
   }
 
+  @Override
   public DeploymentBuilder addModelInstance(String resourceName, DmnModelInstance modelInstance) {
     ensureNotNull("modelInstance", modelInstance);
 
@@ -154,6 +160,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return this;
   }
 
+  @Override
   public DeploymentBuilder addZipInputStream(ZipInputStream zipInputStream) {
     try {
       ZipEntry entry = zipInputStream.getNextEntry();
@@ -170,12 +177,14 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return this;
   }
 
+  @Override
   public DeploymentBuilder addDeploymentResources(String deploymentId) {
     ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
     deployments.add(deploymentId);
     return this;
   }
 
+  @Override
   public DeploymentBuilder addDeploymentResourceById(String deploymentId, String resourceId) {
     ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
     ensureNotNull(NotValidException.class, "resourceId", resourceId);
@@ -185,6 +194,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return this;
   }
 
+  @Override
   public DeploymentBuilder addDeploymentResourcesById(String deploymentId, List<String> resourceIds) {
     ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
 
@@ -197,6 +207,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return this;
   }
 
+  @Override
   public DeploymentBuilder addDeploymentResourceByName(String deploymentId, String resourceName) {
     ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
     ensureNotNull(NotValidException.class, "resourceName", resourceName);
@@ -206,6 +217,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return this;
   }
 
+  @Override
   public DeploymentBuilder addDeploymentResourcesByName(String deploymentId, List<String> resourceNames) {
     ensureNotNull(NotValidException.class, "deploymentId", deploymentId);
 
@@ -218,6 +230,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return this;
   }
 
+  @Override
   public DeploymentBuilder name(String name) {
     if (nameFromDeployment != null && !nameFromDeployment.isEmpty()) {
       String message = String.format("Cannot set the deployment name to '%s', because the property 'nameForDeployment' has been already set to '%s'.", name, nameFromDeployment);
@@ -227,6 +240,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return this;
   }
 
+  @Override
   public DeploymentBuilder nameFromDeployment(String deploymentId) {
     String name = deployment.getName();
     if (name != null && !name.isEmpty()) {
@@ -237,40 +251,48 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
     return this;
   }
 
+  @Override
   public DeploymentBuilder enableDuplicateFiltering() {
     return enableDuplicateFiltering(false);
   }
 
+  @Override
   public DeploymentBuilder enableDuplicateFiltering(boolean deployChangedOnly) {
     this.isDuplicateFilterEnabled = true;
     this.deployChangedOnly = deployChangedOnly;
     return this;
   }
 
+  @Override
   public DeploymentBuilder activateProcessDefinitionsOn(Date date) {
     this.processDefinitionsActivationDate = date;
     return this;
   }
 
+  @Override
   public DeploymentBuilder source(String source) {
     deployment.setSource(source);
     return this;
   }
 
+  @Override
   public DeploymentBuilder tenantId(String tenantId) {
     deployment.setTenantId(tenantId);
     return this;
   }
 
+  @Override
   public Deployment deploy() {
     return deployWithResult();
   }
 
+  @Override
   public DeploymentWithDefinitions deployWithResult() {
     return repositoryService.deployWithResult(this);
   }
 
 
+  @Override
   public Collection<String> getResourceNames() {
     if(deployment.getResources() == null) {
       return Collections.<String>emptySet();

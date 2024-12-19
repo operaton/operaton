@@ -46,29 +46,35 @@ public class IdentityInfoEntity implements DbEntity, HasDbRevision, Account, Ser
   protected String parentId;
   protected Map<String, String> details;
 
+  @Override
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<String, Object>();
     persistentState.put("value", value);
     persistentState.put("password", passwordBytes);
     return persistentState;
   }
-  
+
+  @Override
   public int getRevisionNext() {
     return revision+1;
   }
-  
+
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
-  
+
+  @Override
   public int getRevision() {
     return revision;
   }
 
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
   }
@@ -112,7 +118,8 @@ public class IdentityInfoEntity implements DbEntity, HasDbRevision, Account, Ser
   public void setPasswordBytes(byte[] passwordBytes) {
     this.passwordBytes = passwordBytes;
   }
-  
+
+  @Override
   public String getPassword() {
     return password;
   }
@@ -121,10 +128,12 @@ public class IdentityInfoEntity implements DbEntity, HasDbRevision, Account, Ser
     this.password = password;
   }
 
+  @Override
   public String getName() {
     return key;
   }
 
+  @Override
   public String getUsername() {
     return value;
   }
@@ -136,7 +145,8 @@ public class IdentityInfoEntity implements DbEntity, HasDbRevision, Account, Ser
   public void setParentId(String parentId) {
     this.parentId = parentId;
   }
-  
+
+  @Override
   public Map<String, String> getDetails() {
     return details;
   }

@@ -37,10 +37,12 @@ public class KnowledgeRequirementImpl extends DmnModelElementInstanceImpl implem
     super(instanceContext);
   }
 
+  @Override
   public BusinessKnowledgeModel getRequiredKnowledge() {
     return requiredKnowledgeRef.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setRequiredKnowledge(BusinessKnowledgeModel requiredKnowledge) {
     requiredKnowledgeRef.setReferenceTargetElement(this, requiredKnowledge);
   }
@@ -49,7 +51,8 @@ public class KnowledgeRequirementImpl extends DmnModelElementInstanceImpl implem
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(KnowledgeRequirement.class, DMN_ELEMENT_KNOWLEDGE_REQUIREMENT)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<KnowledgeRequirement>() {
-        public KnowledgeRequirement newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public KnowledgeRequirement newInstance(ModelTypeInstanceContext instanceContext) {
           return new KnowledgeRequirementImpl(instanceContext);
         }
       });

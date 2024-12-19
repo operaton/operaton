@@ -37,6 +37,7 @@ public class ScriptExecutionListenerSpec extends AbstractExecutionListenerSpec {
     super(eventName);
   }
 
+  @Override
   protected void configureCaseExecutionListener(CmmnModelInstance modelInstance, OperatonCaseExecutionListener listener) {
     OperatonScript script = SpecUtil.createElement(modelInstance, listener, null, OperatonScript.class);
     String scriptValue = "${myScript}";
@@ -44,6 +45,7 @@ public class ScriptExecutionListenerSpec extends AbstractExecutionListenerSpec {
     script.setTextContent(scriptValue);
   }
 
+  @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
     assertTrue(listener instanceof ScriptCaseExecutionListener);
 

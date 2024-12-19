@@ -38,10 +38,12 @@ public class TweetExceptionHandler implements JobHandler<JobHandlerConfiguration
 
   protected AtomicInteger exceptionsRemaining = new AtomicInteger(2);
 
+  @Override
   public String getType() {
     return TYPE;
   }
 
+  @Override
   public void execute(JobHandlerConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     if (exceptionsRemaining.decrementAndGet() >= 0) {
       throw new RuntimeException("exception remaining: "+exceptionsRemaining);
@@ -59,6 +61,7 @@ public class TweetExceptionHandler implements JobHandler<JobHandlerConfiguration
     };
   }
 
+  @Override
   public void onDelete(JobHandlerConfiguration configuration, JobEntity jobEntity) {
     // do nothing
   }

@@ -67,48 +67,56 @@ public class UserOperationLogQueryImpl extends AbstractQuery<UserOperationLogQue
     super(commandExecutor);
   }
 
+  @Override
   public UserOperationLogQuery deploymentId(String deploymentId) {
     ensureNotNull("deploymentId", deploymentId);
     this.deploymentId = deploymentId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery processDefinitionId(String processDefinitionId) {
     ensureNotNull("processDefinitionId", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery processDefinitionKey(String processDefinitionKey) {
     ensureNotNull("processDefinitionKey", processDefinitionKey);
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery processInstanceId(String processInstanceId) {
     ensureNotNull("processInstanceId", processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery executionId(String executionId) {
     ensureNotNull("executionId", executionId);
     this.executionId = executionId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery caseDefinitionId(String caseDefinitionId) {
     ensureNotNull("caseDefinitionId", caseDefinitionId);
     this.caseDefinitionId = caseDefinitionId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery caseInstanceId(String caseInstanceId) {
     ensureNotNull("caseInstanceId", caseInstanceId);
     this.caseInstanceId = caseInstanceId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery caseExecutionId(String caseExecutionId) {
     ensureNotNull("caseExecutionId", caseExecutionId);
     this.caseExecutionId = caseExecutionId;
@@ -116,98 +124,115 @@ public class UserOperationLogQueryImpl extends AbstractQuery<UserOperationLogQue
   }
 
 
+  @Override
   public UserOperationLogQuery taskId(String taskId) {
     ensureNotNull("taskId", taskId);
     this.taskId = taskId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery jobId(String jobId) {
     ensureNotNull("jobId", jobId);
     this.jobId = jobId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery jobDefinitionId(String jobDefinitionId) {
     ensureNotNull("jobDefinitionId", jobDefinitionId);
     this.jobDefinitionId = jobDefinitionId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery batchId(String batchId) {
     ensureNotNull("batchId", batchId);
     this.batchId = batchId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery userId(String userId) {
     ensureNotNull("userId", userId);
     this.userId = userId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery operationId(String operationId) {
     ensureNotNull("operationId", operationId);
     this.operationId = operationId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery externalTaskId(String externalTaskId) {
     ensureNotNull("externalTaskId", externalTaskId);
     this.externalTaskId = externalTaskId;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery operationType(String operationType) {
     ensureNotNull("operationType", operationType);
     this.operationType = operationType;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery property(String property) {
     ensureNotNull("property", property);
     this.property = property;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery entityType(String entityType) {
     ensureNotNull("entityType", entityType);
     this.entityType = entityType;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery entityTypeIn(String... entityTypes) {
     ensureNotNull("entity types", (Object[]) entityTypes);
     this.entityTypes = entityTypes;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery category(String category) {
     ensureNotNull("category", category);
     this.category = category;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery categoryIn(String... categories) {
     ensureNotNull("categories", (Object[]) categories);
     this.categories = categories;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery afterTimestamp(Date after) {
     this.timestampAfter = after;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery beforeTimestamp(Date before) {
     this.timestampBefore = before;
     return this;
   }
 
+  @Override
   public UserOperationLogQuery orderByTimestamp() {
     return orderBy(OperationLogQueryProperty.TIMESTAMP);
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return commandContext
@@ -215,6 +240,7 @@ public class UserOperationLogQueryImpl extends AbstractQuery<UserOperationLogQue
       .findOperationLogEntryCountByQueryCriteria(this);
   }
 
+  @Override
   public List<UserOperationLogEntry> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     return commandContext
@@ -226,6 +252,7 @@ public class UserOperationLogQueryImpl extends AbstractQuery<UserOperationLogQue
     return isTenantIdSet;
   }
 
+  @Override
   public UserOperationLogQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -233,6 +260,7 @@ public class UserOperationLogQueryImpl extends AbstractQuery<UserOperationLogQue
     return this;
   }
 
+  @Override
   public UserOperationLogQuery withoutTenantId() {
     this.tenantIds = null;
     this.isTenantIdSet = true;

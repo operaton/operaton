@@ -43,7 +43,8 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonList.class, OPERATON_ELEMENT_LIST)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonList>() {
-        public OperatonList newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonList newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonListImpl(instanceContext);
         }
       });
@@ -55,6 +56,7 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
     super(instanceContext);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends BpmnModelElementInstance> Collection<T> getValues() {
 
@@ -64,22 +66,27 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
         return ModelUtil.getModelElementCollection(getDomElement().getChildElements(), getModelInstance());
       }
 
+      @Override
       public int size() {
         return getElements().size();
       }
 
+      @Override
       public boolean isEmpty() {
         return getElements().isEmpty();
       }
 
+      @Override
       public boolean contains(Object o) {
         return getElements().contains(o);
       }
 
+      @Override
       public Iterator<T> iterator() {
         return (Iterator<T>) getElements().iterator();
       }
 
+      @Override
       public Object[] toArray() {
         return getElements().toArray();
       }
@@ -88,16 +95,19 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
         return getElements().toArray(a);
       }
 
+      @Override
       public boolean add(T t) {
         getDomElement().appendChild(t.getDomElement());
         return true;
       }
 
+      @Override
       public boolean remove(Object o) {
         ModelUtil.ensureInstanceOf(o, BpmnModelElementInstance.class);
         return getDomElement().removeChild(((BpmnModelElementInstance) o).getDomElement());
       }
 
+      @Override
       public boolean containsAll(Collection<?> c) {
         for (Object o : c) {
           if (!contains(o)) {
@@ -114,6 +124,7 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
         return true;
       }
 
+      @Override
       public boolean removeAll(Collection<?> c) {
         boolean result = false;
         for (Object o : c) {
@@ -122,10 +133,12 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
         return result;
       }
 
+      @Override
       public boolean retainAll(Collection<?> c) {
         throw new UnsupportedModelOperationException("retainAll()", "not implemented");
       }
 
+      @Override
       public void clear() {
         DomElement domElement = getDomElement();
         List<DomElement> childElements = domElement.getChildElements();

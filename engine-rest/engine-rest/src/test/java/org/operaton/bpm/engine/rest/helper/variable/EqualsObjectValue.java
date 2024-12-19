@@ -62,6 +62,7 @@ public class EqualsObjectValue extends EqualsTypedValue<EqualsObjectValue> {
     return this;
   }
 
+  @Override
   public boolean matches(Object argument) {
     if (!super.matches(argument)) {
       return false;
@@ -133,6 +134,7 @@ public class EqualsObjectValue extends EqualsTypedValue<EqualsObjectValue> {
     return new EqualsObjectValue();
   }
 
+  @Override
   public void describeTo(Description description) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getClass().getSimpleName());

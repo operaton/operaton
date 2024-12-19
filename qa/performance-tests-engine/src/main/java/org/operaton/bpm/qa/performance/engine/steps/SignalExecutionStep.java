@@ -32,6 +32,7 @@ public class SignalExecutionStep extends ProcessEngineAwareStep {
     this.executionIdVariableName = executionIdVariableName;
   }
 
+  @Override
   public void execute(PerfTestRunContext context) {
     String executionId = context.getVariable(executionIdVariableName);
     runtimeService.signal(executionId);

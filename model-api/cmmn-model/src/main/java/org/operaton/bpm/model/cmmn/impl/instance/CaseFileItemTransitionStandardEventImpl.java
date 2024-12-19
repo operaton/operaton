@@ -39,7 +39,8 @@ public class CaseFileItemTransitionStandardEventImpl extends CmmnModelElementIns
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileItemTransitionStandardEvent.class, CMMN_ELEMENT_STANDARD_EVENT)
       .namespaceUri(CMMN11_NS)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<CaseFileItemTransitionStandardEvent>() {
-        public CaseFileItemTransitionStandardEvent newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseFileItemTransitionStandardEvent newInstance(ModelTypeInstanceContext instanceContext) {
           return new CaseFileItemTransitionStandardEventImpl(instanceContext);
         }
       });
@@ -47,11 +48,13 @@ public class CaseFileItemTransitionStandardEventImpl extends CmmnModelElementIns
     typeBuilder.build();
   }
 
+  @Override
   public CaseFileItemTransition getValue() {
     String standardEvent = getTextContent().trim();
     return Enum.valueOf(CaseFileItemTransition.class, standardEvent);
   }
 
+  @Override
   public void setValue(CaseFileItemTransition value) {
     setTextContent(value.toString());
   }

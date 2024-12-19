@@ -32,6 +32,7 @@ public class ExpressionCaseVariableListener implements CaseVariableListener {
     this.expression = expression;
   }
 
+  @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
     DelegateCaseVariableInstanceImpl variableInstanceImpl = (DelegateCaseVariableInstanceImpl) variableInstance;
 

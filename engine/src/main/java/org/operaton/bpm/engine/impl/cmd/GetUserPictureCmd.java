@@ -39,6 +39,7 @@ public class GetUserPictureCmd implements Command<Picture>, Serializable {
     this.userId = userId;
   }
 
+  @Override
   public Picture execute(CommandContext commandContext) {
     ensureNotNull("userId", userId);
 

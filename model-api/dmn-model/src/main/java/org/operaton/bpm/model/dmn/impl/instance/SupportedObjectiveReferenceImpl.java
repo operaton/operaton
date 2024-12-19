@@ -37,7 +37,8 @@ public class SupportedObjectiveReferenceImpl extends DmnElementReferenceImpl imp
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<SupportedObjectiveReference>() {
-        public SupportedObjectiveReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public SupportedObjectiveReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new SupportedObjectiveReferenceImpl(instanceContext);
         }
       });

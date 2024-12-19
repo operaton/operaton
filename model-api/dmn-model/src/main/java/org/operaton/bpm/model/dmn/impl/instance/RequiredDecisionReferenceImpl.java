@@ -37,7 +37,8 @@ public class RequiredDecisionReferenceImpl extends DmnElementReferenceImpl imple
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<RequiredDecisionReference>() {
-        public RequiredDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public RequiredDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new RequiredDecisionReferenceImpl(instanceContext);
         }
       });

@@ -44,7 +44,8 @@ public class CorrelationPropertyBindingImpl extends BaseElementImpl implements C
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<CorrelationPropertyBinding>() {
-        public CorrelationPropertyBinding newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CorrelationPropertyBinding newInstance(ModelTypeInstanceContext instanceContext) {
           return new CorrelationPropertyBindingImpl(instanceContext);
         }
       });
@@ -67,18 +68,22 @@ public class CorrelationPropertyBindingImpl extends BaseElementImpl implements C
     super(instanceContext);
   }
 
+  @Override
   public CorrelationProperty getCorrelationProperty() {
     return correlationPropertyRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setCorrelationProperty(CorrelationProperty correlationProperty) {
     correlationPropertyRefAttribute.setReferenceTargetElement(this, correlationProperty);
   }
 
+  @Override
   public DataPath getDataPath() {
     return dataPathChild.getChild(this);
   }
 
+  @Override
   public void setDataPath(DataPath dataPath) {
     dataPathChild.setChild(this, dataPath);
   }

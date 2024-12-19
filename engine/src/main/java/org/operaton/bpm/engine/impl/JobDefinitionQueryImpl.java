@@ -54,57 +54,67 @@ public class JobDefinitionQueryImpl extends AbstractQuery<JobDefinitionQuery, Jo
     super(commandExecutor);
   }
 
+  @Override
   public JobDefinitionQuery jobDefinitionId(String jobDefinitionId) {
     ensureNotNull("Job definition id", jobDefinitionId);
     this.id = jobDefinitionId;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery activityIdIn(String... activityIds) {
     ensureNotNull("Activity ids", (Object[]) activityIds);
     this.activityIds = activityIds;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery processDefinitionId(String processDefinitionId) {
     ensureNotNull("Process definition id", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery processDefinitionKey(String processDefinitionKey) {
     ensureNotNull("Process definition key", processDefinitionKey);
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery jobType(String jobType) {
     ensureNotNull("Job type", jobType);
     this.jobType = jobType;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery jobConfiguration(String jobConfiguration) {
     ensureNotNull("Job configuration", jobConfiguration);
     this.jobConfiguration = jobConfiguration;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery active() {
     this.suspensionState = SuspensionState.ACTIVE;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery suspended() {
     this.suspensionState = SuspensionState.SUSPENDED;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery withOverridingJobPriority() {
     this.withOverridingJobPriority = true;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -112,12 +122,14 @@ public class JobDefinitionQueryImpl extends AbstractQuery<JobDefinitionQuery, Jo
     return this;
   }
 
+  @Override
   public JobDefinitionQuery withoutTenantId() {
     isTenantIdSet = true;
     this.tenantIds = null;
     return this;
   }
 
+  @Override
   public JobDefinitionQuery includeJobDefinitionsWithoutTenantId() {
     this.includeJobDefinitionsWithoutTenantId = true;
     return this;
@@ -125,30 +137,37 @@ public class JobDefinitionQueryImpl extends AbstractQuery<JobDefinitionQuery, Jo
 
   // order by ///////////////////////////////////////////
 
+  @Override
   public JobDefinitionQuery orderByJobDefinitionId() {
     return orderBy(JobDefinitionQueryProperty.JOB_DEFINITION_ID);
   }
 
+  @Override
   public JobDefinitionQuery orderByActivityId() {
     return orderBy(JobDefinitionQueryProperty.ACTIVITY_ID);
   }
 
+  @Override
   public JobDefinitionQuery orderByProcessDefinitionId() {
     return orderBy(JobDefinitionQueryProperty.PROCESS_DEFINITION_ID);
   }
 
+  @Override
   public JobDefinitionQuery orderByProcessDefinitionKey() {
     return orderBy(JobDefinitionQueryProperty.PROCESS_DEFINITION_KEY);
   }
 
+  @Override
   public JobDefinitionQuery orderByJobType() {
     return orderBy(JobDefinitionQueryProperty.JOB_TYPE);
   }
 
+  @Override
   public JobDefinitionQuery orderByJobConfiguration() {
     return orderBy(JobDefinitionQueryProperty.JOB_CONFIGURATION);
   }
 
+  @Override
   public JobDefinitionQuery orderByTenantId() {
     return orderBy(JobDefinitionQueryProperty.TENANT_ID);
   }

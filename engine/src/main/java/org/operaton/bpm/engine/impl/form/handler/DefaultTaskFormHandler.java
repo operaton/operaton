@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
  */
 public class DefaultTaskFormHandler extends DefaultFormHandler implements TaskFormHandler {
 
+  @Override
   public TaskFormData createTaskForm(TaskEntity task) {
     TaskFormDataImpl taskFormData = new TaskFormDataImpl();
 

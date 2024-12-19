@@ -32,6 +32,7 @@ public class ExpressionCaseExecutionListener implements CaseExecutionListener {
     this.expression = expression;
   }
 
+  @Override
   public void notify(DelegateCaseExecution caseExecution) throws Exception {
     // Return value of expression is ignored
     expression.getValue(caseExecution);

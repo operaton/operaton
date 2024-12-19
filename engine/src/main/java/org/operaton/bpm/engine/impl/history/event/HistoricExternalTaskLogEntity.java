@@ -54,6 +54,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
 
   protected int state;
 
+  @Override
   public Date getTimestamp() {
     return timestamp;
   }
@@ -62,6 +63,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     this.timestamp = timestamp;
   }
 
+  @Override
   public String getExternalTaskId() {
     return externalTaskId;
   }
@@ -70,6 +72,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     this.externalTaskId = externalTaskId;
   }
 
+  @Override
   public String getTopicName() {
     return topicName;
   }
@@ -78,6 +81,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     this.topicName = topicName;
   }
 
+  @Override
   public String getWorkerId() {
     return workerId;
   }
@@ -86,6 +90,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     this.workerId = workerId;
   }
 
+  @Override
   public Integer getRetries() {
     return retries;
   }
@@ -94,6 +99,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     this.retries = retries;
   }
 
+  @Override
   public String getErrorMessage() {
     return errorMessage;
   }
@@ -144,6 +150,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     return null;
   }
 
+  @Override
   public String getActivityId() {
     return activityId;
   }
@@ -152,6 +159,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     this.activityId = activityId;
   }
 
+  @Override
   public String getActivityInstanceId() {
     return activityInstanceId;
   }
@@ -160,6 +168,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     this.activityInstanceId = activityInstanceId;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -168,6 +177,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     this.tenantId = tenantId;
   }
 
+  @Override
   public long getPriority() {
     return priority;
   }
@@ -209,6 +219,7 @@ public class HistoricExternalTaskLogEntity extends HistoryEvent implements Histo
     return rootProcessInstanceId;
   }
 
+  @Override
   public void setRootProcessInstanceId(String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }

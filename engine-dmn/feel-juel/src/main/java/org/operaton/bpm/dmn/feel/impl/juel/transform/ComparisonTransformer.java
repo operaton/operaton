@@ -27,10 +27,12 @@ public class ComparisonTransformer implements FeelToJuelTransformer {
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
   public static final Pattern COMPARISON_PATTERN = Pattern.compile("^(<=|>=|<|>)([^=].*)$");
 
+  @Override
   public boolean canTransform(String feelExpression) {
     return feelExpression.startsWith("<=") || feelExpression.startsWith("<") || feelExpression.startsWith(">=") || feelExpression.startsWith(">");
   }
 
+  @Override
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     Matcher matcher = COMPARISON_PATTERN.matcher(feelExpression);
     if (matcher.matches()) {

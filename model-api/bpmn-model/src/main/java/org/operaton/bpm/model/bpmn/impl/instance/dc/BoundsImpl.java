@@ -42,7 +42,8 @@ public class BoundsImpl extends BpmnModelElementInstanceImpl implements Bounds {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Bounds.class, DC_ELEMENT_BOUNDS)
       .namespaceUri(DC_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Bounds>() {
-        public Bounds newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Bounds newInstance(ModelTypeInstanceContext instanceContext) {
           return new BoundsImpl(instanceContext);
         }
       });
@@ -70,34 +71,42 @@ public class BoundsImpl extends BpmnModelElementInstanceImpl implements Bounds {
     super(instanceContext);
   }
 
+  @Override
   public Double getX() {
     return xAttribute.getValue(this);
   }
 
+  @Override
   public void setX(double x) {
     xAttribute.setValue(this, x);
   }
 
+  @Override
   public Double getY() {
     return yAttribute.getValue(this);
   }
 
+  @Override
   public void setY(double y) {
     yAttribute.setValue(this, y);
   }
 
+  @Override
   public Double getWidth() {
     return widthAttribute.getValue(this);
   }
 
+  @Override
   public void setWidth(double width) {
     widthAttribute.setValue(this, width);
   }
 
+  @Override
   public Double getHeight() {
     return heightAttribute.getValue(this);
   }
 
+  @Override
   public void setHeight(double height) {
     heightAttribute.setValue(this, height);
   }

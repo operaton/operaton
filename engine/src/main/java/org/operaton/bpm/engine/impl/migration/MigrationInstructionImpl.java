@@ -39,14 +39,17 @@ public class MigrationInstructionImpl implements MigrationInstruction {
     this.updateEventTrigger = updateEventTrigger;
   }
 
+  @Override
   public String getSourceActivityId() {
     return sourceActivityId;
   }
 
+  @Override
   public String getTargetActivityId() {
     return targetActivityId;
   }
 
+  @Override
   public boolean isUpdateEventTrigger() {
     return updateEventTrigger;
   }
@@ -55,6 +58,7 @@ public class MigrationInstructionImpl implements MigrationInstruction {
     this.updateEventTrigger = updateEventTrigger;
   }
 
+  @Override
   public String toString() {
     return "MigrationInstructionImpl{" +
       "sourceActivityId='" + sourceActivityId + '\'' +

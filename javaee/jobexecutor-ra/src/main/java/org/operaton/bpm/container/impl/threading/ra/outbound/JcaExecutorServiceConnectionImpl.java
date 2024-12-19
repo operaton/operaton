@@ -39,10 +39,12 @@ public class JcaExecutorServiceConnectionImpl implements JcaExecutorServiceConne
     this.mcf = mcf;
   }
 
+  @Override
   public void closeConnection() {
     mc.closeHandle(this);
   }
 
+  @Override
   public boolean schedule(Runnable runnable, boolean isLongRunning) {
     return mc.schedule(runnable, isLongRunning);
   }

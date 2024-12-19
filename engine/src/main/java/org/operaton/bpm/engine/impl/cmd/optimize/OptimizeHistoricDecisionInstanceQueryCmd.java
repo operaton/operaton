@@ -35,6 +35,7 @@ public class OptimizeHistoricDecisionInstanceQueryCmd implements Command<List<Hi
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<HistoricDecisionInstance> execute(CommandContext commandContext) {
     return commandContext.getOptimizeManager().getHistoricDecisionInstances(evaluatedAfter, evaluatedAt, maxResults);
   }

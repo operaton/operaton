@@ -658,6 +658,7 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
       for (int i = 0; i < invocationCount; i++) {
         callables.add(new Callable<Exception>() {
+          @Override
           public Exception call() throws Exception {
             try {
               authorizationService.isUserAuthorized("jonny", null, UPDATE, TestResource.RESOURCE1, ANY);

@@ -37,7 +37,8 @@ public class InputDataReferenceImpl extends DmnElementReferenceImpl implements I
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<InputDataReference>() {
-        public InputDataReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputDataReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputDataReferenceImpl(instanceContext);
         }
       });

@@ -36,6 +36,7 @@ public class MigrationPlanValidationReportImpl implements MigrationPlanValidatio
     this.migrationPlan = migrationPlan;
   }
 
+  @Override
   public MigrationPlan getMigrationPlan() {
     return migrationPlan;
   }
@@ -54,10 +55,12 @@ public class MigrationPlanValidationReportImpl implements MigrationPlanValidatio
     variableReports.put(variableName, variableReport);
   }
 
+  @Override
   public boolean hasInstructionReports() {
     return !instructionReports.isEmpty();
   }
 
+  @Override
   public List<MigrationInstructionValidationReport> getInstructionReports() {
     return instructionReports;
   }

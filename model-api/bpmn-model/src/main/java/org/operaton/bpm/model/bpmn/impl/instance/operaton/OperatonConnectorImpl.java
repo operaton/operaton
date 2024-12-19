@@ -44,7 +44,8 @@ public class OperatonConnectorImpl extends BpmnModelElementInstanceImpl implemen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConnector.class, OPERATON_ELEMENT_CONNECTOR)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonConnector>() {
-        public OperatonConnector newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonConnector newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonConnectorImpl(instanceContext);
         }
       });
@@ -65,18 +66,22 @@ public class OperatonConnectorImpl extends BpmnModelElementInstanceImpl implemen
     super(instanceContext);
   }
 
+  @Override
   public OperatonConnectorId getOperatonConnectorId() {
     return operatonConnectorIdChild.getChild(this);
   }
 
+  @Override
   public void setOperatonConnectorId(OperatonConnectorId operatonConnectorId) {
     operatonConnectorIdChild.setChild(this, operatonConnectorId);
   }
 
+  @Override
   public OperatonInputOutput getOperatonInputOutput() {
     return operatonInputOutputChild.getChild(this);
   }
 
+  @Override
   public void setOperatonInputOutput(OperatonInputOutput operatonInputOutput) {
     operatonInputOutputChild.setChild(this, operatonInputOutput);
   }

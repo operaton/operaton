@@ -95,6 +95,7 @@ public class ExecutionTreeStructureAssertion implements ExecutionTreeAssertion {
     return true;
   }
 
+  @Override
   public void assertExecution(ExecutionTree tree) {
     boolean matches = matches(tree);
     if (!matches) {
@@ -116,6 +117,7 @@ public class ExecutionTreeStructureAssertion implements ExecutionTreeAssertion {
     }
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("[activityId=");

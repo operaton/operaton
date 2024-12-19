@@ -31,10 +31,12 @@ public class ShortValueSerializer extends PrimitiveValueSerializer<ShortValue> {
     super(ValueType.SHORT);
   }
 
+  @Override
   public ShortValue convertToTypedValue(UntypedValueImpl untypedValue) {
     return Variables.shortValue((Short) untypedValue.getValue(), untypedValue.isTransient());
   }
 
+  @Override
   public ShortValue readValue(ValueFields valueFields, boolean asTransientValue) {
     Long longValue = valueFields.getLongValue();
     Short shortValue = null;

@@ -542,6 +542,7 @@ public class DefaultDmnEngineConfigurationApiTest {
 
     public DmnDecisionEvaluationEvent evaluationEvent;
 
+    @Override
     public void notify(DmnDecisionEvaluationEvent evaluationEvent) {
       this.evaluationEvent = evaluationEvent;
     }

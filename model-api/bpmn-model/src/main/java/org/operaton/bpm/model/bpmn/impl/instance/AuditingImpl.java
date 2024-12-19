@@ -38,7 +38,8 @@ public class AuditingImpl extends BaseElementImpl implements Auditing {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Auditing>() {
-        public Auditing newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Auditing newInstance(ModelTypeInstanceContext instanceContext) {
           return new AuditingImpl(instanceContext);
         }
       });

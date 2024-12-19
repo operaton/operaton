@@ -64,6 +64,7 @@ public class GetFormKeyCmd implements Command<String> {
     this.processDefinitionId = processDefinitionId;
   }
 
+  @Override
   public String execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();

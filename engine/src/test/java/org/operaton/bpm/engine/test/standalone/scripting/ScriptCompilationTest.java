@@ -142,7 +142,8 @@ public class ScriptCompilationTest extends PluggableProcessEngineTest {
     final ScriptingEnvironment scriptingEnvironment = processEngineConfiguration.getScriptingEnvironment();
     return processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Object>() {
-        public Object execute(CommandContext commandContext) {
+      @Override
+      public Object execute(CommandContext commandContext) {
           return scriptingEnvironment.execute(script, null);
         }
       });

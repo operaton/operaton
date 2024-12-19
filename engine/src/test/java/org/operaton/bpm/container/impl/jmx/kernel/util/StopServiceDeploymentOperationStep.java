@@ -28,10 +28,12 @@ public class StopServiceDeploymentOperationStep extends DeploymentOperationStep 
     this.serviceName = serviceName;
   }
 
+  @Override
   public String getName() {
     return "stop "+serviceName;
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
 

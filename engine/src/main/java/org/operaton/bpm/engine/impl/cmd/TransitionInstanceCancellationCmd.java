@@ -41,6 +41,7 @@ public class TransitionInstanceCancellationCmd extends AbstractInstanceCancellat
     return transitionInstanceId;
   }
 
+  @Override
   protected ExecutionEntity determineSourceInstanceExecution(final CommandContext commandContext) {
     ActivityInstance instance = commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId));
     TransitionInstance instanceToCancel = findTransitionInstance(instance, transitionInstanceId);
@@ -54,6 +55,7 @@ public class TransitionInstanceCancellationCmd extends AbstractInstanceCancellat
     return transitionExecution;
   }
 
+  @Override
   protected String describe() {
     return "Cancel transition instance '" + transitionInstanceId + "'";
   }

@@ -26,6 +26,7 @@ public class TimerSuspendJobDefinitionHandler extends TimerChangeJobDefinitionSu
 
   public static final String TYPE = "suspend-job-definition";
 
+  @Override
   public String getType() {
     return TYPE;
   }

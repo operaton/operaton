@@ -40,6 +40,7 @@ public class FindActiveActivityIdsCmd implements Command<List<String>>, Serializ
     this.executionId = executionId;
   }
 
+  @Override
   public List<String> execute(CommandContext commandContext) {
     ensureNotNull("executionId", executionId);
 

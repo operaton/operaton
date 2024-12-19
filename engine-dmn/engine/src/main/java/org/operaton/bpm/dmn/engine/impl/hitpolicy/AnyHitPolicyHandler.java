@@ -38,6 +38,7 @@ public class AnyHitPolicyHandler implements DmnHitPolicyHandler {
     return HIT_POLICY;
   }
 
+  @Override
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     List<DmnEvaluatedDecisionRule> matchingRules = decisionTableEvaluationEvent.getMatchingRules();
 

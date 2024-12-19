@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class AsyncThrowErrorService implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     Object shouldThrowError = execution.getVariable("shouldThrowError");
     if (shouldThrowError != null) {

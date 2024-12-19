@@ -46,6 +46,7 @@ public class UpdateDecisionDefinitionHistoryTimeToLiveCmd implements Command<Voi
     this.historyTimeToLive = historyTimeToLive;
   }
 
+  @Override
   public Void execute(CommandContext context) {
     checkAuthorization(context);
 

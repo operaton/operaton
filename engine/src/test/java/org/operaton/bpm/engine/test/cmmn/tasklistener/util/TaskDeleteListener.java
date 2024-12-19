@@ -26,6 +26,7 @@ public class TaskDeleteListener implements TaskListener {
 
   public static int eventCounter = 0;
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     TaskDeleteListener.eventCounter++;
   }

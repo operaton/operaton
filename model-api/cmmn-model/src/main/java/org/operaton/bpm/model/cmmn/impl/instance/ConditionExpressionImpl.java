@@ -40,7 +40,8 @@ public class ConditionExpressionImpl extends ExpressionImpl implements Condition
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<ConditionExpression>() {
-        public ConditionExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ConditionExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new ConditionExpressionImpl(instanceContext);
         }
       });

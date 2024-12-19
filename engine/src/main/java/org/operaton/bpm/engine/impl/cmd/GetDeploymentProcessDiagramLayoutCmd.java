@@ -47,6 +47,7 @@ public class GetDeploymentProcessDiagramLayoutCmd implements Command<DiagramLayo
     this.processDefinitionId = processDefinitionId;
   }
 
+  @Override
   public DiagramLayout execute(final CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
         .getProcessEngineConfiguration()

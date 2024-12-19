@@ -40,6 +40,7 @@ public class DisableCaseExecutionCmd extends StateTransitionCaseExecutionCmd {
     super(builder);
   }
 
+  @Override
   protected void performStateTransition(CommandContext commandContext, CaseExecutionEntity caseExecution) {
     caseExecution.disable();
   }

@@ -32,35 +32,43 @@ public class AstMethod extends AstNode {
 		this.params = params;
 	}
 
-	public boolean isLiteralText() {
+  @Override
+  public boolean isLiteralText() {
 		return false;
 	}
 
-	public Class<?> getType(Bindings bindings, ELContext context) {
+  @Override
+  public Class<?> getType(Bindings bindings, ELContext context) {
 		return null;
 	}
 
-	public boolean isReadOnly(Bindings bindings, ELContext context) {
+  @Override
+  public boolean isReadOnly(Bindings bindings, ELContext context) {
 		return true;
 	}
 
-	public void setValue(Bindings bindings, ELContext context, Object value) {
+  @Override
+  public void setValue(Bindings bindings, ELContext context, Object value) {
 		throw new ELException(LocalMessages.get("error.value.set.rvalue", getStructuralId(bindings)));
 	}
 
-	public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
+  @Override
+  public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
 		return null;
 	}
 
-	public boolean isLeftValue() {
+  @Override
+  public boolean isLeftValue() {
 		return false;
 	}
-	
-	public boolean isMethodInvocation() {
+
+  @Override
+  public boolean isMethodInvocation() {
 		return true;
 	}
-	
-	public final ValueReference getValueReference(Bindings bindings, ELContext context) {
+
+  @Override
+  public final ValueReference getValueReference(Bindings bindings, ELContext context) {
 		return null;
 	}
 
@@ -75,7 +83,8 @@ public class AstMethod extends AstNode {
 		return invoke(bindings, context, null, null, null);
 	}
 
-	public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
+  @Override
+  public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
 		Object base = property.getPrefix().eval(bindings, context);
 		if (base == null) {
 			throw new PropertyNotFoundException(LocalMessages.get("error.property.base.null", property.getPrefix()));
@@ -98,11 +107,13 @@ public class AstMethod extends AstNode {
 		return result;
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return 2;
 	}
 
-	public Node getChild(int i) {
+  @Override
+  public Node getChild(int i) {
 		return i == 0 ? property : i == 1 ? params : null;
 	}
 

@@ -56,6 +56,7 @@ public class AcquireJobsCmd implements Command<AcquiredJobs>, OptimisticLockingL
     this.numJobsToAcquire = numJobsToAcquire;
   }
 
+  @Override
   public AcquiredJobs execute(CommandContext commandContext) {
 
     acquiredJobs = new AcquiredJobs(numJobsToAcquire);

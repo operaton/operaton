@@ -25,10 +25,12 @@ import java.util.Collection;
  */
 public class TimerEventListenerTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(EventListener.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(TimerExpression.class, 0, 1),
@@ -36,6 +38,7 @@ public class TimerEventListenerTest extends CmmnModelElementInstanceTest {
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

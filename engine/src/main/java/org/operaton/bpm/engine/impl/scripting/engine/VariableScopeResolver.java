@@ -41,10 +41,12 @@ public class VariableScopeResolver implements Resolver {
     this.variableScope = variableScope;
   }
 
+  @Override
   public boolean containsKey(Object key) {
     return variableScopeKey.equals(key) || variableScope.hasVariable((String) key);
   }
 
+  @Override
   public Object get(Object key) {
     if (variableScopeKey.equals(key)) {
       return variableScope;
@@ -52,6 +54,7 @@ public class VariableScopeResolver implements Resolver {
     return variableScope.getVariable((String) key);
   }
 
+  @Override
   public Set<String> keySet() {
     // get variable names will return a new set instance
     Set<String> variableNames = variableScope.getVariableNames();

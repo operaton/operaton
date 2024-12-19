@@ -40,15 +40,18 @@ public abstract class AbstractTypedValueSerializer<T extends TypedValue> impleme
     valueType = type;
   }
 
+  @Override
   public ValueType getType() {
     return valueType;
   }
 
+  @Override
   public String getSerializationDataformat() {
     // default implementation returns null
     return null;
   }
 
+  @Override
   public boolean canHandle(TypedValue value) {
     if(value.getType() != null && !valueType.getClass().isAssignableFrom(value.getType().getClass())) {
       return false;
@@ -60,6 +63,7 @@ public abstract class AbstractTypedValueSerializer<T extends TypedValue> impleme
 
   protected abstract boolean canWriteValue(TypedValue value);
 
+  @Override
   public boolean isMutableValue(T typedValue) {
     // default
     return false;

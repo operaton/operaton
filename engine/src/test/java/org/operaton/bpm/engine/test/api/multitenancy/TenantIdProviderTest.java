@@ -1198,6 +1198,7 @@ public class TenantIdProviderTest {
 
     protected static TenantIdProvider delegate;
 
+    @Override
     public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       if(delegate != null) {
         return delegate.provideTenantIdForProcessInstance(ctx);
@@ -1211,6 +1212,7 @@ public class TenantIdProviderTest {
       delegate = null;
     }
 
+    @Override
     public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       if (delegate != null) {
         return delegate.provideTenantIdForHistoricDecisionInstance(ctx);
@@ -1219,6 +1221,7 @@ public class TenantIdProviderTest {
       }
     }
 
+    @Override
     public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       if (delegate != null) {
         return delegate.provideTenantIdForCaseInstance(ctx);
@@ -1234,16 +1237,19 @@ public class TenantIdProviderTest {
     protected List<TenantIdProviderHistoricDecisionInstanceContext> dmnParameters = new ArrayList<>();
     protected List<TenantIdProviderCaseInstanceContext> caseParameters = new ArrayList<>();
 
+    @Override
     public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       parameters.add(ctx);
       return null;
     }
 
+    @Override
     public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       dmnParameters.add(ctx);
       return null;
     }
 
+    @Override
     public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       caseParameters.add(ctx);
       return null;
@@ -1260,14 +1266,17 @@ public class TenantIdProviderTest {
       this.tenantIdToSet = tenantIdToSet;
     }
 
+    @Override
     public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return ctx.getSuperExecution() != null ? tenantIdToSet : null;
     }
 
+    @Override
     public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return null;
     }
 
+    @Override
     public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return null;
     }
@@ -1283,14 +1292,17 @@ public class TenantIdProviderTest {
       this.tenantIdToSet = tenantIdToSet;
     }
 
+    @Override
     public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return ctx.getSuperExecution() == null ? tenantIdToSet : null;
     }
 
+    @Override
     public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return null;
     }
 
+    @Override
     public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return null;
     }
@@ -1305,14 +1317,17 @@ public class TenantIdProviderTest {
       this.tenantIdToSet = tenantIdToSet;
     }
 
+    @Override
     public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return null;
     }
 
+    @Override
     public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return ctx.getExecution() != null ? tenantIdToSet : null;
     }
 
+    @Override
     public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return null;
     }
@@ -1327,14 +1342,17 @@ public class TenantIdProviderTest {
       this.tenantIdToSet = tenantIdToSet;
     }
 
+    @Override
     public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return null;
     }
 
+    @Override
     public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return null;
     }
 
+    @Override
     public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return ctx.getSuperCaseExecution() != null ? tenantIdToSet : null;
     }
@@ -1349,14 +1367,17 @@ public class TenantIdProviderTest {
       this.tenantIdToSet = tenantIdToSet;
     }
 
+    @Override
     public String provideTenantIdForProcessInstance(TenantIdProviderProcessInstanceContext ctx) {
       return null;
     }
 
+    @Override
     public String provideTenantIdForHistoricDecisionInstance(TenantIdProviderHistoricDecisionInstanceContext ctx) {
       return null;
     }
 
+    @Override
     public String provideTenantIdForCaseInstance(TenantIdProviderCaseInstanceContext ctx) {
       return ctx.getSuperCaseExecution() == null ? tenantIdToSet : null;
     }

@@ -64,63 +64,78 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
     super(null);
   }
 
+  @Override
   public int getRevision() {
     return revision;
   }
 
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
   }
 
+  @Override
   public int getRevisionNext() {
     return revision + 1;
   }
 
+  @Override
   public String getCategory() {
     return category;
   }
 
+  @Override
   public void setCategory(String category) {
     this.category = category;
   }
 
+  @Override
   public String getKey() {
     return key;
   }
 
+  @Override
   public void setKey(String key) {
     this.key = key;
   }
 
+  @Override
   public int getVersion() {
     return version;
   }
 
+  @Override
   public void setVersion(int version) {
     this.version = version;
     this.firstVersion = (this.version == 1);
   }
 
+  @Override
   public String getDeploymentId() {
     return deploymentId;
   }
 
+  @Override
   public void setDeploymentId(String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public String getResourceName() {
     return resourceName;
   }
 
+  @Override
   public void setResourceName(String resourceName) {
     this.resourceName = resourceName;
   }
 
+  @Override
   public String getDiagramResourceName() {
     return diagramResourceName;
   }
 
+  @Override
   public void setDiagramResourceName(String diagramResourceName) {
     this.diagramResourceName = diagramResourceName;
   }
@@ -133,10 +148,12 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
     this.taskDefinitions = taskDefinitions;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
 
+  @Override
   public void setTenantId(String tenantId) {
     this.tenantId = tenantId;
   }
@@ -146,12 +163,14 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
     return historyTimeToLive;
   }
 
+  @Override
   public void setHistoryTimeToLive(Integer historyTimeToLive) {
     this.historyTimeToLive = historyTimeToLive;
   }
 
   // previous case definition //////////////////////////////////////////////
 
+  @Override
   public CaseDefinitionEntity getPreviousDefinition() {
     CaseDefinitionEntity previousCaseDefinition = null;
 
@@ -238,6 +257,7 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
     return caseInstance;
   }
 
+  @Override
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<String, Object>();
     persistentState.put("historyTimeToLive", this.historyTimeToLive);

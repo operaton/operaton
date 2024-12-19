@@ -22,6 +22,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
 
 public class FailingExecutionListener implements ExecutionListener {
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     throw new RuntimeException("I'm supposed to fail!");
   }

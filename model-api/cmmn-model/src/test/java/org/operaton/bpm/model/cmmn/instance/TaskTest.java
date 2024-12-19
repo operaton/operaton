@@ -27,10 +27,12 @@ import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
  */
 public class TaskTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(PlanItemDefinition.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(CmmnModelConstants.CMMN10_NS, InputsCaseParameter.class),
@@ -40,6 +42,7 @@ public class TaskTest extends CmmnModelElementInstanceTest {
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
           new AttributeAssumption("isBlocking", false, false, Boolean.TRUE)

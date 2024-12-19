@@ -252,6 +252,7 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
     } else {
 
       return SecurityActions.runWithoutAuthentication(new SecurityAction<Boolean>() {
+        @Override
         public Boolean execute() {
           return processEngine.getIdentityService()
               .createUserQuery()

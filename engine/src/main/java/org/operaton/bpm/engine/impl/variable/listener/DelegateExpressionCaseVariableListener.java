@@ -41,6 +41,7 @@ public class DelegateExpressionCaseVariableListener implements CaseVariableListe
     this.fieldDeclarations = fieldDeclarations;
   }
 
+  @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
     Object delegate = expression.getValue(variableInstance.getSourceExecution());
     applyFieldDeclaration(fieldDeclarations, delegate);

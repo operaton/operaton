@@ -2197,6 +2197,7 @@ public class HistoryCleanupRemovalTimeTest {
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
         return null;
@@ -2207,6 +2208,7 @@ public class HistoryCleanupRemovalTimeTest {
   protected void clearJob(final String jobId) {
     engineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         JobEntity job = commandContext.getJobManager().findJobById(jobId);
         if (job != null) {
@@ -2220,6 +2222,7 @@ public class HistoryCleanupRemovalTimeTest {
   protected void clearMeterLog() {
     engineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getMeterLogManager().deleteAll();
 

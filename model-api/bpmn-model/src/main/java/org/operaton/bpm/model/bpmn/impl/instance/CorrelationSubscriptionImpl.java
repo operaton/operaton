@@ -47,7 +47,8 @@ public class CorrelationSubscriptionImpl extends BaseElementImpl implements Corr
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<CorrelationSubscription>() {
-        public CorrelationSubscription newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CorrelationSubscription newInstance(ModelTypeInstanceContext instanceContext) {
           return new CorrelationSubscriptionImpl(instanceContext);
         }
       });
@@ -69,14 +70,17 @@ public class CorrelationSubscriptionImpl extends BaseElementImpl implements Corr
     super(instanceContext);
   }
 
+  @Override
   public CorrelationKey getCorrelationKey() {
     return correlationKeyAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setCorrelationKey(CorrelationKey correlationKey) {
     correlationKeyAttribute.setReferenceTargetElement(this, correlationKey);
   }
 
+  @Override
   public Collection<CorrelationPropertyBinding> getCorrelationPropertyBindings() {
     return correlationPropertyBindingCollection.get(this);
   }

@@ -23,6 +23,7 @@ import org.operaton.bpm.model.dmn.instance.Rule;
 
 public class DmnDecisionTableRuleTransformHandler implements DmnElementTransformHandler<Rule, DmnDecisionTableRuleImpl> {
 
+  @Override
   public DmnDecisionTableRuleImpl handleElement(DmnElementTransformContext context, Rule rule) {
     return createFromRule(context, rule);
   }

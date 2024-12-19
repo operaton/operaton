@@ -67,6 +67,7 @@ public class CompetingHistoricAttachmentPartitioningTest extends AbstractPartiti
       this.attachmentId = attachmentId;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
 
       commandContext.getDbEntityManager()

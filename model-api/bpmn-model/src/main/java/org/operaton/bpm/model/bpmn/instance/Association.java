@@ -38,6 +38,7 @@ public interface Association extends Artifact {
 
   void setAssociationDirection(AssociationDirection associationDirection);
 
+  @Override
   BpmnEdge getDiagramElement();
 
 }

@@ -28,6 +28,7 @@ public class TestIdGenerator implements IdGenerator {
 
   protected AtomicLong atomicLong = new AtomicLong();
 
+  @Override
   public String getNextId() {
     long nextId = atomicLong.getAndIncrement();
     return String.valueOf(nextId);

@@ -43,6 +43,7 @@ public class XmlListSerializable<T> {
     return jsonBuilder.toString();
   }
 
+  @Override
   public String toString() {
     return toExpectedXmlString();
   }

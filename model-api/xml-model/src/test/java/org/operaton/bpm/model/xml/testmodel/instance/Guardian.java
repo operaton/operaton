@@ -35,7 +35,8 @@ public class Guardian extends AnimalReference {
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(AnimalReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<Guardian>() {
-        public Guardian newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Guardian newInstance(ModelTypeInstanceContext instanceContext) {
           return new Guardian(instanceContext);
         }
       });

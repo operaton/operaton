@@ -26,6 +26,7 @@ public class CommandImpl implements Command {
     this.count = count;
   }
 
+  @Override
   public long getCount() {
     return count;
   }

@@ -41,14 +41,17 @@ public class FunctionDefinitionImpl extends ExpressionImpl implements FunctionDe
     super(instanceContext);
   }
 
+  @Override
   public Collection<FormalParameter> getFormalParameters() {
     return formalParameterCollection.get(this);
   }
 
+  @Override
   public Expression getExpression() {
     return expressionChild.getChild(this);
   }
 
+  @Override
   public void setExpression(Expression expression) {
     expressionChild.setChild(this, expression);
   }
@@ -58,7 +61,8 @@ public class FunctionDefinitionImpl extends ExpressionImpl implements FunctionDe
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<FunctionDefinition>() {
-        public FunctionDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public FunctionDefinition newInstance(ModelTypeInstanceContext instanceContext) {
           return new FunctionDefinitionImpl(instanceContext);
         }
       });

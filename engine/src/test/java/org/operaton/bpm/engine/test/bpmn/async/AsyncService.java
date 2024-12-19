@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class AsyncService implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     AsyncTaskTest.INVOCATION = true;
     AsyncTaskTest.NUM_INVOCATIONS++;

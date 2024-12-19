@@ -25,6 +25,7 @@ import org.operaton.spin.plugin.variable.value.JsonValue;
  */
 public interface JsonValueBuilder extends SpinValueBuilder<JsonValue> {
 
+  @Override
   JsonValueBuilder serializationDataFormat(String dataFormatName);
 
   JsonValueBuilder serializationDataFormat(SerializationDataFormat dataFormat);

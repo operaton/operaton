@@ -44,7 +44,8 @@ public class EscalationImpl extends RootElementImpl implements Escalation {
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Escalation>() {
-        public Escalation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Escalation newInstance(ModelTypeInstanceContext instanceContext) {
           return new EscalationImpl(instanceContext);
         }
       });
@@ -66,26 +67,32 @@ public class EscalationImpl extends RootElementImpl implements Escalation {
     super(context);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getEscalationCode() {
     return escalationCodeAttribute.getValue(this);
   }
 
+  @Override
   public void setEscalationCode(String escalationCode) {
     escalationCodeAttribute.setValue(this, escalationCode);
   }
 
+  @Override
   public ItemDefinition getStructure() {
     return structureRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setStructure(ItemDefinition structure) {
     structureRefAttribute.setReferenceTargetElement(this, structure);
   }

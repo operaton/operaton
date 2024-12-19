@@ -36,6 +36,7 @@ public class DbIdGenerator implements IdGenerator {
     reset();
   }
 
+  @Override
   public synchronized String getNextId() {
     if (lastId<nextId) {
       getNewBlock();

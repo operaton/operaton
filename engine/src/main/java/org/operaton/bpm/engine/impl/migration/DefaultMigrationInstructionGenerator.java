@@ -46,11 +46,13 @@ public class DefaultMigrationInstructionGenerator implements MigrationInstructio
     this.migrationActivityMatcher = migrationActivityMatcher;
   }
 
+  @Override
   public MigrationInstructionGenerator migrationActivityValidators(List<MigrationActivityValidator> migrationActivityValidators) {
     this.migrationActivityValidators = migrationActivityValidators;
     return this;
   }
 
+  @Override
   public MigrationInstructionGenerator migrationInstructionValidators(List<MigrationInstructionValidator> migrationInstructionValidators) {
 
     this.migrationInstructionValidators = new ArrayList<MigrationInstructionValidator>();
@@ -66,6 +68,7 @@ public class DefaultMigrationInstructionGenerator implements MigrationInstructio
     return this;
   }
 
+  @Override
   public ValidatingMigrationInstructions generate(ProcessDefinitionImpl sourceProcessDefinition,
       ProcessDefinitionImpl targetProcessDefinition,
       boolean updateEventTriggers) {

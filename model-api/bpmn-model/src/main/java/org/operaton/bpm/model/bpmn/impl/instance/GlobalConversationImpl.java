@@ -38,7 +38,8 @@ public class GlobalConversationImpl extends CollaborationImpl implements GlobalC
       .namespaceUri(BPMN20_NS)
       .extendsType(Collaboration.class)
       .instanceProvider(new ModelTypeInstanceProvider<GlobalConversation>() {
-        public GlobalConversation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public GlobalConversation newInstance(ModelTypeInstanceContext instanceContext) {
           return new GlobalConversationImpl(instanceContext);
         }
       });

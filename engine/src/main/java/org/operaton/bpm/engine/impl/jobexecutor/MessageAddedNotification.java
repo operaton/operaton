@@ -34,6 +34,7 @@ public class MessageAddedNotification implements TransactionListener {
     this.jobExecutor = jobExecutor;
   }
 
+  @Override
   public void execute(CommandContext commandContext) {
     LOG.debugNotifyingJobExecutor("notifying job executor of new job");
     jobExecutor.jobWasAdded();

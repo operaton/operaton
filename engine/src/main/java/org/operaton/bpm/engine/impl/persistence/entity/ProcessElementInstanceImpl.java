@@ -31,24 +31,31 @@ public class ProcessElementInstanceImpl implements ProcessElementInstance {
   protected String processInstanceId;
   protected String processDefinitionId;
 
+  @Override
   public String getId() {
     return id;
   }
   public void setId(String id) {
     this.id = id;
   }
+
+  @Override
   public String getParentActivityInstanceId() {
     return parentActivityInstanceId;
   }
   public void setParentActivityInstanceId(String parentActivityInstanceId) {
     this.parentActivityInstanceId = parentActivityInstanceId;
   }
+
+  @Override
   public String getProcessInstanceId() {
     return processInstanceId;
   }
   public void setProcessInstanceId(String processInstanceId) {
     this.processInstanceId = processInstanceId;
   }
+
+  @Override
   public String getProcessDefinitionId() {
     return processDefinitionId;
   }

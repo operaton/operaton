@@ -38,7 +38,8 @@ public class TimeDurationImpl extends ExpressionImpl implements TimeDuration {
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<TimeDuration>() {
-        public TimeDuration newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TimeDuration newInstance(ModelTypeInstanceContext instanceContext) {
           return new TimeDurationImpl(instanceContext);
         }
       });

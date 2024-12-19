@@ -40,7 +40,8 @@ public class CaseFileModelImpl extends CaseFileImpl implements CaseFileModel {
       .namespaceUri(CMMN11_NS)
       .extendsType(CaseFile.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<CaseFileModel>() {
-        public CaseFileModel newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CaseFileModel newInstance(ModelTypeInstanceContext instanceContext) {
           return new CaseFileModelImpl(instanceContext);
         }
       });

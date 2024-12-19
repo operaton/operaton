@@ -35,6 +35,7 @@ public class HistoricBatchResourceImpl implements HistoricBatchResource {
     this.batchId = batchId;
   }
 
+  @Override
   public HistoricBatchDto getHistoricBatch() {
     HistoricBatch batch = processEngine.getHistoryService()
       .createHistoricBatchQuery()
@@ -48,6 +49,7 @@ public class HistoricBatchResourceImpl implements HistoricBatchResource {
     return HistoricBatchDto.fromBatch(batch);
   }
 
+  @Override
   public void deleteHistoricBatch() {
     try {
       processEngine.getHistoryService()

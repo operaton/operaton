@@ -39,10 +39,12 @@ public abstract class ParameterImpl extends CmmnElementImpl implements Parameter
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }

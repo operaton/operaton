@@ -34,6 +34,7 @@ public class SchemaOperationsProcessEngineBuild implements SchemaOperationsComma
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
+  @Override
   public Void execute(CommandContext commandContext) {
     String databaseSchemaUpdate = Context.getProcessEngineConfiguration().getDatabaseSchemaUpdate();
     PersistenceSession persistenceSession = commandContext.getSession(PersistenceSession.class);

@@ -54,7 +54,8 @@ public class AddIdentityLinkForProcessDefinitionCmd implements Command<Void>, Se
       throw new ProcessEngineException("userId and groupId cannot both be null");
     }
   }
-  
+
+  @Override
   public Void execute(CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
       .getCommandContext()

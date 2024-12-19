@@ -38,6 +38,7 @@ public class GetTaskCommentCmd implements Command<Comment>, Serializable {
     this.commentId = commentId;
   }
 
+  @Override
   public Comment execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
     ensureNotNull("commentId", commentId);

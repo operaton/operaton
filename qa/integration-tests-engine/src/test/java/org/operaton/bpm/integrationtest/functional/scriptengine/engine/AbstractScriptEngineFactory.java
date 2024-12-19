@@ -45,34 +45,42 @@ public abstract class AbstractScriptEngineFactory implements ScriptEngineFactory
     this.behavior = behavior;
   }
 
+  @Override
   public String getEngineName() {
     return name;
   }
 
+  @Override
   public String getEngineVersion() {
     return version;
   }
 
+  @Override
   public List<String> getExtensions() {
     return Collections.emptyList();
   }
 
+  @Override
   public List<String> getMimeTypes() {
     return Collections.emptyList();
   }
 
+  @Override
   public List<String> getNames() {
     return Arrays.asList(name);
   }
 
+  @Override
   public String getLanguageName() {
     return name;
   }
 
+  @Override
   public String getLanguageVersion() {
     return version;
   }
 
+  @Override
   public Object getParameter(String key) {
     if (key.equals("THREADING")) {
       return "MULTITHREADED";
@@ -80,18 +88,22 @@ public abstract class AbstractScriptEngineFactory implements ScriptEngineFactory
     return null;
   }
 
+  @Override
   public String getMethodCallSyntax(String obj, String m, String... args) {
     throw new UnsupportedOperationException("getMethodCallSyntax");
   }
 
+  @Override
   public String getOutputStatement(String toDisplay) {
     throw new UnsupportedOperationException("getOutputStatement");
   }
 
+  @Override
   public String getProgram(String... statements) {
     throw new UnsupportedOperationException("getProgram");
   }
 
+  @Override
   public ScriptEngine getScriptEngine() {
     return new AbstractScriptEngine() {
 

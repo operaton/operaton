@@ -36,6 +36,7 @@ public class HalRelationCacheBootstrap implements ServletContextListener {
 
   protected ObjectMapper objectMapper = new ObjectMapper();
 
+  @Override
   public void contextInitialized(ServletContextEvent sce) {
     String contextParameter = sce.getServletContext().getInitParameter(CONTEXT_PARAM_NAME);
     if (contextParameter != null) {
@@ -43,6 +44,7 @@ public class HalRelationCacheBootstrap implements ServletContextListener {
     }
   }
 
+  @Override
   public void contextDestroyed(ServletContextEvent sce) {
     Hal.getInstance().destroyHalRelationCaches();
   }

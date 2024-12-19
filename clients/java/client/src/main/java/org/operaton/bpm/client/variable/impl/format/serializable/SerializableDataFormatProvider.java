@@ -23,10 +23,12 @@ import org.operaton.bpm.client.spi.DataFormatProvider;
 
 public class SerializableDataFormatProvider implements DataFormatProvider {
 
+  @Override
   public String getDataFormatName() {
     return JAVA.getName();
   }
 
+  @Override
   public DataFormat createInstance() {
     return new SerializableDataFormat(JAVA.getName());
   }

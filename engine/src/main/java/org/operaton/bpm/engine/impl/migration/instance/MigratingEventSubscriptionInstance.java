@@ -58,10 +58,12 @@ public class MigratingEventSubscriptionInstance implements MigratingInstance, Re
     return eventSubscriptionEntity.getExecutionId() == null;
   }
 
+  @Override
   public void detachState() {
     eventSubscriptionEntity.setExecution(null);
   }
 
+  @Override
   public void attachState(MigratingScopeInstance newOwningInstance) {
     eventSubscriptionEntity.setExecution(newOwningInstance.resolveRepresentativeExecution());
   }
@@ -71,6 +73,7 @@ public class MigratingEventSubscriptionInstance implements MigratingInstance, Re
     throw MIGRATION_LOGGER.cannotAttachToTransitionInstance(this);
   }
 
+  @Override
   public void migrateState() {
     if (updateEvent) {
       targetDeclaration.updateSubscription(eventSubscriptionEntity);
@@ -78,14 +81,17 @@ public class MigratingEventSubscriptionInstance implements MigratingInstance, Re
     eventSubscriptionEntity.setActivity((ActivityImpl) targetScope);
   }
 
+  @Override
   public void migrateDependentEntities() {
     // do nothing
   }
 
+  @Override
   public void create(ExecutionEntity scopeExecution) {
     eventSubscriptionDeclaration.createSubscriptionForExecution(scopeExecution);
   }
 
+  @Override
   public void remove() {
     eventSubscriptionEntity.delete();
   }

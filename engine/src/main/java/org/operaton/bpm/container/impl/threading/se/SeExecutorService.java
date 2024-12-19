@@ -39,6 +39,7 @@ public class SeExecutorService implements ExecutorService {
     this.threadPoolExecutor = threadPoolExecutor;
   }
 
+  @Override
   public boolean schedule(Runnable runnable, boolean isLongRunning) {
 
     if(isLongRunning) {
@@ -68,6 +69,7 @@ public class SeExecutorService implements ExecutorService {
 
   }
 
+  @Override
   public Runnable getExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine) {
     return new ExecuteJobsRunnable(jobIds, processEngine);
   }

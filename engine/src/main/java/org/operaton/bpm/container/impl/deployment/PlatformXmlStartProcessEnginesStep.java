@@ -33,6 +33,7 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
  */
 public class PlatformXmlStartProcessEnginesStep extends AbstractStartProcessEnginesStep {
 
+  @Override
   protected List<ProcessEngineXml> getProcessEnginesXmls(DeploymentOperation operationContext) {
     
     final BpmPlatformXml bpmPlatformXml = operationContext.getAttachment(BPM_PLATFORM_XML);

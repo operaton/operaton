@@ -69,27 +69,33 @@ public class DataStoreReferenceImpl extends FlowElementImpl implements DataStore
         super(instanceContext);
     }
 
-    public ItemDefinition getItemSubject() {
+  @Override
+  public ItemDefinition getItemSubject() {
         return itemSubjectRefAttribute.getReferenceTargetElement(this);
     }
 
-    public void setItemSubject(ItemDefinition itemSubject) {
+  @Override
+  public void setItemSubject(ItemDefinition itemSubject) {
         itemSubjectRefAttribute.setReferenceTargetElement(this, itemSubject);
     }
 
-    public DataState getDataState() {
+  @Override
+  public DataState getDataState() {
         return dataStateChild.getChild(this);
     }
 
-    public void setDataState(DataState dataState) {
+  @Override
+  public void setDataState(DataState dataState) {
         dataStateChild.setChild(this, dataState);
     }
 
-    public DataStore getDataStore() {
+  @Override
+  public DataStore getDataStore() {
         return dataStoreRefAttribute.getReferenceTargetElement(this);
     }
 
-    public void setDataStore(DataStore dataStore) {
+  @Override
+  public void setDataStore(DataStore dataStore) {
         dataStoreRefAttribute.setReferenceTargetElement(this, dataStore);
     }
 }

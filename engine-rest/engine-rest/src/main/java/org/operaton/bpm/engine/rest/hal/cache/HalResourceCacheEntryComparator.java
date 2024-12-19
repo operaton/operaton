@@ -34,6 +34,7 @@ public class HalResourceCacheEntryComparator implements Comparator<HalResourceCa
     return REVERSE;
   }
 
+  @Override
   public int compare(HalResourceCacheEntry entry1, HalResourceCacheEntry entry2) {
     int compareTime = ((Long) entry1.getCreateTime()).compareTo(entry2.getCreateTime());
     if (compareTime != 0) {

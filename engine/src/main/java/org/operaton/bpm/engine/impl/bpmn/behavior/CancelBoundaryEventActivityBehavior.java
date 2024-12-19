@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
  */
 public class CancelBoundaryEventActivityBehavior extends BoundaryEventActivityBehavior {
 
+  @Override
   public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
 
     if (LegacyBehavior.signalCancelBoundaryEvent(signalName)) {

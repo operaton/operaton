@@ -40,6 +40,7 @@ public class JsonQueryFilteringPropertyConverter extends JsonObjectConverter<Que
   public static final String COMPARISON_PROPERTY = "comparisonField";
   public static final String SCALAR_VALUE = "value";
 
+  @Override
   public JsonObject toJsonObject(QueryEntityRelationCondition filteringProperty) {
     JsonObject jsonObject = JsonUtil.createObject();
 
@@ -58,6 +59,7 @@ public class JsonQueryFilteringPropertyConverter extends JsonObjectConverter<Que
     return jsonObject;
   }
 
+  @Override
   public QueryEntityRelationCondition toObject(JsonObject jsonObject) {
     // this is limited in that it allows only String values;
     // that is sufficient for current use case with task filters

@@ -38,7 +38,8 @@ public class TimeCycleImpl extends ExpressionImpl implements TimeCycle {
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<TimeCycle>() {
-        public TimeCycle newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TimeCycle newInstance(ModelTypeInstanceContext instanceContext) {
           return new TimeCycleImpl(instanceContext);
         }
       });

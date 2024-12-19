@@ -61,6 +61,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
   protected List<HistoricDecisionInputInstance> inputs;
   protected List<HistoricDecisionOutputInstance> outputs;
 
+  @Override
   public String getDecisionDefinitionId() {
     return decisionDefinitionId;
   }
@@ -69,6 +70,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.decisionDefinitionId = decisionDefinitionId;
   }
 
+  @Override
   public String getDecisionDefinitionKey() {
     return decisionDefinitionKey;
   }
@@ -77,6 +79,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.decisionDefinitionKey = decisionDefinitionKey;
   }
 
+  @Override
   public String getDecisionDefinitionName() {
     return decisionDefinitionName;
   }
@@ -85,6 +88,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.decisionDefinitionName = decisionDefinitionName;
   }
 
+  @Override
   public String getActivityInstanceId() {
     return activityInstanceId;
   }
@@ -93,6 +97,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.activityInstanceId = activityInstanceId;
   }
 
+  @Override
   public String getActivityId() {
     return activityId;
   }
@@ -101,6 +106,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.activityId = activityId;
   }
 
+  @Override
   public Date getEvaluationTime() {
     return evaluationTime;
   }
@@ -109,6 +115,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.evaluationTime = evaluationTime;
   }
 
+  @Override
   public String getUserId() {
     return userId;
   }
@@ -117,6 +124,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.userId = userId;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -172,6 +180,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     outputs.add(decisionOutputInstance);
   }
 
+  @Override
   public Double getCollectResultValue() {
     return collectResultValue;
   }
@@ -180,6 +189,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.collectResultValue = collectResultValue;
   }
 
+  @Override
   public String getRootDecisionInstanceId() {
     return rootDecisionInstanceId;
   }
@@ -188,6 +198,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.rootDecisionInstanceId = rootDecisionInstanceId;
   }
 
+  @Override
   public String getDecisionRequirementsDefinitionId() {
     return decisionRequirementsDefinitionId;
   }
@@ -196,6 +207,7 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
     this.decisionRequirementsDefinitionId = decisionRequirementsDefinitionId;
   }
 
+  @Override
   public String getDecisionRequirementsDefinitionKey() {
     return decisionRequirementsDefinitionKey;
   }

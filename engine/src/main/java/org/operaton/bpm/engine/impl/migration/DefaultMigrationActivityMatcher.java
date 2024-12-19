@@ -20,6 +20,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 
 public class DefaultMigrationActivityMatcher implements MigrationActivityMatcher {
 
+  @Override
   public boolean matchActivities(ActivityImpl source, ActivityImpl target) {
     return source != null && target != null && equalId(source, target);
   }

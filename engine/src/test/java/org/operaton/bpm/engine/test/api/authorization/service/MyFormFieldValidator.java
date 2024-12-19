@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.form.validator.FormFieldValidatorContext;
  */
 public class MyFormFieldValidator extends MyDelegationService implements FormFieldValidator {
 
+  @Override
   public boolean validate(Object submittedValue, FormFieldValidatorContext validatorContext) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     IdentityService identityService = processEngineConfiguration.getIdentityService();

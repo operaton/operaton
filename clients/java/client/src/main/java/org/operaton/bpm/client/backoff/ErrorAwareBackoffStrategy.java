@@ -66,5 +66,6 @@ public interface ErrorAwareBackoffStrategy extends BackoffStrategy {
    *
    * @return the back off time between fetch and lock requests in milliseconds
    */
+  @Override
   long calculateBackoffTime();
 }

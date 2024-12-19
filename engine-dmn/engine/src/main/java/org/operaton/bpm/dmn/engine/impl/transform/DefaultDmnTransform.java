@@ -90,6 +90,7 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     hitPolicyHandlerRegistry = transformer.getHitPolicyHandlerRegistry();
   }
 
+  @Override
   public void setModelInstance(File file) {
     ensureNotNull("file", file);
     try {
@@ -100,11 +101,13 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
   }
 
+  @Override
   public DmnTransform modelInstance(File file) {
     setModelInstance(file);
     return this;
   }
 
+  @Override
   public void setModelInstance(InputStream inputStream) {
     ensureNotNull("inputStream", inputStream);
     try {
@@ -115,16 +118,19 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
   }
 
+  @Override
   public DmnTransform modelInstance(InputStream inputStream) {
     setModelInstance(inputStream);
     return this;
   }
 
+  @Override
   public void setModelInstance(DmnModelInstance modelInstance) {
     ensureNotNull("dmnModelInstance", modelInstance);
     this.modelInstance = modelInstance;
   }
 
+  @Override
   public DmnTransform modelInstance(DmnModelInstance modelInstance) {
     setModelInstance(modelInstance);
     return this;
@@ -132,6 +138,7 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
 
   // transform ////////////////////////////////////////////////////////////////
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends DmnDecisionRequirementsGraph> T transformDecisionRequirementsGraph() {
     try {
@@ -162,6 +169,7 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     return dmnDrg;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends DmnDecision> List<T> transformDecisions() {
     try {
@@ -478,22 +486,27 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
 
   // context //////////////////////////////////////////////////////////////////
 
+  @Override
   public DmnModelInstance getModelInstance() {
     return modelInstance;
   }
 
+  @Override
   public Object getParent() {
     return parent;
   }
 
+  @Override
   public DmnDecision getDecision() {
     return decision;
   }
 
+  @Override
   public DmnDataTypeTransformerRegistry getDataTypeTransformerRegistry() {
     return dataTypeTransformerRegistry;
   }
 
+  @Override
   public DmnHitPolicyHandlerRegistry getHitPolicyHandlerRegistry() {
     return hitPolicyHandlerRegistry;
   }

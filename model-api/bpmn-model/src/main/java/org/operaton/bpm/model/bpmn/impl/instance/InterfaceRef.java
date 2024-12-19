@@ -35,7 +35,8 @@ public class InterfaceRef extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InterfaceRef.class, BPMN_ELEMENT_INTERFACE_REF)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<InterfaceRef>() {
-        public InterfaceRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InterfaceRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new InterfaceRef(instanceContext);
         }
       });

@@ -29,6 +29,7 @@ public abstract class DomXmlNodeIterator<T extends SpinXmlNode> implements Itera
 
   protected int index = 0;
 
+  @Override
   public boolean hasNext() {
     for (; index < getLength() ; index++) {
       if (getCurrent() != null) {
@@ -38,6 +39,7 @@ public abstract class DomXmlNodeIterator<T extends SpinXmlNode> implements Itera
     return false;
   }
 
+  @Override
   public T next() {
     if (hasNext()) {
       T current = getCurrent();
@@ -49,6 +51,7 @@ public abstract class DomXmlNodeIterator<T extends SpinXmlNode> implements Itera
     }
   }
 
+  @Override
   public void remove() {
     throw LOG.methodNotSupportedByClass("remove", DomXmlElementIterable.class);
   }

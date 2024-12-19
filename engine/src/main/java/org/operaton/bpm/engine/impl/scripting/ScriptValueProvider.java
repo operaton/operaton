@@ -37,6 +37,7 @@ public class ScriptValueProvider implements ParameterValueProvider {
     this.script = script;
   }
 
+  @Override
   public Object getValue(VariableScope variableScope) {
     ScriptInvocation invocation = new ScriptInvocation(script, variableScope);
     try {

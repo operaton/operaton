@@ -39,6 +39,7 @@ public class TenantUserMembersResourceImpl extends AbstractIdentityResource impl
     this.relativeRootResourcePath = rootResourcePath;
   }
 
+  @Override
   public void createMembership(String userId) {
     ensureNotReadOnly();
 
@@ -46,6 +47,7 @@ public class TenantUserMembersResourceImpl extends AbstractIdentityResource impl
     identityService.createTenantUserMembership(resourceId, userId);
   }
 
+  @Override
   public void deleteMembership(String userId) {
     ensureNotReadOnly();
 
@@ -53,6 +55,7 @@ public class TenantUserMembersResourceImpl extends AbstractIdentityResource impl
     identityService.deleteTenantUserMembership(resourceId, userId);
   }
 
+  @Override
   public ResourceOptionsDto availableOperations(UriInfo context) {
     ResourceOptionsDto dto = new ResourceOptionsDto();
 

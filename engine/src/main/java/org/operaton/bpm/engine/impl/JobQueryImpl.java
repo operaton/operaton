@@ -83,76 +83,89 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
     super(commandExecutor);
   }
 
+  @Override
   public JobQuery jobId(String jobId) {
     ensureNotNull("Provided job id", jobId);
     this.id = jobId;
     return this;
   }
 
+  @Override
   public JobQuery jobIds(Set<String> ids) {
     ensureNotEmpty("Set of job ids", ids);
     this.ids = ids;
     return this;
   }
 
+  @Override
   public JobQuery jobDefinitionId(String jobDefinitionId) {
     ensureNotNull("Provided job definition id", jobDefinitionId);
     this.jobDefinitionId = jobDefinitionId;
     return this;
   }
 
+  @Override
   public JobQueryImpl rootProcessInstanceId(String rootProcessInstanceId) {
     ensureNotNull("Provided root process instance id", rootProcessInstanceId);
     this.rootProcessInstanceId = rootProcessInstanceId;
     return this;
   }
 
+  @Override
   public JobQueryImpl processInstanceId(String processInstanceId) {
     ensureNotNull("Provided process instance id", processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
   }
 
+  @Override
   public JobQuery processInstanceIds(Set<String> processInstanceIds) {
     ensureNotEmpty("Set of process instance ids", processInstanceIds);
     this.processInstanceIds = processInstanceIds;
     return this;
   }
 
+  @Override
   public JobQueryImpl executionId(String executionId) {
     ensureNotNull("Provided execution id", executionId);
     this.executionId = executionId;
     return this;
   }
 
+  @Override
   public JobQuery processDefinitionId(String processDefinitionId) {
     ensureNotNull("Provided process definition id", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public JobQuery processDefinitionKey(String processDefinitionKey) {
     ensureNotNull("Provided process instance key", processDefinitionKey);
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
-  public JobQuery activityId(String activityId){
+  @Override
+  public JobQuery activityId(String activityId) {
     ensureNotNull("Provided activity id", activityId);
     this.activityId = activityId;
     return this;
   }
 
+  @Override
   public JobQuery withRetriesLeft() {
     retriesLeft = true;
     return this;
   }
 
+  @Override
   public JobQuery executable() {
     executable = true;
     return this;
   }
 
+  @Override
   public JobQuery timers() {
     if (onlyMessages) {
       throw new ProcessEngineException("Cannot combine onlyTimers() with onlyMessages() in the same query");
@@ -161,6 +174,7 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
     return this;
   }
 
+  @Override
   public JobQuery messages() {
     if (onlyTimers) {
       throw new ProcessEngineException("Cannot combine onlyTimers() with onlyMessages() in the same query");
@@ -169,32 +183,38 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
     return this;
   }
 
+  @Override
   public JobQuery duedateHigherThan(Date date) {
     ensureNotNull("Provided date", date);
     this.duedateHigherThan = date;
     return this;
   }
 
+  @Override
   public JobQuery duedateLowerThan(Date date) {
     ensureNotNull("Provided date", date);
     this.duedateLowerThan = date;
     return this;
   }
 
+  @Override
   public JobQuery duedateHigherThen(Date date) {
     return duedateHigherThan(date);
   }
 
+  @Override
   public JobQuery duedateHigherThenOrEquals(Date date) {
     ensureNotNull("Provided date", date);
     this.duedateHigherThanOrEqual = date;
     return this;
   }
 
+  @Override
   public JobQuery duedateLowerThen(Date date) {
     return duedateLowerThan(date);
   }
 
+  @Override
   public JobQuery duedateLowerThenOrEquals(Date date) {
     ensureNotNull("Provided date", date);
     this.duedateLowerThanOrEqual = date;
@@ -215,43 +235,51 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
     return this;
   }
 
-    public JobQuery priorityHigherThanOrEquals(long priority) {
+  @Override
+  public JobQuery priorityHigherThanOrEquals(long priority) {
     this.priorityHigherThanOrEqual = priority;
     return this;
   }
 
+  @Override
   public JobQuery priorityLowerThanOrEquals(long priority) {
     this.priorityLowerThanOrEqual = priority;
     return this;
   }
 
+  @Override
   public JobQuery withException() {
     this.withException = true;
     return this;
   }
 
+  @Override
   public JobQuery exceptionMessage(String exceptionMessage) {
     ensureNotNull("Provided exception message", exceptionMessage);
     this.exceptionMessage = exceptionMessage;
     return this;
   }
 
-  public JobQuery failedActivityId(String activityId){
+  @Override
+  public JobQuery failedActivityId(String activityId) {
     ensureNotNull("Provided activity id", activityId);
     this.failedActivityId = activityId;
     return this;
   }
 
+  @Override
   public JobQuery noRetriesLeft() {
     noRetriesLeft = true;
     return this;
   }
 
+  @Override
   public JobQuery active() {
     suspensionState = SuspensionState.ACTIVE;
     return this;
   }
 
+  @Override
   public JobQuery suspended() {
     suspensionState = SuspensionState.SUSPENDED;
     return this;
@@ -288,6 +316,7 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
     return CompareUtil.areNotInAscendingOrder(dueDates);
   }
 
+  @Override
   public JobQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -295,12 +324,14 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
     return this;
   }
 
+  @Override
   public JobQuery withoutTenantId() {
     isTenantIdSet = true;
     this.tenantIds = null;
     return this;
   }
 
+  @Override
   public JobQuery includeJobsWithoutTenantId() {
     this.includeJobsWithoutTenantId = true;
     return this;
@@ -308,38 +339,47 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
 
   //sorting //////////////////////////////////////////
 
+  @Override
   public JobQuery orderByJobDuedate() {
     return orderBy(JobQueryProperty.DUEDATE);
   }
 
+  @Override
   public JobQuery orderByExecutionId() {
     return orderBy(JobQueryProperty.EXECUTION_ID);
   }
 
+  @Override
   public JobQuery orderByJobId() {
     return orderBy(JobQueryProperty.JOB_ID);
   }
 
+  @Override
   public JobQuery orderByProcessInstanceId() {
     return orderBy(JobQueryProperty.PROCESS_INSTANCE_ID);
   }
 
+  @Override
   public JobQuery orderByProcessDefinitionId() {
     return orderBy(JobQueryProperty.PROCESS_DEFINITION_ID);
   }
 
+  @Override
   public JobQuery orderByProcessDefinitionKey() {
     return orderBy(JobQueryProperty.PROCESS_DEFINITION_KEY);
   }
 
+  @Override
   public JobQuery orderByJobRetries() {
     return orderBy(JobQueryProperty.RETRIES);
   }
 
+  @Override
   public JobQuery orderByJobPriority() {
     return orderBy(JobQueryProperty.PRIORITY);
   }
 
+  @Override
   public JobQuery orderByTenantId() {
     return orderBy(JobQueryProperty.TENANT_ID);
   }

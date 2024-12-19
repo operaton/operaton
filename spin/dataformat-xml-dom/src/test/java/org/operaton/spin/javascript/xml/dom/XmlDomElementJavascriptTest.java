@@ -35,6 +35,7 @@ public class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
    * parameter is null.
    */
 
+  @Override
   @Test(expected = RuntimeException.class)
   @Script(
     name = "XmlDomElementScriptTest.appendChildElement",
@@ -52,6 +53,7 @@ public class XmlDomElementJavascriptTest extends XmlDomElementScriptTest {
    * The Graal.js scripting engine cannot determine the method to call if the
    * parameter is null.
    */
+  @Override
   @Test(expected = RuntimeException.class)
   @Script(
     name = "XmlDomElementScriptTest.removeChildElement",

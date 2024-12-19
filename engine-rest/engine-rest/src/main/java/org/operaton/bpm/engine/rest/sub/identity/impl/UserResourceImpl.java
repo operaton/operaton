@@ -50,6 +50,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
     this.rootResourcePath = rootResourcePath;
   }
 
+  @Override
   public UserProfileDto getUserProfile(UriInfo context) {
 
     User dbUser = findUserObject();
@@ -62,6 +63,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
     return user;
   }
 
+  @Override
   public ResourceOptionsDto availableOperations(UriInfo context) {
     ResourceOptionsDto dto = new ResourceOptionsDto();
 
@@ -85,16 +87,19 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
     return dto;
   }
 
+  @Override
   public void deleteUser() {
     ensureNotReadOnly();
     identityService.deleteUser(resourceId);
   }
 
+  @Override
   public void unlockUser() {
     ensureNotReadOnly();
     identityService.unlockUser(resourceId);
   }
 
+  @Override
   public void updateCredentials(UserCredentialsDto account) {
     ensureNotReadOnly();
 
@@ -115,6 +120,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
     identityService.saveUser(dbUser);
   }
 
+  @Override
   public void updateProfile(UserProfileDto profile) {
     ensureNotReadOnly();
 

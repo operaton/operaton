@@ -39,6 +39,7 @@ public class UnregisterDeploymentCmd implements Command<Void> {
     this(Collections.singleton(deploymentId));
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkUnregisterDeployment);
     Context.getProcessEngineConfiguration().getRegisteredDeployments().removeAll(deploymentIds);

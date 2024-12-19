@@ -37,7 +37,8 @@ public class VariableImpl extends InformationItemImpl implements Variable {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
       .instanceProvider(new ModelTypeInstanceProvider<Variable>() {
-        public Variable newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Variable newInstance(ModelTypeInstanceContext instanceContext) {
           return new VariableImpl(instanceContext);
         }
       });

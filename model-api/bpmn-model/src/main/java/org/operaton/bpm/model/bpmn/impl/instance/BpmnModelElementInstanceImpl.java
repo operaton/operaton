@@ -35,15 +35,18 @@ public abstract class BpmnModelElementInstanceImpl extends ModelElementInstanceI
     super(instanceContext);
   }
 
+  @Override
   @SuppressWarnings("rawtypes")
   public AbstractBaseElementBuilder builder() {
     throw new BpmnModelException("No builder implemented for " + this);
   }
 
+  @Override
   public boolean isScope() {
     return this instanceof org.operaton.bpm.model.bpmn.instance.Process || this instanceof SubProcess;
   }
 
+  @Override
   public BpmnModelElementInstance getScope() {
     BpmnModelElementInstance parentElement = (BpmnModelElementInstance) getParentElement();
     if (parentElement != null) {

@@ -39,6 +39,7 @@ public class FormFieldValidatorInvocation extends DelegateInvocation {
     invocationResult = formFieldValidator.validate(submittedValue, validatorContext);
   }
 
+  @Override
   public Boolean getInvocationResult() {
     return (Boolean) super.getInvocationResult();
   }

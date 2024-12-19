@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 @Named
 public class NamedCdiBean implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     execution.setVariable("a", "b");
   }

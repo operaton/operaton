@@ -29,16 +29,19 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DI_NS;
  * @author Sebastian Menski
  */
 public class ShapeTest extends BpmnModelElementInstanceTest {
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(DI_NS, Node.class, true);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(DC_NS, Bounds.class, 1, 1)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

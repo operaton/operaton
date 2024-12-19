@@ -94,6 +94,7 @@ public class ExternalTaskServiceImpl implements ExternalTaskService {
     complete(externalTask.getId(), variables, localVariables);
   }
 
+  @Override
   public void complete(String externalTaskId, Map<String, Object> variables, Map<String, Object> localVariables) {
     try {
       engineClient.complete(externalTaskId, variables, localVariables);

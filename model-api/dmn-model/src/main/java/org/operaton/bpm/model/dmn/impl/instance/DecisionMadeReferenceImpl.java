@@ -37,7 +37,8 @@ public class DecisionMadeReferenceImpl extends DmnElementReferenceImpl implement
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<DecisionMadeReference>() {
-        public DecisionMadeReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DecisionMadeReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new DecisionMadeReferenceImpl(instanceContext);
         }
       });

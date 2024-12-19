@@ -26,6 +26,7 @@ import org.operaton.bpm.model.bpmn.builder.EventBasedGatewayBuilder;
  */
 public interface EventBasedGateway extends Gateway {
 
+  @Override
   EventBasedGatewayBuilder builder();
 
   boolean isInstantiate();

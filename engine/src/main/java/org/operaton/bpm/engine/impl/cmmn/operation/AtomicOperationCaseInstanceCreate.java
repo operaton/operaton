@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseInstanceCreate extends AbstractCmmnEventAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "case-instance-create";
   }
@@ -45,6 +46,7 @@ public class AtomicOperationCaseInstanceCreate extends AbstractCmmnEventAtomicOp
     return execution;
   }
 
+  @Override
   protected void postTransitionNotification(CmmnExecution execution) {
     // the case instance is associated with the
     // casePlanModel as activity

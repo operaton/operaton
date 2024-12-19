@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
  */
 public class ExampleExecutionListenerOne implements ExecutionListener {
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     execution.setVariable("variableSetInExecutionListener", "firstValue");
     execution.setVariable("eventNameReceived", execution.getEventName());

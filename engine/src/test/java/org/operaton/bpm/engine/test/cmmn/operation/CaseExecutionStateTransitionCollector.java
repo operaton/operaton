@@ -36,6 +36,7 @@ public class CaseExecutionStateTransitionCollector implements CaseExecutionListe
 
   public List<String> stateTransitions = new ArrayList<String>();
 
+  @Override
   public void notify(DelegateCaseExecution planItem) throws Exception {
     CmmnExecution execution = (CmmnExecution) planItem;
 
@@ -56,6 +57,7 @@ public class CaseExecutionStateTransitionCollector implements CaseExecutionListe
     stateTransitions.add(stateTransition);
   }
 
+  @Override
   public String toString() {
     StringBuilder text = new StringBuilder();
     for (String event: stateTransitions) {

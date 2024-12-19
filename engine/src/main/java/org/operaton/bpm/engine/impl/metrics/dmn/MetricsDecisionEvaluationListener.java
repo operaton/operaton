@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.management.Metrics;
 
 public class MetricsDecisionEvaluationListener implements DmnDecisionEvaluationListener {
 
+  @Override
   public void notify(DmnDecisionEvaluationEvent evaluationEvent) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
 

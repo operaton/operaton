@@ -239,27 +239,32 @@ public class DmnTransformListenerTest extends DmnEngineTest {
       return dmnDecisionRequirementsGraph;
     }
 
+    @Override
     public void transformDecision(Decision decision, DmnDecision dmnDecision) {
       this.decision = decision;
       this.dmnDecision = dmnDecision;
       transformedDecisions.add(dmnDecision);
     }
 
+    @Override
     public void transformDecisionTableInput(Input input, DmnDecisionTableInputImpl dmnInput) {
       this.input = input;
       this.dmnInput = dmnInput;
     }
 
+    @Override
     public void transformDecisionTableOutput(Output output, DmnDecisionTableOutputImpl dmnOutput) {
       this.output = output;
       this.dmnOutput = dmnOutput;
     }
 
+    @Override
     public void transformDecisionTableRule(Rule rule, DmnDecisionTableRuleImpl dmnRule) {
       this.rule = rule;
       this.dmnRule = dmnRule;
     }
 
+    @Override
     public void transformDecisionRequirementsGraph(Definitions definitions, DmnDecisionRequirementsGraph dmnDecisionRequirementsGraph) {
       this.definitions = definitions;
       this.dmnDecisionRequirementsGraph = dmnDecisionRequirementsGraph;

@@ -35,6 +35,7 @@ public class AuthorizationExceptionInterceptor extends CommandInterceptor {
 
   protected int count = 0;
 
+  @Override
   public <T> T execute(Command<T> command) {
     try {
       count++; // only catch exception if we are at the top of the command stack

@@ -74,6 +74,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
     this.caseExecutionId = caseExecutionId;
   }
 
+  @Override
   public CaseExecutionCommandBuilder setVariable(String variableName, Object variableValue) {
     ensureNotNull(NotValidException.class, "variableName", variableName);
     ensureVariableShouldNotBeRemoved(variableName);
@@ -82,6 +83,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
     return this;
   }
 
+  @Override
   public CaseExecutionCommandBuilder setVariables(Map<String, Object> variables) {
     if (variables != null) {
       ensureVariablesShouldNotBeRemoved(variables.keySet());
@@ -91,6 +93,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
     return this;
   }
 
+  @Override
   public CaseExecutionCommandBuilder setVariableLocal(String localVariableName, Object localVariableValue) {
     ensureNotNull(NotValidException.class, "localVariableName", localVariableName);
     ensureVariableShouldNotBeRemoved(localVariableName);
@@ -99,6 +102,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
     return this;
   }
 
+  @Override
   public CaseExecutionCommandBuilder setVariablesLocal(Map<String, Object> variablesLocal) {
     if (variablesLocal != null) {
       ensureVariablesShouldNotBeRemoved(variablesLocal.keySet());
@@ -108,6 +112,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
     return this;
   }
 
+  @Override
   public CaseExecutionCommandBuilder removeVariable(String variableName) {
     ensureNotNull(NotValidException.class, "variableName", variableName);
     ensureVariableShouldNotBeSet(variableName);
@@ -116,6 +121,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
     return this;
   }
 
+  @Override
   public CaseExecutionCommandBuilder removeVariables(Collection<String> variableNames) {
     if (variableNames != null) {
       ensureVariablesShouldNotBeSet(variableNames);
@@ -125,6 +131,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
     return this;
   }
 
+  @Override
   public CaseExecutionCommandBuilder removeVariableLocal(String variableName) {
     ensureNotNull(NotValidException.class, "localVariableName", variableName);
     ensureVariableShouldNotBeSet(variableName);
@@ -133,6 +140,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
     return this;
   }
 
+  @Override
   public CaseExecutionCommandBuilder removeVariablesLocal(Collection<String> variableNames) {
     if (variableNames != null) {
       ensureVariablesShouldNotBeSet(variableNames);
@@ -193,36 +201,43 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
   }
 
 
+  @Override
   public void execute() {
     CaseExecutionVariableCmd command = new CaseExecutionVariableCmd(this);
     executeCommand(command);
   }
 
+  @Override
   public void manualStart() {
     ManualStartCaseExecutionCmd command = new ManualStartCaseExecutionCmd(this);
     executeCommand(command);
   }
 
+  @Override
   public void disable() {
     DisableCaseExecutionCmd command = new DisableCaseExecutionCmd(this);
     executeCommand(command);
   }
 
+  @Override
   public void reenable() {
     ReenableCaseExecutionCmd command = new ReenableCaseExecutionCmd(this);
     executeCommand(command);
   }
 
+  @Override
   public void complete() {
     CompleteCaseExecutionCmd command = new CompleteCaseExecutionCmd(this);
     executeCommand(command);
   }
 
+  @Override
   public void close() {
     CloseCaseInstanceCmd command = new CloseCaseInstanceCmd(this);
     executeCommand(command);
   }
 
+  @Override
   public void terminate() {
     TerminateCaseExecutionCmd command = new TerminateCaseExecutionCmd(this);
     executeCommand(command);

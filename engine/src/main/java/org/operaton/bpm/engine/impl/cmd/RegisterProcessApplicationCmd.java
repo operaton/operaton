@@ -49,6 +49,7 @@ public class RegisterProcessApplicationCmd implements Command<ProcessApplication
 
   }
 
+  @Override
   public ProcessApplicationRegistration execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkRegisterProcessApplication);
 

@@ -44,7 +44,8 @@ public class SubConversationImpl extends ConversationNodeImpl implements SubConv
       .namespaceUri(BPMN20_NS)
       .extendsType(ConversationNode.class)
       .instanceProvider(new ModelTypeInstanceProvider<SubConversation>() {
-        public SubConversation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public SubConversation newInstance(ModelTypeInstanceContext instanceContext) {
           return new SubConversationImpl(instanceContext);
         }
       });
@@ -61,6 +62,7 @@ public class SubConversationImpl extends ConversationNodeImpl implements SubConv
     super(instanceContext);
   }
 
+  @Override
   public Collection<ConversationNode> getConversationNodes() {
     return conversationNodeCollection.get(this);
   }

@@ -38,7 +38,8 @@ public class OperatonEntryImpl extends OperatonGenericValueElementImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonEntry.class, OPERATON_ELEMENT_ENTRY)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonEntry>() {
-        public OperatonEntry newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonEntry newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonEntryImpl(instanceContext);
         }
       });
@@ -55,10 +56,12 @@ public class OperatonEntryImpl extends OperatonGenericValueElementImpl implement
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonKey() {
     return operatonKeyAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonKey(String operatonKey) {
     operatonKeyAttribute.setValue(this, operatonKey);
   }

@@ -40,6 +40,7 @@ public class InputParameter extends IoParameter {
     super(name, valueProvider);
   }
 
+  @Override
   protected void execute(AbstractVariableScope innerScope, AbstractVariableScope outerScope) {
 
     // get value from outer scope

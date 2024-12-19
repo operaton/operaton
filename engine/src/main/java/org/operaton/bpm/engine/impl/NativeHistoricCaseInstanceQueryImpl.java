@@ -37,14 +37,16 @@ public class NativeHistoricCaseInstanceQueryImpl extends AbstractNativeQuery<Nat
     super(commandExecutor);
   }
 
- //results ////////////////////////////////////////////////////////////////
+  //results ////////////////////////////////////////////////////////////////
   
+  @Override
   public List<HistoricCaseInstance> executeList(CommandContext commandContext, Map<String, Object> parameterMap, int firstResult, int maxResults) {
     return commandContext
       .getHistoricCaseInstanceManager()
       .findHistoricCaseInstancesByNativeQuery(parameterMap, firstResult, maxResults);
   }
-  
+
+  @Override
   public long executeCount(CommandContext commandContext, Map<String, Object> parameterMap) {
     return commandContext
       .getHistoricCaseInstanceManager()

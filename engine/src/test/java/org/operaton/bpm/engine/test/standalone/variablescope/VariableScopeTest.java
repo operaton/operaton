@@ -126,6 +126,7 @@ public class VariableScopeTest extends PluggableProcessEngineTest {
      this.isLocal = isLocal;
     }
 
+    @Override
     public List<String> execute(CommandContext commandContext) {
       ensureNotNull("executionId", executionId);
 

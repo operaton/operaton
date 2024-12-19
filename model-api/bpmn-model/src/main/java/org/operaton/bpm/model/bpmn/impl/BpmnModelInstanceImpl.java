@@ -35,10 +35,12 @@ public class BpmnModelInstanceImpl extends ModelInstanceImpl implements BpmnMode
     super(model, modelBuilder, document);
   }
 
+  @Override
   public Definitions getDefinitions() {
     return (DefinitionsImpl) getDocumentElement();
   }
 
+  @Override
   public void setDefinitions(Definitions definitions) {
     setDocumentElement(definitions);
   }

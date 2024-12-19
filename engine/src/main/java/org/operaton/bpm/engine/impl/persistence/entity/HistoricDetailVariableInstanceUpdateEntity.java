@@ -45,10 +45,12 @@ public class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariable
 
   protected ByteArrayField byteArrayField = new ByteArrayField(this, ResourceTypes.HISTORY);
 
+  @Override
   public Object getValue() {
     return typedValueField.getValue();
   }
 
+  @Override
   public TypedValue getTypedValue() {
     return typedValueField.getTypedValue(false);
   }
@@ -73,6 +75,7 @@ public class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariable
     return typedValueField.getSerializer();
   }
 
+  @Override
   public String getErrorMessage() {
     return typedValueField.getErrorMessage();
   }
@@ -95,20 +98,24 @@ public class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariable
     return byteArrayField.getByteArrayId();
   }
 
+  @Override
   public byte[] getByteArrayValue() {
     return byteArrayField.getByteArrayValue();
   }
 
+  @Override
   public void setByteArrayValue(byte[] bytes) {
     byteArrayField.setByteArrayValue(bytes);
   }
 
+  @Override
   public String getName() {
     return getVariableName();
   }
 
   // entity lifecycle /////////////////////////////////////////////////////////
 
+  @Override
   public void postLoad() {
     // make sure the serializer is initialized
     typedValueField.postLoad();
@@ -116,14 +123,17 @@ public class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariable
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   public String getTypeName() {
     return typedValueField.getTypeName();
   }
 
+  @Override
   public String getVariableTypeName() {
     return getTypeName();
   }
 
+  @Override
   public Date getTime() {
     return timestamp;
   }

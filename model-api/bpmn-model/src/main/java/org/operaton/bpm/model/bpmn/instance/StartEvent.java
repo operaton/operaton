@@ -26,6 +26,7 @@ import org.operaton.bpm.model.bpmn.builder.StartEventBuilder;
  */
 public interface StartEvent extends CatchEvent {
 
+  @Override
   StartEventBuilder builder();
 
   boolean isInterrupting();

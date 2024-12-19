@@ -38,7 +38,8 @@ public class DeleteMembershipCmd extends AbstractWritableIdentityServiceCmd<Void
     this.userId = userId;
     this.groupId = groupId;
   }
-  
+
+  @Override
   protected Void executeCmd(CommandContext commandContext) {
     ensureNotNull("userId", userId);
     ensureNotNull("groupId", groupId);

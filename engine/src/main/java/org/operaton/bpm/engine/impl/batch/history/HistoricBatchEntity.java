@@ -49,6 +49,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
   protected Date endTime;
   protected Date executionStartTime;
 
+  @Override
   public String getType() {
     return type;
   }
@@ -57,6 +58,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.type = type;
   }
 
+  @Override
   public int getTotalJobs() {
     return totalJobs;
   }
@@ -65,6 +67,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.totalJobs = totalJobs;
   }
 
+  @Override
   public int getBatchJobsPerSeed() {
     return batchJobsPerSeed;
   }
@@ -73,6 +76,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.batchJobsPerSeed = batchJobsPerSeed;
   }
 
+  @Override
   public int getInvocationsPerBatchJob() {
     return invocationsPerBatchJob;
   }
@@ -81,6 +85,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.invocationsPerBatchJob = invocationsPerBatchJob;
   }
 
+  @Override
   public String getSeedJobDefinitionId() {
     return seedJobDefinitionId;
   }
@@ -89,6 +94,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.seedJobDefinitionId = seedJobDefinitionId;
   }
 
+  @Override
   public String getMonitorJobDefinitionId() {
     return monitorJobDefinitionId;
   }
@@ -97,6 +103,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.monitorJobDefinitionId = monitorJobDefinitionId;
   }
 
+  @Override
   public String getBatchJobDefinitionId() {
     return batchJobDefinitionId;
   }
@@ -105,6 +112,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.batchJobDefinitionId = batchJobDefinitionId;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -113,6 +121,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getCreateUserId() {
     return createUserId;
   }
@@ -121,6 +130,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.createUserId = createUserId;
   }
 
+  @Override
   public Date getStartTime() {
     return startTime;
   }
@@ -129,6 +139,7 @@ public class HistoricBatchEntity extends HistoryEvent implements HistoricBatch, 
     this.startTime = startTime;
   }
 
+  @Override
   public Date getEndTime() {
     return endTime;
   }

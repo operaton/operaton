@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationTransitionNotifyListenerStart extends PvmAtomicOperationActivityInstanceStart {
 
+  @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getActivity();
   }
@@ -36,6 +37,7 @@ public class PvmAtomicOperationTransitionNotifyListenerStart extends PvmAtomicOp
     return ExecutionListener.EVENTNAME_START;
   }
 
+  @Override
   protected void eventNotificationsCompleted(PvmExecutionImpl execution) {
 
     super.eventNotificationsCompleted(execution);
@@ -60,6 +62,7 @@ public class PvmAtomicOperationTransitionNotifyListenerStart extends PvmAtomicOp
     execution.dispatchDelayedEventsAndPerformOperation(ACTIVITY_EXECUTE);
   }
 
+  @Override
   public String getCanonicalName() {
     return "transition-notifiy-listener-start";
   }

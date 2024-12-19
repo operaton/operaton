@@ -43,21 +43,25 @@ implements DeploymentStatisticsQuery {
     super(executor);
   }
 
+  @Override
   public DeploymentStatisticsQuery includeFailedJobs() {
     includeFailedJobs = true;
     return this;
   }
 
+  @Override
   public DeploymentStatisticsQuery includeIncidents() {
     includeIncidents = true;
     return this;
   }
 
+  @Override
   public DeploymentStatisticsQuery includeIncidentsForType(String incidentType) {
     this.includeIncidentsForType = incidentType;
     return this;
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return
@@ -84,6 +88,7 @@ implements DeploymentStatisticsQuery {
     return includeIncidents || includeIncidentsForType != null;
   }
 
+  @Override
   protected void checkQueryOk() {
     super.checkQueryOk();
     if (includeIncidents && includeIncidentsForType != null) {

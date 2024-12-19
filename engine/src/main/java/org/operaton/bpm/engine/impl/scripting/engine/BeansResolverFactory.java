@@ -27,18 +27,22 @@ import org.operaton.bpm.engine.impl.context.Context;
  */
 public class BeansResolverFactory implements ResolverFactory, Resolver {
 
+  @Override
   public Resolver createResolver(VariableScope variableScope) {
     return this;
   }
 
+  @Override
   public boolean containsKey(Object key) {
     return Context.getProcessEngineConfiguration().getBeans().containsKey(key);
   }
 
+  @Override
   public Object get(Object key) {
     return Context.getProcessEngineConfiguration().getBeans().get(key);
   }
 
+  @Override
   public Set<String> keySet() {
     return (Set) Context.getProcessEngineConfiguration().getBeans().keySet();
   }

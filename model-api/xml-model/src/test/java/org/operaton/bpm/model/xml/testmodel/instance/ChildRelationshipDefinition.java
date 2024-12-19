@@ -35,7 +35,8 @@ public class ChildRelationshipDefinition extends RelationshipDefinition {
       .extendsType(RelationshipDefinition.class)
       .instanceProvider(new ModelTypeInstanceProvider<ChildRelationshipDefinition>() {
 
-        public ChildRelationshipDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ChildRelationshipDefinition newInstance(ModelTypeInstanceContext instanceContext) {
           return new ChildRelationshipDefinition(instanceContext);
         }
       });

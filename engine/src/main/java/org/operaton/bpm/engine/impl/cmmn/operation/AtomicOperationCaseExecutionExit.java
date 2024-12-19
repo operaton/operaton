@@ -24,6 +24,7 @@ import static org.operaton.bpm.engine.delegate.CaseExecutionListener.EXIT;
  */
 public class AtomicOperationCaseExecutionExit extends AbstractAtomicOperationCaseExecutionTerminate {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-exit";
   }

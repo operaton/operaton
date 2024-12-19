@@ -37,10 +37,12 @@ public class InputDataImpl extends DrgElementImpl implements InputData {
     super(instanceContext);
   }
 
+  @Override
   public InformationItem getInformationItem() {
     return informationItemChild.getChild(this);
   }
 
+  @Override
   public void setInformationItem(InformationItem informationItem) {
     informationItemChild.setChild(this, informationItem);
   }
@@ -50,7 +52,8 @@ public class InputDataImpl extends DrgElementImpl implements InputData {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<InputData>() {
-        public InputData newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputData newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputDataImpl(instanceContext);
         }
       });

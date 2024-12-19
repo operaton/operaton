@@ -28,18 +28,22 @@ public class SuspendBatchCmd extends AbstractSetBatchStateCmd {
     super(batchId);
   }
 
+  @Override
   protected SuspensionState getNewSuspensionState() {
     return SuspensionState.SUSPENDED;
   }
 
+  @Override
   protected void checkAccess(CommandChecker checker, BatchEntity batch) {
     checker.checkSuspendBatch(batch);
   }
 
+  @Override
   protected AbstractSetJobDefinitionStateCmd createSetJobDefinitionStateCommand(UpdateJobDefinitionSuspensionStateBuilderImpl builder) {
     return new SuspendJobDefinitionCmd(builder);
   }
 
+  @Override
   protected String getUserOperationType() {
     return UserOperationLogEntry.OPERATION_TYPE_SUSPEND_BATCH;
   }

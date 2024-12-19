@@ -32,6 +32,7 @@ public class MigrationInstructionValidationReportImpl implements MigrationInstru
     this.migrationInstruction = migrationInstruction;
   }
 
+  @Override
   public MigrationInstruction getMigrationInstruction() {
     return migrationInstruction;
   }
@@ -40,14 +41,17 @@ public class MigrationInstructionValidationReportImpl implements MigrationInstru
     failures.add(failure);
   }
 
+  @Override
   public boolean hasFailures() {
     return !failures.isEmpty();
   }
 
+  @Override
   public List<String> getFailures() {
     return failures;
   }
 
+  @Override
   public String toString() {
     return "MigrationInstructionValidationReportImpl{" +
       "migrationInstruction=" + migrationInstruction +

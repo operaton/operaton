@@ -57,24 +57,28 @@ public class ListenerProcessEngineServicesAccessTest extends AbstractProcessEngi
   }
 
   public static class AccessServicesListener implements ExecutionListener {
+    @Override
     public void notify(DelegateExecution execution) throws Exception {
       assertCanAccessServices(execution.getProcessEngineServices());
     }
   }
 
   public static class PerformQueryListener implements ExecutionListener {
+    @Override
     public void notify(DelegateExecution execution) throws Exception {
       assertCanPerformQuery(execution.getProcessEngineServices());
     }
   }
 
   public static class StartProcessListener implements ExecutionListener {
+    @Override
     public void notify(DelegateExecution execution) throws Exception {
       assertCanStartProcessInstance(execution.getProcessEngineServices());
     }
   }
 
   public static class ProcessEngineStartProcessListener implements ExecutionListener {
+    @Override
     public void notify(DelegateExecution execution) throws Exception {
       assertCanStartProcessInstance(execution.getProcessEngine());
     }

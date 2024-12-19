@@ -63,20 +63,24 @@ public class JacksonJsonNode extends SpinJsonNode {
     this.dataFormat = dataFormat;
   }
 
+  @Override
   public String getDataFormatName() {
     return dataFormat.getName();
   }
 
+  @Override
   public JsonNode unwrap() {
     return jsonNode;
   }
 
+  @Override
   public String toString() {
     StringWriter writer = new StringWriter();
     writeToWriter(writer);
     return writer.toString();
   }
 
+  @Override
   public void writeToWriter(Writer writer) {
     dataFormat.getWriter().writeToWriter(writer, jsonNode);
   }
@@ -124,6 +128,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return -1;
   }
 
+  @Override
   public Integer indexOf(Object searchObject) {
     ensureNotNull("searchObject", searchObject);
     JsonNode node = dataFormat.createJsonNode(searchObject);
@@ -134,6 +139,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return res;
   }
 
+  @Override
   public Integer lastIndexOf(Object searchObject) {
     ensureNotNull("searchObject", searchObject);
     JsonNode node = dataFormat.createJsonNode(searchObject);
@@ -144,6 +150,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return res;
   }
 
+  @Override
   public boolean contains(Object searchObject) {
     ensureNotNull("searchObject", searchObject);
     JsonNode node = dataFormat.createJsonNode(searchObject);
@@ -151,14 +158,17 @@ public class JacksonJsonNode extends SpinJsonNode {
     return res != -1;
   }
 
+  @Override
   public boolean isObject() {
     return jsonNode.isObject();
   }
 
+  @Override
   public boolean hasProp(String name) {
     return jsonNode.has(name);
   }
 
+  @Override
   public SpinJsonNode prop(String name) {
     ensureNotNull("name", name);
     if(jsonNode.has(name)) {
@@ -169,6 +179,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public SpinJsonNode prop(String name, String newProperty) {
     ObjectNode node = (ObjectNode) jsonNode;
 
@@ -177,6 +188,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return this;
   }
 
+  @Override
   public SpinJsonNode prop(String name, Number newProperty) {
     ObjectNode node = (ObjectNode) jsonNode;
 
@@ -197,22 +209,27 @@ public class JacksonJsonNode extends SpinJsonNode {
     return this;
   }
 
+  @Override
   public SpinJsonNode prop(String name, int newProperty) {
     return prop(name, (Number) newProperty);
   }
 
+  @Override
   public SpinJsonNode prop(String name, float newProperty) {
     return prop(name, (Number) newProperty);
   }
 
+  @Override
   public SpinJsonNode prop(String name, long newProperty) {
     return prop(name, (Number) newProperty);
   }
 
+  @Override
   public SpinJsonNode prop(String name, boolean newProperty) {
     return prop(name, (Boolean) newProperty);
   }
 
+  @Override
   public SpinJsonNode prop(String name, Boolean newProperty) {
     ObjectNode node = (ObjectNode) jsonNode;
 
@@ -221,6 +238,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return this;
   }
 
+  @Override
   public SpinJsonNode prop(String name, List<Object> newProperty) {
     ObjectNode node = (ObjectNode) jsonNode;
 
@@ -233,6 +251,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return prop(name, newProperty);
   }
 
+  @Override
   public SpinJsonNode prop(String name, Map<String, Object> newProperty) {
     ObjectNode node = (ObjectNode) jsonNode;
 
@@ -241,6 +260,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return this;
   }
 
+  @Override
   public SpinJsonNode prop(String name, SpinJsonNode newProperty) {
     ObjectNode node = (ObjectNode) jsonNode;
 
@@ -254,6 +274,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return this;
   }
 
+  @Override
   public SpinJsonNode deleteProp(String name) {
     ensureNotNull("name", name);
 
@@ -266,6 +287,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public SpinJsonNode deleteProp(List<String> names) {
     ensureNotNull("names", names);
 
@@ -276,6 +298,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return this;
   }
 
+  @Override
   public SpinJsonNode append(Object property) {
     ensureNotNull("property", property);
     if(jsonNode.isArray()) {
@@ -289,6 +312,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public SpinJsonNode insertAt(int index, Object property) {
     ensureNotNull("property", property);
 
@@ -304,6 +328,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public SpinJsonNode insertBefore(Object searchObject, Object insertObject) {
     ensureNotNull("searchObject", searchObject);
     ensureNotNull("insertObject", insertObject);
@@ -317,6 +342,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public SpinJsonNode insertAfter(Object searchObject, Object insertObject) {
     ensureNotNull("searchObject", searchObject);
     ensureNotNull("insertObject", insertObject);
@@ -330,14 +356,17 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public SpinJsonNode remove(Object property) {
     return removeAt(indexOf(property));
   }
 
+  @Override
   public SpinJsonNode removeLast(Object property) {
     return removeAt(lastIndexOf(property));
   }
 
+  @Override
   public SpinJsonNode removeAt(int index) {
     if(this.isArray()) {
       ArrayNode node = (ArrayNode) jsonNode;
@@ -350,10 +379,12 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public Boolean isBoolean() {
     return jsonNode.isBoolean();
   }
 
+  @Override
   public Boolean boolValue() {
     if(jsonNode.isBoolean()) {
       return jsonNode.booleanValue();
@@ -362,10 +393,12 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public Boolean isNumber() {
     return jsonNode.isNumber();
   }
 
+  @Override
   public Number numberValue() {
     if(jsonNode.isNumber()) {
       return jsonNode.numberValue();
@@ -374,10 +407,12 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public Boolean isString() {
     return jsonNode.isTextual();
   }
 
+  @Override
   public String stringValue() {
     if(jsonNode.isTextual()) {
       return jsonNode.textValue();
@@ -386,14 +421,17 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public Boolean isNull() {
     return jsonNode.isNull();
   }
 
+  @Override
   public Boolean isValue() {
     return jsonNode.isValueNode();
   }
 
+  @Override
   public Object value() {
     if(jsonNode.isBoolean()) {
       return jsonNode.booleanValue();
@@ -414,10 +452,12 @@ public class JacksonJsonNode extends SpinJsonNode {
     throw LOG.unableToParseValue("String/Number/Boolean/Null", jsonNode.getNodeType());
   }
 
+  @Override
   public Boolean isArray() {
     return jsonNode.isArray();
   }
 
+  @Override
   public SpinList<SpinJsonNode> elements() {
     if(jsonNode.isArray()) {
       Iterator<JsonNode> iterator = jsonNode.elements();
@@ -433,6 +473,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     }
   }
 
+  @Override
   public List<String> fieldNames() {
     if(jsonNode.isContainerNode()) {
       Iterator<String> iterator = jsonNode.fieldNames();
@@ -451,6 +492,7 @@ public class JacksonJsonNode extends SpinJsonNode {
     return jsonNode.getNodeType();
   }
 
+  @Override
   public SpinJsonPathQuery jsonPath(String expression) {
     ensureNotNull("expression", expression);
     try {
@@ -469,6 +511,7 @@ public class JacksonJsonNode extends SpinJsonNode {
    *
    * @throws SpinJsonException if the json representation cannot be mapped to the specified type
    */
+  @Override
   public <C> C mapTo(Class<C> type) {
     DataFormatMapper mapper = dataFormat.getMapper();
     return mapper.mapInternalToJava(jsonNode, type);
@@ -483,6 +526,7 @@ public class JacksonJsonNode extends SpinJsonNode {
    * @throws SpinJsonException if the json representation cannot be mapped to the specified type
    * @throws SpinJsonDataFormatException if the parameter does not match a valid type
    */
+  @Override
   public <C> C mapTo(String type) {
     DataFormatMapper mapper = dataFormat.getMapper();
     return mapper.mapInternalToJava(jsonNode, type);

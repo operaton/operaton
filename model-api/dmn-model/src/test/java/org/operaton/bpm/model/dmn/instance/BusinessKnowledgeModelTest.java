@@ -21,10 +21,12 @@ import java.util.Collection;
 
 public class BusinessKnowledgeModelTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(DrgElement.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(EncapsulatedLogic.class, 0, 1),
@@ -34,6 +36,7 @@ public class BusinessKnowledgeModelTest extends DmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

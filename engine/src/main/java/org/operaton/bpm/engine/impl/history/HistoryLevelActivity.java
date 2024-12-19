@@ -45,14 +45,17 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
  */
 public class HistoryLevelActivity extends AbstractHistoryLevel {
 
+  @Override
   public int getId() {
     return 1;
   }
 
+  @Override
   public String getName() {
     return ProcessEngineConfiguration.HISTORY_ACTIVITY;
   }
 
+  @Override
   public boolean isHistoryEventProduced(HistoryEventType eventType, Object entity) {
     return PROCESS_INSTANCE_START == eventType
         || PROCESS_INSTANCE_UPDATE == eventType

@@ -409,6 +409,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
     this.jobDefinitionId = jobDefinitionId;
   }
 
+  @Override
   public String getJobDefinitionId() {
     return jobDefinitionId;
   }
@@ -473,6 +474,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
     return revision + 1;
   }
 
+  @Override
   public String getHistoryConfiguration() {
     return historyConfiguration;
   }
@@ -481,6 +483,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
     this.historyConfiguration = historyConfiguration;
   }
 
+  @Override
   public String getFailedActivityId() {
     return failedActivityId;
   }
@@ -489,6 +492,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
     this.failedActivityId = failedActivityId;
   }
 
+  @Override
   public String getAnnotation() {
     return annotation;
   }

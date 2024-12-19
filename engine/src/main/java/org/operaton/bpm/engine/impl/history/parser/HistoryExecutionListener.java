@@ -44,6 +44,7 @@ public abstract class HistoryExecutionListener implements ExecutionListener {
     this.eventProducer = historyEventProducer;
   }
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
 
     // get the event handler

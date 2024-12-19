@@ -27,32 +27,39 @@ public class TestConnector implements Connector<TestConnectorRequest> {
 
   public static final String ID = "pa-test-connector";
 
+  @Override
   public String getId() {
     return ID;
   }
 
+  @Override
   public TestConnectorRequest createRequest() {
     return new TestConnectorRequest();
   }
 
+  @Override
   public List<ConnectorRequestInterceptor> getRequestInterceptors() {
     return null;
   }
 
+  @Override
   public void setRequestInterceptors(List<ConnectorRequestInterceptor> list) {
     // ignore
   }
 
+  @Override
   public Connector<TestConnectorRequest> addRequestInterceptor(ConnectorRequestInterceptor connectorRequestInterceptor) {
     // ignore
     return this;
   }
 
+  @Override
   public Connector<TestConnectorRequest> addRequestInterceptors(Collection<ConnectorRequestInterceptor> collection) {
     // ignore
     return this;
   }
 
+  @Override
   public ConnectorResponse execute(TestConnectorRequest testConnectorRequest) {
     return testConnectorRequest.execute();
   }

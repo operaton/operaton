@@ -47,6 +47,7 @@ public class TenantResourceImpl extends AbstractIdentityResource implements Tena
     this.rootResourcePath = rootResourcePath;
   }
 
+  @Override
   public TenantDto getTenant(UriInfo context) {
 
     Tenant tenant = findTenantObject();
@@ -58,6 +59,7 @@ public class TenantResourceImpl extends AbstractIdentityResource implements Tena
     return dto;
   }
 
+  @Override
   public void updateTenant(TenantDto tenantDto) {
     ensureNotReadOnly();
 
@@ -71,12 +73,14 @@ public class TenantResourceImpl extends AbstractIdentityResource implements Tena
     identityService.saveTenant(tenant);
   }
 
+  @Override
   public void deleteTenant() {
     ensureNotReadOnly();
 
     identityService.deleteTenant(resourceId);
   }
 
+  @Override
   public ResourceOptionsDto availableOperations(UriInfo context) {
     ResourceOptionsDto dto = new ResourceOptionsDto();
 
@@ -98,10 +102,12 @@ public class TenantResourceImpl extends AbstractIdentityResource implements Tena
     return dto;
   }
 
+  @Override
   public TenantUserMembersResource getTenantUserMembersResource() {
     return new TenantUserMembersResourceImpl(getProcessEngine().getName(), resourceId, rootResourcePath, getObjectMapper());
   }
 
+  @Override
   public TenantGroupMembersResource getTenantGroupMembersResource() {
     return new TenantGroupMembersResourceImpl(getProcessEngine().getName(), resourceId, rootResourcePath, getObjectMapper());
   }

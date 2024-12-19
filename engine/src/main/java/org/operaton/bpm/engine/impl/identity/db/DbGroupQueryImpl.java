@@ -42,12 +42,14 @@ public class DbGroupQueryImpl extends GroupQueryImpl {
 
   //results ////////////////////////////////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     DbReadOnlyIdentityServiceProvider identityProvider = getIdentityProvider(commandContext);
     return identityProvider.findGroupCountByQueryCriteria(this);
   }
 
+  @Override
   public List<Group> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     DbReadOnlyIdentityServiceProvider identityProvider = getIdentityProvider(commandContext);

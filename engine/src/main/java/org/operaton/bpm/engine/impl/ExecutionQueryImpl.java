@@ -61,53 +61,63 @@ public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery
     super(commandExecutor);
   }
 
+  @Override
   public ExecutionQueryImpl processDefinitionId(String processDefinitionId) {
     ensureNotNull("Process definition id", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public ExecutionQueryImpl processDefinitionKey(String processDefinitionKey) {
     ensureNotNull("Process definition key", processDefinitionKey);
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
+  @Override
   public ExecutionQueryImpl processInstanceId(String processInstanceId) {
     ensureNotNull("Process instance id", processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
   }
 
+  @Override
   public ExecutionQuery processInstanceBusinessKey(String businessKey) {
     ensureNotNull("Business key", businessKey);
     this.businessKey = businessKey;
     return this;
   }
 
+  @Override
   public ExecutionQueryImpl executionId(String executionId) {
     ensureNotNull("Execution id", executionId);
     this.executionId = executionId;
     return this;
   }
 
+  @Override
   public ExecutionQueryImpl activityId(String activityId) {
     this.activityId = activityId;
     return this;
   }
 
+  @Override
   public ExecutionQuery signalEventSubscription(String signalName) {
     return eventSubscription(EventType.SIGNAL, signalName);
   }
 
+  @Override
   public ExecutionQuery signalEventSubscriptionName(String signalName) {
     return eventSubscription(EventType.SIGNAL, signalName);
   }
 
+  @Override
   public ExecutionQuery messageEventSubscriptionName(String messageName) {
     return eventSubscription(EventType.MESSAGE, messageName);
   }
 
+  @Override
   public ExecutionQuery messageEventSubscription() {
     return eventSubscription(EventType.MESSAGE, null);
   }
@@ -125,50 +135,59 @@ public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery
     return this;
   }
 
+  @Override
   public ExecutionQuery suspended() {
     this.suspensionState = SuspensionState.SUSPENDED;
     return this;
   }
 
+  @Override
   public ExecutionQuery active() {
     this.suspensionState = SuspensionState.ACTIVE;
     return this;
   }
 
+  @Override
   public ExecutionQuery processVariableValueEquals(String variableName, Object variableValue) {
     addVariable(variableName, variableValue, QueryOperator.EQUALS, false);
     return this;
   }
 
+  @Override
   public ExecutionQuery processVariableValueNotEquals(String variableName, Object variableValue) {
     addVariable(variableName, variableValue, QueryOperator.NOT_EQUALS, false);
     return this;
   }
 
+  @Override
   public ExecutionQuery incidentType(String incidentType) {
     ensureNotNull("incident type", incidentType);
     this.incidentType = incidentType;
     return this;
   }
 
+  @Override
   public ExecutionQuery incidentId(String incidentId) {
     ensureNotNull("incident id", incidentId);
     this.incidentId = incidentId;
     return this;
   }
 
+  @Override
   public ExecutionQuery incidentMessage(String incidentMessage) {
     ensureNotNull("incident message", incidentMessage);
     this.incidentMessage = incidentMessage;
     return this;
   }
 
+  @Override
   public ExecutionQuery incidentMessageLike(String incidentMessageLike) {
     ensureNotNull("incident messageLike", incidentMessageLike);
     this.incidentMessageLike = incidentMessageLike;
     return this;
   }
 
+  @Override
   public ExecutionQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -176,6 +195,7 @@ public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery
     return this;
   }
 
+  @Override
   public ExecutionQuery withoutTenantId() {
     this.tenantIds = null;
     isTenantIdSet = true;
@@ -184,21 +204,25 @@ public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery
 
   //ordering ////////////////////////////////////////////////////
 
+  @Override
   public ExecutionQueryImpl orderByProcessInstanceId() {
     orderBy(ExecutionQueryProperty.PROCESS_INSTANCE_ID);
     return this;
   }
 
+  @Override
   public ExecutionQueryImpl orderByProcessDefinitionId() {
     orderBy(new QueryOrderingProperty(QueryOrderingProperty.RELATION_PROCESS_DEFINITION, ExecutionQueryProperty.PROCESS_DEFINITION_ID));
     return this;
   }
 
+  @Override
   public ExecutionQueryImpl orderByProcessDefinitionKey() {
     orderBy(new QueryOrderingProperty(QueryOrderingProperty.RELATION_PROCESS_DEFINITION, ExecutionQueryProperty.PROCESS_DEFINITION_KEY));
     return this;
   }
 
+  @Override
   public ExecutionQuery orderByTenantId() {
     orderBy(ExecutionQueryProperty.TENANT_ID);
     return this;

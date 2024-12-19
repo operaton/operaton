@@ -33,6 +33,7 @@ public class HttpRequestInvocation  extends AbstractRequestInvocation<HttpReques
     this.client = client;
   }
 
+  @Override
   public Object invokeTarget() throws Exception {
     // execute the request
     return client.execute(target);

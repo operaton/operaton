@@ -31,10 +31,12 @@ public class CdiEventSupportProcessApplication extends org.operaton.bpm.applicat
 
   public static final String LISTENER_INVOCATION_COUNT = "listenerInvocationCount";
 
+  @Override
   public ExecutionListener getExecutionListener() {
     return new CdiEventListener();
   }
 
+  @Override
   public TaskListener getTaskListener() {
     return new CdiEventListener();
   }

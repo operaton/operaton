@@ -137,6 +137,7 @@ public abstract class AbstractRemovalTimeTest {
   protected void clearAttachment(final Attachment attachment) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getAttachmentManager().delete((AttachmentEntity) attachment);
         return null;
@@ -147,6 +148,7 @@ public abstract class AbstractRemovalTimeTest {
   protected void clearCommentByTaskId(final String taskId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getCommentManager().deleteCommentsByTaskId(taskId);
         return null;
@@ -157,6 +159,7 @@ public abstract class AbstractRemovalTimeTest {
   protected void clearCommentByProcessInstanceId(final String processInstanceId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getCommentManager().deleteCommentsByProcessInstanceIds(Collections.singletonList(processInstanceId));
         return null;
@@ -167,6 +170,7 @@ public abstract class AbstractRemovalTimeTest {
   protected void clearHistoricTaskInst(final String taskId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getHistoricTaskInstanceManager().deleteHistoricTaskInstanceById(taskId);
         commandContext.getHistoricIdentityLinkManager().deleteHistoricIdentityLinksLogByTaskId(taskId);
@@ -178,6 +182,7 @@ public abstract class AbstractRemovalTimeTest {
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
         return null;
@@ -188,6 +193,7 @@ public abstract class AbstractRemovalTimeTest {
   protected void clearHistoricIncident(final HistoricIncident historicIncident) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getHistoricIncidentManager().delete((HistoricIncidentEntity) historicIncident);
         return null;

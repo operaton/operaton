@@ -25,6 +25,7 @@ import org.operaton.spin.plugin.variable.value.XmlValue;
  */
 public interface XmlValueBuilder extends SpinValueBuilder<XmlValue> {
 
+  @Override
   XmlValueBuilder serializationDataFormat(String dataFormatName);
 
   XmlValueBuilder serializationDataFormat(SerializationDataFormat dataFormat);

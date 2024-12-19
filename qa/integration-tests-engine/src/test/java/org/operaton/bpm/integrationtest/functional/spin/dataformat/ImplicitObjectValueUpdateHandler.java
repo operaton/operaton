@@ -32,6 +32,7 @@ public class ImplicitObjectValueUpdateHandler implements JavaDelegate, TaskListe
   public static final String VARIABLE_NAME = "var";
   public static final long ONE_DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     JsonSerializable variable = (JsonSerializable) execution.getVariable(VARIABLE_NAME);
 
@@ -39,6 +40,7 @@ public class ImplicitObjectValueUpdateHandler implements JavaDelegate, TaskListe
 
   }
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     JsonSerializable variable = (JsonSerializable) delegateTask.getVariable(VARIABLE_NAME);
 

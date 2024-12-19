@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
  */
 public class VariableUpdateListener implements CaseVariableListener {
 
+  @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
     if (variableInstance.getName().equals("variable")) {
       if (variableInstance.getValue().equals("value1")) {

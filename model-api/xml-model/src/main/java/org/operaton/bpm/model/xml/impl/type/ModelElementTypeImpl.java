@@ -74,6 +74,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     this.instanceType = instanceType;
   }
 
+  @Override
   public ModelElementInstance newInstance(ModelInstance modelInstance) {
     ModelInstanceImpl modelInstanceImpl = (ModelInstanceImpl) modelInstance;
     DomDocument document = modelInstanceImpl.getDocument();
@@ -119,14 +120,17 @@ public class ModelElementTypeImpl implements ModelElementType {
     }
   }
 
+  @Override
   public final List<Attribute<?>> getAttributes() {
     return attributes;
   }
 
+  @Override
   public String getTypeName() {
     return typeName;
   }
 
+  @Override
   public Class<? extends ModelElementInstance> getInstanceType() {
     return instanceType;
   }
@@ -135,6 +139,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     this.typeNamespace = typeNamespace;
   }
 
+  @Override
   public String getTypeNamespace() {
     return typeNamespace;
   }
@@ -152,6 +157,8 @@ public class ModelElementTypeImpl implements ModelElementType {
   public void setInstanceProvider(ModelTypeInstanceProvider<?> instanceProvider) {
     this.instanceProvider = instanceProvider;
   }
+
+  @Override
   public boolean isAbstract() {
     return isAbstract;
   }
@@ -160,10 +167,12 @@ public class ModelElementTypeImpl implements ModelElementType {
     this.isAbstract = isAbstract;
   }
 
+  @Override
   public Collection<ModelElementType> getExtendingTypes() {
     return Collections.unmodifiableCollection(extendingTypes);
   }
 
+  @Override
   public Collection<ModelElementType> getAllExtendingTypes() {
     HashSet<ModelElementType> extendingTypes = new HashSet<ModelElementType>();
     extendingTypes.add(this);
@@ -199,18 +208,22 @@ public class ModelElementTypeImpl implements ModelElementType {
   }
 
 
+  @Override
   public ModelElementType getBaseType() {
     return baseType;
   }
 
+  @Override
   public Model getModel() {
     return model;
   }
 
+  @Override
   public List<ModelElementType> getChildElementTypes() {
     return childElementTypes;
   }
 
+  @Override
   public List<ModelElementType> getAllChildElementTypes() {
     List<ModelElementType> allChildElementTypes = new ArrayList<ModelElementType>();
     if (baseType != null) {
@@ -233,6 +246,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     return allChildElementCollections;
   }
 
+  @Override
   public Collection<ModelElementInstance> getInstances(ModelInstance modelInstance) {
     ModelInstanceImpl modelInstanceImpl = (ModelInstanceImpl) modelInstance;
     DomDocument document = modelInstanceImpl.getDocument();
@@ -301,6 +315,7 @@ public class ModelElementTypeImpl implements ModelElementType {
    * @param attributeName the name of the attribute
    * @return the attribute or null if it not exists
    */
+  @Override
   public Attribute<?> getAttribute(String attributeName) {
     for (Attribute<?> attribute : getAllAttributes()) {
       if (attribute.getAttributeName().equals(attributeName)) {

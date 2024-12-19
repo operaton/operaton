@@ -34,6 +34,7 @@ public class AsyncTransactionContext extends StandaloneTransactionContext {
   // event is fired in new thread
   protected void fireTransactionEvent(final TransactionState transactionState) {
     Thread thread = new Thread() {
+      @Override
       public void run() {
         fireTransactionEventAsync(transactionState);
       }

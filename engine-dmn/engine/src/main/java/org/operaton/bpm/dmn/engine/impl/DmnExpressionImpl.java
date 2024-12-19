@@ -84,18 +84,22 @@ public class DmnExpressionImpl implements CachedCompiledScriptSupport, CachedExp
       '}';
   }
 
+  @Override
   public void cacheCompiledScript(CompiledScript compiledScript) {
     this.cachedCompiledScript = compiledScript;
   }
 
+  @Override
   public CompiledScript getCachedCompiledScript() {
     return this.cachedCompiledScript;
   }
 
+  @Override
   public ElExpression getCachedExpression() {
     return this.cachedExpression;
   }
 
+  @Override
   public void setCachedExpression(ElExpression expression) {
     this.cachedExpression = expression;
   }

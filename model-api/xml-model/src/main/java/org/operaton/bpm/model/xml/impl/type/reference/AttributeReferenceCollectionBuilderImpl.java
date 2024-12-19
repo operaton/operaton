@@ -48,11 +48,13 @@ public class AttributeReferenceCollectionBuilderImpl<T extends ModelElementInsta
     }
   }
 
+  @Override
   public AttributeReferenceCollection<T> build() {
     referenceSourceAttribute.registerOutgoingReference(attributeReferenceCollection);
     return attributeReferenceCollection;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public void performModelBuild(Model model) {
     // register declaring type as a referencing type of referenced type

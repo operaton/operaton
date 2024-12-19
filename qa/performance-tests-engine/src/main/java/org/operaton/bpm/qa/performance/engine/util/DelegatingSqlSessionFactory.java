@@ -39,38 +39,47 @@ public class DelegatingSqlSessionFactory implements SqlSessionFactory {
     wrappedSessionFactory = wrappSqlSessionFactory;
   }
 
+  @Override
   public SqlSession openSession() {
     return wrappedSessionFactory.openSession();
   }
 
+  @Override
   public SqlSession openSession(boolean autoCommit) {
     return wrappedSessionFactory.openSession(autoCommit);
   }
 
+  @Override
   public SqlSession openSession(Connection connection) {
     return wrappedSessionFactory.openSession(connection);
   }
 
+  @Override
   public SqlSession openSession(TransactionIsolationLevel level) {
     return wrappedSessionFactory.openSession(level);
   }
 
+  @Override
   public SqlSession openSession(ExecutorType execType) {
     return wrappedSessionFactory.openSession(execType);
   }
 
+  @Override
   public SqlSession openSession(ExecutorType execType, boolean autoCommit) {
     return wrappedSessionFactory.openSession(execType, autoCommit);
   }
 
+  @Override
   public SqlSession openSession(ExecutorType execType, TransactionIsolationLevel level) {
     return wrappedSessionFactory.openSession(execType, level);
   }
 
+  @Override
   public SqlSession openSession(ExecutorType execType, Connection connection) {
     return wrappedSessionFactory.openSession(execType, connection);
   }
 
+  @Override
   public Configuration getConfiguration() {
     return wrappedSessionFactory.getConfiguration();
   }

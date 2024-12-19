@@ -56,6 +56,7 @@ public class AuthorizationCheckCmd implements Command<Boolean> {
     validate(userId, groupIds, permission, resource);
   }
 
+  @Override
   public Boolean execute(CommandContext commandContext) {
     final AuthorizationManager authorizationManager = commandContext.getAuthorizationManager();
     if (authorizationManager.isPermissionDisabled(permission)) {

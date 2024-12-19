@@ -38,7 +38,8 @@ public class ConversationImpl extends ConversationNodeImpl implements Conversati
       .namespaceUri(BPMN20_NS)
       .extendsType(ConversationNode.class)
       .instanceProvider(new ModelTypeInstanceProvider<Conversation>() {
-        public Conversation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Conversation newInstance(ModelTypeInstanceContext instanceContext) {
           return new ConversationImpl(instanceContext);
         }
       });

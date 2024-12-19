@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public abstract class PvmAtomicOperationCreateConcurrentExecution implements PvmAtomicOperation {
 
+  @Override
   public void execute(PvmExecutionImpl execution) {
 
     // Invariant: execution is the Scope Execution for the activity's flow scope.
@@ -51,6 +52,7 @@ public abstract class PvmAtomicOperationCreateConcurrentExecution implements Pvm
 
   protected abstract void concurrentExecutionCreated(PvmExecutionImpl propagatingExecution);
 
+  @Override
   public boolean isAsync(PvmExecutionImpl execution) {
     return false;
   }

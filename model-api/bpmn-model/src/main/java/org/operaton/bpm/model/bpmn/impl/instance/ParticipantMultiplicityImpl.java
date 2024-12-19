@@ -41,7 +41,8 @@ public class ParticipantMultiplicityImpl extends BaseElementImpl implements Part
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<ParticipantMultiplicity>() {
-        public ParticipantMultiplicity newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ParticipantMultiplicity newInstance(ModelTypeInstanceContext instanceContext) {
           return new ParticipantMultiplicityImpl(instanceContext);
         }
       });
@@ -61,18 +62,22 @@ public class ParticipantMultiplicityImpl extends BaseElementImpl implements Part
     super(instanceContext);
   }
 
+  @Override
   public int getMinimum() {
     return minimumAttribute.getValue(this);
   }
 
+  @Override
   public void setMinimum(int minimum) {
     minimumAttribute.setValue(this, minimum);
   }
 
+  @Override
   public int getMaximum() {
     return maximumAttribute.getValue(this);
   }
 
+  @Override
   public void setMaximum(int maximum) {
     maximumAttribute.setValue(this, maximum);
   }

@@ -42,6 +42,7 @@ public abstract class HistoryTaskListener implements TaskListener {
     this.eventProducer = historyEventProducer;
   }
 
+  @Override
   public void notify(DelegateTask task) {
 
     // get the event handler

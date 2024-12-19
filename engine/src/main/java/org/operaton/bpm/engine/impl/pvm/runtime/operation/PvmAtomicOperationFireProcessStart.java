@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationFireProcessStart extends AbstractPvmEventAtomicOperation {
 
+  @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getProcessDefinition();
   }
@@ -39,6 +40,7 @@ public class PvmAtomicOperationFireProcessStart extends AbstractPvmEventAtomicOp
     // do nothing
   }
 
+  @Override
   public String getCanonicalName() {
     return "fire-process-start";
   }

@@ -159,6 +159,7 @@ public class SectionedHtmlReportBuilder {
       this.header = header;
     }
 
+    @Override
     public String toString() {
       return text;
     }

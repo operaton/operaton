@@ -36,7 +36,8 @@ public class CreateGroupCmd extends AbstractWritableIdentityServiceCmd<Group> im
     ensureNotNull("groupId", groupId);
     this.groupId = groupId;
   }
-  
+
+  @Override
   protected Group executeCmd(CommandContext commandContext) {
     return commandContext
       .getWritableIdentityProvider()

@@ -36,7 +36,8 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   protected String datasource;
   protected Map<String, String> properties;
   protected List<ProcessEnginePluginXml> plugins;
-  
+
+  @Override
   public String getName() {
     return name;
   }
@@ -44,7 +45,8 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public void setName(String name) {
     this.name = name;
   }
-  
+
+  @Override
   public boolean isDefault() {
     return isDefault;
   }
@@ -52,7 +54,8 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public void setDefault(boolean isDefault) {
     this.isDefault = isDefault;
   }
-  
+
+  @Override
   public String getConfigurationClass() {
     return configurationClass;
   }
@@ -60,7 +63,8 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public void setConfigurationClass(String configurationClass) {
     this.configurationClass = configurationClass;
   }
-  
+
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }
@@ -68,7 +72,8 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public void setProperties(Map<String, String> properties) {
     this.properties = properties;
   }
-  
+
+  @Override
   public String getDatasource() {
     return datasource;
   }
@@ -76,7 +81,8 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public void setDatasource(String datasource) {
     this.datasource = datasource;
   }
-  
+
+  @Override
   public String getJobAcquisitionName() {
     return jobAcquisitionName;
   }
@@ -84,7 +90,8 @@ public class ProcessEngineXmlImpl implements ProcessEngineXml {
   public void setJobAcquisitionName(String jobAcquisitionName) {
     this.jobAcquisitionName = jobAcquisitionName;
   }
-  
+
+  @Override
   public List<ProcessEnginePluginXml> getPlugins() {
     return plugins;
   }

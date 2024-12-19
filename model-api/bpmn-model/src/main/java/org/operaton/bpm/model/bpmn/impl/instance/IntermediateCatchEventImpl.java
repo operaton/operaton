@@ -40,7 +40,8 @@ public class IntermediateCatchEventImpl extends CatchEventImpl implements Interm
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(CatchEvent.class)
       .instanceProvider(new ModelTypeInstanceProvider<IntermediateCatchEvent>() {
-        public IntermediateCatchEvent newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public IntermediateCatchEvent newInstance(ModelTypeInstanceContext instanceContext) {
           return new IntermediateCatchEventImpl(instanceContext);
         }
       });

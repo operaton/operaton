@@ -27,10 +27,12 @@ import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
  */
 public class TimerEventTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CmmnModelConstants.CMMN10_NS, Event.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
           new ChildElementAssumption(TimerExpression.class, 0, 1),
@@ -38,6 +40,7 @@ public class TimerEventTest extends CmmnModelElementInstanceTest {
         );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

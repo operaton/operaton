@@ -33,10 +33,12 @@ public class JacksonJsonDataFormatProvider implements DataFormatProvider {
 
   protected Set<String> names;
 
+  @Override
   public String getDataFormatName() {
     return JSON_DATAFORMAT_NAME;
   }
 
+  @Override
   public DataFormat<?> createInstance() {
     return new JacksonJsonDataFormat(JSON_DATAFORMAT_NAME);
   }

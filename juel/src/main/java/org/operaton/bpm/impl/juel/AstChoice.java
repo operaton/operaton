@@ -47,11 +47,13 @@ public class AstChoice extends AstRightValue {
 		no.appendStructure(b, bindings);
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return 3;
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return i == 0 ? question : i == 1 ? yes : i == 2 ? no : null;
 	}
 }

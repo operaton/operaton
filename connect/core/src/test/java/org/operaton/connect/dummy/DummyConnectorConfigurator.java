@@ -20,10 +20,12 @@ import org.operaton.connect.spi.ConnectorConfigurator;
 
 public class DummyConnectorConfigurator implements ConnectorConfigurator<DummyConnector> {
 
+  @Override
   public Class<DummyConnector> getConnectorClass() {
     return DummyConnector.class;
   }
 
+  @Override
   public void configure(DummyConnector connector) {
     connector.setConfiguration("configured");
   }

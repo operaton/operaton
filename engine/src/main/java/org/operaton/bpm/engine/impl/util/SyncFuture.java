@@ -37,19 +37,23 @@ public class SyncFuture<V> implements Future<V> {
   public SyncFuture(Throwable e) {
     this.e = e;
   }
-  
+
+  @Override
   public boolean cancel(boolean mayInterruptIfRunning) {
     return false;
   }
 
+  @Override
   public boolean isCancelled() {
     return false;
   }
 
+  @Override
   public boolean isDone() {
     return true;
   }
 
+  @Override
   public V get() throws InterruptedException, ExecutionException {
     if(e==null) {
       return result;
@@ -58,6 +62,7 @@ public class SyncFuture<V> implements Future<V> {
     }
   }
 
+  @Override
   public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
     return get();
   }

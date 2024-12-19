@@ -37,7 +37,8 @@ public class DefaultOutputEntryImpl extends LiteralExpressionImpl implements Def
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
       .instanceProvider(new ModelTypeInstanceProvider<DefaultOutputEntry>() {
-        public DefaultOutputEntry newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DefaultOutputEntry newInstance(ModelTypeInstanceContext instanceContext) {
           return new DefaultOutputEntryImpl(instanceContext);
         }
       });

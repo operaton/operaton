@@ -30,6 +30,7 @@ public class ActivityStackCollector implements TreeVisitor<ScopeImpl> {
 
   protected List<PvmActivity> activityStack = new ArrayList<PvmActivity>();
 
+  @Override
   public void visit(ScopeImpl scope) {
     if (scope != null && PvmActivity.class.isAssignableFrom(scope.getClass())) {
       activityStack.add((PvmActivity) scope);

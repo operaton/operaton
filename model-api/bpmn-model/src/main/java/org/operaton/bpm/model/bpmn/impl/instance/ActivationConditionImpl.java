@@ -38,7 +38,8 @@ public class ActivationConditionImpl extends ExpressionImpl implements Activatio
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<ActivationCondition>() {
-        public ActivationCondition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ActivationCondition newInstance(ModelTypeInstanceContext instanceContext) {
           return new ActivationConditionImpl(instanceContext);
         }
       });

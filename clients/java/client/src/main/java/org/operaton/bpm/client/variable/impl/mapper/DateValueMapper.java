@@ -42,6 +42,7 @@ public class DateValueMapper extends PrimitiveValueMapper<DateValue> {
     return Variables.dateValue((Date) untypedValue.getValue());
   }
 
+  @Override
   public DateValue readValue(TypedValueField typedValueField) {
     Date date = null;
 
@@ -68,6 +69,7 @@ public class DateValueMapper extends PrimitiveValueMapper<DateValue> {
     }
   }
 
+  @Override
   protected boolean canReadValue(TypedValueField typedValueField) {
     Object value = typedValueField.getValue();
     return value == null || value instanceof String;

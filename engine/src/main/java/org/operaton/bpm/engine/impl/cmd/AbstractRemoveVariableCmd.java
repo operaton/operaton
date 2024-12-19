@@ -35,6 +35,7 @@ public abstract class AbstractRemoveVariableCmd extends AbstractVariableCmd {
     this.variableNames = variableNames;
   }
 
+  @Override
   protected void executeOperation(AbstractVariableScope scope) {
     if (isLocal) {
       scope.removeVariablesLocal(variableNames);
@@ -43,6 +44,7 @@ public abstract class AbstractRemoveVariableCmd extends AbstractVariableCmd {
     }
   }
 
+  @Override
   protected String getLogEntryOperation() {
     return UserOperationLogEntry.OPERATION_TYPE_REMOVE_VARIABLE;
   }

@@ -45,7 +45,8 @@ public class AstBracket extends AstProperty {
 		b.append("]");
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return 2;
 	}
 

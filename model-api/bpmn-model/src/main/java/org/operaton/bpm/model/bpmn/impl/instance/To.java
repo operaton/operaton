@@ -37,7 +37,8 @@ public class To extends ExpressionImpl {
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<To>() {
-        public To newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public To newInstance(ModelTypeInstanceContext instanceContext) {
           return new To(instanceContext);
         }
       });

@@ -44,6 +44,7 @@ public class UpdateProcessDefinitionHistoryTimeToLiveCmd implements Command<Void
     this.historyTimeToLive = historyTimeToLive;
   }
 
+  @Override
   public Void execute(CommandContext context) {
     checkAuthorization(context);
 

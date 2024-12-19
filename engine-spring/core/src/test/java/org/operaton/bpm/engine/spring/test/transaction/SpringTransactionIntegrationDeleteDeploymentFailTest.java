@@ -35,6 +35,7 @@ public class SpringTransactionIntegrationDeleteDeploymentFailTest extends Spring
   @Override
   protected void tearDown() throws Exception {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         commandContext
           .getDeploymentManager()

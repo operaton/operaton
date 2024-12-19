@@ -35,6 +35,7 @@ public class CustomActivityBehavior implements ActivityBehavior, SignallableActi
     this.delegateActivityBehavior = activityBehavior;
   }
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     Context
       .getProcessEngineConfiguration()
@@ -42,6 +43,7 @@ public class CustomActivityBehavior implements ActivityBehavior, SignallableActi
       .handleInvocation(new ActivityBehaviorInvocation(delegateActivityBehavior, execution));
   }
 
+  @Override
   public void signal(ActivityExecution execution, String signalEvent, Object signalData) throws Exception {
     Context
       .getProcessEngineConfiguration()

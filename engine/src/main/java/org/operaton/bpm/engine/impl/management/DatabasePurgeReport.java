@@ -62,6 +62,7 @@ public class DatabasePurgeReport implements PurgeReporting<Long> {
     return deletedEntities.containsKey(key);
   }
 
+  @Override
   public boolean isEmpty() {
     return deletedEntities.isEmpty();
   }

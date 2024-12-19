@@ -24,20 +24,24 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
  */
 public class MilestoneActivityBehavior extends EventListenerOrMilestoneActivityBehavior {
 
+  @Override
   protected void creating(CmmnActivityExecution execution) {
     evaluateRequiredRule(execution);
   }
 
+  @Override
   public void created(CmmnActivityExecution execution) {
     if (execution.isAvailable() && isAtLeastOneEntryCriterionSatisfied(execution)) {
       fireEntryCriteria(execution);
     }
   }
 
+  @Override
   public void fireEntryCriteria(CmmnActivityExecution execution) {
     execution.occur();
   }
 
+  @Override
   protected String getTypeName() {
     return "milestone";
   }

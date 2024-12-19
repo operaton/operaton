@@ -72,7 +72,8 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
       .namespaceUri(BPMN20_NS)
       .extendsType(Activity.class)
       .instanceProvider(new ModelTypeInstanceProvider<CallActivity>() {
-        public CallActivity newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CallActivity newInstance(ModelTypeInstanceContext instanceContext) {
           return new CallActivityImpl(instanceContext);
         }
       });
@@ -140,10 +141,12 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
     return new CallActivityBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public String getCalledElement() {
     return calledElementAttribute.getValue(this);
   }
 
+  @Override
   public void setCalledElement(String calledElement) {
     calledElementAttribute.setValue(this, calledElement);
   }
@@ -152,6 +155,7 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
    * @deprecated use isOperatonAsyncBefore() instead.
    */
   @Deprecated
+  @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
   }
@@ -160,70 +164,87 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
    * @deprecated use setOperatonAsyncBefore() instead.
    */
   @Deprecated
+  @Override
   public void setOperatonAsync(boolean isOperatonAsync) {
     operatonAsyncAttribute.setValue(this, isOperatonAsync);
   }
 
+  @Override
   public String getOperatonCalledElementBinding() {
     return operatonCalledElementBindingAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCalledElementBinding(String operatonCalledElementBinding) {
     operatonCalledElementBindingAttribute.setValue(this, operatonCalledElementBinding);
   }
 
+  @Override
   public String getOperatonCalledElementVersion() {
     return operatonCalledElementVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCalledElementVersion(String operatonCalledElementVersion) {
     operatonCalledElementVersionAttribute.setValue(this, operatonCalledElementVersion);
   }
 
+  @Override
   public String getOperatonCalledElementVersionTag() {
     return operatonCalledElementVersionTagAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCalledElementVersionTag(String operatonCalledElementVersionTag) {
     operatonCalledElementVersionTagAttribute.setValue(this, operatonCalledElementVersionTag);
   }
 
+  @Override
   public String getOperatonCaseRef() {
     return operatonCaseRefAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCaseRef(String operatonCaseRef) {
     operatonCaseRefAttribute.setValue(this, operatonCaseRef);
   }
 
+  @Override
   public String getOperatonCaseBinding() {
     return operatonCaseBindingAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCaseBinding(String operatonCaseBinding) {
     operatonCaseBindingAttribute.setValue(this, operatonCaseBinding);
   }
 
+  @Override
   public String getOperatonCaseVersion() {
     return operatonCaseVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCaseVersion(String operatonCaseVersion) {
     operatonCaseVersionAttribute.setValue(this, operatonCaseVersion);
   }
 
+  @Override
   public String getOperatonCalledElementTenantId() {
     return operatonCalledElementTenantIdAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCalledElementTenantId(String tenantId) {
     operatonCalledElementTenantIdAttribute.setValue(this, tenantId);
   }
 
+  @Override
   public String getOperatonCaseTenantId() {
     return operatonCaseTenantIdAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCaseTenantId(String tenantId) {
     operatonCaseTenantIdAttribute.setValue(this, tenantId);
   }

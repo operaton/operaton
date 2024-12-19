@@ -50,6 +50,7 @@ public class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsy
     this.messageName = messageName;
   }
 
+  @Override
   public MessageCorrelationAsyncBuilder processInstanceIds(List<String> ids) {
     ensureNotNull("processInstanceIds", ids);
     this.processInstanceIds = ids;
@@ -70,6 +71,7 @@ public class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsy
     return this;
   }
 
+  @Override
   public MessageCorrelationAsyncBuilder setVariable(String variableName, Object variableValue) {
     ensureNotNull("variableName", variableName);
     ensurePayloadProcessInstanceVariablesInitialized();
@@ -77,6 +79,7 @@ public class MessageCorrelationAsyncBuilderImpl implements MessageCorrelationAsy
     return this;
   }
 
+  @Override
   public MessageCorrelationAsyncBuilder setVariables(Map<String, Object> variables) {
     if (variables != null) {
       ensurePayloadProcessInstanceVariablesInitialized();

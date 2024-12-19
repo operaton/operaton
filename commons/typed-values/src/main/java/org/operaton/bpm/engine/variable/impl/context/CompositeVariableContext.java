@@ -34,6 +34,7 @@ public class CompositeVariableContext implements VariableContext {
     this.delegateContexts = delegateContexts;
   }
 
+  @Override
   public TypedValue resolve(String variableName) {
     for (VariableContext variableContext : delegateContexts) {
       TypedValue resolvedValue = variableContext.resolve(variableName);
@@ -45,6 +46,7 @@ public class CompositeVariableContext implements VariableContext {
     return null;
   }
 
+  @Override
   public boolean containsVariable(String name) {
     for (VariableContext variableContext : delegateContexts) {
       if(variableContext.containsVariable(name)) {
@@ -55,6 +57,7 @@ public class CompositeVariableContext implements VariableContext {
     return false;
   }
 
+  @Override
   public Set<String> keySet() {
     Set<String> keySet = new HashSet<String>();
     for (VariableContext variableContext : delegateContexts) {

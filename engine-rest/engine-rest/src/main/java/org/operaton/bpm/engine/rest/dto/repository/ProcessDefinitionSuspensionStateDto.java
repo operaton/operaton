@@ -55,6 +55,7 @@ public class ProcessDefinitionSuspensionStateDto extends SuspensionStateDto {
     this.processDefinitionKey = processDefinitionKey;
   }
 
+  @Override
   public void updateSuspensionState(ProcessEngine engine) {
     if (processDefinitionId != null && processDefinitionKey != null) {
       String message = "Only one of processDefinitionId or processDefinitionKey should be set to update the suspension state.";

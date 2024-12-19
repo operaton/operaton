@@ -90,7 +90,8 @@ public class HistoricIdentityLinkLogQueryImpl extends AbstractVariableQueryImpl<
     return isTenantIdSet;
   }
 
-   public HistoricIdentityLinkLogQuery tenantIdIn(String... tenantIds) {
+  @Override
+  public HistoricIdentityLinkLogQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
     this.isTenantIdSet = true;

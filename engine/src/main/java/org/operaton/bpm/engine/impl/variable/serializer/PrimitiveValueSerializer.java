@@ -30,6 +30,7 @@ public abstract class PrimitiveValueSerializer<T extends PrimitiveValue<?>> exte
     super(variableType);
   }
 
+  @Override
   public String getName() {
     // default implementation returns the name of the type. This is OK since we assume that
     // there is only a single serializer for a primitive variable type.
@@ -38,6 +39,7 @@ public abstract class PrimitiveValueSerializer<T extends PrimitiveValue<?>> exte
     return valueType.getName();
   }
 
+  @Override
   public T readValue(ValueFields valueFields, boolean deserializeObjectValue, boolean asTransientValue) {
     // primitive values are always deserialized
     return readValue(valueFields, asTransientValue);
@@ -45,10 +47,12 @@ public abstract class PrimitiveValueSerializer<T extends PrimitiveValue<?>> exte
 
   public abstract T readValue(ValueFields valueFields, boolean asTransientValue);
 
+  @Override
   public PrimitiveValueType getType() {
     return (PrimitiveValueType) super.getType();
   }
 
+  @Override
   protected boolean canWriteValue(TypedValue typedValue) {
     Object value = typedValue.getValue();
     Class<?> javaType = getType().getJavaType();

@@ -37,7 +37,8 @@ public class ItemComponentImpl extends ItemDefinitionImpl implements ItemCompone
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(ItemDefinition.class)
       .instanceProvider(new ModelTypeInstanceProvider<ItemComponent>() {
-        public ItemComponent newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ItemComponent newInstance(ModelTypeInstanceContext instanceContext) {
           return new ItemComponentImpl(instanceContext);
         }
       });

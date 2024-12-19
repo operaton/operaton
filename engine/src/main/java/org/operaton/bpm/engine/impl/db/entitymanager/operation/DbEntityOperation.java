@@ -38,6 +38,7 @@ public class DbEntityOperation extends DbOperation {
   
   protected DbOperation dependentOperation;
 
+  @Override
   public void recycle() {
     entity = null;
     super.recycle();
@@ -60,6 +61,7 @@ public class DbEntityOperation extends DbOperation {
     return flushRelevantEntityReferences;
   }
 
+  @Override
   public String toString() {
     return operationType + " " + ClassNameUtil.getClassNameWithoutPackage(entity)+"["+entity.getId()+"]";
   }

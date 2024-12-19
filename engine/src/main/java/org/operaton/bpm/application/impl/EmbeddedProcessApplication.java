@@ -42,6 +42,7 @@ public class EmbeddedProcessApplication extends AbstractProcessApplication {
     return DEFAULT_NAME;
   }
 
+  @Override
   public ProcessApplicationReference getReference() {
     return new EmbeddedProcessApplicationReferenceImpl(this);
   }
@@ -50,6 +51,7 @@ public class EmbeddedProcessApplication extends AbstractProcessApplication {
    * Since the process engine is loaded by the same classloader
    * as the process application, nothing needs to be done.
    */
+  @Override
   public <T> T execute(Callable<T> callable) throws ProcessApplicationExecutionException {
     try {
       return callable.call();

@@ -34,7 +34,8 @@ public class FlightInstructor extends ModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FlightInstructor.class, ELEMENT_NAME_FLIGHT_INSTRUCTOR)
       .namespaceUri(MODEL_NAMESPACE)
       .instanceProvider(new ModelTypeInstanceProvider<FlightInstructor>() {
-        public FlightInstructor newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public FlightInstructor newInstance(ModelTypeInstanceContext instanceContext) {
           return new FlightInstructor(instanceContext);
         }
       });

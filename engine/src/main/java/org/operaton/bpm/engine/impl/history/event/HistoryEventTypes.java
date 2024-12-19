@@ -207,10 +207,12 @@ public enum HistoryEventTypes implements HistoryEventType {
   protected String entityType;
   protected String eventName;
 
+  @Override
   public String getEntityType() {
     return entityType;
   }
 
+  @Override
   public String getEventName() {
     return eventName;
   }

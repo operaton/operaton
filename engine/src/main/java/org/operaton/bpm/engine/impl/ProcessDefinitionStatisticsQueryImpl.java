@@ -57,16 +57,19 @@ public class ProcessDefinitionStatisticsQueryImpl extends AbstractQuery<ProcessD
         .getStatisticsGroupedByProcessDefinitionVersion(this, page);
   }
 
+  @Override
   public ProcessDefinitionStatisticsQuery includeFailedJobs() {
     includeFailedJobs = true;
     return this;
   }
 
+  @Override
   public ProcessDefinitionStatisticsQuery includeIncidents() {
     includeIncidents = true;
     return this;
   }
 
+  @Override
   public ProcessDefinitionStatisticsQuery includeIncidentsForType(String incidentType) {
     this.includeIncidentsForType = incidentType;
     return this;
@@ -80,6 +83,7 @@ public class ProcessDefinitionStatisticsQueryImpl extends AbstractQuery<ProcessD
     return includeIncidents || includeRootIncidents || includeIncidentsForType != null;
   }
 
+  @Override
   protected void checkQueryOk() {
     super.checkQueryOk();
     if (includeIncidents && includeIncidentsForType != null) {

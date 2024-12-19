@@ -43,62 +43,77 @@ public class OperatonFormDefinitionEntity implements OperatonFormDefinition,
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public int getRevision() {
     return revision;
   }
 
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
   }
 
+  @Override
   public int getRevisionNext() {
     return revision + 1;
   }
 
+  @Override
   public String getKey() {
     return key;
   }
 
+  @Override
   public void setKey(String key) {
     this.key = key;
   }
 
+  @Override
   public int getVersion() {
     return version;
   }
 
+  @Override
   public void setVersion(int version) {
     this.version = version;
   }
 
+  @Override
   public String getDeploymentId() {
     return deploymentId;
   }
 
+  @Override
   public void setDeploymentId(String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public String getResourceName() {
     return resourceName;
   }
 
+  @Override
   public void setResourceName(String resourceName) {
     this.resourceName = resourceName;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
 
+  @Override
   public void setTenantId(String tenantId) {
     this.tenantId = tenantId;
   }

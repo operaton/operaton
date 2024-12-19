@@ -79,18 +79,22 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
 
   protected BatchJobHandler<?> batchJobHandler;
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getName() {
     return id;
   }
 
+  @Override
   public String getType() {
     return type;
   }
@@ -99,6 +103,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.type = type;
   }
 
+  @Override
   public int getTotalJobs() {
     return totalJobs;
   }
@@ -107,6 +112,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.totalJobs = totalJobs;
   }
 
+  @Override
   public int getJobsCreated() {
     return jobsCreated;
   }
@@ -115,6 +121,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.jobsCreated = jobsCreated;
   }
 
+  @Override
   public int getBatchJobsPerSeed() {
     return batchJobsPerSeed;
   }
@@ -123,6 +130,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.batchJobsPerSeed = batchJobsPerSeed;
   }
 
+  @Override
   public int getInvocationsPerBatchJob() {
     return invocationsPerBatchJob;
   }
@@ -131,6 +139,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.invocationsPerBatchJob = invocationsPerBatchJob;
   }
 
+  @Override
   public String getSeedJobDefinitionId() {
     return seedJobDefinitionId;
   }
@@ -139,6 +148,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.seedJobDefinitionId = seedJobDefinitionId;
   }
 
+  @Override
   public String getMonitorJobDefinitionId() {
     return monitorJobDefinitionId;
   }
@@ -147,6 +157,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.monitorJobDefinitionId = monitorJobDefinitionId;
   }
 
+  @Override
   public String getBatchJobDefinitionId() {
     return batchJobDefinitionId;
   }
@@ -155,6 +166,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.batchJobDefinitionId = batchJobDefinitionId;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -163,6 +175,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getCreateUserId() {
     return createUserId;
   }
@@ -187,10 +200,12 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     return suspensionState;
   }
 
+  @Override
   public boolean isSuspended() {
     return suspensionState == SuspensionState.SUSPENDED.getStateCode();
   }
 
+  @Override
   public Date getStartTime() {
     return startTime;
   }
@@ -199,6 +214,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.startTime = startTime;
   }
 
+  @Override
   public Date getExecutionStartTime() {
     return executionStartTime;
   }
@@ -207,15 +223,18 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
     this.executionStartTime = executionStartTime;
   }
 
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
 
   }
 
+  @Override
   public int getRevision() {
     return revision;
   }
 
+  @Override
   public int getRevisionNext() {
     return revision + 1;
   }
@@ -431,6 +450,7 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
       .count() == 0;
   }
 
+  @Override
   public String toString() {
     return "BatchEntity{" +
       "batchHandler=" + batchJobHandler +

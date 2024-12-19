@@ -50,28 +50,33 @@ public class DecisionEvaluationBuilderImpl implements DecisionsEvaluationBuilder
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public DecisionsEvaluationBuilder variables(Map<String, Object> variables) {
     this.variables = variables;
     return this;
   }
 
+  @Override
   public DecisionsEvaluationBuilder version(Integer version) {
     this.version = version;
     return this;
   }
 
+  @Override
   public DecisionsEvaluationBuilder decisionDefinitionTenantId(String tenantId) {
     this.decisionDefinitionTenantId = tenantId;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public DecisionsEvaluationBuilder decisionDefinitionWithoutTenantId() {
     this.decisionDefinitionTenantId = null;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public DmnDecisionResult evaluate() {
      ensureOnlyOneNotNull(NotValidException.class, "either decision definition id or key must be set", decisionDefinitionId, decisionDefinitionKey);
 

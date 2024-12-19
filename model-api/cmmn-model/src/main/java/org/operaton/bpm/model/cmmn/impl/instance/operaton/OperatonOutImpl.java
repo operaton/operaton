@@ -47,7 +47,8 @@ public class OperatonOutImpl extends CmmnModelElementInstanceImpl implements Ope
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonOut.class, OPERATON_ELEMENT_OUT)
       .namespaceUri(CAMUNDA_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonOut>() {
-        public OperatonOut newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonOut newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonOutImpl(instanceContext);
         }
       });
@@ -75,34 +76,42 @@ public class OperatonOutImpl extends CmmnModelElementInstanceImpl implements Ope
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonSource() {
     return operatonSourceAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonSource(String operatonSource) {
     operatonSourceAttribute.setValue(this, operatonSource);
   }
 
+  @Override
   public String getOperatonSourceExpression() {
     return operatonSourceExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonSourceExpression(String operatonSourceExpression) {
     operatonSourceExpressionAttribute.setValue(this, operatonSourceExpression);
   }
 
+  @Override
   public String getOperatonVariables() {
     return operatonVariablesAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonVariables(String operatonVariables) {
     operatonVariablesAttribute.setValue(this, operatonVariables);
   }
 
+  @Override
   public String getOperatonTarget() {
     return operatonTargetAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonTarget(String operatonTarget) {
     operatonTargetAttribute.setValue(this, operatonTarget);
   }

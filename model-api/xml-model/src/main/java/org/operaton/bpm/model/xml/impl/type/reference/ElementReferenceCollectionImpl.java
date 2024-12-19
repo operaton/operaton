@@ -46,6 +46,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
     this.referenceSourceCollection = referenceSourceCollection;
   }
 
+  @Override
   public ChildElementCollection<Source> getReferenceSourceCollection() {
     return referenceSourceCollection;
   }
@@ -87,6 +88,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
     }
   }
 
+  @Override
   public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
     return referenceSourceElement.getTextContent();
   }
@@ -110,6 +112,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
     this.referenceSourceType = referenceSourceType;
   }
 
+  @Override
   public ModelElementType getReferenceSourceElementType() {
     return referenceSourceType;
   }
@@ -131,18 +134,22 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
     return referenceTargetElements;
   }
 
+  @Override
   public Collection<Target> getReferenceTargetElements(final ModelElementInstanceImpl referenceSourceParentElement) {
 
     return new Collection<Target>() {
 
+      @Override
       public int size() {
         return getView(referenceSourceParentElement).size();
       }
 
+      @Override
       public boolean isEmpty() {
         return getView(referenceSourceParentElement).isEmpty();
       }
 
+      @Override
       public boolean contains(Object o) {
         if (o == null) {
           return false;
@@ -155,11 +162,13 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
         }
       }
 
+      @Override
       public Iterator<Target> iterator() {
         Collection<Target> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
         return modelElementCollection.iterator();
       }
 
+      @Override
       public Object[] toArray() {
         Collection<Target> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
         return modelElementCollection.toArray();
@@ -170,6 +179,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
         return modelElementCollection.toArray(a);
       }
 
+      @Override
       public boolean add(Target t) {
         if (referenceSourceCollection.isImmutable()) {
           throw new UnsupportedModelOperationException("add()", "collection is immutable");
@@ -182,6 +192,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
         }
       }
 
+      @Override
       public boolean remove(Object o) {
         if (referenceSourceCollection.isImmutable()) {
           throw new UnsupportedModelOperationException("remove()", "collection is immutable");
@@ -193,6 +204,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
         }
       }
 
+      @Override
       public boolean containsAll(Collection<?> c) {
         Collection<Target> modelElementCollection = ModelUtil.getModelElementCollection(getView(referenceSourceParentElement), referenceSourceParentElement.getModelInstance());
         return modelElementCollection.containsAll(c);
@@ -212,6 +224,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
 
       }
 
+      @Override
       public boolean removeAll(Collection<?> c) {
         if (referenceSourceCollection.isImmutable()) {
           throw new UnsupportedModelOperationException("removeAll()", "collection is immutable");
@@ -225,10 +238,12 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
         }
       }
 
+      @Override
       public boolean retainAll(Collection<?> c) {
         throw new UnsupportedModelOperationException("retainAll()", "not implemented");
       }
 
+      @Override
       public void clear() {
         if (referenceSourceCollection.isImmutable()) {
           throw new UnsupportedModelOperationException("clear()", "collection is immutable");

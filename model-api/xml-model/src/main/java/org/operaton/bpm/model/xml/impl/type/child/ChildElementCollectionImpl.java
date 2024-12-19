@@ -67,6 +67,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
     this.isMutable = isMutable;
   }
 
+  @Override
   public boolean isImmutable() {
     return !isMutable;
   }
@@ -82,6 +83,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
     return modelElement.getDomElement().getChildElementsByType(modelElement.getModelInstance(), childElementTypeClass);
   }
 
+  @Override
   public int getMinOccurs() {
     return minOccurs;
   }
@@ -90,18 +92,22 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
     this.minOccurs = minOccurs;
   }
 
+  @Override
   public int getMaxOccurs() {
     return maxOccurs;
   }
 
+  @Override
   public ModelElementType getChildElementType(Model model) {
     return model.getType(childElementTypeClass);
   }
 
+  @Override
   public Class<T> getChildElementTypeClass() {
     return childElementTypeClass;
   }
 
+  @Override
   public ModelElementType getParentElementType() {
     return parentElementType;
   }
@@ -128,12 +134,14 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
     }
   }
 
+  @Override
   public Collection<T> get(ModelElementInstance element) {
 
     final ModelElementInstanceImpl modelElement = (ModelElementInstanceImpl) element;
 
     return new Collection<T>() {
 
+      @Override
       public boolean contains(Object o) {
         if(o == null) {
           return false;
@@ -147,6 +155,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
         }
       }
 
+      @Override
       public boolean containsAll(Collection<?> c) {
         for (Object elementToCheck : c) {
           if(!contains(elementToCheck)) {
@@ -156,15 +165,18 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
         return true;
       }
 
+      @Override
       public boolean isEmpty() {
         return getView(modelElement).isEmpty();
       }
 
+      @Override
       public Iterator<T> iterator() {
         Collection<T> modelElementCollection = ModelUtil.getModelElementCollection(getView(modelElement), modelElement.getModelInstance());
         return modelElementCollection.iterator();
       }
 
+      @Override
       public Object[] toArray() {
         Collection<T> modelElementCollection = ModelUtil.getModelElementCollection(getView(modelElement), modelElement.getModelInstance());
         return modelElementCollection.toArray();
@@ -175,10 +187,12 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
         return modelElementCollection.toArray(a);
       }
 
+      @Override
       public int size() {
         return getView(modelElement).size();
       }
 
+      @Override
       public boolean add(T e) {
         if(!isMutable) {
           throw new UnsupportedModelOperationException("add()", "collection is immutable");
@@ -198,6 +212,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
         return result;
       }
 
+      @Override
       public void clear() {
         if(!isMutable) {
           throw new UnsupportedModelOperationException("clear()", "collection is immutable");
@@ -206,6 +221,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
         performClearOperation(modelElement, view);
       }
 
+      @Override
       public boolean remove(Object e) {
         if(!isMutable) {
           throw new UnsupportedModelOperationException("remove()", "collection is immutable");
@@ -214,6 +230,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
         return performRemoveOperation(modelElement, e);
       }
 
+      @Override
       public boolean removeAll(Collection<?> c) {
         if(!isMutable) {
           throw new UnsupportedModelOperationException("removeAll()", "collection is immutable");
@@ -225,6 +242,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
         return result;
       }
 
+      @Override
       public boolean retainAll(Collection<?> c) {
         throw new UnsupportedModelOperationException("retainAll()", "not implemented");
       }

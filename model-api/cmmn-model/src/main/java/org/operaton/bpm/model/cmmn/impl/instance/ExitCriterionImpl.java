@@ -41,7 +41,8 @@ public class ExitCriterionImpl extends CriterionImpl implements ExitCriterion {
         .extendsType(Criterion.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<ExitCriterion>() {
-          public ExitCriterion newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ExitCriterion newInstance(ModelTypeInstanceContext instanceContext) {
             return new ExitCriterionImpl(instanceContext);
           }
         });

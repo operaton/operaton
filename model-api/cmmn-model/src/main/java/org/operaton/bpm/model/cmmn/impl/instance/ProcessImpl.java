@@ -51,26 +51,32 @@ public class ProcessImpl extends CmmnElementImpl implements Process {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getImplementationType() {
     return implementationTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setImplementationType(String implementationType) {
     implementationTypeAttribute.setValue(this, implementationType);
   }
 
+  @Override
   public Collection<InputProcessParameter> getInputs() {
     return inputCollection.get(this);
   }
 
+  @Override
   public Collection<OutputProcessParameter> getOutputs() {
     return outputCollection.get(this);
   }
@@ -80,7 +86,8 @@ public class ProcessImpl extends CmmnElementImpl implements Process {
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<Process>() {
-          public Process newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Process newInstance(ModelTypeInstanceContext instanceContext) {
             return new ProcessImpl(instanceContext);
           }
         });

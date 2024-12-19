@@ -27,6 +27,7 @@ public class CallbackBean implements JavaDelegate {
 
   public static final String CALLBACK_EXECUTED = "callbackExecuted";
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     execution.setVariable(CALLBACK_EXECUTED, true);
   }

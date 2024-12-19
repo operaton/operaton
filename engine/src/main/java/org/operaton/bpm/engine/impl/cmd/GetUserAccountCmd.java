@@ -39,6 +39,7 @@ public class GetUserAccountCmd implements Command<Account>, Serializable {
     this.accountName = accountName;
   }
 
+  @Override
   public Account execute(CommandContext commandContext) {
     return commandContext
       .getIdentityInfoManager()

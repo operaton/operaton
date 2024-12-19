@@ -81,11 +81,13 @@ public class ConcurrentVariableUpdateTest {
       this.variableValue = variableValue;
     }
 
+    @Override
     public synchronized void startAndWaitUntilControlIsReturned() {
       activeThread = this;
       super.startAndWaitUntilControlIsReturned();
     }
 
+    @Override
     public void run() {
       try {
         processEngineConfiguration

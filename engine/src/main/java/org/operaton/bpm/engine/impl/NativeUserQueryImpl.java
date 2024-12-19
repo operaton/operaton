@@ -40,13 +40,15 @@ public class NativeUserQueryImpl extends AbstractNativeQuery<NativeUserQuery, Us
   }
 
 
- //results ////////////////////////////////////////////////////////////////
+  //results ////////////////////////////////////////////////////////////////
   
+  @Override
   public List<User> executeList(CommandContext commandContext, Map<String, Object> parameterMap, int firstResult, int maxResults) {
     final DbReadOnlyIdentityServiceProvider identityProvider = getIdentityProvider(commandContext);
     return identityProvider.findUserByNativeQuery(parameterMap, firstResult, maxResults);
   }
-  
+
+  @Override
   public long executeCount(CommandContext commandContext, Map<String, Object> parameterMap) {
     final DbReadOnlyIdentityServiceProvider identityProvider = getIdentityProvider(commandContext);
     return identityProvider.findUserCountByNativeQuery(parameterMap);

@@ -21,10 +21,12 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
 public class SignalableBehavior extends AbstractBpmnActivityBehavior {
 
+  @Override
   public void execute(final ActivityExecution execution) throws Exception {
     // noop;
   }
 
+  @Override
   public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
     leave(execution);
   }

@@ -26,6 +26,7 @@ public class MetricImpl implements Metric {
     this.count = count;
   }
 
+  @Override
   public long getCount() {
     return count;
   }

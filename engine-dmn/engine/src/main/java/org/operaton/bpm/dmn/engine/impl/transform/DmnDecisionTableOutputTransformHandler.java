@@ -27,6 +27,7 @@ import org.operaton.bpm.model.dmn.instance.Output;
 
 public class DmnDecisionTableOutputTransformHandler implements DmnElementTransformHandler<Output, DmnDecisionTableOutputImpl> {
 
+  @Override
   public DmnDecisionTableOutputImpl handleElement(DmnElementTransformContext context, Output output) {
     return createFromOutput(context, output);
   }

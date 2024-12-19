@@ -39,6 +39,7 @@ public class RepeatingFailedJobListener implements TransactionListener {
     this.jobId = jobId;
   }
 
+  @Override
   public void execute(CommandContext commandContext) {
     CreateNewTimerJobCommand cmd = new CreateNewTimerJobCommand(jobId);
     commandExecutor.execute(cmd);
@@ -52,6 +53,7 @@ public class RepeatingFailedJobListener implements TransactionListener {
       this.jobId = jobId;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
 
       TimerEntity failedJob = (TimerEntity) commandContext

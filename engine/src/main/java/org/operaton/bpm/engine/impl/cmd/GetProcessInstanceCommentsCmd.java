@@ -36,6 +36,7 @@ public class GetProcessInstanceCommentsCmd implements Command<List<Comment>>, Se
     this.processInstanceId = processInstanceId;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<Comment> execute(CommandContext commandContext) {
     return commandContext

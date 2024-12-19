@@ -65,6 +65,7 @@ public class DefaultHalResourceCache implements Cache {
     return cache.size();
   }
 
+  @Override
   public void put(String id, Object resource) {
     cache.put(id, new HalResourceCacheEntry(id, resource));
     ensureCapacityLimit();
@@ -74,6 +75,7 @@ public class DefaultHalResourceCache implements Cache {
     cache.remove(id);
   }
 
+  @Override
   public Object get(String id) {
     HalResourceCacheEntry cacheEntry = cache.get(id);
     if (cacheEntry != null) {
@@ -90,6 +92,7 @@ public class DefaultHalResourceCache implements Cache {
     }
   }
 
+  @Override
   public void destroy() {
     cache.clear();
   }

@@ -38,6 +38,7 @@ public interface ExternalTaskState {
       this.name = string;
     }
 
+    @Override
     public int getStateCode() {
       return stateCode;
     }

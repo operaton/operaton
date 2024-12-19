@@ -25,6 +25,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class ExecuteCommandDelegate extends MyDelegationService implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     logAuthentication(execution);
     executeCommand(execution);

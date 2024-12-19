@@ -34,6 +34,7 @@ public class TestContainerRule implements TestRule {
 
   protected ContainerSpecifics containerSpecifics;
 
+  @Override
   public Statement apply(Statement base, Description description) {
 
     lookUpContainerSpecifics();

@@ -29,6 +29,7 @@ public class InvocationCounterServiceBean implements InvocationCounterService, I
   @Inject
   private InvocationCounter invocationCounter;
 
+  @Override
   public int getNumOfInvocations() {    
     return invocationCounter.incrementAndGet();
   }

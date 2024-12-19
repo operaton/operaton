@@ -40,7 +40,8 @@ public class CategoryValueImpl extends BaseElementImpl implements CategoryValue 
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<CategoryValue>() {
-        public CategoryValue newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CategoryValue newInstance(ModelTypeInstanceContext instanceContext) {
           return new CategoryValueImpl(instanceContext);
         }
       });
@@ -55,10 +56,12 @@ public class CategoryValueImpl extends BaseElementImpl implements CategoryValue 
     super(instanceContext);
   }
 
+  @Override
   public String getValue() {
     return valueAttribute.getValue(this);
   }
 
+  @Override
   public void setValue(String name) {
     valueAttribute.setValue(this, name);
   }

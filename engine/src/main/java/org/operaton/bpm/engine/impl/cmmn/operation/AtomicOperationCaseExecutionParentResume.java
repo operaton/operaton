@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionParentResume extends AbstractAtomicOperationCaseExecutionResume {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-parent-resume";
   }
@@ -35,6 +36,7 @@ public class AtomicOperationCaseExecutionParentResume extends AbstractAtomicOper
     return PARENT_RESUME;
   }
 
+  @Override
   protected void triggerBehavior(CmmnActivityBehavior behavior, CmmnExecution execution) {
     behavior.onParentResume(execution);
   }

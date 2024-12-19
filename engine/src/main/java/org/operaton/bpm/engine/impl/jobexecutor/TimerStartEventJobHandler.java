@@ -31,10 +31,12 @@ public class TimerStartEventJobHandler extends TimerEventJobHandler {
 
   public static final String TYPE = "timer-start-event";
 
+  @Override
   public String getType() {
     return TYPE;
   }
 
+  @Override
   public void execute(TimerJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     DeploymentCache deploymentCache = Context
             .getProcessEngineConfiguration()

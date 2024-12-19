@@ -36,7 +36,8 @@ public class ScriptImpl extends BpmnModelElementInstanceImpl implements Script {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Script.class, BPMN_ELEMENT_SCRIPT)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Script>() {
-        public Script newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Script newInstance(ModelTypeInstanceContext instanceContext) {
           return new ScriptImpl(instanceContext);
         }
       });

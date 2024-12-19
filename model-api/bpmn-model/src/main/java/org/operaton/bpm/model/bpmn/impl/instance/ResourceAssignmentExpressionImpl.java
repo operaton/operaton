@@ -43,7 +43,8 @@ public class ResourceAssignmentExpressionImpl extends BaseElementImpl implements
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<ResourceAssignmentExpression>() {
-        public ResourceAssignmentExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ResourceAssignmentExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new ResourceAssignmentExpressionImpl(instanceContext);
         }
       });
@@ -61,10 +62,12 @@ public class ResourceAssignmentExpressionImpl extends BaseElementImpl implements
     super(instanceContext);
   }
 
+  @Override
   public Expression getExpression() {
     return expressionChild.getChild(this);
   }
 
+  @Override
   public void setExpression(Expression expression) {
     expressionChild.setChild(this, expression);
   }

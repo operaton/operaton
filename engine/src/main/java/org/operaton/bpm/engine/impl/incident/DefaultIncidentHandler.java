@@ -50,10 +50,12 @@ public class DefaultIncidentHandler implements IncidentHandler {
     this.type = type;
   }
 
+  @Override
   public String getIncidentHandlerType() {
     return type;
   }
 
+  @Override
   public Incident handleIncident(IncidentContext context, String message) {
     return createIncident(context, message);
   }
@@ -68,10 +70,12 @@ public class DefaultIncidentHandler implements IncidentHandler {
     return newIncident;
   }
 
+  @Override
   public void resolveIncident(IncidentContext context) {
     removeIncident(context, true);
   }
 
+  @Override
   public void deleteIncident(IncidentContext context) {
     removeIncident(context, false);
   }

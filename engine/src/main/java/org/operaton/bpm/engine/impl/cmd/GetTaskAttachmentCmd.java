@@ -38,6 +38,7 @@ public class GetTaskAttachmentCmd implements Command<Attachment>, Serializable {
     this.taskId = taskId;
   }
 
+  @Override
   public Attachment execute(CommandContext commandContext) {
     return commandContext
       .getAttachmentManager()

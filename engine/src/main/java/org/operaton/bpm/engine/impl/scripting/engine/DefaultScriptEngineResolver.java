@@ -37,10 +37,12 @@ public class DefaultScriptEngineResolver implements ScriptEngineResolver {
     this.scriptEngineManager = scriptEngineManager;
   }
 
+  @Override
   public void addScriptEngineFactory(ScriptEngineFactory scriptEngineFactory) {
     scriptEngineManager.registerEngineName(scriptEngineFactory.getEngineName(), scriptEngineFactory);
   }
 
+  @Override
   public ScriptEngineManager getScriptEngineManager() {
     return scriptEngineManager;
   }
@@ -51,6 +53,7 @@ public class DefaultScriptEngineResolver implements ScriptEngineResolver {
    * @param language the language (such as 'groovy' for the script engine)
    * @return the cached engine or null if no script engine can be created for the given language
    */
+  @Override
   public ScriptEngine getScriptEngine(String language, boolean resolveFromCache) {
 
     ScriptEngine scriptEngine = null;

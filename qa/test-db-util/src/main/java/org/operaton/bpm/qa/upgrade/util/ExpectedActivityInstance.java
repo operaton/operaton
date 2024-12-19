@@ -60,6 +60,7 @@ public class ExpectedActivityInstance {
     this.childTransitionInstances = childTransitionInstances;
   }
 
+  @Override
   public String toString() {
     StringWriter writer = new StringWriter();
     writeTree(writer, "", true);

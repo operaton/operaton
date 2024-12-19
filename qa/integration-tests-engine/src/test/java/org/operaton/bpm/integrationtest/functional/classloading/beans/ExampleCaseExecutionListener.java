@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 @Named(value = "caseExecutionListener")
 public class ExampleCaseExecutionListener implements CaseExecutionListener {
 
+  @Override
   public void notify(DelegateCaseExecution caseExecution) throws Exception {
     caseExecution.setVariable("listener", "listener-notified");
   }

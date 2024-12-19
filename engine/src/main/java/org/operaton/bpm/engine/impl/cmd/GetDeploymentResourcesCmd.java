@@ -40,6 +40,7 @@ public class GetDeploymentResourcesCmd implements Command<List>, Serializable {
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public List execute(CommandContext commandContext) {
     ensureNotNull("deploymentId", deploymentId);
 

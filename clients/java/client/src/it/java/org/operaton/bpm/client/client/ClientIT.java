@@ -393,6 +393,7 @@ class ClientIT {
     // given
     AtomicBoolean   isBackoffPerformed = new AtomicBoolean(false);
     BackoffStrategy backOffStrategy = new BackOffStrategyBean() {
+      @Override
       public long calculateBackoffTime() {
         isBackoffPerformed.set(true);
         return 1000L;

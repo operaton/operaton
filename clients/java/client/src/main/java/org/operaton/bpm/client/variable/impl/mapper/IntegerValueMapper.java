@@ -36,6 +36,7 @@ public class IntegerValueMapper extends NumberValueMapper<IntegerValue> {
     typedValueField.setValue(intValue.getValue());
   }
 
+  @Override
   public IntegerValue readValue(TypedValueField typedValueField) {
     Integer intValue = null;
 

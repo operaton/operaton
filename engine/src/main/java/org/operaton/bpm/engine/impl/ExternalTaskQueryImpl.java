@@ -66,6 +66,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
     super(commandExecutor);
   }
 
+  @Override
   public ExternalTaskQuery externalTaskId(String externalTaskId) {
     ensureNotNull("externalTaskId", externalTaskId);
     this.externalTaskId = externalTaskId;
@@ -79,70 +80,82 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
     return this;
   }
 
+  @Override
   public ExternalTaskQuery workerId(String workerId) {
     ensureNotNull("workerId", workerId);
     this.workerId = workerId;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery lockExpirationBefore(Date lockExpirationDate) {
     ensureNotNull("lockExpirationBefore", lockExpirationDate);
     this.lockExpirationBefore = lockExpirationDate;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery lockExpirationAfter(Date lockExpirationDate) {
     ensureNotNull("lockExpirationAfter", lockExpirationDate);
     this.lockExpirationAfter = lockExpirationDate;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery topicName(String topicName) {
     ensureNotNull("topicName", topicName);
     this.topicName = topicName;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery locked() {
     this.locked = Boolean.TRUE;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery notLocked() {
     this.notLocked = Boolean.TRUE;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery executionId(String executionId) {
     ensureNotNull("executionId", executionId);
     this.executionId = executionId;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery processInstanceId(String processInstanceId) {
     ensureNotNull("processInstanceId", processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery processInstanceIdIn(String... processInstanceIdIn) {
     ensureNotNull("processInstanceIdIn", (Object[]) processInstanceIdIn);
     this.processInstanceIdIn = processInstanceIdIn;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery processDefinitionId(String processDefinitionId) {
     ensureNotNull("processDefinitionId", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery activityId(String activityId) {
     ensureNotNull("activityId", activityId);
     this.activityId = activityId;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery activityIdIn(String... activityIdIn) {
     ensureNotNull("activityIdIn", (Object[]) activityIdIn);
     this.activityIdIn = activityIdIn;
@@ -161,21 +174,25 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
   }
 
 
+  @Override
   public ExternalTaskQuery suspended() {
     this.suspensionState = SuspensionState.SUSPENDED;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery active() {
     this.suspensionState = SuspensionState.ACTIVE;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery withRetriesLeft() {
     this.retriesLeft = Boolean.TRUE;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery noRetriesLeft() {
     this.retriesLeft = Boolean.FALSE;
     return this;
@@ -187,32 +204,39 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
       || CompareUtil.areNotInAscendingOrder(priorityHigherThanOrEquals, priorityLowerThanOrEquals);
   }
 
+  @Override
   public ExternalTaskQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
     return this;
   }
 
+  @Override
   public ExternalTaskQuery orderById() {
     return orderBy(ExternalTaskQueryProperty.ID);
   }
 
+  @Override
   public ExternalTaskQuery orderByLockExpirationTime() {
     return orderBy(ExternalTaskQueryProperty.LOCK_EXPIRATION_TIME);
   }
 
+  @Override
   public ExternalTaskQuery orderByProcessInstanceId() {
     return orderBy(ExternalTaskQueryProperty.PROCESS_INSTANCE_ID);
   }
 
+  @Override
   public ExternalTaskQuery orderByProcessDefinitionId() {
     return orderBy(ExternalTaskQueryProperty.PROCESS_DEFINITION_ID);
   }
 
+  @Override
   public ExternalTaskQuery orderByProcessDefinitionKey() {
     return orderBy(ExternalTaskQueryProperty.PROCESS_DEFINITION_KEY);
   }
 
+  @Override
   public ExternalTaskQuery orderByTenantId() {
     return orderBy(ExternalTaskQueryProperty.TENANT_ID);
   }
@@ -243,6 +267,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
       .findExternalTasksByQueryCriteria(this);
   }
 
+  @Override
   public List<String> executeIdsList(CommandContext commandContext) {
     checkQueryOk();
     return commandContext

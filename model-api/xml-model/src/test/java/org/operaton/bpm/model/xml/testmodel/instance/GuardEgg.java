@@ -35,7 +35,8 @@ public class GuardEgg extends ModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(GuardEgg.class, ELEMENT_NAME_GUARD_EGG)
       .namespaceUri(MODEL_NAMESPACE)
       .instanceProvider(new ModelTypeInstanceProvider<GuardEgg>() {
-        public GuardEgg newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public GuardEgg newInstance(ModelTypeInstanceContext instanceContext) {
           return new GuardEgg(instanceContext);
         }
       });

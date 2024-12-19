@@ -59,18 +59,22 @@ public abstract class ItemAwareElementImpl extends BaseElementImpl implements It
     super(instanceContext);
   }
 
+  @Override
   public ItemDefinition getItemSubject() {
     return itemSubjectRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setItemSubject(ItemDefinition itemSubject) {
     itemSubjectRefAttribute.setReferenceTargetElement(this, itemSubject);
   }
 
+  @Override
   public DataState getDataState() {
     return dataStateChild.getChild(this);
   }
 
+  @Override
   public void setDataState(DataState dataState) {
     dataStateChild.setChild(this, dataState);
   }

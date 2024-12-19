@@ -40,7 +40,8 @@ public class ProcessRefExpressionImpl extends ExpressionImpl implements ProcessR
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<ProcessRefExpression>() {
-        public ProcessRefExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ProcessRefExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new ProcessRefExpressionImpl(instanceContext);
         }
       });

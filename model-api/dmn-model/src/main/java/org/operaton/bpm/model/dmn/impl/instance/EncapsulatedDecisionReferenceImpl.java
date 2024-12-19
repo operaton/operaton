@@ -37,7 +37,8 @@ public class EncapsulatedDecisionReferenceImpl extends DmnElementReferenceImpl i
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<EncapsulatedDecisionReference>() {
-        public EncapsulatedDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public EncapsulatedDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new EncapsulatedDecisionReferenceImpl(instanceContext);
         }
       });

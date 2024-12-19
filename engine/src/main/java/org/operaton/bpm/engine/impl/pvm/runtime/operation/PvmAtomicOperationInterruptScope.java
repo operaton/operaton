@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public abstract class PvmAtomicOperationInterruptScope implements PvmAtomicOperation {
 
+  @Override
   public void execute(PvmExecutionImpl execution) {
     PvmActivity interruptingActivity = getInterruptingActivity(execution);
 
@@ -51,10 +52,12 @@ public abstract class PvmAtomicOperationInterruptScope implements PvmAtomicOpera
 
   protected abstract PvmActivity getInterruptingActivity(PvmExecutionImpl execution);
 
+  @Override
   public boolean isAsync(PvmExecutionImpl execution) {
     return false;
   }
 
+  @Override
   public boolean isAsyncCapable() {
     return false;
   }

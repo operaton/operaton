@@ -58,26 +58,32 @@ public class TaskImpl extends PlanItemDefinitionImpl implements Task {
     super(instanceContext);
   }
 
+  @Override
   public boolean isBlocking() {
     return isBlockingAttribute.getValue(this);
   }
 
+  @Override
   public void setIsBlocking(boolean isBlocking) {
     isBlockingAttribute.setValue(this, isBlocking);
   }
 
+  @Override
   public Collection<InputsCaseParameter> getInputs() {
     return inputsCollection.get(this);
   }
 
+  @Override
   public Collection<OutputsCaseParameter> getOutputs() {
     return outputsCollection.get(this);
   }
 
+  @Override
   public Collection<InputCaseParameter> getInputParameters() {
     return inputParameterCollection.get(this);
   }
 
+  @Override
   public Collection<OutputCaseParameter> getOutputParameters() {
     return outputParameterCollection.get(this);
   }
@@ -87,7 +93,8 @@ public class TaskImpl extends PlanItemDefinitionImpl implements Task {
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanItemDefinition.class)
         .instanceProvider(new ModelTypeInstanceProvider<Task>() {
-          public Task newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Task newInstance(ModelTypeInstanceContext instanceContext) {
             return new TaskImpl(instanceContext);
           }
         });

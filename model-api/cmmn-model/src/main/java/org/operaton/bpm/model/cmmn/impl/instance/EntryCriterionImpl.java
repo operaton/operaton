@@ -41,7 +41,8 @@ public class EntryCriterionImpl extends CriterionImpl implements EntryCriterion 
         .extendsType(Criterion.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<EntryCriterion>() {
-          public EntryCriterion newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public EntryCriterion newInstance(ModelTypeInstanceContext instanceContext) {
             return new EntryCriterionImpl(instanceContext);
           }
         });

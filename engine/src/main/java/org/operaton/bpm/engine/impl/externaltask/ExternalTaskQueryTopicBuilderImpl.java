@@ -104,18 +104,21 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
     );
   }
 
+  @Override
   public List<LockedExternalTask> execute() {
     submitCurrentInstruction();
     return commandExecutor.execute(
         new FetchExternalTasksCmd(workerId, maxTasks, instructions, usePriority, orderingProperties));
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder topic(String topicName, long lockDuration) {
     submitCurrentInstruction();
     currentInstruction = new TopicFetchInstruction(topicName, lockDuration);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder variables(String... variables) {
     // don't use plain Arrays.asList since this returns an instance of a different list class
     // that is private and may mess mybatis queries up
@@ -125,56 +128,67 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder variables(List<String> variables) {
     currentInstruction.setVariablesToFetch(variables);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder processInstanceVariableEquals(Map<String, Object> variables) {
     currentInstruction.setFilterVariables(variables);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder processInstanceVariableEquals(String name, Object value) {
     currentInstruction.addFilterVariable(name, value);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder businessKey(String businessKey) {
     currentInstruction.setBusinessKey(businessKey);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder processDefinitionId(String processDefinitionId) {
     currentInstruction.setProcessDefinitionId(processDefinitionId);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder processDefinitionIdIn(String... processDefinitionIds) {
     currentInstruction.setProcessDefinitionIds(processDefinitionIds);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder processDefinitionKey(String processDefinitionKey) {
     currentInstruction.setProcessDefinitionKey(processDefinitionKey);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder processDefinitionKeyIn(String... processDefinitionKeys) {
     currentInstruction.setProcessDefinitionKeys(processDefinitionKeys);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder processDefinitionVersionTag(String processDefinitionVersionTag) {
     currentInstruction.setProcessDefinitionVersionTag(processDefinitionVersionTag);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder withoutTenantId() {
     currentInstruction.setTenantIds(null);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder tenantIdIn(String... tenantIds) {
     currentInstruction.setTenantIds(tenantIds);
     return this;
@@ -186,16 +200,19 @@ public class ExternalTaskQueryTopicBuilderImpl implements ExternalTaskQueryTopic
     }
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder enableCustomObjectDeserialization() {
     currentInstruction.setDeserializeVariables(true);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder localVariables() {
     currentInstruction.setLocalVariables(true);
     return this;
   }
 
+  @Override
   public ExternalTaskQueryTopicBuilder includeExtensionProperties() {
     currentInstruction.setIncludeExtensionProperties(true);
     return this;

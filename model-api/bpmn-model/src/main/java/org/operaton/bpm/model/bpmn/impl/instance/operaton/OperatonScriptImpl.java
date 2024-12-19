@@ -43,7 +43,8 @@ public class OperatonScriptImpl extends BpmnModelElementInstanceImpl implements 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonScript.class, OPERATON_ELEMENT_SCRIPT)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonScript>() {
-        public OperatonScript newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonScript newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonScriptImpl(instanceContext);
         }
       });
@@ -62,18 +63,22 @@ public class OperatonScriptImpl extends BpmnModelElementInstanceImpl implements 
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonScriptFormat() {
     return operatonScriptFormatAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonScriptFormat(String operatonScriptFormat) {
     operatonScriptFormatAttribute.setValue(this, operatonScriptFormat);
   }
 
+  @Override
   public String getOperatonResource() {
     return operatonResourceAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonResource(String operatonResource) {
     operatonResourceAttribute.setValue(this, operatonResource);
   }

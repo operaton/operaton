@@ -64,6 +64,7 @@ public class ResourceLoadingSecurityFilter extends SecurityFilter implements Res
    * @param resourceLoader
    *          the resourceLoader to set
    */
+  @Override
   public void setResourceLoader(ResourceLoader resourceLoader) {
     this.resourceLoader = resourceLoader;
   }
@@ -75,11 +76,12 @@ public class ResourceLoadingSecurityFilter extends SecurityFilter implements Res
         return webappProperty;
     }
 
-    /**
-     * @param webappProperty 
+  /**
+   * @param webappProperty 
      *          webappProperty to set
-     */
-    public void setWebappProperty(WebappProperty webappProperty) {
+   */
+  @Override
+  public void setWebappProperty(WebappProperty webappProperty) {
         this.webappProperty = webappProperty;
     }
   

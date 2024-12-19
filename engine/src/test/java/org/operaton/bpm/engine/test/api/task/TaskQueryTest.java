@@ -5069,6 +5069,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     List<ProcessInstance> instances = new ArrayList<>(expectedProcessInstances);
 
     Collections.sort(instances, new Comparator<ProcessInstance>() {
+      @Override
       public int compare(ProcessInstance p1, ProcessInstance p2) {
         return p1.getId().compareTo(p2.getId());
       }

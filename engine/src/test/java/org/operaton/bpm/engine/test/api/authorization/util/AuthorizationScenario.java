@@ -58,6 +58,7 @@ public class AuthorizationScenario {
     return missingAuthorizations;
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("Given Authorizations: \n");

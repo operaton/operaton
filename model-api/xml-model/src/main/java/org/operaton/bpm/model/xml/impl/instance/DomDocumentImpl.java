@@ -43,6 +43,7 @@ public class DomDocumentImpl implements DomDocument {
     this.document = document;
   }
 
+  @Override
   public DomElement getRootElement() {
     synchronized(document) {
       Element documentElement = document.getDocumentElement();
@@ -56,6 +57,7 @@ public class DomDocumentImpl implements DomDocument {
 
   }
 
+  @Override
   public void setRootElement(DomElement rootElement) {
     synchronized(document) {
       Element documentElement = document.getDocumentElement();
@@ -69,6 +71,7 @@ public class DomDocumentImpl implements DomDocument {
     }
   }
 
+  @Override
   public DomElement createElement(String namespaceUri, String localName) {
     synchronized(document) {
       XmlQName xmlQName = new XmlQName(this, namespaceUri, localName);
@@ -77,6 +80,7 @@ public class DomDocumentImpl implements DomDocument {
     }
   }
 
+  @Override
   public DomElement getElementById(String id) {
     synchronized(document) {
       Element element = document.getElementById(id);
@@ -89,6 +93,7 @@ public class DomDocumentImpl implements DomDocument {
     }
   }
 
+  @Override
   public List<DomElement> getElementsByNameNs(String namespaceUri, String localName) {
     synchronized(document) {
       NodeList elementsByTagNameNS = document.getElementsByTagNameNS(namespaceUri, localName);
@@ -96,10 +101,12 @@ public class DomDocumentImpl implements DomDocument {
     }
   }
 
+  @Override
   public DOMSource getDomSource() {
     return new DOMSource(document);
   }
 
+  @Override
   public String registerNamespace(String namespaceUri) {
     synchronized(document) {
       DomElement rootElement = getRootElement();
@@ -112,6 +119,7 @@ public class DomDocumentImpl implements DomDocument {
     }
   }
 
+  @Override
   public void registerNamespace(String prefix, String namespaceUri) {
     synchronized(document) {
       DomElement rootElement = getRootElement();
@@ -147,6 +155,7 @@ public class DomDocumentImpl implements DomDocument {
     }
   }
 
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
@@ -159,6 +168,7 @@ public class DomDocumentImpl implements DomDocument {
     return document.equals(that.document);
   }
 
+  @Override
   public int hashCode() {
     return document.hashCode();
   }

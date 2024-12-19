@@ -198,6 +198,7 @@ public class FeelEngineTest {
       );
 
       futureSet.add(pool.submit(new Callable<Date>() {
+        @Override
         public Date call() throws Exception {
           return FeelFunctionMapper.parseDateAndTime(dateAndTimeString);
         }
@@ -432,6 +433,7 @@ public class FeelEngineTest {
       return bar;
     }
 
+    @Override
     public String toString() {
       return "TestPojo{" +
         "foo='" + foo + '\'' +

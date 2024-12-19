@@ -36,10 +36,12 @@ public class InformationItemImpl extends NamedElementImpl implements Information
     super(instanceContext);
   }
 
+  @Override
   public String getTypeRef() {
     return typeRefAttribute.getValue(this);
   }
 
+  @Override
   public void setTypeRef(String typeRef) {
     typeRefAttribute.setValue(this, typeRef);
   }
@@ -49,7 +51,8 @@ public class InformationItemImpl extends NamedElementImpl implements Information
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<InformationItem>() {
-        public InformationItem newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InformationItem newInstance(ModelTypeInstanceContext instanceContext) {
           return new InformationItemImpl(instanceContext);
         }
       });

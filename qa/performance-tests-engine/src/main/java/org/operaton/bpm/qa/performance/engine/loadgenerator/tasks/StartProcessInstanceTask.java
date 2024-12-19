@@ -33,6 +33,7 @@ public class StartProcessInstanceTask implements Runnable {
     this.processDefinitionKey = processDefinitionKey;
   }
 
+  @Override
   public void run() {
 
     final RuntimeService runtimeService = processEngine.getRuntimeService();

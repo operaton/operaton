@@ -31,10 +31,12 @@ public class HttpConnectorImpl extends AbstractHttpConnector<HttpRequest, HttpRe
     super(connectorId);
   }
 
+  @Override
   public HttpRequest createRequest() {
     return new HttpRequestImpl(this);
   }
 
+  @Override
   protected HttpResponse createResponse(CloseableHttpResponse response) {
     return new HttpResponseImpl(response);
   }

@@ -55,6 +55,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   public static final List<String> testGroupIds = Arrays.asList("testGroup1", "testGroup2", "testGroup3");
 
   @Before
+  @Override
   public void setUp() {
     createUser(testUserId);
     for (String testGroupId : testGroupIds) {
@@ -69,6 +70,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   @Test
   public void testTaskQueryWithoutGroupAuthorizations() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
 
@@ -91,6 +93,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
     createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, testGroupIds.get(0));
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
 
@@ -115,6 +118,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
     }
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
 
@@ -136,6 +140,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
     identityService.setAuthentication(testUserId, null);
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
 
@@ -156,6 +161,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   @Test
   public void testCheckAuthorizationWithoutGroupAuthorizations() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
         DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
@@ -180,6 +186,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
     createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, testGroupIds.get(0));
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
         DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
@@ -206,6 +213,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
     }
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
         DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
@@ -228,6 +236,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   @Test
   public void testCheckAuthorizationWithUserWithoutGroups() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
         DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);

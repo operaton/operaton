@@ -80,40 +80,48 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // case definition id ///////////////////////////////////////////////////////
 
+  @Override
   public String getCaseDefinitionId() {
     return getCaseDefinition().getId();
   }
 
   // parent ////////////////////////////////////////////////////////////////////
 
+  @Override
   public CaseExecutionImpl getParent() {
     return parent;
   }
 
+  @Override
   public void setParent(CmmnExecution parent) {
     this.parent = (CaseExecutionImpl) parent;
   }
 
+  @Override
   public String getParentId() {
     return getParent().getId();
   }
 
   // activity //////////////////////////////////////////////////////////////////
 
+  @Override
   public String getActivityId() {
     return getActivity().getId();
   }
 
+  @Override
   public String getActivityName() {
     return getActivity().getName();
   }
 
   // case executions ////////////////////////////////////////////////////////////////
 
+  @Override
   public List<CaseExecutionImpl> getCaseExecutions() {
     return new ArrayList<CaseExecutionImpl>(getCaseExecutionsInternal());
   }
 
+  @Override
   protected List<CaseExecutionImpl> getCaseExecutionsInternal() {
     if (caseExecutions == null) {
       caseExecutions = new ArrayList<CaseExecutionImpl>();
@@ -123,42 +131,51 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // case instance /////////////////////////////////////////////////////////////
 
+  @Override
   public CaseExecutionImpl getCaseInstance() {
     return caseInstance;
   }
 
+  @Override
   public void setCaseInstance(CmmnExecution caseInstance) {
     this.caseInstance = (CaseExecutionImpl) caseInstance;
   }
 
   // super execution /////////////////////////////////////////////////////////////
 
+  @Override
   public ExecutionImpl getSuperExecution() {
     return superExecution;
   }
 
+  @Override
   public void setSuperExecution(PvmExecutionImpl superExecution) {
     this.superExecution = (ExecutionImpl) superExecution;
   }
 
   // sub process instance ////////////////////////////////////////////////////////
 
+  @Override
   public ExecutionImpl getSubProcessInstance() {
     return subProcessInstance;
   }
 
+  @Override
   public void setSubProcessInstance(PvmExecutionImpl subProcessInstance) {
     this.subProcessInstance = (ExecutionImpl) subProcessInstance;
   }
 
+  @Override
   public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition) {
     return createSubProcessInstance(processDefinition, null);
   }
 
+  @Override
   public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey) {
     return createSubProcessInstance(processDefinition, businessKey, getCaseInstanceId());
   }
 
+  @Override
   public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey, String caseInstanceId) {
     ExecutionImpl subProcessInstance = (ExecutionImpl) processDefinition.createProcessInstance(businessKey, caseInstanceId);
 
@@ -171,18 +188,22 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // sub-/super- case instance ////////////////////////////////////////////////////
 
+  @Override
   public CaseExecutionImpl getSubCaseInstance() {
     return subCaseInstance;
   }
 
+  @Override
   public void setSubCaseInstance(CmmnExecution subCaseInstance) {
     this.subCaseInstance = (CaseExecutionImpl) subCaseInstance;
   }
 
+  @Override
   public CaseExecutionImpl createSubCaseInstance(CmmnCaseDefinition caseDefinition) {
     return createSubCaseInstance(caseDefinition, null);
   }
 
+  @Override
   public CaseExecutionImpl createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey) {
     CaseExecutionImpl caseInstance = (CaseExecutionImpl) caseDefinition.createCaseInstance(businessKey);
 
@@ -193,16 +214,19 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
     return caseInstance;
   }
 
+  @Override
   public CaseExecutionImpl getSuperCaseExecution() {
     return superCaseExecution;
   }
 
+  @Override
   public void setSuperCaseExecution(CmmnExecution superCaseExecution) {
     this.superCaseExecution = (CaseExecutionImpl) superCaseExecution;
   }
 
   // sentry /////////////////////////////////////////////////////////////////////////
 
+  @Override
   public List<CaseSentryPartImpl> getCaseSentryParts() {
     if (caseSentryParts == null) {
       caseSentryParts = new ArrayList<CaseSentryPartImpl>();
@@ -210,6 +234,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
     return caseSentryParts;
   }
 
+  @Override
   protected Map<String, List<CmmnSentryPart>> getSentries() {
     Map<String, List<CmmnSentryPart>> sentries = new HashMap<String, List<CmmnSentryPart>>();
 
@@ -229,6 +254,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
     return sentries;
   }
 
+  @Override
   protected List<CaseSentryPartImpl> findSentry(String sentryId) {
     List<CaseSentryPartImpl> result = new ArrayList<CaseSentryPartImpl>();
 
@@ -241,16 +267,19 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
     return result;
   }
 
+  @Override
   protected void addSentryPart(CmmnSentryPart sentryPart) {
     getCaseSentryParts().add((CaseSentryPartImpl) sentryPart);
   }
 
+  @Override
   protected CmmnSentryPart newSentryPart() {
     return new CaseSentryPartImpl();
   }
 
   // new case executions ////////////////////////////////////////////////////////////
 
+  @Override
   protected CaseExecutionImpl createCaseExecution(CmmnActivity activity) {
     CaseExecutionImpl child = newCaseExecution();
 
@@ -270,6 +299,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
     return child;
   }
 
+  @Override
   protected CaseExecutionImpl newCaseExecution() {
     return new CaseExecutionImpl();
   }
@@ -292,6 +322,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // toString /////////////////////////////////////////////////////////////////
 
+  @Override
   public String toString() {
     if (isCaseInstanceExecution()) {
       return "CaseInstance[" + getToStringIdentity() + "]";
@@ -300,26 +331,32 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
     }
   }
 
+  @Override
   protected String getToStringIdentity() {
     return Integer.toString(System.identityHashCode(this));
   }
 
+  @Override
   public String getId() {
     return String.valueOf(System.identityHashCode(this));
   }
 
+  @Override
   public ProcessEngineServices getProcessEngineServices() {
     throw LOG.unsupportedTransientOperationException(ProcessEngineServicesAware.class.getName());
   }
 
+  @Override
   public ProcessEngine getProcessEngine() {
     throw LOG.unsupportedTransientOperationException(ProcessEngineServicesAware.class.getName());
   }
 
+  @Override
   public CmmnElement getCmmnModelElementInstance() {
     throw LOG.unsupportedTransientOperationException(CmmnModelExecutionContext.class.getName());
   }
 
+  @Override
   public CmmnModelInstance getCmmnModelInstance() {
     throw LOG.unsupportedTransientOperationException(CmmnModelExecutionContext.class.getName());
   }

@@ -47,7 +47,8 @@ public class OperatonFieldImpl extends BpmnModelElementInstanceImpl implements O
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonField.class, OPERATON_ELEMENT_FIELD)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonField>() {
-        public OperatonField newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonField newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonFieldImpl(instanceContext);
         }
       });
@@ -79,42 +80,52 @@ public class OperatonFieldImpl extends BpmnModelElementInstanceImpl implements O
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonName() {
     return operatonNameAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonName(String operatonName) {
     operatonNameAttribute.setValue(this, operatonName);
   }
 
+  @Override
   public String getOperatonExpression() {
     return operatonExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonExpression(String operatonExpression) {
     operatonExpressionAttribute.setValue(this, operatonExpression);
   }
 
+  @Override
   public String getOperatonStringValue() {
     return operatonStringValueAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonStringValue(String operatonStringValue) {
     operatonStringValueAttribute.setValue(this, operatonStringValue);
   }
 
+  @Override
   public OperatonString getOperatonString() {
     return operatonStringChild.getChild(this);
   }
 
+  @Override
   public void setOperatonString(OperatonString operatonString) {
     operatonStringChild.setChild(this, operatonString);
   }
 
+  @Override
   public OperatonExpression getOperatonExpressionChild() {
     return operatonExpressionChild.getChild(this);
   }
 
+  @Override
   public void setOperatonExpressionChild(OperatonExpression operatonExpression) {
     operatonExpressionChild.setChild(this, operatonExpression);
   }

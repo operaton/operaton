@@ -48,6 +48,7 @@ public class MetricsCollectionTask extends TimerTask {
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public void run() {
     try {
       collectMetrics();

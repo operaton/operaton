@@ -86,6 +86,7 @@ public class MscManagedProcessEngineController extends MscManagedProcessEngine {
   public void start(final StartContext context) throws StartException {
     context.asynchronous();
     executorInjector.getValue().submit(new Runnable() {
+      @Override
       public void run() {
         try {
           startInternal(context);
@@ -128,6 +129,7 @@ public class MscManagedProcessEngineController extends MscManagedProcessEngine {
     // this exploits a hack in MyBatis allowing it to use the TCCL to load the
     // mapping files from the process engine module
     Tccl.runUnderClassloader(new Operation<Void>() {
+      @Override
       public Void run() {
         startProcessEngine();
         return null;

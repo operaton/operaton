@@ -21,6 +21,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 public class SetLocalVariableTask implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     execution.setVariableLocal("test", "test2");
   }

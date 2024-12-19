@@ -29,30 +29,37 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  */
 public class EventListenerItemHandler extends ItemHandler {
 
+  @Override
   protected List<String> getStandardEvents(CmmnElement element) {
     return EVENT_LISTENER_OR_MILESTONE_EVENTS;
   }
 
+  @Override
   protected CmmnActivityBehavior getActivityBehavior() {
     return new EventListenerActivityBehavior();
   }
 
+  @Override
   protected void initializeEntryCriterias(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     // entry criteria is not applicable on event listeners
   }
 
+  @Override
   protected void initializeExitCriterias(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     // exit criteria is not applicable on milestones
   }
 
+  @Override
   protected void initializeRepetitionRule(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     // repetition rule is not applicable on event listeners
   }
 
+  @Override
   protected void initializeRequiredRule(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     // required rule is not applicable on event listeners
   }
 
+  @Override
   protected void initializeManualActivationRule(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     // manual activation rule is not applicable on event listeners
   }

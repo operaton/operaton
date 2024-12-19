@@ -55,6 +55,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
   protected String rootProcessInstanceId;
   protected Date removalTime;
 
+  @Override
   public Object getPersistentState() {
     return CommentEntity.class;
   }
@@ -86,6 +87,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     message = stringBuilder.toString();
   }
 
+  @Override
   public List<String> getMessageParts() {
     if (message==null) {
       return null;
@@ -105,14 +107,17 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getUserId() {
     return userId;
   }
@@ -121,6 +126,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     this.userId = userId;
   }
 
+  @Override
   public String getTaskId() {
     return taskId;
   }
@@ -129,6 +135,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     this.taskId = taskId;
   }
 
+  @Override
   public String getMessage() {
     return message;
   }
@@ -137,6 +144,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     this.message = message;
   }
 
+  @Override
   public Date getTime() {
     return time;
   }
@@ -145,6 +153,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     this.time = time;
   }
 
+  @Override
   public String getProcessInstanceId() {
     return processInstanceId;
   }
@@ -161,6 +170,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     this.type = type;
   }
 
+  @Override
   public String getFullMessage() {
     return fullMessage;
   }
@@ -169,6 +179,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     this.fullMessage = fullMessage;
   }
 
+  @Override
   public String getAction() {
     return action;
   }
@@ -185,6 +196,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
@@ -193,6 +205,7 @@ public class CommentEntity implements Comment, Event, DbEntity, HistoricEntity, 
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 
+  @Override
   public Date getRemovalTime() {
     return removalTime;
   }

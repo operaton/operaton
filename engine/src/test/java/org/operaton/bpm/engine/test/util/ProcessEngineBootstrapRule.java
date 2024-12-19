@@ -82,6 +82,7 @@ public class ProcessEngineBootstrapRule extends TestWatcher {
     final List<Job> jobs = processEngine.getHistoryService().findHistoryCleanupJobs();
     for (final Job job: jobs) {
       ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequired().execute(new Command<Void>() {
+        @Override
         public Void execute(CommandContext commandContext) {
           commandContext.getJobManager().deleteJob((JobEntity) job);
           commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());

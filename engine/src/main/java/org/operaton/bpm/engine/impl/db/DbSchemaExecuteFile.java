@@ -53,6 +53,7 @@ public class DbSchemaExecuteFile {
 
     configuration.getCommandExecutorTxRequired().execute(new Command<Void>() {
 
+      @Override
       public Void execute(CommandContext commandContext) {
 
         commandContext.getDbSqlSession()

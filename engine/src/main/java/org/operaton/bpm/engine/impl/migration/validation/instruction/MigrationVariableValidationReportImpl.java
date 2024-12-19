@@ -41,14 +41,17 @@ public class MigrationVariableValidationReportImpl implements MigrationVariableV
     failures.add(failure);
   }
 
+  @Override
   public boolean hasFailures() {
     return !failures.isEmpty();
   }
 
+  @Override
   public List<String> getFailures() {
     return failures;
   }
 
+  @Override
   public String toString() {
     return "MigrationVariableValidationReportImpl{" +
       ", typedValue=" + typedValue +

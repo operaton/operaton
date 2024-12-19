@@ -39,6 +39,7 @@ public class DbSchemaPrefixTestHelper implements InitializingBean, DisposableBea
 
   private PooledDataSource dataSource;
 
+  @Override
   public void afterPropertiesSet() throws Exception {
 
     dataSource = new PooledDataSource(ReflectUtil.getClassLoader(),
@@ -71,6 +72,7 @@ public class DbSchemaPrefixTestHelper implements InitializingBean, DisposableBea
 
   }
 
+  @Override
   public void destroy() throws Exception {
     Connection connection = dataSource.getConnection();
     connection.createStatement().execute("drop schema if exists SCHEMA1 cascade");
@@ -82,6 +84,7 @@ public class DbSchemaPrefixTestHelper implements InitializingBean, DisposableBea
   // allows to return a process engine configuration which doesn't create a schema when it's build.
   private static class CustomStandaloneInMemProcessEngineConfiguration extends StandaloneInMemProcessEngineConfiguration {
 
+    @Override
     public ProcessEngine buildProcessEngine() {
       init();
       return new NoSchemaProcessEngineImpl(this);

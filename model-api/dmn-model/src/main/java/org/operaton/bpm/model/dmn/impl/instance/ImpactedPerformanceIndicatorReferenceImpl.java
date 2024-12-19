@@ -37,7 +37,8 @@ public class ImpactedPerformanceIndicatorReferenceImpl extends DmnElementReferen
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<ImpactedPerformanceIndicatorReference>() {
-        public ImpactedPerformanceIndicatorReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ImpactedPerformanceIndicatorReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new ImpactedPerformanceIndicatorReferenceImpl(instanceContext);
         }
       });

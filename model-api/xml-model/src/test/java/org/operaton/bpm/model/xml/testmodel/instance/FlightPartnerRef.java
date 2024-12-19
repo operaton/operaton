@@ -34,7 +34,8 @@ public class FlightPartnerRef extends ModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FlightPartnerRef.class, ELEMENT_NAME_FLIGHT_PARTNER_REF)
       .namespaceUri(MODEL_NAMESPACE)
       .instanceProvider(new ModelTypeInstanceProvider<FlightPartnerRef>() {
-        public FlightPartnerRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public FlightPartnerRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new FlightPartnerRef(instanceContext);
         }
       });

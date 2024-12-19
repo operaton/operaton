@@ -28,6 +28,7 @@ public class DatabaseImpl implements Database {
     this.version = version;
   }
 
+  @Override
   public String getVendor() {
     return vendor;
   }
@@ -36,6 +37,7 @@ public class DatabaseImpl implements Database {
     this.vendor = vendor;
   }
 
+  @Override
   public String getVersion() {
     return version;
   }

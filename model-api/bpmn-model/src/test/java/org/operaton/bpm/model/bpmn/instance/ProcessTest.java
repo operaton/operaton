@@ -33,10 +33,12 @@ import org.operaton.bpm.model.bpmn.impl.instance.Supports;
  */
 public class ProcessTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CallableElement.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(Auditing.class, 0, 1),

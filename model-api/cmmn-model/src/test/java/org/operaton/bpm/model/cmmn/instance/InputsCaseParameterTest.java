@@ -26,18 +26,22 @@ import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
  */
 public class InputsCaseParameterTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public String getDefaultNamespace() {
     return CmmnModelConstants.CMMN10_NS;
   }
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CaseParameter.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

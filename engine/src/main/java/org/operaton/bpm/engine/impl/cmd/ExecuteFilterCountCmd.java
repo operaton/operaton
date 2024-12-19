@@ -36,6 +36,7 @@ public class ExecuteFilterCountCmd extends AbstractExecuteFilterCmd implements C
     super(filterId, extendingQuery);
   }
 
+  @Override
   public Long execute(CommandContext commandContext) {
     Filter filter = getFilter(commandContext);
     return filter.getQuery().count();

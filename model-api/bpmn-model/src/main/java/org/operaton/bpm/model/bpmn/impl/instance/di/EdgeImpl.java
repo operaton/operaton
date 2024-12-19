@@ -56,6 +56,7 @@ public abstract class EdgeImpl extends DiagramElementImpl implements Edge {
     super(instanceContext);
   }
 
+  @Override
   public Collection<Waypoint> getWaypoints() {
     return waypointCollection.get(this);
   }

@@ -28,10 +28,12 @@ public class DefaultEngineMetricCollector implements DmnEngineMetricCollector, D
   protected AtomicLong executedDecisionInstances = new AtomicLong();
   protected AtomicLong executedDecisionElements = new AtomicLong();
 
+  @Override
   public void notify(DmnDecisionTableEvaluationEvent evaluationEvent) {
     // collector is registered as decision evaluation listener
   }
 
+  @Override
   public void notify(DmnDecisionEvaluationEvent evaluationEvent) {
     long executedDecisionInstances = evaluationEvent.getExecutedDecisionInstances();
     long executedDecisionElements = evaluationEvent.getExecutedDecisionElements();

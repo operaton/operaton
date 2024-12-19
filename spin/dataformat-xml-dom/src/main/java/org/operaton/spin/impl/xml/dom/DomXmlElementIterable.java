@@ -62,15 +62,18 @@ public class DomXmlElementIterable implements Iterable<SpinXmlElement> {
     validating = true;
   }
 
+  @Override
   public Iterator<SpinXmlElement> iterator() {
     return new DomXmlNodeIterator<SpinXmlElement>() {
 
       private NodeList childs = nodeList;
 
+      @Override
       protected int getLength() {
         return childs.getLength();
       }
 
+      @Override
       protected SpinXmlElement getCurrent() {
         if (childs != null) {
           Node item = childs.item(index);

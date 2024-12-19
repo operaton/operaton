@@ -40,6 +40,7 @@ public interface SerializableValue extends TypedValue {
    * @return the value represented by this TypedValue.
    * @throws IllegalStateException in case the value is not deserialized. See {@link #isDeserialized()}.
    */
+  @Override
   Object getValue();
 
   /**
@@ -59,6 +60,7 @@ public interface SerializableValue extends TypedValue {
    */
   String getSerializationDataFormat();
 
+  @Override
   SerializableValueType getType();
 
 }

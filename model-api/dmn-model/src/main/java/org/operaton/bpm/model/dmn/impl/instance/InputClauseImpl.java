@@ -45,29 +45,35 @@ public class InputClauseImpl extends DmnElementImpl implements InputClause {
     super(instanceContext);
   }
 
+  @Override
   public InputExpression getInputExpression() {
     return inputExpressionChild.getChild(this);
   }
 
+  @Override
   public void setInputExpression(InputExpression inputExpression) {
     inputExpressionChild.setChild(this, inputExpression);
   }
 
+  @Override
   public InputValues getInputValues() {
     return inputValuesChild.getChild(this);
   }
 
+  @Override
   public void setInputValues(InputValues inputValues) {
     inputValuesChild.setChild(this, inputValues);
   }
 
   // operaton extensions
 
+  @Override
   public String getOperatonInputVariable() {
     return operatonInputVariableAttribute.getValue(this);
   }
 
 
+  @Override
   public void setOperatonInputVariable(String inputVariable) {
     operatonInputVariableAttribute.setValue(this, inputVariable);
   }
@@ -77,7 +83,8 @@ public class InputClauseImpl extends DmnElementImpl implements InputClause {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<InputClause>() {
-        public InputClause newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputClause newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputClauseImpl(instanceContext);
         }
       });

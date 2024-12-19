@@ -37,7 +37,8 @@ public class DrgElementReferenceImpl extends DmnElementReferenceImpl implements 
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<DrgElementReference>() {
-        public DrgElementReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DrgElementReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new DrgElementReferenceImpl(instanceContext);
         }
       });

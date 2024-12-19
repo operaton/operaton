@@ -40,6 +40,7 @@ public class ManualStartCaseExecutionCmd extends StateTransitionCaseExecutionCmd
     super(builder);
   }
 
+  @Override
   protected void performStateTransition(CommandContext commandContext, CaseExecutionEntity caseExecution) {
     caseExecution.manualStart();
   }

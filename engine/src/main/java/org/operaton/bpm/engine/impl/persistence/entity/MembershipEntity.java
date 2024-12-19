@@ -37,14 +37,19 @@ public class MembershipEntity implements Serializable, DbEntity {
    */
   protected String id;
 
+  @Override
   public Object getPersistentState() {
     // membership is not updatable
     return MembershipEntity.class;
   }
+
+  @Override
   public String getId() {
     // For the sake of Entity caching the id is necessary
     return id;
   }
+
+  @Override
   public void setId(String id) {
     // For the sake of Entity caching the id is necessary
     this.id = id;

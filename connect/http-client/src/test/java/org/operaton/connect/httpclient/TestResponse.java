@@ -59,6 +59,7 @@ public class TestResponse extends BasicHttpResponse implements CloseableHttpResp
     return this;
   }
 
+  @Override
   public void close() throws IOException {
 
   }

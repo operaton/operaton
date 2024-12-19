@@ -63,6 +63,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
     notifyWatchersEndRun();
   }
 
+  @Override
   public void run() {
     try {
       if(!isStarted) {
@@ -101,6 +102,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
     }
   }
 
+  @Override
   public <T> T getVariable(String name) {
     Object var = runContext.get(name);
     if(var == null) {
@@ -110,6 +112,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
     }
   }
 
+  @Override
   public void setVariable(String name, Object value) {
     runContext.put(name, value);
   }

@@ -72,6 +72,7 @@ public class DefaultFormHandler implements FormHandler {
 
   protected List<FormFieldHandler> formFieldHandlers = new ArrayList<>();
 
+  @Override
   public void parseConfiguration(Element activityElement, DeploymentEntity deployment, ProcessDefinitionEntity processDefinition, BpmnParse bpmnParse) {
     this.deploymentId = deployment.getId();
 
@@ -286,6 +287,7 @@ public class DefaultFormHandler implements FormHandler {
     }
   }
 
+  @Override
   public void submitFormVariables(VariableMap properties, VariableScope variableScope) {
     boolean userOperationLogEnabled = Context.getCommandContext().isUserOperationLogEnabled();
     Context.getCommandContext().enableUserOperationLog();

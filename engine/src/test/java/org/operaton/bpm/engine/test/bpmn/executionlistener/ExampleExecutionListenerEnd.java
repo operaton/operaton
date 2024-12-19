@@ -27,6 +27,7 @@ import org.operaton.bpm.model.bpmn.instance.EndEvent;
  */
 public class ExampleExecutionListenerEnd implements ExecutionListener {
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     boolean instanceEnded = execution.getBpmnModelElementInstance() instanceof EndEvent;
     boolean instanceCanceled = execution.getProcessInstance() != null && execution.getProcessInstance().isCanceled();

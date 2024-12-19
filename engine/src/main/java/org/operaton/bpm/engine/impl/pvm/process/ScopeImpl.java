@@ -61,10 +61,12 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
     this.processDefinition = processDefinition;
   }
 
+  @Override
   public ActivityImpl findActivity(String activityId) {
     return (ActivityImpl) super.findActivity(activityId);
   }
 
+  @Override
   public TransitionImpl findTransition(String transitionId) {
     for (PvmActivity childActivity : flowActivities) {
       for (PvmTransition transition : childActivity.getOutgoingTransitions()) {
@@ -84,6 +86,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
     return null;
   }
 
+  @Override
   public ActivityImpl findActivityAtLevelOfSubprocess(String activityId) {
     if(!isSubProcessScope()) {
       throw new ProcessEngineException("This is not a sub process scope.");
@@ -98,6 +101,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   }
 
   /** searches for the activity locally */
+  @Override
   public ActivityImpl getChildActivity(String activityId) {
     return namedFlowActivities.get(activityId);
   }
@@ -150,6 +154,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
     BACKLOG.put(activityRef, callback);
   }
 
+  @Override
   public ActivityImpl createActivity(String activityId) {
     ActivityImpl activity = new ActivityImpl(activityId, processDefinition);
     if (activityId!=null) {
@@ -219,6 +224,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   public List<ActivityImpl> getActivities() {
     return flowActivities;
   }
@@ -227,6 +233,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
     return eventActivities;
   }
 
+  @Override
   public boolean isSubProcessScope() {
     return isSubProcessScope;
   }

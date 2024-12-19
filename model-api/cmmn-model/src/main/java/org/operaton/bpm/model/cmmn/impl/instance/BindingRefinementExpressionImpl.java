@@ -40,7 +40,8 @@ public class BindingRefinementExpressionImpl extends ExpressionImpl implements B
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<BindingRefinementExpression>() {
-        public BindingRefinementExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public BindingRefinementExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new BindingRefinementExpressionImpl(instanceContext);
         }
       });

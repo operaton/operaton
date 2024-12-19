@@ -48,26 +48,32 @@ public class ManualActivationRuleImpl extends CmmnElementImpl implements ManualA
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public CaseFileItem getContext() {
     return contextRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setContext(CaseFileItem caseFileItem) {
     contextRefAttribute.setReferenceTargetElement(this, caseFileItem);
   }
 
+  @Override
   public ConditionExpression getCondition() {
     return conditionChild.getChild(this);
   }
 
+  @Override
   public void setCondition(ConditionExpression condition) {
     conditionChild.setChild(this, condition);
   }
@@ -77,7 +83,8 @@ public class ManualActivationRuleImpl extends CmmnElementImpl implements ManualA
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<ManualActivationRule>() {
-          public ManualActivationRule newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ManualActivationRule newInstance(ModelTypeInstanceContext instanceContext) {
             return new ManualActivationRuleImpl(instanceContext);
           }
         });

@@ -53,6 +53,7 @@ public class NativeHistoricVariableInstanceQueryImpl extends AbstractNativeQuery
         return this;
   }
 
+  @Override
   public List<HistoricVariableInstance> executeList(CommandContext commandContext, Map<String, Object> parameterMap, int firstResult, int maxResults) {
     List<HistoricVariableInstance> historicVariableInstances = commandContext
             .getHistoricVariableInstanceManager()
@@ -73,6 +74,7 @@ public class NativeHistoricVariableInstanceQueryImpl extends AbstractNativeQuery
     return historicVariableInstances;
   }
 
+  @Override
   public long executeCount(CommandContext commandContext, Map<String, Object> parameterMap) {
     return commandContext
       .getHistoricVariableInstanceManager()

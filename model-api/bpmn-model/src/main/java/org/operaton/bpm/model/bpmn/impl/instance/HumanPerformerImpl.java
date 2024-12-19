@@ -37,7 +37,8 @@ public class HumanPerformerImpl extends PerformerImpl implements HumanPerformer 
       .namespaceUri(BPMN20_NS)
       .extendsType(Performer.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<HumanPerformer>() {
-        public HumanPerformer newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public HumanPerformer newInstance(ModelTypeInstanceContext instanceContext) {
           return new HumanPerformerImpl(instanceContext);
         }
       });

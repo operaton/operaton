@@ -37,10 +37,12 @@ public class CaseDefinitionQueryTest extends AbstractDefinitionQueryTest {
 
   private String deploymentThreeId;
 
+  @Override
   protected String getResourceOnePath() {
     return "org/operaton/bpm/engine/test/repository/one.cmmn";
   }
 
+  @Override
   protected String getResourceTwoPath() {
     return "org/operaton/bpm/engine/test/repository/two.cmmn";
   }

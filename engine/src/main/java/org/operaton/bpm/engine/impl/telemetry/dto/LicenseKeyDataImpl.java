@@ -50,6 +50,7 @@ public class LicenseKeyDataImpl implements LicenseKeyData {
     return new LicenseKeyDataImpl(null, null, null, null, null, licenseKeyRawString);
   }
 
+  @Override
   public String getCustomer() {
     return customer;
   }
@@ -58,6 +59,7 @@ public class LicenseKeyDataImpl implements LicenseKeyData {
     this.customer = customer;
   }
 
+  @Override
   public String getType() {
     return type;
   }
@@ -66,6 +68,7 @@ public class LicenseKeyDataImpl implements LicenseKeyData {
     this.type = type;
   }
 
+  @Override
   public String getValidUntil() {
     return validUntil;
   }
@@ -74,6 +77,7 @@ public class LicenseKeyDataImpl implements LicenseKeyData {
     this.validUntil = validUntil;
   }
 
+  @Override
   public Boolean isUnlimited() {
     return isUnlimited;
   }
@@ -82,6 +86,7 @@ public class LicenseKeyDataImpl implements LicenseKeyData {
     this.isUnlimited = isUnlimited;
   }
 
+  @Override
   public Map<String, String> getFeatures() {
     return features;
   }
@@ -90,6 +95,7 @@ public class LicenseKeyDataImpl implements LicenseKeyData {
     this.features = features;
   }
 
+  @Override
   public String getRaw() {
     return raw;
   }

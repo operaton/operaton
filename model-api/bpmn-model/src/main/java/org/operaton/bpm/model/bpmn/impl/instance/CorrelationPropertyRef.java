@@ -35,7 +35,8 @@ public class CorrelationPropertyRef extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationPropertyRef.class, BPMN_ELEMENT_CORRELATION_PROPERTY_REF)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<CorrelationPropertyRef>() {
-        public CorrelationPropertyRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CorrelationPropertyRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new CorrelationPropertyRef(instanceContext);
         }
       });

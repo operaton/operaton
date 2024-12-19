@@ -43,26 +43,32 @@ public class AuthorityRequirementImpl extends DmnModelElementInstanceImpl implem
     super(instanceContext);
   }
 
+  @Override
   public Decision getRequiredDecision() {
     return requiredDecisionRef.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setRequiredDecision(Decision requiredDecision) {
     requiredDecisionRef.setReferenceTargetElement(this, requiredDecision);
   }
 
+  @Override
   public InputData getRequiredInput() {
     return requiredInputRef.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setRequiredInput(InputData requiredInput) {
     requiredInputRef.setReferenceTargetElement(this, requiredInput);
   }
 
+  @Override
   public KnowledgeSource getRequiredAuthority() {
     return requiredAuthorityRef.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setRequiredAuthority(KnowledgeSource requiredAuthority) {
     requiredAuthorityRef.setReferenceTargetElement(this, requiredAuthority);
   }
@@ -71,7 +77,8 @@ public class AuthorityRequirementImpl extends DmnModelElementInstanceImpl implem
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(AuthorityRequirement.class, DMN_ELEMENT_AUTHORITY_REQUIREMENT)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<AuthorityRequirement>() {
-        public AuthorityRequirement newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public AuthorityRequirement newInstance(ModelTypeInstanceContext instanceContext) {
           return new AuthorityRequirementImpl(instanceContext);
         }
       });

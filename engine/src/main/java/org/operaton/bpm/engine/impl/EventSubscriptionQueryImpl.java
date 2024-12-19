@@ -54,36 +54,42 @@ public class EventSubscriptionQueryImpl
     super(commandExecutor);
   }
 
+  @Override
   public EventSubscriptionQuery eventSubscriptionId(String id) {
     ensureNotNull("event subscription id", id);
     this.eventSubscriptionId = id;
     return this;
   }
 
+  @Override
   public EventSubscriptionQuery eventName(String eventName) {
     ensureNotNull("event name", eventName);
     this.eventName = eventName;
     return this;
   }
 
+  @Override
   public EventSubscriptionQueryImpl executionId(String executionId) {
     ensureNotNull("execution id", executionId);
     this.executionId = executionId;
     return this;
   }
 
+  @Override
   public EventSubscriptionQuery processInstanceId(String processInstanceId) {
     ensureNotNull("process instance id", processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
   }
 
+  @Override
   public EventSubscriptionQueryImpl activityId(String activityId) {
     ensureNotNull("activity id", activityId);
     this.activityId = activityId;
     return this;
   }
 
+  @Override
   public EventSubscriptionQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -91,27 +97,32 @@ public class EventSubscriptionQueryImpl
     return this;
   }
 
+  @Override
   public EventSubscriptionQuery withoutTenantId() {
     isTenantIdSet = true;
     this.tenantIds = null;
     return this;
   }
 
+  @Override
   public EventSubscriptionQuery includeEventSubscriptionsWithoutTenantId() {
     this.includeEventSubscriptionsWithoutTenantId  = true;
     return this;
   }
 
+  @Override
   public EventSubscriptionQueryImpl eventType(String eventType) {
     ensureNotNull("event type", eventType);
     this.eventType = eventType;
     return this;
   }
 
+  @Override
   public EventSubscriptionQuery orderByCreated() {
     return orderBy(EventSubscriptionQueryProperty.CREATED);
   }
 
+  @Override
   public EventSubscriptionQuery orderByTenantId() {
     return orderBy(EventSubscriptionQueryProperty.TENANT_ID);
   }

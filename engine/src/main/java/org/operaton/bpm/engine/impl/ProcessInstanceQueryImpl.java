@@ -86,24 +86,28 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     super(commandExecutor);
   }
 
+  @Override
   public ProcessInstanceQueryImpl processInstanceId(String processInstanceId) {
     ensureNotNull("Process instance id", processInstanceId);
     this.processInstanceId = processInstanceId;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery processInstanceIds(Set<String> processInstanceIds) {
     ensureNotEmpty("Set of process instance ids", processInstanceIds);
     this.processInstanceIds = processInstanceIds;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery processInstanceBusinessKey(String businessKey) {
     ensureNotNull("Business key", businessKey);
     this.businessKey = businessKey;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery processInstanceBusinessKey(String businessKey, String processDefinitionKey) {
     ensureNotNull("Business key", businessKey);
     this.businessKey = businessKey;
@@ -111,41 +115,48 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery processInstanceBusinessKeyLike(String businessKeyLike) {
     this.businessKeyLike = businessKeyLike;
     return this;
   }
 
+  @Override
   public ProcessInstanceQueryImpl processDefinitionId(String processDefinitionId) {
     ensureNotNull("Process definition id", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public ProcessInstanceQueryImpl processDefinitionKey(String processDefinitionKey) {
     ensureNotNull("Process definition key", processDefinitionKey);
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery processDefinitionKeyIn(String... processDefinitionKeys) {
     ensureNotNull("processDefinitionKeys", (Object[]) processDefinitionKeys);
     this.processDefinitionKeys = processDefinitionKeys;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery processDefinitionKeyNotIn(String... processDefinitionKeys) {
     ensureNotNull("processDefinitionKeyNotIn", (Object[]) processDefinitionKeys);
     this.processDefinitionKeyNotIn = processDefinitionKeys;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery deploymentId(String deploymentId) {
     ensureNotNull("Deployment id", deploymentId);
     this.deploymentId = deploymentId;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery superProcessInstanceId(String superProcessInstanceId) {
     if (isRootProcessInstances) {
       throw new ProcessEngineException("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
@@ -154,29 +165,34 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery subProcessInstanceId(String subProcessInstanceId) {
     this.subProcessInstanceId = subProcessInstanceId;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery caseInstanceId(String caseInstanceId) {
     ensureNotNull("caseInstanceId", caseInstanceId);
     this.caseInstanceId = caseInstanceId;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery superCaseInstanceId(String superCaseInstanceId) {
     ensureNotNull("superCaseInstanceId", superCaseInstanceId);
     this.superCaseInstanceId = superCaseInstanceId;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery subCaseInstanceId(String subCaseInstanceId) {
     ensureNotNull("subCaseInstanceId", subCaseInstanceId);
     this.subCaseInstanceId = subCaseInstanceId;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery orderByProcessInstanceId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessInstanceId() within 'or' query");
@@ -186,6 +202,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery orderByProcessDefinitionId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessDefinitionId() within 'or' query");
@@ -196,6 +213,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery orderByProcessDefinitionKey() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByProcessDefinitionKey() within 'or' query");
@@ -206,6 +224,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery orderByTenantId() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByTenantId() within 'or' query");
@@ -215,6 +234,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery orderByBusinessKey() {
     if (isOrQueryActive) {
       throw new ProcessEngineException("Invalid query usage: cannot set orderByBusinessKey() within 'or' query");
@@ -224,45 +244,53 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery active() {
     this.suspensionState = SuspensionState.ACTIVE;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery suspended() {
     this.suspensionState = SuspensionState.SUSPENDED;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery withIncident() {
     this.withIncident = true;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery incidentType(String incidentType) {
     ensureNotNull("incident type", incidentType);
     this.incidentType = incidentType;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery incidentId(String incidentId) {
     ensureNotNull("incident id", incidentId);
     this.incidentId = incidentId;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery incidentMessage(String incidentMessage) {
     ensureNotNull("incident message", incidentMessage);
     this.incidentMessage = incidentMessage;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery incidentMessageLike(String incidentMessageLike) {
     ensureNotNull("incident messageLike", incidentMessageLike);
     this.incidentMessageLike = incidentMessageLike;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -270,18 +298,21 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery withoutTenantId() {
     tenantIds = null;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery activityIdIn(String... activityIds) {
     ensureNotNull("activity ids", (Object[]) activityIds);
     this.activityIds = activityIds;
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery rootProcessInstances() {
     if (superProcessInstanceId != null) {
       throw new ProcessEngineException("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
@@ -290,6 +321,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery leafProcessInstances() {
     if(subProcessInstanceId != null) {
       throw new ProcessEngineException("Invalid query usage: cannot set both leafProcessInstances and subProcessInstanceId");
@@ -298,6 +330,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
     return this;
   }
 
+  @Override
   public ProcessInstanceQuery processDefinitionWithoutTenantId() {
     isProcessDefinitionWithoutTenantId = true;
     return this;
@@ -330,6 +363,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
       .findProcessInstancesByQueryCriteria(this, page);
   }
 
+  @Override
   public List<String> executeIdsList(CommandContext commandContext) {
     checkQueryOk();
 

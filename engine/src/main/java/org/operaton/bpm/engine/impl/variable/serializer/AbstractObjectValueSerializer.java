@@ -35,11 +35,13 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
     super(ValueType.OBJECT, serializationDataFormat);
   }
 
+  @Override
   public ObjectValue convertToTypedValue(UntypedValueImpl untypedValue) {
     // untyped values are always deserialized
     return Variables.objectValue(untypedValue.getValue(), untypedValue.isTransient()).create();
   }
 
+  @Override
   protected void writeToValueFields(ObjectValue value, ValueFields valueFields, byte[] serializedValue) {
     String objectTypeName = getObjectTypeName(value, valueFields);
     valueFields.setByteArrayValue(serializedValue);
@@ -61,6 +63,7 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
     return objectTypeName;
   }
 
+  @Override
   protected void updateTypedValue(ObjectValue value, String serializedStringValue) {
     String objectTypeName = getObjectTypeName(value, null);
     ObjectValueImpl objectValue =(ObjectValueImpl) value;
@@ -69,6 +72,7 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
     objectValue.setSerializationDataFormat(serializationDataFormat);
   }
 
+  @Override
   protected ObjectValue createDeserializedValue(Object deserializedObject, String serializedStringValue,
       ValueFields valueFields, boolean asTransientValue) {
     String objectTypeName = readObjectNameFromFields(valueFields);
@@ -78,6 +82,7 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
   }
 
 
+  @Override
   protected ObjectValue createSerializedValue(String serializedStringValue, ValueFields valueFields,
       boolean asTransientValue) {
     String objectTypeName = readObjectNameFromFields(valueFields);
@@ -112,8 +117,10 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
    * @return the byte array value of the object
    * @throws exception in case the object cannot be serialized
    */
+  @Override
   protected abstract byte[] serializeToByteArray(Object deserializedObject) throws Exception;
 
+  @Override
   protected Object deserializeFromByteArray(byte[] object, ValueFields valueFields) throws Exception {
     String objectTypeName = readObjectNameFromFields(valueFields);
     return deserializeFromByteArray(object, objectTypeName);
@@ -133,6 +140,7 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
    * Return true if the serialization is text based. Return false otherwise
    *
    */
+  @Override
   protected abstract boolean isSerializationTextBased();
 
 }

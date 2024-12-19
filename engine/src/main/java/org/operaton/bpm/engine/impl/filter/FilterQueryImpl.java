@@ -45,58 +45,69 @@ public class FilterQueryImpl extends AbstractQuery<FilterQuery, Filter> implemen
     super(commandExecutor);
   }
 
+  @Override
   public FilterQuery filterId(String filterId) {
     ensureNotNull("filterId", filterId);
     this.filterId = filterId;
     return this;
   }
 
+  @Override
   public FilterQuery filterResourceType(String resourceType) {
     ensureNotNull("resourceType", resourceType);
     this.resourceType = resourceType;
     return this;
   }
 
+  @Override
   public FilterQuery filterName(String name) {
     ensureNotNull("name", name);
     this.name = name;
     return this;
   }
 
+  @Override
   public FilterQuery filterNameLike(String nameLike) {
     ensureNotNull("nameLike", nameLike);
     this.nameLike = nameLike;
     return this;
   }
 
+  @Override
   public FilterQuery filterOwner(String owner) {
     ensureNotNull("owner", owner);
     this.owner = owner;
     return this;
   }
 
+  @Override
   public FilterQuery orderByFilterId() {
     return orderBy(FilterQueryProperty.FILTER_ID);
   }
 
+  @Override
   public FilterQuery orderByFilterResourceType() {
     return orderBy(FilterQueryProperty.RESOURCE_TYPE);
   }
 
+  @Override
   public FilterQuery orderByFilterName() {
     return orderBy(FilterQueryProperty.NAME);
   }
 
+  @Override
   public FilterQuery orderByFilterOwner() {
     return orderBy(FilterQueryProperty.OWNER);
   }
 
+  @Override
   public List<Filter> executeList(CommandContext commandContext, Page page) {
     return commandContext
       .getFilterManager()
       .findFiltersByQueryCriteria(this);
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     return commandContext
       .getFilterManager()

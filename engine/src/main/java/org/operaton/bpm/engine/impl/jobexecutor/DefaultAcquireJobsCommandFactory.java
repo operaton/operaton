@@ -31,6 +31,7 @@ public class DefaultAcquireJobsCommandFactory implements AcquireJobsCommandFacto
     this.jobExecutor = jobExecutor;
   }
 
+  @Override
   public Command<AcquiredJobs> getCommand(int numJobsToAcquire) {
     return new AcquireJobsCmd(jobExecutor, numJobsToAcquire);
   }

@@ -58,45 +58,74 @@ public interface ProcessApplicationDeploymentBuilder extends DeploymentBuilder {
   ProcessApplicationDeploymentBuilder resumePreviousVersionsBy(String resumePreviousVersionsBy);
 
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeployment deploy();
 
   // overridden methods //////////////////////////////
 
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addInputStream(String resourceName, InputStream inputStream);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addClasspathResource(String resource);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addString(String resourceName, String text);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addModelInstance(String resourceName, BpmnModelInstance modelInstance);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addZipInputStream(ZipInputStream zipInputStream);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder name(String name);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder nameFromDeployment(String deploymentId);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder source(String source);
+
   /* {@inheritDoc} */
   @Deprecated
+  @Override
   ProcessApplicationDeploymentBuilder enableDuplicateFiltering();
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder enableDuplicateFiltering(boolean deployChangedOnly);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder activateProcessDefinitionsOn(Date date);
 
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addDeploymentResources(String deploymentId);
 
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addDeploymentResourceById(String deploymentId, String resourceId);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addDeploymentResourcesById(String deploymentId, List<String> resourceIds);
 
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addDeploymentResourceByName(String deploymentId, String resourceName);
+
   /* {@inheritDoc} */
+  @Override
   ProcessApplicationDeploymentBuilder addDeploymentResourcesByName(String deploymentId, List<String> resourceNames);
 
 }

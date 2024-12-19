@@ -62,6 +62,7 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior implements Mi
     task.transitionTo(TaskState.STATE_CREATED);
   }
 
+  @Override
   public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
     leave(execution);
   }

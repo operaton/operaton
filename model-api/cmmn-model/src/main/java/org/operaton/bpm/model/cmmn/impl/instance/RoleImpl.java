@@ -40,10 +40,12 @@ public class RoleImpl extends CmmnElementImpl implements Role {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
@@ -53,7 +55,8 @@ public class RoleImpl extends CmmnElementImpl implements Role {
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<Role>() {
-          public Role newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Role newInstance(ModelTypeInstanceContext instanceContext) {
             return new RoleImpl(instanceContext);
           }
         });

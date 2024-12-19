@@ -28,6 +28,7 @@ public class NoUnmappedLeafInstanceValidator implements
   MigratingTransitionInstanceValidator,
   MigratingCompensationInstanceValidator {
 
+  @Override
   public void validate(MigratingActivityInstance migratingInstance, MigratingProcessInstance migratingProcessInstance, MigratingActivityInstanceValidationReportImpl instanceReport) {
     if (isInvalid(migratingInstance)) {
       instanceReport.addFailure("There is no migration instruction for this instance's activity");

@@ -71,6 +71,7 @@ public class XmlSerializableNoAnnotation {
     return xmlBuilder.toString();
   }
 
+  @Override
   public String toString() {
     return toExpectedXmlString();
   }

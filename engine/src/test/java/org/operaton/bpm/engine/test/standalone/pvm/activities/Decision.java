@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  */
 public class Decision implements ActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     PvmTransition transition = null;
     String creditRating = (String) execution.getVariable("creditRating");

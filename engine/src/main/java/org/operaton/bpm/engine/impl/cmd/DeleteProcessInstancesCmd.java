@@ -44,6 +44,7 @@ public class DeleteProcessInstancesCmd extends AbstractDeleteProcessInstanceCmd 
     this.skipIoMappings = skipIoMappings;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     deleteProcessInstances(commandContext, processInstanceIds);
     return null;

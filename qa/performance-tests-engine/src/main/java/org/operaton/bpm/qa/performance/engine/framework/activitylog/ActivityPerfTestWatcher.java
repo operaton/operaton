@@ -45,26 +45,32 @@ public class ActivityPerfTestWatcher implements PerfTestWatcher {
     watchAllActivities = WATCH_ALL_ACTIVITIES.equals(activityIds);
   }
 
+  @Override
   public void beforePass(PerfTestPass pass) {
     // nothing to do
   }
 
+  @Override
   public void beforeRun(PerfTest test, PerfTestRun run) {
     // nothing to do
   }
 
+  @Override
   public void beforeStep(PerfTestStep step, PerfTestRun run) {
     // nothing to do
   }
 
+  @Override
   public void afterStep(PerfTestStep step, PerfTestRun run) {
     // nothing to do
   }
 
+  @Override
   public void afterRun(PerfTest test, PerfTestRun run) {
     // nothing to do
   }
 
+  @Override
   public void afterPass(PerfTestPass pass) {
     ProcessEngine processEngine = PerfTestProcessEngine.getInstance();
     HistoryService historyService = processEngine.getHistoryService();

@@ -82,6 +82,7 @@ public class TopicSubscriptionManager implements Runnable {
     this.isBackoffStrategyDisabled = new AtomicBoolean(false);
   }
 
+  @Override
   public void run() {
     while (isRunning.get()) {
       try {

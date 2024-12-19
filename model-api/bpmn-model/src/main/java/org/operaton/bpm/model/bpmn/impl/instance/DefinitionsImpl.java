@@ -56,7 +56,8 @@ public class DefinitionsImpl extends BpmnModelElementInstanceImpl implements Def
     ModelElementTypeBuilder typeBuilder = bpmnModelBuilder.defineType(Definitions.class, BPMN_ELEMENT_DEFINITIONS)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<Definitions>() {
-        public Definitions newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Definitions newInstance(ModelTypeInstanceContext instanceContext) {
           return new DefinitionsImpl(instanceContext);
         }
       });
@@ -110,78 +111,97 @@ public class DefinitionsImpl extends BpmnModelElementInstanceImpl implements Def
     super(instanceContext);
   }
 
+  @Override
   public String getId() {
     return idAttribute.getValue(this);
   }
 
+  @Override
   public void setId(String id) {
     idAttribute.setValue(this, id);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public String getTargetNamespace() {
     return targetNamespaceAttribute.getValue(this);
   }
 
+  @Override
   public void setTargetNamespace(String namespace) {
     targetNamespaceAttribute.setValue(this, namespace);
   }
 
+  @Override
   public String getExpressionLanguage() {
     return expressionLanguageAttribute.getValue(this);
   }
 
+  @Override
   public void setExpressionLanguage(String expressionLanguage) {
     expressionLanguageAttribute.setValue(this, expressionLanguage);
   }
 
+  @Override
   public String getTypeLanguage() {
     return typeLanguageAttribute.getValue(this);
   }
 
+  @Override
   public void setTypeLanguage(String typeLanguage) {
     typeLanguageAttribute.setValue(this, typeLanguage);
   }
 
+  @Override
   public String getExporter() {
     return exporterAttribute.getValue(this);
   }
 
+  @Override
   public void setExporter(String exporter) {
     exporterAttribute.setValue(this, exporter);
   }
 
+  @Override
   public String getExporterVersion() {
     return exporterVersionAttribute.getValue(this);
   }
 
+  @Override
   public void setExporterVersion(String exporterVersion) {
     exporterVersionAttribute.setValue(this, exporterVersion);
   }
 
+  @Override
   public Collection<Import> getImports() {
     return importCollection.get(this);
   }
 
+  @Override
   public Collection<Extension> getExtensions() {
     return extensionCollection.get(this);
   }
 
+  @Override
   public Collection<RootElement> getRootElements() {
     return rootElementCollection.get(this);
   }
 
+  @Override
   public Collection<BpmnDiagram> getBpmDiagrams() {
     return bpmnDiagramCollection.get(this);
   }
 
+  @Override
   public Collection<Relationship> getRelationships() {
     return relationshipCollection.get(this);
   }

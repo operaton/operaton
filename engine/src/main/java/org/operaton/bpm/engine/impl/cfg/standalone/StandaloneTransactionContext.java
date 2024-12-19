@@ -45,6 +45,7 @@ public class StandaloneTransactionContext implements TransactionContext {
     this.commandContext = commandContext;
   }
 
+  @Override
   public void addTransactionListener(TransactionState transactionState, TransactionListener transactionListener) {
     if (stateTransactionListeners==null) {
       stateTransactionListeners = new HashMap<TransactionState, List<TransactionListener>>();
@@ -57,6 +58,7 @@ public class StandaloneTransactionContext implements TransactionContext {
     transactionListeners.add(transactionListener);
   }
 
+  @Override
   public void commit() {
     LOG.debugTransactionOperation("firing event committing...");
 
@@ -93,6 +95,7 @@ public class StandaloneTransactionContext implements TransactionContext {
     return commandContext.getSession(PersistenceSession.class);
   }
 
+  @Override
   public void rollback() {
     try {
       try {
@@ -120,6 +123,7 @@ public class StandaloneTransactionContext implements TransactionContext {
     }
   }
 
+  @Override
   public boolean isTransactionActive() {
     return !TransactionState.ROLLINGBACK.equals(lastTransactionState) && !TransactionState.ROLLED_BACK.equals(lastTransactionState);
   }

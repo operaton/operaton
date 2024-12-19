@@ -46,26 +46,32 @@ public class BusinessKnowledgeModelImpl extends DrgElementImpl implements Busine
     super(instanceContext);
   }
 
+  @Override
   public EncapsulatedLogic getEncapsulatedLogic() {
     return encapsulatedLogicChild.getChild(this);
   }
 
+  @Override
   public void setEncapsulatedLogic(EncapsulatedLogic encapsulatedLogic) {
     encapsulatedLogicChild.setChild(this, encapsulatedLogic);
   }
 
+  @Override
   public Variable getVariable() {
     return variableChild.getChild(this);
   }
 
+  @Override
   public void setVariable(Variable variable) {
     variableChild.setChild(this, variable);
   }
 
+  @Override
   public Collection<KnowledgeRequirement> getKnowledgeRequirement() {
     return knowledgeRequirementCollection.get(this);
   }
 
+  @Override
   public Collection<AuthorityRequirement> getAuthorityRequirement() {
     return authorityRequirementCollection.get(this);
   }
@@ -75,7 +81,8 @@ public class BusinessKnowledgeModelImpl extends DrgElementImpl implements Busine
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<BusinessKnowledgeModel>() {
-        public BusinessKnowledgeModel newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public BusinessKnowledgeModel newInstance(ModelTypeInstanceContext instanceContext) {
           return new BusinessKnowledgeModelImpl(instanceContext);
         }
       });

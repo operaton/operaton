@@ -39,6 +39,7 @@ public interface Task extends Activity {
   @Deprecated
   void setOperatonAsync(boolean isOperatonAsync);
 
+  @Override
   BpmnShape getDiagramElement();
 
 }

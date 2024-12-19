@@ -80,6 +80,7 @@ public class HalProcessDefinition extends HalResource<HalProcessDefinition> impl
     return halProcDef;
   }
 
+  @Override
   public String getId() {
     return id;
   }

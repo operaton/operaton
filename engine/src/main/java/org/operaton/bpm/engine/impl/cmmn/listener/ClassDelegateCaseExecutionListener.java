@@ -45,6 +45,7 @@ public class ClassDelegateCaseExecutionListener extends ClassDelegate implements
     super(clazz, fieldDeclarations);
   }
 
+  @Override
   public void notify(DelegateCaseExecution caseExecution) throws Exception {
     CaseExecutionListener listenerInstance = getListenerInstance();
 

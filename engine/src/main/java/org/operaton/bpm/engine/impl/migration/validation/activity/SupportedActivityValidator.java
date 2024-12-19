@@ -56,6 +56,7 @@ public class SupportedActivityValidator implements MigrationActivityValidator {
     SUPPORTED_ACTIVITY_BEHAVIORS.add(EventSubProcessStartConditionalEventActivityBehavior.class);
   }
 
+  @Override
   public boolean valid(ActivityImpl activity) {
     return activity != null && (isSupportedActivity(activity) || isAsync(activity));
   }

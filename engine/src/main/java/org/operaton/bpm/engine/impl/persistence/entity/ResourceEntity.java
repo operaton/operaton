@@ -39,14 +39,17 @@ public class ResourceEntity implements Serializable, DbEntity, Resource {
   protected Integer type;
   protected Date createTime;
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -55,6 +58,7 @@ public class ResourceEntity implements Serializable, DbEntity, Resource {
     this.name = name;
   }
 
+  @Override
   public byte[] getBytes() {
     return bytes;
   }
@@ -63,6 +67,7 @@ public class ResourceEntity implements Serializable, DbEntity, Resource {
     this.bytes = bytes;
   }
 
+  @Override
   public String getDeploymentId() {
     return deploymentId;
   }
@@ -71,6 +76,7 @@ public class ResourceEntity implements Serializable, DbEntity, Resource {
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public Object getPersistentState() {
     return ResourceEntity.class;
   }

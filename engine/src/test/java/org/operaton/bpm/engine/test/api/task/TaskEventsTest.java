@@ -222,6 +222,7 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
   private void assertNoCommentsForTask() {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         assertTrue(commandContext.getCommentManager().findCommentsByTaskId(task.getId()).isEmpty());
         return null;

@@ -21,10 +21,12 @@ import java.util.Collection;
 
 public class AuthorityRequirementTest extends DmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(RequiredDecisionReference.class, 0, 1),
@@ -33,6 +35,7 @@ public class AuthorityRequirementTest extends DmnModelElementInstanceTest {
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

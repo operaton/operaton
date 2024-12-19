@@ -49,7 +49,8 @@ public class DataStoreImpl extends RootElementImpl implements DataStore {
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<DataStore>() {
-        public DataStore newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DataStore newInstance(ModelTypeInstanceContext instanceContext) {
           return new DataStoreImpl(instanceContext);
         }
       });

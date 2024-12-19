@@ -29,6 +29,7 @@ public class ProcessArchiveXmlImpl implements ProcessArchiveXml {
   private List<String> processResourceNames;
   private Map<String, String> properties;
 
+  @Override
   public String getName() {
     return name;
   }
@@ -37,6 +38,7 @@ public class ProcessArchiveXmlImpl implements ProcessArchiveXml {
     this.name = name;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -45,6 +47,7 @@ public class ProcessArchiveXmlImpl implements ProcessArchiveXml {
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getProcessEngineName() {
     return processEngineName;
   }
@@ -53,6 +56,7 @@ public class ProcessArchiveXmlImpl implements ProcessArchiveXml {
     this.processEngineName = processEngineName;
   }
 
+  @Override
   public List<String> getProcessResourceNames() {
     return processResourceNames;
   }
@@ -61,6 +65,7 @@ public class ProcessArchiveXmlImpl implements ProcessArchiveXml {
     this.processResourceNames = processResourceNames;
   }
 
+  @Override
   public Map<String, String> getProperties() {
     return properties;
   }

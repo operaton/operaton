@@ -95,7 +95,8 @@ public class ProcessImpl extends CallableElementImpl implements Process {
       .namespaceUri(BPMN20_NS)
       .extendsType(CallableElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<Process>() {
-        public Process newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Process newInstance(ModelTypeInstanceContext instanceContext) {
           return new ProcessImpl(instanceContext);
         }
       });
@@ -186,116 +187,143 @@ public class ProcessImpl extends CallableElementImpl implements Process {
     return new ProcessBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public ProcessType getProcessType() {
     return processTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setProcessType(ProcessType processType) {
     processTypeAttribute.setValue(this, processType);
   }
 
+  @Override
   public boolean isClosed() {
     return isClosedAttribute.getValue(this);
   }
 
+  @Override
   public void setClosed(boolean closed) {
     isClosedAttribute.setValue(this, closed);
   }
 
+  @Override
   public boolean isExecutable() {
     return isExecutableAttribute.getValue(this);
   }
 
+  @Override
   public void setExecutable(boolean executable) {
     isExecutableAttribute.setValue(this, executable);
   }
 
+  @Override
   public Auditing getAuditing() {
     return auditingChild.getChild(this);
   }
 
+  @Override
   public void setAuditing(Auditing auditing) {
     auditingChild.setChild(this, auditing);
   }
 
+  @Override
   public Monitoring getMonitoring() {
     return monitoringChild.getChild(this);
   }
 
+  @Override
   public void setMonitoring(Monitoring monitoring) {
     monitoringChild.setChild(this, monitoring);
   }
 
+  @Override
   public Collection<Property> getProperties() {
     return propertyCollection.get(this);
   }
 
+  @Override
   public Collection<LaneSet> getLaneSets() {
     return laneSetCollection.get(this);
   }
 
+  @Override
   public Collection<FlowElement> getFlowElements() {
     return flowElementCollection.get(this);
   }
 
+  @Override
   public Collection<Artifact> getArtifacts() {
     return artifactCollection.get(this);
   }
 
+  @Override
   public Collection<CorrelationSubscription> getCorrelationSubscriptions() {
     return correlationSubscriptionCollection.get(this);
   }
 
+  @Override
   public Collection<ResourceRole> getResourceRoles() {
     return resourceRoleCollection.get(this);
   }
 
+  @Override
   public Collection<Process> getSupports() {
     return supportsCollection.getReferenceTargetElements(this);
   }
 
   /** operaton extensions */
 
+  @Override
   public String getOperatonCandidateStarterGroups() {
     return operatonCandidateStarterGroupsAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCandidateStarterGroups(String operatonCandidateStarterGroups) {
     operatonCandidateStarterGroupsAttribute.setValue(this, operatonCandidateStarterGroups);
   }
 
+  @Override
   public List<String> getOperatonCandidateStarterGroupsList() {
     String groupsString = operatonCandidateStarterGroupsAttribute.getValue(this);
     return StringUtil.splitCommaSeparatedList(groupsString);
   }
 
+  @Override
   public void setOperatonCandidateStarterGroupsList(List<String> operatonCandidateStarterGroupsList) {
     String candidateStarterGroups = StringUtil.joinCommaSeparatedList(operatonCandidateStarterGroupsList);
     operatonCandidateStarterGroupsAttribute.setValue(this, candidateStarterGroups);
   }
 
+  @Override
   public String getOperatonCandidateStarterUsers() {
     return operatonCandidateStarterUsersAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCandidateStarterUsers(String operatonCandidateStarterUsers) {
     operatonCandidateStarterUsersAttribute.setValue(this, operatonCandidateStarterUsers);
   }
 
+  @Override
   public List<String> getOperatonCandidateStarterUsersList() {
     String candidateStarterUsers = operatonCandidateStarterUsersAttribute.getValue(this);
     return StringUtil.splitCommaSeparatedList(candidateStarterUsers);
   }
 
+  @Override
   public void setOperatonCandidateStarterUsersList(List<String> operatonCandidateStarterUsersList) {
     String candidateStarterUsers = StringUtil.joinCommaSeparatedList(operatonCandidateStarterUsersList);
     operatonCandidateStarterUsersAttribute.setValue(this, candidateStarterUsers);
   }
 
+  @Override
   public String getOperatonJobPriority() {
     return operatonJobPriorityAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonJobPriority(String jobPriority) {
     operatonJobPriorityAttribute.setValue(this, jobPriority);
   }

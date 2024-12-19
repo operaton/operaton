@@ -51,7 +51,8 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
       .namespaceUri(BPMN20_NS)
       .extendsType(Activity.class)
       .instanceProvider(new ModelTypeInstanceProvider<SubProcess>() {
-        public SubProcess newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public SubProcess newInstance(ModelTypeInstanceContext instanceContext) {
           return new SubProcessImpl(instanceContext);
         }
       });
@@ -85,26 +86,32 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
     super(context);
   }
 
+  @Override
   public SubProcessBuilder builder() {
     return new SubProcessBuilder((BpmnModelInstance) modelInstance, this);
   }
 
+  @Override
   public boolean triggeredByEvent() {
     return triggeredByEventAttribute.getValue(this);
   }
 
+  @Override
   public void setTriggeredByEvent(boolean triggeredByEvent) {
     triggeredByEventAttribute.setValue(this, triggeredByEvent);
   }
 
+  @Override
   public Collection<LaneSet> getLaneSets() {
     return laneSetCollection.get(this);
   }
 
+  @Override
   public Collection<FlowElement> getFlowElements() {
     return flowElementCollection.get(this);
   }
 
+  @Override
   public Collection<Artifact> getArtifacts() {
     return artifactCollection.get(this);
   }
@@ -115,6 +122,7 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
    * @deprecated use isOperatonAsyncBefore() instead.
    */
   @Deprecated
+  @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
   }
@@ -123,6 +131,7 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
    * @deprecated use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
    */
   @Deprecated
+  @Override
   public void setOperatonAsync(boolean isOperatonAsync) {
     operatonAsyncAttribute.setValue(this, isOperatonAsync);
   }

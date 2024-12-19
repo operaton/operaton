@@ -56,6 +56,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
   @After
   public void tearDown() {
     ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         List<HistoricJobLog> jobLogs = processEngine.getHistoryService().createHistoricJobLogQuery().list();
@@ -556,6 +557,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
     protected static ThreadControl monitor;
 
+    @Override
     public void notify(DelegateExecution execution) throws Exception {
       if (WaitingListener.monitor != null) {
         ThreadControl localMonitor = WaitingListener.monitor;
@@ -621,6 +623,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
       this.shouldWaitInListener = shouldWaitInListener;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
 
       if (shouldWaitInListener) {
@@ -645,6 +648,7 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
       this.tasks = tasks;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
 
       for (Task task : tasks) {

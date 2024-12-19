@@ -37,7 +37,8 @@ public class OutputImpl extends OutputClauseImpl implements Output {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(OutputClause.class)
       .instanceProvider(new ModelTypeInstanceProvider<Output>() {
-        public Output newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Output newInstance(ModelTypeInstanceContext instanceContext) {
           return new OutputImpl(instanceContext);
         }
       });

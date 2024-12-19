@@ -30,10 +30,12 @@ public class SoapHttpRequestImpl extends AbstractHttpRequest<SoapHttpRequest, So
     super(connector);
   }
 
+  @Override
   public SoapHttpRequest soapAction(String value) {
     return header(HEADER_SOAP_ACTION, value);
   }
 
+  @Override
   public String getSoapAction() {
     return getHeader(HEADER_SOAP_ACTION);
   }

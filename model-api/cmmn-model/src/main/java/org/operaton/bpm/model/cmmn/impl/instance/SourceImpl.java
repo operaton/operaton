@@ -35,7 +35,8 @@ public class SourceImpl extends CmmnModelElementInstanceImpl implements Source {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Source.class, CMMN_ELEMENT_SOURCE)
       .namespaceUri(CMMN11_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Source>() {
-        public Source newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Source newInstance(ModelTypeInstanceContext instanceContext) {
           return new SourceImpl(instanceContext);
         }
       });

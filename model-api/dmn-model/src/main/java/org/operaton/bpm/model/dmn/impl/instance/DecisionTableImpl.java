@@ -56,46 +56,57 @@ public class DecisionTableImpl extends ExpressionImpl implements DecisionTable {
     super(instanceContext);
   }
 
+  @Override
   public HitPolicy getHitPolicy() {
     return hitPolicyAttribute.getValue(this);
   }
 
+  @Override
   public void setHitPolicy(HitPolicy hitPolicy) {
     hitPolicyAttribute.setValue(this, hitPolicy);
   }
 
+  @Override
   public BuiltinAggregator getAggregation() {
     return aggregationAttribute.getValue(this);
   }
 
+  @Override
   public void setAggregation(BuiltinAggregator aggregation) {
     aggregationAttribute.setValue(this, aggregation);
   }
 
+  @Override
   public DecisionTableOrientation getPreferredOrientation() {
     return preferredOrientationAttribute.getValue(this);
   }
 
+  @Override
   public void setPreferredOrientation(DecisionTableOrientation preferredOrientation) {
     preferredOrientationAttribute.setValue(this, preferredOrientation);
   }
 
+  @Override
   public String getOutputLabel() {
     return outputLabelAttribute.getValue(this);
   }
 
+  @Override
   public void setOutputLabel(String outputLabel) {
     outputLabelAttribute.setValue(this, outputLabel);
   }
 
+  @Override
   public Collection<Input> getInputs() {
     return inputCollection.get(this);
   }
 
+  @Override
   public Collection<Output> getOutputs() {
     return outputCollection.get(this);
   }
 
+  @Override
   public Collection<Rule> getRules() {
     return ruleCollection.get(this);
   }
@@ -105,7 +116,8 @@ public class DecisionTableImpl extends ExpressionImpl implements DecisionTable {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<DecisionTable>() {
-        public DecisionTable newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DecisionTable newInstance(ModelTypeInstanceContext instanceContext) {
           return new DecisionTableImpl(instanceContext);
         }
       });

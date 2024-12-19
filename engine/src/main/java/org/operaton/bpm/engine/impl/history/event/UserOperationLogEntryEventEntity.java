@@ -44,34 +44,42 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
   protected String externalTaskId;
   protected String annotation;
 
+  @Override
   public String getOperationId() {
     return operationId;
   }
 
+  @Override
   public String getOperationType() {
     return operationType;
   }
 
+  @Override
   public String getTaskId() {
     return taskId;
   }
 
+  @Override
   public String getUserId() {
     return userId;
   }
 
+  @Override
   public Date getTimestamp() {
     return timestamp;
   }
 
+  @Override
   public String getProperty() {
     return property;
   }
 
+  @Override
   public String getOrgValue() {
     return orgValue;
   }
 
+  @Override
   public String getNewValue() {
     return newValue;
   }
@@ -108,6 +116,7 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
     this.newValue = newValue;
   }
 
+  @Override
   public String getEntityType() {
     return entityType;
   }
@@ -116,6 +125,7 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
     this.entityType = entityType;
   }
 
+  @Override
   public String getJobId() {
     return jobId;
   }
@@ -124,6 +134,7 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
     this.jobId = jobId;
   }
 
+  @Override
   public String getJobDefinitionId() {
     return jobDefinitionId;
   }
@@ -132,6 +143,7 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
     this.jobDefinitionId = jobDefinitionId;
   }
 
+  @Override
   public String getDeploymentId() {
     return deploymentId;
   }
@@ -140,6 +152,7 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -148,6 +161,7 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getBatchId() {
     return batchId;
   }
@@ -156,6 +170,7 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
     this.batchId = batchId;
   }
 
+  @Override
   public String getCategory() {
     return category;
   }
@@ -164,14 +179,17 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
     this.category = category;
   }
 
+  @Override
   public String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
+  @Override
   public void setRootProcessInstanceId(String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }
 
+  @Override
   public String getExternalTaskId() {
     return externalTaskId;
   }
@@ -180,6 +198,7 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
     this.externalTaskId = externalTaskId;
   }
 
+  @Override
   public String getAnnotation() {
     return annotation;
   }

@@ -41,18 +41,22 @@ public class ImportedValuesImpl extends ImportImpl implements ImportedValues {
     super(instanceContext);
   }
 
+  @Override
   public String getExpressionLanguage() {
     return expressionLanguageAttribute.getValue(this);
   }
 
+  @Override
   public void setExpressionLanguage(String expressionLanguage) {
     expressionLanguageAttribute.setValue(this, expressionLanguage);
   }
 
+  @Override
   public ImportedElement getImportedElement() {
     return importedElementChild.getChild(this);
   }
 
+  @Override
   public void setImportedElement(ImportedElement importedElement) {
     importedElementChild.setChild(this, importedElement);
   }
@@ -62,7 +66,8 @@ public class ImportedValuesImpl extends ImportImpl implements ImportedValues {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Import.class)
       .instanceProvider(new ModelTypeInstanceProvider<ImportedValues>() {
-        public ImportedValues newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ImportedValues newInstance(ModelTypeInstanceContext instanceContext) {
           return new ImportedValuesImpl(instanceContext);
         }
       });

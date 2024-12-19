@@ -74,10 +74,12 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
     return new ModifiableBpmnModelInstance(modelInstance);
   }
 
+  @Override
   public Definitions getDefinitions() {
     return modelInstance.getDefinitions();
   }
 
+  @Override
   public void setDefinitions(Definitions definitions) {
     modelInstance.setDefinitions(definitions);
   }
@@ -87,18 +89,22 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
     return modelInstance.clone();
   }
 
+  @Override
   public DomDocument getDocument() {
     return modelInstance.getDocument();
   }
 
+  @Override
   public ModelElementInstance getDocumentElement() {
     return modelInstance.getDocumentElement();
   }
 
+  @Override
   public void setDocumentElement(ModelElementInstance documentElement) {
     modelInstance.setDocumentElement(documentElement);
   }
 
+  @Override
   public <T extends ModelElementInstance> T newInstance(Class<T> type) {
     return modelInstance.newInstance(type);
   }
@@ -108,6 +114,7 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
     return modelInstance.newInstance(aClass, s);
   }
 
+  @Override
   public <T extends ModelElementInstance> T newInstance(ModelElementType type) {
     return modelInstance.newInstance(type);
   }
@@ -117,18 +124,22 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
     return modelInstance.newInstance(modelElementType, s);
   }
 
+  @Override
   public Model getModel() {
     return modelInstance.getModel();
   }
 
+  @Override
   public <T extends ModelElementInstance> T getModelElementById(String id) {
     return modelInstance.getModelElementById(id);
   }
 
+  @Override
   public Collection<ModelElementInstance> getModelElementsByType(ModelElementType referencingType) {
     return modelInstance.getModelElementsByType(referencingType);
   }
 
+  @Override
   public <T extends ModelElementInstance> Collection<T> getModelElementsByType(Class<T> referencingClass) {
     return modelInstance.getModelElementsByType(referencingClass);
   }
@@ -314,6 +325,7 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
     return this;
   }
 
+  @Override
   public ValidationResults validate(Collection<ModelElementValidator<?>> validators) {
     return null;
   }

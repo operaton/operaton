@@ -76,15 +76,18 @@ public class ProcessStartingPointcutAdvisor implements PointcutAdvisor, Serializ
         return new ProcessStartingMethodInterceptor(this.processEngine);
     }
 
-    public Pointcut getPointcut() {
+  @Override
+  public Pointcut getPointcut() {
         return pointcut;
     }
 
-    public Advice getAdvice() {
+  @Override
+  public Advice getAdvice() {
         return advice;
     }
 
-    public boolean isPerInstance() {
+  @Override
+  public boolean isPerInstance() {
         return true;
     }
 

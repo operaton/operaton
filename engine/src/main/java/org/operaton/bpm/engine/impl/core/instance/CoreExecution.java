@@ -72,6 +72,7 @@ public abstract class CoreExecution extends AbstractVariableScope implements Bas
 
   // event handling ////////////////////////////////////////////////////////
 
+  @Override
   public String getEventName() {
     return eventName;
   }
@@ -107,6 +108,7 @@ public abstract class CoreExecution extends AbstractVariableScope implements Bas
 
   // getters / setters /////////////////////////////////////////////////
 
+  @Override
   public String getId() {
     return id;
   }

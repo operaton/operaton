@@ -34,10 +34,12 @@ public class EmbeddedProcessApplicationReferenceImpl implements ProcessApplicati
     this.application = application;
   }
 
+  @Override
   public String getName() {
     return application.getName();
   }
 
+  @Override
   public ProcessApplicationInterface getProcessApplication() throws ProcessApplicationUnavailableException {
     return application;
   }

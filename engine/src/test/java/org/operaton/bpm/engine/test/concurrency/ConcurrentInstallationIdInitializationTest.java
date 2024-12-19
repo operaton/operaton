@@ -82,6 +82,7 @@ public class ConcurrentInstallationIdInitializationTest extends ConcurrencyTestC
 
   protected static class ControllableInstallationIdInitializationCommand extends ControllableCommand<Void> {
 
+    @Override
     public Void execute(CommandContext commandContext) {
 
       monitor.sync(); // thread will block here until makeContinue() is called from main thread

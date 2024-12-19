@@ -27,6 +27,7 @@ import org.junit.Assert;
  */
 public class GetSerializedValueDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
 
     TypedValue typedValue = execution.getVariableTyped("varName", false);

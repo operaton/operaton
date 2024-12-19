@@ -33,6 +33,7 @@ public class DmnEvaluatedInputImpl implements DmnEvaluatedInput {
     this.inputVariable = input.getInputVariable();
   }
 
+  @Override
   public String getId() {
     return id;
   }
@@ -41,6 +42,7 @@ public class DmnEvaluatedInputImpl implements DmnEvaluatedInput {
     this.id = id;
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -49,6 +51,7 @@ public class DmnEvaluatedInputImpl implements DmnEvaluatedInput {
     this.name = name;
   }
 
+  @Override
   public String getInputVariable() {
     return inputVariable;
   }
@@ -57,6 +60,7 @@ public class DmnEvaluatedInputImpl implements DmnEvaluatedInput {
     this.inputVariable = inputVariable;
   }
 
+  @Override
   public TypedValue getValue() {
     return value;
   }

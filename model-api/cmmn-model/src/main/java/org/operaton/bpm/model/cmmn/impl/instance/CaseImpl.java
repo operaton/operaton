@@ -62,50 +62,62 @@ public class CaseImpl extends CmmnElementImpl implements Case {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public Collection<CaseRole> getCaseRoles() {
     return caseRolesCollection.get(this);
   }
 
+  @Override
   public CaseRoles getRoles() {
     return caseRolesChild.getChild(this);
   }
 
+  @Override
   public void setRoles(CaseRoles caseRole) {
     caseRolesChild.setChild(this, caseRole);
   }
 
+  @Override
   public Collection<InputCaseParameter> getInputs() {
     return inputCollection.get(this);
   }
 
+  @Override
   public Collection<OutputCaseParameter> getOutputs() {
     return outputCollection.get(this);
   }
 
+  @Override
   public CasePlanModel getCasePlanModel() {
     return casePlanModelChild.getChild(this);
   }
 
+  @Override
   public void setCasePlanModel(CasePlanModel casePlanModel) {
     casePlanModelChild.setChild(this, casePlanModel);
   }
 
+  @Override
   public CaseFileModel getCaseFileModel() {
     return caseFileModelChild.getChild(this);
   }
 
+  @Override
   public void setCaseFileModel(CaseFileModel caseFileModel) {
     caseFileModelChild.setChild(this, caseFileModel);
   }
 
+  @Override
   public Integer getOperatonHistoryTimeToLive() {
     String ttl = getOperatonHistoryTimeToLiveString();
     if (ttl != null) {
@@ -114,6 +126,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
     return null;
   }
 
+  @Override
   public void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
     setOperatonHistoryTimeToLiveString(String.valueOf(historyTimeToLive));
   }
@@ -123,7 +136,8 @@ public class CaseImpl extends CmmnElementImpl implements Case {
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
         .instanceProvider(new ModelTypeInstanceProvider<Case>() {
-          public Case newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Case newInstance(ModelTypeInstanceContext instanceContext) {
             return new CaseImpl(instanceContext);
           }
         });

@@ -53,6 +53,7 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
 
   @After
+  @Override
   public void tearDown() {
     disableAuthorization();
     List<Batch> batches = managementService.createBatchQuery().list();

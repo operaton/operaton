@@ -44,7 +44,8 @@ public class AssociationImpl extends ArtifactImpl implements Association {
       .namespaceUri(BPMN20_NS)
       .extendsType(Artifact.class)
       .instanceProvider(new ModelTypeInstanceProvider<Association>() {
-        public Association newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Association newInstance(ModelTypeInstanceContext instanceContext) {
           return new AssociationImpl(instanceContext);
         }
       });
@@ -70,30 +71,37 @@ public class AssociationImpl extends ArtifactImpl implements Association {
     super(instanceContext);
   }
 
+  @Override
   public BaseElement getSource() {
     return sourceRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSource(BaseElement source) {
     sourceRefAttribute.setReferenceTargetElement(this, source);
   }
 
+  @Override
   public BaseElement getTarget() {
     return targetRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setTarget(BaseElement target) {
     targetRefAttribute.setReferenceTargetElement(this, target);
   }
 
+  @Override
   public AssociationDirection getAssociationDirection() {
     return associationDirectionAttribute.getValue(this);
   }
 
+  @Override
   public void setAssociationDirection(AssociationDirection associationDirection) {
     associationDirectionAttribute.setValue(this, associationDirection);
   }
 
+  @Override
   public BpmnEdge getDiagramElement() {
     return (BpmnEdge) super.getDiagramElement();
   }

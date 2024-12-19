@@ -39,7 +39,8 @@ public class CasePlanModel extends StageImpl implements org.operaton.bpm.model.c
       .namespaceUri(CMMN11_NS)
       .extendsType(Stage.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<CasePlanModel>() {
-        public CasePlanModel newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public CasePlanModel newInstance(ModelTypeInstanceContext instanceContext) {
           return new CasePlanModel(instanceContext);
         }
       });

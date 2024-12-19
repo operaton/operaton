@@ -37,14 +37,17 @@ public class EmptyVariableContext implements VariableContext {
     // hidden
   }
 
+  @Override
   public TypedValue resolve(String variableName) {
     return null;
   }
 
+  @Override
   public boolean containsVariable(String variableName) {
     return false;
   }
 
+  @Override
   public Set<String> keySet() {
     return Collections.emptySet();
   }

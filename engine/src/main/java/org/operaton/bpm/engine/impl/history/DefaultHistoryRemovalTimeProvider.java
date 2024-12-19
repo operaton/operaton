@@ -31,6 +31,7 @@ import java.util.Date;
  */
 public class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProvider {
 
+  @Override
   public Date calculateRemovalTime(HistoricProcessInstanceEventEntity historicRootProcessInstance, ProcessDefinition processDefinition) {
 
     Integer historyTimeToLive = processDefinition.getHistoryTimeToLive();
@@ -50,6 +51,7 @@ public class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProv
     return null;
   }
 
+  @Override
   public Date calculateRemovalTime(HistoricDecisionInstanceEntity historicRootDecisionInstance, DecisionDefinition decisionDefinition) {
 
     Integer historyTimeToLive = decisionDefinition.getHistoryTimeToLive();
@@ -62,6 +64,7 @@ public class DefaultHistoryRemovalTimeProvider implements HistoryRemovalTimeProv
     return null;
   }
 
+  @Override
   public Date calculateRemovalTime(HistoricBatchEntity historicBatch) {
     String batchOperation = historicBatch.getType();
     if (batchOperation != null) {

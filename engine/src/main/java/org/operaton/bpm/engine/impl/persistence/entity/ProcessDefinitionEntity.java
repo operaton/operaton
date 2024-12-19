@@ -214,6 +214,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   // previous process definition //////////////////////////////////////////////
 
+  @Override
   public ProcessDefinitionEntity getPreviousDefinition() {
     ProcessDefinitionEntity previousProcessDefinition = null;
 
@@ -287,6 +288,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   public Object getPersistentState() {
     Map<String, Object> persistentState = new HashMap<String, Object>();
     persistentState.put("suspensionState", this.suspensionState);
@@ -294,10 +296,12 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     return persistentState;
   }
 
+  @Override
   public String getKey() {
     return key;
   }
 
+  @Override
   public void setKey(String key) {
     this.key = key;
   }
@@ -312,14 +316,17 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     return deploymentId;
   }
 
+  @Override
   public void setDeploymentId(String deploymentId) {
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public int getVersion() {
     return version;
   }
 
+  @Override
   public void setVersion(int version) {
     this.version = version;
     firstVersion = (this.version == 1);
@@ -330,10 +337,12 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     this.id = id;
   }
 
+  @Override
   public String getResourceName() {
     return resourceName;
   }
 
+  @Override
   public void setResourceName(String resourceName) {
     this.resourceName = resourceName;
   }
@@ -370,10 +379,12 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     this.taskDefinitions = taskDefinitions;
   }
 
+  @Override
   public String getCategory() {
     return category;
   }
 
+  @Override
   public void setCategory(String category) {
     this.category = category;
   }
@@ -383,10 +394,12 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     return diagramResourceName;
   }
 
+  @Override
   public void setDiagramResourceName(String diagramResourceName) {
     this.diagramResourceName = diagramResourceName;
   }
 
+  @Override
   public boolean hasStartFormKey() {
     return hasStartFormKey;
   }
@@ -411,13 +424,17 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     this.isGraphicalNotationDefined = isGraphicalNotationDefined;
   }
 
+  @Override
   public int getRevision() {
     return revision;
   }
+
+  @Override
   public void setRevision(int revision) {
     this.revision = revision;
   }
 
+  @Override
   public int getRevisionNext() {
     return revision+1;
   }
@@ -430,6 +447,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     this.suspensionState = suspensionState;
   }
 
+  @Override
   public boolean isSuspended() {
     return suspensionState == SuspensionState.SUSPENDED.getStateCode();
   }
@@ -450,14 +468,17 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     candidateStarterGroupIdExpressions.add(groupId);
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
 
+  @Override
   public void setTenantId(String tenantId) {
     this.tenantId = tenantId;
   }
 
+  @Override
   public String getVersionTag() {
     return versionTag;
   }
@@ -466,14 +487,17 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     this.versionTag = versionTag;
   }
 
+  @Override
   public Integer getHistoryTimeToLive() {
     return historyTimeToLive;
   }
 
+  @Override
   public void setHistoryTimeToLive(Integer historyTimeToLive) {
     this.historyTimeToLive = historyTimeToLive;
   }
 
+  @Override
   public boolean isStartableInTasklist() {
     return isStartableInTasklist;
   }

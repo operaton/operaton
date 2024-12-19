@@ -55,6 +55,7 @@ public interface DmnDecisionTableEvaluationEvent extends DmnDecisionLogicEvaluat
   /**
    * @return the number of executed decision elements during the evaluation
    */
+  @Override
   long getExecutedDecisionElements();
 
 }

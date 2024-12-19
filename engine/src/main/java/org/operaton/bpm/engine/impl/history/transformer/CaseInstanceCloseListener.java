@@ -30,6 +30,7 @@ public class CaseInstanceCloseListener extends HistoryCaseExecutionListener {
     super(historyEventProducer);
   }
 
+  @Override
   protected HistoryEvent createHistoryEvent(DelegateCaseExecution caseExecution) {
     ensureHistoryLevelInitialized();
     if (historyLevel.isHistoryEventProduced(HistoryEventTypes.CASE_INSTANCE_CLOSE, caseExecution)) {

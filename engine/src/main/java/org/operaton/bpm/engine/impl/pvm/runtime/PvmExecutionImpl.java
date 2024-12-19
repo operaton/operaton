@@ -1118,6 +1118,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   public abstract List<? extends PvmExecutionImpl> getExecutionsAsCopy();
 
+  @Override
   public List<? extends PvmExecutionImpl> getNonEventScopeExecutions() {
     List<? extends PvmExecutionImpl> children = getExecutions();
     List<PvmExecutionImpl> result = new ArrayList<>();
@@ -1388,6 +1389,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     }
   }
 
+  @Override
   public boolean hasChildren() {
     return !getExecutions().isEmpty();
   }
@@ -1623,7 +1625,8 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     new ExecutionWalker(this)
       .addPreVisitor(scopeExecutionCollector)
       .walkWhile(new ReferenceWalker.WalkCondition<PvmExecutionImpl>() {
-        public boolean isFulfilled(PvmExecutionImpl element) {
+      @Override
+      public boolean isFulfilled(PvmExecutionImpl element) {
           return element == null || mapping.containsValue(element);
         }
       });
@@ -1634,7 +1637,8 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     new FlowScopeWalker(currentScope)
       .addPreVisitor(scopeCollector)
       .walkWhile(new ReferenceWalker.WalkCondition<ScopeImpl>() {
-        public boolean isFulfilled(ScopeImpl element) {
+      @Override
+      public boolean isFulfilled(ScopeImpl element) {
           return element == null || mapping.containsKey(element);
         }
       });
@@ -1646,6 +1650,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     ScopeImpl topMostScope = scopes.get(scopes.size() - 1);
     new FlowScopeWalker(topMostScope.getFlowScope())
       .addPreVisitor(new TreeVisitor<ScopeImpl>() {
+        @Override
         public void visit(ScopeImpl obj) {
           scopes.add(obj);
           PvmExecutionImpl priorMappingExecution = mapping.get(obj);
@@ -1700,6 +1705,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setVariable(String variableName, Object value, String targetActivityId) {
     String activityId = getActivityId();
     if (activityId != null && activityId.equals(targetActivityId)) {
@@ -1828,6 +1834,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     this.isActive = isActive;
   }
 
+  @Override
   public void setEnded(boolean isEnded) {
     this.isEnded = isEnded;
   }
@@ -2276,6 +2283,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     return createIncident(incidentType, configuration, null);
   }
 
+  @Override
   public Incident createIncident(String incidentType, String configuration, String message) {
     IncidentContext incidentContext = createIncidentContext(configuration);
 

@@ -33,27 +33,33 @@ import org.operaton.bpm.engine.impl.cmd.SaveAuthorizationCmd;
  *
  */
 public class AuthorizationServiceImpl extends ServiceImpl implements AuthorizationService {
-  
+
+  @Override
   public AuthorizationQuery createAuthorizationQuery() {
     return new AuthorizationQueryImpl(commandExecutor);
   }
-  
+
+  @Override
   public Authorization createNewAuthorization(int type) {
     return commandExecutor.execute(new CreateAuthorizationCommand(type));
   }
-  
+
+  @Override
   public Authorization saveAuthorization(Authorization authorization) {
     return commandExecutor.execute(new SaveAuthorizationCmd(authorization));
   }
-  
+
+  @Override
   public void deleteAuthorization(String authorizationId) {
     commandExecutor.execute(new DeleteAuthorizationCmd(authorizationId));    
   }
 
+  @Override
   public boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource) {
     return commandExecutor.execute(new AuthorizationCheckCmd(userId, groupIds, permission, resource, null));
   }
 
+  @Override
   public boolean isUserAuthorized(String userId, List<String> groupIds, Permission permission, Resource resource, String resourceId) {
     return commandExecutor.execute(new AuthorizationCheckCmd(userId, groupIds, permission, resource, resourceId));
   }

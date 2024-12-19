@@ -28,10 +28,12 @@ import org.operaton.bpm.container.impl.spi.ServiceTypes;
  */
 public class StopManagedThreadPoolStep extends DeploymentOperationStep {
 
+  @Override
   public String getName() {
     return "Stop managed thread pool";
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
     PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
     serviceContainer.stopService(ServiceTypes.BPM_PLATFORM, RuntimeContainerDelegateImpl.SERVICE_NAME_EXECUTOR);

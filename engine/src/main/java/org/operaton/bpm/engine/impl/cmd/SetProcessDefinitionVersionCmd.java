@@ -92,6 +92,7 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
     this.processDefinitionVersion = processDefinitionVersion;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
 

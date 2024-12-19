@@ -25,9 +25,11 @@ public interface DelegateCaseVariableInstance extends DelegateVariableInstance<D
 
   /** The event name, which caused the listener to be notified.
    * Valid values are the constants defined in {@link CaseVariableListener}.*/
+  @Override
   String getEventName();
 
   /** The case execution in which context the variable was created/updated/deleted. */
+  @Override
   DelegateCaseExecution getSourceExecution();
 
 }

@@ -528,7 +528,8 @@ public class IncidentTest extends PluggableProcessEngineTest {
     processEngineConfiguration
       .getCommandExecutorTxRequired()
       .execute(new Command<Void>() {
-        public Void execute(CommandContext commandContext) {
+      @Override
+      public Void execute(CommandContext commandContext) {
           jobEntity.setRetries(-100);
           return null;
         }

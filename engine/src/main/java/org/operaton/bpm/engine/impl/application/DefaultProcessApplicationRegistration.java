@@ -40,10 +40,12 @@ public class DefaultProcessApplicationRegistration implements ProcessApplication
     this.processEngineName = processEnginenName;
   }
 
+  @Override
   public Set<String> getDeploymentIds() {
     return deploymentIds;
   }
 
+  @Override
   public String getProcessEngineName() {
     return processEngineName;
   }

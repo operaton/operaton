@@ -41,18 +41,22 @@ public class DocumentationImpl extends CmmnModelElementInstanceImpl implements D
     super(context);
   }
 
+  @Override
   public String getId() {
     return idAttribute.getValue(this);
   }
 
+  @Override
   public void setId(String id) {
     idAttribute.setValue(this, id);
   }
 
+  @Override
   public String getTextFormat() {
     return textFormatAttribute.getValue(this);
   }
 
+  @Override
   public void setTextFormat(String textFormat) {
     textFormatAttribute.setValue(this, textFormat);
   }
@@ -61,7 +65,8 @@ public class DocumentationImpl extends CmmnModelElementInstanceImpl implements D
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Documentation.class, CMMN_ELEMENT_DOCUMENTATION)
       .namespaceUri(CMMN11_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Documentation>() {
-        public Documentation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Documentation newInstance(ModelTypeInstanceContext instanceContext) {
           return new DocumentationImpl(instanceContext);
         }
       });

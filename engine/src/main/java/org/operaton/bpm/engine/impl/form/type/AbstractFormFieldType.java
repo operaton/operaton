@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public abstract class AbstractFormFieldType implements FormType {
 
+  @Override
   public abstract String getName();
 
   public abstract TypedValue convertToFormValue(TypedValue propertyValue);
@@ -38,6 +39,7 @@ public abstract class AbstractFormFieldType implements FormType {
   @Deprecated
   public abstract String convertModelValueToFormValue(Object modelValue);
 
+  @Override
   public Object getInformation(String key) {
     return null;
   }

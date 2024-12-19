@@ -28,12 +28,14 @@ public abstract class PrimitiveValueMapper<T extends PrimitiveValue<?>> extends 
     super(variableType);
   }
 
+  @Override
   public T readValue(TypedValueField typedValueField, boolean deserializeObjectValue) {
     return readValue(typedValueField);
   }
 
   public abstract T readValue(TypedValueField typedValueField);
 
+  @Override
   public PrimitiveValueType getType() {
     return (PrimitiveValueType) super.getType();
   }

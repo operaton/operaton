@@ -38,15 +38,18 @@ public class ObjectVariableBuilderImpl implements ObjectValueBuilder {
     variableValue = (ObjectValueImpl) value;
   }
 
+  @Override
   public ObjectValue create() {
     return variableValue;
   }
 
+  @Override
   public ObjectValueBuilder serializationDataFormat(String dataFormatName) {
     variableValue.setSerializationDataFormat(dataFormatName);
     return this;
   }
 
+  @Override
   public ObjectValueBuilder serializationDataFormat(SerializationDataFormat dataFormat) {
     return serializationDataFormat(dataFormat.getName());
   }

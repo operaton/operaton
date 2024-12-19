@@ -53,11 +53,13 @@ public class UpdateExternalTaskRetriesBuilderImpl implements UpdateExternalTaskR
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public UpdateExternalTaskRetriesBuilder externalTaskIds(List<String> externalTaskIds) {
     this.externalTaskIds = externalTaskIds;
     return this;
   }
 
+  @Override
   public UpdateExternalTaskRetriesBuilder externalTaskIds(String... externalTaskIds) {
     if (externalTaskIds == null) {
       this.externalTaskIds = Collections.emptyList();
@@ -68,11 +70,13 @@ public class UpdateExternalTaskRetriesBuilderImpl implements UpdateExternalTaskR
     return this;
   }
 
+  @Override
   public UpdateExternalTaskRetriesBuilder processInstanceIds(List<String> processInstanceIds) {
     this.processInstanceIds = processInstanceIds;
     return this;
   }
 
+  @Override
   public UpdateExternalTaskRetriesBuilder processInstanceIds(String... processInstanceIds) {
     if (processInstanceIds == null) {
       this.processInstanceIds = Collections.emptyList();
@@ -83,21 +87,25 @@ public class UpdateExternalTaskRetriesBuilderImpl implements UpdateExternalTaskR
     return this;
   }
 
+  @Override
   public UpdateExternalTaskRetriesBuilder externalTaskQuery(ExternalTaskQuery externalTaskQuery) {
     this.externalTaskQuery = externalTaskQuery;
     return this;
   }
 
+  @Override
   public UpdateExternalTaskRetriesBuilder processInstanceQuery(ProcessInstanceQuery processInstanceQuery) {
     this.processInstanceQuery = processInstanceQuery;
     return this;
   }
 
+  @Override
   public UpdateExternalTaskRetriesBuilder historicProcessInstanceQuery(HistoricProcessInstanceQuery historicProcessInstanceQuery) {
     this.historicProcessInstanceQuery = historicProcessInstanceQuery;
     return this;
   }
 
+  @Override
   public void set(int retries) {
     this.retries = retries;
     commandExecutor.execute(new SetExternalTasksRetriesCmd(this));

@@ -72,23 +72,27 @@ public class CaseInstanceBuilderImpl implements CaseInstanceBuilder {
     this.caseDefinitionId = caseDefinitionId;
   }
 
+  @Override
   public CaseInstanceBuilder businessKey(String businessKey) {
     this.businessKey = businessKey;
     return this;
   }
 
+  @Override
   public CaseInstanceBuilder caseDefinitionTenantId(String tenantId) {
     this.caseDefinitionTenantId = tenantId;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public CaseInstanceBuilder caseDefinitionWithoutTenantId() {
     this.caseDefinitionTenantId = null;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public CaseInstanceBuilder setVariable(String variableName, Object variableValue) {
     ensureNotNull(NotValidException.class, "variableName", variableName);
     if (variables == null) {
@@ -98,6 +102,7 @@ public class CaseInstanceBuilderImpl implements CaseInstanceBuilder {
     return this;
   }
 
+  @Override
   public CaseInstanceBuilder setVariables(Map<String, Object> variables) {
     if (variables != null) {
       if (this.variables == null) {
@@ -110,6 +115,7 @@ public class CaseInstanceBuilderImpl implements CaseInstanceBuilder {
     return this;
   }
 
+  @Override
   public CaseInstance create() {
     if (isTenantIdSet && caseDefinitionId != null) {
       throw LOG.exceptionCreateCaseInstanceByIdAndTenantId();

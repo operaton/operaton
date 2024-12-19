@@ -47,16 +47,19 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
     this.commandExecutor = commandExecutor;
   }
 
+  @Override
   public SetRemovalTimeToHistoricBatchesBuilder byQuery(HistoricBatchQuery query) {
     this.query = query;
     return this;
   }
 
+  @Override
   public SetRemovalTimeToHistoricBatchesBuilder byIds(String... ids) {
     this.ids = ids != null ? Arrays.asList(ids) : null;
     return this;
   }
 
+  @Override
   public SetRemovalTimeToHistoricBatchesBuilder absoluteRemovalTime(Date removalTime) {
     ensureNull(BadUserRequestException.class, "The removal time modes are mutually exclusive","mode", mode);
 
@@ -65,6 +68,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
     return this;
   }
 
+  @Override
   public SetRemovalTimeToHistoricBatchesBuilder calculatedRemovalTime() {
     ensureNull(BadUserRequestException.class, "The removal time modes are mutually exclusive","mode", mode);
 
@@ -72,6 +76,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
     return this;
   }
 
+  @Override
   public SetRemovalTimeToHistoricBatchesBuilder clearedRemovalTime() {
     ensureNull(BadUserRequestException.class, "The removal time modes are mutually exclusive","mode", mode);
 
@@ -79,6 +84,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
     return this;
   }
 
+  @Override
   public Batch executeAsync() {
     return commandExecutor.execute(new SetRemovalTimeToHistoricBatchesCmd(this));
   }

@@ -42,6 +42,7 @@ public class IncidentResourceImpl implements IncidentResource {
     this.objectMapper = objectMapper;
   }
 
+  @Override
   public IncidentDto getIncident() {
     Incident incident = engine.getRuntimeService().createIncidentQuery().incidentId(incidentId).singleResult();
     if (incident == null) {
@@ -50,6 +51,7 @@ public class IncidentResourceImpl implements IncidentResource {
     return IncidentDto.fromIncident(incident);
   }
 
+  @Override
   public void resolveIncident() {
     try {
       engine.getRuntimeService().resolveIncident(incidentId);

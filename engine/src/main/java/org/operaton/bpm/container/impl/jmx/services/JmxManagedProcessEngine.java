@@ -42,14 +42,17 @@ public class JmxManagedProcessEngine implements PlatformService<ProcessEngine>, 
     this.processEngine = processEngine;
   }
 
+  @Override
   public void start(PlatformServiceContainer contanier) {
     // this one has no lifecycle support
   }
 
+  @Override
   public void stop(PlatformServiceContainer container) {
     // this one has no lifecycle support
   }
 
+  @Override
   public String getName() {
     return processEngine.getName();
   }
@@ -58,25 +61,30 @@ public class JmxManagedProcessEngine implements PlatformService<ProcessEngine>, 
     return processEngine;
   }
 
+  @Override
   public ProcessEngine getValue() {
     return processEngine;
   }
 
+  @Override
   public Set<String> getRegisteredDeployments() {
     ManagementService managementService = processEngine.getManagementService();
     return managementService.getRegisteredDeployments();
   }
 
+  @Override
   public void registerDeployment(String deploymentId) {
     ManagementService managementService = processEngine.getManagementService();
     managementService.registerDeploymentForJobExecutor(deploymentId);
   }
 
+  @Override
   public void unregisterDeployment(String deploymentId) {
     ManagementService managementService = processEngine.getManagementService();
     managementService.unregisterDeploymentForJobExecutor(deploymentId);
   }
 
+  @Override
   public void reportDbMetrics() {
     ManagementService managementService = processEngine.getManagementService();
     managementService.reportDbMetricsNow();

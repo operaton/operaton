@@ -74,100 +74,123 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     super(instanceContext);
   }
 
+  @Override
   public Role getPerformer() {
     return performerRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setPerformer(Role performer) {
     performerRefAttribute.setReferenceTargetElement(this, performer);
   }
 
+  @Override
   public Collection<PlanningTable> getPlanningTables() {
     return planningTableCollection.get(this);
   }
 
+  @Override
   public PlanningTable getPlanningTable() {
     return planningTableChild.getChild(this);
   }
 
+  @Override
   public void setPlanningTable(PlanningTable planningTable) {
     planningTableChild.setChild(this, planningTable);
   }
 
   /** operaton extensions */
 
+  @Override
   public String getOperatonAssignee() {
     return operatonAssigneeAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonAssignee(String operatonAssignee) {
     operatonAssigneeAttribute.setValue(this, operatonAssignee);
   }
 
+  @Override
   public String getOperatonCandidateGroups() {
     return operatonCandidateGroupsAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCandidateGroups(String operatonCandidateGroups) {
     operatonCandidateGroupsAttribute.setValue(this, operatonCandidateGroups);
   }
 
+  @Override
   public List<String> getOperatonCandidateGroupsList() {
     String candidateGroups = operatonCandidateGroupsAttribute.getValue(this);
     return StringUtil.splitCommaSeparatedList(candidateGroups);
   }
 
+  @Override
   public void setOperatonCandidateGroupsList(List<String> operatonCandidateGroupsList) {
     String candidateGroups = StringUtil.joinCommaSeparatedList(operatonCandidateGroupsList);
     operatonCandidateGroupsAttribute.setValue(this, candidateGroups);
   }
 
+  @Override
   public String getOperatonCandidateUsers() {
     return operatonCandidateUsersAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonCandidateUsers(String operatonCandidateUsers) {
     operatonCandidateUsersAttribute.setValue(this, operatonCandidateUsers);
   }
 
+  @Override
   public List<String> getOperatonCandidateUsersList() {
     String candidateUsers = operatonCandidateUsersAttribute.getValue(this);
     return StringUtil.splitCommaSeparatedList(candidateUsers);
   }
 
+  @Override
   public void setOperatonCandidateUsersList(List<String> operatonCandidateUsersList) {
     String candidateUsers = StringUtil.joinCommaSeparatedList(operatonCandidateUsersList);
     operatonCandidateUsersAttribute.setValue(this, candidateUsers);
   }
 
+  @Override
   public String getOperatonDueDate() {
     return operatonDueDateAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonDueDate(String operatonDueDate) {
     operatonDueDateAttribute.setValue(this, operatonDueDate);
   }
 
+  @Override
   public String getOperatonFollowUpDate() {
     return operatonFollowUpDateAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFollowUpDate(String operatonFollowUpDate) {
     operatonFollowUpDateAttribute.setValue(this, operatonFollowUpDate);
   }
 
+  @Override
   public String getOperatonFormKey() {
     return operatonFormKeyAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonFormKey(String operatonFormKey) {
     operatonFormKeyAttribute.setValue(this, operatonFormKey);
   }
 
+  @Override
   public String getOperatonPriority() {
     return operatonPriorityAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonPriority(String operatonPriority) {
     operatonPriorityAttribute.setValue(this, operatonPriority);
   }
@@ -177,7 +200,8 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
         .namespaceUri(CMMN11_NS)
         .extendsType(Task.class)
         .instanceProvider(new ModelTypeInstanceProvider<HumanTask>() {
-          public HumanTask newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public HumanTask newInstance(ModelTypeInstanceContext instanceContext) {
             return new HumanTaskImpl(instanceContext);
           }
         });

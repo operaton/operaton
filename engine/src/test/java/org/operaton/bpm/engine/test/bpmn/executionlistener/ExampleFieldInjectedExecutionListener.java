@@ -31,6 +31,7 @@ public class ExampleFieldInjectedExecutionListener implements ExecutionListener 
 
   private Expression dynamicValue;
 
+  @Override
   public void notify(DelegateExecution execution) throws Exception {
     execution.setVariable("var", fixedValue.getValue(execution).toString() + dynamicValue.getValue(execution).toString());
   }

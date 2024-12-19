@@ -211,6 +211,7 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
       this.jobId = jobId;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
       syncBeforeFlush.set(true);
 

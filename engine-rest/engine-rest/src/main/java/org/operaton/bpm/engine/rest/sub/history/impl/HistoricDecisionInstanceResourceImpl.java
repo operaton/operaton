@@ -36,6 +36,7 @@ public class HistoricDecisionInstanceResourceImpl implements HistoricDecisionIns
     this.decisionInstanceId = decisionInstanceId;
   }
 
+  @Override
   public HistoricDecisionInstanceDto getHistoricDecisionInstance(Boolean includeInputs, Boolean includeOutputs, Boolean disableBinaryFetching, Boolean disableCustomObjectDeserialization) {
     HistoryService historyService = engine.getHistoryService();
 

@@ -40,6 +40,7 @@ public class CompleteTaskStep extends ProcessEngineAwareStep {
     this.processVariables = processVariables;
   }
 
+  @Override
   public void execute(PerfTestRunContext context) {
     String taskId = context.getVariable(taskIdKey);
     taskService.complete(taskId, processVariables);

@@ -42,6 +42,7 @@ public class CompleteCaseExecutionCmd extends StateTransitionCaseExecutionCmd {
     super(caseExecutionId, variables, variablesLocal, variableDeletions, variableLocalDeletions);
   }
 
+  @Override
   protected void performStateTransition(CommandContext commandContext, CaseExecutionEntity caseExecution) {
     TaskEntity task = caseExecution.getTask();
     if (task != null) {

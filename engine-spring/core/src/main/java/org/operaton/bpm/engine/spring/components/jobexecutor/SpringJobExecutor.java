@@ -54,7 +54,8 @@ public class SpringJobExecutor extends JobExecutor {
 		this.taskExecutor = taskExecutor;
 	}
 
-	public void executeJobs(List<String> jobIds, ProcessEngineImpl processEngine) {
+  @Override
+  public void executeJobs(List<String> jobIds, ProcessEngineImpl processEngine) {
 	  try {
       taskExecutor.execute(getExecuteJobsRunnable(jobIds, processEngine));
     } catch (RejectedExecutionException e) {

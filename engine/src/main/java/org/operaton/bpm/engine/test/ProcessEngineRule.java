@@ -260,6 +260,7 @@ public class ProcessEngineRule extends TestWatcher implements ProcessEngineServi
     this.configurationResource = configurationResource;
   }
 
+  @Override
   public ProcessEngine getProcessEngine() {
     return processEngine;
   }

@@ -39,6 +39,7 @@ public class BpmPlatformXmlImpl implements BpmPlatformXml {
     this.processEngines = processEngines;
   }
 
+  @Override
   public List<ProcessEngineXml> getProcessEngines() {
     return processEngines;
   }
@@ -47,6 +48,7 @@ public class BpmPlatformXmlImpl implements BpmPlatformXml {
     this.processEngines = processEngines;
   }
 
+  @Override
   public JobExecutorXml getJobExecutor() {
     return jobExecutor;
   }

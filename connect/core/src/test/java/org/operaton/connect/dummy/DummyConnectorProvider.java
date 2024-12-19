@@ -20,10 +20,12 @@ import org.operaton.connect.spi.ConnectorProvider;
 
 public class DummyConnectorProvider implements ConnectorProvider {
 
+  @Override
   public String getConnectorId() {
     return DummyConnector.ID;
   }
 
+  @Override
   public DummyConnector createConnectorInstance() {
     return new DummyConnector(DummyConnector.ID);
   }

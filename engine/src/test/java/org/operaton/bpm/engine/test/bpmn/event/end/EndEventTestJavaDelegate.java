@@ -25,7 +25,8 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 public class EndEventTestJavaDelegate implements JavaDelegate {
   
   public static int timesCalled = 0;
-  
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     timesCalled++;
     Thread.sleep(3000L);

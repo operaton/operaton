@@ -41,6 +41,7 @@ public class HistoricCaseActivityStatisticsQueryImpl extends AbstractQuery<Histo
     this.caseDefinitionId = caseDefinitionId;
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return
@@ -49,6 +50,7 @@ public class HistoricCaseActivityStatisticsQueryImpl extends AbstractQuery<Histo
         .getHistoricStatisticsCountGroupedByCaseActivity(this);
   }
 
+  @Override
   public List<HistoricCaseActivityStatistics> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     return
@@ -57,6 +59,7 @@ public class HistoricCaseActivityStatisticsQueryImpl extends AbstractQuery<Histo
         .getHistoricStatisticsGroupedByCaseActivity(this, page);
   }
 
+  @Override
   protected void checkQueryOk() {
     super.checkQueryOk();
     ensureNotNull("No valid case definition id supplied", "caseDefinitionId", caseDefinitionId);

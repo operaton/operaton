@@ -39,7 +39,8 @@ public class WaypointImpl extends PointImpl implements Waypoint {
       .namespaceUri(DI_NS)
       .extendsType(Point.class)
       .instanceProvider(new ModelTypeInstanceProvider<Waypoint>() {
-        public Waypoint newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Waypoint newInstance(ModelTypeInstanceContext instanceContext) {
           return new WaypointImpl(instanceContext);
         }
       });

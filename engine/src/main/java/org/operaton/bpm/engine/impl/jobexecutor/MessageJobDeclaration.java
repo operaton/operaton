@@ -60,6 +60,7 @@ public class MessageJobDeclaration extends JobDeclaration<AtomicOperationInvocat
     return false;
   }
 
+  @Override
   protected ExecutionEntity resolveExecution(AtomicOperationInvocation context) {
     return context.getExecution();
   }

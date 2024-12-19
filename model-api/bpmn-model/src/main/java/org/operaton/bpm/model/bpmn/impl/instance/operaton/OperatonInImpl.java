@@ -44,7 +44,8 @@ public class OperatonInImpl extends BpmnModelElementInstanceImpl implements Oper
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonIn.class, OPERATON_ELEMENT_IN)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonIn>() {
-        public OperatonIn newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonIn newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonInImpl(instanceContext);
         }
       });
@@ -80,50 +81,62 @@ public class OperatonInImpl extends BpmnModelElementInstanceImpl implements Oper
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonSource() {
     return operatonSourceAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonSource(String operatonSource) {
     operatonSourceAttribute.setValue(this, operatonSource);
   }
 
+  @Override
   public String getOperatonSourceExpression() {
     return operatonSourceExpressionAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonSourceExpression(String operatonSourceExpression) {
     operatonSourceExpressionAttribute.setValue(this, operatonSourceExpression);
   }
 
+  @Override
   public String getOperatonVariables() {
     return operatonVariablesAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonVariables(String operatonVariables) {
     operatonVariablesAttribute.setValue(this, operatonVariables);
   }
 
+  @Override
   public String getOperatonTarget() {
     return operatonTargetAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonTarget(String operatonTarget) {
     operatonTargetAttribute.setValue(this, operatonTarget);
   }
 
+  @Override
   public String getOperatonBusinessKey() {
     return operatonBusinessKeyAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonBusinessKey(String operatonBusinessKey) {
     operatonBusinessKeyAttribute.setValue(this, operatonBusinessKey);
   }
 
+  @Override
   public boolean getOperatonLocal() {
     return operatonLocalAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonLocal(boolean operatonLocal) {
     operatonLocalAttribute.setValue(this, operatonLocal);
   }

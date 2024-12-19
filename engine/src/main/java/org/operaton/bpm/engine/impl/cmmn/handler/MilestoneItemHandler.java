@@ -29,18 +29,22 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  */
 public class MilestoneItemHandler extends ItemHandler {
 
+  @Override
   protected List<String> getStandardEvents(CmmnElement element) {
     return EVENT_LISTENER_OR_MILESTONE_EVENTS;
   }
 
+  @Override
   protected CmmnActivityBehavior getActivityBehavior() {
     return new MilestoneActivityBehavior();
   }
 
+  @Override
   protected void initializeManualActivationRule(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     // manual activation rule is not applicable on milestones
   }
 
+  @Override
   protected void initializeExitCriterias(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     // exit criteria is not applicable on milestones
   }

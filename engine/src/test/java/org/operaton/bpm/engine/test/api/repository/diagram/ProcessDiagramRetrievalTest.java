@@ -333,6 +333,7 @@ public class ProcessDiagramRetrievalTest {
    */
   public static class DiagramNodeComparator implements Comparator<DiagramNode> {
 
+    @Override
     public int compare(DiagramNode o1, DiagramNode o2) {
       if(o1.getId() == null)  {
         return 0;

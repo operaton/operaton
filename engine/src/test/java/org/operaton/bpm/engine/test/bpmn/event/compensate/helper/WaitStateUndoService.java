@@ -29,6 +29,7 @@ public class WaitStateUndoService extends AbstractBpmnActivityBehavior implement
 
   private Expression counterName;
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     String variableName = (String) counterName.getValue(execution);
     Object variable = execution.getVariable(variableName);
@@ -40,6 +41,7 @@ public class WaitStateUndoService extends AbstractBpmnActivityBehavior implement
     }
   }
 
+  @Override
   public void signal(ActivityExecution execution, String signalEvent, Object signalData) throws Exception {
     leave(execution);
   }

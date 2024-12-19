@@ -27,6 +27,7 @@ import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
  */
 public interface Gateway extends FlowNode {
 
+  @Override
   @SuppressWarnings("rawtypes")
   AbstractGatewayBuilder builder();
 
@@ -34,6 +35,7 @@ public interface Gateway extends FlowNode {
 
   void setGatewayDirection(GatewayDirection gatewayDirection);
 
+  @Override
   BpmnShape getDiagramElement();
 
 }

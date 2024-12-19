@@ -169,7 +169,8 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
   protected void clearMeterLog() {
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Object>() {
-        public Object execute(CommandContext commandContext) {
+      @Override
+      public Object execute(CommandContext commandContext) {
           commandContext.getMeterLogManager().deleteAll();
 
           return null;
@@ -180,6 +181,7 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Object>() {
+      @Override
       public Object execute(CommandContext commandContext) {
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
         return null;
@@ -190,7 +192,8 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
   protected void clearJob(final String jobId) {
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Object>() {
-        public Object execute(CommandContext commandContext) {
+      @Override
+      public Object execute(CommandContext commandContext) {
           JobEntity job = commandContext.getJobManager().findJobById(jobId);
           if (job != null) {
             commandContext.getJobManager().delete(job);

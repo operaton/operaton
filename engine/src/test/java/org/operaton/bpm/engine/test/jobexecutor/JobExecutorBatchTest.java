@@ -169,6 +169,7 @@ public class JobExecutorBatchTest {
       // do nothing
     }
 
+    @Override
     public void executeJobs(List<String> jobIds, ProcessEngineImpl processEngine) {
       // do nothing
     }
@@ -178,6 +179,7 @@ public class JobExecutorBatchTest {
       record = true;
     }
 
+    @Override
     public void jobWasAdded() {
       if (record) {
         jobsAdded++;

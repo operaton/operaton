@@ -163,6 +163,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     final List<Job> jobs = historyService.findHistoryCleanupJobs();
     for (final Job job: jobs) {
       processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+        @Override
         public Void execute(CommandContext commandContext) {
             commandContext.getJobManager().deleteJob((JobEntity) job);
           return null;

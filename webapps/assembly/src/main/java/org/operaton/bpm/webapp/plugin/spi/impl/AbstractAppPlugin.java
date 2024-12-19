@@ -43,14 +43,17 @@ public abstract class AbstractAppPlugin implements AppPlugin {
    *
    * @return the directory providing the plugins client side resources
    */
+  @Override
   public String getAssetDirectory() {
     return String.format("plugin-webapp/%s", getId());
   }
 
+  @Override
   public Set<Class<?>> getResourceClasses() {
     return Collections.emptySet();
   }
 
+  @Override
   public List<PluginResourceOverride> getResourceOverrides() {
     return Collections.emptyList();
   }

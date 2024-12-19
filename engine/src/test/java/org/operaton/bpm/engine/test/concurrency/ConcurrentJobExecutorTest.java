@@ -105,6 +105,7 @@ public class ConcurrentJobExecutorTest {
 
       processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
 
+        @Override
         public Void execute(CommandContext commandContext) {
           ((JobEntity) job).delete();
           return null;

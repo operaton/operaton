@@ -35,7 +35,8 @@ public class Supports extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Supports.class, BPMN_ELEMENT_SUPPORTS)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Supports>() {
-        public Supports newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Supports newInstance(ModelTypeInstanceContext instanceContext) {
           return new Supports(instanceContext);
         }
       });

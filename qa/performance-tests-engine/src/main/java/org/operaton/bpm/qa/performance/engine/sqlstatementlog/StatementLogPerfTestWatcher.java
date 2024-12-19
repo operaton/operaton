@@ -33,27 +33,33 @@ import org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogSqlSes
  */
 public class StatementLogPerfTestWatcher implements PerfTestWatcher {
 
+  @Override
   public void beforePass(PerfTestPass pass) {
     // nothing to do
   }
 
+  @Override
   public void beforeRun(PerfTest test, PerfTestRun run) {
     // nothing to do
   }
 
+  @Override
   public void beforeStep(PerfTestStep step, PerfTestRun run) {
     StatementLogSqlSession.startLogging();
   }
 
+  @Override
   public void afterStep(PerfTestStep step, PerfTestRun run) {
     List<SqlStatementLog> loggedStatements = StatementLogSqlSession.stopLogging();
     run.logStepResult(loggedStatements);
   }
 
+  @Override
   public void afterRun(PerfTest test, PerfTestRun run) {
     // nothing to do
   }
 
+  @Override
   public void afterPass(PerfTestPass pass) {
     // nothing to do
   }

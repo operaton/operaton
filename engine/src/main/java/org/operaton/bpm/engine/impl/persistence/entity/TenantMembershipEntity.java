@@ -33,15 +33,18 @@ public class TenantMembershipEntity implements Serializable, DbEntity {
 
   protected String id;
 
+  @Override
   public Object getPersistentState() {
     // entity is not updatable
     return TenantMembershipEntity.class;
   }
 
+  @Override
   public String getId() {
     return id;
   }
 
+  @Override
   public void setId(String id) {
     this.id = id;
   }

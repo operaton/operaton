@@ -41,6 +41,7 @@ public class DeletePropertyCmd implements Command<Object> {
     this.name = name;
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkDeleteProperty);
 

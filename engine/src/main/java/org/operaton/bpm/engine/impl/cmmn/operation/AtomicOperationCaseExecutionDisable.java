@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionDisable extends AbstractCmmnEventAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-disable";
   }
@@ -47,6 +48,7 @@ public class AtomicOperationCaseExecutionDisable extends AbstractCmmnEventAtomic
     return execution;
   }
 
+  @Override
   protected void preTransitionNotification(CmmnExecution execution) {
     CmmnExecution parent = execution.getParent();
     if (parent != null) {

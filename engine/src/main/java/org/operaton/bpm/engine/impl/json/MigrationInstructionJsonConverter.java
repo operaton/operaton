@@ -29,6 +29,7 @@ public class MigrationInstructionJsonConverter extends JsonObjectConverter<Migra
   public static final String TARGET_ACTIVITY_IDS = "targetActivityIds";
   public static final String UPDATE_EVENT_TRIGGER = "updateEventTrigger";
 
+  @Override
   public JsonObject toJsonObject(MigrationInstruction instruction) {
     JsonObject json = JsonUtil.createObject();
 
@@ -39,6 +40,7 @@ public class MigrationInstructionJsonConverter extends JsonObjectConverter<Migra
     return json;
   }
 
+  @Override
   public MigrationInstruction toObject(JsonObject json) {
     return new MigrationInstructionImpl(
       readSourceActivityId(json),

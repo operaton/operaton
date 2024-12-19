@@ -40,7 +40,8 @@ public class OperatonOutputParameterImpl extends OperatonGenericValueElementImpl
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonOutputParameter.class, OPERATON_ELEMENT_OUTPUT_PARAMETER)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonOutputParameter>() {
-        public OperatonOutputParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonOutputParameter newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonOutputParameterImpl(instanceContext);
         }
       });
@@ -57,10 +58,12 @@ public class OperatonOutputParameterImpl extends OperatonGenericValueElementImpl
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonName() {
     return operatonNameAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonName(String operatonName) {
     operatonNameAttribute.setValue(this, operatonName);
   }

@@ -22,6 +22,7 @@ package org.operaton.bpm.engine.impl.db.entitymanager.operation.comparator;
  */
 public class EntityTypeComparatorForInserts extends EntityTypeComparatorForModifications {
 
+  @Override
   public int compare(Class<?> firstEntityType, Class<?> secondEntityType) {
     return super.compare(firstEntityType, secondEntityType) * (-1);
   }

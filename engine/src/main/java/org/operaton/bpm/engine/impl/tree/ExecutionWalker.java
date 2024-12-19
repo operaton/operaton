@@ -28,6 +28,7 @@ public class ExecutionWalker extends SingleReferenceWalker<PvmExecutionImpl> {
     super(initialElement);
   }
 
+  @Override
   protected PvmExecutionImpl nextElement() {
     return getCurrentElement().getParent();
   }

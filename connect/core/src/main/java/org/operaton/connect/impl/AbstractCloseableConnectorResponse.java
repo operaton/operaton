@@ -35,6 +35,7 @@ public abstract class AbstractCloseableConnectorResponse extends AbstractConnect
   /**
    * Implements the default close behavior
    */
+  @Override
   public void close() {
     Closeable closable = getClosable();
     try {

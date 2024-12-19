@@ -33,16 +33,19 @@ class TextAnnotationTest extends BpmnModelElementInstanceTest {
 
   protected static BpmnModelInstance modelInstance;
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(Artifact.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(Text.class, 0, 1)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("textFormat", false, false, "text/plain")

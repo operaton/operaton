@@ -37,7 +37,8 @@ public class InputExpressionImpl extends LiteralExpressionImpl implements InputE
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
       .instanceProvider(new ModelTypeInstanceProvider<InputExpression>() {
-        public InputExpression newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputExpression newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputExpressionImpl(instanceContext);
         }
       });

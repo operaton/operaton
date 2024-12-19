@@ -26,6 +26,7 @@ import org.operaton.bpm.model.dmn.instance.LiteralExpression;
 
 public class DmnLiternalExpressionTransformHandler implements DmnElementTransformHandler<LiteralExpression, DmnExpressionImpl> {
 
+  @Override
   public DmnExpressionImpl handleElement(DmnElementTransformContext context, LiteralExpression literalExpression) {
     return createFromLiteralExpressionEntry(context, literalExpression);
   }

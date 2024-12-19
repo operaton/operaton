@@ -20,7 +20,8 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 
 public class DeleteVariableListener implements ExecutionListener {
-    public void notify(DelegateExecution delegateExecution) throws Exception {
+  @Override
+  public void notify(DelegateExecution delegateExecution) throws Exception {
         delegateExecution.removeVariable("createDate");
     }
 }

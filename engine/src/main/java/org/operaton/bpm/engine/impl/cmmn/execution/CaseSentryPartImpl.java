@@ -28,26 +28,32 @@ public class CaseSentryPartImpl extends CmmnSentryPart {
   protected CaseExecutionImpl caseExecution;
   protected CaseExecutionImpl sourceCaseExecution;
 
+  @Override
   public CaseExecutionImpl getCaseInstance() {
     return caseInstance;
   }
 
+  @Override
   public void setCaseInstance(CmmnExecution caseInstance) {
     this.caseInstance = (CaseExecutionImpl) caseInstance;
   }
 
+  @Override
   public CmmnExecution getCaseExecution() {
     return caseExecution;
   }
 
+  @Override
   public void setCaseExecution(CmmnExecution caseExecution) {
     this.caseExecution = (CaseExecutionImpl) caseExecution;
   }
 
+  @Override
   public CmmnExecution getSourceCaseExecution() {
     return sourceCaseExecution;
   }
 
+  @Override
   public void setSourceCaseExecution(CmmnExecution sourceCaseExecution) {
     this.sourceCaseExecution = (CaseExecutionImpl) sourceCaseExecution;
   }
@@ -70,6 +76,7 @@ public class CaseSentryPartImpl extends CmmnSentryPart {
     return null;
   }
 
+  @Override
   public String getSourceCaseExecutionId() {
     if (sourceCaseExecution != null) {
       return sourceCaseExecution.getId();

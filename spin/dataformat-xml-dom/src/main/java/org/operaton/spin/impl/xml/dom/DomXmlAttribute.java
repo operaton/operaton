@@ -50,26 +50,32 @@ public class DomXmlAttribute extends SpinXmlAttribute {
     this.dataFormat = dataFormat;
   }
 
+  @Override
   public String getDataFormatName() {
     return dataFormat.getName();
   }
 
+  @Override
   public Attr unwrap() {
     return attributeNode;
   }
 
+  @Override
   public String name() {
     return attributeNode.getLocalName();
   }
 
+  @Override
   public String namespace() {
     return attributeNode.getNamespaceURI();
   }
 
+  @Override
   public String prefix() {
     return attributeNode.getPrefix();
   }
 
+  @Override
   public boolean hasPrefix(String prefix) {
     String attributePrefix = attributeNode.getPrefix();
     if(attributePrefix == null) {
@@ -79,6 +85,7 @@ public class DomXmlAttribute extends SpinXmlAttribute {
     }
   }
 
+  @Override
   public boolean hasNamespace(String namespace) {
     String attributeNamespace = attributeNode.getNamespaceURI();
     if (attributeNamespace == null) {
@@ -89,10 +96,12 @@ public class DomXmlAttribute extends SpinXmlAttribute {
     }
   }
 
+  @Override
   public String value() {
     return attributeNode.getValue();
   }
 
+  @Override
   public SpinXmlAttribute value(String value) {
     if (value == null) {
       throw LOG.unableToSetAttributeValueToNull(namespace(), name());
@@ -101,16 +110,19 @@ public class DomXmlAttribute extends SpinXmlAttribute {
     return this;
   }
 
+  @Override
   public SpinXmlElement remove() {
     Element ownerElement = attributeNode.getOwnerElement();
     ownerElement.removeAttributeNode(attributeNode);
     return dataFormat.createElementWrapper(ownerElement);
   }
 
+  @Override
   public String toString() {
     return value();
   }
 
+  @Override
   public void writeToWriter(Writer writer) {
     try {
       writer.write(toString());
@@ -119,11 +131,13 @@ public class DomXmlAttribute extends SpinXmlAttribute {
     }
   }
 
+  @Override
   public <C> C mapTo(Class<C> javaClass) {
     DataFormatMapper mapper = dataFormat.getMapper();
     return mapper.mapInternalToJava(this, javaClass);
   }
 
+  @Override
   public <C> C mapTo(String javaClass) {
     DataFormatMapper mapper = dataFormat.getMapper();
     return mapper.mapInternalToJava(this, javaClass);

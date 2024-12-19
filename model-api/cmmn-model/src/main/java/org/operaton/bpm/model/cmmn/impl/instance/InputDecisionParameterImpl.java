@@ -41,7 +41,8 @@ public class InputDecisionParameterImpl extends DecisionParameterImpl implements
         .namespaceUri(CMMN11_NS)
         .extendsType(DecisionParameter.class)
         .instanceProvider(new ModelTypeInstanceProvider<InputDecisionParameter>() {
-          public InputDecisionParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputDecisionParameter newInstance(ModelTypeInstanceContext instanceContext) {
             return new InputDecisionParameterImpl(instanceContext);
           }
         });

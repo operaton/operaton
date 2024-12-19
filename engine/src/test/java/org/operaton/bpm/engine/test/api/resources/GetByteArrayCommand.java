@@ -28,6 +28,7 @@ public class GetByteArrayCommand implements Command<ByteArrayEntity> {
     this.byteArrayId = byteArrayId;
   }
 
+  @Override
   public ByteArrayEntity execute(CommandContext commandContext) {
     return (ByteArrayEntity) commandContext.getDbEntityManager()
       .selectOne("selectByteArray", byteArrayId);

@@ -21,10 +21,12 @@ import org.operaton.connect.spi.ConnectorProvider;
 
 public class TestConnectorProvider implements ConnectorProvider {
 
+  @Override
   public String getConnectorId() {
     return TestConnector.ID;
   }
 
+  @Override
   public Connector<?> createConnectorInstance() {
     return new TestConnector(TestConnector.ID);
   }

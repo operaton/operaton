@@ -46,10 +46,12 @@ public class MigratingIncident implements MigratingInstance {
     return incident.getExecutionId() == null;
   }
 
+  @Override
   public void detachState() {
     incident.setExecution(null);
   }
 
+  @Override
   public void attachState(MigratingScopeInstance newOwningInstance) {
     attachTo(newOwningInstance.resolveRepresentativeExecution());
   }
@@ -59,6 +61,7 @@ public class MigratingIncident implements MigratingInstance {
     attachTo(targetTransitionInstance.resolveRepresentativeExecution());
   }
 
+  @Override
   public void migrateState() {
     incident.setActivityId(targetScope.getId());
     incident.setProcessDefinitionId(targetScope.getProcessDefinition().getId());
@@ -80,6 +83,7 @@ public class MigratingIncident implements MigratingInstance {
     }
   }
 
+  @Override
   public void migrateDependentEntities() {
     // nothing to do
   }

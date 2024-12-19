@@ -42,6 +42,7 @@ public class SetPropertyCmd implements Command<Object> {
     this.value = value;
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkSetProperty);
 

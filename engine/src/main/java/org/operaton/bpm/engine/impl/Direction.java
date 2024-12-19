@@ -41,6 +41,7 @@ public class Direction {
     return name;
   }
 
+  @Override
   public String toString() {
     return "Direction["
       + "name=" + name

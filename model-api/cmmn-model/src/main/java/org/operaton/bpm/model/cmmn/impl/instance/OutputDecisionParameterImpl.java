@@ -41,7 +41,8 @@ public class OutputDecisionParameterImpl extends DecisionParameterImpl implement
         .namespaceUri(CMMN11_NS)
         .extendsType(DecisionParameter.class)
         .instanceProvider(new ModelTypeInstanceProvider<OutputDecisionParameter>() {
-          public OutputDecisionParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OutputDecisionParameter newInstance(ModelTypeInstanceContext instanceContext) {
             return new OutputDecisionParameterImpl(instanceContext);
           }
         });

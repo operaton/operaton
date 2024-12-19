@@ -39,6 +39,7 @@ public abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implemen
 
   protected static final String JOB_HANDLER_CFG_INCLUDE_JOBS = "includeJobs";
 
+  @Override
   public void execute(JobDefinitionSuspensionStateConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
     AbstractSetJobDefinitionStateCmd cmd = getCommand(configuration);
     cmd.disableLogUserOperation();
@@ -185,6 +186,7 @@ public abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implemen
 
   }
 
+  @Override
   public void onDelete(JobDefinitionSuspensionStateConfiguration configuration, JobEntity jobEntity) {
     // do nothing
   }

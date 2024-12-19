@@ -34,10 +34,12 @@ public class StopJobExecutorStep extends DeploymentOperationStep {
 
   protected static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
+  @Override
   public String getName() {
     return "Stop managed job acquisitions";
   }
 
+  @Override
   public void performOperationStep(DeploymentOperation operationContext) {
 
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();

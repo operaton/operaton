@@ -45,7 +45,8 @@ public class OperatonInputOutputImpl extends BpmnModelElementInstanceImpl implem
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputOutput.class, OPERATON_ELEMENT_INPUT_OUTPUT)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonInputOutput>() {
-        public OperatonInputOutput newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonInputOutput newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonInputOutputImpl(instanceContext);
         }
       });
@@ -65,10 +66,12 @@ public class OperatonInputOutputImpl extends BpmnModelElementInstanceImpl implem
     super(instanceContext);
   }
 
+  @Override
   public Collection<OperatonInputParameter> getOperatonInputParameters() {
     return operatonInputParameterCollection.get(this);
   }
 
+  @Override
   public Collection<OperatonOutputParameter> getOperatonOutputParameters() {
     return operatonOutputParameterCollection.get(this);
   }

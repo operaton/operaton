@@ -31,10 +31,12 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationActivityStartCancelScope extends PvmAtomicOperationCancelActivity {
 
+  @Override
   public String getCanonicalName() {
     return "activity-start-cancel-scope";
   }
 
+  @Override
   protected void activityCancelled(PvmExecutionImpl execution) {
     execution.setActivityInstanceId(null);
     execution.performOperation(ACTIVITY_START_CREATE_SCOPE);
@@ -44,6 +46,7 @@ public class PvmAtomicOperationActivityStartCancelScope extends PvmAtomicOperati
     return execution.getNextActivity();
   }
 
+  @Override
   public boolean isAsyncCapable() {
     return false;
   }

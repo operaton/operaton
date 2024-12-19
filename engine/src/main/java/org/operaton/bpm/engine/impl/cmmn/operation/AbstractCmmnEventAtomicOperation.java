@@ -33,6 +33,7 @@ public abstract class AbstractCmmnEventAtomicOperation extends AbstractEventAtom
     return execution.getActivity();
   }
 
+  @Override
   public boolean isAsync(CmmnExecution execution) {
     return false;
   }

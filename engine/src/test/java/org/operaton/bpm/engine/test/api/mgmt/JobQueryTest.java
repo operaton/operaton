@@ -171,6 +171,7 @@ public class JobQueryTest {
 
     // Create one message
     messageId = commandExecutor.execute(new Command<String>() {
+      @Override
       public String execute(CommandContext commandContext) {
         MessageEntity message = new MessageEntity();
 
@@ -876,6 +877,7 @@ public class JobQueryTest {
     final Job job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
     commandExecutor.execute(new Command<Void>() {
 
+      @Override
       public Void execute(CommandContext commandContext) {
         JobEntity timer = commandContext.getDbEntityManager().selectById(JobEntity.class, job.getId());
         timer.setRetries(retries);
@@ -939,6 +941,7 @@ public class JobQueryTest {
   private void createJobWithoutExceptionMsg() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         JobManager jobManager = commandContext.getJobManager();
 
@@ -966,6 +969,7 @@ public class JobQueryTest {
   private void createJobWithoutExceptionStacktrace() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     commandExecutor.execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         JobManager jobManager = commandContext.getJobManager();
 
@@ -989,6 +993,7 @@ public class JobQueryTest {
   private void deleteJobInDatabase() {
       CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
       commandExecutor.execute(new Command<Void>() {
+        @Override
         public Void execute(CommandContext commandContext) {
 
           timerEntity.delete();

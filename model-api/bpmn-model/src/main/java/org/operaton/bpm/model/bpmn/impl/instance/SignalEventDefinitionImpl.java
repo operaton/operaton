@@ -47,7 +47,8 @@ public class SignalEventDefinitionImpl extends EventDefinitionImpl implements Si
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
       .instanceProvider(new ModelTypeInstanceProvider<SignalEventDefinition>() {
-        public SignalEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public SignalEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
           return new SignalEventDefinitionImpl(instanceContext);
         }
       });
@@ -69,18 +70,22 @@ public class SignalEventDefinitionImpl extends EventDefinitionImpl implements Si
     super(context);
   }
 
+  @Override
   public Signal getSignal() {
     return signalRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSignal(Signal signal) {
     signalRefAttribute.setReferenceTargetElement(this, signal);
   }
 
+  @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonAsync(boolean operatonAsync) {
     operatonAsyncAttribute.setValue(this, operatonAsync);
   }

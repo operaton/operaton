@@ -36,6 +36,7 @@ public abstract class AbstractAtomicOperationCaseExecutionSuspend extends Abstra
 
   }
 
+  @Override
   protected void postTransitionNotification(CmmnExecution execution) {
     CmmnExecution parent = execution.getParent();
     if (parent != null) {

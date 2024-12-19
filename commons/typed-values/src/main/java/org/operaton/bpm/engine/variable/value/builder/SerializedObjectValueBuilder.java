@@ -28,8 +28,10 @@ public interface SerializedObjectValueBuilder extends ObjectValueBuilder {
 
   SerializedObjectValueBuilder objectTypeName(String typeName);
 
+  @Override
   SerializedObjectValueBuilder serializationDataFormat(String dataFormatName);
 
+  @Override
   SerializedObjectValueBuilder serializationDataFormat(SerializationDataFormat dataFormat);
 
 }

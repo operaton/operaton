@@ -24,7 +24,8 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  * @author Daniel Meyer
  */
 public class FailingAsyncService implements JavaDelegate {
-  
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     throw new RuntimeException();
   }

@@ -37,7 +37,8 @@ public class UsingTaskReferenceImpl extends DmnElementReferenceImpl implements U
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<UsingTaskReference>() {
-        public UsingTaskReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public UsingTaskReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new UsingTaskReferenceImpl(instanceContext);
         }
       });

@@ -97,6 +97,7 @@ public class JobExecutorAcquireJobsByTypeTest extends AbstractJobExecutorAcquire
     assertTrue(findJobById(acquirableJobs.get(3).getId()) instanceof MessageEntity);
   }
 
+  @Override
   protected Job findJobById(String id) {
     return managementService.createJobQuery().jobId(id).singleResult();
   }

@@ -34,6 +34,7 @@ public class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInst
 
   private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
 
+  @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getProcessDefinition();
   }
@@ -100,6 +101,7 @@ public class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInst
     }
   }
 
+  @Override
   public String getCanonicalName() {
     return "process-end";
   }

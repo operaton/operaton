@@ -34,6 +34,7 @@ public class GetFilterCmd implements Command<Filter>, Serializable {
     this.filterId = filterId;
   }
 
+  @Override
   public Filter execute(CommandContext commandContext) {
     return commandContext
       .getFilterManager()

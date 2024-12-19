@@ -58,6 +58,7 @@ public class SameBehaviorInstructionValidator implements MigrationInstructionVal
     }
   }
 
+  @Override
   public void validate(ValidatingMigrationInstruction instruction, ValidatingMigrationInstructions instructions, MigrationInstructionValidationReportImpl report) {
     ActivityImpl sourceActivity = instruction.getSourceActivity();
     ActivityImpl targetActivity = instruction.getTargetActivity();

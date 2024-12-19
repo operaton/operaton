@@ -66,6 +66,7 @@ public class DmnDisabledTest {
   // allows to return a process engine configuration which doesn't create a schema when it's build.
   protected static class CustomStandaloneInMemProcessEngineConfiguration extends StandaloneInMemProcessEngineConfiguration {
 
+    @Override
     public ProcessEngine buildProcessEngine() {
       init();
       return new CreateNoSchemaProcessEngineImpl(this);

@@ -34,6 +34,7 @@ public interface ObjectValue extends SerializableValue {
    *
    * @return true if the object is deserialized.
    */
+  @Override
   boolean isDeserialized();
 
   /**
@@ -42,6 +43,7 @@ public interface ObjectValue extends SerializableValue {
    * @return the object represented by this TypedValue.
    * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
    */
+  @Override
   Object getValue();
 
   /**

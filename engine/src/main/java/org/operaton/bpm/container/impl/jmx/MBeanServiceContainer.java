@@ -57,6 +57,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
   public static final String SERVICE_NAME_EXECUTOR = "executor-service";
 
+  @Override
   public synchronized <S> void startService(ServiceType serviceType, String localName, PlatformService<S> service) {
 
     String serviceName = composeLocalName(serviceType, localName);
@@ -64,6 +65,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
   }
 
+  @Override
   public synchronized <S> void startService(String name, PlatformService<S> service) {
 
     ObjectName serviceName = getObjectName(name);
@@ -104,12 +106,14 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     return type.getTypeName() + ":type=" + localName;
   }
 
+  @Override
   public synchronized void stopService(ServiceType serviceType, String localName) {
     String globalName = composeLocalName(serviceType, localName);
     stopService(globalName);
 
   }
 
+  @Override
   public synchronized void stopService(String name) {
 
     final MBeanServer mBeanServer = getmBeanServer();
@@ -136,16 +140,19 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
   }
 
+  @Override
   public DeploymentOperationBuilder createDeploymentOperation(String name) {
     return new DeploymentOperation.DeploymentOperationBuilder(this, name);
   }
 
+  @Override
   public DeploymentOperationBuilder createUndeploymentOperation(String name) {
     DeploymentOperationBuilder builder = new DeploymentOperation.DeploymentOperationBuilder(this, name);
     builder.setUndeploymentOperation();
     return builder;
   }
 
+  @Override
   public void executeDeploymentOperation(DeploymentOperation operation) {
 
     Stack<DeploymentOperation> currentOperationContext = activeDeploymentOperations.get();
@@ -171,6 +178,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    * get a specific service by name or null if no such Service exists.
    *
    */
+  @Override
   public <S> S getService(ServiceType type, String localName) {
     String globalName = composeLocalName(type, localName);
     ObjectName serviceName = getObjectName(globalName);
@@ -206,6 +214,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
    * Service exists.
    *
    */
+  @Override
   public <S> S getServiceValue(ServiceType type, String localName) {
     String globalName = composeLocalName(type, localName);
     ObjectName serviceName = getObjectName(globalName);
@@ -215,6 +224,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   /**
    * @return all services for a specific {@link ServiceType}
    */
+  @Override
   @SuppressWarnings("unchecked")
   public <S> List<PlatformService<S>> getServicesByType(ServiceType type) {
 
@@ -232,6 +242,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   /**
    * @return the service names ( {@link ObjectName} ) for all services for a given type
    */
+  @Override
   public Set<String> getServiceNames(ServiceType type) {
     String typeName = composeLocalName(type, "*");
     ObjectName typeObjectName = getObjectName(typeName);
@@ -246,6 +257,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   /**
    * @return the values of all services for a specific {@link ServiceType}
    */
+  @Override
   @SuppressWarnings("unchecked")
   public <S> List<S> getServiceValuesByType(ServiceType type) {
 

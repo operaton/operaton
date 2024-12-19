@@ -50,6 +50,7 @@ public class JuelElProvider implements ElProvider {
     return new SimpleContext();
   }
 
+  @Override
   public ElExpression createExpression(String expression) {
     TreeValueExpression juelExpr = factory.createValueExpression(parsingElContext, expression, Object.class);
     return new JuelExpression(juelExpr, elContextFactory);

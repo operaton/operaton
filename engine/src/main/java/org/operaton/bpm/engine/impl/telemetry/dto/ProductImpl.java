@@ -36,6 +36,7 @@ public class ProductImpl implements Product {
     this(other.name, other.version, other.edition, new InternalsImpl(other.internals));
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -44,6 +45,7 @@ public class ProductImpl implements Product {
     this.name = name;
   }
 
+  @Override
   public String getVersion() {
     return version;
   }
@@ -52,6 +54,7 @@ public class ProductImpl implements Product {
     this.version = version;
   }
 
+  @Override
   public String getEdition() {
     return edition;
   }
@@ -60,6 +63,7 @@ public class ProductImpl implements Product {
     this.edition = edition;
   }
 
+  @Override
   public InternalsImpl getInternals() {
     return internals;
   }

@@ -38,6 +38,7 @@ public class SendSignalDelegate implements JavaDelegate {
   @Inject
   private BusinessProcess businessProcess;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     businessProcess.setVariable("processName", "throwSignal-visited (was " + businessProcess.getVariable("processName")  + ")");
 

@@ -27,6 +27,7 @@ import javax.ws.rs.core.Response.Status;
  */
 public class PeriodUnitConverter extends JacksonAwareStringToTypeConverter<PeriodUnit> {
 
+  @Override
   public PeriodUnit convertQueryParameterToType(String value) {
     return mapToEnum(value, PeriodUnit.class);
   }

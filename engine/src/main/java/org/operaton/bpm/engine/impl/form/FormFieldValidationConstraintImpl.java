@@ -39,10 +39,12 @@ public class FormFieldValidationConstraintImpl implements FormFieldValidationCon
     this.configuration = configuration;
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public Object getConfiguration() {
     return configuration;
   }

@@ -33,20 +33,24 @@ public class QueryImpl<T extends ModelElementInstance> implements Query<T> {
     this.collection = collection;
   }
 
+  @Override
   public List<T> list() {
     return new ArrayList<T>(collection);
   }
 
+  @Override
   public int count() {
     return collection.size();
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <V extends ModelElementInstance> Query<V> filterByType(ModelElementType elementType) {
     Class<V> elementClass = (Class<V>) elementType.getInstanceType();
     return filterByType(elementClass);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <V extends ModelElementInstance> Query<V> filterByType(Class<V> elementClass) {
     List<V> filtered = new ArrayList<V>();
@@ -58,6 +62,7 @@ public class QueryImpl<T extends ModelElementInstance> implements Query<T> {
     return new QueryImpl<V>(filtered);
   }
 
+  @Override
   public T singleResult() {
     if (collection.size() == 1) {
       return collection.iterator().next();

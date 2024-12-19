@@ -35,10 +35,12 @@ public abstract class ExpressionImpl extends DmnElementImpl implements Expressio
     super(instanceContext);
   }
 
+  @Override
   public String getTypeRef() {
     return typeRefAttribute.getValue(this);
   }
 
+  @Override
   public void setTypeRef(String typeRef) {
     typeRefAttribute.setValue(this, typeRef);
   }

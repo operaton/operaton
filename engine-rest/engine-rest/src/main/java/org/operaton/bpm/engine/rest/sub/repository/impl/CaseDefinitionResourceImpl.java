@@ -106,6 +106,7 @@ public class CaseDefinitionResourceImpl implements CaseDefinitionResource {
     }
   }
 
+  @Override
   public CaseInstanceDto createCaseInstance(UriInfo context, CreateCaseInstanceDto parameters) {
     CaseService caseService = engine.getCaseService();
 

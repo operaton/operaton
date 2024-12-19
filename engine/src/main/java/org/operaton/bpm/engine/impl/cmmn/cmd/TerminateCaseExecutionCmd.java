@@ -40,7 +40,8 @@ public class TerminateCaseExecutionCmd extends StateTransitionCaseExecutionCmd {
       Collection<String> variableDeletions, Collection<String> variableLocalDeletions) {
     super(caseExecutionId, variables, variablesLocal, variableDeletions, variableLocalDeletions);
   }
- 
+
+  @Override
   protected void performStateTransition(CommandContext commandContext, CaseExecutionEntity caseExecution) {
     caseExecution.terminate();
   }

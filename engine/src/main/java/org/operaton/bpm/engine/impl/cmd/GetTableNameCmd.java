@@ -35,6 +35,7 @@ public class GetTableNameCmd implements Command<String>, Serializable {
     this.entityClass = entityClass;
   }
 
+  @Override
   public String execute(CommandContext commandContext) {
     ensureNotNull("entityClass", entityClass);
 

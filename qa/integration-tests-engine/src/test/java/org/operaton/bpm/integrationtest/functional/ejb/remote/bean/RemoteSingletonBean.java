@@ -29,6 +29,7 @@ import javax.ejb.Singleton;
 @Remote(BusinessInterface.class)
 public class RemoteSingletonBean implements BusinessInterface {
 
+  @Override
   public boolean doBusiness() {
     return true;
   }

@@ -37,7 +37,8 @@ public class OutputValuesImpl extends UnaryTestsImpl implements OutputValues {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(UnaryTests.class)
       .instanceProvider(new ModelTypeInstanceProvider<OutputValues>() {
-        public OutputValues newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OutputValues newInstance(ModelTypeInstanceContext instanceContext) {
           return new OutputValuesImpl(instanceContext);
         }
       });

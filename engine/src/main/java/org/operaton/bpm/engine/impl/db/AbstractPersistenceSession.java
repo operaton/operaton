@@ -73,6 +73,7 @@ public abstract class AbstractPersistenceSession implements PersistenceSession {
 
   protected abstract String getDbVersion();
 
+  @Override
   public void dbSchemaCreate() {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
 
@@ -132,6 +133,7 @@ public abstract class AbstractPersistenceSession implements PersistenceSession {
   protected abstract void dbSchemaCreateDmnHistory();
 
 
+  @Override
   public void dbSchemaDrop() {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
 
@@ -176,6 +178,7 @@ public abstract class AbstractPersistenceSession implements PersistenceSession {
 
   protected abstract void dbSchemaDropDmnHistory();
 
+  @Override
   public void dbSchemaPrune() {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     if (isHistoryTablePresent() && !processEngineConfiguration.isDbHistoryUsed()) {
@@ -212,6 +215,7 @@ public abstract class AbstractPersistenceSession implements PersistenceSession {
 
   public abstract boolean isDmnHistoryTablePresent();
 
+  @Override
   public void dbSchemaUpdate() {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
 
@@ -245,10 +249,12 @@ public abstract class AbstractPersistenceSession implements PersistenceSession {
 
   }
 
+  @Override
   public List<String> getTableNamesPresent() {
     return Collections.emptyList();
   }
 
+  @Override
   public void addEntityLoadListener(EntityLoadListener listener) {
     this.listeners.add(listener);
   }

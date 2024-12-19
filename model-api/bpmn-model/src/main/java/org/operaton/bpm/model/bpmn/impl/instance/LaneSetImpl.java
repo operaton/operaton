@@ -46,7 +46,8 @@ public class LaneSetImpl extends BaseElementImpl implements LaneSet {
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<LaneSet>() {
-        public LaneSet newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public LaneSet newInstance(ModelTypeInstanceContext instanceContext) {
           return new LaneSetImpl(instanceContext);
         }
       });
@@ -66,14 +67,17 @@ public class LaneSetImpl extends BaseElementImpl implements LaneSet {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public Collection<Lane> getLanes() {
     return laneCollection.get(this);
   }

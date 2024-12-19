@@ -54,6 +54,7 @@ public class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements 
     this.startMessageOnly = startMessageOnly;
   }
 
+  @Override
   public MessageCorrelationResultImpl execute(final CommandContext commandContext) {
     ensureAtLeastOneNotNull(
         "At least one of the following correlation criteria has to be present: " + "messageName, businessKey, correlationKeys, processInstanceId", messageName,
@@ -65,6 +66,7 @@ public class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements 
     CorrelationHandlerResult correlationResult = null;
     if (startMessageOnly) {
       List<CorrelationHandlerResult> correlationResults = commandContext.runWithoutAuthorization(new Callable<List<CorrelationHandlerResult>>() {
+        @Override
         public List<CorrelationHandlerResult> call() throws Exception {
           return correlationHandler.correlateStartMessages(commandContext, messageName, correlationSet);
         }
@@ -78,6 +80,7 @@ public class CorrelateMessageCmd extends AbstractCorrelateMessageCmd implements 
       }
     } else {
       correlationResult = commandContext.runWithoutAuthorization(new Callable<CorrelationHandlerResult>() {
+        @Override
         public CorrelationHandlerResult call() throws Exception {
           return correlationHandler.correlateMessage(commandContext, messageName, correlationSet);
         }

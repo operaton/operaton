@@ -35,10 +35,12 @@ public class PasswordPolicyResultImpl implements PasswordPolicyResult {
     this.fulfilledRules = fulfilledRules;
   }
 
+  @Override
   public boolean isValid() {
     return violatedRules == null || violatedRules.size() == 0;
   }
 
+  @Override
   public List<PasswordPolicyRule> getViolatedRules() {
     return violatedRules;
   }
@@ -47,6 +49,7 @@ public class PasswordPolicyResultImpl implements PasswordPolicyResult {
     this.violatedRules = violatedRules;
   }
 
+  @Override
   public List<PasswordPolicyRule> getFulfilledRules() {
     return fulfilledRules;
   }

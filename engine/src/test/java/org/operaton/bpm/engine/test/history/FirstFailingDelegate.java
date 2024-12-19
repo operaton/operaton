@@ -28,6 +28,7 @@ public class FirstFailingDelegate implements JavaDelegate {
 
   public static final String FIRST_EXCEPTION_MESSAGE = "First expected exception.";
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     Boolean fail = (Boolean) execution.getVariable("firstFail");
 

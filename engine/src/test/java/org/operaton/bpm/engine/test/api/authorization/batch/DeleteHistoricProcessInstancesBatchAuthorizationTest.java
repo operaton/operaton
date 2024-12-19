@@ -66,6 +66,7 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
     historyService = engineRule.getHistoryService();
   }
 
+  @Override
   public void cleanBatch() {
     super.cleanBatch();
     List<HistoricProcessInstance> list = historyService.createHistoricProcessInstanceQuery().list();

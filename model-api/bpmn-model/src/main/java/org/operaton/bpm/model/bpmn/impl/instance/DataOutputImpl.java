@@ -40,7 +40,8 @@ public class DataOutputImpl extends ItemAwareElementImpl implements DataOutput {
       .namespaceUri(BPMN20_NS)
       .extendsType(ItemAwareElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<DataOutput>() {
-        public DataOutput newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DataOutput newInstance(ModelTypeInstanceContext instanceContext) {
           return new DataOutputImpl(instanceContext);
         }
       });
@@ -59,18 +60,22 @@ public class DataOutputImpl extends ItemAwareElementImpl implements DataOutput {
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public boolean isCollection() {
     return isCollectionAttribute.getValue(this);
   }
 
+  @Override
   public void setCollection(boolean isCollection) {
     isCollectionAttribute.setValue(this, isCollection);
   }

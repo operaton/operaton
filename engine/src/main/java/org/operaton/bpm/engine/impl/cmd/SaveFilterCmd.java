@@ -37,6 +37,7 @@ public class SaveFilterCmd implements Command<Filter>, Serializable {
     this.filter = filter;
   }
 
+  @Override
   public Filter execute(CommandContext commandContext) {
     EnsureUtil.ensureNotNull("filter", filter);
     

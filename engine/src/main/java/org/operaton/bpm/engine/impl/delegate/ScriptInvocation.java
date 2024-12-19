@@ -40,6 +40,7 @@ public class ScriptInvocation extends DelegateInvocation {
     this.scope = scope;
   }
 
+  @Override
   protected void invoke() throws Exception {
     invocationResult = Context
       .getProcessEngineConfiguration()

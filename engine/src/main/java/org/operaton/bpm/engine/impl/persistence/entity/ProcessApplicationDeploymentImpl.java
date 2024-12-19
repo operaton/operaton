@@ -36,26 +36,32 @@ public class ProcessApplicationDeploymentImpl implements ProcessApplicationDeplo
     this.registration = registration;
   }
 
+  @Override
   public String getId() {
     return deployment.getId();
   }
 
+  @Override
   public String getName() {
     return deployment.getName();
   }
 
+  @Override
   public Date getDeploymentTime() {
     return deployment.getDeploymentTime();
   }
 
+  @Override
   public String getSource() {
     return deployment.getSource();
   }
 
+  @Override
   public String getTenantId() {
     return deployment.getTenantId();
   }
 
+  @Override
   public ProcessApplicationRegistration getProcessApplicationRegistration() {
     return registration;
   }

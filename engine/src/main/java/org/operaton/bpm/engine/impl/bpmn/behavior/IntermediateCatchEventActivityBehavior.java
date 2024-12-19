@@ -32,6 +32,7 @@ public class IntermediateCatchEventActivityBehavior extends AbstractBpmnActivity
     this.isAfterEventBasedGateway = isAfterEventBasedGateway;
   }
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     if (isAfterEventBasedGateway) {
       leave(execution);

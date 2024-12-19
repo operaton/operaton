@@ -37,7 +37,8 @@ public class Transformation extends FormalExpressionImpl {
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
       .instanceProvider(new ModelTypeInstanceProvider<Transformation>() {
-        public Transformation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Transformation newInstance(ModelTypeInstanceContext instanceContext) {
           return new Transformation(instanceContext);
         }
       });

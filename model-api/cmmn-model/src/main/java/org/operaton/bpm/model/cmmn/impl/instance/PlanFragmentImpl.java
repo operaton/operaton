@@ -45,10 +45,12 @@ public class PlanFragmentImpl extends PlanItemDefinitionImpl implements PlanFrag
     super(instanceContext);
   }
 
+  @Override
   public Collection<PlanItem> getPlanItems() {
     return planItemCollection.get(this);
   }
 
+  @Override
   public Collection<Sentry> getSentrys() {
     return sentryCollection.get(this);
   }
@@ -58,7 +60,8 @@ public class PlanFragmentImpl extends PlanItemDefinitionImpl implements PlanFrag
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanItemDefinition.class)
         .instanceProvider(new ModelTypeInstanceProvider<PlanFragment>() {
-          public PlanFragment newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public PlanFragment newInstance(ModelTypeInstanceContext instanceContext) {
             return new PlanFragmentImpl(instanceContext);
           }
         });

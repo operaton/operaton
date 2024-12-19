@@ -40,7 +40,8 @@ public class OperatonConstraintImpl extends BpmnModelElementInstanceImpl impleme
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConstraint.class, OPERATON_ELEMENT_CONSTRAINT)
       .namespaceUri(OPERATON_NS)
       .instanceProvider(new ModelTypeInstanceProvider<OperatonConstraint>() {
-        public OperatonConstraint newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OperatonConstraint newInstance(ModelTypeInstanceContext instanceContext) {
           return new OperatonConstraintImpl(instanceContext);
         }
       });
@@ -60,18 +61,22 @@ public class OperatonConstraintImpl extends BpmnModelElementInstanceImpl impleme
     super(instanceContext);
   }
 
+  @Override
   public String getOperatonName() {
     return operatonNameAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonName(String operatonName) {
     operatonNameAttribute.setValue(this, operatonName);
   }
 
+  @Override
   public String getOperatonConfig() {
     return operatonConfigAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonConfig(String operatonConfig) {
     operatonConfigAttribute.setValue(this, operatonConfig);
   }

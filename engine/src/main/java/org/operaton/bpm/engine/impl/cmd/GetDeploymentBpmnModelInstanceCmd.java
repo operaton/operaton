@@ -49,6 +49,7 @@ public class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInsta
     this.processDefinitionId = processDefinitionId;
   }
 
+  @Override
   public BpmnModelInstance execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
     final DeploymentCache deploymentCache = configuration.getDeploymentCache();

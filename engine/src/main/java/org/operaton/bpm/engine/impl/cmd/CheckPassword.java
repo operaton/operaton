@@ -37,6 +37,7 @@ public class CheckPassword implements Command<Boolean>, Serializable {
     this.password = password;
   }
 
+  @Override
   public Boolean execute(CommandContext commandContext) {
     return commandContext.getReadOnlyIdentityProvider().checkPassword(userId, password);
   }

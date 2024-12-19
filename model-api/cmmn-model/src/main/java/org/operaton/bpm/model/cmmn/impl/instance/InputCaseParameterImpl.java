@@ -40,7 +40,8 @@ public class InputCaseParameterImpl extends CaseParameterImpl implements InputCa
       .namespaceUri(CMMN11_NS)
       .extendsType(CaseParameter.class)
       .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<InputCaseParameter>() {
-        public InputCaseParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InputCaseParameter newInstance(ModelTypeInstanceContext instanceContext) {
           return new InputCaseParameterImpl(instanceContext);
         }
       });

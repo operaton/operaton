@@ -55,16 +55,19 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   // VariableMap implementation //////////////////////////////
 
+  @Override
   public VariableMap putValue(String name, Object value) {
     put(name, value);
     return this;
   }
 
+  @Override
   public VariableMap putValueTyped(String name, TypedValue value) {
     variables.put(name, value);
     return this;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T> T getValue(String name, Class<T> type) {
     Object object = get(name);
@@ -79,6 +82,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends TypedValue> T getValueTyped(String name) {
     return (T) variables.get(name);
@@ -86,18 +90,22 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   // java.uitil Map<String, Object> implementation ////////////////////////////////////////
 
+  @Override
   public int size() {
     return variables.size();
   }
 
+  @Override
   public boolean isEmpty() {
     return variables.isEmpty();
   }
 
+  @Override
   public boolean containsKey(Object key) {
     return variables.containsKey(key);
   }
 
+  @Override
   public boolean containsValue(Object value) {
     for (TypedValue varValue : variables.values()) {
       if(value == varValue.getValue()) {
@@ -109,6 +117,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     return false;
   }
 
+  @Override
   public Object get(Object key) {
     TypedValue typedValue = variables.get(key);
 
@@ -120,6 +129,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     }
   }
 
+  @Override
   public Object put(String key, Object value) {
 
     TypedValue typedValue = Variables.untypedValue(value);
@@ -134,6 +144,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     }
   }
 
+  @Override
   public Object remove(Object key) {
     TypedValue prevValue = variables.remove(key);
 
@@ -158,14 +169,17 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     }
   }
 
+  @Override
   public void clear() {
     variables.clear();
   }
 
+  @Override
   public Set<String> keySet() {
     return variables.keySet();
   }
 
+  @Override
   public Collection<Object> values() {
 
     // NOTE: cannot naively return List of values here. A proper implementation must return a
@@ -173,24 +187,31 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
     return new AbstractCollection<Object>() {
 
+      @Override
       public Iterator<Object> iterator() {
 
         // wrapped iterator. Must be local to the iterator() method
         final Iterator<TypedValue> iterator = variables.values().iterator();
 
         return new Iterator<Object>() {
+          @Override
           public boolean hasNext() {
             return iterator.hasNext();
           }
+
+          @Override
           public Object next() {
             return iterator.next().getValue();
           }
+
+          @Override
           public void remove() {
             iterator.remove();
           }
         };
       }
 
+      @Override
       public int size() {
         return variables.size();
       }
@@ -198,6 +219,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     };
   }
 
+  @Override
   public Set<java.util.Map.Entry<String, Object>> entrySet() {
 
     // NOTE: cannot naively return Set of entries here. A proper implementation must
@@ -205,6 +227,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
     return new AbstractSet<Map.Entry<String,Object>>() {
 
+      @Override
       public Iterator<java.util.Map.Entry<String, Object>> iterator() {
 
         return new Iterator<Map.Entry<String,Object>>() {
@@ -212,26 +235,35 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
           // wrapped iterator. Must be local to the iterator() method
           final Iterator<java.util.Map.Entry<String, TypedValue>> iterator = variables.entrySet().iterator();
 
+          @Override
           public boolean hasNext() {
             return iterator.hasNext();
           }
 
+          @Override
           public java.util.Map.Entry<String, Object> next() {
 
             final java.util.Map.Entry<String, TypedValue> underlyingEntry = iterator.next();
 
             // return wrapper backed by the underlying entry
             return new Entry<String, Object>() {
+              @Override
               public String getKey() {
                 return underlyingEntry.getKey();
               }
+
+              @Override
               public Object getValue() {
                 return underlyingEntry.getValue().getValue();
               }
+
+              @Override
               public Object setValue(Object value) {
                 TypedValue typedValue = Variables.untypedValue(value);
                 return underlyingEntry.setValue(typedValue);
               }
+
+              @Override
               public final boolean equals(Object o) {
                 if (!(o instanceof Map.Entry))
                   return false;
@@ -246,6 +278,8 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
                 }
                 return false;
               }
+
+              @Override
               public final int hashCode() {
                 String key = getKey();
                 Object value = getValue();
@@ -254,12 +288,14 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
             };
           }
 
+          @Override
           public void remove() {
             iterator.remove();
           }
         };
       }
 
+      @Override
       public int size() {
         return variables.size();
       }
@@ -267,6 +303,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     };
   }
 
+  @Override
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("{\n");
@@ -281,10 +318,12 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     return stringBuilder.toString();
   }
 
+  @Override
   public boolean equals(Object obj) {
     return asValueMap().equals(obj);
   }
 
+  @Override
   public int hashCode() {
     return asValueMap().hashCode();
   }
@@ -293,14 +332,17 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     return new HashMap<String, Object>(this);
   }
 
+  @Override
   public TypedValue resolve(String variableName) {
     return getValueTyped(variableName);
   }
 
+  @Override
   public boolean containsVariable(String variableName) {
     return containsKey(variableName);
   }
 
+  @Override
   public VariableContext asVariableContext() {
     return this;
   }

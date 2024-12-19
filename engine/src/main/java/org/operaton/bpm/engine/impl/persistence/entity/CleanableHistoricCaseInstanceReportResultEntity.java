@@ -29,6 +29,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
   protected long cleanableCaseInstanceCount;
   protected String tenantId;
 
+  @Override
   public String getCaseDefinitionId() {
     return caseDefinitionId;
   }
@@ -37,6 +38,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     this.caseDefinitionId = caseDefinitionId;
   }
 
+  @Override
   public String getCaseDefinitionKey() {
     return caseDefinitionKey;
   }
@@ -45,6 +47,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     this.caseDefinitionKey = caseDefinitionKey;
   }
 
+  @Override
   public String getCaseDefinitionName() {
     return caseDefinitionName;
   }
@@ -53,6 +56,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     this.caseDefinitionName = caseDefinitionName;
   }
 
+  @Override
   public int getCaseDefinitionVersion() {
     return caseDefinitionVersion;
   }
@@ -61,6 +65,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     this.caseDefinitionVersion = caseDefinitionVersion;
   }
 
+  @Override
   public Integer getHistoryTimeToLive() {
     return historyTimeToLive;
   }
@@ -69,6 +74,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     this.historyTimeToLive = historyTimeToLive;
   }
 
+  @Override
   public long getFinishedCaseInstanceCount() {
     return finishedCaseInstanceCount;
   }
@@ -77,6 +83,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     this.finishedCaseInstanceCount = finishedCaseInstanceCount;
   }
 
+  @Override
   public long getCleanableCaseInstanceCount() {
     return cleanableCaseInstanceCount;
   }
@@ -85,6 +92,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     this.cleanableCaseInstanceCount = cleanableCaseInstanceCount;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -93,6 +101,7 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
     this.tenantId = tenantId;
   }
 
+  @Override
   public String toString() {
     return this.getClass().getSimpleName()
         + "[caseDefinitionId = " + caseDefinitionId

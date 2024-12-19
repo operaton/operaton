@@ -34,6 +34,7 @@ public class ScriptCaseVariableListener implements CaseVariableListener {
     this.script = script;
   }
 
+  @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
     DelegateCaseVariableInstanceImpl variableInstanceImpl = (DelegateCaseVariableInstanceImpl) variableInstance;
 

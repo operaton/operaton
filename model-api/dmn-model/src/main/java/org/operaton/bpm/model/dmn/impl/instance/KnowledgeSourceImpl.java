@@ -50,30 +50,37 @@ public class KnowledgeSourceImpl extends DrgElementImpl implements KnowledgeSour
     super(instanceContext);
   }
 
+  @Override
   public String getLocationUri() {
     return locationUriAttribute.getValue(this);
   }
 
+  @Override
   public void setLocationUri(String locationUri) {
     locationUriAttribute.setValue(this, locationUri);
   }
 
+  @Override
   public Collection<AuthorityRequirement> getAuthorityRequirement() {
     return authorityRequirementCollection.get(this);
   }
 
+  @Override
   public Type getType() {
     return typeChild.getChild(this);
   }
 
+  @Override
   public void setType(Type type) {
     typeChild.setChild(this, type);
   }
 
+  @Override
   public OrganizationUnit getOwner() {
     return ownerRef.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setOwner(OrganizationUnit owner) {
     ownerRef.setReferenceTargetElement(this, owner);
   }
@@ -83,7 +90,8 @@ public class KnowledgeSourceImpl extends DrgElementImpl implements KnowledgeSour
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
       .instanceProvider(new ModelTypeInstanceProvider<KnowledgeSource>() {
-        public KnowledgeSource newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public KnowledgeSource newInstance(ModelTypeInstanceContext instanceContext) {
           return new KnowledgeSourceImpl(instanceContext);
         }
       });

@@ -48,10 +48,12 @@ public class DefaultDataTypeTransformerRegistry implements DmnDataTypeTransforme
     return transformers;
   }
 
+  @Override
   public void addTransformer(String typeName, DmnDataTypeTransformer transformer) {
     transformers.put(typeName, transformer);
   }
 
+  @Override
   public DmnDataTypeTransformer getTransformer(String typeName) {
     if(typeName != null && transformers.containsKey(typeName.toLowerCase())) {
       return transformers.get(typeName.toLowerCase());

@@ -25,6 +25,7 @@ import org.operaton.bpm.model.bpmn.builder.InclusiveGatewayBuilder;
  */
 public interface InclusiveGateway extends Gateway {
 
+  @Override
   InclusiveGatewayBuilder builder();
 
   SequenceFlow getDefault();

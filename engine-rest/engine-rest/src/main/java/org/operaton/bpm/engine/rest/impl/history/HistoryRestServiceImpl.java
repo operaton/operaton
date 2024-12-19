@@ -47,70 +47,87 @@ public class HistoryRestServiceImpl extends AbstractRestProcessEngineAware imple
     super(engineName, objectMapper);
   }
 
+  @Override
   public HistoricProcessInstanceRestService getProcessInstanceService() {
     return new HistoricProcessInstanceRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricCaseInstanceRestService getCaseInstanceService() {
     return new HistoricCaseInstanceRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricActivityInstanceRestService getActivityInstanceService() {
     return new HistoricActivityInstanceRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricCaseActivityInstanceRestService getCaseActivityInstanceService() {
     return new HistoricCaseActivityInstanceRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricVariableInstanceRestService getVariableInstanceService() {
     return new HistoricVariableInstanceRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricProcessDefinitionRestService getProcessDefinitionService() {
     return new HistoricProcessDefinitionRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricDecisionDefinitionRestService getDecisionDefinitionService() {
     return new HistoricDecisionDefinitionRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricDecisionStatisticsRestService getDecisionStatisticsService() {
     return new HistoricDecisionStatisticsRestServiceImpl(getProcessEngine());
   }
 
+  @Override
   public HistoricCaseDefinitionRestService getCaseDefinitionService() {
     return new HistoricCaseDefinitionRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public UserOperationLogRestService getUserOperationLogRestService() {
     return new UserOperationLogRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricDetailRestService getDetailService() {
     return new HistoricDetailRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricTaskInstanceRestService getTaskInstanceService() {
     return new HistoricTaskInstanceRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricIncidentRestService getIncidentService() {
     return new HistoricIncidentRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricIdentityLinkLogRestService getIdentityLinkService() {
     return new HistoricIdentityLinkLogRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricJobLogRestService getJobLogService() {
     return new HistoricJobLogRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricDecisionInstanceRestService getDecisionInstanceService() {
     return new HistoricDecisionInstanceRestServiceImpl(getObjectMapper(), getProcessEngine());
   }
 
+  @Override
   public HistoricBatchRestService getBatchService() {
     return new HistoricBatchRestServiceImpl(getObjectMapper(), getProcessEngine());
   }

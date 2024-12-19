@@ -37,6 +37,7 @@ public class FeelTypedVariableMapper extends VariableMapper {
     this.variableContext = variableContext;
   }
 
+  @Override
   public ValueExpression resolveVariable(String variable) {
     if (variableContext.containsVariable(variable)) {
       Object value = unpackVariable(variable);
@@ -47,6 +48,7 @@ public class FeelTypedVariableMapper extends VariableMapper {
     }
   }
 
+  @Override
   public ValueExpression setVariable(String variable, ValueExpression expression) {
     throw LOG.variableMapperIsReadOnly();
   }

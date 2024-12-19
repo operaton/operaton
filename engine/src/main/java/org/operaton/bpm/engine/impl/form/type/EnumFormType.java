@@ -36,6 +36,7 @@ public class EnumFormType extends SimpleFormFieldType {
     this.values = values;
   }
 
+  @Override
   public String getName() {
     return TYPE_NAME;
   }
@@ -48,6 +49,7 @@ public class EnumFormType extends SimpleFormFieldType {
     return null;
   }
 
+  @Override
   public TypedValue convertValue(TypedValue propertyValue) {
     Object value = propertyValue.getValue();
     if(value == null || String.class.isInstance(value)) {

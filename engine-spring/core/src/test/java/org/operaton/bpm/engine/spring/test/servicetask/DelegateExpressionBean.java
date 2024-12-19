@@ -30,6 +30,7 @@ public class DelegateExpressionBean implements JavaDelegate {
 
   private FixedValue someField;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     execution.setVariable("myVar", sentenceGenerator.getSentence());
     if (someField != null) {

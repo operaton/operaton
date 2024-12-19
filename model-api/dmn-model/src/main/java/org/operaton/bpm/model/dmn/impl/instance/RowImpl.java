@@ -37,7 +37,8 @@ public class RowImpl extends ListImpl implements Row {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(List.class)
       .instanceProvider(new ModelTypeInstanceProvider<Row>() {
-        public Row newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Row newInstance(ModelTypeInstanceContext instanceContext) {
           return new RowImpl(instanceContext);
         }
       });

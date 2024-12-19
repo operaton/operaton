@@ -284,10 +284,12 @@ public class AuthorizationQueryTest extends PluggableProcessEngineTest {
       this.id = id;
     }
 
+    @Override
     public String resourceName() {
       return name;
     }
 
+    @Override
     public int resourceType() {
       return id;
     }

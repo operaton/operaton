@@ -93,6 +93,7 @@ public class CompetingByteVariableAccessTest extends ConcurrencyTestCase {
       this.newValue = newValue;
     }
 
+    @Override
     public Void execute(CommandContext commandContext) {
 
       ExecutionEntity execution = commandContext.getExecutionManager()

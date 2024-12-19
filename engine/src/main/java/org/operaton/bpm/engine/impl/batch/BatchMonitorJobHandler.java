@@ -33,10 +33,12 @@ public class BatchMonitorJobHandler implements JobHandler<BatchMonitorJobConfigu
 
   public static final String TYPE = "batch-monitor-job";
 
+  @Override
   public String getType() {
     return TYPE;
   }
 
+  @Override
   public void execute(BatchMonitorJobConfiguration configuration, ExecutionEntity execution, CommandContext commandContext, String tenantId) {
 
     String batchId = configuration.getBatchId();
@@ -75,6 +77,7 @@ public class BatchMonitorJobHandler implements JobHandler<BatchMonitorJobConfigu
     }
   }
 
+  @Override
   public void onDelete(BatchMonitorJobConfiguration configuration, JobEntity jobEntity) {
     // do nothing
   }

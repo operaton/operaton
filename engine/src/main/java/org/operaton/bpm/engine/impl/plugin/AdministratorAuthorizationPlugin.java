@@ -53,6 +53,7 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
 
   protected boolean authorizationEnabled;
 
+  @Override
   public void postInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
     authorizationEnabled = processEngineConfiguration.isAuthorizationEnabled();
     if (administratorGroupName != null && administratorGroupName.length() > 0) {
@@ -63,6 +64,7 @@ public class AdministratorAuthorizationPlugin extends AbstractProcessEnginePlugi
     }
   }
 
+  @Override
   public void postProcessEngineBuild(ProcessEngine processEngine) {
     if(!authorizationEnabled) {
       return;

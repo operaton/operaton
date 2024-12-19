@@ -65,42 +65,49 @@ public class CaseExecutionQueryImpl extends AbstractVariableQueryImpl<CaseExecut
     super(commandExecutor);
   }
 
+  @Override
   public CaseExecutionQuery caseInstanceId(String caseInstanceId) {
     ensureNotNull(NotValidException.class, "caseInstanceId", caseInstanceId);
     this.caseInstanceId = caseInstanceId;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseDefinitionId(String caseDefinitionId) {
     ensureNotNull(NotValidException.class, "caseDefinitionId", caseDefinitionId);
     this.caseDefinitionId = caseDefinitionId;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseDefinitionKey(String caseDefinitionKey) {
     ensureNotNull(NotValidException.class, "caseDefinitionKey", caseDefinitionKey);
     this.caseDefinitionKey = caseDefinitionKey;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseInstanceBusinessKey(String caseInstanceBusinessKey) {
     ensureNotNull(NotValidException.class, "caseInstanceBusinessKey", caseInstanceBusinessKey);
     this.businessKey = caseInstanceBusinessKey;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseExecutionId(String caseExecutionId) {
     ensureNotNull(NotValidException.class, "caseExecutionId", caseExecutionId);
     this.caseExecutionId = caseExecutionId;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery activityId(String activityId) {
     ensureNotNull(NotValidException.class, "activityId", activityId);
     this.activityId = activityId;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -108,67 +115,80 @@ public class CaseExecutionQueryImpl extends AbstractVariableQueryImpl<CaseExecut
     return this;
   }
 
+  @Override
   public CaseExecutionQuery withoutTenantId() {
     this.tenantIds = null;
     isTenantIdSet = true;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery required() {
     this.required = true;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery available() {
     state = CaseExecutionState.AVAILABLE;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery enabled() {
     state = CaseExecutionState.ENABLED;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery active() {
     state = CaseExecutionState.ACTIVE;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery disabled() {
     state = CaseExecutionState.DISABLED;
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseInstanceVariableValueEquals(String name, Object value) {
     addVariable(name, value, QueryOperator.EQUALS, false);
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseInstanceVariableValueNotEquals(String name, Object value) {
     addVariable(name, value, QueryOperator.NOT_EQUALS, false);
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseInstanceVariableValueGreaterThan(String name, Object value) {
     addVariable(name, value, QueryOperator.GREATER_THAN, false);
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseInstanceVariableValueGreaterThanOrEqual(String name, Object value) {
     addVariable(name, value, QueryOperator.GREATER_THAN_OR_EQUAL, false);
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseInstanceVariableValueLessThan(String name, Object value) {
     addVariable(name, value, QueryOperator.LESS_THAN, false);
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseInstanceVariableValueLessThanOrEqual(String name, Object value) {
     addVariable(name, value, QueryOperator.LESS_THAN_OR_EQUAL, false);
     return this;
   }
 
+  @Override
   public CaseExecutionQuery caseInstanceVariableValueLike(String name, String value) {
     addVariable(name, value, QueryOperator.LIKE, false);
     return this;
@@ -176,22 +196,26 @@ public class CaseExecutionQueryImpl extends AbstractVariableQueryImpl<CaseExecut
 
   // order by ///////////////////////////////////////////
 
+  @Override
   public CaseExecutionQuery orderByCaseExecutionId() {
     orderBy(CaseExecutionQueryProperty.CASE_EXECUTION_ID);
     return this;
   }
 
+  @Override
   public CaseExecutionQuery orderByCaseDefinitionKey() {
     orderBy(new QueryOrderingProperty(QueryOrderingProperty.RELATION_CASE_DEFINITION,
         CaseExecutionQueryProperty.CASE_DEFINITION_KEY));
     return this;
   }
 
+  @Override
   public CaseExecutionQuery orderByCaseDefinitionId() {
     orderBy(CaseExecutionQueryProperty.CASE_DEFINITION_ID);
     return this;
   }
 
+  @Override
   public CaseExecutionQuery orderByTenantId() {
     orderBy(CaseExecutionQueryProperty.TENANT_ID);
     return this;
@@ -199,6 +223,7 @@ public class CaseExecutionQueryImpl extends AbstractVariableQueryImpl<CaseExecut
 
   // results ////////////////////////////////////////////
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     ensureVariablesInitialized();
@@ -207,6 +232,7 @@ public class CaseExecutionQueryImpl extends AbstractVariableQueryImpl<CaseExecut
       .findCaseExecutionCountByQueryCriteria(this);
   }
 
+  @Override
   public List<CaseExecution> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     ensureVariablesInitialized();

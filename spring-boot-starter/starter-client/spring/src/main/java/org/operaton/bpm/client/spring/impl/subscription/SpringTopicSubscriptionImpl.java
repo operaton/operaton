@@ -160,6 +160,7 @@ public class SpringTopicSubscriptionImpl
     }
   }
 
+  @Override
   public void close() {
     String topicName = subscriptionConfiguration.getTopicName();
     if (topicSubscriptionBuilder == null) {

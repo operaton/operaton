@@ -221,10 +221,12 @@ public class HistoricJobLogEvent extends HistoryEvent {
     return state == JobState.DELETED.getStateCode();
   }
 
+  @Override
   public String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
+  @Override
   public void setRootProcessInstanceId(String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }

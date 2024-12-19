@@ -48,11 +48,13 @@ public class AstComposite extends AstRightValue {
 		}
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return nodes.size();
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return nodes.get(i);
 	}
 }

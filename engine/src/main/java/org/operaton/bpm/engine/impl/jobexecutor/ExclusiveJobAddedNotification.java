@@ -37,6 +37,7 @@ public class ExclusiveJobAddedNotification implements TransactionListener {
     this.jobExecutorContext = jobExecutorContext;
   }
 
+  @Override
   public void execute(CommandContext commandContext) {
     LOG.debugAddingNewExclusiveJobToJobExecutorCOntext(jobId);
     jobExecutorContext.getCurrentProcessorJobQueue().add(jobId);

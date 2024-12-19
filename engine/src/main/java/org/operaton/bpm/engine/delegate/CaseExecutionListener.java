@@ -79,6 +79,7 @@ public interface CaseExecutionListener extends DelegateListener<DelegateCaseExec
   String CLOSE = "close";
   String OCCUR = "occur";
 
+  @Override
   void notify(DelegateCaseExecution caseExecution) throws Exception;
 
 }

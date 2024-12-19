@@ -61,6 +61,7 @@ public class CaseExecutionVariableCmd implements Command<Void>, Serializable {
          builder.getVariableDeletions(), builder.getVariableLocalDeletions());
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     ensureNotNull("caseExecutionId", caseExecutionId);
 

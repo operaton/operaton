@@ -27,6 +27,7 @@ import java.util.Collection;
  */
 public interface SubProcess extends Activity {
 
+  @Override
   SubProcessBuilder builder();
 
   boolean triggeredByEvent();

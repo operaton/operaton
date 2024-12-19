@@ -336,6 +336,7 @@ public class FetchAndLockHandlerImpl implements Runnable, FetchAndLockHandler {
     }
   }
 
+  @Override
   public void contextInitialized(ServletContextEvent servletContextEvent) {
     ServletContext servletContext = null;
 

@@ -37,7 +37,8 @@ public class UsingProcessReferenceImpl extends DmnElementReferenceImpl implement
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<UsingProcessReference>() {
-        public UsingProcessReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public UsingProcessReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new UsingProcessReferenceImpl(instanceContext);
         }
       });

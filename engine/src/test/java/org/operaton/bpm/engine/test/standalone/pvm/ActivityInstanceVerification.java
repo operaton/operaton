@@ -57,6 +57,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
   protected Map<String, List<ActivityInstance>> startedActivityInstances = new HashMap<String, List<ActivityInstance>>();
   protected Map<String, List<ActivityInstance>> endedActivityInstances = new HashMap<String, List<ActivityInstance>>();
 
+  @Override
   public void notify(DelegateExecution e) throws Exception {
 
     final ActivityExecution execution = (ActivityExecution) e;

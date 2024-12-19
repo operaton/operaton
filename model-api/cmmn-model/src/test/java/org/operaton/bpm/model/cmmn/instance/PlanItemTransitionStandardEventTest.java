@@ -24,6 +24,7 @@ import java.util.Collection;
  */
 public class PlanItemTransitionStandardEventTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(false);
   }

@@ -28,31 +28,38 @@ public final class AstText extends AstNode {
 		this.value = value;
 	}
 
-	public boolean isLiteralText() {
+  @Override
+  public boolean isLiteralText() {
 		return true;
 	}
 
-	public boolean isLeftValue() {
-		return false;
-	}
-	
-	public boolean isMethodInvocation() {
+  @Override
+  public boolean isLeftValue() {
 		return false;
 	}
 
-	public Class<?> getType(Bindings bindings, ELContext context) {
+  @Override
+  public boolean isMethodInvocation() {
+		return false;
+	}
+
+  @Override
+  public Class<?> getType(Bindings bindings, ELContext context) {
 		return null;
 	}
 
-	public boolean isReadOnly(Bindings bindings, ELContext context) {
+  @Override
+  public boolean isReadOnly(Bindings bindings, ELContext context) {
 		return true;
 	}
 
-	public void setValue(Bindings bindings, ELContext context, Object value) {
+  @Override
+  public void setValue(Bindings bindings, ELContext context, Object value) {
 		throw new ELException(LocalMessages.get("error.value.set.rvalue", getStructuralId(bindings)));
 	}
 
-	public ValueReference getValueReference(Bindings bindings, ELContext context) {
+  @Override
+  public ValueReference getValueReference(Bindings bindings, ELContext context) {
 		return null;
 	}
 	
@@ -61,11 +68,13 @@ public final class AstText extends AstNode {
 		return value;
 	}
 
-	public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
+  @Override
+  public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
 		return null;
 	}
 
-	public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
+  @Override
+  public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
 		return returnType == null ? value : bindings.convert(value, returnType);
 	}
 
@@ -89,11 +98,13 @@ public final class AstText extends AstNode {
 		}
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return 0;
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return null;
 	}
 }

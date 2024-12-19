@@ -36,10 +36,12 @@ import org.operaton.bpm.engine.variable.VariableMap;
  */
 public class MyStartFormHandler extends MyDelegationService implements StartFormHandler {
 
+  @Override
   public void parseConfiguration(Element activityElement, DeploymentEntity deployment, ProcessDefinitionEntity processDefinition, BpmnParse bpmnParse) {
     // do nothing
   }
 
+  @Override
   public void submitFormVariables(VariableMap properties, VariableScope variableScope) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     IdentityService identityService = processEngineConfiguration.getIdentityService();
@@ -49,6 +51,7 @@ public class MyStartFormHandler extends MyDelegationService implements StartForm
     logInstancesCount(runtimeService);
   }
 
+  @Override
   public StartFormData createStartFormData(ProcessDefinitionEntity processDefinition) {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     IdentityService identityService = processEngineConfiguration.getIdentityService();

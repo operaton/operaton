@@ -46,6 +46,7 @@ public class GetTaskVariableCmdTyped implements Command<TypedValue>, Serializabl
     this.deserializeValue = deserializeValue;
   }
 
+  @Override
   public TypedValue execute(CommandContext commandContext) {
     ensureNotNull("taskId", taskId);
     ensureNotNull("variableName", variableName);

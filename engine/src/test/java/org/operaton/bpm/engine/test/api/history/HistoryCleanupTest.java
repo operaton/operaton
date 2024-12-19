@@ -681,6 +681,7 @@ public class HistoryCleanupTest {
 
   private void imitateFailedJob(final String jobId) {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
         JobEntity jobEntity = getJobEntity(jobId);
         jobEntity.setRetries(0);

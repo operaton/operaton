@@ -35,6 +35,7 @@ public class ExecuteFilterSingleResultCmd extends AbstractExecuteFilterCmd imple
     super(filterId, extendingQuery);
   }
 
+  @Override
   public Object execute(CommandContext commandContext) {
     Query<?, ?> query = getFilterQuery(commandContext);
     return query.singleResult();

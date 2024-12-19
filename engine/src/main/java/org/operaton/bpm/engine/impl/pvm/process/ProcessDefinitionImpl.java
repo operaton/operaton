@@ -58,16 +58,19 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
     ensureNotNull("Process '" + name + "' has no default start activity (e.g. none start event), hence you cannot use 'startProcessInstanceBy...' but have to start it using one of the modeled start events (e.g. message start events)", "initial", initial);
   }
 
+  @Override
   public PvmProcessInstance createProcessInstance() {
     ensureDefaultInitialExists();
     return createProcessInstance(null, null, initial);
   }
 
+  @Override
   public PvmProcessInstance createProcessInstance(String businessKey) {
     ensureDefaultInitialExists();
     return createProcessInstance(businessKey, null, this.initial);
   }
 
+  @Override
   public PvmProcessInstance createProcessInstance(String businessKey, String caseInstanceId) {
     ensureDefaultInitialExists();
     return createProcessInstance(businessKey, caseInstanceId, this.initial);
@@ -127,10 +130,12 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
     return initialActivityStack;
   }
 
+  @Override
   public String getDiagramResourceName() {
     return null;
   }
 
+  @Override
   public String getDeploymentId() {
     return null;
   }
@@ -160,6 +165,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   public ActivityImpl getInitial() {
     return initial;
   }
@@ -173,7 +179,8 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
     return "ProcessDefinition("+id+")";
   }
 
-   public String getDescription() {
+  @Override
+  public String getDescription() {
     return (String) getProperty("documentation");
   }
 
@@ -196,18 +203,22 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
     return participantProcess;
   }
 
+  @Override
   public boolean isScope() {
     return true;
   }
 
+  @Override
   public PvmScope getEventScope() {
     return null;
   }
 
+  @Override
   public ScopeImpl getFlowScope() {
     return null;
   }
 
+  @Override
   public PvmScope getLevelOfSubprocessScope() {
     return null;
   }

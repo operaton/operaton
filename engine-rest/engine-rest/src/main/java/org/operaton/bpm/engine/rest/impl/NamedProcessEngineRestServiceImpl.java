@@ -246,16 +246,19 @@ public class NamedProcessEngineRestServiceImpl extends AbstractProcessEngineRest
     return super.getConditionRestService(engineName);
   }
 
+  @Override
   @Path("/{name}" + OptimizeRestService.PATH)
   public OptimizeRestService getOptimizeRestService(@PathParam("name") String engineName) {
     return super.getOptimizeRestService(engineName);
   }
 
+  @Override
   @Path("/{name}" + VersionRestService.PATH)
   public VersionRestService getVersionRestService(@PathParam("name") String engineName) {
     return super.getVersionRestService(engineName);
   }
 
+  @Override
   @Path("/{name}" + SchemaLogRestService.PATH)
   public SchemaLogRestService getSchemaLogRestService(@PathParam("name") String engineName) {
     return super.getSchemaLogRestService(engineName);

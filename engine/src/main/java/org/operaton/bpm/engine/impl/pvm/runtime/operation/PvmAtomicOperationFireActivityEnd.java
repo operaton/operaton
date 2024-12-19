@@ -28,10 +28,12 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationFireActivityEnd extends AbstractPvmEventAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "fire-activity-end";
   }
 
+  @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {
     return execution.getActivity();
   }

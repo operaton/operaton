@@ -28,7 +28,8 @@ public class DummyServiceTask implements JavaDelegate {
   public static boolean wasExecuted = false;
   public static boolean expressionWasExecuted = false;
   public static boolean delegateExpressionWasExecuted = false;
-  
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     boolean expressionWasExecuted = (Boolean )execution.getVariable("expressionWasExecuted");
     boolean delegateExpressionWasExecuted = (Boolean )execution.getVariable("delegateExpressionWasExecuted");

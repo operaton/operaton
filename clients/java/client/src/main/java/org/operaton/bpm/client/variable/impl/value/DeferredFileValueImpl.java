@@ -58,6 +58,7 @@ public class DeferredFileValueImpl extends FileValueImpl implements DeferredFile
     }
   }
 
+  @Override
   public boolean isLoaded() {
     return isLoaded;
   }

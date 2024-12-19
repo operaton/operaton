@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
  */
 public class ProcessApplicationEventListenerPlugin extends AbstractProcessEnginePlugin {
 
+  @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
     List<BpmnParseListener> preParseListeners = processEngineConfiguration.getCustomPreBPMNParseListeners();
     if(preParseListeners == null) {

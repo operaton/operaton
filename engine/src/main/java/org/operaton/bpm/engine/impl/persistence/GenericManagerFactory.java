@@ -41,10 +41,12 @@ public class GenericManagerFactory implements SessionFactory {
     managerImplementation = (Class<? extends Session>) ReflectUtil.loadClass(classname);    
   }
 
-  public Class< ? > getSessionType() {
+  @Override
+  public Class<?> getSessionType() {
     return managerImplementation;
   }
 
+  @Override
   public Session openSession() {
     try {
       return managerImplementation.newInstance();

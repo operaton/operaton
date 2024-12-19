@@ -50,6 +50,7 @@ public class Authentication implements Principal, Serializable {
    * java.security.Principal implementation: return the id of the identity
    * (userId) behind this authentication
    */
+  @Override
   public String getName() {
     return identityId;
   }

@@ -37,10 +37,12 @@ public class ClassExecutionListenerSpec extends AbstractExecutionListenerSpec {
     super(eventName);
   }
 
+  @Override
   protected void configureCaseExecutionListener(CmmnModelInstance modelInstance, OperatonCaseExecutionListener listener) {
     listener.setOperatonClass(CLASS_NAME);
   }
 
+  @Override
   public void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener) {
     assertTrue(listener instanceof ClassDelegateCaseExecutionListener);
     ClassDelegateCaseExecutionListener classDelegateListener = (ClassDelegateCaseExecutionListener) listener;

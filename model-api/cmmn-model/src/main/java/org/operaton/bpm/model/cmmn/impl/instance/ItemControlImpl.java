@@ -41,7 +41,8 @@ public class ItemControlImpl extends PlanItemControlImpl implements ItemControl 
       .namespaceUri(CMMN11_NS)
       .extendsType(PlanItemControl.class)
       .instanceProvider(new ModelTypeInstanceProvider<ItemControl>() {
-        public ItemControl newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ItemControl newInstance(ModelTypeInstanceContext instanceContext) {
           return new ItemControlImpl(instanceContext);
         }
       });

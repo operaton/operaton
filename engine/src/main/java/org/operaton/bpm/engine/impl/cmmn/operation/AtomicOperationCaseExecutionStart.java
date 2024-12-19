@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionStart extends AbstractCmmnEventAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "case-execution-start";
   }
@@ -46,6 +47,7 @@ public class AtomicOperationCaseExecutionStart extends AbstractCmmnEventAtomicOp
     return execution;
   }
 
+  @Override
   protected void postTransitionNotification(CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(execution);
     behavior.started(execution);

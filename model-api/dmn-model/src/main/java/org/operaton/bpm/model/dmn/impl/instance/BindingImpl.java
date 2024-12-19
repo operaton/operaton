@@ -38,18 +38,22 @@ public class BindingImpl extends DmnModelElementInstanceImpl implements Binding 
     super(instanceContext);
   }
 
+  @Override
   public Parameter getParameter() {
     return parameterChild.getChild(this);
   }
 
+  @Override
   public void setParameter(Parameter parameter) {
     parameterChild.setChild(this, parameter);
   }
 
+  @Override
   public Expression getExpression() {
     return expressionChild.getChild(this);
   }
 
+  @Override
   public void setExpression(Expression expression) {
     expressionChild.setChild(this, expression);
   }
@@ -58,7 +62,8 @@ public class BindingImpl extends DmnModelElementInstanceImpl implements Binding 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Binding.class, DMN_ELEMENT_BINDING)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Binding>() {
-        public Binding newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Binding newInstance(ModelTypeInstanceContext instanceContext) {
           return new BindingImpl(instanceContext);
         }
       });

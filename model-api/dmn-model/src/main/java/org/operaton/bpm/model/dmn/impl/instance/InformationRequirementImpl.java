@@ -40,18 +40,22 @@ public class InformationRequirementImpl extends DmnModelElementInstanceImpl impl
     super(instanceContext);
   }
 
+  @Override
   public Decision getRequiredDecision() {
     return requiredDecisionRef.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setRequiredDecision(Decision requiredDecision) {
     requiredDecisionRef.setReferenceTargetElement(this, requiredDecision);
   }
 
+  @Override
   public InputData getRequiredInput() {
     return requiredInputRef.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setRequiredInput(InputData requiredInput) {
     requiredInputRef.setReferenceTargetElement(this, requiredInput);
   }
@@ -60,7 +64,8 @@ public class InformationRequirementImpl extends DmnModelElementInstanceImpl impl
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InformationRequirement.class, DMN_ELEMENT_INFORMATION_REQUIREMENT)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<InformationRequirement>() {
-        public InformationRequirement newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public InformationRequirement newInstance(ModelTypeInstanceContext instanceContext) {
           return new InformationRequirementImpl(instanceContext);
         }
       });

@@ -275,43 +275,53 @@ public class DelegateEvent implements DelegateExecution {
     throw notYetImplemented();
   }
 
+  @Override
   public String getActivityInstanceId() {
     return activityInstanceId;
   }
 
+  @Override
   public String getCurrentActivityId() {
     return currentActivityId;
   }
 
+  @Override
   public String getCurrentActivityName() {
     return currentActivityName;
   }
 
+  @Override
   public String getCurrentTransitionId() {
     return currentTransitionId;
   }
 
+  @Override
   public String getParentActivityInstanceId() {
     return parentActivityInstanceId;
   }
 
+  @Override
   public String getParentId() {
     return parentId;
   }
 
+  @Override
   public String getProcessBusinessKey() {
     return processBusinessKey;
   }
 
+  @Override
   public String getProcessDefinitionId() {
     return processDefinitionId;
   }
 
 
+  @Override
   public String getProcessInstanceId() {
     return processInstanceId;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }

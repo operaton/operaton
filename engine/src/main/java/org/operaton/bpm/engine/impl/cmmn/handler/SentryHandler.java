@@ -52,6 +52,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
 
   protected static final CmmnTransformerLogger LOG = ProcessEngineLogger.CMMN_TRANSFORMER_LOGGER;
 
+  @Override
   public CmmnSentryDeclaration handleElement(Sentry element, CmmnHandlerContext context) {
 
     String id = element.getId();

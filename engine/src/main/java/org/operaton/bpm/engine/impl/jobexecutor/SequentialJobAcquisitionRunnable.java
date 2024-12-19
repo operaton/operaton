@@ -54,6 +54,7 @@ public class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable {
     acquisitionContext = initializeAcquisitionContext();
   }
 
+  @Override
   public synchronized void run() {
     LOG.startingToAcquireJobs(jobExecutor.getName());
 

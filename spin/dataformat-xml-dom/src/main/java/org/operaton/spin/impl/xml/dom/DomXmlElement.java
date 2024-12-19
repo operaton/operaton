@@ -66,26 +66,32 @@ public class DomXmlElement extends SpinXmlElement {
     this.dataFormat = dataFormat;
   }
 
+  @Override
   public String getDataFormatName() {
     return dataFormat.getName();
   }
 
+  @Override
   public Element unwrap() {
     return domElement;
   }
 
+  @Override
   public String name() {
     return domElement.getLocalName();
   }
 
+  @Override
   public String namespace() {
     return domElement.getNamespaceURI();
   }
 
+  @Override
   public String prefix() {
     return domElement.getPrefix();
   }
 
+  @Override
   public boolean hasPrefix(String prefix) {
     String elementPrefix = prefix();
     if(elementPrefix == null) {
@@ -95,6 +101,7 @@ public class DomXmlElement extends SpinXmlElement {
     }
   }
 
+  @Override
   public boolean hasNamespace(String namespace) {
     String elementNamespace = namespace();
     if (elementNamespace == null) {
@@ -105,10 +112,12 @@ public class DomXmlElement extends SpinXmlElement {
     }
   }
 
+  @Override
   public SpinXmlAttribute attr(String attributeName) {
     return attrNs(null, attributeName);
   }
 
+  @Override
   public SpinXmlAttribute attrNs(String namespace, String attributeName) {
     ensureNotNull("attributeName", attributeName);
     Attr attributeNode = domElement.getAttributeNodeNS(namespace, attributeName);
@@ -118,23 +127,28 @@ public class DomXmlElement extends SpinXmlElement {
     return dataFormat.createAttributeWrapper(attributeNode);
   }
 
+  @Override
   public boolean hasAttr(String attributeName) {
     return hasAttrNs(null, attributeName);
   }
 
+  @Override
   public boolean hasAttrNs(String namespace, String attributeName) {
     ensureNotNull("attributeName", attributeName);
     return domElement.hasAttributeNS(namespace, attributeName);
   }
 
+  @Override
   public SpinList<SpinXmlAttribute> attrs() {
     return new SpinListImpl<>(new DomXmlAttributeMapIterable(domElement, dataFormat));
   }
 
+  @Override
   public SpinList<SpinXmlAttribute> attrs(String namespace) {
     return new SpinListImpl<>(new DomXmlAttributeMapIterable(domElement, dataFormat, namespace));
   }
 
+  @Override
   public List<String> attrNames() {
     List<String> attributeNames = new ArrayList<>();
     for (SpinXmlAttribute attribute : attrs()) {
@@ -143,6 +157,7 @@ public class DomXmlElement extends SpinXmlElement {
     return attributeNames;
   }
 
+  @Override
   public List<String> attrNames(String namespace) {
     List<String> attributeNames = new ArrayList<>();
     for (SpinXmlAttribute attribute : attrs(namespace)) {
@@ -151,20 +166,24 @@ public class DomXmlElement extends SpinXmlElement {
     return attributeNames;
   }
 
+  @Override
   public String textContent() {
     return domElement.getTextContent();
   }
 
+  @Override
   public SpinXmlElement textContent(String textContent) {
     ensureNotNull("textContent", textContent);
     domElement.setTextContent(textContent);
     return this;
   }
 
+  @Override
   public SpinXmlElement childElement(String elementName) {
     return childElement(namespace(), elementName);
   }
 
+  @Override
   public SpinXmlElement childElement(String namespace, String elementName) {
     ensureNotNull("elementName", elementName);
     SpinList<SpinXmlElement> childElements = childElements(namespace, elementName);
@@ -176,14 +195,17 @@ public class DomXmlElement extends SpinXmlElement {
     }
   }
 
+  @Override
   public SpinList<SpinXmlElement> childElements() {
     return new SpinListImpl<>(new DomXmlElementIterable(domElement, dataFormat));
   }
 
+  @Override
   public SpinList<SpinXmlElement> childElements(String elementName) {
     return childElements(namespace(), elementName);
   }
 
+  @Override
   public SpinList<SpinXmlElement> childElements(String namespace, String elementName) {
     ensureNotNull("elementName", elementName);
     SpinList<SpinXmlElement> childs = new SpinListImpl<>(new DomXmlElementIterable(domElement, dataFormat, namespace, elementName));
@@ -193,10 +215,12 @@ public class DomXmlElement extends SpinXmlElement {
     return childs;
   }
 
+  @Override
   public SpinXmlElement attr(String attributeName, String value) {
     return attrNs(null, attributeName, value);
   }
 
+  @Override
   public SpinXmlElement attrNs(String namespace, String attributeName, String value) {
     ensureNotNull("attributeName", attributeName);
     ensureNotNull("value", value);
@@ -211,16 +235,19 @@ public class DomXmlElement extends SpinXmlElement {
     return this;
   }
 
+  @Override
   public SpinXmlElement removeAttr(String attributeName) {
     return removeAttrNs(null, attributeName);
   }
 
+  @Override
   public SpinXmlElement removeAttrNs(String namespace, String attributeName) {
     ensureNotNull("attributeName", attributeName);
     domElement.removeAttributeNS(namespace, attributeName);
     return this;
   }
 
+  @Override
   public SpinXmlElement append(SpinXmlElement... childElements) {
     ensureNotNull("childElements", childElements);
     for (SpinXmlElement childElement : childElements) {
@@ -241,11 +268,13 @@ public class DomXmlElement extends SpinXmlElement {
     return append(Arrays.asList(childElement));
   }
 
+  @Override
   public SpinXmlElement append(Collection<SpinXmlElement> childElements) {
     ensureNotNull("childElements", childElements);
     return append(childElements.toArray(new SpinXmlElement[0]));
   }
 
+  @Override
   public SpinXmlElement appendBefore(SpinXmlElement childElement, SpinXmlElement existingChildElement) {
     ensureNotNull("childElement", childElement);
     ensureNotNull("existingChildElement", existingChildElement);
@@ -266,6 +295,7 @@ public class DomXmlElement extends SpinXmlElement {
   }
 
 
+  @Override
   public SpinXmlElement appendAfter(SpinXmlElement childElement, SpinXmlElement existingChildElement) {
     ensureNotNull("childElement", childElement);
     ensureNotNull("existingChildElement", existingChildElement);
@@ -291,6 +321,7 @@ public class DomXmlElement extends SpinXmlElement {
     return this;
   }
 
+  @Override
   public SpinXmlElement remove(SpinXmlElement... childElements) {
     ensureNotNull("childElements", childElements);
     for (SpinXmlElement childElement : childElements) {
@@ -311,11 +342,13 @@ public class DomXmlElement extends SpinXmlElement {
     return remove(Arrays.asList(childElement));
   }
 
+  @Override
   public SpinXmlElement remove(Collection<SpinXmlElement> childElements) {
     ensureNotNull("childElements", childElements);
     return remove(childElements.toArray(new SpinXmlElement[0]));
   }
 
+  @Override
   public SpinXmlElement replace(SpinXmlElement newElement) {
     ensureNotNull("newElement", newElement);
     DomXmlElement element = ensureParamInstanceOf("newElement", newElement, DomXmlElement.class);
@@ -335,6 +368,7 @@ public class DomXmlElement extends SpinXmlElement {
     return element;
   }
 
+  @Override
   public SpinXmlElement replaceChild(SpinXmlElement existingChildElement, SpinXmlElement newChildElement) {
     ensureNotNull("existingChildElement", existingChildElement);
     ensureNotNull("newChildElement", newChildElement);
@@ -353,6 +387,7 @@ public class DomXmlElement extends SpinXmlElement {
     return this;
   }
 
+  @Override
   public SpinXPathQuery xPath(String expression) {
     XPath query = getXPathFactory().newXPath();
     return new DomXPathQuery(this, query, expression, dataFormat);
@@ -375,12 +410,14 @@ public class DomXmlElement extends SpinXmlElement {
     }
   }
 
+  @Override
   public String toString() {
     StringWriter writer = new StringWriter();
     writeToWriter(writer);
     return writer.toString();
   }
 
+  @Override
   public void writeToWriter(Writer writer) {
     dataFormat.getWriter().writeToWriter(writer, this.domElement);
   }
@@ -397,11 +434,13 @@ public class DomXmlElement extends SpinXmlElement {
     return cachedXPathFactory;
   }
 
+  @Override
   public <C> C mapTo(Class<C> javaClass) {
     DataFormatMapper mapper = dataFormat.getMapper();
     return mapper.mapInternalToJava(this.domElement, javaClass);
   }
 
+  @Override
   public <C> C mapTo(String javaClass) {
     DataFormatMapper mapper = dataFormat.getMapper();
     return mapper.mapInternalToJava(this.domElement, javaClass);

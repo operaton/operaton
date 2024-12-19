@@ -51,6 +51,7 @@ public class TaskQueryMatcher extends BaseMatcher<TaskQueryImpl> {
     return matcher;
   }
 
+  @Override
   public void describeTo(Description description) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getClass().getSimpleName());

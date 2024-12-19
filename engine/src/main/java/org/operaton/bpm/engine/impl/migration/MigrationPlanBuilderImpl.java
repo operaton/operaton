@@ -54,6 +54,7 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
     this.explicitMigrationInstructions = new ArrayList<MigrationInstructionImpl>();
   }
 
+  @Override
   public MigrationInstructionsBuilder mapEqualActivities() {
     this.mapEqualActivities = true;
     return this;
@@ -69,6 +70,7 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
     return this;
   }
 
+  @Override
   public MigrationInstructionBuilder mapActivities(String sourceActivityId, String targetActivityId) {
     this.explicitMigrationInstructions.add(
       new MigrationInstructionImpl(sourceActivityId, targetActivityId)
@@ -76,6 +78,7 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
     return this;
   }
 
+  @Override
   public MigrationInstructionBuilder updateEventTrigger() {
     explicitMigrationInstructions
       .get(explicitMigrationInstructions.size() - 1)
@@ -83,6 +86,7 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
     return this;
   }
 
+  @Override
   public MigrationInstructionsBuilder updateEventTriggers() {
     this.updateEventTriggersForGeneratedInstructions = true;
     return this;
@@ -112,6 +116,7 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
     return explicitMigrationInstructions;
   }
 
+  @Override
   public MigrationPlan build() {
     return commandExecutor.execute(new CreateMigrationPlanCmd(this));
   }

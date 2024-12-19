@@ -197,6 +197,7 @@ public class ExternalTaskImpl implements ExternalTask {
     return processDefinitionKey;
   }
 
+  @Override
   public String getProcessDefinitionVersionTag() {
     return processDefinitionVersionTag;
   }
@@ -269,6 +270,7 @@ public class ExternalTaskImpl implements ExternalTask {
     return getAllVariablesTyped(true);
   }
 
+  @Override
   public VariableMap getAllVariablesTyped(boolean deserializeObjectValues) {
     VariableMap variables = Variables.createVariables();
 
@@ -301,6 +303,7 @@ public class ExternalTaskImpl implements ExternalTask {
   }
 
 
+  @Override
   public Map<String, String> getExtensionProperties() {
     return extensionProperties == null ? Collections.emptyMap() : extensionProperties;
   }

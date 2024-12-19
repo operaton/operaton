@@ -25,6 +25,7 @@ public class FailingSerializationBean extends JsonSerializable {
     super(stringProperty, intProperty, booleanProperty);
   }
 
+  @Override
   public String getStringProperty() {
     throw new RuntimeException("I am failing");
   }

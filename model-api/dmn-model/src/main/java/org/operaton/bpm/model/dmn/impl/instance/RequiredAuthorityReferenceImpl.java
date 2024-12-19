@@ -37,7 +37,8 @@ public class RequiredAuthorityReferenceImpl extends DmnElementReferenceImpl impl
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<RequiredAuthorityReference>() {
-        public RequiredAuthorityReference newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public RequiredAuthorityReference newInstance(ModelTypeInstanceContext instanceContext) {
           return new RequiredAuthorityReferenceImpl(instanceContext);
         }
       });

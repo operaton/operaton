@@ -43,10 +43,12 @@ public class UntypedValueImpl implements TypedValue {
     this.isTransient = isTransient;
   }
 
+  @Override
   public Object getValue() {
     return value;
   }
 
+  @Override
   public ValueType getType() {
     // no type
     return null;

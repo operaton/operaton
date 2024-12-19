@@ -33,10 +33,12 @@ public class CmmnModelInstanceImpl extends ModelInstanceImpl implements CmmnMode
     super(model, modelBuilder, document);
   }
 
+  @Override
   public Definitions getDefinitions() {
     return (Definitions) getDocumentElement();
   }
 
+  @Override
   public void setDefinitions(Definitions definitions) {
     setDocumentElement(definitions);
   }

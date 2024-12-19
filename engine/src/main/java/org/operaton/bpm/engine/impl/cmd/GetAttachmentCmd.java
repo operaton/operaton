@@ -36,6 +36,7 @@ public class GetAttachmentCmd implements Command<Attachment>, Serializable {
     this.attachmentId = attachmentId;
   }
 
+  @Override
   public Attachment execute(CommandContext commandContext) {
     return commandContext
       .getDbEntityManager()

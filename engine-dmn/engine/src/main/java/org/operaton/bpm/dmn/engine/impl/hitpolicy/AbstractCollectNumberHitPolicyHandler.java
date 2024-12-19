@@ -37,6 +37,7 @@ public abstract class AbstractCollectNumberHitPolicyHandler implements DmnHitPol
 
   protected abstract BuiltinAggregator getAggregator();
 
+  @Override
   public DmnDecisionTableEvaluationEvent apply(DmnDecisionTableEvaluationEvent decisionTableEvaluationEvent) {
     String resultName = getResultName(decisionTableEvaluationEvent);
     TypedValue resultValue = getResultValue(decisionTableEvaluationEvent);

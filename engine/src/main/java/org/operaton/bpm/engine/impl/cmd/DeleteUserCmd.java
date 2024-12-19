@@ -36,7 +36,8 @@ public class DeleteUserCmd extends AbstractWritableIdentityServiceCmd<Void> impl
   public DeleteUserCmd(String userId) {
     this.userId = userId;
   }
-  
+
+  @Override
   protected Void executeCmd(CommandContext commandContext) {
     ensureNotNull("userId", userId);
 

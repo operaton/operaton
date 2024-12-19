@@ -30,6 +30,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
   protected long cleanableProcessInstanceCount;
   protected String tenantId;
 
+  @Override
   public String getProcessDefinitionId() {
     return processDefinitionId;
   }
@@ -38,6 +39,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     this.processDefinitionId = processDefinitionId;
   }
 
+  @Override
   public String getProcessDefinitionKey() {
     return processDefinitionKey;
   }
@@ -46,6 +48,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     this.processDefinitionKey = processDefinitionKey;
   }
 
+  @Override
   public String getProcessDefinitionName() {
     return processDefinitionName;
   }
@@ -54,6 +57,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     this.processDefinitionName = processDefinitionName;
   }
 
+  @Override
   public int getProcessDefinitionVersion() {
     return processDefinitionVersion;
   }
@@ -62,6 +66,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     this.processDefinitionVersion = processDefinitionVersion;
   }
 
+  @Override
   public Integer getHistoryTimeToLive() {
     return historyTimeToLive;
   }
@@ -70,6 +75,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     this.historyTimeToLive = historyTimeToLive;
   }
 
+  @Override
   public long getFinishedProcessInstanceCount() {
     return finishedProcessInstanceCount;
   }
@@ -78,6 +84,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     this.finishedProcessInstanceCount = finishedProcessInstanceCount;
   }
 
+  @Override
   public long getCleanableProcessInstanceCount() {
     return cleanableProcessInstanceCount;
   }
@@ -86,6 +93,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     this.cleanableProcessInstanceCount = cleanableProcessInstanceCount;
   }
 
+  @Override
   public String getTenantId() {
     return tenantId;
   }
@@ -94,6 +102,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
     this.tenantId = tenantId;
   }
 
+  @Override
   public String toString() {
     return this.getClass().getSimpleName()
         + "[processDefinitionId = " + processDefinitionId

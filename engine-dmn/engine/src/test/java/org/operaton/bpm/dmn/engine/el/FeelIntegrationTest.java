@@ -199,6 +199,7 @@ public class FeelIntegrationTest extends DmnEngineTest {
       feelEngineSpy = spy(feelEngineFactory.createInstance());
     }
 
+    @Override
     public FeelEngine createInstance() {
       return feelEngineSpy;
     }

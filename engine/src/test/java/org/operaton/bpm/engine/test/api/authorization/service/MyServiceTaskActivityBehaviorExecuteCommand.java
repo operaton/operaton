@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
  */
 public class MyServiceTaskActivityBehaviorExecuteCommand extends MyServiceTaskActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     logAuthentication(execution);
     executeCommand(execution);

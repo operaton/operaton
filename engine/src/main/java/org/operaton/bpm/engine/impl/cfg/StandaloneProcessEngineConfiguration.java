@@ -33,7 +33,8 @@ import org.operaton.bpm.engine.impl.interceptor.ProcessApplicationContextInterce
  */
 public class StandaloneProcessEngineConfiguration extends ProcessEngineConfigurationImpl {
 
-  protected Collection< ? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequired() {
+  @Override
+  protected Collection<? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequired() {
     List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<CommandInterceptor>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequired.add(getExceptionCodeInterceptor());
@@ -45,7 +46,8 @@ public class StandaloneProcessEngineConfiguration extends ProcessEngineConfigura
     return defaultCommandInterceptorsTxRequired;
   }
 
-  protected Collection< ? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequiresNew() {
+  @Override
+  protected Collection<? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequiresNew() {
     List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<CommandInterceptor>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequired.add(getExceptionCodeInterceptor());

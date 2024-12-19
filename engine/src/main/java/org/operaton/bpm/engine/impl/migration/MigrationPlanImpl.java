@@ -42,6 +42,7 @@ public class MigrationPlanImpl implements MigrationPlan {
     this.instructions = new ArrayList<MigrationInstruction>();
   }
 
+  @Override
   public String getSourceProcessDefinitionId() {
     return sourceProcessDefinitionId;
   }
@@ -50,6 +51,7 @@ public class MigrationPlanImpl implements MigrationPlan {
     this.sourceProcessDefinitionId = sourceProcessDefinitionId;
   }
 
+  @Override
   public String getTargetProcessDefinitionId() {
     return targetProcessDefinitionId;
   }
@@ -67,6 +69,7 @@ public class MigrationPlanImpl implements MigrationPlan {
     this.targetProcessDefinitionId = targetProcessDefinitionId;
   }
 
+  @Override
   public List<MigrationInstruction> getInstructions() {
     return instructions;
   }
@@ -75,6 +78,7 @@ public class MigrationPlanImpl implements MigrationPlan {
     this.instructions = instructions;
   }
 
+  @Override
   public String toString() {
     return "MigrationPlan[" +
       "sourceProcessDefinitionId='" + sourceProcessDefinitionId + '\'' +

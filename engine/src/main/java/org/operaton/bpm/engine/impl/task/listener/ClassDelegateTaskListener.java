@@ -42,6 +42,7 @@ public class ClassDelegateTaskListener extends ClassDelegate implements TaskList
     super(clazz, fieldDeclarations);
   }
 
+  @Override
   public void notify(DelegateTask delegateTask) {
     TaskListener taskListenerInstance = getTaskListenerInstance();
     try {

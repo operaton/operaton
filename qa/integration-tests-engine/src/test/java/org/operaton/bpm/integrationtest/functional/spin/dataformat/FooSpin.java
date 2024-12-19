@@ -26,26 +26,32 @@ import org.operaton.spin.Spin;
  */
 public class FooSpin extends Spin<FooSpin> {
 
+  @Override
   public String getDataFormatName() {
     return null;
   }
 
+  @Override
   public Object unwrap() {
     return null;
   }
 
+  @Override
   public String toString() {
     return null;
   }
 
+  @Override
   public void writeToWriter(Writer writer) {
 
   }
 
+  @Override
   public <C> C mapTo(Class<C> type) {
     return null;
   }
 
+  @Override
   public <C> C mapTo(String type) {
     return null;
   }

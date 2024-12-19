@@ -41,7 +41,8 @@ public class DecisionParameterImpl extends ParameterImpl implements DecisionPara
         .namespaceUri(CMMN11_NS)
         .extendsType(Parameter.class)
         .instanceProvider(new ModelTypeInstanceProvider<DecisionParameter>() {
-          public DecisionParameter newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public DecisionParameter newInstance(ModelTypeInstanceContext instanceContext) {
             return new DecisionParameterImpl(instanceContext);
           }
         });

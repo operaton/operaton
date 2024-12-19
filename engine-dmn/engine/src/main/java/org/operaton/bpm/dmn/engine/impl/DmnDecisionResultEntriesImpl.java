@@ -75,6 +75,7 @@ public class DmnDecisionResultEntriesImpl implements DmnDecisionResultEntries {
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T> T getFirstEntry() {
     if (!outputValues.isEmpty()) {
@@ -84,6 +85,7 @@ public class DmnDecisionResultEntriesImpl implements DmnDecisionResultEntries {
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T> T getSingleEntry() {
     if (!outputValues.isEmpty()) {
@@ -104,6 +106,7 @@ public class DmnDecisionResultEntriesImpl implements DmnDecisionResultEntries {
     return valueMap;
   }
 
+  @Override
   public Map<String, TypedValue> getEntryMapTyped() {
     return outputValues;
   }

@@ -37,62 +37,76 @@ public class DefaultDmnTransformer implements DmnTransformer {
   protected DmnDataTypeTransformerRegistry dataTypeTransformerRegistry = new DefaultDataTypeTransformerRegistry();
   protected DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry = new DefaultHitPolicyHandlerRegistry();
 
+  @Override
   public DmnTransformFactory getTransformFactory() {
     return transformFactory;
   }
 
+  @Override
   public List<DmnTransformListener> getTransformListeners() {
     return transformListeners;
   }
 
+  @Override
   public void setTransformListeners(List<DmnTransformListener> transformListeners) {
     this.transformListeners = transformListeners;
   }
 
+  @Override
   public DmnTransformer transformListeners(List<DmnTransformListener> transformListeners) {
     setTransformListeners(transformListeners);
     return this;
   }
 
+  @Override
   public DmnElementTransformHandlerRegistry getElementTransformHandlerRegistry() {
     return elementTransformHandlerRegistry;
   }
 
+  @Override
   public void setElementTransformHandlerRegistry(DmnElementTransformHandlerRegistry elementTransformHandlerRegistry) {
     this.elementTransformHandlerRegistry = elementTransformHandlerRegistry;
   }
 
+  @Override
   public DmnTransformer elementTransformHandlerRegistry(DmnElementTransformHandlerRegistry elementTransformHandlerRegistry) {
     setElementTransformHandlerRegistry(elementTransformHandlerRegistry);
     return this;
   }
 
+  @Override
   public DmnDataTypeTransformerRegistry getDataTypeTransformerRegistry() {
     return dataTypeTransformerRegistry;
   }
 
+  @Override
   public void setDataTypeTransformerRegistry(DmnDataTypeTransformerRegistry dataTypeTransformerRegistry) {
     this.dataTypeTransformerRegistry = dataTypeTransformerRegistry;
   }
 
+  @Override
   public DmnTransformer dataTypeTransformerRegistry(DmnDataTypeTransformerRegistry dataTypeTransformerRegistry) {
     setDataTypeTransformerRegistry(dataTypeTransformerRegistry);
     return this;
   }
 
+  @Override
   public DmnHitPolicyHandlerRegistry getHitPolicyHandlerRegistry() {
     return hitPolicyHandlerRegistry;
   }
 
+  @Override
   public void setHitPolicyHandlerRegistry(DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry) {
     this.hitPolicyHandlerRegistry = hitPolicyHandlerRegistry;
   }
 
+  @Override
   public DmnTransformer hitPolicyHandlerRegistry(DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry) {
     setHitPolicyHandlerRegistry(hitPolicyHandlerRegistry);
     return this;
   }
 
+  @Override
   public DmnTransform createTransform() {
     return transformFactory.createTransform(this);
   }

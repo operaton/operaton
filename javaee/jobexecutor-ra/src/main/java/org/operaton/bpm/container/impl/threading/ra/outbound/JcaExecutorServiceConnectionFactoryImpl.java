@@ -44,6 +44,7 @@ public class JcaExecutorServiceConnectionFactoryImpl implements JcaExecutorServi
     this.connectionManager = cxManager;
   }
 
+  @Override
   public JcaExecutorServiceConnection getConnection() throws ResourceException {
     return (JcaExecutorServiceConnection) connectionManager.allocateConnection(mcf, null);
   }

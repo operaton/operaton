@@ -25,51 +25,60 @@ import jakarta.el.ValueReference;
  * @author Christoph Beck
  */
 public abstract class AstRightValue extends AstNode {
-	/**
-	 * Answer <code>false</code>
-	 */
-	public final boolean isLiteralText() {
+  /**
+   * Answer <code>false</code>
+   */
+  @Override
+  public final boolean isLiteralText() {
 		return false;
 	}
 
-	/**
-	 * according to the spec, the result is undefined for rvalues, so answer <code>null</code>
-	 */
-	public final Class<?> getType(Bindings bindings, ELContext context) {
+  /**
+   * according to the spec, the result is undefined for rvalues, so answer <code>null</code>
+   */
+  @Override
+  public final Class<?> getType(Bindings bindings, ELContext context) {
 		return null;
 	}
 
-	/**
-	 * non-lvalues are always readonly, so answer <code>true</code>
-	 */
-	public final boolean isReadOnly(Bindings bindings, ELContext context) {
+  /**
+   * non-lvalues are always readonly, so answer <code>true</code>
+   */
+  @Override
+  public final boolean isReadOnly(Bindings bindings, ELContext context) {
 		return true;
 	}
 
-	/**
-	 * non-lvalues are always readonly, so throw an exception
-	 */
-	public final void setValue(Bindings bindings, ELContext context, Object value) {
+  /**
+   * non-lvalues are always readonly, so throw an exception
+   */
+  @Override
+  public final void setValue(Bindings bindings, ELContext context, Object value) {
 		throw new ELException(LocalMessages.get("error.value.set.rvalue", getStructuralId(bindings)));
 	}
 
-	public final MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
+  @Override
+  public final MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
 		return null;
 	}
 
-	public final Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
+  @Override
+  public final Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
 		throw new ELException(LocalMessages.get("error.method.invalid", getStructuralId(bindings)));
 	}
 
-	public final boolean isLeftValue() {
+  @Override
+  public final boolean isLeftValue() {
 		return false;
 	}
-	
-	public boolean isMethodInvocation() {
+
+  @Override
+  public boolean isMethodInvocation() {
 		return false;
 	}
-	
-	public final ValueReference getValueReference(Bindings bindings, ELContext context) {
+
+  @Override
+  public final ValueReference getValueReference(Bindings bindings, ELContext context) {
 		return null;
 	}
 }

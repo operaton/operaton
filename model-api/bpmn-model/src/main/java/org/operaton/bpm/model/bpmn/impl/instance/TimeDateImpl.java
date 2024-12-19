@@ -38,7 +38,8 @@ public class TimeDateImpl extends ExpressionImpl implements TimeDate {
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<TimeDate>() {
-        public TimeDate newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public TimeDate newInstance(ModelTypeInstanceContext instanceContext) {
           return new TimeDateImpl(instanceContext);
         }
       });

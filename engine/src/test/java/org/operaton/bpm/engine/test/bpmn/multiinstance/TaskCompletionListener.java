@@ -24,7 +24,8 @@ import org.operaton.bpm.engine.delegate.TaskListener;
  * @author Joram Barrez
  */
 public class TaskCompletionListener implements TaskListener {
-  
+
+  @Override
   public void notify(DelegateTask delegateTask) {
     Integer counter = (Integer) delegateTask.getVariable("taskListenerCounter");
     if (counter == null) {

@@ -43,6 +43,7 @@ public class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd {
     super(taskId, variableNames, deserializeObjectValues);
   }
 
+  @Override
   public VariableMap execute(CommandContext commandContext) {
     final TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(resourceId);

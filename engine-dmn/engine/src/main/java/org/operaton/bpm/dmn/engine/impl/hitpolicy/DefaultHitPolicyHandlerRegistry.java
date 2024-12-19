@@ -44,10 +44,12 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
     return handlers;
   }
 
+  @Override
   public DmnHitPolicyHandler getHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator) {
     return handlers.get(new HitPolicyEntry(hitPolicy, builtinAggregator));
   }
 
+  @Override
   public void addHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator, DmnHitPolicyHandler hitPolicyHandler) {
     handlers.put(new HitPolicyEntry(hitPolicy, builtinAggregator), hitPolicyHandler);
   }

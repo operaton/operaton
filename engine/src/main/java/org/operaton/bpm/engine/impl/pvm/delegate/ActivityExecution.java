@@ -55,9 +55,11 @@ public interface ActivityExecution extends DelegateExecution {
   void setActivityInstanceId(String id);
 
   /** return the Id of the activity instance currently executed by this execution */
+  @Override
   String getActivityInstanceId();
 
   /** return the Id of the parent activity instance currently executed by this execution */
+  @Override
   String getParentActivityInstanceId();
 
   /* Execution management */

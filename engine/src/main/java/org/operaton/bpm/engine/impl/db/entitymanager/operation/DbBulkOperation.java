@@ -62,6 +62,7 @@ public class DbBulkOperation extends DbOperation {
     this.statement = statement;
   }
 
+  @Override
   public String toString() {
     return operationType + " "+ statement +" " +parameter;
   }

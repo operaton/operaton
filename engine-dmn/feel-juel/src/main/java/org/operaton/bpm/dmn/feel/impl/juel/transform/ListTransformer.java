@@ -29,10 +29,12 @@ public class ListTransformer implements FeelToJuelTransformer {
   // regex to split by comma which does a positive look ahead to ignore commas enclosed in quotes
   public static final String COMMA_SEPARATOR_REGEX = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
+  @Override
   public boolean canTransform(String feelExpression) {
     return splitExpression(feelExpression).size() > 1;
   }
 
+  @Override
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     List<String> juelExpressions = transformExpressions(transform, feelExpression, inputName);
     return joinExpressions(juelExpressions);

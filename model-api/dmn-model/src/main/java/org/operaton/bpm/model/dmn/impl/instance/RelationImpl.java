@@ -41,10 +41,12 @@ public class RelationImpl extends ExpressionImpl implements Relation {
     super(instanceContext);
   }
 
+  @Override
   public Collection<Column> getColumns() {
     return columnCollection.get(this);
   }
 
+  @Override
   public Collection<Row> getRows() {
     return rowCollection.get(this);
   }
@@ -54,7 +56,8 @@ public class RelationImpl extends ExpressionImpl implements Relation {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
       .instanceProvider(new ModelTypeInstanceProvider<Relation>() {
-        public Relation newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Relation newInstance(ModelTypeInstanceContext instanceContext) {
           return new RelationImpl(instanceContext);
         }
       });

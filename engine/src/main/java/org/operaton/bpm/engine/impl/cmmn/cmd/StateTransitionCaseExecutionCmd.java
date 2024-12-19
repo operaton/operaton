@@ -40,6 +40,7 @@ public abstract class StateTransitionCaseExecutionCmd extends CaseExecutionVaria
     super(builder);
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     super.execute(commandContext);
 

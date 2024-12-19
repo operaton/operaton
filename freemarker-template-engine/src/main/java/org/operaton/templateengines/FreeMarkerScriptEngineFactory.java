@@ -44,34 +44,42 @@ public class FreeMarkerScriptEngineFactory implements ScriptEngineFactory {
     mimeTypes = Collections.emptyList();
   }
 
+  @Override
   public String getEngineName() {
     return NAME;
   }
 
+  @Override
   public String getEngineVersion() {
     return VERSION;
   }
 
+  @Override
   public List<String> getExtensions() {
     return extensions;
   }
 
+  @Override
   public List<String> getMimeTypes() {
     return mimeTypes;
   }
 
+  @Override
   public List<String> getNames() {
     return names;
   }
 
+  @Override
   public String getLanguageName() {
     return NAME;
   }
 
+  @Override
   public String getLanguageVersion() {
     return VERSION;
   }
 
+  @Override
   public Object getParameter(String key) {
     if (key.equals(ScriptEngine.NAME)) {
       return getLanguageName();
@@ -90,14 +98,17 @@ public class FreeMarkerScriptEngineFactory implements ScriptEngineFactory {
     }
   }
 
+  @Override
   public String getMethodCallSyntax(String object, String method, String... args) {
     return "${" + object + "." + method + "(" + joinStrings(", ", args) + ")}";
   }
 
+  @Override
   public String getOutputStatement(String toDisplay) {
     return toDisplay;
   }
 
+  @Override
   public String getProgram(String... statements) {
     return joinStrings("\n", statements);
   }
@@ -111,6 +122,7 @@ public class FreeMarkerScriptEngineFactory implements ScriptEngineFactory {
     }
   }
 
+  @Override
   public ScriptEngine getScriptEngine() {
     return new FreeMarkerScriptEngine(this);
   }

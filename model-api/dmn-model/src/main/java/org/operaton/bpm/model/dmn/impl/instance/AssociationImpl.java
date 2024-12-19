@@ -45,26 +45,32 @@ public class AssociationImpl extends ArtifactImpl implements Association {
     super(instanceContext);
   }
 
+  @Override
   public AssociationDirection getAssociationDirection() {
     return associationDirectionAttribute.getValue(this);
   }
 
+  @Override
   public void setAssociationDirection(AssociationDirection associationDirection) {
     associationDirectionAttribute.setValue(this, associationDirection);
   }
 
+  @Override
   public DmnElement getSource() {
     return sourceRef.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setSource(DmnElement source) {
     sourceRef.setReferenceTargetElement(this, source);
   }
 
+  @Override
   public DmnElement getTarget() {
     return targetRef.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setTarget(DmnElement target) {
     targetRef.setReferenceTargetElement(this, target);
   }
@@ -74,7 +80,8 @@ public class AssociationImpl extends ArtifactImpl implements Association {
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Artifact.class)
       .instanceProvider(new ModelTypeInstanceProvider<Association>() {
-        public Association newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Association newInstance(ModelTypeInstanceContext instanceContext) {
           return new AssociationImpl(instanceContext);
         }
       });

@@ -79,6 +79,7 @@ public class LogUtil {
 
   public static class LogFormatter extends Formatter {
 
+    @Override
     public String format(LogRecord record) {
       StringBuilder line = new StringBuilder();
       line.append(dateFormat.format(new Date()));

@@ -45,22 +45,26 @@ public class ModelBuilderImpl extends ModelBuilder {
     model = new ModelImpl(modelName);
   }
 
+  @Override
   public ModelBuilder alternativeNamespace(String alternativeNs, String actualNs) {
     model.declareAlternativeNamespace(alternativeNs, actualNs);
     return this;
   }
 
+  @Override
   public ModelElementTypeBuilder defineType(Class<? extends ModelElementInstance> modelInstanceType, String typeName) {
     ModelElementTypeBuilderImpl typeBuilder = new ModelElementTypeBuilderImpl(modelInstanceType, typeName, model);
     typeBuilders.add(typeBuilder);
     return typeBuilder;
   }
 
+  @Override
   public ModelElementType defineGenericType(String typeName, String typeNamespaceUri) {
     ModelElementTypeBuilder typeBuilder = defineType(ModelElementInstance.class, typeName)
       .namespaceUri(typeNamespaceUri)
       .instanceProvider(new ModelTypeInstanceProvider<ModelElementInstance>() {
-        public ModelElementInstance newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ModelElementInstance newInstance(ModelTypeInstanceContext instanceContext) {
           return new ModelElementInstanceImpl(instanceContext);
         }
       });
@@ -68,6 +72,7 @@ public class ModelBuilderImpl extends ModelBuilder {
     return typeBuilder.build();
   }
 
+  @Override
   public Model build() {
     for (ModelElementTypeBuilderImpl typeBuilder : typeBuilders) {
       typeBuilder.buildTypeHierarchy(model);

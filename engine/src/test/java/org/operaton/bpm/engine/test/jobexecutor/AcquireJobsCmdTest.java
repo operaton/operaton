@@ -93,7 +93,8 @@ public class AcquireJobsCmdTest extends PluggableProcessEngineTest {
   protected void makeSureJobDue(final Job job) {
     processEngineConfiguration.getCommandExecutorTxRequired()
       .execute(new Command<Void>() {
-        public Void execute(CommandContext commandContext) {
+      @Override
+      public Void execute(CommandContext commandContext) {
           Date currentTime = ClockUtil.getCurrentTime();
           commandContext.getJobManager()
             .findJobById(job.getId())

@@ -30,16 +30,19 @@ import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
  */
 public class OperatonVariableOnPartTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CAMUNDA_NS, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
         new ChildElementAssumption(CAMUNDA_NS, OperatonVariableTransitionEvent.class, 0, 1)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption(CAMUNDA_NS, "variableName")

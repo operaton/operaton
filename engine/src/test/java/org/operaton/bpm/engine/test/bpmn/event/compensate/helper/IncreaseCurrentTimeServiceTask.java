@@ -27,7 +27,8 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  * @author Svetlana Dorokhova
  */
 public class IncreaseCurrentTimeServiceTask implements JavaDelegate {
-  
+
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     Date currentTime = (Date)execution.getVariable("currentTime");
     currentTime = DateUtils.addSeconds(currentTime, 1);

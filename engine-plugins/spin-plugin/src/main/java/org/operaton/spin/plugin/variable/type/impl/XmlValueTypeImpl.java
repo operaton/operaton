@@ -34,10 +34,12 @@ public class XmlValueTypeImpl extends SpinValueTypeImpl implements XmlValueType 
     super(TYPE_NAME);
   }
 
+  @Override
   protected XmlValueBuilder createValue(SpinValue value) {
     return SpinValues.xmlValue((SpinXmlElement) value);
   }
 
+  @Override
   protected XmlValueBuilder createValueFromSerialized(String value) {
     return SpinValues.xmlValue(value);
   }

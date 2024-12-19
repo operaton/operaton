@@ -37,7 +37,8 @@ public class OutputEntryImpl extends LiteralExpressionImpl implements OutputEntr
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
       .instanceProvider(new ModelTypeInstanceProvider<OutputEntry>() {
-        public OutputEntry newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public OutputEntry newInstance(ModelTypeInstanceContext instanceContext) {
           return new OutputEntryImpl(instanceContext);
         }
       });

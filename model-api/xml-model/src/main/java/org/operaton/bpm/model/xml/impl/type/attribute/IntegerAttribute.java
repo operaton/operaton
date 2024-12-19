@@ -27,6 +27,7 @@ public class IntegerAttribute extends AttributeImpl<Integer> {
     super(owningElementType);
   }
 
+  @Override
   protected Integer convertXmlValueToModelValue(String rawValue) {
     try {
       return Integer.parseInt(rawValue);
@@ -36,6 +37,7 @@ public class IntegerAttribute extends AttributeImpl<Integer> {
     }
   }
 
+  @Override
   protected String convertModelValueToXmlValue(Integer modelValue) {
     return modelValue.toString();
   }

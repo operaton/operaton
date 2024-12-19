@@ -46,6 +46,7 @@ public class ObjectValueMapper extends AbstractTypedValueMapper<ObjectValue> {
     this.dataFormat = dataFormat;
   }
 
+  @Override
   public String getSerializationDataformat() {
     return serializationDataFormat;
   }
@@ -69,6 +70,7 @@ public class ObjectValueMapper extends AbstractTypedValueMapper<ObjectValue> {
     updateTypedValue(typedValue, serializedStringValue);
   }
 
+  @Override
   public ObjectValue readValue(TypedValueField value, boolean deserializeObjectValue) {
     String serializedStringValue = (String) value.getValue();
 

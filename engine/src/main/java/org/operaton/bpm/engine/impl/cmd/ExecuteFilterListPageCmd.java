@@ -45,6 +45,7 @@ public class ExecuteFilterListPageCmd extends AbstractExecuteFilterCmd implement
     this.maxResults = maxResults;
   }
 
+  @Override
   public List<?> execute(CommandContext commandContext) {
     Query<?, ?> query = getFilterQuery(commandContext);
     ((AbstractQuery) query).enableMaxResultsLimit();

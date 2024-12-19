@@ -26,6 +26,7 @@ import org.junit.Assert;
  */
 public class GetDeserializedValueDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
 
     JavaSerializable dataObject = (JavaSerializable) execution.getVariable("varName");

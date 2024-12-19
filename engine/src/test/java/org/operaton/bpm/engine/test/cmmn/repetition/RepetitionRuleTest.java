@@ -998,6 +998,7 @@ public class RepetitionRuleTest extends CmmnTest {
 
   protected void fireEntryCriteria(final String caseExecutionId) {
     executeHelperCaseCommand(new HelperCaseCommand() {
+      @Override
       public void execute() {
         getExecution(caseExecutionId).fireEntryCriteria();
       }

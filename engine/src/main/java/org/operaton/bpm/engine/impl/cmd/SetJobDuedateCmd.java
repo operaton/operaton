@@ -50,6 +50,7 @@ public class SetJobDuedateCmd implements Command<Void>, Serializable {
     this.cascade = cascade;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     JobEntity job = commandContext
             .getJobManager()

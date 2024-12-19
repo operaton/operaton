@@ -33,6 +33,7 @@ public class EnumAttribute<T extends Enum<T>> extends AttributeImpl<T> {
     this.type = type;
   }
 
+  @Override
   protected T convertXmlValueToModelValue(String rawValue) {
     if (rawValue != null) {
       return Enum.valueOf(type, rawValue);
@@ -42,6 +43,7 @@ public class EnumAttribute<T extends Enum<T>> extends AttributeImpl<T> {
     }
   }
 
+  @Override
   protected String convertModelValueToXmlValue(T modelValue) {
     return modelValue.name();
   }

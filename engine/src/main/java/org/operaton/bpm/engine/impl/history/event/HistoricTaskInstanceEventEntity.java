@@ -158,10 +158,12 @@ public class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent 
     this.taskState = taskState;
   }
 
+  @Override
   public String getRootProcessInstanceId() {
     return rootProcessInstanceId;
   }
 
+  @Override
   public void setRootProcessInstanceId(String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
   }

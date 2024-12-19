@@ -26,6 +26,7 @@ import org.junit.Assert;
  */
 public class GetVariableDelegate implements JavaDelegate {
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {
     
     SerializableVariable variable = (SerializableVariable) execution.getVariable("var1");

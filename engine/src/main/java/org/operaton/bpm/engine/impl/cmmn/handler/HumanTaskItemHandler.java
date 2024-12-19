@@ -49,6 +49,7 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonTaskListener;
  */
 public class HumanTaskItemHandler extends TaskItemHandler {
 
+  @Override
   public CmmnActivity handleElement(CmmnElement element, CmmnHandlerContext context) {
     HumanTask definition = getDefinition(element);
 
@@ -299,6 +300,7 @@ public class HumanTaskItemHandler extends TaskItemHandler {
     return taskListener;
   }
 
+  @Override
   protected HumanTask getDefinition(CmmnElement element) {
     return (HumanTask) super.getDefinition(element);
   }

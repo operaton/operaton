@@ -19,10 +19,11 @@ import jakarta.el.ELContext;
 
 
 public abstract class AstNode implements ExpressionNode {
-	/**
-	 * evaluate and return the (optionally coerced) result.
-	 */
-	public final Object getValue(Bindings bindings, ELContext context, Class<?> type) {
+  /**
+   * evaluate and return the (optionally coerced) result.
+   */
+  @Override
+  public final Object getValue(Bindings bindings, ELContext context, Class<?> type) {
 		Object value = eval(bindings, context);
 		if (type != null) {
 			value = bindings.convert(value, type);
@@ -33,8 +34,9 @@ public abstract class AstNode implements ExpressionNode {
 	public abstract void appendStructure(StringBuilder builder, Bindings bindings);
 
 	public abstract Object eval(Bindings bindings, ELContext context);
-  
-	public final String getStructuralId(Bindings bindings) {
+
+  @Override
+  public final String getStructuralId(Bindings bindings) {
 		StringBuilder builder = new StringBuilder();
 		appendStructure(builder, bindings);
 		return builder.toString();

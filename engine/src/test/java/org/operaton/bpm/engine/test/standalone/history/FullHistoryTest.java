@@ -894,6 +894,7 @@ public class FullHistoryTest {
 
     engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
 
+      @Override
       public Void execute(CommandContext commandContext) {
         Map<String, Object> formProperties = new HashMap<String, Object>();
         formProperties.put("formProp1", "value1");

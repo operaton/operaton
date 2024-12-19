@@ -117,6 +117,7 @@ public class HistoricInstanceForCleanupQueryTest {
     assertEquals(3, historicList.size());
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+      @Override
       public Void execute(CommandContext commandContext) {
 
         HistoricBatchManager historicBatchManager = commandContext.getHistoricBatchManager();

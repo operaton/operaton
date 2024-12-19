@@ -90,6 +90,7 @@ public class StartProcessInstancesInDirectory {
 
     String[] localNames = dir.list(new FilenameFilter() {
 
+      @Override
       public boolean accept(File dir, String name) {
         for (String extension : DEPLOYABLE_FILE_EXTENSIONS) {
           if(name.endsWith(extension)) {

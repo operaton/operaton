@@ -34,10 +34,12 @@ public class JsonValueTypeImpl extends SpinValueTypeImpl implements JsonValueTyp
     super(TYPE_NAME);
   }
 
+  @Override
   protected JsonValueBuilder createValue(SpinValue value) {
     return SpinValues.jsonValue((SpinJsonNode) value);
   }
 
+  @Override
   protected JsonValueBuilder createValueFromSerialized(String value) {
     return SpinValues.jsonValue(value);
   }

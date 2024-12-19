@@ -27,15 +27,18 @@ import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
  */
 public class AtomicOperationCaseExecutionFireEntryCriteria implements CmmnAtomicOperation {
 
+  @Override
   public String getCanonicalName() {
     return "trigger-entry-criteria";
   }
 
+  @Override
   public void execute(CmmnExecution execution) {
     CmmnActivityBehavior behavior = getActivityBehavior(execution);
     behavior.fireEntryCriteria(execution);
   }
 
+  @Override
   public boolean isAsync(CmmnExecution execution) {
     return false;
   }

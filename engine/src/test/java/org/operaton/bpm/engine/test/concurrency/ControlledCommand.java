@@ -32,6 +32,7 @@ public class ControlledCommand<T> implements Command<T> {
     this.command = command;
   }
 
+  @Override
   public T execute(CommandContext commandContext) {
     T result = command.execute(commandContext);
     controllableThread.returnControlToTestThreadAndWait();

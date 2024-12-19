@@ -33,15 +33,18 @@ public final class AstEval extends AstNode {
 		return deferred;
 	}
 
-	public boolean isLeftValue() {
+  @Override
+  public boolean isLeftValue() {
 		return getChild(0).isLeftValue();
 	}
 
-	public boolean isMethodInvocation() {
+  @Override
+  public boolean isMethodInvocation() {
 		return getChild(0).isMethodInvocation();
 	}
-	
-	public ValueReference getValueReference(Bindings bindings, ELContext context) {
+
+  @Override
+  public ValueReference getValueReference(Bindings bindings, ELContext context) {
 		return child.getValueReference(bindings, context);
 	}
 	
@@ -62,35 +65,43 @@ public final class AstEval extends AstNode {
 		b.append("}");
 	}
 
-	public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
+  @Override
+  public MethodInfo getMethodInfo(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes) {
 		return child.getMethodInfo(bindings, context, returnType, paramTypes);
 	}
 
-	public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
+  @Override
+  public Object invoke(Bindings bindings, ELContext context, Class<?> returnType, Class<?>[] paramTypes, Object[] paramValues) {
 		return child.invoke(bindings, context, returnType, paramTypes, paramValues);
 	}
 
-	public Class<?> getType(Bindings bindings, ELContext context) {
+  @Override
+  public Class<?> getType(Bindings bindings, ELContext context) {
 		return child.getType(bindings, context);
 	}
 
-	public boolean isLiteralText() {
+  @Override
+  public boolean isLiteralText() {
 		return child.isLiteralText();
 	}
 
-	public boolean isReadOnly(Bindings bindings, ELContext context) {
+  @Override
+  public boolean isReadOnly(Bindings bindings, ELContext context) {
 		return child.isReadOnly(bindings, context);
 	}
 
-	public void setValue(Bindings bindings, ELContext context, Object value) {
+  @Override
+  public void setValue(Bindings bindings, ELContext context, Object value) {
 		child.setValue(bindings, context, value);
 	}
 
-	public int getCardinality() {
+  @Override
+  public int getCardinality() {
 		return 1;
 	}
 
-	public AstNode getChild(int i) {
+  @Override
+  public AstNode getChild(int i) {
 		return i == 0 ? child : null;
 	}
 }

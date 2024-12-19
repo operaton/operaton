@@ -67,6 +67,7 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
     super(commandExecutor);
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return commandContext
@@ -74,6 +75,7 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
       .findHistoricCaseActivityInstanceCountByQueryCriteria(this);
   }
 
+  @Override
   public List<HistoricCaseActivityInstance> executeList(CommandContext commandContext, Page page) {
     checkQueryOk();
     return commandContext
@@ -81,114 +83,134 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
       .findHistoricCaseActivityInstancesByQueryCriteria(this, page);
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery caseActivityInstanceId(String caseActivityInstanceId) {
     ensureNotNull(NotValidException.class, "caseActivityInstanceId", caseActivityInstanceId);
     return caseActivityInstanceIdIn(caseActivityInstanceId);
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery caseActivityInstanceIdIn(String... caseActivityInstanceIds) {
     ensureNotNull(NotValidException.class, "caseActivityInstanceIds", (Object[]) caseActivityInstanceIds);
     this.caseActivityInstanceIds = caseActivityInstanceIds;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery caseInstanceId(String caseInstanceId) {
     ensureNotNull(NotValidException.class, "caseInstanceId", caseInstanceId);
     this.caseInstanceId = caseInstanceId;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery caseDefinitionId(String caseDefinitionId) {
     ensureNotNull(NotValidException.class, "caseDefinitionId", caseDefinitionId);
     this.caseDefinitionId = caseDefinitionId;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery caseExecutionId(String caseExecutionId) {
     ensureNotNull(NotValidException.class, "caseExecutionId", caseExecutionId);
     return caseActivityInstanceIdIn(caseExecutionId);
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery caseActivityId(String caseActivityId) {
     ensureNotNull(NotValidException.class, "caseActivityId", caseActivityId);
     return caseActivityIdIn(caseActivityId);
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery caseActivityIdIn(String... caseActivityIds) {
     ensureNotNull(NotValidException.class, "caseActivityIds", (Object[]) caseActivityIds);
     this.caseActivityIds = caseActivityIds;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery caseActivityName(String caseActivityName) {
     ensureNotNull(NotValidException.class, "caseActivityName", caseActivityName);
     this.caseActivityName = caseActivityName;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery caseActivityType(String caseActivityType) {
     ensureNotNull(NotValidException.class, "caseActivityType", caseActivityType);
     this.caseActivityType = caseActivityType;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery createdBefore(Date date) {
     ensureNotNull(NotValidException.class, "createdBefore", date);
     this.createdBefore = date;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery createdAfter(Date date) {
     ensureNotNull(NotValidException.class, "createdAfter", date);
     this.createdAfter = date;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery endedBefore(Date date) {
     ensureNotNull(NotValidException.class, "finishedBefore", date);
     this.endedBefore = date;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery endedAfter(Date date) {
     ensureNotNull(NotValidException.class, "finishedAfter", date);
     this.endedAfter = date;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery required() {
     this.required = true;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery ended() {
     this.ended = true;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery notEnded() {
     this.ended = false;
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery available() {
     ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
     this.caseActivityInstanceState = AVAILABLE.getStateCode();
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery enabled() {
     ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
     this.caseActivityInstanceState = ENABLED.getStateCode();
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery disabled() {
     ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
     this.caseActivityInstanceState = DISABLED.getStateCode();
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery active() {
     ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
     this.caseActivityInstanceState = ACTIVE.getStateCode();
@@ -201,18 +223,21 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery completed() {
     ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
     this.caseActivityInstanceState = COMPLETED.getStateCode();
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery terminated() {
     ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'", "caseActivityState", caseActivityInstanceState);
     this.caseActivityInstanceState = TERMINATED.getStateCode();
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery tenantIdIn(String... tenantIds) {
     ensureNotNull("tenantIds", (Object[]) tenantIds);
     this.tenantIds = tenantIds;
@@ -236,56 +261,67 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
 
   // ordering
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByHistoricCaseActivityInstanceId() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.HISTORIC_CASE_ACTIVITY_INSTANCE_ID);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByCaseInstanceId() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.CASE_INSTANCE_ID);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByCaseExecutionId() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.HISTORIC_CASE_ACTIVITY_INSTANCE_ID);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByCaseActivityId() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.CASE_ACTIVITY_ID);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByCaseActivityName() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.CASE_ACTIVITY_NAME);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByCaseActivityType() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.CASE_ACTIVITY_TYPE);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByHistoricCaseActivityInstanceCreateTime() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.CREATE);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByHistoricCaseActivityInstanceEndTime() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.END);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByHistoricCaseActivityInstanceDuration() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.DURATION);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByCaseDefinitionId() {
     orderBy(HistoricCaseActivityInstanceQueryProperty.CASE_DEFINITION_ID);
     return this;
   }
 
+  @Override
   public HistoricCaseActivityInstanceQuery orderByTenantId() {
     return orderBy(HistoricCaseActivityInstanceQueryProperty.TENANT_ID);
   }

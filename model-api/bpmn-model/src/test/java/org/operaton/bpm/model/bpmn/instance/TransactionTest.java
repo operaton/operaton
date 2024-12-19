@@ -45,14 +45,17 @@ import org.xml.sax.SAXException;
  */
 public class TransactionTest extends BpmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(SubProcess.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Collections.emptyList();
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
       new AttributeAssumption("method", false, false, TransactionMethod.Compensate)

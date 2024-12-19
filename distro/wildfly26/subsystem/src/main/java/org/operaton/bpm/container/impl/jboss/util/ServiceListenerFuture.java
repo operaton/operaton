@@ -67,20 +67,24 @@ public abstract class ServiceListenerFuture<S, V> extends AbstractServiceListene
   
   protected abstract void serviceAvailable();
 
+  @Override
   public boolean cancel(boolean mayInterruptIfRunning) {
     // unsupported
     return false;
   }
 
+  @Override
   public boolean isCancelled() {
     // unsupported
     return cancelled;
   }
 
+  @Override
   public boolean isDone() {
     return value != null;
   }
 
+  @Override
   public V get() throws InterruptedException, ExecutionException {
     if (!failed && !cancelled && value == null) {
       synchronized (this) {
@@ -92,6 +96,7 @@ public abstract class ServiceListenerFuture<S, V> extends AbstractServiceListene
     return value;
   }
 
+  @Override
   public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
     if (!failed && !cancelled && value == null) {
       synchronized (this) {

@@ -29,6 +29,7 @@ import javax.ejb.Singleton;
 @Local(BusinessInterface.class)
 public class LocalSingletonBean implements BusinessInterface {
 
+  @Override
   public boolean doBusiness() {
     return true;
   }

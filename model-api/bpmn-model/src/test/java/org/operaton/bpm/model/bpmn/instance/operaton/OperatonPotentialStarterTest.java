@@ -27,16 +27,19 @@ import java.util.Collection;
  * @author Sebastian Menski
  */
 public class OperatonPotentialStarterTest extends BpmnModelElementInstanceTest {
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(BpmnModelConstants.OPERATON_NS, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
       new ChildElementAssumption(ResourceAssignmentExpression.class, 0, 1)
     );
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

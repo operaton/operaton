@@ -57,6 +57,7 @@ public class StartProcessInstanceAtActivitiesCmd implements Command<ProcessInsta
     this.instantiationBuilder = instantiationBuilder;
   }
 
+  @Override
   public ProcessInstanceWithVariables execute(CommandContext commandContext) {
 
     ProcessDefinitionEntity processDefinition = new GetDeployedProcessDefinitionCmd(instantiationBuilder, false).execute(commandContext);

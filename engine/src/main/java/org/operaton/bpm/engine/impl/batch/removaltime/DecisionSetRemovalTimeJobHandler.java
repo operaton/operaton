@@ -148,6 +148,7 @@ public class DecisionSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Se
       .findHistoricDecisionInstance(instanceId);
   }
 
+  @Override
   public JobDeclaration<BatchJobContext, MessageEntity> getJobDeclaration() {
     return JOB_DECLARATION;
   }
@@ -163,6 +164,7 @@ public class DecisionSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Se
     return SetRemovalTimeJsonConverter.INSTANCE;
   }
 
+  @Override
   public String getType() {
     return Batch.TYPE_DECISION_SET_REMOVAL_TIME;
   }

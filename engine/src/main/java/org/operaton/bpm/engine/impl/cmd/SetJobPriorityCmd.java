@@ -41,6 +41,7 @@ public class SetJobPriorityCmd implements Command<Void> {
     this.priority = priority;
   }
 
+  @Override
   public Void execute(CommandContext commandContext) {
     EnsureUtil.ensureNotNull("job id must not be null", "jobId", jobId);
 

@@ -39,26 +39,32 @@ public class ImportImpl extends DmnModelElementInstanceImpl implements Import {
     super(instanceContext);
   }
 
+  @Override
   public String getNamespace() {
     return namespaceAttribute.getValue(this);
   }
 
+  @Override
   public void setNamespace(String namespace) {
     namespaceAttribute.setValue(this, namespace);
   }
 
+  @Override
   public String getLocationUri() {
     return locationUriAttribute.getValue(this);
   }
 
+  @Override
   public void setLocationUri(String locationUri) {
     locationUriAttribute.setValue(this, locationUri);
   }
 
+  @Override
   public String getImportType() {
     return importTypeAttribute.getValue(this);
   }
 
+  @Override
   public void setImportType(String importType) {
     importTypeAttribute.setValue(this, importType);
   }
@@ -67,7 +73,8 @@ public class ImportImpl extends DmnModelElementInstanceImpl implements Import {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Import.class, DMN_ELEMENT_IMPORT)
       .namespaceUri(LATEST_DMN_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Import>() {
-        public Import newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Import newInstance(ModelTypeInstanceContext instanceContext) {
           return new ImportImpl(instanceContext);
         }
       });

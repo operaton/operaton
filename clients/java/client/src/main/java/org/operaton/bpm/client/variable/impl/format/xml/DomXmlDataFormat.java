@@ -81,6 +81,7 @@ public class DomXmlDataFormat implements DataFormat {
     this.transformerFactory = transformerFactory;
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -93,10 +94,12 @@ public class DomXmlDataFormat implements DataFormat {
     return transformerFactory;
   }
 
+  @Override
   public boolean canMap(Object value) {
     return value != null;
   }
 
+  @Override
   public String writeValue(Object value) {
     Element mappedObject = writeAsElement(value);
 
@@ -113,6 +116,7 @@ public class DomXmlDataFormat implements DataFormat {
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T> T readValue(String value, String typeIdentifier) {
     ensureNotNull("value", value);
@@ -127,6 +131,7 @@ public class DomXmlDataFormat implements DataFormat {
     }
   }
 
+  @Override
   public <T> T readValue(String value, Class<T> cls) {
     ensureNotNull("value", value);
     ensureNotNull("class", cls);
@@ -143,6 +148,7 @@ public class DomXmlDataFormat implements DataFormat {
     }
   }
 
+  @Override
   public String getCanonicalTypeName(Object value) {
     return value.getClass().getName();
   }

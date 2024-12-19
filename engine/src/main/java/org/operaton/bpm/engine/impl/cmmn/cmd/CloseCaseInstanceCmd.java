@@ -40,6 +40,7 @@ public class CloseCaseInstanceCmd extends StateTransitionCaseExecutionCmd {
     super(caseExecutionId, variables, variablesLocal, variableDeletions, variableLocalDeletions);
   }
 
+  @Override
   protected void performStateTransition(CommandContext commandContext, CaseExecutionEntity caseExecution) {
     caseExecution.close();
   }

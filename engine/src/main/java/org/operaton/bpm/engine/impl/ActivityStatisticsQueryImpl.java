@@ -47,6 +47,7 @@ public class ActivityStatisticsQueryImpl extends
     this.processDefinitionId = processDefinitionId;
   }
 
+  @Override
   public long executeCount(CommandContext commandContext) {
     checkQueryOk();
     return
@@ -55,6 +56,7 @@ public class ActivityStatisticsQueryImpl extends
         .getStatisticsCountGroupedByActivity(this);
   }
 
+  @Override
   public List<ActivityStatistics> executeList(
       CommandContext commandContext, Page page) {
     checkQueryOk();
@@ -64,16 +66,19 @@ public class ActivityStatisticsQueryImpl extends
         .getStatisticsGroupedByActivity(this, page);
   }
 
+  @Override
   public ActivityStatisticsQuery includeFailedJobs() {
     includeFailedJobs = true;
     return this;
   }
 
+  @Override
   public ActivityStatisticsQuery includeIncidents() {
     includeIncidents = true;
     return this;
   }
 
+  @Override
   public ActivityStatisticsQuery includeIncidentsForType(String incidentType) {
     this.includeIncidentsForType = incidentType;
     return this;
@@ -91,6 +96,7 @@ public class ActivityStatisticsQueryImpl extends
     return processDefinitionId;
   }
 
+  @Override
   protected void checkQueryOk() {
     super.checkQueryOk();
     ensureNotNull("No valid process definition id supplied", "processDefinitionId", processDefinitionId);

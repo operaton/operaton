@@ -29,6 +29,7 @@ import javax.ejb.Stateless;
 @Remote(BusinessInterface.class)
 public class RemoteSLSBean implements BusinessInterface {
 
+  @Override
   public boolean doBusiness() {
     return true;
   }

@@ -47,10 +47,12 @@ public class MigrationBatchJobHandler extends AbstractBatchJobHandler<MigrationB
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_MIGRATION);
 
+  @Override
   public String getType() {
     return Batch.TYPE_PROCESS_INSTANCE_MIGRATION;
   }
 
+  @Override
   public JobDeclaration<BatchJobContext, MessageEntity> getJobDeclaration() {
     return JOB_DECLARATION;
   }

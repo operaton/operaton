@@ -66,10 +66,14 @@ public class CompetingJoinTest {
     public SignalThread(String executionId) {
       this.executionId = executionId;
     }
+
+    @Override
     public synchronized void startAndWaitUntilControlIsReturned() {
       activeThread = this;
       super.startAndWaitUntilControlIsReturned();
     }
+
+    @Override
     public void run() {
       try {
         processEngineConfiguration

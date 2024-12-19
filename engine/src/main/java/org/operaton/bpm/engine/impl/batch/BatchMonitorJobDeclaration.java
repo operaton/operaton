@@ -55,6 +55,7 @@ public class BatchMonitorJobDeclaration extends JobDeclaration<BatchEntity, Mess
     return batch.getMonitorJobDefinitionId();
   }
 
+  @Override
   public ParameterValueProvider getJobPriorityProvider() {
     long batchJobPriority = Context.getProcessEngineConfiguration()
       .getBatchJobPriority();

@@ -35,6 +35,7 @@ public class InvocationCounterDelegateBeanLocal implements JavaDelegate {
   	"InvocationCounterServiceBean!org.operaton.bpm.integrationtest.functional.ejb.request.beans.InvocationCounterServiceLocal")
   private InvocationCounterServiceLocal invocationCounterService;
 
+  @Override
   public void execute(DelegateExecution execution) throws Exception {    
     execution.setVariable("invocationCounter", invocationCounterService.getNumOfInvocations());      
   }

@@ -26,6 +26,7 @@ import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
  */
 public interface SequenceFlow extends FlowElement {
 
+  @Override
   SequenceFlowBuilder builder();
 
   FlowNode getSource();
@@ -46,6 +47,7 @@ public interface SequenceFlow extends FlowElement {
 
   void removeConditionExpression();
 
+  @Override
   BpmnEdge getDiagramElement();
 
 }

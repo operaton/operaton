@@ -35,6 +35,7 @@ public class FixedValue implements Expression {
     this.value = value;
   }
 
+  @Override
   public Object getValue(VariableScope variableScope) {
     return value;
   }
@@ -43,10 +44,12 @@ public class FixedValue implements Expression {
     return getValue(variableScope);
   }
 
+  @Override
   public void setValue(Object value, VariableScope variableScope) {
     throw new ProcessEngineException("Cannot change fixed value");
   }
 
+  @Override
   public String getExpressionText() {
     return value.toString();
   }

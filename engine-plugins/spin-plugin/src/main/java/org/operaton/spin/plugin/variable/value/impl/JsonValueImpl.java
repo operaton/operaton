@@ -60,15 +60,18 @@ public class JsonValueImpl extends SpinValueImpl implements JsonValue {
     super(value, serializedValue, dataFormatName, isDeserialized, SpinValueType.JSON, isTransient);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public DataFormat<SpinJsonNode> getDataFormat() {
     return (DataFormat<SpinJsonNode>) super.getDataFormat();
   }
 
+  @Override
   public JsonValueType getType() {
     return (JsonValueType) super.getType();
   }
 
+  @Override
   public SpinJsonNode getValue() {
     return (SpinJsonNode) super.getValue();
   }

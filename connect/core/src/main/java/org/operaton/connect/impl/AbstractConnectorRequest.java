@@ -38,6 +38,7 @@ public abstract class AbstractConnectorRequest<R extends ConnectorResponse> impl
     this.connector = connector;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public R execute() {
     if(!isRequestValid()) {
@@ -55,6 +56,7 @@ public abstract class AbstractConnectorRequest<R extends ConnectorResponse> impl
     return true;
   }
 
+  @Override
   public void setRequestParameters(Map<String, Object> params) {
     for (Entry<String, Object> param : params.entrySet()) {
       setRequestParameter(param.getKey(), param.getValue());
@@ -66,6 +68,7 @@ public abstract class AbstractConnectorRequest<R extends ConnectorResponse> impl
    * @param name the name of the parameter
    * @param value the value of the parameter
    */
+  @Override
   public void setRequestParameter(String name, Object value) {
     requestParameters.put(name, value);
   }
@@ -73,10 +76,12 @@ public abstract class AbstractConnectorRequest<R extends ConnectorResponse> impl
   /**
    * @return the parameters as handed in to the request.
    */
+  @Override
   public Map<String, Object> getRequestParameters() {
     return requestParameters;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <V> V getRequestParameter(String name) {
     return (V) requestParameters.get(name);

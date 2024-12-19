@@ -41,6 +41,7 @@ public class ClassDelegateCaseVariableListener extends ClassDelegate implements 
     super(clazz, fieldDeclarations);
   }
 
+  @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
     CaseVariableListener variableListenerInstance = getVariableListenerInstance();
 

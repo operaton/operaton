@@ -53,7 +53,8 @@ public class DeleteIdentityLinkForProcessDefinitionCmd implements Command<Object
       throw new ProcessEngineException("userId and groupId cannot both be null");
     }
   }
-  
+
+  @Override
   public Void execute(CommandContext commandContext) {
     ProcessDefinitionEntity processDefinition = Context
       .getCommandContext()

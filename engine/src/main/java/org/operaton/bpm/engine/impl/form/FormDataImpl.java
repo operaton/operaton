@@ -42,6 +42,7 @@ public abstract class FormDataImpl implements FormData, Serializable {
 
   // getters and setters //////////////////////////////////////////////////////
 
+  @Override
   public String getFormKey() {
     return formKey;
   }
@@ -50,6 +51,7 @@ public abstract class FormDataImpl implements FormData, Serializable {
     this.formKey = formKey;
   }
 
+  @Override
   public OperatonFormRef getOperatonFormRef() {
     return operatonFormRef;
   }
@@ -58,6 +60,7 @@ public abstract class FormDataImpl implements FormData, Serializable {
     this.operatonFormRef = operatonFormRef;
   }
 
+  @Override
   public String getDeploymentId() {
     return deploymentId;
   }
@@ -66,6 +69,7 @@ public abstract class FormDataImpl implements FormData, Serializable {
     this.deploymentId = deploymentId;
   }
 
+  @Override
   public List<FormProperty> getFormProperties() {
     return formProperties;
   }
@@ -74,6 +78,7 @@ public abstract class FormDataImpl implements FormData, Serializable {
     this.formProperties = formProperties;
   }
 
+  @Override
   public List<FormField> getFormFields() {
     return formFields;
   }

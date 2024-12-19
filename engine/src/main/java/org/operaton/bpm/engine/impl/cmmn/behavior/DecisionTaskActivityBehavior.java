@@ -25,6 +25,7 @@ public class DecisionTaskActivityBehavior extends CallingTaskActivityBehavior {
 
   protected String resultVariable;
 
+  @Override
   protected String getTypeName() {
     return "decision task";
   }

@@ -218,6 +218,7 @@ public class EventSubProcessStartConditionalEventTest extends AbstractConditiona
     deployConditionalEventSubProcess(model, CONDITIONAL_EVENT_PROCESS_KEY, isInterrupting);
   }
 
+  @Override
   protected void deployConditionalEventSubProcess(BpmnModelInstance model, String parentId, boolean isInterrupting) {
 
     final BpmnModelInstance modelInstance = modify(model)

@@ -58,60 +58,71 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
     this.topicSubscriptionManager = topicSubscriptionManager;
   }
 
+  @Override
   public TopicSubscriptionBuilder lockDuration(long lockDuration) {
     this.lockDuration = lockDuration;
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder handler(ExternalTaskHandler externalTaskHandler) {
     this.externalTaskHandler = externalTaskHandler;
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder variables(String... variableNames) {
     ensureNotNull(variableNames, "variableNames");
     this.variableNames = Arrays.asList(variableNames);
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder localVariables(boolean localVariables) {
     this.localVariables = localVariables;
     return this;
   }
-  
+
+  @Override
   public TopicSubscriptionBuilder businessKey(String businessKey) {
     this.businessKey = businessKey;
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder processDefinitionId(String processDefinitionId) {
     this.processDefinitionId = processDefinitionId;
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder processDefinitionIdIn(String... processDefinitionIds) {
     ensureNotNull(processDefinitionIds, "processDefinitionIds");
     this.processDefinitionIds = Arrays.asList(processDefinitionIds);
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder processDefinitionKey(String processDefinitionKey) {
     this.processDefinitionKey = processDefinitionKey;
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder processDefinitionKeyIn(String... processDefinitionKeys) {
     ensureNotNull(processDefinitionKeys, "processDefinitionKeys");
     this.processDefinitionKeys = Arrays.asList(processDefinitionKeys);
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder processDefinitionVersionTag(String processDefinitionVersionTag) {
     ensureNotNull(processDefinitionVersionTag, "processDefinitionVersionTag");
     this.processDefinitionVersionTag = processDefinitionVersionTag;
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder processVariablesEqualsIn(Map<String, Object> processVariables) {
     ensureNotNull(processVariables, "processVariables");
     if (this.processVariables == null) {
@@ -124,6 +135,7 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder processVariableEquals(String name, Object value) {
     ensureNotNull(name, "processVariableName");
     if (this.processVariables == null) {
@@ -133,22 +145,26 @@ public class TopicSubscriptionBuilderImpl implements TopicSubscriptionBuilder {
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder withoutTenantId() {
     withoutTenantId = true;
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder tenantIdIn(String... tenantIds) {
     ensureNotNull(tenantIds, "tenantIds");
     this.tenantIds = Arrays.asList(tenantIds);
     return this;
   }
 
+  @Override
   public TopicSubscriptionBuilder includeExtensionProperties(boolean includeExtensionProperties) {
     this.includeExtensionProperties = includeExtensionProperties;
     return this;
   }
 
+  @Override
   public TopicSubscription open() {
     if (topicName == null) {
       throw LOG.topicNameNullException();

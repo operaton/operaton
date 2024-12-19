@@ -53,6 +53,7 @@ public class JacksonJsonDataFormat implements DataFormat {
     this.typeDetectors.add(new DefaultJsonJacksonTypeDetector());
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -65,10 +66,12 @@ public class JacksonJsonDataFormat implements DataFormat {
     this.objectMapper = objectMapper;
   }
 
+  @Override
   public boolean canMap(Object parameter) {
     return parameter != null;
   }
 
+  @Override
   public String writeValue(Object value) {
     try {
       StringWriter stringWriter = new StringWriter();
@@ -80,6 +83,7 @@ public class JacksonJsonDataFormat implements DataFormat {
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T> T readValue(String value, String typeIdentifier) {
     try {
@@ -92,6 +96,7 @@ public class JacksonJsonDataFormat implements DataFormat {
     }
   }
 
+  @Override
   public <T> T readValue(String value, Class<T> cls) {
     try {
       return objectMapper.readValue(value, cls);
@@ -131,6 +136,7 @@ public class JacksonJsonDataFormat implements DataFormat {
     }
   }
 
+  @Override
   public String getCanonicalTypeName(Object value) {
     ensureNotNull("value", value);
 

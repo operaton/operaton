@@ -35,7 +35,8 @@ public class ParticipantRef extends BpmnModelElementInstanceImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ParticipantRef.class, BPMN_ELEMENT_PARTICIPANT_REF)
       .namespaceUri(BPMN20_NS)
       .instanceProvider(new ModelTypeInstanceProvider<ParticipantRef>() {
-        public ParticipantRef newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public ParticipantRef newInstance(ModelTypeInstanceContext instanceContext) {
           return new ParticipantRef(instanceContext);
         }
       });

@@ -70,7 +70,8 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
         return (result instanceof Future || methodInvocation.getMethod().getReturnType().isAssignableFrom(Future.class));
     }
 
-    public Object invoke(MethodInvocation invocation) throws Throwable {
+  @Override
+  public Object invoke(MethodInvocation invocation) throws Throwable {
 
         Method method = invocation.getMethod();
 

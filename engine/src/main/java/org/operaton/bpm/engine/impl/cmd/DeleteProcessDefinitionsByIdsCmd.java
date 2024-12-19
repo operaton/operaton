@@ -218,6 +218,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
     String tenant;
     List<ProcessDefinitionEntity> processDefinitions = new ArrayList<ProcessDefinitionEntity>();
 
+    @Override
     public int hashCode() {
       final int prime = 31;
       int result = 1;
@@ -226,6 +227,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
       return result;
     }
 
+    @Override
     public boolean equals(Object obj) {
       if (this == obj)
         return true;

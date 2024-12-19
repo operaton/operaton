@@ -31,6 +31,7 @@ public class DmnDecisionRequirementsGraphImpl implements DmnDecisionRequirements
 
   protected Map<String, DmnDecision> decisions = new HashMap<String, DmnDecision>();
 
+  @Override
   public String getKey() {
     return key;
   }
@@ -39,6 +40,7 @@ public class DmnDecisionRequirementsGraphImpl implements DmnDecisionRequirements
     this.key = key;
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -47,6 +49,7 @@ public class DmnDecisionRequirementsGraphImpl implements DmnDecisionRequirements
     this.name = name;
   }
 
+  @Override
   public Collection<DmnDecision> getDecisions() {
     return decisions.values();
   }
@@ -59,10 +62,12 @@ public class DmnDecisionRequirementsGraphImpl implements DmnDecisionRequirements
     decisions.put(decision.getKey(), decision);
   }
 
+  @Override
   public DmnDecision getDecision(String key) {
     return decisions.get(key);
   }
 
+  @Override
   public Set<String> getDecisionKeys() {
     return decisions.keySet();
   }

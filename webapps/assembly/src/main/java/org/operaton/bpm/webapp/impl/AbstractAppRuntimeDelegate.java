@@ -47,6 +47,7 @@ public abstract class AbstractAppRuntimeDelegate<T extends AppPlugin> implements
     processEngineProvider = loadProcessEngineProvider();
   }
 
+  @Override
   public ProcessEngine getProcessEngine(String processEngineName) {
     try {
       return processEngineProvider.getProcessEngine(processEngineName);
@@ -55,14 +56,17 @@ public abstract class AbstractAppRuntimeDelegate<T extends AppPlugin> implements
     }
   }
 
+  @Override
   public Set<String> getProcessEngineNames() {
     return processEngineProvider.getProcessEngineNames();
   }
 
+  @Override
   public ProcessEngine getDefaultProcessEngine() {
     return processEngineProvider.getDefaultProcessEngine();
   }
 
+  @Override
   public AppPluginRegistry<T> getAppPluginRegistry() {
     return pluginRegistry;
   }
@@ -83,6 +87,7 @@ public abstract class AbstractAppRuntimeDelegate<T extends AppPlugin> implements
     }
   }
 
+  @Override
   public List<PluginResourceOverride> getResourceOverrides() {
     if(resourceOverrides == null) {
       initResourceOverrides();

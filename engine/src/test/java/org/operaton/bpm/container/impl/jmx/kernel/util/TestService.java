@@ -21,14 +21,17 @@ import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 
 public class TestService implements PlatformService<TestService>, TestServiceMBean {
 
+  @Override
   public void start(PlatformServiceContainer mBeanServiceContainer) {
 
   }
 
+  @Override
   public void stop(PlatformServiceContainer mBeanServiceContainer) {
 
   }
 
+  @Override
   public TestService getValue() {
     return this;
   }

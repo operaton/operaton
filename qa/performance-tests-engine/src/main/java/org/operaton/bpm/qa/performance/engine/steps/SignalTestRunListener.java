@@ -26,13 +26,15 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunner;
 
 public class SignalTestRunListener implements ExecutionListener {
 
+  @Override
   public void notify(final DelegateExecution execution) throws Exception {
     final String runId = (String) execution.getVariable(PerfTestConstants.RUN_ID);
     CommandContext commandContext = Context.getCommandContext();
     if (runId != null && commandContext != null) {
       commandContext.getTransactionContext()
         .addTransactionListener(TransactionState.COMMITTED, new TransactionListener() {
-          public void execute(CommandContext commandContext) {
+        @Override
+        public void execute(CommandContext commandContext) {
             // signal run after the transaction was committed
             PerfTestRunner.signalRun(runId);
           }

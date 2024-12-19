@@ -53,34 +53,42 @@ public class RepetitionRuleImpl extends CmmnElementImpl implements RepetitionRul
     super(instanceContext);
   }
 
+  @Override
   public String getName() {
     return nameAttribute.getValue(this);
   }
 
+  @Override
   public void setName(String name) {
     nameAttribute.setValue(this, name);
   }
 
+  @Override
   public CaseFileItem getContext() {
     return contextRefAttribute.getReferenceTargetElement(this);
   }
 
+  @Override
   public void setContext(CaseFileItem caseFileItem) {
     contextRefAttribute.setReferenceTargetElement(this, caseFileItem);
   }
 
+  @Override
   public ConditionExpression getCondition() {
     return conditionChild.getChild(this);
   }
 
+  @Override
   public void setCondition(ConditionExpression condition) {
     conditionChild.setChild(this, condition);
   }
 
+  @Override
   public String getOperatonRepeatOnStandardEvent() {
     return operatonRepeatOnStandardEventAttribute.getValue(this);
   }
 
+  @Override
   public void setOperatonRepeatOnStandardEvent(String standardEvent) {
     operatonRepeatOnStandardEventAttribute.setValue(this, standardEvent);
   }
@@ -90,7 +98,8 @@ public class RepetitionRuleImpl extends CmmnElementImpl implements RepetitionRul
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
         .instanceProvider(new ModelTypeInstanceProvider<RepetitionRule>() {
-          public RepetitionRule newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public RepetitionRule newInstance(ModelTypeInstanceContext instanceContext) {
             return new RepetitionRuleImpl(instanceContext);
           }
         });

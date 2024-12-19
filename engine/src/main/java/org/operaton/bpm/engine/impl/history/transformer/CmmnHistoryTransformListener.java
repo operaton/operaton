@@ -76,52 +76,65 @@ public class CmmnHistoryTransformListener implements CmmnTransformListener {
     CASE_ACTIVITY_INSTANCE_END_LISTENER = new CaseActivityInstanceEndListener(historyEventProducer);
   }
 
+  @Override
   public void transformRootElement(Definitions definitions, List<? extends CmmnCaseDefinition> caseDefinitions) {
   }
 
+  @Override
   public void transformCase(Case element, CmmnCaseDefinition caseDefinition) {
   }
 
+  @Override
   public void transformCasePlanModel(org.operaton.bpm.model.cmmn.impl.instance.CasePlanModel casePlanModel, CmmnActivity caseActivity) {
     transformCasePlanModel((org.operaton.bpm.model.cmmn.instance.CasePlanModel) casePlanModel, caseActivity);
   }
 
+  @Override
   public void transformCasePlanModel(CasePlanModel casePlanModel, CmmnActivity caseActivity) {
     addCasePlanModelHandlers(caseActivity);
   }
 
+  @Override
   public void transformHumanTask(PlanItem planItem, HumanTask humanTask, CmmnActivity caseActivity) {
     addTaskOrStageHandlers(caseActivity);
   }
 
+  @Override
   public void transformProcessTask(PlanItem planItem, ProcessTask processTask, CmmnActivity caseActivity) {
     addTaskOrStageHandlers(caseActivity);
   }
 
+  @Override
   public void transformCaseTask(PlanItem planItem, CaseTask caseTask, CmmnActivity caseActivity) {
     addTaskOrStageHandlers(caseActivity);
   }
 
+  @Override
   public void transformDecisionTask(PlanItem planItem, DecisionTask decisionTask, CmmnActivity caseActivity) {
     addTaskOrStageHandlers(caseActivity);
   }
 
+  @Override
   public void transformTask(PlanItem planItem, Task task, CmmnActivity caseActivity) {
     addTaskOrStageHandlers(caseActivity);
   }
 
+  @Override
   public void transformStage(PlanItem planItem, Stage stage, CmmnActivity caseActivity) {
     addTaskOrStageHandlers(caseActivity);
   }
 
+  @Override
   public void transformMilestone(PlanItem planItem, Milestone milestone, CmmnActivity caseActivity) {
     addEventListenerOrMilestoneHandlers(caseActivity);
   }
 
+  @Override
   public void transformEventListener(PlanItem planItem, EventListener eventListener, CmmnActivity caseActivity) {
     addEventListenerOrMilestoneHandlers(caseActivity);
   }
 
+  @Override
   public void transformSentry(Sentry sentry, CmmnSentryDeclaration sentryDeclaration) {
   }
 

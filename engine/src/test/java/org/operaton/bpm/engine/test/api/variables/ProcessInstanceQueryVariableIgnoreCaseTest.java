@@ -35,6 +35,7 @@ public class ProcessInstanceQueryVariableIgnoreCaseTest extends AbstractVariable
     instance = runtimeService.startProcessInstanceByKey("oneTaskProcess", VARIABLES);
   }
 
+  @Override
   protected ProcessInstanceQueryImpl createQuery() {
     return (ProcessInstanceQueryImpl) runtimeService.createProcessInstanceQuery();
   }

@@ -81,22 +81,27 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
   /** thread local holding the current authentication */
   private final ThreadLocal<Authentication> currentAuthentication = new ThreadLocal<Authentication>();
 
+  @Override
   public boolean isReadOnly() {
     return commandExecutor.execute(new IsIdentityServiceReadOnlyCmd());
   }
 
+  @Override
   public Group newGroup(String groupId) {
     return commandExecutor.execute(new CreateGroupCmd(groupId));
   }
 
+  @Override
   public User newUser(String userId) {
     return commandExecutor.execute(new CreateUserCmd(userId));
   }
 
+  @Override
   public Tenant newTenant(String tenantId) {
     return commandExecutor.execute(new CreateTenantCmd(tenantId));
   }
 
+  @Override
   public void saveGroup(Group group) {
 
     try {
@@ -109,6 +114,7 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
     }
   }
 
+  @Override
   public void saveUser(User user) {
     saveUser(user, false);
   }
@@ -124,6 +130,7 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
     }
   }
 
+  @Override
   public void saveTenant(Tenant tenant) {
 
     try {
@@ -136,6 +143,7 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
     }
   }
 
+  @Override
   public UserQuery createUserQuery() {
     return commandExecutor.execute(new CreateUserQueryCmd());
   }
@@ -145,38 +153,47 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
     return commandExecutor.execute(new CreateNativeUserQueryCmd());
   }
 
+  @Override
   public GroupQuery createGroupQuery() {
     return commandExecutor.execute(new CreateGroupQueryCmd());
   }
 
+  @Override
   public TenantQuery createTenantQuery() {
     return commandExecutor.execute(new CreateTenantQueryCmd());
   }
 
+  @Override
   public void createMembership(String userId, String groupId) {
     commandExecutor.execute(new CreateMembershipCmd(userId, groupId));
   }
 
+  @Override
   public void deleteGroup(String groupId) {
     commandExecutor.execute(new DeleteGroupCmd(groupId));
   }
 
+  @Override
   public void deleteMembership(String userId, String groupId) {
     commandExecutor.execute(new DeleteMembershipCmd(userId, groupId));
   }
 
+  @Override
   public boolean checkPassword(String userId, String password) {
     return commandExecutor.execute(new CheckPassword(userId, password));
   }
 
+  @Override
   public PasswordPolicyResult checkPasswordAgainstPolicy(String candidatePassword, User user) {
     return checkPasswordAgainstPolicy(getPasswordPolicy(), candidatePassword, user);
   }
 
+  @Override
   public PasswordPolicyResult checkPasswordAgainstPolicy(String password) {
     return checkPasswordAgainstPolicy(getPasswordPolicy(), password, null);
   }
 
+  @Override
   public PasswordPolicyResult checkPasswordAgainstPolicy(PasswordPolicy policy,
                                                          String candidatePassword,
                                                          User user) {
@@ -197,42 +214,52 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
 
   }
 
+  @Override
   public PasswordPolicyResult checkPasswordAgainstPolicy(PasswordPolicy policy, String password) {
     return checkPasswordAgainstPolicy(policy, password, null);
   }
 
+  @Override
   public PasswordPolicy getPasswordPolicy() {
     return commandExecutor.execute(new GetPasswordPolicyCmd());
   }
 
+  @Override
   public void unlockUser(String userId) {
     commandExecutor.execute(new UnlockUserCmd(userId));
   }
 
+  @Override
   public void deleteUser(String userId) {
     commandExecutor.execute(new DeleteUserCmd(userId));
   }
 
+  @Override
   public void deleteTenant(String tenantId) {
     commandExecutor.execute(new DeleteTenantCmd(tenantId));
   }
 
+  @Override
   public void setUserPicture(String userId, Picture picture) {
     commandExecutor.execute(new SetUserPictureCmd(userId, picture));
   }
 
+  @Override
   public Picture getUserPicture(String userId) {
     return commandExecutor.execute(new GetUserPictureCmd(userId));
   }
 
+  @Override
   public void deleteUserPicture(String userId) {
     commandExecutor.execute(new DeleteUserPictureCmd(userId));
   }
 
+  @Override
   public void setAuthenticatedUserId(String authenticatedUserId) {
     setAuthentication(new Authentication(authenticatedUserId, null));
   }
 
+  @Override
   public void setAuthentication(Authentication auth) {
     if(auth == null) {
       clearAuthentication();
@@ -251,66 +278,82 @@ public class IdentityServiceImpl extends ServiceImpl implements IdentityService 
     }
   }
 
+  @Override
   public void setAuthentication(String userId, List<String> groups) {
     setAuthentication(new Authentication(userId, groups));
   }
 
+  @Override
   public void setAuthentication(String userId, List<String> groups, List<String> tenantIds) {
     setAuthentication(new Authentication(userId, groups, tenantIds));
   }
 
+  @Override
   public void clearAuthentication() {
     currentAuthentication.remove();
   }
 
+  @Override
   public Authentication getCurrentAuthentication() {
     return currentAuthentication.get();
   }
 
+  @Override
   public String getUserInfo(String userId, String key) {
     return commandExecutor.execute(new GetUserInfoCmd(userId, key));
   }
 
+  @Override
   public List<String> getUserInfoKeys(String userId) {
     return commandExecutor.execute(new GetUserInfoKeysCmd(userId, IdentityInfoEntity.TYPE_USERINFO));
   }
 
+  @Override
   public List<String> getUserAccountNames(String userId) {
     return commandExecutor.execute(new GetUserInfoKeysCmd(userId, IdentityInfoEntity.TYPE_USERACCOUNT));
   }
 
+  @Override
   public void setUserInfo(String userId, String key, String value) {
     commandExecutor.execute(new SetUserInfoCmd(userId, key, value));
   }
 
+  @Override
   public void deleteUserInfo(String userId, String key) {
     commandExecutor.execute(new DeleteUserInfoCmd(userId, key));
   }
 
+  @Override
   public void deleteUserAccount(String userId, String accountName) {
     commandExecutor.execute(new DeleteUserInfoCmd(userId, accountName));
   }
 
+  @Override
   public Account getUserAccount(String userId, String userPassword, String accountName) {
     return commandExecutor.execute(new GetUserAccountCmd(userId, userPassword, accountName));
   }
 
+  @Override
   public void setUserAccount(String userId, String userPassword, String accountName, String accountUsername, String accountPassword, Map<String, String> accountDetails) {
     commandExecutor.execute(new SetUserInfoCmd(userId, userPassword, accountName, accountUsername, accountPassword, accountDetails));
   }
 
+  @Override
   public void createTenantUserMembership(String tenantId, String userId) {
     commandExecutor.execute(new CreateTenantUserMembershipCmd(tenantId, userId));
   }
 
+  @Override
   public void createTenantGroupMembership(String tenantId, String groupId) {
     commandExecutor.execute(new CreateTenantGroupMembershipCmd(tenantId, groupId));
   }
 
+  @Override
   public void deleteTenantUserMembership(String tenantId, String userId) {
     commandExecutor.execute(new DeleteTenantUserMembershipCmd(tenantId, userId));
   }
 
+  @Override
   public void deleteTenantGroupMembership(String tenantId, String groupId) {
     commandExecutor.execute(new DeleteTenantGroupMembershipCmd(tenantId, groupId));
   }

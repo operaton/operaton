@@ -33,6 +33,7 @@ public class TelemetryDataImpl implements TelemetryData {
     this(other.installation, new ProductImpl(other.product));
   }
 
+  @Override
   public String getInstallation() {
     return installation;
   }
@@ -41,6 +42,7 @@ public class TelemetryDataImpl implements TelemetryData {
     this.installation = installation;
   }
 
+  @Override
   public ProductImpl getProduct() {
     return product;
   }

@@ -26,11 +26,13 @@ import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
  */
 public class WaitState implements SignallableActivityBehavior {
 
+  @Override
   public void execute(ActivityExecution execution) throws Exception {
     "some debug point".toString();
 
   }
 
+  @Override
   public void signal(ActivityExecution execution, String signalName, Object signalData) throws Exception {
     PvmTransition transition = execution.getActivity().getOutgoingTransitions().get(0);
     execution.leaveActivityViaTransition(transition);

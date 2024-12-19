@@ -35,7 +35,8 @@ public class Mother extends AnimalReference {
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(AnimalReference.class)
       .instanceProvider(new ModelTypeInstanceProvider<Mother>() {
-        public Mother newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Mother newInstance(ModelTypeInstanceContext instanceContext) {
           return new Mother(instanceContext);
         }
       });

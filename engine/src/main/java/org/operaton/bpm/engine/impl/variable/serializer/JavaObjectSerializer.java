@@ -43,14 +43,17 @@ public class JavaObjectSerializer extends AbstractObjectValueSerializer {
     super(SerializationDataFormats.JAVA.getName());
   }
 
+  @Override
   public String getName() {
     return NAME;
   }
 
+  @Override
   protected boolean isSerializationTextBased() {
     return false;
   }
 
+  @Override
   protected Object deserializeFromByteArray(byte[] bytes, String objectTypeName) throws Exception {
     ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
     ObjectInputStream ois = null;
@@ -64,6 +67,7 @@ public class JavaObjectSerializer extends AbstractObjectValueSerializer {
     }
   }
 
+  @Override
   protected byte[] serializeToByteArray(Object deserializedObject) throws Exception {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     ObjectOutputStream ois = null;
@@ -78,10 +82,12 @@ public class JavaObjectSerializer extends AbstractObjectValueSerializer {
     }
   }
 
+  @Override
   protected String getTypeNameForDeserialized(Object deserializedObject) {
     return deserializedObject.getClass().getName();
   }
 
+  @Override
   protected boolean canSerializeValue(Object value) {
     return value instanceof Serializable;
   }

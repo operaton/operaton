@@ -26,14 +26,17 @@ import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
  */
 public class UserEventTest extends CmmnModelElementInstanceTest {
 
+  @Override
   public TypeAssumption getTypeAssumption() {
     return new TypeAssumption(CmmnModelConstants.CMMN10_NS, Event.class, false);
   }
 
+  @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return null;
   }
 
+  @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return null;
   }

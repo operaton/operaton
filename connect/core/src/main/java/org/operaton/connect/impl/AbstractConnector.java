@@ -47,23 +47,28 @@ public abstract class AbstractConnector<Q extends ConnectorRequest<R>, R extends
     this.connectorId = connectorId;
   }
 
+  @Override
   public String getId() {
     return connectorId;
   }
 
+  @Override
   public List<ConnectorRequestInterceptor> getRequestInterceptors() {
     return requestInterceptors;
   }
 
+  @Override
   public void setRequestInterceptors(List<ConnectorRequestInterceptor> requestInterceptors) {
     this.requestInterceptors = requestInterceptors;
   }
 
+  @Override
   public Connector<Q> addRequestInterceptor(ConnectorRequestInterceptor interceptor) {
     requestInterceptors.add(interceptor);
     return this;
   }
 
+  @Override
   public Connector<Q> addRequestInterceptors(Collection<ConnectorRequestInterceptor> interceptors) {
     requestInterceptors.addAll(interceptors);
     return this;

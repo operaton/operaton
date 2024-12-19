@@ -57,6 +57,7 @@ public abstract class PlaneImpl extends NodeImpl implements Plane {
     super(instanceContext);
   }
 
+  @Override
   public Collection<DiagramElement> getDiagramElements() {
     return diagramElementCollection.get(this);
   }

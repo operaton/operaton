@@ -37,14 +37,17 @@ public class VariableScopeContext implements VariableContext {
     this.variableScope = variableScope;
   }
 
+  @Override
   public TypedValue resolve(String variableName) {
     return variableScope.getVariableTyped(variableName);
   }
 
+  @Override
   public boolean containsVariable(String variableName) {
     return variableScope.hasVariable(variableName);
   }
 
+  @Override
   public Set<String> keySet() {
     return variableScope.getVariableNames();
   }

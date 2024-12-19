@@ -36,6 +36,7 @@ public class SchemaLogEntryEntity implements SchemaLogEntry, DbEntity, Serializa
   protected Date timestamp;
   protected String version;
 
+  @Override
   public Date getTimestamp() {
     return timestamp;
   }
@@ -44,6 +45,7 @@ public class SchemaLogEntryEntity implements SchemaLogEntry, DbEntity, Serializa
     this.timestamp = timestamp;
   }
 
+  @Override
   public String getVersion() {
     return version;
   }

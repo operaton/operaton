@@ -37,7 +37,8 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Extension.class, DI_ELEMENT_EXTENSION)
       .namespaceUri(DI_NS)
       .instanceProvider(new ModelTypeInstanceProvider<Extension>() {
-        public Extension newInstance(ModelTypeInstanceContext instanceContext) {
+      @Override
+      public Extension newInstance(ModelTypeInstanceContext instanceContext) {
           return new ExtensionImpl(instanceContext);
         }
       });

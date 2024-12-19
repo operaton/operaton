@@ -86,6 +86,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     return variablesLocal;
   }
 
+  @Override
   public Void execute(final CommandContext commandContext) {
     ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
 
@@ -130,6 +131,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     if (ancestorActivityInstanceId == null) {
       // walk until a scope is reached for which executions exist
       walker.walkWhile(new ReferenceWalker.WalkCondition<ScopeImpl>() {
+        @Override
         public boolean isFulfilled(ScopeImpl element) {
           return !mapping.getExecutions(element).isEmpty() || element == processDefinition;
         }
@@ -159,6 +161,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
 
       // walk until the scope of the ancestor scope execution is reached
       walker.walkWhile(new ReferenceWalker.WalkCondition<ScopeImpl>() {
+        @Override
         public boolean isFulfilled(ScopeImpl element) {
           return (
               mapping.getExecutions(element).contains(ancestorScopeExecution)

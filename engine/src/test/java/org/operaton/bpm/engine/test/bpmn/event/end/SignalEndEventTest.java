@@ -88,7 +88,7 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
   @Test
   public void testPropagateOutputVariablesWhileThrowSignal() {
     // given
-    Map<String,Object> variables = new HashMap<String, Object>();
+    Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("SignalParentProcess", variables).getId();
 
@@ -105,7 +105,7 @@ public class SignalEndEventTest extends PluggableProcessEngineTest {
   @Test
   public void testPropagateOutputVariablesWhileThrowSignal2() {
     // given
-    Map<String,Object> variables = new HashMap<String, Object>();
+    Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("SignalParentProcess", variables).getId();
 

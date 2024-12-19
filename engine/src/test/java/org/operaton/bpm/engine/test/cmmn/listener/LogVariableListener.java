@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseVariableInstance;
  */
 public class LogVariableListener implements CaseVariableListener {
 
-  protected static List<DelegateCaseVariableInstance> invocations = new ArrayList<DelegateCaseVariableInstance>();
+  protected static List<DelegateCaseVariableInstance> invocations = new ArrayList<>();
 
   @Override
   public void notify(DelegateCaseVariableInstance variableInstance) throws Exception {
@@ -40,7 +40,7 @@ public class LogVariableListener implements CaseVariableListener {
   }
 
   public static void reset() {
-    invocations = new ArrayList<DelegateCaseVariableInstance>();
+    invocations = new ArrayList<>();
   }
 
 

@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class ScopeExecutionCollector implements TreeVisitor<PvmExecutionImpl> {
 
-  protected List<PvmExecutionImpl> scopeExecutions = new ArrayList<PvmExecutionImpl>();
+  protected List<PvmExecutionImpl> scopeExecutions = new ArrayList<>();
 
   @Override
   public void visit(PvmExecutionImpl obj) {

@@ -41,7 +41,7 @@ class ValidateProcessTest {
   @Test
   void validationFailsIfNoStartEventFound() {
 
-    List<ModelElementValidator<?>> validators = new ArrayList<ModelElementValidator<?>>();
+    List<ModelElementValidator<?>> validators = new ArrayList<>();
     validators.add(new ProcessStartEventValidator());
 
     BpmnModelInstance bpmnModelInstance = Bpmn.createProcess().done();

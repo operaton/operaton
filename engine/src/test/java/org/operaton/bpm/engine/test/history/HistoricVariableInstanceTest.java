@@ -2070,7 +2070,7 @@ public class HistoricVariableInstanceTest extends PluggableProcessEngineTest {
   public void testMultipleAsyncStartEventsVariableHistory() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("foo", "bar");
-    runtimeService.correlateMessage("newInvoiceMessage", new HashMap<String, Object>(), variables);
+    runtimeService.correlateMessage("newInvoiceMessage", new HashMap<>(), variables);
 
     VariableInstance variableFoo = runtimeService.createVariableInstanceQuery().singleResult();
     assertNotNull(variableFoo);

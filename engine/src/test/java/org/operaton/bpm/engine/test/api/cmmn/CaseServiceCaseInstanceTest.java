@@ -284,7 +284,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
   @Test
   public void testCreateByKeyWithVariables() {
     // given a deployed case definition
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     variables.put("aVariableName", "aVariableValue");
     variables.put("anotherVariableName", 999);
@@ -380,7 +380,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     variables.put("aVariableName", "aVariableValue");
     variables.put("anotherVariableName", 999);
@@ -1024,7 +1024,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     // given a deployed case definition
 
     // when
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "aValue");
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase", variables);
 
@@ -1051,7 +1051,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .getId();
 
     // when
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "aValue");
     CaseInstance caseInstance = caseService.createCaseInstanceById(caseDefinitionId, variables);
 
@@ -1073,7 +1073,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
     // given a deployed case definition
 
     // when
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "aValue");
     CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase", "aBusinessKey", variables);
 
@@ -1097,7 +1097,7 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .getId();
 
     // when
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "aValue");
     CaseInstance caseInstance = caseService.createCaseInstanceById(caseDefinitionId, "aBusinessKey", variables);
 

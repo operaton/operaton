@@ -82,7 +82,7 @@ public class ActivityPerfTestWatcher implements PerfTestWatcher {
 
   protected void logActivityResults(PerfTestPass pass, PerfTestRun run, HistoryService historyService) {
     String processInstanceId = run.getVariable(PerfTestConstants.PROCESS_INSTANCE_ID);
-    List<ActivityPerfTestResult> activityResults = new ArrayList<ActivityPerfTestResult>();
+    List<ActivityPerfTestResult> activityResults = new ArrayList<>();
 
     HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
     Date startTime = processInstance.getStartTime();

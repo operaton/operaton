@@ -36,9 +36,9 @@ public class CmmnSentryDeclaration implements Serializable {
 
   protected String id;
 
-  protected Map<String, List<CmmnOnPartDeclaration>> onPartMap = new HashMap<String, List<CmmnOnPartDeclaration>>();
-  protected List<CmmnOnPartDeclaration> onParts = new ArrayList<CmmnOnPartDeclaration>();
-  protected List<CmmnVariableOnPartDeclaration> variableOnParts = new ArrayList<CmmnVariableOnPartDeclaration>();
+  protected Map<String, List<CmmnOnPartDeclaration>> onPartMap = new HashMap<>();
+  protected List<CmmnOnPartDeclaration> onParts = new ArrayList<>();
+  protected List<CmmnVariableOnPartDeclaration> variableOnParts = new ArrayList<>();
 
   protected CmmnIfPartDeclaration ifPart;
 
@@ -78,7 +78,7 @@ public class CmmnSentryDeclaration implements Serializable {
     List<CmmnOnPartDeclaration> onPartDeclarations = onPartMap.get(sourceId);
 
     if (onPartDeclarations == null) {
-      onPartDeclarations = new ArrayList<CmmnOnPartDeclaration>();
+      onPartDeclarations = new ArrayList<>();
       onPartMap.put(sourceId, onPartDeclarations);
     }
 

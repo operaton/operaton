@@ -36,19 +36,19 @@ public abstract class ReferenceWalker<T> {
 
   protected List<T> currentElements;
 
-  protected List<TreeVisitor<T>> preVisitor = new ArrayList<TreeVisitor<T>>();
+  protected List<TreeVisitor<T>> preVisitor = new ArrayList<>();
 
-  protected List<TreeVisitor<T>> postVisitor = new ArrayList<TreeVisitor<T>>();
+  protected List<TreeVisitor<T>> postVisitor = new ArrayList<>();
 
   protected abstract Collection<T> nextElements();
 
   public ReferenceWalker(T initialElement) {
-    currentElements = new LinkedList<T>();
+    currentElements = new LinkedList<>();
     currentElements.add(initialElement);
   }
 
   public ReferenceWalker(List<T> initialElements) {
-    currentElements = new LinkedList<T>(initialElements);
+    currentElements = new LinkedList<>(initialElements);
   }
 
   public ReferenceWalker<T> addPreVisitor(TreeVisitor<T> collector) {
@@ -117,7 +117,7 @@ public abstract class ReferenceWalker<T> {
     }
 
     public static <S> ReferenceWalker.WalkCondition<S> notNull() {
-      return new NullCondition<S>();
+      return new NullCondition<>();
     }
 
   }

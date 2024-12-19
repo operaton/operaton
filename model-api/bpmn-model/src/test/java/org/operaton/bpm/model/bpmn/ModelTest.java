@@ -62,7 +62,7 @@ class ModelTest {
   void testExtendingTypeCalculation() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createEmptyModel();
     Model model = bpmnModelInstance.getModel();
-    List<ModelElementType> baseInstanceTypes = new ArrayList<ModelElementType>();
+    List<ModelElementType> baseInstanceTypes = new ArrayList<>();
     baseInstanceTypes.add(model.getType(Event.class));
     baseInstanceTypes.add(model.getType(CatchEvent.class));
     baseInstanceTypes.add(model.getType(ExtensionElements.class));

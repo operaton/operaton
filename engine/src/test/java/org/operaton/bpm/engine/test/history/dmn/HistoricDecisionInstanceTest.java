@@ -226,7 +226,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
   @Test
   public void testMultipleDecisionInputInstances() {
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("input1", "a");
     variables.put("input2", 1);
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -466,7 +466,7 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
   @Test
   public void testDecisionEvaluatedWithDecisionService() {
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("input1", "test");
     decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY, variables);
 

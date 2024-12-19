@@ -85,7 +85,7 @@ public class CaseExecutionCompletionTest {
     taskA.complete();
 
     // then
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // active --complete(A)--> completed
@@ -147,7 +147,7 @@ public class CaseExecutionCompletionTest {
     taskA.manualComplete();
 
     // then
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // active --complete(A)--> completed
@@ -531,7 +531,7 @@ public class CaseExecutionCompletionTest {
 
     // then
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // enabled --disable(A)-->      disabled
@@ -597,7 +597,7 @@ public class CaseExecutionCompletionTest {
 
     // then
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // active --terminate(A)-->    terminated
@@ -716,7 +716,7 @@ public class CaseExecutionCompletionTest {
 
     // then
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // active --complete(Case1)--> completed
@@ -1001,7 +1001,7 @@ public class CaseExecutionCompletionTest {
 
     // then ////////////////////////////////////////////////////////////////
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transitions:
     // active --complete(A)--> completed
@@ -1103,7 +1103,7 @@ public class CaseExecutionCompletionTest {
 
     // then ////////////////////////////////////////////////////////////////
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transitions:
     // active --complete(A)--> completed
@@ -1392,7 +1392,7 @@ public class CaseExecutionCompletionTest {
 
     // then ////////////////////////////////////////////////////////////////
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transitions:
     // active --complete(A)-->     completed
@@ -1497,7 +1497,7 @@ public class CaseExecutionCompletionTest {
 
     // then ////////////////////////////////////////////////////////////////
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transitions:
     // active --complete(A)-->     completed
@@ -1604,7 +1604,7 @@ public class CaseExecutionCompletionTest {
 
     // then ////////////////////////////////////////////////////////////////
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transitions:
     // active --complete(X)-->     completed
@@ -1705,7 +1705,7 @@ public class CaseExecutionCompletionTest {
 
     // then ////////////////////////////////////////////////////////////////
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transitions:
     // active --complete(X)-->     completed
@@ -1775,7 +1775,7 @@ public class CaseExecutionCompletionTest {
 
     assertTrue(caseInstance.isCompleted());
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // active --complete(Case1)--> completed
@@ -1830,7 +1830,7 @@ public class CaseExecutionCompletionTest {
     assertTrue(caseInstance.isCompleted());
     assertTrue(stageX.isCompleted());
 
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // active --complete(X)-->     completed

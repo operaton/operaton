@@ -483,7 +483,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   private Map<String, String> getCompleteQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("caseDefinitionId", "anId");
     parameters.put("category", "cat");

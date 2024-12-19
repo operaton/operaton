@@ -113,7 +113,7 @@ public class SampleOperatonRestApplicationIT {
       + "}";
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-    HttpEntity<String> requestEntity = new HttpEntity<String>(requestJson, headers);
+    HttpEntity<String> requestEntity = new HttpEntity<>(requestJson, headers);
     ResponseEntity<String> entity = testRestTemplate.postForEntity("/engine-rest/engine/{enginename}/external-task/fetchAndLock", requestEntity, String.class,
       operatonBpmProperties.getProcessEngineName());
     assertEquals(HttpStatus.OK, entity.getStatusCode());

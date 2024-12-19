@@ -325,7 +325,7 @@ public class FormServiceTest {
     assertEquals(5, formProperties.size());
 
     try {
-      formService.submitTaskFormData(taskId, new HashMap<String, String>());
+      formService.submitTaskFormData(taskId, new HashMap<>());
       fail("expected exception about required form property 'street'");
     } catch (ProcessEngineException e) {
       // OK
@@ -408,7 +408,7 @@ public class FormServiceTest {
     assertEquals(5, formProperties.size());
 
     try {
-      formService.submitTaskForm(taskId, new HashMap<String, Object>());
+      formService.submitTaskForm(taskId, new HashMap<>());
       fail("expected exception about required form property 'street'");
     } catch (ProcessEngineException e) {
       // OK
@@ -1270,7 +1270,7 @@ public class FormServiceTest {
     Task task = taskService.createTaskQuery().singleResult();
     assertNotNull(task);
 
-    formService.submitTaskForm(task.getId(), new HashMap<String, Object>());
+    formService.submitTaskForm(task.getId(), new HashMap<>());
 
     testRule.assertProcessEnded(processInstance.getId());
 

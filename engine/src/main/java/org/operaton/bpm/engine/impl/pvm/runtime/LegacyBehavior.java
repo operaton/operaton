@@ -282,7 +282,7 @@ public class LegacyBehavior {
     Collections.reverse(scopeExecutions);
     Collections.reverse(scopes);
 
-    Map<ScopeImpl, PvmExecutionImpl> mapping  = new HashMap<ScopeImpl, PvmExecutionImpl>();
+    Map<ScopeImpl, PvmExecutionImpl> mapping  = new HashMap<>();
     // process definition / process instance.
     mapping.put(scopes.get(0), scopeExecutions.get(0));
     // nested activities
@@ -463,12 +463,12 @@ public class LegacyBehavior {
    * Remove all entries for legacy non-scopes given that the assigned scope execution is also responsible for another scope
    */
   public static void removeLegacyNonScopesFromMapping(Map<ScopeImpl, PvmExecutionImpl> mapping) {
-    Map<PvmExecutionImpl, List<ScopeImpl>> scopesForExecutions = new HashMap<PvmExecutionImpl, List<ScopeImpl>>();
+    Map<PvmExecutionImpl, List<ScopeImpl>> scopesForExecutions = new HashMap<>();
 
     for (Map.Entry<ScopeImpl, PvmExecutionImpl> mappingEntry : mapping.entrySet()) {
       List<ScopeImpl> scopesForExecution = scopesForExecutions.get(mappingEntry.getValue());
       if (scopesForExecution == null) {
-        scopesForExecution = new ArrayList<ScopeImpl>();
+        scopesForExecution = new ArrayList<>();
         scopesForExecutions.put(mappingEntry.getValue(), scopesForExecution);
       }
 

@@ -122,7 +122,7 @@ public class AuthorizationCheckRevokesCfgTest {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
-    final HashMap<String, Object> expectedQueryParams = new HashMap<String, Object>();
+    final HashMap<String, Object> expectedQueryParams = new HashMap<>();
     expectedQueryParams.put("userId", AUTHENTICATED_USER_ID);
     expectedQueryParams.put("authGroupIds", AUTHENTICATED_GROUPS);
 
@@ -143,7 +143,7 @@ public class AuthorizationCheckRevokesCfgTest {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
-    final HashMap<String, Object> expectedQueryParams = new HashMap<String, Object>();
+    final HashMap<String, Object> expectedQueryParams = new HashMap<>();
     expectedQueryParams.put("userId", AUTHENTICATED_USER_ID);
     expectedQueryParams.put("authGroupIds", AUTHENTICATED_GROUPS);
 
@@ -164,7 +164,7 @@ public class AuthorizationCheckRevokesCfgTest {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
-    final HashMap<String, Object> expectedQueryParams = new HashMap<String, Object>();
+    final HashMap<String, Object> expectedQueryParams = new HashMap<>();
     expectedQueryParams.put("userId", AUTHENTICATED_USER_ID);
     expectedQueryParams.put("authGroupIds", AUTHENTICATED_GROUPS);
 
@@ -185,7 +185,7 @@ public class AuthorizationCheckRevokesCfgTest {
     final ListQueryParameterObject query = new ListQueryParameterObject();
     final AuthorizationCheck authCheck = query.getAuthCheck();
 
-    final HashMap<String, Object> expectedQueryParams = new HashMap<String, Object>();
+    final HashMap<String, Object> expectedQueryParams = new HashMap<>();
     expectedQueryParams.put("userId", AUTHENTICATED_USER_ID);
     expectedQueryParams.put("authGroupIds", AUTHENTICATED_GROUPS);
 

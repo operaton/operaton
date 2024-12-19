@@ -32,7 +32,7 @@ public class SendMessageDelegate implements JavaDelegate {
 
     if (allFlag) {
       // 1. message
-      Map<String, Object> variablesFirstCall = new HashMap<String, Object>();
+      Map<String, Object> variablesFirstCall = new HashMap<>();
       variablesFirstCall.put("someVariable", "someValue1");
       runtimeService.createMessageCorrelation("waitForCorrelationKeyMessage")
               .setVariables(variablesFirstCall)
@@ -40,7 +40,7 @@ public class SendMessageDelegate implements JavaDelegate {
               .correlateAllWithResult();
 
       // 2. message
-      Map<String, Object> variablesSecondCall = new HashMap<String, Object>();
+      Map<String, Object> variablesSecondCall = new HashMap<>();
       variablesSecondCall.put("someVariable", "someValue2");
       runtimeService.createMessageCorrelation("waitForCorrelationKeyMessage")
               .setVariables(variablesSecondCall)
@@ -48,7 +48,7 @@ public class SendMessageDelegate implements JavaDelegate {
               .correlateAllWithResult();
     } else {
       // 1. message
-      Map<String, Object> variablesFirstCall = new HashMap<String, Object>();
+      Map<String, Object> variablesFirstCall = new HashMap<>();
       variablesFirstCall.put("someVariable", "someValue1");
       runtimeService.createMessageCorrelation("waitForCorrelationKeyMessage")
               .setVariables(variablesFirstCall)
@@ -56,7 +56,7 @@ public class SendMessageDelegate implements JavaDelegate {
               .correlateWithResult();
 
       // 2. message
-      Map<String, Object> variablesSecondCall = new HashMap<String, Object>();
+      Map<String, Object> variablesSecondCall = new HashMap<>();
       variablesSecondCall.put("someVariable", "someValue2");
       runtimeService.createMessageCorrelation("waitForCorrelationKeyMessage")
               .setVariables(variablesSecondCall)

@@ -42,7 +42,7 @@ public final class StringUtil {
       return Collections.emptyList();
     }
     Matcher matcher = pattern.matcher(text);
-    List<String> parts = new ArrayList<String>();
+    List<String> parts = new ArrayList<>();
     while(matcher.find()) {
       parts.add(matcher.group().trim());
     }
@@ -64,7 +64,7 @@ public final class StringUtil {
     if (text != null) {
       result = text.split(separator);
     }
-    return new ArrayList<String>(Arrays.asList(result));
+    return new ArrayList<>(Arrays.asList(result));
   }
 
   public static String joinList(List<String> list, String separator) {

@@ -32,7 +32,7 @@ public class ListQueryParameterObject implements Serializable {
   protected AuthorizationCheck authCheck = new AuthorizationCheck();
 
   protected TenantCheck tenantCheck = new TenantCheck();
-  protected List<QueryOrderingProperty> orderingProperties = new ArrayList<QueryOrderingProperty>();
+  protected List<QueryOrderingProperty> orderingProperties = new ArrayList<>();
 
   protected int maxResults = Integer.MAX_VALUE;
   protected int firstResult = 0;

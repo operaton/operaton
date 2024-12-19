@@ -56,7 +56,7 @@ public class CaseExecutionRestServiceImpl extends AbstractRestProcessEngineAware
 
     List<CaseExecution> matchingExecutions = QueryUtil.list(query, firstResult, maxResults);
 
-    List<CaseExecutionDto> executionResults = new ArrayList<CaseExecutionDto>();
+    List<CaseExecutionDto> executionResults = new ArrayList<>();
     for (CaseExecution execution : matchingExecutions) {
       CaseExecutionDto resultExecution = CaseExecutionDto.fromCaseExecution(execution);
       executionResults.add(resultExecution);

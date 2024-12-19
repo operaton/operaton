@@ -425,7 +425,7 @@ public class XmlDomElementTest {
 
   @Test
   public void canAppendChildElementCollection() {
-    Collection<SpinXmlElement> childElements = new ArrayList<SpinXmlElement>();
+    Collection<SpinXmlElement> childElements = new ArrayList<>();
     childElements.add(XML("<child/>"));
     childElements.add(XML("<child/>"));
     childElements.add(XML("<child/>"));

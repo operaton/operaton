@@ -78,7 +78,7 @@ public class ScenarioRunner {
    * Scans for all scenarios defined in the class and runs them
    */
   protected void executeScenarioSetups(Class<?> clazz) {
-    Map<String, Scenario> scenarios = new HashMap<String, Scenario>();
+    Map<String, Scenario> scenarios = new HashMap<>();
 
     for (Method method : clazz.getDeclaredMethods()) {
       DescribesScenario scenarioAnnotation = method.getAnnotation(DescribesScenario.class);

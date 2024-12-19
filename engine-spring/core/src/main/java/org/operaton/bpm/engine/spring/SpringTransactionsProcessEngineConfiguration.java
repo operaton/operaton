@@ -72,7 +72,7 @@ public class SpringTransactionsProcessEngineConfiguration extends ProcessEngineC
       throw new ProcessEngineException("transactionManager is required property for SpringProcessEngineConfiguration, use "+StandaloneProcessEngineConfiguration.class.getName()+" otherwise");
     }
 
-    List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<CommandInterceptor>();
+    List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequired.add(getExceptionCodeInterceptor());
     }
@@ -86,7 +86,7 @@ public class SpringTransactionsProcessEngineConfiguration extends ProcessEngineC
   }
 
   protected Collection< ? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequiresNew() {
-    List<CommandInterceptor> defaultCommandInterceptorsTxRequiresNew = new ArrayList<CommandInterceptor>();
+    List<CommandInterceptor> defaultCommandInterceptorsTxRequiresNew = new ArrayList<>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequiresNew.add(getExceptionCodeInterceptor());
     }

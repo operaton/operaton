@@ -100,7 +100,7 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
 
   protected void evaluateDecisionTable(DmnDecisionTableImpl decisionTable, VariableContext variableContext, DmnDecisionTableEvaluationEventImpl evaluationResult) {
     int inputSize = decisionTable.getInputs().size();
-    List<DmnDecisionTableRuleImpl> matchingRules = new ArrayList<DmnDecisionTableRuleImpl>(decisionTable.getRules());
+    List<DmnDecisionTableRuleImpl> matchingRules = new ArrayList<>(decisionTable.getRules());
     for (int inputIdx = 0; inputIdx < inputSize; inputIdx++) {
       // evaluate input
       DmnDecisionTableInputImpl input = decisionTable.getInputs().get(inputIdx);
@@ -134,7 +134,7 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
   }
 
   protected List<DmnDecisionTableRuleImpl> evaluateInputForAvailableRules(int conditionIdx, DmnDecisionTableInputImpl input, List<DmnDecisionTableRuleImpl> availableRules, VariableContext variableContext) {
-    List<DmnDecisionTableRuleImpl> matchingRules = new ArrayList<DmnDecisionTableRuleImpl>();
+    List<DmnDecisionTableRuleImpl> matchingRules = new ArrayList<>();
     for (DmnDecisionTableRuleImpl availableRule : availableRules) {
       DmnExpressionImpl condition = availableRule.getConditions().get(conditionIdx);
       if (isConditionApplicable(input, condition, variableContext)) {
@@ -152,7 +152,7 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
   protected void setEvaluationOutput(DmnDecisionTableImpl decisionTable, List<DmnDecisionTableRuleImpl> matchingRules, VariableContext variableContext, DmnDecisionTableEvaluationEventImpl evaluationResult) {
     List<DmnDecisionTableOutputImpl> decisionTableOutputs = decisionTable.getOutputs();
 
-    List<DmnEvaluatedDecisionRule> evaluatedDecisionRules = new ArrayList<DmnEvaluatedDecisionRule>();
+    List<DmnEvaluatedDecisionRule> evaluatedDecisionRules = new ArrayList<>();
     for (DmnDecisionTableRuleImpl matchingRule : matchingRules) {
       DmnEvaluatedDecisionRule evaluatedRule = evaluateMatchingRule(decisionTableOutputs, matchingRule, variableContext);
       evaluatedDecisionRules.add(evaluatedRule);
@@ -257,7 +257,7 @@ public class DecisionTableEvaluationHandler implements DmnDecisionLogicEvaluatio
   public DmnDecisionResult generateDecisionResult(DmnDecisionLogicEvaluationEvent event) {
     DmnDecisionTableEvaluationEvent evaluationResult = (DmnDecisionTableEvaluationEvent) event;
 
-    List<DmnDecisionResultEntries> ruleResults = new ArrayList<DmnDecisionResultEntries>();
+    List<DmnDecisionResultEntries> ruleResults = new ArrayList<>();
 
     if (evaluationResult.getCollectResultName() != null || evaluationResult.getCollectResultValue() != null) {
       DmnDecisionResultEntriesImpl ruleResult = new DmnDecisionResultEntriesImpl();

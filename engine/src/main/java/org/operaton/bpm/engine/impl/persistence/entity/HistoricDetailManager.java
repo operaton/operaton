@@ -34,31 +34,31 @@ import org.operaton.bpm.engine.impl.persistence.AbstractHistoricManager;
 public class HistoricDetailManager extends AbstractHistoricManager {
 
   public void deleteHistoricDetailsByProcessInstanceIds(List<String> historicProcessInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("processInstanceIds", historicProcessInstanceIds);
     deleteHistoricDetails(parameters);
   }
 
   public void deleteHistoricDetailsByTaskProcessInstanceIds(List<String> historicProcessInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("taskProcessInstanceIds", historicProcessInstanceIds);
     deleteHistoricDetails(parameters);
   }
 
   public void deleteHistoricDetailsByCaseInstanceIds(List<String> historicCaseInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("caseInstanceIds", historicCaseInstanceIds);
     deleteHistoricDetails(parameters);
   }
 
   public void deleteHistoricDetailsByTaskCaseInstanceIds(List<String> historicCaseInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("taskCaseInstanceIds", historicCaseInstanceIds);
     deleteHistoricDetails(parameters);
   }
 
   public void deleteHistoricDetailsByVariableInstanceId(String historicVariableInstanceId) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("variableInstanceId", historicVariableInstanceId);
     deleteHistoricDetails(parameters);
   }
@@ -131,7 +131,7 @@ public class HistoricDetailManager extends AbstractHistoricManager {
   }
 
   public DbOperation deleteHistoricDetailsByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("removalTime", removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
       parameters.put("minuteFrom", minuteFrom);

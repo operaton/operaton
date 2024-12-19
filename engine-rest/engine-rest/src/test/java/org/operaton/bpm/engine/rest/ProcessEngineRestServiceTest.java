@@ -234,7 +234,7 @@ public class ProcessEngineRestServiceTest extends
 
 
   private void createCaseDefinitionMock() {
-    List<CaseDefinition> caseDefinitions = new ArrayList<CaseDefinition>();
+    List<CaseDefinition> caseDefinitions = new ArrayList<>();
     CaseDefinition mockCaseDefinition = MockProvider.createMockCaseDefinition();
     caseDefinitions.add(mockCaseDefinition);
 
@@ -244,7 +244,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   private void createCaseInstanceMock() {
-    List<CaseInstance> caseInstances = new ArrayList<CaseInstance>();
+    List<CaseInstance> caseInstances = new ArrayList<>();
     CaseInstance mockCaseInstance = MockProvider.createMockCaseInstance();
     caseInstances.add(mockCaseInstance);
 
@@ -254,7 +254,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   private void createCaseExecutionMock() {
-    List<CaseExecution> caseExecutions = new ArrayList<CaseExecution>();
+    List<CaseExecution> caseExecutions = new ArrayList<>();
     CaseExecution mockCaseExecution = MockProvider.createMockCaseExecution();
     caseExecutions.add(mockCaseExecution);
 
@@ -295,7 +295,7 @@ public class ProcessEngineRestServiceTest extends
     // identity
     UserQuery sampleUserQuery = mock(UserQuery.class);
     GroupQuery sampleGroupQuery = mock(GroupQuery.class);
-    List<User> mockUsers = new ArrayList<User>();
+    List<User> mockUsers = new ArrayList<>();
     User mockUser = MockProvider.createMockUser();
     mockUsers.add(mockUser);
 
@@ -315,7 +315,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   private void createVariableInstanceMock() {
-    List<VariableInstance> variables = new ArrayList<VariableInstance>();
+    List<VariableInstance> variables = new ArrayList<>();
     VariableInstance mockInstance = MockProvider.createMockVariableInstance();
     variables.add(mockInstance);
 
@@ -325,7 +325,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   private void createJobDefinitionMock() {
-    List<JobDefinition> jobDefinitions = new ArrayList<JobDefinition>();
+    List<JobDefinition> jobDefinitions = new ArrayList<>();
     JobDefinition mockJobDefinition = MockProvider.createMockJobDefinition();
     jobDefinitions.add(mockJobDefinition);
 
@@ -356,7 +356,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   private void createHistoricActivityInstanceMock() {
-    List<HistoricActivityInstance> activities = new ArrayList<HistoricActivityInstance>();
+    List<HistoricActivityInstance> activities = new ArrayList<>();
     HistoricActivityInstance mockInstance = MockProvider.createMockHistoricActivityInstance();
     activities.add(mockInstance);
 
@@ -366,7 +366,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   private void createHistoricProcessInstanceMock() {
-    List<HistoricProcessInstance> processes = new ArrayList<HistoricProcessInstance>();
+    List<HistoricProcessInstance> processes = new ArrayList<>();
     HistoricProcessInstance mockInstance = MockProvider.createMockHistoricProcessInstance();
     processes.add(mockInstance);
 
@@ -376,7 +376,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   private void createHistoricVariableInstanceMock() {
-    List<HistoricVariableInstance> variables = new ArrayList<HistoricVariableInstance>();
+    List<HistoricVariableInstance> variables = new ArrayList<>();
     HistoricVariableInstance mockInstance = MockProvider.createMockHistoricVariableInstance();
     variables.add(mockInstance);
 
@@ -427,7 +427,7 @@ public class ProcessEngineRestServiceTest extends
   }
 
   private void createFilterMock() {
-    List<Filter> filters = new ArrayList<Filter>();
+    List<Filter> filters = new ArrayList<>();
     Filter mockFilter = MockProvider.createMockFilter();
     filters.add(mockFilter);
 
@@ -529,7 +529,7 @@ public class ProcessEngineRestServiceTest extends
   @Test
   public void testMessageServiceEngineAccess() {
     String messageName = "aMessage";
-    Map<String, Object> messageParameters = new HashMap<String, Object>();
+    Map<String, Object> messageParameters = new HashMap<>();
     messageParameters.put("messageName", messageName);
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters).pathParam("name", EXAMPLE_ENGINE_NAME)
@@ -545,7 +545,7 @@ public class ProcessEngineRestServiceTest extends
   @Test
   public void testMessageWithResultServiceEngineAccess() {
     String messageName = "aMessage";
-    Map<String, Object> messageParameters = new HashMap<String, Object>();
+    Map<String, Object> messageParameters = new HashMap<>();
     messageParameters.put("messageName", messageName);
     messageParameters.put("resultEnabled", true);
 

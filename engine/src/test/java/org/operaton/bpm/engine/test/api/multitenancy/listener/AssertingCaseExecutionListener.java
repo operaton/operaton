@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.delegate.DelegateCaseExecution;
 
 public class AssertingCaseExecutionListener implements CaseExecutionListener {
 
-  public static List<DelegateCaseExecutionAsserter> asserts = new ArrayList<DelegateCaseExecutionAsserter>();
+  public static List<DelegateCaseExecutionAsserter> asserts = new ArrayList<>();
 
   @Override
   public void notify(DelegateCaseExecution caseExecution) throws Exception {

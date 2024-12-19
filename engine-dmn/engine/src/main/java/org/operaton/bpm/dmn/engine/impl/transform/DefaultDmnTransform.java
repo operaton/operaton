@@ -185,7 +185,7 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
   protected List<DmnDecision> transformDecisions(Collection<Decision> decisions) {
     Map<String,DmnDecisionImpl> dmnDecisions = transformIndividualDecisions(decisions);
     buildDecisionRequirements(decisions, dmnDecisions);
-    List<DmnDecision> dmnDecisionList = new ArrayList<DmnDecision>(dmnDecisions.values());
+    List<DmnDecision> dmnDecisionList = new ArrayList<>(dmnDecisions.values());
 
     for(Decision decision: decisions) {
       DmnDecision dmnDecision = dmnDecisions.get(decision.getId());
@@ -197,7 +197,7 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
   }
 
   protected Map<String,DmnDecisionImpl> transformIndividualDecisions(Collection<Decision> decisions) {
-    Map<String, DmnDecisionImpl> dmnDecisions = new HashMap<String, DmnDecisionImpl>();
+    Map<String, DmnDecisionImpl> dmnDecisions = new HashMap<>();
 
     for (Decision decision : decisions) {
       DmnDecisionImpl dmnDecision = transformDecision(decision);
@@ -220,10 +220,10 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
   }
 
   protected void ensureNoLoopInDecisions(List<DmnDecision> dmnDecisionList) {
-    List<String> visitedDecisions = new ArrayList<String>();
+    List<String> visitedDecisions = new ArrayList<>();
 
     for(DmnDecision decision: dmnDecisionList) {
-      ensureNoLoopInDecision(decision, new ArrayList<String>(), visitedDecisions);
+      ensureNoLoopInDecision(decision, new ArrayList<>(), visitedDecisions);
     }
   }
 
@@ -241,13 +241,13 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
         throw LOG.requiredDecisionLoopDetected(requiredDecision.getKey());
       }
 
-      ensureNoLoopInDecision(requiredDecision, new ArrayList<String>(parentDecisionList), visitedDecisions);
+      ensureNoLoopInDecision(requiredDecision, new ArrayList<>(parentDecisionList), visitedDecisions);
     }
     visitedDecisions.add(decision.getKey());
   }
 
   protected List<DmnDecision> getRequiredDmnDecisions(Decision decision, Map<String, DmnDecisionImpl> dmnDecisions) {
-    List<DmnDecision> requiredDecisionList = new ArrayList<DmnDecision>();
+    List<DmnDecision> requiredDecisionList = new ArrayList<>();
     for(InformationRequirement informationRequirement: decision.getInformationRequirements()) {
 
       Decision requiredDecision = informationRequirement.getRequiredDecision();
@@ -306,7 +306,7 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
 
     boolean needsName = decisionTable.getOutputs().size() > 1;
-    Set<String> usedNames = new HashSet<String>();
+    Set<String> usedNames = new HashSet<>();
     for (Output output : decisionTable.getOutputs()) {
       parent = dmnDecisionTable;
       this.decisionTable = dmnDecisionTable;
@@ -383,7 +383,7 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
 
     List<DmnDecisionTableInputImpl> inputs = this.decisionTable.getInputs();
-    List<InputEntry> inputEntries = new ArrayList<InputEntry>(rule.getInputEntries());
+    List<InputEntry> inputEntries = new ArrayList<>(rule.getInputEntries());
     if (inputs.size() != inputEntries.size()) {
       throw LOG.differentNumberOfInputsAndInputEntries(inputs.size(), inputEntries.size(), dmnRule);
     }
@@ -396,7 +396,7 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     }
 
     List<DmnDecisionTableOutputImpl> outputs = this.decisionTable.getOutputs();
-    List<OutputEntry> outputEntries = new ArrayList<OutputEntry>(rule.getOutputEntries());
+    List<OutputEntry> outputEntries = new ArrayList<>(rule.getOutputEntries());
     if (outputs.size() != outputEntries.size()) {
       throw LOG.differentNumberOfOutputsAndOutputEntries(outputs.size(), outputEntries.size(), dmnRule);
     }

@@ -56,7 +56,7 @@ public abstract class AbstractTransactionProcessEngineConfiguration extends Proc
 
   @Override
   protected Collection< ? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequired() {
-    List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<CommandInterceptor>();
+    List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequired.add(getExceptionCodeInterceptor());
     }
@@ -70,7 +70,7 @@ public abstract class AbstractTransactionProcessEngineConfiguration extends Proc
 
   @Override
   protected Collection< ? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequiresNew() {
-    List<CommandInterceptor> defaultCommandInterceptorsTxRequiresNew = new ArrayList<CommandInterceptor>();
+    List<CommandInterceptor> defaultCommandInterceptorsTxRequiresNew = new ArrayList<>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequiresNew.add(getExceptionCodeInterceptor());
     }
@@ -88,7 +88,7 @@ public abstract class AbstractTransactionProcessEngineConfiguration extends Proc
   @Override
   protected void initCommandExecutorDbSchemaOperations() {
     if(commandExecutorSchemaOperations == null) {
-      List<CommandInterceptor> commandInterceptorsDbSchemaOperations = new ArrayList<CommandInterceptor>();
+      List<CommandInterceptor> commandInterceptorsDbSchemaOperations = new ArrayList<>();
       commandInterceptorsDbSchemaOperations.add(new LogInterceptor());
       commandInterceptorsDbSchemaOperations.add(new CommandCounterInterceptor(this));
       commandInterceptorsDbSchemaOperations.add(new CommandContextInterceptor(dbSchemaOperationsCommandContextFactory, this));

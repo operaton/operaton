@@ -41,13 +41,13 @@ public abstract class AbstractProcessInstanceQueryDto<T extends ProcessInstanceD
 
   private static final List<String> VALID_SORT_BY_VALUES;
   static {
-    VALID_SORT_BY_VALUES = new ArrayList<String>();
+    VALID_SORT_BY_VALUES = new ArrayList<>();
     VALID_SORT_BY_VALUES.add(SORT_BY_PROCESS_INSTANCE_START_TIME);
   }
 
   private static final Map<String, String> ORDER_BY_VALUES;
   static {
-    ORDER_BY_VALUES = new HashMap<String, String>();
+    ORDER_BY_VALUES = new HashMap<>();
     ORDER_BY_VALUES.put(SORT_BY_PROCESS_INSTANCE_START_TIME, "START_TIME_");
   }
 

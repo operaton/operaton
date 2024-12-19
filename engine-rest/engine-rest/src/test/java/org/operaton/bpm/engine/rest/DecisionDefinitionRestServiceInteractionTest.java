@@ -291,7 +291,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     DmnDecisionResult decisionResult = MockProvider.createMockDecisionResult();
     when(decisionEvaluationBuilderMock.evaluate()).thenReturn(decisionResult);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables",
         VariablesBuilder.create()
           .variable("amount", 420)
@@ -307,7 +307,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
         .statusCode(Status.OK.getStatusCode())
       .when().post(EVALUATE_DECISION_BY_KEY_AND_TENANT_ID_URL);
 
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("amount", 420);
     expectedVariables.put("invoiceCategory", "MISC");
 
@@ -402,7 +402,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
     when(decisionEvaluationBuilderMock.evaluate()).thenReturn(decisionResult);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables",
         VariablesBuilder.create()
           .variable("amount", 420)
@@ -416,7 +416,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
         .statusCode(Status.OK.getStatusCode())
       .when().post(EVALUATE_DECISION_BY_KEY_URL);
 
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("amount", 420);
     expectedVariables.put("invoiceCategory", "MISC");
 
@@ -430,7 +430,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
     when(decisionEvaluationBuilderMock.evaluate()).thenReturn(decisionResult);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables",
         VariablesBuilder.create()
           .variable("amount", 420)
@@ -444,7 +444,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
         .statusCode(Status.OK.getStatusCode())
       .when().post(EVALUATE_DECISION_URL);
 
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("amount", 420);
     expectedVariables.put("invoiceCategory", "MISC");
 
@@ -461,7 +461,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
     when(decisionEvaluationBuilderMock.evaluate()).thenReturn(decisionResult);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)
@@ -486,7 +486,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
     when(decisionEvaluationBuilderMock.evaluate()).thenReturn(decisionResult);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)
@@ -512,7 +512,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
 
     when(decisionEvaluationBuilderMock.evaluate()).thenReturn(decisionResult);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)
@@ -532,7 +532,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new NotFoundException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)
@@ -549,7 +549,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new NotFoundException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("key", MockProvider.EXAMPLE_DECISION_DEFINITION_KEY)
@@ -584,7 +584,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new NotValidException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)
@@ -601,7 +601,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new NotValidException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("key", MockProvider.EXAMPLE_DECISION_DEFINITION_KEY)
@@ -618,7 +618,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new AuthorizationException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)
@@ -635,7 +635,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new AuthorizationException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("key", MockProvider.EXAMPLE_DECISION_DEFINITION_KEY)
@@ -652,7 +652,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new ProcessEngineException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)
@@ -669,7 +669,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new ProcessEngineException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("key", MockProvider.EXAMPLE_DECISION_DEFINITION_KEY)
@@ -686,7 +686,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new DmnEngineException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("id", MockProvider.EXAMPLE_DECISION_DEFINITION_ID)
@@ -703,7 +703,7 @@ public class DecisionDefinitionRestServiceInteractionTest extends AbstractRestSe
     String message = "expected message";
     when(decisionEvaluationBuilderMock.evaluate()).thenThrow(new DmnEngineException(message));
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", Collections.emptyMap());
 
     given().pathParam("key", MockProvider.EXAMPLE_DECISION_DEFINITION_KEY)

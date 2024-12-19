@@ -179,7 +179,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testSequentialMITasksExecutionListener() {
     RecordInvocationListener.reset();
 
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("nrOfLoops", 2);
     runtimeService.startProcessInstanceByKey("miSequentialListener", vars);
 
@@ -204,7 +204,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testParallelMITasksExecutionListener() {
     RecordInvocationListener.reset();
 
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("nrOfLoops", 5);
     runtimeService.startProcessInstanceByKey("miSequentialListener", vars);
 
@@ -402,7 +402,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   @Deployment(resources="org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelUserTasksBasedOnCollection.bpmn20.xml")
   @Test
   public void testEmptyCollectionInMI() {
-    List<String> assigneeList = new ArrayList<String>();
+    List<String> assigneeList = new ArrayList<>();
     String procId = runtimeService.startProcessInstanceByKey("miParallelUserTasksBasedOnCollection",
       CollectionUtil.singletonMap("assigneeList", assigneeList)).getId();
 
@@ -442,7 +442,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testParallelUserTasksCustomExtensions() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     List<String> assigneeList = Arrays.asList("kermit", "gonzo", "fozzie");
     vars.put("assigneeList", assigneeList);
     runtimeService.startProcessInstanceByKey("miSequentialUserTasks", vars);
@@ -485,7 +485,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testSequentialScriptTasks() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 5);
     runtimeService.startProcessInstanceByKey("miSequentialScriptTask", vars);
@@ -497,7 +497,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   @Deployment(resources="org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialScriptTasks.bpmn20.xml")
   @Test
   public void testSequentialScriptTasksNoStackOverflow() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 200);
     runtimeService.startProcessInstanceByKey("miSequentialScriptTask", vars);
@@ -509,7 +509,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialScriptTasks.bpmn20.xml"})
   @Test
   public void testSequentialScriptTasksHistory() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 7);
     runtimeService.startProcessInstanceByKey("miSequentialScriptTask", vars);
@@ -539,7 +539,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testParallelScriptTasks() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 10);
     runtimeService.startProcessInstanceByKey("miParallelScriptTask", vars);
@@ -551,7 +551,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testParallelScriptTasks.bpmn20.xml"})
   @Test
   public void testParallelScriptTasksHistory() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("sum", 0);
     vars.put("nrOfLoops", 4);
     runtimeService.startProcessInstanceByKey("miParallelScriptTask", vars);
@@ -920,11 +920,11 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testSequentialCallActivityWithList.bpmn20.xml")
   @Test
   public void testSequentialCallActivityWithList() {
-    ArrayList<String> list = new ArrayList<String>();
+    ArrayList<String> list = new ArrayList<>();
     list.add("one");
     list.add("two");
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("list", list);
 
     String procId = runtimeService.startProcessInstanceByKey("parentProcess", variables).getId();
@@ -935,7 +935,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     assertNotNull(task1);
     assertNotNull(task2);
 
-    HashMap<String, Object> subVariables = new HashMap<String, Object>();
+    HashMap<String, Object> subVariables = new HashMap<>();
     subVariables.put("x", "y");
 
     taskService.complete(task1.getId(), subVariables);
@@ -1178,7 +1178,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   @Test
   public void testSequentialServiceTaskWithClassAndCollection() {
     Collection<Integer> items = Arrays.asList(1,2,3,4,5,6);
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("result", 1);
     vars.put("items", items);
 
@@ -1218,7 +1218,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.throwingErrorEventSubProcess.bpmn20.xml" })
   @Test
   public void testMultiInstanceCallActivityWithErrorBoundaryEvent() {
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("assignees", Arrays.asList("kermit", "gonzo"));
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variableMap);
@@ -1227,7 +1227,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     assertEquals(2, tasks.size());
 
     // finish first call activity with error
-    variableMap = new HashMap<String, Object>();
+    variableMap = new HashMap<>();
     variableMap.put("done", false);
     taskService.complete(tasks.get(0).getId(), variableMap);
 
@@ -1245,7 +1245,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.throwingErrorEventSubProcess.bpmn20.xml" })
   @Test
   public void testSequentialMultiInstanceCallActivityWithErrorBoundaryEvent() {
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("assignees", Arrays.asList("kermit", "gonzo"));
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variableMap);
@@ -1254,7 +1254,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
     assertEquals(1, tasks.size());
 
     // finish first call activity with error
-    variableMap = new HashMap<String, Object>();
+    variableMap = new HashMap<>();
     variableMap.put("done", false);
     taskService.complete(tasks.get(0).getId(), variableMap);
 
@@ -1271,7 +1271,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testNestedMultiInstanceTasks() {
     List<String> processes = Arrays.asList("process A", "process B");
     List<String> assignees = Arrays.asList("kermit", "gonzo");
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("subProcesses", processes);
     variableMap.put("assignees", assignees);
 
@@ -1294,7 +1294,7 @@ public class MultiInstanceTest extends PluggableProcessEngineTest {
   public void testNestedMultiInstanceTasksActivityInstance() {
     List<String> processes = Arrays.asList("process A", "process B");
     List<String> assignees = Arrays.asList("kermit", "gonzo");
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("subProcesses", processes);
     variableMap.put("assignees", assignees);
 

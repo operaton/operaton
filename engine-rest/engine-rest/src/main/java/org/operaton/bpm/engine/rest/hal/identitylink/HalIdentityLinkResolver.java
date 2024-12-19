@@ -47,7 +47,7 @@ public class HalIdentityLinkResolver extends HalCachingLinkResolver {
 
     List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(linkedIds[0]);
 
-    List<HalResource<?>> resolvedIdentityLinks = new ArrayList<HalResource<?>>();
+    List<HalResource<?>> resolvedIdentityLinks = new ArrayList<>();
     for (IdentityLink identityLink : identityLinks) {
       resolvedIdentityLinks.add(HalIdentityLink.fromIdentityLink(identityLink));
     }

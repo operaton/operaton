@@ -1614,12 +1614,12 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   public void testSetRetriesAsyncWithCreateTimesQuery() {
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put(RETRIES, 5);
-    Map<String, Object> condition = new HashMap<String, Object>();
+    Map<String, Object> condition = new HashMap<>();
     condition.put("operator", "lt");
     condition.put("value", "2022-12-15T10:45:00.000+0100");
-    Map<String, Object> jobQueryDto = new HashMap<String, Object>();
+    Map<String, Object> jobQueryDto = new HashMap<>();
     jobQueryDto.put("createTimes", Arrays.asList(condition));
     messageBodyJson.put("jobQuery", jobQueryDto);
 
@@ -1641,12 +1641,12 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   public void testSetRetriesAsyncWithDueDatesQuery() {
-      Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+      Map<String, Object> messageBodyJson = new HashMap<>();
       messageBodyJson.put(RETRIES, 5);
-      Map<String, Object> condition = new HashMap<String, Object>();
+      Map<String, Object> condition = new HashMap<>();
       condition.put("operator", "lt");
       condition.put("value", "2022-12-15T10:45:00.000+0100");
-      Map<String, Object> jobQueryDto = new HashMap<String, Object>();
+      Map<String, Object> jobQueryDto = new HashMap<>();
       jobQueryDto.put("dueDates", Arrays.asList(condition));
       messageBodyJson.put("jobQuery", jobQueryDto);
 

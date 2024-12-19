@@ -140,7 +140,7 @@ public class TenantRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("id", MockProvider.EXAMPLE_TENANT_ID);
     parameters.put("name", MockProvider.EXAMPLE_TENANT_NAME);

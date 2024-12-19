@@ -37,7 +37,7 @@ public class ChildElementBuilderImpl<T extends ModelElementInstance> extends Chi
 
   @Override
   protected ChildElementCollectionImpl<T> createCollectionInstance() {
-    return new ChildElementImpl<T>(childElementType, parentElementType);
+    return new ChildElementImpl<>(childElementType, parentElementType);
   }
 
   @Override
@@ -72,7 +72,7 @@ public class ChildElementBuilderImpl<T extends ModelElementInstance> extends Chi
   @Override
   public <V extends ModelElementInstance> ElementReferenceBuilder<V, T> qNameElementReference(Class<V> referenceTargetType) {
     ChildElementImpl<T> child = (ChildElementImpl<T>) build();
-    QNameElementReferenceBuilderImpl<V,T> builder = new QNameElementReferenceBuilderImpl<V, T>(childElementType, referenceTargetType, child);
+    QNameElementReferenceBuilderImpl<V,T> builder = new QNameElementReferenceBuilderImpl<>(childElementType, referenceTargetType, child);
     setReferenceBuilder(builder);
     return builder;
   }
@@ -80,7 +80,7 @@ public class ChildElementBuilderImpl<T extends ModelElementInstance> extends Chi
   @Override
   public <V extends ModelElementInstance> ElementReferenceBuilder<V, T> idElementReference(Class<V> referenceTargetType) {
     ChildElementImpl<T> child = (ChildElementImpl<T>) build();
-    ElementReferenceBuilderImpl<V, T> builder = new ElementReferenceBuilderImpl<V, T>(childElementType, referenceTargetType, child);
+    ElementReferenceBuilderImpl<V, T> builder = new ElementReferenceBuilderImpl<>(childElementType, referenceTargetType, child);
     setReferenceBuilder(builder);
     return builder;
   }
@@ -88,7 +88,7 @@ public class ChildElementBuilderImpl<T extends ModelElementInstance> extends Chi
   @Override
   public <V extends ModelElementInstance> ElementReferenceBuilder<V, T> uriElementReference(Class<V> referenceTargetType) {
     ChildElementImpl<T> child = (ChildElementImpl<T>) build();
-    ElementReferenceBuilderImpl<V, T> builder = new UriElementReferenceBuilderImpl<V, T>(childElementType, referenceTargetType, child);
+    ElementReferenceBuilderImpl<V, T> builder = new UriElementReferenceBuilderImpl<>(childElementType, referenceTargetType, child);
     setReferenceBuilder(builder);
     return builder;
   }

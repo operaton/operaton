@@ -672,7 +672,7 @@ public class StartTimerEventTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/bpmn/event/timer/StartTimerEventTest.testStartTimerEventWithTwoEventSubProcesses.bpmn20.xml" })
   @Test
   public void testStartTimerEventSubProcessCalledFromCallActivity() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("calledProcess", "startTimerEventWithTwoEventSubProcesses");
     // start process instance
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("simpleCallActivityProcess", variables);

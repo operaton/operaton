@@ -124,7 +124,7 @@ public class JobDefinitionRedeploymentTest {
   }
 
   protected Set<String> getJobDefinitionIds(List<JobDefinition> jobDefinitions) {
-    Set<String> definitionIds = new HashSet<String>();
+    Set<String> definitionIds = new HashSet<>();
     for (JobDefinition definition : jobDefinitions) {
       definitionIds.add(definition.getId());
     }

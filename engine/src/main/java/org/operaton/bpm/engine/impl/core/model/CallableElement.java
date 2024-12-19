@@ -36,9 +36,9 @@ public class CallableElement extends BaseCallableElement {
   protected List<CallableElementParameter> outputsLocal;
 
   public CallableElement() {
-    this.inputs = new ArrayList<CallableElementParameter>();
-    this.outputs = new ArrayList<CallableElementParameter>();
-    this.outputsLocal = new ArrayList<CallableElementParameter>();
+    this.inputs = new ArrayList<>();
+    this.outputs = new ArrayList<>();
+    this.outputsLocal = new ArrayList<>();
   }
 
   // definitionKey ////////////////////////////////////////////////////////////////

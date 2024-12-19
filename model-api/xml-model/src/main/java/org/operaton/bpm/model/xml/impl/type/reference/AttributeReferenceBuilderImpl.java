@@ -47,7 +47,7 @@ public class AttributeReferenceBuilderImpl<T extends ModelElementInstance> imple
   public AttributeReferenceBuilderImpl(AttributeImpl<String> referenceSourceAttribute, Class<T> referenceTargetElement) {
     this.referenceSourceAttribute = referenceSourceAttribute;
     this.referenceTargetElement = referenceTargetElement;
-    this.attributeReferenceImpl = new AttributeReferenceImpl<T>(referenceSourceAttribute);
+    this.attributeReferenceImpl = new AttributeReferenceImpl<>(referenceSourceAttribute);
   }
 
   @Override

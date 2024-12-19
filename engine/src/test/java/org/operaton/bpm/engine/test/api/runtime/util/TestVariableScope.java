@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore;
  */
 public class TestVariableScope extends AbstractVariableScope {
 
-  protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<SimpleVariableInstance>();
+  protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
 
   protected VariableStore<CoreVariableInstance> getVariableStore() {
     return (VariableStore) variableStore;

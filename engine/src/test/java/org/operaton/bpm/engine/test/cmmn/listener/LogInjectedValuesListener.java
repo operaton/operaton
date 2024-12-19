@@ -32,8 +32,8 @@ public class LogInjectedValuesListener implements CaseVariableListener {
   protected Expression stringValueExpression;
   protected Expression juelExpression;
 
-  protected static List<Object> resolvedStringValueExpressions = new ArrayList<Object>();
-  protected static List<Object> resolvedJuelExpressions = new ArrayList<Object>();
+  protected static List<Object> resolvedStringValueExpressions = new ArrayList<>();
+  protected static List<Object> resolvedJuelExpressions = new ArrayList<>();
 
 
   @Override
@@ -51,8 +51,8 @@ public class LogInjectedValuesListener implements CaseVariableListener {
   }
 
   public static void reset() {
-    resolvedJuelExpressions = new ArrayList<Object>();
-    resolvedStringValueExpressions = new ArrayList<Object>();
+    resolvedJuelExpressions = new ArrayList<>();
+    resolvedStringValueExpressions = new ArrayList<>();
   }
 
 }

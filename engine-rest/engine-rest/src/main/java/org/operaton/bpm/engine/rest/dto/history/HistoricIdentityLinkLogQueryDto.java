@@ -55,7 +55,7 @@ public class HistoricIdentityLinkLogQueryDto extends AbstractQueryDto<HistoricId
 
   private static final List<String> VALID_SORT_BY_VALUES;
   static {
-    VALID_SORT_BY_VALUES = new ArrayList<String>();
+    VALID_SORT_BY_VALUES = new ArrayList<>();
     VALID_SORT_BY_VALUES.add(SORT_BY_TIME);
     VALID_SORT_BY_VALUES.add(SORT_BY_TYPE);
     VALID_SORT_BY_VALUES.add(SORT_BY_USER_ID);

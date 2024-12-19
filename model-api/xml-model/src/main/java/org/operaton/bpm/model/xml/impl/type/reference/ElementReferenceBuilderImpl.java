@@ -28,7 +28,7 @@ public class ElementReferenceBuilderImpl<Target extends ModelElementInstance, So
 
   public ElementReferenceBuilderImpl(Class<Source> childElementType, Class<Target> referenceTargetClass, ChildElementImpl<Source> child) {
     super(childElementType, referenceTargetClass, child);
-    this.elementReferenceCollectionImpl = new ElementReferenceImpl<Target, Source>(child);
+    this.elementReferenceCollectionImpl = new ElementReferenceImpl<>(child);
   }
 
   @Override

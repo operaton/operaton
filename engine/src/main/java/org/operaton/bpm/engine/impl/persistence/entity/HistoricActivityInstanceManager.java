@@ -43,7 +43,7 @@ public class HistoricActivityInstanceManager extends AbstractHistoricManager {
   }
 
   public HistoricActivityInstanceEntity findHistoricActivityInstance(String activityId, String processInstanceId) {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("activityId", activityId);
     parameters.put("processInstanceId", processInstanceId);
 
@@ -96,7 +96,7 @@ public class HistoricActivityInstanceManager extends AbstractHistoricManager {
   }
 
   public DbOperation deleteHistoricActivityInstancesByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("removalTime", removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
       parameters.put("minuteFrom", minuteFrom);

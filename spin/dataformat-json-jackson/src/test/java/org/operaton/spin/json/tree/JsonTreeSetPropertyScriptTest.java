@@ -241,7 +241,7 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailWhileSettingObject() throws Throwable{
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("date", new Date());
     failingWithException(variables);
   }
@@ -250,7 +250,7 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
   public void shouldFailWhileSettingArray() throws Throwable{
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("date", new Date());
     failingWithException(variables);
   }

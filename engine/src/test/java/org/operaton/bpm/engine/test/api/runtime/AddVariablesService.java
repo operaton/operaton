@@ -30,13 +30,13 @@ public class AddVariablesService implements JavaDelegate {
   @Override
   public void execute(DelegateExecution execution) throws Exception {
     Date now = new Date();
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
 
     // Start process instance with different types of variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     variables.put("shortVar", (short) 123);
     variables.put("integerVar", 1234);

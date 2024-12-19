@@ -63,7 +63,7 @@ public class HistoricBatchRestServiceImpl implements HistoricBatchRestService {
 
     List<HistoricBatch> matchingBatches = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricBatchDto> batchResults = new ArrayList<HistoricBatchDto>();
+    List<HistoricBatchDto> batchResults = new ArrayList<>();
     for (HistoricBatch matchingBatch : matchingBatches) {
       batchResults.add(HistoricBatchDto.fromBatch(matchingBatch));
     }

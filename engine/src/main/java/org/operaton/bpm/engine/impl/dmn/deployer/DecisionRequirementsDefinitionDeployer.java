@@ -112,7 +112,7 @@ public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDe
   @Override
   protected void ensureNoDuplicateDefinitionKeys(List<DecisionRequirementsDefinitionEntity> definitions) {
     // ignore decision requirements definitions which will not be persistent
-    ArrayList<DecisionRequirementsDefinitionEntity> persistableDefinitions = new ArrayList<DecisionRequirementsDefinitionEntity>();
+    ArrayList<DecisionRequirementsDefinitionEntity> persistableDefinitions = new ArrayList<>();
     for (DecisionRequirementsDefinitionEntity definition : definitions) {
       if (isDecisionRequirementsDefinitionPersistable(definition)) {
         persistableDefinitions.add(definition);

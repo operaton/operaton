@@ -59,7 +59,7 @@ public class ProcessApplicationTaskListenerTest extends AbstractFoxPlatformInteg
 
   @Test
   public void testTaskListener() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put(TaskListener.EVENTNAME_CREATE, false);
     variables.put(TaskListener.EVENTNAME_ASSIGNMENT, false);
     variables.put(TaskListener.EVENTNAME_UPDATE, false);

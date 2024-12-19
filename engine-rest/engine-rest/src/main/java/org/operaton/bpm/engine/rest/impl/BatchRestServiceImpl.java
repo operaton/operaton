@@ -53,7 +53,7 @@ public class BatchRestServiceImpl extends AbstractRestProcessEngineAware impleme
 
     List<Batch> matchingBatches = QueryUtil.list(query, firstResult, maxResults);
 
-    List<BatchDto> batchResults = new ArrayList<BatchDto>();
+    List<BatchDto> batchResults = new ArrayList<>();
     for (Batch matchingBatch : matchingBatches) {
       batchResults.add(BatchDto.fromBatch(matchingBatch));
     }
@@ -77,7 +77,7 @@ public class BatchRestServiceImpl extends AbstractRestProcessEngineAware impleme
 
     List<BatchStatistics> batchStatisticsList = QueryUtil.list(query, firstResult, maxResults);
 
-    List<BatchStatisticsDto> statisticsResults = new ArrayList<BatchStatisticsDto>();
+    List<BatchStatisticsDto> statisticsResults = new ArrayList<>();
     for (BatchStatistics batchStatistics : batchStatisticsList) {
       statisticsResults.add(BatchStatisticsDto.fromBatchStatistics(batchStatistics));
     }

@@ -157,7 +157,7 @@ public class HistoryByteArrayTest {
     byte[] binaryContent = "some binary content".getBytes();
 
     // given
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("binaryVariable", binaryContent);
     Task task = taskService.newTask();
     taskService.saveTask(task);

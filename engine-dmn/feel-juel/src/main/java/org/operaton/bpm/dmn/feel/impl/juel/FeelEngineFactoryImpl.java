@@ -116,7 +116,7 @@ public class FeelEngineFactoryImpl implements FeelEngineFactory {
   }
 
   protected Cache<TransformExpressionCacheKey, String> createTransformExpressionCache() {
-    return new ConcurrentLruCache<TransformExpressionCacheKey, String>(expressionCacheSize);
+    return new ConcurrentLruCache<>(expressionCacheSize);
   }
 
 }

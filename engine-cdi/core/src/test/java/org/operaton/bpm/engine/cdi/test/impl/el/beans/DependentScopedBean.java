@@ -32,7 +32,7 @@ import javax.inject.Named;
 @Dependent
 public class DependentScopedBean {
 
-  public static List<String> lifecycle = new ArrayList<String>();
+  public static List<String> lifecycle = new ArrayList<>();
 
   public void invoke() {
     lifecycle.add("bean-invoked");

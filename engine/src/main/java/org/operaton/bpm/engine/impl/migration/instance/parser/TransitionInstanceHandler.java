@@ -93,7 +93,7 @@ public class TransitionInstanceHandler implements MigratingInstanceParseHandler<
   }
 
   protected List<VariableInstanceEntity> collectTransitionInstanceVariables(MigratingTransitionInstance instance) {
-    List<VariableInstanceEntity> variables = new ArrayList<VariableInstanceEntity>();
+    List<VariableInstanceEntity> variables = new ArrayList<>();
     ExecutionEntity representativeExecution = instance.resolveRepresentativeExecution();
 
     if (representativeExecution.isConcurrent()) {

@@ -48,7 +48,7 @@ public class MultipleClasspathRootsClassPathScannerTest {
 
     ClassPathProcessApplicationScanner scanner = new ClassPathProcessApplicationScanner();
 
-    Map<String, byte[]> scanResult = new HashMap<String, byte[]>();
+    Map<String, byte[]> scanResult = new HashMap<>();
 
     scanner.scanPaResourceRootPath(classLoader, null, "classpath:directory/",scanResult);
 

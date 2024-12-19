@@ -52,7 +52,7 @@ public class MocksTest {
   @Test
   public void testMethodsOfMocksAPI() {
     //given
-    HashMap<String, Object> map = new HashMap<String, Object>();
+    HashMap<String, Object> map = new HashMap<>();
 
     for (int i = 0; i < 5; i++) {
       map.put("key" + i, new Object());

@@ -188,7 +188,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
     // valid submit
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FormDataTest.testFormFieldSubmit");
     Task task = taskService.createTaskQuery().singleResult();
-    Map<String, Object> formValues = new HashMap<String, Object>();
+    Map<String, Object> formValues = new HashMap<>();
     formValues.put("stringField", "12345");
     formValues.put("longField", 9L);
     formValues.put("customField", "validValue");
@@ -201,7 +201,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
     task = taskService.createTaskQuery().singleResult();
     // invalid submit 1
 
-    formValues = new HashMap<String, Object>();
+    formValues = new HashMap<>();
     formValues.put("stringField", "1234");
     formValues.put("longField", 9L);
     formValues.put("customField", "validValue");
@@ -213,7 +213,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
     }
 
     // invalid submit 2
-    formValues = new HashMap<String, Object>();
+    formValues = new HashMap<>();
 
     formValues.put("customFieldWithValidationDetails", "C");
     try {
@@ -237,7 +237,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("FormDataTest.testSubmitFormDataWithEmptyDate");
     Task task = taskService.createTaskQuery().singleResult();
-    Map<String, Object> formValues = new HashMap<String, Object>();
+    Map<String, Object> formValues = new HashMap<>();
     formValues.put("stringField", "12345");
     formValues.put("dateField", "");
 
@@ -280,7 +280,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
   public void testDoubleQuotesAreEscapedInGeneratedTaskForms() {
 
     // given
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("foo", "This is a \"Test\" message!");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
     Task taskWithForm = taskService.createTaskQuery().singleResult();

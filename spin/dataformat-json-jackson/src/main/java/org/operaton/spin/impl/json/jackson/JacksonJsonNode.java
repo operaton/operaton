@@ -461,7 +461,7 @@ public class JacksonJsonNode extends SpinJsonNode {
   public SpinList<SpinJsonNode> elements() {
     if(jsonNode.isArray()) {
       Iterator<JsonNode> iterator = jsonNode.elements();
-      SpinList<SpinJsonNode> list = new SpinListImpl<SpinJsonNode>();
+      SpinList<SpinJsonNode> list = new SpinListImpl<>();
       while(iterator.hasNext()) {
         SpinJsonNode node = dataFormat.createWrapperInstance(iterator.next());
         list.add(node);
@@ -477,7 +477,7 @@ public class JacksonJsonNode extends SpinJsonNode {
   public List<String> fieldNames() {
     if(jsonNode.isContainerNode()) {
       Iterator<String> iterator = jsonNode.fieldNames();
-      List<String> list = new ArrayList<String>();
+      List<String> list = new ArrayList<>();
       while(iterator.hasNext()) {
         list.add(iterator.next());
       }

@@ -585,7 +585,7 @@ public class HistoricJobLogQueryTest {
   @Test
   public void testQueryByJobPriority() {
     // given 5 process instances with 5 jobs
-    List<ProcessInstance> processInstances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> processInstances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       processInstances.add(runtimeService.startProcessInstanceByKey("process",

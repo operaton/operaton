@@ -32,7 +32,7 @@ public class VariableOrderProperty extends QueryOrderingProperty {
 
   public VariableOrderProperty(String name, ValueType valueType) {
     super(QueryOrderingProperty.RELATION_VARIABLE, typeToQueryProperty(valueType));
-    this.relationConditions = new ArrayList<QueryEntityRelationCondition>();
+    this.relationConditions = new ArrayList<>();
     relationConditions.add(new QueryEntityRelationCondition(VariableInstanceQueryProperty.VARIABLE_NAME, name));
 
     // works only for primitive types

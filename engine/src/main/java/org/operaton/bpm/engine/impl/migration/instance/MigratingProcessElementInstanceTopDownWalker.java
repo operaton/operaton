@@ -38,7 +38,7 @@ public class MigratingProcessElementInstanceTopDownWalker extends ReferenceWalke
   @Override
   protected Collection<MigrationContext> nextElements() {
 
-    Collection<MigrationContext> nextElements = new LinkedList<MigrationContext>();
+    Collection<MigrationContext> nextElements = new LinkedList<>();
 
     MigrationContext currentElement = getCurrentElement();
 

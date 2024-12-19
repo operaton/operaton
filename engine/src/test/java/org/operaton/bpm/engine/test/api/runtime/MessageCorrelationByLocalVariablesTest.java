@@ -68,13 +68,13 @@ public class MessageCorrelationByLocalVariablesTest {
 
     testHelper.deploy(model);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("vars", Arrays.asList(1, 2, 3));
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated by local variables
     String messageName = TEST_MESSAGE_NAME;
-    Map<String, Object> correlationKeys = new HashMap<String, Object>();
+    Map<String, Object> correlationKeys = new HashMap<>();
     int correlationKey = 1;
     correlationKeys.put("localVar", correlationKey);
     correlationKeys.put("constVar", "someValue");
@@ -108,7 +108,7 @@ public class MessageCorrelationByLocalVariablesTest {
 
     testHelper.deploy(model);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("vars", Arrays.asList(1, 2, 3));
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
@@ -147,17 +147,17 @@ public class MessageCorrelationByLocalVariablesTest {
 
     testHelper.deploy(model);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("vars", Arrays.asList(1, 2, 3));
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated by local variables
     String messageName = TEST_MESSAGE_NAME;
-    Map<String, Object> correlationKeys = new HashMap<String, Object>();
+    Map<String, Object> correlationKeys = new HashMap<>();
     int correlationKey = 1;
     correlationKeys.put("localVar", correlationKey);
     correlationKeys.put("constVar", "someValue");
-    Map<String, Object> messagePayload = new HashMap<String, Object>();
+    Map<String, Object> messagePayload = new HashMap<>();
     messagePayload.put("newVar", "newValue");
 
     MessageCorrelationResult messageCorrelationResult = engineRule.getRuntimeService().createMessageCorrelation(messageName)
@@ -193,27 +193,27 @@ public class MessageCorrelationByLocalVariablesTest {
 
     testHelper.deploy(model);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("vars", Arrays.asList(1, 2, 3));
     variables.put("processInstanceVar", "processInstanceVarValue");
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //second process instance with another process instance variable value
-    variables = new HashMap<String, Object>();
+    variables = new HashMap<>();
     variables.put("vars", Arrays.asList(1, 2, 3));
     variables.put("processInstanceVar", "anotherProcessInstanceVarValue");
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated by local variables
     String messageName = TEST_MESSAGE_NAME;
-    Map<String, Object> correlationKeys = new HashMap<String, Object>();
+    Map<String, Object> correlationKeys = new HashMap<>();
     int correlationKey = 1;
     correlationKeys.put("localVar", correlationKey);
     correlationKeys.put("constVar", "someValue");
-    Map<String, Object> processInstanceKeys = new HashMap<String, Object>();
+    Map<String, Object> processInstanceKeys = new HashMap<>();
     String processInstanceVarValue = "processInstanceVarValue";
     processInstanceKeys.put("processInstanceVar", processInstanceVarValue);
-    Map<String, Object> messagePayload = new HashMap<String, Object>();
+    Map<String, Object> messagePayload = new HashMap<>();
     messagePayload.put("newVar", "newValue");
 
     MessageCorrelationResult messageCorrelationResult = engineRule.getRuntimeService().createMessageCorrelation(messageName)
@@ -246,13 +246,13 @@ public class MessageCorrelationByLocalVariablesTest {
 
     testHelper.deploy(model);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("vars", Arrays.asList(1, 2, 1));
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated by local variables
     String messageName = TEST_MESSAGE_NAME;
-    Map<String, Object> correlationKeys = new HashMap<String, Object>();
+    Map<String, Object> correlationKeys = new HashMap<>();
     int correlationKey = 1;
     correlationKeys.put("localVar", correlationKey);
     correlationKeys.put("constVar", "someValue");
@@ -283,13 +283,13 @@ public class MessageCorrelationByLocalVariablesTest {
 
     testHelper.deploy(model);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("vars", Arrays.asList(1, 2, 1));
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated ALL by local variables
     String messageName = TEST_MESSAGE_NAME;
-    Map<String, Object> correlationKeys = new HashMap<String, Object>();
+    Map<String, Object> correlationKeys = new HashMap<>();
     int correlationKey = 1;
     correlationKeys.put("localVar", correlationKey);
     correlationKeys.put("constVar", "someValue");

@@ -42,10 +42,10 @@ public abstract class AbstractExecutionListenerSpec {
 
   public AbstractExecutionListenerSpec(String eventName) {
     this.eventNameToRegisterOn = eventName;
-    this.expectedRegisteredEvents = new HashSet<String>();
+    this.expectedRegisteredEvents = new HashSet<>();
     this.expectedRegisteredEvents.add(eventName);
 
-    this.fieldSpecs = new ArrayList<FieldSpec>();
+    this.fieldSpecs = new ArrayList<>();
   }
 
   public void addListenerToElement(CmmnModelInstance modelInstance, CmmnModelElementInstance modelElement) {
@@ -79,7 +79,7 @@ public abstract class AbstractExecutionListenerSpec {
   protected abstract void verifyListener(DelegateListener<? extends BaseDelegateExecution> listener);
 
   public AbstractExecutionListenerSpec expectRegistrationFor(List<String> events) {
-    expectedRegisteredEvents = new HashSet<String>(events);
+    expectedRegisteredEvents = new HashSet<>(events);
     return this;
   }
 

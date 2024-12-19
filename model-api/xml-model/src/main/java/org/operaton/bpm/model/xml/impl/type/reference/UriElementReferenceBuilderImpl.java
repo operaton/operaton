@@ -23,7 +23,7 @@ public class UriElementReferenceBuilderImpl<Target extends ModelElementInstance,
 
   public UriElementReferenceBuilderImpl(Class<Source> childElementType, Class<Target> referenceTargetClass, ChildElementImpl<Source> child) {
     super(childElementType, referenceTargetClass, child);
-    this.elementReferenceCollectionImpl = new UriElementReferenceImpl<Target, Source>(child);
+    this.elementReferenceCollectionImpl = new UriElementReferenceImpl<>(child);
   }
 
 }

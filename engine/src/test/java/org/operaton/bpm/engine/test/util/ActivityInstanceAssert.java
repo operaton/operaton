@@ -89,7 +89,7 @@ public class ActivityInstanceAssert {
           return false;
         } else {
 
-          List<ActivityInstance> unmatchedInstances = new ArrayList<ActivityInstance>(Arrays.asList(expectedInstance.getChildActivityInstances()));
+          List<ActivityInstance> unmatchedInstances = new ArrayList<>(Arrays.asList(expectedInstance.getChildActivityInstances()));
           for (ActivityInstance actualChild : actualInstance.getChildActivityInstances()) {
             boolean matchFound = false;
             for (ActivityInstance expectedChild : new ArrayList<ActivityInstance>(unmatchedInstances)) {
@@ -109,7 +109,7 @@ public class ActivityInstanceAssert {
           }
 
           List<TransitionInstance> unmatchedTransitionInstances =
-              new ArrayList<TransitionInstance>(Arrays.asList(expectedInstance.getChildTransitionInstances()));
+              new ArrayList<>(Arrays.asList(expectedInstance.getChildTransitionInstances()));
           for (TransitionInstance child : actualInstance.getChildTransitionInstances()) {
             Iterator<TransitionInstance> expectedTransitionInstanceIt = unmatchedTransitionInstances.iterator();
 
@@ -138,7 +138,7 @@ public class ActivityInstanceAssert {
   public static class ActivityInstanceTreeBuilder {
 
     protected ActivityInstanceImpl rootInstance = null;
-    protected Stack<ActivityInstanceImpl> activityInstanceStack = new Stack<ActivityInstanceImpl>();
+    protected Stack<ActivityInstanceImpl> activityInstanceStack = new Stack<>();
 
     public ActivityInstanceTreeBuilder() {
       this(null);
@@ -160,7 +160,7 @@ public class ActivityInstanceAssert {
       newInstance.setId(activityInstanceId);
 
       ActivityInstanceImpl parentInstance = activityInstanceStack.peek();
-      List<ActivityInstance> childInstances = new ArrayList<ActivityInstance>(Arrays.asList(parentInstance.getChildActivityInstances()));
+      List<ActivityInstance> childInstances = new ArrayList<>(Arrays.asList(parentInstance.getChildActivityInstances()));
       childInstances.add(newInstance);
       parentInstance.setChildActivityInstances(childInstances.toArray(new ActivityInstance[childInstances.size()]));
 
@@ -197,7 +197,7 @@ public class ActivityInstanceAssert {
       newInstance.setActivityId(activityId);
       ActivityInstanceImpl parentInstance = activityInstanceStack.peek();
 
-      List<TransitionInstance> childInstances = new ArrayList<TransitionInstance>(
+      List<TransitionInstance> childInstances = new ArrayList<>(
           Arrays.asList(parentInstance.getChildTransitionInstances()));
       childInstances.add(newInstance);
       parentInstance.setChildTransitionInstances(childInstances.toArray(new TransitionInstance[childInstances.size()]));

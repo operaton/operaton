@@ -53,7 +53,7 @@ public class IdentityInfoManager extends AbstractManager {
       return null;
     }
 
-    Map<String,String> details = new HashMap<String, String>();
+    Map<String,String> details = new HashMap<>();
     String identityInfoId = identityInfoEntity.getId();
     List<IdentityInfoEntity> identityInfoDetails = findIdentityInfoDetails(identityInfoId);
     for (IdentityInfoEntity identityInfoDetail: identityInfoDetails) {
@@ -87,10 +87,10 @@ public class IdentityInfoManager extends AbstractManager {
       identityInfoEntity.setPasswordBytes(storedPassword);
 
       if (accountDetails==null) {
-        accountDetails = new HashMap<String, String>();
+        accountDetails = new HashMap<>();
       }
 
-      Set<String> newKeys = new HashSet<String>(accountDetails.keySet());
+      Set<String> newKeys = new HashSet<>(accountDetails.keySet());
       List<IdentityInfoEntity> identityInfoDetails = findIdentityInfoDetails(identityInfoEntity.getId());
       for (IdentityInfoEntity identityInfoDetail: identityInfoDetails) {
         String detailKey = identityInfoDetail.getKey();
@@ -143,7 +143,7 @@ public class IdentityInfoManager extends AbstractManager {
   }
 
   public IdentityInfoEntity findUserInfoByUserIdAndKey(String userId, String key) {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("userId", userId);
     parameters.put("key", key);
     return (IdentityInfoEntity) getDbEntityManager().selectOne("selectIdentityInfoByUserIdAndKey", parameters);
@@ -151,7 +151,7 @@ public class IdentityInfoManager extends AbstractManager {
 
   @SuppressWarnings("unchecked")
   public List<String> findUserInfoKeysByUserIdAndType(String userId, String type) {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("userId", userId);
     parameters.put("type", type);
     return (List) getDbEntityManager().selectList("selectIdentityInfoKeysByUserIdAndType", parameters);

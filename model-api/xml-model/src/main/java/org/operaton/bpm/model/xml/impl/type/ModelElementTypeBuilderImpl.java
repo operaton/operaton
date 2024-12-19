@@ -42,7 +42,7 @@ public class ModelElementTypeBuilderImpl implements ModelElementTypeBuilder, Mod
   private final ModelImpl model;
   private final Class<? extends ModelElementInstance> instanceType;
 
-  private final List<ModelBuildOperation> modelBuildOperations = new ArrayList<ModelBuildOperation>();
+  private final List<ModelBuildOperation> modelBuildOperations = new ArrayList<>();
   private Class<? extends ModelElementInstance> extendedType;
 
   public ModelElementTypeBuilderImpl(Class<? extends ModelElementInstance> instanceType, String name, ModelImpl model) {
@@ -99,14 +99,14 @@ public class ModelElementTypeBuilderImpl implements ModelElementTypeBuilder, Mod
 
   @Override
   public <V extends Enum<V>> AttributeBuilder<V> enumAttribute(String attributeName, Class<V> enumType) {
-    EnumAttributeBuilder<V> builder = new EnumAttributeBuilder<V>(attributeName, modelType, enumType);
+    EnumAttributeBuilder<V> builder = new EnumAttributeBuilder<>(attributeName, modelType, enumType);
     modelBuildOperations.add(builder);
     return builder;
   }
 
   @Override
   public <V extends Enum<V>> AttributeBuilder<V> namedEnumAttribute(String attributeName, Class<V> enumType) {
-    NamedEnumAttributeBuilder<V> builder = new NamedEnumAttributeBuilder<V>(attributeName, modelType, enumType);
+    NamedEnumAttributeBuilder<V> builder = new NamedEnumAttributeBuilder<>(attributeName, modelType, enumType);
     modelBuildOperations.add(builder);
     return builder;
   }

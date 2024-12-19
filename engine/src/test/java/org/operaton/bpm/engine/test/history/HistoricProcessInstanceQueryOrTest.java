@@ -233,11 +233,11 @@ public class HistoricProcessInstanceQueryOrTest {
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   public void shouldReturnHistoricProcInstWithVarValue1OrVarValue2() {
     // given
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
 
-    vars = new HashMap<String, Object>();
+    vars = new HashMap<>();
     vars.put("stringVar", "ghijkl");
     runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
 
@@ -397,7 +397,7 @@ public class HistoricProcessInstanceQueryOrTest {
     // given
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
     runtimeService.setVariable(processInstance2.getProcessInstanceId(), "aVarName", "varValue");
@@ -429,7 +429,7 @@ public class HistoricProcessInstanceQueryOrTest {
   @Deployment(resources={"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   public void shouldReturnHistoricProcInstFilteredByMultipleOrAndCriteria() {
     // given
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     vars.put("longVar", 12345L);
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
@@ -730,7 +730,7 @@ public class HistoricProcessInstanceQueryOrTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     // start one process instance and suspend it
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("foo", 0);
     ProcessInstance suspendedProcessInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
     runtimeService.suspendProcessInstanceById(suspendedProcessInstance.getProcessInstanceId());

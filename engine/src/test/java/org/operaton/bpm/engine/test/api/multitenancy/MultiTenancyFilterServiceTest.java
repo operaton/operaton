@@ -38,7 +38,7 @@ public class MultiTenancyFilterServiceTest extends PluggableProcessEngineTest {
   protected static final String[] TENANT_IDS = new String[] {TENANT_ONE, TENANT_TWO};
 
   protected String filterId = null;
-  protected final List<String> taskIds = new ArrayList<String>();
+  protected final List<String> taskIds = new ArrayList<>();
 
   @Before
   public void setUp() {

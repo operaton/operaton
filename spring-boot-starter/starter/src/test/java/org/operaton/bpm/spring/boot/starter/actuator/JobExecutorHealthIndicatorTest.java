@@ -42,7 +42,7 @@ public class JobExecutorHealthIndicatorTest {
   private static final int MAX_JOBS_PER_ACQUISITION = 6;
   private static final String JOB_EXECUTOR_NAME = "job executor name";
   private static final int WAIT_TIME_IN_MILLIS = 7;
-  private static final List<ProcessEngineImpl> PROCESS_ENGINES = new ArrayList<ProcessEngineImpl>();
+  private static final List<ProcessEngineImpl> PROCESS_ENGINES = new ArrayList<>();
   private static final String PROCESS_ENGINE_NAME = "process engine name";
 
   static {

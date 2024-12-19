@@ -81,7 +81,7 @@ public class SignalEventConcurrencyTest extends ConcurrencyTestHelper {
 
     runtimeService.startProcessInstanceByKey("mainProcess");
 
-    final ControllableCommand<Object> sendSignalCommand = new ControllableCommand<Object>() {
+    final ControllableCommand<Object> sendSignalCommand = new ControllableCommand<>() {
       @Override
       public Object execute(final CommandContext commandContext) {
         // send signal to execution

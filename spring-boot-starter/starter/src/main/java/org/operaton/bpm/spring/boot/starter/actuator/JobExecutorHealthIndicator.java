@@ -122,7 +122,7 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
 
       public DetailsBuilder processEngineName(String processEngineName) {
         if (this.processEngineNames == null) {
-          this.processEngineNames = new HashSet<String>();
+          this.processEngineNames = new HashSet<>();
         }
         this.processEngineNames.add(processEngineName);
         return this;
@@ -130,7 +130,7 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
 
       public DetailsBuilder processEngineNames(Set<? extends String> processEngineNames) {
         if (this.processEngineNames == null) {
-          this.processEngineNames = new HashSet<String>();
+          this.processEngineNames = new HashSet<>();
         }
         this.processEngineNames.addAll(processEngineNames);
         return this;

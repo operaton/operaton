@@ -28,8 +28,8 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 public class DmnDecisionTableEvaluationEventImpl implements DmnDecisionTableEvaluationEvent {
 
   protected DmnDecision decision;
-  protected List<DmnEvaluatedInput> inputs = new ArrayList<DmnEvaluatedInput>();
-  protected List<DmnEvaluatedDecisionRule> matchingRules = new ArrayList<DmnEvaluatedDecisionRule>();
+  protected List<DmnEvaluatedInput> inputs = new ArrayList<>();
+  protected List<DmnEvaluatedDecisionRule> matchingRules = new ArrayList<>();
   protected String collectResultName;
   protected TypedValue collectResultValue;
   protected long executedDecisionElements;

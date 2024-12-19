@@ -168,14 +168,14 @@ public class HistoricDecisionInstanceEntity extends HistoryEvent implements Hist
 
   public void addInput(HistoricDecisionInputInstance decisionInputInstance) {
     if(inputs == null) {
-      inputs = new ArrayList<HistoricDecisionInputInstance>();
+      inputs = new ArrayList<>();
     }
     inputs.add(decisionInputInstance);
   }
 
   public void addOutput(HistoricDecisionOutputInstance decisionOutputInstance) {
     if(outputs == null) {
-      outputs = new ArrayList<HistoricDecisionOutputInstance>();
+      outputs = new ArrayList<>();
     }
     outputs.add(decisionOutputInstance);
   }

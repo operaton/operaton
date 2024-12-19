@@ -34,7 +34,7 @@ public class FeelFunctionMapper extends FunctionMapper {
   protected static final SimpleDateFormat FEEL_DATE_AND_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   public static final String JUEL_DATE_AND_TIME_METHOD = "dateAndTime";
 
-  protected static final Map<String, Method> methods = new HashMap<String, Method>();
+  protected static final Map<String, Method> methods = new HashMap<>();
 
   static {
     methods.put(JUEL_DATE_AND_TIME_METHOD, getMethod("parseDateAndTime", String.class));

@@ -90,7 +90,7 @@ public class QuerySessionFactory extends StandaloneProcessEngineConfiguration {
 
   protected String buildMappings(List<String> mappingFiles) {
 
-    List<String> mappings = new ArrayList<String>(mappingFiles);
+    List<String> mappings = new ArrayList<>(mappingFiles);
     mappings.addAll(Arrays.asList(DEFAULT_MAPPING_FILES));
 
     StringBuilder builder = new StringBuilder();

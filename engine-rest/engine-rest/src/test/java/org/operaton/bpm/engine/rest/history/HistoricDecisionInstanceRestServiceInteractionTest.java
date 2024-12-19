@@ -305,7 +305,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
     when(historyServiceMock.deleteHistoricDecisionInstancesAsync(any(), any(), any())).thenReturn(batchEntity);
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put("historicDecisionInstanceIds", ids);
     messageBodyJson.put("deleteReason", "a-delete-reason");
 
@@ -326,7 +326,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
     when(historyServiceMock.deleteHistoricDecisionInstancesAsync(any(), any(), any())).thenReturn(batchEntity);
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
     HistoricDecisionInstanceQueryDto query = new HistoricDecisionInstanceQueryDto();
     query.setDecisionDefinitionKey("decision");
     messageBodyJson.put("historicDecisionInstanceQuery", query);
@@ -353,7 +353,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
         anyString()
     )).thenReturn(batchEntity);
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
     HistoricDecisionInstanceQueryDto query = new HistoricDecisionInstanceQueryDto();
     query.setDecisionDefinitionKey("decision");
     messageBodyJson.put("historicDecisionInstanceQuery", query);

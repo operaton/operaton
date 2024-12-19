@@ -35,7 +35,7 @@ public class Properties {
   protected final Map<String, Object> properties;
 
   public Properties() {
-    this(new HashMap<String, Object>());
+    this(new HashMap<>());
   }
 
   public Properties(Map<String, Object> properties) {
@@ -73,7 +73,7 @@ public class Properties {
     if (contains(property)) {
       return (List<T>) properties.get(property.getName());
     } else {
-      return new ArrayList<T>();
+      return new ArrayList<>();
     }
   }
 
@@ -94,7 +94,7 @@ public class Properties {
     if (contains(property)) {
       return (Map<K, V>) properties.get(property.getName());
     } else {
-      return new HashMap<K, V>();
+      return new HashMap<>();
     }
   }
 
@@ -234,7 +234,7 @@ public class Properties {
    * @return a map view of this properties
    */
   public Map<String, Object> toMap() {
-    return new HashMap<String, Object>(properties);
+    return new HashMap<>(properties);
   }
 
   @Override

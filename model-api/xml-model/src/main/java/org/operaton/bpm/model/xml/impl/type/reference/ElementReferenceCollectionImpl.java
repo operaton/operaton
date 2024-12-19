@@ -120,7 +120,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
   protected Collection<DomElement> getView(ModelElementInstanceImpl referenceSourceParentElement) {
     DomDocument document = referenceSourceParentElement.getModelInstance().getDocument();
     Collection<Source> referenceSourceElements = referenceSourceCollection.get(referenceSourceParentElement);
-    Collection<DomElement> referenceTargetElements = new ArrayList<DomElement>();
+    Collection<DomElement> referenceTargetElements = new ArrayList<>();
     for (Source referenceSourceElement : referenceSourceElements) {
       String identifier = getReferenceIdentifier(referenceSourceElement);
       DomElement referenceTargetElement = document.getElementById(identifier);
@@ -137,7 +137,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
   @Override
   public Collection<Target> getReferenceTargetElements(final ModelElementInstanceImpl referenceSourceParentElement) {
 
-    return new Collection<Target>() {
+    return new Collection<>() {
 
       @Override
       public int size() {
@@ -249,7 +249,7 @@ public class ElementReferenceCollectionImpl<Target extends ModelElementInstance,
           throw new UnsupportedModelOperationException("clear()", "collection is immutable");
         }
         else {
-          Collection<DomElement> view = new ArrayList<DomElement>();
+          Collection<DomElement> view = new ArrayList<>();
           for (Source referenceSourceElement : referenceSourceCollection.get(referenceSourceParentElement)) {
             view.add(referenceSourceElement.getDomElement());
           }

@@ -36,9 +36,9 @@ public class AuthorizationTestBaseRule extends TestWatcher {
 
   protected ProcessEngineRule engineRule;
 
-  protected List<User> users = new ArrayList<User>();
-  protected List<Group> groups = new ArrayList<Group>();
-  protected List<Authorization> authorizations = new ArrayList<Authorization>();
+  protected List<User> users = new ArrayList<>();
+  protected List<Group> groups = new ArrayList<>();
+  protected List<Authorization> authorizations = new ArrayList<>();
 
   public AuthorizationTestBaseRule(ProcessEngineRule engineRule) {
     this.engineRule = engineRule;

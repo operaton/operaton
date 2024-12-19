@@ -91,7 +91,7 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
     // assert that two jobs have been created, one for each deployment
     List<Job> jobs = managementService.createJobQuery().list();
     Assert.assertEquals(2, jobs.size());
-    Set<String> jobDeploymentIds = new HashSet<String>();
+    Set<String> jobDeploymentIds = new HashSet<>();
     jobDeploymentIds.add(jobs.get(0).getDeploymentId());
     jobDeploymentIds.add(jobs.get(1).getDeploymentId());
 

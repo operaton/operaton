@@ -367,7 +367,7 @@ public class MigrationBoundaryEventsTest {
         .mapActivities(USER_TASK_ID, USER_TASK_ID)
         .build();
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "foo");
 
     // when
@@ -403,7 +403,7 @@ public class MigrationBoundaryEventsTest {
         .mapActivities(USER_TASK_ID, USER_TASK_ID)
         .build();
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "foo");
 
     // when
@@ -476,7 +476,7 @@ public class MigrationBoundaryEventsTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(targetProcess);
 
-    Map<String, String> activities = new HashMap<String, String>();
+    Map<String, String> activities = new HashMap<>();
     activities.put(USER_TASK_ID, USER_TASK_ID);
     activities.put(BOUNDARY_ID, BOUNDARY_ID);
 
@@ -522,7 +522,7 @@ public class MigrationBoundaryEventsTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(targetProcess);
 
-    Map<String, String> activities = new HashMap<String, String>();
+    Map<String, String> activities = new HashMap<>();
     activities.put(USER_TASK_ID, USER_TASK_ID);
     activities.put(BOUNDARY_ID, BOUNDARY_ID);
 
@@ -569,7 +569,7 @@ public class MigrationBoundaryEventsTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(targetProcess);
 
-    Map<String, String> activities = new HashMap<String, String>();
+    Map<String, String> activities = new HashMap<>();
     activities.put(USER_TASK_ID, USER_TASK_ID);
     activities.put(BOUNDARY_ID, BOUNDARY_ID);
 

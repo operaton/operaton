@@ -40,13 +40,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  */
 public class Context {
 
-  protected static ThreadLocal<Deque<CommandContext>> commandContextThreadLocal = new ThreadLocal<Deque<CommandContext>>();
-  protected static ThreadLocal<Deque<CommandInvocationContext>> commandInvocationContextThreadLocal = new ThreadLocal<Deque<CommandInvocationContext>>();
+  protected static ThreadLocal<Deque<CommandContext>> commandContextThreadLocal = new ThreadLocal<>();
+  protected static ThreadLocal<Deque<CommandInvocationContext>> commandInvocationContextThreadLocal = new ThreadLocal<>();
 
-  protected static ThreadLocal<Deque<ProcessEngineConfigurationImpl>> processEngineConfigurationStackThreadLocal = new ThreadLocal<Deque<ProcessEngineConfigurationImpl>>();
-  protected static ThreadLocal<Deque<CoreExecutionContext<? extends CoreExecution>>> executionContextStackThreadLocal = new ThreadLocal<Deque<CoreExecutionContext<? extends CoreExecution>>>();
-  protected static ThreadLocal<JobExecutorContext> jobExecutorContextThreadLocal = new ThreadLocal<JobExecutorContext>();
-  protected static ThreadLocal<Deque<ProcessApplicationReference>> processApplicationContext = new ThreadLocal<Deque<ProcessApplicationReference>>();
+  protected static ThreadLocal<Deque<ProcessEngineConfigurationImpl>> processEngineConfigurationStackThreadLocal = new ThreadLocal<>();
+  protected static ThreadLocal<Deque<CoreExecutionContext<? extends CoreExecution>>> executionContextStackThreadLocal = new ThreadLocal<>();
+  protected static ThreadLocal<JobExecutorContext> jobExecutorContextThreadLocal = new ThreadLocal<>();
+  protected static ThreadLocal<Deque<ProcessApplicationReference>> processApplicationContext = new ThreadLocal<>();
 
   public static CommandContext getCommandContext() {
     Deque<CommandContext> stack = getStack(commandContextThreadLocal);
@@ -149,7 +149,7 @@ public class Context {
   protected static <T> Deque<T> getStack(ThreadLocal<Deque<T>> threadLocal) {
     Deque<T> stack = threadLocal.get();
     if (stack==null) {
-      stack = new ArrayDeque<T>();
+      stack = new ArrayDeque<>();
       threadLocal.set(stack);
     }
     return stack;
@@ -203,7 +203,7 @@ public class Context {
 
       try {
         // wrap callback
-        ProcessApplicationClassloaderInterceptor<T> wrappedCallback = new ProcessApplicationClassloaderInterceptor<T>(callback);
+        ProcessApplicationClassloaderInterceptor<T> wrappedCallback = new ProcessApplicationClassloaderInterceptor<>(callback);
         // execute wrapped callback
         return processApplication.execute(wrappedCallback, invocationContext);
 

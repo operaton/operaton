@@ -47,7 +47,7 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
       .setName("name")
       .setOwner("owner")
       .setQuery(taskService.createTaskQuery())
-      .setProperties(new HashMap<String, Object>());
+      .setProperties(new HashMap<>());
     assertNull(filter.getId());
     filterService.saveFilter(filter);
     assertNotNull(filter.getId());
@@ -103,7 +103,7 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
     filter.setName("newName");
     filter.setOwner("newOwner");
     filter.setQuery(taskService.createTaskQuery());
-    filter.setProperties(new HashMap<String, Object>());
+    filter.setProperties(new HashMap<>());
 
     filterService.saveFilter(filter);
 

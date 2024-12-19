@@ -31,12 +31,12 @@ import java.util.Map;
  */
 public class Mocks {
 
-  private static final ThreadLocal<Map<String, Object>> mockContainer = new ThreadLocal<Map<String, Object>>();
+  private static final ThreadLocal<Map<String, Object>> mockContainer = new ThreadLocal<>();
 
   public static Map<String, Object> getMocks() {
     Map<String, Object> mocks = mockContainer.get();
     if (mocks == null) {
-      mocks = new HashMap<String, Object>();
+      mocks = new HashMap<>();
       Mocks.mockContainer.set(mocks);
     }
     return mocks;

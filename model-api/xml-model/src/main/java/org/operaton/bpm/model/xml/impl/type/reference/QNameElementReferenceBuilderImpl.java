@@ -26,6 +26,6 @@ public class QNameElementReferenceBuilderImpl<Target extends ModelElementInstanc
 
   public QNameElementReferenceBuilderImpl(Class<Source> childElementType, Class<Target> referenceTargetClass, ChildElementImpl<Source> child) {
     super(childElementType, referenceTargetClass, child);
-    this.elementReferenceCollectionImpl = new QNameElementReferenceImpl<Target,Source>(child);
+    this.elementReferenceCollectionImpl = new QNameElementReferenceImpl<>(child);
   }
 }

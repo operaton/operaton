@@ -51,7 +51,7 @@ public class CockpitPlugins extends AbstractCockpitPlugin {
 
   @Override
   public Set<Class<?>> getResourceClasses() {
-    HashSet<Class<?>> classes = new HashSet<Class<?>>();
+    HashSet<Class<?>> classes = new HashSet<>();
 
     classes.add(CockpitPluginsRootResource.class);
     classes.add(BaseRootResource.class);

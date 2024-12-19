@@ -42,7 +42,7 @@ public class HistoricCaseActivityInstanceManager extends AbstractHistoricManager
   }
 
   public HistoricCaseActivityInstanceEntity findHistoricCaseActivityInstance(String caseActivityId, String caseInstanceId) {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("caseActivityId", caseActivityId);
     parameters.put("caseInstanceId", caseInstanceId);
 

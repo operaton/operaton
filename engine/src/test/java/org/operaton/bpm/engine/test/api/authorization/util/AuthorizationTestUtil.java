@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.impl.util.ResourceTypeUtil;
  */
 public class AuthorizationTestUtil {
 
-  protected static Map<Integer, Resource> resourcesByType = new HashMap<Integer, Resource>();
+  protected static Map<Integer, Resource> resourcesByType = new HashMap<>();
 
   static {
     for (Resource resource : Resources.values()) {

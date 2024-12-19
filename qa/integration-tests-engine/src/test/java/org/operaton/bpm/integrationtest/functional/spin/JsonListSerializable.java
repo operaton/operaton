@@ -25,7 +25,7 @@ public class JsonListSerializable<T> {
   private List<T> listProperty;
 
   public JsonListSerializable() {
-    this.listProperty = new ArrayList<T>();
+    this.listProperty = new ArrayList<>();
   }
 
   public void setListProperty(List<T> listProperty) {

@@ -42,7 +42,7 @@ public class HalCaseDefinitionResolver extends HalIdResourceCacheLinkResolver {
       .caseDefinitionIdIn(linkedIds)
       .listPage(0, linkedIds.length);
 
-    List<HalResource<?>> resolved = new ArrayList<HalResource<?>>();
+    List<HalResource<?>> resolved = new ArrayList<>();
     for (CaseDefinition caseDefinition : caseDefinitions) {
       resolved.add(HalCaseDefinition.fromCaseDefinition(caseDefinition, processEngine));
     }

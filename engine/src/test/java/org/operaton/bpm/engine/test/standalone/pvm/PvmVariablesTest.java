@@ -55,7 +55,7 @@ public class PvmVariablesTest {
     assertEquals(500L, activityInstance.getVariable("amount"));
     assertEquals("hello world", activityInstance.getVariable("msg"));
     
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("amount", 500L);
     expectedVariables.put("msg", "hello world");
 

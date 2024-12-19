@@ -55,7 +55,7 @@ public class DecisionDefinitionDeployer extends AbstractDefinitionDeployer<Decis
 
   @Override
   protected List<DecisionDefinitionEntity> transformDefinitions(DeploymentEntity deployment, ResourceEntity resource, Properties properties) {
-    List<DecisionDefinitionEntity> decisions = new ArrayList<DecisionDefinitionEntity>();
+    List<DecisionDefinitionEntity> decisions = new ArrayList<>();
 
     // get the decisions from the deployed drd instead of parse the DMN again
     DecisionRequirementsDefinitionEntity deployedDrd = findDeployedDrdForResource(deployment, resource.getName());

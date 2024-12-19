@@ -189,7 +189,7 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
 
   protected void initializeInputInstances(Collection<HistoricDecisionInstanceEntity> decisionInstances) {
     for (HistoricDecisionInstanceEntity decisionInstance : decisionInstances) {
-      decisionInstance.setInputs(new ArrayList<HistoricDecisionInputInstance>());
+      decisionInstance.setInputs(new ArrayList<>());
     }
   }
 
@@ -230,7 +230,7 @@ public class HistoricDecisionInstanceManager extends AbstractHistoricManager {
 
   protected void initializeOutputInstances(Collection<HistoricDecisionInstanceEntity> decisionInstances) {
     for (HistoricDecisionInstanceEntity decisionInstance : decisionInstances) {
-      decisionInstance.setOutputs(new ArrayList<HistoricDecisionOutputInstance>());
+      decisionInstance.setOutputs(new ArrayList<>());
     }
   }
 

@@ -58,7 +58,7 @@ public class DeleteProcessDefinitionsBuilderImpl implements DeleteProcessDefinit
   @Override
   public DeleteProcessDefinitionsBuilderImpl byIds(String... processDefinitionId) {
     if (processDefinitionId != null) {
-      this.processDefinitionIds = new ArrayList<String>();
+      this.processDefinitionIds = new ArrayList<>();
       this.processDefinitionIds.addAll(Arrays.asList(processDefinitionId));
     }
     return this;

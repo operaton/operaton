@@ -31,8 +31,8 @@ import org.operaton.bpm.engine.impl.jobexecutor.SequentialJobAcquisitionRunnable
  */
 public class RecordingAcquireJobsRunnable extends SequentialJobAcquisitionRunnable {
 
-  protected List<RecordedWaitEvent> waitEvents = new ArrayList<RecordedWaitEvent>();
-  protected List<RecordedAcquisitionEvent> acquisitionEvents = new ArrayList<RecordedAcquisitionEvent>();
+  protected List<RecordedWaitEvent> waitEvents = new ArrayList<>();
+  protected List<RecordedAcquisitionEvent> acquisitionEvents = new ArrayList<>();
 
   public RecordingAcquireJobsRunnable(ControllableJobExecutor jobExecutor) {
     super(jobExecutor);

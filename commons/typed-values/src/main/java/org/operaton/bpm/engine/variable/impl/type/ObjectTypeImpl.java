@@ -64,7 +64,7 @@ public class ObjectTypeImpl extends AbstractValueTypeImpl implements Serializabl
     }
     ObjectValue objectValue = (ObjectValue) typedValue;
 
-    Map<String, Object> valueInfo = new HashMap<String, Object>();
+    Map<String, Object> valueInfo = new HashMap<>();
 
     String serializationDataFormat = objectValue.getSerializationDataFormat();
     if(serializationDataFormat != null) {

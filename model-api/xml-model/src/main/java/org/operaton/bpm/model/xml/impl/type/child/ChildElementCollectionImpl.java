@@ -139,7 +139,7 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
 
     final ModelElementInstanceImpl modelElement = (ModelElementInstanceImpl) element;
 
-    return new Collection<T>() {
+    return new Collection<>() {
 
       @Override
       public boolean contains(Object o) {

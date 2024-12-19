@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  */
 public class ExecutionOrderListener implements ExecutionListener {
 
-  protected static List<ActivitySequenceCounterMap> activityExecutionOrder = new ArrayList<ActivitySequenceCounterMap>();
+  protected static List<ActivitySequenceCounterMap> activityExecutionOrder = new ArrayList<>();
 
   @Override
   public void notify(DelegateExecution execution) throws Exception {

@@ -112,7 +112,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
       PARENT_COMPLETE
     );
 
-  public static List<String> TASK_OR_STAGE_EVENTS = new ArrayList<String>();
+  public static List<String> TASK_OR_STAGE_EVENTS = new ArrayList<>();
 
   public static List<String> EVENT_LISTENER_OR_MILESTONE_CREATE_EVENTS = Arrays.asList(
       CaseExecutionListener.CREATE
@@ -130,7 +130,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
       PARENT_COMPLETE
     );
 
-  public static List<String> EVENT_LISTENER_OR_MILESTONE_EVENTS = new ArrayList<String>();
+  public static List<String> EVENT_LISTENER_OR_MILESTONE_EVENTS = new ArrayList<>();
 
   public static List<String> CASE_PLAN_MODEL_CREATE_EVENTS = Arrays.asList(
       CaseExecutionListener.CREATE
@@ -147,7 +147,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
       CaseExecutionListener.CLOSE
     );
 
-  public static List<String> CASE_PLAN_MODEL_EVENTS = new ArrayList<String>();
+  public static List<String> CASE_PLAN_MODEL_EVENTS = new ArrayList<>();
 
   public static List<String> DEFAULT_VARIABLE_EVENTS = Arrays.asList(
       VariableListener.CREATE,
@@ -484,7 +484,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
   }
 
   protected List<FieldDeclaration> initializeFieldDeclarations(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, Collection<OperatonField> fields) {
-    List<FieldDeclaration> fieldDeclarations = new ArrayList<FieldDeclaration>();
+    List<FieldDeclaration> fieldDeclarations = new ArrayList<>();
 
     for (OperatonField field : fields) {
       FieldDeclaration fieldDeclaration = initializeFieldDeclaration(element, activity, context, field);
@@ -595,7 +595,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
       return query.filterByType(cls).list();
 
     } else {
-      return new ArrayList<V>();
+      return new ArrayList<>();
     }
   }
 
@@ -652,7 +652,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
       return planItem.getEntryCriteria();
     }
 
-    return new ArrayList<Sentry>();
+    return new ArrayList<>();
   }
 
   protected Collection<Sentry> getExitCriterias(CmmnElement element) {
@@ -661,7 +661,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
       return planItem.getExitCriteria();
     }
 
-    return new ArrayList<Sentry>();
+    return new ArrayList<>();
   }
 
   protected String getDesciption(CmmnElement element) {

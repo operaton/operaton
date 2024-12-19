@@ -86,8 +86,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   @Test
   public void testRestartProcessInstanceSync() {
 
-    HashMap<String, Object> json = new HashMap<String, Object>();
-    ArrayList<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    HashMap<String, Object> json = new HashMap<>();
+    ArrayList<Map<String, Object>> instructions = new ArrayList<>();
     instructions.add(ModificationInstructionBuilder.startAfter().activityId("activityId").getJson());
     json.put("instructions", instructions);
     json.put("processInstanceIds", Arrays.asList("processInstanceId1", "processInstanceId2"));
@@ -109,8 +109,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   
   @Test
   public void testRestartProcessInstanceAsync() {
-    HashMap<String, Object> json = new HashMap<String, Object>();
-    ArrayList<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    HashMap<String, Object> json = new HashMap<>();
+    ArrayList<Map<String, Object>> instructions = new ArrayList<>();
     instructions.add(ModificationInstructionBuilder.startAfter().activityId("activityId").getJson());
     json.put("instructions", instructions);
     json.put("processInstanceIds", Arrays.asList("processInstanceId1", "processInstanceId2"));
@@ -134,8 +134,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   public void testRestartProcessInstanceWithNullProcessInstanceIdsSync() {
     doThrow(new BadUserRequestException("processInstanceIds is null")).when(builderMock).execute();
     
-    HashMap<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    HashMap<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
     json.put("instructions", instructions);
     
@@ -153,8 +153,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   public void testRestartProcessInstanceWithNullProcessInstanceIdsAsync() {
     doThrow(new BadUserRequestException("processInstanceIds is null")).when(builderMock).executeAsync();
     
-    HashMap<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    HashMap<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
     json.put("instructions", instructions);
     
@@ -171,8 +171,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   @Test
   public void testRestartProcessInstanceWithHistoricProcessInstanceQuerySync() {
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(new HistoricProcessInstanceQueryImpl());
-    HashMap<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    HashMap<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
     json.put("instructions", instructions);
     
@@ -199,8 +199,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   @Test
   public void testRestartProcessInstanceWithHistoricProcessInstanceQueryAsync() {
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(new HistoricProcessInstanceQueryImpl());
-    HashMap<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    HashMap<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
     json.put("instructions", instructions);
     
@@ -228,7 +228,7 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   public void testRestartProcessInstanceWithNullInstructionsSync() {
     doThrow(new BadUserRequestException("instructions is null")).when(builderMock).execute();
     
-    HashMap<String, Object> json = new HashMap<String, Object>();
+    HashMap<String, Object> json = new HashMap<>();
     json.put("processInstanceIds", "processInstanceId");
     
     given()
@@ -245,7 +245,7 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   public void testRestartProcessInstanceWithNullInstructionsAsync() {
     doThrow(new BadUserRequestException("instructions is null")).when(builderMock).executeAsync();
     
-    HashMap<String, Object> json = new HashMap<String, Object>();
+    HashMap<String, Object> json = new HashMap<>();
     json.put("processInstanceIds", "processInstanceId");
     
     given()
@@ -260,8 +260,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   
   @Test
   public void testRestartProcessInstanceWithInvalidModificationInstructionForStartAfterSync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("200", "100"));
     instructions.add(ModificationInstructionBuilder.startAfter().getJson());
@@ -283,8 +283,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithInvalidModificationInstructionForStartAfterAsync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("200", "100"));
     instructions.add(ModificationInstructionBuilder.startAfter().getJson());
@@ -306,8 +306,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithInvalidModificationInstructionForStartBeforeSync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("200", "100"));
     instructions.add(ModificationInstructionBuilder.startBefore().getJson());
@@ -329,8 +329,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithInvalidModificationInstructionForStartBeforeAsync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("200", "100"));
     instructions.add(ModificationInstructionBuilder.startBefore().getJson());
@@ -352,8 +352,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithInvalidModificationInstructionForStartTransitionSync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("200", "100"));
     instructions.add(ModificationInstructionBuilder.startTransition().getJson());
@@ -375,8 +375,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithInvalidModificationInstructionForStartTransitionAsync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("200", "100"));
     instructions.add(ModificationInstructionBuilder.startTransition().getJson());
@@ -398,8 +398,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithInitialVariablesAsync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("processInstance1", "processInstance2"));
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
@@ -425,8 +425,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithInitialVariablesSync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("processInstance1", "processInstance2"));
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
@@ -451,8 +451,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithSkipCustomListenersAsync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("processInstance1", "processInstance2"));
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
@@ -478,8 +478,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithSkipCustomListenersSync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("processInstance1", "processInstance2"));
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
@@ -504,8 +504,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithSkipIoMappingsAsync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("processInstance1", "processInstance2"));
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
@@ -531,8 +531,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithSkipIoMappingsSync() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("processInstance1", "processInstance2"));
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
@@ -557,8 +557,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
 
   @Test
   public void testRestartProcessInstanceWithoutBusinessKey() {
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
 
     json.put("processInstanceIds", Arrays.asList("processInstance1", "processInstance2"));
     instructions.add(ModificationInstructionBuilder.startBefore().activityId("activityId").getJson());
@@ -584,8 +584,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   @Test
   public void testRestartProcessInstanceWithoutProcessInstanceIdsSync() {
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(new HistoricProcessInstanceQueryImpl());
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
     HistoricProcessInstanceQueryDto query = new HistoricProcessInstanceQueryDto();
     query.setFinished(true);
     json.put("historicProcessInstanceQuery", query);
@@ -611,8 +611,8 @@ public class RestartProcessInstanceRestServiceTest extends AbstractRestServiceTe
   @Test
   public void testRestartProcessInstanceWithoutProcessInstanceIdsAsync() {
     when(historyServiceMock.createHistoricProcessInstanceQuery()).thenReturn(new HistoricProcessInstanceQueryImpl());
-    Map<String, Object> json = new HashMap<String, Object>();
-    List<Map<String, Object>> instructions = new ArrayList<Map<String, Object>>();
+    Map<String, Object> json = new HashMap<>();
+    List<Map<String, Object>> instructions = new ArrayList<>();
     HistoricProcessInstanceQueryDto query = new HistoricProcessInstanceQueryDto();
     query.setFinished(true);
     json.put("historicProcessInstanceQuery", query);

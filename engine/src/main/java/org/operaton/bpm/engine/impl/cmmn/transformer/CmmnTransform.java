@@ -76,7 +76,7 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
 
   protected CmmnModelInstance model;
   protected CmmnHandlerContext context = new CmmnHandlerContext();
-  protected List<CaseDefinitionEntity> caseDefinitions = new ArrayList<CaseDefinitionEntity>();
+  protected List<CaseDefinitionEntity> caseDefinitions = new ArrayList<>();
 
   public CmmnTransform(CmmnTransformer transformer) {
     this.transformer = transformer;

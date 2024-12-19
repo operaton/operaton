@@ -29,7 +29,7 @@ import org.junit.Assert;
 
 public class TweetHandler implements JobHandler<TweetJobConfiguration> {
 
-  List<String> messages = new ArrayList<String>();
+  List<String> messages = new ArrayList<>();
 
   @Override
   public String getType() {

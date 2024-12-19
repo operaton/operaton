@@ -67,7 +67,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
   protected Set<ProcessEngine> processEngines = new CopyOnWriteArraySet<ProcessEngine>();
 
   protected ServiceTracker<MscManagedProcessApplication> processApplicationServiceTracker;
-  protected Set<MscManagedProcessApplication> processApplications = new CopyOnWriteArraySet<MscManagedProcessApplication>();
+  protected Set<MscManagedProcessApplication> processApplications = new CopyOnWriteArraySet<>();
 
   // Lifecycle /////////////////////////////////////////////////
 
@@ -186,7 +186,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
   }
 
   public Set<String> getProcessEngineNames() {
-    HashSet<String> result = new HashSet<String>();
+    HashSet<String> result = new HashSet<>();
     for (ProcessEngine engine : processEngines) {
       result.add(engine.getName());
     }
@@ -211,7 +211,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
   }
 
   public Set<String> getProcessApplicationNames() {
-    HashSet<String> result = new HashSet<String>();
+    HashSet<String> result = new HashSet<>();
     for (MscManagedProcessApplication application : processApplications) {
       result.add(application.getProcessApplicationInfo().getName());
     }
@@ -275,7 +275,7 @@ public class MscRuntimeContainerDelegate implements Service<MscRuntimeContainerD
     processEngineServiceTracker = new ServiceTracker<ProcessEngine>(ServiceNames.forManagedProcessEngines(), processEngines);
     serviceContainer.addListener(processEngineServiceTracker);
 
-    processApplicationServiceTracker = new ServiceTracker<MscManagedProcessApplication>(ServiceNames.forManagedProcessApplications(), processApplications);
+    processApplicationServiceTracker = new ServiceTracker<>(ServiceNames.forManagedProcessApplications(), processApplications);
     serviceContainer.addListener(processApplicationServiceTracker);
   }
 

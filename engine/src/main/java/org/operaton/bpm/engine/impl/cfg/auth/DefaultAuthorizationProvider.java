@@ -83,7 +83,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
 
   @Override
   public AuthorizationEntity[] newGroup(Group group) {
-    List<AuthorizationEntity> authorizations = new ArrayList<AuthorizationEntity>();
+    List<AuthorizationEntity> authorizations = new ArrayList<>();
 
     // whenever a new group is created, all users part of the
     // group are granted READ permissions on the group

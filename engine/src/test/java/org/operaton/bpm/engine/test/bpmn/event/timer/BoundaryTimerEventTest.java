@@ -98,7 +98,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // Set the clock fixed
     Date startTime = new Date();
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("duration", "PT1H");
 
     // After process start, there should be a timer created
@@ -123,7 +123,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // Set the clock fixed
     Date startTime = new Date();
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("duedate", "PT1H");
 
     // After process start, there should be a timer created
@@ -161,7 +161,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // Set the clock fixed
     Date startTime = new Date();
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("duedate", "PT1H");
 
     // After process start, there should be a timer created
@@ -195,7 +195,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // Set the clock fixed
     Date startTime = new Date();
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("duedate", "PT1H");
 
     // After process start, there should be a timer created
@@ -230,7 +230,7 @@ public class BoundaryTimerEventTest extends PluggableProcessEngineTest {
     // Set the clock fixed
     Date startTime = new Date();
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("duedate", "PT1H");
 
     // After process start, there should be a timer created

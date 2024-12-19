@@ -126,7 +126,7 @@ public class PerfTestConfiguration {
       return WATCH_ALL_ACTIVITIES;
     }
     else {
-      List<String> watchActivities = new ArrayList<String>();
+      List<String> watchActivities = new ArrayList<>();
       String[] parts = watchActivitiesString.split(",");
       for (String part : parts) {
         part = part.trim();

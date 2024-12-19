@@ -41,7 +41,7 @@ public class FeelEngineCustomFunctionTest {
   public void initEngine() {
     variables = Variables.createVariables();
 
-    List<FeelToJuelFunctionTransformer> customFunctionTransformers = new ArrayList<FeelToJuelFunctionTransformer>();
+    List<FeelToJuelFunctionTransformer> customFunctionTransformers = new ArrayList<>();
     customFunctionTransformers.add(new StartsWithFunctionTransformer());
 
     FeelEngineFactoryImpl feelEngineFactory = new FeelEngineFactoryImpl(customFunctionTransformers);

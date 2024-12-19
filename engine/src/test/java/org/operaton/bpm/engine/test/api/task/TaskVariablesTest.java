@@ -78,7 +78,7 @@ public class TaskVariablesTest extends PluggableProcessEngineTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
     String taskId = taskService.createTaskQuery().singleResult().getId();
 
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     assertEquals(expectedVariables, runtimeService.getVariables(processInstanceId));
     assertEquals(expectedVariables, taskService.getVariables(taskId));
     assertEquals(expectedVariables, runtimeService.getVariablesLocal(processInstanceId));
@@ -86,7 +86,7 @@ public class TaskVariablesTest extends PluggableProcessEngineTest {
 
     runtimeService.setVariable(processInstanceId, "instrument", "trumpet");
 
-    expectedVariables = new HashMap<String, Object>();
+    expectedVariables = new HashMap<>();
     assertEquals(expectedVariables, taskService.getVariablesLocal(taskId));
     expectedVariables.put("instrument", "trumpet");
     assertEquals(expectedVariables, runtimeService.getVariables(processInstanceId));
@@ -95,7 +95,7 @@ public class TaskVariablesTest extends PluggableProcessEngineTest {
 
     taskService.setVariable(taskId, "player", "gonzo");
 
-    expectedVariables = new HashMap<String, Object>();
+    expectedVariables = new HashMap<>();
     assertEquals(expectedVariables, taskService.getVariablesLocal(taskId));
     expectedVariables.put("player", "gonzo");
     expectedVariables.put("instrument", "trumpet");
@@ -107,7 +107,7 @@ public class TaskVariablesTest extends PluggableProcessEngineTest {
 
     taskService.setVariableLocal(taskId, "budget", "unlimited");
 
-    expectedVariables = new HashMap<String, Object>();
+    expectedVariables = new HashMap<>();
     expectedVariables.put("budget", "unlimited");
     assertEquals(expectedVariables, taskService.getVariablesLocal(taskId));
     assertEquals(expectedVariables, taskService.getVariablesLocalTyped(taskId, true));
@@ -119,7 +119,7 @@ public class TaskVariablesTest extends PluggableProcessEngineTest {
     assertEquals(expectedVariables, taskService.getVariables(taskId, null));
     assertEquals(expectedVariables, taskService.getVariablesTyped(taskId, null, true));
 
-    expectedVariables = new HashMap<String, Object>();
+    expectedVariables = new HashMap<>();
     expectedVariables.put("player", "gonzo");
     expectedVariables.put("instrument", "trumpet");
     assertEquals(expectedVariables, runtimeService.getVariables(processInstanceId));
@@ -128,12 +128,12 @@ public class TaskVariablesTest extends PluggableProcessEngineTest {
 
     // typed variable API
 
-    ArrayList<String> serializableValue = new ArrayList<String>();
+    ArrayList<String> serializableValue = new ArrayList<>();
     serializableValue.add("1");
     serializableValue.add("2");
     taskService.setVariable(taskId, "objectVariable", objectValue(serializableValue).create());
 
-    ArrayList<String> serializableValueLocal = new ArrayList<String>();
+    ArrayList<String> serializableValueLocal = new ArrayList<>();
     serializableValueLocal.add("3");
     serializableValueLocal.add("4");
     taskService.setVariableLocal(taskId, "objectVariableLocal", objectValue(serializableValueLocal).create());

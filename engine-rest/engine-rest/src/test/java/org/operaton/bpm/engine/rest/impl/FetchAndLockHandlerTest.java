@@ -120,7 +120,7 @@ public class FetchAndLockHandlerTest {
   @Test
   public void shouldResumeAsyncResponseDueToAvailableTasks() {
     // given
-    List<LockedExternalTask> tasks = new ArrayList<LockedExternalTask>();
+    List<LockedExternalTask> tasks = new ArrayList<>();
     tasks.add(lockedExternalTaskMock);
 
     when(fetchAndLockBuilder.subscribe()).thenReturn(externalTaskQueryTopicBuilder);
@@ -171,7 +171,7 @@ public class FetchAndLockHandlerTest {
     assertThat(handler.getPendingRequests()).hasSize(1);
     verify(handler).suspend(5000L);
 
-    List<LockedExternalTask> tasks = new ArrayList<LockedExternalTask>();
+    List<LockedExternalTask> tasks = new ArrayList<>();
     tasks.add(lockedExternalTaskMock);
 
     when(externalTaskQueryTopicBuilder.execute()).thenReturn(tasks);

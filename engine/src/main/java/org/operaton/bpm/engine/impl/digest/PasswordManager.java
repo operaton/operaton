@@ -38,7 +38,7 @@ public class PasswordManager {
 
   public static final SecurityLogger LOG = ProcessEngineLogger.SECURITY_LOGGER;
 
-  protected Map<String, PasswordEncryptor> passwordChecker = new HashMap<String, PasswordEncryptor>();
+  protected Map<String, PasswordEncryptor> passwordChecker = new HashMap<>();
   protected PasswordEncryptor defaultPasswordEncryptor;
 
   protected DatabasePrefixHandler prefixHandler = new DatabasePrefixHandler();

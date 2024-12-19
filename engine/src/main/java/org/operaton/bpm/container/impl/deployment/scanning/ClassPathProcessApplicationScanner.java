@@ -56,7 +56,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
   @Override
   public Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URL metaFileUrl, String[] additionalResourceSuffixes) {
 
-    final Map<String, byte[]> resourceMap = new HashMap<String, byte[]>();
+    final Map<String, byte[]> resourceMap = new HashMap<>();
 
     // perform the scanning. (results are collected in 'resourceMap')
     scanPaResourceRootPath(classLoader, metaFileUrl, paResourceRootPath, additionalResourceSuffixes, resourceMap);

@@ -1031,7 +1031,7 @@ public class HistoricCaseActivityInstanceTest extends CmmnTest {
     public final Collection<CaseExecutionState> NOT_ENDED_STATES;
 
     public CaseExecutionStateCountMap() {
-      NOT_ENDED_STATES = new ArrayList<CaseExecutionState>(ALL_STATES);
+      NOT_ENDED_STATES = new ArrayList<>(ALL_STATES);
       NOT_ENDED_STATES.removeAll(ENDED_STATES);
     }
 

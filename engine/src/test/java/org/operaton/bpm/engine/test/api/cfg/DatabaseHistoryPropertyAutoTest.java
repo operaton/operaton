@@ -37,7 +37,7 @@ import org.junit.Test;
 
 public class DatabaseHistoryPropertyAutoTest {
 
-  protected List<ProcessEngineImpl> processEngines = new ArrayList<ProcessEngineImpl>();
+  protected List<ProcessEngineImpl> processEngines = new ArrayList<>();
 
   private static ProcessEngineConfigurationImpl config(final String historyLevel) {
 

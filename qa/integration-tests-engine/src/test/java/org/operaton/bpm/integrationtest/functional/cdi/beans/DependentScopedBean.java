@@ -29,7 +29,7 @@ import java.util.ArrayList;
 @Dependent
 public class DependentScopedBean {
 
-  public static ArrayList<String> lifecycle = new ArrayList<String>();
+  public static ArrayList<String> lifecycle = new ArrayList<>();
 
   public void invoke() {
     lifecycle.add("bean-invoked");

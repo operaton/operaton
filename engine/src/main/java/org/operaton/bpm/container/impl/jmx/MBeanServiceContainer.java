@@ -50,10 +50,10 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
   protected MBeanServer mBeanServer;
 
-  protected Map<ObjectName, PlatformService<?>> servicesByName = new ConcurrentHashMap<ObjectName, PlatformService<?>>();
+  protected Map<ObjectName, PlatformService<?>> servicesByName = new ConcurrentHashMap<>();
 
   /** set if the current thread is performing a composite deployment operation */
-  protected ThreadLocal<Stack<DeploymentOperation>> activeDeploymentOperations = new ThreadLocal<Stack<DeploymentOperation>>();
+  protected ThreadLocal<Stack<DeploymentOperation>> activeDeploymentOperations = new ThreadLocal<>();
 
   public static final String SERVICE_NAME_EXECUTOR = "executor-service";
 
@@ -157,7 +157,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
     Stack<DeploymentOperation> currentOperationContext = activeDeploymentOperations.get();
     if(currentOperationContext == null) {
-      currentOperationContext = new Stack<DeploymentOperation>();
+      currentOperationContext = new Stack<>();
       activeDeploymentOperations.set(currentOperationContext);
     }
 
@@ -231,7 +231,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     // query the MBeanServer for all services of the given type
     Set<String> serviceNames = getServiceNames(type);
 
-    List<PlatformService<S>> res = new ArrayList<PlatformService<S>>();
+    List<PlatformService<S>> res = new ArrayList<>();
     for (String serviceName : serviceNames) {
       res.add((PlatformService<S>) servicesByName.get(getObjectName(serviceName)));
     }
@@ -247,7 +247,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     String typeName = composeLocalName(type, "*");
     ObjectName typeObjectName = getObjectName(typeName);
     Set<ObjectName> resultNames = getmBeanServer().queryNames(typeObjectName, null);
-    Set<String> result= new HashSet<String>();
+    Set<String> result= new HashSet<>();
     for (ObjectName objectName : resultNames) {
       result.add(objectName.toString());
     }
@@ -264,7 +264,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     // query the MBeanServer for all services of the given type
     Set<String> serviceNames = getServiceNames(type);
 
-    List<S> res = new ArrayList<S>();
+    List<S> res = new ArrayList<>();
     for (String serviceName : serviceNames) {
       PlatformService<S> BpmPlatformService = (PlatformService<S>) servicesByName.get(getObjectName(serviceName));
       if (BpmPlatformService != null) {

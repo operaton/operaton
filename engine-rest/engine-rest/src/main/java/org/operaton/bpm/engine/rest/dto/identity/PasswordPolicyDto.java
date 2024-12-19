@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.identity.PasswordPolicyRule;
  * @author Miklas Boskamp
  */
 public class PasswordPolicyDto {
-  protected List<PasswordPolicyRuleDto> rules = new ArrayList<PasswordPolicyRuleDto>();
+  protected List<PasswordPolicyRuleDto> rules = new ArrayList<>();
 
   // transformers
 

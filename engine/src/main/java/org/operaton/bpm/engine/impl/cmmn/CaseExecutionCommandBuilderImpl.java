@@ -190,13 +190,13 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
 
   protected void ensureVariableDeletionsInitialized() {
     if (variableDeletions == null) {
-      variableDeletions = new ArrayList<String>();
+      variableDeletions = new ArrayList<>();
     }
   }
 
   protected void ensureVariableDeletionsLocalInitialized() {
     if (variableLocalDeletions == null) {
-      variableLocalDeletions = new ArrayList<String>();
+      variableLocalDeletions = new ArrayList<>();
     }
   }
 

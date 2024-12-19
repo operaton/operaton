@@ -48,14 +48,14 @@ public class IoMapping {
 
   public void addInputParameter(InputParameter param) {
     if(inputParameters == null) {
-      inputParameters = new ArrayList<InputParameter>();
+      inputParameters = new ArrayList<>();
     }
     inputParameters.add(param);
   }
 
   public void addOutputParameter(OutputParameter param) {
     if(outputParameters == null) {
-      outputParameters = new ArrayList<OutputParameter>();
+      outputParameters = new ArrayList<>();
     }
     outputParameters.add(param);
   }

@@ -38,10 +38,10 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   private static final long serialVersionUID = 1L;
 
-  protected Map<String, TypedValue> variables = new HashMap<String, TypedValue>();
+  protected Map<String, TypedValue> variables = new HashMap<>();
 
   public VariableMapImpl(VariableMapImpl map) {
-    variables = new HashMap<String, TypedValue>(map.variables);
+    variables = new HashMap<>(map.variables);
   }
 
   public VariableMapImpl(Map<String, Object> map) {
@@ -185,7 +185,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     // NOTE: cannot naively return List of values here. A proper implementation must return a
     // Collection which is backed by the actual variable map
 
-    return new AbstractCollection<Object>() {
+    return new AbstractCollection<>() {
 
       @Override
       public Iterator<Object> iterator() {
@@ -193,7 +193,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
         // wrapped iterator. Must be local to the iterator() method
         final Iterator<TypedValue> iterator = variables.values().iterator();
 
-        return new Iterator<Object>() {
+        return new Iterator<>() {
           @Override
           public boolean hasNext() {
             return iterator.hasNext();
@@ -225,12 +225,12 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
     // NOTE: cannot naively return Set of entries here. A proper implementation must
     // return a Set which is backed by the actual map
 
-    return new AbstractSet<Map.Entry<String,Object>>() {
+    return new AbstractSet<>() {
 
       @Override
       public Iterator<java.util.Map.Entry<String, Object>> iterator() {
 
-        return new Iterator<Map.Entry<String,Object>>() {
+        return new Iterator<>() {
 
           // wrapped iterator. Must be local to the iterator() method
           final Iterator<java.util.Map.Entry<String, TypedValue>> iterator = variables.entrySet().iterator();
@@ -246,7 +246,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
             final java.util.Map.Entry<String, TypedValue> underlyingEntry = iterator.next();
 
             // return wrapper backed by the underlying entry
-            return new Entry<String, Object>() {
+            return new Entry<>() {
               @Override
               public String getKey() {
                 return underlyingEntry.getKey();
@@ -329,7 +329,7 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
   }
 
   public Map<String, Object> asValueMap() {
-    return new HashMap<String, Object>(this);
+    return new HashMap<>(this);
   }
 
   @Override

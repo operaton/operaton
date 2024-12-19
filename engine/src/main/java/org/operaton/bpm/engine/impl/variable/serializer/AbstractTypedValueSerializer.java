@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public abstract class AbstractTypedValueSerializer<T extends TypedValue> implements TypedValueSerializer<T> {
 
-  public static final Set<String> BINARY_VALUE_TYPES = new HashSet<String>();
+  public static final Set<String> BINARY_VALUE_TYPES = new HashSet<>();
   static {
     BINARY_VALUE_TYPES.add(ValueType.BYTES.getName());
     BINARY_VALUE_TYPES.add(ValueType.FILE.getName());

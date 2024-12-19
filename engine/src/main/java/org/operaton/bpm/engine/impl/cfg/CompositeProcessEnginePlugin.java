@@ -38,7 +38,7 @@ public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
    * New instance with empty list.
    */
   public CompositeProcessEnginePlugin() {
-    this.plugins = new ArrayList<ProcessEnginePlugin>();
+    this.plugins = new ArrayList<>();
   }
 
 
@@ -124,7 +124,7 @@ public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
 
 
   private static List<ProcessEnginePlugin> toList(ProcessEnginePlugin plugin, ProcessEnginePlugin... additionalPlugins) {
-    final List<ProcessEnginePlugin> plugins = new ArrayList<ProcessEnginePlugin>();
+    final List<ProcessEnginePlugin> plugins = new ArrayList<>();
     plugins.add(plugin);
     if (additionalPlugins != null && additionalPlugins.length > 0) {
       plugins.addAll(Arrays.asList(additionalPlugins));

@@ -82,7 +82,7 @@ public class AuthorizationDto {
   }
 
   public static List<AuthorizationDto> fromAuthorizationList(List<Authorization> resultList, ProcessEngineConfiguration engineConfiguration) {
-    ArrayList<AuthorizationDto> result = new ArrayList<AuthorizationDto>();
+    ArrayList<AuthorizationDto> result = new ArrayList<>();
 
     for (Authorization authorization : resultList) {
       result.add(fromAuthorization(authorization, engineConfiguration));

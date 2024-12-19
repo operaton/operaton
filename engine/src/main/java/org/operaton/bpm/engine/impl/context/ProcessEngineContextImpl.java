@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.impl.context;
 
 public class ProcessEngineContextImpl {
 
-  protected static ThreadLocal<Boolean> commandContextNew = new ThreadLocal<Boolean>() {
+  protected static ThreadLocal<Boolean> commandContextNew = new ThreadLocal<>() {
     @Override
     protected Boolean initialValue() {
       return Boolean.FALSE;

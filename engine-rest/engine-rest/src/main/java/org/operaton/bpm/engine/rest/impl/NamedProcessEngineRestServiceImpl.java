@@ -282,7 +282,7 @@ public class NamedProcessEngineRestServiceImpl extends AbstractProcessEngineRest
     ProcessEngineProvider provider = getProcessEngineProvider();
     Set<String> engineNames = provider.getProcessEngineNames();
 
-    List<ProcessEngineDto> results = new ArrayList<ProcessEngineDto>();
+    List<ProcessEngineDto> results = new ArrayList<>();
     for (String engineName : engineNames) {
       ProcessEngineDto dto = new ProcessEngineDto();
       dto.setName(engineName);

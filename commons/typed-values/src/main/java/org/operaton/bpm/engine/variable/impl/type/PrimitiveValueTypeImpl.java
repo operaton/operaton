@@ -78,7 +78,7 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
 
   @Override
   public Map<String, Object> getValueInfo(TypedValue typedValue) {
-    Map<String, Object> result = new HashMap<String, Object>();
+    Map<String, Object> result = new HashMap<>();
     if (typedValue.isTransient())
       result.put(VALUE_INFO_TRANSIENT, typedValue.isTransient());
     return result;

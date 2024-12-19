@@ -38,7 +38,7 @@ public class HistoricDecisionStatisticsRestServiceImpl implements HistoricDecisi
 
   @Override
   public List<HistoricDecisionInstanceStatisticsDto> getDecisionStatistics(String decisionRequirementsDefinitionId, String decisionInstanceId) {
-    List<HistoricDecisionInstanceStatisticsDto> result = new ArrayList<HistoricDecisionInstanceStatisticsDto>();
+    List<HistoricDecisionInstanceStatisticsDto> result = new ArrayList<>();
     HistoricDecisionInstanceStatisticsQuery statisticsQuery = processEngine.getHistoryService()
         .createHistoricDecisionInstanceStatisticsQuery(decisionRequirementsDefinitionId);
     if (decisionInstanceId != null) {

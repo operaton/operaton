@@ -556,7 +556,7 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   private Map<String, String> getCompleteStartDateAsStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("startedAfter", EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_AFTER);
     parameters.put("startedBefore", EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_BEFORE);

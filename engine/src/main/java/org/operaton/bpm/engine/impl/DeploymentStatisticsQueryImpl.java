@@ -35,9 +35,9 @@ implements DeploymentStatisticsQuery {
   protected String includeIncidentsForType;
 
   // for internal use
-  protected List<PermissionCheck> processInstancePermissionChecks = new ArrayList<PermissionCheck>();
-  protected List<PermissionCheck> jobPermissionChecks = new ArrayList<PermissionCheck>();
-  protected List<PermissionCheck> incidentPermissionChecks = new ArrayList<PermissionCheck>();
+  protected List<PermissionCheck> processInstancePermissionChecks = new ArrayList<>();
+  protected List<PermissionCheck> jobPermissionChecks = new ArrayList<>();
+  protected List<PermissionCheck> incidentPermissionChecks = new ArrayList<>();
 
   public DeploymentStatisticsQueryImpl(CommandExecutor executor) {
     super(executor);

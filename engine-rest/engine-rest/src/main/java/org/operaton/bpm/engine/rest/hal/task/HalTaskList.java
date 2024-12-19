@@ -46,7 +46,7 @@ public class HalTaskList extends HalCollectionResource<HalTaskList> {
     HalTaskList taskList = new HalTaskList();
 
     // embed tasks
-    List<HalResource<?>> embeddedTasks = new ArrayList<HalResource<?>>();
+    List<HalResource<?>> embeddedTasks = new ArrayList<>();
     for (Task task : tasks) {
       embeddedTasks.add(HalTask.fromTask(task));
     }

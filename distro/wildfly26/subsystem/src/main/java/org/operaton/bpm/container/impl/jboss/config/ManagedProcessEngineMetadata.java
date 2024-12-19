@@ -217,7 +217,7 @@ public class ManagedProcessEngineMetadata {
   private Map<String, String> selectProperties(Map<String, String> allProperties, boolean selectFoxProperties) {
     Map<String, String> result = null;
     if (selectFoxProperties) {
-      result = new HashMap<String, String>();
+      result = new HashMap<>();
       String isAutoSchemaUpdate = allProperties.get(PROP_IS_AUTO_SCHEMA_UPDATE);
       String isActivateJobExecutor = allProperties.get(PROP_IS_ACTIVATE_JOB_EXECUTOR);
       String isIdentityUsed = allProperties.get(PROP_IS_IDENTITY_USED);
@@ -240,7 +240,7 @@ public class ManagedProcessEngineMetadata {
         result.put(PROP_JOB_EXECUTOR_ACQUISITION_NAME, jobExecutorAcquisitionName);
       }
     } else {
-      result = new HashMap<String, String>(allProperties);
+      result = new HashMap<>(allProperties);
       result.remove(PROP_IS_AUTO_SCHEMA_UPDATE);
       result.remove(PROP_IS_ACTIVATE_JOB_EXECUTOR);
       result.remove(PROP_IS_IDENTITY_USED);

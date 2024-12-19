@@ -152,7 +152,7 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
   @Override
   public Permission[] getPermissions(Permission[] permissions) {
 
-    List<Permission> result = new ArrayList<Permission>();
+    List<Permission> result = new ArrayList<>();
         
     for (Permission permission : permissions) {
       if((AUTH_TYPE_GLOBAL == authorizationType || AUTH_TYPE_GRANT == authorizationType) 
@@ -290,7 +290,7 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
   @Override
   public Object getPersistentState() {
         
-    HashMap<String, Object> state = new HashMap<String, Object>();
+    HashMap<String, Object> state = new HashMap<>();
     state.put("userId", userId);
     state.put("groupId", groupId);
     state.put("resourceType", resourceType);
@@ -322,13 +322,13 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<String>();
+    Set<String> referencedEntityIds = new HashSet<>();
     return referencedEntityIds;
   }
 
   @Override
   public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<String, Class>();
+    Map<String, Class> referenceIdAndClass = new HashMap<>();
     return referenceIdAndClass;
   }
 

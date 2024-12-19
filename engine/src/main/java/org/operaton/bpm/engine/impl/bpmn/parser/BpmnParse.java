@@ -625,7 +625,7 @@ public class BpmnParse extends Parse {
     processDefinition.setName(processElement.attribute("name"));
     processDefinition.setCategory(rootElement.attribute("targetNamespace"));
     processDefinition.setProperty(PROPERTYNAME_DOCUMENTATION, parseDocumentation(processElement));
-    processDefinition.setTaskDefinitions(new HashMap<String, TaskDefinition>());
+    processDefinition.setTaskDefinitions(new HashMap<>());
     processDefinition.setDeploymentId(deployment.getId());
     processDefinition.setTenantId(deployment.getTenantId());
     processDefinition.setProperty(PROPERTYNAME_JOB_PRIORITY, parsePriority(processElement, PROPERTYNAME_JOB_PRIORITY));

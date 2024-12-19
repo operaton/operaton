@@ -200,7 +200,7 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
     // configure cache
     HalRelationCacheConfiguration configuration = new HalRelationCacheConfiguration();
     configuration.setCacheImplementationClass(DefaultHalResourceCache.class);
-    Map<String, Object> halUserConfig = new HashMap<String, Object>();
+    Map<String, Object> halUserConfig = new HashMap<>();
     halUserConfig.put("capacity", 100);
     halUserConfig.put("secondsToLive", 10000);
     configuration.addCacheConfiguration(HalUser.class, halUserConfig);
@@ -262,7 +262,7 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
     // configure cache
     HalRelationCacheConfiguration configuration = new HalRelationCacheConfiguration();
     configuration.setCacheImplementationClass(DefaultHalResourceCache.class);
-    Map<String, Object> halIdentityLinkConfig = new HashMap<String, Object>();
+    Map<String, Object> halIdentityLinkConfig = new HashMap<>();
     halIdentityLinkConfig.put("capacity", 100);
     halIdentityLinkConfig.put("secondsToLive", 10000);
     configuration.addCacheConfiguration(HalIdentityLink.class, halIdentityLinkConfig);

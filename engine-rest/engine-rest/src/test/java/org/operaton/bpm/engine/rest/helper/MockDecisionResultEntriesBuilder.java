@@ -30,7 +30,7 @@ public class MockDecisionResultEntriesBuilder {
 
   protected final MockDecisionResultBuilder mockDecisionResultBuilder;
 
-  protected Map<String, TypedValue> entries = new HashMap<String, TypedValue>();
+  protected Map<String, TypedValue> entries = new HashMap<>();
 
   public MockDecisionResultEntriesBuilder(MockDecisionResultBuilder mockDecisionResultBuilder) {
     this.mockDecisionResultBuilder = mockDecisionResultBuilder;
@@ -70,7 +70,7 @@ public class MockDecisionResultEntriesBuilder {
     }
 
     private static Map<? extends String, ?> asEntryMap(Map<String, TypedValue> typedValueMap) {
-      Map<String, Object> entryMap = new HashMap<String, Object>();
+      Map<String, Object> entryMap = new HashMap<>();
 
       for(Map.Entry<String, TypedValue> entry : typedValueMap.entrySet()) {
         entryMap.put(entry.getKey(), entry.getValue().getValue());

@@ -61,7 +61,7 @@ public class BpmPlatformXmlParse extends DeploymentMetadataParse {
   protected void parseRootElement() {
 
     JobExecutorXmlImpl jobExecutor = new JobExecutorXmlImpl();
-    List<ProcessEngineXml> processEngines = new ArrayList<ProcessEngineXml>();
+    List<ProcessEngineXml> processEngines = new ArrayList<>();
 
     for (Element element : rootElement.elements()) {
 
@@ -83,8 +83,8 @@ public class BpmPlatformXmlParse extends DeploymentMetadataParse {
    */
   protected void parseJobExecutor(Element element, JobExecutorXmlImpl jobExecutorXml) {
 
-    List<JobAcquisitionXml> jobAcquisitions = new ArrayList<JobAcquisitionXml>();
-    Map<String, String> properties = new HashMap<String, String>();
+    List<JobAcquisitionXml> jobAcquisitions = new ArrayList<>();
+    Map<String, String> properties = new HashMap<>();
 
     for (Element childElement : element.elements()) {
 
@@ -113,7 +113,7 @@ public class BpmPlatformXmlParse extends DeploymentMetadataParse {
     // set name
     jobAcquisition.setName(element.attribute(NAME));
 
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
 
     for (Element childElement : element.elements()) {
       if (JOB_EXECUTOR_CLASS_NAME.equals(childElement.getTagName())) {

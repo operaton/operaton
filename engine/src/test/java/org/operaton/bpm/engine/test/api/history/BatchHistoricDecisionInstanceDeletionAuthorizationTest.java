@@ -119,7 +119,7 @@ public class BatchHistoricDecisionInstanceDeletionAuthorizationTest {
     historyService = engineRule.getHistoryService();
     decisionService = engineRule.getDecisionService();
     managementService = engineRule.getManagementService();
-    decisionInstanceIds = new ArrayList<String>();
+    decisionInstanceIds = new ArrayList<>();
   }
 
   @Before

@@ -106,7 +106,7 @@ class ConnectProcessEnginePluginTest {
 
     TestConnector.responseParameters.put("someOutputParameter", outputParamValue);
 
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("someInputVariable", inputVariableValue);
     runtimeService.startProcessInstanceByKey("testProcess", vars);
 
@@ -124,7 +124,7 @@ class ConnectProcessEnginePluginTest {
   @Test
   void connectorWithScriptInputOutputMapping() {
     int x = 3;
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("x", x);
     runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -156,7 +156,7 @@ class ConnectProcessEnginePluginTest {
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn")
   @Test
   void connectorBpmnErrorThrownInScriptInputMappingIsHandledByBoundaryEvent() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "in");
     variables.put("exception", new BpmnError("error"));
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -169,7 +169,7 @@ class ConnectProcessEnginePluginTest {
   @Test
   void connectorRuntimeExceptionThrownInScriptInputMappingIsNotHandledByBoundaryEvent() {
     String exceptionMessage = "myException";
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "in");
     variables.put("exception", new RuntimeException(exceptionMessage));
     try {
@@ -182,7 +182,7 @@ class ConnectProcessEnginePluginTest {
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn")
   @Test
   void connectorBpmnErrorThrownInScriptOutputMappingIsHandledByBoundaryEvent() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "out");
     variables.put("exception", new BpmnError("error"));
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -195,7 +195,7 @@ class ConnectProcessEnginePluginTest {
   @Test
   void connectorRuntimeExceptionThrownInScriptOutputMappingIsNotHandledByBoundaryEvent() {
     String exceptionMessage = "myException";
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "out");
     variables.put("exception", new RuntimeException(exceptionMessage));
     try {
@@ -208,7 +208,7 @@ class ConnectProcessEnginePluginTest {
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
   @Test
   void connectorBpmnErrorThrownInScriptResourceInputMappingIsHandledByBoundaryEvent() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "in");
     variables.put("exception", new BpmnError("error"));
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -221,7 +221,7 @@ class ConnectProcessEnginePluginTest {
   @Test
   void connectorRuntimeExceptionThrownInScriptResourceInputMappingIsNotHandledByBoundaryEvent() {
     String exceptionMessage = "myException";
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "in");
     variables.put("exception", new RuntimeException(exceptionMessage));
     try {
@@ -234,7 +234,7 @@ class ConnectProcessEnginePluginTest {
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
   @Test
   void connectorBpmnErrorThrownInScriptResourceOutputMappingIsHandledByBoundaryEvent() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "out");
     variables.put("exception", new BpmnError("error"));
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -247,7 +247,7 @@ class ConnectProcessEnginePluginTest {
   @Test
   void connectorRuntimeExceptionThrownInScriptResourceOutputMappingIsNotHandledByBoundaryEvent() {
     String exceptionMessage = "myException";
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "out");
     variables.put("exception", new RuntimeException(exceptionMessage));
     try {
@@ -261,7 +261,7 @@ class ConnectProcessEnginePluginTest {
   @Test
   void connectorBpmnErrorThrownInScriptResourceNoAsyncAfterJobIsCreated() {
     // given
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "in");
     variables.put("exception", new BpmnError("error"));
 
@@ -295,7 +295,7 @@ class ConnectProcessEnginePluginTest {
 
     TestConnector.responseParameters.put("someOutputParameter", outputParamValue);
 
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("someInputVariable", inputVariableValue);
     ProcessInstance processInstance = runtimeService
         .startProcessInstanceByKey("process_sending_with_connector", vars);
@@ -318,7 +318,7 @@ class ConnectProcessEnginePluginTest {
 
     TestConnector.responseParameters.put("someOutputParameter", outputParamValue);
 
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("someInputVariable", inputVariableValue);
     ProcessInstance processInstance = runtimeService
         .startProcessInstanceByKey("process_sending_with_connector", vars);
@@ -341,7 +341,7 @@ class ConnectProcessEnginePluginTest {
 
     TestConnector.responseParameters.put("someOutputParameter", outputParamValue);
 
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("someInputVariable", inputVariableValue);
     ProcessInstance processInstance = runtimeService
         .startProcessInstanceByKey("process_sending_with_connector", vars);

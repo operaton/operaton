@@ -39,7 +39,7 @@ public class CreateInvoiceDataListener implements ExecutionListener {
 
     execution.setVariable("invoiceData", invoiceData);
 
-    Map<String,String> potentialApprovers = new HashMap<String, String>();
+    Map<String,String> potentialApprovers = new HashMap<>();
     potentialApprovers.put("demo", "Demo User");
     potentialApprovers.put("mary", "Mary Anne");
     potentialApprovers.put("peter", "Peter Meter");

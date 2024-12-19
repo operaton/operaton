@@ -56,11 +56,11 @@ public class Authentication {
     this.authenticatedUserId = authenticatedUserId;
 
     if (authenticatedGroupIds != null) {
-      this.authenticatedGroupIds = new ArrayList<String>(authenticatedGroupIds);
+      this.authenticatedGroupIds = new ArrayList<>(authenticatedGroupIds);
     }
 
     if (authenticatedTenantIds != null) {
-      this.authenticatedTenantIds = new ArrayList<String>(authenticatedTenantIds);
+      this.authenticatedTenantIds = new ArrayList<>(authenticatedTenantIds);
     }
   }
 

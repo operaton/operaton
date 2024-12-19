@@ -64,7 +64,7 @@ public class HistoricTaskInstanceRestServiceImpl implements HistoricTaskInstance
 
     List<HistoricTaskInstance> match = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricTaskInstanceDto> result = new ArrayList<HistoricTaskInstanceDto>();
+    List<HistoricTaskInstanceDto> result = new ArrayList<>();
     for (HistoricTaskInstance taskInstance : match) {
       HistoricTaskInstanceDto taskInstanceDto = HistoricTaskInstanceDto.fromHistoricTaskInstance(taskInstance);
       result.add(taskInstanceDto);
@@ -109,7 +109,7 @@ public class HistoricTaskInstanceRestServiceImpl implements HistoricTaskInstance
   }
 
   protected List<HistoricTaskInstanceReportResultDto> generateCountDto(List<HistoricTaskInstanceReportResult> results) {
-    List<HistoricTaskInstanceReportResultDto> dtoList = new ArrayList<HistoricTaskInstanceReportResultDto>();
+    List<HistoricTaskInstanceReportResultDto> dtoList = new ArrayList<>();
 
     for( HistoricTaskInstanceReportResult result : results ) {
       dtoList.add(HistoricTaskInstanceReportResultDto.fromHistoricTaskInstanceReportResult(result));
@@ -119,7 +119,7 @@ public class HistoricTaskInstanceRestServiceImpl implements HistoricTaskInstance
   }
 
   protected List<ReportResultDto> generateDurationDto(List<? extends ReportResult> results) {
-    List<ReportResultDto> dtoList = new ArrayList<ReportResultDto>();
+    List<ReportResultDto> dtoList = new ArrayList<>();
 
     for( ReportResult result : results ) {
       dtoList.add(ReportResultDto.fromReportResult(result));

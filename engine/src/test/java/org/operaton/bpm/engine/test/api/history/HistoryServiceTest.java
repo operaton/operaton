@@ -251,7 +251,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     // now complete the task to end the process instance
     Task task = taskService.createTaskQuery().processDefinitionKey("checkCreditProcess").singleResult();
-    Map<String, Object> map = new HashMap<String, Object>();
+    Map<String, Object> map = new HashMap<>();
     map.put("creditApproved", true);
     taskService.complete(task.getId(), map);
 
@@ -268,7 +268,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
       "org/operaton/bpm/engine/test/api/runtime/otherOneTaskProcess.bpmn20.xml" })
   @Test
   public void testHistoricProcessInstanceQueryByProcessInstanceIds() {
-    HashSet<String> processInstanceIds = new HashSet<String>();
+    HashSet<String> processInstanceIds = new HashSet<>();
     for (int i = 0; i < 4; i++) {
       processInstanceIds.add(runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, i + "").getId());
     }
@@ -295,7 +295,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   @Test
   public void testHistoricProcessInstanceQueryByProcessInstanceIdsEmpty() {
     try {
-      historyService.createHistoricProcessInstanceQuery().processInstanceIds(new HashSet<String>());
+      historyService.createHistoricProcessInstanceQuery().processInstanceIds(new HashSet<>());
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       testRule.assertTextPresent("Set of process instance ids is empty", re.getMessage());
@@ -374,13 +374,13 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
   @Test
   public void testHistoricVariableInstancesOnParallelExecution() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("rootValue", "test");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("concurrent", vars);
 
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
     for (Task task : tasks) {
-      Map<String, Object> variables = new HashMap<String, Object>();
+      Map<String, Object> variables = new HashMap<>();
       // set token local variable
       LOG.debug("setting variables on task " + task.getId() + ", execution " + task.getExecutionId());
       runtimeService.setVariableLocal(task.getExecutionId(), "parallelValue1", task.getName());
@@ -402,18 +402,18 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   public void testQueryStringVariable() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     String processInstance1 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, vars).getId();
     taskService.complete(taskService.createTaskQuery().processInstanceId(processInstance1).singleResult().getId());
 
-    vars = new HashMap<String, Object>();
+    vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     vars.put("stringVar2", "ghijkl");
     String processInstance2 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, vars).getId();
     taskService.complete(taskService.createTaskQuery().processInstanceId(processInstance2).singleResult().getId());
 
-    vars = new HashMap<String, Object>();
+    vars = new HashMap<>();
     vars.put("stringVar", "azerty");
     String processInstance3 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, vars).getId();
     taskService.complete(taskService.createTaskQuery().processInstanceId(processInstance3).singleResult().getId());
@@ -487,7 +487,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   public void testQueryDateVariable() throws Exception {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     Date date1 = Calendar.getInstance().getTime();
     vars.put("dateVar", date1);
 
@@ -495,7 +495,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     taskService.complete(taskService.createTaskQuery().processInstanceId(processInstance1.getId()).singleResult().getId());
 
     Date date2 = Calendar.getInstance().getTime();
-    vars = new HashMap<String, Object>();
+    vars = new HashMap<>();
     vars.put("dateVar", date1);
     vars.put("dateVar2", date2);
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, vars);
@@ -503,7 +503,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
 
     Calendar nextYear = Calendar.getInstance();
     nextYear.add(Calendar.YEAR, 1);
-    vars = new HashMap<String, Object>();
+    vars = new HashMap<>();
     vars.put("dateVar", nextYear.getTime());
     ProcessInstance processInstance3 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, vars);
     taskService.complete(taskService.createTaskQuery().processInstanceId(processInstance3.getId()).singleResult().getId());
@@ -563,7 +563,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     Assert.assertEquals(2, processInstances.size());
 
     List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<String>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertTrue(ids.isEmpty());
 
@@ -671,7 +671,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
   @Test
   public void testNativeHistoricVariableInstanceTest() {
     Date date = Calendar.getInstance().getTime();
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("stringVar", "abcdef");
     vars.put("dateVar", date);
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS, vars);
@@ -1297,7 +1297,7 @@ public class HistoryServiceTest extends PluggableProcessEngineTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
-    List<String> processInstanceIds = new ArrayList<String>(Arrays.asList(
+    List<String> processInstanceIds = new ArrayList<>(Arrays.asList(
         new String[]{processInstance.getId(), processInstance2.getId()}));
     runtimeService.deleteProcessInstances(processInstanceIds, null, true, true);
 

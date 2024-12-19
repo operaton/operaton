@@ -85,7 +85,7 @@ public class RestJaxRs2IT extends AbstractWebIntegrationTest {
       .setConnectionManager(cm)
       .build();
 
-    Callable<String> performRequest = new Callable<String>() {
+    Callable<String> performRequest = new Callable<>() {
 
       @Override
       public String call() throws IOException {

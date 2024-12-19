@@ -75,11 +75,11 @@ public class SignalEventTest extends CdiProcessEngineTestCase {
   @Deployment(resources = {"org/operaton/bpm/engine/cdi/test/bpmn/SignalEventTests.catchAlertSignalBoundaryWithReceiveTask.bpmn20.xml", 
                           "org/operaton/bpm/engine/cdi/test/bpmn/SignalEventTests.throwAlertSignalWithDelegate.bpmn20.xml"})
   public void testSignalCatchBoundaryWithVariables() {
-    HashMap<String, Object> variables1 = new HashMap<String, Object>();
+    HashMap<String, Object> variables1 = new HashMap<>();
     variables1.put("processName", "catchSignal");
     ProcessInstance piCatchSignal = runtimeService.startProcessInstanceByKey("catchSignal", variables1);
         
-    HashMap<String, Object> variables2 = new HashMap<String, Object>();
+    HashMap<String, Object> variables2 = new HashMap<>();
     variables2.put("processName", "throwSignal");
     variables2.put("signalProcessInstanceId", piCatchSignal.getProcessInstanceId());
     ProcessInstance piThrowSignal = runtimeService.startProcessInstanceByKey("throwSignal", variables2);

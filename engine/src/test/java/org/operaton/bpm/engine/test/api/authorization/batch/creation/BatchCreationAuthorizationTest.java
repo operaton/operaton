@@ -100,7 +100,7 @@ public abstract class BatchCreationAuthorizationTest {
 
   protected List<String> setupHistory() {
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
-    List<String> historicProcessInstances = new ArrayList<String>();
+    List<String> historicProcessInstances = new ArrayList<>();
 
     for (HistoricProcessInstance hpi : historyService.createHistoricProcessInstanceQuery().list()) {
       historicProcessInstances.add(hpi.getId());

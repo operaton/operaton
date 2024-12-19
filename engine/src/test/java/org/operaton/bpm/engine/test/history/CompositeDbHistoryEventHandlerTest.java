@@ -143,7 +143,7 @@ public class CompositeDbHistoryEventHandlerTest extends AbstractCompositeHistory
   @Test
   public void shouldUseCompositeDbHistoryEventHandlerArgumentConstructorWithNotEmptyListNullTwoEvents() {
     // prepare the list with two null events
-    List<HistoryEventHandler> historyEventHandlers = new ArrayList<HistoryEventHandler>();
+    List<HistoryEventHandler> historyEventHandlers = new ArrayList<>();
     historyEventHandlers.add(null);
     historyEventHandlers.add(null);
 
@@ -159,7 +159,7 @@ public class CompositeDbHistoryEventHandlerTest extends AbstractCompositeHistory
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/HistoryLevelTest.bpmn20.xml"})
   public void shouldUseCompositeDbHistoryEventHandlerArgumentConstructorWithNotEmptyListNotNullTwoEvents() {
     // prepare the list with two events
-    List<HistoryEventHandler> historyEventHandlers = new ArrayList<HistoryEventHandler>();
+    List<HistoryEventHandler> historyEventHandlers = new ArrayList<>();
     historyEventHandlers.add(new CustomDbHistoryEventHandler());
     historyEventHandlers.add(new CustomDbHistoryEventHandler());
 

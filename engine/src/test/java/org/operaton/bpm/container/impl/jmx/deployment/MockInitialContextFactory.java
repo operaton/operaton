@@ -24,7 +24,7 @@ import java.util.Hashtable;
 
 public class MockInitialContextFactory implements InitialContextFactory {
 
-  private static final ThreadLocal<Context> currentContext = new ThreadLocal<Context>();
+  private static final ThreadLocal<Context> currentContext = new ThreadLocal<>();
 
   @Override
   public Context getInitialContext(Hashtable<?, ?> environment) throws NamingException {

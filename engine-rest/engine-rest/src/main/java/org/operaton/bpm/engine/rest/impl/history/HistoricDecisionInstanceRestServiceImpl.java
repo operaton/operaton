@@ -67,7 +67,7 @@ public class HistoricDecisionInstanceRestServiceImpl implements HistoricDecision
 
     List<HistoricDecisionInstance> matchingHistoricDecisionInstances = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricDecisionInstanceDto> historicDecisionInstanceDtoResults = new ArrayList<HistoricDecisionInstanceDto>();
+    List<HistoricDecisionInstanceDto> historicDecisionInstanceDtoResults = new ArrayList<>();
     for (HistoricDecisionInstance historicDecisionInstance : matchingHistoricDecisionInstances) {
       HistoricDecisionInstanceDto resultHistoricDecisionInstanceDto = HistoricDecisionInstanceDto.fromHistoricDecisionInstance(historicDecisionInstance);
       historicDecisionInstanceDtoResults.add(resultHistoricDecisionInstanceDto);

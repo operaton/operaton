@@ -187,8 +187,8 @@ public class FeelEngineTest {
     int threadCount = 2;
     ExecutorService pool = Executors.newFixedThreadPool(threadCount);
 
-    Set<Future<Date>> futureSet = new HashSet<Future<Date>>();
-    Set<Date> expectedDates = new HashSet<Date>();
+    Set<Future<Date>> futureSet = new HashSet<>();
+    Set<Date> expectedDates = new HashSet<>();
 
     for(int i = 1; i <= 3 * threadCount; i++) {
       final String dateAndTimeString = "2015-12-12T22:12:5" + i;
@@ -207,7 +207,7 @@ public class FeelEngineTest {
 
     pool.shutdown();
 
-    Set<Date> actualDates = new HashSet<Date>();
+    Set<Date> actualDates = new HashSet<>();
     for( Future<Date> dateFuture : futureSet ) {
       actualDates.add(dateFuture.get());
     }

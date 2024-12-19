@@ -187,8 +187,8 @@ public class CompensationUtil {
 
     // <LEGACY>: different flow scopes may have the same scope execution =>
     // collect subscriptions in a set
-    final Set<EventSubscriptionEntity> subscriptions = new HashSet<EventSubscriptionEntity>();
-    TreeVisitor<ScopeImpl> eventSubscriptionCollector = new TreeVisitor<ScopeImpl>() {
+    final Set<EventSubscriptionEntity> subscriptions = new HashSet<>();
+    TreeVisitor<ScopeImpl> eventSubscriptionCollector = new TreeVisitor<>() {
       @Override
       public void visit(ScopeImpl obj) {
         PvmExecutionImpl execution = scopeExecutionMapping.get(obj);
@@ -204,7 +204,7 @@ public class CompensationUtil {
       }
     });
 
-    return new ArrayList<EventSubscriptionEntity>(subscriptions);
+    return new ArrayList<>(subscriptions);
   }
 
   /**
@@ -216,7 +216,7 @@ public class CompensationUtil {
     final List<EventSubscriptionEntity> eventSubscriptions = collectCompensateEventSubscriptionsForScope(execution);
     final String subscriptionActivityId = getSubscriptionActivityId(execution, activityRef);
 
-    List<EventSubscriptionEntity> eventSubscriptionsForActivity = new ArrayList<EventSubscriptionEntity>();
+    List<EventSubscriptionEntity> eventSubscriptionsForActivity = new ArrayList<>();
     for (EventSubscriptionEntity subscription : eventSubscriptions) {
       if (subscriptionActivityId.equals(subscription.getActivityId())) {
         eventSubscriptionsForActivity.add(subscription);

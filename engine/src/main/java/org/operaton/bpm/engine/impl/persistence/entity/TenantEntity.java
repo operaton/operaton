@@ -42,7 +42,7 @@ public class TenantEntity implements Tenant, Serializable, DbEntity, HasDbRevisi
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("name", name);
     return persistentState;
   }

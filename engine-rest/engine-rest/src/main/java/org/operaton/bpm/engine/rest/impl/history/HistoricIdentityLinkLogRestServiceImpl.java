@@ -49,7 +49,7 @@ public class HistoricIdentityLinkLogRestServiceImpl implements HistoricIdentityL
     HistoricIdentityLinkLogQuery query = queryDto.toQuery(processEngine);
 
     List<HistoricIdentityLinkLog> queryResult = QueryUtil.list(query, firstResult, maxResults);
-    List<HistoricIdentityLinkLogDto> result = new ArrayList<HistoricIdentityLinkLogDto>();
+    List<HistoricIdentityLinkLogDto> result = new ArrayList<>();
     for (HistoricIdentityLinkLog historicIdentityLink : queryResult) {
       HistoricIdentityLinkLogDto dto = HistoricIdentityLinkLogDto.fromHistoricIdentityLink(historicIdentityLink);
       result.add(dto);

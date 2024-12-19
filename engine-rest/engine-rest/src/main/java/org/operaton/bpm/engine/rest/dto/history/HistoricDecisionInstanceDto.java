@@ -182,7 +182,7 @@ public class HistoricDecisionInstanceDto {
     dto.tenantId = historicDecisionInstance.getTenantId();
 
     try {
-      List<HistoricDecisionInputInstanceDto> inputs = new ArrayList<HistoricDecisionInputInstanceDto>();
+      List<HistoricDecisionInputInstanceDto> inputs = new ArrayList<>();
       for (HistoricDecisionInputInstance input : historicDecisionInstance.getInputs()) {
         HistoricDecisionInputInstanceDto inputDto = HistoricDecisionInputInstanceDto.fromHistoricDecisionInputInstance(input);
         inputs.add(inputDto);
@@ -194,7 +194,7 @@ public class HistoricDecisionInstanceDto {
     }
 
     try {
-      List<HistoricDecisionOutputInstanceDto> outputs = new ArrayList<HistoricDecisionOutputInstanceDto>();
+      List<HistoricDecisionOutputInstanceDto> outputs = new ArrayList<>();
       for (HistoricDecisionOutputInstance output : historicDecisionInstance.getOutputs()) {
         HistoricDecisionOutputInstanceDto outputDto = HistoricDecisionOutputInstanceDto.fromHistoricDecisionOutputInstance(output);
         outputs.add(outputDto);

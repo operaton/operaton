@@ -59,7 +59,7 @@ public class MigrateProcessInstanceSyncQueryTest {
 
   @Before
   public void setUp() {
-    authorizations = new ArrayList<Authorization>();
+    authorizations = new ArrayList<>();
     authRule.createUserAndGroup("userId", "groupId");
   }
 

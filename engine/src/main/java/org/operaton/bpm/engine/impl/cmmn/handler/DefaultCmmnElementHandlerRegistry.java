@@ -62,12 +62,12 @@ public class DefaultCmmnElementHandlerRegistry {
   public DefaultCmmnElementHandlerRegistry() {
 
     // init definition element handler
-    definitionElementHandlers = new HashMap<Class<? extends CmmnElement>, CmmnElementHandler<? extends CmmnElement, ? extends CmmnActivity>>();
+    definitionElementHandlers = new HashMap<>();
 
     definitionElementHandlers.put(Case.class, caseHandler);
 
     // init plan item element handler
-    planItemElementHandlers = new HashMap<Class<? extends PlanItemDefinition>, ItemHandler>();
+    planItemElementHandlers = new HashMap<>();
 
     planItemElementHandlers.put(Stage.class, stagePlanItemHandler);
     planItemElementHandlers.put(CasePlanModel.class, casePlanModelHandler);
@@ -82,7 +82,7 @@ public class DefaultCmmnElementHandlerRegistry {
     // planItemElementHandlers.put(EventListener.class, eventListenerPlanItemHandler);
 
     // init discretionary element handler
-    discretionaryElementHandlers = new HashMap<Class<? extends PlanItemDefinition>, ItemHandler>();
+    discretionaryElementHandlers = new HashMap<>();
 
     discretionaryElementHandlers.put(Stage.class, stageDiscretionaryItemHandler);
     discretionaryElementHandlers.put(HumanTask.class, humanTaskDiscretionaryItemHandler);

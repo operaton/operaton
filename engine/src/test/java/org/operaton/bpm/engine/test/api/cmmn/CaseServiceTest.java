@@ -309,7 +309,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -445,7 +445,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -673,7 +673,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -818,7 +818,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -910,7 +910,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -1051,7 +1051,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    List<String> variableNames = new ArrayList<String>();
+    List<String> variableNames = new ArrayList<>();
     variableNames.add("aVariableName");
     variableNames.add("anotherVariableName");
 
@@ -1106,7 +1106,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .singleResult()
         .getId();
 
-    List<String> variableNames = new ArrayList<String>();
+    List<String> variableNames = new ArrayList<>();
     variableNames.add("aVariableName");
     variableNames.add("anotherVariableName");
 
@@ -1218,7 +1218,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .setVariableLocal("anotherVariableName", 999)
       .execute();
 
-    List<String> variableNames = new ArrayList<String>();
+    List<String> variableNames = new ArrayList<>();
     variableNames.add("aVariableName");
     variableNames.add("anotherVariableName");
 
@@ -1277,7 +1277,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .setVariableLocal("aThirdVariable", 123)
       .execute();
 
-    List<String> variableNames = new ArrayList<String>();
+    List<String> variableNames = new ArrayList<>();
     variableNames.add("aVariableName");
     variableNames.add("anotherVariableName");
 
@@ -1336,7 +1336,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .setVariableLocal("aThirdVariable", 123)
       .execute();
 
-    List<String> variableNames = new ArrayList<String>();
+    List<String> variableNames = new ArrayList<>();
     variableNames.add("aVariableName");
     variableNames.add("anotherVariableName");
 
@@ -1557,7 +1557,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
          .singleResult()
          .getId();
 
-     List<String> names = new ArrayList<String>();
+     List<String> names = new ArrayList<>();
      names.add("aVariableName");
      names.add("anotherVariableName");
 
@@ -1601,7 +1601,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
          .singleResult()
          .getId();
 
-     List<String> names = new ArrayList<String>();
+     List<String> names = new ArrayList<>();
      names.add("aVariableName");
      names.add("anotherVariableName");
 
@@ -1767,7 +1767,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .setVariableLocal("anotherVariableName", 999)
       .execute();
 
-     List<String> names = new ArrayList<String>();
+     List<String> names = new ArrayList<>();
      names.add("aVariableName");
      names.add("anotherVariableName");
 
@@ -1813,7 +1813,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
       .setVariableLocal("anotherVariableName", 999)
       .execute();
 
-     List<String> names = new ArrayList<String>();
+     List<String> names = new ArrayList<>();
      names.add("aVariableName");
      names.add("anotherVariableName");
 
@@ -2069,7 +2069,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .getId();
 
     // when
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 123);
     caseService.setVariables(caseExecutionId, variables);
@@ -2176,7 +2176,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .getId();
 
     // when
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 123);
     caseService.setVariablesLocal(caseExecutionId, variables);
@@ -2311,7 +2311,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     // given:
     // a deployed case definition
     // and an active case instance
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "abc");
     variables.put("anotherVariable", 123);
 
@@ -2387,7 +2387,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
         .getId();
 
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "abc");
     variables.put("anotherVariable", 123);
 
@@ -2584,7 +2584,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
 
     // when
-    Map<String, Object> variables = caseService.getVariables(caseInstanceId, new ArrayList<String>());
+    Map<String, Object> variables = caseService.getVariables(caseInstanceId, new ArrayList<>());
 
     // then
     assertNotNull(variables);
@@ -2598,7 +2598,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
 
     // when
-    Map<String, Object> variables = caseService.getVariablesTyped(caseInstanceId, new ArrayList<String>(), false);
+    Map<String, Object> variables = caseService.getVariablesTyped(caseInstanceId, new ArrayList<>(), false);
 
     // then
     assertNotNull(variables);
@@ -2612,7 +2612,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
 
     // when
-    Map<String, Object> variables = caseService.getVariablesLocal(caseInstanceId, new ArrayList<String>());
+    Map<String, Object> variables = caseService.getVariablesLocal(caseInstanceId, new ArrayList<>());
 
     // then
     assertNotNull(variables);
@@ -2626,7 +2626,7 @@ public class CaseServiceTest extends PluggableProcessEngineTest {
     String caseInstanceId = caseService.createCaseInstanceByKey("oneTaskCase").getId();
 
     // when
-    Map<String, Object> variables = caseService.getVariablesLocalTyped(caseInstanceId, new ArrayList<String>(), false);
+    Map<String, Object> variables = caseService.getVariablesLocalTyped(caseInstanceId, new ArrayList<>(), false);
 
     // then
     assertNotNull(variables);

@@ -70,7 +70,7 @@ public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
     checkAuthorization(commandContext, sourceProcessDefinition, targetProcessDefinition);
 
     MigrationPlanImpl migrationPlan = new MigrationPlanImpl(sourceProcessDefinition.getId(), targetProcessDefinition.getId());
-    List<MigrationInstruction> instructions = new ArrayList<MigrationInstruction>();
+    List<MigrationInstruction> instructions = new ArrayList<>();
 
     if (migrationBuilder.isMapEqualActivities()) {
       instructions.addAll(generateInstructions(commandContext, sourceProcessDefinition, targetProcessDefinition, migrationBuilder.isUpdateEventTriggersForGeneratedInstructions()));

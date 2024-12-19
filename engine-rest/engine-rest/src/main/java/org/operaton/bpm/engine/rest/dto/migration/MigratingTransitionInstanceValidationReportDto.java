@@ -61,7 +61,7 @@ public class MigratingTransitionInstanceValidationReportDto {
   }
 
   public static List<MigratingTransitionInstanceValidationReportDto> from(List<MigratingTransitionInstanceValidationReport> reports) {
-    ArrayList<MigratingTransitionInstanceValidationReportDto> dtos = new ArrayList<MigratingTransitionInstanceValidationReportDto>();
+    ArrayList<MigratingTransitionInstanceValidationReportDto> dtos = new ArrayList<>();
     for (MigratingTransitionInstanceValidationReport report : reports) {
       dtos.add(MigratingTransitionInstanceValidationReportDto.from(report));
     }

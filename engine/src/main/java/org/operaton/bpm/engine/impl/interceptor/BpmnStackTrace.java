@@ -34,7 +34,7 @@ public class BpmnStackTrace {
 
   private static final ContextLogger LOG = ProcessEngineLogger.CONTEXT_LOGGER;
 
-  protected List<AtomicOperationInvocation> perfromedInvocations = new ArrayList<AtomicOperationInvocation>();
+  protected List<AtomicOperationInvocation> perfromedInvocations = new ArrayList<>();
 
   public void printStackTrace(boolean verbose) {
     if(perfromedInvocations.isEmpty()) {
@@ -97,14 +97,14 @@ public class BpmnStackTrace {
   }
 
   protected List<Map<String, String>> collectActivityTrace() {
-    List<Map<String, String>> activityTrace = new ArrayList<Map<String, String>>();
+    List<Map<String, String>> activityTrace = new ArrayList<>();
     for (AtomicOperationInvocation atomicOperationInvocation : perfromedInvocations) {
       String activityId = atomicOperationInvocation.getActivityId();
       if(activityId == null) {
         continue;
       }
 
-      Map<String, String> activity = new HashMap<String, String>();
+      Map<String, String> activity = new HashMap<>();
       activity.put("activityId", activityId);
 
       String activityName = atomicOperationInvocation.getActivityName();

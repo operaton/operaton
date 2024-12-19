@@ -89,7 +89,7 @@ public class HistoricDetailRestServiceImpl implements HistoricDetailRestService 
 
     List<HistoricDetail> queryResult = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricDetailDto> result = new ArrayList<HistoricDetailDto>();
+    List<HistoricDetailDto> result = new ArrayList<>();
     for (HistoricDetail historicDetail : queryResult) {
       HistoricDetailDto dto = HistoricDetailDto.fromHistoricDetail(historicDetail);
       result.add(dto);

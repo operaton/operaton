@@ -30,7 +30,7 @@ public class BpmPlatformPlugins {
   protected List<BpmPlatformPlugin> plugins;
 
   public BpmPlatformPlugins() {
-    this.plugins = new ArrayList<BpmPlatformPlugin>();
+    this.plugins = new ArrayList<>();
   }
 
   public void add(BpmPlatformPlugin plugin) {

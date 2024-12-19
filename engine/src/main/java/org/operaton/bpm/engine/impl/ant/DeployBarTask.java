@@ -46,7 +46,7 @@ public class DeployBarTask extends Task {
   List<FileSet> fileSets;
   
   public void execute() throws BuildException {
-    List<File> files = new ArrayList<File>();
+    List<File> files = new ArrayList<>();
     if (file!=null) {
       files.add(file);
     }

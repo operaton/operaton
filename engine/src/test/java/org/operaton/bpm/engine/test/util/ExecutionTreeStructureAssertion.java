@@ -33,7 +33,7 @@ public class ExecutionTreeStructureAssertion implements ExecutionTreeAssertion {
   protected Boolean expectedIsEventScope = false;
   protected String expectedId;
 
-  protected List<ExecutionTreeStructureAssertion> childAssertions = new ArrayList<ExecutionTreeStructureAssertion>();
+  protected List<ExecutionTreeStructureAssertion> childAssertions = new ArrayList<>();
 
   public void addChildAssertion(ExecutionTreeStructureAssertion childAssertion) {
     this.childAssertions.add(childAssertion);
@@ -78,7 +78,7 @@ public class ExecutionTreeStructureAssertion implements ExecutionTreeAssertion {
       return false;
     }
 
-    List<ExecutionTreeStructureAssertion> unmatchedChildAssertions = new ArrayList<ExecutionTreeStructureAssertion>(childAssertions);
+    List<ExecutionTreeStructureAssertion> unmatchedChildAssertions = new ArrayList<>(childAssertions);
     for (ExecutionTree child : tree.getExecutions()) {
       for (ExecutionTreeStructureAssertion childAssertion : unmatchedChildAssertions) {
         if (childAssertion.matches(child)) {

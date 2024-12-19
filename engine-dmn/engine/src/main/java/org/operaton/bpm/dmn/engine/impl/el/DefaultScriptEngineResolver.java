@@ -28,7 +28,7 @@ import org.operaton.bpm.dmn.engine.impl.spi.el.DmnScriptEngineResolver;
 
 public class DefaultScriptEngineResolver implements DmnScriptEngineResolver {
 
-  protected Map<String, ScriptEngine> scriptEngineCache = new HashMap<String, ScriptEngine>();
+  protected Map<String, ScriptEngine> scriptEngineCache = new HashMap<>();
 
   protected ScriptEngineManager scriptEngineManager;
 

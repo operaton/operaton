@@ -48,7 +48,7 @@ public class JsonLegacyQueryOrderingPropertyConverter {
       new JsonLegacyQueryOrderingPropertyConverter();
 
   public List<QueryOrderingProperty> fromOrderByString(String orderByString) {
-    List<QueryOrderingProperty> properties = new ArrayList<QueryOrderingProperty>();
+    List<QueryOrderingProperty> properties = new ArrayList<>();
 
     String[] orderByClauses = orderByString.split(ORDER_BY_DELIMITER);
 

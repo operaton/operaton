@@ -58,7 +58,7 @@ public class HistoricCaseInstanceRestServiceImpl implements HistoricCaseInstance
 
     List<HistoricCaseInstance> matchingHistoricCaseInstances = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricCaseInstanceDto> historicCaseInstanceDtoResults = new ArrayList<HistoricCaseInstanceDto>();
+    List<HistoricCaseInstanceDto> historicCaseInstanceDtoResults = new ArrayList<>();
     for (HistoricCaseInstance historicCaseInstance : matchingHistoricCaseInstances) {
       HistoricCaseInstanceDto resultHistoricCaseInstanceDto = HistoricCaseInstanceDto.fromHistoricCaseInstance(historicCaseInstance);
       historicCaseInstanceDtoResults.add(resultHistoricCaseInstanceDto);

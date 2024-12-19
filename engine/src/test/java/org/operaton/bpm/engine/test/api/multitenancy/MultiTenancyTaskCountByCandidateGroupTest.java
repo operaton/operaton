@@ -61,7 +61,7 @@ public class MultiTenancyTaskCountByCandidateGroupTest {
   protected String tenantId = "aTenant";
   protected String anotherTenantId = "anotherTenant";
 
-  protected List<String> taskIds = new ArrayList<String>();
+  protected List<String> taskIds = new ArrayList<>();
 
   @Before
   public void setUp() {

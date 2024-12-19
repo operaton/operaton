@@ -811,7 +811,7 @@ public class TestOrderingUtil {
 
   public static <T, P extends Comparable<P>> NullTolerantComparator<T> propertyComparator(
       final PropertyAccessor<T, P> accessor) {
-    return new NullTolerantComparator<T>() {
+    return new NullTolerantComparator<>() {
 
       @Override
       public int compare(T o1, T o2) {
@@ -834,7 +834,7 @@ public class TestOrderingUtil {
 
 
   public static <T> NullTolerantComparator<T> inverted(final NullTolerantComparator<T> comparator) {
-    return new NullTolerantComparator<T>() {
+    return new NullTolerantComparator<>() {
       @Override
       public int compare(T o1, T o2) {
         return - comparator.compare(o1, o2);
@@ -850,7 +850,7 @@ public class TestOrderingUtil {
 
   public static <T> NullTolerantComparator<T> hierarchical(final NullTolerantComparator<T> baseComparator,
       final NullTolerantComparator<T>... minorOrderings) {
-    return new NullTolerantComparator<T>() {
+    return new NullTolerantComparator<>() {
       @Override
       public int compare(T o1, T o2, boolean nullPrecedes) {
         int comparison = baseComparator.compare(o1, o2, nullPrecedes);

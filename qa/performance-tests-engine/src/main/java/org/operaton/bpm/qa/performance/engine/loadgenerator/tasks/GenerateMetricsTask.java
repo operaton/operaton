@@ -50,7 +50,7 @@ public class GenerateMetricsTask implements Runnable {
   /**
    * The thread id which identifies the current thread.
    */
-  public static final ThreadLocal<Integer> THREAD_ID = new ThreadLocal<Integer>() {
+  public static final ThreadLocal<Integer> THREAD_ID = new ThreadLocal<>() {
 
     @Override
     protected Integer initialValue() {
@@ -64,7 +64,7 @@ public class GenerateMetricsTask implements Runnable {
    * and the milliseconds per year. That means each thread generated
    * data in a different year.
    */
-  public static final ThreadLocal<Long> START_TIME = new ThreadLocal<Long>() {
+  public static final ThreadLocal<Long> START_TIME = new ThreadLocal<>() {
 
     @Override
     protected Long initialValue() {

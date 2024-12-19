@@ -87,7 +87,7 @@ public class CaseInstanceCloseTest {
     caseInstance.close();
 
     // then
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // completed --close(Case1)--> closed
@@ -138,7 +138,7 @@ public class CaseInstanceCloseTest {
     caseInstance.close();
 
     // then
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // terminated --close(Case1)--> closed
@@ -189,7 +189,7 @@ public class CaseInstanceCloseTest {
     caseInstance.close();
 
     // then
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
 
     // expected state transition:
     // suspended --close(Case1)--> closed

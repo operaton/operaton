@@ -54,7 +54,7 @@ public class ExternalTaskParseTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testParseExternalTaskWithExpressionTopic() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("topicName", "testTopicExpression");
 
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithExpressionTopicProcess", variables);
@@ -65,7 +65,7 @@ public class ExternalTaskParseTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testParseExternalTaskWithStringTopic() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     runtimeService.startProcessInstanceByKey("oneExternalTaskWithStringTopicProcess", variables);
     ExternalTask task = externalTaskService.createExternalTaskQuery().singleResult();

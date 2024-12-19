@@ -345,7 +345,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   public void fireIfOnlySentryParts() {
     // the following steps are a workaround, because setVariable()
     // does not check nor fire a sentry!!!
-    Set<String> affectedSentries = new HashSet<String>();
+    Set<String> affectedSentries = new HashSet<>();
     List<CmmnSentryPart> sentryParts = collectSentryParts(getSentries());
     for (CmmnSentryPart sentryPart : sentryParts) {
       if (isNotSatisfiedIfPartOnly(sentryPart)) {
@@ -354,7 +354,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
     }
 
     // Step 7: check each not affected sentry whether it is satisfied
-    List<String> satisfiedSentries = getSatisfiedSentries(new ArrayList<String>(affectedSentries));
+    List<String> satisfiedSentries = getSatisfiedSentries(new ArrayList<>(affectedSentries));
 
     // Step 8: reset sentries -> satisfied == false
     resetSentries(satisfiedSentries);
@@ -373,7 +373,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
     List<CmmnSentryPart> affectedSentryParts = getAffectedSentryParts(sentries,affectedSentries);
     forceUpdateOnCaseSentryParts(affectedSentryParts);
 
-    List<String> allSentries = new ArrayList<String>(sentries.keySet());
+    List<String> allSentries = new ArrayList<>(sentries.keySet());
 
     List<String> satisfiedSentries = getSatisfiedSentriesInExecutionTree(allSentries, sentries);
 
@@ -387,7 +387,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   protected List<String> collectAffectedSentries(CmmnExecution child, String transition) {
     List<? extends CmmnSentryPart> sentryParts = getCaseSentryParts();
 
-    List<String> affectedSentries = new ArrayList<String>();
+    List<String> affectedSentries = new ArrayList<>();
 
     for (CmmnSentryPart sentryPart : sentryParts) {
 
@@ -428,7 +428,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   protected List<String> collectAffectedSentriesWithVariableOnParts(String variableName, String variableEvent, List<CmmnSentryPart> sentryParts) {
 
-    List<String> affectedSentries = new ArrayList<String>();
+    List<String> affectedSentries = new ArrayList<>();
 
     for (CmmnSentryPart sentryPart : sentryParts) {
 
@@ -461,7 +461,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   }
 
   protected Map<String,List<CmmnSentryPart>> collectAllSentries() {
-    Map<String,List<CmmnSentryPart>> sentries = new HashMap<String, List<CmmnSentryPart>>();
+    Map<String,List<CmmnSentryPart>> sentries = new HashMap<>();
     List<? extends CmmnExecution> caseExecutions = getCaseExecutions();
     for(CmmnExecution caseExecution: caseExecutions) {
       sentries.putAll(caseExecution.collectAllSentries());
@@ -471,7 +471,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   }
 
   protected List<CmmnSentryPart> getAffectedSentryParts(Map<String,List<CmmnSentryPart>> allSentries, List<String> affectedSentries) {
-    List<CmmnSentryPart> affectedSentryParts = new ArrayList<CmmnSentryPart>();
+    List<CmmnSentryPart> affectedSentryParts = new ArrayList<>();
     for(String affectedSentryId: affectedSentries) {
       affectedSentryParts.addAll(allSentries.get(affectedSentryId));
     }
@@ -479,7 +479,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   }
 
   protected List<CmmnSentryPart> collectSentryParts(Map<String,List<CmmnSentryPart>> sentries) {
-    List<CmmnSentryPart> sentryParts = new ArrayList<CmmnSentryPart>();
+    List<CmmnSentryPart> sentryParts = new ArrayList<>();
     for(String sentryId: sentries.keySet()) {
       sentryParts.addAll(sentries.get(sentryId));
     }
@@ -502,7 +502,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
    * sentry is satisfied.
    */
   protected List<String> getSatisfiedSentries(List<String> sentryIds) {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
 
     if (sentryIds != null) {
 
@@ -522,7 +522,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
    * sentry is satisfied.
    */
   protected List<String> getSatisfiedSentriesInExecutionTree(List<String> sentryIds, Map<String, List<CmmnSentryPart>> allSentries) {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
 
     if (sentryIds != null) {
 
@@ -574,7 +574,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
       // 1. propagate to all child case executions ///////////////////////////////////////////
 
       // collect the execution tree.
-      ArrayList<CmmnExecution> children = new ArrayList<CmmnExecution>();
+      ArrayList<CmmnExecution> children = new ArrayList<>();
       collectCaseExecutionsInExecutionTree(children);
 
       for (CmmnExecution currentChild : children) {
@@ -971,7 +971,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   @Override
   public List<CmmnExecution> createChildExecutions(List<CmmnActivity> activities) {
-    List<CmmnExecution> children = new ArrayList<CmmnExecution>();
+    List<CmmnExecution> children = new ArrayList<>();
 
     // first create new child case executions
     for (CmmnActivity currentActivity : activities) {
@@ -1200,7 +1200,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   protected Queue<VariableEvent> getVariableEventQueue() {
     if (variableEventsQueue == null) {
-      variableEventsQueue = new LinkedList<VariableEvent>();
+      variableEventsQueue = new LinkedList<>();
     }
 
     return variableEventsQueue;

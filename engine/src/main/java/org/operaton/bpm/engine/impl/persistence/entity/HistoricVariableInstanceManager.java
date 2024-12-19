@@ -46,13 +46,13 @@ public class HistoricVariableInstanceManager extends AbstractHistoricManager {
   }
 
   public void deleteHistoricVariableInstanceByProcessInstanceIds(List<String> historicProcessInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("processInstanceIds", historicProcessInstanceIds);
     deleteHistoricVariableInstances(parameters);
   }
 
   public void deleteHistoricVariableInstancesByTaskProcessInstanceIds(List<String> historicProcessInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("taskProcessInstanceIds", historicProcessInstanceIds);
     deleteHistoricVariableInstances(parameters);
   }
@@ -62,7 +62,7 @@ public class HistoricVariableInstanceManager extends AbstractHistoricManager {
   }
 
   public void deleteHistoricVariableInstancesByCaseInstanceIds(List<String> historicCaseInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("caseInstanceIds", historicCaseInstanceIds);
     deleteHistoricVariableInstances(parameters);
   }
@@ -172,7 +172,7 @@ public class HistoricVariableInstanceManager extends AbstractHistoricManager {
   }
 
   public DbOperation deleteHistoricVariableInstancesByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("removalTime", removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
       parameters.put("minuteFrom", minuteFrom);

@@ -61,7 +61,7 @@ public class InjectionUtil {
   public static Object[] resolveInjections(DeploymentOperation operationContext, Method lifecycleMethod) {
 
     final Type[] parameterTypes = lifecycleMethod.getGenericParameterTypes();
-    final List<Object> parameters = new ArrayList<Object>();
+    final List<Object> parameters = new ArrayList<>();
 
     for (Type parameterType : parameterTypes) {
 
@@ -117,7 +117,7 @@ public class InjectionUtil {
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
     final ProcessApplicationInfo processApplicationInfo = getProcessApplicationInfo(operationContext);
 
-    List<ProcessEngine> processEngines = new ArrayList<ProcessEngine>();
+    List<ProcessEngine> processEngines = new ArrayList<>();
     for (ProcessApplicationDeploymentInfo deploymentInfo : processApplicationInfo.getDeploymentInfo()) {
       String processEngineName = deploymentInfo.getProcessEngineName();
       processEngines.add((ProcessEngine) serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, processEngineName));

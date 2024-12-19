@@ -38,7 +38,7 @@ public class TaskListenerInvocationTest extends CdiProcessEngineTestCase {
   @Test
   @Deployment
   public void test() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put(VARIABLE_NAME, INITIAL_VALUE);
 
     runtimeService.startProcessInstanceByKey("process", variables);

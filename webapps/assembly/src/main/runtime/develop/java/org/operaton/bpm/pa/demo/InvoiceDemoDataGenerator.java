@@ -178,7 +178,7 @@ public class InvoiceDemoDataGenerator {
       // Filter
       FilterService filterService = engine.getFilterService();
 
-      Map<String, Object> filterProperties = new HashMap<String, Object>();
+      Map<String, Object> filterProperties = new HashMap<>();
       filterProperties.put("description", "Unfiltered Tasks");
       filterProperties.put("priority", 1);
       Filter filter = filterService.newTaskFilter().setName("All Tasks").setProperties(filterProperties);
@@ -187,7 +187,7 @@ public class InvoiceDemoDataGenerator {
       filterProperties.clear();
       filterProperties.put("description", "Tasks assigned to me");
       filterProperties.put("priority", -10);
-      List<FilterVariableDefinition> variableDefinitions = new ArrayList<FilterVariableDefinition>();
+      List<FilterVariableDefinition> variableDefinitions = new ArrayList<>();
       variableDefinitions.add(new FilterVariableDefinition("Bytes", "aByteVar"));
       variableDefinitions.add(new FilterVariableDefinition("String", "stringVar"));
       variableDefinitions.add(new FilterVariableDefinition("File", "bytesVar"));

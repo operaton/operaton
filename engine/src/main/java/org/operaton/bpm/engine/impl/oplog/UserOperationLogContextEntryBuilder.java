@@ -257,7 +257,7 @@ public class UserOperationLogContextEntryBuilder {
   }
 
   public UserOperationLogContextEntryBuilder propertyChanges(PropertyChange propertyChange) {
-    List<PropertyChange> propertyChanges = new ArrayList<PropertyChange>();
+    List<PropertyChange> propertyChanges = new ArrayList<>();
     propertyChanges.add(propertyChange);
     entry.setPropertyChanges(propertyChanges);
     return this;

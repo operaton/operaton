@@ -66,7 +66,7 @@ public class StartProcessApplicationServiceStep extends DeploymentOperationStep 
 
     // create service
     JmxManagedProcessApplication mbean = new JmxManagedProcessApplication(processApplicationInfo, processApplication.getReference());
-    mbean.setProcessesXmls(new ArrayList<ProcessesXml>(processesXmls.values()));
+    mbean.setProcessesXmls(new ArrayList<>(processesXmls.values()));
     mbean.setDeploymentMap(processArchiveDeploymentMap);
 
     // start service
@@ -84,7 +84,7 @@ public class StartProcessApplicationServiceStep extends DeploymentOperationStep 
     processApplicationInfo.setProperties(processApplication.getProperties());
 
     // create deployment infos
-    List<ProcessApplicationDeploymentInfo> deploymentInfoList = new ArrayList<ProcessApplicationDeploymentInfo>();
+    List<ProcessApplicationDeploymentInfo> deploymentInfoList = new ArrayList<>();
     if(processArchiveDeploymentMap != null) {
       for (Entry<String, DeployedProcessArchive> deployment : processArchiveDeploymentMap.entrySet()) {
 

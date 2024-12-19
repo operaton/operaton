@@ -108,7 +108,7 @@ public class CaseDefinitionQueryTest extends AbstractDefinitionQueryTest {
     List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery().list();
     // no point of the test if the caseDefinitions is empty
     assertThat(caseDefinitions).isNotEmpty();
-    List<String> ids = new ArrayList<String>();
+    List<String> ids = new ArrayList<>();
     for (CaseDefinition caseDefinition : caseDefinitions) {
       ids.add(caseDefinition.getId());
     }

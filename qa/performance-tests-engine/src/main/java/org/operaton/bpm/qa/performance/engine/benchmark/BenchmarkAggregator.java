@@ -45,7 +45,7 @@ public class BenchmarkAggregator extends TabularResultAggregator {
 
   protected void processResults(PerfTestResults results, TabularResultSet tabularResultSet) {
 
-    List<Object> row = new ArrayList<Object>();
+    List<Object> row = new ArrayList<>();
     row.add(results.getTestName());
 
     for (PerfTestResult passResult : results.getPassResults()) {
@@ -82,7 +82,7 @@ public class BenchmarkAggregator extends TabularResultAggregator {
     if(tabularResultSet.getResults().size() > 0) {
       int columnSize = tabularResultSet.getResults().get(0).size();
 
-      ArrayList<String> columnNames = new ArrayList<String>();
+      ArrayList<String> columnNames = new ArrayList<>();
       columnNames.add(TEST_NAME);
       for (int i = 1; i < columnSize; i++) {
         if((i-1)%3 == 0) {

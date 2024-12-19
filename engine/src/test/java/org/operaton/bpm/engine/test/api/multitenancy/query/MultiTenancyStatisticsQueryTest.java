@@ -234,7 +234,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
   }
 
   protected Set<String> collectDeploymentTenantIds(List<DeploymentStatistics> deploymentStatistics) {
-    Set<String> tenantIds = new HashSet<String>();
+    Set<String> tenantIds = new HashSet<>();
 
     for (DeploymentStatistics statistics : deploymentStatistics) {
       tenantIds.add(statistics.getTenantId());
@@ -243,7 +243,7 @@ public class MultiTenancyStatisticsQueryTest extends PluggableProcessEngineTest 
   }
 
   protected Set<String> collectDefinitionTenantIds(List<ProcessDefinitionStatistics> processDefinitionStatistics) {
-    Set<String> tenantIds = new HashSet<String>();
+    Set<String> tenantIds = new HashSet<>();
 
     for (ProcessDefinitionStatistics statistics : processDefinitionStatistics) {
       tenantIds.add(statistics.getTenantId());

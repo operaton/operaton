@@ -49,7 +49,7 @@ public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> imp
   protected int firstResult = 0;
   protected ResultType resultType;
 
-  private Map<String, Object> parameters = new HashMap<String, Object>();
+  private Map<String, Object> parameters = new HashMap<>();
   private String sqlStatement;
 
   protected AbstractNativeQuery(CommandExecutor commandExecutor) {
@@ -172,7 +172,7 @@ public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> imp
   }
 
   private Map<String, Object> getParameterMap() {
-    HashMap<String, Object> parameterMap = new HashMap<String, Object>();
+    HashMap<String, Object> parameterMap = new HashMap<>();
     parameterMap.put("sql", sqlStatement);
     parameterMap.putAll(parameters);
     return parameterMap;

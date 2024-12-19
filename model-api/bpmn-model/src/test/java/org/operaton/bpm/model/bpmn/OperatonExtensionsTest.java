@@ -1054,7 +1054,7 @@ public class OperatonExtensionsTest {
     list = inputParameter.getValue();
     assertThat(list.getValues()).hasSize(6);
     list.getValues().removeAll(testValues);
-    ArrayList<BpmnModelElementInstance> operatonValues = new ArrayList<BpmnModelElementInstance>(list.getValues());
+    ArrayList<BpmnModelElementInstance> operatonValues = new ArrayList<>(list.getValues());
     assertThat(operatonValues).hasSize(4);
     for (BpmnModelElementInstance value : operatonValues) {
       assertThat(value.getTextContent()).isEqualTo("test");
@@ -1075,7 +1075,7 @@ public class OperatonExtensionsTest {
     OperatonValue value = this.modelInstance.newInstance(OperatonValue.class);
     elements.add(value);
 
-    List<OperatonValue> newValues = new ArrayList<OperatonValue>();
+    List<OperatonValue> newValues = new ArrayList<>();
     newValues.add(this.modelInstance.newInstance(OperatonValue.class));
     newValues.add(this.modelInstance.newInstance(OperatonValue.class));
     elements.addAll(newValues);

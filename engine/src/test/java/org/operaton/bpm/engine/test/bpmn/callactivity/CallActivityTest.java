@@ -311,7 +311,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
   public void testSubProcessWithDataInputOutput() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("superVariable", "Hello from the super process.");
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessDataInputOutput", vars);
@@ -567,7 +567,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
   @Test
   public void testSubProcessWithNullDataInputAsExpression() {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("superVariable", null);
     String processInstanceId = runtimeService.startProcessInstanceByKey("subProcessDataInputOutput", params).getId();
 
@@ -669,7 +669,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     "org/operaton/bpm/engine/test/bpmn/callactivity/dataSubProcess.bpmn20.xml"})
   @Test
   public void testSubProcessWithNullDataOutputAsExpression() {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("superVariable", null);
     String processInstanceId = runtimeService.startProcessInstanceByKey("subProcessDataInputOutput", params).getId();
 
@@ -774,7 +774,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
   public void testSubProcessAllDataInputOutput() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("superVariable", "Hello from the super process.");
     vars.put("testVariable", "Only a test.");
 
@@ -829,7 +829,7 @@ public class CallActivityTest extends PluggableProcessEngineTest {
     "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
   @Test
   public void testSubProcessAllDataInputOutputWithAdditionalInputMapping() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("superVariable", "Hello from the super process.");
     vars.put("testVariable", "Only a test.");
 

@@ -57,19 +57,19 @@ public class DbOperationManager {
   // pre-sorted operation maps //////////////
 
   /** INSERTs */
-  public SortedMap<Class<?>, SortedSet<DbEntityOperation>> inserts = new TreeMap<Class<?>, SortedSet<DbEntityOperation>>(INSERT_TYPE_COMPARATOR);
+  public SortedMap<Class<?>, SortedSet<DbEntityOperation>> inserts = new TreeMap<>(INSERT_TYPE_COMPARATOR);
 
   /** UPDATEs of a single entity */
-  public SortedMap<Class<?>, SortedSet<DbEntityOperation>> updates = new TreeMap<Class<?>, SortedSet<DbEntityOperation>>(MODIFICATION_TYPE_COMPARATOR);
+  public SortedMap<Class<?>, SortedSet<DbEntityOperation>> updates = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
 
   /** DELETEs of a single entity */
-  public SortedMap<Class<?>, SortedSet<DbEntityOperation>> deletes = new TreeMap<Class<?>, SortedSet<DbEntityOperation>>(MODIFICATION_TYPE_COMPARATOR);
+  public SortedMap<Class<?>, SortedSet<DbEntityOperation>> deletes = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
 
   /** bulk modifications (DELETE, UPDATE) on an entity collection */
-  public SortedMap<Class<?>, SortedSet<DbBulkOperation>> bulkOperations = new TreeMap<Class<?>, SortedSet<DbBulkOperation>>(MODIFICATION_TYPE_COMPARATOR);
+  public SortedMap<Class<?>, SortedSet<DbBulkOperation>> bulkOperations = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
 
   /** bulk modifications (DELETE, UPDATE) for which order of execution is important */
-  public LinkedHashSet<DbBulkOperation> bulkOperationsInsertionOrder = new LinkedHashSet<DbBulkOperation>();
+  public LinkedHashSet<DbBulkOperation> bulkOperationsInsertionOrder = new LinkedHashSet<>();
 
   public boolean addOperation(DbEntityOperation newOperation) {
     if(newOperation.getOperationType() == INSERT) {
@@ -90,7 +90,7 @@ public class DbOperationManager {
   protected SortedSet<DbEntityOperation> getDeletesByType(Class<? extends DbEntity> type, boolean create) {
     SortedSet<DbEntityOperation> deletesByType = deletes.get(type);
     if(deletesByType == null && create) {
-      deletesByType = new TreeSet<DbEntityOperation>(MODIFICATION_OPERATION_COMPARATOR);
+      deletesByType = new TreeSet<>(MODIFICATION_OPERATION_COMPARATOR);
       deletes.put(type, deletesByType);
     }
     return deletesByType;
@@ -99,7 +99,7 @@ public class DbOperationManager {
   protected SortedSet<DbEntityOperation> getUpdatesByType(Class<? extends DbEntity> type, boolean create) {
     SortedSet<DbEntityOperation> updatesByType = updates.get(type);
     if(updatesByType == null && create) {
-      updatesByType = new TreeSet<DbEntityOperation>(MODIFICATION_OPERATION_COMPARATOR);
+      updatesByType = new TreeSet<>(MODIFICATION_OPERATION_COMPARATOR);
       updates.put(type, updatesByType);
     }
     return updatesByType;
@@ -108,7 +108,7 @@ public class DbOperationManager {
   protected SortedSet<DbEntityOperation> getInsertsForType(Class<? extends DbEntity> type, boolean create) {
     SortedSet<DbEntityOperation> insertsByType = inserts.get(type);
     if(insertsByType == null && create) {
-      insertsByType = new TreeSet<DbEntityOperation>(INSERT_OPERATION_COMPARATOR);
+      insertsByType = new TreeSet<>(INSERT_OPERATION_COMPARATOR);
       inserts.put(type, insertsByType);
     }
     return insertsByType;
@@ -117,7 +117,7 @@ public class DbOperationManager {
   public boolean addOperation(DbBulkOperation newOperation) {
     SortedSet<DbBulkOperation> bulksByType = bulkOperations.get(newOperation.getEntityType());
     if(bulksByType == null) {
-      bulksByType = new TreeSet<DbBulkOperation>(BULK_OPERATION_COMPARATOR);
+      bulksByType = new TreeSet<>(BULK_OPERATION_COMPARATOR);
       bulkOperations.put(newOperation.getEntityType(), bulksByType);
     }
 
@@ -129,7 +129,7 @@ public class DbOperationManager {
   }
 
   public List<DbOperation> calculateFlush() {
-    List<DbOperation> flush = new ArrayList<DbOperation>();
+    List<DbOperation> flush = new ArrayList<>();
     // first INSERTs
     addSortedInserts(flush);
     // then UPDATEs + DELETEs
@@ -159,7 +159,7 @@ public class DbOperationManager {
   protected void addSortedModifications(List<DbOperation> flush) {
 
     // calculate sorted set of all modified entity types
-    SortedSet<Class<?>> modifiedEntityTypes = new TreeSet<Class<?>>(MODIFICATION_TYPE_COMPARATOR);
+    SortedSet<Class<?>> modifiedEntityTypes = new TreeSet<>(MODIFICATION_TYPE_COMPARATOR);
     modifiedEntityTypes.addAll(updates.keySet());
     modifiedEntityTypes.addAll(deletes.keySet());
     modifiedEntityTypes.addAll(bulkOperations.keySet());
@@ -202,7 +202,7 @@ public class DbOperationManager {
    */
   protected List<DbEntityOperation> sortByReferences(SortedSet<DbEntityOperation> preSorted) {
     // copy the pre-sorted set and apply final sorting to list
-    List<DbEntityOperation> opList = new ArrayList<DbEntityOperation>(preSorted);
+    List<DbEntityOperation> opList = new ArrayList<>(preSorted);
 
     for (int i = 0; i < opList.size(); i++) {
 
@@ -248,7 +248,7 @@ public class DbOperationManager {
   }
 
   protected void determineDependencies(List<DbOperation> flush) {
-    TreeSet<DbEntityOperation> defaultValue = new TreeSet<DbEntityOperation>();
+    TreeSet<DbEntityOperation> defaultValue = new TreeSet<>();
     for (DbOperation operation : flush) {
       if (operation instanceof DbEntityOperation dbEntityOperation) {
         DbEntity entity = dbEntityOperation.getEntity();

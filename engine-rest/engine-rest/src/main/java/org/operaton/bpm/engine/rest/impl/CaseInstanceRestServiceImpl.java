@@ -60,7 +60,7 @@ public class CaseInstanceRestServiceImpl extends AbstractRestProcessEngineAware 
 
     List<CaseInstance> matchingInstances = QueryUtil.list(query, firstResult, maxResults);
 
-    List<CaseInstanceDto> instanceResults = new ArrayList<CaseInstanceDto>();
+    List<CaseInstanceDto> instanceResults = new ArrayList<>();
     for (CaseInstance instance : matchingInstances) {
       CaseInstanceDto resultInstance = CaseInstanceDto.fromCaseInstance(instance);
       instanceResults.add(resultInstance);

@@ -52,7 +52,7 @@ public class LaneSet {
   
   public List<Lane> getLanes() {
     if(lanes == null) {
-      lanes = new ArrayList<Lane>();
+      lanes = new ArrayList<>();
     }
     return lanes;
   }

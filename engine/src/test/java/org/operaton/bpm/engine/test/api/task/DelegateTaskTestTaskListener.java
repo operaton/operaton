@@ -32,8 +32,8 @@ public class DelegateTaskTestTaskListener implements TaskListener {
   @Override
   public void notify(DelegateTask delegateTask) {
     Set<IdentityLink> candidates = delegateTask.getCandidates();
-    Set<String> candidateUsers = new HashSet<String>();
-    Set<String> candidateGroups = new HashSet<String>();
+    Set<String> candidateUsers = new HashSet<>();
+    Set<String> candidateGroups = new HashSet<>();
     for (IdentityLink candidate : candidates) {
       if (candidate.getUserId() != null) {
         candidateUsers.add(candidate.getUserId());

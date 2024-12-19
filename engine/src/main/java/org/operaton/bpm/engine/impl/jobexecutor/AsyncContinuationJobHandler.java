@@ -44,7 +44,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
   private final Map<String, PvmAtomicOperation> supportedOperations;
 
   public AsyncContinuationJobHandler() {
-    supportedOperations = new HashMap<String, PvmAtomicOperation>();
+    supportedOperations = new HashMap<>();
     // async before activity
     supportedOperations.put(PvmAtomicOperation.TRANSITION_CREATE_SCOPE.getCanonicalName(), PvmAtomicOperation.TRANSITION_CREATE_SCOPE);
     supportedOperations.put(PvmAtomicOperation.ACTIVITY_START_CREATE_SCOPE.getCanonicalName(), PvmAtomicOperation.ACTIVITY_START_CREATE_SCOPE);

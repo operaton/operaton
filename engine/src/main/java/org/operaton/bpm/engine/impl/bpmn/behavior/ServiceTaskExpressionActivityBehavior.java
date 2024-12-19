@@ -43,7 +43,7 @@ public class ServiceTaskExpressionActivityBehavior extends TaskActivityBehavior 
 
   @Override
   public void performExecution(final ActivityExecution execution) throws Exception {
-    executeWithErrorPropagation(execution, new Callable<Void>() {
+    executeWithErrorPropagation(execution, new Callable<>() {
       @Override
       public Void call() throws Exception {
         //getValue() can have side-effects, that's why we have to call it independently from the result variable

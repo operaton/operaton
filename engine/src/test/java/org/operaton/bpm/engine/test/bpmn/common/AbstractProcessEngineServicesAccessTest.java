@@ -45,7 +45,7 @@ public abstract class AbstractProcessEngineServicesAccessTest extends PluggableP
 
   private static final String CALLED_PROCESS_DEF_ID = "calledProcess";
 
-  protected List<String> deploymentIds = new ArrayList<String>();
+  protected List<String> deploymentIds = new ArrayList<>();
 
   @After
   public void tearDown() {

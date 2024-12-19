@@ -32,7 +32,7 @@ public abstract class AbstractConnectorResponse implements ConnectorResponse {
   @Override
   public Map<String, Object> getResponseParameters() {
     if(responseParameters == null) {
-      responseParameters = new HashMap<String, Object>();
+      responseParameters = new HashMap<>();
       collectResponseParameters(responseParameters);
     }
     return responseParameters;

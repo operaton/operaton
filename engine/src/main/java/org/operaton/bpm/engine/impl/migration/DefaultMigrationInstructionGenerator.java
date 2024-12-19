@@ -38,8 +38,8 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
  */
 public class DefaultMigrationInstructionGenerator implements MigrationInstructionGenerator {
 
-  protected List<MigrationActivityValidator> migrationActivityValidators = new ArrayList<MigrationActivityValidator>();
-  protected List<MigrationInstructionValidator> migrationInstructionValidators = new ArrayList<MigrationInstructionValidator>();
+  protected List<MigrationActivityValidator> migrationActivityValidators = new ArrayList<>();
+  protected List<MigrationInstructionValidator> migrationInstructionValidators = new ArrayList<>();
   protected MigrationActivityMatcher migrationActivityMatcher;
 
   public DefaultMigrationInstructionGenerator(MigrationActivityMatcher migrationActivityMatcher) {
@@ -55,7 +55,7 @@ public class DefaultMigrationInstructionGenerator implements MigrationInstructio
   @Override
   public MigrationInstructionGenerator migrationInstructionValidators(List<MigrationInstructionValidator> migrationInstructionValidators) {
 
-    this.migrationInstructionValidators = new ArrayList<MigrationInstructionValidator>();
+    this.migrationInstructionValidators = new ArrayList<>();
     for (MigrationInstructionValidator validator : migrationInstructionValidators) {
       // ignore the following two validators during generation. Enables multi-instance bodies to be mapped.
       // this procedure is fine because these validators are again applied after all instructions have been generated
@@ -88,7 +88,7 @@ public class DefaultMigrationInstructionGenerator implements MigrationInstructio
       boolean updateEventTriggers,
       ValidatingMigrationInstructions existingInstructions) {
 
-    List<ValidatingMigrationInstruction> generatedInstructions = new ArrayList<ValidatingMigrationInstruction>();
+    List<ValidatingMigrationInstruction> generatedInstructions = new ArrayList<>();
 
     for (ActivityImpl sourceActivity : sourceActivities) {
       if (!existingInstructions.containsInstructionForSourceScope(sourceActivity)) {

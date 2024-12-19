@@ -37,7 +37,7 @@ public class ConditionalScriptSequenceFlowTest extends PluggableProcessEngineTes
   @Test
   public void testScriptExpression() {
     String[] directions = new String[] { "left", "right" };
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     for (String direction : directions) {
       variables.put("foo", direction);
@@ -68,7 +68,7 @@ public class ConditionalScriptSequenceFlowTest extends PluggableProcessEngineTes
   @Test
   public void testScriptResourceExpression() {
     String[] directions = new String[] { "left", "right" };
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     for (String direction : directions) {
       variables.put("foo", direction);

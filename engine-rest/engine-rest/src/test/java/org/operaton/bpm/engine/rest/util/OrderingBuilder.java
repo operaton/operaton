@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class OrderingBuilder {
 
-  protected List<Map<String, Object>> orderings = new ArrayList<Map<String, Object>>();
+  protected List<Map<String, Object>> orderings = new ArrayList<>();
   protected Map<String, Object> currentOrdering;
 
   public static OrderingBuilder create() {
@@ -35,7 +35,7 @@ public class OrderingBuilder {
   }
 
   public OrderingBuilder orderBy(String property) {
-    currentOrdering = new HashMap<String, Object>();
+    currentOrdering = new HashMap<>();
     orderings.add(currentOrdering);
     currentOrdering.put("sortBy", property);
     return this;
@@ -56,7 +56,7 @@ public class OrderingBuilder {
     Map<String, Object> parameters = (Map<String, Object>) currentOrdering.get("parameters");
 
     if (parameters == null) {
-      parameters = new HashMap<String, Object>();
+      parameters = new HashMap<>();
       currentOrdering.put("parameters", parameters);
     }
 

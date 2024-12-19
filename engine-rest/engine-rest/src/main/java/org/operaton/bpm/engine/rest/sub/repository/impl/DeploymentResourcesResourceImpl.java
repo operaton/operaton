@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
  */
 public class DeploymentResourcesResourceImpl implements DeploymentResourcesResource {
 
-  protected static final Map<String, String> MEDIA_TYPE_MAPPING = new HashMap<String, String>();
+  protected static final Map<String, String> MEDIA_TYPE_MAPPING = new HashMap<>();
 
   static {
     MEDIA_TYPE_MAPPING.put("bpmn", MediaType.APPLICATION_XML);
@@ -80,7 +80,7 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
   public List<DeploymentResourceDto> getDeploymentResources() {
     List<Resource> resources = engine.getRepositoryService().getDeploymentResources(deploymentId);
 
-    List<DeploymentResourceDto> deploymentResources = new ArrayList<DeploymentResourceDto>();
+    List<DeploymentResourceDto> deploymentResources = new ArrayList<>();
     for (Resource resource : resources) {
       deploymentResources.add(DeploymentResourceDto.fromResources(resource));
     }

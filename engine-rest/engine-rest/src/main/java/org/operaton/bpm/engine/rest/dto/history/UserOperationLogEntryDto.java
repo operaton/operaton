@@ -88,7 +88,7 @@ public class UserOperationLogEntryDto {
   }
 
   public static List<UserOperationLogEntryDto> map(List<UserOperationLogEntry> entries) {
-    List<UserOperationLogEntryDto> result = new ArrayList<UserOperationLogEntryDto>();
+    List<UserOperationLogEntryDto> result = new ArrayList<>();
     for (UserOperationLogEntry entry : entries) {
       result.add(map(entry));
     }

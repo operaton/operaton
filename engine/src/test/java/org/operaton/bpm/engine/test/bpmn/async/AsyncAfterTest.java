@@ -141,7 +141,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
   public void testAsyncAfterServiceTaskMultipleTransitions() {
 
     // start process instance
-    Map<String, Object> varMap = new HashMap<String, Object>();
+    Map<String, Object> varMap = new HashMap<>();
     varMap.put("flowToTake", "flow2");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", varMap);
 
@@ -166,7 +166,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
     //////////////////////////////////////////////////////////////
 
     // start process instance
-    varMap = new HashMap<String, Object>();
+    varMap = new HashMap<>();
     varMap.put("flowToTake", "flow3");
     pi = runtimeService.startProcessInstanceByKey("testProcess", varMap);
 
@@ -192,7 +192,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
   public void testAsyncAfterServiceTaskMultipleTransitionsConcurrent() {
 
     // start process instance
-    Map<String, Object> varMap = new HashMap<String, Object>();
+    Map<String, Object> varMap = new HashMap<>();
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", varMap);
 
     // the service task is completely invoked
@@ -473,7 +473,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
   @Test
   public void testAsyncAfterExclusiveGateway() {
     // start process instance with variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("flow", false);
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testExclusiveGateway", variables);
@@ -504,7 +504,7 @@ public class AsyncAfterTest extends PluggableProcessEngineTest {
   @Test
   public void testAsyncAfterAndBeforeExclusiveGateway() {
     // start process instance with variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("flow", false);
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testExclusiveGateway", variables);

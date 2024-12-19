@@ -35,7 +35,7 @@ public class MethodExpressionServiceTaskTest extends PluggableProcessEngineTest 
   @Deployment
   @Test
   public void testSetServiceResultToProcessVariables() {
-    Map<String,Object> variables = new HashMap<String, Object>();
+    Map<String,Object> variables = new HashMap<>();
     variables.put("okReturningService", new OkReturningService());
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("setServiceResultToProcessVariables", variables);

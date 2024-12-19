@@ -29,7 +29,7 @@ public class CustomFunctionMapper extends FunctionMapper {
 
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
 
-  protected final Map<String, Method> methods = new HashMap<String, Method>();
+  protected final Map<String, Method> methods = new HashMap<>();
 
   @Override
   public Method resolveFunction(String prefix, String localName) {

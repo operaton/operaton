@@ -35,8 +35,8 @@ public class DefaultVariableSerializers implements Serializable, VariableSeriali
 
   private static final long serialVersionUID = 1L;
 
-  protected List<TypedValueSerializer<?>> serializerList = new ArrayList<TypedValueSerializer<?>>();
-  protected Map<String, TypedValueSerializer<?>> serializerMap = new HashMap<String, TypedValueSerializer<?>>();
+  protected List<TypedValueSerializer<?>> serializerList = new ArrayList<>();
+  protected Map<String, TypedValueSerializer<?>> serializerMap = new HashMap<>();
 
   public DefaultVariableSerializers() {
   }
@@ -56,7 +56,7 @@ public class DefaultVariableSerializers implements Serializable, VariableSeriali
 
     String defaultSerializationFormat = Context.getProcessEngineConfiguration().getDefaultSerializationFormat();
 
-    List<TypedValueSerializer<?>> matchedSerializers = new ArrayList<TypedValueSerializer<?>>();
+    List<TypedValueSerializer<?>> matchedSerializers = new ArrayList<>();
 
     ValueType type = value.getType();
     if (type != null && type.isAbstract()) {
@@ -183,7 +183,7 @@ public class DefaultVariableSerializers implements Serializable, VariableSeriali
 
   @Override
   public List<TypedValueSerializer<?>> getSerializers() {
-    return new ArrayList<TypedValueSerializer<?>>(serializerList);
+    return new ArrayList<>(serializerList);
   }
 
 }

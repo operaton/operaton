@@ -154,7 +154,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
   @Test
   public void testCaseExecutionRetrieval() {
-    Map<String, String> params = new HashMap<String, String>();
+    Map<String, String> params = new HashMap<>();
     params.put("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID);
     given()
       .pathParam("id", MockProvider.EXAMPLE_CASE_EXECUTION_ID)
@@ -226,7 +226,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -262,7 +262,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -298,7 +298,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -331,14 +331,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -363,14 +363,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey, true);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -395,14 +395,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -433,12 +433,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -471,12 +471,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -509,12 +509,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -547,12 +547,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -618,7 +618,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -654,7 +654,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -690,7 +690,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -723,14 +723,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -755,14 +755,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey, true);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -787,14 +787,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -825,12 +825,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -863,12 +863,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -901,12 +901,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -939,12 +939,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -1010,7 +1010,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -1046,7 +1046,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -1082,7 +1082,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -1115,14 +1115,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -1147,14 +1147,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey, true);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -1179,14 +1179,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -1217,12 +1217,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -1255,12 +1255,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -1293,12 +1293,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -1331,12 +1331,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -1622,7 +1622,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
   @Test
   public void testLocalVariableModification() {
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
 
     String variableKey = "aKey";
     int variableValue = 123;
@@ -1630,7 +1630,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     Map<String, Object> modifications = VariablesBuilder.create().variable(variableKey, variableValue).getVariables();
     messageBodyJson.put("modifications", modifications);
 
-    List<String> deletions = new ArrayList<String>();
+    List<String> deletions = new ArrayList<>();
     deletions.add("deleteKey");
     messageBodyJson.put("deletions", deletions);
 
@@ -1644,7 +1644,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     .when()
       .post(CASE_EXECUTION_LOCAL_VARIABLES_URL);
 
-    Map<String, Object> expectedMap = new HashMap<String, Object>();
+    Map<String, Object> expectedMap = new HashMap<>();
     expectedMap.put(variableKey, variableValue);
 
     verify(caseServiceMock).withCaseExecution(MockProvider.EXAMPLE_CASE_EXECUTION_ID);
@@ -1655,7 +1655,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
   @Test
   public void testVariableModification() {
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
 
     String variableKey = "aKey";
     int variableValue = 123;
@@ -1663,7 +1663,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     Map<String, Object> modifications = VariablesBuilder.create().variable(variableKey, variableValue).getVariables();
     messageBodyJson.put("modifications", modifications);
 
-    List<String> deletions = new ArrayList<String>();
+    List<String> deletions = new ArrayList<>();
     deletions.add("deleteKey");
     messageBodyJson.put("deletions", deletions);
 
@@ -1677,7 +1677,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     .when()
       .post(CASE_EXECUTION_VARIABLES_URL);
 
-    Map<String, Object> expectedMap = new HashMap<String, Object>();
+    Map<String, Object> expectedMap = new HashMap<>();
     expectedMap.put(variableKey, variableValue);
 
     verify(caseServiceMock).withCaseExecution(MockProvider.EXAMPLE_CASE_EXECUTION_ID);
@@ -1694,7 +1694,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
       .when(caseExecutionCommandBuilderMock)
       .execute();
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
 
     String variableKey = "aKey";
     int variableValue = 123;
@@ -1717,7 +1717,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     .when()
       .post(CASE_EXECUTION_LOCAL_VARIABLES_URL);
 
-    Map<String, Object> expectedMap = new HashMap<String, Object>();
+    Map<String, Object> expectedMap = new HashMap<>();
     expectedMap.put(variableKey, variableValue);
 
     verify(caseServiceMock).withCaseExecution("aNonExistingExecutionId");
@@ -1734,7 +1734,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
       .when(caseExecutionCommandBuilderMock)
       .execute();
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
 
     String variableKey = "aKey";
     int variableValue = 123;
@@ -1757,7 +1757,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     .when()
       .post(CASE_EXECUTION_VARIABLES_URL);
 
-    Map<String, Object> expectedMap = new HashMap<String, Object>();
+    Map<String, Object> expectedMap = new HashMap<>();
     expectedMap.put(variableKey, variableValue);
 
     verify(caseServiceMock).withCaseExecution("aNonExistingExecutionId");
@@ -2759,7 +2759,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testPutSingleLocalSerializableVariableFromJson() throws Exception {
 
-    ArrayList<String> serializable = new ArrayList<String>();
+    ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
 
     ObjectMapper mapper = new ObjectMapper();
@@ -2787,7 +2787,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testPutSingleSerializableVariableFormJson() throws Exception {
 
-    ArrayList<String> serializable = new ArrayList<String>();
+    ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
 
     ObjectMapper mapper = new ObjectMapper();
@@ -2815,7 +2815,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testPutSingleLocalSerializableVariableUnsupportedMediaType() throws Exception {
 
-    ArrayList<String> serializable = new ArrayList<String>();
+    ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
 
     ObjectMapper mapper = new ObjectMapper();
@@ -2841,7 +2841,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testPutSingleSerializableVariableUnsupportedMediaType() throws Exception {
 
-    ArrayList<String> serializable = new ArrayList<String>();
+    ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
 
     ObjectMapper mapper = new ObjectMapper();
@@ -3208,7 +3208,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -3244,7 +3244,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -3280,7 +3280,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -3313,14 +3313,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -3345,14 +3345,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey, true);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -3377,14 +3377,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -3415,12 +3415,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -3453,12 +3453,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -3491,12 +3491,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -3529,12 +3529,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -3601,7 +3601,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -3637,7 +3637,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -3673,7 +3673,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String anotherVariableKey = "anotherKey";
     String anotherVariableValue = "abc";
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     Map<String, Object> variables = VariablesBuilder
         .create()
@@ -3706,14 +3706,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -3738,14 +3738,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey, true);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -3770,14 +3770,14 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     String aVariableKey = "aKey";
     String anotherVariableKey = "anotherKey";
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
     VariableNameDto secondVariableName = new VariableNameDto(anotherVariableKey);
     variableNames.add(secondVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("deletions", variableNames);
 
@@ -3808,12 +3808,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -3846,12 +3846,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String")
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -3884,12 +3884,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);
@@ -3922,12 +3922,12 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
           .variable(anotherVariableKey, anotherVariableValue, "String", true)
           .getVariables();
 
-    List<VariableNameDto> variableNames = new ArrayList<VariableNameDto>();
+    List<VariableNameDto> variableNames = new ArrayList<>();
 
     VariableNameDto firstVariableName = new VariableNameDto(aVariableKey, true);
     variableNames.add(firstVariableName);
 
-    Map<String, Object> variablesJson = new HashMap<String, Object>();
+    Map<String, Object> variablesJson = new HashMap<>();
 
     variablesJson.put("variables", variables);
     variablesJson.put("deletions", variableNames);

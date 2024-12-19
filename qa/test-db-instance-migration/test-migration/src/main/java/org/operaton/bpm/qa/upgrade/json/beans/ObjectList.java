@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(contentAs = RegularCustomer.class)
 public class ObjectList<T> implements List<Object> {
 
-  protected List<Object> innerList = new ArrayList<Object>();
+  protected List<Object> innerList = new ArrayList<>();
 
   @Override
   public int size() {

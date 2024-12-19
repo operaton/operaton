@@ -477,7 +477,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
   }
 
   private Map<String, String> getCompleteQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("decisionRequirementsDefinitionId", "anId");
     parameters.put("category", "cat");

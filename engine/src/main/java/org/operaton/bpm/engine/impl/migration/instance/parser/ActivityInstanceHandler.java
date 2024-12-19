@@ -99,7 +99,7 @@ public class ActivityInstanceHandler implements MigratingInstanceParseHandler<Ac
   }
 
   protected List<VariableInstanceEntity> collectActivityInstanceVariables(MigratingActivityInstance instance) {
-    List<VariableInstanceEntity> variables = new ArrayList<VariableInstanceEntity>();
+    List<VariableInstanceEntity> variables = new ArrayList<>();
     ExecutionEntity representativeExecution = instance.resolveRepresentativeExecution();
     ExecutionEntity parentExecution = representativeExecution.getParent();
 
@@ -150,7 +150,7 @@ public class ActivityInstanceHandler implements MigratingInstanceParseHandler<Ac
   }
 
   public static List<VariableInstanceEntity> getConcurrentLocalVariables(ExecutionEntity execution) {
-    List<VariableInstanceEntity> variables = new ArrayList<VariableInstanceEntity>();
+    List<VariableInstanceEntity> variables = new ArrayList<>();
 
     for (VariableInstanceEntity variable : execution.getVariablesInternal()) {
       if (variable.isConcurrentLocal()) {

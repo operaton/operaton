@@ -107,7 +107,7 @@ public class EqualsMap extends BaseMatcher<Map<String, Object>> {
 
   public EqualsMap matcher(String key, Matcher<?> matcher) {
     if (matchers == null) {
-      this.matchers = new HashMap<String, Matcher<?>>();
+      this.matchers = new HashMap<>();
     }
 
     matchers.put(key, matcher);

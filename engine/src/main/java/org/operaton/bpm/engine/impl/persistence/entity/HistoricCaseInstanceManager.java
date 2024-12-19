@@ -109,7 +109,7 @@ public class HistoricCaseInstanceManager extends AbstractHistoricManager {
 
   @SuppressWarnings("unchecked")
   public List<String> findHistoricCaseInstanceIdsForCleanup(int batchSize, int minuteFrom, int minuteTo) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("currentTimestamp", ClockUtil.getCurrentTime());
     if (minuteTo - minuteFrom + 1 < 60) {
       parameters.put("minuteFrom", minuteFrom);

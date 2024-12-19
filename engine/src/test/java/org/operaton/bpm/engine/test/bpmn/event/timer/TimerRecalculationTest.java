@@ -102,7 +102,7 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
   @Test
   public void testFinishedJob() {
     // given
-    HashMap<String, Object> variables1 = new HashMap<String, Object>();
+    HashMap<String, Object> variables1 = new HashMap<>();
     variables1.put("dueDate", new Date());
 
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables1);

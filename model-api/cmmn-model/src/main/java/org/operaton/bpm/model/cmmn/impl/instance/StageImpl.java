@@ -85,7 +85,7 @@ public class StageImpl extends PlanFragmentImpl implements Stage {
       return Collections.unmodifiableCollection(getExitCriterias());
     }
     else {
-      List<Sentry> sentries = new ArrayList<Sentry>();
+      List<Sentry> sentries = new ArrayList<>();
       Collection<ExitCriterion> exitCriterions = getExitCriterions();
       for (ExitCriterion exitCriterion : exitCriterions) {
         Sentry sentry = exitCriterion.getSentry();

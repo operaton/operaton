@@ -63,13 +63,13 @@ public class PvmAtomicOperationProcessStart extends AbstractPvmEventAtomicOperat
 
   protected void eventNotificationsCompleted(PvmExecutionImpl execution) {
 
-    execution.continueIfExecutionDoesNotAffectNextOperation(new Callback<PvmExecutionImpl, Void>() {
+    execution.continueIfExecutionDoesNotAffectNextOperation(new Callback<>() {
       @Override
       public Void callback(PvmExecutionImpl execution) {
         execution.dispatchEvent(null);
         return null;
       }
-    }, new Callback<PvmExecutionImpl, Void>() {
+    }, new Callback<>() {
       @Override
       public Void callback(PvmExecutionImpl execution) {
 

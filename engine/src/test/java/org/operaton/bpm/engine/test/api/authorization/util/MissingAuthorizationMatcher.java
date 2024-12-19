@@ -71,7 +71,7 @@ public class MissingAuthorizationMatcher extends TypeSafeDiagnosingMatcher<Missi
   }
 
   public static List<MissingAuthorization> asMissingAuthorizations(List<Authorization> authorizations) {
-    List<MissingAuthorization> missingAuthorizations = new ArrayList<MissingAuthorization>();
+    List<MissingAuthorization> missingAuthorizations = new ArrayList<>();
     for (Authorization authorization : authorizations) {
       missingAuthorizations.add(asMissingAuthorization(authorization));
     }

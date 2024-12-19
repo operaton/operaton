@@ -98,7 +98,7 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
 
   public void addDeployedArtifact(ResourceDefinitionEntity deployedArtifact) {
     if (deployedArtifacts == null) {
-      deployedArtifacts = new HashMap<Class<?>, List>();
+      deployedArtifacts = new HashMap<>();
     }
 
     Class<?> clazz = deployedArtifact.getClass();

@@ -129,7 +129,7 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
 
   @Parameters(name="{0} - {4}")
   public static Iterable<Object[]> params() {
-    final ArrayList<Object[]> params = new ArrayList<Object[]>();
+    final ArrayList<Object[]> params = new ArrayList<>();
 
     for (Object[] queryResourcesAndPermission : queryResourcesAndPermissions) {
       for (Authentication authentication : authentications) {

@@ -153,7 +153,7 @@ public class Connectors {
   }
 
   protected void initializeConnectors(ClassLoader classLoader) {
-    Map<String, Connector<?>> connectors = new HashMap<String, Connector<?>>();
+    Map<String, Connector<?>> connectors = new HashMap<>();
 
     if(classLoader == null) {
       classLoader = Connectors.class.getClassLoader();

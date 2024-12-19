@@ -172,7 +172,7 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
    */
   protected InputStream applyResourceOverrides(String file, InputStream assetStream) {
     // use a copy of the list cause it could be modified during iteration
-    List<PluginResourceOverride> resourceOverrides = new ArrayList<PluginResourceOverride>(runtimeDelegate.getResourceOverrides());
+    List<PluginResourceOverride> resourceOverrides = new ArrayList<>(runtimeDelegate.getResourceOverrides());
     for (PluginResourceOverride pluginResourceOverride : resourceOverrides) {
       assetStream = pluginResourceOverride.filterResource(assetStream, new RequestInfo(headers, servletContext, uriInfo));
     }

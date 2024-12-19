@@ -53,7 +53,7 @@ public class BenchmarkLongtermAggregator extends TabularResultAggregator {
   }
 
   protected List<Object> processRow(PerfTestResult passResult, PerfTestResults results) {
-    List<Object> row = new ArrayList<Object>();
+    List<Object> row = new ArrayList<>();
     PerfTestConfiguration configuration = results.getConfiguration();
     
     // test name

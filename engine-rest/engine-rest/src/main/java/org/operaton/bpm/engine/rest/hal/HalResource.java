@@ -55,7 +55,7 @@ public abstract class HalResource<T extends HalResource<?>> {
 
   public void addLink(String rel, String href) {
     if(_links == null) {
-      _links = new TreeMap<String, HalLink>();
+      _links = new TreeMap<>();
     }
     _links.put(rel, new HalLink(href));
   }
@@ -71,7 +71,7 @@ public abstract class HalResource<T extends HalResource<?>> {
 
   private void addEmbeddedObject(String name, Object embedded) {
     if(_embedded == null) {
-      _embedded = new TreeMap<String, Object>();
+      _embedded = new TreeMap<>();
     }
     _embedded.put(name, embedded);
   }

@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.util.CollectionUtil;
 public class SameBehaviorInstructionValidator implements MigrationInstructionValidator {
 
   public static final List<Set<Class<?>>> EQUIVALENT_BEHAVIORS =
-      new ArrayList<Set<Class<?>>>();
+      new ArrayList<>();
 
   static {
     EQUIVALENT_BEHAVIORS.add(CollectionUtil.<Class<?>>asHashSet(
@@ -44,7 +44,7 @@ public class SameBehaviorInstructionValidator implements MigrationInstructionVal
     ));
   }
 
-  protected Map<Class<?>, Set<Class<?>>> equivalentBehaviors = new HashMap<Class<?>, Set<Class<?>>>();
+  protected Map<Class<?>, Set<Class<?>>> equivalentBehaviors = new HashMap<>();
 
   public SameBehaviorInstructionValidator() {
     this(EQUIVALENT_BEHAVIORS);

@@ -59,7 +59,7 @@ public class ProcessInstanceModificationBuilderImpl implements ProcessInstanceMo
   protected boolean externallyTerminated = false;
   protected String annotation;
 
-  protected List<AbstractProcessInstanceModificationCommand> operations = new ArrayList<AbstractProcessInstanceModificationCommand>();
+  protected List<AbstractProcessInstanceModificationCommand> operations = new ArrayList<>();
 
   // variables not associated with an activity that are to be set on the instance itself
   protected VariableMap processVariables = new VariableMapImpl();

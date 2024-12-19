@@ -32,7 +32,7 @@ public class TenantCheck implements Serializable {
   protected boolean isTenantCheckEnabled = true;
 
   /** the ids of the authenticated tenants */
-  protected List<String> authTenantIds = new ArrayList<String>();
+  protected List<String> authTenantIds = new ArrayList<>();
 
   public boolean isTenantCheckEnabled() {
     return isTenantCheckEnabled;

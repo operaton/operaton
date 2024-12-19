@@ -120,7 +120,7 @@ public class ActivitiStateAnnotationBeanPostProcessor implements BeanPostProcess
 
 						Assert.notNull(stateName, "You must provide a stateName!");
 
-						Map<Integer, String> vars = new HashMap<Integer, String>();
+						Map<Integer, String> vars = new HashMap<>();
 						Annotation[][] paramAnnotationsArray = method.getParameterAnnotations();
 
 						int ctr = 0;

@@ -121,7 +121,7 @@ public class ExternalTaskUserOperationLogTest {
     runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
     
     List<ExternalTask> list = externalTaskService.createExternalTaskQuery().list();
-    List<String> externalTaskIds = new ArrayList<String>();
+    List<String> externalTaskIds = new ArrayList<>();
 
     for (ExternalTask task : list) {
       externalTaskIds.add(task.getId());
@@ -292,7 +292,7 @@ public class ExternalTaskUserOperationLogTest {
   }
 
   protected Map<String, UserOperationLogEntry> asMap(List<UserOperationLogEntry> logEntries) {
-    Map<String, UserOperationLogEntry> map = new HashMap<String, UserOperationLogEntry>();
+    Map<String, UserOperationLogEntry> map = new HashMap<>();
 
     for (UserOperationLogEntry entry : logEntries) {
 

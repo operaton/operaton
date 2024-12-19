@@ -84,7 +84,7 @@ public class ModificationExecutionSyncTest {
 
   @After
   public void removeInstanceIds() {
-    helper.currentProcessInstances = new ArrayList<String>();
+    helper.currentProcessInstances = new ArrayList<>();
   }
 
   @Test

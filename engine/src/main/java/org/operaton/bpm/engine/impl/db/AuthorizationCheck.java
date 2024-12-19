@@ -54,7 +54,7 @@ public class AuthorizationCheck implements Serializable {
   protected String authUserId;
 
   /** the ids of the groups to check permissions for */
-  protected List<String> authGroupIds = new ArrayList<String>();
+  protected List<String> authGroupIds = new ArrayList<>();
 
   /** the default permissions to use if no matching authorization
    * can be found.*/

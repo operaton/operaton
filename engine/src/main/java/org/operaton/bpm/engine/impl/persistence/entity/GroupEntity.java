@@ -46,7 +46,7 @@ public class GroupEntity implements Group, Serializable, DbEntity, HasDbRevision
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("name", name);
     persistentState.put("type", type);
     return persistentState;

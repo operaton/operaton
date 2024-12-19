@@ -33,7 +33,7 @@ public class EngineRestApplication extends Application {
 
   @Override
   public Set<Class<?>> getClasses() {
-    Set<Class<?>> classes = new HashSet<Class<?>>();
+    Set<Class<?>> classes = new HashSet<>();
 
     // only provide named process engine access.
     classes.add(NamedProcessEngineRestServiceImpl.class);

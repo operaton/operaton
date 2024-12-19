@@ -36,7 +36,7 @@ public class MapValueProvider implements ParameterValueProvider {
 
   @Override
   public Object getValue(VariableScope variableScope) {
-    Map<Object, Object> valueMap = new TreeMap<Object, Object>();
+    Map<Object, Object> valueMap = new TreeMap<>();
     for (Entry<ParameterValueProvider, ParameterValueProvider> entry : providerMap.entrySet()) {
       valueMap.put(entry.getKey().getValue(variableScope), entry.getValue().getValue(variableScope));
     }

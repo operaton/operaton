@@ -97,7 +97,7 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
 
     List<Task> matchingTasks = executeTaskQuery(firstResult, maxResults, query);
 
-    List<TaskDto> tasks = new ArrayList<TaskDto>();
+    List<TaskDto> tasks = new ArrayList<>();
     if (Boolean.TRUE.equals(queryDto.getWithCommentAttachmentInfo())) {
       tasks = matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).collect(Collectors.toList());
     }

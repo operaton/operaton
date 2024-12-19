@@ -71,7 +71,7 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
 
   public static ExpectedCondition<Boolean> currentURIIs(final URI pageURI) {
 
-    return new ExpectedCondition<Boolean>() {
+    return new ExpectedCondition<>() {
       @Override
       public Boolean apply(WebDriver webDriver) {
         try {
@@ -86,7 +86,7 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
 
   public static ExpectedCondition<Boolean> containsCurrentUrl(final String url) {
 
-    return new ExpectedCondition<Boolean>() {
+    return new ExpectedCondition<>() {
       @Override
       public Boolean apply(WebDriver webDriver) {
         return webDriver.getCurrentUrl().contains(url);

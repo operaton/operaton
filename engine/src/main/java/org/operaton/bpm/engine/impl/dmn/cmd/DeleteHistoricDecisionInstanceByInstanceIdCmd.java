@@ -65,7 +65,7 @@ public class DeleteHistoricDecisionInstanceByInstanceIdCmd implements Command<Ob
   }
 
   protected void writeUserOperationLog(CommandContext commandContext, HistoricDecisionInstance historicDecisionInstance) {
-    List<PropertyChange> propertyChanges = new ArrayList<PropertyChange>();
+    List<PropertyChange> propertyChanges = new ArrayList<>();
     propertyChanges.add(new PropertyChange("nrOfInstances", null, 1));
     propertyChanges.add(new PropertyChange("async", null, false));
 

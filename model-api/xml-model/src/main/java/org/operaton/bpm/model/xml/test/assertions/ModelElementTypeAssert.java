@@ -41,7 +41,7 @@ public class ModelElementTypeAssert extends AbstractAssert<ModelElementTypeAsser
   }
 
   private List<String> getActualAttributeNames() {
-    List<String> actualAttributeNames = new ArrayList<String>();
+    List<String> actualAttributeNames = new ArrayList<>();
     for (Attribute<?> attribute : actual.getAttributes()) {
       actualAttributeNames.add(attribute.getAttributeName());
     }
@@ -49,7 +49,7 @@ public class ModelElementTypeAssert extends AbstractAssert<ModelElementTypeAsser
   }
 
   private Collection<String> getTypeNames(Collection<ModelElementType> elementTypes) {
-    List<String> typeNames = new ArrayList<String>();
+    List<String> typeNames = new ArrayList<>();
     QName qName;
     for (ModelElementType elementType : elementTypes) {
       qName = new QName(elementType.getTypeNamespace(), elementType.getTypeName());
@@ -256,7 +256,7 @@ public class ModelElementTypeAssert extends AbstractAssert<ModelElementTypeAsser
     List<ModelElementType> notExtendingTypes = Arrays.asList(types);
     Collection<ModelElementType> actualExtendingTypes = actual.getExtendingTypes();
 
-    List<ModelElementType> errorTypes = new ArrayList<ModelElementType>();
+    List<ModelElementType> errorTypes = new ArrayList<>();
 
     for (ModelElementType notExtendingType : notExtendingTypes) {
       if (actualExtendingTypes.contains(notExtendingType)) {

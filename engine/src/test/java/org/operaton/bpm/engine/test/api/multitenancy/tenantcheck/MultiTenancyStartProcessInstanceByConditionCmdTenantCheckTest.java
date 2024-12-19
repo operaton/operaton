@@ -88,7 +88,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     identityService.setAuthentication("user", null, null);
 
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", "bar");
 
     // when
@@ -118,7 +118,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", "bar");
 
     // when
@@ -149,7 +149,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
 
     identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
 
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", "bar");
 
     // when
@@ -180,7 +180,7 @@ public class MultiTenancyStartProcessInstanceByConditionCmdTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
     identityService.setAuthentication("user", null, null);
 
-    Map<String, Object> variableMap = new HashMap<String, Object>();
+    Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("foo", "bar");
 
     // when

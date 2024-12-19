@@ -80,7 +80,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
     assertEquals(1, localVariables.size());
     assertEquals("mappedValue", localVariables.get("mappedVariable"));
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("messageVariable", "outValue");
     runtimeService.messageEventReceived("IncomingMessage", messageExecution.getId(), variables);
 
@@ -92,7 +92,7 @@ public class InputOutputEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testTimerCatchEvent() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     Date dueDate = DateTimeUtil.now().plusMinutes(5).toDate();
     variables.put("outerVariable", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(dueDate));
     runtimeService.startProcessInstanceByKey("testProcess", variables);

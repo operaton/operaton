@@ -360,7 +360,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
   @Test
   public void testDeleteDecisionInstanceByDecisionDefinition() {
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("input1", "test");
     decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY, variables);
 
@@ -383,7 +383,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
   @Test
   public void testDeleteDecisionInstanceById() {
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("input1", "test");
     decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY, variables);
 
@@ -444,7 +444,7 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
   private String[] findProcessDefinitionIdsByKey(String processDefinitionKey) {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey(processDefinitionKey).list();
-    List<String> processDefinitionIds = new ArrayList<String>();
+    List<String> processDefinitionIds = new ArrayList<>();
     for (ProcessDefinition processDefinition: processDefinitions) {
       processDefinitionIds.add(processDefinition.getId());
     }

@@ -84,7 +84,7 @@ public class DmnEngineConfigurationApiTest {
     assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
       .isEmpty();
 
-    ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<DmnDecisionTableEvaluationListener>();
+    ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new DefaultEngineMetricCollector());
     listeners.add(new DefaultEngineMetricCollector());
 
@@ -103,7 +103,7 @@ public class DmnEngineConfigurationApiTest {
     assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
       .isEmpty();
 
-    ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<DmnDecisionTableEvaluationListener>();
+    ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new DefaultEngineMetricCollector());
     listeners.add(new DefaultEngineMetricCollector());
 
@@ -122,7 +122,7 @@ public class DmnEngineConfigurationApiTest {
     assertThat(configuration.getCustomPreDecisionEvaluationListeners())
       .isEmpty();
 
-    ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<DmnDecisionEvaluationListener>();
+    ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new TestDecisionEvaluationListener());
     listeners.add(new TestDecisionEvaluationListener());
 
@@ -141,7 +141,7 @@ public class DmnEngineConfigurationApiTest {
     assertThat(configuration.getCustomPreDecisionEvaluationListeners())
       .isEmpty();
 
-    ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<DmnDecisionEvaluationListener>();
+    ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new TestDecisionEvaluationListener());
     listeners.add(new TestDecisionEvaluationListener());
 
@@ -160,7 +160,7 @@ public class DmnEngineConfigurationApiTest {
     assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
       .isEmpty();
 
-    ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<DmnDecisionTableEvaluationListener>();
+    ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new DefaultEngineMetricCollector());
     listeners.add(new DefaultEngineMetricCollector());
 
@@ -179,7 +179,7 @@ public class DmnEngineConfigurationApiTest {
     assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
       .isEmpty();
 
-    ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<DmnDecisionTableEvaluationListener>();
+    ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new DefaultEngineMetricCollector());
     listeners.add(new DefaultEngineMetricCollector());
 
@@ -198,7 +198,7 @@ public class DmnEngineConfigurationApiTest {
     assertThat(configuration.getCustomPostDecisionEvaluationListeners())
       .isEmpty();
 
-    ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<DmnDecisionEvaluationListener>();
+    ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new TestDecisionEvaluationListener());
     listeners.add(new TestDecisionEvaluationListener());
 
@@ -217,7 +217,7 @@ public class DmnEngineConfigurationApiTest {
     assertThat(configuration.getCustomPostDecisionEvaluationListeners())
       .isEmpty();
 
-    ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<DmnDecisionEvaluationListener>();
+    ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new TestDecisionEvaluationListener());
     listeners.add(new TestDecisionEvaluationListener());
 
@@ -229,14 +229,14 @@ public class DmnEngineConfigurationApiTest {
   @Test
   public void shouldBeFluentConfigurable() {
     DefaultEngineMetricCollector metricCollector = new DefaultEngineMetricCollector();
-    ArrayList<DmnDecisionTableEvaluationListener> preListeners = new ArrayList<DmnDecisionTableEvaluationListener>();
+    ArrayList<DmnDecisionTableEvaluationListener> preListeners = new ArrayList<>();
     preListeners.add(new DefaultEngineMetricCollector());
-    ArrayList<DmnDecisionTableEvaluationListener> postListeners = new ArrayList<DmnDecisionTableEvaluationListener>();
+    ArrayList<DmnDecisionTableEvaluationListener> postListeners = new ArrayList<>();
     preListeners.add(new DefaultEngineMetricCollector());
 
-    ArrayList<DmnDecisionEvaluationListener> preDecisionListeners = new ArrayList<DmnDecisionEvaluationListener>();
+    ArrayList<DmnDecisionEvaluationListener> preDecisionListeners = new ArrayList<>();
     preDecisionListeners.add(new TestDecisionEvaluationListener());
-    ArrayList<DmnDecisionEvaluationListener> postDecisionListeners = new ArrayList<DmnDecisionEvaluationListener>();
+    ArrayList<DmnDecisionEvaluationListener> postDecisionListeners = new ArrayList<>();
     postDecisionListeners.add(new TestDecisionEvaluationListener());
 
     DmnEngine engine = DmnEngineConfiguration

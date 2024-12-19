@@ -73,7 +73,7 @@ public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
   }
   
   private List<SchemaLogEntry> createMockedSchemaLogEntries(){
-    List<SchemaLogEntry> entries = new ArrayList<SchemaLogEntry>();
+    List<SchemaLogEntry> entries = new ArrayList<>();
     SchemaLogEntryEntity entry = new SchemaLogEntryEntity();
 
     entry.setId(SCHEMA_LOG_ENTRY_MOCK_ID);
@@ -104,7 +104,7 @@ public class SchemaLogRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   public void testGetSchemaLogAsPost() {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("version", SCHEMA_LOG_ENTRY_MOCK_VERSION);
     params.put("sortBy", "timestamp");
     params.put("sortOrder", "asc");

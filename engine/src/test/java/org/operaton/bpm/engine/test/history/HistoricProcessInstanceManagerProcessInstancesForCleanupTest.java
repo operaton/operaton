@@ -173,7 +173,7 @@ public class HistoricProcessInstanceManagerProcessInstancesForCleanupTest {
   }
 
   private List<String> prepareHistoricProcesses(String businessKey, Integer processInstanceCount) {
-    List<String> processInstanceIds = new ArrayList<String>();
+    List<String> processInstanceIds = new ArrayList<>();
 
     for (int i = 0; i < processInstanceCount; i++) {
       ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(businessKey);

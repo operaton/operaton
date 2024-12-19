@@ -31,8 +31,8 @@ public class AcquiredJobs {
 
   protected int numberOfJobsAttemptedToAcquire;
 
-  protected List<List<String>> acquiredJobBatches = new ArrayList<List<String>>();
-  protected Set<String> acquiredJobs = new HashSet<String>();
+  protected List<List<String>> acquiredJobBatches = new ArrayList<>();
+  protected Set<String> acquiredJobs = new HashSet<>();
 
   protected int numberOfJobsFailedToLock = 0;
 
@@ -52,7 +52,7 @@ public class AcquiredJobs {
   }
 
   public void addJobIdBatch(String jobId) {
-    ArrayList<String> list = new ArrayList<String>();
+    ArrayList<String> list = new ArrayList<>();
     list.add(jobId);
 
     addJobIdBatch(list);

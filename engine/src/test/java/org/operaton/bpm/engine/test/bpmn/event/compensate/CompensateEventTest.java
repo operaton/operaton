@@ -424,7 +424,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   @Ignore("Fix CAM-4268")
   @Test
   public void testCompensateMiSubprocessVariableSnapshotOfElementVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     // multi instance collection
     List<String> flights = Arrays.asList("STS-14", "STS-28");
     variables.put("flights", flights);
@@ -535,7 +535,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testExecutionListeners() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("start", 0);
     variables.put("end", 0);
 
@@ -837,7 +837,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCompensateMiSubprocessWithCompensationEventSubProcess() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     // multi instance collection
     variables.put("flights", Arrays.asList("STS-14", "STS-28"));
 
@@ -863,7 +863,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testCompensateParallelMiSubprocessWithCompensationEventSubProcess() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     // multi instance collection
     variables.put("flights", Arrays.asList("STS-14", "STS-28"));
 
@@ -1215,7 +1215,7 @@ public class CompensateEventTest extends PluggableProcessEngineTest {
     Task task = taskService.createTaskQuery().taskName(taskName).singleResult();
     assertNotNull("No open task with name '" + taskName + "'", task);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     if (variable != null) {
       variables.put(variable, value);
     }

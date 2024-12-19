@@ -69,7 +69,7 @@ public class StartProcessInstancesInDirectory {
   }
 
   private static List<String> extractProcessDefinitionKeys(List<String> deployableFileNames) {
-    ArrayList<String> keys = new ArrayList<String>();
+    ArrayList<String> keys = new ArrayList<>();
     for (String file : deployableFileNames) {
       if(file.endsWith(".bpmn") || file.endsWith(".bpmn20.xml")) {
         BpmnModelInstance modelInstance = Bpmn.readModelFromFile(new File(file));
@@ -86,7 +86,7 @@ public class StartProcessInstancesInDirectory {
 
   private static List<String> findDeployableFiles(File dir) {
 
-    final List<String> result = new ArrayList<String>();
+    final List<String> result = new ArrayList<>();
 
     String[] localNames = dir.list(new FilenameFilter() {
 

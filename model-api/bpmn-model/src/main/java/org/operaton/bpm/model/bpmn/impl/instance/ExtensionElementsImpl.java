@@ -64,7 +64,7 @@ public class ExtensionElementsImpl extends BpmnModelElementInstanceImpl implemen
 
   @Override
   public Query<ModelElementInstance> getElementsQuery() {
-    return new QueryImpl<ModelElementInstance>(getElements());
+    return new QueryImpl<>(getElements());
   }
 
   @Override

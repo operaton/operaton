@@ -118,7 +118,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testDecideBasedOnListOrArrayOfBeans() {
-    List<ExclusiveGatewayTestOrder> orders = new ArrayList<ExclusiveGatewayTestOrder>();
+    List<ExclusiveGatewayTestOrder> orders = new ArrayList<>();
     orders.add(new ExclusiveGatewayTestOrder(50));
     orders.add(new ExclusiveGatewayTestOrder(300));
     orders.add(new ExclusiveGatewayTestOrder(175));
@@ -293,7 +293,7 @@ public class ExclusiveGatewayTest extends PluggableProcessEngineTest {
   @Test
   public void testDecisionFunctionality() {
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     // Test with input == 1
     variables.put("input", 1);

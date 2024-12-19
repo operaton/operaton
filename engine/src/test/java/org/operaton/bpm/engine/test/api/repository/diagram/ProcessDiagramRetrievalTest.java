@@ -261,7 +261,7 @@ public class ProcessDiagramRetrievalTest {
     html.append("    <div style=\"position: relative\">\n");
     html.append("      <img src=\"" + imageUrl + "\" />\n");
     
-    List<DiagramNode> nodes = new ArrayList<DiagramNode>(processDiagramLayout.getNodes());
+    List<DiagramNode> nodes = new ArrayList<>(processDiagramLayout.getNodes());
     // sort the nodes according to their ID property.
     Collections.sort(nodes, new DiagramNodeComparator());    
     for (DiagramNode node : nodes) {

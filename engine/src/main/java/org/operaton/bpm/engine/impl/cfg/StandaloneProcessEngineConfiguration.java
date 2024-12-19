@@ -35,7 +35,7 @@ public class StandaloneProcessEngineConfiguration extends ProcessEngineConfigura
 
   @Override
   protected Collection<? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequired() {
-    List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<CommandInterceptor>();
+    List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequired.add(getExceptionCodeInterceptor());
     }
@@ -48,7 +48,7 @@ public class StandaloneProcessEngineConfiguration extends ProcessEngineConfigura
 
   @Override
   protected Collection<? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequiresNew() {
-    List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<CommandInterceptor>();
+    List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequired.add(getExceptionCodeInterceptor());
     }

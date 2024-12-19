@@ -55,7 +55,7 @@ public interface ProcessesXml {
 
     @Override
     public List<ProcessArchiveXml> getProcessArchives() {
-      List<ProcessArchiveXml> processArchives = new ArrayList<ProcessArchiveXml>();
+      List<ProcessArchiveXml> processArchives = new ArrayList<>();
 
       // add single PA
       ProcessArchiveXmlImpl pa = new ProcessArchiveXmlImpl();
@@ -64,7 +64,7 @@ public interface ProcessesXml {
       pa.setProcessResourceNames(Collections.<String>emptyList());
 
       // with default properties
-      HashMap<String, String> properties = new HashMap<String, String>();
+      HashMap<String, String> properties = new HashMap<>();
       pa.setProperties(properties);
       properties.put(ProcessArchiveXml.PROP_IS_DELETE_UPON_UNDEPLOY, Boolean.FALSE.toString());
       properties.put(ProcessArchiveXml.PROP_IS_SCAN_FOR_PROCESS_DEFINITIONS, Boolean.TRUE.toString());

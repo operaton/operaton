@@ -73,7 +73,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // variables ////////////////////////////////////////////////////////////////
 
-  protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<SimpleVariableInstance>();
+  protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
 
   public CaseExecutionImpl() {
   }
@@ -118,13 +118,13 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   @Override
   public List<CaseExecutionImpl> getCaseExecutions() {
-    return new ArrayList<CaseExecutionImpl>(getCaseExecutionsInternal());
+    return new ArrayList<>(getCaseExecutionsInternal());
   }
 
   @Override
   protected List<CaseExecutionImpl> getCaseExecutionsInternal() {
     if (caseExecutions == null) {
-      caseExecutions = new ArrayList<CaseExecutionImpl>();
+      caseExecutions = new ArrayList<>();
     }
     return caseExecutions;
   }
@@ -229,14 +229,14 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   @Override
   public List<CaseSentryPartImpl> getCaseSentryParts() {
     if (caseSentryParts == null) {
-      caseSentryParts = new ArrayList<CaseSentryPartImpl>();
+      caseSentryParts = new ArrayList<>();
     }
     return caseSentryParts;
   }
 
   @Override
   protected Map<String, List<CmmnSentryPart>> getSentries() {
-    Map<String, List<CmmnSentryPart>> sentries = new HashMap<String, List<CmmnSentryPart>>();
+    Map<String, List<CmmnSentryPart>> sentries = new HashMap<>();
 
     for (CaseSentryPartImpl sentryPart : getCaseSentryParts()) {
 
@@ -244,7 +244,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
       List<CmmnSentryPart> parts = sentries.get(sentryId);
 
       if (parts == null) {
-        parts = new ArrayList<CmmnSentryPart>();
+        parts = new ArrayList<>();
         sentries.put(sentryId, parts);
       }
 
@@ -256,7 +256,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   @Override
   protected List<CaseSentryPartImpl> findSentry(String sentryId) {
-    List<CaseSentryPartImpl> result = new ArrayList<CaseSentryPartImpl>();
+    List<CaseSentryPartImpl> result = new ArrayList<>();
 
     for (CaseSentryPartImpl sentryPart : getCaseSentryParts()) {
       if (sentryPart.getSentryId().equals(sentryId)) {

@@ -50,7 +50,7 @@ public class ExecutionAssert {
   public static class ExecutionTreeBuilder {
 
     protected ExecutionTreeStructureAssertion rootAssertion = null;
-    protected Stack<ExecutionTreeStructureAssertion> activityInstanceStack = new Stack<ExecutionTreeStructureAssertion>();
+    protected Stack<ExecutionTreeStructureAssertion> activityInstanceStack = new Stack<>();
 
     public ExecutionTreeBuilder(String rootActivityInstanceId) {
       rootAssertion = new ExecutionTreeStructureAssertion();

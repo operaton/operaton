@@ -34,7 +34,7 @@ public class MigrationExecutionDtoBuilder {
   protected final Map<String, Object> migrationExecution;
 
   public MigrationExecutionDtoBuilder() {
-    migrationExecution = new HashMap<String, Object>();
+    migrationExecution = new HashMap<>();
   }
 
   public MigrationExecutionDtoBuilder processInstances(String... processInstanceIds) {

@@ -63,7 +63,7 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
   }
 
   protected Set<String> collectParentScopeIdsForActivity(ProcessDefinitionImpl processDefinition, String activityId) {
-    Set<String> parentScopeIds = new HashSet<String>();
+    Set<String> parentScopeIds = new HashSet<>();
     ScopeImpl scope = processDefinition.findActivity(activityId);
 
     while (scope != null) {
@@ -80,7 +80,7 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
       return Collections.emptyList();
     }
 
-    List<TransitionInstance> instances = new ArrayList<TransitionInstance>();
+    List<TransitionInstance> instances = new ArrayList<>();
     TransitionInstance[] transitionInstances = tree.getChildTransitionInstances();
 
     for (TransitionInstance transitionInstance : transitionInstances) {
@@ -102,7 +102,7 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
       return Collections.emptyList();
     }
 
-    List<ActivityInstance> instances = new ArrayList<ActivityInstance>();
+    List<ActivityInstance> instances = new ArrayList<>();
 
     if (activityId.equals(tree.getActivityId())) {
       instances.add(tree);
@@ -133,7 +133,7 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
   }
 
   public List<AbstractInstanceCancellationCmd> createActivityInstanceCancellations(ActivityInstance activityInstanceTree, CommandContext commandContext) {
-    List<AbstractInstanceCancellationCmd> commands = new ArrayList<AbstractInstanceCancellationCmd>();
+    List<AbstractInstanceCancellationCmd> commands = new ArrayList<>();
 
     ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
     ProcessDefinitionImpl processDefinition = processInstance.getProcessDefinition();

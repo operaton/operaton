@@ -195,7 +195,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .getId();
 
     // variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -379,7 +379,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .getId();
 
     // variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -546,7 +546,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .getId();
 
     // variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -1677,7 +1677,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
 
     // when
     // activate child case execution
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "aValue");
     caseService.manuallyStartCaseExecution(caseExecutionId, variables);
 
@@ -1767,7 +1767,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
         .getId();
 
     // when
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "aValue");
     caseService.disableCaseExecution(caseExecutionId, variables);
 
@@ -1855,7 +1855,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
       .disable();
 
     // when
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "aValue");
     caseService.reenableCaseExecution(caseExecutionId, variables);
 
@@ -1974,7 +1974,7 @@ public class CaseServiceHumanTaskTest extends PluggableProcessEngineTest {
     assertNotNull(task);
 
     // when
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "aValue");
 
     caseService.completeCaseExecution(caseExecutionId, variables);

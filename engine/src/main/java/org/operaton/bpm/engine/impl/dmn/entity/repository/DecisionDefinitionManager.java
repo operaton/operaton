@@ -76,7 +76,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
    * @see #findLatestDecisionDefinitionByKey(String)
    */
   public DecisionDefinitionEntity findLatestDecisionDefinitionByKeyAndTenantId(String decisionDefinitionKey, String tenantId) {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("decisionDefinitionKey", decisionDefinitionKey);
     parameters.put("tenantId", tenantId);
 
@@ -88,14 +88,14 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   }
 
   public DecisionDefinitionEntity findDecisionDefinitionByKeyAndVersion(String decisionDefinitionKey, Integer decisionDefinitionVersion) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
     parameters.put("decisionDefinitionKey", decisionDefinitionKey);
     return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectDecisionDefinitionByKeyAndVersion", configureParameterizedQuery(parameters));
   }
 
   public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, Integer decisionDefinitionVersion, String tenantId) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
     parameters.put("decisionDefinitionKey", decisionDefinitionKey);
     parameters.put("tenantId", tenantId);
@@ -108,7 +108,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
 
   @SuppressWarnings("unchecked")
   public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, String decisionDefinitionVersionTag, String tenantId) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersionTag", decisionDefinitionVersionTag);
     parameters.put("decisionDefinitionKey", decisionDefinitionKey);
     parameters.put("tenantId", tenantId);
@@ -128,7 +128,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   }
 
   public DecisionDefinitionEntity findDecisionDefinitionByDeploymentAndKey(String deploymentId, String decisionDefinitionKey) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("deploymentId", deploymentId);
     parameters.put("decisionDefinitionKey", decisionDefinitionKey);
     return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectDecisionDefinitionByDeploymentAndKey", parameters);
@@ -146,7 +146,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   }
 
   public String findPreviousDecisionDefinitionId(String decisionDefinitionKey, Integer version, String tenantId) {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("key", decisionDefinitionKey);
     params.put("version", version);
     params.put("tenantId", tenantId);

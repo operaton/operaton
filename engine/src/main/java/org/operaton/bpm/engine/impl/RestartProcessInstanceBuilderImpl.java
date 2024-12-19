@@ -52,9 +52,9 @@ public class RestartProcessInstanceBuilderImpl implements RestartProcessInstance
   public RestartProcessInstanceBuilderImpl(CommandExecutor commandExecutor, String processDefinitionId) {
     ensureNotNull(NotValidException.class, "processDefinitionId", processDefinitionId);
     this.commandExecutor = commandExecutor;
-    this.instructions = new ArrayList<AbstractProcessInstanceModificationCommand>();
+    this.instructions = new ArrayList<>();
     this.processDefinitionId = processDefinitionId;
-    this.processInstanceIds = new ArrayList<String>();
+    this.processInstanceIds = new ArrayList<>();
   }
 
   public RestartProcessInstanceBuilderImpl(String processDefinitionId) {

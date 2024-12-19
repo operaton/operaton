@@ -35,7 +35,7 @@ import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
  */
 public class StatementLogSqlSession extends DelegatingSqlSession {
 
-  protected static ThreadLocal<List<SqlStatementLog>> threadStatementLog = new ThreadLocal<List<SqlStatementLog>>();
+  protected static ThreadLocal<List<SqlStatementLog>> threadStatementLog = new ThreadLocal<>();
 
   public StatementLogSqlSession(SqlSession wrappedSession) {
     super(wrappedSession);

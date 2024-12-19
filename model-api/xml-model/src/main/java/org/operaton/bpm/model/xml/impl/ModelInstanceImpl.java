@@ -140,7 +140,7 @@ public class ModelInstanceImpl implements ModelInstance {
   public Collection<ModelElementInstance> getModelElementsByType(ModelElementType type) {
     Collection<ModelElementType> extendingTypes = type.getAllExtendingTypes();
 
-    List<ModelElementInstance> instances = new ArrayList<ModelElementInstance>();
+    List<ModelElementInstance> instances = new ArrayList<>();
     for (ModelElementType modelElementType : extendingTypes) {
       if(!modelElementType.isAbstract()) {
         instances.addAll(modelElementType.getInstances(this));

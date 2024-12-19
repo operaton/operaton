@@ -45,7 +45,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
   public void testOrderByPriority() {
     // given five jobs with priorities from 1 to 5
     //each process has two external tasks - one with priority expression and one without priority
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
@@ -62,7 +62,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
   public void testFilterByExternalTaskPriorityLowerThanOrEquals() {
     // given five jobs with priorities from 1 to 5
     //each process has two external tasks - one with priority expression and one without priority
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
@@ -83,7 +83,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
   @Test
   public void testFilterByExternalTaskPriorityLowerThanOrEqualsAndHigherThanOrEqual() {
     // given five jobs with priorities from 1 to 5
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
@@ -103,7 +103,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
   @Test
   public void testFilterByExternalTaskPriorityHigherThanOrEquals() {
     // given five jobs with priorities from 1 to 5
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",
@@ -115,7 +115,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(2L).list();
     assertEquals(3, tasks.size());
 
-    Set<String> processInstanceIds = new HashSet<String>();
+    Set<String> processInstanceIds = new HashSet<>();
     processInstanceIds.add(instances.get(2).getId());
     processInstanceIds.add(instances.get(3).getId());
     processInstanceIds.add(instances.get(4).getId());
@@ -130,7 +130,7 @@ public class ExternalTaskQueryByPriorityTest extends PluggableProcessEngineTest 
   @Test
   public void testFilterByExternalTaskPriorityLowerAndHigher() {
     // given five jobs with priorities from 1 to 5
-    List<ProcessInstance> instances = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> instances = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       instances.add(runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess",

@@ -68,7 +68,7 @@ public class JobDefinitionRestServiceImpl extends AbstractRestProcessEngineAware
 
     List<JobDefinition> matchingJobDefinitions = QueryUtil.list(query, firstResult, maxResults);
 
-    List<JobDefinitionDto> jobDefinitionResults = new ArrayList<JobDefinitionDto>();
+    List<JobDefinitionDto> jobDefinitionResults = new ArrayList<>();
     for (JobDefinition jobDefinition : matchingJobDefinitions) {
       JobDefinitionDto result = JobDefinitionDto.fromJobDefinition(jobDefinition);
       jobDefinitionResults.add(result);

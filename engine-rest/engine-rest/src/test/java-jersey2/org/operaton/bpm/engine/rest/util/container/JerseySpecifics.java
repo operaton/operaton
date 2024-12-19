@@ -39,7 +39,7 @@ public class JerseySpecifics implements ContainerSpecifics {
       new EmbeddedServerRuleFactory(new JaxrsApplication());
 
   protected static final Map<Class<?>, TestRuleFactory> TEST_RULE_FACTORIES =
-      new HashMap<Class<?>, TestRuleFactory>();
+      new HashMap<>();
 
   static {
     TEST_RULE_FACTORIES.put(ExceptionHandlerTest.class, new EmbeddedServerRuleFactory(new TestCustomResourceApplication()));

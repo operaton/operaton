@@ -734,7 +734,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
     try {
-      formService.submitTaskFormData(taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId(), new HashMap<String, String>());
+      formService.submitTaskFormData(taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId(), new HashMap<>());
       fail();
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
@@ -749,7 +749,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
 
     try {
-      formService.submitTaskFormData(taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId(), new HashMap<String, String>());
+      formService.submitTaskFormData(taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId(), new HashMap<>());
       fail();
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
@@ -764,7 +764,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
 
     try {
-      formService.submitTaskFormData(taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId(), new HashMap<String, String>());
+      formService.submitTaskFormData(taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId(), new HashMap<>());
       fail();
     } catch(SuspendedEntityInteractionException e) {
       // This is expected
@@ -790,7 +790,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.signal(processInstance.getId(), new HashMap<String, Object>());
+      runtimeService.signal(processInstance.getId(), new HashMap<>());
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -818,7 +818,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.signal(processInstance.getId(), new HashMap<String, Object>());
+      runtimeService.signal(processInstance.getId(), new HashMap<>());
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -846,7 +846,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.signal(processInstance.getId(), new HashMap<String, Object>());
+      runtimeService.signal(processInstance.getId(), new HashMap<>());
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -872,7 +872,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.messageEventReceived("someMessage", subscription.getExecutionId(), new HashMap<String, Object>());
+      runtimeService.messageEventReceived("someMessage", subscription.getExecutionId(), new HashMap<>());
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -897,7 +897,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.messageEventReceived("someMessage", subscription.getExecutionId(), new HashMap<String, Object>());
+      runtimeService.messageEventReceived("someMessage", subscription.getExecutionId(), new HashMap<>());
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -922,7 +922,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.messageEventReceived("someMessage", subscription.getExecutionId(), new HashMap<String, Object>());
+      runtimeService.messageEventReceived("someMessage", subscription.getExecutionId(), new HashMap<>());
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -947,7 +947,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.signalEventReceived(signal);
     assertEquals(1, runtimeService.createProcessInstanceQuery().count());
 
-    runtimeService.signalEventReceived(signal, new HashMap<String, Object>());
+    runtimeService.signalEventReceived(signal, new HashMap<>());
     assertEquals(1, runtimeService.createProcessInstanceQuery().count());
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
@@ -960,7 +960,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.signalEventReceived(signal, subscription.getExecutionId(), new HashMap<String, Object>());
+      runtimeService.signalEventReceived(signal, subscription.getExecutionId(), new HashMap<>());
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -990,7 +990,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.signalEventReceived(signal);
     assertEquals(1, runtimeService.createProcessInstanceQuery().count());
 
-    runtimeService.signalEventReceived(signal, new HashMap<String, Object>());
+    runtimeService.signalEventReceived(signal, new HashMap<>());
     assertEquals(1, runtimeService.createProcessInstanceQuery().count());
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
@@ -1003,7 +1003,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.signalEventReceived(signal, subscription.getExecutionId(), new HashMap<String, Object>());
+      runtimeService.signalEventReceived(signal, subscription.getExecutionId(), new HashMap<>());
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -1038,7 +1038,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     runtimeService.signalEventReceived(signal);
     assertEquals(1, runtimeService.createProcessInstanceQuery().count());
 
-    runtimeService.signalEventReceived(signal, new HashMap<String, Object>());
+    runtimeService.signalEventReceived(signal, new HashMap<>());
     assertEquals(1, runtimeService.createProcessInstanceQuery().count());
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
@@ -1051,7 +1051,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      runtimeService.signalEventReceived(signal, subscription.getExecutionId(), new HashMap<String, Object>());
+      runtimeService.signalEventReceived(signal, subscription.getExecutionId(), new HashMap<>());
       fail();
     } catch (SuspendedEntityInteractionException e) {
       // This is expected
@@ -1483,7 +1483,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      HashMap<String, String> variables = new HashMap<String, String>();
+      HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariables(task.getId(), variables);
@@ -1492,7 +1492,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      HashMap<String, String> variables = new HashMap<String, String>();
+      HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariablesLocal(task.getId(), variables);
@@ -1572,7 +1572,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      HashMap<String, String> variables = new HashMap<String, String>();
+      HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariables(task.getId(), variables);
@@ -1581,7 +1581,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      HashMap<String, String> variables = new HashMap<String, String>();
+      HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariablesLocal(task.getId(), variables);
@@ -1661,7 +1661,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      HashMap<String, String> variables = new HashMap<String, String>();
+      HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariables(task.getId(), variables);
@@ -1670,7 +1670,7 @@ public class ProcessInstanceSuspensionTest extends PluggableProcessEngineTest {
     }
 
     try {
-      HashMap<String, String> variables = new HashMap<String, String>();
+      HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariablesLocal(task.getId(), variables);

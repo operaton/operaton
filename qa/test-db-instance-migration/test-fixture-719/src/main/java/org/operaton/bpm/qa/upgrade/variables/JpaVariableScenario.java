@@ -49,7 +49,7 @@ public class JpaVariableScenario {
 
       setupJPAEntities();
 
-      Map<String, Object> variables = new HashMap<String, Object>();
+      Map<String, Object> variables = new HashMap<>();
       variables.put("simpleEntityFieldAccess", simpleEntityFieldAccess);
 
       //

@@ -41,7 +41,7 @@ public class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
   public void execute(PvmExecutionImpl execution) {
     execution.activityInstanceStarted();
 
-    execution.continueIfExecutionDoesNotAffectNextOperation(new Callback<PvmExecutionImpl, Void>() {
+    execution.continueIfExecutionDoesNotAffectNextOperation(new Callback<>() {
       @Override
       public Void callback(PvmExecutionImpl execution) {
         if (execution.getActivity().isScope()) {
@@ -49,7 +49,7 @@ public class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
         }
         return null;
       }
-    }, new Callback<PvmExecutionImpl, Void>() {
+    }, new Callback<>() {
 
       @Override
       public Void callback(PvmExecutionImpl execution) {

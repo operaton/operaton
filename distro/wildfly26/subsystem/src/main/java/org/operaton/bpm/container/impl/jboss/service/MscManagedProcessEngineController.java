@@ -63,13 +63,13 @@ public class MscManagedProcessEngineController extends MscManagedProcessEngine {
 
   private static final Logger LOGGER = Logger.getLogger(MscManagedProcessEngineController.class.getName());
 
-  protected InjectedValue<ExecutorService> executorInjector = new InjectedValue<ExecutorService>();
+  protected InjectedValue<ExecutorService> executorInjector = new InjectedValue<>();
 
   // Injecting these values makes the MSC aware of our dependencies on these resources.
   // This ensures that they are available when this service is started
   protected final InjectedValue<TransactionManager> transactionManagerInjector = new InjectedValue<TransactionManager>();
   protected final InjectedValue<DataSourceReferenceFactoryService> datasourceBinderServiceInjector = new InjectedValue<DataSourceReferenceFactoryService>();
-  protected final InjectedValue<MscRuntimeContainerJobExecutor> mscRuntimeContainerJobExecutorInjector = new InjectedValue<MscRuntimeContainerJobExecutor>();
+  protected final InjectedValue<MscRuntimeContainerJobExecutor> mscRuntimeContainerJobExecutorInjector = new InjectedValue<>();
 
   protected ManagedProcessEngineMetadata processEngineMetadata;
 

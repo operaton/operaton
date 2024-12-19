@@ -57,7 +57,7 @@ public class UserEntity implements User, Serializable, DbEntity, HasDbRevision {
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("firstName", firstName);
     persistentState.put("lastName", lastName);
     persistentState.put("email", email);

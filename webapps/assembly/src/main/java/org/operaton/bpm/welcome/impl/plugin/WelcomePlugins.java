@@ -37,7 +37,7 @@ public class WelcomePlugins extends AbstractWelcomePlugin {
 
   @Override
   public Set<Class<?>> getResourceClasses() {
-    HashSet<Class<?>> classes = new HashSet<Class<?>>();
+    HashSet<Class<?>> classes = new HashSet<>();
 
     classes.add(WelcomePluginsRootResource.class);
 

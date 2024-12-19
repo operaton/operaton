@@ -1328,7 +1328,7 @@ public class TaskQueryOrTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     // start one process instance and suspend it
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("foo", 0);
     ProcessInstance suspendedProcessInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
     runtimeService.suspendProcessInstanceById(suspendedProcessInstance.getProcessInstanceId());
@@ -1359,7 +1359,7 @@ public class TaskQueryOrTest {
       .startProcessInstanceByKey("aProcessDefinition", "aBusinessKey")
       .getId();
 
-    List<String> processInstanceIds = new ArrayList<String>();
+    List<String> processInstanceIds = new ArrayList<>();
     for (int i = 0; i < 4; i++) {
       processInstanceIds.add(runtimeService
                               .startProcessInstanceByKey("aProcessDefinition")
@@ -1403,7 +1403,7 @@ public class TaskQueryOrTest {
 
     assertEquals(3, taskService.createTaskQuery().count());
 
-    return new HashMap<String, Date>() {{
+    return new HashMap<>() {{
       put("date", date);
       put("oneHourAgo", oneHourAgo);
       put("oneHourLater", oneHourLater);

@@ -60,7 +60,7 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
 
     List<String> jobIds = jobIdsList.get(0);
 
-    List<String> expectedJobIds = new ArrayList<String>();
+    List<String> expectedJobIds = new ArrayList<>();
     expectedJobIds.add(jobId);
 
     assertEquals(expectedJobIds, new ArrayList<String>(jobIds));
@@ -99,7 +99,7 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
     List<List<String>> jobIdsList = acquiredJobs.getJobIdBatches();
     assertEquals(0, jobIdsList.size());
 
-    List<String> expectedJobIds = new ArrayList<String>();
+    List<String> expectedJobIds = new ArrayList<>();
 
     ClockUtil.setCurrentTime(new Date(SOME_TIME + (20 * SECOND)));
 

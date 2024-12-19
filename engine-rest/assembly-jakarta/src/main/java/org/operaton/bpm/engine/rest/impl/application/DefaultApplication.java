@@ -39,7 +39,7 @@ public class DefaultApplication extends Application {
 
   @Override
   public Set<Class<?>> getClasses() {
-    Set<Class<?>> classes = new HashSet<Class<?>>();
+    Set<Class<?>> classes = new HashSet<>();
 
     classes.addAll(OperatonRestResources.getResourceClasses());
     classes.addAll(OperatonRestResources.getConfigurationClasses());

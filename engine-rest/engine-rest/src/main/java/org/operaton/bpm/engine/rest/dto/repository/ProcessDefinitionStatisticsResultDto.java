@@ -42,7 +42,7 @@ public class ProcessDefinitionStatisticsResultDto extends StatisticsResultDto {
     dto.instances = statistics.getInstances();
     dto.failedJobs = statistics.getFailedJobs();
     
-    dto.incidents = new ArrayList<IncidentStatisticsResultDto>();
+    dto.incidents = new ArrayList<>();
     for (IncidentStatistics incident : statistics.getIncidentStatistics()) {
       IncidentStatisticsResultDto incidentDto = IncidentStatisticsResultDto.fromIncidentStatistics(incident);
       dto.incidents.add(incidentDto);

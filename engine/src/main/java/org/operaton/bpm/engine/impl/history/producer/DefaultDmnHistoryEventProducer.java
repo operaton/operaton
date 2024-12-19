@@ -109,7 +109,7 @@ public class DefaultDmnHistoryEventProducer implements DmnHistoryEventProducer {
     HistoricDecisionInstanceEntity rootDecisionEvent = supplier.createHistoricDecisionInstance(evaluationEvent.getDecisionResult(), null);
     event.setRootHistoricDecisionInstance(rootDecisionEvent);
 
-    List<HistoricDecisionInstanceEntity> requiredDecisionEvents = new ArrayList<HistoricDecisionInstanceEntity>();
+    List<HistoricDecisionInstanceEntity> requiredDecisionEvents = new ArrayList<>();
     for (DmnDecisionLogicEvaluationEvent requiredDecisionResult : evaluationEvent.getRequiredDecisionResults()) {
       HistoricDecisionInstanceEntity requiredDecisionEvent = supplier.createHistoricDecisionInstance(requiredDecisionResult, rootDecisionEvent);
       requiredDecisionEvents.add(requiredDecisionEvent);
@@ -262,7 +262,7 @@ public class DefaultDmnHistoryEventProducer implements DmnHistoryEventProducer {
   }
 
   protected List<HistoricDecisionInputInstance> createHistoricDecisionInputInstances(DmnDecisionTableEvaluationEvent evaluationEvent, String rootProcessInstanceId, Date removalTime) {
-    List<HistoricDecisionInputInstance> inputInstances = new ArrayList<HistoricDecisionInputInstance>();
+    List<HistoricDecisionInputInstance> inputInstances = new ArrayList<>();
 
     for(DmnEvaluatedInput inputClause : evaluationEvent.getInputs()) {
 
@@ -281,7 +281,7 @@ public class DefaultDmnHistoryEventProducer implements DmnHistoryEventProducer {
   }
 
   protected List<HistoricDecisionOutputInstance> createHistoricDecisionOutputInstances(DmnDecisionTableEvaluationEvent evaluationEvent, String rootProcessInstanceId, Date removalTime) {
-    List<HistoricDecisionOutputInstance> outputInstances = new ArrayList<HistoricDecisionOutputInstance>();
+    List<HistoricDecisionOutputInstance> outputInstances = new ArrayList<>();
 
     List<DmnEvaluatedDecisionRule> matchingRules = evaluationEvent.getMatchingRules();
     for(int index = 0; index < matchingRules.size(); index++) {

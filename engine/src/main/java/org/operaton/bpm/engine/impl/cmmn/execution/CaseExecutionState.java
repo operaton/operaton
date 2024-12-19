@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public interface CaseExecutionState {
 
-  Map<Integer, CaseExecutionState> CASE_EXECUTION_STATES = new HashMap<Integer, CaseExecutionState>();
+  Map<Integer, CaseExecutionState> CASE_EXECUTION_STATES = new HashMap<>();
 
   CaseExecutionState NEW = new CaseExecutionStateImpl(0, "new");
   CaseExecutionState AVAILABLE = new CaseExecutionStateImpl(1, "available");

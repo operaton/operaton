@@ -31,9 +31,9 @@ public class ExpectedActivityInstance {
    * This is a list in some migration scenarios where the
    * activity id is not clear.
    */
-  protected List<String> activityIds = new ArrayList<String>();
-  protected List<ExpectedActivityInstance> childActivityInstances = new ArrayList<ExpectedActivityInstance>();
-  protected List<ExpectedTransitionInstance> childTransitionInstances = new ArrayList<ExpectedTransitionInstance>();
+  protected List<String> activityIds = new ArrayList<>();
+  protected List<ExpectedActivityInstance> childActivityInstances = new ArrayList<>();
+  protected List<ExpectedTransitionInstance> childTransitionInstances = new ArrayList<>();
 
   public List<String> getActivityIds() {
     return activityIds;

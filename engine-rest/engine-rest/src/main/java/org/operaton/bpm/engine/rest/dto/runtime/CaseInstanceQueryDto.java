@@ -50,7 +50,7 @@ public class CaseInstanceQueryDto extends AbstractQueryDto<CaseInstanceQuery> {
 
   protected static final List<String> VALID_SORT_BY_VALUES;
   static {
-    VALID_SORT_BY_VALUES = new ArrayList<String>();
+    VALID_SORT_BY_VALUES = new ArrayList<>();
     VALID_SORT_BY_VALUES.add(SORT_BY_INSTANCE_ID_VALUE);
     VALID_SORT_BY_VALUES.add(SORT_BY_DEFINITION_KEY_VALUE);
     VALID_SORT_BY_VALUES.add(SORT_BY_DEFINITION_ID_VALUE);

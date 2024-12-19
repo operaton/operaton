@@ -28,7 +28,7 @@ public class MyCacheFactory extends DefaultCacheFactory {
 
   @Override
   public <T> Cache<String, T> createCache(int maxNumberOfElementsInCache) {
-    return new MyCacheImplementation<String, T>(maxNumberOfElementsInCache);
+    return new MyCacheImplementation<>(maxNumberOfElementsInCache);
   }
 
 }

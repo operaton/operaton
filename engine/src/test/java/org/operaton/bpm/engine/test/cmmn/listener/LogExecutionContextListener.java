@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.impl.context.Context;
  */
 public class LogExecutionContextListener implements CaseVariableListener {
 
-  protected static List<CaseExecutionContext> executionContexts = new ArrayList<CaseExecutionContext>();
+  protected static List<CaseExecutionContext> executionContexts = new ArrayList<>();
 
 
   @Override
@@ -43,7 +43,7 @@ public class LogExecutionContextListener implements CaseVariableListener {
   }
 
   public static void reset() {
-    executionContexts = new ArrayList<CaseExecutionContext>();
+    executionContexts = new ArrayList<>();
   }
 
 }

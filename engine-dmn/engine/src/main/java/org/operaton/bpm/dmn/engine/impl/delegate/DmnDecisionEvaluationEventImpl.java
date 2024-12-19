@@ -26,7 +26,7 @@ import org.operaton.bpm.dmn.engine.delegate.DmnDecisionLogicEvaluationEvent;
 public class DmnDecisionEvaluationEventImpl implements DmnDecisionEvaluationEvent {
 
   protected DmnDecisionLogicEvaluationEvent decisionResult;
-  protected Collection<DmnDecisionLogicEvaluationEvent> requiredDecisionResults = new ArrayList<DmnDecisionLogicEvaluationEvent>();
+  protected Collection<DmnDecisionLogicEvaluationEvent> requiredDecisionResults = new ArrayList<>();
   protected long executedDecisionInstances;
   protected long executedDecisionElements;
 

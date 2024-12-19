@@ -48,7 +48,7 @@ public class LaunchTask extends Task {
     String[] cmd = null;
     String executable = getExecutable();
     if (args!=null) {
-      List<String> pieces = new ArrayList<String>();
+      List<String> pieces = new ArrayList<>();
       pieces.add(executable);
       StringTokenizer tokenizer = new StringTokenizer("args", " ");
       while (tokenizer.hasMoreTokens()) {

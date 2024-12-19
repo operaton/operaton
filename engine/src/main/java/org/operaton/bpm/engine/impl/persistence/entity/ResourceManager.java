@@ -39,7 +39,7 @@ public class ResourceManager extends AbstractManager {
   }
 
   public ResourceEntity findResourceByDeploymentIdAndResourceName(String deploymentId, String resourceName) {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("deploymentId", deploymentId);
     params.put("resourceName", resourceName);
     return (ResourceEntity) getDbEntityManager().selectOne("selectResourceByDeploymentIdAndResourceName", params);
@@ -47,14 +47,14 @@ public class ResourceManager extends AbstractManager {
 
   @SuppressWarnings("unchecked")
   public List<ResourceEntity> findResourceByDeploymentIdAndResourceNames(String deploymentId, String... resourceNames) {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("deploymentId", deploymentId);
     params.put("resourceNames", resourceNames);
     return getDbEntityManager().selectList("selectResourceByDeploymentIdAndResourceNames", params);
   }
 
   public ResourceEntity findResourceByDeploymentIdAndResourceId(String deploymentId, String resourceId) {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("deploymentId", deploymentId);
     params.put("resourceId", resourceId);
     return (ResourceEntity) getDbEntityManager().selectOne("selectResourceByDeploymentIdAndResourceId", params);
@@ -62,7 +62,7 @@ public class ResourceManager extends AbstractManager {
 
   @SuppressWarnings("unchecked")
   public List<ResourceEntity> findResourceByDeploymentIdAndResourceIds(String deploymentId, String... resourceIds) {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("deploymentId", deploymentId);
     params.put("resourceIds", resourceIds);
     return getDbEntityManager().selectList("selectResourceByDeploymentIdAndResourceIds", params);
@@ -75,7 +75,7 @@ public class ResourceManager extends AbstractManager {
 
   @SuppressWarnings("unchecked")
   public Map<String, ResourceEntity> findLatestResourcesByDeploymentName(String deploymentName, Set<String> resourcesToFind, String source, String tenantId) {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("deploymentName", deploymentName);
     params.put("resourcesToFind", resourcesToFind);
     params.put("source", source);
@@ -83,7 +83,7 @@ public class ResourceManager extends AbstractManager {
 
     List<ResourceEntity> resources = getDbEntityManager().selectList("selectLatestResourcesByDeploymentName", params);
 
-    Map<String, ResourceEntity> existingResourcesByName = new HashMap<String, ResourceEntity>();
+    Map<String, ResourceEntity> existingResourcesByName = new HashMap<>();
     for (ResourceEntity existingResource : resources) {
       existingResourcesByName.put(existingResource.getName(), existingResource);
     }

@@ -162,7 +162,7 @@ public class GroupRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private Map<String, Object> getCompleteStringQueryParameters() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
 
     parameters.put("name", MockProvider.EXAMPLE_GROUP_NAME);
     parameters.put("nameLike", "%" + MockProvider.EXAMPLE_GROUP_NAME + "%");

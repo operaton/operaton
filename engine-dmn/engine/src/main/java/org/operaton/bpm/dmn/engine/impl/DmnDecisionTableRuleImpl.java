@@ -24,8 +24,8 @@ public class DmnDecisionTableRuleImpl {
   public String id;
   public String name;
 
-  protected List<DmnExpressionImpl> conditions = new ArrayList<DmnExpressionImpl>();
-  protected List<DmnExpressionImpl> conclusions = new ArrayList<DmnExpressionImpl>();
+  protected List<DmnExpressionImpl> conditions = new ArrayList<>();
+  protected List<DmnExpressionImpl> conclusions = new ArrayList<>();
 
   public String getId() {
     return id;

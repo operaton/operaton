@@ -63,7 +63,7 @@ public class HistoricJobLogRestServiceImpl implements HistoricJobLogRestService 
 
     List<HistoricJobLog> matchingHistoricJobLogs = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricJobLogDto> results = new ArrayList<HistoricJobLogDto>();
+    List<HistoricJobLogDto> results = new ArrayList<>();
     for (HistoricJobLog historicJobLog : matchingHistoricJobLogs) {
       HistoricJobLogDto result = HistoricJobLogDto.fromHistoricJobLog(historicJobLog);
       results.add(result);

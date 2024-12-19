@@ -183,7 +183,7 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("satisfied", isSatisfied());
 
     if (forcedUpdate) {
@@ -204,13 +204,13 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<String>();
+    Set<String> referencedEntityIds = new HashSet<>();
     return referencedEntityIds;
   }
 
   @Override
   public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<String, Class>();
+    Map<String, Class> referenceIdAndClass = new HashMap<>();
 
     if (caseExecutionId != null) {
       referenceIdAndClass.put(caseExecutionId, CaseExecutionEntity.class);

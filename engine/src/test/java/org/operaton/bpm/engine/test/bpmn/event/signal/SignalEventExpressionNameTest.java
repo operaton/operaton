@@ -42,7 +42,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
   public void testSignalCatchIntermediate() {
 
     // given
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "TestVar");
 
     // when
@@ -58,7 +58,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
   public void testSignalCatchIntermediateActsOnEventReceive() {
 
     // given
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "TestVar");
 
     // when
@@ -76,7 +76,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
   public void testSignalThrowCatchIntermediate() {
 
     // given
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "TestVar");
 
     // when
@@ -98,7 +98,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
   public void testSignalThrowEndCatchIntermediate() {
 
     // given
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "TestVar");
 
     // when
@@ -120,7 +120,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
   public void testSignalCatchBoundary() {
 
     // given
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "TestVar");
     runtimeService.startProcessInstanceByKey("catchSignal", variables);
     assertEquals(1, runtimeService.createEventSubscriptionQuery().eventType("signal").eventName("alert-TestVar").count());
@@ -213,7 +213,7 @@ public class SignalEventExpressionNameTest extends PluggableProcessEngineTest {
     String expectedErrorMessage = "Unknown property used in expression: alert-${var}. Cannot resolve identifier 'var'";
 
     // given an empty variable mapping
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
 
     try {
       // when starting the process

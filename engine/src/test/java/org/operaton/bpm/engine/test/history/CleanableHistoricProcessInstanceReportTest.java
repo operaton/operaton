@@ -112,7 +112,7 @@ public class CleanableHistoricProcessInstanceReportTest {
     Date oldCurrentTime = ClockUtil.getCurrentTime();
     ClockUtil.setCurrentTime(DateUtils.addDays(oldCurrentTime, daysInThePast));
 
-    List<String> processInstanceIds = new ArrayList<String>();
+    List<String> processInstanceIds = new ArrayList<>();
     for (int i = 0; i < instanceCount; i++) {
       ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(key);
       processInstanceIds.add(processInstance.getId());

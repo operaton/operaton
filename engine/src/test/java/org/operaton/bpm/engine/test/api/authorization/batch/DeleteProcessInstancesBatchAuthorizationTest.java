@@ -109,7 +109,7 @@ public class DeleteProcessInstancesBatchAuthorizationTest extends AbstractBatchA
   public void testWithQuery() {
     //given
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery()
-        .processInstanceIds(new HashSet<String>(Arrays.asList(processInstance.getId(), processInstance2.getId())));
+        .processInstanceIds(new HashSet<>(Arrays.asList(processInstance.getId(), processInstance2.getId())));
 
     authRule
         .init(scenario)

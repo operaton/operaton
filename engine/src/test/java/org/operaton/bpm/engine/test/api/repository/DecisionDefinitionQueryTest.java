@@ -126,7 +126,7 @@ public class DecisionDefinitionQueryTest {
 
     // collect all ids
     List<DecisionDefinition> decisionDefinitions = repositoryService.createDecisionDefinitionQuery().list();
-    List<String> ids = new ArrayList<String>();
+    List<String> ids = new ArrayList<>();
     for (DecisionDefinition decisionDefinition : decisionDefinitions) {
       ids.add(decisionDefinition.getId());
     }

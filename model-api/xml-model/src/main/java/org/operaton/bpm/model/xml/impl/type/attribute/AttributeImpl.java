@@ -51,9 +51,9 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
 
   private boolean isIdAttribute = false;
 
-  private final List<Reference<?>> outgoingReferences = new ArrayList<Reference<?>>();
+  private final List<Reference<?>> outgoingReferences = new ArrayList<>();
 
-  private final List<Reference<?>> incomingReferences = new ArrayList<Reference<?>>();
+  private final List<Reference<?>> incomingReferences = new ArrayList<>();
 
   private final ModelElementType owningElementType;
 

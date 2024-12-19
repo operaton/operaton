@@ -76,7 +76,7 @@ public class SequentialMultiInstanceActivityBehavior extends MultiInstanceActivi
       LOG.unsupportedConcurrencyException(scopeExecution.toString(), this.getClass().getSimpleName());
     }
 
-    List<ActivityExecution> executions = new ArrayList<ActivityExecution>();
+    List<ActivityExecution> executions = new ArrayList<>();
 
     prepareScope(scopeExecution, nrOfInstances);
     setLoopVariable(scopeExecution, NUMBER_OF_ACTIVE_INSTANCES, nrOfInstances);

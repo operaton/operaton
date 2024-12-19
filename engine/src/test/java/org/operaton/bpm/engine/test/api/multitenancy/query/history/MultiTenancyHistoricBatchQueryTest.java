@@ -261,7 +261,7 @@ public class MultiTenancyHistoricBatchQueryTest {
   protected void assertBatches(List<HistoricBatch> actualBatches, String... expectedIds) {
     Assert.assertEquals(expectedIds.length, actualBatches.size());
 
-    Set<String> actualIds = new HashSet<String>();
+    Set<String> actualIds = new HashSet<>();
     for (HistoricBatch batch : actualBatches) {
       actualIds.add(batch.getId());
     }

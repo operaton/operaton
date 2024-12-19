@@ -959,7 +959,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
     String key = "oneFailingServiceTaskProcess";
 
     // a running process instance with a failed service task
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("fail", Boolean.TRUE);
     runtimeService.startProcessInstanceByKey(key, params);
 
@@ -1753,7 +1753,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   }
 
   private Map<String, Object> createMapForVariableAddition() {
-    Map<String, Object> variables =  new HashMap<String, Object>();
+    Map<String, Object> variables =  new HashMap<>();
     variables.put("testVariable1", "THIS IS TESTVARIABLE!!!");
     variables.put("testVariable2", "OVER 9000!");
 
@@ -1761,7 +1761,7 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   }
 
   private Collection<String> createCollectionForVariableDeletion() {
-    Collection<String> variables = new ArrayList<String>();
+    Collection<String> variables = new ArrayList<>();
     variables.add("testVariable3");
     variables.add("testVariable4");
 

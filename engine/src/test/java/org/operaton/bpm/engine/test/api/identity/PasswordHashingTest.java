@@ -160,7 +160,7 @@ public class PasswordHashingTest {
   public void twoEncryptorsWithSamePrefixThrowError() {
 
     // given two algorithms with the same prefix
-    List<PasswordEncryptor> additionalEncryptorsForPasswordChecking = new LinkedList<PasswordEncryptor>();
+    List<PasswordEncryptor> additionalEncryptorsForPasswordChecking = new LinkedList<>();
     additionalEncryptorsForPasswordChecking.add(new ShaHashDigest());
     PasswordEncryptor defaultEncryptor = new ShaHashDigest();
 
@@ -216,7 +216,7 @@ public class PasswordHashingTest {
     String userName3 = "Gonzo";
     createUserWithEncryptor(userName3, new ShaHashDigest());
 
-    List<PasswordEncryptor> additionalEncryptorsForPasswordChecking = new LinkedList<PasswordEncryptor>();
+    List<PasswordEncryptor> additionalEncryptorsForPasswordChecking = new LinkedList<>();
     additionalEncryptorsForPasswordChecking.add(new MyCustomPasswordEncryptor(PASSWORD, ALGORITHM_NAME));
     additionalEncryptorsForPasswordChecking.add(new MyCustomPasswordEncryptor(PASSWORD, anotherAlgorithmName));
     PasswordEncryptor defaultEncryptor = new ShaHashDigest();

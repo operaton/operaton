@@ -48,7 +48,7 @@ public class ProcessStartingPointcutAdvisor implements PointcutAdvisor, Serializ
     /**
      * annotations that shall be scanned
      */
-    private final Set<Class<? extends Annotation>> annotations = new HashSet<Class<? extends Annotation>>(Arrays.asList(StartProcess.class));
+    private final Set<Class<? extends Annotation>> annotations = new HashSet<>(Arrays.asList(StartProcess.class));
 
     /**
      * the {@link org.aopalliance.intercept.MethodInterceptor} that handles launching the business process.

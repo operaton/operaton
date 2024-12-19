@@ -145,7 +145,7 @@ public class ProcessInstanceSnapshot {
 
   public List<EventSubscription> getEventSubscriptionsForActivityIdAndEventName(String activityId, String eventName) {
 
-    List<EventSubscription> collectedEventsubscriptions = new ArrayList<EventSubscription>();
+    List<EventSubscription> collectedEventsubscriptions = new ArrayList<>();
 
     for (EventSubscription eventSubscription : getEventSubscriptions()) {
       if (activityId.equals(eventSubscription.getActivityId())) {
@@ -169,7 +169,7 @@ public class ProcessInstanceSnapshot {
   }
 
   public Job getJobForDefinitionId(String jobDefinitionId) {
-    List<Job> collectedJobs = new ArrayList<Job>();
+    List<Job> collectedJobs = new ArrayList<>();
 
     for (Job job : getJobs()) {
       if (jobDefinitionId.equals(job.getJobDefinitionId())) {
@@ -223,7 +223,7 @@ public class ProcessInstanceSnapshot {
   }
 
   protected List<JobDefinition> getJobDefinitionsForActivityIdAndType(String activityId, String jobHandlerType) {
-    List<JobDefinition> collectedDefinitions = new ArrayList<JobDefinition>();
+    List<JobDefinition> collectedDefinitions = new ArrayList<>();
     for (JobDefinition jobDefinition : getJobDefinitions()) {
       if (activityId.equals(jobDefinition.getActivityId()) && jobHandlerType.equals(jobDefinition.getJobType())) {
         collectedDefinitions.add(jobDefinition);
@@ -241,7 +241,7 @@ public class ProcessInstanceSnapshot {
   }
 
   public void setVariables(List<VariableInstance> variables) {
-    this.variables = new HashMap<String, VariableInstance>();
+    this.variables = new HashMap<>();
 
     for (VariableInstance variable : variables) {
       this.variables.put(variable.getId(), variable);
@@ -249,7 +249,7 @@ public class ProcessInstanceSnapshot {
   }
 
   public VariableInstance getSingleVariable(final String variableName) {
-    return getSingleVariable(new Condition<VariableInstance>() {
+    return getSingleVariable(new Condition<>() {
 
       @Override
       public boolean matches(VariableInstance variable) {
@@ -259,7 +259,7 @@ public class ProcessInstanceSnapshot {
   }
 
   public VariableInstance getSingleVariable(final String executionId, final String variableName) {
-    return getSingleVariable(new Condition<VariableInstance>() {
+    return getSingleVariable(new Condition<>() {
 
       @Override
       public boolean matches(VariableInstance variable) {
@@ -269,7 +269,7 @@ public class ProcessInstanceSnapshot {
   }
 
   public VariableInstance getSingleTaskVariable(final String taskId, final String variableName) {
-    return getSingleVariable(new Condition<VariableInstance>() {
+    return getSingleVariable(new Condition<>() {
 
       @Override
       public boolean matches(VariableInstance variable) {
@@ -280,7 +280,7 @@ public class ProcessInstanceSnapshot {
   }
 
   protected VariableInstance getSingleVariable(Condition<VariableInstance> condition) {
-    List<VariableInstance> matchingVariables = new ArrayList<VariableInstance>();
+    List<VariableInstance> matchingVariables = new ArrayList<>();
 
     for (VariableInstance variable : variables.values()) {
       if (condition.matches(variable)) {

@@ -65,7 +65,7 @@ public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
   @Override
   @SuppressWarnings("unchecked")
   public <T> List<T> collectEntries(String outputName) {
-    List<T> outputValues = new ArrayList<T>();
+    List<T> outputValues = new ArrayList<>();
 
     for (DmnDecisionRuleResult ruleResult : ruleResults) {
       if (ruleResult.containsKey(outputName)) {
@@ -79,7 +79,7 @@ public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
 
   @Override
   public List<Map<String, Object>> getResultList() {
-    List<Map<String, Object>> entryMapList = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> entryMapList = new ArrayList<>();
 
     for (DmnDecisionRuleResult ruleResult : ruleResults) {
       Map<String, Object> entryMap = ruleResult.getEntryMap();
@@ -234,7 +234,7 @@ public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
   }
 
   public static DmnDecisionTableResultImpl wrap(DmnDecisionResult decisionResult) {
-    List<DmnDecisionRuleResult> ruleResults = new ArrayList<DmnDecisionRuleResult>();
+    List<DmnDecisionRuleResult> ruleResults = new ArrayList<>();
 
     for (DmnDecisionResultEntries result : decisionResult) {
       DmnDecisionRuleResultImpl ruleResult = new DmnDecisionRuleResultImpl();

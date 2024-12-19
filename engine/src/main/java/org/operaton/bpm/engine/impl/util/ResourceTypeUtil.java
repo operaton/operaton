@@ -54,7 +54,7 @@ public class ResourceTypeUtil {
   protected static final Map<Integer, Class<? extends Enum<? extends Permission>>> PERMISSION_ENUMS;
 
   static {
-    PERMISSION_ENUMS = new HashMap<Integer, Class<? extends Enum<? extends Permission>>>() {{
+    PERMISSION_ENUMS = new HashMap<>() {{
       put(BATCH.resourceType(), BatchPermissions.class);
       put(PROCESS_DEFINITION.resourceType(), ProcessDefinitionPermissions.class);
       put(PROCESS_INSTANCE.resourceType(), ProcessInstancePermissions.class);

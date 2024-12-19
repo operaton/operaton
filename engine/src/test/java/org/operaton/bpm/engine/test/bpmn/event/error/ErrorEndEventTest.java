@@ -58,7 +58,7 @@ public class ErrorEndEventTest {
                             "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventTest.errorParent.bpmn20.xml" })
   public void testPropagateOutputVariablesWhileThrowError() {
     // given
-    Map<String,Object> variables = new HashMap<String, Object>();
+    Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("ErrorParentProcess", variables).getId();
 

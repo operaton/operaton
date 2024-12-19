@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
  */
 public class JobExecutorContext {
 
-  protected List<String> currentProcessorJobQueue = new LinkedList<String>();
+  protected List<String> currentProcessorJobQueue = new LinkedList<>();
 
   /** the currently executed job */
   protected JobEntity currentJob;

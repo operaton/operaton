@@ -47,7 +47,7 @@ public class MigrationInstructionValidationReportDto {
   }
 
   public static List<MigrationInstructionValidationReportDto> from(List<MigrationInstructionValidationReport> instructionReports) {
-    List<MigrationInstructionValidationReportDto> dtos = new ArrayList<MigrationInstructionValidationReportDto>();
+    List<MigrationInstructionValidationReportDto> dtos = new ArrayList<>();
     for (MigrationInstructionValidationReport instructionReport : instructionReports) {
       dtos.add(MigrationInstructionValidationReportDto.from(instructionReport));
     }

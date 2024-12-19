@@ -276,11 +276,11 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     "processes/dynamic-call-activity.bpmn"
   })
   public void testCalledProcessDefinitionByCallingDifferentProcessFromSameCallActivity() {
-    Map<String, Object> vars1 = new HashMap<String, Object>();
+    Map<String, Object> vars1 = new HashMap<>();
     vars1.put("callProcess", "userTaskProcess");
     runtimeService.startProcessInstanceByKey("DynamicCallActivity", vars1);
 
-    Map<String, Object> vars2 = new HashMap<String, Object>();
+    Map<String, Object> vars2 = new HashMap<>();
     vars2.put("callProcess", "anotherUserTaskProcess");
     runtimeService.startProcessInstanceByKey("DynamicCallActivity", vars2);
 
@@ -520,12 +520,12 @@ public class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
   })
   public void testQueryWithVariable() {
     // given
-    Map<String, Object> vars1 = new HashMap<String, Object>();
+    Map<String, Object> vars1 = new HashMap<>();
     vars1.put("callProcess", "userTaskProcess");
     vars1.put("aVariableName", "test_123");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("DynamicCallActivity", vars1);
 
-    Map<String, Object> vars2 = new HashMap<String, Object>();
+    Map<String, Object> vars2 = new HashMap<>();
     vars2.put("callProcess", "anotherUserTaskProcess");
     vars1.put("aVariableName", "test_456");
     runtimeService.startProcessInstanceByKey("DynamicCallActivity", vars2);

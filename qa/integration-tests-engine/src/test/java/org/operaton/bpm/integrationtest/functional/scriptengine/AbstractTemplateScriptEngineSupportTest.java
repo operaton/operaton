@@ -58,7 +58,7 @@ public abstract class AbstractTemplateScriptEngineSupportTest extends AbstractFo
 
   @Test
   public void shouldEvaluateTemplate() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("name", "world");
     processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_ID, variables).getId();
 

@@ -40,7 +40,7 @@ public abstract class HalCachingLinkResolver implements HalLinkResolver {
       return resolveNotCachedLinks(linkedIds, processEngine);
     }
     else {
-      ArrayList<String> notCachedLinkedIds = new ArrayList<String>();
+      ArrayList<String> notCachedLinkedIds = new ArrayList<>();
       List<HalResource<?>> resolvedResources = resolveCachedLinks(linkedIds, cache, notCachedLinkedIds);
 
       if (!notCachedLinkedIds.isEmpty()) {
@@ -81,7 +81,7 @@ public abstract class HalCachingLinkResolver implements HalLinkResolver {
    * @return the cached resources
    */
   protected List<HalResource<?>> resolveCachedLinks(String[] linkedIds, Cache cache, List<String> notCachedLinkedIds) {
-    ArrayList<HalResource<?>> resolvedResources = new ArrayList<HalResource<?>>();
+    ArrayList<HalResource<?>> resolvedResources = new ArrayList<>();
 
     for (String linkedId : linkedIds) {
       HalResource<?> resource = (HalResource<?>) cache.get(linkedId);

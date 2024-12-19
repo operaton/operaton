@@ -53,7 +53,7 @@ public class CollectEntriesDecisionResultMapper implements DecisionResultMapper 
   }
 
   protected Set<String> collectOutputNames(DmnDecisionResult decisionResult) {
-    Set<String> outputNames = new HashSet<String>();
+    Set<String> outputNames = new HashSet<>();
 
     for (Map<String, Object> entryMap : decisionResult.getResultList()) {
       outputNames.addAll(entryMap.keySet());

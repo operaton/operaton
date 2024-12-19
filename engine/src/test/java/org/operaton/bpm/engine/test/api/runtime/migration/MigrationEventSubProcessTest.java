@@ -611,7 +611,7 @@ public class MigrationEventSubProcessTest {
         .mapActivities("eventSubProcess", "eventSubProcess")
         .mapActivities("catchMessage", "catchMessage").updateEventTrigger()
         .build();
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "foo");
 
     // when
@@ -646,7 +646,7 @@ public class MigrationEventSubProcessTest {
         .mapActivities(EVENT_SUB_PROCESS_START_ID, EVENT_SUB_PROCESS_START_ID).updateEventTrigger()
         .build();
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "foo");
 
     // when

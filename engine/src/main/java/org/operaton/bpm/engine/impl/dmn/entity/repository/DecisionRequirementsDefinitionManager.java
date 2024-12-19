@@ -46,7 +46,7 @@ public class DecisionRequirementsDefinitionManager extends AbstractManager imple
   }
 
   public String findPreviousDecisionRequirementsDefinitionId(String decisionRequirementsDefinitionKey, Integer version, String tenantId) {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("key", decisionRequirementsDefinitionKey);
     params.put("version", version);
     params.put("tenantId", tenantId);
@@ -59,7 +59,7 @@ public class DecisionRequirementsDefinitionManager extends AbstractManager imple
   }
 
   public DecisionRequirementsDefinitionEntity findDecisionRequirementsDefinitionByDeploymentAndKey(String deploymentId, String decisionRequirementsDefinitionKey) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("deploymentId", deploymentId);
     parameters.put("decisionRequirementsDefinitionKey", decisionRequirementsDefinitionKey);
     return (DecisionRequirementsDefinitionEntity) getDbEntityManager().selectOne("selectDecisionRequirementsDefinitionByDeploymentAndKey", parameters);
@@ -69,7 +69,7 @@ public class DecisionRequirementsDefinitionManager extends AbstractManager imple
    * @return the latest version of the decision requirements definition with the given key and tenant id
    */
   public DecisionRequirementsDefinitionEntity findLatestDecisionRequirementsDefinitionByKeyAndTenantId(String decisionRequirementsDefinitionKey, String tenantId) {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("decisionRequirementsDefinitionKey", decisionRequirementsDefinitionKey);
     parameters.put("tenantId", tenantId);
 

@@ -113,7 +113,7 @@ public class SetExternalTasksRetriesAuthorizationTest {
       .bindResource("processDefinitionKey", "oneExternalTaskProcess")
       .start();
     
-    ArrayList<String> externalTaskIds = new ArrayList<String>();
+    ArrayList<String> externalTaskIds = new ArrayList<>();
     externalTaskIds.add(tasks.get(0).getId());
     externalTaskIds.add(tasks.get(1).getId());
     

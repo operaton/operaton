@@ -32,7 +32,7 @@ public class HalLinker {
   /**
    * linked resource ids by {@link HalRelation}
    */
-  Map<HalRelation, Set<String>> linkedResources = new HashMap<HalRelation, Set<String>>();
+  Map<HalRelation, Set<String>> linkedResources = new HashMap<>();
 
   protected final Hal hal;
 
@@ -56,7 +56,7 @@ public class HalLinker {
     if(pathParams != null && pathParams.length > 0 && pathParams[0] != null) {
       Set<String> linkedResourceIds = linkedResources.get(rel);
       if(linkedResourceIds == null) {
-        linkedResourceIds = new HashSet<String>();
+        linkedResourceIds = new HashSet<>();
         linkedResources.put(rel, linkedResourceIds);
       }
 

@@ -161,7 +161,7 @@ public class IdentityServiceTest {
     identityService.setUserInfo("testuser", "myinfo", "myvalue");
     identityService.setUserInfo("testuser", "myinfo2", "myvalue2");
 
-    List<String> expectedUserAccountNames = new ArrayList<String>();
+    List<String> expectedUserAccountNames = new ArrayList<>();
     expectedUserAccountNames.add("google");
     expectedUserAccountNames.add("alfresco");
     List<String> userAccountNames = identityService.getUserAccountNames("testuser");
@@ -195,7 +195,7 @@ public class IdentityServiceTest {
     User user = identityService.newUser("testuser");
     identityService.saveUser(user);
 
-    Map<String, String> accountDetails = new HashMap<String, String>();
+    Map<String, String> accountDetails = new HashMap<>();
     accountDetails.put("server", "localhost");
     accountDetails.put("port", "35");
     identityService.setUserAccount("testuser", "123", "google", "mygoogleusername", "mygooglepwd", accountDetails);
@@ -816,14 +816,14 @@ public class IdentityServiceTest {
 
     List<Group> groups = identityService.createGroupQuery().groupMember("johndoe").groupType("security-role").list();
     Set<String> groupIds = getGroupIds(groups);
-    Set<String> expectedGroupIds = new HashSet<String>();
+    Set<String> expectedGroupIds = new HashSet<>();
     expectedGroupIds.add("user");
     expectedGroupIds.add("admin");
     assertEquals(expectedGroupIds, groupIds);
 
     groups = identityService.createGroupQuery().groupMember("joesmoe").groupType("security-role").list();
     groupIds = getGroupIds(groups);
-    expectedGroupIds = new HashSet<String>();
+    expectedGroupIds = new HashSet<>();
     expectedGroupIds.add("user");
     assertEquals(expectedGroupIds, groupIds);
 
@@ -1106,7 +1106,7 @@ public class IdentityServiceTest {
   }
 
   private Object createStringSet(String... strings) {
-    Set<String> stringSet = new HashSet<String>();
+    Set<String> stringSet = new HashSet<>();
     for (String string : strings) {
       stringSet.add(string);
     }
@@ -1114,7 +1114,7 @@ public class IdentityServiceTest {
   }
 
   protected Set<String> getGroupIds(List<Group> groups) {
-    Set<String> groupIds = new HashSet<String>();
+    Set<String> groupIds = new HashSet<>();
     for (Group group : groups) {
       groupIds.add(group.getId());
     }
@@ -1122,7 +1122,7 @@ public class IdentityServiceTest {
   }
 
   protected Set<String> getUserIds(List<User> users) {
-    Set<String> userIds = new HashSet<String>();
+    Set<String> userIds = new HashSet<>();
     for (User user : users) {
       userIds.add(user.getId());
     }

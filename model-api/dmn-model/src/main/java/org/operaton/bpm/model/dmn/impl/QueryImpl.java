@@ -35,7 +35,7 @@ public class QueryImpl<T extends ModelElementInstance> implements Query<T> {
 
   @Override
   public List<T> list() {
-    return new ArrayList<T>(collection);
+    return new ArrayList<>(collection);
   }
 
   @Override
@@ -53,13 +53,13 @@ public class QueryImpl<T extends ModelElementInstance> implements Query<T> {
   @Override
   @SuppressWarnings("unchecked")
   public <V extends ModelElementInstance> Query<V> filterByType(Class<V> elementClass) {
-    List<V> filtered = new ArrayList<V>();
+    List<V> filtered = new ArrayList<>();
     for (T instance : collection) {
       if (elementClass.isAssignableFrom(instance.getClass())) {
         filtered.add((V) instance);
       }
     }
-    return new QueryImpl<V>(filtered);
+    return new QueryImpl<>(filtered);
   }
 
   @Override

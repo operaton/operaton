@@ -499,7 +499,7 @@ public class MessageCorrelationTest {
     Map<String, Object> variables = new HashMap<>();
     variables.put("aKey", "aValue");
 
-    runtimeService.correlateMessage("newInvoiceMessage", new HashMap<String, Object>(), variables);
+    runtimeService.correlateMessage("newInvoiceMessage", new HashMap<>(), variables);
 
     long instances = runtimeService.createProcessInstanceQuery().processDefinitionKey("messageStartEvent")
         .variableValueEquals("aKey", "aValue").count();
@@ -1456,7 +1456,7 @@ public class MessageCorrelationTest {
     variables.put("aKey", "aValue");
 
     try {
-      runtimeService.correlateMessage("newInvoiceMessage", new HashMap<String, Object>(), variables);
+      runtimeService.correlateMessage("newInvoiceMessage", new HashMap<>(), variables);
       fail("It should not be possible to correlate a message to a suspended process definition.");
     } catch (MismatchingMessageCorrelationException e) {
       // expected

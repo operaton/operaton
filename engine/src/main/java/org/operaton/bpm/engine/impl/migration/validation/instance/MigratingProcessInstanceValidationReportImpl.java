@@ -27,10 +27,10 @@ public class MigratingProcessInstanceValidationReportImpl implements MigratingPr
 
   protected String processInstanceId;
   protected List<MigratingActivityInstanceValidationReport> activityInstanceReports =
-      new ArrayList<MigratingActivityInstanceValidationReport>();
+      new ArrayList<>();
   protected List<MigratingTransitionInstanceValidationReport> transitionInstanceReports =
-      new ArrayList<MigratingTransitionInstanceValidationReport>();
-  protected List<String> failures = new ArrayList<String>();
+      new ArrayList<>();
+  protected List<String> failures = new ArrayList<>();
 
   @Override
   public String getProcessInstanceId() {

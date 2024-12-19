@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.tree.TreeVisitor;
  */
 public class DeleteUnmappedInstanceVisitor implements TreeVisitor<MigratingScopeInstance> {
 
-  protected Set<MigratingScopeInstance> visitedInstances = new HashSet<MigratingScopeInstance>();
+  protected Set<MigratingScopeInstance> visitedInstances = new HashSet<>();
 
   protected boolean skipCustomListeners;
   protected boolean skipIoMappings;
@@ -43,7 +43,7 @@ public class DeleteUnmappedInstanceVisitor implements TreeVisitor<MigratingScope
 
     visitedInstances.add(currentInstance);
     if (!currentInstance.migrates()) {
-      Set<MigratingProcessElementInstance> children = new HashSet<MigratingProcessElementInstance>(currentInstance.getChildren());
+      Set<MigratingProcessElementInstance> children = new HashSet<>(currentInstance.getChildren());
       MigratingScopeInstance parent = currentInstance.getParent();
 
       // 1. detach children

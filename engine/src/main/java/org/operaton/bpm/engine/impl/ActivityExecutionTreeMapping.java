@@ -47,7 +47,7 @@ public class ActivityExecutionTreeMapping {
   protected ProcessDefinitionImpl processDefinition;
 
   public ActivityExecutionTreeMapping(CommandContext commandContext, String processInstanceId) {
-    this.activityExecutionMapping = new HashMap<ScopeImpl, Set<ExecutionEntity>>();
+    this.activityExecutionMapping = new HashMap<>();
     this.commandContext = commandContext;
     this.processInstanceId = processInstanceId;
 
@@ -61,7 +61,7 @@ public class ActivityExecutionTreeMapping {
   public Set<ExecutionEntity> getExecutions(ScopeImpl activity) {
     Set<ExecutionEntity> executionsForActivity = activityExecutionMapping.get(activity);
     if (executionsForActivity == null) {
-      executionsForActivity = new HashSet<ExecutionEntity>();
+      executionsForActivity = new HashSet<>();
       activityExecutionMapping.put(activity, executionsForActivity);
     }
 
@@ -84,7 +84,7 @@ public class ActivityExecutionTreeMapping {
   }
 
   protected ExecutionEntity intersect(Set<ExecutionEntity> executions, String[] executionIds) {
-    Set<String> executionIdSet = new HashSet<String>();
+    Set<String> executionIdSet = new HashSet<>();
     for (String executionId : executionIds) {
       executionIdSet.add(executionId);
     }
@@ -142,7 +142,7 @@ public class ActivityExecutionTreeMapping {
   }
 
   protected List<ExecutionEntity> fetchExecutionsForProcessInstance(ExecutionEntity execution) {
-    List<ExecutionEntity> executions = new ArrayList<ExecutionEntity>();
+    List<ExecutionEntity> executions = new ArrayList<>();
     executions.addAll(execution.getExecutions());
     for (ExecutionEntity child : execution.getExecutions()) {
       executions.addAll(fetchExecutionsForProcessInstance(child));
@@ -152,7 +152,7 @@ public class ActivityExecutionTreeMapping {
   }
 
   protected List<ExecutionEntity> findLeaves(List<ExecutionEntity> executions) {
-    List<ExecutionEntity> leaves = new ArrayList<ExecutionEntity>();
+    List<ExecutionEntity> leaves = new ArrayList<>();
 
     for (ExecutionEntity execution : executions) {
       if (isLeaf(execution)) {

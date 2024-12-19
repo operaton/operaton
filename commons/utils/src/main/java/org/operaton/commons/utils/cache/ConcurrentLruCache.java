@@ -36,8 +36,8 @@ public class ConcurrentLruCache<K, V> implements Cache<K, V> {
 
   private final int capacity;
 
-  private final ConcurrentMap<K, V> cache = new ConcurrentHashMap<K, V>();
-  private final ConcurrentLinkedQueue<K> keys = new ConcurrentLinkedQueue<K>();
+  private final ConcurrentMap<K, V> cache = new ConcurrentHashMap<>();
+  private final ConcurrentLinkedQueue<K> keys = new ConcurrentLinkedQueue<>();
 
   /**
    * Creates the cache with a fixed capacity.

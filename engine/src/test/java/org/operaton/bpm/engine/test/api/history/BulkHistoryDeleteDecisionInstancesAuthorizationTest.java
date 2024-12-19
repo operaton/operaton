@@ -133,7 +133,7 @@ public class BulkHistoryDeleteDecisionInstancesAuthorizationTest {
       decisionService.evaluateDecisionByKey(DECISION).variables(createVariables()).evaluate();
     }
     final List<HistoricDecisionInstance> decisionInstances = historyService.createHistoricDecisionInstanceQuery().list();
-    final List<String> decisionInstanceIds = new ArrayList<String>();
+    final List<String> decisionInstanceIds = new ArrayList<>();
     for (HistoricDecisionInstance decisionInstance : decisionInstances) {
       decisionInstanceIds.add(decisionInstance.getId());
     }

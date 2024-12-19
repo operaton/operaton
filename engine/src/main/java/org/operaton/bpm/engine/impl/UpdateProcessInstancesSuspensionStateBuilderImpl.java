@@ -36,7 +36,7 @@ public class UpdateProcessInstancesSuspensionStateBuilderImpl implements UpdateP
   protected String processDefinitionId;
 
   public UpdateProcessInstancesSuspensionStateBuilderImpl(CommandExecutor commandExecutor) {
-    this.processInstanceIds = new ArrayList<String>();
+    this.processInstanceIds = new ArrayList<>();
     this.commandExecutor = commandExecutor;
   }
 

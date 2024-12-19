@@ -257,7 +257,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   private List<ProcessDefinition> createIncompleteMockDefinitions() {
-    List<ProcessDefinition> mocks = new ArrayList<ProcessDefinition>();
+    List<ProcessDefinition> mocks = new ArrayList<>();
 
     MockDefinitionBuilder builder = new MockDefinitionBuilder();
     ProcessDefinition mockDefinition =
@@ -315,7 +315,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   private Map<String, String> getCompleteQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("processDefinitionId", "anId");
     parameters.put("category", "cat");

@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class MockDecisionResultBuilder {
 
-  protected List<DmnDecisionResultEntries> entries = new ArrayList<DmnDecisionResultEntries>();
+  protected List<DmnDecisionResultEntries> entries = new ArrayList<>();
 
   public MockDecisionResultEntriesBuilder resultEntries() {
     return new MockDecisionResultEntriesBuilder(this);

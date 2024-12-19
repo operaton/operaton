@@ -99,7 +99,7 @@ public class SignalEventReceivedCmd implements Command<Void> {
   protected Map<String, ProcessDefinitionEntity> getProcessDefinitionsOfSubscriptions(List<EventSubscriptionEntity> startSignalEventSubscriptions) {
     DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();
 
-    Map<String, ProcessDefinitionEntity> processDefinitions = new HashMap<String, ProcessDefinitionEntity>();
+    Map<String, ProcessDefinitionEntity> processDefinitions = new HashMap<>();
 
     for (EventSubscriptionEntity eventSubscription : startSignalEventSubscriptions) {
 
@@ -182,7 +182,7 @@ public class SignalEventReceivedCmd implements Command<Void> {
   }
 
   protected List<EventSubscriptionEntity> filterIntermediateSubscriptions(List<EventSubscriptionEntity> subscriptions) {
-    List<EventSubscriptionEntity> result = new ArrayList<EventSubscriptionEntity>();
+    List<EventSubscriptionEntity> result = new ArrayList<>();
 
     for (EventSubscriptionEntity subscription : subscriptions) {
       if (subscription.getExecutionId() != null) {
@@ -194,7 +194,7 @@ public class SignalEventReceivedCmd implements Command<Void> {
   }
 
   protected List<EventSubscriptionEntity> filterStartSubscriptions(List<EventSubscriptionEntity> subscriptions) {
-    List<EventSubscriptionEntity> result = new ArrayList<EventSubscriptionEntity>();
+    List<EventSubscriptionEntity> result = new ArrayList<>();
 
     for (EventSubscriptionEntity subscription : subscriptions) {
       if (subscription.getExecutionId() == null) {

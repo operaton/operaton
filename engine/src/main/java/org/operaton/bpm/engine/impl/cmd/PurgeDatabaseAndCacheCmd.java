@@ -86,7 +86,7 @@ public class PurgeDatabaseAndCacheCmd implements Command<PurgeReport>, Serializa
       if (!TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK.contains(tableNameWithoutPrefix)) {
 
         // Check if table contains data
-        Map<String, String> param = new HashMap<String, String>();
+        Map<String, String> param = new HashMap<>();
         param.put(TABLE_NAME, tableName);
         Long count = (Long) dbEntityManager.selectOne(SELECT_TABLE_COUNT, param);
 

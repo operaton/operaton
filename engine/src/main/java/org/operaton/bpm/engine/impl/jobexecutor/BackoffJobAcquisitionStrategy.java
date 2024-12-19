@@ -82,7 +82,7 @@ public class BackoffJobAcquisitionStrategy implements JobAcquisitionStrategy {
 
   protected int baseNumJobsToAcquire;
 
-  protected Map<String, Integer> jobsToAcquire = new HashMap<String, Integer>();
+  protected Map<String, Integer> jobsToAcquire = new HashMap<>();
 
   /*
    * Backing off when the execution resources (queue) are saturated

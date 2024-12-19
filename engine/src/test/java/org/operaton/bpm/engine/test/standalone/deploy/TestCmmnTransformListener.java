@@ -45,9 +45,9 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  */
 public class TestCmmnTransformListener implements CmmnTransformListener {
 
-  public static Set<CmmnModelElementInstance> modelElementInstances = new HashSet<CmmnModelElementInstance>();
-  public static Set<CmmnActivity> cmmnActivities = new HashSet<CmmnActivity>();
-  public static Set<CmmnSentryDeclaration> sentryDeclarations = new HashSet<CmmnSentryDeclaration>();
+  public static Set<CmmnModelElementInstance> modelElementInstances = new HashSet<>();
+  public static Set<CmmnActivity> cmmnActivities = new HashSet<>();
+  public static Set<CmmnSentryDeclaration> sentryDeclarations = new HashSet<>();
 
   @Override
   public void transformRootElement(Definitions definitions, List<? extends CmmnCaseDefinition> caseDefinitions) {
@@ -147,9 +147,9 @@ public class TestCmmnTransformListener implements CmmnTransformListener {
   }
 
   public static void reset() {
-    modelElementInstances = new HashSet<CmmnModelElementInstance>();
-    cmmnActivities = new HashSet<CmmnActivity>();
-    sentryDeclarations = new HashSet<CmmnSentryDeclaration>();
+    modelElementInstances = new HashSet<>();
+    cmmnActivities = new HashSet<>();
+    sentryDeclarations = new HashSet<>();
   }
 
   public static int numberOfRegistered(Class<? extends CmmnModelElementInstance> modelElementInstanceClass) {

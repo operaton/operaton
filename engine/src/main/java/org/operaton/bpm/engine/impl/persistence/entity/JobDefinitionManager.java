@@ -59,21 +59,21 @@ public class JobDefinitionManager extends AbstractManager {
   }
 
   public void updateJobDefinitionSuspensionStateById(String jobDefinitionId, SuspensionState suspensionState) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("jobDefinitionId", jobDefinitionId);
     parameters.put("suspensionState", suspensionState.getStateCode());
     getDbEntityManager().update(JobDefinitionEntity.class, "updateJobDefinitionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateJobDefinitionSuspensionStateByProcessDefinitionId(String processDefinitionId, SuspensionState suspensionState) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("processDefinitionId", processDefinitionId);
     parameters.put("suspensionState", suspensionState.getStateCode());
     getDbEntityManager().update(JobDefinitionEntity.class, "updateJobDefinitionSuspensionStateByParameters", configureParameterizedQuery(parameters));
   }
 
   public void updateJobDefinitionSuspensionStateByProcessDefinitionKey(String processDefinitionKey, SuspensionState suspensionState) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("processDefinitionKey", processDefinitionKey);
     parameters.put("isProcessDefinitionTenantIdSet", false);
     parameters.put("suspensionState", suspensionState.getStateCode());
@@ -81,7 +81,7 @@ public class JobDefinitionManager extends AbstractManager {
   }
 
   public void updateJobDefinitionSuspensionStateByProcessDefinitionKeyAndTenantId(String processDefinitionKey, String processDefinitionTenantId, SuspensionState suspensionState) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("processDefinitionKey", processDefinitionKey);
     parameters.put("isProcessDefinitionTenantIdSet", true);
     parameters.put("processDefinitionTenantId", processDefinitionTenantId);

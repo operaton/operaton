@@ -310,7 +310,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventSubprocessTest.testPropagateOutputVariablesWhileCatchEscalationOnCallActivity.bpmn20.xml"})
   @Test
   public void testPropagateOutputVariablesWhileCatchEscalationOnCallActivity() {
-    Map<String,Object> variables = new HashMap<String, Object>();
+    Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("catchEscalationProcess", variables).getId();
     // when throw an escalation event on called process
@@ -325,7 +325,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventSubprocessTest.testPropagateOutputVariablesWhileCatchEscalationOnCallActivity.bpmn20.xml"})
   @Test
   public void testPropagateOutputVariablesTwoTimes() {
-    Map<String,Object> variables = new HashMap<String, Object>();
+    Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("catchEscalationProcess", variables).getId();
     // when throw an escalation event on called process
@@ -348,7 +348,7 @@ public class EscalationEventSubprocessTest extends PluggableProcessEngineTest {
   "org/operaton/bpm/engine/test/bpmn/event/escalation/EscalationEventSubprocessTest.testPropagateOutputVariablesWhileCatchInterruptingEscalationOnCallActivity.bpmn20.xml"})
   @Test
   public void testPropagateOutputVariablesWhileCatchInterruptingEscalationOnCallActivity() {
-    Map<String,Object> variables = new HashMap<String, Object>();
+    Map<String,Object> variables = new HashMap<>();
     variables.put("input", 42);
     String processInstanceId = runtimeService.startProcessInstanceByKey("catchEscalationProcess", variables).getId();
     // when throw an escalation event on called process

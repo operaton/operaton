@@ -266,7 +266,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setSortBy("startTime");
     queryParameter.setSortOrder("desc");
 
-    List<ProcessInstanceDto> allResults = new ArrayList<ProcessInstanceDto>();
+    List<ProcessInstanceDto> allResults = new ArrayList<>();
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, 0, 3);
     assertThat(result).isNotEmpty();
@@ -305,7 +305,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
     queryParameter.setSortBy("startTime");
     queryParameter.setSortOrder("asc");
 
-    List<ProcessInstanceDto> allResults = new ArrayList<ProcessInstanceDto>();
+    List<ProcessInstanceDto> allResults = new ArrayList<>();
 
     List<ProcessInstanceDto> result = resource.queryProcessInstances(queryParameter, 0, 3);
     assertThat(result).isNotEmpty();
@@ -992,7 +992,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithIntegerVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1016,7 +1016,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithIntegerVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1040,7 +1040,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithIntegerVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1064,7 +1064,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithIntegerVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1088,7 +1088,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithIntegerVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1112,7 +1112,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithIntegerVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1136,7 +1136,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithLongVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1160,7 +1160,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithLongVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1184,7 +1184,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithLongVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1208,7 +1208,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithLongVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1232,7 +1232,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithLongVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1256,7 +1256,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithLongVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1280,7 +1280,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithShortVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1304,7 +1304,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithShortVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1328,7 +1328,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithShortVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1352,7 +1352,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithShortVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1376,7 +1376,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithShortVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1400,7 +1400,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithShortVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1424,7 +1424,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithDoubleVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1448,7 +1448,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithDoubleVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1473,7 +1473,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithDoubleVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1498,7 +1498,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithDoubleVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1523,7 +1523,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithDoubleVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1548,7 +1548,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterShortVariableWithDoubleVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (short) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1572,7 +1572,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithIntegerVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1596,7 +1596,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithIntegerVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1620,7 +1620,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithIntegerVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1644,7 +1644,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithIntegerVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1668,7 +1668,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithIntegerVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1692,7 +1692,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithIntegerVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1716,7 +1716,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithLongVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1740,7 +1740,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithLongVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1764,7 +1764,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithLongVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1788,7 +1788,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithLongVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1812,7 +1812,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithLongVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1836,7 +1836,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithLongVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1860,7 +1860,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithShortVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1884,7 +1884,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithShortVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1908,7 +1908,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithShortVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1932,7 +1932,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithShortVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1956,7 +1956,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithShortVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -1980,7 +1980,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithShortVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2004,7 +2004,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithDoubleVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2028,7 +2028,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithDoubleVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2053,7 +2053,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithDoubleVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2078,7 +2078,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithDoubleVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2103,7 +2103,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithDoubleVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2128,7 +2128,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterIntegerVariableWithDoubleVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2152,7 +2152,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithIntegerVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2176,7 +2176,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithIntegerVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2200,7 +2200,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithIntegerVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2224,7 +2224,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithIntegerVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2248,7 +2248,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithIntegerVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2272,7 +2272,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithIntegerVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2296,7 +2296,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithLongVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2320,7 +2320,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithLongVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2344,7 +2344,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithLongVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2368,7 +2368,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithLongVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2392,7 +2392,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithLongVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2416,7 +2416,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithLongVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2440,7 +2440,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithShortVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2464,7 +2464,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithShortVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2488,7 +2488,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithShortVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2512,7 +2512,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithShortVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2536,7 +2536,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithShortVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2560,7 +2560,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithShortVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2584,7 +2584,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithDoubleVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2608,7 +2608,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithDoubleVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2633,7 +2633,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithDoubleVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2658,7 +2658,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithDoubleVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2683,7 +2683,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithDoubleVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2708,7 +2708,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterLongVariableWithDoubleVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2732,7 +2732,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithIntegerVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2756,7 +2756,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithIntegerVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2780,7 +2780,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithIntegerVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2804,7 +2804,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithIntegerVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2828,7 +2828,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithIntegerVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2852,7 +2852,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithIntegerVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2876,7 +2876,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithLongVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2900,7 +2900,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithLongVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2924,7 +2924,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithLongVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2948,7 +2948,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithLongVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2972,7 +2972,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithLongVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -2996,7 +2996,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithLongVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3020,7 +3020,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithShortVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3044,7 +3044,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithShortVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3068,7 +3068,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithShortVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", (long) 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3092,7 +3092,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithShortVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3116,7 +3116,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithShortVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3140,7 +3140,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithShortVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3164,7 +3164,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithDoubleVariable_Eq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.0);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3188,7 +3188,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithDoubleVariable_Neq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3212,7 +3212,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithDoubleVariable_Gteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3236,7 +3236,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithDoubleVariable_Gt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3260,7 +3260,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithDoubleVariable_Lteq() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.1);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);
@@ -3284,7 +3284,7 @@ public class ProcessInstanceRestServiceTest extends AbstractCockpitPluginTest {
       "processes/user-task-process.bpmn"
     })
   public void testQueryAfterDoubleVariableWithDoubleVariable_Lt() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", 5.3);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userTaskProcess", vars);

@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
  */
 public class FilterQueryTest extends PluggableProcessEngineTest {
 
-  protected List<String> filterIds = new ArrayList<String>();
+  protected List<String> filterIds = new ArrayList<>();
 
   @Before
   public void setUp() {
@@ -214,7 +214,7 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
   @SuppressWarnings({ "unchecked", "deprecation" })
   @Test
   public void testQuerySorting() {
-    List<String> sortedIds = new ArrayList<String>(filterIds);
+    List<String> sortedIds = new ArrayList<>(filterIds);
     Collections.sort(sortedIds);
     assertEquals(4, filterService.createFilterQuery().orderByFilterId().asc().list().size());
 

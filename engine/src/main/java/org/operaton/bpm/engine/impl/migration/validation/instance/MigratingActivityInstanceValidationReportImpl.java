@@ -28,7 +28,7 @@ public class MigratingActivityInstanceValidationReportImpl implements MigratingA
   protected String activityInstanceId;
   protected String sourceScopeId;
   protected MigrationInstruction migrationInstruction;
-  protected List<String> failures = new ArrayList<String>();
+  protected List<String> failures = new ArrayList<>();
 
   public MigratingActivityInstanceValidationReportImpl(MigratingActivityInstance migratingActivityInstance) {
     this.activityInstanceId = migratingActivityInstance.getActivityInstance().getId();

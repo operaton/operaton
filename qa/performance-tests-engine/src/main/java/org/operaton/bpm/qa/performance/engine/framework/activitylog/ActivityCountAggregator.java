@@ -71,8 +71,8 @@ public class ActivityCountAggregator extends TabularResultAggregator {
   }
 
   protected void addTableHeaders(TabularResultSet tabularResultSet, List<String> watchActivities) {
-    List<Object> row1 = new ArrayList<Object>();
-    List<Object> row2 = new ArrayList<Object>();
+    List<Object> row1 = new ArrayList<>();
+    List<Object> row2 = new ArrayList<>();
 
     row1.add(new TableCell("", true));
     row2.add(new TableCell("seconds", true));
@@ -112,10 +112,10 @@ public class ActivityCountAggregator extends TabularResultAggregator {
 
     long firstTimestamp = firstStartTime.getTime();
     long lastTimestamp = lastEndTime.getTime();
-    List<Map<String, ActivityCount>> resultTable = new ArrayList<Map<String, ActivityCount>>();
+    List<Map<String, ActivityCount>> resultTable = new ArrayList<>();
 
     for (long t = firstTimestamp; t <= lastTimestamp + INTERVAL; t += INTERVAL) {
-      Map<String, ActivityCount> activitiesMap = new HashMap<String, ActivityCount>();
+      Map<String, ActivityCount> activitiesMap = new HashMap<>();
       for (String activity : watchActivities) {
         activitiesMap.put(activity, new ActivityCount());
       }
@@ -135,14 +135,14 @@ public class ActivityCountAggregator extends TabularResultAggregator {
     }
 
     ArrayList<Object> row = null;
-    Map<String, ActivityCount> sumMap = new HashMap<String, ActivityCount>();
+    Map<String, ActivityCount> sumMap = new HashMap<>();
     for (String activity : watchActivities) {
       sumMap.put(activity, new ActivityCount());
     }
 
     long sumActivitiesEnded = 0;
     for (int i = 0; i < resultTable.size(); i++) {
-      row = new ArrayList<Object>();
+      row = new ArrayList<>();
       row.add(i * INTERVAL / TIME_UNIT);
       long currentActivitiesEnded = 0;
       for (String activity : watchActivities) {

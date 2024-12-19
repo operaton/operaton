@@ -31,7 +31,7 @@ public class DmnDecisionResultImpl implements DmnDecisionResult {
   protected final List<DmnDecisionResultEntries> ruleResults;
 
   public DmnDecisionResultImpl() {
-    this.ruleResults = new ArrayList<DmnDecisionResultEntries>();
+    this.ruleResults = new ArrayList<>();
   }
 
   public DmnDecisionResultImpl(List<DmnDecisionResultEntries> ruleResults) {

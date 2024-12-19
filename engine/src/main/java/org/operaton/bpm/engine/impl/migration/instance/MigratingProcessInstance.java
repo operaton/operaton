@@ -51,10 +51,10 @@ public class MigratingProcessInstance {
 
   public MigratingProcessInstance(String processInstanceId, ProcessDefinitionEntity sourceDefinition, ProcessDefinitionEntity targetDefinition) {
     this.processInstanceId = processInstanceId;
-    this.migratingActivityInstances = new ArrayList<MigratingActivityInstance>();
-    this.migratingTransitionInstances = new ArrayList<MigratingTransitionInstance>();
-    this.migratingEventScopeInstances = new ArrayList<MigratingEventScopeInstance>();
-    this.migratingCompensationSubscriptionInstances = new ArrayList<MigratingCompensationEventSubscriptionInstance>();
+    this.migratingActivityInstances = new ArrayList<>();
+    this.migratingTransitionInstances = new ArrayList<>();
+    this.migratingEventScopeInstances = new ArrayList<>();
+    this.migratingCompensationSubscriptionInstances = new ArrayList<>();
     this.sourceDefinition = sourceDefinition;
     this.targetDefinition = targetDefinition;
   }
@@ -84,7 +84,7 @@ public class MigratingProcessInstance {
   }
 
   public Collection<MigratingScopeInstance> getMigratingScopeInstances() {
-    Set<MigratingScopeInstance> result = new HashSet<MigratingScopeInstance>();
+    Set<MigratingScopeInstance> result = new HashSet<>();
 
     result.addAll(migratingActivityInstances);
     result.addAll(migratingEventScopeInstances);

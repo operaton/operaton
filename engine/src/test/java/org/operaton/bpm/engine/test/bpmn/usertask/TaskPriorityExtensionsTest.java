@@ -40,7 +40,7 @@ public class TaskPriorityExtensionsTest extends PluggableProcessEngineTest {
   }
 
   private void testPriorityExtension(int priority) {
-    final Map<String, Object> variables = new HashMap<String, Object>();
+    final Map<String, Object> variables = new HashMap<>();
     variables.put("taskPriority", priority);
 
     // Start process-instance, passing priority that should be used as task priority

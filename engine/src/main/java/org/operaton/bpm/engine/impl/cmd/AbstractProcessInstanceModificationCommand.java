@@ -161,7 +161,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     ScopeImpl scope = getScopeForActivityInstance(processDefinition, activityInstance);
 
     Set<ExecutionEntity> executions = mapping.getExecutions(scope);
-    Set<String> activityInstanceExecutions = new HashSet<String>(Arrays.asList(activityInstance.getExecutionIds()));
+    Set<String> activityInstanceExecutions = new HashSet<>(Arrays.asList(activityInstance.getExecutionIds()));
 
     // TODO: this is a hack around the activity instance tree
     // remove with fix of CAM-3574
@@ -177,7 +177,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     }
 
     // find the scope execution for the given activity instance
-    Set<ExecutionEntity> retainedExecutionsForInstance = new HashSet<ExecutionEntity>();
+    Set<ExecutionEntity> retainedExecutionsForInstance = new HashSet<>();
     for (ExecutionEntity execution : executions) {
       if (activityInstanceExecutions.contains(execution.getId())) {
         retainedExecutionsForInstance.add(execution);

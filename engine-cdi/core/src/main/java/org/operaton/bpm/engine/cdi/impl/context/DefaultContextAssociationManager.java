@@ -80,7 +80,7 @@ public class DefaultContextAssociationManager implements ContextAssociationManag
    *          #getBroadestActiveContext()})
    */
   protected List<Class< ? extends ScopedAssociation>> getAvailableScopedAssociationClasses() {
-    ArrayList<Class< ? extends ScopedAssociation>> scopeTypes = new ArrayList<Class< ? extends ScopedAssociation>>();
+    ArrayList<Class< ? extends ScopedAssociation>> scopeTypes = new ArrayList<>();
     scopeTypes.add(ConversationScopedAssociation.class);
     scopeTypes.add(RequestScopedAssociation.class);
     return scopeTypes;

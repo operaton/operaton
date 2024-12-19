@@ -536,7 +536,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableValueEquals() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -675,7 +675,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableValueNotEquals() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -838,7 +838,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableGreaterThan() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -1037,7 +1037,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableGreaterThanOrEqual() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -1200,7 +1200,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableLessThan() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -1399,7 +1399,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableVariableLessThanOrEqual() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -1591,7 +1591,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableCaseInstanceVariableValueEquals() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -1730,7 +1730,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableCaseInstanceVariableValueNotEquals() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -1893,7 +1893,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableCaseInstanceVariableGreaterThan() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -2092,7 +2092,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableCaseInstanceVariableGreaterThanOrEqual() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -2255,7 +2255,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableCaseInstanceVariableLessThan() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");
@@ -2454,7 +2454,7 @@ public class CaseExecutionQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryBySerializableCaseInstanceVariableLessThanOrEqual() {
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("one");
     serializable.add("two");
     serializable.add("three");

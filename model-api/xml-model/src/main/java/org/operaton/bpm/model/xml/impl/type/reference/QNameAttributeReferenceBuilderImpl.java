@@ -33,6 +33,6 @@ public class QNameAttributeReferenceBuilderImpl<T extends ModelElementInstance> 
    */
   public QNameAttributeReferenceBuilderImpl(AttributeImpl<String> referenceSourceAttribute, Class<T> referenceTargetElement) {
     super(referenceSourceAttribute, referenceTargetElement);
-    this.attributeReferenceImpl = new QNameAttributeReferenceImpl<T>(referenceSourceAttribute);
+    this.attributeReferenceImpl = new QNameAttributeReferenceImpl<>(referenceSourceAttribute);
   }
 }

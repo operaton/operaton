@@ -35,7 +35,7 @@ public class ExpressionServiceTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testSetServiceResultToProcessVariables() {
-    Map<String,Object> variables = new HashMap<String, Object>();
+    Map<String,Object> variables = new HashMap<>();
     variables.put("bean", new ValueBean("ok"));
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("setServiceResultToProcessVariables", variables);
     assertEquals("ok", runtimeService.getVariable(pi.getId(), "result"));
@@ -44,7 +44,7 @@ public class ExpressionServiceTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testBackwardsCompatibleExpression() {
-    Map<String,Object> variables = new HashMap<String, Object>();
+    Map<String,Object> variables = new HashMap<>();
     variables.put("var", "---");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("BackwardsCompatibleExpressionProcess", variables);
     assertEquals("...---...", runtimeService.getVariable(pi.getId(), "result"));

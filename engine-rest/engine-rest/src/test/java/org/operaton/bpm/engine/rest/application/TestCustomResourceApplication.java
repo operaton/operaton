@@ -32,8 +32,8 @@ import java.util.Set;
 @ApplicationPath("/")
 public class TestCustomResourceApplication extends Application {
 
-  private static final Set<Class<?>> RESOURCES = new HashSet<Class<?>>();
-  private static final Set<Class<?>> PROVIDERS = new HashSet<Class<?>>();
+  private static final Set<Class<?>> RESOURCES = new HashSet<>();
+  private static final Set<Class<?>> PROVIDERS = new HashSet<>();
 
   static {
     // RESOURCES
@@ -55,7 +55,7 @@ public class TestCustomResourceApplication extends Application {
 
   @Override
   public Set<Class<?>> getClasses() {
-    Set<Class<?>> classes = new HashSet<Class<?>>();
+    Set<Class<?>> classes = new HashSet<>();
     classes.addAll(RESOURCES);
     classes.addAll(PROVIDERS);
 

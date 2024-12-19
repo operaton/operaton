@@ -55,14 +55,14 @@ public class SchemaLogTestCase {
   public void init() {
     processEngine = rule.getProcessEngine();
 
-    folderContents = new HashMap<String, List<String>>();
+    folderContents = new HashMap<>();
     for (String folder : SCRIPT_FOLDERS) {
       folderContents.put(folder, readFolderContent(folder));
     }
   }
 
   private List<String> readFolderContent(String path) {
-    List<String> files = new ArrayList<String>();
+    List<String> files = new ArrayList<>();
     try {
       PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
       Resource[] resources = resolver.getResources("classpath:" + path + "/*");

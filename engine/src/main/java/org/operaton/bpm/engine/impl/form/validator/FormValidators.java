@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
 public class FormValidators {
 
   /** the registry of configured validators. Populated through {@link ProcessEngineConfiguration}. */
-  protected Map<String, Class<? extends FormFieldValidator>> validators = new HashMap<String, Class<? extends FormFieldValidator>>();
+  protected Map<String, Class<? extends FormFieldValidator>> validators = new HashMap<>();
 
   /**
    * factory method for creating validator instances

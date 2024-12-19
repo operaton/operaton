@@ -641,7 +641,7 @@ public class MultiTenancyUserOperationLogTest {
         .setName("name")
         .setOwner("owner")
         .setQuery(taskService.createTaskQuery())
-        .setProperties(new HashMap<String, Object>());
+        .setProperties(new HashMap<>());
 
     // when
     filterService.saveFilter(filter);

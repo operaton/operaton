@@ -40,8 +40,8 @@ public class ValidatingMigrationInstructions {
 
   public ValidatingMigrationInstructions(Collection<ValidatingMigrationInstruction> instructions) {
     this.instructions = instructions;
-    instructionsBySourceScope = new HashMap<ScopeImpl, List<ValidatingMigrationInstruction>>();
-    instructionsByTargetScope = new HashMap<ScopeImpl, List<ValidatingMigrationInstruction>>();
+    instructionsBySourceScope = new HashMap<>();
+    instructionsByTargetScope = new HashMap<>();
 
     for (ValidatingMigrationInstruction instruction : instructions) {
       indexInstruction(instruction);
@@ -49,7 +49,7 @@ public class ValidatingMigrationInstructions {
   }
 
   public ValidatingMigrationInstructions() {
-    this(new HashSet<ValidatingMigrationInstruction>());
+    this(new HashSet<>());
   }
 
   public void addInstruction(ValidatingMigrationInstruction instruction) {
@@ -69,7 +69,7 @@ public class ValidatingMigrationInstructions {
   }
 
   public List<ValidatingMigrationInstruction> getInstructions() {
-    return new ArrayList<ValidatingMigrationInstruction>(instructions);
+    return new ArrayList<>(instructions);
   }
 
   public List<ValidatingMigrationInstruction> getInstructionsBySourceScope(ScopeImpl scope) {
@@ -95,7 +95,7 @@ public class ValidatingMigrationInstructions {
   }
 
   public void filterWith(List<MigrationInstructionValidator> validators) {
-    List<ValidatingMigrationInstruction> validInstructions = new ArrayList<ValidatingMigrationInstruction>();
+    List<ValidatingMigrationInstruction> validInstructions = new ArrayList<>();
 
     for (ValidatingMigrationInstruction instruction : instructions) {
       if (isValidInstruction(instruction, this, validators)) {
@@ -113,7 +113,7 @@ public class ValidatingMigrationInstructions {
   }
 
   public List<MigrationInstruction> asMigrationInstructions() {
-    List<MigrationInstruction> instructions = new ArrayList<MigrationInstruction>();
+    List<MigrationInstruction> instructions = new ArrayList<>();
 
     for (ValidatingMigrationInstruction instruction : this.instructions) {
       instructions.add(instruction.toMigrationInstruction());

@@ -311,7 +311,7 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
   }
 
   protected void startProcessInstanceAndEvaluateDecision() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("input1", null);
     startProcessInstanceByKey(PROCESS_KEY, variables);
   }

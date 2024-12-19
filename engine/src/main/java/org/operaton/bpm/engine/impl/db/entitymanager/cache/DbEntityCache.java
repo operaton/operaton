@@ -55,7 +55,7 @@ public class DbEntityCache {
    *
    * b) performance (?)
    */
-  protected Map<Class<?>, Map<String, CachedDbEntity>> cachedEntites = new HashMap<Class<?>, Map<String, CachedDbEntity>>();
+  protected Map<Class<?>, Map<String, CachedDbEntity>> cachedEntites = new HashMap<>();
 
   protected DbEntityCacheKeyMapping cacheKeyMapping;
 
@@ -98,7 +98,7 @@ public class DbEntityCache {
   public <T extends DbEntity> List<T> getEntitiesByType(Class<T> type) {
     Class<?> cacheKey = cacheKeyMapping.getEntityCacheKey(type);
     Map<String, CachedDbEntity> entities = cachedEntites.get(cacheKey);
-    List<T> result = new ArrayList<T>();
+    List<T> result = new ArrayList<>();
     if(entities == null) {
       return Collections.emptyList();
     } else {
@@ -193,7 +193,7 @@ public class DbEntityCache {
 
     Map<String, CachedDbEntity> map = cachedEntites.get(cacheKey);
     if(map == null) {
-      map = new HashMap<String, CachedDbEntity>();
+      map = new HashMap<>();
       cachedEntites.put(cacheKey, map);
     }
 
@@ -345,7 +345,7 @@ public class DbEntityCache {
   }
 
   public List<CachedDbEntity> getCachedEntities() {
-    List<CachedDbEntity> result = new ArrayList<CachedDbEntity>();
+    List<CachedDbEntity> result = new ArrayList<>();
     for (Map<String, CachedDbEntity> typeCache : cachedEntites.values()) {
       result.addAll(typeCache.values());
     }

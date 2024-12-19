@@ -70,7 +70,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testExpressionFieldInjection() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("name", "kermit");
     vars.put("gender", "male");
     vars.put("genderBean", new GenderBean());
@@ -114,7 +114,7 @@ public class JavaServiceTaskTest extends PluggableProcessEngineTest {
 
     // If variable value is != 'throw-exception', process goes
     // through service task and ends immidiately
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("var", "no-exception");
     runtimeService.startProcessInstanceByKey("exceptionHandling", vars);
     assertEquals(0, runtimeService.createProcessInstanceQuery().count());

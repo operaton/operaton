@@ -830,7 +830,7 @@ public class DefaultHistoryEventProducer implements HistoryEventProducer {
 
   @Override
   public List<HistoryEvent> createUserOperationLogEvents(UserOperationLogContext context) {
-    List<HistoryEvent> historyEvents = new ArrayList<HistoryEvent>();
+    List<HistoryEvent> historyEvents = new ArrayList<>();
 
     String operationId = Context.getCommandContext().getOperationId();
     context.setOperationId(operationId);

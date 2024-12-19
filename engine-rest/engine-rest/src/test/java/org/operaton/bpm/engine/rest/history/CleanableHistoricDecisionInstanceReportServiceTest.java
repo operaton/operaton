@@ -109,7 +109,7 @@ public class CleanableHistoricDecisionInstanceReportServiceTest extends Abstract
     when(anotherReportResult.getTenantId()).thenReturn(ANOTHER_EXAMPLE_TENANT_ID);
 
 
-    List<CleanableHistoricDecisionInstanceReportResult> mocks = new ArrayList<CleanableHistoricDecisionInstanceReportResult>();
+    List<CleanableHistoricDecisionInstanceReportResult> mocks = new ArrayList<>();
     mocks.add(reportResult);
     mocks.add(anotherReportResult);
 
@@ -368,7 +368,7 @@ public class CleanableHistoricDecisionInstanceReportServiceTest extends Abstract
   }
 
   protected Map<String, Object> getCompleteQueryParameters() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
 
     parameters.put("decisionDefinitionIdIn", EXAMPLE_DD_ID + "," + ANOTHER_EXAMPLE_DD_ID);
     parameters.put("decisionDefinitionKeyIn", EXAMPLE_DD_KEY + "," + ANOTHER_EXAMPLE_DD_KEY);

@@ -34,8 +34,8 @@ public class CmmnActivity extends CoreActivity {
 
   private static final long serialVersionUID = 1L;
 
-  protected List<CmmnActivity> activities = new ArrayList<CmmnActivity>();
-  protected Map<String, CmmnActivity> namedActivities = new HashMap<String, CmmnActivity>();
+  protected List<CmmnActivity> activities = new ArrayList<>();
+  protected Map<String, CmmnActivity> namedActivities = new HashMap<>();
 
   protected CmmnElement cmmnElement;
 
@@ -45,11 +45,11 @@ public class CmmnActivity extends CoreActivity {
 
   protected CmmnActivity parent;
 
-  protected List<CmmnSentryDeclaration> sentries = new ArrayList<CmmnSentryDeclaration>();
-  protected Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<String, CmmnSentryDeclaration>();
+  protected List<CmmnSentryDeclaration> sentries = new ArrayList<>();
+  protected Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
 
-  protected List<CmmnSentryDeclaration> entryCriteria = new ArrayList<CmmnSentryDeclaration>();
-  protected List<CmmnSentryDeclaration> exitCriteria = new ArrayList<CmmnSentryDeclaration>();
+  protected List<CmmnSentryDeclaration> entryCriteria = new ArrayList<>();
+  protected List<CmmnSentryDeclaration> exitCriteria = new ArrayList<>();
 
   // eventName => activity id => variable listeners
   protected Map<String, Map<String, List<VariableListener<?>>>> resolvedVariableListeners;
@@ -187,13 +187,13 @@ public class CmmnActivity extends CoreActivity {
     Map<String, Map<String, List<VariableListener<?>>>> listenerCache;
     if (includeCustomListeners) {
       if (resolvedVariableListeners == null) {
-        resolvedVariableListeners = new HashMap<String, Map<String,List<VariableListener<?>>>>();
+        resolvedVariableListeners = new HashMap<>();
       }
 
       listenerCache = resolvedVariableListeners;
     } else {
       if (resolvedBuiltInVariableListeners == null) {
-        resolvedBuiltInVariableListeners = new HashMap<String, Map<String,List<VariableListener<?>>>>();
+        resolvedBuiltInVariableListeners = new HashMap<>();
       }
       listenerCache = resolvedBuiltInVariableListeners;
     }
@@ -201,7 +201,7 @@ public class CmmnActivity extends CoreActivity {
     Map<String, List<VariableListener<?>>> resolvedListenersForEvent = listenerCache.get(eventName);
 
     if (resolvedListenersForEvent == null) {
-      resolvedListenersForEvent = new HashMap<String, List<VariableListener<?>>>();
+      resolvedListenersForEvent = new HashMap<>();
       listenerCache.put(eventName, resolvedListenersForEvent);
 
       CmmnActivity currentActivity = this;

@@ -45,7 +45,7 @@ public class DefaultFailedJobParseListener extends AbstractBpmnParseListener {
   @Deprecated
   public static final Namespace FOX_ENGINE_NS = new Namespace("http://www.operaton.com/fox");
 
-  public static final PropertyKey<FailedJobRetryConfiguration> FAILED_JOB_CONFIGURATION = new PropertyKey<FailedJobRetryConfiguration>("FAILED_JOB_CONFIGURATION");
+  public static final PropertyKey<FailedJobRetryConfiguration> FAILED_JOB_CONFIGURATION = new PropertyKey<>("FAILED_JOB_CONFIGURATION");
 
   @Override
   public void parseStartEvent(Element startEventElement, ScopeImpl scope, ActivityImpl startEventActivity) {

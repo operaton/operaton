@@ -347,7 +347,7 @@ public class DeleteProcessDefinitionTest {
       deployTwoProcessDefinitions();
     }
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     for (int i = 0; i < 3; i++) {
       variables.put("varName" + i, "varValue");
@@ -489,7 +489,7 @@ public class DeleteProcessDefinitionTest {
     }
     String[] processDefinitionIdsOne = findProcessDefinitionIdsByKey("processOne");
     String[] processDefinitionIdsTwo = findProcessDefinitionIdsByKey("processTwo");
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     for (int i = 0; i < 3; i++) {
       variables.put("varName" + i, "varValue");
@@ -580,7 +580,7 @@ public class DeleteProcessDefinitionTest {
   private String[] findProcessDefinitionIdsByKey(String processDefinitionKey) {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey(processDefinitionKey).list();
-    List<String> processDefinitionIds = new ArrayList<String>();
+    List<String> processDefinitionIds = new ArrayList<>();
     for (ProcessDefinition processDefinition: processDefinitions) {
       processDefinitionIds.add(processDefinition.getId());
     }

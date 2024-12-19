@@ -31,7 +31,7 @@ public abstract class MigratingJobInstance implements MigratingInstance, Removin
   protected JobDefinitionEntity targetJobDefinitionEntity;
   protected ScopeImpl targetScope;
 
-  protected List<MigratingInstance> migratingDependentInstances = new ArrayList<MigratingInstance>();
+  protected List<MigratingInstance> migratingDependentInstances = new ArrayList<>();
 
   public MigratingJobInstance(JobEntity jobEntity, JobDefinitionEntity jobDefinitionEntity,
       ScopeImpl targetScope) {

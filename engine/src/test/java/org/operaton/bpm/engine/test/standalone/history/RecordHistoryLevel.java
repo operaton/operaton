@@ -25,8 +25,8 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 
 public class RecordHistoryLevel implements HistoryLevel {
 
-  protected List<HistoryEventType> recordedHistoryEventTypes = new ArrayList<HistoryEventType>();
-  protected List<ProducedHistoryEvent> producedHistoryEvents = new ArrayList<ProducedHistoryEvent>();
+  protected List<HistoryEventType> recordedHistoryEventTypes = new ArrayList<>();
+  protected List<ProducedHistoryEvent> producedHistoryEvents = new ArrayList<>();
 
   public RecordHistoryLevel() {
   }

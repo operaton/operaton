@@ -28,7 +28,7 @@ public class DatabasePurgeReport implements PurgeReporting<Long> {
    * Key: table name
    * Value: entity count
    */
-  Map<String, Long> deletedEntities = new HashMap<String, Long>();
+  Map<String, Long> deletedEntities = new HashMap<>();
   boolean dbContainsLicenseKey;
 
   @Override

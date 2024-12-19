@@ -225,7 +225,7 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .getId();
 
     // variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 
@@ -360,7 +360,7 @@ public class CaseServiceStageTest extends PluggableProcessEngineTest {
         .getId();
 
     // variables
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariableName", "abc");
     variables.put("anotherVariableName", 999);
 

@@ -105,7 +105,7 @@ public class RetryCmdDeployment {
   }
 
   public static Collection<RetryCmdDeployment[]> asParameters(RetryCmdDeployment... deployments) {
-    List<RetryCmdDeployment[]> deploymentList = new ArrayList<RetryCmdDeployment[]>();
+    List<RetryCmdDeployment[]> deploymentList = new ArrayList<>();
     for (RetryCmdDeployment deployment : deployments) {
       deploymentList.add(new RetryCmdDeployment[]{ deployment });
     }

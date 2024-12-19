@@ -546,7 +546,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   protected Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("decisionInstanceId", MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID);
     parameters.put("decisionInstanceIdIn", MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID_IN);

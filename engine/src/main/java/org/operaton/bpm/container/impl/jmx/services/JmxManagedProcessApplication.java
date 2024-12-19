@@ -81,7 +81,7 @@ public class JmxManagedProcessApplication implements PlatformService<JmxManagedP
 
   @Override
   public List<String> getDeploymentIds() {
-    List<String> deploymentIds = new ArrayList<String>();
+    List<String> deploymentIds = new ArrayList<>();
     for (DeployedProcessArchive registration : deploymentMap.values()) {
       deploymentIds.addAll(registration.getAllDeploymentIds());
     }
@@ -90,7 +90,7 @@ public class JmxManagedProcessApplication implements PlatformService<JmxManagedP
 
   @Override
   public List<String> getDeploymentNames() {
-    return new ArrayList<String>(deploymentMap.keySet());
+    return new ArrayList<>(deploymentMap.keySet());
   }
 
   public ProcessApplicationInfoImpl getProcessApplicationInfo() {

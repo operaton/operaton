@@ -49,7 +49,7 @@ public class DeleteJobsCmd implements Command<Void> {
   }
 
   public DeleteJobsCmd(String jobId, boolean cascade) {
-    this.jobIds = new ArrayList<String>();
+    this.jobIds = new ArrayList<>();
     jobIds.add(jobId);
     this.cascade = cascade;
   }

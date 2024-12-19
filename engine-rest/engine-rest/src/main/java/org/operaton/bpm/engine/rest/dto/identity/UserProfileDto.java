@@ -44,7 +44,7 @@ public class UserProfileDto {
   }
   
   public static List<UserProfileDto> fromUserList(List<User> sourceList) {
-    List<UserProfileDto> resultList = new ArrayList<UserProfileDto>(); 
+    List<UserProfileDto> resultList = new ArrayList<>(); 
     for (User user : sourceList) {
       resultList.add(fromUser(user));
     }

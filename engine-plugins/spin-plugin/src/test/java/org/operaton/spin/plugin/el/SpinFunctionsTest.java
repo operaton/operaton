@@ -103,7 +103,7 @@ public class SpinFunctionsTest extends PluggableProcessEngineTestCase {
       .addModelInstance("process.bpmn", bpmnModelInstance)
       .deploy();
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("xmlVar", "<customers><customer /></customers>");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 

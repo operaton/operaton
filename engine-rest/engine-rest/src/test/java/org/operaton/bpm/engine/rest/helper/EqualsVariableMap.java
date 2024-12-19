@@ -71,7 +71,7 @@ public class EqualsVariableMap extends BaseMatcher<Map<String, Object>> {
 
   public EqualsVariableMap matcher(String key, Matcher<?> matcher) {
     if (matchers == null) {
-      this.matchers = new HashMap<String, Matcher<?>>();
+      this.matchers = new HashMap<>();
     }
 
     matchers.put(key, matcher);

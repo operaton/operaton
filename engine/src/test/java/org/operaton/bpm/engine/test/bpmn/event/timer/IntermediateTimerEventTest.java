@@ -65,10 +65,10 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
   @Test
   public void testExpression() {
     // Set the clock fixed
-    HashMap<String, Object> variables1 = new HashMap<String, Object>();
+    HashMap<String, Object> variables1 = new HashMap<>();
     variables1.put("dueDate", new Date());
 
-    HashMap<String, Object> variables2 = new HashMap<String, Object>();
+    HashMap<String, Object> variables2 = new HashMap<>();
     variables2.put("dueDate", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date()));
 
     // After process start, there should be timer created
@@ -96,7 +96,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
   @Test
   public void testExpressionRecalculateCurrentDateBased() {
     // Set the clock fixed
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("duration", "PT1H");
 
     // After process start, there should be timer created
@@ -131,7 +131,7 @@ public class IntermediateTimerEventTest extends PluggableProcessEngineTest {
   @Test
   public void testExpressionRecalculateCreationDateBased() {
     // Set the clock fixed
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("duration", "PT1H");
 
     // After process start, there should be timer created

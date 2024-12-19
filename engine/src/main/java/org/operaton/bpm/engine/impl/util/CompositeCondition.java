@@ -24,7 +24,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class CompositeCondition {
 
-  protected CopyOnWriteArrayList<SingleConsumerCondition> conditions = new CopyOnWriteArrayList<SingleConsumerCondition>();
+  protected CopyOnWriteArrayList<SingleConsumerCondition> conditions = new CopyOnWriteArrayList<>();
 
   public void addConsumer(SingleConsumerCondition condition) {
     conditions.add(condition);

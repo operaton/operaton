@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
  */
 public class ActivityStackCollector implements TreeVisitor<ScopeImpl> {
 
-  protected List<PvmActivity> activityStack = new ArrayList<PvmActivity>();
+  protected List<PvmActivity> activityStack = new ArrayList<>();
 
   @Override
   public void visit(ScopeImpl scope) {

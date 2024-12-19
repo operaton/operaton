@@ -135,7 +135,7 @@ public class BulkHistoryDeleteProcessInstancesAuthorizationTest {
   }
 
   private List<String> prepareHistoricProcesses(String businessKey, VariableMap variables) {
-    List<String> processInstanceIds = new ArrayList<String>();
+    List<String> processInstanceIds = new ArrayList<>();
 
     for (int i = 0; i < 5; i++) {
       ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(businessKey, variables);

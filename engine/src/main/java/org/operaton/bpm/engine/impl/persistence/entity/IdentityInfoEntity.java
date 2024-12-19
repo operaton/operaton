@@ -48,7 +48,7 @@ public class IdentityInfoEntity implements DbEntity, HasDbRevision, Account, Ser
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("value", value);
     persistentState.put("password", passwordBytes);
     return persistentState;

@@ -75,7 +75,7 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
     String identifier = getReferenceIdentifier(referenceSourceElement);
     List<String> references = StringUtil.splitListBySeparator(identifier, separator);
 
-    Collection<DomElement> referenceTargetElements = new ArrayList<DomElement>();
+    Collection<DomElement> referenceTargetElements = new ArrayList<>();
     for (String reference : references) {
       DomElement referenceTargetElement = document.getElementById(reference);
       if (referenceTargetElement != null) {
@@ -90,7 +90,7 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
 
   public Collection<T> getReferenceTargetElements(final ModelElementInstance referenceSourceElement) {
 
-    return new Collection<T>() {
+    return new Collection<>() {
 
       @Override
       public int size() {

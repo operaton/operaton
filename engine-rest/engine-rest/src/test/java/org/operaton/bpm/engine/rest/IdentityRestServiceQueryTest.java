@@ -64,7 +64,7 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
   private void createMockIdentityQueries() {
     UserQuery sampleUserQuery = mock(UserQuery.class);
 
-    List<User> mockUsers = new ArrayList<User>();
+    List<User> mockUsers = new ArrayList<>();
 
     mockUser = MockProvider.createMockUser();
     mockUsers.add(mockUser);

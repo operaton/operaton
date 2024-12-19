@@ -34,7 +34,7 @@ public class CaseExecutionStateTransitionCollector implements CaseExecutionListe
 
   private static final Logger LOG = TestLogger.TEST_LOGGER.getLogger();
 
-  public List<String> stateTransitions = new ArrayList<String>();
+  public List<String> stateTransitions = new ArrayList<>();
 
   @Override
   public void notify(DelegateCaseExecution planItem) throws Exception {

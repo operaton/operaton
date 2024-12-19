@@ -59,7 +59,7 @@ public class HistoricExternalTaskLogRestServiceImpl implements HistoricExternalT
 
     List<HistoricExternalTaskLog> matchingHistoricExternalTaskLogs = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricExternalTaskLogDto> results = new ArrayList<HistoricExternalTaskLogDto>();
+    List<HistoricExternalTaskLogDto> results = new ArrayList<>();
     for (HistoricExternalTaskLog historicExternalTaskLog : matchingHistoricExternalTaskLogs) {
       HistoricExternalTaskLogDto result = HistoricExternalTaskLogDto.fromHistoricExternalTaskLog(historicExternalTaskLog);
       results.add(result);

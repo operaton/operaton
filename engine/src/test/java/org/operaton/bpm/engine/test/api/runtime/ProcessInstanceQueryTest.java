@@ -1354,7 +1354,7 @@ public class ProcessInstanceQueryTest {
   @Test
   public void testQueryByProcessInstanceIdsEmpty() {
     try {
-      runtimeService.createProcessInstanceQuery().processInstanceIds(new HashSet<String>());
+      runtimeService.createProcessInstanceQuery().processInstanceIds(new HashSet<>());
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException re) {
       assertThat(re.getMessage()).contains("Set of process instance ids is empty");

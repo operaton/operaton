@@ -74,7 +74,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldBroadcast() {
-    Map<String, String> requestBody = new HashMap<String, String>();
+    Map<String, String> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
 
     given()
@@ -93,7 +93,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldBroadcastWithVariables() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("variables",
       VariablesBuilder.create()
@@ -112,7 +112,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
     verify(runtimeServiceMock).createSignalEvent((String) requestBody.get("name"));
 
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("total", 420);
     expectedVariables.put("invoiceId", "ABC123");
     verify(signalBuilderMock).setVariables(expectedVariables);
@@ -122,7 +122,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldBroadcastWithTenant() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("tenantId", "aTenantId");
 
@@ -143,7 +143,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldBroadcastWithVariablesAndTenant() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("variables",
       VariablesBuilder.create()
@@ -163,7 +163,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
     verify(runtimeServiceMock).createSignalEvent((String) requestBody.get("name"));
 
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("total", 420);
     expectedVariables.put("invoiceId", "ABC123");
     verify(signalBuilderMock).setVariables(expectedVariables);
@@ -174,7 +174,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldBroadcastWithoutTenant() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("withoutTenantId", true);
 
@@ -195,7 +195,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldBroadcastWithoutTenantAndWithVariables() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("variables",
       VariablesBuilder.create()
@@ -214,7 +214,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
       .post(SIGNAL_URL);
 
     verify(runtimeServiceMock).createSignalEvent((String) requestBody.get("name"));
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("total", 420);
     expectedVariables.put("invoiceId", "ABC123");
     verify(signalBuilderMock).setVariables(expectedVariables);
@@ -225,7 +225,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldDeliverToSingleExecution() {
-    Map<String, String> requestBody = new HashMap<String, String>();
+    Map<String, String> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("executionId", "anExecutionId");
 
@@ -246,7 +246,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldDeliverToSingleExecutionWithVariables() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("executionId", "anExecutionId");
     requestBody.put("variables",
@@ -265,7 +265,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
       .post(SIGNAL_URL);
 
     verify(runtimeServiceMock).createSignalEvent((String) requestBody.get("name"));
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("total", 420);
     expectedVariables.put("invoiceId", "ABC123");
     verify(signalBuilderMock).setVariables(expectedVariables);
@@ -276,7 +276,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldDeliverToSingleExecutionWithTenant() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("tenantId", "aTenantId");
     requestBody.put("executionId", "anExecutionId");
@@ -299,7 +299,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldDeliverToSingleExecutionWithVariablesAndTenant() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("executionId", "anExecutionId");
     requestBody.put("variables",
@@ -320,7 +320,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
     verify(runtimeServiceMock).createSignalEvent((String) requestBody.get("name"));
     verify(signalBuilderMock).executionId((String) requestBody.get("executionId"));
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("total", 420);
     expectedVariables.put("invoiceId", "ABC123");
     verify(signalBuilderMock).setVariables(expectedVariables);
@@ -331,7 +331,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldDeliverToSingleExecutionWithoutTenant() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("executionId", "anExecutionId");
     requestBody.put("withoutTenantId", true);
@@ -354,7 +354,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldDeliverToSingleExecutionWithoutTenantAndWithVariables() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("executionId", "anExecutionId");
     requestBody.put("withoutTenantId", true);
@@ -376,7 +376,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
     verify(runtimeServiceMock).createSignalEvent((String) requestBody.get("name"));
     verify(signalBuilderMock).executionId((String) requestBody.get("executionId"));
     verify(signalBuilderMock).withoutTenantId();
-    Map<String, Object> expectedVariables = new HashMap<String, Object>();
+    Map<String, Object> expectedVariables = new HashMap<>();
     expectedVariables.put("total", 420);
     expectedVariables.put("invoiceId", "ABC123");
     verify(signalBuilderMock).setVariables(expectedVariables);
@@ -386,7 +386,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
 
   @Test
   public void shouldThrowExceptionByMissingName() {
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
 
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -405,7 +405,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
     String message = "expected exception";
     doThrow(new BadUserRequestException(message)).when(signalBuilderMock).send();
 
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
 
     given()
@@ -425,7 +425,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
     String message = "expected exception";
     doThrow(new AuthorizationException(message)).when(signalBuilderMock).send();
 
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
 
     given()
@@ -445,7 +445,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
     String message = "expected exception";
     doThrow(new ProcessEngineException(message)).when(signalBuilderMock).send();
 
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
 
     given()
@@ -465,7 +465,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
     String message = "expected exception";
     doThrow(new NotFoundException(message)).when(signalBuilderMock).send();
 
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
     requestBody.put("executionId", "foo");
 
@@ -486,7 +486,7 @@ public class SignalRestServiceTest extends AbstractRestServiceTest {
     String message = "expected exception";
     doThrow(new IllegalArgumentException(message)).when(signalBuilderMock).send();
 
-    Map<String, Object> requestBody = new HashMap<String, Object>();
+    Map<String, Object> requestBody = new HashMap<>();
     requestBody.put("name", "aSignalName");
 
     given()

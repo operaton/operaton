@@ -36,7 +36,7 @@ public class ProcessApplicationEventListenerPlugin extends AbstractProcessEngine
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
     List<BpmnParseListener> preParseListeners = processEngineConfiguration.getCustomPreBPMNParseListeners();
     if(preParseListeners == null) {
-      preParseListeners = new ArrayList<BpmnParseListener>();
+      preParseListeners = new ArrayList<>();
       processEngineConfiguration.setCustomPreBPMNParseListeners(preParseListeners);
     }
     preParseListeners.add(new ProcessApplicationEventParseListener());

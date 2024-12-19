@@ -88,7 +88,7 @@ public class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityB
         return;
       }
     }
-    executeWithErrorPropagation(execution, new Callable<Void>() {
+    executeWithErrorPropagation(execution, new Callable<>() {
       @Override
       public Void call() throws Exception {
         ((SignallableActivityBehavior) activityBehaviorInstance).signal(execution, signalName, signalData);
@@ -99,7 +99,7 @@ public class ServiceTaskDelegateExpressionActivityBehavior extends TaskActivityB
 
 	@Override
   public void performExecution(final ActivityExecution execution) throws Exception {
-	  Callable<Void> callable = new Callable<Void>() {
+	  Callable<Void> callable = new Callable<>() {
       @Override
       public Void call() throws Exception {
         // Note: we can't cache the result of the expression, because the

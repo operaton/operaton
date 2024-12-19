@@ -611,7 +611,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
   @Deployment
   public void FAILURE_testMultipleCompensationOfCancellationOfMultipleTx() {
     // when
-    List<String> devices = new ArrayList<String>();
+    List<String> devices = new ArrayList<>();
 	  devices.add("device1");
     devices.add("device2");
     devices.add("fail");
@@ -700,7 +700,7 @@ public class TransactionSubProcessTest extends PluggableProcessEngineTest {
   }
 
   protected List<Execution> collectExecutionsFor(String... activityIds) {
-    List<Execution> executions = new ArrayList<Execution>();
+    List<Execution> executions = new ArrayList<>();
 
     for (String activityId : activityIds) {
       executions.addAll(runtimeService.createExecutionQuery().activityId(activityId).list());

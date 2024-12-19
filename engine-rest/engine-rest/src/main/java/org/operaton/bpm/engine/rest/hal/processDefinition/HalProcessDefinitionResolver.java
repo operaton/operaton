@@ -42,7 +42,7 @@ public class HalProcessDefinitionResolver extends HalIdResourceCacheLinkResolver
       .processDefinitionIdIn(linkedIds)
       .listPage(0, linkedIds.length);
 
-    List<HalResource<?>> resolved = new ArrayList<HalResource<?>>();
+    List<HalResource<?>> resolved = new ArrayList<>();
     for (ProcessDefinition procDef : processDefinitions) {
       resolved.add(HalProcessDefinition.fromProcessDefinition(procDef, processEngine));
     }

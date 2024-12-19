@@ -34,7 +34,7 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   public static final DmnEngineLogger LOG = DmnLogger.ENGINE_LOGGER;
 
-  protected final Map<String, TypedValue> outputValues = new LinkedHashMap<String, TypedValue>();
+  protected final Map<String, TypedValue> outputValues = new LinkedHashMap<>();
 
   public void putValue(String name, TypedValue value) {
     outputValues.put(name, value);
@@ -97,7 +97,7 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   @Override
   public Map<String, Object> getEntryMap() {
-    Map<String, Object> valueMap = new HashMap<String, Object>();
+    Map<String, Object> valueMap = new HashMap<>();
 
     for (String key : outputValues.keySet()) {
       valueMap.put(key, get(key));
@@ -133,7 +133,7 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   @Override
   public Collection<Object> values() {
-    List<Object> values = new ArrayList<Object>();
+    List<Object> values = new ArrayList<>();
 
     for (TypedValue typedValue : outputValues.values()) {
       values.add(typedValue.getValue());
@@ -184,7 +184,7 @@ public class DmnDecisionRuleResultImpl implements DmnDecisionRuleResult {
 
   @Override
   public Set<Entry<String, Object>> entrySet() {
-    Set<Entry<String, Object>> entrySet = new HashSet<Entry<String, Object>>();
+    Set<Entry<String, Object>> entrySet = new HashSet<>();
 
     for (Entry<String, TypedValue> typedEntry : outputValues.entrySet()) {
       DmnDecisionRuleOutputEntry entry = new DmnDecisionRuleOutputEntry(typedEntry.getKey(), typedEntry.getValue());

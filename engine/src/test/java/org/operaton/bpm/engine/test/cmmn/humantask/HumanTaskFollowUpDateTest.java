@@ -41,7 +41,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
   public void testHumanTaskFollowUpDateExtension() throws Exception {
 
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("01-01-2015 12:10:00");
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", date);
 
     String caseInstanceId = caseService.createCaseInstanceByKey("case", variables).getId();
@@ -56,7 +56,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
   @Test
   public void testHumanTaskFollowUpDateStringExtension() throws Exception {
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "2015-01-01T12:10:00");
 
     String caseInstanceId = caseService.createCaseInstanceByKey("case", variables).getId();
@@ -71,7 +71,7 @@ public class HumanTaskFollowUpDateTest extends PluggableProcessEngineTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/humantask/HumanTaskFollowUpDateTest.testHumanTaskFollowUpDate.cmmn"})
   @Test
   public void testHumanTaskRelativeFollowUpDate() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("dateVariable", "P2DT2H30M");
 
     String caseInstanceId = caseService.createCaseInstanceByKey("case", variables).getId();

@@ -254,7 +254,7 @@ public class DemoDataGenerator {
 
       FilterService filterService = engine.getFilterService();
 
-      Map<String, Object> filterProperties = new HashMap<String, Object>();
+      Map<String, Object> filterProperties = new HashMap<>();
       filterProperties.put("description", "Tasks assigned to me");
       filterProperties.put("priority", -10);
       addVariables(filterProperties);
@@ -345,7 +345,7 @@ public class DemoDataGenerator {
     }
 
     protected void addVariables(Map<String, Object> filterProperties) {
-      List<Object> variables = new ArrayList<Object>();
+      List<Object> variables = new ArrayList<>();
 
       addVariable(variables, "amount", "Invoice Amount");
       addVariable(variables, "invoiceNumber", "Invoice Number");
@@ -356,7 +356,7 @@ public class DemoDataGenerator {
     }
 
     protected void addVariable(List<Object> variables, String name, String label) {
-      Map<String, String> variable = new HashMap<String, String>();
+      Map<String, String> variable = new HashMap<>();
       variable.put("name", name);
       variable.put("label", label);
       variables.add(variable);

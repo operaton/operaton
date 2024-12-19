@@ -60,7 +60,7 @@ public class JaxBContextProviderTest {
     } catch (SpinXmlDataFormatException e) {
 
       // assert that there is a jaxb exception somewhere in the exception hierarchy
-      Set<Throwable> processedExceptions = new HashSet<Throwable>();
+      Set<Throwable> processedExceptions = new HashSet<>();
       while (!processedExceptions.contains(e.getCause()) && e.getCause() != null) {
         if (e.getCause() instanceof JAXBException) {
           // happy path

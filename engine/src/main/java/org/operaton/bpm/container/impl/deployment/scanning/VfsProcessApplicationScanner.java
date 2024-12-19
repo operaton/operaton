@@ -55,7 +55,7 @@ public class VfsProcessApplicationScanner implements ProcessApplicationScanner {
   public Map<String, byte[]> findResources(ClassLoader classLoader, String resourceRootPath, URL processesXml, String[] additionalResourceSuffixes) {
 
     // the map in which we collect the resources
-    final Map<String, byte[]> resources = new HashMap<String, byte[]>();
+    final Map<String, byte[]> resources = new HashMap<>();
 
     if(resourceRootPath != null && !resourceRootPath.startsWith("pa:")) {
 

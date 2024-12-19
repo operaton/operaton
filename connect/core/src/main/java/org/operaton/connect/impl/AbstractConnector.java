@@ -41,7 +41,7 @@ public abstract class AbstractConnector<Q extends ConnectorRequest<R>, R extends
   /**
    * The {@link ConnectorRequestInterceptor} chain
    */
-  protected List<ConnectorRequestInterceptor> requestInterceptors = new LinkedList<ConnectorRequestInterceptor>();
+  protected List<ConnectorRequestInterceptor> requestInterceptors = new LinkedList<>();
 
   public AbstractConnector(String connectorId) {
     this.connectorId = connectorId;

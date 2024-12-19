@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.rest.dto.externaltask.LockedExternalTaskDto;
  */
 public class FetchAndLockResult {
 
-  protected List<LockedExternalTaskDto> tasks = new ArrayList<LockedExternalTaskDto>();
+  protected List<LockedExternalTaskDto> tasks = new ArrayList<>();
   protected Throwable throwable;
 
   public FetchAndLockResult(List<LockedExternalTaskDto> tasks) {

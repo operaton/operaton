@@ -39,8 +39,8 @@ public class FormFieldImpl implements FormField {
   protected FormType type;
   protected Object defaultValue;
   protected TypedValue value;
-  protected List<FormFieldValidationConstraint> validationConstraints = new ArrayList<FormFieldValidationConstraint>();
-  protected Map<String, String> properties = new HashMap<String, String>();
+  protected List<FormFieldValidationConstraint> validationConstraints = new ArrayList<>();
+  protected Map<String, String> properties = new HashMap<>();
 
   // getters / setters ///////////////////////////////////////////
 

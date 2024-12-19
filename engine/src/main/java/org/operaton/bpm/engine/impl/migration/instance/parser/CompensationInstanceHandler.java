@@ -146,7 +146,7 @@ public class CompensationInstanceHandler implements MigratingInstanceParseHandle
 
     ExecutionEntity representativeExecution = migratingInstance.resolveRepresentativeExecution();
 
-    List<VariableInstanceEntity> variables = new ArrayList<VariableInstanceEntity>(
+    List<VariableInstanceEntity> variables = new ArrayList<>(
         representativeExecution.getVariablesInternal());
     parseContext.handleDependentVariables(migratingInstance, variables);
   }

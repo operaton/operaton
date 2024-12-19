@@ -56,7 +56,7 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
 
       List<ActivityExecution> joinedExecutions = execution.findInactiveConcurrentExecutions(activity);
       String defaultSequenceFlow = (String) execution.getActivity().getProperty("default");
-      List<PvmTransition> transitionsToTake = new ArrayList<PvmTransition>();
+      List<PvmTransition> transitionsToTake = new ArrayList<>();
 
       // find matching non-default sequence flows
       for (PvmTransition outgoingTransition : execution.getActivity().getOutgoingTransitions()) {
@@ -92,7 +92,7 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
   }
 
   protected Collection<ActivityExecution> getLeafExecutions(ActivityExecution parent) {
-    List<ActivityExecution> executionlist = new ArrayList<ActivityExecution>();
+    List<ActivityExecution> executionlist = new ArrayList<>();
     List<? extends ActivityExecution> subExecutions = parent.getNonEventScopeExecutions();
     if (subExecutions.size() == 0) {
       executionlist.add(parent);
@@ -133,9 +133,9 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
   protected boolean canReachActivity(ActivityExecution execution, PvmActivity activity) {
     PvmTransition pvmTransition = execution.getTransition();
     if (pvmTransition != null) {
-      return isReachable(pvmTransition.getDestination(), activity, new HashSet<PvmActivity>());
+      return isReachable(pvmTransition.getDestination(), activity, new HashSet<>());
     } else {
-      return isReachable(execution.getActivity(), activity, new HashSet<PvmActivity>());
+      return isReachable(execution.getActivity(), activity, new HashSet<>());
     }
   }
 

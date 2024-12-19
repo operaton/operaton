@@ -64,7 +64,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
     // Process contains 2 service tasks. one containing a method with no params, the other
     // contains a method with 2 params. When the process completes without exception,
     // test passed.
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("aString", "abcdefgh");
     runtimeService.startProcessInstanceByKey("methodExpressionProcess", vars);
 
@@ -74,7 +74,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testExecutionAvailable() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
 
     vars.put("myVar", new ExecutionTestVariable());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testExecutionAvailableProcess", vars);
@@ -106,7 +106,7 @@ public class ExpressionManagerTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testResolvesVariablesFromDifferentScopes() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("assignee", "michael");
 
     runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);

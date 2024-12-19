@@ -42,7 +42,7 @@ public class HalUserResolver extends HalIdResourceCacheLinkResolver {
       .userIdIn(linkedIds)
       .listPage(0, linkedIds.length);
 
-    List<HalResource<?>> resolvedUsers = new ArrayList<HalResource<?>>();
+    List<HalResource<?>> resolvedUsers = new ArrayList<>();
     for (User user : users) {
       resolvedUsers.add(HalUser.fromUser(user));
     }

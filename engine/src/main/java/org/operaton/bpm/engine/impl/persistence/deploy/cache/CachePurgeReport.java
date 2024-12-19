@@ -40,7 +40,7 @@ public class CachePurgeReport implements PurgeReporting<Set<String>> {
    * Key: cache name
    * Value: values
    */
-  Map<String, Set<String>> deletedCache = new HashMap<String, Set<String>>();
+  Map<String, Set<String>> deletedCache = new HashMap<>();
 
   @Override
   public void addPurgeInformation(String key, Set<String> value) {

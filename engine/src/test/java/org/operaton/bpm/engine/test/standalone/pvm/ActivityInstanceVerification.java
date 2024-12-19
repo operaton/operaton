@@ -54,8 +54,8 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
 
   }
 
-  protected Map<String, List<ActivityInstance>> startedActivityInstances = new HashMap<String, List<ActivityInstance>>();
-  protected Map<String, List<ActivityInstance>> endedActivityInstances = new HashMap<String, List<ActivityInstance>>();
+  protected Map<String, List<ActivityInstance>> startedActivityInstances = new HashMap<>();
+  protected Map<String, List<ActivityInstance>> endedActivityInstances = new HashMap<>();
 
   @Override
   public void notify(DelegateExecution e) throws Exception {
@@ -85,7 +85,7 @@ public class ActivityInstanceVerification extends Assert implements ExecutionLis
     // add to instance map
     List<ActivityInstance> instancesForThisAct = instanceMap.get(actId);
     if(instancesForThisAct == null) {
-      instancesForThisAct = new ArrayList<ActivityInstance>();
+      instancesForThisAct = new ArrayList<>();
       instanceMap.put(actId, instancesForThisAct);
     }
     ActivityInstance activityInstance = new ActivityInstance(executionId, actInstanceId, parentActInstanceId, execution.isCompleteScope());

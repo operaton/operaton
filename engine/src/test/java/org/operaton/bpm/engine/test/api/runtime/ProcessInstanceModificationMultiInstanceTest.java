@@ -1191,7 +1191,7 @@ public class ProcessInstanceModificationMultiInstanceTest extends PluggableProce
   }
 
   protected void assertVariableSet(List<Execution> executions, String variableName, List<?> expectedValues) {
-    List<Object> actualValues = new ArrayList<Object>();
+    List<Object> actualValues = new ArrayList<>();
     for (Execution execution : executions) {
       actualValues.add(runtimeService.getVariable(execution.getId(), variableName));
     }

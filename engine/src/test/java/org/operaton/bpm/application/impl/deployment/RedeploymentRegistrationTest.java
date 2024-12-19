@@ -513,7 +513,7 @@ public class RedeploymentRegistrationTest {
 
       @Override
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
-        return new Command<ProcessApplicationReference>() {
+        return new Command<>() {
 
           @Override
           public ProcessApplicationReference execute(CommandContext commandContext) {
@@ -538,7 +538,7 @@ public class RedeploymentRegistrationTest {
 
       @Override
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
-        return new Command<ProcessApplicationReference>() {
+        return new Command<>() {
 
           @Override
           public ProcessApplicationReference execute(CommandContext commandContext) {
@@ -563,7 +563,7 @@ public class RedeploymentRegistrationTest {
 
       @Override
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
-        return new Command<ProcessApplicationReference>() {
+        return new Command<>() {
 
           @Override
           public ProcessApplicationReference execute(CommandContext commandContext) {
@@ -588,7 +588,7 @@ public class RedeploymentRegistrationTest {
 
       @Override
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
-        return new Command<ProcessApplicationReference>() {
+        return new Command<>() {
 
           @Override
           public ProcessApplicationReference execute(CommandContext commandContext) {

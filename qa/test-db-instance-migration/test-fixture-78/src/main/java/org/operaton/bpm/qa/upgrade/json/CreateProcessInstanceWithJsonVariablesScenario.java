@@ -67,14 +67,14 @@ public class CreateProcessInstanceWithJsonVariablesScenario {
     orderDetails.setPrice(32000.45);
     orderDetails.setRoundedPrice(32000);
 
-    List<String> currencies = new ArrayList<String>();
+    List<String> currencies = new ArrayList<>();
     currencies.add("euro");
     currencies.add("dollar");
     orderDetails.setCurrencies(currencies);
 
     order.setOrderDetails(orderDetails);
 
-    List<RegularCustomer> customers = new ArrayList<RegularCustomer>();
+    List<RegularCustomer> customers = new ArrayList<>();
 
     customers.add(new RegularCustomer("Kermit", 1354539722));
     customers.add(new RegularCustomer("Waldo", 1320325322));

@@ -45,8 +45,8 @@ public class FormFieldHandler {
   protected Expression label;
   protected AbstractFormFieldType type;
   protected Expression defaultValueExpression;
-  protected Map<String, String> properties = new HashMap<String, String>();
-  protected List<FormFieldValidationConstraintHandler> validationHandlers = new ArrayList<FormFieldValidationConstraintHandler>();
+  protected Map<String, String> properties = new HashMap<>();
+  protected List<FormFieldValidationConstraintHandler> validationHandlers = new ArrayList<>();
   protected boolean businessKey;
 
   public FormField createFormField(ExecutionEntity executionEntity) {

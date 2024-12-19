@@ -39,7 +39,7 @@ public class TransitionImpl extends CoreModelElement implements PvmTransition {
   protected ProcessDefinitionImpl processDefinition;
 
   /** Graphical information: a list of waypoints: x1, y1, x2, y2, x3, y3, .. */
-  protected List<Integer> waypoints = new ArrayList<Integer>();
+  protected List<Integer> waypoints = new ArrayList<>();
 
 
   public TransitionImpl(String id, ProcessDefinitionImpl processDefinition) {

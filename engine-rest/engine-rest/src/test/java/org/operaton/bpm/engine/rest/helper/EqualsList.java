@@ -44,8 +44,8 @@ public class EqualsList extends BaseMatcher<List<String>> {
 
     List<String> argumentList = (List<String>) list;
 
-    Set<String> setToCompare = new HashSet<String>(listToCompare);
-    Set<String> argumentSet = new HashSet<String>(argumentList);
+    Set<String> setToCompare = new HashSet<>(listToCompare);
+    Set<String> argumentSet = new HashSet<>(argumentList);
 
     return setToCompare.equals(argumentSet);
   }

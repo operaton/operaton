@@ -55,7 +55,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // given
 
     // a running process instance with a failed job
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("fail", Boolean.TRUE);
     runtimeService.startProcessInstanceByKey("suspensionProcess", params);
 
@@ -88,7 +88,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // given
 
     // a running process instance with a failed job
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("fail", Boolean.TRUE);
     runtimeService.startProcessInstanceByKey("suspensionProcess", params);
 
@@ -125,7 +125,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     // given
 
     // a running process instance with a failed job
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("fail", Boolean.TRUE);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("suspensionProcess", params);
 
@@ -164,7 +164,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     // a running process instance with a failed job
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("fail", Boolean.TRUE);
     runtimeService.startProcessInstanceByKey("suspensionProcess", params);
 
@@ -199,7 +199,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     // a running process instance with a failed job
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("fail", Boolean.TRUE);
     runtimeService.startProcessInstanceByKey("suspensionProcess", params);
 
@@ -237,7 +237,7 @@ public class ActivateJobTest extends PluggableProcessEngineTest {
     for (int i=0; i < nrOfProcessDefinitions; i++) {
       repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn").deploy();
-      Map<String, Object> params = new HashMap<String, Object>();
+      Map<String, Object> params = new HashMap<>();
       params.put("fail", Boolean.TRUE);
       runtimeService.startProcessInstanceByKey(key, params);
     }

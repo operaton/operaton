@@ -64,7 +64,7 @@ public class PerfTestRunner {
     // init test watchers
     String testWatchers = configuration.getTestWatchers();
     if(testWatchers != null) {
-      watchers = new ArrayList<PerfTestWatcher>();
+      watchers = new ArrayList<>();
       String[] watcherClassNames = testWatchers.split(",");
       for (String watcherClassName : watcherClassNames) {
         if(watcherClassName.length() > 0) {
@@ -80,7 +80,7 @@ public class PerfTestRunner {
     // add activity watcher
     if (configuration.getWatchActivities() != null) {
       if (watchers == null) {
-        watchers = new ArrayList<PerfTestWatcher>();
+        watchers = new ArrayList<>();
       }
       watchers.add(new ActivityPerfTestWatcher(configuration.getWatchActivities()));
     }
@@ -105,7 +105,7 @@ public class PerfTestRunner {
       }
     }.start();
 
-    return new Future<PerfTestResults>() {
+    return new Future<>() {
 
       @Override
       public boolean isDone() {

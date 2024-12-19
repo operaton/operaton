@@ -41,7 +41,7 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
   protected SpinXmlElement element;
 
   public DomXPathNamespaceResolver(SpinXmlElement element) {
-    this.namespaces = new HashMap<String, String>();
+    this.namespaces = new HashMap<>();
     this.element = element;
   }
 
@@ -108,7 +108,7 @@ public class DomXPathNamespaceResolver implements NamespaceContext {
   public Iterator getPrefixes(String namespaceURI) {
     ensureNotNull("Namespace URI", namespaceURI);
 
-    List<String> list = new ArrayList<String>();
+    List<String> list = new ArrayList<>();
     if(namespaceURI.equals(XMLConstants.XML_NS_URI)) {
       list.add(XMLConstants.XML_NS_PREFIX);
       return Collections.unmodifiableList(list).iterator();

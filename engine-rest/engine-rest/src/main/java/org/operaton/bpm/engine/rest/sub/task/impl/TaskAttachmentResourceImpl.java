@@ -63,7 +63,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
 
     List<Attachment> taskAttachments = engine.getTaskService().getTaskAttachments(taskId);
 
-    List<AttachmentDto> attachments = new ArrayList<AttachmentDto>();
+    List<AttachmentDto> attachments = new ArrayList<>();
     for (Attachment attachment : taskAttachments) {
       attachments.add(AttachmentDto.fromAttachment(attachment));
     }

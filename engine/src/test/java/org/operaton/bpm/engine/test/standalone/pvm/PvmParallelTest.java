@@ -117,7 +117,7 @@ public class PvmParallelTest {
     activityInstanceC2.signal(null, null);
 
     List<String> activityNames = processInstance.findActiveActivityIds();
-    List<String> expectedActivityNames = new ArrayList<String>();
+    List<String> expectedActivityNames = new ArrayList<>();
     expectedActivityNames.add("end");
 
     assertEquals(expectedActivityNames, activityNames);

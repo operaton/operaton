@@ -347,7 +347,7 @@ public class MultiTenancyBatchQueryTest {
   protected void assertBatches(List<? extends Batch> actualBatches, String... expectedIds) {
     Assert.assertEquals(expectedIds.length, actualBatches.size());
 
-    Set<String> actualIds = new HashSet<String>();
+    Set<String> actualIds = new HashSet<>();
     for (Batch batch : actualBatches) {
       actualIds.add(batch.getId());
     }

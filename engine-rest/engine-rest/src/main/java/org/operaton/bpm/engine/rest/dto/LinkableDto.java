@@ -22,7 +22,7 @@ import java.util.List;
 
 public abstract class LinkableDto {
 
-  protected List<AtomLink> links = new ArrayList<AtomLink>();
+  protected List<AtomLink> links = new ArrayList<>();
   
   public List<AtomLink> getLinks() {
     return links;

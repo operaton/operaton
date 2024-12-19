@@ -86,9 +86,9 @@ public class AsyncStartEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testMultipleAsyncStartEvents() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("foo", "bar");
-    runtimeService.correlateMessage("newInvoiceMessage", new HashMap<String, Object>(), variables);
+    runtimeService.correlateMessage("newInvoiceMessage", new HashMap<>(), variables);
 
     assertEquals(1, runtimeService.createProcessInstanceQuery().count());
 

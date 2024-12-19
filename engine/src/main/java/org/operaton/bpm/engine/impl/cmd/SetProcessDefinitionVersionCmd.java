@@ -173,7 +173,7 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
   }
 
   protected Map<String, String> getJobDefinitionMapping(List<JobDefinitionEntity> currentJobDefinitions, List<JobDefinitionEntity> newVersionJobDefinitions) {
-    Map<String, String> mapping = new HashMap<String, String>();
+    Map<String, String> mapping = new HashMap<>();
 
     for (JobDefinitionEntity currentJobDefinition : currentJobDefinitions) {
       for (JobDefinitionEntity newJobDefinition : newVersionJobDefinitions) {

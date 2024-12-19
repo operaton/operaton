@@ -77,7 +77,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
     decisionService = engineRule.getDecisionService();
     managementService = engineRule.getManagementService();
     identityService = engineRule.getIdentityService();
-    decisionInstanceIds = new ArrayList<String>();
+    decisionInstanceIds = new ArrayList<>();
   }
 
   @Before
@@ -351,7 +351,7 @@ public class BatchHistoricDecisionInstanceDeletionUserOperationTest {
   }
 
   protected Map<String, UserOperationLogEntry> asMap(List<UserOperationLogEntry> logEntries) {
-    Map<String, UserOperationLogEntry> map = new HashMap<String, UserOperationLogEntry>();
+    Map<String, UserOperationLogEntry> map = new HashMap<>();
 
     for (UserOperationLogEntry entry : logEntries) {
 

@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.migration.MigrationInstruction;
  */
 public class EventSubscriptionInstanceHandler implements MigratingDependentInstanceParseHandler<MigratingActivityInstance, List<EventSubscriptionEntity>> {
 
-  public static final Set<String> SUPPORTED_EVENT_TYPES = new HashSet<String>(Arrays.asList(EventType.MESSAGE.name(), EventType.SIGNAL.name(), EventType.CONDITONAL.name()));
+  public static final Set<String> SUPPORTED_EVENT_TYPES = new HashSet<>(Arrays.asList(EventType.MESSAGE.name(), EventType.SIGNAL.name(), EventType.CONDITONAL.name()));
 
   @Override
   public void handle(MigratingInstanceParseContext parseContext, MigratingActivityInstance owningInstance, List<EventSubscriptionEntity> elements) {
@@ -83,7 +83,7 @@ public class EventSubscriptionInstanceHandler implements MigratingDependentInsta
   protected Map<String, EventSubscriptionDeclaration> getDeclarationsByTriggeringActivity(ScopeImpl eventScope) {
     Map<String, EventSubscriptionDeclaration> declarations = EventSubscriptionDeclaration.getDeclarationsForScope(eventScope);
 
-    return new HashMap<String, EventSubscriptionDeclaration>(declarations);
+    return new HashMap<>(declarations);
   }
 
   protected void addEmergingEventSubscriptions(MigratingActivityInstance owningInstance, Map<String, EventSubscriptionDeclaration> targetDeclarations) {

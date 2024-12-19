@@ -45,7 +45,7 @@ public class AuthorizationTestRule extends AuthorizationTestBaseRule {
   }
 
   public void start(AuthorizationScenario scenario) {
-    start(scenario, null, new HashMap<String, String>());
+    start(scenario, null, new HashMap<>());
   }
 
   public void start(AuthorizationScenario scenario, String userId, Map<String, String> resourceBindings) {
@@ -105,7 +105,7 @@ public class AuthorizationTestRule extends AuthorizationTestBaseRule {
   }
 
   public static Collection<AuthorizationScenario[]> asParameters(AuthorizationScenario... scenarios) {
-    List<AuthorizationScenario[]> scenarioList = new ArrayList<AuthorizationScenario[]>();
+    List<AuthorizationScenario[]> scenarioList = new ArrayList<>();
     for (AuthorizationScenario scenario : scenarios) {
       scenarioList.add(new AuthorizationScenario[]{ scenario });
     }
@@ -124,7 +124,7 @@ public class AuthorizationTestRule extends AuthorizationTestBaseRule {
     protected AuthorizationScenario scenario;
     protected AuthorizationTestRule rule;
     protected String userId;
-    protected Map<String, String> resourceBindings = new HashMap<String, String>();
+    protected Map<String, String> resourceBindings = new HashMap<>();
 
     public AuthorizationScenarioInstanceBuilder withUser(String userId) {
       this.userId = userId;

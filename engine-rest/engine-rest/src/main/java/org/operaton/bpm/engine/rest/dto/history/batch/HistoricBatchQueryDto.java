@@ -46,7 +46,7 @@ public class HistoricBatchQueryDto extends AbstractQueryDto<HistoricBatchQuery> 
 
   private static final List<String> VALID_SORT_BY_VALUES;
   static {
-    VALID_SORT_BY_VALUES = new ArrayList<String>();
+    VALID_SORT_BY_VALUES = new ArrayList<>();
     VALID_SORT_BY_VALUES.add(SORT_BY_BATCH_ID_VALUE);
     VALID_SORT_BY_VALUES.add(SORT_BY_BATCH_START_TIME_VALUE);
     VALID_SORT_BY_VALUES.add(SORT_BY_BATCH_END_TIME_VALUE);

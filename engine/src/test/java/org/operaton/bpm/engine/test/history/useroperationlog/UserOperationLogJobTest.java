@@ -352,7 +352,7 @@ public class UserOperationLogJobTest extends AbstractUserOperationLogTest {
   @Test
   public void testRecalculateJobDueDate() {
     // given a job
-    HashMap<String, Object> variables1 = new HashMap<String, Object>();
+    HashMap<String, Object> variables1 = new HashMap<>();
     Date duedate = ClockUtil.getCurrentTime();
     variables1.put("dueDate", duedate);
 

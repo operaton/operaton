@@ -44,8 +44,8 @@ public class Hal {
 
   public static Hal instance = new Hal();
 
-  protected Map<Class<?>, HalLinkResolver> halLinkResolvers = new HashMap<Class<?>, HalLinkResolver>();
-  protected Map<Class<?>, Cache> halRelationCaches = new HashMap<Class<?>, Cache>();
+  protected Map<Class<?>, HalLinkResolver> halLinkResolvers = new HashMap<>();
+  protected Map<Class<?>, Cache> halRelationCaches = new HashMap<>();
 
   public Hal() {
     // register the built-in resolvers

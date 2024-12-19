@@ -114,7 +114,7 @@ public class FullHistoryTest {
   @Test
   @Deployment
   public void testVariableUpdates() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("number", "one");
     variables.put("character", "a");
     variables.put("bytes", ":-(".getBytes());
@@ -266,7 +266,7 @@ public class FullHistoryTest {
   @Test
   @Deployment(resources="org/operaton/bpm/engine/test/standalone/history/FullHistoryTest.testVariableUpdates.bpmn20.xml")
   public void testHistoricVariableInstanceQuery() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("process", "one");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("receiveTask", variables);
     runtimeService.signal(processInstance.getProcessInstanceId());
@@ -274,7 +274,7 @@ public class FullHistoryTest {
     assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableName("process").count());
     assertEquals(1, historyService.createHistoricVariableInstanceQuery().variableValueEquals("process", "one").count());
 
-    Map<String, Object> variables2 = new HashMap<String, Object>();
+    Map<String, Object> variables2 = new HashMap<>();
     variables2.put("process", "two");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("receiveTask", variables2);
     runtimeService.signal(processInstance2.getProcessInstanceId());
@@ -291,7 +291,7 @@ public class FullHistoryTest {
     assertEquals(historicProcessVariable.getValue(), historicProcessVariable.getTypedValue().getValue());
     assertEquals(historicProcessVariable.getTypeName(), historicProcessVariable.getTypedValue().getType().getName());
 
-    Map<String, Object> variables3 = new HashMap<String, Object>();
+    Map<String, Object> variables3 = new HashMap<>();
     variables3.put("long", 1000l);
     variables3.put("double", 25.43d);
     ProcessInstance processInstance3 = runtimeService.startProcessInstanceByKey("receiveTask", variables3);
@@ -309,7 +309,7 @@ public class FullHistoryTest {
   public void testHistoricVariableUpdatesAllTypes() throws Exception {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss SSS");
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("aVariable", "initial value");
 
     Date startedDate = sdf.parse("01/01/2001 01:23:45 000");
@@ -454,7 +454,7 @@ public class FullHistoryTest {
 
     ClockUtil.setCurrentTime(startedDate);
 
-    Map<String, String> formProperties = new HashMap<String, String>();
+    Map<String, String> formProperties = new HashMap<>();
     formProperties.put("formProp1", "Activiti rocks");
     formProperties.put("formProp2", "12345");
 
@@ -474,7 +474,7 @@ public class FullHistoryTest {
     String taskActivityId = activityIds.get(0);
 
     // Submit form properties
-    formProperties = new HashMap<String, String>();
+    formProperties = new HashMap<>();
     formProperties.put("formProp3", "Activiti still rocks!!!");
     formProperties.put("formProp4", "54321");
     formService.submitTaskFormData(task.getId(), formProperties);
@@ -533,7 +533,7 @@ public class FullHistoryTest {
   @Deployment(
     resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   public void testHistoricVariableQuery() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "activiti rocks!");
     variables.put("longVar", 12345L);
 
@@ -569,7 +569,7 @@ public class FullHistoryTest {
   @Deployment(
     resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   public void testHistoricVariableQueryExcludeTaskRelatedDetails() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "activiti rocks!");
     variables.put("longVar", 12345L);
 
@@ -596,7 +596,7 @@ public class FullHistoryTest {
   @Deployment(
     resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   public void testHistoricFormPropertiesQuery() {
-    Map<String, String> formProperties = new HashMap<String, String>();
+    Map<String, String> formProperties = new HashMap<>();
     formProperties.put("stringVar", "activiti rocks!");
     formProperties.put("longVar", "12345");
 
@@ -613,7 +613,7 @@ public class FullHistoryTest {
 
     // Complete the task by submitting the task properties
     Task task = taskService.createTaskQuery().singleResult();
-    formProperties = new HashMap<String, String>();
+    formProperties = new HashMap<>();
     formProperties.put("taskVar", "task form property");
     formService.submitTaskFormData(task.getId(), formProperties);
 
@@ -625,7 +625,7 @@ public class FullHistoryTest {
   @Deployment(
     resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   public void testHistoricVariableQuerySorting() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("stringVar", "activiti rocks!");
     variables.put("longVar", 12345L);
 
@@ -661,7 +661,7 @@ public class FullHistoryTest {
     resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   public void testHistoricFormPropertySorting() {
 
-    Map<String, String> formProperties = new HashMap<String, String>();
+    Map<String, String> formProperties = new HashMap<>();
     formProperties.put("stringVar", "activiti rocks!");
     formProperties.put("longVar", "12345");
 
@@ -689,7 +689,7 @@ public class FullHistoryTest {
   @Deployment
   public void testHistoricDetailQueryMixed() {
 
-    Map<String, String> formProperties = new HashMap<String, String>();
+    Map<String, String> formProperties = new HashMap<>();
     formProperties.put("formProp1", "activiti rocks!");
     formProperties.put("formProp2", "12345");
 
@@ -829,7 +829,7 @@ public class FullHistoryTest {
   @Deployment
   public void testDeleteHistoricProcessInstance() {
     // Start process-instance with some variables set
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("processVar", 123L);
     vars.put("anotherProcessVar", new DummySerializable());
 
@@ -920,14 +920,14 @@ public class FullHistoryTest {
   @Test
   @Deployment
   public void testHistoricFormPropertiesOnReEnteringActivity() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("comeBack", Boolean.TRUE);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricFormPropertiesProcess", variables);
     assertNotNull(processInstance);
 
     // Submit form on task
-    Map<String, String> data = new HashMap<String, String>();
+    Map<String, String> data = new HashMap<>();
     data.put("formProp1", "Property value");
 
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
@@ -973,7 +973,7 @@ public class FullHistoryTest {
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
     // Set some variables on the task
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 12345L);
     variables.put("shortVar", (short) 123);
     variables.put("integerVar", 1234);
@@ -1096,7 +1096,7 @@ public class FullHistoryTest {
   @Deployment
   public void testHistoricTaskInstanceQueryProcessVariableValueEquals() {
     // Set some variables on the process instance
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 12345L);
     variables.put("shortVar", (short) 123);
     variables.put("integerVar", 1234);
@@ -1165,7 +1165,7 @@ public class FullHistoryTest {
   @Deployment
   public void testHistoricProcessInstanceVariableValueEquals() {
     // Set some variables on the process instance
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 12345L);
     variables.put("shortVar", (short) 123);
     variables.put("integerVar", 1234);
@@ -1186,7 +1186,7 @@ public class FullHistoryTest {
   @Deployment(resources={"org/operaton/bpm/engine/test/standalone/history/FullHistoryTest.testHistoricProcessInstanceVariableValueEquals.bpmn20.xml"})
   public void testHistoricProcessInstanceVariableValueNotEquals() {
     // Set some variables on the process instance
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 12345L);
     variables.put("shortVar", (short) 123);
     variables.put("integerVar", 1234);
@@ -1219,7 +1219,7 @@ public class FullHistoryTest {
   @Deployment(resources={"org/operaton/bpm/engine/test/standalone/history/FullHistoryTest.testHistoricProcessInstanceVariableValueEquals.bpmn20.xml"})
   public void testHistoricProcessInstanceVariableValueLessThanAndGreaterThan() {
     // Set some variables on the process instance
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("longVar", 12345L);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("HistoricProcessInstanceTest", variables);
@@ -1236,7 +1236,7 @@ public class FullHistoryTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("ProcessWithSubProcess");
 
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("test", "1");
     taskService.complete(task.getId(), variables);
 
@@ -1253,7 +1253,7 @@ public class FullHistoryTest {
     List<HistoricDetail> updates = historyService.createHistoricDetailQuery().variableUpdates().list();
     assertEquals(2, updates.size());
 
-    Map<String, HistoricVariableUpdate> updatesMap = new HashMap<String, HistoricVariableUpdate>();
+    Map<String, HistoricVariableUpdate> updatesMap = new HashMap<>();
     HistoricVariableUpdate update = (HistoricVariableUpdate) updates.get(0);
     updatesMap.put((String)update.getValue(), update);
     update = (HistoricVariableUpdate) updates.get(1);
@@ -1285,7 +1285,7 @@ public class FullHistoryTest {
   @Test
   @Deployment(resources={"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
   public void testHistoricDetailQueryByVariableInstanceId() {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("testVar", "testValue");
     runtimeService.startProcessInstanceByKey("oneTaskProcess", params);
 
@@ -1476,7 +1476,7 @@ public class FullHistoryTest {
     Task newTask = taskService.newTask();
     taskService.saveTask(newTask);
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("customSerializable", new CustomSerializable());
     variables.put("failingSerializable", new FailingSerializable());
     taskService.setVariables(newTask.getId(), variables);

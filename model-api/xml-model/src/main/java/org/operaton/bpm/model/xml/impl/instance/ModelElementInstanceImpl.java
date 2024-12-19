@@ -320,7 +320,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
 
   @Override
   public Collection<ModelElementInstance> getChildElementsByType(ModelElementType childElementType) {
-    List<ModelElementInstance> instances = new ArrayList<ModelElementInstance>();
+    List<ModelElementInstance> instances = new ArrayList<>();
     for (ModelElementType extendingType : childElementType.getExtendingTypes()) {
       instances.addAll(getChildElementsByType(extendingType));
     }
@@ -404,7 +404,7 @@ public class ModelElementInstanceImpl implements ModelElementInstance {
   }
 
   protected <T> Set<T> asSet(T element, Set<T> elements){
-    Set<T> result = new HashSet<T>();
+    Set<T> result = new HashSet<>();
     result.add(element);
 
     if (elements != null) {

@@ -71,7 +71,7 @@ public class DeleteHistoricProcessInstancesCmd implements Command<Void>, Seriali
       }
     }
 
-    List<String> existingIds = new ArrayList<String>();
+    List<String> existingIds = new ArrayList<>();
 
     for (HistoricProcessInstance historicProcessInstance : instances) {
       existingIds.add(historicProcessInstance.getId());
@@ -84,7 +84,7 @@ public class DeleteHistoricProcessInstancesCmd implements Command<Void>, Seriali
     }
 
     if(failIfNotExists) {
-      ArrayList<String> nonExistingIds = new ArrayList<String>(processInstanceIds);
+      ArrayList<String> nonExistingIds = new ArrayList<>(processInstanceIds);
       nonExistingIds.removeAll(existingIds);
       if(nonExistingIds.size() != 0) {
         throw new BadUserRequestException("No historic process instance found with id: " + nonExistingIds);

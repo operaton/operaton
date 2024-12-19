@@ -39,7 +39,7 @@ import java.util.Set;
  */
 public class MultipartFormData {
 
-  protected Map<String, FormPart> formParts = new HashMap<String, FormPart>();
+  protected Map<String, FormPart> formParts = new HashMap<>();
 
   public void addPart(FormPart formPart) {
     formParts.put(formPart.getFieldName(), formPart);

@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
  */
 public class BookFlightService implements JavaDelegate {
 
-  public static List<String> bookedFlights = new ArrayList<String>();
+  public static List<String> bookedFlights = new ArrayList<>();
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

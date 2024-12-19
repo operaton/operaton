@@ -26,7 +26,7 @@ public class MigrationInstructionValidationReportImpl implements MigrationInstru
 
   protected MigrationInstruction migrationInstruction;
 
-  protected List<String> failures = new ArrayList<String>();
+  protected List<String> failures = new ArrayList<>();
 
   public MigrationInstructionValidationReportImpl(MigrationInstruction migrationInstruction) {
     this.migrationInstruction = migrationInstruction;

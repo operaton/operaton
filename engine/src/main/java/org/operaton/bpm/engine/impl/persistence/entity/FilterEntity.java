@@ -51,7 +51,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
   private static final long serialVersionUID = 1L;
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  public static final Map<String, JsonObjectConverter<?>> queryConverter = new HashMap<String, JsonObjectConverter<?>>();
+  public static final Map<String, JsonObjectConverter<?>> queryConverter = new HashMap<>();
 
   static {
     queryConverter.put(EntityTypes.TASK, new JsonTaskQueryConverter());
@@ -211,7 +211,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("name", this.name);
     persistentState.put("owner", this.owner);
     persistentState.put("query", this.query);
@@ -238,13 +238,13 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<String>();
+    Set<String> referencedEntityIds = new HashSet<>();
     return referencedEntityIds;
   }
 
   @Override
   public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<String, Class>();
+    Map<String, Class> referenceIdAndClass = new HashMap<>();
     return referenceIdAndClass;
   }
 }

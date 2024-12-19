@@ -32,7 +32,7 @@ public class HistoricDecisionInstanceSerializationTest extends PluggableProcessE
 
   @Deployment(resources = {"org/operaton/spin/plugin/DecisionSingleOutput.dmn11.xml"})
   public void testListJsonProperty() {
-    JsonListSerializable<String> list = new JsonListSerializable<String>();
+    JsonListSerializable<String> list = new JsonListSerializable<>();
     list.addElement("foo");
 
     ObjectValue objectValue = Variables.objectValue(list).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create();

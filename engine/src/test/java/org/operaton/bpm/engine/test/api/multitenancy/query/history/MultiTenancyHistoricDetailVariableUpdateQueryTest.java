@@ -274,7 +274,7 @@ public class MultiTenancyHistoricDetailVariableUpdateQueryTest {
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(task).isNotNull();
 
-    Map<String, Object> updatedVariables = new HashMap<String, Object>();
+    Map<String, Object> updatedVariables = new HashMap<>();
     updatedVariables.put(VARIABLE_NAME, varValue);
     taskService.complete(task.getId(), updatedVariables);
   }

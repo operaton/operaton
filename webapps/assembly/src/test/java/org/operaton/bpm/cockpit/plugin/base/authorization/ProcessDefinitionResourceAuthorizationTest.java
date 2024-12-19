@@ -177,11 +177,11 @@ public class ProcessDefinitionResourceAuthorizationTest extends AuthorizationTes
     resource = new ProcessDefinitionResource(engineName, processDefinitionId);
 
     disableAuthorization();
-    Map<String, Object> vars1 = new HashMap<String, Object>();
+    Map<String, Object> vars1 = new HashMap<>();
     vars1.put("callProcess", "anotherUserTaskProcess");
     String firstProcessInstanceId = runtimeService.startProcessInstanceByKey("DynamicCallActivity", vars1).getId();
 
-    Map<String, Object> vars2 = new HashMap<String, Object>();
+    Map<String, Object> vars2 = new HashMap<>();
     vars2.put("callProcess", "userTaskProcess");
     runtimeService.startProcessInstanceByKey("DynamicCallActivity", vars2);
     enableAuthorization();

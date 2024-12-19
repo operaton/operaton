@@ -141,7 +141,7 @@ public class HttpRequestTest {
 
     request.setRequestParameter("hello", "world");
 
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("foo", "bar");
     params.put("number", 42);
     request.setRequestParameters(params);

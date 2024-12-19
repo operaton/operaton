@@ -118,13 +118,13 @@ public class MeterLogEntity implements DbEntity, HasDbReferences, Serializable {
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<String>();
+    Set<String> referencedEntityIds = new HashSet<>();
     return referencedEntityIds;
   }
 
   @Override
   public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<String, Class>();
+    Map<String, Class> referenceIdAndClass = new HashMap<>();
     return referenceIdAndClass;
   }
 }

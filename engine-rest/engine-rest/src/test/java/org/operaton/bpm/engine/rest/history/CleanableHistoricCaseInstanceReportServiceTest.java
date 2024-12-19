@@ -108,7 +108,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
     when(anotherReportResult.getTenantId()).thenReturn(ANOTHER_EXAMPLE_TENANT_ID);
 
 
-    List<CleanableHistoricCaseInstanceReportResult> mocks = new ArrayList<CleanableHistoricCaseInstanceReportResult>();
+    List<CleanableHistoricCaseInstanceReportResult> mocks = new ArrayList<>();
     mocks.add(reportResult);
     mocks.add(anotherReportResult);
 
@@ -367,7 +367,7 @@ public class CleanableHistoricCaseInstanceReportServiceTest extends AbstractRest
   }
 
   protected Map<String, Object> getCompleteQueryParameters() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
 
     parameters.put("caseDefinitionIdIn", EXAMPLE_CD_ID + "," + ANOTHER_EXAMPLE_CD_ID);
     parameters.put("caseDefinitionKeyIn", EXAMPLE_CD_KEY + "," + ANOTHER_EXAMPLE_CD_KEY);

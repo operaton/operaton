@@ -2622,7 +2622,7 @@ public class TaskServiceTest {
       .getId();
 
     // when
-    Map<String, Object> variables = taskService.getVariables(taskId, new ArrayList<String>());
+    Map<String, Object> variables = taskService.getVariables(taskId, new ArrayList<>());
 
     // then
     assertNotNull(variables);
@@ -2640,7 +2640,7 @@ public class TaskServiceTest {
       .getId();
 
     // when
-    Map<String, Object> variables = taskService.getVariablesTyped(taskId, new ArrayList<String>(), false);
+    Map<String, Object> variables = taskService.getVariablesTyped(taskId, new ArrayList<>(), false);
 
     // then
     assertNotNull(variables);
@@ -2658,7 +2658,7 @@ public class TaskServiceTest {
       .getId();
 
     // when
-    Map<String, Object> variables = taskService.getVariablesLocal(taskId, new ArrayList<String>());
+    Map<String, Object> variables = taskService.getVariablesLocal(taskId, new ArrayList<>());
 
     // then
     assertNotNull(variables);
@@ -2676,7 +2676,7 @@ public class TaskServiceTest {
       .getId();
 
     // when
-    Map<String, Object> variables = taskService.getVariablesLocalTyped(taskId, new ArrayList<String>(), false);
+    Map<String, Object> variables = taskService.getVariablesLocalTyped(taskId, new ArrayList<>(), false);
 
     // then
     assertNotNull(variables);

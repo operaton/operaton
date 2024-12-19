@@ -3305,7 +3305,7 @@ public class RuntimeServiceTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
     // when
-    Map<String, Object> variables = runtimeService.getVariables(processInstanceId, new ArrayList<String>());
+    Map<String, Object> variables = runtimeService.getVariables(processInstanceId, new ArrayList<>());
 
     // then
     assertNotNull(variables);
@@ -3319,7 +3319,7 @@ public class RuntimeServiceTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
     // when
-    Map<String, Object> variables = runtimeService.getVariablesTyped(processInstanceId, new ArrayList<String>(), false);
+    Map<String, Object> variables = runtimeService.getVariablesTyped(processInstanceId, new ArrayList<>(), false);
 
     // then
     assertNotNull(variables);
@@ -3333,7 +3333,7 @@ public class RuntimeServiceTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
     // when
-    Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId, new ArrayList<String>());
+    Map<String, Object> variables = runtimeService.getVariablesLocal(processInstanceId, new ArrayList<>());
 
     // then
     assertNotNull(variables);
@@ -3347,7 +3347,7 @@ public class RuntimeServiceTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
 
     // when
-    Map<String, Object> variables = runtimeService.getVariablesLocalTyped(processInstanceId, new ArrayList<String>(), false);
+    Map<String, Object> variables = runtimeService.getVariablesLocalTyped(processInstanceId, new ArrayList<>(), false);
 
     // then
     assertNotNull(variables);

@@ -84,7 +84,7 @@ import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
 
     List<HistoricProcessInstance> matchingHistoricProcessInstances = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricProcessInstanceDto> historicProcessInstanceDtoResults = new ArrayList<HistoricProcessInstanceDto>();
+    List<HistoricProcessInstanceDto> historicProcessInstanceDtoResults = new ArrayList<>();
     for (HistoricProcessInstance historicProcessInstance : matchingHistoricProcessInstances) {
       HistoricProcessInstanceDto resultHistoricProcessInstanceDto = HistoricProcessInstanceDto.fromHistoricProcessInstance(historicProcessInstance);
       historicProcessInstanceDtoResults.add(resultHistoricProcessInstanceDto);
@@ -209,7 +209,7 @@ import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
 
   protected List<ReportResultDto> getReportResultAsJson(UriInfo uriInfo) {
     List<ReportResult> reports = queryHistoricProcessInstanceReport(uriInfo);
-    List<ReportResultDto> result = new ArrayList<ReportResultDto>();
+    List<ReportResultDto> result = new ArrayList<>();
     for (ReportResult report : reports) {
       result.add(ReportResultDto.fromReportResult(report));
     }

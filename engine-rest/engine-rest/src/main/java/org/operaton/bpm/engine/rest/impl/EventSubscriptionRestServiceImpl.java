@@ -48,7 +48,7 @@ public class EventSubscriptionRestServiceImpl extends AbstractRestProcessEngineA
 
     List<EventSubscription> matchingEventSubscriptions = QueryUtil.list(query, firstResult, maxResults);
 
-    List<EventSubscriptionDto> eventSubscriptionResults = new ArrayList<EventSubscriptionDto>();
+    List<EventSubscriptionDto> eventSubscriptionResults = new ArrayList<>();
     for (EventSubscription eventSubscription : matchingEventSubscriptions) {
       EventSubscriptionDto resultEventSubscription = EventSubscriptionDto.fromEventSubscription(eventSubscription);
       eventSubscriptionResults.add(resultEventSubscription);

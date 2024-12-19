@@ -26,9 +26,9 @@ public class DmnDecisionTableImpl implements DmnDecisionLogic {
 
   protected DmnHitPolicyHandler hitPolicyHandler;
 
-  protected List<DmnDecisionTableInputImpl> inputs = new ArrayList<DmnDecisionTableInputImpl>();
-  protected List<DmnDecisionTableOutputImpl> outputs = new ArrayList<DmnDecisionTableOutputImpl>();
-  protected List<DmnDecisionTableRuleImpl> rules = new ArrayList<DmnDecisionTableRuleImpl>();
+  protected List<DmnDecisionTableInputImpl> inputs = new ArrayList<>();
+  protected List<DmnDecisionTableOutputImpl> outputs = new ArrayList<>();
+  protected List<DmnDecisionTableRuleImpl> rules = new ArrayList<>();
 
   public DmnHitPolicyHandler getHitPolicyHandler() {
     return hitPolicyHandler;

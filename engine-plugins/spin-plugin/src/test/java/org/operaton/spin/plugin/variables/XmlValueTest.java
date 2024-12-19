@@ -244,7 +244,7 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
 
   public void testApplyValueInfoFromSerializedValue() {
     // given
-    Map<String, Object> valueInfo = new HashMap<String, Object>();
+    Map<String, Object> valueInfo = new HashMap<>();
     valueInfo.put(ValueType.VALUE_INFO_TRANSIENT, true);
 
     // when

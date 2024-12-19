@@ -41,7 +41,7 @@ public class PasswordPolicyDigitRuleImpl implements PasswordPolicyRule {
 
   @Override
   public Map<String, String> getParameters() {
-    Map<String, String> parameter = new HashMap<String, String>();
+    Map<String, String> parameter = new HashMap<>();
     parameter.put("minDigit", "" + this.minDigit);
     return parameter;
   }

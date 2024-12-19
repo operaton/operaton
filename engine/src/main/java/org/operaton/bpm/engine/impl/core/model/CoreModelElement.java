@@ -42,16 +42,16 @@ public abstract class CoreModelElement implements Serializable {
   protected Properties properties = new Properties();
 
   /** contains built-in listeners */
-  protected Map<String, List<DelegateListener<? extends BaseDelegateExecution>>> builtInListeners = new HashMap<String, List<DelegateListener<? extends BaseDelegateExecution>>>();
+  protected Map<String, List<DelegateListener<? extends BaseDelegateExecution>>> builtInListeners = new HashMap<>();
 
   /** contains all listeners (built-in + user-provided) */
-  protected Map<String, List<DelegateListener<? extends BaseDelegateExecution>>> listeners = new HashMap<String, List<DelegateListener<? extends BaseDelegateExecution>>>();
+  protected Map<String, List<DelegateListener<? extends BaseDelegateExecution>>> listeners = new HashMap<>();
 
   protected Map<String, List<VariableListener<?>>> builtInVariableListeners =
-      new HashMap<String, List<VariableListener<?>>>();
+      new HashMap<>();
 
   protected Map<String, List<VariableListener<?>>> variableListeners =
-      new HashMap<String, List<VariableListener<?>>>();
+      new HashMap<>();
 
   public CoreModelElement(String id) {
     this.id = id;
@@ -154,7 +154,7 @@ public abstract class CoreModelElement implements Serializable {
   protected <T> void addListenerToMap(Map<String, List<T>> listenerMap, String eventName, T listener, int index) {
     List<T> listeners = listenerMap.get(eventName);
     if (listeners == null) {
-      listeners = new ArrayList<T>();
+      listeners = new ArrayList<>();
       listenerMap.put(eventName, listeners);
     }
     if (index < 0) {

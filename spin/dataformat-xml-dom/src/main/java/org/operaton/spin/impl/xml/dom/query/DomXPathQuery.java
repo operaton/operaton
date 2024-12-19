@@ -82,7 +82,7 @@ public class DomXPathQuery extends SpinXPathQuery {
       ensureNotDocumentRootExpression(expression);
       NodeList nodeList = (NodeList) query.evaluate(expression, domElement.unwrap(), XPathConstants.NODESET);
       ensureXPathNotEmpty(nodeList, expression);
-      return new SpinListImpl<SpinXmlElement>(new DomXmlElementIterable(nodeList, dataFormat));
+      return new SpinListImpl<>(new DomXmlElementIterable(nodeList, dataFormat));
     } catch (XPathExpressionException e) {
       throw LOG.unableToEvaluateXPathExpressionOnElement(domElement, e);
     } catch (ClassCastException e) {
@@ -110,7 +110,7 @@ public class DomXPathQuery extends SpinXPathQuery {
       ensureNotDocumentRootExpression(expression);
       NodeList nodeList = (NodeList) query.evaluate(expression, domElement.unwrap(), XPathConstants.NODESET);
       ensureXPathNotEmpty(nodeList, expression);
-      return new SpinListImpl<SpinXmlAttribute>(new DomXmlAttributeIterable(nodeList, dataFormat));
+      return new SpinListImpl<>(new DomXmlAttributeIterable(nodeList, dataFormat));
     } catch (XPathExpressionException e) {
       throw LOG.unableToEvaluateXPathExpressionOnElement(domElement, e);
     } catch (ClassCastException e) {

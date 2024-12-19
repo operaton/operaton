@@ -64,7 +64,7 @@ public class DeploymentWithDefinitionsDto extends DeploymentDto {
   private static void initDeployedResourceLists(DeploymentWithDefinitions deployment, DeploymentWithDefinitionsDto dto) {
     List<ProcessDefinition> deployedProcessDefinitions = deployment.getDeployedProcessDefinitions();
     if (deployedProcessDefinitions != null) {
-      dto.deployedProcessDefinitions = new HashMap<String, ProcessDefinitionDto>();
+      dto.deployedProcessDefinitions = new HashMap<>();
       for (ProcessDefinition processDefinition : deployedProcessDefinitions) {
         dto.deployedProcessDefinitions
           .put(processDefinition.getId(), ProcessDefinitionDto.fromProcessDefinition(processDefinition));
@@ -73,7 +73,7 @@ public class DeploymentWithDefinitionsDto extends DeploymentDto {
 
     List<CaseDefinition> deployedCaseDefinitions = deployment.getDeployedCaseDefinitions();
     if (deployedCaseDefinitions != null) {
-      dto.deployedCaseDefinitions = new HashMap<String, CaseDefinitionDto>();
+      dto.deployedCaseDefinitions = new HashMap<>();
       for (CaseDefinition caseDefinition : deployedCaseDefinitions) {
         dto.deployedCaseDefinitions
           .put(caseDefinition.getId(), CaseDefinitionDto.fromCaseDefinition(caseDefinition));
@@ -82,7 +82,7 @@ public class DeploymentWithDefinitionsDto extends DeploymentDto {
 
     List<DecisionDefinition> deployedDecisionDefinitions = deployment.getDeployedDecisionDefinitions();
     if (deployedDecisionDefinitions != null) {
-      dto.deployedDecisionDefinitions = new HashMap<String, DecisionDefinitionDto>();
+      dto.deployedDecisionDefinitions = new HashMap<>();
       for (DecisionDefinition decisionDefinition : deployedDecisionDefinitions) {
         dto.deployedDecisionDefinitions
           .put(decisionDefinition.getId(), DecisionDefinitionDto.fromDecisionDefinition(decisionDefinition));
@@ -91,7 +91,7 @@ public class DeploymentWithDefinitionsDto extends DeploymentDto {
 
     List<DecisionRequirementsDefinition> deployedDecisionRequirementsDefinitions = deployment.getDeployedDecisionRequirementsDefinitions();
     if (deployedDecisionRequirementsDefinitions != null) {
-      dto.deployedDecisionRequirementsDefinitions = new HashMap<String, DecisionRequirementsDefinitionDto>();
+      dto.deployedDecisionRequirementsDefinitions = new HashMap<>();
       for (DecisionRequirementsDefinition drd : deployedDecisionRequirementsDefinitions) {
         dto.deployedDecisionRequirementsDefinitions
           .put(drd.getId(), DecisionRequirementsDefinitionDto.fromDecisionRequirementsDefinition(drd));

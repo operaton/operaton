@@ -60,7 +60,7 @@ public abstract class SpinValueTypeImpl extends AbstractValueTypeImpl implements
     }
     SpinValue spinValue = (SpinValue) typedValue;
 
-    Map<String, Object> valueInfo = new HashMap<String, Object>();
+    Map<String, Object> valueInfo = new HashMap<>();
 
     if (spinValue.isTransient()) {
       valueInfo.put(VALUE_INFO_TRANSIENT, spinValue.isTransient());

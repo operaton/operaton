@@ -415,7 +415,7 @@ public class BulkHistoryDeleteTest {
   }
 
   private List<String> findExceptionByteArrayIds() {
-    List<String> exceptionByteArrayIds = new ArrayList<String>();
+    List<String> exceptionByteArrayIds = new ArrayList<>();
     List<HistoricJobLog> historicJobLogs = historyService.createHistoricJobLogQuery().list();
     for (HistoricJobLog historicJobLog : historicJobLogs) {
       HistoricJobLogEventEntity historicJobLogEventEntity = (HistoricJobLogEventEntity) historicJobLog;
@@ -437,12 +437,12 @@ public class BulkHistoryDeleteTest {
 
     //remember input and output ids
     List<HistoricDecisionInstance> historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().includeInputs().includeOutputs().list();
-    final List<String> inputIds = new ArrayList<String>();
-    final List<String> inputByteArrayIds = new ArrayList<String>();
+    final List<String> inputIds = new ArrayList<>();
+    final List<String> inputByteArrayIds = new ArrayList<>();
     collectHistoricDecisionInputIds(historicDecisionInstances, inputIds, inputByteArrayIds);
 
-    final List<String> outputIds = new ArrayList<String>();
-    final List<String> outputByteArrayIds = new ArrayList<String>();
+    final List<String> outputIds = new ArrayList<>();
+    final List<String> outputByteArrayIds = new ArrayList<>();
     collectHistoricDecisionOutputIds(historicDecisionInstances, outputIds, outputByteArrayIds);
 
     //when
@@ -513,12 +513,12 @@ public class BulkHistoryDeleteTest {
 
     //remember input and output ids
     List<HistoricDecisionInstance> historicDecisionInstances = historyService.createHistoricDecisionInstanceQuery().includeInputs().includeOutputs().list();
-    final List<String> inputIds = new ArrayList<String>();
-    final List<String> inputByteArrayIds = new ArrayList<String>();
+    final List<String> inputIds = new ArrayList<>();
+    final List<String> inputByteArrayIds = new ArrayList<>();
     collectHistoricDecisionInputIds(historicDecisionInstances, inputIds, inputByteArrayIds);
 
-    final List<String> outputIds = new ArrayList<String>();
-    final List<String> outputByteArrayIds = new ArrayList<String>();
+    final List<String> outputIds = new ArrayList<>();
+    final List<String> outputByteArrayIds = new ArrayList<>();
     collectHistoricDecisionOutputIds(historicDecisionInstances, outputIds, outputByteArrayIds);
 
     List<String> decisionInstanceIds = extractIds(historicDecisionInstances);
@@ -536,7 +536,7 @@ public class BulkHistoryDeleteTest {
   }
 
   private List<String> extractIds(List<HistoricDecisionInstance> historicDecisionInstances) {
-    List<String> decisionInstanceIds = new ArrayList<String>();
+    List<String> decisionInstanceIds = new ArrayList<>();
     for (HistoricDecisionInstance historicDecisionInstance: historicDecisionInstances) {
       decisionInstanceIds.add(historicDecisionInstance.getId());
     }
@@ -557,7 +557,7 @@ public class BulkHistoryDeleteTest {
     }
 
     try {
-      historyService.deleteHistoricProcessInstancesBulk(new ArrayList<String>());
+      historyService.deleteHistoricProcessInstancesBulk(new ArrayList<>());
       fail("Empty process instance ids exception was expected");
     } catch (BadUserRequestException ex) {
     }
@@ -618,7 +618,7 @@ public class BulkHistoryDeleteTest {
   }
 
   private List<String> prepareHistoricProcesses(String businessKey, VariableMap variables, Integer processInstanceCount) {
-    List<String> processInstanceIds = new ArrayList<String>();
+    List<String> processInstanceIds = new ArrayList<>();
 
     for (int i = 0; i < processInstanceCount; i++) {
       ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(businessKey, variables);
@@ -833,7 +833,7 @@ public class BulkHistoryDeleteTest {
   public void testCleanupHistoryCaseInstanceVariables() {
     // given
     // create case instances
-    List<String> caseInstanceIds = new ArrayList<String>();
+    List<String> caseInstanceIds = new ArrayList<>();
     int instanceCount = 10;
     for (int i = 0; i < instanceCount; i++) {
       VariableMap variables = Variables.createVariables();
@@ -937,7 +937,7 @@ public class BulkHistoryDeleteTest {
   }
 
   private List<String> prepareHistoricCaseInstance(int instanceCount) {
-    List<String> caseInstanceIds = new ArrayList<String>();
+    List<String> caseInstanceIds = new ArrayList<>();
     for (int i = 0; i < instanceCount; i++) {
       CaseInstance caseInstance = caseService.createCaseInstanceByKey("oneTaskCase");
       String caseInstanceId = caseInstance.getId();

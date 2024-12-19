@@ -38,7 +38,7 @@ public class DefaultElResolverLookup {
   public static final ELResolver lookupResolver(AbstractProcessApplication processApplication) {
 
     ServiceLoader<ProcessApplicationElResolver> providers = ServiceLoader.load(ProcessApplicationElResolver.class);
-    List<ProcessApplicationElResolver> sortedProviders = new ArrayList<ProcessApplicationElResolver>();
+    List<ProcessApplicationElResolver> sortedProviders = new ArrayList<>();
     for (ProcessApplicationElResolver provider : providers) {
       sortedProviders.add(provider);
     }

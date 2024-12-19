@@ -67,7 +67,7 @@ public class FilterRestServiceImpl extends AbstractAuthorizedRestResource implem
 
     List<Filter> matchingFilters = QueryUtil.list(query, firstResult, maxResults);
 
-    List<FilterDto> filters = new ArrayList<FilterDto>();
+    List<FilterDto> filters = new ArrayList<>();
     for (Filter filter : matchingFilters) {
       FilterDto dto = FilterDto.fromFilter(filter);
       if (itemCount != null && itemCount) {

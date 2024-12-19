@@ -79,7 +79,7 @@ public class BpmnParser extends Parser {
   public static final String XSI_NS = "http://www.w3.org/2001/XMLSchema-instance";
 
   protected ExpressionManager expressionManager;
-  protected List<BpmnParseListener> parseListeners = new ArrayList<BpmnParseListener>();
+  protected List<BpmnParseListener> parseListeners = new ArrayList<>();
 
   protected BpmnParseFactory bpmnParseFactory;
 

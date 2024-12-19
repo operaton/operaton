@@ -95,7 +95,7 @@ public class ModificationUserOperationLogTest {
 
   @After
   public void removeInstanceIds() {
-    helper.currentProcessInstances = new ArrayList<String>();
+    helper.currentProcessInstances = new ArrayList<>();
   }
 
   @After
@@ -341,7 +341,7 @@ public class ModificationUserOperationLogTest {
   }
 
   protected Map<String, UserOperationLogEntry> asMap(List<UserOperationLogEntry> logEntries) {
-    Map<String, UserOperationLogEntry> map = new HashMap<String, UserOperationLogEntry>();
+    Map<String, UserOperationLogEntry> map = new HashMap<>();
 
     for (UserOperationLogEntry entry : logEntries) {
 

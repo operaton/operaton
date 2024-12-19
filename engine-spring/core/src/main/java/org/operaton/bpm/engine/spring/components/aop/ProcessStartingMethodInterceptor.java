@@ -133,7 +133,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
     private <K extends Annotation, V> Map<K, V> mapOfAnnotationValues(Class<K> annotationType, MethodInvocation invocation) {
         Method method = invocation.getMethod();
         Annotation[][] annotations = method.getParameterAnnotations();
-        Map<K, V> vars = new HashMap<K, V>();
+        Map<K, V> vars = new HashMap<>();
         int paramIndx = 0;
         for (Annotation[] annPerParam : annotations) {
             for (Annotation annotation : annPerParam) {
@@ -163,7 +163,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
 
         Map<ProcessVariable, Object> vars = this.mapOfAnnotationValues(ProcessVariable.class, invocation);
 
-        Map<String, Object> varNameToValueMap = new HashMap<String, Object>();
+        Map<String, Object> varNameToValueMap = new HashMap<>();
         for (ProcessVariable processVariable : vars.keySet()) {
             varNameToValueMap.put(processVariable.value(), vars.get(processVariable));
         }

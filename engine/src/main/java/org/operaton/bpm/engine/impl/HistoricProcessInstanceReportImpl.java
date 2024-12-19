@@ -129,7 +129,7 @@ public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanc
       if (processDefinitionIdIn == null && processDefinitionKeyIn == null) {
         checker.checkReadHistoryAnyProcessDefinition();
       } else {
-        List<String> processDefinitionKeys = new ArrayList<String>();
+        List<String> processDefinitionKeys = new ArrayList<>();
         if (processDefinitionKeyIn != null) {
           processDefinitionKeys.addAll(Arrays.asList(processDefinitionKeyIn));
         }

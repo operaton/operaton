@@ -1536,7 +1536,7 @@ public class HitPolicyTest extends DmnEngineTest {
   // helper methods
 
   public List<Object> collectSingleOutputEntries(DmnDecisionTableResult results) {
-    List<Object> values = new ArrayList<Object>();
+    List<Object> values = new ArrayList<>();
     for (DmnDecisionRuleResult result : results) {
       values.add(result.getSingleEntry());
     }

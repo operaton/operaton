@@ -49,7 +49,7 @@ public class HttpConnectorSystemPropertiesTest {
 
   @BeforeEach
   void setUp() {
-    updatedSystemProperties = new HashSet<String>();
+    updatedSystemProperties = new HashSet<>();
     stubFor(get(urlEqualTo("/")).willReturn(aResponse().withStatus(200)));
   }
 

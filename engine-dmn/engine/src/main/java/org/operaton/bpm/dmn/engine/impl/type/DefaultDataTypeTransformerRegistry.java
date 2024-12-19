@@ -36,7 +36,7 @@ public class DefaultDataTypeTransformerRegistry implements DmnDataTypeTransforme
   protected static final Map<String, DmnDataTypeTransformer> transformers = getDefaultTransformers();
 
   protected static Map<String, DmnDataTypeTransformer> getDefaultTransformers() {
-    Map<String, DmnDataTypeTransformer> transformers = new HashMap<String, DmnDataTypeTransformer>();
+    Map<String, DmnDataTypeTransformer> transformers = new HashMap<>();
 
     transformers.put("string", new StringDataTypeTransformer());
     transformers.put("boolean", new BooleanDataTypeTransformer());

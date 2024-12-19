@@ -27,9 +27,9 @@ public class CompositePermissionCheck {
 
   protected boolean disjunctive;
 
-  protected List<CompositePermissionCheck> compositeChecks = new ArrayList<CompositePermissionCheck>();
+  protected List<CompositePermissionCheck> compositeChecks = new ArrayList<>();
 
-  protected List<PermissionCheck> atomicChecks = new ArrayList<PermissionCheck>();
+  protected List<PermissionCheck> atomicChecks = new ArrayList<>();
 
   public CompositePermissionCheck() {
     this(true);
@@ -76,7 +76,7 @@ public class CompositePermissionCheck {
   }
 
   public List<PermissionCheck> getAllPermissionChecks() {
-    List<PermissionCheck> allChecks = new ArrayList<PermissionCheck>();
+    List<PermissionCheck> allChecks = new ArrayList<>();
 
     allChecks.addAll(atomicChecks);
 

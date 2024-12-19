@@ -75,7 +75,7 @@ public class DmnEngineConfigurationTest {
     // given a DMN engine configuration with custom listener
     DefaultDmnEngineConfiguration dmnEngineConfiguration = (DefaultDmnEngineConfiguration) DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
     DmnDecisionTableEvaluationListener customEvaluationListener = mock(DmnDecisionTableEvaluationListener.class);
-    List<DmnDecisionTableEvaluationListener> customListeners = new ArrayList<DmnDecisionTableEvaluationListener>();
+    List<DmnDecisionTableEvaluationListener> customListeners = new ArrayList<>();
     customListeners.add(customEvaluationListener);
     dmnEngineConfiguration.setCustomPostDecisionTableEvaluationListeners(customListeners);
 

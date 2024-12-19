@@ -42,7 +42,7 @@ public class HistoricStatisticsManager extends AbstractManager {
       return getDbEntityManager().selectList("selectHistoricActivityStatistics", query, page);
     }
     else {
-      return new ArrayList<HistoricActivityStatistics>();
+      return new ArrayList<>();
     }
   }
 

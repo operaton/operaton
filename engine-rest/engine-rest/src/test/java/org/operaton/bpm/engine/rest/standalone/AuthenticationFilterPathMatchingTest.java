@@ -154,7 +154,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
     when(mockGroupQuery.groupMember(anyString())).thenReturn(mockGroupQuery);
     when(mockGroupQuery.list()).thenReturn(groups);
 
-    List<String> groupIds = new ArrayList<String>();
+    List<String> groupIds = new ArrayList<>();
     for (Group groupMock : groups) {
       groupIds.add(groupMock.getId());
     }
@@ -169,7 +169,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
     when(mockTenantQuery.includingGroupsOfUser(anyBoolean())).thenReturn(mockTenantQuery);
     when(mockTenantQuery.list()).thenReturn(tenants);
 
-    List<String> tenantIds = new ArrayList<String>();
+    List<String> tenantIds = new ArrayList<>();
     for(Tenant tenant: tenants) {
       tenantIds.add(tenant.getId());
     }

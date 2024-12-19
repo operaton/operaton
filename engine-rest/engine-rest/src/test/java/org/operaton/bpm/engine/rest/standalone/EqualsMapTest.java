@@ -37,8 +37,8 @@ public class EqualsMapTest {
 
   @Before
   public void setUp() {
-    map1 = new HashMap<String, Object>();
-    map2 = new HashMap<String, Object>();
+    map1 = new HashMap<>();
+    map2 = new HashMap<>();
   }
 
   @Test

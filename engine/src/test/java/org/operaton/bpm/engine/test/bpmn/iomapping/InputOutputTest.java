@@ -110,7 +110,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testInputScriptValueAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptSource", "return 1 + 1");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     Execution execution = runtimeService.createExecutionQuery().activityId("wait").singleResult();
@@ -124,7 +124,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testInputScriptValueAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("onePlusOneBean", new OnePlusOneBean());
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     Execution execution = runtimeService.createExecutionQuery().activityId("wait").singleResult();
@@ -150,7 +150,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testInputExternalScriptValueAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "org/operaton/bpm/engine/test/bpmn/iomapping/oneplusone.groovy");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     Execution execution = runtimeService.createExecutionQuery().activityId("wait").singleResult();
@@ -164,7 +164,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testInputExternalScriptValueAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("onePlusOneBean", new OnePlusOneBean());
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     Execution execution = runtimeService.createExecutionQuery().activityId("wait").singleResult();
@@ -190,7 +190,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testInputExternalClasspathScriptValueAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "classpath://org/operaton/bpm/engine/test/bpmn/iomapping/oneplusone.groovy");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     Execution execution = runtimeService.createExecutionQuery().activityId("wait").singleResult();
@@ -204,7 +204,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testInputExternalClasspathScriptValueAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("onePlusOneBean", new OnePlusOneBean());
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     Execution execution = runtimeService.createExecutionQuery().activityId("wait").singleResult();
@@ -236,7 +236,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   })
   @Test
   public void testInputExternalDeploymentScriptValueAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "deployment://org/operaton/bpm/engine/test/bpmn/iomapping/oneplusone.groovy");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     Execution execution = runtimeService.createExecutionQuery().activityId("wait").singleResult();
@@ -253,7 +253,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   })
   @Test
   public void testInputExternalDeploymentScriptValueAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("onePlusOneBean", new OnePlusOneBean());
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     Execution execution = runtimeService.createExecutionQuery().activityId("wait").singleResult();
@@ -345,7 +345,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Test
   public void testInputNested() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("exprKey", "b");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
     Execution execution = runtimeService.createExecutionQuery().activityId("wait").singleResult();
@@ -367,7 +367,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testInputNestedListValues() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("exprKey", "vegie");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -395,7 +395,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Test
   public void testInputMapElKey() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("varExpr1", "a");
     variables.put("varExpr2", "b");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -411,7 +411,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Test
   public void testInputMapElMixedKey() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("varExpr1", "a");
     variables.put("varExpr2", "b");
     variables.put("varExprMapValue", "avocado");
@@ -485,7 +485,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testOutputScriptValueAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptSource", "return 1 + 1");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -527,7 +527,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testOutputScriptValueAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("onePlusOneBean", new OnePlusOneBean());
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -551,7 +551,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testOutputExternalScriptValueAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "org/operaton/bpm/engine/test/bpmn/iomapping/oneplusone.groovy");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -564,7 +564,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testOutputExternalScriptValueAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("onePlusOneBean", new OnePlusOneBean());
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -588,7 +588,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testOutputExternalClasspathScriptValueAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "classpath://org/operaton/bpm/engine/test/bpmn/iomapping/oneplusone.groovy");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -601,7 +601,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testOutputExternalClasspathScriptValueAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("onePlusOneBean", new OnePlusOneBean());
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -631,7 +631,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   })
   @Test
   public void testOutputExternalDeploymentScriptValueAsVariable() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "deployment://org/operaton/bpm/engine/test/bpmn/iomapping/oneplusone.groovy");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -647,7 +647,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   })
   @Test
   public void testOutputExternalDeploymentScriptValueAsBean() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("onePlusOneBean", new OnePlusOneBean());
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -736,7 +736,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Test
   public void testOutputNested() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("exprKey", "b");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -758,7 +758,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @SuppressWarnings("unchecked")
   @Test
   public void testOutputListNestedValues() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("exprKey", "vegie");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -788,7 +788,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   public void testOutputMapElKey() {
 
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("varExpr1", "a");
     variables.put("varExpr2", "b");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -804,7 +804,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Test
   public void testOutputMapElMixedKey() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("varExpr1", "a");
     variables.put("varExpr2", "b");
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -847,7 +847,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testSubprocessIoSupport() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("processVar", "value");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess", variables);
 
@@ -869,7 +869,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testSequentialMIActivityIoSupport() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("counter", new AtomicInteger());
     variables.put("nrOfLoops", 2);
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSequentialActivity", variables);
@@ -907,7 +907,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testSequentialMISubprocessIoSupport() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("counter", new AtomicInteger());
     variables.put("nrOfLoops", 2);
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miSequentialSubprocess", variables);
@@ -944,12 +944,12 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testParallelMIActivityIoSupport() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("counter", new AtomicInteger());
     variables.put("nrOfLoops", 2);
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miParallelActivity", variables);
 
-    Set<Integer> counters = new HashSet<Integer>();
+    Set<Integer> counters = new HashSet<>();
 
     // first mi execution
     Execution miExecution1 = runtimeService.createExecutionQuery().activityId("miTask")
@@ -981,12 +981,12 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testParallelMISubprocessIoSupport() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("counter", new AtomicInteger());
     variables.put("nrOfLoops", 2);
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("miParallelSubprocess", variables);
 
-    Set<Integer> counters = new HashSet<Integer>();
+    Set<Integer> counters = new HashSet<>();
 
     // first parallel mi execution
     Execution miScopeExecution1 = runtimeService.createExecutionQuery().activityId("task")
@@ -1032,7 +1032,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Ignore
   @Test
   public void testBpmnErrorInScriptInputMapping() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "in");
     variables.put("exception", new BpmnError("error"));
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -1045,7 +1045,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Test
   public void testExceptionInScriptInputMapping() {
     String exceptionMessage = "myException";
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "in");
     variables.put("exception", new RuntimeException(exceptionMessage));
     try {
@@ -1059,7 +1059,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Ignore
   @Test
   public void testBpmnErrorInScriptOutputMapping() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "out");
     variables.put("exception", new BpmnError("error"));
     runtimeService.startProcessInstanceByKey("testProcess", variables);
@@ -1072,7 +1072,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Test
   public void testExceptionInScriptOutputMapping() {
     String exceptionMessage = "myException";
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "out");
     variables.put("exception", new RuntimeException(exceptionMessage));
     try {
@@ -1293,7 +1293,7 @@ public class InputOutputTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testOutputPlainTask() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put("foo", "bar");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process", variables);
 

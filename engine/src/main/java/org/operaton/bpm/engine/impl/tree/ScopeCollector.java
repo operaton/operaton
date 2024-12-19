@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
  */
 public class ScopeCollector implements TreeVisitor<ScopeImpl> {
 
-  protected List<ScopeImpl> scopes = new ArrayList<ScopeImpl>();
+  protected List<ScopeImpl> scopes = new ArrayList<>();
 
   @Override
   public void visit(ScopeImpl obj) {

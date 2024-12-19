@@ -24,7 +24,7 @@ public class XmlListSerializable<T> {
   private List<T> listProperty;
 
   public XmlListSerializable() {
-    this.listProperty = new ArrayList<T>();
+    this.listProperty = new ArrayList<>();
   }
 
   public void setListProperty(List<T> listProperty) {

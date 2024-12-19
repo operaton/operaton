@@ -108,10 +108,10 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
       null,
       incidents);
 
-    Map<String, ActivityInstanceImpl> activityInstances = new HashMap<String, ActivityInstanceImpl>();
+    Map<String, ActivityInstanceImpl> activityInstances = new HashMap<>();
     activityInstances.put(processInstanceId, processActInst);
 
-    Map<String, TransitionInstanceImpl> transitionInstances = new HashMap<String, TransitionInstanceImpl>();
+    Map<String, TransitionInstanceImpl> transitionInstances = new HashMap<>();
 
 
     for (ExecutionEntity leaf : leaves) {
@@ -122,7 +122,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
       }
 
       Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = leaf.createActivityExecutionMapping();
-      Map<ScopeImpl, PvmExecutionImpl> scopeInstancesToCreate = new HashMap<ScopeImpl, PvmExecutionImpl>(activityExecutionMapping);
+      Map<ScopeImpl, PvmExecutionImpl> scopeInstancesToCreate = new HashMap<>(activityExecutionMapping);
 
       // create an activity/transition instance for each leaf that executes a non-scope activity
       // and does not throw compensation
@@ -227,7 +227,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
       actInst.setActivityType((String) scope.getProperty("type"));
     }
 
-    List<String> executionIds = new ArrayList<String>();
+    List<String> executionIds = new ArrayList<>();
     List<String> incidentIds = new ArrayList<>();
     List<Incident> incidents = new ArrayList<>();
 
@@ -292,9 +292,9 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   protected void populateChildInstances(Map<String, ActivityInstanceImpl> activityInstances,
       Map<String, TransitionInstanceImpl> transitionInstances) {
     Map<ActivityInstanceImpl, List<ActivityInstanceImpl>> childActivityInstances
-      = new HashMap<ActivityInstanceImpl, List<ActivityInstanceImpl>>();
+      = new HashMap<>();
     Map<ActivityInstanceImpl, List<TransitionInstanceImpl>> childTransitionInstances
-      = new HashMap<ActivityInstanceImpl, List<TransitionInstanceImpl>>();
+      = new HashMap<>();
 
     for (ActivityInstanceImpl instance : activityInstances.values()) {
       if (instance.getParentActivityInstanceId() != null) {
@@ -339,7 +339,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   protected <S, T> void putListElement(Map<S, List<T>> mapOfLists, S key, T listElement) {
     List<T> list = mapOfLists.get(key);
     if (list == null) {
-      list = new ArrayList<T>();
+      list = new ArrayList<>();
       mapOfLists.put(key, list);
     }
     list.add(listElement);
@@ -356,7 +356,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   protected List<ExecutionEntity> filterLeaves(List<ExecutionEntity> executionList) {
-    List<ExecutionEntity> leaves = new ArrayList<ExecutionEntity>();
+    List<ExecutionEntity> leaves = new ArrayList<>();
     for (ExecutionEntity execution : executionList) {
       // although executions executing throwing compensation events are not leaves in the tree,
       // they are treated as leaves since their child executions are logical children of their parent scope execution
@@ -368,7 +368,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   protected List<ExecutionEntity> filterNonEventScopeExecutions(List<ExecutionEntity> executionList) {
-    List<ExecutionEntity> nonEventScopeExecutions = new ArrayList<ExecutionEntity>();
+    List<ExecutionEntity> nonEventScopeExecutions = new ArrayList<>();
     for (ExecutionEntity execution : executionList) {
       if (!execution.isEventScope()) {
         nonEventScopeExecutions.add(execution);
@@ -387,7 +387,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
     for (ExecutionEntity executionEntity : cachedExecutions) {
       if(processInstanceId.equals(executionEntity.getProcessInstanceId())) {
         // found one execution from process instance
-        result = new ArrayList<ExecutionEntity>();
+        result = new ArrayList<>();
         ExecutionEntity processInstance = executionEntity.getProcessInstance();
         // add process instance
         result.add(processInstance);

@@ -59,7 +59,7 @@ public class CompositeVariableContext implements VariableContext {
 
   @Override
   public Set<String> keySet() {
-    Set<String> keySet = new HashSet<String>();
+    Set<String> keySet = new HashSet<>();
     for (VariableContext variableContext : delegateContexts) {
       keySet.addAll(variableContext.keySet());
     }

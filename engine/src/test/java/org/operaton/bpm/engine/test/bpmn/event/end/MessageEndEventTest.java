@@ -44,7 +44,7 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
   @Deployment
   @Test
   public void testMessageEndEventServiceTaskBehavior() {
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     // class
     variables.put("wasExecuted", true);
@@ -57,7 +57,7 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
     assertTrue(DummyServiceTask.wasExecuted);
 
     // expression
-    variables = new HashMap<String, Object>();
+    variables = new HashMap<>();
     variables.put("wasExecuted", false);
     variables.put("expressionWasExecuted", true);
     variables.put("delegateExpressionWasExecuted", false);
@@ -69,7 +69,7 @@ public class MessageEndEventTest extends PluggableProcessEngineTest {
     assertTrue(DummyServiceTask.expressionWasExecuted);
 
     // delegate expression
-    variables = new HashMap<String, Object>();
+    variables = new HashMap<>();
     variables.put("wasExecuted", false);
     variables.put("expressionWasExecuted", false);
     variables.put("delegateExpressionWasExecuted", true);

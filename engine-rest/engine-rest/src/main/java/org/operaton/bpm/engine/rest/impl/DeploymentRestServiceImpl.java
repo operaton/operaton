@@ -53,7 +53,7 @@ public class DeploymentRestServiceImpl extends AbstractRestProcessEngineAware im
   public static final String DEPLOYMENT_SOURCE = "deployment-source";
   public static final String TENANT_ID = "tenant-id";
 
-  protected static final Set<String> RESERVED_KEYWORDS = new HashSet<String>();
+  protected static final Set<String> RESERVED_KEYWORDS = new HashSet<>();
 
   static {
     RESERVED_KEYWORDS.add(DEPLOYMENT_NAME);
@@ -82,7 +82,7 @@ public class DeploymentRestServiceImpl extends AbstractRestProcessEngineAware im
 
     List<Deployment> matchingDeployments = QueryUtil.list(query, firstResult, maxResults);
 
-    List<DeploymentDto> deployments = new ArrayList<DeploymentDto>();
+    List<DeploymentDto> deployments = new ArrayList<>();
     for (Deployment deployment : matchingDeployments) {
       DeploymentDto def = DeploymentDto.fromDeployment(deployment);
       deployments.add(def);

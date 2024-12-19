@@ -208,7 +208,7 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("firstName", MockProvider.EXAMPLE_USER_FIRST_NAME);
     parameters.put("lastName", MockProvider.EXAMPLE_USER_LAST_NAME);

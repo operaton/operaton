@@ -172,7 +172,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
   public ActivityInstance[] getActivityInstances(String activityId) {
     EnsureUtil.ensureNotNull("activityId", activityId);
 
-    List<ActivityInstance> instances = new ArrayList<ActivityInstance>();
+    List<ActivityInstance> instances = new ArrayList<>();
     collectActivityInstances(activityId, instances);
 
     return instances.toArray(new ActivityInstance[instances.size()]);
@@ -193,7 +193,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
   public TransitionInstance[] getTransitionInstances(String activityId) {
     EnsureUtil.ensureNotNull("activityId", activityId);
 
-    List<TransitionInstance> instances = new ArrayList<TransitionInstance>();
+    List<TransitionInstance> instances = new ArrayList<>();
     collectTransitionInstances(activityId, instances);
 
     return instances.toArray(new TransitionInstance[instances.size()]);

@@ -50,7 +50,7 @@ public class MscManagedProcessEngine implements Service<ProcessEngine> {
   
   private static final Logger LOGG = Logger.getLogger(MscManagedProcessEngine.class.getName());
   
-  protected InjectedValue<MscRuntimeContainerDelegate> runtimeContainerDelegateInjector = new InjectedValue<MscRuntimeContainerDelegate>();
+  protected InjectedValue<MscRuntimeContainerDelegate> runtimeContainerDelegateInjector = new InjectedValue<>();
   
   /** the process engine managed by this service */
   protected ProcessEngine processEngine;

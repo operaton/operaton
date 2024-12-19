@@ -57,14 +57,14 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
   protected ExecutionEntity representativeExecution;
   protected boolean activeState;
 
-  protected List<RemovingInstance> removingDependentInstances = new ArrayList<RemovingInstance>();
-  protected List<MigratingInstance> migratingDependentInstances = new ArrayList<MigratingInstance>();
-  protected List<EmergingInstance> emergingDependentInstances = new ArrayList<EmergingInstance>();
+  protected List<RemovingInstance> removingDependentInstances = new ArrayList<>();
+  protected List<MigratingInstance> migratingDependentInstances = new ArrayList<>();
+  protected List<EmergingInstance> emergingDependentInstances = new ArrayList<>();
 
-  protected Set<MigratingActivityInstance> childActivityInstances = new HashSet<MigratingActivityInstance>();
-  protected Set<MigratingTransitionInstance> childTransitionInstances = new HashSet<MigratingTransitionInstance>();
-  protected Set<MigratingEventScopeInstance> childCompensationInstances = new HashSet<MigratingEventScopeInstance>();
-  protected Set<MigratingCompensationEventSubscriptionInstance> childCompensationSubscriptionInstances = new HashSet<MigratingCompensationEventSubscriptionInstance>();
+  protected Set<MigratingActivityInstance> childActivityInstances = new HashSet<>();
+  protected Set<MigratingTransitionInstance> childTransitionInstances = new HashSet<>();
+  protected Set<MigratingEventScopeInstance> childCompensationInstances = new HashSet<>();
+  protected Set<MigratingCompensationEventSubscriptionInstance> childCompensationSubscriptionInstances = new HashSet<>();
 
   // behaves differently if the current activity is scope or not
   protected MigratingActivityInstanceBehavior instanceBehavior;
@@ -117,7 +117,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
 
   @Override
   public void detachChildren() {
-    Set<MigratingActivityInstance> childrenCopy = new HashSet<MigratingActivityInstance>(childActivityInstances);
+    Set<MigratingActivityInstance> childrenCopy = new HashSet<>(childActivityInstances);
     // First detach all dependent entities, only then detach the activity instances.
     // This is because detaching activity instances may trigger execution tree compaction which in turn
     // may overwrite certain dependent entities (e.g. variables)
@@ -129,17 +129,17 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
       child.detachState();
     }
 
-    Set<MigratingTransitionInstance> transitionChildrenCopy = new HashSet<MigratingTransitionInstance>(childTransitionInstances);
+    Set<MigratingTransitionInstance> transitionChildrenCopy = new HashSet<>(childTransitionInstances);
     for (MigratingTransitionInstance child : transitionChildrenCopy) {
       child.detachState();
     }
 
-    Set<MigratingEventScopeInstance> compensationChildrenCopy = new HashSet<MigratingEventScopeInstance>(childCompensationInstances);
+    Set<MigratingEventScopeInstance> compensationChildrenCopy = new HashSet<>(childCompensationInstances);
     for (MigratingEventScopeInstance child : compensationChildrenCopy) {
       child.detachState();
     }
 
-    Set<MigratingCompensationEventSubscriptionInstance> compensationSubscriptionsChildrenCopy = new HashSet<MigratingCompensationEventSubscriptionInstance>(childCompensationSubscriptionInstances);
+    Set<MigratingCompensationEventSubscriptionInstance> compensationSubscriptionsChildrenCopy = new HashSet<>(childCompensationSubscriptionInstances);
     for (MigratingCompensationEventSubscriptionInstance child : compensationSubscriptionsChildrenCopy) {
       child.detachState();
     }
@@ -306,7 +306,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
    */
   @Override
   public Set<MigratingProcessElementInstance> getChildren() {
-    Set<MigratingProcessElementInstance> childInstances = new HashSet<MigratingProcessElementInstance>();
+    Set<MigratingProcessElementInstance> childInstances = new HashSet<>();
     childInstances.addAll(childActivityInstances);
     childInstances.addAll(childTransitionInstances);
     childInstances.addAll(childCompensationInstances);
@@ -316,7 +316,7 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
 
   @Override
   public Collection<MigratingScopeInstance> getChildScopeInstances() {
-    Set<MigratingScopeInstance> childInstances = new HashSet<MigratingScopeInstance>();
+    Set<MigratingScopeInstance> childInstances = new HashSet<>();
     childInstances.addAll(childActivityInstances);
     childInstances.addAll(childCompensationInstances);
     return childInstances;

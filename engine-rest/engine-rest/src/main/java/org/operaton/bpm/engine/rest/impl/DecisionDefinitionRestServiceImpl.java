@@ -87,7 +87,7 @@ public class DecisionDefinitionRestServiceImpl extends AbstractRestProcessEngine
   @Override
   public List<DecisionDefinitionDto> getDecisionDefinitions(UriInfo uriInfo, Integer firstResult, Integer maxResults) {
     DecisionDefinitionQueryDto queryDto = new DecisionDefinitionQueryDto(getObjectMapper(), uriInfo.getQueryParameters());
-    List<DecisionDefinitionDto> definitions = new ArrayList<DecisionDefinitionDto>();
+    List<DecisionDefinitionDto> definitions = new ArrayList<>();
 
     ProcessEngine engine = getProcessEngine();
     DecisionDefinitionQuery query = queryDto.toQuery(engine);

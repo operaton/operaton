@@ -33,7 +33,7 @@ public class EventCollector implements ExecutionListener {
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
-  public List<String> events = new ArrayList<String>();
+  public List<String> events = new ArrayList<>();
 
   @Override
   public void notify(DelegateExecution execution) throws Exception {

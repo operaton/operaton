@@ -46,7 +46,7 @@ public class MissingAuthorizationDto {
   }
 
   public static List<MissingAuthorizationDto> fromInfo(Collection<MissingAuthorization> infos) {
-    List<MissingAuthorizationDto> dtos = new ArrayList<MissingAuthorizationDto>();
+    List<MissingAuthorizationDto> dtos = new ArrayList<>();
     for (MissingAuthorization info : infos) {
       dtos.add(fromInfo(info));
     }

@@ -210,7 +210,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
     Batch batchEntity = MockProvider.createMockBatch();
     when(historyServiceMock.deleteHistoricProcessInstancesAsync(anyList(), any(), anyString())).thenReturn(batchEntity);
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put("historicProcessInstanceIds", ids);
     messageBodyJson.put(DELETE_REASON, TEST_DELETE_REASON);
 
@@ -232,7 +232,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
     when(historyServiceMock.deleteHistoricProcessInstancesAsync(any(), any(), any())
     ).thenReturn(batchEntity);
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put(DELETE_REASON, TEST_DELETE_REASON);
     HistoricProcessInstanceQueryDto query = new HistoricProcessInstanceQueryDto();
     messageBodyJson.put("historicProcessInstanceQuery", query);
@@ -255,7 +255,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
     doThrow(new BadUserRequestException("process instance ids are empty"))
         .when(historyServiceMock).deleteHistoricProcessInstancesAsync(eq((List<String>) null), eq((HistoricProcessInstanceQuery) null), anyString());
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put(DELETE_REASON, TEST_DELETE_REASON);
 
     given()

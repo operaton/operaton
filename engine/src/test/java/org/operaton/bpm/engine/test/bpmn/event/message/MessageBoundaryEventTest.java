@@ -637,7 +637,7 @@ public class MessageBoundaryEventTest extends PluggableProcessEngineTest {
   public void testExpressionInBoundaryMessageEventName() {
 
     // given a process instance with its variables
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("foo", "bar");
     runtimeService.startProcessInstanceByKey("process", variables);
 

@@ -251,7 +251,7 @@ public class ProcessApplicationStartService implements Service<ProcessApplicatio
 
   protected Object[] getInjections(Method lifecycleMethod) {
     final Type[] parameterTypes = lifecycleMethod.getGenericParameterTypes();
-    final List<Object> parameters = new ArrayList<Object>();
+    final List<Object> parameters = new ArrayList<>();
 
     for (Type parameterType : parameterTypes) {
 

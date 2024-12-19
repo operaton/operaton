@@ -68,7 +68,7 @@ public class SchemaLogEntryEntity implements SchemaLogEntry, DbEntity, Serializa
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("id", this.id);
     persistentState.put("timestamp", this.timestamp);
     persistentState.put("version", this.version);

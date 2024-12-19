@@ -93,7 +93,7 @@ public class ProcessInstanceRestServiceQueryTest extends
   }
 
   private List<ProcessInstance> createMockInstanceList() {
-    List<ProcessInstance> mocks = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> mocks = new ArrayList<>();
 
     mocks.add(MockProvider.createMockInstance());
     return mocks;
@@ -202,7 +202,7 @@ public class ProcessInstanceRestServiceQueryTest extends
   }
 
   private List<ProcessInstance> createIncompleteMockInstances() {
-    List<ProcessInstance> mocks = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> mocks = new ArrayList<>();
     ProcessInstance mockInstance = mock(ProcessInstance.class);
     when(mockInstance.getId()).thenReturn(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
 
@@ -246,7 +246,7 @@ public class ProcessInstanceRestServiceQueryTest extends
   }
 
   private Map<String, String> getCompleteQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("businessKey", "aBusinessKey");
     parameters.put("businessKeyLike", "aKeyLike");
@@ -483,15 +483,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValueEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -508,15 +508,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValueGreaterThanAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "gt");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -533,15 +533,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValueGreaterThanEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "gteq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -558,15 +558,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValueLessThanAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "lt");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -583,15 +583,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValueLessThanEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "lteq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -608,15 +608,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValueLikeAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -633,15 +633,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValueNotEqualsAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -658,15 +658,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValuesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
 
@@ -685,15 +685,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValuesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
 
@@ -712,15 +712,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableValuesLikeIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "like");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableValuesIgnoreCase", true);
 
@@ -740,15 +740,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableNamesEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "eq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableNamesIgnoreCase", true);
 
@@ -767,15 +767,15 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testVariableNamesNotEqualsIgnoreCaseAsPost() {
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", "varName");
     variableJson.put("value", "varValue");
     variableJson.put("operator", "neq");
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
     json.put("variableNamesIgnoreCase", true);
 
@@ -819,21 +819,21 @@ public class ProcessInstanceRestServiceQueryTest extends
     String anotherVariableName = "anotherVarName";
     Integer anotherVariableValue = 30;
 
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", variableName);
     variableJson.put("operator", "eq");
     variableJson.put("value", variableValue);
 
-    Map<String, Object> anotherVariableJson = new HashMap<String, Object>();
+    Map<String, Object> anotherVariableJson = new HashMap<>();
     anotherVariableJson.put("name", anotherVariableName);
     anotherVariableJson.put("operator", "neq");
     anotherVariableJson.put("value", anotherVariableValue);
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
     variables.add(anotherVariableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(json)
@@ -868,15 +868,15 @@ public class ProcessInstanceRestServiceQueryTest extends
     String variableName = "varName";
     String variableValue = withTimezone("2014-06-16T10:00:00");
 
-    Map<String, Object> variableJson = new HashMap<String, Object>();
+    Map<String, Object> variableJson = new HashMap<>();
     variableJson.put("name", variableName);
     variableJson.put("operator", "eq");
     variableJson.put("value", variableValue);
 
-    List<Map<String, Object>> variables = new ArrayList<Map<String, Object>>();
+    List<Map<String, Object>> variables = new ArrayList<>();
     variables.add(variableJson);
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("variables", variables);
 
     given()
@@ -971,7 +971,7 @@ public class ProcessInstanceRestServiceQueryTest extends
   public void testTenantIdListPostParameter() {
     mockedQuery = setUpMockInstanceQuery(createMockProcessInstancesTwoTenants());
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("tenantIdIn", MockProvider.EXAMPLE_TENANT_ID_LIST.split(","));
 
     Response response = given()
@@ -1000,7 +1000,7 @@ public class ProcessInstanceRestServiceQueryTest extends
   public void testWithoutTenantIdPostParameter() {
     mockedQuery = setUpMockInstanceQuery(Arrays.asList(MockProvider.createMockInstance(null)));
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withoutTenantId", true);
 
     Response response = given()
@@ -1043,7 +1043,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testActivityIdListPostParameter() {
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("activityIdIn", MockProvider.EXAMPLE_ACTIVITY_ID_LIST.split(","));
 
     given()
@@ -1089,7 +1089,7 @@ public class ProcessInstanceRestServiceQueryTest extends
   @Test
   public void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("definitionKey").desc()
       .orderBy("definitionId").asc()
@@ -1164,7 +1164,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testInstanceRetrievalByList() {
-    List<ProcessInstance> mockProcessInstanceList = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> mockProcessInstanceList = new ArrayList<>();
 
     mockProcessInstanceList.add(MockProvider.createMockInstance());
     mockProcessInstanceList.add(MockProvider.createAnotherMockInstance());
@@ -1202,7 +1202,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testInstanceRetrievalByListAsPost() {
-    List<ProcessInstance> mockProcessInstanceList = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> mockProcessInstanceList = new ArrayList<>();
 
     mockProcessInstanceList.add(MockProvider.createMockInstance());
     mockProcessInstanceList.add(MockProvider.createAnotherMockInstance());
@@ -1212,7 +1212,7 @@ public class ProcessInstanceRestServiceQueryTest extends
     when(processEngine.getRuntimeService().createProcessInstanceQuery()).thenReturn(instanceQuery);
     when(instanceQuery.list()).thenReturn(mockProcessInstanceList);
 
-    Map<String, Set<String>> params = new HashMap<String, Set<String>>();
+    Map<String, Set<String>> params = new HashMap<>();
     Set<String> processInstanceIds = MockProvider.createMockSetFromList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID_LIST);
     params.put("processInstanceIds", processInstanceIds);
 
@@ -1244,7 +1244,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testInstanceRetrievalByListWithDuplicate() {
-    List<ProcessInstance> mockProcessInstanceList = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> mockProcessInstanceList = new ArrayList<>();
 
     mockProcessInstanceList.add(MockProvider.createMockInstance());
     mockProcessInstanceList.add(MockProvider.createAnotherMockInstance());
@@ -1282,7 +1282,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testInstanceRetrievalByListWithDuplicateAsPost() {
-    List<ProcessInstance> mockProcessInstanceList = new ArrayList<ProcessInstance>();
+    List<ProcessInstance> mockProcessInstanceList = new ArrayList<>();
 
     mockProcessInstanceList.add(MockProvider.createMockInstance());
     mockProcessInstanceList.add(MockProvider.createAnotherMockInstance());
@@ -1292,7 +1292,7 @@ public class ProcessInstanceRestServiceQueryTest extends
     when(instanceQuery.list()).thenReturn(mockProcessInstanceList);
     when(processEngine.getRuntimeService().createProcessInstanceQuery()).thenReturn(instanceQuery);
 
-    Map<String, Set<String>> params = new HashMap<String, Set<String>>();
+    Map<String, Set<String>> params = new HashMap<>();
     Set<String> processInstanceIds = MockProvider.createMockSetFromList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID_LIST);
     params.put("processInstanceIds", processInstanceIds);
 
@@ -1351,7 +1351,7 @@ public class ProcessInstanceRestServiceQueryTest extends
     doThrow(new ProcessEngineException(expectedExceptionMessage)).when(instanceQuery).processInstanceIds(anySet());
     when(processEngine.getRuntimeService().createProcessInstanceQuery()).thenReturn(instanceQuery);
 
-    Map<String, Set<String>> params = new HashMap<String, Set<String>>();
+    Map<String, Set<String>> params = new HashMap<>();
     params.put("processInstanceIds", new HashSet<String>());
 
     given()
@@ -1381,7 +1381,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testQueryRootProcessInstancesAsPost() {
-    Map<String, Object> params =new HashMap<String, Object>();
+    Map<String, Object> params =new HashMap<>();
     params.put("rootProcessInstances", true);
 
     given()
@@ -1411,7 +1411,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testQueryLeafProcessInstancesAsPost() {
-    Map<String, Object> params =new HashMap<String, Object>();
+    Map<String, Object> params =new HashMap<>();
     params.put("leafProcessInstances", true);
 
     given()
@@ -1471,7 +1471,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testQueryProcessInstanceWithIncidentAsPost() {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("withIncident", true);
 
     given()
@@ -1501,7 +1501,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testProcessDefinitionKeyInPostParameter() {
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("processDefinitionKeyIn", MockProvider.EXAMPLE_KEY_LIST.split(","));
 
     given()
@@ -1531,7 +1531,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   public void testProcessDefinitionKeyNotInPostParameter() {
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("processDefinitionKeyNotIn", MockProvider.EXAMPLE_KEY_LIST.split(","));
 
     given()

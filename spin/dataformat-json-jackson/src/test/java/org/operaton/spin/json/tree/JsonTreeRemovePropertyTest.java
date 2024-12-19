@@ -56,7 +56,7 @@ public class JsonTreeRemovePropertyTest {
 
   @Test
   public void removePropertyByList() {
-    List<String> names = new ArrayList<String>();
+    List<String> names = new ArrayList<>();
     names.add(order);
     names.add(active);
 
@@ -81,7 +81,7 @@ public class JsonTreeRemovePropertyTest {
 
   @Test
   public void failWhileRemovePropertyByList() {
-    List<String> names = new ArrayList<String>();
+    List<String> names = new ArrayList<>();
     names.add(active);
     names.add("waldo");
     try {

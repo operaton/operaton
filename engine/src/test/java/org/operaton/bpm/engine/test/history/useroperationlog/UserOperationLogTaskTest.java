@@ -333,7 +333,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
   public void testSubmitTaskForm_Complete() {
     startTestProcess();
 
-    formService.submitTaskForm(task.getId(), new HashMap<String, Object>());
+    formService.submitTaskForm(task.getId(), new HashMap<>());
 
     // expect: one entry for the completion
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_COMPLETE);
@@ -355,7 +355,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     taskService.delegateTask(task.getId(), "demo");
 
-    formService.submitTaskForm(task.getId(), new HashMap<String, Object>());
+    formService.submitTaskForm(task.getId(), new HashMap<>());
 
     // expect: two entries for the resolving (delegation and assignee changed)
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_RESOLVE);

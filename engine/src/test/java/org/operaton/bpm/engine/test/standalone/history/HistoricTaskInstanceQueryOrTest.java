@@ -964,7 +964,7 @@ public class HistoricTaskInstanceQueryOrTest {
 
     assertEquals(3, historyService.createHistoricTaskInstanceQuery().count());
 
-    return new HashMap<String, Date>() {{
+    return new HashMap<>() {{
       put("date", date);
       put("oneHourAgo", oneHourAgo);
       put("oneHourLater", oneHourLater);

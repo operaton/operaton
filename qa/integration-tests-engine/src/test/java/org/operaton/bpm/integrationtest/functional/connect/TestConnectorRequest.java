@@ -33,7 +33,7 @@ public class TestConnectorRequest implements ConnectorRequest<TestConnectorRespo
   @Override
   public void setRequestParameter(String name, Object value) {
     if (requestParameters == null) {
-      requestParameters = new HashMap<String, Object>();
+      requestParameters = new HashMap<>();
     }
     requestParameters.put(name, value);
   }

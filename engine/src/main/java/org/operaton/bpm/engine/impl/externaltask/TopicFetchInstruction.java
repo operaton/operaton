@@ -55,7 +55,7 @@ public class TopicFetchInstruction implements Serializable {
   public TopicFetchInstruction(String topicName, long lockDuration) {
     this.topicName = topicName;
     this.lockDuration = lockDuration;
-    this.filterVariables = new ArrayList<QueryVariableValue>();
+    this.filterVariables = new ArrayList<>();
   }
 
   public List<String> getVariablesToFetch() {

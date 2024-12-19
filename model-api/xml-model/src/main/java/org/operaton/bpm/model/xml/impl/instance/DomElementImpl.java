@@ -129,7 +129,7 @@ public class DomElementImpl implements DomElement {
 
   @Override
   public List<DomElement> getChildElementsByNameNs(Set<String> namespaceUris, String elementName) {
-    List<DomElement> result = new ArrayList<DomElement>();
+    List<DomElement> result = new ArrayList<>();
     for (String namespace : namespaceUris) {
       if (namespace != null) {
         result.addAll(getChildElementsByNameNs(namespace, elementName));

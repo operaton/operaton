@@ -75,7 +75,7 @@ public class CaseInstanceTest {
     // ()        --create(Case1)--> active
     // ()        --create(A)-->     available
     // available --enable(A)-->     enabled
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
     expectedStateTransitions.add("() --create(Case1)--> active");
     expectedStateTransitions.add("() --create(A)--> available");
     expectedStateTransitions.add("available --enable(A)--> enabled");
@@ -329,7 +329,7 @@ public class CaseInstanceTest {
     // ()        --create(Case1)--> active
     // ()        --create(X)-->     available
     // available --enable(X)-->     enabled
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
     expectedStateTransitions.add("() --create(Case1)--> active");
     expectedStateTransitions.add("() --create(X)--> available");
     expectedStateTransitions.add("available --enable(X)--> enabled");
@@ -459,7 +459,7 @@ public class CaseInstanceTest {
     // available --enable(X1)-->    enabled
     // ()        --create(Y)-->     available
     // available --enable(Y)-->     enabled
-    List<String> expectedStateTransitions = new ArrayList<String>();
+    List<String> expectedStateTransitions = new ArrayList<>();
     expectedStateTransitions.add("() --create(Case1)--> active");
     expectedStateTransitions.add("() --create(A1)--> available");
     expectedStateTransitions.add("available --enable(A1)--> enabled");

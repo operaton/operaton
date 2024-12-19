@@ -38,7 +38,7 @@ public class HalGroupResolver extends HalIdResourceCacheLinkResolver {
       .groupIdIn(linkedIds)
       .listPage(0, linkedIds.length);
 
-    List<HalResource<?>> resolvedGroups = new ArrayList<HalResource<?>>();
+    List<HalResource<?>> resolvedGroups = new ArrayList<>();
     for (Group group : groups) {
       resolvedGroups.add(HalGroup.fromGroup(group));
     }

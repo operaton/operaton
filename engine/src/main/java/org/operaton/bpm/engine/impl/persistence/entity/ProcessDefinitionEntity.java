@@ -71,9 +71,9 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   protected String versionTag;
   protected Integer historyTimeToLive;
   protected boolean isIdentityLinksInitialized = false;
-  protected List<IdentityLinkEntity> definitionIdentityLinkEntities = new ArrayList<IdentityLinkEntity>();
-  protected Set<Expression> candidateStarterUserIdExpressions = new HashSet<Expression>();
-  protected Set<Expression> candidateStarterGroupIdExpressions = new HashSet<Expression>();
+  protected List<IdentityLinkEntity> definitionIdentityLinkEntities = new ArrayList<>();
+  protected Set<Expression> candidateStarterUserIdExpressions = new HashSet<>();
+  protected Set<Expression> candidateStarterGroupIdExpressions = new HashSet<>();
   protected boolean isStartableInTasklist;
 
   // firstVersion is true, when version == 1 or when
@@ -290,7 +290,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   @Override
   public Object getPersistentState() {
-    Map<String, Object> persistentState = new HashMap<String, Object>();
+    Map<String, Object> persistentState = new HashMap<>();
     persistentState.put("suspensionState", this.suspensionState);
     persistentState.put("historyTimeToLive", this.historyTimeToLive);
     return persistentState;

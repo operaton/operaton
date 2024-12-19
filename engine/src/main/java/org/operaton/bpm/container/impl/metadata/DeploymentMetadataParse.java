@@ -91,8 +91,8 @@ public abstract class DeploymentMetadataParse extends Parse {
       processEngine.setDefault(Boolean.parseBoolean(defaultValue));
     }
 
-    Map<String, String> properties = new HashMap<String, String>();
-    List<ProcessEnginePluginXml> plugins = new ArrayList<ProcessEnginePluginXml>();
+    Map<String, String> properties = new HashMap<>();
+    List<ProcessEnginePluginXml> plugins = new ArrayList<>();
 
     for (Element childElement : element.elements()) {
       if(CONFIGURATION.equals(childElement.getTagName())) {
@@ -140,7 +140,7 @@ public abstract class DeploymentMetadataParse extends Parse {
 
     ProcessEnginePluginXmlImpl plugin = new ProcessEnginePluginXmlImpl();
 
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
 
     for (Element childElement : element.elements()) {
       if(PLUGIN_CLASS.equals(childElement.getTagName())) {

@@ -42,7 +42,7 @@ public final class LdapTestUtilities {
   }
 
   public static void testGroupPaging(IdentityService identityService) {
-    Set<String> groupNames = new HashSet<String>();
+    Set<String> groupNames = new HashSet<>();
     List<Group> groups = identityService.createGroupQuery().listPage(0, 2);
     assertEquals(2, groups.size());
     checkPagingResults(groupNames, groups.get(0).getId(), groups.get(1).getId());
@@ -61,7 +61,7 @@ public final class LdapTestUtilities {
   }
 
   public static void testUserPaging(IdentityService identityService, LdapTestEnvironment ldapTestEnvironment) {
-    Set<String> userNames = new HashSet<String>();
+    Set<String> userNames = new HashSet<>();
     List<User> users = identityService.createUserQuery().listPage(0, 2);
     assertEquals(2, users.size());
     checkPagingResults(userNames, users.get(0).getId(), users.get(1).getId());
@@ -84,7 +84,7 @@ public final class LdapTestUtilities {
   }
 
   public static void testUserPagingWithMemberOfGroup(IdentityService identityService) {
-    Set<String> userNames = new HashSet<String>();
+    Set<String> userNames = new HashSet<>();
     List<User> users = identityService.createUserQuery().memberOfGroup("all").listPage(0, 2);
     assertEquals(2, users.size());
     checkPagingResults(userNames, users.get(0).getId(), users.get(1).getId());

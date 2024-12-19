@@ -55,7 +55,7 @@ public class DefaultConditionHandler implements ConditionHandler {
     if (subscriptions.isEmpty()) {
       throw LOG.exceptionWhenEvaluatingConditionalStartEvent();
     }
-    List<ConditionHandlerResult> results = new ArrayList<ConditionHandlerResult>();
+    List<ConditionHandlerResult> results = new ArrayList<>();
     for (EventSubscriptionEntity subscription : subscriptions) {
 
       ProcessDefinitionEntity processDefinition = subscription.getProcessDefinition();
@@ -88,7 +88,7 @@ public class DefaultConditionHandler implements ConditionHandler {
     DeploymentCache deploymentCache = commandContext.getProcessEngineConfiguration().getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
 
-    List<ConditionHandlerResult> results = new ArrayList<ConditionHandlerResult>();
+    List<ConditionHandlerResult> results = new ArrayList<>();
 
     if (processDefinition != null && !processDefinition.isSuspended()) {
       List<ActivityImpl> activities = findConditionalStartEventActivities(processDefinition);
@@ -105,7 +105,7 @@ public class DefaultConditionHandler implements ConditionHandler {
   }
 
   protected List<ActivityImpl> findConditionalStartEventActivities(ProcessDefinitionEntity processDefinition) {
-    List<ActivityImpl> activities = new ArrayList<ActivityImpl>();
+    List<ActivityImpl> activities = new ArrayList<>();
     for (EventSubscriptionDeclaration declaration : ConditionalEventDefinition.getDeclarationsForScope(processDefinition).values()) {
       if (isConditionStartEvent(declaration)) {
         activities.add(((ConditionalEventDefinition) declaration).getConditionalActivity());

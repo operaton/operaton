@@ -1135,7 +1135,7 @@ public class AuthorizationManager extends AbstractManager {
 
   protected Set<String> getAllGroups() {
     if(availableAuthorizedGroupIds == null) {
-      availableAuthorizedGroupIds = new HashSet<String>();
+      availableAuthorizedGroupIds = new HashSet<>();
       List<String> groupsFromDatabase = getDbEntityManager().selectList("selectAuthorizedGroupIds");
 
       groupsFromDatabase.stream()

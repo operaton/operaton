@@ -581,7 +581,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
   @Test
   public void testAsyncExclusiveGateway() {
     // The test needs variables to work properly
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("flow", false);
 
     // start PI
@@ -763,7 +763,7 @@ public class AsyncTaskTest extends PluggableProcessEngineTest {
 
   @Test
   public void testDeployAndRemoveAsyncActivity() {
-    Set<String> deployments = new HashSet<String>();
+    Set<String> deployments = new HashSet<>();
 
     try {
       // given a deployment that contains a process called "process" with an async task "task"

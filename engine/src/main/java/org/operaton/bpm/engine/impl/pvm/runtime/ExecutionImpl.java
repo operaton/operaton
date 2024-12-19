@@ -81,7 +81,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   // variables/////////////////////////////////////////////////////////////////
 
-  protected VariableStore<CoreVariableInstance> variableStore = new VariableStore<CoreVariableInstance>();
+  protected VariableStore<CoreVariableInstance> variableStore = new VariableStore<>();
 
   // lifecycle methods ////////////////////////////////////////////////////////
 
@@ -150,14 +150,14 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   @Override
   public List<ExecutionImpl> getExecutionsAsCopy() {
-    return new ArrayList<ExecutionImpl>(getExecutions());
+    return new ArrayList<>(getExecutions());
   }
 
   /** ensures initialization and returns the non-null executions list */
   @Override
   public List<ExecutionImpl> getExecutions() {
     if(executions == null) {
-      executions = new ArrayList<ExecutionImpl>();
+      executions = new ArrayList<>();
     }
     return executions;
   }

@@ -44,11 +44,11 @@ import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
 public class MockedProcessEngineProvider implements ProcessEngineProvider {
 
   private static ProcessEngine cachedDefaultProcessEngine;
-  private static Map<String, ProcessEngine> cachedEngines = new HashMap<String, ProcessEngine>();
+  private static Map<String, ProcessEngine> cachedEngines = new HashMap<>();
 
   public void resetEngines() {
     cachedDefaultProcessEngine = null;
-    cachedEngines = new HashMap<String, ProcessEngine>();
+    cachedEngines = new HashMap<>();
   }
 
   private ProcessEngine mockProcessEngine(String engineName) {
@@ -123,7 +123,7 @@ public class MockedProcessEngineProvider implements ProcessEngineProvider {
 
   @Override
   public Set<String> getProcessEngineNames() {
-    Set<String> result = new HashSet<String>();
+    Set<String> result = new HashSet<>();
     result.add(MockProvider.EXAMPLE_PROCESS_ENGINE_NAME);
     result.add(MockProvider.ANOTHER_EXAMPLE_PROCESS_ENGINE_NAME);
     return result;

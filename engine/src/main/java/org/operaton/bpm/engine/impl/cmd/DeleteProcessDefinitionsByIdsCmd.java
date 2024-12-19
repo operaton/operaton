@@ -68,7 +68,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
   }
 
   public DeleteProcessDefinitionsByIdsCmd(List<String> processDefinitionIds, boolean cascadeToHistory, boolean cascadeToInstances, boolean skipCustomListeners, boolean skipIoMappings, boolean writeUserOperationLog) {
-    this.processDefinitionIds = new HashSet<String>(processDefinitionIds);
+    this.processDefinitionIds = new HashSet<>(processDefinitionIds);
     this.cascadeToHistory = cascadeToHistory;
     this.cascadeToInstances = cascadeToInstances;
     this.skipCustomListeners = skipCustomListeners;
@@ -83,7 +83,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
     List<ProcessDefinition> processDefinitions;
     if (processDefinitionIds.size() == 1) {
       ProcessDefinition processDefinition = getSingleProcessDefinition(commandContext);
-      processDefinitions = new ArrayList<ProcessDefinition>();
+      processDefinitions = new ArrayList<>();
       processDefinitions.add(processDefinition);
     } else {
       ProcessDefinitionManager processDefinitionManager = commandContext.getProcessDefinitionManager();
@@ -114,8 +114,8 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
   }
 
   protected Set<ProcessDefinitionGroup> groupByKeyAndTenant(List<ProcessDefinition> processDefinitions) {
-    Set<ProcessDefinitionGroup> groups = new HashSet<ProcessDefinitionGroup>();
-    Map<ProcessDefinitionGroup, List<ProcessDefinitionEntity>> map = new HashMap<ProcessDefinitionGroup, List<ProcessDefinitionEntity>>();
+    Set<ProcessDefinitionGroup> groups = new HashSet<>();
+    Map<ProcessDefinitionGroup, List<ProcessDefinitionEntity>> map = new HashMap<>();
 
     for (ProcessDefinition current : processDefinitions) {
       ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) current;
@@ -216,7 +216,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
 
     String key;
     String tenant;
-    List<ProcessDefinitionEntity> processDefinitions = new ArrayList<ProcessDefinitionEntity>();
+    List<ProcessDefinitionEntity> processDefinitions = new ArrayList<>();
 
     @Override
     public int hashCode() {

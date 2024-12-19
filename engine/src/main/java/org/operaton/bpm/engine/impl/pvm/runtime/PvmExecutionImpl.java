@@ -2048,7 +2048,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    * @param atomicOperation the atomic operation which should be executed
    */
   public void dispatchDelayedEventsAndPerformOperation(final PvmAtomicOperation atomicOperation) {
-    dispatchDelayedEventsAndPerformOperation(new Callback<PvmExecutionImpl, Void>() {
+    dispatchDelayedEventsAndPerformOperation(new Callback<>() {
       @Override
       public Void callback(PvmExecutionImpl param) {
         param.performOperation(atomicOperation);
@@ -2071,13 +2071,13 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       return;
     }
 
-    continueIfExecutionDoesNotAffectNextOperation(new Callback<PvmExecutionImpl, Void>() {
+    continueIfExecutionDoesNotAffectNextOperation(new Callback<>() {
       @Override
       public Void callback(PvmExecutionImpl execution) {
         dispatchScopeEvents(execution);
         return null;
       }
-    }, new Callback<PvmExecutionImpl, Void>(){
+    }, new Callback<>(){
       @Override
       public Void callback(PvmExecutionImpl execution) {
         continueExecutionIfNotCanceled(continuation, execution);

@@ -51,7 +51,7 @@ public class ProcessApplicationReferenceImpl implements ProcessApplicationRefere
   protected String name;
 
   public ProcessApplicationReferenceImpl(AbstractProcessApplication processApplication) {
-    this.processApplication = new WeakReference<AbstractProcessApplication>(processApplication);
+    this.processApplication = new WeakReference<>(processApplication);
     this.name = processApplication.getName();
   }
 

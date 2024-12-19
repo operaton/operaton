@@ -73,7 +73,7 @@ public class CreateAndResolveIncidentTest {
   private static final CustomIncidentHandler JOB_HANDLER = new CustomIncidentHandler(Incident.FAILED_JOB_HANDLER_TYPE);
   private static final CustomIncidentHandler EXTERNAL_TASK_HANDLER = new CustomIncidentHandler(Incident.EXTERNAL_TASK_HANDLER_TYPE);
 
-  private static final List<IncidentHandler> HANDLERS = new ArrayList<IncidentHandler>();
+  private static final List<IncidentHandler> HANDLERS = new ArrayList<>();
   static {
     HANDLERS.add(CUSTOM_HANDLER);
     HANDLERS.add(JOB_HANDLER);

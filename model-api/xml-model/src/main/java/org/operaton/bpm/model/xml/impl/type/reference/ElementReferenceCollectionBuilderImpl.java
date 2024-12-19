@@ -37,7 +37,7 @@ public class ElementReferenceCollectionBuilderImpl<Target extends ModelElementIn
   public ElementReferenceCollectionBuilderImpl(Class<Source> childElementType, Class<Target> referenceTargetClass, ChildElementCollectionImpl<Source> collection) {
     this.childElementType = childElementType;
     this.referenceTargetClass = referenceTargetClass;
-    this.elementReferenceCollectionImpl = new ElementReferenceCollectionImpl<Target, Source>(collection);
+    this.elementReferenceCollectionImpl = new ElementReferenceCollectionImpl<>(collection);
   }
 
   @Override

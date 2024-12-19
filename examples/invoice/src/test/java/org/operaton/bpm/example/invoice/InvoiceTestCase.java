@@ -67,7 +67,7 @@ public class InvoiceTestCase {
     assertEquals("approveInvoice", task.getTaskDefinitionKey());
 
     List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
-    Set<String> approverGroups = new HashSet<String>();
+    Set<String> approverGroups = new HashSet<>();
     for (IdentityLink link : links) {
       approverGroups.add(link.getGroupId());
     }
@@ -111,7 +111,7 @@ public class InvoiceTestCase {
     assertEquals("approveInvoice", task.getTaskDefinitionKey());
 
     List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
-    Set<String> approverGroups = new HashSet<String>();
+    Set<String> approverGroups = new HashSet<>();
     for (IdentityLink link : links) {
       approverGroups.add(link.getGroupId());
     }
@@ -162,7 +162,7 @@ public class InvoiceTestCase {
 
     // and task has candidate groups
     List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
-    Set<String> approverGroups = new HashSet<String>();
+    Set<String> approverGroups = new HashSet<>();
     for (IdentityLink link : links) {
       approverGroups.add(link.getGroupId());
     }
@@ -200,7 +200,7 @@ public class InvoiceTestCase {
     assertEquals("approveInvoice", task.getTaskDefinitionKey());
 
     List<IdentityLink> links = taskService.getIdentityLinksForTask(task.getId());
-    Set<String> approverGroups = new HashSet<String>();
+    Set<String> approverGroups = new HashSet<>();
     for (IdentityLink link : links) {
       approverGroups.add(link.getGroupId());
     }

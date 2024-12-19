@@ -30,14 +30,14 @@ public class ChangeVariablesService implements JavaDelegate {
   public void execute(DelegateExecution execution) {
     Date now = new Date();
 
-    List<String> serializable = new ArrayList<String>();
+    List<String> serializable = new ArrayList<>();
     serializable.add("four");
     serializable.add("five");
     serializable.add("six");
 
     byte[] bytes = "anotherBytes".getBytes();
 
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
 
     variables.put("shortVar", (short) 456);
     variables.put("longVar", 999999L);

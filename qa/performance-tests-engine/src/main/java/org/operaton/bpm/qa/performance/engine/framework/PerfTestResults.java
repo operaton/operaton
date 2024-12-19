@@ -32,7 +32,7 @@ public class PerfTestResults {
   protected PerfTestConfiguration configuration;
 
   /** the individual result entries **/
-  protected List<PerfTestResult> passResults = new ArrayList<PerfTestResult>();
+  protected List<PerfTestResult> passResults = new ArrayList<>();
 
   public PerfTestResults(PerfTestConfiguration configuration) {
     this.configuration = configuration;

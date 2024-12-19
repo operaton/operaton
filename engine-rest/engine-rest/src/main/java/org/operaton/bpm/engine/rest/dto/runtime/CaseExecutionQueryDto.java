@@ -48,7 +48,7 @@ public class CaseExecutionQueryDto extends AbstractQueryDto<CaseExecutionQuery> 
 
   protected static final List<String> VALID_SORT_BY_VALUES;
   static {
-    VALID_SORT_BY_VALUES = new ArrayList<String>();
+    VALID_SORT_BY_VALUES = new ArrayList<>();
     VALID_SORT_BY_VALUES.add(SORT_BY_EXECUTION_ID_VALUE);
     VALID_SORT_BY_VALUES.add(SORT_BY_DEFINITION_KEY_VALUE);
     VALID_SORT_BY_VALUES.add(SORT_BY_DEFINITION_ID_VALUE);

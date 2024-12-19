@@ -80,7 +80,7 @@ public class CompetingExternalTaskFetchingTest {
 
     @Override
     public void run() {
-      Map<String, TopicFetchInstruction> instructions = new HashMap<String, TopicFetchInstruction>();
+      Map<String, TopicFetchInstruction> instructions = new HashMap<>();
 
       TopicFetchInstruction instruction = new TopicFetchInstruction(topic, 10000L);
       instructions.put(topic, instruction);

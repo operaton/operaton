@@ -64,7 +64,7 @@ public class ExecutionTree implements Execution {
   }
 
   protected static ExecutionTree forExecution(ExecutionEntity execution) {
-    List<ExecutionTree> children = new ArrayList<ExecutionTree>();
+    List<ExecutionTree> children = new ArrayList<>();
 
     for (ExecutionEntity child : execution.getExecutions()) {
       children.add(ExecutionTree.forExecution(child));
@@ -79,7 +79,7 @@ public class ExecutionTree implements Execution {
   }
 
   public List<ExecutionTree> getLeafExecutions(String activityId) {
-    List<ExecutionTree> executions = new ArrayList<ExecutionTree>();
+    List<ExecutionTree> executions = new ArrayList<>();
 
     for (ExecutionTree child : children) {
       if (!child.isEventScope()) {

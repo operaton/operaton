@@ -245,7 +245,7 @@ public class MultiTenancyCleanableHistoricProcessInstanceReportCmdTenantCheckTes
     Date oldCurrentTime = ClockUtil.getCurrentTime();
     ClockUtil.setCurrentTime(DateUtils.addDays(oldCurrentTime, daysInThePast));
 
-    List<String> processInstanceIds = new ArrayList<String>();
+    List<String> processInstanceIds = new ArrayList<>();
     {
       for (int i = 0; i < instanceCount; i++) {
         String processInstanceId = null;

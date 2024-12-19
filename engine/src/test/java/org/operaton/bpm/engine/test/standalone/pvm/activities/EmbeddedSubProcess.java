@@ -33,7 +33,7 @@ public class EmbeddedSubProcess implements CompositeActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
-    List<PvmActivity> startActivities = new ArrayList<PvmActivity>();
+    List<PvmActivity> startActivities = new ArrayList<>();
     for (PvmActivity activity: execution.getActivity().getActivities()) {
       if (activity.getIncomingTransitions().isEmpty()) {
         startActivities.add(activity);

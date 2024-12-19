@@ -77,7 +77,7 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
    * @see #findLatestCaseDefinitionByKeyAndTenantId(String, String)
    */
   public CaseDefinitionEntity findLatestCaseDefinitionByKeyAndTenantId(String caseDefinitionKey, String tenantId) {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("caseDefinitionKey", caseDefinitionKey);
     parameters.put("tenantId", tenantId);
 
@@ -89,7 +89,7 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
   }
 
   public CaseDefinitionEntity findCaseDefinitionByKeyVersionAndTenantId(String caseDefinitionKey, Integer caseDefinitionVersion, String tenantId) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("caseDefinitionVersion", caseDefinitionVersion);
     parameters.put("caseDefinitionKey", caseDefinitionKey);
     parameters.put("tenantId", tenantId);
@@ -97,14 +97,14 @@ public class CaseDefinitionManager extends AbstractManager implements AbstractRe
   }
 
   public CaseDefinitionEntity findCaseDefinitionByDeploymentAndKey(String deploymentId, String caseDefinitionKey) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("deploymentId", deploymentId);
     parameters.put("caseDefinitionKey", caseDefinitionKey);
     return (CaseDefinitionEntity) getDbEntityManager().selectOne("selectCaseDefinitionByDeploymentAndKey", parameters);
   }
 
   public String findPreviousCaseDefinitionId(String caseDefinitionKey, Integer version, String tenantId) {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("key", caseDefinitionKey);
     params.put("version", version);
     params.put("tenantId", tenantId);

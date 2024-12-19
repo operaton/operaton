@@ -35,7 +35,7 @@ public class LazyInitRegistration implements ApplicationContextAware {
 
   protected static final String RESOURCE_LOADER_DEPENDING_INIT_HOOK = "resourceLoaderDependingInitHook";
 
-  protected static final Set<LazyDelegateFilter<? extends Filter>> REGISTRATION = new HashSet<LazyDelegateFilter<? extends Filter>>();
+  protected static final Set<LazyDelegateFilter<? extends Filter>> REGISTRATION = new HashSet<>();
 
   protected static ApplicationContext APPLICATION_CONTEXT;
 

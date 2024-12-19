@@ -58,7 +58,7 @@ public class DurationHelper {
   }
   
   public DurationHelper(String expressions, Date startDate) throws Exception {
-    List<String> expression = new ArrayList<String>();
+    List<String> expression = new ArrayList<>();
     if(expressions != null) {
       expression = Arrays.asList(expressions.split("/"));
     }

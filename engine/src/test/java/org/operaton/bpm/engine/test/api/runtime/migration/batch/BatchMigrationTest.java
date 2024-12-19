@@ -666,7 +666,7 @@ public class BatchMigrationTest {
     ProcessDefinition sourceProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
 
-    List<String> processInstanceIds = new ArrayList<String>();
+    List<String> processInstanceIds = new ArrayList<>();
     for (int i = 0; i < processInstanceCount; i++) {
       processInstanceIds.add(
         runtimeService.startProcessInstanceById(sourceProcessDefinition.getId()).getId()

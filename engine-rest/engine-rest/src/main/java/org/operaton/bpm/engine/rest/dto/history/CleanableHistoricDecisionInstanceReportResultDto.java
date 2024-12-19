@@ -100,7 +100,7 @@ public class CleanableHistoricDecisionInstanceReportResultDto implements Seriali
   }
 
   public static List<CleanableHistoricDecisionInstanceReportResultDto> convert(List<CleanableHistoricDecisionInstanceReportResult> reportResult) {
-    List<CleanableHistoricDecisionInstanceReportResultDto> dtos = new ArrayList<CleanableHistoricDecisionInstanceReportResultDto>();
+    List<CleanableHistoricDecisionInstanceReportResultDto> dtos = new ArrayList<>();
     for (CleanableHistoricDecisionInstanceReportResult current : reportResult) {
       CleanableHistoricDecisionInstanceReportResultDto dto = new CleanableHistoricDecisionInstanceReportResultDto();
       dto.setDecisionDefinitionId(current.getDecisionDefinitionId());

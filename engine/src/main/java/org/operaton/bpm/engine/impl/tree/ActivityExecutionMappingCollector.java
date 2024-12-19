@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class ActivityExecutionMappingCollector implements TreeVisitor<ActivityExecution> {
 
-  private final Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = new HashMap<ScopeImpl, PvmExecutionImpl>();
+  private final Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping = new HashMap<>();
 
   private final ActivityExecution initialExecution;
   private boolean initialized = false;

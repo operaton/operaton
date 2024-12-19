@@ -29,7 +29,7 @@ public class DmnDecisionRequirementsGraphImpl implements DmnDecisionRequirements
   protected String key;
   protected String name;
 
-  protected Map<String, DmnDecision> decisions = new HashMap<String, DmnDecision>();
+  protected Map<String, DmnDecision> decisions = new HashMap<>();
 
   @Override
   public String getKey() {

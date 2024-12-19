@@ -56,7 +56,7 @@ public class DeleteHistoricDecisionInstancesBulkCmd implements Command<Object> {
   }
 
   protected void writeUserOperationLog(CommandContext commandContext, int numInstances) {
-    List<PropertyChange> propertyChanges = new ArrayList<PropertyChange>();
+    List<PropertyChange> propertyChanges = new ArrayList<>();
     propertyChanges.add(new PropertyChange("nrOfInstances", null, numInstances));
     propertyChanges.add(new PropertyChange("async", null, false));
 

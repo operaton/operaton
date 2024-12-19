@@ -44,7 +44,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
   public void testActivityStatisticsQueryWithoutFailedJobs() {
 
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
 
     runtimeService.startProcessInstanceByKey("ExampleProcess", parameters);
@@ -69,7 +69,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
   public void testActivityStatisticsQueryWithIncidents() {
 
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("ExampleProcess", parameters);
@@ -99,7 +99,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
   public void testActivityStatisticsQueryWithIncidentType() {
 
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("ExampleProcess", parameters);
@@ -129,7 +129,7 @@ public class ActivityStatisticsQueryTest extends PluggableProcessEngineTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQueryWithFailedJobs.bpmn20.xml")
   public void testActivityStatisticsQueryWithInvalidIncidentType() {
 
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("fail", true);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("ExampleProcess", parameters);

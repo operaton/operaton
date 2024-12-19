@@ -38,12 +38,12 @@ import org.operaton.bpm.model.xml.type.ModelElementType;
  */
 public class ModelImpl implements Model {
 
-  private final Map<QName, ModelElementType> typesByName = new HashMap<QName, ModelElementType>();
-  private final Map<Class<? extends ModelElementInstance>, ModelElementType> typesByClass = new HashMap<Class<? extends ModelElementInstance>, ModelElementType>();
+  private final Map<QName, ModelElementType> typesByName = new HashMap<>();
+  private final Map<Class<? extends ModelElementInstance>, ModelElementType> typesByClass = new HashMap<>();
   private final String modelName;
 
-  protected final Map<String, Set<String>> actualNsToAlternative = new HashMap<String, Set<String>>();
-  protected final Map<String, String> alternativeNsToActual = new HashMap<String, String>();
+  protected final Map<String, Set<String>> actualNsToAlternative = new HashMap<>();
+  protected final Map<String, String> alternativeNsToActual = new HashMap<>();
 
   /**
    * Create a new {@link Model} with a model name.
@@ -65,7 +65,7 @@ public class ModelImpl implements Model {
     if (alternativeNamespaces == null)
     {
       // linked hash set for consistent iteration order
-      alternativeNamespaces = new LinkedHashSet<String>();
+      alternativeNamespaces = new LinkedHashSet<>();
       actualNsToAlternative.put(actualNs, alternativeNamespaces);
     }
 
@@ -109,7 +109,7 @@ public class ModelImpl implements Model {
 
   @Override
   public Collection<ModelElementType> getTypes() {
-    return new ArrayList<ModelElementType>(typesByName.values());
+    return new ArrayList<>(typesByName.values());
   }
 
   @Override

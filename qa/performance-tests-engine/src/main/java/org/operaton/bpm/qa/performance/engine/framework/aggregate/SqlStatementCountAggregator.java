@@ -62,7 +62,7 @@ public class SqlStatementCountAggregator extends TabularResultAggregator {
   @Override
   @SuppressWarnings("unchecked")
   protected void processResults(PerfTestResults results, TabularResultSet tabularResultSet) {
-    ArrayList<Object> row = new ArrayList<Object>();
+    ArrayList<Object> row = new ArrayList<>();
 
     row.add(results.getTestName());
 

@@ -71,7 +71,7 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
     String[] deploymentDescriptors = getDeploymentDescriptorLocations(processApplication);
     List<URL> processesXmlUrls = getProcessesXmlUrls(deploymentDescriptors, processApplication);
 
-    Map<URL, ProcessesXml> parsedFiles = new HashMap<URL, ProcessesXml>();
+    Map<URL, ProcessesXml> parsedFiles = new HashMap<>();
 
     // perform parsing
     for (URL url : processesXmlUrls) {
@@ -97,7 +97,7 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
   protected List<URL> getProcessesXmlUrls(String[] deploymentDescriptors, AbstractProcessApplication processApplication) {
     ClassLoader processApplicationClassloader = processApplication.getProcessApplicationClassloader();
 
-    List<URL> result = new ArrayList<URL>();
+    List<URL> result = new ArrayList<>();
 
     // load all deployment descriptor files using the classloader of the process application
     for (String deploymentDescriptor : deploymentDescriptors) {

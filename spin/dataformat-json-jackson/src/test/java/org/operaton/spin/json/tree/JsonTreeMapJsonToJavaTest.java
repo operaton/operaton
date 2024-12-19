@@ -83,7 +83,7 @@ public class JsonTreeMapJsonToJavaTest {
   }
 
   protected Map<String, Object> newMap(String key, Object value) {
-    Map<String, Object> result = new HashMap<String, Object>();
+    Map<String, Object> result = new HashMap<>();
     result.put(key, value);
 
     return result;

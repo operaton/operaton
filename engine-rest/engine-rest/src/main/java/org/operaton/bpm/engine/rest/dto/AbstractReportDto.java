@@ -48,7 +48,7 @@ public abstract class AbstractReportDto<T extends Report> extends AbstractSearch
 
   public static final List<String> VALID_REPORT_TYPE_VALUES;
   static {
-    VALID_REPORT_TYPE_VALUES = new ArrayList<String>();
+    VALID_REPORT_TYPE_VALUES = new ArrayList<>();
     VALID_REPORT_TYPE_VALUES.add(REPORT_TYPE_DURATION);
     VALID_REPORT_TYPE_VALUES.add(REPORT_TYPE_COUNT);
   }

@@ -44,7 +44,7 @@ public class CleanableHistoricProcessInstanceReportDto extends AbstractQueryDto<
   public static final List<String> VALID_SORT_BY_VALUES;
 
   static {
-    VALID_SORT_BY_VALUES = new ArrayList<String>();
+    VALID_SORT_BY_VALUES = new ArrayList<>();
     VALID_SORT_BY_VALUES.add(SORT_BY_FINISHED_VALUE);
   }
 

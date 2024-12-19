@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 public class GetVariablesDelegate implements JavaDelegate {
 
   private Expression variable;
-  public static List<String> values = new ArrayList<String>();
+  public static List<String> values = new ArrayList<>();
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

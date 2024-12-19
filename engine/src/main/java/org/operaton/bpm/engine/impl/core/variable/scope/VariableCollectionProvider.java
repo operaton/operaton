@@ -39,7 +39,7 @@ public class VariableCollectionProvider<T extends CoreVariableInstance> implemen
   @Override
   public Collection<T> provideVariables() {
     if (variables == null) {
-      return new ArrayList<T>();
+      return new ArrayList<>();
     }
     else {
       return variables;
@@ -52,7 +52,7 @@ public class VariableCollectionProvider<T extends CoreVariableInstance> implemen
       return provideVariables();
     }
 
-    List<T> result = new ArrayList<T>();
+    List<T> result = new ArrayList<>();
     if (variables != null) {
       for (T variable : variables) {
         if (variablesNames.contains(variable.getName())) {
@@ -64,7 +64,7 @@ public class VariableCollectionProvider<T extends CoreVariableInstance> implemen
   }
 
   public static <T extends CoreVariableInstance> VariableCollectionProvider<T> emptyVariables() {
-    return new VariableCollectionProvider<T>(Collections.<T>emptySet());
+    return new VariableCollectionProvider<>(Collections.<T>emptySet());
   }
 
 }

@@ -63,7 +63,7 @@ public class ProcessApplicationDeploymentService implements Service<ProcessAppli
 
   private static final Logger LOGGER = Logger.getLogger(ProcessApplicationDeploymentService.class.getName());
 
-  protected InjectedValue<ExecutorService> executorInjector = new InjectedValue<ExecutorService>();
+  protected InjectedValue<ExecutorService> executorInjector = new InjectedValue<>();
 
   protected InjectedValue<ProcessEngine> processEngineInjector = new InjectedValue<ProcessEngine>();
 

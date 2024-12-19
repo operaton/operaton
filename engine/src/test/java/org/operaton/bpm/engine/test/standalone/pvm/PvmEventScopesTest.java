@@ -169,7 +169,7 @@ public class PvmEventScopesTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance(); 
     processInstance.start();
     
-    List<String> expectedActiveActivityIds = new ArrayList<String>();
+    List<String> expectedActiveActivityIds = new ArrayList<>();
     expectedActiveActivityIds.add("wait");
     assertEquals(expectedActiveActivityIds, processInstance.findActiveActivityIds());
     

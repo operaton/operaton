@@ -61,7 +61,7 @@ public class TaskCountByCandidateGroupsTest {
   protected ProcessEngineConfiguration processEngineConfiguration;
 
   protected String userId = "user";
-  protected List<String> tasks = new ArrayList<String>();
+  protected List<String> tasks = new ArrayList<>();
   protected List<String> tenants = Arrays.asList("tenant1", "tenant2");
   protected List<String> groups = Arrays.asList("aGroupId", "anotherGroupId");
 

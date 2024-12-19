@@ -170,7 +170,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
 
   @Override
   public Object getPersistentState() {
-    HashMap<String, Object> persistentState = new HashMap<String, Object>();
+    HashMap<String, Object> persistentState = new HashMap<>();
     persistentState.put("executionId", executionId);
     persistentState.put("configuration", configuration);
     persistentState.put("activityId", activityId);
@@ -368,13 +368,13 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
 
   @Override
   public Set<String> getReferencedEntityIds() {
-    Set<String> referencedEntityIds = new HashSet<String>();
+    Set<String> referencedEntityIds = new HashSet<>();
     return referencedEntityIds;
   }
 
   @Override
   public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<String, Class>();
+    Map<String, Class> referenceIdAndClass = new HashMap<>();
 
     if (executionId != null) {
       referenceIdAndClass.put(executionId, ExecutionEntity.class);

@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 public class AddListVariableListener implements TaskListener {
   
   public void notify(DelegateTask task) {
-    List<String> list = new ArrayList<String>();
+    List<String> list = new ArrayList<>();
     list.add("demo");
     list.add("john");
     list.add("peter");

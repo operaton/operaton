@@ -27,9 +27,9 @@ import java.util.List;
  */
 public class TabularResultSet {
 
-  protected List<String> resultColumnNames = new ArrayList<String>();
+  protected List<String> resultColumnNames = new ArrayList<>();
 
-  protected List<List<Object>> results = new ArrayList<List<Object>>();
+  protected List<List<Object>> results = new ArrayList<>();
 
   public void setResultColumnNames(List<String> resultColumnNames) {
     this.resultColumnNames = resultColumnNames;

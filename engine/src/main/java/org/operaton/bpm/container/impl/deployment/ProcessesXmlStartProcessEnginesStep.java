@@ -40,7 +40,7 @@ public class ProcessesXmlStartProcessEnginesStep extends AbstractStartProcessEng
 
     final Map<URL, ProcessesXml> processesXmls = operationContext.getAttachment(PROCESSES_XML_RESOURCES);
 
-    List<ProcessEngineXml> processEngines = new ArrayList<ProcessEngineXml>();
+    List<ProcessEngineXml> processEngines = new ArrayList<>();
 
     for (ProcessesXml processesXml : processesXmls.values()) {
       processEngines.addAll(processesXml.getProcessEngines());

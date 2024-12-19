@@ -42,9 +42,9 @@ public class MigratingEventScopeInstance extends MigratingScopeInstance {
 
   protected ExecutionEntity eventScopeExecution;
 
-  protected Set<MigratingEventScopeInstance> childInstances = new HashSet<MigratingEventScopeInstance>();
-  protected Set<MigratingCompensationEventSubscriptionInstance> childCompensationSubscriptionInstances = new HashSet<MigratingCompensationEventSubscriptionInstance>();
-  protected List<MigratingInstance> migratingDependentInstances = new ArrayList<MigratingInstance>();
+  protected Set<MigratingEventScopeInstance> childInstances = new HashSet<>();
+  protected Set<MigratingCompensationEventSubscriptionInstance> childCompensationSubscriptionInstances = new HashSet<>();
+  protected List<MigratingInstance> migratingDependentInstances = new ArrayList<>();
 
   public MigratingEventScopeInstance(
       MigrationInstruction migrationInstruction,
@@ -186,7 +186,7 @@ public class MigratingEventScopeInstance extends MigratingScopeInstance {
 
   @Override
   public void detachChildren() {
-    Set<MigratingProcessElementInstance> childrenCopy = new HashSet<MigratingProcessElementInstance>(getChildren());
+    Set<MigratingProcessElementInstance> childrenCopy = new HashSet<>(getChildren());
     for (MigratingProcessElementInstance child : childrenCopy) {
       child.detachState();
     }
@@ -203,14 +203,14 @@ public class MigratingEventScopeInstance extends MigratingScopeInstance {
 
   @Override
   public Collection<MigratingProcessElementInstance> getChildren() {
-    Set<MigratingProcessElementInstance> children = new HashSet<MigratingProcessElementInstance>(childInstances);
+    Set<MigratingProcessElementInstance> children = new HashSet<>(childInstances);
     children.addAll(childCompensationSubscriptionInstances);
     return children;
   }
 
   @Override
   public Collection<MigratingScopeInstance> getChildScopeInstances() {
-    return new HashSet<MigratingScopeInstance>(childInstances);
+    return new HashSet<>(childInstances);
   }
 
   @Override

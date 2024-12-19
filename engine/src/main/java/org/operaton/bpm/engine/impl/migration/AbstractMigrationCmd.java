@@ -86,7 +86,7 @@ public abstract class AbstractMigrationCmd {
       Map<String, Object> variables,
       boolean async) {
 
-    List<PropertyChange> propertyChanges = new ArrayList<PropertyChange>();
+    List<PropertyChange> propertyChanges = new ArrayList<>();
     propertyChanges.add(new PropertyChange("processDefinitionId",
         sourceProcessDefinition.getId(),
         targetProcessDefinition.getId()));

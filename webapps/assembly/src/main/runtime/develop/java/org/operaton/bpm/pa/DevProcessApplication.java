@@ -90,11 +90,11 @@ public class DevProcessApplication extends ServletProcessApplication {
   protected void createCockpitDemoData(final ProcessEngine engine) {
     RuntimeService runtimeService = engine.getRuntimeService();
 
-    Map<String, Object> vars1 = new HashMap<String, Object>();
+    Map<String, Object> vars1 = new HashMap<>();
     vars1.put("booleanVar", true);
     runtimeService.startProcessInstanceByKey("ProcessWithExclusiveGateway", "secondUserTask", vars1);
 
-    Map<String, Object> vars2 = new HashMap<String, Object>();
+    Map<String, Object> vars2 = new HashMap<>();
     vars2.put("booleanVar", false);
     runtimeService.startProcessInstanceByKey("ProcessWithExclusiveGateway", "firstUserTask", vars2);
 
@@ -183,7 +183,7 @@ public class DevProcessApplication extends ServletProcessApplication {
     ClockUtil.setCurrentTime(createArtificalDate(8));
     runtimeService.startProcessInstanceByKey("CallActivity");
 
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("value1", "a");
     params.put("value2", "b");
     params.put("value3", "c");

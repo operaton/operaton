@@ -41,7 +41,7 @@ public class FilterQueryDto extends AbstractQueryDto<FilterQuery> {
 
   private static final List<String> VALID_SORT_BY_VALUES;
   static {
-    VALID_SORT_BY_VALUES = new ArrayList<String>();
+    VALID_SORT_BY_VALUES = new ArrayList<>();
     VALID_SORT_BY_VALUES.add(SORT_BY_ID_VALUE);
     VALID_SORT_BY_VALUES.add(SORT_BY_RESOURCE_TYPE_VALUE);
     VALID_SORT_BY_VALUES.add(SORT_BY_NAME_VALUE);

@@ -156,7 +156,7 @@ public class HistoricJobLogManager extends AbstractHistoricManager {
   }
 
   public DbOperation deleteJobLogByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("removalTime", removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
       parameters.put("minuteFrom", minuteFrom);
@@ -173,7 +173,7 @@ public class HistoricJobLogManager extends AbstractHistoricManager {
 
   protected void deleteExceptionByteArrayByParameterMap(String key, Object value) {
     EnsureUtil.ensureNotNull(key, value);
-    Map<String, Object> parameterMap = new HashMap<String, Object>();
+    Map<String, Object> parameterMap = new HashMap<>();
     parameterMap.put(key, value);
     getDbEntityManager().delete(ByteArrayEntity.class, "deleteExceptionByteArraysByIds", parameterMap);
   }

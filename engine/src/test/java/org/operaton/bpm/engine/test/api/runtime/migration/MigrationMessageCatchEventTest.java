@@ -162,7 +162,7 @@ public class MigrationMessageCatchEventTest {
         .updateEventTrigger()
         .build();
 
-    HashMap<String, Object> variables = new HashMap<String, Object>();
+    HashMap<String, Object> variables = new HashMap<>();
     variables.put("var", "foo");
 
     // when

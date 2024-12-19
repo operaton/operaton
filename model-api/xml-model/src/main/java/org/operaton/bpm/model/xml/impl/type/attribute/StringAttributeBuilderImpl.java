@@ -72,7 +72,7 @@ public class StringAttributeBuilderImpl extends AttributeBuilderImpl<String> imp
   @Override
   public <V extends ModelElementInstance> AttributeReferenceBuilder<V> qNameAttributeReference(Class<V> referenceTargetElement) {
     AttributeImpl<String> attribute = (AttributeImpl<String>) build();
-    AttributeReferenceBuilderImpl<V> referenceBuilder = new QNameAttributeReferenceBuilderImpl<V>(attribute, referenceTargetElement);
+    AttributeReferenceBuilderImpl<V> referenceBuilder = new QNameAttributeReferenceBuilderImpl<>(attribute, referenceTargetElement);
     setAttributeReference(referenceBuilder);
     return referenceBuilder;
   }
@@ -80,7 +80,7 @@ public class StringAttributeBuilderImpl extends AttributeBuilderImpl<String> imp
   @Override
   public <V extends ModelElementInstance> AttributeReferenceBuilder<V> idAttributeReference(Class<V> referenceTargetElement) {
     AttributeImpl<String> attribute = (AttributeImpl<String>) build();
-    AttributeReferenceBuilderImpl<V> referenceBuilder = new AttributeReferenceBuilderImpl<V>(attribute, referenceTargetElement);
+    AttributeReferenceBuilderImpl<V> referenceBuilder = new AttributeReferenceBuilderImpl<>(attribute, referenceTargetElement);
     setAttributeReference(referenceBuilder);
     return referenceBuilder;
   }
@@ -89,7 +89,7 @@ public class StringAttributeBuilderImpl extends AttributeBuilderImpl<String> imp
   @SuppressWarnings("rawtypes")
   public <V extends ModelElementInstance> AttributeReferenceCollectionBuilder<V> idAttributeReferenceCollection(Class<V> referenceTargetElement, Class<? extends AttributeReferenceCollection> attributeReferenceCollection) {
     AttributeImpl<String> attribute = (AttributeImpl<String>) build();
-    AttributeReferenceCollectionBuilder<V> referenceBuilder = new AttributeReferenceCollectionBuilderImpl<V>(attribute, referenceTargetElement, attributeReferenceCollection);
+    AttributeReferenceCollectionBuilder<V> referenceBuilder = new AttributeReferenceCollectionBuilderImpl<>(attribute, referenceTargetElement, attributeReferenceCollection);
     setAttributeReference(referenceBuilder);
     return referenceBuilder;
   }

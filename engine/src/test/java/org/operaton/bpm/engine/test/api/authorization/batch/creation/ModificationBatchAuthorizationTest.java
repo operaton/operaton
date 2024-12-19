@@ -65,7 +65,7 @@ public class ModificationBatchAuthorizationTest extends BatchCreationAuthorizati
     BpmnModelInstance instance = Bpmn.createExecutableProcess("process1").startEvent().userTask("user1").userTask("user2").endEvent().done();
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(instance);
 
-    List<String> instances = new ArrayList<String>();
+    List<String> instances = new ArrayList<>();
     for (int i = 0; i < 2; i++) {
       ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("process1");
       instances.add(processInstance.getId());

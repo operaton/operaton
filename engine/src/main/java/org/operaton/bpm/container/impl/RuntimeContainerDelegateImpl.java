@@ -182,7 +182,7 @@ public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, P
 
   @Override
   public Set<String> getProcessEngineNames() {
-    Set<String> processEngineNames = new HashSet<String>();
+    Set<String> processEngineNames = new HashSet<>();
     List<ProcessEngine> processEngines = getProcessEngines();
     for (ProcessEngine processEngine : processEngines) {
       processEngineNames.add(processEngine.getName());
@@ -195,7 +195,7 @@ public class RuntimeContainerDelegateImpl implements RuntimeContainerDelegate, P
   @Override
   public Set<String> getProcessApplicationNames() {
     List<JmxManagedProcessApplication> processApplications = serviceContainer.getServiceValuesByType(ServiceTypes.PROCESS_APPLICATION);
-    Set<String> processApplicationNames = new HashSet<String>();
+    Set<String> processApplicationNames = new HashSet<>();
     for (JmxManagedProcessApplication jmxManagedProcessApplication : processApplications) {
       processApplicationNames.add(jmxManagedProcessApplication.getProcessApplicationName());
     }

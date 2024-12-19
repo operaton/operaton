@@ -71,7 +71,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   private List<EventSubscription> createMockEventSubscriptionList() {
-    List<EventSubscription> mocks = new ArrayList<EventSubscription>();
+    List<EventSubscription> mocks = new ArrayList<>();
 
     mocks.add(MockProvider.createMockEventSubscription());
     return mocks;
@@ -310,7 +310,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
   
   private Map<String, String> getCompleteQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("eventSubscriptionId", "anEventSubscriptionId");
     parameters.put("eventType", "aEventType");

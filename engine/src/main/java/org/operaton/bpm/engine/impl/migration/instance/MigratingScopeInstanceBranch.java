@@ -31,7 +31,7 @@ public class MigratingScopeInstanceBranch {
   protected Map<ScopeImpl, MigratingScopeInstance> scopeInstances;
 
   public MigratingScopeInstanceBranch() {
-    this(new HashMap<ScopeImpl, MigratingScopeInstance>());
+    this(new HashMap<>());
   }
 
   protected MigratingScopeInstanceBranch(

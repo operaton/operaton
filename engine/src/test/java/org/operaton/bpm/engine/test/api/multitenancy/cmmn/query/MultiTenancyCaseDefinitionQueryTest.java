@@ -332,7 +332,7 @@ public class MultiTenancyCaseDefinitionQueryTest extends PluggableProcessEngineT
   }
 
   protected Map<String, CaseDefinition> getCaseDefinitionsForTenant(List<CaseDefinition> definitions) {
-    Map<String, CaseDefinition> definitionsForTenant = new HashMap<String, CaseDefinition>();
+    Map<String, CaseDefinition> definitionsForTenant = new HashMap<>();
 
     for (CaseDefinition definition : definitions) {
       definitionsForTenant.put(definition.getTenantId(), definition);

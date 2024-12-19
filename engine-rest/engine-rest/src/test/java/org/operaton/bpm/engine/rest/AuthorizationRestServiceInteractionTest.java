@@ -108,7 +108,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedTrue() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -135,7 +135,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedFalse() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -161,7 +161,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedBatchResource() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -189,7 +189,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedProcessDefinitionResource() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -219,7 +219,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedProcessInstanceResource() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -249,7 +249,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedTaskResource() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -279,7 +279,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedWithUserIdTrue() {
 
-    List<String> currentUserGroups = new ArrayList<String>();
+    List<String> currentUserGroups = new ArrayList<>();
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, currentUserGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
 
@@ -311,7 +311,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedWithUserIdFalse() {
 
-    List<String> currentUserGroups = new ArrayList<String>();
+    List<String> currentUserGroups = new ArrayList<>();
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, currentUserGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
 
@@ -343,7 +343,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedWithUserIdNoReadPermission() {
 
-    List<String> currentUserGroups = new ArrayList<String>();
+    List<String> currentUserGroups = new ArrayList<>();
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, currentUserGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
 
@@ -372,7 +372,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedNotValidPermission() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -401,7 +401,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedResourceIdTrue() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -429,7 +429,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @Test
   public void testIsUserAuthorizedResourceIdFalse() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, exampleGroups);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -458,7 +458,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
   @SuppressWarnings("unchecked")
   public void testIsUserAuthorizedNoAuthentication() {
 
-    List<String> exampleGroups = new ArrayList<String>();
+    List<String> exampleGroups = new ArrayList<>();
 
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(null);
 
@@ -619,7 +619,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
     Authorization authorization = MockProvider.createMockGrantAuthorization();
     when(authorizationServiceMock.createNewAuthorization(Authorization.AUTH_TYPE_GRANT)).thenReturn(authorization);
 
-    Map<String, Object> jsonBody = new HashMap<String, Object>();
+    Map<String, Object> jsonBody = new HashMap<>();
 
     jsonBody.put("type", Authorization.AUTH_TYPE_GRANT);
     jsonBody.put("permissions", Arrays.asList(Permissions.READ_INSTANCE.name()));
@@ -820,7 +820,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
     when(authorizationQuery.authorizationId(MockProvider.EXAMPLE_AUTHORIZATION_ID)).thenReturn(authorizationQuery);
     when(authorizationQuery.singleResult()).thenReturn(authorization);
 
-    Map<String, Object> jsonBody = new HashMap<String, Object>();
+    Map<String, Object> jsonBody = new HashMap<>();
 
     jsonBody.put("permissions", Arrays.asList(Permissions.TASK_WORK.name()));
     jsonBody.put("userId", MockProvider.EXAMPLE_USER_ID + ","+MockProvider.EXAMPLE_USER_ID2);
@@ -1112,7 +1112,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
     when(identityServiceMock.createGroupQuery()).thenReturn(mockGroupQuery);
     when(mockGroupQuery.groupMember(anyString())).thenReturn(mockGroupQuery);
     when(mockGroupQuery.unlimitedList()).thenReturn(groupMocks);
-    List<String> groupIds = new ArrayList<String>();
+    List<String> groupIds = new ArrayList<>();
     for (Group group : groupMocks) {
       groupIds.add(group.getId());
     }

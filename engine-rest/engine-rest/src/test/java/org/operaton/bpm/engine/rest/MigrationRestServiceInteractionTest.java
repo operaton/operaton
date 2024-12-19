@@ -309,7 +309,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
       .instruction(EXAMPLE_ACTIVITY_ID, ANOTHER_EXAMPLE_ACTIVITY_ID, true)
       .builder();
 
-    Map<String, Object> generationRequest = new HashMap<String, Object>();
+    Map<String, Object> generationRequest = new HashMap<>();
     generationRequest.put("sourceProcessDefinitionId", EXAMPLE_PROCESS_DEFINITION_ID);
     generationRequest.put("targetProcessDefinitionId", ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID);
     generationRequest.put("updateEventTriggers", true);
@@ -345,7 +345,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
     when(runtimeServiceMock.createMigrationPlan(anyString(), anyString()))
         .thenReturn(migrationPlanBuilderMock);
 
-    Map<String, Object> generationRequest = new HashMap<String, Object>();
+    Map<String, Object> generationRequest = new HashMap<>();
     generationRequest.put("sourceProcessDefinitionId", EXAMPLE_PROCESS_DEFINITION_ID);
     generationRequest.put("targetProcessDefinitionId", ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID);
 

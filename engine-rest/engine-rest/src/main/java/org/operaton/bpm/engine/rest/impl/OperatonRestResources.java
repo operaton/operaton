@@ -38,9 +38,9 @@ import java.util.Set;
  */
 public class OperatonRestResources {
 
-  private static final Set<Class<?>> RESOURCE_CLASSES = new HashSet<Class<?>>();
+  private static final Set<Class<?>> RESOURCE_CLASSES = new HashSet<>();
 
-  private static final Set<Class<?>> CONFIGURATION_CLASSES = new HashSet<Class<?>>();
+  private static final Set<Class<?>> CONFIGURATION_CLASSES = new HashSet<>();
 
   static {
     RESOURCE_CLASSES.add(NamedProcessEngineRestServiceImpl.class);

@@ -58,7 +58,7 @@ public class ExecutionRestServiceImpl extends AbstractRestProcessEngineAware imp
 
     List<Execution> matchingExecutions = QueryUtil.list(query, firstResult, maxResults);
 
-    List<ExecutionDto> executionResults = new ArrayList<ExecutionDto>();
+    List<ExecutionDto> executionResults = new ArrayList<>();
     for (Execution execution : matchingExecutions) {
       ExecutionDto resultExecution = ExecutionDto.fromExecution(execution);
       executionResults.add(resultExecution);

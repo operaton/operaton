@@ -78,7 +78,7 @@ public class ClassPathScannerTest {
     
     URLClassLoader classLoader = getClassloader();
     
-    Map<String, byte[]> scanResult = new HashMap<String, byte[]>();
+    Map<String, byte[]> scanResult = new HashMap<>();
     
     scanner.scanPaResourceRootPath(classLoader, new URL(url+"/META-INF/processes.xml"), null, scanResult);
 
@@ -96,7 +96,7 @@ public class ClassPathScannerTest {
 
     URLClassLoader classLoader = getClassloader();
     
-    Map<String, byte[]> scanResult = new HashMap<String, byte[]>();
+    Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, new URL(url+"/META-INF/processes.xml"), "pa:nonexisting", scanResult);
 
     assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
@@ -109,7 +109,7 @@ public class ClassPathScannerTest {
     
     URLClassLoader classLoader = getClassloader();
     
-    Map<String, byte[]> scanResult = new HashMap<String, byte[]>();
+    Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, null, "nonexisting", scanResult);
     
     assertFalse("'testDeployProcessArchive.bpmn20.xml' found", contains(scanResult, "testDeployProcessArchive.bpmn20.xml"));
@@ -122,7 +122,7 @@ public class ClassPathScannerTest {
 
     URLClassLoader classLoader = getClassloader();
     
-    Map<String, byte[]> scanResult = new HashMap<String, byte[]>();
+    Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, new URL(url+"/META-INF/processes.xml"), "pa:directory/", scanResult);
 
     if(url.contains("Recursive")) {
@@ -141,7 +141,7 @@ public class ClassPathScannerTest {
     
     URLClassLoader classLoader = getClassloader();
     
-    Map<String, byte[]> scanResult = new HashMap<String, byte[]>();
+    Map<String, byte[]> scanResult = new HashMap<>();
     scanner.scanPaResourceRootPath(classLoader, null, "directory/", scanResult);
         
     if(url.contains("Recursive")) {

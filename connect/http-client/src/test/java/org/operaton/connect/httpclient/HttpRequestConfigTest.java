@@ -274,7 +274,7 @@ public class HttpRequestConfigTest {
   @Test
   void shouldParseProxyPreferredAuthSchemes() {
     // given
-    ArrayList<String> testArray = new ArrayList<String>();
+    ArrayList<String> testArray = new ArrayList<>();
     HttpRequest request = connector.createRequest()
         .configOption(PROXY_PREFERRED_AUTH_SCHEMES.getName(), testArray);
     Map<String, Object> configOptions = request.getConfigOptions();
@@ -363,7 +363,7 @@ public class HttpRequestConfigTest {
   @Test
   void shouldParseTargetPreferredAuthSchemes() {
     // given
-    ArrayList<String> testArray = new ArrayList<String>();
+    ArrayList<String> testArray = new ArrayList<>();
     HttpRequest request = connector.createRequest()
         .configOption(TARGET_PREFERRED_AUTH_SCHEMES.getName(), testArray);
     Map<String, Object> configOptions = request.getConfigOptions();

@@ -76,7 +76,7 @@ public class PvmEmbeddedSubProcessTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    List<String> expectedActiveActivityIds = new ArrayList<String>();
+    List<String> expectedActiveActivityIds = new ArrayList<>();
     expectedActiveActivityIds.add("end");
 
     assertEquals(expectedActiveActivityIds, processInstance.findActiveActivityIds());
@@ -254,7 +254,7 @@ public class PvmEmbeddedSubProcessTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    List<String> expectedActiveActivityIds = new ArrayList<String>();
+    List<String> expectedActiveActivityIds = new ArrayList<>();
     expectedActiveActivityIds.add("end");
 
     assertEquals(expectedActiveActivityIds, processInstance.findActiveActivityIds());

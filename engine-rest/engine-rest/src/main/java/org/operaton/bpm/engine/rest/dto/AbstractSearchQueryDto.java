@@ -98,7 +98,7 @@ public abstract class AbstractSearchQueryDto {
   }
 
   private List<Method> findMatchingAnnotatedMethods(String parameterName) {
-    List<Method> result = new ArrayList<Method>();
+    List<Method> result = new ArrayList<>();
     Method[] methods = this.getClass().getMethods();
     for (int i = 0; i < methods.length; i++) {
       Method method = methods[i];

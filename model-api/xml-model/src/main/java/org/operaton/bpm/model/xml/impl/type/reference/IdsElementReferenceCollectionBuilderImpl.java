@@ -26,7 +26,7 @@ public class IdsElementReferenceCollectionBuilderImpl<Target extends ModelElemen
 
   public IdsElementReferenceCollectionBuilderImpl(Class<Source> childElementType, Class<Target> referenceTargetClass, ChildElementCollectionImpl<Source> collection) {
     super(childElementType, referenceTargetClass, collection);
-    this.elementReferenceCollectionImpl = new IdsElementReferenceCollectionImpl<Target, Source>(collection);
+    this.elementReferenceCollectionImpl = new IdsElementReferenceCollectionImpl<>(collection);
   }
 
 }

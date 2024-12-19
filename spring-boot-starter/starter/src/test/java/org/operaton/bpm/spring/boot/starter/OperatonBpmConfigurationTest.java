@@ -40,7 +40,7 @@ public class OperatonBpmConfigurationTest {
   }
 
   private List<ProcessEnginePlugin> createUnordedList() {
-    List<ProcessEnginePlugin> list = new ArrayList<ProcessEnginePlugin>();
+    List<ProcessEnginePlugin> list = new ArrayList<>();
     list.add(mock(ProcessEnginePlugin.class));
     list.add(mock(ProcessEnginePlugin.class));
     return list;

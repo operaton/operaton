@@ -68,7 +68,7 @@ public abstract class AbstractDefinitionDeployer<DefinitionEntity extends Resour
   }
 
   protected List<DefinitionEntity> parseDefinitionResources(DeploymentEntity deployment, Properties properties) {
-    List<DefinitionEntity> definitions = new ArrayList<DefinitionEntity>();
+    List<DefinitionEntity> definitions = new ArrayList<>();
     for (ResourceEntity resource : deployment.getResources().values()) {
       LOG.debugProcessingResource(resource.getName());
       if (isResourceHandled(resource)) {
@@ -183,7 +183,7 @@ public abstract class AbstractDefinitionDeployer<DefinitionEntity extends Resour
   }
 
   protected void ensureNoDuplicateDefinitionKeys(List<DefinitionEntity> definitions) {
-    Set<String> keys = new HashSet<String>();
+    Set<String> keys = new HashSet<>();
 
     for (DefinitionEntity definition : definitions) {
 

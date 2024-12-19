@@ -403,7 +403,7 @@ public class BirdTest extends TestModelTest {
   void testGuardianRefsByTextContent(TestModelArgs args) {
     init(args);
     Collection<Guardian> guardianRefs = egg1.getGuardianRefs();
-    Collection<String> hrefs = new ArrayList<String>();
+    Collection<String> hrefs = new ArrayList<>();
     for (Guardian guardianRef : guardianRefs) {
       String href = guardianRef.getHref();
       assertThat(href).isNotEmpty();
@@ -416,7 +416,7 @@ public class BirdTest extends TestModelTest {
   @MethodSource("models")
   void testUpdateGuardianRefsByTextContent(TestModelArgs args) {
     init(args);
-    List<Guardian> guardianRefs = new ArrayList<Guardian>(egg1.getGuardianRefs());
+    List<Guardian> guardianRefs = new ArrayList<>(egg1.getGuardianRefs());
 
     guardianRefs.get(0).setHref("#" + tweety.getId());
 
@@ -427,7 +427,7 @@ public class BirdTest extends TestModelTest {
   @MethodSource("models")
   void testUpdateGuardianRefsByRemoveElements(TestModelArgs args) {
     init(args);
-    List<Guardian> guardianRefs = new ArrayList<Guardian>(egg1.getGuardianRefs());
+    List<Guardian> guardianRefs = new ArrayList<>(egg1.getGuardianRefs());
     egg1.getGuardianRefs().remove(guardianRefs.get(1));
     assertThat(egg1.getGuardians()).hasSize(1).containsOnly(hedwig);
   }
@@ -477,7 +477,7 @@ public class BirdTest extends TestModelTest {
     init(args);
 
     Collection<GuardEgg> guardianRefs = timmy.getGuardedEggRefs();
-    Collection<String> textContents = new ArrayList<String>();
+    Collection<String> textContents = new ArrayList<>();
     for (GuardEgg guardianRef : guardianRefs) {
       String textContent = guardianRef.getTextContent();
       assertThat(textContent).isNotEmpty();
@@ -490,7 +490,7 @@ public class BirdTest extends TestModelTest {
   @MethodSource("models")
   void testUpdateGuardedEggRefsByTextContent(TestModelArgs args) {
     init(args);
-    List<GuardEgg> guardianRefs = new ArrayList<GuardEgg>(hedwig.getGuardedEggRefs());
+    List<GuardEgg> guardianRefs = new ArrayList<>(hedwig.getGuardedEggRefs());
 
     guardianRefs.get(0).setTextContent(egg1.getId() + " " + egg3.getId());
 
@@ -503,7 +503,7 @@ public class BirdTest extends TestModelTest {
 
     init(args);
 
-    List<GuardEgg> guardianRefs = new ArrayList<GuardEgg>(timmy.getGuardedEggRefs());
+    List<GuardEgg> guardianRefs = new ArrayList<>(timmy.getGuardedEggRefs());
     timmy.getGuardedEggRefs().remove(guardianRefs.get(0));
     assertThat(timmy.getGuardedEggs()).hasSize(1).containsOnly(egg3);
   }

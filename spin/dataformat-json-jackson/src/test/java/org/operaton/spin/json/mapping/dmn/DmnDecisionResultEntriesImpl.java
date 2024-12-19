@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public class DmnDecisionResultEntriesImpl implements DmnDecisionResultEntries {
 
-  protected final Map<String, Object> outputValues = new LinkedHashMap<String, Object>();
+  protected final Map<String, Object> outputValues = new LinkedHashMap<>();
 
   public void putValue(String name, Object value) {
     outputValues.put(name, value);

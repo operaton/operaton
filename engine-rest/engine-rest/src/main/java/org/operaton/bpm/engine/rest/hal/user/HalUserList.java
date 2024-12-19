@@ -33,7 +33,7 @@ public class HalUserList extends HalResource<HalUserList> {
   public static HalUserList fromUserList(List<User> users) {
     HalUserList result = new HalUserList();
 
-    List<HalResource<?>> halUsers = new ArrayList<HalResource<?>>();
+    List<HalResource<?>> halUsers = new ArrayList<>();
     for (User user : users) {
       halUsers.add(HalUser.fromUser(user));
     }

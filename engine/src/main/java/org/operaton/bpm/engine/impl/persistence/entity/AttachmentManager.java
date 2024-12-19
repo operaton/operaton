@@ -78,19 +78,19 @@ public class AttachmentManager extends AbstractHistoricManager {
   }
 
   public void deleteAttachmentsByProcessInstanceIds(List<String> processInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("processInstanceIds", processInstanceIds);
     deleteAttachments(parameters);
   }
 
   public void deleteAttachmentsByTaskProcessInstanceIds(List<String> processInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("taskProcessInstanceIds", processInstanceIds);
     deleteAttachments(parameters);
   }
 
   public void deleteAttachmentsByTaskCaseInstanceIds(List<String> caseInstanceIds) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("caseInstanceIds", caseInstanceIds);
     deleteAttachments(parameters);
   }
@@ -103,7 +103,7 @@ public class AttachmentManager extends AbstractHistoricManager {
   public Attachment findAttachmentByTaskIdAndAttachmentId(String taskId, String attachmentId) {
     checkHistoryEnabled();
 
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
     parameters.put("taskId", taskId);
     parameters.put("id", attachmentId);
 
@@ -111,7 +111,7 @@ public class AttachmentManager extends AbstractHistoricManager {
   }
 
   public DbOperation deleteAttachmentsByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
     parameters.put("removalTime", removalTime);
     if (minuteTo - minuteFrom + 1 < 60) {
       parameters.put("minuteFrom", minuteFrom);

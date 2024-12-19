@@ -793,12 +793,12 @@ public class HistoricProcessInstanceDurationReportTest extends PluggableProcessE
   protected class DurationReportResultAssertion {
 
     protected PeriodUnit periodUnit = MONTH;
-    protected Map<Integer, Set<String>> periodToProcessInstancesMap = new HashMap<Integer, Set<String>>();
+    protected Map<Integer, Set<String>> periodToProcessInstancesMap = new HashMap<>();
 
     public DurationReportResultAssertion addDurationReportResult(int period, String processInstanceId) {
       Set<String> processInstances = periodToProcessInstancesMap.get(period);
       if (processInstances == null) {
-        processInstances = new HashSet<String>();
+        processInstances = new HashSet<>();
         periodToProcessInstancesMap.put(period, processInstances);
       }
       processInstances.add(processInstanceId);

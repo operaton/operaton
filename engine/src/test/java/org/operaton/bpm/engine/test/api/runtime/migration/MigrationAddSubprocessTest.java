@@ -684,7 +684,7 @@ public class MigrationAddSubprocessTest {
       .mapActivities("userTask", "userTask")
       .build();
 
-    List<String> miElements = new ArrayList<String>();
+    List<String> miElements = new ArrayList<>();
     miElements.add("a");
     miElements.add("b");
     ProcessInstance processInstance = rule.getRuntimeService()
@@ -708,7 +708,7 @@ public class MigrationAddSubprocessTest {
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();
     assertEquals(2, migratedTasks.size());
 
-    List<String> collectedElementsVars = new ArrayList<String>();
+    List<String> collectedElementsVars = new ArrayList<>();
     for (Task migratedTask : migratedTasks) {
       collectedElementsVars.add((String) rule.getTaskService().getVariable(migratedTask.getId(), "elementVar"));
     }

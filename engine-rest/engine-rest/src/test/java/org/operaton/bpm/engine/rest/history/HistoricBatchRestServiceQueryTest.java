@@ -281,7 +281,7 @@ public class HistoricBatchRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   protected Map<String, Object> getCompleteQueryParameters() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
 
     parameters.put("batchId", MockProvider.EXAMPLE_BATCH_ID);
     parameters.put("type", MockProvider.EXAMPLE_BATCH_TYPE);

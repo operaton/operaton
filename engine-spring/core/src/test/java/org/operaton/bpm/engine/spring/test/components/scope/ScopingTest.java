@@ -94,7 +94,7 @@ public class ScopingTest {
 	 */
 	private StatefulObject run() throws Throwable {
 		logger.info("----------------------------------------------");
-		Map<String, Object> vars = new HashMap<String, Object>();
+		Map<String, Object> vars = new HashMap<>();
 		vars.put(customerIdProcVarName, CUSTOMER_ID_PROC_VAR_VALUE);
 		ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey("component-waiter", vars);
 		StatefulObject scopedObject = (StatefulObject) processEngine.getRuntimeService().getVariable(processInstance.getId(), "scopedTarget.c1");

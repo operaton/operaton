@@ -185,7 +185,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
       .groupMember(userId)
       .list();
 
-    List<String> groupIds = new ArrayList<String>();
+    List<String> groupIds = new ArrayList<>();
     for (Group group : groups) {
       groupIds.add(group.getId());
     }
@@ -198,7 +198,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
       .includingGroupsOfUser(true)
       .list();
 
-    List<String> tenantIds = new ArrayList<String>();
+    List<String> tenantIds = new ArrayList<>();
     for(Tenant tenant : tenants) {
       tenantIds.add(tenant.getId());
     }

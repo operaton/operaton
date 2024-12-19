@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 
 public class AssertingTaskListener implements TaskListener {
 
-  public static List<DelegateTaskAsserter> asserts = new ArrayList<DelegateTaskAsserter>();
+  public static List<DelegateTaskAsserter> asserts = new ArrayList<>();
 
   @Override
   public void notify(DelegateTask delegateTask) {

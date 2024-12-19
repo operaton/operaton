@@ -31,7 +31,7 @@ public class MigrationPlanDtoBuilder {
   protected final Map<String, Object> migrationPlan;
 
   public MigrationPlanDtoBuilder(String sourceProcessDefinitionId, String targetProcessDefinitionId) {
-    migrationPlan = new HashMap<String, Object>();
+    migrationPlan = new HashMap<>();
     migrationPlan.put(PROP_SOURCE_PROCESS_DEFINITION_ID, sourceProcessDefinitionId);
     migrationPlan.put(PROP_TARGET_PROCESS_DEFINITION_ID, targetProcessDefinitionId);
   }
@@ -48,7 +48,7 @@ public class MigrationPlanDtoBuilder {
   public MigrationPlanDtoBuilder instruction(String sourceActivityId, String targetActivityId, Boolean updateEventTrigger) {
     List<Map<String, Object>> instructions = (List<Map<String, Object>>) migrationPlan.get(PROP_INSTRUCTIONS);
     if (instructions == null) {
-      instructions = new ArrayList<Map<String, Object>>();
+      instructions = new ArrayList<>();
       migrationPlan.put(PROP_INSTRUCTIONS, instructions);
     }
 

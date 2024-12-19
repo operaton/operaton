@@ -174,7 +174,7 @@ public final class ModelUtil {
    */
   @SuppressWarnings("unchecked")
   public static <T extends ModelElementInstance> Collection<T> getModelElementCollection(Collection<DomElement> view, ModelInstanceImpl model) {
-    List<ModelElementInstance> resultList = new ArrayList<ModelElementInstance>();
+    List<ModelElementInstance> resultList = new ArrayList<>();
     for (DomElement element : view) {
       resultList.add(getModelElement(element, model));
     }
@@ -196,7 +196,7 @@ public final class ModelUtil {
         return index;
       }
     }
-    Collection<String> childElementTypeNames = new ArrayList<String>();
+    Collection<String> childElementTypeNames = new ArrayList<>();
     for (ModelElementType childElementType : childElementTypes) {
       childElementTypeNames.add(childElementType.getTypeName());
     }
@@ -209,7 +209,7 @@ public final class ModelUtil {
    * @param baseTypes the collection of types to calculate the union of all extending types
    */
   public static Collection<ModelElementType> calculateAllExtendingTypes(Model model, Collection<ModelElementType> baseTypes) {
-    Set<ModelElementType> allExtendingTypes = new HashSet<ModelElementType>();
+    Set<ModelElementType> allExtendingTypes = new HashSet<>();
     for (ModelElementType baseType : baseTypes) {
       ModelElementTypeImpl modelElementTypeImpl = (ModelElementTypeImpl) model.getType(baseType.getInstanceType());
       modelElementTypeImpl.resolveExtendingTypes(allExtendingTypes);
@@ -221,7 +221,7 @@ public final class ModelUtil {
    * Calculate a collection of all base types for the given type
    */
   public static Collection<ModelElementType> calculateAllBaseTypes(ModelElementType type) {
-    List<ModelElementType> baseTypes = new ArrayList<ModelElementType>();
+    List<ModelElementType> baseTypes = new ArrayList<>();
     ModelElementTypeImpl typeImpl = (ModelElementTypeImpl) type;
     typeImpl.resolveBaseTypes(baseTypes);
     return baseTypes;

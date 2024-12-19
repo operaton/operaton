@@ -140,7 +140,7 @@ public class VariableContextScriptBindings implements Bindings {
 
   protected Map<String, Object> calculateBindingMap() {
 
-    Map<String, Object> bindingMap = new HashMap<String, Object>();
+    Map<String, Object> bindingMap = new HashMap<>();
 
     Set<String> keySet = variableContext.keySet();
     for (String variableName : keySet) {

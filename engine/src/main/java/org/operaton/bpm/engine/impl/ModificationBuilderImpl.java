@@ -54,8 +54,8 @@ public class ModificationBuilderImpl implements ModificationBuilder {
     this.commandExecutor = commandExecutor;
     ensureNotNull(NotValidException.class,"processDefinitionId", processDefinitionId);
     this.processDefinitionId = processDefinitionId;
-    processInstanceIds = new ArrayList<String>();
-    instructions = new ArrayList<AbstractProcessInstanceModificationCommand>();
+    processInstanceIds = new ArrayList<>();
+    instructions = new ArrayList<>();
   }
 
   @Override

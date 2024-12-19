@@ -50,7 +50,7 @@ public class HistoricIncidentRestServiceImpl implements HistoricIncidentRestServ
 
     List<HistoricIncident> queryResult = QueryUtil.list(query, firstResult, maxResults);
 
-    List<HistoricIncidentDto> result = new ArrayList<HistoricIncidentDto>();
+    List<HistoricIncidentDto> result = new ArrayList<>();
     for (HistoricIncident historicIncident : queryResult) {
       HistoricIncidentDto dto = HistoricIncidentDto.fromHistoricIncident(historicIncident);
       result.add(dto);

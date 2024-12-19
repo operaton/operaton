@@ -29,6 +29,6 @@ public class DefaultCacheFactory implements CacheFactory {
 
   @Override
   public <T> Cache<String, T> createCache(int maxNumberOfElementsInCache) {
-    return new ConcurrentLruCache<String, T>(maxNumberOfElementsInCache);
+    return new ConcurrentLruCache<>(maxNumberOfElementsInCache);
   }
 }

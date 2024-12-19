@@ -132,7 +132,7 @@ public class SetExternalTasksRetriesBatchAuthorizationTest {
     ProcessInstance processInstance1 = engineRule.getRuntimeService().startProcessInstanceByKey("Process");
     List<ExternalTask> externalTasks = engineRule.getExternalTaskService().createExternalTaskQuery().list();
 
-    ArrayList<String> externalTaskIds = new ArrayList<String>();
+    ArrayList<String> externalTaskIds = new ArrayList<>();
 
     for (ExternalTask task : externalTasks) {
       externalTaskIds.add(task.getId());

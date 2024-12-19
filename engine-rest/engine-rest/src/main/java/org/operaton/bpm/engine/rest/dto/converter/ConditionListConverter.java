@@ -32,7 +32,7 @@ public class ConditionListConverter extends JacksonAwareStringToTypeConverter<Li
   public List<ConditionQueryParameterDto> convertQueryParameterToType(String value) {
     String[] expressions = value.split(EXPRESSION_DELIMITER);
 
-    List<ConditionQueryParameterDto> queryConditions = new ArrayList<ConditionQueryParameterDto>();
+    List<ConditionQueryParameterDto> queryConditions = new ArrayList<>();
 
     for (String expression : expressions) {
       String[] valueTuple = expression.split(ATTRIBUTE_DELIMITER);

@@ -298,7 +298,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
   @Test
   public void testSecondarySortingAsPost() {
     InOrder inOrder = Mockito.inOrder(mockedQuery);
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("sorting", OrderingBuilder.create()
       .orderBy("processInstanceId").desc()
       .orderBy("timestamp").asc()
@@ -451,7 +451,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
   public void testSimpleHistoricExternalTaskLogQueryAsPost() {
     String processInstanceId = MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_PROC_INST_ID;
 
-    Map<String, Object> json = new HashMap<String, Object>();
+    Map<String, Object> json = new HashMap<>();
     json.put("processInstanceId", processInstanceId);
 
     Response response =
@@ -548,7 +548,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
   }
 
   protected Map<String, String> getCompleteStringQueryParameters() {
-    Map<String, String> parameters = new HashMap<String, String>();
+    Map<String, String> parameters = new HashMap<>();
 
     parameters.put("logId", MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_ID);
     parameters.put("externalTaskId", MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_EXTERNAL_TASK_ID);
@@ -615,7 +615,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
     String anExecutionId = "anExecutionId";
     String anotherExecutionId = "anotherExecutionId";
 
-    Map<String, List<String>> json = new HashMap<String, List<String>>();
+    Map<String, List<String>> json = new HashMap<>();
     json.put("activityIdIn", Arrays.asList(anActId, anotherActId));
     json.put("activityInstanceIdIn", Arrays.asList(anActInstId, anotherActInstId));
     json.put("executionIdIn", Arrays.asList(anExecutionId, anotherExecutionId));
@@ -668,7 +668,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
   }
 
   protected Map<String, Boolean> getCompleteBooleanQueryParameters() {
-    Map<String, Boolean> parameters = new HashMap<String, Boolean>();
+    Map<String, Boolean> parameters = new HashMap<>();
 
     parameters.put("creationLog", MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_CREATION_LOG);
     parameters.put("failureLog", MockProvider.EXAMPLE_HISTORIC_EXTERNAL_TASK_LOG_IS_FAILURE_LOG);
@@ -719,7 +719,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
   }
 
   protected Map<String, Object> getCompleteIntegerQueryParameters() {
-    Map<String, Object> parameters = new HashMap<String, Object>();
+    Map<String, Object> parameters = new HashMap<>();
 
     parameters.put("priorityLowerThanOrEquals", EXTERNAL_TASK_LOG_QUERY_MAX_PRIORITY);
     parameters.put("priorityHigherThanOrEquals", EXTERNAL_TASK_LOG_QUERY_MIN_PRIORITY);
@@ -765,7 +765,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
   public void testTenantIdListPostParameter() {
     mockedQuery = setUpMockHistoricExternalTaskLogQuery(createMockHistoricExternalTaskLogsTwoTenants());
 
-    Map<String, Object> queryParameters = new HashMap<String, Object>();
+    Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("tenantIdIn", MockProvider.EXAMPLE_TENANT_ID_LIST.split(","));
 
     Response response =

@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
  */
 public class FormTypes {
 
-  protected Map<String, AbstractFormFieldType> formTypes = new HashMap<String, AbstractFormFieldType>();
+  protected Map<String, AbstractFormFieldType> formTypes = new HashMap<>();
 
   public void addFormType(AbstractFormFieldType formType) {
     formTypes.put(formType.getName(), formType);
@@ -51,7 +51,7 @@ public class FormTypes {
 
     } else if ("enum".equals(typeText)) {
       // ACT-1023: Using linked hashmap to preserve the order in which the entries are defined
-      Map<String, String> values = new LinkedHashMap<String, String>();
+      Map<String, String> values = new LinkedHashMap<>();
       for (Element valueElement: formFieldElement.elementsNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS,"value")) {
         String valueId = valueElement.attribute("id");
         String valueName = valueElement.attribute("name");

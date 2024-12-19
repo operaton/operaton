@@ -48,7 +48,7 @@ import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
  */
 public class ValueTypeResolverImpl implements ValueTypeResolver {
 
-  protected Map<String, ValueType> knownTypes = new HashMap<String, ValueType>();
+  protected Map<String, ValueType> knownTypes = new HashMap<>();
 
   public ValueTypeResolverImpl() {
     addType(BOOLEAN);
@@ -77,9 +77,9 @@ public class ValueTypeResolverImpl implements ValueTypeResolver {
 
   @Override
   public Collection<ValueType> getSubTypes(ValueType type) {
-    List<ValueType> types = new ArrayList<ValueType>();
+    List<ValueType> types = new ArrayList<>();
 
-    Set<ValueType> validParents = new HashSet<ValueType>();
+    Set<ValueType> validParents = new HashSet<>();
     validParents.add(type);
 
     for (ValueType knownType : knownTypes.values()) {

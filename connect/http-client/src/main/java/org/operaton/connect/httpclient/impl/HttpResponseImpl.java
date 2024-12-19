@@ -82,7 +82,7 @@ public class HttpResponseImpl extends AbstractCloseableConnectorResponse impleme
   }
 
   protected void collectResponseHeaders() {
-    Map<String, String> headers = new HashMap<String, String>();
+    Map<String, String> headers = new HashMap<>();
     for (Header header : httpResponse.getAllHeaders()) {
       headers.put(header.getName(), header.getValue());
     }

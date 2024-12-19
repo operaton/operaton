@@ -37,7 +37,7 @@ import org.operaton.bpm.model.bpmn.instance.FlowElement;
  */
 public class DelegateEvent implements DelegateExecution {
 
-  protected static final List<DelegateEvent> RECORDED_EVENTS = new ArrayList<DelegateEvent>();
+  protected static final List<DelegateEvent> RECORDED_EVENTS = new ArrayList<>();
 
   protected String activityInstanceId;
   protected String businessKey;

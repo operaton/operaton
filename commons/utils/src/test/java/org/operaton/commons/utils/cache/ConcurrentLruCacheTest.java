@@ -28,7 +28,7 @@ class ConcurrentLruCacheTest {
 
   @BeforeEach
   void createCache() {
-    cache = new ConcurrentLruCache<String, String>(3);
+    cache = new ConcurrentLruCache<>(3);
   }
 
   @Test

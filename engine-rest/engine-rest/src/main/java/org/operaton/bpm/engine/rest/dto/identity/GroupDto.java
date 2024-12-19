@@ -48,7 +48,7 @@ public class GroupDto {
   }
   
   public static List<GroupDto> fromGroupList(List<Group> dbGroupList) {
-    List<GroupDto> resultList = new ArrayList<GroupDto>();
+    List<GroupDto> resultList = new ArrayList<>();
     for (Group group : dbGroupList) {
       resultList.add(fromGroup(group));
     }

@@ -42,7 +42,7 @@ public class VariablesBuilder {
   private final Map<String, Object> variables;
 
   private VariablesBuilder() {
-    variables = new HashMap<String, Object>();
+    variables = new HashMap<>();
   }
 
   public static VariablesBuilder create() {
@@ -93,7 +93,7 @@ public class VariablesBuilder {
   }
 
   public static Map<String, Object> getVariableValueMap(Object value, String type, boolean local) {
-    Map<String, Object> variable = new HashMap<String, Object>();
+    Map<String, Object> variable = new HashMap<>();
     if (value != null) {
       variable.put("value", value);
     }
@@ -107,7 +107,7 @@ public class VariablesBuilder {
   }
 
   public static Map<String, Object> getObjectValueMap(Object value, String variableType, String serializationFormat, String objectTypeName) {
-    Map<String, Object> serializedVariable = new HashMap<String, Object>();
+    Map<String, Object> serializedVariable = new HashMap<>();
 
     if (value != null) {
       serializedVariable.put("value", value);
@@ -117,7 +117,7 @@ public class VariablesBuilder {
       serializedVariable.put("type", variableType);
     }
 
-    Map<String, Object> typeInfo = new HashMap<String, Object>();
+    Map<String, Object> typeInfo = new HashMap<>();
     typeInfo.put(SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT, serializationFormat);
     typeInfo.put(SerializableValueType.VALUE_INFO_OBJECT_TYPE_NAME, objectTypeName);
 
@@ -128,7 +128,7 @@ public class VariablesBuilder {
 
   public VariablesBuilder variableTransient(String name, String value, String type) {
     Map<String, Object> valueMap = getVariableValueMap(value, type);
-    Map<String, Object> valueInfo = new HashMap<String, Object>();
+    Map<String, Object> valueInfo = new HashMap<>();
     valueInfo.put("transient", true);
     valueMap.put("valueInfo", valueInfo);
     variables.put(name, valueMap);

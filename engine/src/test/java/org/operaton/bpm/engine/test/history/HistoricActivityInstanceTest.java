@@ -955,7 +955,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.startEventTypesForEventSubprocess.bpmn20.xml")
   @Test
   public void testMessageEventSubprocess() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("shouldThrowError", false);
     runtimeService.startProcessInstanceByKey("process", vars);
 
@@ -970,7 +970,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.startEventTypesForEventSubprocess.bpmn20.xml")
   @Test
   public void testSignalEventSubprocess() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("shouldThrowError", false);
     runtimeService.startProcessInstanceByKey("process", vars);
 
@@ -985,7 +985,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.startEventTypesForEventSubprocess.bpmn20.xml")
   @Test
   public void testTimerEventSubprocess() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("shouldThrowError", false);
     runtimeService.startProcessInstanceByKey("process", vars);
 
@@ -1001,7 +1001,7 @@ public class HistoricActivityInstanceTest extends PluggableProcessEngineTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricActivityInstanceTest.startEventTypesForEventSubprocess.bpmn20.xml")
   @Test
   public void testErrorEventSubprocess() {
-    Map<String, Object> vars = new HashMap<String, Object>();
+    Map<String, Object> vars = new HashMap<>();
     vars.put("shouldThrowError", true);
     runtimeService.startProcessInstanceByKey("process", vars);
 

@@ -46,7 +46,7 @@ public class JsonTreeMapJavaToJsonTest {
 
   @Test
   public void shouldMapListToJson() {
-    List<String> names = new ArrayList<String>();
+    List<String> names = new ArrayList<>();
     names.add("Waldo");
     names.add("Hugo");
     names.add("Kermit");
@@ -69,7 +69,7 @@ public class JsonTreeMapJavaToJsonTest {
 
   @Test
   public void shouldMapMapToJson() {
-    Map<String, Object> javaMap = new HashMap<String, Object>();
+    Map<String, Object> javaMap = new HashMap<>();
     javaMap.put("aKey", "aValue");
     javaMap.put("anotherKey", 42);
 
@@ -107,7 +107,7 @@ public class JsonTreeMapJavaToJsonTest {
 
   @Test
   public void shouldMapListOfPrimitiveStrings() {
-    List<String> inputList = new ArrayList<String>();
+    List<String> inputList = new ArrayList<>();
     inputList.add("Waldo");
     inputList.add("Hugo");
     inputList.add("Kermit");
@@ -122,7 +122,7 @@ public class JsonTreeMapJavaToJsonTest {
   }
 
   protected Map<String, Object> newMap(String key, Object value) {
-    Map<String, Object> result = new HashMap<String, Object>();
+    Map<String, Object> result = new HashMap<>();
     result.put(key, value);
 
     return result;

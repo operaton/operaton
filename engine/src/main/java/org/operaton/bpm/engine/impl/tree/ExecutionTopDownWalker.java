@@ -39,7 +39,7 @@ public class ExecutionTopDownWalker extends ReferenceWalker<ExecutionEntity> {
   protected Collection<ExecutionEntity> nextElements() {
     List<ExecutionEntity> executions = getCurrentElement().getExecutions();
     if (executions == null) {
-      executions = new ArrayList<ExecutionEntity>();
+      executions = new ArrayList<>();
     }
     return (List) executions;
   }

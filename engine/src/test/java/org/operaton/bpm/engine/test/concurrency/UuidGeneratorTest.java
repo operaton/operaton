@@ -37,11 +37,11 @@ public class UuidGeneratorTest {
 
   @Test
   public void testMultithreaded() throws InterruptedException {
-    final List<Thread> threads = new ArrayList<Thread>();
+    final List<Thread> threads = new ArrayList<>();
 
     final TimeBasedGenerator timeBasedGenerator = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
-    final ConcurrentSkipListSet<String> generatedIds = new ConcurrentSkipListSet<String>();
-    final ConcurrentSkipListSet<String> duplicatedIds = new ConcurrentSkipListSet<String>();
+    final ConcurrentSkipListSet<String> generatedIds = new ConcurrentSkipListSet<>();
+    final ConcurrentSkipListSet<String> duplicatedIds = new ConcurrentSkipListSet<>();
 
     for (int i = 0; i < THREAD_COUNT; i++) {
       Thread thread = new Thread(new Runnable() {

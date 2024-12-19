@@ -59,10 +59,10 @@ public class MigratingInstanceParseContext {
 
   protected MigratingProcessInstance migratingProcessInstance;
 
-  protected Map<String, MigratingActivityInstance> activityInstances = new HashMap<String, MigratingActivityInstance>();
-  protected Map<String, MigratingEventScopeInstance> compensationInstances = new HashMap<String, MigratingEventScopeInstance>();
-  protected Map<String, MigratingJobInstance> migratingJobs = new HashMap<String, MigratingJobInstance>();
-  protected Map<String, MigratingExternalTaskInstance> migratingExternalTasks = new HashMap<String, MigratingExternalTaskInstance>();
+  protected Map<String, MigratingActivityInstance> activityInstances = new HashMap<>();
+  protected Map<String, MigratingEventScopeInstance> compensationInstances = new HashMap<>();
+  protected Map<String, MigratingJobInstance> migratingJobs = new HashMap<>();
+  protected Map<String, MigratingExternalTaskInstance> migratingExternalTasks = new HashMap<>();
 
   protected Collection<EventSubscriptionEntity> eventSubscriptions;
   protected Collection<IncidentEntity> incidents;
@@ -93,32 +93,32 @@ public class MigratingInstanceParseContext {
   }
 
   public MigratingInstanceParseContext jobs(Collection<JobEntity> jobs) {
-    this.jobs = new HashSet<JobEntity>(jobs);
+    this.jobs = new HashSet<>(jobs);
     return this;
   }
 
   public MigratingInstanceParseContext incidents(Collection<IncidentEntity> incidents) {
-    this.incidents = new HashSet<IncidentEntity>(incidents);
+    this.incidents = new HashSet<>(incidents);
     return this;
   }
 
   public MigratingInstanceParseContext tasks(Collection<TaskEntity> tasks) {
-    this.tasks = new HashSet<TaskEntity>(tasks);
+    this.tasks = new HashSet<>(tasks);
     return this;
   }
 
   public MigratingInstanceParseContext externalTasks(Collection<ExternalTaskEntity> externalTasks) {
-    this.externalTasks = new HashSet<ExternalTaskEntity>(externalTasks);
+    this.externalTasks = new HashSet<>(externalTasks);
     return this;
   }
 
   public MigratingInstanceParseContext eventSubscriptions(Collection<EventSubscriptionEntity> eventSubscriptions) {
-    this.eventSubscriptions = new HashSet<EventSubscriptionEntity>(eventSubscriptions);
+    this.eventSubscriptions = new HashSet<>(eventSubscriptions);
     return this;
   }
 
   public MigratingInstanceParseContext targetJobDefinitions(Collection<JobDefinitionEntity> jobDefinitions) {
-    this.targetJobDefinitions = new HashMap<String, List<JobDefinitionEntity>>();
+    this.targetJobDefinitions = new HashMap<>();
 
     for (JobDefinitionEntity jobDefinition : jobDefinitions) {
       CollectionUtil.addToMapOfLists(this.targetJobDefinitions, jobDefinition.getActivityId(), jobDefinition);
@@ -127,7 +127,7 @@ public class MigratingInstanceParseContext {
   }
 
   public MigratingInstanceParseContext variables(Collection<VariableInstanceEntity> variables) {
-    this.variables = new HashSet<VariableInstanceEntity>(variables);
+    this.variables = new HashSet<>(variables);
     return this;
   }
 
@@ -259,7 +259,7 @@ public class MigratingInstanceParseContext {
   }
 
   protected Map<String, List<MigrationInstruction>> organizeInstructionsBySourceScope(MigrationPlan migrationPlan) {
-    Map<String, List<MigrationInstruction>> organizedInstructions = new HashMap<String, List<MigrationInstruction>>();
+    Map<String, List<MigrationInstruction>> organizedInstructions = new HashMap<>();
 
     for (MigrationInstruction instruction : migrationPlan.getInstructions()) {
       CollectionUtil.addToMapOfLists(organizedInstructions, instruction.getSourceActivityId(), instruction);

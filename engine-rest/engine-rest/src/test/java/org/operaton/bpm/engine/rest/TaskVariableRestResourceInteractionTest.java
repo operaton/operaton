@@ -228,7 +228,7 @@ public class TaskVariableRestResourceInteractionTest extends
   public void testVariableModification() {
     TaskServiceImpl taskServiceMock = mockTaskServiceImpl();
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
 
     String variableKey = "aKey";
     int variableValue = 123;
@@ -236,7 +236,7 @@ public class TaskVariableRestResourceInteractionTest extends
     Map<String, Object> modifications = VariablesBuilder.create().variable(variableKey, variableValue).getVariables();
     messageBodyJson.put("modifications", modifications);
 
-    List<String> deletions = new ArrayList<String>();
+    List<String> deletions = new ArrayList<>();
     deletions.add("deleteKey");
     messageBodyJson.put("deletions", deletions);
 
@@ -245,7 +245,7 @@ public class TaskVariableRestResourceInteractionTest extends
       .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(SINGLE_TASK_MODIFY_VARIABLES_URL);
 
-    Map<String, Object> expectedModifications = new HashMap<String, Object>();
+    Map<String, Object> expectedModifications = new HashMap<>();
     expectedModifications.put(variableKey, variableValue);
     verify(taskServiceMock).updateVariables(eq(EXAMPLE_TASK_ID), argThat(new EqualsMap(expectedModifications)),
         argThat(new EqualsList(deletions)));
@@ -256,7 +256,7 @@ public class TaskVariableRestResourceInteractionTest extends
     TaskServiceImpl taskServiceMock = mockTaskServiceImpl();
     doThrow(new ProcessEngineException("Cannot find task with id " + NON_EXISTING_ID)).when(taskServiceMock).updateVariables(any(), any(), any());
 
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
 
     String variableKey = "aKey";
     int variableValue = 123;
@@ -285,7 +285,7 @@ public class TaskVariableRestResourceInteractionTest extends
   public void testVariableModificationThrowsAuthorizationException() {
     String variableKey = "aKey";
     int variableValue = 123;
-    Map<String, Object> messageBodyJson = new HashMap<String, Object>();
+    Map<String, Object> messageBodyJson = new HashMap<>();
     Map<String, Object> modifications = VariablesBuilder.create().variable(variableKey, variableValue).getVariables();
     messageBodyJson.put("modifications", modifications);
 
@@ -1001,7 +1001,7 @@ public class TaskVariableRestResourceInteractionTest extends
   @Test
   public void testPostSingleSerializableVariable() throws Exception {
 
-    ArrayList<String> serializable = new ArrayList<String>();
+    ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
 
     ObjectMapper mapper = new ObjectMapper();
@@ -1027,7 +1027,7 @@ public class TaskVariableRestResourceInteractionTest extends
   @Test
   public void testPostSingleSerializableVariableUnsupportedMediaType() throws Exception {
 
-    ArrayList<String> serializable = new ArrayList<String>();
+    ArrayList<String> serializable = new ArrayList<>();
     serializable.add("foo");
 
     ObjectMapper mapper = new ObjectMapper();

@@ -35,7 +35,7 @@ public class ListValueProvider implements ParameterValueProvider {
 
   @Override
   public Object getValue(VariableScope variableScope) {
-    List<Object> valueList = new ArrayList<Object>();
+    List<Object> valueList = new ArrayList<>();
     for (ParameterValueProvider provider : providerList) {
       valueList.add(provider.getValue(variableScope));
     }

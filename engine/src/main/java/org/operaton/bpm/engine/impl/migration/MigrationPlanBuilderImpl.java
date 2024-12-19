@@ -51,7 +51,7 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
     this.commandExecutor = commandExecutor;
     this.sourceProcessDefinitionId = sourceProcessDefinitionId;
     this.targetProcessDefinitionId = targetProcessDefinitionId;
-    this.explicitMigrationInstructions = new ArrayList<MigrationInstructionImpl>();
+    this.explicitMigrationInstructions = new ArrayList<>();
   }
 
   @Override

@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public class JuelExpressionManager implements ExpressionManager, ElProviderCompatible {
 
-  protected Map<String, Method> functions = new HashMap<String, Method>();
+  protected Map<String, Method> functions = new HashMap<>();
   protected ExpressionFactory expressionFactory;
   protected Map<Object, Object> beans;
   protected volatile boolean initialized = false;

@@ -92,7 +92,7 @@ public class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValu
       throw new IllegalArgumentException("Value not of type FileValue");
     }
     FileValue fileValue = (FileValue) typedValue;
-    Map<String, Object> result = new HashMap<String, Object>(2);
+    Map<String, Object> result = new HashMap<>(2);
     result.put(VALUE_INFO_FILE_NAME, fileValue.getFilename());
     if (fileValue.getMimeType() != null) {
       result.put(VALUE_INFO_FILE_MIME_TYPE, fileValue.getMimeType());

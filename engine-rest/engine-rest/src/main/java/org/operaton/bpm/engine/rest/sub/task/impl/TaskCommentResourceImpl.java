@@ -59,7 +59,7 @@ public class TaskCommentResourceImpl implements TaskCommentResource {
 
     List<Comment> taskComments = engine.getTaskService().getTaskComments(taskId);
 
-    List<CommentDto> comments = new ArrayList<CommentDto>();
+    List<CommentDto> comments = new ArrayList<>();
     for (Comment comment : taskComments) {
       comments.add(CommentDto.fromComment(comment));
     }

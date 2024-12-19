@@ -225,7 +225,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
       return query.filterByType(cls).list();
 
     } else {
-      return new ArrayList<V>();
+      return new ArrayList<>();
     }
   }
 }

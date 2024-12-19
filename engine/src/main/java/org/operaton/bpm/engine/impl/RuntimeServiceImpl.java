@@ -406,7 +406,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   @Override
   public void setVariable(String executionId, String variableName, Object value) {
     ensureNotNull("variableName", variableName);
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put(variableName, value);
     setVariables(executionId, variables);
   }
@@ -414,7 +414,7 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   @Override
   public void setVariableLocal(String executionId, String variableName, Object value) {
     ensureNotNull("variableName", variableName);
-    Map<String, Object> variables = new HashMap<String, Object>();
+    Map<String, Object> variables = new HashMap<>();
     variables.put(variableName, value);
     setVariablesLocal(executionId, variables);
   }
@@ -488,14 +488,14 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
 
   @Override
   public void removeVariable(String executionId, String variableName) {
-    Collection<String> variableNames = new ArrayList<String>();
+    Collection<String> variableNames = new ArrayList<>();
     variableNames.add(variableName);
     commandExecutor.execute(new RemoveExecutionVariablesCmd(executionId, variableNames, false));
   }
 
   @Override
   public void removeVariableLocal(String executionId, String variableName) {
-    Collection<String> variableNames = new ArrayList<String>();
+    Collection<String> variableNames = new ArrayList<>();
     variableNames.add(variableName);
     commandExecutor.execute(new RemoveExecutionVariablesCmd(executionId, variableNames, true));
 

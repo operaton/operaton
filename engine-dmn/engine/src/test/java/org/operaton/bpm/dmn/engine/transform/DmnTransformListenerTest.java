@@ -181,7 +181,7 @@ public class DmnTransformListenerTest extends DmnEngineTest {
 
     protected Decision decision;
     protected DmnDecision dmnDecision;
-    protected List<DmnDecision> transformedDecisions = new ArrayList<DmnDecision>();
+    protected List<DmnDecision> transformedDecisions = new ArrayList<>();
 
     protected Input input;
     protected DmnDecisionTableInputImpl dmnInput;

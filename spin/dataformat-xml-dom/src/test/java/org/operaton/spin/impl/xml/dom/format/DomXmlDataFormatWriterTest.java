@@ -25,6 +25,7 @@ import org.operaton.spin.xml.SpinXmlElement;
 
 import java.io.*;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -56,7 +57,7 @@ public class DomXmlDataFormatWriterTest {
   // see https://github.com/operaton/operaton/blob/main/engine-plugins/spin-plugin/src/main/java/org/operaton/spin/plugin/impl/SpinValueSerializer.java
   private byte[] serializeValue(SpinXmlElement spinXml) throws UnsupportedEncodingException {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
-    OutputStreamWriter outWriter = new OutputStreamWriter(out, "UTF-8");
+    OutputStreamWriter outWriter = new OutputStreamWriter(out, UTF_8);
     BufferedWriter bufferedWriter = new BufferedWriter(outWriter);
 
     spinXml.writeToWriter(bufferedWriter);
@@ -66,7 +67,7 @@ public class DomXmlDataFormatWriterTest {
   public SpinXmlElement deserializeValue(byte[] serialized, DataFormat<SpinXmlElement> dataFormat)
       throws UnsupportedEncodingException {
     ByteArrayInputStream bais = new ByteArrayInputStream(serialized);
-    InputStreamReader inReader = new InputStreamReader(bais, "UTF-8");
+    InputStreamReader inReader = new InputStreamReader(bais, UTF_8);
     BufferedReader bufferedReader = new BufferedReader(inReader);
 
     Object wrapper = dataFormat.getReader().readInput(bufferedReader);
@@ -104,7 +105,7 @@ public class DomXmlDataFormatWriterTest {
 
     // then
     // assert that there are now new lines in the serialized value:
-    assertThat(new String(serializedValue, "UTF-8")).isEqualTo(getExpectedFormattedXML());
+    assertThat(new String(serializedValue, UTF_8)).isEqualTo(getExpectedFormattedXML());
 
     // when
     // this is what execution.getVariable("test"); does
@@ -130,7 +131,7 @@ public class DomXmlDataFormatWriterTest {
 
     // then
     // assert that there are no new lines in the serialized value:
-    assertThat(new String(serializedValue, "UTF-8")).isEqualTo(getExpectedFormattedXML());
+    assertThat(new String(serializedValue, UTF_8)).isEqualTo(getExpectedFormattedXML());
 
     // when
     // this is what execution.getVariable("test"); does
@@ -156,7 +157,7 @@ public class DomXmlDataFormatWriterTest {
 
     // then
     // assert that xml has not been formatted
-    assertThat(new String(serializedValue, "UTF-8")).isEqualTo(xml);
+    assertThat(new String(serializedValue, UTF_8)).isEqualTo(xml);
 
     // when
     // this is what execution.getVariable("test"); does
@@ -189,7 +190,7 @@ public class DomXmlDataFormatWriterTest {
 
     // then
     // assert that xml has not been formatted
-    assertThat(new String(serializedValue, "UTF-8")).isEqualTo(expectedXml);
+    assertThat(new String(serializedValue, UTF_8)).isEqualTo(expectedXml);
 
     // when
     // this is what execution.getVariable("test"); does
@@ -219,7 +220,7 @@ public class DomXmlDataFormatWriterTest {
 
     // then
     // assert that xml has not been formatted
-    assertThat(new String(serializedValue, "UTF-8")).isEqualTo(getExpectedFormattedXML(true));
+    assertThat(new String(serializedValue, UTF_8)).isEqualTo(getExpectedFormattedXML(true));
 
     // when
     // this is what execution.getVariable("test"); does

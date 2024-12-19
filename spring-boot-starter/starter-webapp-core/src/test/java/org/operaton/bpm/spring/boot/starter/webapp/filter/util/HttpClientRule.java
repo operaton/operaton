@@ -31,6 +31,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class HttpClientRule extends ExternalResource {
 
   public static final String PORT_PLACEHOLDER_WEBAPP_URL = "{PORT}";
@@ -178,7 +180,7 @@ public class HttpClientRule extends ExternalResource {
   public String getContent() {
     try {
       StringWriter writer = new StringWriter();
-      IOUtils.copy(connection.getInputStream(), writer, "UTF-8");
+      IOUtils.copy(connection.getInputStream(), writer, UTF_8);
       return writer.toString();
     } catch (IOException e) {
       e.printStackTrace();
@@ -190,7 +192,7 @@ public class HttpClientRule extends ExternalResource {
     getContent();
     try {
       StringWriter writer = new StringWriter();
-      IOUtils.copy(connection.getErrorStream(), writer, "UTF-8");
+      IOUtils.copy(connection.getErrorStream(), writer, UTF_8);
       return writer.toString();
     } catch (IOException e) {
       e.printStackTrace();

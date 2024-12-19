@@ -33,6 +33,8 @@ import org.operaton.spin.spi.DataFormatWriter;
 import org.operaton.spin.xml.SpinXmlElementException;
 import org.w3c.dom.Node;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * A writer for XML DOM.
  *
@@ -118,7 +120,7 @@ public class DomXmlDataFormatWriter implements DataFormatWriter {
   protected Transformer getFormattingTransformer() {
     try {
       Transformer transformer = formattingTemplates.newTransformer();
-      transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+      transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
       transformer.setOutputProperty(OutputKeys.INDENT, "yes");
       transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
       return transformer;
@@ -137,7 +139,7 @@ public class DomXmlDataFormatWriter implements DataFormatWriter {
     TransformerFactory transformerFactory = domXmlDataFormat.getTransformerFactory();
     try {
       Transformer transformer = transformerFactory.newTransformer();
-      transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+      transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
       return transformer;
     } catch (TransformerConfigurationException e) {
       throw LOG.unableToCreateTransformer(e);

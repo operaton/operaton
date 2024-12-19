@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.impl.util;
 
 import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
@@ -72,7 +72,7 @@ public final class ResourceUtil {
     }
 
     if (resourceBytes != null) {
-      return new String(resourceBytes, Charset.forName("UTF-8"));
+      return new String(resourceBytes, StandardCharsets.UTF_8);
     }
     else {
       throw LOG.cannotFindResource(resourcePath);

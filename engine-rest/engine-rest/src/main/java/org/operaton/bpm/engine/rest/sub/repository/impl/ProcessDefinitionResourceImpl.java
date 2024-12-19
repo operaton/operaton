@@ -73,12 +73,13 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource {
 
@@ -260,13 +261,11 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     try {
       processModelIn = engine.getRepositoryService().getProcessModel(processDefinitionId);
       byte[] processModel = IoUtil.readInputStream(processModelIn, "processModelBpmn20Xml");
-      return ProcessDefinitionDiagramDto.create(processDefinitionId, new String(processModel, "UTF-8"));
+      return ProcessDefinitionDiagramDto.create(processDefinitionId, new String(processModel, UTF_8));
     } catch (AuthorizationException e) {
       throw e;
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, "No matching definition with id " + processDefinitionId);
-    } catch (UnsupportedEncodingException e) {
-      throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
     } finally {
       IoUtil.closeSilently(processModelIn);
     }

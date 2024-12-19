@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.digest;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @author Daniel Meyer
@@ -45,13 +46,8 @@ public abstract class Base64EncodedHashDigest {
 
   protected byte[] createByteHash(String password) {
     MessageDigest digest = createDigestInstance();
-    try {
-      digest.update(password.getBytes("UTF-8"));
-      return digest.digest();
-
-    } catch (UnsupportedEncodingException e) {
-      throw new ProcessEngineException("UnsupportedEncodingException while calculating password digest");
-    }
+    digest.update(password.getBytes(UTF_8));
+    return digest.digest();
   }
 
   protected MessageDigest createDigestInstance() {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.spin.impl.util;
-
+import java.nio.charset.StandardCharsets;
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
@@ -29,7 +29,7 @@ import java.nio.charset.Charset;
  */
 public class SpinIoUtil extends IoUtil {
 
-  public static final Charset ENCODING_CHARSET = Charset.forName("UTF-8");
+  public static final Charset ENCODING_CHARSET = StandardCharsets.UTF_8;
 
   private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
 

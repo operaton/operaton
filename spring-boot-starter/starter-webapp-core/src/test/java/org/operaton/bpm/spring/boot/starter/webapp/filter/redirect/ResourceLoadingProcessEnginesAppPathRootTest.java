@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class ResourceLoadingProcessEnginesAppPathRootTest {
 
     // when
     // get content returned by the request
-    String body = IOUtils.toString(con.getInputStream(), "UTF-8");
+    String body = IOUtils.toString(con.getInputStream(), UTF_8);
 
     // then
     assertThat(con.getResponseCode()).isEqualTo(200);

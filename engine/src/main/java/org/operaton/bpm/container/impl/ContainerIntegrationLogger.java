@@ -17,7 +17,6 @@
 package org.operaton.bpm.container.impl;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -64,7 +63,7 @@ public class ContainerIntegrationLogger extends ProcessEngineLogger {
         urlPath);
   }
 
-  public ProcessEngineException cannotDecodePathName(UnsupportedEncodingException e) {
+  public ProcessEngineException cannotDecodePathName(IllegalArgumentException e) {
     return new ProcessEngineException(exceptionMessage(
         "005",
         "Could not decode pathname using utf-8 decoder."), e);

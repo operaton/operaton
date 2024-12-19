@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class DemoDelegate implements JavaDelegate {
 
   Logger log = Logger.getLogger(DemoDelegate.class.getName());
@@ -64,9 +66,9 @@ public class DemoDelegate implements JavaDelegate {
     insertVariable("characterObjectArray", characterObjectArray);
     
     String byteString = "mycooltextcontentasbyteyesyes!!!";
-    insertVariable("byteArrayVar", byteString.getBytes("UTF-8"));
+    insertVariable("byteArrayVar", byteString.getBytes(UTF_8));
     Byte[] ByteArray = new Byte[byteString.length()];
-    byte[] bytes = byteString.getBytes("UTF-8");
+    byte[] bytes = byteString.getBytes(UTF_8);
 
     for (int i = 0; i < bytes.length; i++) {
       byte b = bytes[i];

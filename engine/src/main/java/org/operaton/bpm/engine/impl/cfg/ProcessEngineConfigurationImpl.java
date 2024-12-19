@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.cfg;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd.MAX_THREADS_NUMBER;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -2504,7 +2505,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected void initDefaultCharset() {
     if (defaultCharset == null) {
       if (defaultCharsetName == null) {
-        defaultCharsetName = "UTF-8";
+        defaultCharsetName = UTF_8.name();
       }
       defaultCharset = Charset.forName(defaultCharsetName);
     }

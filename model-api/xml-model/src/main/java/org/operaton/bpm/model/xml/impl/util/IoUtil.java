@@ -22,6 +22,8 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * @author Daniel Meyer
  * @author Sebastian Menski
@@ -125,7 +127,7 @@ public final class IoUtil {
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
     try {
       Transformer transformer = transformerFactory.newTransformer();
-      transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+      transformer.setOutputProperty(OutputKeys.ENCODING, UTF_8.name());
       transformer.setOutputProperty(OutputKeys.INDENT, "yes");
       transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 

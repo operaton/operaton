@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.form.engine;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.io.UnsupportedEncodingException;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
@@ -92,13 +91,6 @@ public class JuelFormEngine implements FormEngine {
     ensureNotNull("Form with formKey '" + formKey + "' does not exist", "resourceStream", resourceStream);
 
     byte[] resourceBytes = resourceStream.getBytes();
-    String encoding = "UTF-8";
-    String formTemplateString = "";
-    try {
-      formTemplateString = new String(resourceBytes, encoding);
-    } catch (UnsupportedEncodingException e) {
-      throw new ProcessEngineException("Unsupported encoding of :" + encoding, e);
-    }
-    return formTemplateString;
+    return new String(resourceBytes, UTF_8);
   }
 }

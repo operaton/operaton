@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.sub.impl;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -169,7 +170,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
     try {
       JavaType type = TypeFactory.defaultInstance().constructFromCanonical(className);
       validateType(type);
-      return objectMapper.readValue(new String(data, Charset.forName("UTF-8")), type);
+      return objectMapper.readValue(new String(data, StandardCharsets.UTF_8), type);
     } catch(Exception e) {
       throw new InvalidRequestException(Status.INTERNAL_SERVER_ERROR, "Could not deserialize JSON object: "+e.getMessage());
     }

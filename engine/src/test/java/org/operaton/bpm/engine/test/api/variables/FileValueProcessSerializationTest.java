@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.variables;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.nio.charset.Charset;
 import java.util.Scanner;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -50,7 +50,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
     VariableMap variables = Variables.createVariables();
     String filename = "test.txt";
     String type = "text/plain";
-    FileValue fileValue = Variables.fileValue(filename).file("ABC".getBytes()).encoding("UTF-8").mimeType(type).create();
+    FileValue fileValue = Variables.fileValue(filename).file("ABC".getBytes()).encoding(UTF_8.name()).mimeType(type).create();
     variables.put("file", fileValue);
     runtimeService.startProcessInstanceByKey("process", variables);
     Task task = taskService.createTaskQuery().singleResult();
@@ -59,8 +59,8 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
 
     assertThat(value.getFilename()).isEqualTo(filename);
     assertThat(value.getMimeType()).isEqualTo(type);
-    assertThat(value.getEncoding()).isEqualTo("UTF-8");
-    assertThat(value.getEncodingAsCharset()).isEqualTo(Charset.forName("UTF-8"));
+    assertThat(value.getEncoding()).isEqualTo(UTF_8.name());
+    assertThat(value.getEncodingAsCharset()).isEqualTo(UTF_8);
     try (Scanner scanner = new Scanner(value.getValue())) {
       assertThat(scanner.nextLine()).isEqualTo("ABC");
     }
@@ -73,7 +73,7 @@ public class FileValueProcessSerializationTest extends PluggableProcessEngineTes
   @Deployment(resources = ONE_TASK_PROCESS)
   public void testSerializeNullMimeType() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess",
-        Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").file("ABC".getBytes()).encoding("UTF-8").create()));
+        Variables.createVariables().putValue("fileVar", Variables.fileValue("test.txt").file("ABC".getBytes()).encoding(UTF_8.name()).create()));
 
     FileValue fileVar = runtimeService.getVariableTyped(pi.getId(), "fileVar");
     assertNull(fileVar.getMimeType());

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.sub.repository.impl;
 
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +51,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class DecisionDefinitionResourceImpl implements DecisionDefinitionResource {
 
@@ -97,20 +98,13 @@ public class DecisionDefinitionResourceImpl implements DecisionDefinitionResourc
       decisionModelInputStream = engine.getRepositoryService().getDecisionModel(decisionDefinitionId);
 
       byte[] decisionModel = IoUtil.readInputStream(decisionModelInputStream, "decisionModelDmnXml");
-      return DecisionDefinitionDiagramDto.create(decisionDefinitionId, new String(decisionModel, "UTF-8"));
-
+      return DecisionDefinitionDiagramDto.create(decisionDefinitionId, new String(decisionModel, UTF_8));
     } catch (NotFoundException e) {
       throw new InvalidRequestException(Status.NOT_FOUND, e, e.getMessage());
-
     } catch (NotValidException e) {
       throw new InvalidRequestException(Status.BAD_REQUEST, e, e.getMessage());
-
     } catch (ProcessEngineException e) {
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
-
-    } catch (UnsupportedEncodingException e) {
-      throw new RestException(Status.INTERNAL_SERVER_ERROR, e);
-
     } finally {
       IoUtil.closeSilently(decisionModelInputStream);
     }

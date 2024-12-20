@@ -40,7 +40,7 @@ class ProcessEngineExtensionRequiredHistoryLevelAuditTest {
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   void testRequiredHistoryLevelMatch() {
-    assertEquals(extension.getProcessEngineConfiguration().getHistoryLevel().getName(),
-        ProcessEngineConfiguration.HISTORY_AUDIT);
+    assertEquals(
+      ProcessEngineConfiguration.HISTORY_AUDIT, extension.getProcessEngineConfiguration().getHistoryLevel().getName());
   }
 }

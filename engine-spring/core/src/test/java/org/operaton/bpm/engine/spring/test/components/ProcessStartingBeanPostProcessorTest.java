@@ -82,11 +82,11 @@ public class ProcessStartingBeanPostProcessorTest {
 
 		this.processInitiatingPojo.reset();
 
-		assertEquals(this.processInitiatingPojo.getMethodState(), 0);
+    assertEquals(0, this.processInitiatingPojo.getMethodState());
 
 		this.processInitiatingPojo.startProcess(53);
 
-		assertEquals(this.processInitiatingPojo.getMethodState(), 1);
+    assertEquals(1, this.processInitiatingPojo.getMethodState());
 	}
 
 	@Test

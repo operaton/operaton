@@ -100,14 +100,14 @@ public class ScopingTest {
 		StatefulObject scopedObject = (StatefulObject) processEngine.getRuntimeService().getVariable(processInstance.getId(), "scopedTarget.c1");
 		Assert.assertNotNull("the scopedObject can't be null", scopedObject);
 		Assert.assertTrue("the 'name' property can't be null.", StringUtils.hasText(scopedObject.getName()));
-		Assert.assertEquals(scopedObject.getVisitedCount(), 2);
+    Assert.assertEquals(2, scopedObject.getVisitedCount());
 
 		// the process has paused
 		String procId = processInstance.getProcessInstanceId();
 
 		List<Task> tasks = taskService.createTaskQuery().executionId(procId).list();
 
-		Assert.assertEquals("there should be 1 (one) task enqueued at this point.", tasks.size(), 1);
+    Assert.assertEquals("there should be 1 (one) task enqueued at this point.", 1, tasks.size());
 
 		Task t = tasks.iterator().next();
 
@@ -121,7 +121,7 @@ public class ScopingTest {
 		this.taskService.complete(t.getId());
 
 		scopedObject = (StatefulObject) processEngine.getRuntimeService().getVariable(processInstance.getId(), "scopedTarget.c1");
-		Assert.assertEquals(scopedObject.getVisitedCount(), 3);
+    Assert.assertEquals(3, scopedObject.getVisitedCount());
 
 		Assert.assertEquals( "the customerId injected should " +
 					"be what was given as a processVariable parameter." ,

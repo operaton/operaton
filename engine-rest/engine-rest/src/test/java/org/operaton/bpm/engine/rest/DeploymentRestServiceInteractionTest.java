@@ -2036,47 +2036,47 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   }
 
   private void verifyBpmnDeployment(HashMap<String, Object> dto) {
-    assertEquals(dto.get("id"), MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
-    assertEquals(dto.get("category"), EXAMPLE_PROCESS_DEFINITION_CATEGORY);
-    assertEquals(dto.get("name"), EXAMPLE_PROCESS_DEFINITION_NAME);
-    assertEquals(dto.get("key"), EXAMPLE_PROCESS_DEFINITION_KEY);
-    assertEquals(dto.get("description"), EXAMPLE_PROCESS_DEFINITION_DESCRIPTION);
-    assertEquals(dto.get("version"), EXAMPLE_PROCESS_DEFINITION_VERSION);
-    assertEquals(dto.get("resource"), EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME);
-    assertEquals(dto.get("deploymentId"), EXAMPLE_DEPLOYMENT_ID);
-    assertEquals(dto.get("diagram"), EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME);
-    assertEquals(dto.get("suspended"), EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED);
+    assertEquals(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, dto.get("id"));
+    assertEquals(EXAMPLE_PROCESS_DEFINITION_CATEGORY, dto.get("category"));
+    assertEquals(EXAMPLE_PROCESS_DEFINITION_NAME, dto.get("name"));
+    assertEquals(EXAMPLE_PROCESS_DEFINITION_KEY, dto.get("key"));
+    assertEquals(EXAMPLE_PROCESS_DEFINITION_DESCRIPTION, dto.get("description"));
+    assertEquals(EXAMPLE_PROCESS_DEFINITION_VERSION, dto.get("version"));
+    assertEquals(EXAMPLE_PROCESS_DEFINITION_RESOURCE_NAME, dto.get("resource"));
+    assertEquals(EXAMPLE_DEPLOYMENT_ID, dto.get("deploymentId"));
+    assertEquals(EXAMPLE_PROCESS_DEFINITION_DIAGRAM_RESOURCE_NAME, dto.get("diagram"));
+    assertEquals(EXAMPLE_PROCESS_DEFINITION_IS_SUSPENDED, dto.get("suspended"));
   }
   private void verifyCmnDeployment(HashMap<String, Object> dto) {
-    assertEquals(dto.get("id"), EXAMPLE_CASE_DEFINITION_ID);
-    assertEquals(dto.get("category"), EXAMPLE_CASE_DEFINITION_CATEGORY);
-    assertEquals(dto.get("name"), EXAMPLE_CASE_DEFINITION_NAME);
-    assertEquals(dto.get("key"), EXAMPLE_CASE_DEFINITION_KEY);
-    assertEquals(dto.get("version"), EXAMPLE_CASE_DEFINITION_VERSION);
-    assertEquals(dto.get("resource"), EXAMPLE_CASE_DEFINITION_RESOURCE_NAME);
-    assertEquals(dto.get("deploymentId"), EXAMPLE_DEPLOYMENT_ID);
+    assertEquals(EXAMPLE_CASE_DEFINITION_ID, dto.get("id"));
+    assertEquals(EXAMPLE_CASE_DEFINITION_CATEGORY, dto.get("category"));
+    assertEquals(EXAMPLE_CASE_DEFINITION_NAME, dto.get("name"));
+    assertEquals(EXAMPLE_CASE_DEFINITION_KEY, dto.get("key"));
+    assertEquals(EXAMPLE_CASE_DEFINITION_VERSION, dto.get("version"));
+    assertEquals(EXAMPLE_CASE_DEFINITION_RESOURCE_NAME, dto.get("resource"));
+    assertEquals(EXAMPLE_DEPLOYMENT_ID, dto.get("deploymentId"));
   }
 
   private void verifyDmnDeployment(HashMap<String, Object> dto) {
-    assertEquals(dto.get("id"), EXAMPLE_DECISION_DEFINITION_ID);
-    assertEquals(dto.get("category"), EXAMPLE_DECISION_DEFINITION_CATEGORY);
-    assertEquals(dto.get("name"), EXAMPLE_DECISION_DEFINITION_NAME);
-    assertEquals(dto.get("key"), EXAMPLE_DECISION_DEFINITION_KEY);
-    assertEquals(dto.get("version"), EXAMPLE_DECISION_DEFINITION_VERSION);
-    assertEquals(dto.get("resource"), EXAMPLE_DECISION_DEFINITION_RESOURCE_NAME);
-    assertEquals(dto.get("deploymentId"), EXAMPLE_DEPLOYMENT_ID);
-    assertEquals(dto.get("decisionRequirementsDefinitionId"), EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID);
-    assertEquals(dto.get("decisionRequirementsDefinitionKey"), EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY);
+    assertEquals(EXAMPLE_DECISION_DEFINITION_ID, dto.get("id"));
+    assertEquals(EXAMPLE_DECISION_DEFINITION_CATEGORY, dto.get("category"));
+    assertEquals(EXAMPLE_DECISION_DEFINITION_NAME, dto.get("name"));
+    assertEquals(EXAMPLE_DECISION_DEFINITION_KEY, dto.get("key"));
+    assertEquals(EXAMPLE_DECISION_DEFINITION_VERSION, dto.get("version"));
+    assertEquals(EXAMPLE_DECISION_DEFINITION_RESOURCE_NAME, dto.get("resource"));
+    assertEquals(EXAMPLE_DEPLOYMENT_ID, dto.get("deploymentId"));
+    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID, dto.get("decisionRequirementsDefinitionId"));
+    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY, dto.get("decisionRequirementsDefinitionKey"));
   }
 
   private void verifyDrdDeployment(HashMap<String, Object> dto) {
-    assertEquals(dto.get("id"), EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID);
-    assertEquals(dto.get("category"), EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_CATEGORY);
-    assertEquals(dto.get("name"), EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_NAME);
-    assertEquals(dto.get("key"), EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY);
-    assertEquals(dto.get("version"), EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_VERSION);
-    assertEquals(dto.get("resource"), EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_RESOURCE_NAME);
-    assertEquals(dto.get("deploymentId"), EXAMPLE_DEPLOYMENT_ID);
+    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_ID, dto.get("id"));
+    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_CATEGORY, dto.get("category"));
+    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_NAME, dto.get("name"));
+    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_KEY, dto.get("key"));
+    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_VERSION, dto.get("version"));
+    assertEquals(EXAMPLE_DECISION_REQUIREMENTS_DEFINITION_RESOURCE_NAME, dto.get("resource"));
+    assertEquals(EXAMPLE_DEPLOYMENT_ID, dto.get("deploymentId"));
   }
 
   private void verifyDeploymentValuesEmptyDefinitions(Deployment mockDeployment, String responseContent) {

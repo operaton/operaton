@@ -32,15 +32,6 @@ platform:
   replacements:
     aarch_64: aarch64
 
-files:
-  artifacts:
-    - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.tar.gz'
-    - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.tar.gz'
-    - path: 'distro/sql-script/target/operaton-sql-scripts-{{projectVersion}}.tar.gz'
-    - path: 'distro/webjar/target/operaton-webapp-webjar-{{projectVersion}}.jar'
-    - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.tar.gz'
-    - path: 'target/project-reports.zip'
-
 release: # https://jreleaser.org/guide/latest/reference/release/github.html
   github:
     overwrite: true
@@ -178,7 +169,7 @@ deploy:
   maven:
     mavenCentral:
       MavenCentral:
-        active: ALWAYS
+        active: RELEASE
         applyMavenCentralRules: true
         url: https://central.sonatype.com/api/v1/publisher
         stagingRepositories:
@@ -198,3 +189,97 @@ catalog:
 signing:
   active: ALWAYS
   armored: true
+
+files:
+  artifacts:
+    - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.tar.gz'
+    - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.zip'
+    - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.tar.gz'
+    - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.zip'
+    - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.tar.gz'
+    - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
+    - path: 'distro/sql-script/target/operaton-sql-scripts-{{projectVersion}}.tar.gz'
+    - path: 'distro/webjar/target/operaton-webapp-webjar-{{projectVersion}}.jar'
+    - path: 'target/project-reports.zip'
+
+distributions:
+  operaton:
+    type: BINARY
+    executable:
+      name: start
+    tags:
+      - 'operaton'
+      - 'bpmn'
+      - 'process automation'
+    artifacts:
+      - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.zip'
+        platform: linux
+      - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.zip'
+        platform: osx
+      - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.zip'
+        platform: windows
+    brew:
+      active: RELEASE
+      continueOnError: true
+      formulaName: operaton
+      multiPlatform: true
+      repository:
+        active: RELEASE
+        commitMessage: 'Operaton {{tagName}}'
+      commitAuthor:
+        name: GitHub Actions
+        email: github-actions[bot]@users.noreply.github.com
+  operaton-tomcat:
+    type: BINARY
+    executable:
+      name: start
+    tags:
+      - 'operaton'
+      - 'bpmn'
+      - 'process automation'
+      - 'tomcat'
+    artifacts:
+      - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.zip'
+        platform: linux
+      - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.zip'
+        platform: osx
+      - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.zip'
+        platform: windows
+    brew:
+      active: RELEASE
+      continueOnError: true
+      formulaName: operaton-tomcat
+      multiPlatform: true
+      repository:
+        active: RELEASE
+        commitMessage: 'Operaton Tomcat 10 {{tagName}}'
+      commitAuthor:
+        name: GitHub Actions
+        email: github-actions[bot]@users.noreply.github.com
+  operaton-wildfly:
+    type: BINARY
+    executable:
+      name: start
+    tags:
+      - 'operaton'
+      - 'bpmn'
+      - 'process automation'
+      - 'wildfly'
+    artifacts:
+      - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
+        platform: linux
+      - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
+        platform: osx
+      - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
+        platform: windows
+    brew:
+      active: RELEASE
+      continueOnError: true
+      formulaName: operaton-wildfly
+      multiPlatform: true
+      repository:
+        active: RELEASE
+        commitMessage: 'Operaton Wildfly 33 {{tagName}}'
+      commitAuthor:
+        name: GitHub Actions
+        email: github-actions[bot]@users.noreply.github.com

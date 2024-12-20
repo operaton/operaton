@@ -42,6 +42,6 @@ public class SpringProcessEnginePluginTest {
 
   @Test
   public void verifyToString() {
-    Assert.assertEquals(plugin.toString(), "theBeanName");
+    Assert.assertEquals("theBeanName", plugin.toString());
   }
 }

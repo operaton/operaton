@@ -78,7 +78,7 @@ public class LocalSingletonBeanInvocationTest extends AbstractFoxPlatformIntegra
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInvokeBean");
 
-    Assert.assertEquals(runtimeService.getVariable(pi.getId(), "result"), true);
+    Assert.assertEquals(true, runtimeService.getVariable(pi.getId(), "result"));
 
     runtimeService.setVariable(pi.getId(), "result", false);
 
@@ -86,7 +86,7 @@ public class LocalSingletonBeanInvocationTest extends AbstractFoxPlatformIntegra
 
     waitForJobExecutorToProcessAllJobs();
 
-    Assert.assertEquals(runtimeService.getVariable(pi.getId(), "result"), true);
+    Assert.assertEquals(true, runtimeService.getVariable(pi.getId(), "result"));
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }
@@ -100,7 +100,7 @@ public class LocalSingletonBeanInvocationTest extends AbstractFoxPlatformIntegra
 
     for(int i=0; i<instances; i++) {
       ids[i] = runtimeService.startProcessInstanceByKey("testInvokeBean").getId();
-      Assert.assertEquals(runtimeService.getVariable(ids[i], "result"), true);
+      Assert.assertEquals(true, runtimeService.getVariable(ids[i], "result"));
       runtimeService.setVariable(ids[i], "result", false);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -108,7 +108,7 @@ public class LocalSingletonBeanInvocationTest extends AbstractFoxPlatformIntegra
     waitForJobExecutorToProcessAllJobs(60*1000);
 
     for(int i=0; i<instances; i++) {
-      Assert.assertEquals(runtimeService.getVariable(ids[i], "result"), true);
+      Assert.assertEquals(true, runtimeService.getVariable(ids[i], "result"));
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
 

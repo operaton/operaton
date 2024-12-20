@@ -26,7 +26,7 @@
     <version.sqlserver>8.4.1.jre8</version.sqlserver>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
     <version.db2>${version.db2-11.5}</version.db2>
-    <version.postgresql>42.5.5</version.postgresql>
+    <version.postgresql>42.7.4</version.postgresql>
     <version.liquibase>4.8.0</version.liquibase>
 
     <!-- needed for sql script and backward compatibility checks -->
@@ -337,7 +337,12 @@
     <profile>
       <id>postgresql</id>
       <properties>
+        <database.port>5432</database.port>
+        <database.password>postgres</database.password>
         <database.type>postgres</database.type>
+        <database.username>postgres</database.username>
+        <database.name>process-engine</database.name>
+        <database.url>jdbc:postgresql://localhost:${database.port}/${database.name}</database.url>
         <database.driver>org.postgresql.Driver</database.driver>
         <database.datasource.class>org.postgresql.ds.PGSimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-ds.xml</jboss.datasource.filename>
@@ -354,6 +359,66 @@
         </dependency>
       </dependencies>
       <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.45.1</version>
+            <configuration>
+              <images>
+                <image>
+                  <name>postgres:17.2</name>
+                  <alias>database</alias>
+                  <run>
+                    <env>
+                      <POSTGRES_PASSWORD>${database.password}</POSTGRES_PASSWORD>
+                      <POSTGRES_DB>${database.name}</POSTGRES_DB>
+                    </env>
+                    <ports>
+                      <port>${database.port}:5432</port>
+                    </ports>
+                    <wait>
+                      <log>.*database system is ready to accept connections.*</log>
+                      <time>10000</time>
+                    </wait>
+                  </run>
+                </image>
+              </images>
+            </configuration>
+            <executions>
+              <execution>
+                <id>start</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>stop</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>true</skipTests>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <includes>
+                <include>%regex[.*]</include>
+              </includes>
+            </configuration>
+          </plugin>
+        </plugins>
         <pluginManagement>
           <plugins>
             <plugin>

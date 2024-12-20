@@ -248,7 +248,7 @@ distributions:
     brew:
       active: ALWAYS
       continueOnError: true
-      formulaName: operaton
+      formulaName: operaton-tomcat
       multiPlatform: true
       repository:
         active: ALWAYS
@@ -275,7 +275,7 @@ distributions:
     brew:
       active: ALWAYS
       continueOnError: true
-      formulaName: operaton
+      formulaName: operaton-wildfly
       multiPlatform: true
       repository:
         active: ALWAYS

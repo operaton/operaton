@@ -53,6 +53,9 @@ public class JobExecutorMetricsTest extends AbstractMetricsTest {
   public void saveJobExecutor() {
     processEngine = engineRule.getProcessEngine();
     defaultJobExecutor = processEngineConfiguration.getJobExecutor();
+
+    // Deletes all Metrics
+    processEngine.getManagementService().deleteMetrics(null);
   }
 
   @After

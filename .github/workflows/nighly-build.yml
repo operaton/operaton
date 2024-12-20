@@ -9,7 +9,7 @@ on:
         description: 'Java version to use'
         type: choice
         required: true
-        default: '["17", "21"]'
+        default: '["17"]'
         options:
           - '["17"]'
           - '["21"]'
@@ -19,6 +19,11 @@ on:
         type: boolean
         required: true
         default: true
+      skip_tests:
+        description: 'Skip test execution for faster build'
+        type: boolean
+        required: true
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -49,17 +54,19 @@ jobs:
         id: maven-build
         shell: bash
         run: |
-          PROJECT_ROOT=$(pwd)
           .github/scripts/jacoco-create-flag-files.sh
           RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
+          SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
           echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+          echo "skip_tests=$SKIP_TESTS"
           ./mvnw \
             -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory \
             install \
             versions:dependency-updates-aggregate-report \
             versions:plugin-updates-aggregate-report \
             -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc \
-            -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list
+            -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list \
+            -DskipTests=$SKIP_TESTS
           .github/scripts/prepare-reports.sh
           ./mvnw -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
@@ -69,6 +76,7 @@ jobs:
         with:
           path: |
             distro/**/*.tar.gz
+            distro/**/*.zip
             distro/webjar/target/operaton-webapp-webjar-*.jar
             ./*/staging-deploy/**
             **/target/reports/**
@@ -76,8 +84,8 @@ jobs:
             target/project-reports.zip
           key: ${{ github.run_id }}-build-artifacts
       - name: Publish Test Report
-        if: always()
-        #https://github.com/marketplace/actions/junit-report-action
+        if: ${{ github.event.inputs.skip_tests == 'false' || github.event_name == 'schedule' }}
+        # https://github.com/marketplace/actions/junit-report-action
         uses: mikepenz/action-junit-report@v4
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
@@ -100,6 +108,7 @@ jobs:
         with:
           path: |
             distro/**/*.tar.gz
+            distro/**/*.zip
             distro/webjar/target/operaton-webapp-webjar-*.jar
             ./*/staging-deploy/**
             **/target/reports/**

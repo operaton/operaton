@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
-import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -56,6 +54,8 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.tree.ExecutionWalker;
 import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
 
+import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
+
 /**
  * This class encapsulates legacy runtime behavior for the process engine.
  *<p>
@@ -84,6 +84,9 @@ import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
 public class LegacyBehavior {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
+
+  private LegacyBehavior() {
+  }
 
   // concurrent scopes ///////////////////////////////////////////
 
@@ -660,5 +663,4 @@ public class LegacyBehavior {
       }
     }
   }
-
 }

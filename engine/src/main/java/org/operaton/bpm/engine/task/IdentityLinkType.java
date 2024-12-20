@@ -38,4 +38,7 @@ public class IdentityLinkType {
 
   public static final String OWNER = "owner";
 
+  private IdentityLinkType() {
+  }
+
 }

@@ -24,13 +24,16 @@ import java.util.Stack;
  * @author Christoph Beck
  */
 public class NodePrinter {
+	private NodePrinter() {
+	}
+
 	private static boolean isLastSibling(Node node, Node parent) {
 		if (parent != null) {
 			return node == parent.getChild(parent.getCardinality() - 1);
 		}
 		return true;
 	}
-	
+
 	private static void dump(PrintWriter writer, Node node, Stack<Node> predecessors) {
 		if (!predecessors.isEmpty()) {
 			Node parent = null;

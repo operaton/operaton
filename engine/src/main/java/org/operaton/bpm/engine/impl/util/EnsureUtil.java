@@ -36,6 +36,9 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public final class EnsureUtil {
 
+  private EnsureUtil() {
+  }
+
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
   public static void ensureNotNull(String variableName, Object value) {

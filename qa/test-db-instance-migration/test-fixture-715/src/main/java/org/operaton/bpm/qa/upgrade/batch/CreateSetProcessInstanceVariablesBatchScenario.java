@@ -30,6 +30,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class CreateSetProcessInstanceVariablesBatchScenario {
 
+  private CreateSetProcessInstanceVariablesBatchScenario() {
+  }
+
   @Deployment
   public static String modelDeployment() {
     return "org/operaton/bpm/qa/upgrade/batch/oneTaskProcess.bpmn20.xml";
@@ -84,5 +87,4 @@ public class CreateSetProcessInstanceVariablesBatchScenario {
           processInstanceIdTwo);
     };
   }
-
 }

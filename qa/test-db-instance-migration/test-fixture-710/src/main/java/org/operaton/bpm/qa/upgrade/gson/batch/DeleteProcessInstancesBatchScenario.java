@@ -31,6 +31,9 @@ import java.util.List;
  */
 public class DeleteProcessInstancesBatchScenario {
 
+  private DeleteProcessInstancesBatchScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/gson/oneTaskProcess.bpmn20.xml";

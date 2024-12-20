@@ -27,11 +27,13 @@ import java.util.Date;
  * @author Tassilo Weidner
  */
 public class TimerChangeJobDefinitionScenario {
-
   protected static final Date FIXED_DATE_ONE = new Date(1363607000000L);
   protected static final Date FIXED_DATE_TWO = new Date(1363607500000L);
   protected static final Date FIXED_DATE_THREE = new Date(1363607600000L);
   protected static final Date FIXED_DATE_FOUR = new Date(1363607700000L);
+
+  private TimerChangeJobDefinitionScenario() {
+  }
 
   @DescribesScenario("initTimerChangeJobDefinition")
   public static ScenarioSetup initTimerChangeJobDefinition() {

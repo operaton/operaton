@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class ParallelTasksScenario {
 
+  private ParallelTasksScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/task/parallelTasksProcess.bpmn20.xml";

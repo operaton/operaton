@@ -43,6 +43,9 @@ public class DecisionEvaluationUtil {
 
   public static final String DECISION_RESULT_VARIABLE = "decisionResult";
 
+  private DecisionEvaluationUtil() {
+  }
+
   public static DecisionResultMapper getDecisionResultMapperForName(String mapDecisionResult) {
     if ("singleEntry".equals(mapDecisionResult)) {
       return new SingleEntryDecisionResultMapper();
@@ -121,5 +124,4 @@ public class DecisionEvaluationUtil {
   protected static DecisionDefinition resolveDecisionDefinition(BaseCallableElement callableElement, AbstractVariableScope execution, String defaultTenantId) {
     return CallableElementUtil.getDecisionDefinitionToCall(execution, defaultTenantId, callableElement);
   }
-
 }

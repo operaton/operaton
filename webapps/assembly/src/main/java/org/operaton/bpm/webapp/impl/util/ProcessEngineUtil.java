@@ -27,6 +27,9 @@ import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
 
 public class ProcessEngineUtil {
 
+  private ProcessEngineUtil() {
+  }
+
   public static ProcessEngine lookupProcessEngine(String engineName) {
     ServiceLoader<ProcessEngineProvider> serviceLoader = ServiceLoader.load(ProcessEngineProvider.class);
     Iterator<ProcessEngineProvider> iterator = serviceLoader.iterator();

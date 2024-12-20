@@ -27,6 +27,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  */
 public class ProcessInstanceModificationScenario {
 
+  private ProcessInstanceModificationScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/gson/oneTaskProcessInstanceModification.bpmn20.xml";

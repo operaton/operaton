@@ -31,6 +31,9 @@ import org.springframework.core.io.Resource;
  */
 public class BeansConfigurationHelper {
 
+  private BeansConfigurationHelper() {
+  }
+
   public static ProcessEngineConfiguration parseProcessEngineConfiguration(Resource springResource, String beanName) {
     DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
     XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);

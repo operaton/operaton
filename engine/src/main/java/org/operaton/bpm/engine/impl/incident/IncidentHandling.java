@@ -21,6 +21,9 @@ import org.operaton.bpm.engine.runtime.Incident;
 
 public class IncidentHandling {
 
+  private IncidentHandling() {
+  }
+
   public static Incident createIncident(String incidentType,
       IncidentContext context,
       String message) {

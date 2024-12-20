@@ -32,6 +32,9 @@ import java.util.List;
  */
 public class DeleteHistoricDecisionsBatchScenario {
 
+  private DeleteHistoricDecisionsBatchScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/gson/Example.dmn";

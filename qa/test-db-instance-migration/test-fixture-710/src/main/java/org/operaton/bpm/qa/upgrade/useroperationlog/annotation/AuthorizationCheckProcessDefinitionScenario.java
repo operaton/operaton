@@ -23,6 +23,8 @@ import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class AuthorizationCheckProcessDefinitionScenario {
+  private AuthorizationCheckProcessDefinitionScenario() {
+  }
 
   @Deployment
   public static String deploy() {

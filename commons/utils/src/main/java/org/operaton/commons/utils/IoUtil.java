@@ -16,7 +16,16 @@
  */
 package org.operaton.commons.utils;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -26,9 +35,11 @@ import java.nio.charset.StandardCharsets;
  * @author Sebastian Menski
  */
 public class IoUtil {
-
   private static final IoUtilLogger LOG = UtilsLogger.IO_UTIL_LOGGER;
   public static final Charset ENCODING_CHARSET = StandardCharsets.UTF_8;
+
+  protected IoUtil() {
+  }
 
   /**
    * Returns the input stream as String.
@@ -232,5 +243,4 @@ public class IoUtil {
       throw LOG.fileNotFoundException(filename, e);
     }
   }
-
 }

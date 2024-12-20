@@ -31,6 +31,9 @@ import java.util.List;
  */
 public class RestartProcessInstanceBatchScenario {
 
+  private RestartProcessInstanceBatchScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/gson/oneTaskProcessRestart.bpmn20.xml";

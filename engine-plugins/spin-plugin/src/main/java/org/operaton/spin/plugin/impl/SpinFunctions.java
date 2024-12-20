@@ -32,4 +32,7 @@ public class SpinFunctions {
   public static final String S = "S";
   public static final String XML = "XML";
   public static final String JSON = "JSON";
+
+  private SpinFunctions() {
+  }
 }

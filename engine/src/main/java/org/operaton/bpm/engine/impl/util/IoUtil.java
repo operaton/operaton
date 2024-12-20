@@ -41,6 +41,9 @@ public class IoUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
+  private IoUtil() {
+  }
+
   public static byte[] readInputStream(InputStream inputStream, String inputStreamName) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     byte[] buffer = new byte[16*1024];

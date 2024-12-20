@@ -31,6 +31,9 @@ public class ProcessWithUserTaskAndTimerScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithUserTaskAndTimer";
 
+  private ProcessWithUserTaskAndTimerScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/processWithUserTaskAndTimer.bpmn20.xml";

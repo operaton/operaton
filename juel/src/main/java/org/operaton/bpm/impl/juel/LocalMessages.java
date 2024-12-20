@@ -23,6 +23,9 @@ public final class LocalMessages {
 	private static final String BUNDLE_NAME = "org.operaton.bpm.impl.juel.misc.LocalStrings";
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
+	private LocalMessages() {
+	}
+
 	public static String get(String key, Object... args) {
 		String template = null;
 		try {

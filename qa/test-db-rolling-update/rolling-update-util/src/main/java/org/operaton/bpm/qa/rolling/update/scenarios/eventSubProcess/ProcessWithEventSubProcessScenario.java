@@ -32,6 +32,9 @@ public class ProcessWithEventSubProcessScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithEventSubProcess";
 
+  private ProcessWithEventSubProcessScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/processWithEventSubProcess.bpmn20.xml";
@@ -63,5 +66,4 @@ public class ProcessWithEventSubProcessScenario {
       }
     };
   }
-
 }

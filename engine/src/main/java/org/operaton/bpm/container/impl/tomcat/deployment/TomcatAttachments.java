@@ -26,4 +26,6 @@ public class TomcatAttachments {
 
   public static final String SERVER = "server";
 
+  private TomcatAttachments() {
+  }
 }

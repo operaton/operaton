@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -27,8 +34,6 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
-import java.util.*;
-
 /**
  * Some Helpers useful when handling model elements.
  *
@@ -38,6 +43,9 @@ import java.util.*;
 public final class ModelUtil {
 
   private static final String ID_ATTRIBUTE_NAME = "id";
+
+  private ModelUtil() {
+  }
 
   /**
    * Returns the {@link ModelElementInstanceImpl ModelElement} for a DOM element.
@@ -267,5 +275,4 @@ public final class ModelUtil {
   public static String getUniqueIdentifier(ModelElementType type) {
     return type.getTypeName() + "_" + UUID.randomUUID();
   }
-
 }

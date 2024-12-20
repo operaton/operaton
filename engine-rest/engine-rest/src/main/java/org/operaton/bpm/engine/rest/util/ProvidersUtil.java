@@ -16,17 +16,20 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
-import org.operaton.bpm.engine.rest.exception.RestException;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Providers;
+
+import org.operaton.bpm.engine.rest.exception.RestException;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 public class ProvidersUtil {
+
+  private ProvidersUtil() {
+  }
 
   public static <T> T resolveFromContext(Providers providers, Class<T> clazz) {
     return resolveFromContext(providers, clazz, null);

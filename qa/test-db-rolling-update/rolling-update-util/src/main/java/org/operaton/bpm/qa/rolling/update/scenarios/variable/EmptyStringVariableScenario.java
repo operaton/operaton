@@ -27,6 +27,9 @@ public class EmptyStringVariableScenario {
 
   public static final String PROCESS_DEF_KEY = "oneTaskProcess";
 
+  private EmptyStringVariableScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/oneTaskProcess.bpmn20.xml";
@@ -42,5 +45,4 @@ public class EmptyStringVariableScenario {
       }
     };
   }
-
 }

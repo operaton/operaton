@@ -16,19 +16,22 @@
  */
 package org.operaton.spin.impl.json.jackson.format;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-
 import java.lang.reflect.TypeVariable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+
 /**
  * Collection of helper methods to construct types.
  */
 public class TypeHelper {
+
+  private TypeHelper() {
+  }
 
   /**
    * Checks if the erased type has the correct number of type bindings.
@@ -125,5 +128,4 @@ public class TypeHelper {
           "Could not detect class for " + value + " of type " + value.getClass().getName());
     }
   }
-
 }

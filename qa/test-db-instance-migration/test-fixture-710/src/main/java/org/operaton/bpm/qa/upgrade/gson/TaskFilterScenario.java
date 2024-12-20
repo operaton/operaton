@@ -33,6 +33,9 @@ import java.util.List;
  */
 public class TaskFilterScenario {
 
+  private TaskFilterScenario() {
+  }
+
   @DescribesScenario("initTaskFilter")
   public static ScenarioSetup initTaskFilter() {
     return new ScenarioSetup() {

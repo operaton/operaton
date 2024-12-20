@@ -21,6 +21,9 @@ import org.operaton.bpm.engine.test.Deployment;
 
 public class EnforceHistoryTimeToLiveScenario {
 
+  private EnforceHistoryTimeToLiveScenario() {
+  }
+
   @Deployment
   public static String processWithoutHTTL() {
     return "org/operaton/bpm/qa/upgrade/httl/process_without_httl.bpmn20.xml";

@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.webapp.impl.util;
 
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter;
-import org.operaton.bpm.webapp.impl.security.auth.UserAuthenticationResource;
+import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import java.util.Date;
+
+import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter;
+import org.operaton.bpm.webapp.impl.security.auth.UserAuthenticationResource;
 
 /**
  * With Operaton.13 we introduced the application path prefix /operaton to Spring Boot.
@@ -42,6 +43,9 @@ public class ServletContextUtil {
 
   protected static final String AUTH_CACHE_TTL_ATTR_NAME =
     "org.operaton.bpm.webapp.auth.cache.ttl";
+
+  private ServletContextUtil() {
+  }
 
   /**
    * Consumed by Operaton CE & EE Webapp:
@@ -116,5 +120,4 @@ public class ServletContextUtil {
 
     }
   }
-
 }

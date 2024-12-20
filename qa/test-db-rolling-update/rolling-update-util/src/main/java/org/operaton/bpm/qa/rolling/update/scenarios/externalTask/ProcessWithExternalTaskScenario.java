@@ -28,11 +28,13 @@ import org.operaton.bpm.qa.upgrade.Times;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 public class ProcessWithExternalTaskScenario {
-
   public static final String PROCESS_DEF_KEY = "processWithExternalTask";
   public static final String EXTERNAL_TASK = "externalTask";
   public static final String EXTERNAL_TASK_TYPE = "external";
   public static final long LOCK_TIME = 5 * 60 * 1000;
+
+  private ProcessWithExternalTaskScenario() {
+  }
 
   /**
    * Deploy a process model, which contains an external task. The topic is

@@ -27,6 +27,9 @@ import java.util.List;
  */
 public class CompareUtil {
 
+  private CompareUtil() {
+  }
+
   /**
    * Checks if any of the values are not in an ascending order. The check is done based on the {@link Comparable#compareTo(Object)} method.
    *

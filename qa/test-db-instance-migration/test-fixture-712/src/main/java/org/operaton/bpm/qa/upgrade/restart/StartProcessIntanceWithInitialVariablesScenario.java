@@ -25,6 +25,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class StartProcessIntanceWithInitialVariablesScenario {
 
+  private StartProcessIntanceWithInitialVariablesScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/async/oneAsyncTaskProcess.bpmn20.xml";
@@ -54,5 +57,4 @@ public class StartProcessIntanceWithInitialVariablesScenario {
       }
     };
   }
-
 }

@@ -174,4 +174,7 @@ public class SubsystemAttributeDefinitons {
         PLUGINS
     };
 
+  private SubsystemAttributeDefinitons() {
+  }
+
 }

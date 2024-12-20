@@ -35,6 +35,9 @@ import static org.junit.Assert.assertEquals;
 
 public class CreateProcessInstanceWithJsonVariablesScenario {
 
+  private CreateProcessInstanceWithJsonVariablesScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/json/simpleProcess.bpmn20.xml";

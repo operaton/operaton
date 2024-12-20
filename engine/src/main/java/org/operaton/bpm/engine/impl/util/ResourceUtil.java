@@ -30,6 +30,9 @@ public final class ResourceUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
+  private ResourceUtil() {
+  }
+
   /**
    * Parse a operaton:resource attribute and loads the resource depending on the url scheme.
    * Supported URL schemes are <code>classpath://</code> and <code>deployment://</code>.
@@ -78,5 +81,4 @@ public final class ResourceUtil {
       throw LOG.cannotFindResource(resourcePath);
     }
   }
-
 }

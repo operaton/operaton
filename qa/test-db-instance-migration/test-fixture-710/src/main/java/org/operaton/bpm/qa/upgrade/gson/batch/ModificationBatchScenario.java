@@ -29,6 +29,9 @@ import java.util.List;
  */
 public class ModificationBatchScenario {
 
+  private ModificationBatchScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/gson/oneTaskProcessModification.bpmn20.xml";

@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class NestedInterruptingErrorEventSubprocessScenario {
 
+  private NestedInterruptingErrorEventSubprocessScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/eventsubprocess/nestedInterruptingErrorEventSubprocess.bpmn20.xml";
@@ -50,5 +53,4 @@ public class NestedInterruptingErrorEventSubprocessScenario {
       }
     };
   }
-
 }

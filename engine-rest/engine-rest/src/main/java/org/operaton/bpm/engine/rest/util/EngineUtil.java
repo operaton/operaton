@@ -16,15 +16,19 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
+import java.util.Iterator;
+import java.util.ServiceLoader;
+
+import javax.ws.rs.core.Response.Status;
+
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
 
-import javax.ws.rs.core.Response.Status;
-import java.util.Iterator;
-import java.util.ServiceLoader;
-
 public class EngineUtil {
+
+  private EngineUtil() {
+  }
 
   /**
    * Look up the process engine from the {@link ProcessEngineProvider}. If engineName is null, the default engine is returned.

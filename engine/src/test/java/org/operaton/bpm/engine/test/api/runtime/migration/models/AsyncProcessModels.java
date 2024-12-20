@@ -16,15 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.models;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 public class AsyncProcessModels {
+  private AsyncProcessModels() {
+  }
 
   public static final BpmnModelInstance ASYNC_BEFORE_USER_TASK_PROCESS =
     modify(ProcessModels.ONE_TASK_PROCESS)

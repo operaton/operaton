@@ -28,10 +28,12 @@ import org.operaton.bpm.engine.variable.VariableMap;
  */
 public class FormPropertyHelper {
 
+  private FormPropertyHelper() {
+  }
+
   public static void initFormPropertiesOnScope(VariableMap variables, PvmExecutionImpl execution) {
     ProcessDefinitionEntity pd = (ProcessDefinitionEntity) execution.getProcessDefinition();
     StartFormHandler startFormHandler = pd.getStartFormHandler();
     startFormHandler.submitFormVariables(variables, execution);
   }
-
 }

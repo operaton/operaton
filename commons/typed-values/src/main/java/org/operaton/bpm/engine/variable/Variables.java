@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.variable.impl.context.EmptyVariableContext;
 import org.operaton.bpm.engine.variable.impl.value.AbstractTypedValue;
 import org.operaton.bpm.engine.variable.impl.value.FileValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.NullValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.BooleanValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.BytesValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.DateValueImpl;
@@ -39,6 +38,7 @@ import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.LongVa
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.NumberValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.ShortValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.StringValueImpl;
+import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.builder.FileValueBuilderImpl;
 import org.operaton.bpm.engine.variable.impl.value.builder.ObjectVariableBuilderImpl;
 import org.operaton.bpm.engine.variable.impl.value.builder.SerializedObjectValueBuilderImpl;
@@ -127,7 +127,6 @@ public class Variables {
     SerializationDataFormats(String name) {
       this.name = name;
     }
-
     @Override
     public String getName() {
       return name;
@@ -436,5 +435,4 @@ public class Variables {
   public static VariableContext emptyVariableContext() {
     return EmptyVariableContext.INSTANCE;
   }
-
 }

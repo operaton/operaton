@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.performance.engine.framework.report.HtmlReportBuilder
  */
 public class ReportUtil {
 
+  private ReportUtil() {
+  }
+
   public static void writeReport(String resultsFolder,
       String reportsFolder,
       String benchmarkName,
@@ -67,5 +70,4 @@ public class ReportUtil {
     // write CSV report
     CsvUtil.saveResultSetToFile(csvReportPath, aggregatedResults);
   }
-
 }

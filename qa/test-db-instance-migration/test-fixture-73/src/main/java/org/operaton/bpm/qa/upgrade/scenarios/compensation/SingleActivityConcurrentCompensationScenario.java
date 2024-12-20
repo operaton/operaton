@@ -30,6 +30,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class SingleActivityConcurrentCompensationScenario {
 
+  private SingleActivityConcurrentCompensationScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/compensation/concurrentCompensationProcess.bpmn20.xml";
@@ -69,5 +72,4 @@ public class SingleActivityConcurrentCompensationScenario {
       }
     };
   }
-
 }

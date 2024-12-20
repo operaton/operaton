@@ -19,5 +19,4 @@ package org.operaton.bpm.engine.impl.cmd;
 public class LicenseCmd {
   public static final String LICENSE_KEY_PROPERTY_NAME = "operaton-license-key";
   public static final String LICENSE_KEY_BYTE_ARRAY_ID = "operaton-license-key-id";
-
 }

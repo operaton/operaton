@@ -26,6 +26,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  */
 public class CreateRootProcessInstanceWithoutRootIdScenario {
 
+  private CreateRootProcessInstanceWithoutRootIdScenario() {
+  }
+
   @DescribesScenario("initRootProcessInstanceWithoutRootId")
   public static ScenarioSetup initRootProcessInstance() {
     return new ScenarioSetup() {
@@ -52,5 +55,4 @@ public class CreateRootProcessInstanceWithoutRootIdScenario {
       }
     };
   }
-
 }

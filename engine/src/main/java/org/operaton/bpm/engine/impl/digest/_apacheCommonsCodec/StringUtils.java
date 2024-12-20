@@ -33,6 +33,9 @@ public class StringUtils {
 
     public static final String UTF_8 = StandardCharsets.UTF_8.name();
 
+    private StringUtils() {
+    }
+
     /**
      * Constructs a new <code>String</code> by decoding the specified array of bytes using the given charset.
      * <p>

@@ -30,6 +30,8 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class TwoLevelNestedNonInterruptingEventSubprocessScenario {
 
+  private TwoLevelNestedNonInterruptingEventSubprocessScenario() {
+  }
 
   @Deployment
   public static String deployProcess() {

@@ -20,6 +20,8 @@ package org.operaton.bpm.webapp.impl.util;
  * Common logic that is used in servlet filters.
  */
 public class ServletFilterUtil {
+  private ServletFilterUtil() {
+  }
 
   /**
    * Checks if servlet filter init parameter is empty.
@@ -27,5 +29,4 @@ public class ServletFilterUtil {
   public static boolean isEmpty(String string) {
     return string == null || string.trim().isEmpty();
   }
-
 }

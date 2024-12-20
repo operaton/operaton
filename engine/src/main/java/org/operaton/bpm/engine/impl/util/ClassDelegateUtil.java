@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -27,6 +25,8 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.FieldDeclaration;
 import org.operaton.bpm.engine.impl.context.Context;
 
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
 /**
  * @author Roman Smirnov
  *
@@ -34,6 +34,9 @@ import org.operaton.bpm.engine.impl.context.Context;
 public class ClassDelegateUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
+
+  private ClassDelegateUtil() {
+  }
 
   public static Object instantiateDelegate(Class<?> clazz, List<FieldDeclaration> fieldDeclarations) {
     return instantiateDelegate(clazz.getName(), fieldDeclarations);
@@ -95,5 +98,4 @@ public class ClassDelegateUtil {
       return true;
     }
   }
-
 }

@@ -31,5 +31,8 @@ public class ActivitiContextUtils {
 	 */
 	public static final String ACTIVITI_REGISTRY_BEAN_NAME = "activitiComponentRegistry" ;
 
+  private ActivitiContextUtils() {
+  }
+
 
 }

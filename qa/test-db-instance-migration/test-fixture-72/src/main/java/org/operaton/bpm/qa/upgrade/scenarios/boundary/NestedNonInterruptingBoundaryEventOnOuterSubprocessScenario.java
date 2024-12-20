@@ -30,6 +30,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class NestedNonInterruptingBoundaryEventOnOuterSubprocessScenario {
 
+  private NestedNonInterruptingBoundaryEventOnOuterSubprocessScenario() {
+  }
+
   @Deployment
   public static String deployTimerBoundary() {
     return "org/operaton/bpm/qa/upgrade/boundary/nestedNonInterruptingTimerBoundaryEventOnOuterSubprocess.bpmn20.xml";

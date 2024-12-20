@@ -18,7 +18,9 @@ package org.operaton.bpm.engine.impl.util;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+
 import javax.servlet.ServletContextEvent;
+
 import org.operaton.bpm.engine.ProcessEngine;
 
 /**
@@ -91,5 +93,4 @@ public class ClassLoaderUtil {
     Thread.currentThread().setContextClassLoader(ProcessEngine.class.getClassLoader());
     return currentClassloader;
   }
-
 }

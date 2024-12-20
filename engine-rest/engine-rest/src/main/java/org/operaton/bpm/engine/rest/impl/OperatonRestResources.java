@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.operaton.bpm.engine.rest.exception.ExceptionHandler;
 import org.operaton.bpm.engine.rest.exception.JsonMappingExceptionHandler;
 import org.operaton.bpm.engine.rest.exception.JsonParseExceptionHandler;
@@ -26,9 +28,6 @@ import org.operaton.bpm.engine.rest.exception.RestExceptionHandler;
 import org.operaton.bpm.engine.rest.hal.JacksonHalJsonProvider;
 import org.operaton.bpm.engine.rest.mapper.JacksonConfigurator;
 import org.operaton.bpm.engine.rest.mapper.MultipartPayloadProvider;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * <p>Class providing static methods returning all the resource classes provided by Operaton.</p>
@@ -57,6 +56,9 @@ public class OperatonRestResources {
     CONFIGURATION_CLASSES.add(ExceptionHandler.class);
   }
 
+  private OperatonRestResources() {
+  }
+
   /**
    * Returns a set containing all resource classes provided by Operaton.
    * @return a set of resource classes.
@@ -73,5 +75,4 @@ public class OperatonRestResources {
   public static Set<Class<?>> getConfigurationClasses() {
     return CONFIGURATION_CLASSES;
   }
-
 }

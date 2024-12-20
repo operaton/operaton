@@ -29,6 +29,9 @@ import java.util.List;
  */
 public class SetExternalTaskRetriesBatchScenario {
 
+  private SetExternalTaskRetriesBatchScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/gson/externalTaskProcess.bpmn20.xml";

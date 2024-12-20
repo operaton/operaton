@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class OneScopeTaskScenario {
 
+  private OneScopeTaskScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/task/oneScopeTaskProcess.bpmn20.xml";

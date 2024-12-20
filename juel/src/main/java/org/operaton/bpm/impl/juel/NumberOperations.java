@@ -26,9 +26,12 @@ import java.math.RoundingMode;
  * @author Christoph Beck
  */
 public class NumberOperations {
-	private static final Long LONG_ZERO = 0L;
+	private static Long LONG_ZERO = 0L;
 
-	private static final boolean isDotEe(String value) {
+	private NumberOperations() {
+	}
+
+	private static boolean isDotEe(String value) {
 		int length = value.length();
 		for (int i = 0; i < length; i++) {
 			switch (value.charAt(i)) {
@@ -38,23 +41,23 @@ public class NumberOperations {
 		return false;
 	}
 
-	private static final boolean isDotEe(Object value) {
+	private static boolean isDotEe(Object value) {
 		return value instanceof String stringValue && isDotEe(stringValue);
 	}
 
-	private static final boolean isFloatOrDouble(Object value) {
+	private static boolean isFloatOrDouble(Object value) {
 		return value instanceof Float || value instanceof Double;
 	}
 
-	private static final boolean isFloatOrDoubleOrDotEe(Object value) {
+	private static boolean isFloatOrDoubleOrDotEe(Object value) {
 		return isFloatOrDouble(value) || isDotEe(value);
 	}
 
-	private static final boolean isBigDecimalOrBigInteger(Object value) {
+	private static boolean isBigDecimalOrBigInteger(Object value) {
 		return value instanceof BigDecimal || value instanceof BigInteger;
 	}
 
-	private static final boolean isBigDecimalOrFloatOrDoubleOrDotEe(Object value) {
+	private static boolean isBigDecimalOrFloatOrDoubleOrDotEe(Object value) {
 		return value instanceof BigDecimal || isFloatOrDoubleOrDotEe(value);
 	}
 

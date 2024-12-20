@@ -24,6 +24,9 @@ import static java.text.MessageFormat.format;
 
 public class URLEncodingUtil {
 
+  private URLEncodingUtil() {
+  }
+
   /**
    * Encode a string value using `UTF-8` encoding scheme
    */
@@ -43,5 +46,4 @@ public class URLEncodingUtil {
   public static String buildAttachmentValue(String attachmentFileName) {
     return format("attachment; filename=\"{0}\"; filename*=UTF-8''''{1}", attachmentFileName, encode(attachmentFileName));
   }
-
 }

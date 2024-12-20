@@ -30,6 +30,9 @@ public class SpringBootStarterPropertyHelper {
 
   protected static final SpringBootProcessEngineLogger LOG = SpringBootProcessEngineLogger.LOG;
 
+  private SpringBootStarterPropertyHelper() {
+  }
+
   public static <T> void applyProperties(T target, Map<String, Object> sourceMap, boolean ignoreUnknownFields) {
     ConfigurationPropertySource source = new MapConfigurationPropertySource(sourceMap);
     Binder binder = new Binder(source);
@@ -43,5 +46,4 @@ public class SpringBootStarterPropertyHelper {
       throw LOG.exceptionDuringBinding(e.getMessage());
     }
   }
-
 }

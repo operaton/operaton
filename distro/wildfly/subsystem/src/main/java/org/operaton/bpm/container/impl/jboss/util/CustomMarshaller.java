@@ -29,6 +29,8 @@ import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.Property;
 
 public class CustomMarshaller {
+  private CustomMarshaller() {
+  }
 
   /**
    * Obtain the 'valueTypes' of the ObjectTypeAttributeDefinition through reflection because they are private in Wildfly 8.
@@ -181,4 +183,5 @@ public class CustomMarshaller {
   public static final PluginObjectTypeMarshaller OBJECT_AS_ELEMENT = new PluginObjectTypeMarshaller();
   public static final ObjectListMarshaller OBJECT_LIST = new ObjectListMarshaller();
   public static final PropertiesAttributeMarshaller PROPERTIES_MARSHALLER = new PropertiesAttributeMarshaller();
+
 }

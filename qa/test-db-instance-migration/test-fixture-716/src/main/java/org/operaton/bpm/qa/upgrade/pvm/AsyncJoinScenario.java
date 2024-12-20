@@ -21,12 +21,14 @@ import org.operaton.bpm.qa.upgrade.DescribesScenario;
 import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class AsyncJoinScenario {
+  private AsyncJoinScenario() {
+  }
 
   @Deployment
   public static String modelParallelDeployment() {
     return "org/operaton/bpm/qa/upgrade/pvm/asyncParallelGateway.bpmn20.xml";
   }
-  
+
   @Deployment
   public static String modelInclusiveDeployment() {
     return "org/operaton/bpm/qa/upgrade/pvm/asyncInclusiveGateway.bpmn20.xml";
@@ -41,7 +43,7 @@ public class AsyncJoinScenario {
       // reaching the parallel join gateway
     };
   }
-  
+
   @DescribesScenario("asyncJoinInclusive")
   public static ScenarioSetup createJobsForInclusiveJoin() {
     return (engine, scenarioName) -> {

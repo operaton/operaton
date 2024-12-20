@@ -16,14 +16,16 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
-import static org.operaton.bpm.engine.rest.util.EngineUtil.getProcessEngineProvider;
-
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.telemetry.dto.LicenseKeyDataImpl;
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
+import static org.operaton.bpm.engine.rest.util.EngineUtil.getProcessEngineProvider;
 
 public class WebApplicationUtil {
+
+  private WebApplicationUtil() {
+  }
 
   public static void setApplicationServer(String serverInfo) {
     if (serverInfo != null && !serverInfo.isEmpty() ) {

@@ -31,6 +31,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class SetJobRetriesWithDueDateScenario {
 
+  private SetJobRetriesWithDueDateScenario() {
+  }
+
   @Deployment
   public static String deployOneTask() {
     return "org/operaton/bpm/qa/upgrade/job/SetJobRetriesWithDueDateScenario.oneTaskProcess.bpmn20.xml";

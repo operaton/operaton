@@ -26,9 +26,11 @@ import java.nio.charset.StandardCharsets;
  * @author Sebastian Menski
  */
 public class IoUtil {
-
   private static final IoUtilLogger LOG = UtilsLogger.IO_UTIL_LOGGER;
   public static final Charset ENCODING_CHARSET = StandardCharsets.UTF_8;
+
+  protected IoUtil() {
+  }
 
   /**
    * Returns the input stream as String.
@@ -232,5 +234,4 @@ public class IoUtil {
       throw LOG.fileNotFoundException(filename, e);
     }
   }
-
 }

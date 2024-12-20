@@ -24,6 +24,9 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  */
 public class CallActivityModels {
 
+  private CallActivityModels() {
+  }
+
   public static BpmnModelInstance oneBpmnCallActivityProcess(String calledProcessKey) {
     return ProcessModels.newModel()
         .startEvent()

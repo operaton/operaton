@@ -57,6 +57,9 @@ import org.operaton.bpm.application.impl.ProcessApplicationIdentifier;
  */
 public class ProcessApplicationContext {
 
+  private ProcessApplicationContext() {
+  }
+
   /**
    * Declares the context process application for all subsequent engine API invocations
    * until {@link #clear()} is called. The context is bound to the current thread.

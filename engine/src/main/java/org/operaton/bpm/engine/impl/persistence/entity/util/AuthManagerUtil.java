@@ -22,6 +22,9 @@ import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 
 public class AuthManagerUtil {
 
+  private AuthManagerUtil() {
+  }
+
   public static VariablePermissions getVariablePermissions(boolean ensureSpecificVariablePermission) {
     return new VariablePermissions(ensureSpecificVariablePermission);
   }
@@ -50,6 +53,6 @@ public class AuthManagerUtil {
     public Permission getHistoricTaskPermission() {
       return historicTaskPermission;
     }
-  }
 
+  }
 }

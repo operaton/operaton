@@ -31,6 +31,8 @@ import org.junit.Assert;
  *
  */
 public class ActivityInstanceAssert {
+  private ActivityInstanceAssert() {
+  }
 
   public static class ActivityInstanceAssertThatClause {
 
@@ -103,10 +105,10 @@ public class ActivityInstanceAssert {
     }
 
   }
-
   public static class ActivityInstanceTreeBuilder {
 
     protected ExpectedActivityInstance rootInstance = null;
+
     protected Stack<ExpectedActivityInstance> activityInstanceStack = new Stack<>();
 
     public ActivityInstanceTreeBuilder() {
@@ -163,10 +165,10 @@ public class ActivityInstanceAssert {
       activityInstanceStack.pop();
       return this;
     }
-
     public ExpectedActivityInstance done() {
       return rootInstance;
     }
+
   }
 
   public static ActivityInstanceTreeBuilder describeActivityInstanceTree() {

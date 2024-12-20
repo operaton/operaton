@@ -30,6 +30,9 @@ import java.util.List;
  */
 public class UpdateProcessInstanceSuspendStateBatchScenario {
 
+  private UpdateProcessInstanceSuspendStateBatchScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/gson/oneTaskProcess.bpmn20.xml";

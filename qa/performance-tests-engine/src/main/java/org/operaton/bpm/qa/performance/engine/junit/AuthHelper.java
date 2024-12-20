@@ -27,6 +27,9 @@ import org.operaton.bpm.engine.ProcessEngine;
  */
 public class AuthHelper {
 
+  private AuthHelper() {
+  }
+
   public static <T> T withAuthentication(Callable<T> callable, ProcessEngine processEngine, String userId, String... groupIds) {
     try {
       processEngine.getProcessEngineConfiguration().setAuthorizationEnabled(true);

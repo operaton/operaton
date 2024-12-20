@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.event.EventType;
@@ -34,14 +25,20 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
-import org.operaton.bpm.engine.impl.tree.TreeVisitor;
 import org.operaton.bpm.engine.impl.tree.FlowScopeWalker;
 import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
+import org.operaton.bpm.engine.impl.tree.TreeVisitor;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * @author Daniel Meyer
  */
 public class CompensationUtil {
+
+  private CompensationUtil() {
+  }
 
   /**
    * name of the signal that is thrown when a compensation handler completed
@@ -253,5 +250,4 @@ public class CompensationUtil {
       }
     }
   }
-
 }

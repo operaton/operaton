@@ -24,4 +24,6 @@ public class OperatonIntegration {
   public static final String JBOSS_SUBSYSTEM = "jboss-subsystem";
   public static final String CAMUNDA_EJB_SERVICE = "operaton-ejb-service";
 
+  private OperatonIntegration() {
+  }
 }

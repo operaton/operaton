@@ -28,4 +28,7 @@ public class OperationLogQueryProperty {
 
   public static final QueryProperty TIMESTAMP = new QueryPropertyImpl("TIMESTAMP_");
 
+  private OperationLogQueryProperty() {
+  }
+
 }

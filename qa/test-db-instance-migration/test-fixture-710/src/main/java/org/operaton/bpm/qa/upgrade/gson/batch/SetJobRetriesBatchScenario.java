@@ -31,6 +31,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  */
 public class SetJobRetriesBatchScenario {
 
+  private SetJobRetriesBatchScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/gson/oneTaskProcessAsync.bpmn20.xml";

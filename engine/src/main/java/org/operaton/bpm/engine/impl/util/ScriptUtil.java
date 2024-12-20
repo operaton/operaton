@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -28,11 +24,17 @@ import org.operaton.bpm.engine.impl.el.ExpressionManager;
 import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.engine.JuelScriptEngineFactory;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Sebastian Menski
  */
 public final class ScriptUtil {
+
+  private ScriptUtil() {
+  }
 
   /**
    * Creates a new {@link ExecutableScript} from a source or resource. It excepts static and

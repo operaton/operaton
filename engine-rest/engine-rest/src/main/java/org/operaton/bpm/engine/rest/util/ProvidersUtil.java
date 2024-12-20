@@ -28,6 +28,9 @@ import javax.ws.rs.ext.Providers;
  */
 public class ProvidersUtil {
 
+  private ProvidersUtil() {
+  }
+
   public static <T> T resolveFromContext(Providers providers, Class<T> clazz) {
     return resolveFromContext(providers, clazz, null);
   }

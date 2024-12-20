@@ -16,14 +16,17 @@
  */
 package org.operaton.bpm.client.spring.impl.util;
 
+import java.lang.annotation.Annotation;
+import java.util.NoSuchElementException;
+
 import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
-import java.lang.annotation.Annotation;
-import java.util.NoSuchElementException;
-
 public class AnnotationUtil {
+
+  private AnnotationUtil() {
+  }
 
   public static <T extends Annotation> T get(Class<T> annotationClass,
                                              AnnotatedTypeMetadata metadata) {

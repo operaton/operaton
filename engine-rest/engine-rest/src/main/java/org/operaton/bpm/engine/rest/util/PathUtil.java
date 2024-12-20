@@ -22,6 +22,9 @@ package org.operaton.bpm.engine.rest.util;
  */
 public class PathUtil {
 
+  private PathUtil() {
+  }
+
   public static String decodePathParam(String param) {
 
     return param

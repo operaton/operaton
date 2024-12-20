@@ -26,6 +26,9 @@ import org.junit.Assert;
  */
 public class AssertUtil {
 
+  private AssertUtil() {
+  }
+
   /**
    * Drop milliseconds since older MySQL versions cannot store them
    */

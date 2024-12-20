@@ -16,23 +16,17 @@
  */
 package org.operaton.bpm.webapp.impl.security.filter.util;
 
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
+import org.operaton.bpm.webapp.impl.security.auth.Authentication;
+import org.operaton.bpm.webapp.impl.security.filter.*;
+import org.operaton.bpm.webapp.impl.security.filter.SecurityFilterConfig.PathFilterConfig;
+import org.operaton.bpm.webapp.impl.security.filter.SecurityFilterConfig.PathMatcherConfig;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.bpm.webapp.impl.security.auth.Authentication;
-import org.operaton.bpm.webapp.impl.security.filter.Authorization;
-import org.operaton.bpm.webapp.impl.security.filter.PathFilterRule;
-import org.operaton.bpm.webapp.impl.security.filter.RequestAuthorizer;
-import org.operaton.bpm.webapp.impl.security.filter.RequestFilter;
-import org.operaton.bpm.webapp.impl.security.filter.RequestMatcher;
-import org.operaton.bpm.webapp.impl.security.filter.SecurityFilterConfig;
-import org.operaton.bpm.webapp.impl.security.filter.SecurityFilterConfig.PathFilterConfig;
-import org.operaton.bpm.webapp.impl.security.filter.SecurityFilterConfig.PathMatcherConfig;
-import org.operaton.bpm.webapp.impl.security.filter.SecurityFilterRule;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -42,6 +36,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author nico.rehwaldt
  */
 public class FilterRules {
+
+  private FilterRules() {
+  }
 
   public static List<SecurityFilterRule> load(InputStream configFileResource,
                                               String applicationPath) throws IOException {

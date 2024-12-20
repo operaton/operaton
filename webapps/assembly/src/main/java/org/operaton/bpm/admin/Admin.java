@@ -23,7 +23,9 @@ package org.operaton.bpm.admin;
  *
  */
 public class Admin {
-
+  private Admin() {
+  }
+  
   /**
    * The {@link AdminRuntimeDelegate} is an delegate that will be
    * initialized by bootstrapping operaton admin with an specific

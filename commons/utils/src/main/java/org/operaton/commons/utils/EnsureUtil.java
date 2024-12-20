@@ -21,6 +21,9 @@ package org.operaton.commons.utils;
  */
 public class EnsureUtil {
 
+  protected EnsureUtil() {
+  }
+
   private static final EnsureUtilLogger LOG = UtilsLogger.ENSURE_UTIL_LOGGER;
 
   /**

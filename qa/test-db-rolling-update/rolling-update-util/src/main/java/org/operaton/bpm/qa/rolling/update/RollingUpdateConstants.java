@@ -24,4 +24,7 @@ package org.operaton.bpm.qa.rolling.update;
 public final class RollingUpdateConstants {
   public static final String OLD_ENGINE_TAG = "OLD";
   public static final String NEW_ENGINE_TAG = "CURRENT";
+
+  private RollingUpdateConstants() {
+  }
 }

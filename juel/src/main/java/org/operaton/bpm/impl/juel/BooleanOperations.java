@@ -25,9 +25,9 @@ import java.util.Set;
 import jakarta.el.ELException;
 
 public class BooleanOperations {
-	private static final Set<Class<? extends Number>> SIMPLE_INTEGER_TYPES = new HashSet<>();
-	private static final Set<Class<? extends Number>> SIMPLE_FLOAT_TYPES = new HashSet<>();
-	
+	private static Set<Class<? extends Number>> SIMPLE_INTEGER_TYPES = new HashSet<>();
+	private static Set<Class<? extends Number>> SIMPLE_FLOAT_TYPES = new HashSet<>();
+
 	static {
 		SIMPLE_INTEGER_TYPES.add(Byte.class);
 		SIMPLE_INTEGER_TYPES.add(Short.class);
@@ -37,8 +37,11 @@ public class BooleanOperations {
 		SIMPLE_FLOAT_TYPES.add(Double.class);
 	}
 
+	private BooleanOperations() {
+	}
+
 	@SuppressWarnings("unchecked")
-	private static final boolean lt0(TypeConverter converter, Object o1, Object o2) {
+	private static boolean lt0(TypeConverter converter, Object o1, Object o2) {
 		Class<?> t1 = o1.getClass();
 		Class<?> t2 = o2.getClass();
 		if (BigDecimal.class.isAssignableFrom(t1) || BigDecimal.class.isAssignableFrom(t2)) {
@@ -66,7 +69,7 @@ public class BooleanOperations {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static final boolean gt0(TypeConverter converter, Object o1, Object o2) {		
+	private static boolean gt0(TypeConverter converter, Object o1, Object o2) {
 		Class<?> t1 = o1.getClass();
 		Class<?> t2 = o2.getClass();
 		if (BigDecimal.class.isAssignableFrom(t1) || BigDecimal.class.isAssignableFrom(t2)) {

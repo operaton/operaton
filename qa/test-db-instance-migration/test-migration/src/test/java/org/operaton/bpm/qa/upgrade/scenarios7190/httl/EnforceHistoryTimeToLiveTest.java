@@ -115,10 +115,13 @@ public class EnforceHistoryTimeToLiveTest {
   }
 
   static class Assert {
+    private Assert() {
+    }
 
     @FunctionalInterface
     interface FailingRunnable {
       void run() throws Exception;
+
     }
 
     static void assertDoesNotThrow(FailingRunnable runnable) {

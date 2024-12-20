@@ -28,6 +28,9 @@ public class DeployUserWithoutSaltForPasswordHashingScenario {
   protected static final String USER_NAME = "kermit";
   protected static final String USER_PWD = "password";
 
+  private DeployUserWithoutSaltForPasswordHashingScenario() {
+  }
+
   @DescribesScenario("initUser")
   @Times(1)
   public static ScenarioSetup initUser() {

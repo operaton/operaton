@@ -43,6 +43,9 @@ public class ServletContextUtil {
   protected static final String AUTH_CACHE_TTL_ATTR_NAME =
     "org.operaton.bpm.webapp.auth.cache.ttl";
 
+  private ServletContextUtil() {
+  }
+
   /**
    * Consumed by Operaton CE & EE Webapp:
    * Retrieves the application path from Spring Boot's servlet context.
@@ -116,5 +119,4 @@ public class ServletContextUtil {
 
     }
   }
-
 }

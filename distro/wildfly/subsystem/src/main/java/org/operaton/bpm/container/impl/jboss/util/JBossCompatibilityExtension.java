@@ -40,6 +40,9 @@ public class JBossCompatibilityExtension {
    */
   static final ServiceName JBOSS_SERVER_EXECUTOR = JBOSS_AS.append("server-executor");
 
+  private JBossCompatibilityExtension() {
+  }
+
   /**
    * Adds the JBoss server executor as a dependency to the given service.
    * Copied from org.jboss.as.server.Services - JBoss 7.2.0.Final

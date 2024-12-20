@@ -30,6 +30,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class SingleActivityCompensationScenario {
 
+  private SingleActivityCompensationScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/compensation/simpleCompensationProcess.bpmn20.xml";
@@ -65,5 +68,4 @@ public class SingleActivityCompensationScenario {
       }
     };
   }
-
 }

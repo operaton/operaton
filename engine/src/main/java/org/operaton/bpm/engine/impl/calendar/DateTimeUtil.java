@@ -43,6 +43,9 @@ public class DateTimeUtil {
 
   private static DateTimeFormatter DATE_TIME_FORMATER;
 
+  private DateTimeUtil() {
+  }
+
   private static DateTimeFormatter getDataTimeFormater() {
     if (DATE_TIME_FORMATER == null) {
       DATE_TIME_FORMATER = ISODateTimeFormat.dateTimeParser().withZone(JVM_DEFAULT_DATE_TIME_ZONE);
@@ -62,5 +65,4 @@ public class DateTimeUtil {
   public static Date parseDate(String date) {
     return parseDateTime(date).toDate();
   }
-
 }

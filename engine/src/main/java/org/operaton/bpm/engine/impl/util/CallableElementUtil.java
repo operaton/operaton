@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.operaton.bpm.engine.impl.ProcessEngineLogger.UTIL_LOGGER;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
@@ -29,12 +27,16 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
+import static org.operaton.bpm.engine.impl.ProcessEngineLogger.UTIL_LOGGER;
 
 /**
  * @author Roman Smirnov
  *
  */
 public class CallableElementUtil {
+
+  private CallableElementUtil() {
+  }
 
   public static DeploymentCache getDeploymentCache() {
     return Context
@@ -149,5 +151,4 @@ public class CallableElementUtil {
 
     return decisionDefinition;
   }
-
 }

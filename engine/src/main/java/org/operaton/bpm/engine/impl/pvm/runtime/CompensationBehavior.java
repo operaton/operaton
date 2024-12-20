@@ -30,6 +30,9 @@ import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
  */
 public class CompensationBehavior {
 
+  private CompensationBehavior() {
+  }
+
   /**
    * With compensation, we have a dedicated scope execution for every handler, even if the handler is not
    * a scope activity; this must be respected when invoking end listeners, etc.
@@ -84,5 +87,4 @@ public class CompensationBehavior {
 
     return parentScopeExecution.getParentActivityInstanceId();
   }
-
 }

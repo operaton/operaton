@@ -30,4 +30,7 @@ public final class CookieConstants {
 
   public static final String SECURE_FLAG_NAME = ";Secure";
   public static final Pattern SECURE_FLAG_NAME_REGEX = Pattern.compile(";\\w*Secure");
+
+  private CookieConstants() {
+  }
 }

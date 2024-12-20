@@ -30,6 +30,10 @@ public class Tasklist {
    * instance
    */
   protected static TasklistRuntimeDelegate TASKLIST_RUNTIME_DELEGATE;
+
+  private Tasklist() {
+  }
+
   /**
    * Returns an instance of {@link TasklistRuntimeDelegate}
    *
@@ -46,5 +50,4 @@ public class Tasklist {
   public static void setTasklistRuntimeDelegate(TasklistRuntimeDelegate tasklistRuntimeDelegate) {
     TASKLIST_RUNTIME_DELEGATE = tasklistRuntimeDelegate;
   }
-
 }

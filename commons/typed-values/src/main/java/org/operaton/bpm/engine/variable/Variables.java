@@ -16,50 +16,29 @@
  */
 package org.operaton.bpm.engine.variable;
 
-import java.io.File;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Map;
-
-import javax.activation.MimetypesFileTypeMap;
-
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.impl.context.EmptyVariableContext;
 import org.operaton.bpm.engine.variable.impl.value.AbstractTypedValue;
 import org.operaton.bpm.engine.variable.impl.value.FileValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.NullValueImpl;
+import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.*;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.BooleanValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.BytesValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.DateValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.DoubleValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.IntegerValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.LongValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.NumberValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.ShortValueImpl;
-import org.operaton.bpm.engine.variable.impl.value.PrimitiveTypeValueImpl.StringValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.builder.FileValueBuilderImpl;
 import org.operaton.bpm.engine.variable.impl.value.builder.ObjectVariableBuilderImpl;
 import org.operaton.bpm.engine.variable.impl.value.builder.SerializedObjectValueBuilderImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.operaton.bpm.engine.variable.value.BooleanValue;
-import org.operaton.bpm.engine.variable.value.BytesValue;
-import org.operaton.bpm.engine.variable.value.DateValue;
-import org.operaton.bpm.engine.variable.value.DoubleValue;
-import org.operaton.bpm.engine.variable.value.FileValue;
-import org.operaton.bpm.engine.variable.value.IntegerValue;
-import org.operaton.bpm.engine.variable.value.LongValue;
-import org.operaton.bpm.engine.variable.value.NumberValue;
-import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.operaton.bpm.engine.variable.value.SerializationDataFormat;
-import org.operaton.bpm.engine.variable.value.ShortValue;
-import org.operaton.bpm.engine.variable.value.StringValue;
-import org.operaton.bpm.engine.variable.value.TypedValue;
+import org.operaton.bpm.engine.variable.value.*;
 import org.operaton.bpm.engine.variable.value.builder.FileValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.ObjectValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.TypedValueBuilder;
+
+import javax.activation.MimetypesFileTypeMap;
+import java.io.File;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * <p>This class is the entry point to the process engine's typed variables API.
@@ -127,7 +106,6 @@ public class Variables {
     SerializationDataFormats(String name) {
       this.name = name;
     }
-
     @Override
     public String getName() {
       return name;
@@ -436,5 +414,4 @@ public class Variables {
   public static VariableContext emptyVariableContext() {
     return EmptyVariableContext.INSTANCE;
   }
-
 }

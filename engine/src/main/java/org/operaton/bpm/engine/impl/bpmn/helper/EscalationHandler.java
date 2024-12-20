@@ -35,6 +35,9 @@ public class EscalationHandler {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
+  private EscalationHandler() {
+  }
+
   public static void propagateEscalation(ActivityExecution execution, String escalationCode) {
     EscalationEventDefinition escalationEventDefinition = executeEscalation(execution, escalationCode);
 
@@ -95,5 +98,4 @@ public class EscalationHandler {
       return escalationHandler.getFlowScope();
     }
   }
-
 }

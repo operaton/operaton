@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.context;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.Callable;
+
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -39,14 +40,17 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  * @author Thorben Lindhauer
  */
 public class Context {
-
   protected static ThreadLocal<Deque<CommandContext>> commandContextThreadLocal = new ThreadLocal<>();
+
   protected static ThreadLocal<Deque<CommandInvocationContext>> commandInvocationContextThreadLocal = new ThreadLocal<>();
 
   protected static ThreadLocal<Deque<ProcessEngineConfigurationImpl>> processEngineConfigurationStackThreadLocal = new ThreadLocal<>();
   protected static ThreadLocal<Deque<CoreExecutionContext<? extends CoreExecution>>> executionContextStackThreadLocal = new ThreadLocal<>();
   protected static ThreadLocal<JobExecutorContext> jobExecutorContextThreadLocal = new ThreadLocal<>();
   protected static ThreadLocal<Deque<ProcessApplicationReference>> processApplicationContext = new ThreadLocal<>();
+
+  private Context() {
+  }
 
   public static CommandContext getCommandContext() {
     Deque<CommandContext> stack = getStack(commandContextThreadLocal);

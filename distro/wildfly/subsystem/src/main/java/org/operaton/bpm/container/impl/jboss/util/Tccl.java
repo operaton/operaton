@@ -25,6 +25,8 @@ import java.security.PrivilegedAction;
  * @author Daniel Meyer
  */
 public class Tccl {
+  private Tccl() {
+  }
 
   public static interface Operation<T> {
     T run();
@@ -41,7 +43,7 @@ public class Tccl {
             throw new RuntimeException(e);
           }
         }
-      });     
+      });
     } else {
       return runWithTccl(operation, classLoader);
     }
@@ -56,5 +58,4 @@ public class Tccl {
       Thread.currentThread().setContextClassLoader(cl);
     }
   }
-
 }

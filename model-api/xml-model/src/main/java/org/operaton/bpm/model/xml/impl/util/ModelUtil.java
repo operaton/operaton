@@ -39,6 +39,9 @@ public final class ModelUtil {
 
   private static final String ID_ATTRIBUTE_NAME = "id";
 
+  private ModelUtil() {
+  }
+
   /**
    * Returns the {@link ModelElementInstanceImpl ModelElement} for a DOM element.
    * If the model element does not yet exist, it is created and linked to the DOM.
@@ -267,5 +270,4 @@ public final class ModelUtil {
   public static String getUniqueIdentifier(ModelElementType type) {
     return type.getTypeName() + "_" + UUID.randomUUID();
   }
-
 }

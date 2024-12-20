@@ -32,6 +32,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class FailingIntermediateBoundaryTimerJobScenario {
 
+  private FailingIntermediateBoundaryTimerJobScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/customretries/failingTimerJob.bpmn20.xml";

@@ -26,6 +26,9 @@ import java.util.ServiceLoader;
 
 public class EngineUtil {
 
+  private EngineUtil() {
+  }
+
   /**
    * Look up the process engine from the {@link ProcessEngineProvider}. If engineName is null, the default engine is returned.
    * @param engineName

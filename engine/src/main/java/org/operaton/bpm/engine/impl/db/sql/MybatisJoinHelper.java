@@ -28,8 +28,8 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * @author Thorben Lindhauer
  */
 public class MybatisJoinHelper {
-
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
+
   protected static final String DEFAULT_ORDER = "RES.ID_ asc";
   public static Map<String, MyBatisTableMapping> mappings = new HashMap<>();
 
@@ -38,6 +38,9 @@ public class MybatisJoinHelper {
     mappings.put(QueryOrderingProperty.RELATION_PROCESS_DEFINITION, new ProcessDefinitionTableMapping());
     mappings.put(QueryOrderingProperty.RELATION_CASE_DEFINITION, new CaseDefinitionTableMapping());
     mappings.put(QueryOrderingProperty.RELATION_DEPLOYMENT, new DeploymentTableMapping());
+  }
+
+  private MybatisJoinHelper() {
   }
 
   public static String tableAlias(String relation, int index) {

@@ -41,6 +41,9 @@ public class ServiceNames {
 
   private static final ServiceName BPM_PLATFORM_PLUGINS = BPM_PLATFORM.append("bpm-platform-plugins");
 
+  private ServiceNames() {
+  }
+
   /**
    * Returns the service name for a {@link MscManagedProcessEngine}.
    *
@@ -160,5 +163,4 @@ public class ServiceNames {
   public static ServiceName forThreadFactoryService(String threadFactoryName) {
     return ThreadsServices.threadFactoryName(threadFactoryName);
   }
-
 }

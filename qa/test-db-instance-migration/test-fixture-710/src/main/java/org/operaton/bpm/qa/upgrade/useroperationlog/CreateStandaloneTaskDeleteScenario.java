@@ -29,6 +29,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  */
 public class CreateStandaloneTaskDeleteScenario {
 
+  private CreateStandaloneTaskDeleteScenario() {
+  }
+
   @DescribesScenario("createUserOperationLogEntriesForDelete")
   public static ScenarioSetup createUserOperationLogEntries() {
     return new ScenarioSetup() {

@@ -16,6 +16,18 @@
  */
 package org.operaton.bpm.container.impl.deployment.util;
 
+import org.operaton.bpm.application.AbstractProcessApplication;
+import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
+import org.operaton.bpm.application.ProcessApplicationInfo;
+import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
+import org.operaton.bpm.container.impl.deployment.Attachments;
+import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessApplication;
+import org.operaton.bpm.container.impl.spi.DeploymentOperation;
+import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
+import org.operaton.bpm.container.impl.spi.ServiceTypes;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -23,23 +35,14 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.operaton.bpm.application.AbstractProcessApplication;
-import org.operaton.bpm.application.ProcessApplicationDeploymentInfo;
-import org.operaton.bpm.application.ProcessApplicationInfo;
-import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
-import org.operaton.bpm.container.impl.deployment.Attachments;
-import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessApplication;
-import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
-import org.operaton.bpm.container.impl.spi.DeploymentOperation;
-import org.operaton.bpm.container.impl.spi.ServiceTypes;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
 /**
  * @author Daniel Meyer
  *
  */
 public class InjectionUtil {
+
+  private InjectionUtil() {
+  }
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -130,5 +133,4 @@ public class InjectionUtil {
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
     return serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, "default");
   }
-
 }

@@ -26,6 +26,9 @@ public class EncodingUtil {
 
   public static final Charset DEFAULT_ENCODING = getDefaultEncoding();
 
+  private EncodingUtil() {
+  }
+
   protected static Charset getDefaultEncoding() {
     Charset charset = null;
     try {

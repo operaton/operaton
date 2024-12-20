@@ -40,6 +40,9 @@ public class PropertyHelper {
   public static final String SNAKE_CASE = "_";
   public static final String CAMEL_CASE = "";
 
+  private PropertyHelper() {
+  }
+
   /**
    * Regex for Ant-style property placeholders
    */
@@ -165,5 +168,4 @@ public class PropertyHelper {
     }
     return value;
   }
-
 }

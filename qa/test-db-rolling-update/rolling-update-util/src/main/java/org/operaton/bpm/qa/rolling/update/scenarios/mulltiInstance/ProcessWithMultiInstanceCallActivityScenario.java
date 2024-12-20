@@ -32,6 +32,9 @@ public class ProcessWithMultiInstanceCallActivityScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithMultiInstanceCallActivity";
 
+  private ProcessWithMultiInstanceCallActivityScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/processWithMultiInstanceCallActivity.bpmn20.xml";
@@ -63,6 +66,4 @@ public class ProcessWithMultiInstanceCallActivityScenario {
       }
     };
   }
-
-
 }

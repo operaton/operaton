@@ -32,6 +32,9 @@ import org.operaton.spin.xml.SpinXmlElement;
  */
 public class SpinVariableSerializers {
 
+  private SpinVariableSerializers() {
+  }
+
   public static List<TypedValueSerializer<?>> createObjectValueSerializers(DataFormats dataFormats) {
     List<TypedValueSerializer<?>> serializers = new ArrayList<TypedValueSerializer<?>>();
 

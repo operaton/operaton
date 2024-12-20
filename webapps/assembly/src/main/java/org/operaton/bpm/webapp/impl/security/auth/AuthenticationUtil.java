@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
-import static org.operaton.bpm.engine.authorization.Permissions.ACCESS;
-import static org.operaton.bpm.engine.authorization.Resources.APPLICATION;
-import static org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener.AUTH_TIME_SESSION_MUTEX;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.Group;
@@ -35,6 +24,13 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.webapp.impl.WebappLogger;
 import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
+import static org.operaton.bpm.engine.authorization.Permissions.ACCESS;
+import static org.operaton.bpm.engine.authorization.Resources.APPLICATION;
+import static org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener.AUTH_TIME_SESSION_MUTEX;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 public class AuthenticationUtil {
 
@@ -44,6 +40,9 @@ public class AuthenticationUtil {
 
   public static final String[] APPS = new String[]{"cockpit", "tasklist", "admin"};
   public static final String APP_WELCOME = "welcome";
+
+  private AuthenticationUtil() {
+  }
 
   public static UserAuthentication createAuthentication(String engineName, String username) {
     return createAuthentication(engineName, username, null, null);

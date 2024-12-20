@@ -34,6 +34,9 @@ public class JpaVariableScenario {
   protected static FieldAccessJPAEntity simpleEntityFieldAccess;
   protected static EntityManagerFactory entityManagerFactory;
 
+  private JpaVariableScenario() {
+  }
+
   @Deployment
   public static String deployOneTask() {
     return "org/operaton/bpm/qa/upgrade/variables/JpaEntitiesScenario.oneTaskProcess.bpmn20.xml";

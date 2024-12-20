@@ -25,6 +25,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class JobFailureLogScenario {
 
+  private JobFailureLogScenario() {
+  }
+
   @Deployment
   public static String modelDeployment() {
     return "org/operaton/bpm/qa/upgrade/job/oneTaskProcess.bpmn20.xml";

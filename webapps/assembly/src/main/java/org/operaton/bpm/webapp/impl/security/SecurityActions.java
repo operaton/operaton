@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.webapp.impl.security;
 
-import javax.servlet.ServletException;
-import java.io.IOException;
-import java.util.List;
-
 import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -27,11 +23,18 @@ import org.operaton.bpm.webapp.impl.security.auth.Authentication;
 import org.operaton.bpm.webapp.impl.security.auth.Authentications;
 import org.operaton.bpm.webapp.impl.security.auth.UserAuthentication;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.List;
+
 /**
  * @author Daniel Meyer
  *
  */
 public class SecurityActions {
+
+  private SecurityActions() {
+  }
 
   public static <T> T runWithAuthentications(SecurityAction<T> action, Authentications authentications) throws IOException, ServletException {
 
@@ -90,9 +93,8 @@ public class SecurityActions {
     }
 
   }
-
   public static interface SecurityAction<T> {
     public T execute() throws IOException, ServletException;
-  }
 
+  }
 }

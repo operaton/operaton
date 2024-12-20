@@ -28,6 +28,9 @@ public class CommandContextFunctions {
   public static final String CURRENT_USER = "currentUser";
   public static final String CURRENT_USER_GROUPS = "currentUserGroups";
 
+  private CommandContextFunctions() {
+  }
+
   public static String currentUser() {
     CommandContext commandContext = Context.getCommandContext();
     if (commandContext != null) {
@@ -47,5 +50,4 @@ public class CommandContextFunctions {
       return null;
     }
   }
-
 }

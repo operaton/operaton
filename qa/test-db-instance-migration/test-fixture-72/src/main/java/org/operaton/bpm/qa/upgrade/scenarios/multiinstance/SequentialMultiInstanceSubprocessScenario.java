@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class SequentialMultiInstanceSubprocessScenario {
 
+  private SequentialMultiInstanceSubprocessScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/multiinstance/sequentialMultiInstanceSubprocess.bpmn20.xml";

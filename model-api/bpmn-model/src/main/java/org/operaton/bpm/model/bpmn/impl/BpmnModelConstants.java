@@ -488,4 +488,7 @@ public final class BpmnModelConstants {
   public static final String OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE = "historyTimeToLive";
   public static final String OPERATON_ATTRIBUTE_IS_STARTABLE_IN_TASKLIST = "isStartableInTasklist";
   public static final String OPERATON_ATTRIBUTE_VERSION_TAG = "versionTag";
+
+  private BpmnModelConstants() {
+  }
 }

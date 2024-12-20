@@ -30,6 +30,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class ParallelNestedNonInterruptingEventSubprocessScenario {
 
+  private ParallelNestedNonInterruptingEventSubprocessScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/eventsubprocess/parallelNestedNonInterruptingMessageEventSubprocess.bpmn20.xml";

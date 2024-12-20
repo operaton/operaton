@@ -32,6 +32,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class ParallelMultiInstanceCompensationScenario {
 
+  private ParallelMultiInstanceCompensationScenario() {
+  }
+
   @Deployment
   public static String deploySingleActivityHandler() {
     return "org/operaton/bpm/qa/upgrade/compensation/parallelMultiInstanceCompensationSingleActivityHandlerProcess.bpmn20.xml";

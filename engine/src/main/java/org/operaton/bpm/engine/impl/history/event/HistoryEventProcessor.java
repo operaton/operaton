@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.history.event;
 
 import java.util.Collections;
 import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
@@ -36,6 +37,9 @@ import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
  * @since 7.5
  */
 public class HistoryEventProcessor {
+
+  private HistoryEventProcessor() {
+  }
 
   /**
    * The {@link HistoryEventCreator} interface which is used to interchange the implementation

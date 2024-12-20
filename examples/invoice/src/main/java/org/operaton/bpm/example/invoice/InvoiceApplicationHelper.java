@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.example.invoice;
 
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-import static org.operaton.bpm.engine.variable.Variables.fileValue;
-
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.logging.Logger;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
@@ -34,10 +27,20 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import static org.operaton.bpm.engine.variable.Variables.createVariables;
+import static org.operaton.bpm.engine.variable.Variables.fileValue;
+
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.logging.Logger;
 
 public class InvoiceApplicationHelper {
 
   private static final Logger LOGGER = Logger.getLogger(InvoiceApplicationHelper.class.getName());
+
+  private InvoiceApplicationHelper() {
+  }
 
   public static void startFirstProcess(ProcessEngine processEngine) {
     createUsers(processEngine);

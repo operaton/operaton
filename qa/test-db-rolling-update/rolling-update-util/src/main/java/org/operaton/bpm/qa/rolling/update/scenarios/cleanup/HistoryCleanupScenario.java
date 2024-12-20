@@ -36,6 +36,9 @@ public class HistoryCleanupScenario {
 
   static final Date FIXED_DATE = new Date(1363608000000L);
 
+  private HistoryCleanupScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/cleanup/oneTaskProcess.bpmn20.xml";
@@ -99,5 +102,4 @@ public class HistoryCleanupScenario {
     calendar.add(Calendar.MINUTE, minutes);
     return calendar.getTime();
   }
-
 }

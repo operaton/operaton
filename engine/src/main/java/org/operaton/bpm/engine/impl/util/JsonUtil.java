@@ -16,31 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSyntaxException;
+import java.lang.reflect.Type;
+import java.util.*;
+import java.util.function.Supplier;
+
+import com.google.gson.*;
 import com.google.gson.internal.LazilyParsedNumber;
 
 /**
@@ -51,6 +34,9 @@ public final class JsonUtil {
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
   protected static Gson gsonMapper = createGsonMapper();
+
+  private JsonUtil() {
+  }
 
   public static void addFieldRawValue(JsonObject jsonObject, String memberName, Object rawValue) {
     if (rawValue != null) {
@@ -757,5 +743,4 @@ public final class JsonUtil {
       })
       .create();
   }
-
 }

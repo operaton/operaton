@@ -21,6 +21,9 @@ import org.testcontainers.utility.TestcontainersConfiguration;
 
 public class TestcontainersHelper {
 
+  private TestcontainersHelper() {
+  }
+
   public static String resolveImageName(String imageProperty, String defaultImage) {
     String image = TestcontainersConfiguration.getInstance().getEnvVarOrProperty(imageProperty, defaultImage);
     if (image == null) {
@@ -37,5 +40,4 @@ public class TestcontainersHelper {
     String dockerImageString = resolveImageName(imageProperty, defaultDbImage) + ":" + tag;
     return DockerImageName.parse(dockerImageString).asCompatibleSubstituteFor(defaultDbImage);
   }
-
 }

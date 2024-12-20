@@ -25,6 +25,9 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
  */
 public class TestContainer {
 
+  private TestContainer() {
+  }
+
   /**
    * In some scenarios, Tomcat 10 and Weld 5 have issues when the Weld library is embedded into the WAR.
    * To solve these issues, Weld is added to the Tomcat server libs folder.
@@ -84,5 +87,4 @@ public class TestContainer {
   public static void addCommonLoggingDependency(WebArchive webArchive) {
     // nothing to do
   }
-
 }

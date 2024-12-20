@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.models;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
 import org.operaton.bpm.model.bpmn.AssociationDirection;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Association;
 import org.operaton.bpm.model.bpmn.instance.BaseElement;
 import org.operaton.bpm.model.bpmn.instance.BoundaryEvent;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 /**
  * @author Thorben Lindhauer
  *
  */
 public class CompensationModels {
+  private CompensationModels() {
+  }
 
   public static final BpmnModelInstance ONE_COMPENSATION_TASK_MODEL = ProcessModels.newModel()
     .startEvent()
@@ -45,6 +46,7 @@ public class CompensationModels {
       .compensateEventDefinitionDone()
     .endEvent()
     .done();
+
   static {
     addUserTaskCompensationHandler(ONE_COMPENSATION_TASK_MODEL, "compensationBoundary", "compensationHandler");
   }
@@ -120,6 +122,7 @@ public static final BpmnModelInstance COMPENSATION_ONE_TASK_SUBPROCESS_MODEL =  
           .compensateEventDefinitionDone()
         .endEvent()
         .done();
+
   static {
     CompensationModels.addUserTaskCompensationHandler(DOUBLE_SUBPROCESS_MODEL, "compensationBoundary", "compensationHandler");
   }
@@ -147,6 +150,7 @@ public static final BpmnModelInstance COMPENSATION_ONE_TASK_SUBPROCESS_MODEL =  
       .compensateEventDefinition()
       .compensateEventDefinitionDone()
     .done();
+
   static {
     addUserTaskCompensationHandler(TRANSACTION_COMPENSATION_MODEL, "compensationBoundary", "compensationHandler");
   }
@@ -185,6 +189,4 @@ public static final BpmnModelInstance COMPENSATION_ONE_TASK_SUBPROCESS_MODEL =  
     scope.addChildElement(association);
 
   }
-
-
 }

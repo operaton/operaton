@@ -29,6 +29,9 @@ public class SetRemovalTimeToProcessInstanceScenario {
 
   public static final String PROCESS_DEF_KEY = "oneTaskProcess";
 
+  private SetRemovalTimeToProcessInstanceScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/oneTaskProcess.bpmn20.xml";
@@ -65,5 +68,4 @@ public class SetRemovalTimeToProcessInstanceScenario {
       }
     };
   }
-
 }

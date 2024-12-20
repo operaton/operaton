@@ -179,4 +179,7 @@ public final class DmnModelConstants {
   public static final String OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE = "historyTimeToLive";
   public static final String OPERATON_ATTRIBUTE_VERSION_TAG = "versionTag";
 
+  private DmnModelConstants() {
+  }
+
 }

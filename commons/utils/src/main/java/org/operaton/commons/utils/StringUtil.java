@@ -24,6 +24,9 @@ import java.io.StringWriter;
  */
 public final class StringUtil {
 
+  private StringUtil() {
+  }
+
   /**
    * Checks whether a String seams to be an expression or not
    *
@@ -114,5 +117,4 @@ public final class StringUtil {
     throwable.printStackTrace(new PrintWriter(sw, true));
     return sw.toString();
   }
-
 }

@@ -35,6 +35,9 @@ public class ProcessApplicationContextUtil {
 
   private static final ProcessApplicationLogger LOG = ProcessApplicationLogger.PROCESS_APPLICATION_LOGGER;
 
+  private ProcessApplicationContextUtil() {
+  }
+
   public static ProcessApplicationReference getTargetProcessApplication(CoreExecution execution) {
     if (execution instanceof ExecutionEntity executionEntity) {
       return getTargetProcessApplication(executionEntity);

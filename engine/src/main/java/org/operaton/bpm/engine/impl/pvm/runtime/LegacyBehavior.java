@@ -16,36 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
-import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.bpmn.behavior.BpmnBehaviorLogger;
-import org.operaton.bpm.engine.impl.bpmn.behavior.CancelBoundaryEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.CancelEndEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.CompensationEventActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.ReceiveTaskActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.SequentialMultiInstanceActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.SubProcessActivityBehavior;
+import org.operaton.bpm.engine.impl.bpmn.behavior.*;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.cmd.GetActivityInstanceCmd;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
-import org.operaton.bpm.engine.impl.persistence.entity.ActivityInstanceImpl;
-import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceHistoryListener;
+import org.operaton.bpm.engine.impl.persistence.entity.*;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
@@ -55,6 +32,9 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.tree.ExecutionWalker;
 import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
+import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
+
+import java.util.*;
 
 /**
  * This class encapsulates legacy runtime behavior for the process engine.
@@ -84,6 +64,9 @@ import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
 public class LegacyBehavior {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
+
+  private LegacyBehavior() {
+  }
 
   // concurrent scopes ///////////////////////////////////////////
 
@@ -660,5 +643,4 @@ public class LegacyBehavior {
       }
     }
   }
-
 }

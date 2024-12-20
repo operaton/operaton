@@ -18,6 +18,9 @@ package org.operaton.bpm.engine.impl.util;
 
 public final class EncryptionUtil {
 
+  private EncryptionUtil() {
+  }
+
   public static String saltPassword(String password, String salt) {
     // Before version 7.7 no salt was used. Thus, if no salt
     // is available an empty salt should be used.

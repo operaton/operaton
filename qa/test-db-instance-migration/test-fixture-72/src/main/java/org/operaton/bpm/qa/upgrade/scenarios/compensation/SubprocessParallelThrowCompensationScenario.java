@@ -30,6 +30,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class SubprocessParallelThrowCompensationScenario {
 
+  private SubprocessParallelThrowCompensationScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/compensation/subprocessParallelThrowCompensationProcess.bpmn20.xml";
@@ -65,5 +68,4 @@ public class SubprocessParallelThrowCompensationScenario {
       }
     };
   }
-
 }

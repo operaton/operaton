@@ -30,6 +30,9 @@ public final class StringUtil {
 
   private static final Pattern pattern = Pattern.compile("(\\w[^,]*)|([#$]\\{[^}]*})");
 
+  private StringUtil() {
+  }
+
   /**
    * Splits a comma separated list in to single Strings. The list can
    * contain expressions with commas in it.

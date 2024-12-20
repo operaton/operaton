@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.application.impl;
 
+import org.operaton.bpm.application.AbstractProcessApplication;
+import org.operaton.bpm.application.ProcessApplicationElResolver;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+
+import jakarta.el.CompositeELResolver;
+import jakarta.el.ELResolver;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
-
-import org.operaton.bpm.application.AbstractProcessApplication;
-import org.operaton.bpm.application.ProcessApplicationElResolver;
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import jakarta.el.CompositeELResolver;
-import jakarta.el.ELResolver;
 
 /**
  * @author Daniel Meyer
@@ -34,6 +34,9 @@ import jakarta.el.ELResolver;
 public class DefaultElResolverLookup {
 
   private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
+
+  private DefaultElResolverLookup() {
+  }
 
   public static final ELResolver lookupResolver(AbstractProcessApplication processApplication) {
 
@@ -73,5 +76,4 @@ public class DefaultElResolverLookup {
     }
 
   }
-
 }

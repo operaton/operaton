@@ -20,6 +20,9 @@ import org.operaton.bpm.engine.management.Metrics;
 
 public class MetricsUtil {
 
+  private MetricsUtil() {
+  }
+
   /**
    * Resolves the internal name of the metric by the public name.
    *
@@ -53,5 +56,4 @@ public class MetricsUtil {
     default -> internalName;
     };
   }
-
 }

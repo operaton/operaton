@@ -29,6 +29,9 @@ import org.operaton.spin.xml.SpinXmlElement;
  */
 public class SpinValues {
 
+  private SpinValues() {
+  }
+
   public static JsonValueBuilder jsonValue(SpinJsonNode value) {
     return jsonValue(value, false);
   }

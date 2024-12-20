@@ -29,6 +29,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  */
 public class CreateStandaloneTaskScenario {
 
+  private CreateStandaloneTaskScenario() {
+  }
+
   @DescribesScenario("createUserOperationLogEntries")
   public static ScenarioSetup createUserOperationLogEntries() {
     return new ScenarioSetup() {

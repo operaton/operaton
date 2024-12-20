@@ -25,6 +25,9 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 public class TestUtils {
+  private TestUtils() {
+  }
+
   public static void trustSelfSignedSSL() throws NoSuchAlgorithmException, KeyManagementException {
     SSLContext ctx = SSLContext.getInstance("SSL");
     X509TrustManager tm = new X509TrustManager() {

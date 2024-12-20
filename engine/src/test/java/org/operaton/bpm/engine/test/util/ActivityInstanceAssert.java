@@ -233,4 +233,7 @@ public class ActivityInstanceAssert {
     return new ActivityInstanceAssertThatClause(actual);
   }
 
+  private ActivityInstanceAssert() {
+  }
+
 }

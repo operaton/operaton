@@ -58,4 +58,7 @@ public class EntityTypes {
   public static final String INCIDENT = "Incident";
   public static final String SYSTEM = "System";
   public static final String COMMENT = "Comment";
+
+  private EntityTypes() {
+  }
 }

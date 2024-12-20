@@ -29,6 +29,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class NestedCompensationScenario {
 
+  private NestedCompensationScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/compensation/nestedCompensationProcess.bpmn20.xml";

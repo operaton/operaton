@@ -27,6 +27,9 @@ public class SpinReflectUtil {
 
   private static final SpinCoreLogger LOG = SpinCoreLogger.CORE_LOGGER;
 
+  private SpinReflectUtil() {
+  }
+
   /**
    * Used by dataformats if they need to load a class
    *
@@ -59,5 +62,4 @@ public class SpinReflectUtil {
     }
 
   }
-
 }

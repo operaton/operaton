@@ -83,4 +83,7 @@ public class Metrics {
    */
   public static final String UNIQUE_TASK_WORKERS = "unique-task-workers";
   public static final String TASK_USERS = "task-users";
+
+  private Metrics() {
+  }
 }

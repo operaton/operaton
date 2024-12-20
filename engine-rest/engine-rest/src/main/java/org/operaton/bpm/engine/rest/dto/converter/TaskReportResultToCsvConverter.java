@@ -33,6 +33,9 @@ public class TaskReportResultToCsvConverter {
                                                 + DELIMITER
                                                 + "TASK_COUNT";
 
+  private TaskReportResultToCsvConverter() {
+  }
+
   public static String convertCandidateGroupReportResult(List<TaskCountByCandidateGroupResult> reports) {
     StringBuilder buffer = new StringBuilder();
 
@@ -47,5 +50,4 @@ public class TaskReportResultToCsvConverter {
 
     return buffer.toString();
   }
-
 }

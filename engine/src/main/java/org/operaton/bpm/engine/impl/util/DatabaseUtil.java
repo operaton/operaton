@@ -17,11 +17,15 @@
 package org.operaton.bpm.engine.impl.util;
 
 import java.util.Arrays;
+
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 
 public class DatabaseUtil {
+
+  private DatabaseUtil() {
+  }
 
   /**
    * Checks if the currently used database is of a given database type.

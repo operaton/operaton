@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class NonInterruptingBoundaryEventScenario {
 
+  private NonInterruptingBoundaryEventScenario() {
+  }
+
   @Deployment
   public static String deployMessageBoundary() {
     return "org/operaton/bpm/qa/upgrade/boundary/nonInterruptingMessageBoundaryEvent.bpmn20.xml";
@@ -46,6 +49,4 @@ public class NonInterruptingBoundaryEventScenario {
       }
     };
   }
-
-
 }

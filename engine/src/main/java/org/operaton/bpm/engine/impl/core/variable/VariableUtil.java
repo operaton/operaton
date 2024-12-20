@@ -37,11 +37,12 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class VariableUtil {
-
   public static final CommandLogger CMD_LOGGER = ProcessEngineLogger.CMD_LOGGER;
   public static final CoreLogger CORE_LOGGER = ProcessEngineLogger.CORE_LOGGER;
-
   public static final String ERROR_MSG = "Cannot set variable with name {0}. Java serialization format is prohibited";
+
+  private VariableUtil() {
+  }
 
   /**
    * Checks, if Java serialization will be used and if it is allowed to be used.
@@ -136,10 +137,9 @@ public class VariableUtil {
   protected static TypedValue getSerializedValue(VariableInstanceEntity variableInstanceEntity) {
     return variableInstanceEntity.getTypedValue(false);
   }
-
   @FunctionalInterface
   public interface SetVariableFunction {
     void apply(String variableName, Object variableValue);
-  }
 
+  }
 }

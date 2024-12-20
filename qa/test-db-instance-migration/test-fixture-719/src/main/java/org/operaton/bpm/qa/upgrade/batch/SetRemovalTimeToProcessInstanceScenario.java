@@ -29,6 +29,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class SetRemovalTimeToProcessInstanceScenario {
 
+  private SetRemovalTimeToProcessInstanceScenario() {
+  }
+
   @Deployment
   public static String deployOneTask() {
     return "org/operaton/bpm/qa/upgrade/batch/SetRemovalTimeToProcessInstanceScenario.oneTaskProcess.bpmn20.xml";

@@ -60,6 +60,9 @@ import java.util.concurrent.Callable;
  */
 public class ProcessEngineContext {
 
+  private ProcessEngineContext() {
+  }
+
   /**
    * Declares to the Process Engine that a new, separate context,
    * bound to the current thread, needs to be created for all subsequent

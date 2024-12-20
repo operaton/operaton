@@ -263,4 +263,7 @@ public class CmmnModelConstants {
   public static final String OPERATON_ATTRIBUTE_VARIABLE_NAME = "variableName";
   public static final String OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE = "historyTimeToLive";
 
+  private CmmnModelConstants() {
+  }
+
 }

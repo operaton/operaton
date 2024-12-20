@@ -29,6 +29,9 @@ import org.operaton.bpm.model.dmn.instance.UnaryTests;
 
 public class DmnExpressionTransformHelper {
 
+  private DmnExpressionTransformHelper() {
+  }
+
   public static DmnTypeDefinition createTypeDefinition(DmnElementTransformContext context, LiteralExpression expression) {
     return createTypeDefinition(context, expression.getTypeRef());
   }
@@ -95,6 +98,4 @@ public class DmnExpressionTransformHelper {
     }
     return null;
   }
-
-
 }

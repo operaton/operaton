@@ -32,6 +32,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  */
 public class SuspendProcessDefinitionDeleteScenario {
 
+  private SuspendProcessDefinitionDeleteScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/useroperationlog/timerBoundaryEventProcess.bpmn20.xml";
@@ -45,7 +48,7 @@ public class SuspendProcessDefinitionDeleteScenario {
         ProcessInstance processInstance1 = engine.getRuntimeService().startProcessInstanceByKey("timerBoundaryProcess", processInstanceBusinessKey);
         ProcessInstance processInstance2 = engine.getRuntimeService().startProcessInstanceByKey("timerBoundaryProcess", processInstanceBusinessKey);
         ProcessInstance processInstance3 = engine.getRuntimeService().startProcessInstanceByKey("timerBoundaryProcess", processInstanceBusinessKey);
-        
+
         IdentityService identityService = engine.getIdentityService();
         identityService.setAuthentication("jane01", null);
 

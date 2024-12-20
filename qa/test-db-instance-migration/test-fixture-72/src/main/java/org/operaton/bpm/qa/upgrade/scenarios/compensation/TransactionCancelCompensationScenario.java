@@ -30,6 +30,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class TransactionCancelCompensationScenario {
 
+  private TransactionCancelCompensationScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/compensation/transactionCancelCompensationProcess.bpmn20.xml";
@@ -66,5 +69,4 @@ public class TransactionCancelCompensationScenario {
       }
     };
   }
-
 }

@@ -23,6 +23,9 @@ import org.slf4j.MDC;
  */
 public class MdcAccess {
 
+  private MdcAccess() {
+  }
+
   /**
    * see {@link MDC#remove(String)}
    */

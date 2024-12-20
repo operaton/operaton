@@ -40,6 +40,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  */
 public class JobMigrationScenario {
 
+  private JobMigrationScenario() {
+  }
+
   @DescribesScenario("createJob")
   public static ScenarioSetup triggerEntryCriterion() {
     return new ScenarioSetup() {

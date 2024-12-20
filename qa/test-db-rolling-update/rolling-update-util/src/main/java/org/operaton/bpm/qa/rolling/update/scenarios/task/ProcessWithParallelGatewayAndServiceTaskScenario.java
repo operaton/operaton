@@ -35,6 +35,9 @@ public class ProcessWithParallelGatewayAndServiceTaskScenario {
 
   public static final String PROCESS_DEF_KEY_2 = "processWithParallelGatewayAndAsyncServiceTask";
 
+  private ProcessWithParallelGatewayAndServiceTaskScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/processWithParallelGatewayAndServiceTask.bpmn20.xml";

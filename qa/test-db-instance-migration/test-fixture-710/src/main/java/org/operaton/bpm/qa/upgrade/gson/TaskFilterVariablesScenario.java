@@ -29,6 +29,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  */
 public class TaskFilterVariablesScenario {
 
+  private TaskFilterVariablesScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/gson/oneTaskProcess.bpmn20.xml";

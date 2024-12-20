@@ -24,6 +24,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class CreateSetVariablesMigrationBatchScenario {
 
+  private CreateSetVariablesMigrationBatchScenario() {
+  }
+
   @Deployment
   public static String sourceDeployment() {
     return "org/operaton/bpm/qa/upgrade/migration/oneTaskProcess-source.bpmn20.xml";
@@ -67,5 +70,4 @@ public class CreateSetVariablesMigrationBatchScenario {
           .setProperty("CreateSetVariablesMigrationBatchScenario.batch.id", batchId);
     };
   }
-
 }

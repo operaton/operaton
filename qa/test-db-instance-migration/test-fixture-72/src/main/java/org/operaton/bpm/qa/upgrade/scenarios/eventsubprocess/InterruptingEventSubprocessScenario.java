@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class InterruptingEventSubprocessScenario {
 
+  private InterruptingEventSubprocessScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/eventsubprocess/interruptingMessageEventSubprocess.bpmn20.xml";
@@ -49,5 +52,4 @@ public class InterruptingEventSubprocessScenario {
       }
     };
   }
-
 }

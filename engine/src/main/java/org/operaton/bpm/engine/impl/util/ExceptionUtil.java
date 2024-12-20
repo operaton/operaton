@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.ProcessEnginePersistenceException;
+import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
+import org.operaton.bpm.engine.repository.ResourceType;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.DB2;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.H2;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.DEADLOCK_CODES.MARIADB_MYSQL;
@@ -27,13 +32,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.function.Supplier;
+
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.BatchExecutorException;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.ProcessEnginePersistenceException;
-import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
-import org.operaton.bpm.engine.repository.ResourceType;
 
 /**
  * @author Roman Smirnov
@@ -46,6 +47,9 @@ public class ExceptionUtil {
       "exception stack trace.";
 
   public static final String PERSISTENCE_CONNECTION_ERROR_CLASS = "08";
+
+  private ExceptionUtil() {
+  }
 
   public static String getExceptionStacktrace(Throwable exception) {
     StringWriter stringWriter = new StringWriter();
@@ -260,8 +264,8 @@ public class ExceptionUtil {
     ORACLE(60, "61000"),
     POSTGRES(0, "40P01"),
     H2(40001, "40001");
-
     protected final int errorCode;
+
     protected final String sqlState;
 
     DEADLOCK_CODES(int errorCode, String sqlState) {
@@ -337,5 +341,4 @@ public class ExceptionUtil {
   public static ProcessEnginePersistenceException wrapPersistenceException(Exception ex) {
     return new ProcessEnginePersistenceException(PERSISTENCE_EXCEPTION_MESSAGE, ex);
   }
-
 }

@@ -24,6 +24,9 @@ import org.operaton.bpm.engine.test.Deployment;
  */
 public class DeployProcessWithoutIsExecutableAttributeScenario {
 
+  private DeployProcessWithoutIsExecutableAttributeScenario() {
+  }
+
   @Deployment
   public static String deployNonExecutableProcess() {
     return "org/operaton/bpm/qa/upgrade/deployment/processWithoutIsExecutableAttribute.bpmn20.xml";

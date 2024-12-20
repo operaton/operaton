@@ -31,6 +31,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class NestedMultiInstanceCompensationScenario {
 
+  private NestedMultiInstanceCompensationScenario() {
+  }
+
   @Deployment
   public static String deployThrowInnerProcess() {
     return "org/operaton/bpm/qa/upgrade/compensation/nestedMultiInstanceCompensationThrowInnerProcess.bpmn20.xml";

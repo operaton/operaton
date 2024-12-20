@@ -18,20 +18,20 @@ package org.operaton.bpm.engine.rest.dto.converter;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response.Status;
+
 import org.operaton.bpm.engine.history.DurationReportResult;
 import org.operaton.bpm.engine.history.ReportResult;
 import org.operaton.bpm.engine.rest.dto.history.HistoricProcessInstanceReportDto;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
-
-import javax.ws.rs.core.Response.Status;
 
 /**
  * @author Roman Smirnov
  *
  */
 public class ReportResultToCsvConverter {
-
   protected static String DELIMITER = ",";
+
   protected static String NEW_LINE_SEPARATOR = "\n";
 
   public static String DURATION_HEADER = "PERIOD"
@@ -39,6 +39,9 @@ public class ReportResultToCsvConverter {
                               + DELIMITER + "MINIMUM"
                               + DELIMITER + "MAXIMUM"
                               + DELIMITER + "AVERAGE";
+
+  private ReportResultToCsvConverter() {
+  }
 
   public static String convertReportResult(List<ReportResult> reports, String reportType) {
     if (HistoricProcessInstanceReportDto.REPORT_TYPE_DURATION.equals(reportType)) {
@@ -69,5 +72,4 @@ public class ReportResultToCsvConverter {
 
     return buffer.toString();
   }
-
 }

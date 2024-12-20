@@ -26,6 +26,8 @@ import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 public class ApplicationContextPathUtil {
+  private ApplicationContextPathUtil() {
+  }
 
   public static String getApplicationPathByProcessDefinitionId(ProcessEngine engine, String processDefinitionId) {
     ProcessDefinition processDefinition = engine.getRepositoryService().getProcessDefinition(processDefinitionId);

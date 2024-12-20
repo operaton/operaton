@@ -29,6 +29,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  */
 public class DelegateExecutionContext {
 
+  private DelegateExecutionContext() {
+  }
+
   /**
    * Returns the current delegation execution or null if the
    * execution is not available.

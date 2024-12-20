@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
@@ -25,12 +23,16 @@ import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Roman Smirnov
  *
  */
 public class ActivityBehaviorUtil {
+
+  private ActivityBehaviorUtil() {
+  }
 
   public static CmmnActivityBehavior getActivityBehavior(CmmnExecution execution) {
     String id = execution.getId();

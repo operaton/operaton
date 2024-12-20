@@ -37,6 +37,9 @@ public class ProgrammaticBeanLookup {
 
   public static final Logger LOG = Logger.getLogger(ProgrammaticBeanLookup.class.getName());
 
+  private ProgrammaticBeanLookup() {
+  }
+
   public static <T> T lookup(Class<T> clazz, BeanManager bm) {
     return lookup(clazz, bm, true);
   }
@@ -135,5 +138,4 @@ public class ProgrammaticBeanLookup {
 
     }
   }
-
 }

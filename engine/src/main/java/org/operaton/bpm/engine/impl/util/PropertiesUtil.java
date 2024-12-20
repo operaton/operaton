@@ -26,6 +26,9 @@ public class PropertiesUtil {
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
+  private PropertiesUtil() {
+  }
+
   /**
    * Reads a <code>.properties</code> file from the classpath and provides a {@link Properties} object.
    */

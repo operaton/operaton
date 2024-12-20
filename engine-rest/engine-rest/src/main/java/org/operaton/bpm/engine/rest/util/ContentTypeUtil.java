@@ -24,6 +24,9 @@ public class ContentTypeUtil {
 
   private static final String SUFFIX_FORM_FILE = ".form";
 
+  private ContentTypeUtil() {
+  }
+
   /**
    * @return the content type to use for the provided form's key
    *

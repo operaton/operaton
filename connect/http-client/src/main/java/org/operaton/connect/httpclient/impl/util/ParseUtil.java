@@ -16,16 +16,20 @@
  */
 package org.operaton.connect.httpclient.impl.util;
 
+import org.operaton.connect.httpclient.impl.HttpConnectorLogger;
+import org.operaton.connect.httpclient.impl.HttpLogger;
+import org.operaton.connect.httpclient.impl.RequestConfigOption;
+
 import java.util.Map;
 
 import org.apache.http.client.config.RequestConfig.Builder;
-import org.operaton.connect.httpclient.impl.RequestConfigOption;
-import org.operaton.connect.httpclient.impl.HttpConnectorLogger;
-import org.operaton.connect.httpclient.impl.HttpLogger;
 
 public class ParseUtil {
 
   protected static HttpConnectorLogger LOG = HttpLogger.HTTP_LOGGER;
+
+  private ParseUtil() {
+  }
 
   public static void parseConfigOptions(Map<String, Object> configOptions, Builder configBuilder) {
     for (RequestConfigOption option : RequestConfigOption.values()) {

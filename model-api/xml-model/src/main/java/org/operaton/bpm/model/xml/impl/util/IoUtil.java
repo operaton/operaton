@@ -31,6 +31,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public final class IoUtil {
 
+  private IoUtil() {
+  }
+
   public static void closeSilently(Closeable closeable) {
     try {
       if (closeable != null) {
@@ -140,5 +143,4 @@ public final class IoUtil {
       throw new ModelIoException("Unable to transform model to xml", e);
     }
   }
-
 }

@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.spring.test.configuration;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;

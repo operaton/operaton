@@ -33,6 +33,9 @@ public class Mocks {
 
   private static final ThreadLocal<Map<String, Object>> mockContainer = new ThreadLocal<>();
 
+  private Mocks() {
+  }
+
   public static Map<String, Object> getMocks() {
     Map<String, Object> mocks = mockContainer.get();
     if (mocks == null) {
@@ -45,7 +48,7 @@ public class Mocks {
   /**
    * This method lets you register a mock object. Make sure to register the
    * {@link MockExpressionManager} with your process engine configuration.
-   * 
+   *
    * @param key
    *          the key under which the mock object will be registered
    * @param value
@@ -58,7 +61,7 @@ public class Mocks {
   /**
    * This method returns the mock object registered under the provided key or
    * null if there is no object for the provided key.
-   * 
+   *
    * @param key
    *          the key of the requested object
    * @return the mock object registered under the provided key or null if there
@@ -76,5 +79,4 @@ public class Mocks {
       getMocks().clear();
     }
   }
-
 }

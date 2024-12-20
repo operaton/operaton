@@ -43,6 +43,9 @@ public class BitMaskUtil {
 
   private static final int[] MASKS = {FLAG_BIT_1, FLAG_BIT_2, FLAG_BIT_3, FLAG_BIT_4, FLAG_BIT_5, FLAG_BIT_6, FLAG_BIT_7, FLAG_BIT_8};
 
+  private BitMaskUtil() {
+  }
+
   /**
    * Set bit to '1' in the given int.
    * @param current integer value

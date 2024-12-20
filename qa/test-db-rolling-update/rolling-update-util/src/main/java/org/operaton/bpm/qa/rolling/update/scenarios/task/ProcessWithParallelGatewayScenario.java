@@ -34,6 +34,9 @@ public class ProcessWithParallelGatewayScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithParallelGateway";
 
+  private ProcessWithParallelGatewayScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/processWithParallelGateway.bpmn20.xml";

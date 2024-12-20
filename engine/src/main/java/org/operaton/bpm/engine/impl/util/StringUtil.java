@@ -38,7 +38,10 @@ import org.operaton.bpm.engine.runtime.ProcessElementInstance;
  * @author Sebastian Menski
  */
 public final class StringUtil {
-  
+
+  private StringUtil() {
+  }
+
   /**
    * Note: {@link String#length()} counts Unicode supplementary
    * characters twice, so for a String consisting only of those,
@@ -168,9 +171,9 @@ public final class StringUtil {
     Charset charset = processEngineConfiguration.getDefaultCharset();
     return string.getBytes(charset);
   }
-  
+
   /**
-   * Trims the input to the {@link #DB_MAX_STRING_LENGTH maxium length allowed} for persistence with our default database schema 
+   * Trims the input to the {@link #DB_MAX_STRING_LENGTH maxium length allowed} for persistence with our default database schema
    *
    * @param string the input that might be trimmed if maximum length is exceeded
    * @return the input, eventually trimmed to {@link #DB_MAX_STRING_LENGTH}
@@ -221,8 +224,8 @@ public final class StringUtil {
 
     return builder.toString();
   }
-
   public abstract static class StringIterator<T> implements Iterator<String> {
+
 
     protected Iterator<? extends T> iterator;
 
@@ -240,5 +243,4 @@ public final class StringUtil {
       iterator.remove();
     }
   }
-
 }

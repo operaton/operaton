@@ -30,4 +30,7 @@ public class ConditionalModels {
   public static final String CONDITION_ID = "conditionCatch";
   public static final String VAR_CONDITION = "${variable == 1}";
   public static final String USER_TASK_ID = "userTask";
+
+  private ConditionalModels() {
+  }
 }

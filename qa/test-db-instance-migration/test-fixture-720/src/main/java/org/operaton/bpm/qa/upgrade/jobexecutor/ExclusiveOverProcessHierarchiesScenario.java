@@ -24,6 +24,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class ExclusiveOverProcessHierarchiesScenario {
 
+    private ExclusiveOverProcessHierarchiesScenario() {
+    }
+
     @DescribesScenario("createRootProcessInstancesWithHierarchies")
     public static ScenarioSetup createRootProcessInstancesWithHierarchies() {
         return (engine, scenarioName) -> {

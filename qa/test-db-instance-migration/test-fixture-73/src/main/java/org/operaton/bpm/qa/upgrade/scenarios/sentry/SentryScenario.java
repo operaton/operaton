@@ -29,7 +29,10 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  *
  */
 public class SentryScenario {
-  
+
+  private SentryScenario() {
+  }
+
   @Deployment
   public static String deployOneTaskProcess() {
     return "org/operaton/bpm/qa/upgrade/sentry/sentry.cmmn";
@@ -52,7 +55,7 @@ public class SentryScenario {
         CaseService caseService = engine.getCaseService();
         CaseInstance caseInstance = caseService.createCaseInstanceByKey("case", scenarioName);
         String caseInstanceId = caseInstance.getId();
-        
+
         CaseExecutionQuery query = caseService.createCaseExecutionQuery().caseInstanceId(caseInstanceId);
 
         String firstHumanTaskId = query.activityId("PI_HumanTask_1").singleResult().getId();
@@ -64,7 +67,7 @@ public class SentryScenario {
       }
     };
   }
-  
+
   @DescribesScenario("newSentryInstance")
   public static ScenarioSetup newSentryInstance() {
     return new ScenarioSetup() {
@@ -72,7 +75,7 @@ public class SentryScenario {
         CaseService caseService = engine.getCaseService();
         CaseInstance caseInstance = caseService.createCaseInstanceByKey("case", scenarioName);
         String caseInstanceId = caseInstance.getId();
-        
+
         CaseExecutionQuery query = caseService.createCaseExecutionQuery().caseInstanceId(caseInstanceId);
 
         String firstHumanTaskId = query.activityId("PI_HumanTask_1").singleResult().getId();
@@ -85,7 +88,7 @@ public class SentryScenario {
       }
     };
   }
-  
+
   @DescribesScenario("completeInstance")
   public static ScenarioSetup completeInstance() {
     return new ScenarioSetup() {
@@ -95,5 +98,4 @@ public class SentryScenario {
       }
     };
   }
-  
 }

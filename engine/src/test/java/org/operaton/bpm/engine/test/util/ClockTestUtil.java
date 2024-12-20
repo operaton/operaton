@@ -19,9 +19,13 @@ package org.operaton.bpm.engine.test.util;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
 public final class ClockTestUtil {
+
+  private ClockTestUtil() {
+  }
 
   /**
    * Increments the current time by the given seconds.
@@ -46,5 +50,4 @@ public final class ClockTestUtil {
     ClockUtil.setCurrentTime(new GregorianCalendar(2023, Calendar.AUGUST, 18, 8, 0, 0).getTime());
     return ClockUtil.getCurrentTime();
   }
-
 }

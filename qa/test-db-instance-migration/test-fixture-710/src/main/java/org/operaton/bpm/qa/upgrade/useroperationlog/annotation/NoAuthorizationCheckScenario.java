@@ -23,24 +23,27 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class NoAuthorizationCheckScenario {
 
+  private NoAuthorizationCheckScenario() {
+  }
+
   @DescribesScenario("prepareNoAuthorizationCheck")
   public static ScenarioSetup prepareNoAuthorizationCheck() {
-    
+
     return new ScenarioSetup() {
       public void execute(ProcessEngine engine, String scenarioName) {
-        
+
         engine.getIdentityService()
             .setAuthentication("demo", null);
-        
+
         Task task = engine.getTaskService()
             .newTask("myTaskForUserOperationLogUpdate");
-        
+
         engine.getTaskService()
             .saveTask(task);
 
         engine.getIdentityService()
             .clearAuthentication();
-        
+
       }
     };
   }

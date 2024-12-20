@@ -30,13 +30,16 @@ public class BeanManagerLookup {
   /** provide a custom jndi lookup name */
   public static String jndiName;
 
+  private BeanManagerLookup() {
+  }
+
   public static BeanManager getBeanManager() {
-    
+
     BeanManager beanManager = lookupBeanManagerInJndi();
-    
+
     if(beanManager != null) {
       return beanManager;
-      
+
     } else {
       if (localInstance != null) {
         return localInstance;
@@ -63,15 +66,15 @@ public class BeanManagerLookup {
     } catch (NamingException e) {
       // silently ignore
     }
-    
+
     try {
       // in a servlet container
       return (BeanManager) InitialContext.doLookup("java:comp/env/BeanManager");
     } catch (NamingException e) {
       // silently ignore
     }
-    
+
     return null;
-   
+
   }
 }

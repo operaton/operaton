@@ -25,6 +25,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class ExternalTaskFailureLogScenario {
 
+  private ExternalTaskFailureLogScenario() {
+  }
+
   @Deployment
   public static String modelDeployment() {
     return "org/operaton/bpm/qa/upgrade/externaltask/oneTaskProcess.bpmn20.xml";

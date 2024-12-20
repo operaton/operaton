@@ -25,13 +25,16 @@ import java.io.InputStreamReader;
  * @author nico.rehwaldt
  */
 public class FileUtils {
-  
+
+  private FileUtils() {
+  }
+
   public static String readFile(String name) throws Exception {
     InputStream is = null;
     BufferedReader reader = null;
-    
+
     StringBuilder fileContents = new StringBuilder();
-    
+
     try {
       is = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
       reader = new BufferedReader(new InputStreamReader(is));
@@ -41,7 +44,7 @@ public class FileUtils {
         if (line == null) {
           break;
         }
-        
+
         fileContents.append(line);
       }
     } finally {
@@ -51,7 +54,7 @@ public class FileUtils {
         ; // Cannot handle exception
       }
     }
-    
+
     return fileContents.toString();
   }
 }

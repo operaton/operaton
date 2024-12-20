@@ -29,6 +29,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class InterruptingEventSubProcessCompensationScenario {
 
+  private InterruptingEventSubProcessCompensationScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/compensation/interruptingEventSubProcessCompensationProcess.bpmn20.xml";

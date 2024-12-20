@@ -18,8 +18,8 @@ package org.operaton.bpm.engine.impl.el;
 
 import java.util.Date;
 
-import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.joda.time.DateTime;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
 
 /**
  * @author Sebastian Menski
@@ -27,6 +27,9 @@ import org.joda.time.DateTime;
 public class DateTimeFunctions {
   public static final String NOW = "now";
   public static final String DATE_TIME = "dateTime";
+
+  private DateTimeFunctions() {
+  }
 
   public static Date now() {
     return ClockUtil.getCurrentTime();

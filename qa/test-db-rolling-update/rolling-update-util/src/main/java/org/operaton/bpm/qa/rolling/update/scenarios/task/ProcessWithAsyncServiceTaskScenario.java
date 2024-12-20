@@ -30,6 +30,9 @@ public class ProcessWithAsyncServiceTaskScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithAsyncServiceTask";
 
+  private ProcessWithAsyncServiceTaskScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/processWithAsyncServiceTask.bpmn20.xml";
@@ -44,5 +47,4 @@ public class ProcessWithAsyncServiceTaskScenario {
       }
     };
   }
-
 }

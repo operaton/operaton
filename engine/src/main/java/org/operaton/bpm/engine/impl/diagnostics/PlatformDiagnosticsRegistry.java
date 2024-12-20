@@ -22,6 +22,9 @@ public class PlatformDiagnosticsRegistry {
 
   protected static ApplicationServerImpl applicationServer;
 
+  private PlatformDiagnosticsRegistry() {
+  }
+
   public static synchronized ApplicationServerImpl getApplicationServer() {
     return applicationServer;
   }

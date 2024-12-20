@@ -29,8 +29,8 @@ import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.deployment.Attachments;
 import org.operaton.bpm.container.impl.jmx.services.JmxManagedProcessApplication;
-import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
+import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.container.impl.spi.ServiceTypes;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -40,6 +40,9 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  *
  */
 public class InjectionUtil {
+
+  private InjectionUtil() {
+  }
 
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
@@ -130,5 +133,4 @@ public class InjectionUtil {
     final PlatformServiceContainer serviceContainer = operationContext.getServiceContainer();
     return serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, "default");
   }
-
 }

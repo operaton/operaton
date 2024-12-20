@@ -93,4 +93,7 @@ public final class BpmnTestConstants {
   public static final String TEST_STRING_FORM_REF_BINDING = "version";
   public static final String TEST_STRING_FORM_REF_VERSION = "2";
 
+  private BpmnTestConstants() {
+  }
+
 }

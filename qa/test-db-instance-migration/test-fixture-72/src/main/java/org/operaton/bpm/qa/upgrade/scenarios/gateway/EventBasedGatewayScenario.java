@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class EventBasedGatewayScenario {
 
+  private EventBasedGatewayScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/gateway/eventBasedGatewayProcess.bpmn20.xml";

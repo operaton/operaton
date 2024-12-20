@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.engine.rest.dto.converter;
 
-import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
-
 import java.util.List;
+
+import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
 
 /**
  * @author Roman Smirnov
@@ -32,6 +32,9 @@ public class TaskReportResultToCsvConverter {
   public static String CANDIDATE_GROUP_HEADER = "CANDIDATE_GROUP_NAME"
                                                 + DELIMITER
                                                 + "TASK_COUNT";
+
+  private TaskReportResultToCsvConverter() {
+  }
 
   public static String convertCandidateGroupReportResult(List<TaskCountByCandidateGroupResult> reports) {
     StringBuilder buffer = new StringBuilder();
@@ -47,5 +50,4 @@ public class TaskReportResultToCsvConverter {
 
     return buffer.toString();
   }
-
 }

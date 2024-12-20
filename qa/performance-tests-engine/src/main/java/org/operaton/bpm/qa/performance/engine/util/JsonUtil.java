@@ -18,10 +18,10 @@ package org.operaton.bpm.qa.performance.engine.util;
 
 import java.io.File;
 
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 
 /**
  * @author Daniel Meyer
@@ -30,6 +30,9 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 public class JsonUtil {
 
   private static ObjectMapper mapper;
+
+  private JsonUtil() {
+  }
 
   public static void writeObjectToFile(String filename, Object object) {
 

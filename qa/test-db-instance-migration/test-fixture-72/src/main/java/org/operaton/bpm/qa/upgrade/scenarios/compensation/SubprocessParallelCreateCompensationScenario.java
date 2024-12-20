@@ -29,6 +29,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class SubprocessParallelCreateCompensationScenario {
 
+  private SubprocessParallelCreateCompensationScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/compensation/subprocessParallelCreateCompensationProcess.bpmn20.xml";

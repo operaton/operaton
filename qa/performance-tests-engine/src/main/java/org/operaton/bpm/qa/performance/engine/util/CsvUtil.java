@@ -29,17 +29,20 @@ import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultS
  */
 public class CsvUtil {
 
+  private CsvUtil() {
+  }
+
   public static String resultSetAsCsv(TabularResultSet resultSet) {
     return resultSetAsCsv(resultSet, true);
   }
-  
+
   public static String resultSetAsCsvLine(TabularResultSet resultSet) {
     return resultSetAsCsv(resultSet, false);
   }
 
   private static String resultSetAsCsv(TabularResultSet resultSet, boolean writeHeadline) {
     StringBuilder builder = new StringBuilder();
-  
+
     if (writeHeadline) {
       // write headline
       List<String> resultColumnNames = resultSet.getResultColumnNames();
@@ -66,5 +69,4 @@ public class CsvUtil {
   public static void saveResultSetToFile(String fileName, TabularResultSet resultSet) {
     FileUtil.writeStringToFile(resultSetAsCsv(resultSet), fileName);
   }
-
 }

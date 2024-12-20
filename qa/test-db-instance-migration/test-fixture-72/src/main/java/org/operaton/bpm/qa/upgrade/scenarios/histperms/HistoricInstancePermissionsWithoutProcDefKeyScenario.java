@@ -24,6 +24,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class HistoricInstancePermissionsWithoutProcDefKeyScenario {
 
+  private HistoricInstancePermissionsWithoutProcDefKeyScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/oneTaskProcess.bpmn20.xml";

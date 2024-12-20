@@ -31,6 +31,9 @@ public class TimerChangeProcessDefinitionScenario {
   protected static final Date FIXED_DATE_TWO = new Date(1363608500000L);
   protected static final Date FIXED_DATE_THREE = new Date(1363608600000L);
 
+  private TimerChangeProcessDefinitionScenario() {
+  }
+
   @DescribesScenario("initTimerChangeProcessDefinition")
   public static ScenarioSetup initTimerChangeProcessDefinition() {
     return new ScenarioSetup() {

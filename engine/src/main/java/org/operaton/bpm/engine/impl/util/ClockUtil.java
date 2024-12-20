@@ -26,6 +26,9 @@ import org.joda.time.DateTimeUtils;
  */
 public class ClockUtil {
 
+  private ClockUtil() {
+  }
+
   /**
    * Freezes the clock to a specified Date that will be returned by
    * {@link #now()} and {@link #getCurrentTime()}
@@ -66,5 +69,4 @@ public class ClockUtil {
     DateTimeUtils.setCurrentMillisSystem();
     return new Date(DateTimeUtils.currentTimeMillis());
   }
-
 }

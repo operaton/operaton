@@ -25,6 +25,9 @@ public class ProcessApplicationContextImpl {
   protected static ThreadLocal<ProcessApplicationIdentifier> currentProcessApplication =
       new ThreadLocal<>();
 
+  private ProcessApplicationContextImpl() {
+  }
+
   public static ProcessApplicationIdentifier get() {
     return currentProcessApplication.get();
   }

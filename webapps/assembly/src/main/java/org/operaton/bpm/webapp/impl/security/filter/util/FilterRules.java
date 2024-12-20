@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.webapp.impl.security.auth.Authentication;
 import org.operaton.bpm.webapp.impl.security.filter.Authorization;
@@ -34,14 +35,15 @@ import org.operaton.bpm.webapp.impl.security.filter.SecurityFilterConfig.PathFil
 import org.operaton.bpm.webapp.impl.security.filter.SecurityFilterConfig.PathMatcherConfig;
 import org.operaton.bpm.webapp.impl.security.filter.SecurityFilterRule;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * Utility to load and match filter rules.
  *
  * @author nico.rehwaldt
  */
 public class FilterRules {
+
+  private FilterRules() {
+  }
 
   public static List<SecurityFilterRule> load(InputStream configFileResource,
                                               String applicationPath) throws IOException {

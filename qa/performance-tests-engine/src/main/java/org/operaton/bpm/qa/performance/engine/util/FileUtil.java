@@ -29,6 +29,9 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
  */
 public class FileUtil {
 
+  private FileUtil() {
+  }
+
   public static void writeStringToFile(String value, String filePath) {
     writeStringToFile(value, filePath, true);
   }
@@ -53,9 +56,8 @@ public class FileUtil {
     }
 
   }
-  
+
   public static void appendStringToFile(String value, String filePath) {
     writeStringToFile(value, filePath, false);
   }
-
 }

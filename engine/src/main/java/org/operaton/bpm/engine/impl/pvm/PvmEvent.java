@@ -26,4 +26,6 @@ public class PvmEvent {
   public static final String EVENTNAME_END = "end";
   public static final String EVENTNAME_TAKE = "take";
 
+  private PvmEvent() {
+  }
 }

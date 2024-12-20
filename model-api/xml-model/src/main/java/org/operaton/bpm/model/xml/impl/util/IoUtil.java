@@ -16,11 +16,24 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
-import org.operaton.bpm.model.xml.instance.DomDocument;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.StringWriter;
 
-import javax.xml.transform.*;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
-import java.io.*;
+
+import org.operaton.bpm.model.xml.instance.DomDocument;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -30,6 +43,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  *
  */
 public final class IoUtil {
+
+  private IoUtil() {
+  }
 
   public static void closeSilently(Closeable closeable) {
     try {
@@ -140,5 +156,4 @@ public final class IoUtil {
       throw new ModelIoException("Unable to transform model to xml", e);
     }
   }
-
 }

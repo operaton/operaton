@@ -25,6 +25,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class CreateProcessInstanceWithVariableScenario {
 
+  private CreateProcessInstanceWithVariableScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/variable/simpleProcess.bpmn20.xml";

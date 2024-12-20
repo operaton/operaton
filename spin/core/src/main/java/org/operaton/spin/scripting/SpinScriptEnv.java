@@ -16,16 +16,16 @@
  */
 package org.operaton.spin.scripting;
 
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.script.ScriptEngine;
+
 import org.operaton.spin.SpinScriptException;
 import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 import org.operaton.spin.impl.util.SpinIoUtil;
-
-import javax.script.ScriptEngine;
-
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Spin provides a set of environment scripts for known scripting languages.
@@ -51,6 +51,9 @@ public class SpinScriptEnv {
     extensions.put("javascript", "js");
     extensions.put("groovy", "groovy");
     extensions.put("ruby", "rb");
+  }
+
+  private SpinScriptEnv() {
   }
 
   /**
@@ -107,5 +110,4 @@ public class SpinScriptEnv {
       }
     }
   }
-
 }

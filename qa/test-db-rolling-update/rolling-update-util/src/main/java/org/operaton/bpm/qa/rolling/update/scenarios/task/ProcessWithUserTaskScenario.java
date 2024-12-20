@@ -31,6 +31,9 @@ public class ProcessWithUserTaskScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithUserTask";
 
+  private ProcessWithUserTaskScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/processWithUserTask.bpmn20.xml";

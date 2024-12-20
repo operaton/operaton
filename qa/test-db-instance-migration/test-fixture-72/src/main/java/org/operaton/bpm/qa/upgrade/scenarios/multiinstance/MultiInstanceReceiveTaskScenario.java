@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class MultiInstanceReceiveTaskScenario {
 
+  private MultiInstanceReceiveTaskScenario() {
+  }
+
   @Deployment
   public static String deployProcessParallel() {
     return "org/operaton/bpm/qa/upgrade/multiinstance/parallelMultiInstanceReceiveTask.bpmn20.xml";

@@ -30,6 +30,9 @@ import java.util.List;
  */
 public class MigrationBatchScenario {
 
+  private MigrationBatchScenario() {
+  }
+
   @DescribesScenario("initMigrationBatch")
   public static ScenarioSetup initMigrationBatch() {
     return new ScenarioSetup() {

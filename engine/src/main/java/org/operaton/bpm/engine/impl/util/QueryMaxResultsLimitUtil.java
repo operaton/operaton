@@ -25,6 +25,9 @@ import org.operaton.bpm.engine.impl.identity.Authentication;
 
 public class QueryMaxResultsLimitUtil {
 
+  private QueryMaxResultsLimitUtil() {
+  }
+
   public static void checkMaxResultsLimit(int resultsCount, int maxResultsLimit,
                                           boolean isUserAuthenticated) {
     if (isUserAuthenticated && maxResultsLimit < Integer.MAX_VALUE) {
@@ -75,5 +78,4 @@ public class QueryMaxResultsLimitUtil {
   protected static int getMaxResultsLimit(ProcessEngineConfigurationImpl processEngineConfig) {
     return processEngineConfig.getQueryMaxResultsLimit();
   }
-
 }

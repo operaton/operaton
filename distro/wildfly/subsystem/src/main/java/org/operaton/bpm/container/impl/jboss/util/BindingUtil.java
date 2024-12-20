@@ -31,7 +31,10 @@ import org.jboss.msc.service.ServiceTarget;
  *
  */
 public class BindingUtil {
-  
+
+  private BindingUtil() {
+  }
+
   public static ServiceController<ManagedReferenceFactory> createJndiBindings(ServiceTarget target, ServiceName serviceName, String binderServiceName,  ManagedReferenceFactory managedReferenceFactory) {
 
     BinderService binderService = new BinderService(binderServiceName);
@@ -39,7 +42,7 @@ public class BindingUtil {
             .addService(serviceName, binderService)
             .addDependency(ContextNames.GLOBAL_CONTEXT_SERVICE_NAME, ServiceBasedNamingStore.class, binderService.getNamingStoreInjector());
     binderService.getManagedObjectInjector().inject(managedReferenceFactory);
-            
+
     return serviceBuilder.install();
   }
   

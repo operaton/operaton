@@ -25,6 +25,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class EmptyStringVariableScenario {
 
+  private EmptyStringVariableScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/variable/oneTaskProcess.bpmn20.xml";
@@ -41,5 +44,4 @@ public class EmptyStringVariableScenario {
       }
     };
   }
-
 }

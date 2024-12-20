@@ -28,6 +28,9 @@ import org.operaton.bpm.engine.ProcessEngine;
  */
 public class Cockpit {
 
+  private Cockpit() {
+  }
+
   /**
    * The {@link CockpitRuntimeDelegate} is an delegate that will be
    * initialized by bootstrapping operaton cockpit with an specific
@@ -79,5 +82,4 @@ public class Cockpit {
   public static void setCockpitRuntimeDelegate(CockpitRuntimeDelegate cockpitRuntimeDelegate) {
     COCKPIT_RUNTIME_DELEGATE = cockpitRuntimeDelegate;
   }
-
 }

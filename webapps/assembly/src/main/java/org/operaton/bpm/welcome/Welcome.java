@@ -24,6 +24,9 @@ package org.operaton.bpm.welcome;
  */
 public class Welcome {
 
+  private Welcome() {
+  }
+
   /**
    * The {@link WelcomeRuntimeDelegate} is an delegate that will be
    * initialized by bootstrapping operaton welcome with an specific
@@ -47,5 +50,4 @@ public class Welcome {
   public static void setRuntimeDelegate(WelcomeRuntimeDelegate welcomeRuntimeDelegate) {
     WELCOME_RUNTIME_DELEGATE = welcomeRuntimeDelegate;
   }
-
 }

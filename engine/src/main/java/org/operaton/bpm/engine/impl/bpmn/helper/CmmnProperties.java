@@ -26,4 +26,7 @@ public class CmmnProperties {
 
   public static final PropertyListKey<String> REPEAT_ON_STANDARD_EVENTS = new PropertyListKey<>("repeatOnStandardEvents");
 
+  private CmmnProperties() {
+  }
+
 }

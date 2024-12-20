@@ -39,6 +39,9 @@ public class ExecuteJobHelper {
 
   };
 
+  private ExecuteJobHelper() {
+  }
+
   public static void executeJob(String jobId, CommandExecutor commandExecutor) {
 
     JobFailureCollector jobFailureCollector = new JobFailureCollector(jobId);
@@ -132,9 +135,8 @@ public class ExecuteJobHelper {
   protected static SuccessfulJobListener createSuccessfulJobListener(CommandExecutor commandExecutor) {
     return new SuccessfulJobListener();
   }
-
   public interface ExceptionLoggingHandler {
     void exceptionWhileExecutingJob(String jobId, Throwable exception);
-  }
 
+  }
 }

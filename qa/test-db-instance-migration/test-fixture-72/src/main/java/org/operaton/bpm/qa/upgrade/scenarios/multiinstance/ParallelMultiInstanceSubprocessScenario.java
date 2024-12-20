@@ -28,6 +28,9 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class ParallelMultiInstanceSubprocessScenario {
 
+  private ParallelMultiInstanceSubprocessScenario() {
+  }
+
   @Deployment
   public static String deployProcessWithNonInterruptingBoundaryEvent() {
     return "org/operaton/bpm/qa/upgrade/multiinstance/parallelMultiInstanceSubprocessNonInterruptingBoundaryEvent.bpmn20.xml";

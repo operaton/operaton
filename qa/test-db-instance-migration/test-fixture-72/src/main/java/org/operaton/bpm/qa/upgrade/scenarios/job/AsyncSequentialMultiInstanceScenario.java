@@ -27,6 +27,8 @@ import org.operaton.bpm.qa.upgrade.Times;
  *
  */
 public class AsyncSequentialMultiInstanceScenario {
+  private AsyncSequentialMultiInstanceScenario() {
+  }
 
   @Deployment
   public static String deployAsyncBeforeProcess() {

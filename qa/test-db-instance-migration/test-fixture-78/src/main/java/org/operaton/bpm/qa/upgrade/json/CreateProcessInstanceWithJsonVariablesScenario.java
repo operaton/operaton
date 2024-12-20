@@ -34,6 +34,9 @@ import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 
 public class CreateProcessInstanceWithJsonVariablesScenario {
 
+  private CreateProcessInstanceWithJsonVariablesScenario() {
+  }
+
   @Deployment
   public static String deployProcess() {
     return "org/operaton/bpm/qa/upgrade/json/simpleProcess.bpmn20.xml";
@@ -99,5 +102,4 @@ public class CreateProcessInstanceWithJsonVariablesScenario {
   public static SerializedObjectValueBuilder createSerializedMap(){
     return serializedObjectValue("{\"foo\": \"bar\"}").serializationDataFormat("application/json").objectTypeName(HashMap.class.getName());
   }
-
 }

@@ -16,16 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.operaton.bpm.engine.authorization.Resources.BATCH;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
-import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
-import static org.operaton.bpm.engine.authorization.Resources.OPTIMIZE;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.Resources.SYSTEM;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +34,20 @@ import org.operaton.bpm.engine.authorization.SystemPermissions;
 import org.operaton.bpm.engine.authorization.TaskPermissions;
 import org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions;
 
+import static org.operaton.bpm.engine.authorization.Resources.BATCH;
+import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
+import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
+import static org.operaton.bpm.engine.authorization.Resources.OPTIMIZE;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.SYSTEM;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+
 public class ResourceTypeUtil {
+
+  private ResourceTypeUtil() {
+  }
 
   /**
    * A map containing all {@link Resources} as a key and

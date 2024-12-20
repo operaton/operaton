@@ -42,6 +42,9 @@ public class PerfTestProcessEngine {
 
   protected static ProcessEngine processEngine;
 
+  private PerfTestProcessEngine() {
+  }
+
   public static ProcessEngine getInstance() {
     if(processEngine == null) {
 

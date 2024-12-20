@@ -31,6 +31,9 @@ public class OperatonBpmRunProcessEnginePluginHelper {
 
   protected static final OperatonBpmRunLogger LOG = OperatonBpmRunLogger.LOG;
 
+  private OperatonBpmRunProcessEnginePluginHelper() {
+  }
+
   public static void registerYamlPlugins(List<ProcessEnginePlugin> processEnginePlugins,
                                          List<OperatonBpmRunProcessEnginePluginProperty> pluginsInfo) {
 

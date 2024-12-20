@@ -32,6 +32,9 @@ public class ProcessWithCallActivityScenario {
 
   public static final String PROCESS_DEF_KEY = "processWithCallActivity";
 
+  private ProcessWithCallActivityScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/rolling/update/processWithCallActivity.bpmn20.xml";
@@ -63,5 +66,4 @@ public class ProcessWithCallActivityScenario {
       }
     };
   }
-
 }

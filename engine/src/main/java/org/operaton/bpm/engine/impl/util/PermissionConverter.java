@@ -37,15 +37,18 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
  */
 public class PermissionConverter {
 
+  private PermissionConverter() {
+  }
+
   public static Permission[] getPermissionsForNames(String[] names, int resourceType, ProcessEngineConfiguration engineConfiguration) {
-    
+
     final Permission[] permissions = new Permission[names.length];
-    
+
     for (int i = 0; i < names.length; i++) {
       permissions[i] = ((ProcessEngineConfigurationImpl) engineConfiguration).getPermissionProvider().getPermissionForName(names[i], resourceType);
     }
-        
-    return permissions;    
+
+    return permissions;
   }
 
   public static String[] getNamesForPermissions(Authorization authorization, Permission[] permissions) {

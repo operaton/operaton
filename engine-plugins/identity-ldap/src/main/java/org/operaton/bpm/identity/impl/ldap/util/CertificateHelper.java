@@ -27,7 +27,9 @@ import javax.net.ssl.X509TrustManager;
 
 
 public class CertificateHelper {
-  
+  private CertificateHelper() {
+  }
+
   public static void acceptUntrusted() {
     try {
       SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -37,8 +39,8 @@ public class CertificateHelper {
       throw new RuntimeException("Could not change SSL TrustManager to accept arbitrary certificates", ex);
     }
   }
-
   private static class DefaultTrustManager implements X509TrustManager {
+
 
     @Override
     public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
@@ -47,7 +49,6 @@ public class CertificateHelper {
     @Override
     public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
     }
-
     @Override
     public X509Certificate[] getAcceptedIssuers() {
       return null;

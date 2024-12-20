@@ -38,6 +38,9 @@ public class BpmnExceptionHandler {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
 
+  private BpmnExceptionHandler() {
+  }
+
   /**
    * Decides how to propagate the exception properly, e.g. as bpmn error or "normal" error.
    * @param execution the current execution
@@ -154,6 +157,4 @@ public class BpmnExceptionHandler {
       errorHandlingExecution.executeActivity(errorHandlingActivity);
     }
   }
-
-
 }

@@ -48,4 +48,6 @@ public class DeploymentMetadataConstants {
   public static final String PROCESS = "process";
   public static final String RESOURCE = "resource";
 
+  private DeploymentMetadataConstants() {
+  }
 }

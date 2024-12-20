@@ -37,4 +37,7 @@ public final class CsrfConstants {
 
   public static final String CSRF_PATH_FIELD_NAME = ";Path=";
 
+  private CsrfConstants() {
+  }
+
 }

@@ -31,6 +31,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
 
 public class DeploymentAwareBatchesScenario {
 
+  private DeploymentAwareBatchesScenario() {
+  }
+
   @Deployment
   public static String deployOneTask() {
     return "org/operaton/bpm/qa/upgrade/batch/deploymentaware/oneTaskProcess.bpmn20.xml";

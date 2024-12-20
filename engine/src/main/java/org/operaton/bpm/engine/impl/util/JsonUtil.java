@@ -26,9 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -42,6 +39,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LazilyParsedNumber;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 
 /**
  * @author Tassilo Weidner
@@ -51,6 +50,9 @@ public final class JsonUtil {
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
   protected static Gson gsonMapper = createGsonMapper();
+
+  private JsonUtil() {
+  }
 
   public static void addFieldRawValue(JsonObject jsonObject, String memberName, Object rawValue) {
     if (rawValue != null) {
@@ -757,5 +759,4 @@ public final class JsonUtil {
       })
       .create();
   }
-
 }

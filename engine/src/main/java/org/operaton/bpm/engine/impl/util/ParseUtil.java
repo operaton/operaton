@@ -36,6 +36,9 @@ public class ParseUtil {
 
   protected static final Pattern REGEX_TTL_ISO = Pattern.compile("^P(\\d+)D$");
 
+  private ParseUtil() {
+  }
+
   /**
    * Parse History Time To Live in ISO-8601 format to integer and set into the given entity
    * @param historyTimeToLive

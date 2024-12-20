@@ -27,6 +27,9 @@ import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
 
 public class ProcessApplicationScanningUtil {
 
+  private ProcessApplicationScanningUtil() {
+  }
+
   /**
    *
    * @param classLoader

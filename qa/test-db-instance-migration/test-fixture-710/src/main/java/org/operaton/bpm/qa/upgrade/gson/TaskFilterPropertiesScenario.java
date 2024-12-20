@@ -33,6 +33,9 @@ import java.util.Map;
  */
 public class TaskFilterPropertiesScenario {
 
+  private TaskFilterPropertiesScenario() {
+  }
+
   @DescribesScenario("initTaskFilterProperties")
   public static ScenarioSetup initTaskFilterProperties() {
     return new ScenarioSetup() {

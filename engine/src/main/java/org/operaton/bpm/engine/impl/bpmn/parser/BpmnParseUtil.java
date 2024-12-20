@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
 import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -42,6 +43,9 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
  * Helper methods to reused for common parsing tasks.
  */
 public final class BpmnParseUtil {
+
+  private BpmnParseUtil() {
+  }
 
   /**
    * Returns the operaton extension element in the operaton namespace
@@ -255,5 +259,4 @@ public final class BpmnParseUtil {
   protected static ExpressionManager getExpressionManager() {
     return Context.getProcessEngineConfiguration().getExpressionManager();
   }
-
 }

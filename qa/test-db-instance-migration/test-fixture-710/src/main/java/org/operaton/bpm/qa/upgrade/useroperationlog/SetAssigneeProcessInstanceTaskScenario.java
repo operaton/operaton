@@ -32,6 +32,9 @@ import org.operaton.bpm.qa.upgrade.ScenarioSetup;
  */
 public class SetAssigneeProcessInstanceTaskScenario {
 
+  private SetAssigneeProcessInstanceTaskScenario() {
+  }
+
   @Deployment
   public static String deploy() {
     return "org/operaton/bpm/qa/upgrade/useroperationlog/oneTaskProcess.bpmn20.xml";

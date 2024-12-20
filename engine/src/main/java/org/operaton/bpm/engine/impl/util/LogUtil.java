@@ -39,13 +39,17 @@ import org.operaton.bpm.engine.impl.pvm.PvmException;
 @Deprecated
 public class LogUtil {
 
-  public static enum ThreadLogMode {
-    NONE, INDENT, PRINT_ID
-  }
 
+  public static enum ThreadLogMode {
+    NONE, INDENT, PRINT_ID;
+
+  }
   private static final String LINE_SEPARATOR = System.getProperty("line.separator");
   private static Map<Integer, String> threadIndents = new HashMap<>();
   private static ThreadLogMode threadLogMode = ThreadLogMode.NONE;
+
+  private LogUtil() {
+  }
 
   public static ThreadLogMode getThreadLogMode() {
     return threadLogMode;
@@ -76,8 +80,8 @@ public class LogUtil {
   }
 
   private static Format dateFormat = new SimpleDateFormat("HH:mm:ss,SSS");
-
   public static class LogFormatter extends Formatter {
+
 
     @Override
     public String format(LogRecord record) {

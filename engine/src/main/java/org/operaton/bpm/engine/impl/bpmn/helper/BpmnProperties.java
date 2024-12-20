@@ -79,4 +79,7 @@ public class BpmnProperties {
   public static final PropertyKey<Map<String, String>> EXTENSION_PROPERTIES = new PropertyKey<>("extensionProperties");
 
   public static final PropertyListKey<OperatonErrorEventDefinition> CAMUNDA_ERROR_EVENT_DEFINITION = new PropertyListKey<>("operatonErrorEventDefinition");
+
+  private BpmnProperties() {
+  }
 }

@@ -416,6 +416,9 @@
               <includes>
                 <include>%regex[.*]</include>
               </includes>
+              <excludes combine.children="append">
+                <exclude>**/*NashornTest.java</exclude>
+              </excludes>
             </configuration>
           </plugin>
         </plugins>

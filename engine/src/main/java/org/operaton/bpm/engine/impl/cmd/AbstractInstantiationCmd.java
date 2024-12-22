@@ -85,6 +85,14 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     return variablesLocal;
   }
 
+  public String getAncestorActivityInstanceId() {
+    return ancestorActivityInstanceId;
+  }
+
+  public void setAncestorActivityInstanceId(String ancestorActivityInstanceId) {
+    this.ancestorActivityInstanceId = ancestorActivityInstanceId;
+  }
+
   @Override
   public Void execute(final CommandContext commandContext) {
     ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
@@ -317,7 +325,6 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
       throw new ProcessEngineException("Cannot instantiate element " + targetElement);
     }
   }
-
 
   protected void instantiateConcurrent(ExecutionEntity ancestorScopeExecution, List<PvmActivity> parentFlowScopes, CoreModelElement targetElement) {
     if (PvmTransition.class.isAssignableFrom(targetElement.getClass())) {

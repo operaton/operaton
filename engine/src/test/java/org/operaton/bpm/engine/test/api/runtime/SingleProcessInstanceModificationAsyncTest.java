@@ -27,10 +27,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.batch.Batch;
@@ -53,12 +55,12 @@ import org.junit.Test;
 
 /**
  * @author Yana Vasileva
- *
  */
 public class SingleProcessInstanceModificationAsyncTest extends PluggableProcessEngineTest {
 
   protected static final String PARALLEL_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.parallelGateway.bpmn20.xml";
   protected static final String EXCLUSIVE_GATEWAY_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.exclusiveGateway.bpmn20.xml";
+  protected static final String LOOP_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.loop.bpmn";
   protected static final String SUBPROCESS_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.subprocess.bpmn20.xml";
   protected static final String ONE_SCOPE_TASK_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.oneScopeTaskProcess.bpmn20.xml";
   protected static final String TRANSITION_LISTENER_PROCESS = "org/operaton/bpm/engine/test/api/runtime/ProcessInstanceModificationTest.transitionListeners.bpmn20.xml";
@@ -85,20 +87,25 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   public void testTheDeploymentIdIsSet() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
     String processDefinitionId = processInstance.getProcessDefinitionId();
-    ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
+    ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+        .processDefinitionId(processDefinitionId)
+        .singleResult();
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
         .executeAsync();
     assertNotNull(modificationBatch);
-    Job job = managementService.createJobQuery().jobDefinitionId(modificationBatch.getSeedJobDefinitionId()).singleResult();
+    Job job = managementService.createJobQuery()
+        .jobDefinitionId(modificationBatch.getSeedJobDefinitionId())
+        .singleResult();
     // seed job
     managementService.executeJob(job.getId());
 
-    for (Job pending : managementService.createJobQuery().jobDefinitionId(modificationBatch.getBatchJobDefinitionId()).list()) {
+    for (Job pending : managementService.createJobQuery()
+        .jobDefinitionId(modificationBatch.getBatchJobDefinitionId())
+        .list()) {
       managementService.executeJob(pending.getId());
       assertEquals(processDefinition.getDeploymentId(), pending.getDeploymentId());
     }
@@ -112,8 +119,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -123,7 +129,8 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
@@ -142,9 +149,9 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
     Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
-      .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
-      .cancelActivityInstance(getInstanceIdForActivity(tree, "task2"))
-      .executeAsync();
+        .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
+        .cancelActivityInstance(getInstanceIdForActivity(tree, "task2"))
+        .executeAsync();
     assertNotNull(modificationBatch);
     executeSeedAndBatchJobs(modificationBatch);
 
@@ -160,9 +167,9 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     try {
       Batch modificationBatch = runtimeService.createProcessInstanceModification("foo")
-        .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
-        .cancelActivityInstance(getInstanceIdForActivity(tree, "task2"))
-        .executeAsync();
+          .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
+          .cancelActivityInstance(getInstanceIdForActivity(tree, "task2"))
+          .executeAsync();
       assertNotNull(modificationBatch);
       executeSeedAndBatchJobs(modificationBatch);
       testRule.assertProcessEnded(processInstance.getId());
@@ -179,8 +186,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .startBeforeActivity("task2")
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -190,12 +196,22 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
+            .activity("task2")
+            .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
-        .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .up()
+        .child("task2")
+        .concurrent()
+        .noScope()
+        .done());
 
     assertEquals(2, taskService.createTaskQuery().count());
 
@@ -212,8 +228,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstanceId);
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .startBeforeActivity("task2", tree.getId())
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -223,12 +238,22 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
+            .activity("task2")
+            .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
-        .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .up()
+        .child("task2")
+        .concurrent()
+        .noScope()
+        .done());
 
     assertEquals(2, taskService.createTaskQuery().count());
 
@@ -237,6 +262,34 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     testRule.assertProcessEnded(processInstanceId);
   }
 
+  @Deployment(resources = LOOP_PROCESS)
+  @Test
+  public void testStartBeforeWithAncestorInstanceIdWithAncestorCancelled() {
+    // given
+    Map<String, Object> vars = new HashMap<>();
+    vars.put("ids", new ArrayList<>(Arrays.asList("1")));
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("loopProcess", vars);
+    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
+    String ancestorActivityId = getChildInstanceForActivity(tree, "loop").getId();
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
+        .cancelActivityInstance(getChildInstanceForActivity(tree, "task").getId())
+        .startBeforeActivity("task", ancestorActivityId)
+        .executeAsync();
+    assertNotNull(modificationBatch);
+
+    try {
+      // when
+      executeSeedAndBatchJobs(modificationBatch);
+      fail(
+          "It should not be possible to start before the 'task' activity because the 'task' activity has already been cancelled.");
+    } catch (ProcessEngineException e) {
+      // then
+      testRule.assertTextPresentIgnoreCase(
+          "Cannot perform instruction: Start before activity 'task' with ancestor activity instance '"
+              + ancestorActivityId + "'; Ancestor activity instance '" + ancestorActivityId
+              + "' does not exist: ancestorInstance is null", e.getMessage());
+    }
+  }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
@@ -251,7 +304,8 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
       fail("should not succeed");
     } catch (NotValidException e) {
       // then
-      testRule.assertTextPresentIgnoreCase("element 'someNonExistingActivity' does not exist in process ", e.getMessage());
+      testRule.assertTextPresentIgnoreCase("element 'someNonExistingActivity' does not exist in process ",
+          e.getMessage());
     }
   }
 
@@ -276,7 +330,8 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
@@ -295,8 +350,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .startTransition("flow4")
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -306,12 +360,22 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
+            .activity("task2")
+            .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
-        .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .up()
+        .child("task2")
+        .concurrent()
+        .noScope()
+        .done());
 
     assertEquals(2, taskService.createTaskQuery().count());
 
@@ -328,8 +392,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstanceId);
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .startTransition("flow4", tree.getId())
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -339,12 +402,22 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
+            .activity("task2")
+            .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
-        .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .up()
+        .child("task2")
+        .concurrent()
+        .noScope()
+        .done());
 
     assertEquals(2, taskService.createTaskQuery().count());
 
@@ -368,8 +441,9 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     } catch (ProcessEngineException e) {
       // happy path
-      testRule.assertTextPresent("Cannot perform instruction: " + "Start transition 'invalidFlowId'; " + "Element 'invalidFlowId' does not exist in process '"
-          + processInstance.getProcessDefinitionId() + "'", e.getMessage());
+      testRule.assertTextPresent("Cannot perform instruction: " + "Start transition 'invalidFlowId'; "
+              + "Element 'invalidFlowId' does not exist in process '" + processInstance.getProcessDefinitionId() + "'",
+          e.getMessage());
     }
   }
 
@@ -379,8 +453,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .startAfterActivity("theStart")
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -390,12 +463,22 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task1").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
+            .activity("task1")
+            .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
-        .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task1").concurrent().noScope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .up()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .done());
 
     assertEquals(2, taskService.createTaskQuery().count());
 
@@ -412,8 +495,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstanceId);
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .startAfterActivity("theStart", tree.getId())
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -423,12 +505,22 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1").activity("task1").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task1")
+            .activity("task1")
+            .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree)
-        .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task1").concurrent().noScope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .up()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .done());
 
     assertEquals(2, taskService.createTaskQuery().count());
 
@@ -437,6 +529,34 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     testRule.assertProcessEnded(processInstanceId);
   }
 
+  @Deployment(resources = LOOP_PROCESS)
+  @Test
+  public void testStartAfterWithAncestorInstanceIdWithAncestorCancelled() {
+    // given
+    Map<String, Object> vars = new HashMap<>();
+    vars.put("ids", new ArrayList<>(Arrays.asList("1")));
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("loopProcess", vars);
+    ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
+    String ancestorActivityId = getChildInstanceForActivity(tree, "loop").getId();
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
+        .cancelActivityInstance(getChildInstanceForActivity(tree, "task").getId())
+        .startAfterActivity("task", ancestorActivityId)
+        .executeAsync();
+    assertNotNull(modificationBatch);
+
+    try {
+      // when
+      executeSeedAndBatchJobs(modificationBatch);
+      fail(
+          "It should not be possible to start after the 'task' activity because the 'task' activity has already been cancelled.");
+    } catch (ProcessEngineException e) {
+      // then
+      testRule.assertTextPresentIgnoreCase(
+          "Cannot perform instruction: Start after activity 'task' with ancestor activity instance '"
+              + ancestorActivityId + "'; Ancestor activity instance '" + ancestorActivityId
+              + "' does not exist: ancestorInstance is null", e.getMessage());
+    }
+  }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
@@ -495,8 +615,9 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
       fail("should not succeed");
     } catch (NotValidException e) {
       // then
-      testRule.assertTextPresentIgnoreCase("Cannot perform instruction: " + "Start after activity 'someNonExistingActivity'; "
-          + "Activity 'someNonExistingActivity' does not exist: activity is null", e.getMessage());
+      testRule.assertTextPresentIgnoreCase(
+          "Cannot perform instruction: " + "Start after activity 'someNonExistingActivity'; "
+              + "Activity 'someNonExistingActivity' does not exist: activity is null", e.getMessage());
     }
   }
 
@@ -506,8 +627,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .startBeforeActivity("theTask")
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -517,12 +637,27 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").activity("theTask").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask")
+            .activity("theTask")
+            .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("theTask").scope().up().up().child(null)
-        .concurrent().noScope().child("theTask").scope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child(null)
+        .concurrent()
+        .noScope()
+        .child("theTask")
+        .scope()
+        .up()
+        .up()
+        .child(null)
+        .concurrent()
+        .noScope()
+        .child("theTask")
+        .scope()
+        .done());
 
     assertEquals(2, taskService.createTaskQuery().count());
     completeTasksInOrder("theTask", "theTask");
@@ -537,8 +672,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
 
     // when starting after the task, essentially nothing changes in the process
     // instance
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .startAfterActivity("theTask")
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -548,14 +682,17 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
     assertThat(executionTree).matches(describeExecutionTree(null).scope().child("theTask").scope().done());
 
     // when starting after the start event, regular concurrency happens
-    Batch modificationBatch2 = runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("theStart").executeAsync();
+    Batch modificationBatch2 = runtimeService.createProcessInstanceModification(processInstance.getId())
+        .startAfterActivity("theStart")
+        .executeAsync();
     assertNotNull(modificationBatch2);
     executeSeedAndBatchJobs(modificationBatch2);
 
@@ -563,12 +700,27 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(processInstanceId, updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask").activity("theTask").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("theTask")
+            .activity("theTask")
+            .done());
 
     executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
-    assertThat(executionTree).matches(describeExecutionTree(null).scope().child(null).concurrent().noScope().child("theTask").scope().up().up().child(null)
-        .concurrent().noScope().child("theTask").scope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child(null)
+        .concurrent()
+        .noScope()
+        .child("theTask")
+        .scope()
+        .up()
+        .up()
+        .child(null)
+        .concurrent()
+        .noScope()
+        .child("theTask")
+        .scope()
+        .done());
 
     completeTasksInOrder("theTask", "theTask");
     testRule.assertProcessEnded(processInstanceId);
@@ -578,15 +730,14 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   @Test
   public void testSkipTaskListenerInvocation() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerProcess", "brum",
-        Collections.<String, Object> singletonMap("listener", new RecorderTaskListener()));
+        Collections.<String, Object>singletonMap("listener", new RecorderTaskListener()));
 
     String processInstanceId = processInstance.getId();
 
     RecorderTaskListener.clear();
 
     // when I start an activity with "skip listeners" setting
-    Batch modificationBatch =  runtimeService
-        .createProcessInstanceModification(processInstanceId)
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstanceId)
         .startBeforeActivity("task")
         .executeAsync(true, false);
     assertNotNull(modificationBatch);
@@ -598,8 +749,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     // when I cancel an activity with "skip listeners" setting
     ActivityInstance activityInstanceTree = runtimeService.getActivityInstance(processInstanceId);
 
-    Batch batch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch batch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .cancelActivityInstance(getChildInstanceForActivity(activityInstanceTree, "task").getId())
         .executeAsync(true, false);
     assertNotNull(batch);
@@ -615,8 +765,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("ioMappingProcess");
 
     // when I start task2
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(processInstance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(processInstance.getId())
         .startBeforeActivity("task2")
         .executeAsync(false, true);
     assertNotNull(modificationBatch);
@@ -629,7 +778,9 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNull(runtimeService.getVariable(task2Execution.getId(), "inputMappingExecuted"));
 
     // when I cancel task2
-    Batch modificationBatch2 = runtimeService.createProcessInstanceModification(processInstance.getId()).cancelAllForActivity("task2").executeAsync(false, true);
+    Batch modificationBatch2 = runtimeService.createProcessInstanceModification(processInstance.getId())
+        .cancelAllForActivity("task2")
+        .executeAsync(false, true);
     assertNotNull(modificationBatch2);
     executeSeedAndBatchJobs(modificationBatch2);
 
@@ -645,8 +796,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("transitionListenerProcess",
         Variables.createVariables().putValue("listener", new RecorderExecutionListener()));
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(instance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(instance.getId())
         .startTransition("flow2")
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -665,12 +815,20 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(instance.getId(), updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(instance.getId(), processEngine);
 
-    assertThat(executionTree)
-        .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .up()
+        .child("task2")
+        .concurrent()
+        .noScope()
+        .done());
 
     completeTasksInOrder("task1", "task2", "task2");
     testRule.assertProcessEnded(instance.getId());
@@ -684,8 +842,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("transitionListenerProcess",
         Variables.createVariables().putValue("listener", new RecorderExecutionListener()));
 
-    Batch modificationBatch = runtimeService
-        .createProcessInstanceModification(instance.getId())
+    Batch modificationBatch = runtimeService.createProcessInstanceModification(instance.getId())
         .startTransition("flow2")
         .executeAsync();
     assertNotNull(modificationBatch);
@@ -704,12 +861,20 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(updatedTree);
     assertEquals(instance.getId(), updatedTree.getProcessInstanceId());
 
-    assertThat(updatedTree).hasStructure(describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
+    assertThat(updatedTree).hasStructure(
+        describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(instance.getId(), processEngine);
 
-    assertThat(executionTree)
-        .matches(describeExecutionTree(null).scope().child("task1").concurrent().noScope().up().child("task2").concurrent().noScope().done());
+    assertThat(executionTree).matches(describeExecutionTree(null).scope()
+        .child("task1")
+        .concurrent()
+        .noScope()
+        .up()
+        .child("task2")
+        .concurrent()
+        .noScope()
+        .done());
 
     completeTasksInOrder("task1", "task2", "task2");
     testRule.assertProcessEnded(instance.getId());
@@ -734,7 +899,8 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
     assertNotNull(activityInstanceTree);
     assertEquals(processInstanceId, activityInstanceTree.getProcessInstanceId());
 
-    assertThat(activityInstanceTree).hasStructure(describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
+    assertThat(activityInstanceTree).hasStructure(
+        describeActivityInstanceTree(processInstance.getProcessDefinitionId()).activity("task2").done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
 
@@ -782,8 +948,9 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
       executeSeedAndBatchJobs(modificationBatch);
       fail("should not succeed");
     } catch (NotValidException e) {
-      testRule.assertTextPresent("Cannot perform instruction: Cancel transition instance 'nonExistingActivityInstance'; "
-          + "Transition instance 'nonExistingActivityInstance' does not exist", e.getMessage());
+      testRule.assertTextPresent(
+          "Cannot perform instruction: Cancel transition instance 'nonExistingActivityInstance'; "
+              + "Transition instance 'nonExistingActivityInstance' does not exist", e.getMessage());
     }
 
   }
@@ -793,7 +960,9 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   public void testCancelCallActivityInstance() {
     // given
     ProcessInstance parentprocess = runtimeService.startProcessInstanceByKey("parentprocess");
-    ProcessInstance subProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").singleResult();
+    ProcessInstance subProcess = runtimeService.createProcessInstanceQuery()
+        .processDefinitionKey("subprocess")
+        .singleResult();
 
     ActivityInstance subProcessActivityInst = runtimeService.getActivityInstance(subProcess.getId());
 
@@ -823,8 +992,7 @@ public class SingleProcessInstanceModificationAsyncTest extends PluggableProcess
   @Test
   public void testSetInvocationsPerBatchType() {
     // given
-    processEngineConfiguration.getInvocationsPerBatchJobByBatchType()
-        .put(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION, 42);
+    processEngineConfiguration.getInvocationsPerBatchJobByBatchType().put(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION, 42);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
 

@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.operaton.bpm.container.ExecutorService;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
+import org.operaton.bpm.container.impl.jmx.services.JmxManagedThreadPool;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 
@@ -62,6 +63,15 @@ public class RuntimeContainerJobExecutor extends JobExecutor {
 
       logRejectedExecution(processEngine, jobIds.size());
       rejectedJobsHandler.jobsRejected(jobIds, processEngine, this);
+    }
+
+    if (executorService instanceof JmxManagedThreadPool jmxManagedThreadPool) {
+      int totalQueueCapacity = calculateTotalQueueCapacity(jmxManagedThreadPool.getQueueCount(),
+              jmxManagedThreadPool.getQueueAddlCapacity());
+
+      logJobExecutionInfo(processEngine, jmxManagedThreadPool.getQueueCount(), totalQueueCapacity,
+              jmxManagedThreadPool.getMaximumPoolSize(),
+              jmxManagedThreadPool.getActiveCount());
     }
   }
 

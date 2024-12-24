@@ -290,6 +290,8 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- Scripting -->
+
     <dependency>
       <groupId>org.apache.groovy</groupId>
       <artifactId>groovy-jsr223</artifactId>
@@ -325,6 +327,11 @@
       <groupId>org.graalvm.js</groupId>
       <artifactId>js-scriptengine</artifactId>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.openjdk.nashorn</groupId>
+      <artifactId>nashorn-core</artifactId>
     </dependency>
 
     <dependency>

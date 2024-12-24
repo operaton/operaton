@@ -338,6 +338,13 @@
         <version>${version.jaxrs.api}</version>
       </dependency>
 
+      <!-- Scripting -->
+      <dependency>
+        <groupId>org.openjdk.nashorn</groupId>
+        <artifactId>nashorn-core</artifactId>
+        <version>15.4</version>
+      </dependency>
+
       <!-- licensing dependencies -->
       <dependency>
         <groupId>org.bouncycastle</groupId>

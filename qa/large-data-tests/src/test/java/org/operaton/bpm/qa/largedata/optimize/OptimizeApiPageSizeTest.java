@@ -59,7 +59,7 @@ class OptimizeApiPageSizeTest {
     assertThat(pageOfEntries).hasSize(OPTIMIZE_PAGE_SIZE);
   }
 
-  private Object[] optimizeServiceFunctions() {
+  private static Object[] optimizeServiceFunctions() {
     return new TestScenario[]{
       new TestScenario(
         pageSize -> optimizeService.getRunningHistoricActivityInstances(null, null, pageSize),

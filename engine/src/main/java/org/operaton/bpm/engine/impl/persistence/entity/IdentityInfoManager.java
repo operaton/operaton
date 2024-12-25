@@ -154,7 +154,7 @@ public class IdentityInfoManager extends AbstractManager {
     Map<String, String> parameters = new HashMap<>();
     parameters.put("userId", userId);
     parameters.put("type", type);
-    return (List) getDbEntityManager().selectList("selectIdentityInfoKeysByUserIdAndType", parameters);
+    return getDbEntityManager().selectList("selectIdentityInfoKeysByUserIdAndType", parameters);
   }
 
   public void deleteUserInfoByUserId(String userId) {

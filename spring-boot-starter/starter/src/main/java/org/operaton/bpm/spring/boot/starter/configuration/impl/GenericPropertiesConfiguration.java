@@ -22,13 +22,6 @@ import org.operaton.bpm.spring.boot.starter.configuration.Ordering;
 import org.operaton.bpm.spring.boot.starter.property.GenericProperties;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterPropertyHelper;
-import org.springframework.boot.context.properties.bind.BindHandler;
-import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.context.properties.bind.Binder;
-import org.springframework.boot.context.properties.bind.handler.NoUnboundElementsBindHandler;
-import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
-import org.springframework.boot.context.properties.source.ConfigurationPropertySource;
-import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.CollectionUtils;
 

@@ -18,8 +18,6 @@ package org.operaton.bpm.qa.upgrade.scenarios7110.timestamp;
 
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.qa.upgrade.Origin;
-import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 import org.junit.Test;
 
 import java.util.Date;

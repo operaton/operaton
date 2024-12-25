@@ -52,7 +52,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(results.getFirstResult()).isNull();
     assertThat(results.getSingleResult()).isNull();
 
-    assertThat((Object) results.getSingleEntry()).isNull();
+    assertThat(results.getSingleEntry() == null).isTrue();
     assertThat((Object) results.getSingleEntryTyped()).isNull();
   }
 
@@ -118,7 +118,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
     assertNoOutputValue(decisionResult.getFirstResult());
 
-    assertThat((Object) decisionResult.getSingleEntry()).isNull();
+    assertThat(decisionResult.getSingleEntry() == null).isTrue();
   }
 
   @Test

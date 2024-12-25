@@ -26,8 +26,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.operaton.bpm.qa.upgrade.Origin;
-import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 import org.junit.Rule;
 import org.junit.Test;
 

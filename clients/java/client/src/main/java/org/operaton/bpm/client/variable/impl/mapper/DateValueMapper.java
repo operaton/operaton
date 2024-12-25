@@ -61,7 +61,7 @@ public class DateValueMapper extends PrimitiveValueMapper<DateValue> {
   }
 
   public void writeValue(DateValue dateValue, TypedValueField typedValueField) {
-    Date date = (Date) dateValue.getValue();
+    Date date = dateValue.getValue();
 
     if (date != null) {
       SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);

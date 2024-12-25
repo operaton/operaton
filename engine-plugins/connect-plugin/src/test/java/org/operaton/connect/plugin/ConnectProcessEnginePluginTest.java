@@ -25,7 +25,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.BpmnError;

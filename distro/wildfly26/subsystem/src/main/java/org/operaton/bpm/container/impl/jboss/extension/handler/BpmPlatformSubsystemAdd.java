@@ -32,8 +32,6 @@ import org.jboss.dmr.ModelNode;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceController.Mode;
 
-import java.util.List;
-
 
 /**
  * Provides the description and the implementation of the subsystem#add operation.

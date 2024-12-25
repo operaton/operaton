@@ -42,7 +42,7 @@ public abstract class AbstractPvmEventAtomicOperation extends AbstractEventAtomi
   protected void eventNotificationsFailed(PvmExecutionImpl execution, Exception exception) {
 
     if (shouldHandleFailureAsBpmnError()) {
-      ActivityExecution activityExecution = (ActivityExecution) execution;
+      ActivityExecution activityExecution = execution;
       try {
         resetListeners(execution);
         BpmnExceptionHandler.propagateException(activityExecution, exception);

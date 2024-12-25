@@ -46,7 +46,7 @@ public class IncidentManager extends AbstractManager {
   }
 
   public Incident findIncidentById(String id) {
-    return (Incident) getDbEntityManager().selectById(IncidentEntity.class, id);
+    return getDbEntityManager().selectById(IncidentEntity.class, id);
   }
 
   public List<Incident> findIncidentByConfiguration(String configuration) {

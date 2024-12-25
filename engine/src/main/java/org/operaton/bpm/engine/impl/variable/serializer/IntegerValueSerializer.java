@@ -40,7 +40,7 @@ public class IntegerValueSerializer extends PrimitiveValueSerializer<IntegerValu
     Integer value = variableValue.getValue();
 
     if (value!=null) {
-      valueFields.setLongValue(((Integer) value).longValue());
+      valueFields.setLongValue(value.longValue());
       valueFields.setTextValue(value.toString());
     } else {
       valueFields.setLongValue(null);

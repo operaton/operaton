@@ -55,7 +55,6 @@ import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.core.model.CallableElement;
-import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionEntity;
 import org.operaton.bpm.engine.impl.history.event.UserOperationLogEntryEventEntity;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateProcessDefinitionHandler;
@@ -924,7 +923,7 @@ public class RepositoryServiceTest extends PluggableProcessEngineTest {
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinition.getId(), null);
 
     //then
-    decisionDefinition = (DecisionDefinitionEntity) repositoryService.getDecisionDefinition(decisionDefinition.getId());
+    decisionDefinition = repositoryService.getDecisionDefinition(decisionDefinition.getId());
     assertEquals(null, decisionDefinition.getHistoryTimeToLive());
 
   }

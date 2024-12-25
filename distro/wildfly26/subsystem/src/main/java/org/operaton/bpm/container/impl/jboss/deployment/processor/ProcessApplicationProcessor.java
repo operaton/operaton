@@ -233,14 +233,11 @@ public class ProcessApplicationProcessor implements DeploymentUnitProcessor {
 
   protected ClassInfo getClassInfo(AnnotationInstance annotation) {
     AnnotationTarget target = annotation.target();
-    switch (target.kind()) {
-    case METHOD:
-      return target.asMethod().declaringClass();
-    case CLASS:
-      return target.asClass();
-    default:
-      return null;
-    }
+    return switch (target.kind()) {
+      case METHOD -> target.asMethod().declaringClass();
+      case CLASS -> target.asClass();
+      default -> null;
+    };
   }
 
   @Override

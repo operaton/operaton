@@ -19,7 +19,6 @@ package org.operaton.bpm.spring.boot.starter.actuator;
 import static java.util.Objects.requireNonNull;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;

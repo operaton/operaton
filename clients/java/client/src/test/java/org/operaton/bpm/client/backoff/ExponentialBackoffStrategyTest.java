@@ -21,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -43,9 +44,9 @@ class ExponentialBackoffStrategyTest {
 
     // when
     // in consecutive iterations, no external tasks are available
-    backoffStrategy.reconfigure(Lists.emptyList());
+    backoffStrategy.reconfigure(emptyList());
     long waitingTime1 = backoffStrategy.calculateBackoffTime();
-    backoffStrategy.reconfigure(Lists.emptyList());
+    backoffStrategy.reconfigure(emptyList());
     long waitingTime2 = backoffStrategy.calculateBackoffTime();
 
     // then
@@ -56,7 +57,7 @@ class ExponentialBackoffStrategyTest {
   @Test
   void shouldResetBackoffStrategy() {
     // given
-    backoffStrategy.reconfigure(Lists.emptyList());
+    backoffStrategy.reconfigure(emptyList());
     long waitingTime1 = backoffStrategy.calculateBackoffTime();
     assertThat(waitingTime1).isEqualTo(500L);
 

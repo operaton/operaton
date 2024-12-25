@@ -127,17 +127,13 @@ public class ExternalTaskClientLogger extends BaseLogger {
       String message = restException.getMessage();
       int httpStatusCode = restException.getHttpStatusCode();
 
-      switch (httpStatusCode) {
-        case 400:
-          return new BadRequestException(createMessage("007", actionName, message), restException);
-        case 404:
-          return new NotFoundException(createMessage("008", actionName, message), restException);
-        case 500:
-          return new EngineException(createMessage("009", actionName, message), restException);
-        default:
-          return new UnknownHttpErrorException(exceptionMessage(
-            "031", "Exception while {}: The request failed with status code {} and message: \"{}\"", actionName, httpStatusCode, message), restException);
-      }
+      return switch (httpStatusCode) {
+        case 400 -> new BadRequestException(createMessage("007", actionName, message), restException);
+        case 404 -> new NotFoundException(createMessage("008", actionName, message), restException);
+        case 500 -> new EngineException(createMessage("009", actionName, message), restException);
+        default -> new UnknownHttpErrorException(exceptionMessage(
+                  "031", "Exception while {}: The request failed with status code {} and message: \"{}\"", actionName, httpStatusCode, message), restException);
+      };
     }
 
     if (causedException instanceof IOException ioException) {

@@ -53,7 +53,7 @@ public class CandidateDeploymentImpl implements CandidateDeployment {
 
   public static CandidateDeploymentImpl fromDeploymentEntity(DeploymentEntity deploymentEntity) {
     // first cast ResourceEntity map to Resource
-    Map<String, Resource> resources = new HashMap<>((Map<String, ? extends Resource>) deploymentEntity.getResources());
+    Map<String, Resource> resources = new HashMap<>(deploymentEntity.getResources());
     return new CandidateDeploymentImpl(deploymentEntity.getName(), resources);
   }
 }

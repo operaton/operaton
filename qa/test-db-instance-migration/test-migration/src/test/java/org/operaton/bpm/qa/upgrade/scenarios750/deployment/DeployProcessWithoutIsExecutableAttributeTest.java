@@ -19,8 +19,6 @@ package org.operaton.bpm.qa.upgrade.scenarios750.deployment;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.qa.upgrade.Origin;
-import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

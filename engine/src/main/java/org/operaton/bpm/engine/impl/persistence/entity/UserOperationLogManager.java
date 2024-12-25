@@ -826,18 +826,13 @@ public class UserOperationLogManager extends AbstractHistoricManager {
   }
 
   protected String getOperationType(IdentityOperationResult operationResult) {
-    switch (operationResult.getOperation()) {
-    case IdentityOperationResult.OPERATION_CREATE:
-      return UserOperationLogEntry.OPERATION_TYPE_CREATE;
-    case IdentityOperationResult.OPERATION_UPDATE:
-      return UserOperationLogEntry.OPERATION_TYPE_UPDATE;
-    case IdentityOperationResult.OPERATION_DELETE:
-      return UserOperationLogEntry.OPERATION_TYPE_DELETE;
-    case IdentityOperationResult.OPERATION_UNLOCK:
-      return UserOperationLogEntry.OPERATION_TYPE_UNLOCK;
-    default:
-      return null;
-    }
+    return switch (operationResult.getOperation()) {
+      case IdentityOperationResult.OPERATION_CREATE -> UserOperationLogEntry.OPERATION_TYPE_CREATE;
+      case IdentityOperationResult.OPERATION_UPDATE -> UserOperationLogEntry.OPERATION_TYPE_UPDATE;
+      case IdentityOperationResult.OPERATION_DELETE -> UserOperationLogEntry.OPERATION_TYPE_DELETE;
+      case IdentityOperationResult.OPERATION_UNLOCK -> UserOperationLogEntry.OPERATION_TYPE_UNLOCK;
+      default -> null;
+    };
   }
 
   protected void configureQuery(UserOperationLogQueryImpl query) {

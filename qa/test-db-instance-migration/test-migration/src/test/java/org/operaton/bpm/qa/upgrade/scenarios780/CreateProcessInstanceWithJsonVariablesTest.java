@@ -22,9 +22,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.operaton.bpm.qa.upgrade.Origin;
-
-import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 import org.operaton.bpm.qa.upgrade.json.beans.ObjectList;
 import org.operaton.bpm.qa.upgrade.json.beans.Order;
 

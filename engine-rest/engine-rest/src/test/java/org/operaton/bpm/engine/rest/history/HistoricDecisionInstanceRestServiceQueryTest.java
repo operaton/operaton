@@ -619,14 +619,14 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     // verify common properties
     for (Map<String, Object> returnedInput : returnedInputs) {
-      assertThat(returnedInput).containsEntry("id", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_ID);
-      assertThat(returnedInput).containsEntry("decisionInstanceId", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID);
-      assertThat(returnedInput).containsEntry("clauseId", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_CLAUSE_ID);
-      assertThat(returnedInput).containsEntry("clauseName", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_CLAUSE_NAME);
+      assertThat(returnedInput).containsEntry("id", MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_ID);
+      assertThat(returnedInput).containsEntry("decisionInstanceId", MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID);
+      assertThat(returnedInput).containsEntry("clauseId", MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_CLAUSE_ID);
+      assertThat(returnedInput).containsEntry("clauseName", MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_CLAUSE_NAME);
       assertThat(returnedInput).containsEntry("errorMessage", null);
-      assertThat(returnedInput).containsEntry("createTime", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_CREATE_TIME);
-      assertThat(returnedInput).containsEntry("removalTime", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_REMOVAL_TIME);
-      assertThat(returnedInput).containsEntry("rootProcessInstanceId", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_ROOT_PROCESS_INSTANCE_ID);
+      assertThat(returnedInput).containsEntry("createTime", MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_CREATE_TIME);
+      assertThat(returnedInput).containsEntry("removalTime", MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_INSTANCE_REMOVAL_TIME);
+      assertThat(returnedInput).containsEntry("rootProcessInstanceId", MockProvider.EXAMPLE_HISTORIC_DECISION_INPUT_ROOT_PROCESS_INSTANCE_ID);
     }
 
     verifyStringValue(returnedInputs.get(0));
@@ -640,17 +640,17 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
     // verify common properties
     for (Map<String, Object> returnedOutput : returnedOutputs) {
-      assertThat(returnedOutput).containsEntry("id", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_ID);
-      assertThat(returnedOutput).containsEntry("decisionInstanceId", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID);
-      assertThat(returnedOutput).containsEntry("clauseId", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_CLAUSE_ID);
-      assertThat(returnedOutput).containsEntry("clauseName", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_CLAUSE_NAME);
-      assertThat(returnedOutput).containsEntry("ruleId", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_RULE_ID);
-      assertThat(returnedOutput).containsEntry("ruleOrder", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_RULE_ORDER);
-      assertThat(returnedOutput).containsEntry("variableName", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_VARIABLE_NAME);
+      assertThat(returnedOutput).containsEntry("id", MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_ID);
+      assertThat(returnedOutput).containsEntry("decisionInstanceId", MockProvider.EXAMPLE_HISTORIC_DECISION_INSTANCE_ID);
+      assertThat(returnedOutput).containsEntry("clauseId", MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_CLAUSE_ID);
+      assertThat(returnedOutput).containsEntry("clauseName", MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_CLAUSE_NAME);
+      assertThat(returnedOutput).containsEntry("ruleId", MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_RULE_ID);
+      assertThat(returnedOutput).containsEntry("ruleOrder", MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_RULE_ORDER);
+      assertThat(returnedOutput).containsEntry("variableName", MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_VARIABLE_NAME);
       assertThat(returnedOutput).containsEntry("errorMessage", null);
-      assertThat(returnedOutput).containsEntry("createTime", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_CREATE_TIME);
-      assertThat(returnedOutput).containsEntry("removalTime", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_REMOVAL_TIME);
-      assertThat(returnedOutput).containsEntry("rootProcessInstanceId", (Object) MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_ROOT_PROCESS_INSTANCE_ID);
+      assertThat(returnedOutput).containsEntry("createTime", MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_CREATE_TIME);
+      assertThat(returnedOutput).containsEntry("removalTime", MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_INSTANCE_REMOVAL_TIME);
+      assertThat(returnedOutput).containsEntry("rootProcessInstanceId", MockProvider.EXAMPLE_HISTORIC_DECISION_OUTPUT_ROOT_PROCESS_INSTANCE_ID);
     }
 
     verifyStringValue(returnedOutputs.get(0));
@@ -660,23 +660,23 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
 
   protected void verifyStringValue(Map<String, Object> stringValue) {
     StringValue exampleValue = MockProvider.EXAMPLE_HISTORIC_DECISION_STRING_VALUE;
-    assertThat(stringValue).containsEntry("type", (Object) VariableValueDto.toRestApiTypeName(exampleValue.getType().getName()));
-    assertThat(stringValue).containsEntry("value", (Object) exampleValue.getValue());
-    assertThat(stringValue).containsEntry("valueInfo", (Object) Collections.emptyMap());
+    assertThat(stringValue).containsEntry("type", VariableValueDto.toRestApiTypeName(exampleValue.getType().getName()));
+    assertThat(stringValue).containsEntry("value", exampleValue.getValue());
+    assertThat(stringValue).containsEntry("valueInfo", Collections.emptyMap());
   }
 
   protected void verifyByteArrayValue(Map<String, Object> byteArrayValue) {
     BytesValue exampleValue = MockProvider.EXAMPLE_HISTORIC_DECISION_BYTE_ARRAY_VALUE;
-    assertThat(byteArrayValue).containsEntry("type", (Object) VariableValueDto.toRestApiTypeName(exampleValue.getType().getName()));
+    assertThat(byteArrayValue).containsEntry("type", VariableValueDto.toRestApiTypeName(exampleValue.getType().getName()));
     String byteString = Base64.encodeBase64String(exampleValue.getValue()).trim();
-    assertThat(byteArrayValue).containsEntry("value", (Object) byteString);
-    assertThat(byteArrayValue).containsEntry("valueInfo", (Object) Collections.emptyMap());
+    assertThat(byteArrayValue).containsEntry("value", byteString);
+    assertThat(byteArrayValue).containsEntry("valueInfo", Collections.emptyMap());
   }
 
   @SuppressWarnings("unchecked")
   protected void verifySerializedValue(Map<String, Object> serializedValue) {
     ObjectValue exampleValue = MockProvider.EXAMPLE_HISTORIC_DECISION_SERIALIZED_VALUE;
-    assertThat(serializedValue).containsEntry("type", (Object) VariableValueDto.toRestApiTypeName(exampleValue.getType().getName()));
+    assertThat(serializedValue).containsEntry("type", VariableValueDto.toRestApiTypeName(exampleValue.getType().getName()));
     assertThat(serializedValue).containsEntry("value", exampleValue.getValue());
     Map<String, String> valueInfo = (Map<String, String>) serializedValue.get("valueInfo");
     assertThat(valueInfo).containsEntry("serializationDataFormat", exampleValue.getSerializationDataFormat());

@@ -113,8 +113,8 @@ public class CsrfPreventionFilterTest {
   public void testNonModifyingRequestTokenGeneration() throws IOException, ServletException {
     MockHttpServletResponse response = performNonModifyingRequest(nonModifyingRequestUrl, new MockHttpSession());
 
-    String cookieToken = (String) response.getHeader(SET_COOKIE_HEADER_NAME);
-    String headerToken = (String) response.getHeader(CSRF_HEADER_NAME);
+    String cookieToken = response.getHeader(SET_COOKIE_HEADER_NAME);
+    String headerToken = response.getHeader(CSRF_HEADER_NAME);
 
     Assert.assertNotNull(cookieToken);
     Assert.assertNotNull(headerToken);
@@ -143,8 +143,8 @@ public class CsrfPreventionFilterTest {
     applyFilter(nonModifyingRequest, response);
 
     // then
-    String cookieToken = (String) response.getHeader(SET_COOKIE_HEADER_NAME);
-    String headerToken = (String) response.getHeader(CSRF_HEADER_NAME);
+    String cookieToken = response.getHeader(SET_COOKIE_HEADER_NAME);
+    String headerToken = response.getHeader(CSRF_HEADER_NAME);
 
     Assert.assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
@@ -167,8 +167,8 @@ public class CsrfPreventionFilterTest {
     // second non-modifying request
     MockHttpServletResponse secondResponse = performNonModifyingRequest(nonModifyingRequestUrl, session);
 
-    String headerToken1 = (String) firstResponse.getHeader(CSRF_HEADER_NAME);
-    String headerToken2 = (String) secondResponse.getHeader(CSRF_HEADER_NAME);
+    String headerToken1 = firstResponse.getHeader(CSRF_HEADER_NAME);
+    String headerToken2 = secondResponse.getHeader(CSRF_HEADER_NAME);
 
     Assert.assertNotNull(headerToken1);
     Assert.assertNull(headerToken2);
@@ -182,7 +182,7 @@ public class CsrfPreventionFilterTest {
     MockHttpServletResponse nonModifyingResponse = performNonModifyingRequest(nonModifyingRequestUrl, session);
 
     if (!isModifyingFetchRequest) {
-      String token = (String) nonModifyingResponse.getHeader(CSRF_HEADER_NAME);
+      String token = nonModifyingResponse.getHeader(CSRF_HEADER_NAME);
       HttpServletResponse modifyingResponse = performModifyingRequest(token, session);
       Assert.assertEquals(Response.Status.OK.getStatusCode(), modifyingResponse.getStatus());
     }

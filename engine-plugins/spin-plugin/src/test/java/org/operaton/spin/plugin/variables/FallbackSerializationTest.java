@@ -18,13 +18,10 @@ package org.operaton.spin.plugin.variables;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
-import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializerFactory;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Test;
 
 /**
  * @author Thorben Lindhauer

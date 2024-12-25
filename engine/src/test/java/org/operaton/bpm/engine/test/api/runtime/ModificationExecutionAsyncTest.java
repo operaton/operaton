@@ -1468,8 +1468,8 @@ public class ModificationExecutionAsyncTest {
     HistoricBatch historicBatch = rule.getHistoryService().createHistoricBatchQuery().singleResult();
     batch = rule.getManagementService().createBatchQuery().singleResult();
 
-    Assertions.assertThat(batch.getExecutionStartTime()).isEqualToIgnoringMillis(START_DATE);
-    Assertions.assertThat(historicBatch.getExecutionStartTime()).isEqualToIgnoringMillis(START_DATE);
+    Assertions.assertThat(batch.getExecutionStartTime()).isCloseTo(START_DATE, 1000);
+    Assertions.assertThat(historicBatch.getExecutionStartTime()).isCloseTo(START_DATE, 1000);
 
     // clear
     configuration.setInvocationsPerBatchJobByBatchType(new HashMap<>());

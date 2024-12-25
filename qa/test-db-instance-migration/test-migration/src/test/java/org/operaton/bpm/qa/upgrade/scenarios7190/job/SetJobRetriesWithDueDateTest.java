@@ -70,7 +70,7 @@ public class SetJobRetriesWithDueDateTest {
 
     // then
     Job timerJobAfterBatch = managementService.createJobQuery().processDefinitionKey("createProcessForSetRetriesWithDueDate_718").singleResult();
-    assertThat(timerJob.getDuedate()).isEqualToIgnoringMillis(timerJobAfterBatch.getDuedate());
+    assertThat(timerJob.getDuedate()).isCloseTo(timerJobAfterBatch.getDuedate(), 1000);
     assertThat(timerJob.getRetries()).isEqualTo(3);
     assertThat(timerJobAfterBatch.getRetries()).isEqualTo(5);
   }

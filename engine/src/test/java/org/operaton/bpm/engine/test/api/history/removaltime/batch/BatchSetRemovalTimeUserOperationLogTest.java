@@ -190,7 +190,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
     // then
     assertThat(userOperationLogEntry.getOrgValue()).isNull();
-    assertThat(fromMillis(userOperationLogEntry.getNewValue())).isEqualToIgnoringMillis(removalTime);
+    assertThat(fromMillis(userOperationLogEntry.getNewValue())).isCloseTo(removalTime, 1000);
   }
 
   @Test
@@ -521,7 +521,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
     // then
     assertThat(userOperationLogEntry.getOrgValue()).isNull();
-    assertThat(fromMillis(userOperationLogEntry.getNewValue())).isEqualToIgnoringMillis(removalTime);
+    assertThat(fromMillis(userOperationLogEntry.getNewValue())).isCloseTo(removalTime, 1000);
   }
 
   @Test
@@ -755,7 +755,7 @@ public class BatchSetRemovalTimeUserOperationLogTest {
 
     // then
     assertThat(userOperationLogEntry.getOrgValue()).isNull();
-    assertThat(fromMillis(userOperationLogEntry.getNewValue())).isEqualToIgnoringMillis(removalTime);
+    assertThat(fromMillis(userOperationLogEntry.getNewValue())).isCloseTo(removalTime, 1000);
   }
 
   @Test

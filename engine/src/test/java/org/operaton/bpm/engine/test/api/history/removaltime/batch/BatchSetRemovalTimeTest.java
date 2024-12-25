@@ -2821,8 +2821,8 @@ public class BatchSetRemovalTimeTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = managementService.createBatchQuery().singleResult();
 
-    assertThat(batch.getExecutionStartTime()).isEqualToIgnoringMillis(CURRENT_DATE);
-    assertThat(historicBatch.getExecutionStartTime()).isEqualToIgnoringMillis(CURRENT_DATE);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(CURRENT_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(CURRENT_DATE, 1000);
   }
 
   @Test
@@ -2850,8 +2850,8 @@ public class BatchSetRemovalTimeTest {
     HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
     batch = managementService.createBatchQuery().singleResult();
 
-    assertThat(batch.getExecutionStartTime()).isEqualToIgnoringMillis(CURRENT_DATE);
-    assertThat(historicBatch.getExecutionStartTime()).isEqualToIgnoringMillis(CURRENT_DATE);
+    assertThat(batch.getExecutionStartTime()).isCloseTo(CURRENT_DATE, 1000);
+    assertThat(historicBatch.getExecutionStartTime()).isCloseTo(CURRENT_DATE, 1000);
   }
 
 }

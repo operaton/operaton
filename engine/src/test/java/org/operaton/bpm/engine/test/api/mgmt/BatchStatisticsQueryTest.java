@@ -689,7 +689,7 @@ public class BatchStatisticsQueryTest {
     // then
     final List<BatchStatistics> batchStatistics = query1.list();
     assertThat(batchStatistics.get(0).getId()).isEqualTo(batch.getId());
-    assertThat(batchStatistics.get(0).getStartTime()).isEqualToIgnoringMillis(ClockUtil.getCurrentTime());
+    assertThat(batchStatistics.get(0).getStartTime()).isCloseTo(ClockUtil.getCurrentTime(), 1000);
     assertThat(batchStatistics).hasSize(1);
     assertThat(query1.count()).isEqualTo(1);
 
@@ -716,7 +716,7 @@ public class BatchStatisticsQueryTest {
 
     final List<BatchStatistics> batchStatistics = query2.list();
     assertThat(batchStatistics.get(0).getId()).isEqualTo(batch.getId());
-    assertThat(batchStatistics.get(0).getStartTime()).isEqualToIgnoringMillis(ClockUtil.getCurrentTime());
+    assertThat(batchStatistics.get(0).getStartTime()).isCloseTo(ClockUtil.getCurrentTime(), 1000);
     assertThat(batchStatistics).hasSize(1);
     assertThat(query2.count()).isEqualTo(1);
   }

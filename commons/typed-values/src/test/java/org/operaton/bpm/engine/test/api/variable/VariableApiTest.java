@@ -186,7 +186,7 @@ class VariableApiTest {
                      .putValueTyped("ser", serializedObjectValue("{\"name\" : \"foo\"}", true).create());
 
     for (Entry<String, Object> e : variableMap.entrySet()) {
-      TypedValue value = (TypedValue) variableMap.getValueTyped(e.getKey());
+      TypedValue value = variableMap.getValueTyped(e.getKey());
       assertTrue(value.isTransient(), "Variable '" + e.getKey() + "' is not transient: " + value);
     }
   }
@@ -211,7 +211,7 @@ class VariableApiTest {
                      .putValue("serBuilder", serializedObjectValue("{\"name\" : \"foo\"}", true));
 
     for (Entry<String, Object> e : variableMap.entrySet()) {
-      TypedValue value = (TypedValue) variableMap.getValueTyped(e.getKey());
+      TypedValue value = variableMap.getValueTyped(e.getKey());
       assertTrue(value.isTransient(), "Variable '" + e.getKey() + "' is not transient: " + value);
     }
   }

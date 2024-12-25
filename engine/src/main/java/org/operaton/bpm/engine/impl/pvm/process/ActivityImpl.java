@@ -203,7 +203,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
     ScopeImpl levelOfSubprocessScope = getFlowScope();
     while(!levelOfSubprocessScope.isSubProcessScope) {
       // cast always possible since process definition is always a sub process scope
-      levelOfSubprocessScope = ((PvmActivity)levelOfSubprocessScope).getFlowScope();
+      levelOfSubprocessScope = levelOfSubprocessScope.getFlowScope();
     }
     return levelOfSubprocessScope;
   }

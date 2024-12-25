@@ -16,8 +16,6 @@
  */
 package org.operaton.connect.plugin.impl;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.engine.impl.bpmn.behavior.TaskActivityBehavior;
 import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;

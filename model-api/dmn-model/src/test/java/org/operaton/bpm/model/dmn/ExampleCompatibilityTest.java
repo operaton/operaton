@@ -42,7 +42,6 @@ import org.operaton.bpm.model.dmn.instance.OutputEntry;
 import org.operaton.bpm.model.dmn.instance.OutputValues;
 import org.operaton.bpm.model.dmn.instance.Rule;
 import org.operaton.bpm.model.dmn.instance.Text;
-import org.junit.jupiter.api.BeforeEach;
 
 public class ExampleCompatibilityTest extends DmnModelTest {
 

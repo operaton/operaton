@@ -18,7 +18,6 @@ package org.operaton.bpm.model.bpmn.builder;
 
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.ErrorEventDefinition;
-import org.operaton.bpm.model.bpmn.instance.ExtensionElements;
 import org.operaton.bpm.model.bpmn.instance.ServiceTask;
 
 public class OperatonErrorEventDefinitionBuilder extends AbstractErrorEventDefinitionBuilder<OperatonErrorEventDefinitionBuilder> {
@@ -35,6 +34,6 @@ public class OperatonErrorEventDefinitionBuilder extends AbstractErrorEventDefin
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public AbstractServiceTaskBuilder errorEventDefinitionDone() {
-    return ((ServiceTask)((ExtensionElements) element.getParentElement()).getParentElement()).builder();
+    return ((ServiceTask)element.getParentElement().getParentElement()).builder();
   }
 }

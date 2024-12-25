@@ -92,7 +92,7 @@ public abstract class AbstractMetricsIntervalTest {
   protected void reportMetrics() {
     for (String metricName : metricsRegistry.getDbMeters().keySet()) {
       //mark random occurence
-      long occurence = (long) (rand.nextInt((MAX_OCCURENCE - MIN_OCCURENCE) + 1) + MIN_OCCURENCE);
+      long occurence = rand.nextInt((MAX_OCCURENCE - MIN_OCCURENCE) + 1) + MIN_OCCURENCE;
       metricsRegistry.markOccurrence(metricName, occurence);
     }
     //report logged metrics

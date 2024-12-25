@@ -49,7 +49,7 @@ public class DelegateTaskFormHandler extends DelegateFormHandler implements Task
 
   @Override
   public FormHandler getFormHandler() {
-    return (TaskFormHandler) formHandler;
+    return formHandler;
   }
 
 }

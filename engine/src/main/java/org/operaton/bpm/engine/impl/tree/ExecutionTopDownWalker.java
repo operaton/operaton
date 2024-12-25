@@ -41,6 +41,6 @@ public class ExecutionTopDownWalker extends ReferenceWalker<ExecutionEntity> {
     if (executions == null) {
       executions = new ArrayList<>();
     }
-    return (List) executions;
+    return executions;
   }
 }

@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.service.TransactionalTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

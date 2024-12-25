@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.sub.impl;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;

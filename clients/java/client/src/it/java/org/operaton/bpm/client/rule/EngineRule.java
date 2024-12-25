@@ -23,7 +23,6 @@ import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Supplier;
@@ -37,8 +36,6 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.*;
 import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
 import com.fasterxml.jackson.databind.*;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
@@ -314,7 +311,7 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback  {
   public VariableInstanceDto getVariableByProcessInstanceId(String processInstanceId, String varName) {
     List<VariableInstanceDto> variables = getVariablesByProcessInstanceIdAndVariableName(processInstanceId, varName);
     assertThat(variables).hasSize(1);
-    return (VariableInstanceDto) variables.get(0);
+    return variables.get(0);
   }
 
   public List<VariableInstanceDto> getVariablesByProcessInstanceIdAndVariableName(String processInstanceId, String varName) {
@@ -334,7 +331,7 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback  {
     HttpGet httpGet = new HttpGet(uri);
     TaskDto[] tasks = executeRequest(httpGet, TaskDto[].class);
     assertThat(tasks).hasSize(1);
-    return (TaskDto) tasks[0];
+    return tasks[0];
   }
 
   public IncidentDto getIncidentByProcessInstanceId(String processInstanceId) {
@@ -342,7 +339,7 @@ public class EngineRule implements BeforeEachCallback, AfterEachCallback  {
     HttpGet httpGet = new HttpGet(uri);
     IncidentDto[] incidents = executeRequest(httpGet, IncidentDto[].class);
     assertThat(incidents).hasSize(1);
-    return (IncidentDto) incidents[0];
+    return incidents[0];
   }
 
   public ExternalTask getExternalTaskByProcessInstanceId(String processInstanceId) {

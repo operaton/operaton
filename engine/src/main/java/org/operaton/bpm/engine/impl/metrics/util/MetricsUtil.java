@@ -28,13 +28,13 @@ public class MetricsUtil {
    */
   public static String resolveInternalName(final String publicName) {
     if (publicName == null) return null;
-    switch (publicName) {
-      case Metrics.TASK_USERS: return Metrics.UNIQUE_TASK_WORKERS;
-      case Metrics.PROCESS_INSTANCES: return Metrics.ROOT_PROCESS_INSTANCE_START;
-      case Metrics.DECISION_INSTANCES: return Metrics.EXECUTED_DECISION_INSTANCES;
-      case Metrics.FLOW_NODE_INSTANCES: return Metrics.ACTIVTY_INSTANCE_START;
-      default: return publicName;
-    }
+    return switch (publicName) {
+      case Metrics.TASK_USERS -> Metrics.UNIQUE_TASK_WORKERS;
+      case Metrics.PROCESS_INSTANCES -> Metrics.ROOT_PROCESS_INSTANCE_START;
+      case Metrics.DECISION_INSTANCES -> Metrics.EXECUTED_DECISION_INSTANCES;
+      case Metrics.FLOW_NODE_INSTANCES -> Metrics.ACTIVTY_INSTANCE_START;
+      default -> publicName;
+    };
   }
 
   /**
@@ -45,13 +45,13 @@ public class MetricsUtil {
    */
   public static String resolvePublicName(final String internalName) {
     if (internalName == null) return null;
-    switch (internalName) {
-      case Metrics.UNIQUE_TASK_WORKERS: return Metrics.TASK_USERS;
-      case Metrics.ROOT_PROCESS_INSTANCE_START: return Metrics.PROCESS_INSTANCES;
-      case Metrics.EXECUTED_DECISION_INSTANCES: return Metrics.DECISION_INSTANCES;
-      case Metrics.ACTIVTY_INSTANCE_START: return Metrics.FLOW_NODE_INSTANCES;
-      default: return internalName;
-    }
+    return switch (internalName) {
+    case Metrics.UNIQUE_TASK_WORKERS -> Metrics.TASK_USERS;
+    case Metrics.ROOT_PROCESS_INSTANCE_START -> Metrics.PROCESS_INSTANCES;
+    case Metrics.EXECUTED_DECISION_INSTANCES -> Metrics.DECISION_INSTANCES;
+    case Metrics.ACTIVTY_INSTANCE_START -> Metrics.FLOW_NODE_INSTANCES;
+    default -> internalName;
+    };
   }
 
 }

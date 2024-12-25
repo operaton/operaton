@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.HashSet;
@@ -105,7 +104,7 @@ public class SpringAutoDeployTest extends PvmTestCase {
     assertEquals(3, processDefinitionQuery.count());
 
     // Creating a new app context with same resources doesn't lead to more deployments
-    ((AbstractXmlApplicationContext) applicationContext).close();
+    applicationContext.close();
     applicationContext = new ClassPathXmlApplicationContext(CTX_PATH);
     assertEquals(1, deploymentQuery.count());
     assertEquals(3, processDefinitionQuery.count());
@@ -145,7 +144,7 @@ public class SpringAutoDeployTest extends PvmTestCase {
     assertEquals(1, repositoryService.createDeploymentQuery().count());
 
     // when
-    ((AbstractXmlApplicationContext) applicationContext).close();
+    applicationContext.close();
 
     DynamicResourceProducer.clearResources();
     DynamicResourceProducer.addResource("a.bpmn", model2);
@@ -171,7 +170,7 @@ public class SpringAutoDeployTest extends PvmTestCase {
 
     createAppContext(CTX_DYNAMIC_DEPLOY_PATH);
     assertEquals(1, repositoryService.createDeploymentQuery().count());
-    ((AbstractXmlApplicationContext)applicationContext).close();
+    applicationContext.close();
 
     // when
     DynamicResourceProducer.clearResources();

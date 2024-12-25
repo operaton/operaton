@@ -117,7 +117,7 @@ public class FormFieldHandler {
   // submit /////////////////////////////////////////////
 
   public void handleSubmit(VariableScope variableScope, VariableMap values, VariableMap allValues) {
-    TypedValue submittedValue = (TypedValue) values.getValueTyped(id);
+    TypedValue submittedValue = values.getValueTyped(id);
     values.remove(id);
 
     // perform validation

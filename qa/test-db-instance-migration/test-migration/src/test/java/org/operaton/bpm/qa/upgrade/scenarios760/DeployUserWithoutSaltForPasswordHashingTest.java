@@ -18,8 +18,6 @@ package org.operaton.bpm.qa.upgrade.scenarios760;
 
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.operaton.bpm.qa.upgrade.Origin;
-import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 import org.junit.Rule;
 import org.junit.Test;
 

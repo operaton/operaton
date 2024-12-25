@@ -44,7 +44,7 @@ public class QueryValidators {
 
     @SuppressWarnings("unchecked")
     public static <T extends AbstractQuery<?, ?>> AdhocQueryValidator<T> get() {
-      return (AdhocQueryValidator<T>) INSTANCE;
+      return INSTANCE;
     }
 
   }
@@ -68,7 +68,7 @@ public class QueryValidators {
 
     @SuppressWarnings("unchecked")
     public static <T extends AbstractQuery<?, ?>> StoredQueryValidator<T> get() {
-      return (StoredQueryValidator<T>) INSTANCE;
+      return INSTANCE;
     }
   }
 

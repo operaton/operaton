@@ -29,7 +29,6 @@ import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
-import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.container.impl.jboss.util.Tccl;
 import org.operaton.bpm.container.impl.metadata.PropertyHelper;
 import org.operaton.bpm.engine.ProcessEngine;

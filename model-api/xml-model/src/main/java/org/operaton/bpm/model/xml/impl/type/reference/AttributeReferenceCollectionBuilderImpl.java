@@ -41,7 +41,7 @@ public class AttributeReferenceCollectionBuilderImpl<T extends ModelElementInsta
     this.referenceSourceAttribute = attribute;
     this.referenceTargetElement = referenceTargetElement;
     try {
-      this.attributeReferenceCollection = (AttributeReferenceCollection<T>) attributeReferenceCollection.getConstructor(AttributeImpl.class)
+      this.attributeReferenceCollection = attributeReferenceCollection.getConstructor(AttributeImpl.class)
         .newInstance(referenceSourceAttribute);
     } catch (Exception e) {
       throw new RuntimeException(e);

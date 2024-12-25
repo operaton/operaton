@@ -33,8 +33,9 @@ public class OperatonBpmPropertiesTest {
   public void initResourcePatterns() {
     final String[] patterns = OperatonBpmProperties.initDeploymentResourcePattern();
 
-    assertThat(patterns).hasSize(7);
-    assertThat(patterns).containsOnly("classpath*:**/*.bpmn", "classpath*:**/*.bpmn20.xml", "classpath*:**/*.dmn", "classpath*:**/*.dmn11.xml",
+    assertThat(patterns)
+            .hasSize(7)
+            .containsOnly("classpath*:**/*.bpmn", "classpath*:**/*.bpmn20.xml", "classpath*:**/*.dmn", "classpath*:**/*.dmn11.xml",
       "classpath*:**/*.cmmn", "classpath*:**/*.cmmn10.xml", "classpath*:**/*.cmmn11.xml");
   }
 

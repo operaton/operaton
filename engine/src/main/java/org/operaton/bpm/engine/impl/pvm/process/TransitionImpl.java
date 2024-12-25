@@ -65,6 +65,10 @@ public class TransitionImpl extends CoreModelElement implements PvmTransition {
     super.addListener(ExecutionListener.EVENTNAME_TAKE, executionListener);
   }
 
+  /**
+   * @deprecated Use {@link #getListeners(ExecutionListener.EVENTNAME_TAKE)} instead
+   * @return
+   */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Deprecated
   public List<ExecutionListener> getExecutionListeners() {

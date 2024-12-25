@@ -174,7 +174,7 @@ public class CdiEventSupportBpmnParseListener implements BpmnParseListener {
 
   @Override
   public void parseSequenceFlow(Element sequenceFlowElement, ScopeImpl scopeElement, TransitionImpl transition) {
-    transition.addExecutionListener(new CdiEventListener());
+    transition.addListener(ExecutionListener.EVENTNAME_TAKE, new CdiEventListener());
   }
 
   @Override

@@ -77,7 +77,7 @@ public class EntitySerializationTest {
    execution.setProcessDefinition(processDefinitionImpl);
 
    TransitionImpl transitionImpl = new TransitionImpl("test", new ProcessDefinitionImpl("test"));
-   transitionImpl.addExecutionListener(new TestExecutionListener());
+   transitionImpl.addListener(ExecutionListener.EVENTNAME_TAKE, new TestExecutionListener());
    execution.setTransition(transitionImpl);
 
    execution.setSuperExecution(new ExecutionEntity());

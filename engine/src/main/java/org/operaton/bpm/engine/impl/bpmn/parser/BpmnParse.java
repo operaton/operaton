@@ -4472,7 +4472,7 @@ public class BpmnParse extends Parse {
         if (listener != null) {
           // Since a transition only fires event 'take', we don't parse the
           // event attribute, it is ignored
-          activity.addExecutionListener(listener);
+          activity.addListener(ExecutionListener.EVENTNAME_TAKE, listener);
         }
       }
     }

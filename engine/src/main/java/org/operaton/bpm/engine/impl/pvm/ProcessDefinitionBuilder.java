@@ -156,7 +156,7 @@ public class ProcessDefinitionBuilder {
 
   public ProcessDefinitionBuilder executionListener(ExecutionListener executionListener) {
     if (transition!=null) {
-      transition.addExecutionListener(executionListener);
+      transition.addListener(ExecutionListener.EVENTNAME_TAKE, executionListener);
     } else {
       throw new PvmException("not in a transition scope");
     }
@@ -165,9 +165,9 @@ public class ProcessDefinitionBuilder {
 
   public ProcessDefinitionBuilder executionListener(String eventName, ExecutionListener executionListener) {
     if (transition==null) {
-      scopeStack.peek().addExecutionListener(eventName, executionListener);
+      scopeStack.peek().addListener(eventName, executionListener);
     } else {
-      transition.addExecutionListener(executionListener);
+      transition.addListener(ExecutionListener.EVENTNAME_TAKE, executionListener);
     }
     return this;
   }

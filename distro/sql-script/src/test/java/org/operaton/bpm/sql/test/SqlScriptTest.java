@@ -16,16 +16,20 @@
  */
 package org.operaton.bpm.sql.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
+
 import liquibase.Contexts;
 import liquibase.Liquibase;
 import liquibase.change.Change;
@@ -49,12 +53,15 @@ import liquibase.snapshot.SnapshotControl;
 import liquibase.snapshot.SnapshotGeneratorFactory;
 import liquibase.structure.DatabaseObject;
 import liquibase.structure.core.UniqueConstraint;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
-public class SqlScriptTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class SqlScriptTest {
 
   /*
    * The following unique constraints are present on both databases (manual and
@@ -62,22 +69,22 @@ public class SqlScriptTest {
    * by Liquibase#diff. They have been manually confirmed and can be ignored in
    * the comparison in case they are missing in either database.
    */
-  protected static final List<String> IGNORED_CONSTRAINTS = Arrays.asList(
+  static final List<String> IGNORED_CONSTRAINTS = Arrays.asList(
       "ACT_UNIQ_VARIABLE",
       "CONSTRAINT_8D1",// used on all but PostgreSQL
       "ACT_HI_PROCINST_PROC_INST_ID__KEY",// used on PostgreSQL
       "ACT_UNIQ_TENANT_MEMB_USER",
       "ACT_UNIQ_TENANT_MEMB_GROUP");
 
-  protected Properties properties;
-  protected Database database;
-  protected String databaseType;
-  protected String projectVersion;
-  protected Liquibase liquibase;
-  protected DiffGeneratorFactory databaseDiffer;
+  Properties properties;
+  Database database;
+  String databaseType;
+  String projectVersion;
+  Liquibase liquibase;
+  DiffGeneratorFactory databaseDiffer;
 
-  @Before
-  public void setup() throws Exception {
+  @BeforeEach
+  void setup() throws Exception {
     InputStream is = getClass().getClassLoader().getResourceAsStream("properties-from-pom.properties");
     properties = new Properties();
     properties.load(is);
@@ -91,14 +98,14 @@ public class SqlScriptTest {
     cleanUpDatabaseTables();
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
     cleanUpDatabaseTables();
     liquibase.close();
   }
 
   @Test
-  public void shouldEqualLiquibaseChangelogAndCreateScripts() throws Exception {
+  void shouldEqualLiquibaseChangelogAndCreateScripts() throws Exception {
     // given
     executeSqlScript("create", "engine");
     executeSqlScript("create", "identity");
@@ -120,7 +127,8 @@ public class SqlScriptTest {
   }
 
   @Test
-  public void shouldEqualOldUpgradedAndNewCreatedViaLiquibase() throws Exception {
+  @EnabledIf(value="isScriptsFromPreviousVersionPresent", disabledReason = "No scripts from previous version found")
+  void shouldEqualOldUpgradedAndNewCreatedViaLiquibase() throws Exception {
     try (Liquibase liquibaseOld = getLiquibase("scripts-old/", getDatabase())) {
       // given
       liquibase.update(new Contexts());
@@ -145,7 +153,8 @@ public class SqlScriptTest {
   }
 
   @Test
-  public void shouldEqualOldUpgradedAndNewCreatedViaScripts() throws Exception {
+  @EnabledIf(value="isScriptsFromPreviousVersionPresent", disabledReason = "No scripts from previous version found")
+  void shouldEqualOldUpgradedAndNewCreatedViaScripts() throws Exception {
     // given
     String currentMajorMinor = properties.getProperty("current.majorminor");
     String oldMajorMinor = properties.getProperty("old.majorminor");
@@ -176,11 +185,11 @@ public class SqlScriptTest {
         .isEmpty();
   }
 
-  protected void executeSqlScript(String sqlFolder, String sqlScript) throws LiquibaseException {
+  void executeSqlScript(String sqlFolder, String sqlScript) throws LiquibaseException {
     executeSqlScript("", sqlFolder, sqlScript + "_" + projectVersion);
   }
 
-  protected void executeSqlScript(String baseDirectory, String sqlFolder, String sqlScript) throws LiquibaseException {
+  void executeSqlScript(String baseDirectory, String sqlFolder, String sqlScript) throws LiquibaseException {
     String scriptFileName = String.format("%ssql/%s/%s_%s.sql", baseDirectory, sqlFolder, databaseType, sqlScript);
     String statements = IoUtil.inputStreamAsString(getClass().getClassLoader().getResourceAsStream(scriptFileName));
     SQLFileChange sqlFileChange = new SQLFileChange();
@@ -188,7 +197,7 @@ public class SqlScriptTest {
     database.execute(sqlFileChange.generateStatements(database), null);
   }
 
-  protected void cleanUpDatabaseTables() {
+  void cleanUpDatabaseTables() {
     try {
       liquibase.dropAll();
       // dropAll can be incomplete if it takes too long, second attempt should
@@ -199,7 +208,7 @@ public class SqlScriptTest {
     }
   }
 
-  protected Database getDatabase() throws DatabaseException {
+  Database getDatabase() throws DatabaseException {
     String databaseUrl = properties.getProperty("database.url");
     String databaseUser = properties.getProperty("database.username");
     String databasePassword = properties.getProperty("database.password");
@@ -208,32 +217,34 @@ public class SqlScriptTest {
         null, null, new ClassLoaderResourceAccessor());
   }
 
-  protected Liquibase getLiquibase() throws URISyntaxException {
+  Liquibase getLiquibase() throws URISyntaxException {
     return getLiquibase("", database);
   }
 
-  protected static Liquibase getLiquibase(String baseDirectory, Database database) throws URISyntaxException {
+  static Liquibase getLiquibase(String baseDirectory, Database database) throws URISyntaxException {
     return new Liquibase("operaton-changelog.xml", getAccessorForChangelogDirectory(baseDirectory), database);
   }
 
-  protected static FileSystemResourceAccessor getAccessorForChangelogDirectory(String baseDirectory) throws URISyntaxException {
-    URI changelogUri = SqlScriptTest.class.getClassLoader().getResource(baseDirectory + "sql/liquibase").toURI();
+  static FileSystemResourceAccessor getAccessorForChangelogDirectory(String baseDirectory) throws URISyntaxException {
+    URL resource = SqlScriptTest.class.getClassLoader().getResource(baseDirectory + "sql/liquibase");
+    Objects.requireNonNull(resource, "Changelog directory not found");
+    URI changelogUri = resource.toURI();
     return new FileSystemResourceAccessor(Paths.get(changelogUri).toAbsolutePath().toFile());
   }
 
-  protected DatabaseSnapshot createCurrentDatabaseSnapshot() throws Exception {
+  DatabaseSnapshot createCurrentDatabaseSnapshot() throws Exception {
     return SnapshotGeneratorFactory.getInstance()
         .createSnapshot(database.getDefaultSchema(), database, new SnapshotControl(database));
   }
 
-  protected static List<String> getChanges(List<ChangeSet> changeSetsToApply) {
+  static List<String> getChanges(List<ChangeSet> changeSetsToApply) {
     return changeSetsToApply.stream()
         .flatMap(cs -> cs.getChanges().stream())
         .map(Change::getDescription)
         .collect(Collectors.toList());
   }
 
-  protected static class CustomDiffOutputControl extends DiffOutputControl {
+  static class CustomDiffOutputControl extends DiffOutputControl {
 
     public CustomDiffOutputControl() {
       setObjectChangeFilter(new IgnoreUniqueConstraintsChangeFilter());
@@ -262,11 +273,21 @@ public class SqlScriptTest {
 
       @Override
       public boolean include(DatabaseObject object) {
-        if (object instanceof UniqueConstraint && IGNORED_CONSTRAINTS.contains(object.getName().toUpperCase())) {
-          return false;
-        }
-        return true;
+        return !(object instanceof UniqueConstraint) || !IGNORED_CONSTRAINTS.contains(object.getName().toUpperCase());
       }
+    }
+  }
+
+  static boolean isScriptsFromPreviousVersionPresent() {
+    Path scriptsOldDir = Paths.get("target/test-classes/scripts-old");
+    if (!Files.exists(scriptsOldDir)) {
+      return false;
+    }
+
+    try (var files = Files.list(scriptsOldDir)) {
+      return files.findAny().isPresent();
+    } catch (IOException e) {
+      return false;
     }
   }
 }

@@ -69,11 +69,11 @@ public class EntitySerializationTest {
    ExecutionEntity execution = new ExecutionEntity();
 
    ActivityImpl activityImpl = new ActivityImpl("test", null);
-   activityImpl.getExecutionListeners().put("start", Collections.<ExecutionListener>singletonList(new TestExecutionListener()));
+   activityImpl.addListener("start", new TestExecutionListener());
    execution.setActivity(activityImpl);
 
    ProcessDefinitionImpl processDefinitionImpl = new ProcessDefinitionImpl("test");
-   processDefinitionImpl.getExecutionListeners().put("start", Collections.<ExecutionListener>singletonList(new TestExecutionListener()));
+   processDefinitionImpl.addListener("start", new TestExecutionListener());
    execution.setProcessDefinition(processDefinitionImpl);
 
    TransitionImpl transitionImpl = new TransitionImpl("test", new ProcessDefinitionImpl("test"));

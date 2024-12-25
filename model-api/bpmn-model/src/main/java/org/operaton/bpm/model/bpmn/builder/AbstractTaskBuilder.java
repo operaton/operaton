@@ -37,7 +37,7 @@ public abstract class AbstractTaskBuilder<B extends AbstractTaskBuilder<B, E>, E
    *
    * @return the builder object
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public B operatonAsync() {
     element.setOperatonAsyncBefore(true);
     return myself;
@@ -51,7 +51,7 @@ public abstract class AbstractTaskBuilder<B extends AbstractTaskBuilder<B, E>, E
    * @param isOperatonAsync  the async state of the task
    * @return the builder object
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public B operatonAsync(boolean isOperatonAsync) {
     element.setOperatonAsyncBefore(isOperatonAsync);
     return myself;

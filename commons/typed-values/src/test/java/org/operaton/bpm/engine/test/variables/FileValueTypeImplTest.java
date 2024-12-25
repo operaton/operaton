@@ -209,10 +209,11 @@ class FileValueTypeImplTest {
     FileValue fileValue = Variables.fileValue(fileName).file(file).mimeType(fileType).encoding(encoding).setTransient(true).create();
     Map<String, Object> info = type.getValueInfo(fileValue);
 
-    assertThat(info).containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_NAME, (Object) fileName);
-    assertThat(info).containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_MIME_TYPE, (Object) fileType);
-    assertThat(info).containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_ENCODING, (Object) encoding.name());
-    assertThat(info).containsEntry(FileValueTypeImpl.VALUE_INFO_TRANSIENT, (Object) true);
+    assertThat(info)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_NAME, (Object) fileName)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_MIME_TYPE, (Object) fileType)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_ENCODING, (Object) encoding.name())
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_TRANSIENT, (Object) true);
   }
 
   @Test
@@ -224,9 +225,10 @@ class FileValueTypeImplTest {
     FileValue fileValue = Variables.fileValue(fileName).file(file).mimeType(fileType).encoding(encoding).create();
     Map<String, Object> info = type.getValueInfo(fileValue);
 
-    assertThat(info).containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_NAME, (Object) fileName);
-    assertThat(info).containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_MIME_TYPE, (Object) fileType);
-    assertThat(info).containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_ENCODING, (Object) encoding);
+    assertThat(info)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_NAME, (Object) fileName)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_MIME_TYPE, (Object) fileType)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_ENCODING, (Object) encoding);
   }
 
   @Test

@@ -72,8 +72,9 @@ class ModelTest {
 
   @Test
   void testEqual() {
-    assertThat(model).isNotEqualTo(null);
-    assertThat(model).isNotEqualTo(new Object());
+    assertThat(model)
+            .isNotEqualTo(null)
+            .isNotEqualTo(new Object());
     Model otherModel = ModelBuilder.createInstance("Other Model").build();
     assertThat(model).isNotEqualTo(otherModel);
     otherModel = ModelBuilder.createInstance(MODEL_NAME).build();

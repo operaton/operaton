@@ -236,7 +236,8 @@ public class ReadWriteTest extends DmnModelTest {
 
     InputData inputData = modelInstance.getModelElementById("customerStatusIn");
 
-    assertThat(inputData).isNotNull();
-    assertThat(inputData).isInstanceOf(InputData.class);
+    assertThat(inputData)
+            .isNotNull()
+            .isInstanceOf(InputData.class);
   }
 }

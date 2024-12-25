@@ -181,8 +181,9 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
     List<Map<String, Object>> returnedInputs = from(content).getList("inputs");
     List<Map<String, Object>> returnedOutputs = from(content).getList("outputs");
-    assertThat(returnedInputs).isNotNull();
-    assertThat(returnedInputs).hasSize(3);
+    assertThat(returnedInputs)
+            .isNotNull()
+            .hasSize(3);
     assertThat(returnedOutputs).isNull();
   }
 
@@ -210,8 +211,9 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
     List<Map<String, Object>> returnedInputs = from(content).getList("inputs");
     List<Map<String, Object>> returnedOutputs = from(content).getList("outputs");
     assertThat(returnedInputs).isNull();
-    assertThat(returnedOutputs).isNotNull();
-    assertThat(returnedOutputs).hasSize(3);
+    assertThat(returnedOutputs)
+            .isNotNull()
+            .hasSize(3);
   }
 
   @Test
@@ -238,10 +240,12 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
     List<Map<String, Object>> returnedInputs = from(content).getList("inputs");
     List<Map<String, Object>> returnedOutputs = from(content).getList("outputs");
-    assertThat(returnedInputs).isNotNull();
-    assertThat(returnedInputs).hasSize(3);
-    assertThat(returnedOutputs).isNotNull();
-    assertThat(returnedOutputs).hasSize(3);
+    assertThat(returnedInputs)
+            .isNotNull()
+            .hasSize(3);
+    assertThat(returnedOutputs)
+            .isNotNull()
+            .hasSize(3);
   }
 
   @Test

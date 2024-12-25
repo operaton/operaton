@@ -26,7 +26,7 @@ import java.math.RoundingMode;
  * @author Christoph Beck
  */
 public class NumberOperations {
-	private static Long LONG_ZERO = 0L;
+	private static final Long LONG_ZERO = 0L;
 
 	private NumberOperations() {
 	}

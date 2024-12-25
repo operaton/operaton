@@ -120,7 +120,7 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
   /**
    * @deprecated use isOperatonAsyncBefore() instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
@@ -129,7 +129,7 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
   /**
    * @deprecated use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   @Override
   public void setOperatonAsync(boolean isOperatonAsync) {
     operatonAsyncAttribute.setValue(this, isOperatonAsync);

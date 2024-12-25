@@ -154,7 +154,7 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
   /**
    * @deprecated use isOperatonAsyncBefore() instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   @Override
   public boolean isOperatonAsync() {
     return operatonAsyncAttribute.getValue(this);
@@ -163,7 +163,7 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
   /**
    * @deprecated use setOperatonAsyncBefore() instead.
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   @Override
   public void setOperatonAsync(boolean isOperatonAsync) {
     operatonAsyncAttribute.setValue(this, isOperatonAsync);

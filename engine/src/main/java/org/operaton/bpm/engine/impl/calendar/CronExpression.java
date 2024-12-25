@@ -482,7 +482,7 @@ public class CronExpression implements Serializable, Cloneable {
                             i);
             }
             if (type == DAY_OF_WEEK && !lastdayOfMonth) {
-                int val = ((Integer) daysOfMonth.last()).intValue();
+                int val = daysOfMonth.last().intValue();
                 if (val == NO_SPEC_INT) {
                     throw new ParseException(
                                 "'?' can only be specfied for Day-of-Month -OR- Day-of-Week.",
@@ -832,16 +832,16 @@ public class CronExpression implements Serializable, Cloneable {
         // type, and using modulus max to determine the value being added.
         int max = -1;
         if (stopAt < startAt) {
-            switch (type) {
-              case       SECOND : max = 60; break;
-              case       MINUTE : max = 60; break;
-              case         HOUR : max = 24; break;
-              case        MONTH : max = 12; break;
-              case  DAY_OF_WEEK : max = 7;  break;
-              case DAY_OF_MONTH : max = 31; break;
-              case         YEAR : throw new IllegalArgumentException("Start year must be less than stop year");
-              default           : throw new IllegalArgumentException("Unexpected type encountered");
-            }
+            max = switch (type) {
+              case SECOND -> 60;
+              case MINUTE -> 60;
+              case HOUR -> 24;
+              case MONTH -> 12;
+              case DAY_OF_WEEK -> 7;
+              case DAY_OF_MONTH -> 31;
+              case YEAR -> throw new IllegalArgumentException("Start year must be less than stop year");
+              default -> throw new IllegalArgumentException("Unexpected type encountered");
+            };
             stopAt += max;
         }
 
@@ -864,24 +864,16 @@ public class CronExpression implements Serializable, Cloneable {
     }
 
     protected TreeSet<Integer> getSet(int type) {
-        switch (type) {
-            case SECOND:
-                return seconds;
-            case MINUTE:
-                return minutes;
-            case HOUR:
-                return hours;
-            case DAY_OF_MONTH:
-                return daysOfMonth;
-            case MONTH:
-                return months;
-            case DAY_OF_WEEK:
-                return daysOfWeek;
-            case YEAR:
-                return years;
-            default:
-                return null;
-        }
+        return switch (type) {
+        case SECOND -> seconds;
+        case MINUTE -> minutes;
+        case HOUR -> hours;
+        case DAY_OF_MONTH -> daysOfMonth;
+        case MONTH -> months;
+        case DAY_OF_WEEK -> daysOfWeek;
+        case YEAR -> years;
+        default -> null;
+        };
     }
 
     protected ValueSet getValue(int v, String s, int i) {
@@ -966,7 +958,7 @@ public class CronExpression implements Serializable, Cloneable {
             if (st != null && st.size() != 0) {
                 sec = ((Integer) st.first()).intValue();
             } else {
-                sec = ((Integer) seconds.first()).intValue();
+                sec = seconds.first().intValue();
                 min++;
                 cl.set(Calendar.MINUTE, min);
             }
@@ -982,7 +974,7 @@ public class CronExpression implements Serializable, Cloneable {
                 t = min;
                 min = ((Integer) st.first()).intValue();
             } else {
-                min = ((Integer) minutes.first()).intValue();
+                min = minutes.first().intValue();
                 hr++;
             }
             if (min != t) {
@@ -1003,7 +995,7 @@ public class CronExpression implements Serializable, Cloneable {
                 t = hr;
                 hr = ((Integer) st.first()).intValue();
             } else {
-                hr = ((Integer) hours.first()).intValue();
+                hr = hours.first().intValue();
                 day++;
             }
             if (hr != t) {
@@ -1071,7 +1063,7 @@ public class CronExpression implements Serializable, Cloneable {
                     }
                 } else if(nearestWeekday) {
                     t = day;
-                    day = ((Integer) daysOfMonth.first()).intValue();
+                    day = daysOfMonth.first().intValue();
 
                     java.util.Calendar tcal = java.util.Calendar.getInstance(getTimeZone());
                     tcal.set(Calendar.SECOND, 0);
@@ -1102,7 +1094,7 @@ public class CronExpression implements Serializable, Cloneable {
                     tcal.set(Calendar.MONTH, mon - 1);
                     Date nTime = tcal.getTime();
                     if(nTime.before(afterTime)) {
-                        day = ((Integer) daysOfMonth.first()).intValue();
+                        day = daysOfMonth.first().intValue();
                         mon++;
                     }
                 } else if (st != null && st.size() != 0) {
@@ -1111,11 +1103,11 @@ public class CronExpression implements Serializable, Cloneable {
                     // make sure we don't over-run a short month, such as february
                     int lastDay = getLastDayOfMonth(mon, cl.get(Calendar.YEAR));
                     if (day > lastDay) {
-                        day = ((Integer) daysOfMonth.first()).intValue();
+                        day = daysOfMonth.first().intValue();
                         mon++;
                     }
                 } else {
-                    day = ((Integer) daysOfMonth.first()).intValue();
+                    day = daysOfMonth.first().intValue();
                     mon++;
                 }
 
@@ -1132,7 +1124,7 @@ public class CronExpression implements Serializable, Cloneable {
             } else if (dayOfWSpec && !dayOfMSpec) { // get day by day of week rule
                 if (lastdayOfWeek) { // are we looking for the last XXX day of
                     // the month?
-                    int dow = ((Integer) daysOfWeek.first()).intValue(); // desired
+                    int dow = daysOfWeek.first().intValue(); // desired
                     // d-o-w
                     int cDow = cl.get(Calendar.DAY_OF_WEEK); // current d-o-w
                     int daysToAdd = 0;
@@ -1175,7 +1167,7 @@ public class CronExpression implements Serializable, Cloneable {
 
                 } else if (nthdayOfWeek != 0) {
                     // are we looking for the Nth XXX day in the month?
-                    int dow = ((Integer) daysOfWeek.first()).intValue(); // desired
+                    int dow = daysOfWeek.first().intValue(); // desired
                     // d-o-w
                     int cDow = cl.get(Calendar.DAY_OF_WEEK); // current d-o-w
                     int daysToAdd = 0;
@@ -1219,7 +1211,7 @@ public class CronExpression implements Serializable, Cloneable {
                     }
                 } else {
                     int cDow = cl.get(Calendar.DAY_OF_WEEK); // current d-o-w
-                    int dow = ((Integer) daysOfWeek.first()).intValue(); // desired
+                    int dow = daysOfWeek.first().intValue(); // desired
                     // d-o-w
                     st = daysOfWeek.tailSet(cDow);
                     if (st != null && st.size() > 0) {
@@ -1281,7 +1273,7 @@ public class CronExpression implements Serializable, Cloneable {
                 t = mon;
                 mon = ((Integer) st.first()).intValue();
             } else {
-                mon = ((Integer) months.first()).intValue();
+                mon = months.first().intValue();
                 year++;
             }
             if (mon != t) {
@@ -1352,35 +1344,22 @@ public class CronExpression implements Serializable, Cloneable {
 
     protected int getLastDayOfMonth(int monthNum, int year) {
 
-        switch (monthNum) {
-            case 1:
-                return 31;
-            case 2:
-                return (isLeapYear(year)) ? 29 : 28;
-            case 3:
-                return 31;
-            case 4:
-                return 30;
-            case 5:
-                return 31;
-            case 6:
-                return 30;
-            case 7:
-                return 31;
-            case 8:
-                return 31;
-            case 9:
-                return 30;
-            case 10:
-                return 31;
-            case 11:
-                return 30;
-            case 12:
-                return 31;
-            default:
-                throw new IllegalArgumentException("Illegal month number: "
-                        + monthNum);
-        }
+        return switch (monthNum) {
+        case 1 -> 31;
+        case 2 -> (isLeapYear(year)) ? 29 : 28;
+        case 3 -> 31;
+        case 4 -> 30;
+        case 5 -> 31;
+        case 6 -> 30;
+        case 7 -> 31;
+        case 8 -> 31;
+        case 9 -> 30;
+        case 10 -> 31;
+        case 11 -> 30;
+        case 12 -> 31;
+        default -> throw new IllegalArgumentException("Illegal month number: "
+                + monthNum);
+        };
     }
 
 

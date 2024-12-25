@@ -33,7 +33,6 @@ import org.operaton.bpm.model.cmmn.instance.ConditionExpression;
 import org.operaton.bpm.model.cmmn.instance.Documentation;
 import org.operaton.bpm.model.cmmn.instance.EntryCriterion;
 import org.operaton.bpm.model.cmmn.instance.Event;
-import org.operaton.bpm.model.cmmn.instance.EventListener;
 import org.operaton.bpm.model.cmmn.instance.ExitCriterion;
 import org.operaton.bpm.model.cmmn.instance.HumanTask;
 import org.operaton.bpm.model.cmmn.instance.IfPart;

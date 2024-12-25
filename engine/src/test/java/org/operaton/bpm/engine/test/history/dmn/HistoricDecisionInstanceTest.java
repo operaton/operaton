@@ -215,11 +215,11 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
 
     List<HistoricDecisionInputInstance> inputsOfFirstDecision = historicDecisionInstances.get(0).getInputs();
     assertThat(inputsOfFirstDecision).hasSize(1);
-    assertThat(inputsOfFirstDecision.get(0).getValue()).isEqualTo((Object) "a");
+    assertThat(inputsOfFirstDecision.get(0).getValue()).isEqualTo("a");
 
     List<HistoricDecisionInputInstance> inputsOfSecondDecision = historicDecisionInstances.get(1).getInputs();
     assertThat(inputsOfSecondDecision).hasSize(1);
-    assertThat(inputsOfSecondDecision.get(0).getValue()).isEqualTo((Object) "b");
+    assertThat(inputsOfSecondDecision.get(0).getValue()).isEqualTo("b");
   }
 
   @Deployment(resources = { DECISION_PROCESS, DECISION_MULTIPLE_INPUT_DMN})
@@ -235,8 +235,8 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     List<HistoricDecisionInputInstance> inputs = historicDecisionInstance.getInputs();
     assertThat(inputs).hasSize(2);
 
-    assertThat(inputs.get(0).getValue()).isEqualTo((Object) "a");
-    assertThat(inputs.get(1).getValue()).isEqualTo((Object) 1);
+    assertThat(inputs.get(0).getValue()).isEqualTo("a");
+    assertThat(inputs.get(1).getValue()).isEqualTo(1);
   }
 
   @Deployment(resources = { DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN })
@@ -292,14 +292,14 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     assertThat(firstOutput.getRuleId()).isEqualTo("rule1");
     assertThat(firstOutput.getRuleOrder()).isEqualTo(1);
     assertThat(firstOutput.getVariableName()).isEqualTo("result1");
-    assertThat(firstOutput.getValue()).isEqualTo((Object) "okay");
+    assertThat(firstOutput.getValue()).isEqualTo("okay");
 
     HistoricDecisionOutputInstance secondOutput = outputs.get(1);
     assertThat(secondOutput.getClauseId()).isEqualTo("out1");
     assertThat(secondOutput.getRuleId()).isEqualTo("rule2");
     assertThat(secondOutput.getRuleOrder()).isEqualTo(2);
     assertThat(secondOutput.getVariableName()).isEqualTo("result1");
-    assertThat(secondOutput.getValue()).isEqualTo((Object) "not okay");
+    assertThat(secondOutput.getValue()).isEqualTo("not okay");
   }
 
   @Deployment(resources = { DECISION_PROCESS, DECISION_COMPOUND_OUTPUT_DMN })
@@ -317,14 +317,14 @@ public class HistoricDecisionInstanceTest extends PluggableProcessEngineTest {
     assertThat(firstOutput.getRuleId()).isEqualTo("rule1");
     assertThat(firstOutput.getRuleOrder()).isEqualTo(1);
     assertThat(firstOutput.getVariableName()).isEqualTo("result1");
-    assertThat(firstOutput.getValue()).isEqualTo((Object) "okay");
+    assertThat(firstOutput.getValue()).isEqualTo("okay");
 
     HistoricDecisionOutputInstance secondOutput = outputs.get(1);
     assertThat(secondOutput.getClauseId()).isEqualTo("out2");
     assertThat(secondOutput.getRuleId()).isEqualTo("rule1");
     assertThat(secondOutput.getRuleOrder()).isEqualTo(1);
     assertThat(secondOutput.getVariableName()).isEqualTo("result2");
-    assertThat(secondOutput.getValue()).isEqualTo((Object) "not okay");
+    assertThat(secondOutput.getValue()).isEqualTo("not okay");
   }
 
   @Deployment(resources = { DECISION_PROCESS, DECISION_COLLECT_SUM_DMN })

@@ -120,7 +120,7 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
     if(deployedArtifacts == null) {
       return null;
     } else {
-      return (List<T>) deployedArtifacts.get(clazz);
+      return deployedArtifacts.get(clazz);
     }
   }
 

@@ -183,7 +183,7 @@ public class MeterLogManager extends AbstractManager {
     ListQueryParameterObject parameterObject = new ListQueryParameterObject(queryParameters, 0, batchSize);
     parameterObject.getOrderingProperties().add(new QueryOrderingProperty(new QueryPropertyImpl("TIMESTAMP_"), Direction.ASCENDING));
 
-    return (List<String>) getDbEntityManager().selectList(SELECT_TASK_METER_FOR_CLEANUP, parameterObject);
+    return getDbEntityManager().selectList(SELECT_TASK_METER_FOR_CLEANUP, parameterObject);
   }
 
 }

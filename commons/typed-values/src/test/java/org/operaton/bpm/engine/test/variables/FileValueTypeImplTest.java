@@ -29,7 +29,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
@@ -210,10 +209,10 @@ class FileValueTypeImplTest {
     Map<String, Object> info = type.getValueInfo(fileValue);
 
     assertThat(info)
-            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_NAME, (Object) fileName)
-            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_MIME_TYPE, (Object) fileType)
-            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_ENCODING, (Object) encoding.name())
-            .containsEntry(FileValueTypeImpl.VALUE_INFO_TRANSIENT, (Object) true);
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_NAME, fileName)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_MIME_TYPE, fileType)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_ENCODING, encoding.name())
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_TRANSIENT, true);
   }
 
   @Test
@@ -226,9 +225,9 @@ class FileValueTypeImplTest {
     Map<String, Object> info = type.getValueInfo(fileValue);
 
     assertThat(info)
-            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_NAME, (Object) fileName)
-            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_MIME_TYPE, (Object) fileType)
-            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_ENCODING, (Object) encoding);
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_NAME, fileName)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_MIME_TYPE, fileType)
+            .containsEntry(FileValueTypeImpl.VALUE_INFO_FILE_ENCODING, encoding);
   }
 
   @Test

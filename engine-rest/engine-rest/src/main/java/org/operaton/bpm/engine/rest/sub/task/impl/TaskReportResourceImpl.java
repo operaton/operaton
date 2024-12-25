@@ -68,7 +68,7 @@ public class TaskReportResourceImpl implements TaskReportResource {
   @SuppressWarnings("unchecked")
   protected List<TaskCountByCandidateGroupResult> queryTaskCountByCandidateGroupReport() {
     TaskCountByCandidateGroupResultDto reportDto = new TaskCountByCandidateGroupResultDto();
-    return (List<TaskCountByCandidateGroupResult>) reportDto.executeTaskCountByCandidateGroupReport(engine);
+    return reportDto.executeTaskCountByCandidateGroupReport(engine);
   }
 
   protected List<TaskCountByCandidateGroupResultDto> getTaskCountByCandidateGroupResultAsJson() {

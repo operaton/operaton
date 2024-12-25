@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

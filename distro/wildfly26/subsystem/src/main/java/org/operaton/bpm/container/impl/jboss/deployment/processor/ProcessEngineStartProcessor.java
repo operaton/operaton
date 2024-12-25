@@ -17,8 +17,6 @@
 package org.operaton.bpm.container.impl.jboss.deployment.processor;
 
 import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
 import org.operaton.bpm.container.impl.jboss.deployment.marker.ProcessApplicationAttachments;
 import org.operaton.bpm.container.impl.jboss.service.MscManagedProcessEngineController;
@@ -31,7 +29,6 @@ import org.jboss.as.server.deployment.DeploymentUnit;
 import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceController.Mode;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceTarget;
 
@@ -105,7 +102,7 @@ public class ProcessEngineStartProcessor implements DeploymentUnitProcessor {
         processEngineXml.getDatasource(),
         processEngineXml.getProperties().get("history"),
         processEngineXml.getConfigurationClass(),
-        (Map) processEngineXml.getProperties(),
+        processEngineXml.getProperties(),
         processEngineXml.getPlugins());
   }
 

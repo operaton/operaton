@@ -165,15 +165,11 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
       return commandExecutor.execute(this);
     }
 
-    switch (resultType) {
-      case SINGLE_RESULT:
-        return executeSingleResult(Context.getCommandContext());
-      case LIST_PAGE:
-      case LIST:
-        return evaluateExpressionsAndExecuteList(Context.getCommandContext(), null);
-      default:
-        throw new ProcessEngineException("Unknown result type!");
-    }
+    return switch (resultType) {
+      case SINGLE_RESULT -> executeSingleResult(Context.getCommandContext());
+      case LIST_PAGE, LIST -> evaluateExpressionsAndExecuteList(Context.getCommandContext(), null);
+      default -> throw new ProcessEngineException("Unknown result type!");
+    };
   }
 
   @Override

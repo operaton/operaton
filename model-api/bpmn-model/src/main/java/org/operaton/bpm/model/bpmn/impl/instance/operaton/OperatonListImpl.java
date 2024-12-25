@@ -83,7 +83,7 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
 
       @Override
       public Iterator<T> iterator() {
-        return (Iterator<T>) getElements().iterator();
+        return getElements().iterator();
       }
 
       @Override

@@ -162,7 +162,7 @@ public class CustomFunctionTest {
         Object argX = args.get(0);
 
         // then
-        assertThat(argX).isEqualTo((double)12.1);
+        assertThat(argX).isEqualTo(12.1);
 
         return "";
       })

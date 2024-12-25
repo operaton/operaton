@@ -22,9 +22,6 @@ import static org.operaton.bpm.qa.upgrade.util.ActivityInstanceAssert.describeAc
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.qa.upgrade.Origin;
-import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;

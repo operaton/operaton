@@ -19,8 +19,6 @@ package org.operaton.bpm.engine.spring.test.components;
 import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import java.io.Serializable;
 
 

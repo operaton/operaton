@@ -18,8 +18,6 @@ package org.operaton.connect.spi;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Set;
-
 import org.junit.jupiter.api.Test;
 import org.operaton.connect.Connectors;
 import org.operaton.connect.dummy.DummyConnector;

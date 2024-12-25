@@ -159,7 +159,7 @@ public class ConcurrentJobExecutorTest {
     threadOne.startAndWaitUntilControlIsReturned();
 
     // and lock is expiring in the meantime
-    ClockUtil.offset((long) engineRule.getProcessEngineConfiguration().getJobExecutor().getLockTimeInMillis() + 10_000L);
+    ClockUtil.offset(engineRule.getProcessEngineConfiguration().getJobExecutor().getLockTimeInMillis() + 10_000L);
 
     // and job is acquired again
     JobAcquisitionThread acquisitionThread = new JobAcquisitionThread();

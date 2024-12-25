@@ -22,8 +22,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.junit.Assert;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-
 import java.util.UUID;
 import java.util.logging.Logger;
 

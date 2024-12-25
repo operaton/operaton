@@ -41,7 +41,7 @@ public class ExecutionContext extends CoreExecutionContext<ExecutionEntity> {
   }
 
   public ProcessDefinitionEntity getProcessDefinition() {
-    return (ProcessDefinitionEntity) execution.getProcessDefinition();
+    return execution.getProcessDefinition();
   }
 
   @Override

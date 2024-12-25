@@ -17,9 +17,6 @@
 package org.operaton.bpm.qa.upgrade.scenarios730.job;
 
 import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.qa.upgrade.Origin;
-import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
-import org.operaton.bpm.qa.upgrade.UpgradeTestRule;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

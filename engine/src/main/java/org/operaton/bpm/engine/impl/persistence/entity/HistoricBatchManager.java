@@ -77,7 +77,7 @@ public class HistoricBatchManager extends AbstractManager {
     ListQueryParameterObject parameterObject = new ListQueryParameterObject(queryParameters, 0, batchSize);
     parameterObject.getOrderingProperties().add(new QueryOrderingProperty(new QueryPropertyImpl("END_TIME_"), Direction.ASCENDING));
 
-    return (List<String>) getDbEntityManager().selectList("selectHistoricBatchIdsForCleanup", parameterObject);
+    return getDbEntityManager().selectList("selectHistoricBatchIdsForCleanup", parameterObject);
   }
 
   public void deleteHistoricBatchById(String id) {

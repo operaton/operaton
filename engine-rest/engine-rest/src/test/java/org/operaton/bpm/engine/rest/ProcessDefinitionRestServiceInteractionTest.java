@@ -23,7 +23,6 @@ import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotFoundException;
-import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
 import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;

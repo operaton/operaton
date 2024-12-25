@@ -87,7 +87,7 @@ public class Java9CDataWhitespaceFilter implements Predicate<Node> {
 
   private boolean isWhitespaceTextNode(Node node)
   {
-    return isTextNode(node) && ((Text) node).getNodeValue().trim().isEmpty();
+    return isTextNode(node) && node.getNodeValue().trim().isEmpty();
   }
 
   private boolean isTextNode(Node node) {

@@ -351,7 +351,7 @@ public class ErrorEventSubProcessTest extends PluggableProcessEngineTest {
     assertThat(errorVariable.getValue()).isEqualTo(errorCode);
 
     errorVariable = runtimeService.createVariableInstanceQuery().variableName("errorMessageVariable").singleResult();
-    assertThat(errorVariable.getValue()).isEqualTo((Object)"ouch!");
+    assertThat(errorVariable.getValue()).isEqualTo("ouch!");
   }
 
   @Deployment(resources={

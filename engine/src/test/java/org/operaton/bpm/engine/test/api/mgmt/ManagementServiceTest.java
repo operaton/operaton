@@ -59,7 +59,6 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 

@@ -22,7 +22,6 @@ import javax.servlet.ServletContextListener;
 
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.application.ProcessApplicationInterface;
-import org.operaton.bpm.application.impl.ejb.DefaultEjbProcessApplication;
 
 
 /**

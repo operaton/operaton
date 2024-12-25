@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.dmn.util;
 
 import org.junit.jupiter.api.extension.BeforeAllCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.xml.Model;

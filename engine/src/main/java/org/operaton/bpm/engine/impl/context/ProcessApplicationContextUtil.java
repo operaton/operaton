@@ -48,7 +48,7 @@ public class ProcessApplicationContextUtil {
       return null;
     }
 
-    ProcessApplicationReference processApplicationForDeployment = getTargetProcessApplication((ProcessDefinitionEntity) execution.getProcessDefinition());
+    ProcessApplicationReference processApplicationForDeployment = getTargetProcessApplication(execution.getProcessDefinition());
 
     // logg application context switch details
     if(LOG.isContextSwitchLoggable() && processApplicationForDeployment == null) {

@@ -4439,7 +4439,7 @@ public class BpmnParse extends Parse {
         if (isValidEventNameForScope(eventName, listenerElement, scopeElementId)) {
           ExecutionListener listener = parseExecutionListener(listenerElement, scopeElementId);
           if (listener != null) {
-            scope.addExecutionListener(eventName, listener);
+            scope.addListener(eventName, listener);
           }
         }
       }

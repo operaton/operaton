@@ -17,11 +17,12 @@
 
 package org.operaton.bpm.engine.test.logging;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
-
 import java.util.HashMap;
 import java.util.Map;
+
 import org.operaton.commons.logging.MdcAccess;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Class that encapsulates the creation of MDC properties such as Logging Context Parameters or any other third party

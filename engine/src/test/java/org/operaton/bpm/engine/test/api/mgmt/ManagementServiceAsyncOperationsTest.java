@@ -406,7 +406,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     for (String id : ids) {
       Job job = managementService.createJobQuery().jobId(id).singleResult();
       assertThat(job.getRetries()).isEqualTo(RETRIES);
-      assertThat(job.getDuedate()).isEqualToIgnoringMillis(TEST_DUE_DATE);
+      assertThat(job.getDuedate()).isCloseTo(TEST_DUE_DATE, 1000);
     }
   }
 
@@ -427,7 +427,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     for (String id : processInstanceIds) {
       Job job = managementService.createJobQuery().processInstanceId(id).singleResult();
       assertThat(job.getRetries()).isEqualTo(RETRIES);
-      assertThat(job.getDuedate()).isEqualToIgnoringMillis(TEST_DUE_DATE);
+      assertThat(job.getDuedate()).isCloseTo(TEST_DUE_DATE, 1000);
     }
   }
 
@@ -446,7 +446,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     for (String id : ids) {
       Job jobResult = managementService.createJobQuery().jobId(id).singleResult();
       assertThat(jobResult.getRetries()).isEqualTo(RETRIES);
-      assertThat(jobResult.getDuedate()).isEqualToIgnoringMillis(TEST_DUE_DATE);
+      assertThat(jobResult.getDuedate()).isCloseTo(TEST_DUE_DATE, 1000);
     }
   }
 
@@ -470,7 +470,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     for (String id : ids) {
       Job jobResult = managementService.createJobQuery().jobId(id).singleResult();
       assertThat(jobResult.getRetries()).isEqualTo(RETRIES);
-      assertThat(jobResult.getDuedate()).isEqualToIgnoringMillis(TEST_DUE_DATE);
+      assertThat(jobResult.getDuedate()).isCloseTo(TEST_DUE_DATE, 1000);
     }
   }
 
@@ -517,7 +517,7 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
     for (String id : ids) {
       Job jobResult = managementService.createJobQuery().jobId(id).singleResult();
       assertThat(jobResult.getRetries()).isEqualTo(RETRIES);
-      assertThat(jobResult.getDuedate()).isEqualToIgnoringMillis(TEST_DUE_DATE);
+      assertThat(jobResult.getDuedate()).isCloseTo(TEST_DUE_DATE, 1000);
     }
   }
 

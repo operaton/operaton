@@ -529,7 +529,7 @@ public class MigrationTransitionInstancesTest {
     Job job = testHelper.snapshotAfterMigration.getJobs().get(0);
 
     assertThat(job.getPriority()).isEqualTo(42);
-    assertThat(job.getDuedate()).isEqualToIgnoringMillis(newDueDate);
+    assertThat(job.getDuedate()).isCloseTo(newDueDate, 1000);
     assertThat(job.getRetries()).isEqualTo(52);
     assertThat(job.isSuspended()).isTrue();
   }

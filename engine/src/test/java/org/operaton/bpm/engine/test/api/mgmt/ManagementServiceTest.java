@@ -243,7 +243,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     List<Job> jobs = managementService.createJobQuery().list();
     for (Job job : jobs) {
       assertThat(job.getRetries()).isEqualTo(5);
-      assertThat(job.getDuedate()).isEqualToIgnoringMillis(TEST_DUE_DATE);
+      assertThat(job.getDuedate()).isCloseTo(TEST_DUE_DATE, 1000);
     }
   }
 
@@ -262,7 +262,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     // then
     Job job = managementService.createJobQuery().jobId(jobId).singleResult();
     assertThat(job.getRetries()).isEqualTo(5);
-    assertThat(job.getDuedate()).isEqualToIgnoringMillis(TEST_DUE_DATE);
+    assertThat(job.getDuedate()).isCloseTo(TEST_DUE_DATE, 1000);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
@@ -300,7 +300,7 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
     // then
     job = managementService.createJobQuery().jobDefinitionId(job.getJobDefinitionId()).singleResult();
     assertThat(job.getRetries()).isEqualTo(5);
-    assertThat(job.getDuedate()).isEqualToIgnoringMillis(TEST_DUE_DATE);
+    assertThat(job.getDuedate()).isCloseTo(TEST_DUE_DATE, 1000);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})

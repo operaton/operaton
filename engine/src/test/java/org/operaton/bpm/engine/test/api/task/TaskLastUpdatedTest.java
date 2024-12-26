@@ -128,7 +128,7 @@ public class TaskLastUpdatedTest {
     assertThat(task.getLastUpdated()).isNull();
     Task taskResult = taskService.createTaskQuery().processInstanceId(processInstance.getId()).taskUpdatedAfter(beforeUpdate).singleResult();
     assertThat(taskResult).isNotNull();
-    assertThat(taskResult.getLastUpdated()).isEqualToIgnoringMillis(now);
+    assertThat(taskResult.getLastUpdated()).isCloseTo(now, 1000);
   }
 
   @Test

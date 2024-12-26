@@ -56,7 +56,7 @@ public class ExternalTaskConditionsTest {
   @Before
   public void setUp() {
 
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
 
     ProcessEngineImpl.EXT_TASK_CONDITIONS.addConsumer(condition);
 

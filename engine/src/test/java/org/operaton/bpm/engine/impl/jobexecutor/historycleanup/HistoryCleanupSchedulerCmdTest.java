@@ -16,25 +16,30 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
-import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
-
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class HistoryCleanupSchedulerCmdTest {
 
@@ -58,10 +63,11 @@ public class HistoryCleanupSchedulerCmdTest {
 
     String METRICS_KEY = "Key";
     Long METRICS_VALUE = 123L;
+    private AutoCloseable closeable;
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        closeable = MockitoAnnotations.openMocks(this);
 
         when(commandContext.getProcessEngineConfiguration()).thenReturn(engineConfigurationSpy);
         when(commandContext.getJobManager()).thenReturn(jobManager);
@@ -74,13 +80,12 @@ public class HistoryCleanupSchedulerCmdTest {
         configuration = new HistoryCleanupJobHandlerConfiguration();
 
         // Mocking static methods
-        mockedHistoryCleanupHelper = mockStatic(HistoryCleanupHelper.class);
         mockedHistoryCleanupHelper.when(() -> HistoryCleanupHelper.isWithinBatchWindow(any(Date.class), any(ProcessEngineConfigurationImpl.class))).thenReturn(false);
     }
 
     @After
-    public void tearDown() {
-        mockedHistoryCleanupHelper.close();
+    public void tearDown() throws Exception {
+        closeable.close();
     }
 
     @Test

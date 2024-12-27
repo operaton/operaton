@@ -19,12 +19,13 @@ package org.operaton.spin.impl.xml.dom.format;
 import org.operaton.spin.DeserializationTypeValidator;
 import org.operaton.spin.SpinRuntimeException;
 
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DomXmlDeserializationValidationTest {
 

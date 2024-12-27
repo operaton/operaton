@@ -16,9 +16,6 @@
  */
 package org.operaton.spin.impl.xml.dom.format;
 
-import org.junit.Test;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.SpinFactory;
 import org.operaton.spin.spi.DataFormat;
@@ -26,6 +23,8 @@ import org.operaton.spin.xml.JdkUtil;
 import org.operaton.spin.xml.SpinXmlElement;
 
 import java.io.*;
+
+import org.junit.jupiter.api.Test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class DomXmlDataFormatWriterTest {
 
-  private final String newLine = System.getProperty("line.separator");
+  private final String newLine = System.lineSeparator();
   private final String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><product>Milk</product><product>Coffee</product><product> </product></order>";
 
   private final String formattedXmlIbmJDK = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order>" + newLine
@@ -149,8 +148,8 @@ public class DomXmlDataFormatWriterTest {
   @Test
   void disabledPrettyPrintUnformatted() throws Exception {
     // given
-    DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
-    ((DomXmlDataFormat) dataFormat).setPrettyPrint(false);
+    DomXmlDataFormat dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
+    dataFormat.setPrettyPrint(false);
 
     SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(xml, dataFormat);
 
@@ -182,8 +181,8 @@ public class DomXmlDataFormatWriterTest {
         + "  <product> </product>" + newLine
         + "</order>";
 
-    DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
-    ((DomXmlDataFormat) dataFormat).setPrettyPrint(false);
+    DomXmlDataFormat dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
+    dataFormat.setPrettyPrint(false);
 
     SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(formattedXmlWithWhitespaceInProduct, dataFormat);
 
@@ -208,11 +207,11 @@ public class DomXmlDataFormatWriterTest {
    */
   @Test
   void customStripSpaceXSL() throws Exception {
-    final DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
+    final DomXmlDataFormat dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
 
-    try (final InputStream inputStream = DomXmlDataFormatWriterTest.class.getClassLoader()
+    try (InputStream inputStream = DomXmlDataFormatWriterTest.class.getClassLoader()
         .getResourceAsStream("org/operaton/spin/strip-space-preserve-space.xsl")) {
-      ((DomXmlDataFormat) dataFormat).setFormattingConfiguration(inputStream);
+      dataFormat.setFormattingConfiguration(inputStream);
     }
 
     final SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(this.xml, dataFormat);

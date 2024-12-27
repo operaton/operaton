@@ -16,20 +16,6 @@
  */
 package org.operaton.spin.xml.dom;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.operaton.spin.Spin.S;
-import static org.operaton.spin.Spin.XML;
-import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_NAMESPACE;
-import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML_FILE_NAME;
-import static org.operaton.spin.xml.XmlTestConstants.NON_EXISTING;
-import static org.operaton.spin.xml.XmlTestConstants.exampleXmlFileAsReader;
-
-import java.util.HashMap;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
@@ -38,6 +24,17 @@ import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlAttributeException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.SpinXmlElementException;
+import static org.operaton.spin.Spin.S;
+import static org.operaton.spin.Spin.XML;
+import static org.operaton.spin.xml.XmlTestConstants.*;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Sebastian Menski
@@ -82,8 +79,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void canCheckAttributeByNullName() {
-    assertThrows(IllegalArgumentException.class, () ->
-      failingWithException());
+    assertThatIllegalArgumentException().isThrownBy(this::failingWithException);
   }
 
   @Test
@@ -125,8 +121,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void canCheckAttributeByNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () ->
-      failingWithException());
+    assertThatIllegalArgumentException().isThrownBy(this::failingWithException);
   }
 
   @Test
@@ -185,8 +180,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void cannotReadAttributeByNonExistingName() {
-    assertThrows(SpinXmlAttributeException.class, () ->
-      failingWithException());
+    assertThrows(SpinXmlAttributeException.class, this::failingWithException);
   }
 
   @Test
@@ -199,8 +193,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void cannotReadAttributeByNullName() {
-    assertThrows(IllegalArgumentException.class, () ->
-      failingWithException());
+    assertThatIllegalArgumentException().isThrownBy(this::failingWithException);
   }
 
   @Test
@@ -242,8 +235,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void cannotReadAttributeByNonExistingNamespaceAndName() {
-    assertThrows(SpinXmlAttributeException.class, () ->
-      failingWithException());
+    assertThrows(SpinXmlAttributeException.class, this::failingWithException);
   }
 
   @Test
@@ -257,8 +249,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void cannotReadAttributeByNamespaceAndNonExistingName() {
-    assertThrows(SpinXmlAttributeException.class, () ->
-      failingWithException());
+    assertThrows(SpinXmlAttributeException.class, this::failingWithException);
   }
 
   @Test
@@ -272,8 +263,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void cannotReadAttributeByNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () ->
-      failingWithException());
+    assertThrows(IllegalArgumentException.class, this::failingWithException);
   }
 
   @Test
@@ -287,8 +277,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void cannotReadAttributeByNonExistingNamespaceAndNonExistingName() {
-    assertThrows(SpinXmlAttributeException.class, () ->
-      failingWithException());
+    assertThrows(SpinXmlAttributeException.class, this::failingWithException);
   }
 
   @Test
@@ -302,8 +291,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void cannotReadAttributeByNullNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () ->
-      failingWithException());
+    assertThatIllegalArgumentException().isThrownBy(this::failingWithException);
   }
 
   // write attribute
@@ -408,8 +396,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void canWriteAttributeByNamespaceAndNullName() {
-    assertThrows(IllegalArgumentException.class, () ->
-      failingWithException());
+    assertThrows(IllegalArgumentException.class, this::failingWithException);
   }
 
   @Test
@@ -424,8 +411,7 @@ public abstract class XmlDomElementScriptTest extends ScriptTest {
     execute = false
   )
   public void canWriteAttributeByNamespaceAndNameWithNullValue() {
-    assertThrows(IllegalArgumentException.class, () ->
-      failingWithException());
+    assertThrows(IllegalArgumentException.class, this::failingWithException);
   }
 
   @Test

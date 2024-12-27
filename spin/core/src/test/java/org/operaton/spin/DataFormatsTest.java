@@ -16,10 +16,9 @@
  */
 package org.operaton.spin;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
@@ -34,7 +33,7 @@ class DataFormatsTest {
     dataFormats.registerDataFormats(DataFormats.class.getClassLoader());
 
     // then the operation was successful
-    assertEquals(0, dataFormats.getAllAvailableDataFormats().size());
+    assertThat(dataFormats.getAllAvailableDataFormats()).isEmpty();
 
     // note: this checks the existence of API that allows to initialize
     // data formats with a custom class loader; the functionality is actually tested

@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 package org.operaton.spin.javascript.nashorn.json.tree;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+
 import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 @ScriptEngine("nashorn")
 class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScriptTest {
@@ -30,7 +32,7 @@ class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScr
   @Test
   @Disabled
   @Override
-  public void shouldFailInsertAtWithWrongObject() throws Throwable {
+  public void shouldFailInsertAtWithWrongObject() {
   }
 
   /**
@@ -40,7 +42,7 @@ class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScr
   @Test
   @Disabled
   @Override
-  public void shouldFailInsertWrongObjectAfterSearchObject() throws Throwable {
+  public void shouldFailInsertWrongObjectAfterSearchObject() {
   }
 
   /**
@@ -50,7 +52,7 @@ class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScr
   @Test
   @Disabled
   @Override
-  public void shouldFailAppendWrongNode() throws Throwable {
+  public void shouldFailAppendWrongNode() {
   }
 
   /**
@@ -60,6 +62,6 @@ class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScr
   @Test
   @Disabled
   @Override
-  public void shouldFailInsertWrongObjectBeforeSearchObject() throws Throwable {
+  public void shouldFailInsertWrongObjectBeforeSearchObject() {
   }
 }

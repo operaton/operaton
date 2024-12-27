@@ -16,20 +16,23 @@
  */
 package org.operaton.spin.impl.test;
 
-import org.graalvm.polyglot.Value;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.operaton.spin.impl.util.SpinIoUtil;
 import org.operaton.spin.scripting.SpinScriptEnv;
+
+import java.io.File;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
-import java.io.File;
-import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.graalvm.polyglot.Value;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
  * A JUnit5 {@link org.junit.jupiter.api.extension.Extension} to load and execute a script.
@@ -37,7 +40,7 @@ import java.util.Map;
  *
  * <p>Provides support for loading scripts and managing script variables.
  */
-public class ScriptRule implements BeforeEachCallback {
+public class ScriptRule implements BeforeEachCallback, AfterEachCallback {
 
   private static final SpinTestLogger LOG = SpinTestLogger.TEST_LOGGER;
 
@@ -51,16 +54,12 @@ public class ScriptRule implements BeforeEachCallback {
   protected final Map<String, Object> variables = new HashMap<>();
 
   @Override
-  public void beforeEach(ExtensionContext context) {
-    try {
-      loadScript(context);
-    } catch (Throwable e) {
-      throw new RuntimeException(e);
-    }
-    tearDownVariables();
+  public void beforeEach(ExtensionContext context) throws Exception {
+    loadScript(context);
   }
 
-  protected void tearDownVariables() {
+  @Override
+  public void afterEach(ExtensionContext context) {
     for (Object variable : variables.values()) {
       if (variable instanceof Reader) {
         SpinIoUtil.closeSilently((Reader) variable);
@@ -72,9 +71,8 @@ public class ScriptRule implements BeforeEachCallback {
    * Load a script and the script variables defined.
    *
    * @param context the test context
-   * @throws Throwable
    */
-  private void loadScript(ExtensionContext context) throws Throwable {
+  private void loadScript(ExtensionContext context) throws Exception {
     scriptEngine = getScriptEngine(context);
     if (scriptEngine == null) {
       return;
@@ -150,7 +148,7 @@ public class ScriptRule implements BeforeEachCallback {
     return annotation != null && annotation.execute();
   }
 
-  private void executeScript() throws Throwable {
+  private void executeScript() throws Exception {
     if (scriptEngine != null) {
       try {
         String environment = SpinScriptEnv.get(scriptEngine.getFactory().getLanguageName());
@@ -161,7 +159,10 @@ public class ScriptRule implements BeforeEachCallback {
         scriptEngine.eval(script, bindings);
       } catch (ScriptException e) {
         if ("graal.js".equalsIgnoreCase(scriptEngine.getFactory().getEngineName())) {
-          throw e.getCause();
+          if (e.getCause() instanceof Exception ex) {
+            throw ex;
+          }
+          throw new RuntimeException(e.getCause());
         }
         throw LOG.scriptExecutionError(scriptPath, e);
       }

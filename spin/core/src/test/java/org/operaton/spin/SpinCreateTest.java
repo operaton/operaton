@@ -16,11 +16,12 @@
  */
 package org.operaton.spin;
 
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.spin.spi.DataFormat;
 import static org.operaton.spin.Spin.S;
 
 import org.junit.jupiter.api.Test;
-import org.operaton.spin.spi.DataFormat;
+
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 /**
  * @author Thorben Lindhauer
@@ -30,19 +31,10 @@ class SpinCreateTest {
 
   @Test
   void shouldFailForNonExistingDataFormat() {
-    try {
-      S("{}", "a non-existing format");
-      fail("expected exception");
-    } catch (IllegalArgumentException e) {
-      // happy path
-    }
+    assertThatIllegalArgumentException().isThrownBy(() -> S("{}", "a non-existing format"))
+      .withMessageContaining(" Parameter 'format' is null");
 
-    try {
-      DataFormat<?> dataFormat = null;
-      S("{}", dataFormat);
-      fail("expected exception");
-    } catch (IllegalArgumentException e) {
-      // happy path
-    }
+    assertThatIllegalArgumentException().isThrownBy(() -> S("{}", (DataFormat<?>) null))
+      .withMessageContaining(" Parameter 'format' is null");
   }
 }

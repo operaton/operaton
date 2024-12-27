@@ -47,9 +47,7 @@ public class ExampleCompatibilityTest extends DmnModelTest {
 
   public static final String EXAMPLE_DMN = "org/operaton/bpm/model/dmn/Example.dmn";
 
-  private DmnModelInstance originalModelInstance;
-
-   public static Collection<Object[]> parameters(){
+  public static Collection<Object[]> parameters(){
      return Arrays.asList(new Object[][]{
          {Dmn.readModelFromStream(ExampleCompatibilityTest.class.getResourceAsStream("Example.dmn"))},
          // for compatibility reasons we gotta check the old namespace, too
@@ -66,7 +64,6 @@ public class ExampleCompatibilityTest extends DmnModelTest {
    }
 
   public void initExampleCompatibilityTest(DmnModelInstance originalModelInstance) {
-    this.originalModelInstance = originalModelInstance;
     this.modelInstance = originalModelInstance.clone();
   }
 

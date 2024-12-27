@@ -204,31 +204,6 @@ public class JuelScriptEngine extends AbstractScriptEngine {
   }
 
   /**
-   * Class representing a compiled script using JUEL.
-   *
-   * @author Frederik Heremans
-   */
-  private class JuelCompiledScript extends CompiledScript {
-
-    private ValueExpression valueExpression;
-
-    JuelCompiledScript(ValueExpression valueExpression) {
-      this.valueExpression = valueExpression;
-    }
-
-    @Override
-    public ScriptEngine getEngine() {
-      // Return outer class instance
-      return JuelScriptEngine.this;
-    }
-
-    @Override
-    public Object eval(ScriptContext ctx) throws ScriptException {
-      return evaluateExpression(valueExpression, ctx);
-    }
-  }
-
-  /**
    * ValueMapper that uses the ScriptContext to get variable values or value
    * expressions.
    *

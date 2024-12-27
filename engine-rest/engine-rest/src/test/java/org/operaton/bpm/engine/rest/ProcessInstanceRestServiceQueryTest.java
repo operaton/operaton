@@ -75,8 +75,6 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   protected static final String PROCESS_INSTANCE_QUERY_URL = TEST_RESOURCE_ROOT_PATH + "/process-instance";
   protected static final String PROCESS_INSTANCE_COUNT_QUERY_URL = PROCESS_INSTANCE_QUERY_URL + "/count";
-  private static final String TEST_VAR_NAME = "varName";
-  private static final String TEST_VAR_VALUE = "varValue";
   protected ProcessInstanceQuery mockedQuery;
 
   @Before

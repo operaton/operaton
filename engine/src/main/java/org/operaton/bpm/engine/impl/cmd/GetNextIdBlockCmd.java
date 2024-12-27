@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
  */
 public class GetNextIdBlockCmd implements Command<IdBlock> {
   
-  private static final long serialVersionUID = 1L;
   protected int idBlockSize;
   
   public GetNextIdBlockCmd(int idBlockSize) {

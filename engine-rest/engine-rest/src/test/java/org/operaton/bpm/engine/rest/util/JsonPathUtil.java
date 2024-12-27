@@ -26,9 +26,6 @@ public final class JsonPathUtil {
 
   public static JsonPath from(String json) {
     return JsonPath.from(json).using(new DefaultJackson2ObjectMapperFactory() {
-      public ObjectMapper create(Class cls, String charset) {
-        return JacksonConfigurator.configureObjectMapper(super.create(cls, charset));
-      }
     });
   }
 

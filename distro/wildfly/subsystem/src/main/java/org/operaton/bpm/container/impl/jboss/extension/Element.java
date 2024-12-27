@@ -145,9 +145,4 @@ public enum Element {
     final Element element = MAP.get(localName);
     return element == null ? UNKNOWN : element;
   }
-
-  @SuppressWarnings("unused")
-  private static List<AttributeDefinition> getAttributeDefinitions(final AttributeDefinition... attributeDefinitions) {
-    return Arrays.asList(attributeDefinitions);
-  }
 }

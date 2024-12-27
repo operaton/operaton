@@ -32,8 +32,6 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
  */
 public class SchemaOperationsProcessEngineBuild implements SchemaOperationsCommand {
 
-  private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
-
   @Override
   public Void execute(CommandContext commandContext) {
     String databaseSchemaUpdate = Context.getProcessEngineConfiguration().getDatabaseSchemaUpdate();

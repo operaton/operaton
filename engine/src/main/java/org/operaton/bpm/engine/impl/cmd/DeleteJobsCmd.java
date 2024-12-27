@@ -30,8 +30,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
  */
 public class DeleteJobsCmd implements Command<Void> {
 
-  private static final long serialVersionUID = 1L;
-
   protected List<String> jobIds;
   protected boolean cascade;
 

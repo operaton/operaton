@@ -315,20 +315,6 @@ public class ProcessDiagramRetrievalTest {
   }
   
   /**
-   * Might be used for debugging {@link ProcessDiagramRetrievalTest#testGetProcessDiagram()}.
-   */
-  @SuppressWarnings("unused")
-  private static void writeToFile(InputStream is, File file) throws Exception {
-    DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-    int c;
-    while((c = is.read()) != -1) {
-      out.writeByte(c);
-    }
-    is.close();
-    out.close();
-  }
-  
-  /**
    * sorts {@link DiagramNode DiagramNodes} by ID 
    */
   public static class DiagramNodeComparator implements Comparator<DiagramNode> {

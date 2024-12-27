@@ -398,7 +398,6 @@
         <groupId>org.openjdk.nashorn</groupId>
         <artifactId>nashorn-core</artifactId>
         <version>${version.nashorn}</version>
-        <scope>test</scope>
       </dependency>
 
       <dependency>

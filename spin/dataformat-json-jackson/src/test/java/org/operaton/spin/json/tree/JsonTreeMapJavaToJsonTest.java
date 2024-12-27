@@ -16,9 +16,9 @@
  */
 package org.operaton.spin.json.tree;
 
-import static net.javacrumbs.jsonunit.fluent.JsonFluentAssert.assertThatJson;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.spin.SpinList;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.json.mapping.Order;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.operaton.spin.json.JsonTestConstants.createExampleOrder;
@@ -29,9 +29,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.operaton.spin.SpinList;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.json.mapping.Order;
+
+import static net.javacrumbs.jsonunit.fluent.JsonFluentAssert.assertThatJson;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class JsonTreeMapJavaToJsonTest {
 
@@ -81,12 +82,7 @@ class JsonTreeMapJavaToJsonTest {
 
   @Test
   void shouldFailWithNull() {
-    try {
-      JSON(null).toString();
-      fail("expected exception");
-    } catch (IllegalArgumentException e) {
-      // happy path
-    }
+    assertThrows(IllegalArgumentException.class, () -> JSON(null).toString());
   }
 
   @Test
@@ -121,10 +117,4 @@ class JsonTreeMapJavaToJsonTest {
     assertThat(elements.get(2).stringValue()).isEqualTo("Kermit");
   }
 
-  protected Map<String, Object> newMap(String key, Object value) {
-    Map<String, Object> result = new HashMap<>();
-    result.put(key, value);
-
-    return result;
-  }
 }

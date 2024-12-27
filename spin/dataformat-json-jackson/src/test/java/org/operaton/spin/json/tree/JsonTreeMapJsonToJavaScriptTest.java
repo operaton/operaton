@@ -16,18 +16,6 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_COLLECTION;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
-import static org.operaton.spin.json.JsonTestConstants.assertIsExampleOrder;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.impl.test.ScriptVariable;
@@ -35,6 +23,17 @@ import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonException;
 import org.operaton.spin.json.mapping.Order;
 import org.operaton.spin.json.mapping.RegularCustomer;
+import static org.operaton.spin.json.JsonTestConstants.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
 
@@ -101,8 +100,7 @@ public abstract class JsonTreeMapJsonToJavaScriptTest extends ScriptTest {
     execute = false
   )
   public void shouldFailForMalformedTypeString() {
-    assertThrows(SpinJsonDataFormatException.class, () ->
-      failingWithException());
+    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
   }
 
   protected Map<String, Object> newMap(String key, Object value) {

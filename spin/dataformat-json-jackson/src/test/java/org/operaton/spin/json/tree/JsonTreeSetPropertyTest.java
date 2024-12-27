@@ -16,20 +16,18 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.json.SpinJsonPropertyException;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.json.SpinJsonPropertyException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Stefan Hentschel
@@ -105,7 +103,7 @@ class JsonTreeSetPropertyTest {
     Integer oldValue = dueUntil.numberValue().intValue();
 
     assertThat(customers.isArray()).isTrue();
-    assertThat(dueUntil.isNumber());
+    assertThat(dueUntil.isNumber()).isTrue();
 
     // set new values
     jsonNode.prop("dueUntil", value);
@@ -139,7 +137,7 @@ class JsonTreeSetPropertyTest {
     Float oldValue = price.numberValue().floatValue();
 
     assertThat(customers.isArray()).isTrue();
-    assertThat(price.isNumber());
+    assertThat(price.isNumber()).isTrue();
 
     // set new values
     orderDetails.prop("price", value);
@@ -172,7 +170,7 @@ class JsonTreeSetPropertyTest {
     Long oldValue = id.numberValue().longValue();
 
     assertThat(customers.isArray()).isTrue();
-    assertThat(id.isNumber());
+    assertThat(id.isNumber()).isTrue();
 
     // set new values
     jsonNode.prop("id", value);
@@ -205,7 +203,7 @@ class JsonTreeSetPropertyTest {
     Boolean value = !oldValue;
 
     assertThat(customers.isArray()).isTrue();
-    assertThat(active.isBoolean());
+    assertThat(active.isBoolean()).isTrue();
 
     // set new values
     jsonNode.prop("active", value);
@@ -237,7 +235,6 @@ class JsonTreeSetPropertyTest {
     list1.add(42);
     list1.add(list2);
     list1.add(map);
-
 
     jsonNode.prop("comment", list1);
     SpinJsonNode comment = jsonNode.prop("comment");
@@ -359,12 +356,7 @@ class JsonTreeSetPropertyTest {
     Map<String, Object> map = new HashMap<>();
     map.put("date", date);
 
-    try {
-      jsonNode.prop("test", map);
-      fail("Expected SpinJsonTreePropertyException");
-    } catch(SpinJsonPropertyException e) {
-      // expected
-    }
+    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.prop("test", map));
   }
 
   @Test
@@ -373,12 +365,7 @@ class JsonTreeSetPropertyTest {
     ArrayList<Object> list = new ArrayList<>();
     list.add(date);
 
-    try {
-      jsonNode.prop("test", list);
-      fail("Expected SpinJsonTreePropertyException");
-    } catch(SpinJsonPropertyException e) {
-      // expected
-    }
+    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.prop("test", list));
   }
 
   @Test
@@ -399,7 +386,6 @@ class JsonTreeSetPropertyTest {
 
   @Test
   void setNullStringProperty() {
-
     jsonNode.prop("newNullValue", (String) null);
 
     assertThat(jsonNode.prop("newNullValue").isNull()).isTrue();

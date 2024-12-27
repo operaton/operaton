@@ -18,8 +18,12 @@ package org.operaton.spin.json;
 
 import org.operaton.spin.DeserializationTypeValidator;
 import org.operaton.spin.spi.DataFormatMapper;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 
 class JsonSerializationWithValidationTest extends JsonSerializationTest {
 
@@ -27,8 +31,8 @@ class JsonSerializationWithValidationTest extends JsonSerializationTest {
 
   @BeforeEach
   void setUpValidator() {
-    validator = Mockito.mock(DeserializationTypeValidator.class);
-    Mockito.when(validator.validate(Mockito.anyString())).thenReturn(true);
+    validator = mock(DeserializationTypeValidator.class);
+    Mockito.when(validator.validate(anyString())).thenReturn(true);
   }
 
   @Override

@@ -16,25 +16,23 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.spin.Spin.JSON;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_COLLECTION;
-import static org.operaton.spin.json.JsonTestConstants.assertIsExampleOrder;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.junit.jupiter.api.Test;
 import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonException;
 import org.operaton.spin.json.mapping.Order;
 import org.operaton.spin.json.mapping.RegularCustomer;
+import static org.operaton.spin.Spin.JSON;
+import static org.operaton.spin.json.JsonTestConstants.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class JsonTreeMapJsonToJavaTest {
 
@@ -73,19 +71,7 @@ class JsonTreeMapJsonToJavaTest {
 
   @Test
   void shouldFailForMalformedTypeString() {
-    try {
-      JSON(EXAMPLE_JSON_COLLECTION).mapTo("rubbish");
-      fail("Expected SpinJsonTreeNodeException");
-    } catch (SpinJsonDataFormatException e) {
-      // happy path
-    }
-  }
-
-  protected Map<String, Object> newMap(String key, Object value) {
-    Map<String, Object> result = new HashMap<>();
-    result.put(key, value);
-
-    return result;
+    assertThrows(SpinJsonDataFormatException.class, () -> JSON(EXAMPLE_JSON_COLLECTION).mapTo("rubbish"));
   }
 
 }

@@ -16,26 +16,24 @@
  */
 package org.operaton.spin.xml.dom;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.spin.DataFormats;
+import org.operaton.spin.spi.SpinDataFormatException;
+import org.operaton.spin.xml.SpinXmlElement;
 import static org.operaton.spin.DataFormats.xml;
 import static org.operaton.spin.Spin.S;
 import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.impl.util.SpinIoUtil.stringAsReader;
-import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_EMPTY_STRING;
-import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_INVALID_XML;
-import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML;
+import static org.operaton.spin.xml.XmlTestConstants.*;
 
 import java.io.Reader;
 
 import org.junit.jupiter.api.Test;
-import org.operaton.spin.DataFormats;
-import org.operaton.spin.spi.SpinDataFormatException;
-import org.operaton.spin.xml.SpinXmlElement;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Daniel Meyer
- *
  */
 class XmlDomCreateTest {
 
@@ -82,164 +80,44 @@ class XmlDomCreateTest {
   void shouldFailForNull() {
     SpinXmlElement xmlTreeElement = null;
 
-    try {
-      XML(xmlTreeElement);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(xmlTreeElement, xml());
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(xmlTreeElement);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
+    assertThrows(IllegalArgumentException.class, () -> XML(xmlTreeElement));
+    assertThrows(IllegalArgumentException.class, () -> S(xmlTreeElement, xml()));
+    assertThrows(IllegalArgumentException.class, () -> S(xmlTreeElement));
 
     Reader reader = null;
 
-    try {
-      XML(reader);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(reader, xml());
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(reader);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
+    assertThrows(IllegalArgumentException.class, () -> XML(reader));
+    assertThrows(IllegalArgumentException.class, () -> S(reader, xml()));
+    assertThrows(IllegalArgumentException.class, () -> S(reader));
 
     String inputString = null;
 
-    try {
-      XML(inputString);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(inputString, xml());
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(inputString, DataFormats.XML_DATAFORMAT_NAME);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      S(inputString);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
+    assertThrows(IllegalArgumentException.class, () -> XML(inputString));
+    assertThrows(IllegalArgumentException.class, () -> S(inputString, xml()));
+    assertThrows(IllegalArgumentException.class, () -> S(inputString, DataFormats.XML_DATAFORMAT_NAME));
+    assertThrows(IllegalArgumentException.class, () -> S(inputString));
   }
 
   @Test
   void shouldFailForInvalidXml() {
-    try {
-      XML(EXAMPLE_INVALID_XML);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_INVALID_XML, xml());
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_INVALID_XML, DataFormats.XML_DATAFORMAT_NAME);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_INVALID_XML);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+    assertThrows(SpinDataFormatException.class, () -> XML(EXAMPLE_INVALID_XML));
+    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML, xml()));
+    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML, DataFormats.XML_DATAFORMAT_NAME));
+    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML));
   }
 
   @Test
   void shouldFailForEmptyString() {
-    try {
-      XML(EXAMPLE_EMPTY_STRING);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_EMPTY_STRING, xml());
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_EMPTY_STRING, DataFormats.XML_DATAFORMAT_NAME);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(EXAMPLE_EMPTY_STRING);
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+    assertThrows(SpinDataFormatException.class, () -> XML(EXAMPLE_EMPTY_STRING));
+    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING, xml()));
+    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING, DataFormats.XML_DATAFORMAT_NAME));
+    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING));
   }
 
   @Test
   void shouldFailForEmptyReader() {
-    try {
-      XML(stringAsReader(EXAMPLE_EMPTY_STRING));
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(stringAsReader(EXAMPLE_EMPTY_STRING), xml());
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
-
-    try {
-      S(stringAsReader(EXAMPLE_EMPTY_STRING));
-      fail("Expected IllegalArgumentException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+    assertThrows(SpinDataFormatException.class, () -> XML(stringAsReader(EXAMPLE_EMPTY_STRING)));
+    assertThrows(SpinDataFormatException.class, () -> S(stringAsReader(EXAMPLE_EMPTY_STRING), xml()));
+    assertThrows(SpinDataFormatException.class, () -> S(stringAsReader(EXAMPLE_EMPTY_STRING)));
   }
 }

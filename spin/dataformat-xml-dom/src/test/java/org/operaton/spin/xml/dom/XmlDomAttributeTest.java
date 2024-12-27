@@ -16,23 +16,19 @@
  */
 package org.operaton.spin.xml.dom;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.Spin.XML;
-
-import java.io.StringWriter;
-
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlAttributeException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.XmlTestConstants;
+import static org.operaton.spin.Spin.XML;
 
 import java.io.StringWriter;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.operaton.spin.Spin.XML;
 
 /**
  * @author Sebastian Menski

@@ -81,7 +81,8 @@ class RewindableReaderTest {
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];
-    reader.read(buffer);
+    int read = reader.read(buffer);
+    assertThat(read).isEqualTo(5);
 
     reader.rewind();
 
@@ -133,14 +134,14 @@ class RewindableReaderTest {
     reader = newReaderInstance(EXAMPLE_INPUT_STRING, DEFAULT_BUFFER_SIZE);
 
     char[] buffer = new char[5];
-    reader.read(buffer);
+    int read = reader.read(buffer);
 
+    assertThat(read).isEqualTo(5);
     assertThat(SpinIoUtil.getStringFromReader(reader)).isEqualTo(EXAMPLE_INPUT_STRING.substring(5));
   }
 
   /**
    * When reading more characters than fits into the reader's buffer
-   * @throws IOException
    */
   @Test
   void shouldFailWhenRewindLimitExceeded() throws IOException {

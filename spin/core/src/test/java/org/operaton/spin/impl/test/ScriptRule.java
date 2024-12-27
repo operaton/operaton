@@ -112,17 +112,17 @@ public class ScriptRule implements BeforeEachCallback, AfterEachCallback {
 
   private void collectScriptVariables(ExtensionContext context) {
     ScriptVariable scriptVariable = context.getRequiredTestMethod().getAnnotation(ScriptVariable.class);
-    collectScriptVariable(scriptVariable, context);
+    collectScriptVariable(scriptVariable);
 
     Script script = context.getRequiredTestMethod().getAnnotation(Script.class);
     if (script != null) {
       for (ScriptVariable variable : script.variables()) {
-        collectScriptVariable(variable, context);
+        collectScriptVariable(variable);
       }
     }
   }
 
-  private void collectScriptVariable(ScriptVariable scriptVariable, ExtensionContext context) {
+  private void collectScriptVariable(ScriptVariable scriptVariable) {
     if (scriptVariable == null) {
       return;
     }

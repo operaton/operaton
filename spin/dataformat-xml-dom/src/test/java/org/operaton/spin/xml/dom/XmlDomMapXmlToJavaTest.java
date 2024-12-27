@@ -16,14 +16,15 @@
  */
 package org.operaton.spin.xml.dom;
 
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.spin.xml.SpinXmlDataFormatException;
+import org.operaton.spin.xml.mapping.Order;
 import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.assertIsExampleOrder;
 
 import org.junit.jupiter.api.Test;
-import org.operaton.spin.xml.SpinXmlDataFormatException;
-import org.operaton.spin.xml.mapping.Order;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class XmlDomMapXmlToJavaTest {
 
@@ -41,11 +42,6 @@ class XmlDomMapXmlToJavaTest {
 
   @Test
   void shouldFailForMalformedTypeString() {
-    try {
-      XML(EXAMPLE_VALIDATION_XML).mapTo("rubbish");
-      fail("Expected SpinXmlDataFormatException");
-    } catch (SpinXmlDataFormatException e) {
-      // happy path
-    }
+    assertThrows(SpinXmlDataFormatException.class, () -> XML(EXAMPLE_VALIDATION_XML).mapTo("rubbish"));
   }
 }

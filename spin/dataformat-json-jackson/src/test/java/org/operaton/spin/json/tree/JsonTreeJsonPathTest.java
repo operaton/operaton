@@ -27,11 +27,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * @author Stefan Hentschel
+ * Author: Stefan Hentschel
  */
 class JsonTreeJsonPathTest {
 
@@ -82,8 +81,8 @@ class JsonTreeJsonPathTest {
 
   @Test
   void shouldGetNullNode() {
-	  SpinJsonNode node = jsonNode.jsonPath("$.nullValue").element();
-	  assertThat(node.isNull()).isTrue();
+    SpinJsonNode node = jsonNode.jsonPath("$.nullValue").element();
+    assertThat(node.isNull()).isTrue();
   }
 
   @Test
@@ -128,160 +127,50 @@ class JsonTreeJsonPathTest {
 
   @Test
   void failReadingJsonPath() {
-    try {
-      jsonNode.jsonPath("$.....").element();
-      fail("Expected: SpinJsonTreePathException");
-    } catch(SpinJsonPathException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("").element();
-      fail("Expected: SpinJsonTreePathException");
-    } catch(SpinJsonPathException ex) {
-      // expected
-    }
+    assertThrows(SpinJsonPathException.class, () -> jsonNode.jsonPath("$.....").element());
+    assertThrows(SpinJsonPathException.class, () -> jsonNode.jsonPath("").element());
   }
 
   @Test
   void failAccessNonExistentProperty() {
-    try {
-      jsonNode.jsonPath("$.order.test").element();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch(SpinJsonPathException ex) {
-      // expected
-    }
+    assertThrows(SpinJsonPathException.class, () -> jsonNode.jsonPath("$.order.test").element());
   }
 
   @Test
   void failReadingElementList() {
-    try {
-      jsonNode.jsonPath("$.order").elementList();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$.id").elementList();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$.active").elementList();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$").elementList();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException ex) {
-      // expected
-    }
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.order").elementList());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.id").elementList());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.active").elementList());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$").elementList());
   }
 
   @Test
   void failReadingStringProperty() {
-    try {
-      jsonNode.jsonPath("$.customers").stringValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$.active").stringValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$.id").stringValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$").stringValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException ex) {
-      // expected
-    }
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.customers").stringValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.active").stringValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.id").stringValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$").stringValue());
   }
 
   @Test
   void failReadingNumberProperty() {
-    try {
-      jsonNode.jsonPath("$.customers").numberValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch (SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$.active").numberValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch (SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$.order").numberValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch (SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$").numberValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch (SpinJsonDataFormatException ex) {
-      // expected
-    }
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.customers").numberValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.active").numberValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.order").numberValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$").numberValue());
   }
 
   @Test
   void failReadingBooleanProperty() {
-    try {
-      jsonNode.jsonPath("$.customers").boolValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch (SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$.id").boolValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch (SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$.order").boolValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch (SpinJsonDataFormatException ex) {
-      // expected
-    }
-
-    try {
-      jsonNode.jsonPath("$").boolValue();
-      fail("Expected: SpinJsonDataFormatException");
-    } catch (SpinJsonDataFormatException ex) {
-      // expected
-    }
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.customers").boolValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.id").boolValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$.order").boolValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.jsonPath("$").boolValue());
   }
 
   @Test
   void failOnNonExistingJsonPath() {
     SpinJsonNode json = JSON("{\"a\": {\"id\": \"a\"}, \"b\": {\"id\": \"b\"}}");
-    assertThrows(SpinJsonPathException.class, () ->
-      json.jsonPath("$.c?(@.id)").element());
+    assertThrows(SpinJsonPathException.class, () -> json.jsonPath("$.c?(@.id)").element());
   }
-
 }

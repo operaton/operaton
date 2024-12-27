@@ -27,7 +27,7 @@ class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScr
 
   /**
    * Ignored since javascript implementation changed
-   * see: https://app.camunda.com/jira/browse/CAM-3612
+   * see: <a href="https://app.camunda.com/jira/browse/CAM-3612">CAM-3612</a>
    */
   @Test
   @Disabled
@@ -37,7 +37,7 @@ class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScr
 
   /**
    * Ignored since javascript implementation changed
-   * see: https://app.camunda.com/jira/browse/CAM-3612
+   * see: <a href="https://app.camunda.com/jira/browse/CAM-3612">CAM-3612</a>
    */
   @Test
   @Disabled
@@ -47,7 +47,7 @@ class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScr
 
   /**
    * Ignored since javascript implementation changed
-   * see: https://app.camunda.com/jira/browse/CAM-3612
+   * see: <a href="https://app.camunda.com/jira/browse/CAM-3612">CAM-3612</a>
    */
   @Test
   @Disabled
@@ -57,7 +57,7 @@ class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScr
 
   /**
    * Ignored since javascript implementation changed
-   * see: https://app.camunda.com/jira/browse/CAM-3612
+   * see: <a href="https://app.camunda.com/jira/browse/CAM-3612">CAM-3612</a>
    */
   @Test
   @Disabled

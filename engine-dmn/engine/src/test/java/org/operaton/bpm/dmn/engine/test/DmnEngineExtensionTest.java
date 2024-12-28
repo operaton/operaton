@@ -16,27 +16,28 @@
  */
 package org.operaton.bpm.dmn.engine.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngine;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.junit.Rule;
-import org.junit.Test;
 
-public class DmnEngineRuleTest {
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-  @Rule
-  public DmnEngineRule engineRule = new DmnEngineRule();
+import static org.assertj.core.api.Assertions.assertThat;
 
-  @Rule
-  public DmnEngineRule nullEngineRule = new DmnEngineRule(null);
+class DmnEngineExtensionTest {
 
-  @Rule
-  public DmnEngineRule customEngineRule = new DmnEngineRule(initConfiguration());
+  @RegisterExtension
+  DmnEngineExtension engineRule = new DmnEngineExtension();
 
-  public DmnEngineConfiguration customConfiguration;
+  @RegisterExtension
+  DmnEngineExtension nullEngineRule = new DmnEngineExtension(null);
+
+  @RegisterExtension
+  DmnEngineExtension customEngineRule = new DmnEngineExtension(initConfiguration());
+
+  DmnEngineConfiguration customConfiguration;
 
   public DmnEngineConfiguration initConfiguration() {
     customConfiguration = new DefaultDmnEngineConfiguration();
@@ -44,7 +45,7 @@ public class DmnEngineRuleTest {
   }
 
   @Test
-  public void shouldCreateDefaultDmnEngineWithoutConfiguration() {
+  void shouldCreateDefaultDmnEngineWithoutConfiguration() {
     DmnEngine dmnEngine = engineRule.getDmnEngine();
     assertThat(dmnEngine)
       .isInstanceOf(DefaultDmnEngine.class)
@@ -52,7 +53,7 @@ public class DmnEngineRuleTest {
   }
 
   @Test
-  public void shouldCreateDefaultDmnEngineWithNullConfiguration() {
+  void shouldCreateDefaultDmnEngineWithNullConfiguration() {
     DmnEngine dmnEngine = nullEngineRule.getDmnEngine();
     assertThat(dmnEngine)
       .isInstanceOf(DefaultDmnEngine.class)
@@ -60,7 +61,7 @@ public class DmnEngineRuleTest {
   }
 
   @Test
-  public void shouldCreateEngineFromCustomConfiguration() {
+  void shouldCreateEngineFromCustomConfiguration() {
     DmnEngine dmnEngine = customEngineRule.getDmnEngine();
     assertThat(dmnEngine)
       .isNotNull();

@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionTableEvaluationEvent;
@@ -30,42 +23,47 @@ import org.operaton.bpm.dmn.engine.spi.DmnEngineMetricCollector;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.VariableMap;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.operaton.bpm.engine.variable.Variables.createVariables;
 
-public class DmnEngineMetricCollectorTest extends DmnEngineTest {
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-  public static final String EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/api/Example.dmn";
-  public static final String DISH_EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/api/DrdDishDecisionExample.dmn";
-  public static final String DRG_WITH_LITERAL_EXPRESSIONS = "org/operaton/bpm/dmn/engine/api/DrgWithLiteralExpressions.dmn";
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+class DmnEngineMetricCollectorTest extends DmnEngineTest {
+
+  private static final String EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/api/Example.dmn";
+  private static final String DISH_EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/api/DrdDishDecisionExample.dmn";
+  private static final String DRG_WITH_LITERAL_EXPRESSIONS = "org/operaton/bpm/dmn/engine/api/DrgWithLiteralExpressions.dmn";
 
   protected DmnEngineMetricCollector metricCollector;
 
-  @Before
-  public void getEngineMetricCollector() {
+  @BeforeEach
+  void getEngineMetricCollector() {
     metricCollector = dmnEngine.getConfiguration().getEngineMetricCollector();
   }
 
-  @Before
-  public void setTestVariables() {
+  @BeforeEach
+  void setTestVariables() {
     variables.putValue("status", "bronze");
     variables.putValue("sum", 100);
   }
 
-  @After
-  public void clearEngineMetrics() {
+  @AfterEach
+  void clearEngineMetrics() {
     metricCollector.clearExecutedDecisionElements();
   }
 
   @Test
-  public void testInitialExecutedDecisionElementsValue() {
+  void initialExecutedDecisionElementsValue() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
   }
 
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
-  public void testExecutedDecisionElementsOfDecisionTable() {
+  void executedDecisionElementsOfDecisionTable() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     dmnEngine.evaluateDecisionTable(decision, variables);
@@ -81,7 +79,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DISH_EXAMPLE_DMN, decisionKey = "Dish")
-  public void testExecutedDecisionElementsOfDrg() {
+  void executedDecisionElementsOfDrg() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     VariableMap variableMap = createVariables()
@@ -100,7 +98,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
   }
 
   @Test
-  public void testExecutedDecisionElementsOfDecisionLiteralExpression() {
+  void executedDecisionElementsOfDecisionLiteralExpression() {
     // evaluate one decision with a single literal expression
     dmnEngine.evaluateDecision(parseDecisionFromFile("c", DRG_WITH_LITERAL_EXPRESSIONS), createVariables());
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(1);
@@ -114,7 +112,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
-  public void testClearExecutedDecisionElementsValue() {
+  void clearExecutedDecisionElementsValue() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     dmnEngine.evaluateDecisionTable(decision, variables);
@@ -126,12 +124,11 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DISH_EXAMPLE_DMN, decisionKey = "Dish")
-  public void testDrdDishDecisionExample() {
+  void drdDishDecisionExample() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
-    dmnEngine.evaluateDecisionTable(decision, createVariables()
-      .putValue("temperature", 20)
-      .putValue("dayType", "Weekend"));
+    dmnEngine.evaluateDecisionTable(decision,
+      createVariables().putValue("temperature", 20).putValue("dayType", "Weekend"));
 
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(30L);
     assertThat(metricCollector.clearExecutedDecisionElements()).isEqualTo(30L);
@@ -140,7 +137,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
   }
 
   @Test
-  public void testCustomEngineMetricCollector() {
+  void customEngineMetricCollector() {
     DmnEngineConfiguration configuration = DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
     DmnEngineMetricCollector mockMetricCollector = mock(DmnEngineMetricCollector.class);
     configuration.setEngineMetricCollector(mockMetricCollector);

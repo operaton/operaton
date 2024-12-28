@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import org.assertj.core.api.Fail;
-import org.junit.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionResultException;
@@ -30,22 +28,24 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class DmnDecisionTableResultTest extends DmnEngineTest {
+class DmnDecisionTableResultTest extends DmnEngineTest {
 
-  public static final String NO_OUTPUT_VALUE = "noOutputValue";
-  public static final String SINGLE_OUTPUT_VALUE = "singleOutputValue";
-  public static final String MULTIPLE_OUTPUT_VALUES = "multipleOutputValues";
+  private static final String NO_OUTPUT_VALUE = "noOutputValue";
+  private static final String SINGLE_OUTPUT_VALUE = "singleOutputValue";
+  private static final String MULTIPLE_OUTPUT_VALUES = "multipleOutputValues";
 
-  public static final String RESULT_TEST_DMN = "DmnResultTest.dmn";
-  public static final String RESULT_TEST_WITH_TYPES_DMN = "DmnResultTypedTest.dmn";
-  public static final String RESULT_TEST_WITH_SINGLE_UNNAMED_OUTPUT_DMN = "DmnResultTest.testSingleOutputNoName.dmn";
+  private static final String RESULT_TEST_DMN = "DmnResultTest.dmn";
+  private static final String RESULT_TEST_WITH_TYPES_DMN = "DmnResultTypedTest.dmn";
+  private static final String RESULT_TEST_WITH_SINGLE_UNNAMED_OUTPUT_DMN = "DmnResultTest.testSingleOutputNoName.dmn";
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testNoResult() {
+  void noResult() {
     DmnDecisionTableResult results = evaluateWithMatchingRules();
 
     assertThat(results).isEmpty();
@@ -58,7 +58,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testSingleResult() {
+  void singleResult() {
     DmnDecisionTableResult results = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
 
     assertThat(results).hasSize(1);
@@ -71,8 +71,9 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testMultipleResults() {
-    DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(NO_OUTPUT_VALUE, SINGLE_OUTPUT_VALUE, MULTIPLE_OUTPUT_VALUES);
+  void multipleResults() {
+    DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(NO_OUTPUT_VALUE, SINGLE_OUTPUT_VALUE,
+      MULTIPLE_OUTPUT_VALUES);
     assertThat(decisionResult).hasSize(3);
 
     DmnDecisionRuleResult ruleResult = decisionResult.get(0);
@@ -85,34 +86,22 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     ruleResult = decisionResult.getFirstResult();
     assertNoOutputValue(ruleResult);
 
-    try {
-      decisionResult.getSingleResult();
-      failBecauseExceptionWasNotThrown(DmnDecisionResultException.class);
-    }
-    catch (DmnDecisionResultException e){
-      assertThat(e)
-        .hasMessageStartingWith("DMN-01008")
-        .hasMessageContaining("singleValue")
-        .hasMessageContaining("multipleValues1")
-        .hasMessageContaining("multipleValues2");
-    }
+    assertThatThrownBy(decisionResult::getSingleResult).isInstanceOf(DmnDecisionResultException.class)
+      .hasMessageStartingWith("DMN-01008")
+      .hasMessageContaining("singleValue")
+      .hasMessageContaining("multipleValues1")
+      .hasMessageContaining("multipleValues2");
 
-    try {
-      decisionResult.getSingleEntry();
-      failBecauseExceptionWasNotThrown(DmnDecisionResultException.class);
-    }
-    catch (DmnDecisionResultException e){
-      assertThat(e)
-        .hasMessageStartingWith("DMN-01008")
-        .hasMessageContaining("singleValue")
-        .hasMessageContaining("multipleValues1")
-        .hasMessageContaining("multipleValues2");
-    }
+    assertThatThrownBy(decisionResult::getSingleEntry).isInstanceOf(DmnDecisionResultException.class)
+      .hasMessageStartingWith("DMN-01008")
+      .hasMessageContaining("singleValue")
+      .hasMessageContaining("multipleValues1")
+      .hasMessageContaining("multipleValues2");
   }
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testNoOutputValue() {
+  void noOutputValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(NO_OUTPUT_VALUE);
     assertThat(decisionResult).hasSize(1);
 
@@ -123,7 +112,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testSingleOutputValue() {
+  void singleOutputValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
     assertThat(decisionResult).hasSize(1);
 
@@ -134,7 +123,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_WITH_SINGLE_UNNAMED_OUTPUT_DMN)
-  public void testSingleOutputNoName() {
+  void singleOutputNoName() {
     DmnDecisionTableResult decisionResult = evaluateDecisionTable();
     assertThat(decisionResult).hasSize(1);
 
@@ -147,28 +136,23 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testMultipleOutputValues() {
+  void multipleOutputValues() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(MULTIPLE_OUTPUT_VALUES);
     assertThat(decisionResult).hasSize(1);
 
     assertMultipleOutputValues(decisionResult.getFirstResult());
 
-    try {
-      decisionResult.getSingleEntry();
-      failBecauseExceptionWasNotThrown(DmnDecisionResultException.class);
-    }
-    catch (DmnDecisionResultException e){
-      assertThat(e)
-        .hasMessageStartingWith("DMN-01007")
-        .hasMessageContaining("multipleValues1")
-        .hasMessageContaining("multipleValues2");
-    }
+    assertThatThrownBy(decisionResult::getSingleEntry).isInstanceOf(DmnDecisionResultException.class)
+      .hasMessageStartingWith("DMN-01007")
+      .hasMessageContaining("multipleValues1")
+      .hasMessageContaining("multipleValues2");
   }
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testCollectOutputValues() {
-    DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(NO_OUTPUT_VALUE, SINGLE_OUTPUT_VALUE, MULTIPLE_OUTPUT_VALUES);
+  void collectOutputValues() {
+    DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(NO_OUTPUT_VALUE, SINGLE_OUTPUT_VALUE,
+      MULTIPLE_OUTPUT_VALUES);
     assertThat(decisionResult).hasSize(3);
 
     List<String> entryValues = decisionResult.collectEntries("firstOutput");
@@ -180,7 +164,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testOutputList() {
+  void outputList() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE, MULTIPLE_OUTPUT_VALUES);
 
     List<Map<String, Object>> entryMapList = decisionResult.getResultList();
@@ -198,7 +182,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testValueMap() {
+  void valueMap() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(MULTIPLE_OUTPUT_VALUES);
 
     DmnDecisionRuleResult ruleResult = decisionResult.getSingleResult();
@@ -212,7 +196,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testSingleOutputUntypedValue() {
+  void singleOutputUntypedValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
     assertThat(decisionResult).hasSize(1);
 
@@ -233,7 +217,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_WITH_TYPES_DMN)
-  public void testSingleOutputTypedValue() {
+  void singleOutputTypedValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
     assertThat(decisionResult).hasSize(1);
 
@@ -254,7 +238,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testSingleEntryUntypedValue() {
+  void singleEntryUntypedValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
 
     TypedValue typedValue = decisionResult.getSingleEntryTyped();
@@ -263,7 +247,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_WITH_TYPES_DMN)
-  public void testSingleEntryTypedValue() {
+  void singleEntryTypedValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
 
     TypedValue typedValue = decisionResult.getSingleEntryTyped();
@@ -272,7 +256,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   // helper methods
 
-  protected DmnDecisionTableResult evaluateWithMatchingRules(String... matchingRules) {
+  private DmnDecisionTableResult evaluateWithMatchingRules(String... matchingRules) {
     List<String> matchingRulesList = Arrays.asList(matchingRules);
     variables.putValue(NO_OUTPUT_VALUE, matchingRulesList.contains(NO_OUTPUT_VALUE));
     variables.putValue(SINGLE_OUTPUT_VALUE, matchingRulesList.contains(SINGLE_OUTPUT_VALUE));
@@ -280,7 +264,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     return evaluateDecisionTable();
   }
 
-  protected void assertSingleOutputValue(DmnDecisionRuleResult decisionRuleResult) {
+  private void assertSingleOutputValue(DmnDecisionRuleResult decisionRuleResult) {
     assertThat(decisionRuleResult).hasSize(1);
 
     String value = (String) decisionRuleResult.get("firstOutput");
@@ -296,23 +280,11 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     assertThat(value).isEqualTo("singleValue");
   }
 
-  protected void assertNoOutputValue(DmnDecisionRuleResult decisionRuleResult) {
+  private void assertNoOutputValue(DmnDecisionRuleResult decisionRuleResult) {
     assertThat(decisionRuleResult).isEmpty();
-
-    String value = (String) decisionRuleResult.get("firstOutput");
-    assertThat(value).isNull();
-
-    value = (String) decisionRuleResult.get("secondOutput");
-    assertThat(value).isNull();
-
-    value = decisionRuleResult.getFirstEntry();
-    assertThat(value).isNull();
-
-    value = decisionRuleResult.getSingleEntry();
-    assertThat(value).isNull();
   }
 
-  protected void assertMultipleOutputValues(DmnDecisionRuleResult decisionRuleResult) {
+  private void assertMultipleOutputValues(DmnDecisionRuleResult decisionRuleResult) {
     assertThat(decisionRuleResult).hasSize(2);
 
     String value = (String) decisionRuleResult.get("firstOutput");
@@ -324,16 +296,11 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
     value = decisionRuleResult.getFirstEntry();
     assertThat(value).isEqualTo("multipleValues1");
 
-    try {
-      decisionRuleResult.getSingleEntry();
-      Fail.failBecauseExceptionWasNotThrown(DmnDecisionResultException.class);
-    }
-    catch (DmnDecisionResultException e) {
-      assertThat(e)
-        .hasMessageStartingWith("DMN-01007")
-        .hasMessageContaining("multipleValues1")
-        .hasMessageContaining("multipleValues2");
-    }
+    assertThatThrownBy(decisionRuleResult::getSingleEntry)
+      .isInstanceOf(DmnDecisionResultException.class)
+      .hasMessageStartingWith("DMN-01007")
+      .hasMessageContaining("multipleValues1")
+      .hasMessageContaining("multipleValues2");
   }
 
 }

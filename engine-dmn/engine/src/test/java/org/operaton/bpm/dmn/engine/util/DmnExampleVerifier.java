@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.dmn.engine.util;
 
-import java.io.InputStream;
-import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.commons.utils.IoUtil;
+import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
+
+import java.io.InputStream;
 
 public final class DmnExampleVerifier {
 
-  public static final String EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/api/Example.dmn";
+  private static final String EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/api/Example.dmn";
 
   public static void assertExample(DmnEngine engine) {
     InputStream inputStream = IoUtil.fileAsStream(EXAMPLE_DMN);

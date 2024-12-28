@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
     <version>1.0.0-beta-3-SNAPSHOT</version>
-    <relativePath>../../</relativePath>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <groupId>org.operaton.bpm.dmn</groupId>

@@ -22,17 +22,18 @@ import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CustomFunctionConfigTest extends DmnEngineTest {
+class CustomFunctionConfigTest extends DmnEngineTest {
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
     List<FeelCustomFunctionProvider> customFunctionProviders = new ArrayList<>();
     customFunctionProviders.add(new CustomFunctionProvider("myFunctionOne", "foo"));
@@ -44,7 +45,7 @@ public class CustomFunctionConfigTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "custom_function.dmn")
-  public void shouldRegisterCustomFunctions() {
+  void shouldRegisterCustomFunctions() {
     // given
 
     // when

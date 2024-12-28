@@ -18,18 +18,19 @@ package org.operaton.bpm.dmn.engine.type;
 
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Philipp Ossler
  */
-public class TypedValueDecisionTest extends DmnEngineTest {
+class TypedValueDecisionTest extends DmnEngineTest {
 
-  public static final String DMN_FILE = "org/operaton/bpm/dmn/engine/type/TypedValue.dmn";
+  private static final String DMN_FILE = "org/operaton/bpm/dmn/engine/type/TypedValue.dmn";
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void decisionWithUntypedValueSatisfied() {
+  void decisionWithUntypedValueSatisfied() {
     variables.put("type", "untyped");
     variables.put("integer", 84);
 
@@ -40,7 +41,7 @@ public class TypedValueDecisionTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void decisionWithUntypedValueNotSatisfied() {
+  void decisionWithUntypedValueNotSatisfied() {
     variables.put("type", "untyped");
     variables.put("integer", 21);
 
@@ -51,7 +52,7 @@ public class TypedValueDecisionTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void decisionWithTypedValueSatisfied() {
+  void decisionWithTypedValueSatisfied() {
     variables.put("type", "typed");
     variables.put("integer", 73);
 
@@ -62,7 +63,7 @@ public class TypedValueDecisionTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void decisionWithTypedValueNotSatisfied() {
+  void decisionWithTypedValueNotSatisfied() {
     variables.put("type", "typed");
     variables.put("integer", 41);
 

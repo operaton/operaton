@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.transform;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
@@ -33,14 +27,17 @@ import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformListener;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
-import org.operaton.bpm.model.dmn.instance.Decision;
-import org.operaton.bpm.model.dmn.instance.Definitions;
-import org.operaton.bpm.model.dmn.instance.Input;
-import org.operaton.bpm.model.dmn.instance.Output;
-import org.operaton.bpm.model.dmn.instance.Rule;
+import org.operaton.bpm.model.dmn.instance.*;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -48,26 +45,26 @@ import org.junit.Test;
  *
  */
 
-public class DmnTransformListenerTest extends DmnEngineTest {
+class DmnTransformListenerTest extends DmnEngineTest {
 
-  public static final String DRG_EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/transform/DrgExample.dmn";
-  public static final String DECISION_TRANSFORM_DMN = "org/operaton/bpm/dmn/engine/transform/DmnDecisionTransform.dmn";
+  private static final String DRG_EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/transform/DrgExample.dmn";
+  private static final String DECISION_TRANSFORM_DMN = "org/operaton/bpm/dmn/engine/transform/DmnDecisionTransform.dmn";
 
   protected TestDmnTransformListener listener;
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     return new TestDmnTransformListenerConfiguration();
   }
 
-  @Before
-  public void initListener() {
+  @BeforeEach
+  void initListener() {
     TestDmnTransformListenerConfiguration configuration = (TestDmnTransformListenerConfiguration) dmnEngine.getConfiguration();
     listener = configuration.testDmnTransformListener;
   }
 
   @Test
-  public void shouldCallListener() {
+  void shouldCallListener() {
     dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DECISION_TRANSFORM_DMN));
     assertThat(listener.getDmnDecisionRequirementsGraph()).isNotNull();
     assertThat(listener.getDmnDecision()).isNotNull();
@@ -77,7 +74,7 @@ public class DmnTransformListenerTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldVerifyDmnDecisionRequirementsGraph() {
+  void shouldVerifyDmnDecisionRequirementsGraph() {
     dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_EXAMPLE_DMN));
     DmnDecisionRequirementsGraph dmnDecisionRequirementsGraph = listener.getDmnDecisionRequirementsGraph();
     Definitions definitions = listener.getDefinitions();
@@ -94,7 +91,7 @@ public class DmnTransformListenerTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldVerifyTransformedDmnDecision() {
+  void shouldVerifyTransformedDmnDecision() {
     InputStream inputStream =  IoUtil.fileAsStream(DECISION_TRANSFORM_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
     dmnEngine.parseDecisionRequirementsGraph(modelInstance);
@@ -112,7 +109,7 @@ public class DmnTransformListenerTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldVerifyTransformedDmnDecisions() {
+  void shouldVerifyTransformedDmnDecisions() {
     dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_EXAMPLE_DMN));
     List<DmnDecision> transformedDecisions = listener.getTransformedDecisions();
     assertThat(transformedDecisions).hasSize(3);
@@ -124,7 +121,7 @@ public class DmnTransformListenerTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldVerifyTransformedInput() {
+  void shouldVerifyTransformedInput() {
     dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DECISION_TRANSFORM_DMN));
     DmnDecisionTableInputImpl dmnInput = listener.getDmnInput();
     Input input = listener.getInput();
@@ -136,7 +133,7 @@ public class DmnTransformListenerTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldVerifyTransformedOutput() {
+  void shouldVerifyTransformedOutput() {
     dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DECISION_TRANSFORM_DMN));
     DmnDecisionTableOutputImpl dmnOutput = listener.getDmnOutput();
     Output output = listener.getOutput();
@@ -148,7 +145,7 @@ public class DmnTransformListenerTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldVerifyTransformedRule() {
+  void shouldVerifyTransformedRule() {
     dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DECISION_TRANSFORM_DMN));
     DmnDecisionTableRuleImpl dmnRule = listener.getDmnRule();
     Rule rule = listener.getRule();

@@ -16,29 +16,25 @@
  */
 package org.operaton.bpm.dmn.engine.feel;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.Date;
-
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelEngineFactory;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-public class NewScalaFeelBehaviorTest extends DmnEngineTest {
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class NewScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
     configuration.setFeelEngineFactory(new ScalaFeelEngineFactory());
     return configuration;
@@ -46,7 +42,7 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "scala_input_expression.dmn")
-  public void shouldEvaluateInputExpression_Simple() {
+  void shouldEvaluateInputExpression_Simple() {
     // given
     getVariables()
       .putValue("date1", new Date())
@@ -61,7 +57,7 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "scala_input_expression_builtin_function.dmn")
-  public void shouldEvaluateInputExpression_BuiltInFunction() {
+  void shouldEvaluateInputExpression_BuiltInFunction() {
     // given
     getVariables()
       .putValue("date1", new Date());
@@ -75,7 +71,7 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "scala_compare_date_with_time_zone_non_typed.dmn")
-  public void shouldEvaluateTimezoneComparisonWithZonedDateTime() {
+  void shouldEvaluateTimezoneComparisonWithZonedDateTime() {
     variables.putValue("date1", ZonedDateTime.now());
 
     assertThatDecisionTableResult()
@@ -85,7 +81,7 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "scala_unary_builtin_function.dmn")
-  public void shouldEvaluateBuiltInFunctionInUnaryTest() {
+  void shouldEvaluateBuiltInFunctionInUnaryTest() {
     variables.putValue("integerString", "45");
 
     assertThatDecisionTableResult()
@@ -95,7 +91,7 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "scala_compare_date_untyped.dmn")
-  public void shouldEvaluateLocalDate_NonInputClauseType() {
+  void shouldEvaluateLocalDate_NonInputClauseType() {
     // given
     getVariables()
       .putValue("date1", LocalDateTime.now());
@@ -109,7 +105,7 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "scala_literal_expression_date_typed.dmn")
-  public void shouldEvaluateToUtilDateWithLiteralExpression() {
+  void shouldEvaluateToUtilDateWithLiteralExpression() {
     // given
     getVariables()
       .putValue("date1", new Date());
@@ -123,7 +119,7 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "scala_date_typed_output.dmn")
-  public void shouldEvaluateToUtilDateForTypedOutputClause() {
+  void shouldEvaluateToUtilDateForTypedOutputClause() {
     // given
 
     // when
@@ -136,7 +132,7 @@ public class NewScalaFeelBehaviorTest extends DmnEngineTest {
   // https://jira.camunda.com/browse/CAM-11382
   @Test
   @DecisionResource(resource = "scala_output_expression_double.dmn")
-  public void shouldReturnMaxDouble() {
+  void shouldReturnMaxDouble() {
     // given
     getVariables().putValue("myVariable", Double.MAX_VALUE);
 

@@ -16,39 +16,34 @@
  */
 package org.operaton.bpm.dmn.engine.feel.function;
 
-import org.operaton.bpm.dmn.engine.feel.helper.FeelRule;
+import org.operaton.bpm.dmn.engine.feel.helper.FeelExtension;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.RuleChain;
 
-public class ExternalFunctionTest {
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-  protected FeelRule feelRule = FeelRule.build();
-  protected ExpectedException thrown = ExpectedException.none();
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-  @Rule
-  public RuleChain ruleChain = RuleChain.outerRule(feelRule).around(thrown);
+class ExternalFunctionTest {
+
+  @RegisterExtension
+  FeelExtension feelExtension = FeelExtension.build();
 
   @Test
-  public void shouldFailWhenUsingExternalFunction() {
-    // given
-
-    // then
-    thrown.expect(FeelException.class);
-    thrown.expectMessage("External functions are disabled");
-
-    // when
-    feelRule.evaluateExpression("{ \n" +
-      "  foo: function(x, y) external { \n" +
-      "    java: { \n" +
-      "        class: \"java.lang.Math\", \n" +
-      "        method signature: \"addExact(int, int)\" \n" +
-      "    } \n" +
-      "  },\n" +
-      "  bar: foo(5, 5)\n" +
-      "}.bar");
+  void shouldFailWhenUsingExternalFunction() {
+    assertThatThrownBy(() -> feelExtension.evaluateExpression("""
+      {
+      foo: function(x, y) external {
+        java: {
+            class: "java.lang.Math",
+            method signature: "addExact(int, int)"
+        }
+      },
+      bar: foo(5, 5)
+      }.bar
+      """))
+      .isInstanceOf(FeelException.class)
+      .hasMessageContaining("External functions are disabled");
   }
 
 }

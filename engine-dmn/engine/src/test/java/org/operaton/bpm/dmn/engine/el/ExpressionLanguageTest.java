@@ -16,20 +16,10 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
-import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionLiteralExpressionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableInputImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableRuleImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnExpressionImpl;
+import org.operaton.bpm.dmn.engine.impl.*;
 import org.operaton.bpm.dmn.engine.impl.el.DefaultScriptEngineResolver;
 import org.operaton.bpm.dmn.engine.impl.el.JuelElProvider;
 import org.operaton.bpm.dmn.engine.impl.spi.el.DmnScriptEngineResolver;
@@ -39,33 +29,35 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
+import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
-public class ExpressionLanguageTest extends DmnEngineTest {
+class ExpressionLanguageTest extends DmnEngineTest {
 
-  public static final String GROOVY_DECISION_TABLE_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.groovy.decisionTable.dmn";
-  public static final String GROOVY_DECISION_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.groovy.decisionLiteralExpression.dmn";
-  public static final String SCRIPT_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.script.dmn";
-  public static final String EMPTY_EXPRESSIONS_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.emptyExpressions.dmn";
-  public static final String DECISION_WITH_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.decisionLiteralExpression.dmn";
-  public static final String CAPITAL_JUEL_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.JUEL.dmn";
-  public static final String JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.JUEL.expressionsWithProperties.dmn";
-  public static final String JUEL = "juel";
+  private static final String GROOVY_DECISION_TABLE_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.groovy.decisionTable.dmn";
+  private static final String GROOVY_DECISION_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.groovy.decisionLiteralExpression.dmn";
+  private static final String SCRIPT_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.script.dmn";
+  private static final String EMPTY_EXPRESSIONS_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.emptyExpressions.dmn";
+  private static final String DECISION_WITH_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.decisionLiteralExpression.dmn";
+  private static final String CAPITAL_JUEL_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.JUEL.dmn";
+  private static final String JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.JUEL.expressionsWithProperties.dmn";
+  private static final String JUEL = "juel";
 
-  protected DefaultScriptEngineResolver scriptEngineResolver;
-  protected JuelElProvider elProvider;
+  DefaultScriptEngineResolver scriptEngineResolver;
+  JuelElProvider elProvider;
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
 
     configuration.setScriptEngineResolver(createScriptEngineResolver());
@@ -87,7 +79,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = GROOVY_DECISION_TABLE_DMN)
-  public void testGlobalExpressionLanguageDecisionTable() {
+  void globalExpressionLanguageDecisionTable() {
     DmnDecisionTableImpl decisionTable = (DmnDecisionTableImpl) decision.getDecisionLogic();
     for (DmnDecisionTableInputImpl dmnInput : decisionTable.getInputs()) {
       assertThat(dmnInput.getExpression().getExpressionLanguage()).isEqualTo("groovy");
@@ -109,7 +101,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = GROOVY_DECISION_LITERAL_EXPRESSION_DMN)
-  public void testGlobalExpressionLanguageDecisionLiteralExpression() {
+  void globalExpressionLanguageDecisionLiteralExpression() {
     DmnDecisionLiteralExpressionImpl decisionLiteralExpression = (DmnDecisionLiteralExpressionImpl) decision.getDecisionLogic();
 
     assertThat(decisionLiteralExpression.getExpression().getExpressionLanguage()).isEqualTo("groovy");
@@ -122,7 +114,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
   }
 
   @Test
-  public void testExecuteDefaultDmnEngineConfiguration() {
+  void executeDefaultDmnEngineConfiguration() {
     assertExample(dmnEngine);
 
     verify(elProvider, atLeastOnce()).createExpression(anyString());
@@ -130,7 +122,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = SCRIPT_DMN)
-  public void testExecuteJuelDmnEngineConfiguration() {
+  void executeJuelDmnEngineConfiguration() {
     DmnEngine juelEngine = createEngineWithDefaultExpressionLanguage(JUEL);
     assertExample(juelEngine, decision);
 
@@ -139,7 +131,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = SCRIPT_DMN)
-  public void testExecuteGroovyDmnEngineConfiguration() {
+  void executeGroovyDmnEngineConfiguration() {
     DmnEngine groovyEngine = createEngineWithDefaultExpressionLanguage("groovy");
     assertExample(groovyEngine, decision);
 
@@ -149,7 +141,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = SCRIPT_DMN)
-  public void testExecuteJavascriptDmnEngineConfiguration() {
+  void executeJavascriptDmnEngineConfiguration() {
     DmnEngine javascriptEngine = createEngineWithDefaultExpressionLanguage("javascript");
     assertExample(javascriptEngine, decision);
 
@@ -159,7 +151,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DECISION_WITH_LITERAL_EXPRESSION_DMN)
-  public void testExecuteLiteralExpressionWithDefaultDmnEngineConfiguration() {
+  void executeLiteralExpressionWithDefaultDmnEngineConfiguration() {
     dmnEngine.evaluateDecision(decision,
         Variables.createVariables().putValue("a", 1).putValue("b", 2));
 
@@ -168,7 +160,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DECISION_WITH_LITERAL_EXPRESSION_DMN)
-  public void testExecuteLiteralExpressionWithGroovyDmnEngineConfiguration() {
+  void executeLiteralExpressionWithGroovyDmnEngineConfiguration() {
     DmnEngine juelEngine = createEngineWithDefaultExpressionLanguage("groovy");
 
     juelEngine.evaluateDecision(decision,
@@ -180,7 +172,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN)
-  public void testDefaultEmptyExpressions() {
+  void defaultEmptyExpressions() {
     assertThatDecisionTableResult()
       .hasSingleResult()
       .hasSingleEntry(true);
@@ -190,7 +182,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN)
-  public void testJuelEmptyExpressions() {
+  void juelEmptyExpressions() {
     dmnEngine = createEngineWithDefaultExpressionLanguage(JUEL);
     assertThatDecisionTableResult()
       .hasSingleResult()
@@ -201,7 +193,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN)
-  public void testGroovyEmptyExpressions() {
+  void groovyEmptyExpressions() {
     dmnEngine = createEngineWithDefaultExpressionLanguage("groovy");
     assertThatDecisionTableResult()
       .hasSingleResult()
@@ -212,7 +204,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN)
-  public void testJavascriptEmptyExpressions() {
+  void javascriptEmptyExpressions() {
     dmnEngine = createEngineWithDefaultExpressionLanguage("javascript");
     assertThatDecisionTableResult()
       .hasSingleResult()
@@ -223,7 +215,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = EMPTY_EXPRESSIONS_DMN, decisionKey = "decision2")
-  public void testFailFeelUseOfEmptyInputExpression() {
+  void failFeelUseOfEmptyInputExpression() {
     try {
       evaluateDecisionTable();
       failBecauseExceptionWasNotThrown(FeelException.class);
@@ -237,7 +229,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = CAPITAL_JUEL_DMN)
-  public void testElResolution () {
+  void elResolution() {
     DmnEngine juelEngine = createEngineWithDefaultExpressionLanguage(JUEL);
     assertExample(juelEngine, decision);
 
@@ -247,7 +239,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN)
-  public void testJuelDoesNotShadowInnerProperty() {
+  void juelDoesNotShadowInnerProperty() {
     VariableMap inputs = Variables.createVariables();
     inputs.putValue("testExpr", "TestProperty");
 
@@ -263,7 +255,7 @@ public class ExpressionLanguageTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN)
-  public void testJuelResolvesListIndex() {
+  void juelResolvesListIndex() {
     VariableMap inputs = Variables.createVariables();
     inputs.putValue("testExpr", "TestListIndex");
 

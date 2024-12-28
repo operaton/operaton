@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.dmn.feel.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class FeelExceptionTest {
 
@@ -37,13 +38,13 @@ public class FeelExceptionTest {
 
   public VariableMap variables;
 
-  @BeforeClass
-  public static void initFeelEngine() {
+  @BeforeAll
+  static void initFeelEngine() {
     feelEngine = new FeelEngineFactoryImpl().createInstance();
   }
 
   @Test
-  public void testSimpleExpressionNotSupported() {
+  void simpleExpressionNotSupported() {
     try {
       feelEngine.evaluateSimpleExpression("12 == 12", Variables.emptyVariableContext());
       failBecauseExceptionWasNotThrown(UnsupportedOperationException.class);
@@ -53,14 +54,14 @@ public class FeelExceptionTest {
     }
   }
 
-  @Before
-  public void initVariables() {
+  @BeforeEach
+  void initVariables() {
     variables = Variables.createVariables();
     variables.putValue(INPUT_VARIABLE, 13);
   }
 
   @Test
-  public void testInvalidNot() {
+  void invalidNot() {
     assertException("FEEL-01001",
       "not(",
       "not(2",
@@ -71,7 +72,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testInvalidInterval() {
+  void invalidInterval() {
     assertException("FEEL-01002",
       "[1..3",
       "(1..3",
@@ -103,7 +104,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testInvalidComparison() {
+  void invalidComparison() {
     assertException("FEEL-01003",
       ">",
       ">=",
@@ -113,7 +114,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testUnknownMethod() {
+  void unknownMethod() {
     assertException("FEEL-01007",
       "unknown(12)",
       "not(unknown(12))",
@@ -127,7 +128,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testUnknownVariable() {
+  void unknownVariable() {
     assertException("FEEL-01009",
       "a",
       "not(a)",
@@ -141,7 +142,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testInvalidSyntax() {
+  void invalidSyntax() {
     assertException("FEEL-01010",
       "!= x",
       "== x",
@@ -164,7 +165,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testUnableToConvertToBoolean() {
+  void unableToConvertToBoolean() {
     variables.putValue(INPUT_VARIABLE, true);
     assertException("FEEL-01015",
       "''",
@@ -176,7 +177,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testUnableToConvertToBigDecimal() {
+  void unableToConvertToBigDecimal() {
     variables.putValue(INPUT_VARIABLE, BigDecimal.valueOf(10));
     assertException("FEEL-01015",
       "''",
@@ -193,7 +194,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testUnableToConvertToBigInteger() {
+  void unableToConvertToBigInteger() {
     variables.putValue(INPUT_VARIABLE, BigInteger.valueOf(10));
     assertException("FEEL-01015",
       "''",
@@ -210,7 +211,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testUnableToConvertToDouble() {
+  void unableToConvertToDouble() {
     variables.putValue(INPUT_VARIABLE, 10.0);
     assertException("FEEL-01015",
       "''",
@@ -227,7 +228,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testUnableToConvertToLong() {
+  void unableToConvertToLong() {
     variables.putValue(INPUT_VARIABLE, 10L);
     assertException("FEEL-01015",
       "''",
@@ -244,7 +245,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testUnableToConvertToString() {
+  void unableToConvertToString() {
     variables.putValue(INPUT_VARIABLE, "operaton");
     assertException("FEEL-01015",
       "false",
@@ -255,7 +256,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testMissingInputVariable() {
+  void missingInputVariable() {
     variables.remove(INPUT_VARIABLE);
     assertException("FEEL-01017",
       "false",
@@ -266,7 +267,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testInvalidDateAndTimeFormat() {
+  void invalidDateAndTimeFormat() {
     assertException("FEEL-01019",
       "date and time('operaton')",
       "date and time('2012-13-13')",
@@ -276,7 +277,7 @@ public class FeelExceptionTest {
   }
 
   @Test
-  public void testInvalidListFormat() {
+  void invalidListFormat() {
     assertException("FEEL-01020",
       ",",
       "1,",
@@ -303,8 +304,8 @@ public class FeelExceptionTest {
     }
   }
 
-  public boolean evaluateFeel(String feelExpression) {
-    return feelEngine.evaluateSimpleUnaryTests(feelExpression, INPUT_VARIABLE, variables.asVariableContext());
+  public void evaluateFeel(String feelExpression) {
+    feelEngine.evaluateSimpleUnaryTests(feelExpression, INPUT_VARIABLE, variables.asVariableContext());
   }
 
 }

@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.dmn.feel.impl.custom;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.operaton.bpm.dmn.feel.impl.FeelEngine;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
 import org.operaton.bpm.dmn.feel.impl.juel.transform.FeelToJuelFunctionTransformer;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Before;
-import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FeelEngineCustomFunctionTest {
 
@@ -37,8 +38,8 @@ public class FeelEngineCustomFunctionTest {
 
   public VariableMap variables;
 
-  @Before
-  public void initEngine() {
+  @BeforeEach
+  void initEngine() {
     variables = Variables.createVariables();
 
     List<FeelToJuelFunctionTransformer> customFunctionTransformers = new ArrayList<>();
@@ -50,7 +51,7 @@ public class FeelEngineCustomFunctionTest {
   }
 
   @Test
-  public void testStringStartsWith() {
+  void stringStartsWith() {
     assertEvaluatesToTrue("foobar", "starts with(\"foo\")");
     assertEvaluatesToFalse("foobar", "starts with(\"foa\")");
     assertEvaluatesToFalse("foobar", "starts with(\"afoo\")");

@@ -16,26 +16,28 @@
  */
 package org.operaton.bpm.dmn.feel.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
 import org.operaton.bpm.dmn.feel.impl.juel.el.FeelFunctionMapper;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.DateValue;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FeelEngineTest {
 
@@ -45,18 +47,18 @@ public class FeelEngineTest {
 
   public VariableMap variables;
 
-  @BeforeClass
-  public static void initFeelEngine() {
+  @BeforeAll
+  static void initFeelEngine() {
     feelEngine = new FeelEngineFactoryImpl().createInstance();
   }
 
-  @Before
-  public void initVariables() {
+  @BeforeEach
+  void initVariables() {
     variables = Variables.createVariables();
   }
 
   @Test
-  public void testLong() {
+  void testLong() {
     variables.putValue("integer", 12);
     variables.putValue("primitive", 12L);
     variables.putValue("typed", Variables.longValue(12L));
@@ -67,7 +69,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testEndpointString() {
+  void endpointString() {
     assertEvaluatesToTrue("Hello World", "\"Hello World\"");
     assertEvaluatesToFalse("Hello World", "\"Hello Operaton\"");
     assertEvaluatesToFalse("Hello World", "\"\"");
@@ -77,7 +79,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testEndpointVariable() {
+  void endpointVariable() {
     variables.put("y", "a");
     assertEvaluatesToTrue("a", "y");
     assertEvaluatesToFalse("b", "y");
@@ -88,14 +90,14 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testEndpointVariableGreater() {
+  void endpointVariableGreater() {
     variables.put("y", 13.37);
     assertEvaluatesToTrue(12, "<y");
     assertEvaluatesToFalse(13.38, "<y");
   }
 
   @Test
-  public void testEndpointVariableGreaterEqual() {
+  void endpointVariableGreaterEqual() {
     variables.put("y", 13.37);
     assertEvaluatesToTrue(12, "<=y");
     assertEvaluatesToTrue(13.37, "<=y");
@@ -103,14 +105,14 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testEndpointVariableLess() {
+  void endpointVariableLess() {
     variables.put("y", 13.37);
     assertEvaluatesToFalse(12, ">y");
     assertEvaluatesToTrue(13.38, ">y");
   }
 
   @Test
-  public void testEndpointVariableLessEqual() {
+  void endpointVariableLessEqual() {
     variables.put("y", 13.37);
     assertEvaluatesToFalse(12, ">=y");
     assertEvaluatesToTrue(13.37, ">=y");
@@ -118,7 +120,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testEndpointBoolean() {
+  void endpointBoolean() {
     assertEvaluatesToTrue(true, "true");
     assertEvaluatesToFalse(true, "false");
     assertEvaluatesToTrue(false, "false");
@@ -126,7 +128,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testEndpointNumber() {
+  void endpointNumber() {
     assertEvaluatesToTrue(13, "13");
     assertEvaluatesToTrue(13.37, "13.37");
     assertEvaluatesToTrue(0.37, ".37");
@@ -135,7 +137,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testEndpointNumberGreater() {
+  void endpointNumberGreater() {
     assertEvaluatesToTrue(12, "<13");
     assertEvaluatesToTrue(13.35, "<13.37");
     assertEvaluatesToTrue(0.337, "<.37");
@@ -144,7 +146,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testEndpointNumberGreaterEqual() {
+  void endpointNumberGreaterEqual() {
     assertEvaluatesToTrue(13.37, "<=13.37");
     assertEvaluatesToTrue(13.337, "<=13.37");
     assertEvaluatesToTrue(0.37, "<=.37");
@@ -154,7 +156,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testEndpointNumberLess() {
+  void endpointNumberLess() {
     assertEvaluatesToTrue(13.37, ">13");
     assertEvaluatesToTrue(13.42, ">13.37");
     assertEvaluatesToTrue(0.42, ">.37");
@@ -162,18 +164,25 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0.37, ">.37");
   }
 
-  @Test
-  public void testEndpointNumberLessEqual() {
-    assertEvaluatesToTrue(13.37, ">=13");
-    assertEvaluatesToTrue(13.37, ">=13.37");
-    assertEvaluatesToTrue(0.37, ">=.37");
-    assertEvaluatesToTrue(0.42, ">=.37");
-    assertEvaluatesToFalse(13.337, ">=13.37");
-    assertEvaluatesToFalse(0.23, ">=.37");
+  @ParameterizedTest
+  @CsvSource({
+      "13.37, >=13, true",
+      "13.37, >=13.37, true",
+      "0.37, >=.37, true",
+      "0.42, >=.37, true",
+      "13.337, >=13.37, false",
+      "0.23, >=.37, false"
+  })
+  void endpointNumberLessEqual(double input, String feelExpression, boolean expectTrueResult) {
+      if (expectTrueResult) {
+          assertEvaluatesToTrue(input, feelExpression);
+      } else {
+          assertEvaluatesToFalse(input, feelExpression);
+      }
   }
 
   @Test
-  public void testEndpointDateAndTime() {
+  void endpointDateAndTime() {
     DateValue dateTime = parseDateAndTime("2015-12-12T22:12:53");
 
     assertEvaluatesToTrue(dateTime, "date and time(\"2015-12-12T22:12:53\")");
@@ -183,7 +192,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testThreadSafetyDateAndTimeParsing() throws ExecutionException, InterruptedException {
+  void threadSafetyDateAndTimeParsing() throws ExecutionException, InterruptedException {
     int threadCount = 2;
     ExecutorService pool = Executors.newFixedThreadPool(threadCount);
 
@@ -197,12 +206,7 @@ public class FeelEngineTest {
         FeelFunctionMapper.parseDateAndTime(dateAndTimeString)
       );
 
-      futureSet.add(pool.submit(new Callable<Date>() {
-        @Override
-        public Date call() throws Exception {
-          return FeelFunctionMapper.parseDateAndTime(dateAndTimeString);
-        }
-      }));
+      futureSet.add(pool.submit(() -> FeelFunctionMapper.parseDateAndTime(dateAndTimeString)));
     }
 
     pool.shutdown();
@@ -216,111 +220,110 @@ public class FeelEngineTest {
     assertThat(actualDates).hasSameElementsAs(expectedDates);
   }
 
-  @Test
-  public void testIntervalNumber() {
-    assertEvaluatesToTrue(0.23, "[.12...37]");
-    assertEvaluatesToTrue(0.23, "[.12...37)");
-    assertEvaluatesToTrue(0.23, "[.12...37[");
+  @ParameterizedTest
+  @CsvSource({
+      "0.23, [.12...37], true",
+      "0.23, [.12...37), true",
+      "0.23, [.12...37[, true",
+      "0.23, (.12...37], true",
+      "0.23, (.12...37), true",
+      "0.23, (.12...37[, true",
+      "0.23, ].12...37], true",
+      "0.23, ].12...37), true",
+      "0.23, ].12...37[, true",
+      "13.37, [.12...37], false",
+      "13.37, [.12...37), false",
+      "13.37, [.12...37[, false",
+      "13.37, (.12...37], false",
+      "13.37, (.12...37), false",
+      "13.37, (.12...37[, false",
+      "13.37, ].12...37], false",
+      "13.37, ].12...37), false",
+      "13.37, ].12...37[, false"
+  })
+  void intervalNumber(double input, String feelExpression, boolean expectedResult) {
+      if (expectedResult) {
+          assertEvaluatesToTrue(input, feelExpression);
+      } else {
+          assertEvaluatesToFalse(input, feelExpression);
+      }
+  }
 
-    assertEvaluatesToTrue(0.23, "(.12...37]");
-    assertEvaluatesToTrue(0.23, "(.12...37)");
-    assertEvaluatesToTrue(0.23, "(.12...37[");
+  @ParameterizedTest
+  @CsvSource({
+      "13.37, [a..b], true",
+      "13.37, [a..b), true",
+      "13.37, [a..b[, true",
+      "13.37, (a..b], true",
+      "13.37, (a..b), true",
+      "13.37, (a..b[, true",
+      "13.37, ]a..b], true",
+      "13.37, ]a..b), true",
+      "13.37, ]a..b[, true",
+      "0.37, [a..b], false",
+      "0.37, [a..b), false",
+      "0.37, [a..b[, false",
+      "0.37, (a..b], false",
+      "0.37, (a..b), false",
+      "0.37, (a..b[, false",
+      "0.37, ]a..b], false",
+      "0.37, ]a..b), false",
+      "0.37, ]a..b[, false"
+  })
+  void intervalVariable(double input, String feelExpression, boolean expectTrue) {
+      variables.put("a", 10);
+      variables.put("b", 15);
+      if (expectTrue) {
+          assertEvaluatesToTrue(input, feelExpression);
+      } else {
+          assertEvaluatesToFalse(input, feelExpression);
+      }
+  }
 
-    assertEvaluatesToTrue(0.23, "].12...37]");
-    assertEvaluatesToTrue(0.23, "].12...37)");
-    assertEvaluatesToTrue(0.23, "].12...37[");
-
-    assertEvaluatesToFalse(13.37, "[.12...37]");
-    assertEvaluatesToFalse(13.37, "[.12...37)");
-    assertEvaluatesToFalse(13.37, "[.12...37[");
-
-    assertEvaluatesToFalse(13.37, "(.12...37]");
-    assertEvaluatesToFalse(13.37, "(.12...37)");
-    assertEvaluatesToFalse(13.37, "(.12...37[");
-
-    assertEvaluatesToFalse(13.37, "].12...37]");
-    assertEvaluatesToFalse(13.37, "].12...37)");
-    assertEvaluatesToFalse(13.37, "].12...37[");
+  @ParameterizedTest
+  @CsvSource({
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2016-03-03T00:00:00, true, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2016-03-03T00:00:00, true, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2016-03-03T00:00:00, true, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2016-03-03T00:00:00, true, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\")]",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:01\")[",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:01\"))",
+      "2016-03-03T00:00:00, true, [date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, ]date and time(\"2016-03-02T23:59:59\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, (date and time(\"2016-03-02T23:59:59\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2013-03-03T00:00:00, false, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2013-03-03T00:00:00, false, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2013-03-03T00:00:00, false, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2013-03-03T00:00:00, false, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-02T23:59:59\")]",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\")[",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\"))",
+      "2013-03-03T00:00:00, false, [date and time(\"2016-03-03T00:00:01\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, ]date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, (date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]"
+  })
+  void intervalDateAndTime(String dateTimeString, boolean expectedResult, String feelExpression) {
+      DateValue dateTime = parseDateAndTime(dateTimeString);
+      if (expectedResult) {
+          assertEvaluatesToTrue(dateTime, feelExpression);
+      } else {
+          assertEvaluatesToFalse(dateTime, feelExpression);
+      }
   }
 
   @Test
-  public void testIntervalVariable() {
-    variables.put("a", 10);
-    variables.put("b", 15);
-
-    assertEvaluatesToTrue(13.37, "[a..b]");
-    assertEvaluatesToTrue(13.37, "[a..b)");
-    assertEvaluatesToTrue(13.37, "[a..b[");
-
-    assertEvaluatesToTrue(13.37, "(a..b]");
-    assertEvaluatesToTrue(13.37, "(a..b)");
-    assertEvaluatesToTrue(13.37, "(a..b[");
-
-    assertEvaluatesToTrue(13.37, "]a..b]");
-    assertEvaluatesToTrue(13.37, "]a..b)");
-    assertEvaluatesToTrue(13.37, "]a..b[");
-
-    assertEvaluatesToFalse(0.37, "[a..b]");
-    assertEvaluatesToFalse(0.37, "[a..b)");
-    assertEvaluatesToFalse(0.37, "[a..b[");
-
-    assertEvaluatesToFalse(0.37, "(a..b]");
-    assertEvaluatesToFalse(0.37, "(a..b)");
-    assertEvaluatesToFalse(0.37, "(a..b[");
-
-    assertEvaluatesToFalse(0.37, "]a..b]");
-    assertEvaluatesToFalse(0.37, "]a..b)");
-    assertEvaluatesToFalse(0.37, "]a..b[");
-  }
-
-  @Test
-  public void testIntervalDateAndTime() {
-    DateValue dateAndTime = parseDateAndTime("2016-03-03T00:00:00");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToTrue(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToTrue(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToTrue(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToTrue(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:01\")[");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:01\"))");
-
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "]date and time(\"2016-03-02T23:59:59\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "(date and time(\"2016-03-02T23:59:59\")..date and time(\"2016-06-06T00:00:00\")]");
-
-
-    dateAndTime = parseDateAndTime("2013-03-03T00:00:00");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToFalse(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToFalse(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToFalse(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToFalse(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-02T23:59:59\")]");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\")[");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\"))");
-
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2016-03-03T00:00:01\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "]date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "(date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-  }
-
-  @Test
-  public void testNot() {
+  void not() {
     variables.put("y", 13.37);
 
     assertEvaluatesToTrue("Hello operaton", "not(\"Hello World\")");
@@ -342,7 +345,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testList() {
+  void list() {
     variables.put("a", "Hello operaton");
     variables.put("y", 0);
 
@@ -360,7 +363,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testNested() {
+  void nested() {
     variables.put("a", 23.42);
     assertEvaluatesToTrue(0.37, "not(>=a,13.37,].37...42),<.37)");
     assertEvaluatesToFalse(23.42, "not(>=a,13.37,].37...42),<.37)");
@@ -370,12 +373,12 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testDontCare() {
+  void dontCare() {
     assertEvaluatesToTrue(13.37, "-");
   }
 
   @Test
-  public void testWhitespace() {
+  void whitespace() {
     assertEvaluatesToTrue("Hello World", "'Hello World' ");
     assertEvaluatesToTrue("Hello World", " 'Hello World'");
     assertEvaluatesToTrue("Hello World", " 'Hello World' ");
@@ -387,7 +390,7 @@ public class FeelEngineTest {
   }
 
   @Test
-  public void testPojo() {
+  void pojo() {
     variables.putValue("pojo", new TestPojo("foo", 13.37));
     assertEvaluatesToTrue("foo", "pojo.foo");
     assertEvaluatesToFalse("operaton", "pojo.foo");
@@ -415,7 +418,7 @@ public class FeelEngineTest {
     return Variables.dateValue(date);
   }
 
-  public class TestPojo {
+  public static class TestPojo {
 
     protected String foo;
     protected Double bar;

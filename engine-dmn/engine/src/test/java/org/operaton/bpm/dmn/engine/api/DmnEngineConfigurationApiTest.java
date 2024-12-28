@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationEvent;
@@ -28,206 +23,182 @@ import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationListener;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionTableEvaluationListener;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.metrics.DefaultEngineMetricCollector;
-import org.junit.Before;
-import org.junit.Test;
 
-public class DmnEngineConfigurationApiTest {
+import java.util.ArrayList;
+import java.util.Collections;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class DmnEngineConfigurationApiTest {
 
   protected DmnEngineConfiguration configuration;
 
-  @Before
-  public void initConfiguration() {
+  @BeforeEach
+  void initConfiguration() {
     configuration = DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
   }
 
   @Test
-  public void shouldCreateDefaultEngineConfiguration() {
+  void shouldCreateDefaultEngineConfiguration() {
     DmnEngineConfiguration configuration = DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
-    assertThat(configuration)
-      .isInstanceOf(DefaultDmnEngineConfiguration.class)
-      .isNotNull();
+    assertThat(configuration).isInstanceOf(DefaultDmnEngineConfiguration.class).isNotNull();
   }
 
   @Test
-  public void shouldSetEngineMetricCollector() {
+  void shouldSetEngineMetricCollector() {
     configuration.setEngineMetricCollector(null);
-    assertThat(configuration.getEngineMetricCollector())
-      .isNull();
+    assertThat(configuration.getEngineMetricCollector()).isNull();
 
     DefaultEngineMetricCollector metricCollector = new DefaultEngineMetricCollector();
     configuration.setEngineMetricCollector(metricCollector);
 
-    assertThat(configuration.getEngineMetricCollector())
-      .isEqualTo(metricCollector);
-    }
+    assertThat(configuration.getEngineMetricCollector()).isEqualTo(metricCollector);
+  }
 
   @Test
-  public void shouldSetFluentEngineMetricCollector() {
+  void shouldSetFluentEngineMetricCollector() {
     configuration.engineMetricCollector(null);
-    assertThat(configuration.getEngineMetricCollector())
-      .isNull();
+    assertThat(configuration.getEngineMetricCollector()).isNull();
 
     DefaultEngineMetricCollector metricCollector = new DefaultEngineMetricCollector();
     configuration.engineMetricCollector(metricCollector);
 
-    assertThat(configuration.getEngineMetricCollector())
-      .isEqualTo(metricCollector);
+    assertThat(configuration.getEngineMetricCollector()).isEqualTo(metricCollector);
   }
 
   @Test
-  public void shouldSetCustomPreDecisionTableEvaluationListeners() {
+  void shouldSetCustomPreDecisionTableEvaluationListeners() {
     configuration.setCustomPreDecisionTableEvaluationListeners(null);
-    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
-      .isNull();
+    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners()).isNull();
 
-    configuration.setCustomPreDecisionTableEvaluationListeners(Collections.<DmnDecisionTableEvaluationListener>emptyList());
-    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
-      .isEmpty();
+    configuration.setCustomPreDecisionTableEvaluationListeners(Collections.emptyList());
+    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners()).isEmpty();
 
     ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new DefaultEngineMetricCollector());
     listeners.add(new DefaultEngineMetricCollector());
 
     configuration.setCustomPreDecisionTableEvaluationListeners(listeners);
-    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
-      .containsExactlyElementsOf(listeners);
+    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners()).containsExactlyElementsOf(listeners);
   }
 
   @Test
-  public void shouldSetFluentCustomPreDecisionTableEvaluationListeners() {
+  void shouldSetFluentCustomPreDecisionTableEvaluationListeners() {
     configuration.customPreDecisionTableEvaluationListeners(null);
-    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
-      .isNull();
+    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners()).isNull();
 
-    configuration.customPreDecisionTableEvaluationListeners(Collections.<DmnDecisionTableEvaluationListener>emptyList());
-    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
-      .isEmpty();
+    configuration.customPreDecisionTableEvaluationListeners(Collections.emptyList());
+    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners()).isEmpty();
 
     ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new DefaultEngineMetricCollector());
     listeners.add(new DefaultEngineMetricCollector());
 
     configuration.customPreDecisionTableEvaluationListeners(listeners);
-    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
-      .containsExactlyElementsOf(listeners);
+    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners()).containsExactlyElementsOf(listeners);
   }
 
   @Test
-  public void shouldSetCustomPreDecisionEvaluationListeners() {
+  void shouldSetCustomPreDecisionEvaluationListeners() {
     configuration.setCustomPreDecisionEvaluationListeners(null);
-    assertThat(configuration.getCustomPreDecisionEvaluationListeners())
-      .isNull();
+    assertThat(configuration.getCustomPreDecisionEvaluationListeners()).isNull();
 
-    configuration.setCustomPreDecisionEvaluationListeners(Collections.<DmnDecisionEvaluationListener>emptyList());
-    assertThat(configuration.getCustomPreDecisionEvaluationListeners())
-      .isEmpty();
+    configuration.setCustomPreDecisionEvaluationListeners(Collections.emptyList());
+    assertThat(configuration.getCustomPreDecisionEvaluationListeners()).isEmpty();
 
     ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new TestDecisionEvaluationListener());
     listeners.add(new TestDecisionEvaluationListener());
 
     configuration.setCustomPreDecisionEvaluationListeners(listeners);
-    assertThat(configuration.getCustomPreDecisionEvaluationListeners())
-      .containsExactlyElementsOf(listeners);
+    assertThat(configuration.getCustomPreDecisionEvaluationListeners()).containsExactlyElementsOf(listeners);
   }
 
   @Test
-  public void shouldSetFluentCustomPreDecisionEvaluationListeners() {
+  void shouldSetFluentCustomPreDecisionEvaluationListeners() {
     configuration.customPreDecisionEvaluationListeners(null);
-    assertThat(configuration.getCustomPreDecisionEvaluationListeners())
-      .isNull();
+    assertThat(configuration.getCustomPreDecisionEvaluationListeners()).isNull();
 
-    configuration.customPreDecisionEvaluationListeners(Collections.<DmnDecisionEvaluationListener>emptyList());
-    assertThat(configuration.getCustomPreDecisionEvaluationListeners())
-      .isEmpty();
+    configuration.customPreDecisionEvaluationListeners(Collections.emptyList());
+    assertThat(configuration.getCustomPreDecisionEvaluationListeners()).isEmpty();
 
     ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new TestDecisionEvaluationListener());
     listeners.add(new TestDecisionEvaluationListener());
 
     configuration.customPreDecisionEvaluationListeners(listeners);
-    assertThat(configuration.getCustomPreDecisionEvaluationListeners())
-      .containsExactlyElementsOf(listeners);
+    assertThat(configuration.getCustomPreDecisionEvaluationListeners()).containsExactlyElementsOf(listeners);
   }
 
   @Test
-  public void shouldSetCustomPostDecisionTableEvaluationListeners() {
+  void shouldSetCustomPostDecisionTableEvaluationListeners() {
     configuration.setCustomPostDecisionTableEvaluationListeners(null);
-    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
-      .isNull();
+    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners()).isNull();
 
-    configuration.setCustomPostDecisionTableEvaluationListeners(Collections.<DmnDecisionTableEvaluationListener>emptyList());
-    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
-      .isEmpty();
+    configuration.setCustomPostDecisionTableEvaluationListeners(Collections.emptyList());
+    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners()).isEmpty();
 
     ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new DefaultEngineMetricCollector());
     listeners.add(new DefaultEngineMetricCollector());
 
     configuration.setCustomPostDecisionTableEvaluationListeners(listeners);
-    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
-      .containsExactlyElementsOf(listeners);
+    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners()).containsExactlyElementsOf(listeners);
   }
 
   @Test
-  public void shouldSetFluentCustomPostDecisionTableEvaluationListeners() {
+  void shouldSetFluentCustomPostDecisionTableEvaluationListeners() {
     configuration.customPostDecisionTableEvaluationListeners(null);
-    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
-      .isNull();
+    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners()).isNull();
 
-    configuration.customPostDecisionTableEvaluationListeners(Collections.<DmnDecisionTableEvaluationListener>emptyList());
-    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
-      .isEmpty();
+    configuration.customPostDecisionTableEvaluationListeners(Collections.emptyList());
+    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners()).isEmpty();
 
     ArrayList<DmnDecisionTableEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new DefaultEngineMetricCollector());
     listeners.add(new DefaultEngineMetricCollector());
 
     configuration.customPostDecisionTableEvaluationListeners(listeners);
-    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
-      .containsExactlyElementsOf(listeners);
+    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners()).containsExactlyElementsOf(listeners);
   }
 
   @Test
-  public void shouldSetCustomPostDecisionEvaluationListeners() {
+  void shouldSetCustomPostDecisionEvaluationListeners() {
     configuration.setCustomPostDecisionEvaluationListeners(null);
-    assertThat(configuration.getCustomPostDecisionEvaluationListeners())
-      .isNull();
+    assertThat(configuration.getCustomPostDecisionEvaluationListeners()).isNull();
 
-    configuration.setCustomPostDecisionEvaluationListeners(Collections.<DmnDecisionEvaluationListener>emptyList());
-    assertThat(configuration.getCustomPostDecisionEvaluationListeners())
-      .isEmpty();
+    configuration.setCustomPostDecisionEvaluationListeners(Collections.emptyList());
+    assertThat(configuration.getCustomPostDecisionEvaluationListeners()).isEmpty();
 
     ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new TestDecisionEvaluationListener());
     listeners.add(new TestDecisionEvaluationListener());
 
     configuration.setCustomPostDecisionEvaluationListeners(listeners);
-    assertThat(configuration.getCustomPostDecisionEvaluationListeners())
-      .containsExactlyElementsOf(listeners);
+    assertThat(configuration.getCustomPostDecisionEvaluationListeners()).containsExactlyElementsOf(listeners);
   }
 
   @Test
-  public void shouldSetFluentCustomPostDecisionEvaluationListeners() {
+  void shouldSetFluentCustomPostDecisionEvaluationListeners() {
     configuration.customPostDecisionEvaluationListeners(null);
-    assertThat(configuration.getCustomPostDecisionEvaluationListeners())
-      .isNull();
+    assertThat(configuration.getCustomPostDecisionEvaluationListeners()).isNull();
 
-    configuration.customPostDecisionEvaluationListeners(Collections.<DmnDecisionEvaluationListener>emptyList());
-    assertThat(configuration.getCustomPostDecisionEvaluationListeners())
-      .isEmpty();
+    configuration.customPostDecisionEvaluationListeners(Collections.emptyList());
+    assertThat(configuration.getCustomPostDecisionEvaluationListeners()).isEmpty();
 
     ArrayList<DmnDecisionEvaluationListener> listeners = new ArrayList<>();
     listeners.add(new TestDecisionEvaluationListener());
     listeners.add(new TestDecisionEvaluationListener());
 
     configuration.customPostDecisionEvaluationListeners(listeners);
-    assertThat(configuration.getCustomPostDecisionEvaluationListeners())
-      .containsExactlyElementsOf(listeners);
+    assertThat(configuration.getCustomPostDecisionEvaluationListeners()).containsExactlyElementsOf(listeners);
   }
 
   @Test
-  public void shouldBeFluentConfigurable() {
+  void shouldBeFluentConfigurable() {
     DefaultEngineMetricCollector metricCollector = new DefaultEngineMetricCollector();
     ArrayList<DmnDecisionTableEvaluationListener> preListeners = new ArrayList<>();
     preListeners.add(new DefaultEngineMetricCollector());
@@ -239,8 +210,7 @@ public class DmnEngineConfigurationApiTest {
     ArrayList<DmnDecisionEvaluationListener> postDecisionListeners = new ArrayList<>();
     postDecisionListeners.add(new TestDecisionEvaluationListener());
 
-    DmnEngine engine = DmnEngineConfiguration
-      .createDefaultDmnEngineConfiguration()
+    DmnEngine engine = DmnEngineConfiguration.createDefaultDmnEngineConfiguration()
       .engineMetricCollector(metricCollector)
       .customPreDecisionTableEvaluationListeners(preListeners)
       .customPostDecisionTableEvaluationListeners(postListeners)
@@ -249,20 +219,16 @@ public class DmnEngineConfigurationApiTest {
       .buildEngine();
 
     DmnEngineConfiguration configuration = engine.getConfiguration();
-    assertThat(configuration.getEngineMetricCollector())
-      .isEqualTo(metricCollector);
-    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
-      .containsExactlyElementsOf(preListeners);
-    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
-      .containsExactlyElementsOf(postListeners);
-    assertThat(configuration.getCustomPreDecisionEvaluationListeners())
-      .containsExactlyElementsOf(preDecisionListeners);
-    assertThat(configuration.getCustomPostDecisionEvaluationListeners())
-      .containsExactlyElementsOf(postDecisionListeners);
+    assertThat(configuration.getEngineMetricCollector()).isEqualTo(metricCollector);
+    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners()).containsExactlyElementsOf(preListeners);
+    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners()).containsExactlyElementsOf(postListeners);
+    assertThat(configuration.getCustomPreDecisionEvaluationListeners()).containsExactlyElementsOf(preDecisionListeners);
+    assertThat(configuration.getCustomPostDecisionEvaluationListeners()).containsExactlyElementsOf(
+      postDecisionListeners);
   }
 
   @Test
-  public void shouldBuildEngine() {
+  void shouldBuildEngine() {
     DmnEngine engine = configuration.buildEngine();
     assertThat(engine).isNotNull();
   }
@@ -277,6 +243,7 @@ public class DmnEngineConfigurationApiTest {
       this.evaluationEvent = evaluationEvent;
     }
 
+    @SuppressWarnings("unused")
     public DmnDecisionEvaluationEvent getEvaluationEvent() {
       return evaluationEvent;
     }

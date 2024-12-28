@@ -18,15 +18,16 @@ package org.operaton.bpm.dmn.engine.el;
 
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
-import org.junit.Test;
 
-public class FeelTest extends DmnEngineTest {
+import org.junit.jupiter.api.Test;
 
-  public static final String FEEL_TEST_DMN = "FeelTest.dmn";
+class FeelTest extends DmnEngineTest {
+
+  private static final String FEEL_TEST_DMN = "FeelTest.dmn";
 
   @Test
   @DecisionResource(resource = FEEL_TEST_DMN)
-  public void testStringVariable() {
+  void stringVariable() {
     variables.putValue("stringInput", "operaton");
     variables.putValue("numberInput", 13.37);
     variables.putValue("booleanInput", true);

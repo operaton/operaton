@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.delegate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
@@ -33,44 +28,50 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.dmn.BuiltinAggregator;
 import org.operaton.bpm.model.dmn.HitPolicy;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
-public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
+import java.util.List;
+import java.util.Map;
 
-  public static final String DMN_FILE = "org/operaton/bpm/dmn/engine/delegate/DmnDecisionTableListenerTest.test.dmn";
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-  public static DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry;
-  public TestDecisionTableEvaluationListener listener;
+import static org.assertj.core.api.Assertions.assertThat;
+
+class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
+
+  private static final String DMN_FILE = "org/operaton/bpm/dmn/engine/delegate/DmnDecisionTableListenerTest.test.dmn";
+
+  static DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry;
+  TestDecisionTableEvaluationListener listener;
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     return new TestDecisionTableEvaluationListenerConfiguration()
       .enableFeelLegacyBehavior(true);
   }
 
-  @BeforeClass
-  public static void initHitPolicyHandlerRegistry() {
+  @BeforeAll
+  static void initHitPolicyHandlerRegistry() {
     hitPolicyHandlerRegistry = new DefaultHitPolicyHandlerRegistry();
   }
 
-  @Before
-  public void initListener() {
+  @BeforeEach
+  void initListener() {
     TestDecisionTableEvaluationListenerConfiguration configuration = (TestDecisionTableEvaluationListenerConfiguration) dmnEngine.getConfiguration();
     listener = configuration.testDecisionTableListener;
   }
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testListenerIsCalled() {
+  void listenerIsCalled() {
     evaluateDecisionTable(true, "foo", "hello", "hello");
     assertThat(listener.evaluationEvent).isNotNull();
   }
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testExecutedDecisionElements() {
+  void executedDecisionElements() {
     // the number should be independent from input and result
     evaluateDecisionTable(true, "foo", false, "hello");
     assertThat(listener.evaluationEvent.getExecutedDecisionElements()).isEqualTo(36);
@@ -84,7 +85,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testInputValues() {
+  void inputValues() {
     evaluateDecisionTable(true, "foo", "test", "hello");
     List<DmnEvaluatedInput> inputs = listener.evaluationEvent.getInputs();
     assertThat(inputs).hasSize(3);
@@ -110,7 +111,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testMatchingRules() {
+  void matchingRules() {
     evaluateDecisionTable(true, "foo", "test", "hello");
     List<DmnEvaluatedDecisionRule> matchingRules = listener.evaluationEvent.getMatchingRules();
     assertThat(matchingRules).hasSize(1);
@@ -154,7 +155,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testOutputs() {
+  void outputs() {
     evaluateDecisionTable(true, "foo", "test", "hello");
     List<DmnEvaluatedDecisionRule> matchingRules = listener.evaluationEvent.getMatchingRules();
     Map<String, DmnEvaluatedOutput> outputs = matchingRules.get(0).getOutputEntries();
@@ -188,7 +189,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testCollectResult() {
+  void collectResult() {
     setDecisionTableHitPolicy(HitPolicy.COLLECT, null);
     evaluateDecisionTable(true, "bar", true, "hello");
     assertThat(listener.evaluationEvent.getCollectResultName()).isNull();
@@ -203,7 +204,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testCollectCountResult() {
+  void collectCountResult() {
     setDecisionTableHitPolicy(HitPolicy.COLLECT, BuiltinAggregator.COUNT);
     evaluateDecisionTable(true, "bar", true, "hello");
     assertThat(listener.evaluationEvent.getCollectResultName()).isEqualTo("collectMe");
@@ -218,7 +219,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testCollectSumResult() {
+  void collectSumResult() {
     setDecisionTableHitPolicy(HitPolicy.COLLECT, BuiltinAggregator.SUM);
     evaluateDecisionTable(true, "bar", true, "hello");
     assertThat(listener.evaluationEvent.getCollectResultName()).isEqualTo("collectMe");
@@ -233,7 +234,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testCollectMaxResult() {
+  void collectMaxResult() {
     setDecisionTableHitPolicy(HitPolicy.COLLECT, BuiltinAggregator.MAX);
     evaluateDecisionTable(true, "bar", true, "hello");
     assertThat(listener.evaluationEvent.getCollectResultName()).isEqualTo("collectMe");
@@ -248,7 +249,7 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_FILE)
-  public void testCollectMinResult() {
+  void collectMinResult() {
     setDecisionTableHitPolicy(HitPolicy.COLLECT, BuiltinAggregator.MIN);
     evaluateDecisionTable(true, "bar", true, "hello");
     assertThat(listener.evaluationEvent.getCollectResultName()).isEqualTo("collectMe");
@@ -280,24 +281,20 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
   }
 
   public static class TestDecisionTableEvaluationListenerConfiguration extends DefaultDmnEngineConfiguration {
-
     public TestDecisionTableEvaluationListener testDecisionTableListener = new TestDecisionTableEvaluationListener();
 
     public TestDecisionTableEvaluationListenerConfiguration() {
       customPostDecisionTableEvaluationListeners.add(testDecisionTableListener);
     }
-
   }
 
   public static class TestDecisionTableEvaluationListener implements DmnDecisionTableEvaluationListener {
-
     public DmnDecisionTableEvaluationEvent evaluationEvent;
 
     @Override
     public void notify(DmnDecisionTableEvaluationEvent evaluationEvent) {
       this.evaluationEvent = evaluationEvent;
     }
-
   }
 
 }

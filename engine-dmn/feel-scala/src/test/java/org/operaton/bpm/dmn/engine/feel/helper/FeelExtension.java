@@ -21,38 +21,59 @@ import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelEngine;
 import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
 
 import java.util.Collections;
 import java.util.List;
 
-public class FeelRule extends TestWatcher {
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
-  protected FunctionProvider functionProvider;
-  protected ScalaFeelEngine feelEngine;
+/**
+ * JUnit 5 extension for managing the FeelEngine and FunctionProvider.
+ * <p>
+ * Usage:
+ * </p>
+ *
+ * <pre>
+ * &#64;ExtendWith(FeelExtension.class)
+ * public class YourTest {
+ *
+ *   &#64;RegisterExtension
+ *   public static FeelExtension feelExtension = FeelExtension.buildWithFunctionProvider();
+ *
+ *   ...
+ * }
+ * </pre>
+ *
+ * <p>
+ * The FeelEngine and FunctionProvider will be made available to the test class
+ * through the getters of the {@code feelExtension} (see {@link #getFunctionProvider()}).
+ * </p>
+ */
+public class FeelExtension implements AfterEachCallback {
 
-  protected FeelRule(FunctionProvider functionProvider) {
+  private FunctionProvider functionProvider;
+  private ScalaFeelEngine feelEngine;
+
+  private FeelExtension(FunctionProvider functionProvider) {
     this.functionProvider = functionProvider;
   }
 
-  protected FeelRule() {
+  private FeelExtension() {
     feelEngine = new ScalaFeelEngine(null);
   }
 
-  public static FeelRule buildWithFunctionProvider() {
+  public static FeelExtension buildWithFunctionProvider() {
     FunctionProvider functionProvider = new FunctionProvider();
-    return new FeelRule(functionProvider);
+    return new FeelExtension(functionProvider);
   }
 
-  public static FeelRule build() {
-    return new FeelRule();
+  public static FeelExtension build() {
+    return new FeelExtension();
   }
 
   @Override
-  protected void finished(Description description) {
-    super.finished(description);
-
+  public void afterEach(ExtensionContext context) {
     if (functionProvider != null) {
       functionProvider.clear();
     }
@@ -69,7 +90,6 @@ public class FeelRule extends TestWatcher {
 
       feelEngine = new ScalaFeelEngine(functionProviders);
     }
-
     VariableContext variableCtx = Variables.putValue("variable", value).asVariableContext();
     return feelEngine.evaluateSimpleExpression(expression, variableCtx);
   }
@@ -77,5 +97,4 @@ public class FeelRule extends TestWatcher {
   public FunctionProvider getFunctionProvider() {
     return functionProvider;
   }
-
 }

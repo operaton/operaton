@@ -16,20 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
@@ -40,20 +26,30 @@ import org.operaton.bpm.dmn.feel.impl.FeelEngine;
 import org.operaton.bpm.dmn.feel.impl.FeelEngineFactory;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
+import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
-import org.junit.Test;
+import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
 
-public class FeelIntegrationTest extends DmnEngineTest {
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-  protected static final String DMN = "org/operaton/bpm/dmn/engine/el/FeelIntegrationTest.dmn";
-  protected static final String DMN_12 = "org/operaton/bpm/dmn/engine/el/dmn12/FeelIntegrationTest.dmn";
-  protected static final String DMN_13 = "org/operaton/bpm/dmn/engine/el/dmn13/FeelIntegrationTest.dmn";
+import org.junit.jupiter.api.Test;
 
-  protected FeelEngine feelEngineSpy;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
+
+class FeelIntegrationTest extends DmnEngineTest {
+
+  private static final String DMN = "org/operaton/bpm/dmn/engine/el/FeelIntegrationTest.dmn";
+  private static final String DMN_12 = "org/operaton/bpm/dmn/engine/el/dmn12/FeelIntegrationTest.dmn";
+  private static final String DMN_13 = "org/operaton/bpm/dmn/engine/el/dmn13/FeelIntegrationTest.dmn";
+
+  private FeelEngine feelEngineSpy;
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
     configuration.enableFeelLegacyBehavior(true);
     configuration.setFeelEngineFactory(new TestFeelEngineFactory());
@@ -62,8 +58,9 @@ public class FeelIntegrationTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN)
-  public void testFeelInputEntry() {
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision, Variables.createVariables().putValue("score", 3));
+  void feelInputEntry() {
+    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision,
+      Variables.createVariables().putValue("score", 3));
 
     assertThat((String) decisionResult.getSingleEntry()).isEqualTo("a");
 
@@ -72,12 +69,13 @@ public class FeelIntegrationTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN)
-  public void testFeelInputEntryWithAlternativeName() {
+  void feelInputEntryWithAlternativeName() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
     configuration.setDefaultInputEntryExpressionLanguage("feel");
     DmnEngine dmnEngine = configuration.buildEngine();
 
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision, Variables.createVariables().putValue("score", 3));
+    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision,
+      Variables.createVariables().putValue("score", 3));
 
     assertThat((String) decisionResult.getSingleEntry()).isEqualTo("a");
 
@@ -86,81 +84,65 @@ public class FeelIntegrationTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.script.dmn")
-  public void testFeelExceptionDoesNotContainJuel() {
-    try {
-      assertExample(dmnEngine, decision);
-      failBecauseExceptionWasNotThrown(FeelException.class);
-    }
-    catch (FeelException e) {
-      assertThat(e).hasMessageStartingWith("FEEL-01015");
-      assertThat(e.getMessage()).doesNotContain("${");
-    }
+  void feelExceptionDoesNotContainJuel() {
+    assertThatThrownBy(() -> assertExample(dmnEngine, decision)).isInstanceOf(FeelException.class)
+      .hasMessageStartingWith("FEEL-01015")
+      .hasMessageNotContaining("${");
   }
 
   @Test
   @DecisionResource()
-  public void testDateAndTimeIntegration() {
+  void dateAndTimeIntegration() {
     Date testDate = new Date(1445526087000L);
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     variables.putValue("dateString", format.format(testDate));
 
-    assertThatDecisionTableResult()
-      .hasSingleResult()
-      .hasSingleEntryTyped(Variables.dateValue(testDate));
+    assertThatDecisionTableResult().hasSingleResult().hasSingleEntryTyped(Variables.dateValue(testDate));
   }
 
   @Test
   @DecisionResource(resource = DMN)
-  public void testFeelInputExpression() {
+  void feelInputExpression() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
     configuration.setDefaultInputExpressionExpressionLanguage(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE);
     DmnEngine engine = configuration.buildEngine();
 
-    try {
-      engine.evaluateDecision(decision, Variables.createVariables().putValue("score", 3));
-
-      failBecauseExceptionWasNotThrown(UnsupportedOperationException.class);
-    }
-    catch (UnsupportedOperationException e) {
-      assertThat(e).hasMessageStartingWith("FEEL-01016");
-      verify(feelEngineSpy).evaluateSimpleExpression(anyString(), any(VariableContext.class));
-    }
+    VariableMap variableMap = Variables.createVariables().putValue("score", 3);
+    assertThatThrownBy(() -> engine.evaluateDecision(decision, variableMap))
+      .isInstanceOf(UnsupportedOperationException.class)
+      .hasMessageStartingWith("FEEL-01016");
+    verify(feelEngineSpy).evaluateSimpleExpression(anyString(), any(VariableContext.class));
   }
 
   @Test
   @DecisionResource(resource = DMN_12)
-  public void testFeelInputExpression_Dmn12() {
-    testFeelInputExpression();
+  void feelInputExpressionDmn12() {
+    feelInputExpression();
   }
 
   @Test
   @DecisionResource(resource = DMN_13)
-  public void testFeelInputExpression_Dmn13() {
-    testFeelInputExpression();
+  void feelInputExpressionDmn13() {
+    feelInputExpression();
   }
 
   @Test
   @DecisionResource(resource = DMN)
-  public void testFeelOutputEntry() {
+  void feelOutputEntry() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
     configuration.setDefaultOutputEntryExpressionLanguage(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE);
     DmnEngine engine = configuration.buildEngine();
 
-    try {
-      engine.evaluateDecision(decision, Variables.createVariables().putValue("score", 3));
-
-      failBecauseExceptionWasNotThrown(UnsupportedOperationException.class);
-    }
-    catch (UnsupportedOperationException e) {
-      assertThat(e).hasMessageStartingWith("FEEL-01016");
-      verify(feelEngineSpy).evaluateSimpleExpression(anyString(), any(VariableContext.class));
-    }
+    VariableMap variableMap = Variables.createVariables().putValue("score", 3);
+    assertThatThrownBy(() -> engine.evaluateDecision(decision, variableMap)).isInstanceOf(
+      UnsupportedOperationException.class).hasMessageStartingWith("FEEL-01016");
+    verify(feelEngineSpy).evaluateSimpleExpression(anyString(), any(VariableContext.class));
   }
 
   @Test
   @DecisionResource(resource = DMN)
-  public void testFeelInputExpressionWithCustomEngine() {
+  void feelInputExpressionWithCustomEngine() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
     configuration.setDefaultInputExpressionExpressionLanguage(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE);
     DmnEngine engine = configuration.buildEngine();
@@ -168,7 +150,8 @@ public class FeelIntegrationTest extends DmnEngineTest {
     // stubbing the default FEEL engine behavior
     doReturn(3).when(feelEngineSpy).evaluateSimpleExpression(eq("score"), any(VariableContext.class));
 
-    DmnDecisionResult decisionResult = engine.evaluateDecision(decision, Variables.createVariables().putValue("score", 3));
+    DmnDecisionResult decisionResult = engine.evaluateDecision(decision,
+      Variables.createVariables().putValue("score", 3));
 
     assertThat((String) decisionResult.getSingleEntry()).isEqualTo("a");
 
@@ -177,7 +160,7 @@ public class FeelIntegrationTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN)
-  public void testFeelOutputEntryWithCustomEngine() {
+  void feelOutputEntryWithCustomEngine() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
     configuration.setDefaultOutputEntryExpressionLanguage(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE);
     DmnEngine engine = configuration.buildEngine();
@@ -185,7 +168,8 @@ public class FeelIntegrationTest extends DmnEngineTest {
     // stubbing the default FEEL engine behavior
     doReturn("a").when(feelEngineSpy).evaluateSimpleExpression(eq("\"a\""), any(VariableContext.class));
 
-    DmnDecisionResult decisionResult = engine.evaluateDecision(decision, Variables.createVariables().putValue("score", 3));
+    DmnDecisionResult decisionResult = engine.evaluateDecision(decision,
+      Variables.createVariables().putValue("score", 3));
 
     assertThat((String) decisionResult.getSingleEntry()).isEqualTo("a");
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.feel;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Date;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
@@ -28,19 +25,21 @@ import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelEngineFactory;
+import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
+import java.util.Date;
 
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
     configuration.setFeelEngineFactory(new ScalaFeelEngineFactory());
     return configuration;
@@ -49,7 +48,7 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
   // https://jira.camunda.com/browse/CAM-11304
   @Test
   @DecisionResource(resource = "breaking_unary_test_compare_short_untyped.dmn")
-  public void shouldCompareShortUntyped() {
+  void shouldCompareShortUntyped() {
     variables.putValue("numberInput", (short)5);
 
     assertThatDecisionTableResult()
@@ -59,7 +58,7 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "breaking_unary_test_boolean.dmn")
-  public void shouldEqualBoolean() {
+  void shouldEqualBoolean() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
     DmnEngine engine = configuration.buildEngine();
 
@@ -70,7 +69,7 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "breaking_compare_date_with_time_zone_untyped.dmn")
-  public void shouldEvaluateTimezoneComparisonWithTypedValue() {
+  void shouldEvaluateTimezoneComparisonWithTypedValue() {
     // given a date typed value
     variables.putValue("date1", Variables.dateValue(new Date()));
 
@@ -83,7 +82,7 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "breaking_compare_date_with_time_zone_untyped.dmn")
-  public void shouldEvaluateTimezoneComparisonWithDate() {
+  void shouldEvaluateTimezoneComparisonWithDate() {
     // given a date
     variables.putValue("date1", new Date());
 
@@ -96,24 +95,24 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "breaking_single_quotes.dmn")
-  public void shouldUseSingleQuotesInStringLiterals() {
+  void shouldUseSingleQuotesInStringLiterals() {
     // given
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
     DmnEngine engine = configuration.buildEngine();
 
-    // then
-    thrown.expect(FeelException.class);
-    thrown.expectMessage("FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression ''Hello World'': "
-      + "Expected (start-of-input | negation | positiveUnaryTests | anyInput):1:1, found \"'Hello Wor\"");
-
     // when
-    engine.evaluateDecision(decision, Variables.createVariables().putValue("input", "Hello World"));
+    VariableMap variableMap = Variables.createVariables().putValue("input", "Hello World");
+    assertThatThrownBy(() -> engine.evaluateDecision(decision, variableMap))
+      .isInstanceOf(FeelException.class)
+      .hasMessageContaining(
+        "FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression ''Hello World'': "
+          + "Expected (start-of-input | negation | positiveUnaryTests | anyInput):1:1, found \"'Hello Wor\"");
   }
 
-  @Ignore("CAM-11319")
+  @Disabled("CAM-11319")
   @Test
   @DecisionResource(resource = "breaking_pojo_comparison.dmn")
-  public void shouldComparePojo() {
+  void shouldComparePojo() {
     // given
     variables.putValue("pojoOne", new TestPojo())
       .putValue("pojoTwo", new TestPojo());

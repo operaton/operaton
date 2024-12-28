@@ -20,6 +20,7 @@ import org.operaton.bpm.dmn.engine.*;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DmnEvaluationException;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
+import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.commons.utils.IoUtil;
 import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
@@ -87,13 +88,14 @@ class DmnDecisionEvaluationTest extends DmnEngineTest {
 
   @Test
   void shouldFailDecisionEvaluationWithRequiredDecisionAndNoMatchingRuleInChildDecision() {
-    assertThatThrownBy(
-      () -> dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_MULTI_LEVEL_MULTIPLE_INPUT_SINGLE_OUTPUT),
-        createVariables().putValue("xx", "pp")
-          .putValue("yy", "yy")
-          .putValue("zz", "zz")
-          .putValue("ll", "ll")
-          .asVariableContext()))
+    DmnDecision dmnDecision = parseDecisionFromFile("A", DMN_MULTI_LEVEL_MULTIPLE_INPUT_SINGLE_OUTPUT);
+    VariableContext variableContext = createVariables().putValue("xx", "pp")
+      .putValue("yy", "yy")
+      .putValue("zz", "zz")
+      .putValue("ll", "ll")
+      .asVariableContext();
+
+    assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(dmnDecision, variableContext))
       .isInstanceOf(DmnEvaluationException.class)
       .hasMessageStartingWith("DMN-01002")
       .hasMessageContaining("Unable to evaluate expression for language 'juel': '${dd}'");
@@ -101,19 +103,20 @@ class DmnDecisionEvaluationTest extends DmnEngineTest {
 
   @Test
   void shouldFailDecisionEvaluationWithRequiredDecisionAndMissingInput() {
-assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_MULTI_LEVEL_MULTIPLE_INPUT_SINGLE_OUTPUT) , createVariables()
-    .putValue("xx", "xx")
-    .putValue("yy", "yy")
-    .putValue("zz", "zz")
-    .asVariableContext()))
-  .isInstanceOf(DmnEvaluationException.class)
-  .hasMessageStartingWith("DMN-01002")
-  .hasMessageContaining("Unable to evaluate expression for language 'juel': '${ll}'");
+    DmnDecision dmnDecision = parseDecisionFromFile("A", DMN_MULTI_LEVEL_MULTIPLE_INPUT_SINGLE_OUTPUT);
+    VariableContext variableContext = createVariables().putValue("xx", "xx")
+      .putValue("yy", "yy")
+      .putValue("zz", "zz")
+      .asVariableContext();
+
+    assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(dmnDecision, variableContext))
+      .isInstanceOf(DmnEvaluationException.class)
+      .hasMessageStartingWith("DMN-01002")
+      .hasMessageContaining("Unable to evaluate expression for language 'juel': '${ll}'");
   }
 
   @Test
   void shouldEvaluateDecisionsWithRequiredDecisionAndMultipleMatchingRules() {
-
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_MULTIPLE_MATCHING_RULES) , createVariables()
         .putValue("dd", 3)
         .putValue("ee", "ee")
@@ -237,19 +240,21 @@ assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(parseDecisionFromFile("
 
   @Test
   void shouldEvaluateDecisionsWithInputTypeMisMatchInChildDecision() {
-    assertThatThrownBy(
-      () -> dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_DIFFERENT_INPUT_OUTPUT_TYPES),
-        createVariables().putValue("dd", "7").putValue("ee", "abc").asVariableContext())).isInstanceOf(
-        DmnEngineException.class)
+    DmnDecision dmnDecision = parseDecisionFromFile("A", DMN_DECISIONS_WITH_DIFFERENT_INPUT_OUTPUT_TYPES);
+    VariableContext variableContext = createVariables().putValue("dd", "7").putValue("ee", "abc").asVariableContext();
+
+    assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(dmnDecision, variableContext))
+      .isInstanceOf(DmnEngineException.class)
       .hasMessageStartingWith("DMN-01005")
       .hasMessageContaining("Invalid value 'abc' for clause with type 'long'");
   }
 
   @Test
   void shouldEvaluateDecisionsWithInputTypeMisMatchInParentDecision() {
-    assertThatThrownBy(
-      () -> dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_INVALID_INPUT_TYPE),
-        createVariables().putValue("dd", 5).asVariableContext()))
+    DmnDecision dmnDecision = parseDecisionFromFile("A", DMN_DECISIONS_WITH_INVALID_INPUT_TYPE);
+    VariableContext variableContext = createVariables().putValue("dd", 5).asVariableContext();
+
+    assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(dmnDecision, variableContext))
       .isInstanceOf(DmnEngineException.class)
       .hasMessageStartingWith("DMN-01005")
       .hasMessageContaining("Invalid value 'bb' for clause with type 'integer'");
@@ -262,10 +267,9 @@ assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(parseDecisionFromFile("
           .putValue("a", 2)
           .putValue("b", 3));
 
-    assertThat(result.getSingleResult().keySet()).containsOnly("c");
+    assertThat(result.getSingleResult()).containsOnlyKeys("c");
 
     assertThat((int) result.getSingleEntry())
-      .isNotNull()
       .isEqualTo(5);
   }
 
@@ -289,7 +293,6 @@ assertThatThrownBy(() -> dmnEngine.evaluateDecisionTable(parseDecisionFromFile("
           .putValue("bean", new TestBean(3)));
 
     assertThat((int) result.getSingleEntry())
-      .isNotNull()
       .isEqualTo(6);
   }
 

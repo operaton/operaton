@@ -45,7 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  */
 
-public class DmnTransformListenerTest extends DmnEngineTest {
+class DmnTransformListenerTest extends DmnEngineTest {
 
   private static final String DRG_EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/transform/DrgExample.dmn";
   private static final String DECISION_TRANSFORM_DMN = "org/operaton/bpm/dmn/engine/transform/DmnDecisionTransform.dmn";

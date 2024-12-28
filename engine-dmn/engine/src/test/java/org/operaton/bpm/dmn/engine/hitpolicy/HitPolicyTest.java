@@ -37,7 +37,7 @@ import static java.lang.Integer.MIN_VALUE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.entry;
 
-public class HitPolicyTest extends DmnEngineTest {
+class HitPolicyTest extends DmnEngineTest {
 
   private static final Double DOUBLE_MIN = -Double.MAX_VALUE;
 

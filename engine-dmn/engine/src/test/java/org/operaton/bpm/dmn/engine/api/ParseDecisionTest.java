@@ -36,8 +36,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ParseDecisionTest extends DmnEngineTest {
 
+  @SuppressWarnings("unused")
   private static final String NO_DECISION_DMN = "org/operaton/bpm/dmn/engine/api/NoDecision.dmn";
   private static final String NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/NoInput.dmn";
+  @SuppressWarnings("unused")
   private static final String INVOCATION_DECISION_DMN = "org/operaton/bpm/dmn/engine/api/InvocationDecision.dmn";
   private static final String MISSING_DECISION_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingDecisionId.dmn";
   private static final String MISSING_INPUT_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingInputId.dmn";

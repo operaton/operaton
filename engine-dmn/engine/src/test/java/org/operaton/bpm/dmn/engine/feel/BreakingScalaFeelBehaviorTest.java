@@ -25,6 +25,7 @@ import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelEngineFactory;
+import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
 import java.util.Date;
@@ -35,7 +36,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
+class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Override
   protected DmnEngineConfiguration getDmnEngineConfiguration() {
@@ -100,7 +101,8 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
     DmnEngine engine = configuration.buildEngine();
 
     // when
-    assertThatThrownBy(() -> engine.evaluateDecision(decision, Variables.createVariables().putValue("input", "Hello World")))
+    VariableMap variableMap = Variables.createVariables().putValue("input", "Hello World");
+    assertThatThrownBy(() -> engine.evaluateDecision(decision, variableMap))
       .isInstanceOf(FeelException.class)
       .hasMessageContaining(
         "FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression ''Hello World'': "

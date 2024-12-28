@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ScalaFeelBehaviorTest extends FeelBehavior {
+class ScalaFeelBehaviorTest extends FeelBehavior {
 
   @Override
   protected DmnEngineConfiguration getDmnEngineConfiguration() {

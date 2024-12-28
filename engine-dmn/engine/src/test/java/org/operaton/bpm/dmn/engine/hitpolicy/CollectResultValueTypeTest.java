@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Philipp Ossler
  */
-public class CollectResultValueTypeTest extends DmnEngineTest {
+class CollectResultValueTypeTest extends DmnEngineTest {
 
   private static final String COLLECT_SUM = "HitPolicyTest.collect.sum.single.dmn";
   private static final String COLLECT_MIN = "HitPolicyTest.collect.min.single.dmn";

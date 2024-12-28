@@ -187,7 +187,7 @@ public abstract class FeelBehavior extends DmnEngineTest {
     getVariables().putValue("date1", org.joda.time.LocalDate.parse("2020-01-17"));
 
     // when
-    assertThatThrownBy(() -> evaluateDecision().getSingleEntry())
+    assertThatThrownBy(this::evaluateDecision)
       .isInstanceOf(DmnEngineException.class)
       .hasMessageContaining("DMN-01005 Invalid value '2020-01-17' for clause with type 'date'.");
   }
@@ -199,7 +199,7 @@ public abstract class FeelBehavior extends DmnEngineTest {
     getVariables().putValue("date1", LocalDate.parse("2020-01-17"));
 
     // when
-    assertThatThrownBy(() -> evaluateDecision().getSingleEntry())
+    assertThatThrownBy(this::evaluateDecision)
       .isInstanceOf(DmnEngineException.class)
       .hasMessageContaining("Unsupported type: 'java.time.LocalDate' " + "cannot be converted to 'java.util.Date'");
   }

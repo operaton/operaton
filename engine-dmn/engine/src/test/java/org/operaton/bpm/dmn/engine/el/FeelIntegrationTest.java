@@ -26,6 +26,7 @@ import org.operaton.bpm.dmn.feel.impl.FeelEngine;
 import org.operaton.bpm.dmn.feel.impl.FeelEngineFactory;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
+import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
@@ -107,9 +108,10 @@ class FeelIntegrationTest extends DmnEngineTest {
     configuration.setDefaultInputExpressionExpressionLanguage(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE);
     DmnEngine engine = configuration.buildEngine();
 
-    assertThatThrownBy(
-      () -> engine.evaluateDecision(decision, Variables.createVariables().putValue("score", 3))).isInstanceOf(
-      UnsupportedOperationException.class).hasMessageStartingWith("FEEL-01016");
+    VariableMap variableMap = Variables.createVariables().putValue("score", 3);
+    assertThatThrownBy(() -> engine.evaluateDecision(decision, variableMap))
+      .isInstanceOf(UnsupportedOperationException.class)
+      .hasMessageStartingWith("FEEL-01016");
     verify(feelEngineSpy).evaluateSimpleExpression(anyString(), any(VariableContext.class));
   }
 
@@ -132,8 +134,8 @@ class FeelIntegrationTest extends DmnEngineTest {
     configuration.setDefaultOutputEntryExpressionLanguage(DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE);
     DmnEngine engine = configuration.buildEngine();
 
-    assertThatThrownBy(
-      () -> engine.evaluateDecision(decision, Variables.createVariables().putValue("score", 3))).isInstanceOf(
+    VariableMap variableMap = Variables.createVariables().putValue("score", 3);
+    assertThatThrownBy(() -> engine.evaluateDecision(decision, variableMap)).isInstanceOf(
       UnsupportedOperationException.class).hasMessageStartingWith("FEEL-01016");
     verify(feelEngineSpy).evaluateSimpleExpression(anyString(), any(VariableContext.class));
   }

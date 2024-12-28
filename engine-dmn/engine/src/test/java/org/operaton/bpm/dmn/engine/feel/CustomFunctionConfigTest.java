@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CustomFunctionConfigTest extends DmnEngineTest {
+class CustomFunctionConfigTest extends DmnEngineTest {
 
   @Override
   protected DmnEngineConfiguration getDmnEngineConfiguration() {

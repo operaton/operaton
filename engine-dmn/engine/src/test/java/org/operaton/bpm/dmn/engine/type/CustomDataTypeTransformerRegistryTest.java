@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Philipp Ossler
  */
-public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
+class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
 
   private static final String DMN_INPUT_FILE = "org/operaton/bpm/dmn/engine/type/CustomInputDefinition.dmn";
   private static final String DMN_OUTPUT_FILE = "org/operaton/bpm/dmn/engine/type/CustomOutputDefinition.dmn";

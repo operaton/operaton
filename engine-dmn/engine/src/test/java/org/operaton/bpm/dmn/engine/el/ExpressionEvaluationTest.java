@@ -16,56 +16,33 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
+import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
-import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 
-import org.junit.jupiter.api.Test;
+import java.util.List;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ExpressionEvaluationTest extends DmnEngineTest {
 
-  private static final String DMN_INPUT_VARIABLE = "org/operaton/bpm/dmn/engine/el/ExpressionEvaluationTest.inputVariableName.dmn";
-  private static final String DMN_OVERRIDE_INPUT_VARIABLE = "org/operaton/bpm/dmn/engine/el/ExpressionEvaluationTest.overrideInputVariableName.dmn";
-  private static final String DMN_VARIABLE_CONTEXT = "org/operaton/bpm/dmn/engine/el/ExpressionEvaluationTest.variableContext.dmn";
-  private static final String DMN_VARIABLE_CONTEXT_WITH_INPUT_VARIABLE = "org/operaton/bpm/dmn/engine/el/ExpressionEvaluationTest.variableContextWithInputVariable.dmn";
-
-  @Test
-  @DecisionResource(resource = DMN_INPUT_VARIABLE)
-  void hasInputVariableName() {
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision,
-      Variables.createVariables().putValue("inVar", 2));
-
-    assertThat((boolean) decisionResult.getSingleEntry()).isTrue();
-  }
-
-  @Test
-  @DecisionResource(resource = DMN_OVERRIDE_INPUT_VARIABLE)
-  void overrideInputVariableName() {
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision,
-      Variables.createVariables().putValue("inVar", 2));
+  @ParameterizedTest(name = "{index} => resource={0}, input={1}")
+  @CsvSource({
+    "ExpressionEvaluationTest.inputVariableName.dmn, 2",
+    "ExpressionEvaluationTest.overrideInputVariableName.dmn, 2",
+    "ExpressionEvaluationTest.variableContext.dmn, 3",
+    "ExpressionEvaluationTest.variableContextWithInputVariable.dmn, 3"
+  })
+  void evaluateDecision(String resource, int input) {
+    List<DmnDecision> dmnDecisions = dmnEngine.parseDecisions(getClass().getResourceAsStream(resource));
+    assertThat(dmnDecisions).hasSize(1);
+    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(dmnDecisions.get(0),
+      Variables.createVariables().putValue("inVar", input));
 
     assertThat((boolean) decisionResult.getSingleEntry()).isTrue();
   }
-
-  @Test
-  @DecisionResource(resource = DMN_VARIABLE_CONTEXT)
-  void hasVariableContext() {
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision,
-      Variables.createVariables().putValue("inVar", 3));
-
-    assertThat((boolean) decisionResult.getSingleEntry()).isTrue();
-  }
-
-  @Test
-  @DecisionResource(resource = DMN_VARIABLE_CONTEXT_WITH_INPUT_VARIABLE)
-  void hasInputVariableNameInVariableContext() {
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision,
-      Variables.createVariables().putValue("inVar", 3));
-
-    assertThat((boolean) decisionResult.getSingleEntry()).isTrue();
-  }
-
 }

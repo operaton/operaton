@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class JuelFeelBehaviorTest extends FeelBehavior {
+class JuelFeelBehaviorTest extends FeelBehavior {
 
   @Override
   protected DmnEngineConfiguration getDmnEngineConfiguration() {
@@ -54,7 +54,7 @@ public class JuelFeelBehaviorTest extends FeelBehavior {
     getVariables().putValue("myDate", new Date());
 
     // when
-    assertThrows(FeelException.class, () -> evaluateDecision().getSingleEntry());
+    assertThrows(FeelException.class, this::evaluateDecision);
   }
 
 }

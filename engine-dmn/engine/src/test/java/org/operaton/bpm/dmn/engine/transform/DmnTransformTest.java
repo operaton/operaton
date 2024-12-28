@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class DmnTransformTest extends DmnEngineTest {
+class DmnTransformTest extends DmnEngineTest {
 
   private static final String TRANSFORM_DMN = "org/operaton/bpm/dmn/engine/transform/DmnTransformTest.dmn";
 

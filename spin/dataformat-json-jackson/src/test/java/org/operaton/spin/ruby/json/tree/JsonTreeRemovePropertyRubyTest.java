@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeRemovePropertyScriptTest;
  *
  */
 @ScriptEngine("ruby")
-public class JsonTreeRemovePropertyRubyTest extends JsonTreeRemovePropertyScriptTest {
+class JsonTreeRemovePropertyRubyTest extends JsonTreeRemovePropertyScriptTest {
 
 }

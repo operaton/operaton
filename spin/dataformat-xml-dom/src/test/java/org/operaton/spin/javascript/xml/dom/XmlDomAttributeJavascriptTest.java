@@ -23,5 +23,5 @@ import org.operaton.spin.xml.dom.XmlDomAttributeScriptTest;
  * @author Sebastian Menski
  */
 @ScriptEngine("graal.js")
-public class XmlDomAttributeJavascriptTest extends XmlDomAttributeScriptTest {
+class XmlDomAttributeJavascriptTest extends XmlDomAttributeScriptTest {
 }

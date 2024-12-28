@@ -23,5 +23,5 @@ import org.operaton.spin.xml.dom.XmlDomMapXmlToJavaScriptTest;
  * @author Stefan Hentschel.
  */
 @ScriptEngine("python")
-public class XmlDomMapXmlToJavaPythonTest extends XmlDomMapXmlToJavaScriptTest {
+class XmlDomMapXmlToJavaPythonTest extends XmlDomMapXmlToJavaScriptTest {
 }

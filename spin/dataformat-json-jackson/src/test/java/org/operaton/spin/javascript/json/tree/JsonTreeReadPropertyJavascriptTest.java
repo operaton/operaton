@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeReadPropertyScriptTest;
  *
  */
 @ScriptEngine("graal.js")
-public class JsonTreeReadPropertyJavascriptTest extends JsonTreeReadPropertyScriptTest {
+class JsonTreeReadPropertyJavascriptTest extends JsonTreeReadPropertyScriptTest {
 
 }

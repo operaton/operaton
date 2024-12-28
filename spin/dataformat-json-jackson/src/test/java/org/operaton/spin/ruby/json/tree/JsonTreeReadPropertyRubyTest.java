@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeReadPropertyScriptTest;
  *
  */
 @ScriptEngine("ruby")
-public class JsonTreeReadPropertyRubyTest extends JsonTreeReadPropertyScriptTest {
+class JsonTreeReadPropertyRubyTest extends JsonTreeReadPropertyScriptTest {
 
 }

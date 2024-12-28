@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeReadPropertyScriptTest;
  *
  */
 @ScriptEngine("python")
-public class JsonTreeReadPropertyPythonTest extends JsonTreeReadPropertyScriptTest {
+class JsonTreeReadPropertyPythonTest extends JsonTreeReadPropertyScriptTest {
 
 }

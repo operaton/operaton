@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeMapObjectToJsonScriptTest;
  *
  */
 @ScriptEngine("groovy")
-public class JsonTreeMapObjectToJsonGroovyTest extends JsonTreeMapObjectToJsonScriptTest {
+class JsonTreeMapObjectToJsonGroovyTest extends JsonTreeMapObjectToJsonScriptTest {
 
 }

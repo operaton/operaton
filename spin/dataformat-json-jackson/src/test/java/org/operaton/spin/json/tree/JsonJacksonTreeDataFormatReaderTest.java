@@ -16,21 +16,23 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.spin.DataFormats;
+import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
+import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormatReader;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_COLLECTION;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.operaton.spin.DataFormats;
-import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
-import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormatReader;
 
-public class JsonJacksonTreeDataFormatReaderTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class JsonJacksonTreeDataFormatReaderTest {
 
   private JacksonJsonDataFormatReader reader;
   private Reader inputReader;

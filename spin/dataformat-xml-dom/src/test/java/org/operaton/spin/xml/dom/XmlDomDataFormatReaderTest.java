@@ -16,20 +16,22 @@
  */
 package org.operaton.spin.xml.dom;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.spin.DataFormats;
+import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
+import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormatReader;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_XML;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.operaton.spin.DataFormats;
-import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
-import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormatReader;
 
-public class XmlDomDataFormatReaderTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class XmlDomDataFormatReaderTest {
 
   private DomXmlDataFormatReader reader;
   private Reader inputReader;

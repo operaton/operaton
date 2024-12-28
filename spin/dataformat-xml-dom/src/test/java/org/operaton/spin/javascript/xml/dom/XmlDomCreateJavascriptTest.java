@@ -24,6 +24,6 @@ import org.operaton.spin.xml.dom.XmlDomCreateScriptTest;
  *
  */
 @ScriptEngine("graal.js")
-public class XmlDomCreateJavascriptTest extends XmlDomCreateScriptTest {
+class XmlDomCreateJavascriptTest extends XmlDomCreateScriptTest {
 
 }

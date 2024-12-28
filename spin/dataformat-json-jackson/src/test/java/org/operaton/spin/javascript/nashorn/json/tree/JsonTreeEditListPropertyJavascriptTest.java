@@ -30,7 +30,7 @@ class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScr
    * see: <a href="https://app.camunda.com/jira/browse/CAM-3612">CAM-3612</a>
    */
   @Test
-  @Disabled
+  @Disabled("Ignored since javascript implementation changed, see CAM-3612")
   @Override
   public void shouldFailInsertAtWithWrongObject() {
   }

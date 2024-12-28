@@ -23,5 +23,5 @@ import org.operaton.spin.xml.dom.XmlDomMapJavaToXmlScriptTest;
  * @author Stefan Hentschel.
  */
 @ScriptEngine("groovy")
-public class XmlDomMapJavaToXmlGroovyTest extends XmlDomMapJavaToXmlScriptTest {
+class XmlDomMapJavaToXmlGroovyTest extends XmlDomMapJavaToXmlScriptTest {
 }

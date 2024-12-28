@@ -23,5 +23,5 @@ import org.operaton.spin.xml.dom.XmlDomAttributeScriptTest;
  * @author Sebastian Menski
  */
 @ScriptEngine("ruby")
-public class XmlDomAttributeRubyTest extends XmlDomAttributeScriptTest {
+class XmlDomAttributeRubyTest extends XmlDomAttributeScriptTest {
 }

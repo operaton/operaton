@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeCreateScriptTest;
  *
  */
 @ScriptEngine("groovy")
-public class JsonTreeCreateGroovyTest extends JsonTreeCreateScriptTest {
+class JsonTreeCreateGroovyTest extends JsonTreeCreateScriptTest {
 
 }

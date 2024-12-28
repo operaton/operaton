@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeSetPropertyScriptTest;
  *
  */
 @ScriptEngine("groovy")
-public class JsonTreeSetPropertyGroovyTest extends JsonTreeSetPropertyScriptTest {
+class JsonTreeSetPropertyGroovyTest extends JsonTreeSetPropertyScriptTest {
 
 }

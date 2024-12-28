@@ -23,5 +23,5 @@ import org.operaton.spin.json.tree.JsonTreeMapJsonToJavaScriptTest;
  * @author Sebastian Menski
  */
 @ScriptEngine("ruby")
-public class JsonTreeMapJsonToJavaRubyTest extends JsonTreeMapJsonToJavaScriptTest {
+class JsonTreeMapJsonToJavaRubyTest extends JsonTreeMapJsonToJavaScriptTest {
 }

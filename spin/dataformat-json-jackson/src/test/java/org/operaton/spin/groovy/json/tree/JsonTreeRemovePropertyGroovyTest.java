@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeRemovePropertyScriptTest;
  *
  */
 @ScriptEngine("groovy")
-public class JsonTreeRemovePropertyGroovyTest extends JsonTreeRemovePropertyScriptTest {
+class JsonTreeRemovePropertyGroovyTest extends JsonTreeRemovePropertyScriptTest {
 
 }

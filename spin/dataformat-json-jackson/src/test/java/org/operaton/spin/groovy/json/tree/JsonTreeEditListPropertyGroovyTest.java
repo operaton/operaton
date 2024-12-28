@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
  *
  */
 @ScriptEngine("groovy")
-public class JsonTreeEditListPropertyGroovyTest extends JsonTreeEditListPropertyScriptTest {
+class JsonTreeEditListPropertyGroovyTest extends JsonTreeEditListPropertyScriptTest {
 
 }

@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Test xml transformation in DomXmlDataFormatWriter
  */
-public class DomXmlDataFormatWriterTest {
+class DomXmlDataFormatWriterTest {
 
   private final String newLine = System.lineSeparator();
   private final String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><product>Milk</product><product>Coffee</product><product> </product></order>";

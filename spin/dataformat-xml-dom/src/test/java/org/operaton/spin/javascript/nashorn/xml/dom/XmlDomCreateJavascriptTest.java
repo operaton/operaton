@@ -20,6 +20,6 @@ import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.xml.dom.XmlDomCreateScriptTest;
 
 @ScriptEngine("nashorn")
-public class XmlDomCreateJavascriptTest extends XmlDomCreateScriptTest {
+class XmlDomCreateJavascriptTest extends XmlDomCreateScriptTest {
 
 }

@@ -20,6 +20,6 @@ import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.json.tree.JsonTreeJsonPathScriptTest;
 
 @ScriptEngine("nashorn")
-public class JsonTreeJsonPathJavascriptTest extends JsonTreeJsonPathScriptTest {
+class JsonTreeJsonPathJavascriptTest extends JsonTreeJsonPathScriptTest {
 
 }

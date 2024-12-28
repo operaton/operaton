@@ -31,8 +31,8 @@ import static org.mockito.Mockito.*;
 
 class JsonDeserializationValidationTest {
 
-  protected DeserializationTypeValidator validator;
-  protected static JacksonJsonDataFormat format;
+  private DeserializationTypeValidator validator;
+  private static JacksonJsonDataFormat format;
 
   @BeforeAll
   static void setUpMocks() {

@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeCreateScriptTest;
  *
  */
 @ScriptEngine("python")
-public class JsonTreeCreatePythonTest extends JsonTreeCreateScriptTest {
+class JsonTreeCreatePythonTest extends JsonTreeCreateScriptTest {
 
 }

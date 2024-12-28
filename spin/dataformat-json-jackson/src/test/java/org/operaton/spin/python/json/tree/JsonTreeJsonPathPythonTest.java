@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeJsonPathScriptTest;
  *
  */
 @ScriptEngine("python")
-public class JsonTreeJsonPathPythonTest extends JsonTreeJsonPathScriptTest {
+class JsonTreeJsonPathPythonTest extends JsonTreeJsonPathScriptTest {
 
 }

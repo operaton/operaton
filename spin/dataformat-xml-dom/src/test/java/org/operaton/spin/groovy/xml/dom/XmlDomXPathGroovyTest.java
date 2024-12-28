@@ -23,5 +23,5 @@ import org.operaton.spin.xml.dom.XmlDomXPathScriptTest;
  * @author Sebastian Menski
  */
 @ScriptEngine("groovy")
-public class XmlDomXPathGroovyTest extends XmlDomXPathScriptTest {
+class XmlDomXPathGroovyTest extends XmlDomXPathScriptTest {
 }

@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeRemovePropertyScriptTest;
  *
  */
 @ScriptEngine("python")
-public class JsonTreeRemovePropertyPythonTest extends JsonTreeRemovePropertyScriptTest {
+class JsonTreeRemovePropertyPythonTest extends JsonTreeRemovePropertyScriptTest {
 
 }

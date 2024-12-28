@@ -32,9 +32,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
-public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
+class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
 
-  public static final String RESULT_TEST_DMN = "ReturnBlankTableOutputAsNull.dmn";
+  private static final String RESULT_TEST_DMN = "ReturnBlankTableOutputAsNull.dmn";
 
   @BeforeEach
   void configure() {

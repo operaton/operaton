@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
@@ -51,7 +50,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  * through the getters of the {@code feelExtension} (see {@link #getFunctionProvider()}).
  * </p>
  */
-public class FeelExtension implements BeforeEachCallback, AfterEachCallback {
+public class FeelExtension implements AfterEachCallback {
 
   private FunctionProvider functionProvider;
   private ScalaFeelEngine feelEngine;
@@ -71,10 +70,6 @@ public class FeelExtension implements BeforeEachCallback, AfterEachCallback {
 
   public static FeelExtension build() {
     return new FeelExtension();
-  }
-
-  @Override
-  public void beforeEach(ExtensionContext context) {
   }
 
   @Override

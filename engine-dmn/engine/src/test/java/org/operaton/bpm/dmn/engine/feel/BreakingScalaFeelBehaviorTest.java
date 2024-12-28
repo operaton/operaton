@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.feel;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Date;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
@@ -31,13 +26,19 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelEngineFactory;
 import org.operaton.bpm.engine.variable.Variables;
+
+import java.util.Date;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
     configuration.setFeelEngineFactory(new ScalaFeelEngineFactory());
     return configuration;
@@ -94,16 +95,16 @@ public class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
   @Test
   @DecisionResource(resource = "breaking_single_quotes.dmn")
   void shouldUseSingleQuotesInStringLiterals() {
-    Throwable exception = assertThrows(FeelException.class, () -> {
-      // given
-      DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
-      DmnEngine engine = configuration.buildEngine();
+    // given
+    DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) getDmnEngineConfiguration();
+    DmnEngine engine = configuration.buildEngine();
 
-      // when
-      engine.evaluateDecision(decision, Variables.createVariables().putValue("input", "Hello World"));
-    });
-    assertTrue(exception.getMessage().contains("FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression ''Hello World'': "
-      + "Expected (start-of-input | negation | positiveUnaryTests | anyInput):1:1, found \"'Hello Wor\""));
+    // when
+    assertThatThrownBy(() -> engine.evaluateDecision(decision, Variables.createVariables().putValue("input", "Hello World")))
+      .isInstanceOf(FeelException.class)
+      .hasMessageContaining(
+        "FEEL/SCALA-01008 Error while evaluating expression: failed to parse expression ''Hello World'': "
+          + "Expected (start-of-input | negation | positiveUnaryTests | anyInput):1:1, found \"'Hello Wor\"");
   }
 
   @Disabled("CAM-11319")

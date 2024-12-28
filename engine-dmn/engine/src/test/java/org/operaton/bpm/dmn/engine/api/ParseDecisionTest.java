@@ -29,34 +29,33 @@ import org.operaton.commons.utils.IoUtil;
 import java.io.InputStream;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ParseDecisionTest extends DmnEngineTest {
+class ParseDecisionTest extends DmnEngineTest {
 
-  public static final String NO_DECISION_DMN = "org/operaton/bpm/dmn/engine/api/NoDecision.dmn";
-  public static final String NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/NoInput.dmn";
-  public static final String INVOCATION_DECISION_DMN = "org/operaton/bpm/dmn/engine/api/InvocationDecision.dmn";
-  public static final String MISSING_DECISION_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingDecisionId.dmn";
-  public static final String MISSING_INPUT_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingInputId.dmn";
-  public static final String MISSING_OUTPUT_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingOutputId.dmn";
-  public static final String MISSING_RULE_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingRuleId.dmn";
-  public static final String MISSING_COMPOUND_OUTPUT_NAME_DMN = "org/operaton/bpm/dmn/engine/api/CompoundOutputs.noName.dmn";
-  public static final String DUPLICATE_COMPOUND_OUTPUT_NAME_DMN = "org/operaton/bpm/dmn/engine/api/CompoundOutputs.duplicateName.dmn";
+  private static final String NO_DECISION_DMN = "org/operaton/bpm/dmn/engine/api/NoDecision.dmn";
+  private static final String NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/NoInput.dmn";
+  private static final String INVOCATION_DECISION_DMN = "org/operaton/bpm/dmn/engine/api/InvocationDecision.dmn";
+  private static final String MISSING_DECISION_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingDecisionId.dmn";
+  private static final String MISSING_INPUT_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingInputId.dmn";
+  private static final String MISSING_OUTPUT_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingOutputId.dmn";
+  private static final String MISSING_RULE_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingRuleId.dmn";
+  private static final String MISSING_COMPOUND_OUTPUT_NAME_DMN = "org/operaton/bpm/dmn/engine/api/CompoundOutputs.noName.dmn";
+  private static final String DUPLICATE_COMPOUND_OUTPUT_NAME_DMN = "org/operaton/bpm/dmn/engine/api/CompoundOutputs.duplicateName.dmn";
 
-  public static final String MISSING_VARIABLE_DMN = "org/operaton/bpm/dmn/engine/api/MissingVariable.dmn";
+  private static final String MISSING_VARIABLE_DMN = "org/operaton/bpm/dmn/engine/api/MissingVariable.dmn";
 
-  public static final String MISSING_REQUIRED_DECISION_REFERENCE_DMN = "org/operaton/bpm/dmn/engine/api/MissingRequiredDecisionReference.dmn";
-  public static final String WRONG_REQUIRED_DECISION_REFERENCE_DMN = "org/operaton/bpm/dmn/engine/api/WrongRequiredDecisionReference.dmn";
-  public static final String MISSING_REQUIRED_DECISION_ATTRIBUTE_DMN = "org/operaton/bpm/dmn/engine/api/MissingRequiredDecisionAttribute.dmn";
-  public static final String NO_INFORMATION_REQUIREMENT_ATTRIBUTE_DMN = "org/operaton/bpm/dmn/engine/api/NoInformationRequirementAttribute.dmn";
-  public static final String MISSING_DECISION_REQUIREMENT_DIAGRAM_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingDrdId.dmn";
+  private static final String MISSING_REQUIRED_DECISION_REFERENCE_DMN = "org/operaton/bpm/dmn/engine/api/MissingRequiredDecisionReference.dmn";
+  private static final String WRONG_REQUIRED_DECISION_REFERENCE_DMN = "org/operaton/bpm/dmn/engine/api/WrongRequiredDecisionReference.dmn";
+  private static final String MISSING_REQUIRED_DECISION_ATTRIBUTE_DMN = "org/operaton/bpm/dmn/engine/api/MissingRequiredDecisionAttribute.dmn";
+  private static final String NO_INFORMATION_REQUIREMENT_ATTRIBUTE_DMN = "org/operaton/bpm/dmn/engine/api/NoInformationRequirementAttribute.dmn";
+  private static final String MISSING_DECISION_REQUIREMENT_DIAGRAM_ID_DMN = "org/operaton/bpm/dmn/engine/api/MissingIds.missingDrdId.dmn";
 
-  public static final String DMN12_NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/dmn12/NoInput.dmn";
-  public static final String DMN13_NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/dmn13/NoInput.dmn";
+  private static final String DMN12_NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/dmn12/NoInput.dmn";
+  private static final String DMN13_NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/dmn13/NoInput.dmn";
 
   @Test
   void shouldParseDecisionFromInputStream() {
@@ -76,150 +75,95 @@ public class ParseDecisionTest extends DmnEngineTest {
 
   @Test
   void shouldFailIfDecisionKeyIsUnknown() {
-    try {
-      parseDecisionFromFile("unknownDecision", NO_INPUT_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      Assertions.assertThat(e)
-        .hasMessageStartingWith("DMN-01001")
-        .hasMessageContaining("Unable to find decision")
-        .hasMessageContaining("unknownDecision");
-    }
+    assertThatThrownBy(() -> parseDecisionFromFile("unknownDecision", NO_INPUT_DMN)).isInstanceOf(
+        DmnTransformException.class)
+      .hasMessageStartingWith("DMN-01001")
+      .hasMessageContaining("Unable to find decision")
+      .hasMessageContaining("unknownDecision");
   }
 
   @Test
   void shouldFailIfDecisionIdIsMissing() {
-    try {
-      parseDecisionsFromFile(MISSING_DECISION_ID_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(DmnTransformException.class)
-        .hasMessageStartingWith("DMN-02004")
-        .hasMessageContaining("DMN-02010")
-        .hasMessageContaining("Decision With Missing Id");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(MISSING_DECISION_ID_DMN)).isInstanceOf(DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02004")
+      .hasMessageContaining("DMN-02010")
+      .hasMessageContaining("Decision With Missing Id");
   }
 
   @Test
   void shouldFailIfInputIdIsMissing() {
-    try {
-      parseDecisionsFromFile(MISSING_INPUT_ID_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(DmnTransformException.class)
-        .hasMessageStartingWith("DMN-02004")
-        .hasMessageContaining("DMN-02011")
-        .hasMessageContaining("Decision With Missing Input Id");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(MISSING_INPUT_ID_DMN)).isInstanceOf(DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02004")
+      .hasMessageContaining("DMN-02011")
+      .hasMessageContaining("Decision With Missing Input Id");
   }
 
   @Test
   void shouldFailIfOutputIdIsMissing() {
-    try {
-      parseDecisionsFromFile(MISSING_OUTPUT_ID_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(DmnTransformException.class)
-        .hasMessageStartingWith("DMN-02004")
-        .hasMessageContaining("DMN-02012")
-        .hasMessageContaining("Decision With Missing Output Id");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(MISSING_OUTPUT_ID_DMN)).isInstanceOf(DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02004")
+      .hasMessageContaining("DMN-02012")
+      .hasMessageContaining("Decision With Missing Output Id");
   }
 
   @Test
   void shouldFailIfRuleIdIsMissing() {
-    try {
-      parseDecisionsFromFile(MISSING_RULE_ID_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(DmnTransformException.class)
-        .hasMessageStartingWith("DMN-02004")
-        .hasMessageContaining("DMN-02013")
-        .hasMessageContaining("Decision With Missing Rule Id");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(MISSING_RULE_ID_DMN)).isInstanceOf(DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02004")
+      .hasMessageContaining("DMN-02013")
+      .hasMessageContaining("Decision With Missing Rule Id");
   }
 
   @Test
   void shouldFailIfCompoundOutputsNameIsMissing() {
-    try {
-      parseDecisionsFromFile(MISSING_COMPOUND_OUTPUT_NAME_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(DmnTransformException.class)
-        .hasMessageStartingWith("DMN-02004")
-        .hasMessageContaining("DMN-02008")
-        .hasMessageContaining("does not have an output name");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(MISSING_COMPOUND_OUTPUT_NAME_DMN)).isInstanceOf(
+        DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02004")
+      .hasMessageContaining("DMN-02008")
+      .hasMessageContaining("does not have an output name");
   }
 
   @Test
   void shouldFailIfCompoundOutputsHaveDuplicateName() {
-    try {
-      parseDecisionsFromFile(DUPLICATE_COMPOUND_OUTPUT_NAME_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(DmnTransformException.class)
-        .hasMessageStartingWith("DMN-02004")
-        .hasMessageContaining("DMN-02009")
-        .hasMessageContaining("has a compound output but name of output")
-        .hasMessageContaining("is duplicate");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(DUPLICATE_COMPOUND_OUTPUT_NAME_DMN)).isInstanceOf(
+        DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02004")
+      .hasMessageContaining("DMN-02009")
+      .hasMessageContaining("has a compound output but name of output")
+      .hasMessageContaining("is duplicate");
   }
 
   @Test
   void shouldFailIfVariableIsMissing() {
-    try {
-      parseDecisionsFromFile(MISSING_VARIABLE_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(DmnTransformException.class)
-        .hasMessageStartingWith("DMN-02004")
-        .hasMessageContaining("DMN-02018")
-        .hasMessageContaining("The decision 'missing-variable' must have an 'variable' element");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(MISSING_VARIABLE_DMN)).isInstanceOf(DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02004")
+      .hasMessageContaining("DMN-02018")
+      .hasMessageContaining("The decision 'missing-variable' must have an 'variable' element");
   }
 
   @Test
   void shouldFailIfRequiredDecisionReferenceMissing() {
-    try {
-      parseDecisionsFromFile(MISSING_REQUIRED_DECISION_REFERENCE_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(ModelException.class)
-        .hasMessageStartingWith("DMN-02004")
-        .hasMessageContaining("Unable to find a model element instance for id null");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(MISSING_REQUIRED_DECISION_REFERENCE_DMN)).isInstanceOf(
+        DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(ModelException.class)
+      .hasMessageStartingWith("DMN-02004")
+      .hasMessageContaining("Unable to find a model element instance for id null");
   }
 
   @Test
   void shouldFailIfWrongRequiredDecisionReference() {
-    try {
-      parseDecisionsFromFile(WRONG_REQUIRED_DECISION_REFERENCE_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(ModelException.class)
-        .hasMessageStartingWith("DMN-02004")
-        .hasMessageContaining("Unable to find a model element instance for id");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(WRONG_REQUIRED_DECISION_REFERENCE_DMN)).isInstanceOf(
+        DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(ModelException.class)
+      .hasMessageStartingWith("DMN-02004")
+      .hasMessageContaining("Unable to find a model element instance for id");
   }
 
   @Test
@@ -231,16 +175,11 @@ public class ParseDecisionTest extends DmnEngineTest {
 
   @Test
   void shouldFailIfNoInformationRequirementAttribute() {
-    try {
-      parseDecisionsFromFile(NO_INFORMATION_REQUIREMENT_ATTRIBUTE_DMN);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(DmnModelException.class)
-        .hasMessageStartingWith("DMN-02003")
-        .hasMessageContaining("Unable to transform decisions from input stream");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(NO_INFORMATION_REQUIREMENT_ATTRIBUTE_DMN)).isInstanceOf(
+        DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(DmnModelException.class)
+      .hasMessageStartingWith("DMN-02003")
+      .hasMessageContaining("Unable to transform decisions from input stream");
   }
 
   @Test
@@ -263,19 +202,12 @@ public class ParseDecisionTest extends DmnEngineTest {
 
   @Test
   void shouldFailIfDecisionDrgIdIsMissing() {
-    try {
-      InputStream inputStream = IoUtil.fileAsStream(MISSING_DECISION_REQUIREMENT_DIAGRAM_ID_DMN);
-      dmnEngine.parseDecisionRequirementsGraph(inputStream);
-
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e)
-        .hasCauseExactlyInstanceOf(DmnTransformException.class)
-        .hasMessageStartingWith("DMN-02016")
-        .hasMessageContaining("DMN-02017")
-        .hasMessageContaining("DRD with Missing Id");
-    }
+    InputStream inputStream = IoUtil.fileAsStream(MISSING_DECISION_REQUIREMENT_DIAGRAM_ID_DMN);
+    assertThatThrownBy(() -> dmnEngine.parseDecisionRequirementsGraph(inputStream)).isInstanceOf(DmnTransformException.class)
+      .hasCauseExactlyInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02016")
+      .hasMessageContaining("DMN-02017")
+      .hasMessageContaining("DRD with Missing Id");
   }
 
   @Test

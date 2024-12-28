@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.dmn.engine.type;
 
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Philipp Ossler
  */
-public class TypedValueDecisionTest extends DmnEngineTest {
+class TypedValueDecisionTest extends DmnEngineTest {
 
-  public static final String DMN_FILE = "org/operaton/bpm/dmn/engine/type/TypedValue.dmn";
+  private static final String DMN_FILE = "org/operaton/bpm/dmn/engine/type/TypedValue.dmn";
 
   @Test
   @DecisionResource(resource = DMN_FILE)

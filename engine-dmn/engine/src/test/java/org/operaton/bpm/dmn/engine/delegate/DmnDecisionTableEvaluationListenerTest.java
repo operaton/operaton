@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.delegate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.Map;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
@@ -36,15 +29,24 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.dmn.BuiltinAggregator;
 import org.operaton.bpm.model.dmn.HitPolicy;
 
-public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
+import java.util.List;
+import java.util.Map;
 
-  public static final String DMN_FILE = "org/operaton/bpm/dmn/engine/delegate/DmnDecisionTableListenerTest.test.dmn";
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-  public static DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry;
-  public TestDecisionTableEvaluationListener listener;
+import static org.assertj.core.api.Assertions.assertThat;
+
+class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
+
+  private static final String DMN_FILE = "org/operaton/bpm/dmn/engine/delegate/DmnDecisionTableListenerTest.test.dmn";
+
+  static DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry;
+  TestDecisionTableEvaluationListener listener;
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     return new TestDecisionTableEvaluationListenerConfiguration()
       .enableFeelLegacyBehavior(true);
   }
@@ -279,24 +281,20 @@ public class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
   }
 
   public static class TestDecisionTableEvaluationListenerConfiguration extends DefaultDmnEngineConfiguration {
-
     public TestDecisionTableEvaluationListener testDecisionTableListener = new TestDecisionTableEvaluationListener();
 
     public TestDecisionTableEvaluationListenerConfiguration() {
       customPostDecisionTableEvaluationListeners.add(testDecisionTableListener);
     }
-
   }
 
   public static class TestDecisionTableEvaluationListener implements DmnDecisionTableEvaluationListener {
-
     public DmnDecisionTableEvaluationEvent evaluationEvent;
 
     @Override
     public void notify(DmnDecisionTableEvaluationEvent evaluationEvent) {
       this.evaluationEvent = evaluationEvent;
     }
-
   }
 
 }

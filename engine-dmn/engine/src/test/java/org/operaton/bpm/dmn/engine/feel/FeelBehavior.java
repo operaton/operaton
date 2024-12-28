@@ -30,8 +30,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public abstract class FeelBehavior extends DmnEngineTest {
 
@@ -184,30 +183,25 @@ public abstract class FeelBehavior extends DmnEngineTest {
   @Test
   @DecisionResource(resource = "input_date_typed.dmn")
   public void shouldThrowExceptionWhenEvaluateJodaDate_Typed() {
-    Throwable exception = assertThrows(DmnEngineException.class, () -> {
-      // given
-      getVariables()
-        .putValue("date1", org.joda.time.LocalDate.parse("2020-01-17"));
+    // given
+    getVariables().putValue("date1", org.joda.time.LocalDate.parse("2020-01-17"));
 
-      // when
-      evaluateDecision().getSingleEntry();
-    });
-    assertTrue(exception.getMessage().contains("DMN-01005 Invalid value '2020-01-17' for clause with type 'date'."));
+    // when
+    assertThatThrownBy(() -> evaluateDecision().getSingleEntry())
+      .isInstanceOf(DmnEngineException.class)
+      .hasMessageContaining("DMN-01005 Invalid value '2020-01-17' for clause with type 'date'.");
   }
 
   @Test
   @DecisionResource(resource = "input_date_typed.dmn")
   public void shouldThrowExceptionWhenEvaluateLocalDate_Typed() {
-    Throwable exception = assertThrows(DmnEngineException.class, () -> {
-      // given
-      getVariables()
-        .putValue("date1", LocalDate.parse("2020-01-17"));
+    // given
+    getVariables().putValue("date1", LocalDate.parse("2020-01-17"));
 
-      // when
-      evaluateDecision().getSingleEntry();
-    });
-    assertTrue(exception.getMessage().contains("Unsupported type: 'java.time.LocalDate' " +
-      "cannot be converted to 'java.util.Date'"));
+    // when
+    assertThatThrownBy(() -> evaluateDecision().getSingleEntry())
+      .isInstanceOf(DmnEngineException.class)
+      .hasMessageContaining("Unsupported type: 'java.time.LocalDate' " + "cannot be converted to 'java.util.Date'");
   }
 
   public static class Person {

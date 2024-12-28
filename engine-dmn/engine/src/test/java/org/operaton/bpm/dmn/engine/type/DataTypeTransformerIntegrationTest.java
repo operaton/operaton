@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.type;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformer;
@@ -34,24 +25,28 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import org.junit.jupiter.api.Test;
+
+import static org.mockito.Mockito.*;
+
 /**
  * Tests that {@link DmnDataTypeTransformerTest} is invoked while evaluation of the
  * decision.
  *
  * @author Philipp Ossler
  */
-public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
+class DataTypeTransformerIntegrationTest extends DmnEngineTest {
 
-  protected static final String DMN_OUTPUT_FILE = "org/operaton/bpm/dmn/engine/type/DataTypeTransformerTest-Output.dmn";
-  protected static final String DMN_INPUT_FILE = "org/operaton/bpm/dmn/engine/type/DataTypeTransformerTest-Input.dmn";
-  protected static final String DMN_NO_TYPE_FILE = "org/operaton/bpm/dmn/engine/type/DataTypeTransformerTest-NoTypes.dmn";
+  private static final String DMN_OUTPUT_FILE = "org/operaton/bpm/dmn/engine/type/DataTypeTransformerTest-Output.dmn";
+  private static final String DMN_INPUT_FILE = "org/operaton/bpm/dmn/engine/type/DataTypeTransformerTest-Input.dmn";
+  private static final String DMN_NO_TYPE_FILE = "org/operaton/bpm/dmn/engine/type/DataTypeTransformerTest-NoTypes.dmn";
 
-  protected static final TypedValue TRANSFORMED_VALUE = Variables.integerValue(42);
+  private static final TypedValue TRANSFORMED_VALUE = Variables.integerValue(42);
 
   protected static DmnDataTypeTransformer dataTypeTransformerMock;
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
 
     dataTypeTransformerMock = mock(DmnDataTypeTransformer.class);

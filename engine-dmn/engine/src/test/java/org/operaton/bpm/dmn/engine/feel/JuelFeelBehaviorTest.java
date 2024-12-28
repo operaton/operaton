@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class JuelFeelBehaviorTest extends FeelBehavior {
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
     configuration.setFeelEngineFactory(new FeelEngineFactoryImpl());
     configuration.init();
@@ -50,13 +50,11 @@ public class JuelFeelBehaviorTest extends FeelBehavior {
   @Test
   @DecisionResource(resource = "context_function.dmn")
   void shouldFailOnInternalContextFunctions() {
-    assertThrows(FeelException.class, () -> {
-      // given
-      getVariables().putValue("myDate", new Date());
+    // given
+    getVariables().putValue("myDate", new Date());
 
-      // when
-      evaluateDecision().getSingleEntry();
-    });
+    // when
+    assertThrows(FeelException.class, () -> evaluateDecision().getSingleEntry());
   }
 
 }

@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 
-public class FeelTest extends DmnEngineTest {
+import org.junit.jupiter.api.Test;
 
-  public static final String FEEL_TEST_DMN = "FeelTest.dmn";
+class FeelTest extends DmnEngineTest {
+
+  private static final String FEEL_TEST_DMN = "FeelTest.dmn";
 
   @Test
   @DecisionResource(resource = FEEL_TEST_DMN)

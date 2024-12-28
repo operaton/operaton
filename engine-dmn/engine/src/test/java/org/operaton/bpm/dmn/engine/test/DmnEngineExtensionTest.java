@@ -26,18 +26,18 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DmnEngineExtensionTest {
+class DmnEngineExtensionTest {
 
   @RegisterExtension
-  public DmnEngineExtension engineRule = new DmnEngineExtension();
+  DmnEngineExtension engineRule = new DmnEngineExtension();
 
   @RegisterExtension
-  public DmnEngineExtension nullEngineRule = new DmnEngineExtension(null);
+  DmnEngineExtension nullEngineRule = new DmnEngineExtension(null);
 
   @RegisterExtension
-  public DmnEngineExtension customEngineRule = new DmnEngineExtension(initConfiguration());
+  DmnEngineExtension customEngineRule = new DmnEngineExtension(initConfiguration());
 
-  public DmnEngineConfiguration customConfiguration;
+  DmnEngineConfiguration customConfiguration;
 
   public DmnEngineConfiguration initConfiguration() {
     customConfiguration = new DefaultDmnEngineConfiguration();

@@ -38,7 +38,7 @@ public abstract class DmnEngineTest {
   public DmnDecision decision;
   public VariableMap variables;
 
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     return null;
   }
 

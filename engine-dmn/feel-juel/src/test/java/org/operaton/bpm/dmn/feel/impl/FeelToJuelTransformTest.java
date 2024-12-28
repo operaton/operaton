@@ -21,6 +21,8 @@ import org.operaton.bpm.dmn.feel.impl.juel.transform.FeelToJuelTransformImpl;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -119,43 +121,38 @@ public class FeelToJuelTransformTest {
     assertTransform("x", "date(\"2015-12-12\")", "${x == date(\"2015-12-12\")}");
   }
 
-  @Test
-  void intervalNumber() {
-    assertTransform("x", "[0..12]", "${x >= 0 && x <= 12}");
-    assertTransform("x", "[0..12)", "${x >= 0 && x < 12}");
-    assertTransform("x", "[0..12[", "${x >= 0 && x < 12}");
-
-    assertTransform("x", "[0.12..13.37]", "${x >= 0.12 && x <= 13.37}");
-    assertTransform("x", "[0.12..13.37)", "${x >= 0.12 && x < 13.37}");
-    assertTransform("x", "[0.12..13.37[", "${x >= 0.12 && x < 13.37}");
-
-    assertTransform("x", "[.12...37]", "${x >= .12 && x <= .37}");
-    assertTransform("x", "[.12...37)", "${x >= .12 && x < .37}");
-    assertTransform("x", "[.12...37[", "${x >= .12 && x < .37}");
-
-    assertTransform("x", "(0..12]", "${x > 0 && x <= 12}");
-    assertTransform("x", "(0..12)", "${x > 0 && x < 12}");
-    assertTransform("x", "(0..12[", "${x > 0 && x < 12}");
-
-    assertTransform("x", "(0.12..13.37]", "${x > 0.12 && x <= 13.37}");
-    assertTransform("x", "(0.12..13.37)", "${x > 0.12 && x < 13.37}");
-    assertTransform("x", "(0.12..13.37[", "${x > 0.12 && x < 13.37}");
-
-    assertTransform("x", "(.12...37]", "${x > .12 && x <= .37}");
-    assertTransform("x", "(.12...37)", "${x > .12 && x < .37}");
-    assertTransform("x", "(.12...37[", "${x > .12 && x < .37}");
-
-    assertTransform("x", "]0..12]", "${x > 0 && x <= 12}");
-    assertTransform("x", "]0..12)", "${x > 0 && x < 12}");
-    assertTransform("x", "]0..12[", "${x > 0 && x < 12}");
-
-    assertTransform("x", "]0.12..13.37]", "${x > 0.12 && x <= 13.37}");
-    assertTransform("x", "]0.12..13.37)", "${x > 0.12 && x < 13.37}");
-    assertTransform("x", "]0.12..13.37[", "${x > 0.12 && x < 13.37}");
-
-    assertTransform("x", "].12...37]", "${x > .12 && x <= .37}");
-    assertTransform("x", "].12...37)", "${x > .12 && x < .37}");
-    assertTransform("x", "].12...37[", "${x > .12 && x < .37}");
+  @ParameterizedTest
+  @CsvSource({
+    "'x', '[0..12]', '${x >= 0 && x <= 12}'",
+    "'x', '[0..12)', '${x >= 0 && x < 12}'",
+    "'x', '[0..12[', '${x >= 0 && x < 12}'",
+    "'x', '[0.12..13.37]', '${x >= 0.12 && x <= 13.37}'",
+    "'x', '[0.12..13.37)', '${x >= 0.12 && x < 13.37}'",
+    "'x', '[0.12..13.37[', '${x >= 0.12 && x < 13.37}'",
+    "'x', '[.12...37]', '${x >= .12 && x <= .37}'",
+    "'x', '[.12...37)', '${x >= .12 && x < .37}'",
+    "'x', '[.12...37[', '${x >= .12 && x < .37}'",
+    "'x', '(0..12]', '${x > 0 && x <= 12}'",
+    "'x', '(0..12)', '${x > 0 && x < 12}'",
+    "'x', '(0..12[', '${x > 0 && x < 12}'",
+    "'x', '(0.12..13.37]', '${x > 0.12 && x <= 13.37}'",
+    "'x', '(0.12..13.37)', '${x > 0.12 && x < 13.37}'",
+    "'x', '(0.12..13.37[', '${x > 0.12 && x < 13.37}'",
+    "'x', '(.12...37]', '${x > .12 && x <= .37}'",
+    "'x', '(.12...37)', '${x > .12 && x < .37}'",
+    "'x', '(.12...37[', '${x > .12 && x < .37}'",
+    "'x', ']0..12]', '${x > 0 && x <= 12}'",
+    "'x', ']0..12)', '${x > 0 && x < 12}'",
+    "'x', ']0..12[', '${x > 0 && x < 12}'",
+    "'x', ']0.12..13.37]', '${x > 0.12 && x <= 13.37}'",
+    "'x', ']0.12..13.37)', '${x > 0.12 && x < 13.37}'",
+    "'x', ']0.12..13.37[', '${x > 0.12 && x < 13.37}'",
+    "'x', '].12...37]', '${x > .12 && x <= .37}'",
+    "'x', '].12...37)', '${x > .12 && x < .37}'",
+    "'x', '].12...37[', '${x > .12 && x < .37}'"
+  })
+  void intervalNumber(String inputName, String feelExpression, String expectedJuelExpression) {
+    assertTransform(inputName, feelExpression, expectedJuelExpression);
   }
 
   @Test
@@ -188,29 +185,32 @@ public class FeelToJuelTransformTest {
     assertTransform("x", "]date(\"2015-12-12\")..date(\"2016-06-06\")[", "${x > date(\"2015-12-12\") && x < date(\"2016-06-06\")}");
   }
 
-  @Test
-  void not() {
-    assertTransform("x", "not(\"Hello World\")", "${not(x == \"Hello World\")}");
-    assertTransform("x", "not(y)", "${not(x == y)}");
-    assertTransform("x", "not(<y)", "${not(x < y)}");
-    assertTransform("x", "not(<=y)", "${not(x <= y)}");
-    assertTransform("x", "not(>y)", "${not(x > y)}");
-    assertTransform("x", "not(>=y)", "${not(x >= y)}");
-    assertTransform("x", "not(13.37)", "${not(x == 13.37)}");
-    assertTransform("x", "not(<13.37)", "${not(x < 13.37)}");
-    assertTransform("x", "not(<=13.37)", "${not(x <= 13.37)}");
-    assertTransform("x", "not(>13.37)", "${not(x > 13.37)}");
-    assertTransform("x", "not(>=13.37)", "${not(x >= 13.37)}");
-    assertTransform("x", "not(.37)", "${not(x == .37)}");
-    assertTransform("x", "not(<.37)", "${not(x < .37)}");
-    assertTransform("x", "not(<=.37)", "${not(x <= .37)}");
-    assertTransform("x", "not(>.37)", "${not(x > .37)}");
-    assertTransform("x", "not(>=.37)", "${not(x >= .37)}");
-    assertTransform("x", "not(date(\"2015-12-12\"))", "${not(x == date(\"2015-12-12\"))}");
-    assertTransform("x", "not(<date(\"2015-12-12\"))", "${not(x < date(\"2015-12-12\"))}");
-    assertTransform("x", "not(<=date(\"2015-12-12\"))", "${not(x <= date(\"2015-12-12\"))}");
-    assertTransform("x", "not(>date(\"2015-12-12\"))", "${not(x > date(\"2015-12-12\"))}");
-    assertTransform("x", "not(>=date(\"2015-12-12\"))", "${not(x >= date(\"2015-12-12\"))}");
+  @ParameterizedTest
+  @CsvSource({
+    "'x', 'not(\"Hello World\")', '${not(x == \"Hello World\")}'",
+    "'x', 'not(y)', '${not(x == y)}'",
+    "'x', 'not(<y)', '${not(x < y)}'",
+    "'x', 'not(<=y)', '${not(x <= y)}'",
+    "'x', 'not(>y)', '${not(x > y)}'",
+    "'x', 'not(>=y)', '${not(x >= y)}'",
+    "'x', 'not(13.37)', '${not(x == 13.37)}'",
+    "'x', 'not(<13.37)', '${not(x < 13.37)}'",
+    "'x', 'not(<=13.37)', '${not(x <= 13.37)}'",
+    "'x', 'not(>13.37)', '${not(x > 13.37)}'",
+    "'x', 'not(>=13.37)', '${not(x >= 13.37)}'",
+    "'x', 'not(.37)', '${not(x == .37)}'",
+    "'x', 'not(<.37)', '${not(x < .37)}'",
+    "'x', 'not(<=.37)', '${not(x <= .37)}'",
+    "'x', 'not(>.37)', '${not(x > .37)}'",
+    "'x', 'not(>=.37)', '${not(x >= .37)}'",
+    "'x', 'not(date(\"2015-12-12\"))', '${not(x == date(\"2015-12-12\"))}'",
+    "'x', 'not(<date(\"2015-12-12\"))', '${not(x < date(\"2015-12-12\"))}'",
+    "'x', 'not(<=date(\"2015-12-12\"))', '${not(x <= date(\"2015-12-12\"))}'",
+    "'x', 'not(>date(\"2015-12-12\"))', '${not(x > date(\"2015-12-12\"))}'",
+    "'x', 'not(>=date(\"2015-12-12\"))', '${not(x >= date(\"2015-12-12\"))}'"
+  })
+  void not(String inputName, String feelExpression, String expectedJuelExpression) {
+    assertTransform(inputName, feelExpression, expectedJuelExpression);
   }
 
   @Test

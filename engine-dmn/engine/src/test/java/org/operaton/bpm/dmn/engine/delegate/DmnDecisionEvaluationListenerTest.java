@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.delegate;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
@@ -30,6 +28,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -38,14 +39,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  */
 
-public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
+class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
 
-  public static final String DMN_FILE = "org/operaton/bpm/dmn/engine/delegate/DrdDishDecisionExampleWithInsufficientRules.dmn";
+  private static final String DMN_FILE = "org/operaton/bpm/dmn/engine/delegate/DrdDishDecisionExampleWithInsufficientRules.dmn";
 
   public TestDecisionEvaluationListener listener;
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     return new TestDecisionEvaluationListenerConfiguration();
   }
 
@@ -169,17 +170,14 @@ public class DmnDecisionEvaluationListenerTest extends DmnEngineTest {
   }
 
   public static class TestDecisionEvaluationListenerConfiguration extends DefaultDmnEngineConfiguration {
-
     public TestDecisionEvaluationListener testDecisionListener = new TestDecisionEvaluationListener();
 
     public TestDecisionEvaluationListenerConfiguration() {
       customPostDecisionEvaluationListeners.add(testDecisionListener);
     }
-
   }
 
   public static class TestDecisionEvaluationListener implements DmnDecisionEvaluationListener {
-
     public DmnDecisionEvaluationEvent evaluationEvent;
 
     @Override

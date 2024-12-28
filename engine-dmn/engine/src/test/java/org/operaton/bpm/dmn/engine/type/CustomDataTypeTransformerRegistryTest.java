@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.type;
 
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformer;
@@ -27,16 +26,18 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * @author Philipp Ossler
  */
 public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
 
-  protected static final String DMN_INPUT_FILE = "org/operaton/bpm/dmn/engine/type/CustomInputDefinition.dmn";
-  protected static final String DMN_OUTPUT_FILE = "org/operaton/bpm/dmn/engine/type/CustomOutputDefinition.dmn";
+  private static final String DMN_INPUT_FILE = "org/operaton/bpm/dmn/engine/type/CustomInputDefinition.dmn";
+  private static final String DMN_OUTPUT_FILE = "org/operaton/bpm/dmn/engine/type/CustomOutputDefinition.dmn";
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
     configuration.getTransformer().setDataTypeTransformerRegistry(new CustomDataTypeTransformerRegistry());
     configuration.enableFeelLegacyBehavior(true);
@@ -84,7 +85,7 @@ public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
 
   protected static class CustomDataTypeTransformer implements DmnDataTypeTransformer {
 
-    protected static final TypedValue CUSTOM_OBJECT = Variables.integerValue(42);
+    private static final TypedValue CUSTOM_OBJECT = Variables.integerValue(42);
 
     @Override
     public TypedValue transform(Object value) throws IllegalArgumentException {

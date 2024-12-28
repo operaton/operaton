@@ -32,7 +32,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  * before tests.
  */
 public class DmnEngineTestExtension extends DmnEngineExtension implements BeforeEachCallback {
-  public static final String DMN_SUFFIX = "dmn";
+  private static final String DMN_SUFFIX = "dmn";
 
   protected DmnDecision decision;
 

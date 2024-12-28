@@ -16,21 +16,10 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
-import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionLiteralExpressionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableInputImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableRuleImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnExpressionImpl;
+import org.operaton.bpm.dmn.engine.impl.*;
 import org.operaton.bpm.dmn.engine.impl.el.DefaultScriptEngineResolver;
 import org.operaton.bpm.dmn.engine.impl.el.JuelElProvider;
 import org.operaton.bpm.dmn.engine.impl.spi.el.DmnScriptEngineResolver;
@@ -40,32 +29,35 @@ import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-import static org.operaton.bpm.dmn.engine.util.DmnExampleVerifier.assertExample;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
-public class ExpressionLanguageTest extends DmnEngineTest {
+class ExpressionLanguageTest extends DmnEngineTest {
 
-  public static final String GROOVY_DECISION_TABLE_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.groovy.decisionTable.dmn";
-  public static final String GROOVY_DECISION_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.groovy.decisionLiteralExpression.dmn";
-  public static final String SCRIPT_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.script.dmn";
-  public static final String EMPTY_EXPRESSIONS_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.emptyExpressions.dmn";
-  public static final String DECISION_WITH_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.decisionLiteralExpression.dmn";
-  public static final String CAPITAL_JUEL_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.JUEL.dmn";
-  public static final String JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.JUEL.expressionsWithProperties.dmn";
-  public static final String JUEL = "juel";
+  private static final String GROOVY_DECISION_TABLE_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.groovy.decisionTable.dmn";
+  private static final String GROOVY_DECISION_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.groovy.decisionLiteralExpression.dmn";
+  private static final String SCRIPT_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.script.dmn";
+  private static final String EMPTY_EXPRESSIONS_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.emptyExpressions.dmn";
+  private static final String DECISION_WITH_LITERAL_EXPRESSION_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.decisionLiteralExpression.dmn";
+  private static final String CAPITAL_JUEL_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.JUEL.dmn";
+  private static final String JUEL_EXPRESSIONS_WITH_PROPERTIES_DMN = "org/operaton/bpm/dmn/engine/el/ExpressionLanguageTest.JUEL.expressionsWithProperties.dmn";
+  private static final String JUEL = "juel";
 
-  protected DefaultScriptEngineResolver scriptEngineResolver;
-  protected JuelElProvider elProvider;
+  DefaultScriptEngineResolver scriptEngineResolver;
+  JuelElProvider elProvider;
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
 
     configuration.setScriptEngineResolver(createScriptEngineResolver());

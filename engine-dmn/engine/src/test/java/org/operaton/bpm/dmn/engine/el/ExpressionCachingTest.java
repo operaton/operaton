@@ -16,24 +16,25 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
-import static org.operaton.bpm.engine.variable.Variables.emptyVariableContext;
-import static org.mockito.Mockito.*;
-
-import javax.script.CompiledScript;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
-
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DmnExpressionImpl;
 import org.operaton.bpm.dmn.engine.impl.el.DefaultScriptEngineResolver;
 import org.operaton.bpm.dmn.engine.impl.evaluation.ExpressionEvaluationHandler;
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElExpression;
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElProvider;
+import static org.operaton.bpm.engine.variable.Variables.emptyVariableContext;
+
+import javax.script.CompiledScript;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import javax.script.SimpleBindings;
+
 import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
+
+import static org.mockito.Mockito.*;
 
 /**
  * @author Daniel Meyer
@@ -41,8 +42,8 @@ import org.mockito.InOrder;
  */
 class ExpressionCachingTest {
 
-  protected ExpressionEvaluationHandler expressionEvaluationHandler;
-  protected ElProvider elProviderSpy;
+  ExpressionEvaluationHandler expressionEvaluationHandler;
+  ElProvider elProviderSpy;
   private GroovyScriptEngineImpl scriptEngineSpy;
 
   @BeforeEach

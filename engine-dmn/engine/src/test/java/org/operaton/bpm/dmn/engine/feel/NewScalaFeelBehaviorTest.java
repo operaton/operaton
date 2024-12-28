@@ -16,24 +16,25 @@
  */
 package org.operaton.bpm.dmn.engine.feel;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.Date;
-
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelEngineFactory;
 import org.operaton.bpm.engine.variable.Variables;
+
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class NewScalaFeelBehaviorTest extends DmnEngineTest {
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
     configuration.setFeelEngineFactory(new ScalaFeelEngineFactory());
     return configuration;

@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.transform;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
@@ -34,12 +27,17 @@ import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformListener;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
-import org.operaton.bpm.model.dmn.instance.Decision;
-import org.operaton.bpm.model.dmn.instance.Definitions;
-import org.operaton.bpm.model.dmn.instance.Input;
-import org.operaton.bpm.model.dmn.instance.Output;
-import org.operaton.bpm.model.dmn.instance.Rule;
+import org.operaton.bpm.model.dmn.instance.*;
 import org.operaton.commons.utils.IoUtil;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -49,13 +47,13 @@ import org.operaton.commons.utils.IoUtil;
 
 public class DmnTransformListenerTest extends DmnEngineTest {
 
-  public static final String DRG_EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/transform/DrgExample.dmn";
-  public static final String DECISION_TRANSFORM_DMN = "org/operaton/bpm/dmn/engine/transform/DmnDecisionTransform.dmn";
+  private static final String DRG_EXAMPLE_DMN = "org/operaton/bpm/dmn/engine/transform/DrgExample.dmn";
+  private static final String DECISION_TRANSFORM_DMN = "org/operaton/bpm/dmn/engine/transform/DmnDecisionTransform.dmn";
 
   protected TestDmnTransformListener listener;
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     return new TestDmnTransformListenerConfiguration();
   }
 

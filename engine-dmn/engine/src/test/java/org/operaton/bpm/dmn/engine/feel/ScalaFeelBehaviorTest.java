@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ScalaFeelBehaviorTest extends FeelBehavior {
 
   @Override
-  public DmnEngineConfiguration getDmnEngineConfiguration() {
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
     configuration.setFeelEngineFactory(new ScalaFeelEngineFactory());
     configuration.init();

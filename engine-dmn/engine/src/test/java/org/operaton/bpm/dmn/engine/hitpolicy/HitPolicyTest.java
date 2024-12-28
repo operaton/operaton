@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.hitpolicy;
 
-import static java.lang.Integer.MAX_VALUE;
-import static java.lang.Integer.MIN_VALUE;
-
-import static org.assertj.core.api.Assertions.entry;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.hitpolicy.DmnHitPolicyException;
@@ -34,33 +23,46 @@ import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.engine.test.asserts.DmnDecisionTableResultAssert;
+import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static java.lang.Integer.MAX_VALUE;
+import static java.lang.Integer.MIN_VALUE;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.entry;
 
 public class HitPolicyTest extends DmnEngineTest {
 
-  protected static final Double DOUBLE_MIN = -Double.MAX_VALUE;
+  private static final Double DOUBLE_MIN = -Double.MAX_VALUE;
 
-  public static final String DEFAULT_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.default.single.dmn";
-  public static final String DEFAULT_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.default.compound.dmn";
-  public static final String UNIQUE_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.unique.single.dmn";
-  public static final String UNIQUE_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.unique.compound.dmn";
-  public static final String ANY_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.any.single.dmn";
-  public static final String ANY_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.any.compound.dmn";
-  public static final String PRIORITY_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.priority.single.dmn";
-  public static final String FIRST_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.first.single.dmn";
-  public static final String FIRST_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.first.compound.dmn";
-  public static final String OUTPUT_ORDER_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.outputOrder.single.dmn";
-  public static final String RULE_ORDER_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.ruleOrder.single.dmn";
-  public static final String RULE_ORDER_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.ruleOrder.compound.dmn";
-  public static final String COLLECT_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.single.dmn";
-  public static final String COLLECT_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.compound.dmn";
-  public static final String COLLECT_SUM_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.sum.single.dmn";
-  public static final String COLLECT_SUM_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.sum.compound.dmn";
-  public static final String COLLECT_MIN_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.min.single.dmn";
-  public static final String COLLECT_MIN_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.min.compound.dmn";
-  public static final String COLLECT_MAX_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.max.single.dmn";
-  public static final String COLLECT_MAX_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.max.compound.dmn";
-  public static final String COLLECT_COUNT_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.count.single.dmn";
-  public static final String COLLECT_COUNT_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.count.compound.dmn";
+  private static final String DEFAULT_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.default.single.dmn";
+  private static final String DEFAULT_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.default.compound.dmn";
+  private static final String UNIQUE_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.unique.single.dmn";
+  private static final String UNIQUE_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.unique.compound.dmn";
+  private static final String ANY_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.any.single.dmn";
+  private static final String ANY_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.any.compound.dmn";
+  private static final String PRIORITY_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.priority.single.dmn";
+  private static final String FIRST_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.first.single.dmn";
+  private static final String FIRST_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.first.compound.dmn";
+  private static final String OUTPUT_ORDER_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.outputOrder.single.dmn";
+  private static final String RULE_ORDER_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.ruleOrder.single.dmn";
+  private static final String RULE_ORDER_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.ruleOrder.compound.dmn";
+  private static final String COLLECT_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.single.dmn";
+  private static final String COLLECT_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.compound.dmn";
+  private static final String COLLECT_SUM_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.sum.single.dmn";
+  private static final String COLLECT_SUM_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.sum.compound.dmn";
+  private static final String COLLECT_MIN_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.min.single.dmn";
+  private static final String COLLECT_MIN_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.min.compound.dmn";
+  private static final String COLLECT_MAX_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.max.single.dmn";
+  private static final String COLLECT_MAX_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.max.compound.dmn";
+  private static final String COLLECT_COUNT_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.count.single.dmn";
+  private static final String COLLECT_COUNT_COMPOUND = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.collect.count.compound.dmn";
 
   @Test
   @DecisionResource(resource = DEFAULT_SINGLE)
@@ -88,37 +90,21 @@ public class HitPolicyTest extends DmnEngineTest {
   @Test
   @DecisionResource(resource = DEFAULT_SINGLE)
   void defaultHitPolicySingleOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(true, true, false, "a", "b", "c"))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03001");
 
-    try {
-      evaluateDecisionTable(true, false, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(true, false, true, "a", "b", "c"))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03001");
 
-    try {
-      evaluateDecisionTable(false, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(false, true, true, "a", "b", "c"))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03001");
 
-    try {
-      evaluateDecisionTable(true, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(true, true, true, "a", "b", "c"))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03001");
   }
 
   @Test
@@ -144,40 +130,18 @@ public class HitPolicyTest extends DmnEngineTest {
       .containsOnly(entry("out1", "c"), entry("out2", "c"), entry("out3", "c"));
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false, a, b, c",
+    "true, false, true, a, b, c",
+    "false, true, true, a, b, c",
+    "true, true, true, a, b, c"
+  })
   @DecisionResource(resource = DEFAULT_COMPOUND)
-  void defaultHitPolicyCompoundOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
-
-    try {
-      evaluateDecisionTable(true, false, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
-
-    try {
-      evaluateDecisionTable(true, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
+  void defaultHitPolicyCompoundOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3, String output1, String output2, String output3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, output1, output2, output3))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03001");
   }
 
   @Test
@@ -203,40 +167,18 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleEntry("c");
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false, a, b, c",
+    "true, false, true, a, b, c",
+    "false, true, true, a, b, c",
+    "true, true, true, a, b, c"
+  })
   @DecisionResource(resource = UNIQUE_SINGLE)
-  void uniqueHitPolicySingleOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
-
-    try {
-      evaluateDecisionTable(true, false, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
-
-    try {
-      evaluateDecisionTable(true, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
+  void uniqueHitPolicySingleOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3, String output1, String output2, String output3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, output1, output2, output3))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03001");
   }
 
   @Test
@@ -262,40 +204,18 @@ public class HitPolicyTest extends DmnEngineTest {
       .containsOnly(entry("out1", "c"), entry("out2", "c"), entry("out3", "c"));
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false, a, b, c",
+    "true, false, true, a, b, c",
+    "false, true, true, a, b, c",
+    "true, true, true, a, b, c"
+  })
   @DecisionResource(resource = UNIQUE_COMPOUND)
-  void uniqueHitPolicyCompoundOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
-
-    try {
-      evaluateDecisionTable(true, false, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
-
-    try {
-      evaluateDecisionTable(true, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03001");
-    }
+  void uniqueHitPolicyCompoundOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3, String output1, String output2, String output3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, output1, output2, output3))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03001");
   }
 
   @Test
@@ -321,54 +241,20 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleEntry("c");
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false, a, b, c",
+    "true, false, true, a, b, c",
+    "false, true, true, a, b, c",
+    "true, true, true, a, b, c"
+  })
   @DecisionResource(resource = ANY_SINGLE)
-  void anyHitPolicySingleOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03002");
-    }
+  void anyHitPolicySingleOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3, String output1, String output2, String output3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, output1, output2, output3))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03002");
 
-    try {
-      evaluateDecisionTable(true, false, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03002");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03002");
-    }
-
-    try {
-      evaluateDecisionTable(true, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03002");
-    }
-
-    assertThatDecisionTableResult(true, true, false, "a", "a", "a")
-      .hasSingleResult()
-      .hasSingleEntry("a");
-
-    assertThatDecisionTableResult(true, false, true, "a", "a", "a")
-      .hasSingleResult()
-      .hasSingleEntry("a");
-
-    assertThatDecisionTableResult(false, true, true, "a", "a", "a")
-      .hasSingleResult()
-      .hasSingleEntry("a");
-
-    assertThatDecisionTableResult(true, true, true, "a", "a", "a")
+    assertThatDecisionTableResult(input1, input2, input3, "a", "a", "a")
       .hasSingleResult()
       .hasSingleEntry("a");
   }
@@ -396,63 +282,29 @@ public class HitPolicyTest extends DmnEngineTest {
       .containsOnly(entry("out1", "c"), entry("out2", "c"), entry("out3", "c"));
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false, a, b, c",
+    "true, false, true, a, b, c",
+    "false, true, true, a, b, c",
+    "true, true, true, a, b, c"
+  })
   @DecisionResource(resource = ANY_COMPOUND)
-  void anyHitPolicyCompoundOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03002");
-    }
+  void anyHitPolicyCompoundOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3, String output1, String output2, String output3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, output1, output2, output3))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03002");
 
-    try {
-      evaluateDecisionTable(true, false, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03002");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03002");
-    }
-
-    try {
-      evaluateDecisionTable(true, true, true, "a", "b", "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03002");
-    }
-
-    assertThatDecisionTableResult(true, true, false, "a", "a", "a")
-      .hasSingleResult()
-      .containsOnly(entry("out1", "a"), entry("out2", "a"), entry("out3", "a"));
-
-    assertThatDecisionTableResult(true, false, true, "a", "a", "a")
-      .hasSingleResult()
-      .containsOnly(entry("out1", "a"), entry("out2", "a"), entry("out3", "a"));
-
-    assertThatDecisionTableResult(false, true, true, "a", "a", "a")
-      .hasSingleResult()
-      .containsOnly(entry("out1", "a"), entry("out2", "a"), entry("out3", "a"));
-
-    assertThatDecisionTableResult(true, true, true, "a", "a", "a")
+    assertThatDecisionTableResult(input1, input2, input3, "a", "a", "a")
       .hasSingleResult()
       .containsOnly(entry("out1", "a"), entry("out2", "a"), entry("out3", "a"));
   }
 
   @Test
   void priorityHitPolicySingleOutputNoMatchingRule() {
-    try {
-      parseDecisionsFromFile(PRIORITY_SINGLE);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e).hasMessageStartingWith("DMN-02004");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(PRIORITY_SINGLE))
+      .isInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02004");
   }
 
   @Test
@@ -575,13 +427,9 @@ public class HitPolicyTest extends DmnEngineTest {
 
   @Test
   void outputOrderHitPolicyNotSupported() {
-    try {
-      parseDecisionsFromFile(OUTPUT_ORDER_SINGLE);
-      failBecauseExceptionWasNotThrown(DmnTransformException.class);
-    }
-    catch (DmnTransformException e) {
-      assertThat(e).hasMessageStartingWith("DMN-02004");
-    }
+    assertThatThrownBy(() -> parseDecisionsFromFile(OUTPUT_ORDER_SINGLE))
+      .isInstanceOf(DmnTransformException.class)
+      .hasMessageStartingWith("DMN-02004");
   }
 
   @Test
@@ -839,12 +687,9 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleResult()
       .hasSingleEntry(3.0);
 
-    try {
-      evaluateDecisionTable(false, false, true, 10, 20L, "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03004");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(false, false, true, 10, 20L, "c"))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03004");
   }
 
   @Test
@@ -914,12 +759,9 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleResult()
       .hasSingleEntry(6.0);
 
-    try {
-      evaluateDecisionTable(true, true, true, 10, 20L, true);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03004");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(true, true, true, 10, 20L, true))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03004");
   }
 
   @Test
@@ -929,68 +771,31 @@ public class HitPolicyTest extends DmnEngineTest {
       .isEmpty();
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, false, false",
+    "false, true, false",
+    "false, false, true"
+  })
   @DecisionResource(resource = COLLECT_SUM_COMPOUND)
-  void collectSumHitPolicyCompoundOutputSingleMatchingRule() {
-    try {
-      evaluateDecisionTable(true, false, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, false, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
+  void collectSumHitPolicyCompoundOutputSingleMatchingRule(boolean input1, boolean input2, boolean input3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, 1, 2L, 3d))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03003");
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false",
+    "true, false, true",
+    "false, true, true",
+    "true, true, true"
+  })
   @DecisionResource(resource = COLLECT_SUM_COMPOUND)
-  void collectSumHitPolicyCompoundOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(true, false, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(true, true, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
+  void collectSumHitPolicyCompoundOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, 1, 2L, 3d))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03003");
   }
 
   @Test
@@ -1051,12 +856,9 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleResult()
       .hasSingleEntry(3.0);
 
-    try {
-      evaluateDecisionTable(false, false, true, 10, 20L, "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03004");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(false, false, true, 10, 20L, "c"))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03004");
   }
 
   @Test
@@ -1126,12 +928,9 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleResult()
       .hasSingleEntry(1.0);
 
-    try {
-      evaluateDecisionTable(true, true, true, 10, 20L, true);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03004");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(true, true, true, 10, 20L, true))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03004");
   }
 
   @Test
@@ -1141,68 +940,31 @@ public class HitPolicyTest extends DmnEngineTest {
       .isEmpty();
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, false, false",
+    "false, true, false",
+    "false, false, true"
+  })
   @DecisionResource(resource = COLLECT_MIN_COMPOUND)
-  void collectMinHitPolicyCompoundOutputSingleMatchingRule() {
-    try {
-      evaluateDecisionTable(true, false, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, false, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
+  void collectMinHitPolicyCompoundOutputSingleMatchingRule(boolean input1, boolean input2, boolean input3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, 1, 2L, 3d))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03003");
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false",
+    "true, false, true",
+    "false, true, true",
+    "true, true, true"
+  })
   @DecisionResource(resource = COLLECT_MIN_COMPOUND)
-  void collectMinHitPolicyCompoundOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(true, false, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(true, true, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
+  void collectMinHitPolicyCompoundOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, 1, 2L, 3d))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03003");
   }
 
   @Test
@@ -1263,12 +1025,9 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleResult()
       .hasSingleEntry(3.0);
 
-    try {
-      evaluateDecisionTable(false, false, true, 10, 20L, "c");
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03004");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(false, false, true, 10, 20L, "c"))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03004");
   }
 
   @Test
@@ -1338,12 +1097,9 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleResult()
       .hasSingleEntry(3.0);
 
-    try {
-      evaluateDecisionTable(true, true, true, 10, 20L, true);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    } catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03004");
-    }
+    assertThatThrownBy(() -> evaluateDecisionTable(true, true, true, 10, 20L, true))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03004");
   }
 
   @Test
@@ -1353,68 +1109,31 @@ public class HitPolicyTest extends DmnEngineTest {
       .isEmpty();
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, false, false",
+    "false, true, false",
+    "false, false, true"
+  })
   @DecisionResource(resource = COLLECT_MAX_COMPOUND)
-  void collectMaxHitPolicyCompoundOutputSingleMatchingRule() {
-    try {
-      evaluateDecisionTable(true, false, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, false, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
+  void collectMaxHitPolicyCompoundOutputSingleMatchingRule(boolean input1, boolean input2, boolean input3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, 1, 2L, 3d))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03003");
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false",
+    "true, false, true",
+    "false, true, true",
+    "true, true, true"
+  })
   @DecisionResource(resource = COLLECT_MAX_COMPOUND)
-  void collectMaxHitPolicyCompoundOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(true, false, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(true, true, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
+  void collectMaxHitPolicyCompoundOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, 1, 2L, 3d))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03003");
   }
 
   @Test
@@ -1441,24 +1160,18 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleEntry(1);
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false, 2",
+    "true, false, true, 2",
+    "false, true, true, 2",
+    "true, true, true, 3"
+  })
   @DecisionResource(resource = COLLECT_COUNT_SINGLE)
-  void collectCountHitPolicySingleOutputMultipleMatchingRules() {
-    assertThatDecisionTableResult(true, true, false, 10, "b", 30.034)
+  void collectCountHitPolicySingleOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3, int expectedCount) {
+    assertThatDecisionTableResult(input1, input2, input3, 10, "b", 30.034)
       .hasSingleResult()
-      .hasSingleEntry(2);
-
-    assertThatDecisionTableResult(true, false, true, 10, "b", 30.034)
-      .hasSingleResult()
-      .hasSingleEntry(2);
-
-    assertThatDecisionTableResult(false, true, true, 10, "b", 30.034)
-      .hasSingleResult()
-      .hasSingleEntry(2);
-
-    assertThatDecisionTableResult(true, true, true, 10, "b", 30.034)
-      .hasSingleResult()
-      .hasSingleEntry(3);
+      .hasSingleEntry(expectedCount);
   }
 
   @Test
@@ -1469,73 +1182,36 @@ public class HitPolicyTest extends DmnEngineTest {
       .hasSingleEntry(0);
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, false, false",
+    "false, true, false",
+    "false, false, true"
+  })
   @DecisionResource(resource = COLLECT_COUNT_COMPOUND)
-  void collectCountHitPolicyCompoundOutputSingleMatchingRule() {
-    try {
-      evaluateDecisionTable(true, false, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, false, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
+  void collectCountHitPolicyCompoundOutputSingleMatchingRule(boolean input1, boolean input2, boolean input3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, 1, 2L, 3d))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03003");
   }
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "true, true, false",
+    "true, false, true",
+    "false, true, true",
+    "true, true, true"
+  })
   @DecisionResource(resource = COLLECT_COUNT_COMPOUND)
-  void collectCountHitPolicyCompoundOutputMultipleMatchingRules() {
-    try {
-      evaluateDecisionTable(true, true, false, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(true, false, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(false, true, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
-
-    try {
-      evaluateDecisionTable(true, true, true, 1, 2L, 3d);
-      failBecauseExceptionWasNotThrown(DmnHitPolicyException.class);
-    }
-    catch (DmnHitPolicyException e) {
-      assertThat(e).hasMessageStartingWith("DMN-03003");
-    }
+  void collectCountHitPolicyCompoundOutputMultipleMatchingRules(boolean input1, boolean input2, boolean input3) {
+    assertThatThrownBy(() -> evaluateDecisionTable(input1, input2, input3, 1, 2L, 3d))
+      .isInstanceOf(DmnHitPolicyException.class)
+      .hasMessageStartingWith("DMN-03003");
   }
 
   // helper methods
 
-  public List<Object> collectSingleOutputEntries(DmnDecisionTableResult results) {
+  List<Object> collectSingleOutputEntries(DmnDecisionTableResult results) {
     List<Object> values = new ArrayList<>();
     for (DmnDecisionRuleResult result : results) {
       values.add(result.getSingleEntry());
@@ -1543,7 +1219,7 @@ public class HitPolicyTest extends DmnEngineTest {
     return values;
   }
 
-  public DmnDecisionTableResult evaluateDecisionTable(Boolean input1, Boolean input2, Boolean input3, Object output1, Object output2, Object output3) {
+  DmnDecisionTableResult evaluateDecisionTable(Boolean input1, Boolean input2, Boolean input3, Object output1, Object output2, Object output3) {
     variables.put("input1", input1);
     variables.put("input2", input2);
     variables.put("input3", input3);
@@ -1554,7 +1230,7 @@ public class HitPolicyTest extends DmnEngineTest {
     return evaluateDecisionTable();
   }
 
-  public DmnDecisionTableResultAssert assertThatDecisionTableResult(Boolean input1, Boolean input2, Boolean input3, Object output1, Object output2, Object output3) {
+  DmnDecisionTableResultAssert assertThatDecisionTableResult(Boolean input1, Boolean input2, Boolean input3, Object output1, Object output2, Object output3) {
     return assertThat(evaluateDecisionTable(input1, input2, input3, output1, output2, output3));
   }
 

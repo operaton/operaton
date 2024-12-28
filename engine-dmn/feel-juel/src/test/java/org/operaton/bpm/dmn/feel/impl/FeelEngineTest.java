@@ -34,6 +34,8 @@ import java.util.concurrent.Future;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -162,14 +164,21 @@ public class FeelEngineTest {
     assertEvaluatesToFalse(0.37, ">.37");
   }
 
-  @Test
-  void endpointNumberLessEqual() {
-    assertEvaluatesToTrue(13.37, ">=13");
-    assertEvaluatesToTrue(13.37, ">=13.37");
-    assertEvaluatesToTrue(0.37, ">=.37");
-    assertEvaluatesToTrue(0.42, ">=.37");
-    assertEvaluatesToFalse(13.337, ">=13.37");
-    assertEvaluatesToFalse(0.23, ">=.37");
+  @ParameterizedTest
+  @CsvSource({
+      "13.37, >=13, true",
+      "13.37, >=13.37, true",
+      "0.37, >=.37, true",
+      "0.42, >=.37, true",
+      "13.337, >=13.37, false",
+      "0.23, >=.37, false"
+  })
+  void endpointNumberLessEqual(double input, String feelExpression, boolean expectTrueResult) {
+      if (expectTrueResult) {
+          assertEvaluatesToTrue(input, feelExpression);
+      } else {
+          assertEvaluatesToFalse(input, feelExpression);
+      }
   }
 
   @Test
@@ -211,107 +220,106 @@ public class FeelEngineTest {
     assertThat(actualDates).hasSameElementsAs(expectedDates);
   }
 
-  @Test
-  void intervalNumber() {
-    assertEvaluatesToTrue(0.23, "[.12...37]");
-    assertEvaluatesToTrue(0.23, "[.12...37)");
-    assertEvaluatesToTrue(0.23, "[.12...37[");
-
-    assertEvaluatesToTrue(0.23, "(.12...37]");
-    assertEvaluatesToTrue(0.23, "(.12...37)");
-    assertEvaluatesToTrue(0.23, "(.12...37[");
-
-    assertEvaluatesToTrue(0.23, "].12...37]");
-    assertEvaluatesToTrue(0.23, "].12...37)");
-    assertEvaluatesToTrue(0.23, "].12...37[");
-
-    assertEvaluatesToFalse(13.37, "[.12...37]");
-    assertEvaluatesToFalse(13.37, "[.12...37)");
-    assertEvaluatesToFalse(13.37, "[.12...37[");
-
-    assertEvaluatesToFalse(13.37, "(.12...37]");
-    assertEvaluatesToFalse(13.37, "(.12...37)");
-    assertEvaluatesToFalse(13.37, "(.12...37[");
-
-    assertEvaluatesToFalse(13.37, "].12...37]");
-    assertEvaluatesToFalse(13.37, "].12...37)");
-    assertEvaluatesToFalse(13.37, "].12...37[");
+  @ParameterizedTest
+  @CsvSource({
+      "0.23, [.12...37], true",
+      "0.23, [.12...37), true",
+      "0.23, [.12...37[, true",
+      "0.23, (.12...37], true",
+      "0.23, (.12...37), true",
+      "0.23, (.12...37[, true",
+      "0.23, ].12...37], true",
+      "0.23, ].12...37), true",
+      "0.23, ].12...37[, true",
+      "13.37, [.12...37], false",
+      "13.37, [.12...37), false",
+      "13.37, [.12...37[, false",
+      "13.37, (.12...37], false",
+      "13.37, (.12...37), false",
+      "13.37, (.12...37[, false",
+      "13.37, ].12...37], false",
+      "13.37, ].12...37), false",
+      "13.37, ].12...37[, false"
+  })
+  void intervalNumber(double input, String feelExpression, boolean expectedResult) {
+      if (expectedResult) {
+          assertEvaluatesToTrue(input, feelExpression);
+      } else {
+          assertEvaluatesToFalse(input, feelExpression);
+      }
   }
 
-  @Test
-  void intervalVariable() {
-    variables.put("a", 10);
-    variables.put("b", 15);
-
-    assertEvaluatesToTrue(13.37, "[a..b]");
-    assertEvaluatesToTrue(13.37, "[a..b)");
-    assertEvaluatesToTrue(13.37, "[a..b[");
-
-    assertEvaluatesToTrue(13.37, "(a..b]");
-    assertEvaluatesToTrue(13.37, "(a..b)");
-    assertEvaluatesToTrue(13.37, "(a..b[");
-
-    assertEvaluatesToTrue(13.37, "]a..b]");
-    assertEvaluatesToTrue(13.37, "]a..b)");
-    assertEvaluatesToTrue(13.37, "]a..b[");
-
-    assertEvaluatesToFalse(0.37, "[a..b]");
-    assertEvaluatesToFalse(0.37, "[a..b)");
-    assertEvaluatesToFalse(0.37, "[a..b[");
-
-    assertEvaluatesToFalse(0.37, "(a..b]");
-    assertEvaluatesToFalse(0.37, "(a..b)");
-    assertEvaluatesToFalse(0.37, "(a..b[");
-
-    assertEvaluatesToFalse(0.37, "]a..b]");
-    assertEvaluatesToFalse(0.37, "]a..b)");
-    assertEvaluatesToFalse(0.37, "]a..b[");
+  @ParameterizedTest
+  @CsvSource({
+      "13.37, [a..b], true",
+      "13.37, [a..b), true",
+      "13.37, [a..b[, true",
+      "13.37, (a..b], true",
+      "13.37, (a..b), true",
+      "13.37, (a..b[, true",
+      "13.37, ]a..b], true",
+      "13.37, ]a..b), true",
+      "13.37, ]a..b[, true",
+      "0.37, [a..b], false",
+      "0.37, [a..b), false",
+      "0.37, [a..b[, false",
+      "0.37, (a..b], false",
+      "0.37, (a..b), false",
+      "0.37, (a..b[, false",
+      "0.37, ]a..b], false",
+      "0.37, ]a..b), false",
+      "0.37, ]a..b[, false"
+  })
+  void intervalVariable(double input, String feelExpression, boolean expectTrue) {
+      variables.put("a", 10);
+      variables.put("b", 15);
+      if (expectTrue) {
+          assertEvaluatesToTrue(input, feelExpression);
+      } else {
+          assertEvaluatesToFalse(input, feelExpression);
+      }
   }
 
-  @Test
-  void intervalDateAndTime() {
-    DateValue dateAndTime = parseDateAndTime("2016-03-03T00:00:00");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToTrue(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToTrue(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToTrue(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToTrue(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:01\")[");
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:01\"))");
-
-    assertEvaluatesToTrue(dateAndTime, "[date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "]date and time(\"2016-03-02T23:59:59\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToTrue(dateAndTime, "(date and time(\"2016-03-02T23:59:59\")..date and time(\"2016-06-06T00:00:00\")]");
-
-
-    dateAndTime = parseDateAndTime("2013-03-03T00:00:00");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToFalse(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToFalse(dateAndTime, "(date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToFalse(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))");
-    assertEvaluatesToFalse(dateAndTime, "]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[");
-
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-02T23:59:59\")]");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\")[");
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\"))");
-
-    assertEvaluatesToFalse(dateAndTime, "[date and time(\"2016-03-03T00:00:01\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "]date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
-    assertEvaluatesToFalse(dateAndTime, "(date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]");
+  @ParameterizedTest
+  @CsvSource({
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2016-03-03T00:00:00, true, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2016-03-03T00:00:00, true, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2016-03-03T00:00:00, true, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2016-03-03T00:00:00, true, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\")]",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:01\")[",
+      "2016-03-03T00:00:00, true, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:01\"))",
+      "2016-03-03T00:00:00, true, [date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, ]date and time(\"2016-03-02T23:59:59\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2016-03-03T00:00:00, true, (date and time(\"2016-03-02T23:59:59\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2013-03-03T00:00:00, false, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2013-03-03T00:00:00, false, (date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2013-03-03T00:00:00, false, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\"))",
+      "2013-03-03T00:00:00, false, ]date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-06-06T00:00:00\")[",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-02T23:59:59\")]",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\")[",
+      "2013-03-03T00:00:00, false, [date and time(\"2015-12-12T00:00:00\")..date and time(\"2016-03-03T00:00:00\"))",
+      "2013-03-03T00:00:00, false, [date and time(\"2016-03-03T00:00:01\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, ]date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]",
+      "2013-03-03T00:00:00, false, (date and time(\"2016-03-03T00:00:00\")..date and time(\"2016-06-06T00:00:00\")]"
+  })
+  void intervalDateAndTime(String dateTimeString, boolean expectedResult, String feelExpression) {
+      DateValue dateTime = parseDateAndTime(dateTimeString);
+      if (expectedResult) {
+          assertEvaluatesToTrue(dateTime, feelExpression);
+      } else {
+          assertEvaluatesToFalse(dateTime, feelExpression);
+      }
   }
 
   @Test

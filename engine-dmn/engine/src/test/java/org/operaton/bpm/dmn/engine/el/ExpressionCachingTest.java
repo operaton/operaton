@@ -31,22 +31,22 @@ import org.operaton.bpm.dmn.engine.impl.evaluation.ExpressionEvaluationHandler;
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElExpression;
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElProvider;
 import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class ExpressionCachingTest {
+class ExpressionCachingTest {
 
   protected ExpressionEvaluationHandler expressionEvaluationHandler;
   protected ElProvider elProviderSpy;
   private GroovyScriptEngineImpl scriptEngineSpy;
 
-  @Before
-  public void setup() throws ScriptException {
+  @BeforeEach
+  void setup() throws ScriptException {
     ScriptEngineManager scriptEngineManager = mock(ScriptEngineManager.class);
 
     scriptEngineSpy = mock(GroovyScriptEngineImpl.class);
@@ -67,7 +67,7 @@ public class ExpressionCachingTest {
   }
 
   @Test
-  public void testCompiledScriptCaching() throws ScriptException {
+  void compiledScriptCaching() throws ScriptException {
 
     // given
     DmnExpressionImpl expression = createExpression("1 > 2", "groovy");
@@ -90,7 +90,7 @@ public class ExpressionCachingTest {
   }
 
   @Test
-  public void testElExpressionCaching() {
+  void elExpressionCaching() {
 
     // given
     DmnExpressionImpl expression = createExpression("1 > 2", "juel");

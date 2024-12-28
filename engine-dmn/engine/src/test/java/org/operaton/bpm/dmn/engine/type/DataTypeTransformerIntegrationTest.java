@@ -24,6 +24,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformer;
@@ -32,7 +33,6 @@ import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Test;
 
 /**
  * Tests that {@link DmnDataTypeTransformerTest} is invoked while evaluation of the
@@ -68,7 +68,7 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_OUTPUT_FILE)
-  public void invokeTransformerForOutputDefinition() {
+  void invokeTransformerForOutputDefinition() {
     variables.put("output", 21);
 
     assertThatDecisionTableResult()
@@ -80,7 +80,7 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_OUTPUT_FILE)
-  public void dontInvokeTransformerForOutputDefinitionWithNull() {
+  void dontInvokeTransformerForOutputDefinitionWithNull() {
     variables.put("output", null);
 
     assertThatDecisionTableResult()
@@ -92,7 +92,7 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_INPUT_FILE)
-  public void invokeTransformerForInputTypeDefinition() {
+  void invokeTransformerForInputTypeDefinition() {
     variables.put("input", 21);
 
     assertThatDecisionTableResult()
@@ -104,7 +104,7 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_INPUT_FILE)
-  public void dontInvokeTransformerForInputTypeDefinitionWithNull() {
+  void dontInvokeTransformerForInputTypeDefinitionWithNull() {
     variables.put("input", null);
 
     assertThatDecisionTableResult()
@@ -116,7 +116,7 @@ public class DataTypeTransformerIntegrationTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_NO_TYPE_FILE)
-  public void dontInvokeTransformerForNoTypeDefinition() {
+  void dontInvokeTransformerForNoTypeDefinition() {
     // no type definition for input clause
     variables.put("input", 21);
     // no output definition for output clause

@@ -18,11 +18,11 @@ package org.operaton.bpm.dmn.engine.api;
 
 import static org.assertj.core.api.Assertions.entry;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
-import org.junit.Test;
 
 public class EvaluateDecisionTest extends DmnEngineTest {
 
@@ -42,7 +42,7 @@ public class EvaluateDecisionTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = NO_INPUT_DMN)
-  public void shouldEvaluateRuleWithoutInput() {
+  void shouldEvaluateRuleWithoutInput() {
     assertThatDecisionTableResult()
       .hasSingleResult()
       .hasSingleEntry("ok");
@@ -50,7 +50,7 @@ public class EvaluateDecisionTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldEvaluateSingleRule() {
+  void shouldEvaluateSingleRule() {
     variables.putValue("input", "ok");
 
     assertThatDecisionTableResult()
@@ -65,7 +65,7 @@ public class EvaluateDecisionTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
-  public void shouldEvaluateExample() {
+  void shouldEvaluateExample() {
     variables.put("status", "bronze");
     variables.put("sum", 200);
 
@@ -96,7 +96,7 @@ public class EvaluateDecisionTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DATA_TYPE_DMN)
-  public void shouldDetectDataTypes() {
+  void shouldDetectDataTypes() {
     variables.put("boolean", true);
     variables.put("integer", 9000);
     variables.put("double", 13.37);
@@ -124,7 +124,7 @@ public class EvaluateDecisionTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN12_NO_INPUT_DMN)
-  public void shouldEvaluateRuleWithoutInput_Dmn12() {
+  void shouldEvaluateRuleWithoutInput_Dmn12() {
     assertThatDecisionTableResult()
       .hasSingleResult()
       .hasSingleEntry("ok");
@@ -132,7 +132,7 @@ public class EvaluateDecisionTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN13_NO_INPUT_DMN)
-  public void shouldEvaluateRuleWithoutInput_Dmn13() {
+  void shouldEvaluateRuleWithoutInput_Dmn13() {
     assertThatDecisionTableResult()
       .hasSingleResult()
       .hasSingleEntry("ok");

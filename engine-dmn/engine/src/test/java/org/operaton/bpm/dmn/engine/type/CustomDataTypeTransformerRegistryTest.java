@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.dmn.engine.type;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformer;
@@ -25,7 +26,6 @@ import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.Test;
 
 /**
  * @author Philipp Ossler
@@ -45,7 +45,7 @@ public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_OUTPUT_FILE)
-  public void customOutputTransformer() {
+  void customOutputTransformer() {
     variables.put("output", 21);
 
     assertThatDecisionTableResult()
@@ -55,7 +55,7 @@ public class CustomDataTypeTransformerRegistryTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DMN_INPUT_FILE)
-  public void customInputTransformer() {
+  void customInputTransformer() {
     variables.put("input", 21);
 
     assertThatDecisionTableResult()

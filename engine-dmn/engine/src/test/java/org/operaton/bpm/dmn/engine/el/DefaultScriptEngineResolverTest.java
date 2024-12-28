@@ -24,18 +24,18 @@ import static org.mockito.Mockito.when;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.impl.el.DefaultScriptEngineResolver;
-import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class DefaultScriptEngineResolverTest {
+class DefaultScriptEngineResolverTest {
 
   @Test
-  public void testCacheScriptEngine() {
+  void cacheScriptEngine() {
     String scriptLang = "hipster-script";
 
     ScriptEngineManager mockScriptEngineManager = mock(ScriptEngineManager.class);

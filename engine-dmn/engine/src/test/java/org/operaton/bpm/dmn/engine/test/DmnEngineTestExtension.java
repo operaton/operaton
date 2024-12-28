@@ -16,30 +16,27 @@
  */
 package org.operaton.bpm.dmn.engine.test;
 
-import java.io.InputStream;
-import java.util.List;
-
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.runner.Description;
+
+import java.io.InputStream;
+import java.util.List;
+
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
- * JUnit test rule for internal unit tests. Uses The
+ * JUnit 5 test extension for internal unit tests. Uses The
  * {@link DecisionResource} annotation to load decisions
  * before tests.
  */
-public class DmnEngineTestRule extends DmnEngineRule {
-
+public class DmnEngineTestExtension extends DmnEngineExtension implements BeforeEachCallback {
   public static final String DMN_SUFFIX = "dmn";
 
   protected DmnDecision decision;
 
-  public DmnEngineTestRule() {
-    super();
-  }
-
-  public DmnEngineTestRule(DmnEngineConfiguration dmnEngineConfiguration) {
+  public DmnEngineTestExtension(DmnEngineConfiguration dmnEngineConfiguration) {
     super(dmnEngineConfiguration);
   }
 
@@ -48,54 +45,43 @@ public class DmnEngineTestRule extends DmnEngineRule {
   }
 
   @Override
-  protected void starting(Description description) {
-    super.starting(description);
-
-    decision = loadDecision(description);
+  public void beforeEach(ExtensionContext context) {
+    super.beforeEach(context);
+    decision = loadDecision(context);
   }
 
-  protected DmnDecision loadDecision(Description description) {
-    DecisionResource decisionResource = description.getAnnotation(DecisionResource.class);
-
-    if(decisionResource != null) {
-
-      String resourcePath = decisionResource.resource();
-
-      resourcePath = expandResourcePath(description, resourcePath);
-
-      InputStream inputStream = IoUtil.fileAsStream(resourcePath);
-
-      String decisionKey = decisionResource.decisionKey();
-
-      if (decisionKey == null || decisionKey.isEmpty()) {
-        List<DmnDecision> decisions = dmnEngine.parseDecisions(inputStream);
-        if (!decisions.isEmpty()) {
-          return decisions.get(0);
-        }
-        else {
-          return null;
-        }
-      } else {
-        return dmnEngine.parseDecision(decisionKey, inputStream);
-      }
-    }
-    else {
+  protected DmnDecision loadDecision(ExtensionContext context) {
+    DecisionResource decisionResource = context.getRequiredTestMethod().getAnnotation(DecisionResource.class);
+    if (decisionResource == null) {
       return null;
     }
+
+    String resourcePath = decisionResource.resource();
+    resourcePath = expandResourcePath(context, resourcePath);
+
+    InputStream inputStream = IoUtil.fileAsStream(resourcePath);
+
+    String decisionKey = decisionResource.decisionKey();
+
+    if (decisionKey == null || decisionKey.isEmpty()) {
+      List<DmnDecision> decisions = dmnEngine.parseDecisions(inputStream);
+      return decisions.isEmpty() ? null : decisions.get(0);
+    } else {
+      return dmnEngine.parseDecision(decisionKey, inputStream);
+    }
   }
 
-  protected String expandResourcePath(Description description, String resourcePath) {
+  protected String expandResourcePath(ExtensionContext context, String resourcePath) {
     if (resourcePath.contains("/")) {
       // already expanded path
       return resourcePath;
-    }
-    else {
-      Class<?> testClass = description.getTestClass();
+    } else {
+      Class<?> testClass = context.getTestClass().orElseThrow();
       if (resourcePath.isEmpty()) {
         // use test class and method name as resource file name
-        return testClass.getName().replace(".", "/") + "." + description.getMethodName() + "." + DMN_SUFFIX;
-      }
-      else {
+        return testClass.getName().replace(".", "/") + "." + context.getRequiredTestMethod().getName() + "."
+          + DMN_SUFFIX;
+      } else {
         // use test class location as resource location
         return testClass.getPackage().getName().replace(".", "/") + "/" + resourcePath;
       }

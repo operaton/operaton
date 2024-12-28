@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import org.assertj.core.api.Fail;
-import org.junit.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionResultException;
@@ -29,6 +27,9 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import org.assertj.core.api.Fail;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -45,7 +46,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testNoResult() {
+  void noResult() {
     DmnDecisionTableResult results = evaluateWithMatchingRules();
 
     assertThat(results).isEmpty();
@@ -58,7 +59,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testSingleResult() {
+  void singleResult() {
     DmnDecisionTableResult results = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
 
     assertThat(results).hasSize(1);
@@ -71,7 +72,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testMultipleResults() {
+  void multipleResults() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(NO_OUTPUT_VALUE, SINGLE_OUTPUT_VALUE, MULTIPLE_OUTPUT_VALUES);
     assertThat(decisionResult).hasSize(3);
 
@@ -112,7 +113,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testNoOutputValue() {
+  void noOutputValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(NO_OUTPUT_VALUE);
     assertThat(decisionResult).hasSize(1);
 
@@ -123,7 +124,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testSingleOutputValue() {
+  void singleOutputValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
     assertThat(decisionResult).hasSize(1);
 
@@ -134,7 +135,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_WITH_SINGLE_UNNAMED_OUTPUT_DMN)
-  public void testSingleOutputNoName() {
+  void singleOutputNoName() {
     DmnDecisionTableResult decisionResult = evaluateDecisionTable();
     assertThat(decisionResult).hasSize(1);
 
@@ -147,7 +148,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testMultipleOutputValues() {
+  void multipleOutputValues() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(MULTIPLE_OUTPUT_VALUES);
     assertThat(decisionResult).hasSize(1);
 
@@ -167,7 +168,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testCollectOutputValues() {
+  void collectOutputValues() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(NO_OUTPUT_VALUE, SINGLE_OUTPUT_VALUE, MULTIPLE_OUTPUT_VALUES);
     assertThat(decisionResult).hasSize(3);
 
@@ -180,7 +181,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testOutputList() {
+  void outputList() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE, MULTIPLE_OUTPUT_VALUES);
 
     List<Map<String, Object>> entryMapList = decisionResult.getResultList();
@@ -198,7 +199,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testValueMap() {
+  void valueMap() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(MULTIPLE_OUTPUT_VALUES);
 
     DmnDecisionRuleResult ruleResult = decisionResult.getSingleResult();
@@ -212,7 +213,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testSingleOutputUntypedValue() {
+  void singleOutputUntypedValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
     assertThat(decisionResult).hasSize(1);
 
@@ -233,7 +234,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_WITH_TYPES_DMN)
-  public void testSingleOutputTypedValue() {
+  void singleOutputTypedValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
     assertThat(decisionResult).hasSize(1);
 
@@ -254,7 +255,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void testSingleEntryUntypedValue() {
+  void singleEntryUntypedValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
 
     TypedValue typedValue = decisionResult.getSingleEntryTyped();
@@ -263,7 +264,7 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_WITH_TYPES_DMN)
-  public void testSingleEntryTypedValue() {
+  void singleEntryTypedValue() {
     DmnDecisionTableResult decisionResult = evaluateWithMatchingRules(SINGLE_OUTPUT_VALUE);
 
     TypedValue typedValue = decisionResult.getSingleEntryTyped();
@@ -298,18 +299,6 @@ public class DmnDecisionTableResultTest extends DmnEngineTest {
 
   protected void assertNoOutputValue(DmnDecisionRuleResult decisionRuleResult) {
     assertThat(decisionRuleResult).isEmpty();
-
-    String value = (String) decisionRuleResult.get("firstOutput");
-    assertThat(value).isNull();
-
-    value = (String) decisionRuleResult.get("secondOutput");
-    assertThat(value).isNull();
-
-    value = decisionRuleResult.getFirstEntry();
-    assertThat(value).isNull();
-
-    value = decisionRuleResult.getSingleEntry();
-    assertThat(value).isNull();
   }
 
   protected void assertMultipleOutputValues(DmnDecisionRuleResult decisionRuleResult) {

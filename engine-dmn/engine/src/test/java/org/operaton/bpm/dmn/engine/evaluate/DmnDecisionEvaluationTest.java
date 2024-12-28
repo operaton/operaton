@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.dmn.engine.evaluate;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.*;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DmnEvaluationException;
@@ -57,7 +57,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDrdDishDecisionExample() {
+  void shouldEvaluateDrdDishDecisionExample() {
 
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("Dish", DMN_DECISIONS_WITH_DISH_DECISON_EXAMPLE) , createVariables()
       .putValue("temperature", 20)
@@ -69,7 +69,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionWithRequiredDecisionByKey() {
+  void shouldEvaluateDecisionWithRequiredDecisionByKey() {
 
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_MULTI_LEVEL_MULTIPLE_INPUT_SINGLE_OUTPUT) , createVariables()
       .putValue("xx", "xx")
@@ -85,7 +85,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailDecisionEvaluationWithRequiredDecisionAndNoMatchingRuleInChildDecision() {
+  void shouldFailDecisionEvaluationWithRequiredDecisionAndNoMatchingRuleInChildDecision() {
 
     try {
       dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_MULTI_LEVEL_MULTIPLE_INPUT_SINGLE_OUTPUT) , createVariables()
@@ -102,7 +102,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailDecisionEvaluationWithRequiredDecisionAndMissingInput() {
+  void shouldFailDecisionEvaluationWithRequiredDecisionAndMissingInput() {
 
     try {
       dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_MULTI_LEVEL_MULTIPLE_INPUT_SINGLE_OUTPUT) , createVariables()
@@ -118,7 +118,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsWithRequiredDecisionAndMultipleMatchingRules() {
+  void shouldEvaluateDecisionsWithRequiredDecisionAndMultipleMatchingRules() {
 
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_MULTIPLE_MATCHING_RULES) , createVariables()
         .putValue("dd", 3)
@@ -131,7 +131,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsWithRequiredDecisionAndMultipleMatchingRulesMultipleOutputs() {
+  void shouldEvaluateDecisionsWithRequiredDecisionAndMultipleMatchingRulesMultipleOutputs() {
 
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_MULTIPLE_MATCHING_RULES_MULTIPLE_OUTPUTS) , createVariables()
         .putValue("dd", "dd")
@@ -145,7 +145,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionWithRequiredDecisionAndNoMatchingRuleInParentDecision() {
+  void shouldEvaluateDecisionWithRequiredDecisionAndNoMatchingRuleInParentDecision() {
 
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_NO_MATCHING_RULE_IN_PARENT) , createVariables()
       .putValue("dd", "dd")
@@ -158,7 +158,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsWithRequiredDecisionAndParentDecision() {
+  void shouldEvaluateDecisionsWithRequiredDecisionAndParentDecision() {
 
    DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_PARENT_DECISION) , createVariables()
      .putValue("ff", true)
@@ -171,7 +171,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateSharedDecisions() {
+  void shouldEvaluateSharedDecisions() {
 
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_SHARED_DECISIONS) , createVariables()
       .putValue("ff", "ff")
@@ -183,7 +183,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsWithDifferentInputAndOutputTypes() {
+  void shouldEvaluateDecisionsWithDifferentInputAndOutputTypes() {
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_DIFFERENT_INPUT_OUTPUT_TYPES) , createVariables()
       .putValue("dd", "5")
       .putValue("ee", 21)
@@ -202,7 +202,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsWithNoMatchingRuleAndDefaultRuleInParent() {
+  void shouldEvaluateDecisionsWithNoMatchingRuleAndDefaultRuleInParent() {
 
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_DIFFERENT_INPUT_OUTPUT_TYPES) , createVariables()
       .putValue("dd", "7")
@@ -215,7 +215,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsWithDefaultRuleInChildDecision() {
+  void shouldEvaluateDecisionsWithDefaultRuleInChildDecision() {
 
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_DEFAULT_RULE_IN_CHILD) , createVariables()
       .putValue("dd", "7") // There is no rule in the table matching the input 7
@@ -227,7 +227,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsWithUserInputForParentDecision() {
+  void shouldEvaluateDecisionsWithUserInputForParentDecision() {
 
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_DIFFERENT_INPUT_OUTPUT_TYPES) , createVariables()
       .putValue("bb", "bb")
@@ -242,7 +242,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsWithInputTypeMisMatchInChildDecision() {
+  void shouldEvaluateDecisionsWithInputTypeMisMatchInChildDecision() {
     try {
       dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_DIFFERENT_INPUT_OUTPUT_TYPES) , createVariables()
         .putValue("dd", "7")
@@ -256,7 +256,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsWithInputTypeMisMatchInParentDecision() {
+  void shouldEvaluateDecisionsWithInputTypeMisMatchInParentDecision() {
 
     try {
       dmnEngine.evaluateDecisionTable(parseDecisionFromFile("A", DMN_DECISIONS_WITH_INVALID_INPUT_TYPE) , createVariables()
@@ -270,7 +270,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionWithLiteralExpression() {
+  void shouldEvaluateDecisionWithLiteralExpression() {
     DmnDecisionResult result = dmnEngine.evaluateDecision(parseDecisionFromFile("decision", DMN_DECISION_WITH_LITERAL_EXPRESSION) ,
         createVariables()
           .putValue("a", 2)
@@ -284,7 +284,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionsDrgWithLiteralExpression() {
+  void shouldEvaluateDecisionsDrgWithLiteralExpression() {
     DmnDecisionTableResult result = dmnEngine.evaluateDecisionTable(parseDecisionFromFile("dish-decision", DMN_DRG_WITH_LITERAL_EXPRESSION) ,
         createVariables()
           .putValue("temperature", 31)
@@ -296,7 +296,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionWithBeanInvocationInLiteralExpression() {
+  void shouldEvaluateDecisionWithBeanInvocationInLiteralExpression() {
     DmnDecisionResult result = dmnEngine.evaluateDecision(parseDecisionFromFile("decision", DMN_DECISION_WITH_BEAN_INVOCATION_IN_LITERAL_EXPRESSION) ,
         createVariables()
           .putValue("x", 2)
@@ -308,7 +308,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionWithCollectHitPolicyReturningAList() {
+  void shouldEvaluateDecisionWithCollectHitPolicyReturningAList() {
     DmnDecisionRequirementsGraph graph = dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_COLLECT_DMN));
     initVariables();
     variables.putValue("dayType","WeekDay");
@@ -320,7 +320,7 @@ public class DmnDecisionEvaluationTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionWithRuleOrderHitPolicyReturningAList() {
+  void shouldEvaluateDecisionWithRuleOrderHitPolicyReturningAList() {
     DmnDecisionRequirementsGraph graph = dmnEngine.parseDecisionRequirementsGraph(IoUtil.fileAsStream(DRG_RULE_ORDER_DMN));
     initVariables();
     variables.putValue("dayType","WeekDay");

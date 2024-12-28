@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationEvent;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationListener;
@@ -36,20 +31,26 @@ import org.operaton.bpm.dmn.engine.impl.transform.DefaultDmnTransformer;
 import org.operaton.bpm.dmn.feel.impl.FeelEngineFactory;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineImpl;
-import org.junit.Before;
-import org.junit.Test;
 
-public class DefaultDmnEngineConfigurationApiTest {
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
+
+class DefaultDmnEngineConfigurationApiTest {
 
   protected DefaultDmnEngineConfiguration configuration;
 
-  @Before
-  public void initConfiguration() {
+  @BeforeEach
+  void initConfiguration() {
     configuration = new DefaultDmnEngineConfiguration();
   }
 
   @Test
-  public void shouldSetEngineMetricCollector() {
+  void shouldSetEngineMetricCollector() {
     configuration.setEngineMetricCollector(null);
     assertThat(configuration.getEngineMetricCollector())
       .isNull();
@@ -62,7 +63,7 @@ public class DefaultDmnEngineConfigurationApiTest {
     }
 
   @Test
-  public void shouldSetFluentEngineMetricCollector() {
+  void shouldSetFluentEngineMetricCollector() {
     configuration.engineMetricCollector(null);
     assertThat(configuration.getEngineMetricCollector())
       .isNull();
@@ -75,12 +76,12 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetCustomPreDecisionTableEvaluationListeners() {
+  void shouldSetCustomPreDecisionTableEvaluationListeners() {
     configuration.setCustomPreDecisionTableEvaluationListeners(null);
     assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
       .isNull();
 
-    configuration.setCustomPreDecisionTableEvaluationListeners(Collections.<DmnDecisionTableEvaluationListener>emptyList());
+    configuration.setCustomPreDecisionTableEvaluationListeners(emptyList());
     assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
       .isEmpty();
 
@@ -94,12 +95,12 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentCustomPreDecisionTableEvaluationListeners() {
+  void shouldSetFluentCustomPreDecisionTableEvaluationListeners() {
     configuration.customPreDecisionTableEvaluationListeners(null);
     assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
       .isNull();
 
-    configuration.customPreDecisionTableEvaluationListeners(Collections.<DmnDecisionTableEvaluationListener>emptyList());
+    configuration.customPreDecisionTableEvaluationListeners(emptyList());
     assertThat(configuration.getCustomPreDecisionTableEvaluationListeners())
       .isEmpty();
 
@@ -113,12 +114,12 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentCustomPreDecisionEvaluationListeners() {
+  void shouldSetFluentCustomPreDecisionEvaluationListeners() {
     configuration.customPreDecisionEvaluationListeners(null);
     assertThat(configuration.getCustomPreDecisionEvaluationListeners())
       .isNull();
 
-    configuration.customPreDecisionEvaluationListeners(Collections.<DmnDecisionEvaluationListener>emptyList());
+    configuration.customPreDecisionEvaluationListeners(emptyList());
     assertThat(configuration.getCustomPreDecisionEvaluationListeners())
       .isEmpty();
 
@@ -132,12 +133,12 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetCustomPostDecisionTableEvaluationListeners() {
+  void shouldSetCustomPostDecisionTableEvaluationListeners() {
     configuration.setCustomPostDecisionTableEvaluationListeners(null);
     assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
       .isNull();
 
-    configuration.setCustomPostDecisionTableEvaluationListeners(Collections.<DmnDecisionTableEvaluationListener>emptyList());
+    configuration.setCustomPostDecisionTableEvaluationListeners(emptyList());
     assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
       .isEmpty();
 
@@ -151,12 +152,12 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetCustomPreDecisionEvaluationListeners() {
+  void shouldSetCustomPreDecisionEvaluationListeners() {
     configuration.setCustomPreDecisionEvaluationListeners(null);
     assertThat(configuration.getCustomPreDecisionEvaluationListeners())
       .isNull();
 
-    configuration.setCustomPreDecisionEvaluationListeners(Collections.<DmnDecisionEvaluationListener>emptyList());
+    configuration.setCustomPreDecisionEvaluationListeners(emptyList());
     assertThat(configuration.getCustomPreDecisionEvaluationListeners())
       .isEmpty();
 
@@ -170,12 +171,12 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetCustomPostDecisionEvaluationListeners() {
+  void shouldSetCustomPostDecisionEvaluationListeners() {
     configuration.setCustomPostDecisionEvaluationListeners(null);
     assertThat(configuration.getCustomPostDecisionEvaluationListeners())
       .isNull();
 
-    configuration.setCustomPostDecisionEvaluationListeners(Collections.<DmnDecisionEvaluationListener>emptyList());
+    configuration.setCustomPostDecisionEvaluationListeners(emptyList());
     assertThat(configuration.getCustomPostDecisionEvaluationListeners())
       .isEmpty();
 
@@ -189,12 +190,12 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentCustomPostDecisionTableEvaluationListeners() {
+  void shouldSetFluentCustomPostDecisionTableEvaluationListeners() {
     configuration.customPostDecisionTableEvaluationListeners(null);
     assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
       .isNull();
 
-    configuration.customPostDecisionTableEvaluationListeners(Collections.<DmnDecisionTableEvaluationListener>emptyList());
+    configuration.customPostDecisionTableEvaluationListeners(emptyList());
     assertThat(configuration.getCustomPostDecisionTableEvaluationListeners())
       .isEmpty();
 
@@ -208,12 +209,12 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentCustomPostDecisionEvaluationListeners() {
+  void shouldSetFluentCustomPostDecisionEvaluationListeners() {
     configuration.customPostDecisionEvaluationListeners(null);
     assertThat(configuration.getCustomPostDecisionEvaluationListeners())
       .isNull();
 
-    configuration.customPostDecisionEvaluationListeners(Collections.<DmnDecisionEvaluationListener>emptyList());
+    configuration.customPostDecisionEvaluationListeners(emptyList());
     assertThat(configuration.getCustomPostDecisionEvaluationListeners())
       .isEmpty();
 
@@ -227,7 +228,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetScriptEngineResolver() {
+  void shouldSetScriptEngineResolver() {
     configuration.setScriptEngineResolver(null);
     assertThat(configuration.getScriptEngineResolver())
       .isNull();
@@ -240,7 +241,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentScriptEngineResolver() {
+  void shouldSetFluentScriptEngineResolver() {
     configuration.scriptEngineResolver(null);
     assertThat(configuration.getScriptEngineResolver())
       .isNull();
@@ -253,7 +254,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetElProvider() {
+  void shouldSetElProvider() {
     configuration.setElProvider(null);
     assertThat(configuration.getElProvider())
       .isNull();
@@ -266,7 +267,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentElProvider() {
+  void shouldSetFluentElProvider() {
     configuration.elProvider(null);
     assertThat(configuration.getElProvider())
       .isNull();
@@ -279,7 +280,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFeelEngineFactory() {
+  void shouldSetFeelEngineFactory() {
     configuration.setFeelEngineFactory(null);
     assertThat(configuration.getFeelEngineFactory())
       .isNull();
@@ -292,7 +293,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentFeelEngineFactory() {
+  void shouldSetFluentFeelEngineFactory() {
     configuration.feelEngineFactory(null);
     assertThat(configuration.getFeelEngineFactory())
       .isNull();
@@ -305,7 +306,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetDefaultInputExpressionExpressionLanguage() {
+  void shouldSetDefaultInputExpressionExpressionLanguage() {
     configuration.setDefaultInputExpressionExpressionLanguage(null);
     assertThat(configuration.getDefaultInputExpressionExpressionLanguage())
       .isNull();
@@ -316,7 +317,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentDefaultInputExpressionExpressionLanguage() {
+  void shouldSetFluentDefaultInputExpressionExpressionLanguage() {
     configuration.defaultInputExpressionExpressionLanguage(null);
     assertThat(configuration.getDefaultInputExpressionExpressionLanguage())
       .isNull();
@@ -327,7 +328,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetDefaultInputEntryExpressionLanguage() {
+  void shouldSetDefaultInputEntryExpressionLanguage() {
     configuration.setDefaultInputEntryExpressionLanguage(null);
     assertThat(configuration.getDefaultInputEntryExpressionLanguage())
       .isNull();
@@ -338,7 +339,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentDefaultInputEntryExpressionLanguage() {
+  void shouldSetFluentDefaultInputEntryExpressionLanguage() {
     configuration.defaultInputEntryExpressionLanguage(null);
     assertThat(configuration.getDefaultInputEntryExpressionLanguage())
       .isNull();
@@ -349,7 +350,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetDefaultOutputEntryExpressionLanguage() {
+  void shouldSetDefaultOutputEntryExpressionLanguage() {
     configuration.setDefaultOutputEntryExpressionLanguage(null);
     assertThat(configuration.getDefaultOutputEntryExpressionLanguage())
       .isNull();
@@ -360,7 +361,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentDefaultOutputEntryExpressionLanguage() {
+  void shouldSetFluentDefaultOutputEntryExpressionLanguage() {
     configuration.defaultOutputEntryExpressionLanguage(null);
     assertThat(configuration.getDefaultOutputEntryExpressionLanguage())
       .isNull();
@@ -371,7 +372,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetDefaultLiteralExpressionLanguage() {
+  void shouldSetDefaultLiteralExpressionLanguage() {
     configuration.setDefaultLiteralExpressionLanguage(null);
     assertThat(configuration.getDefaultLiteralExpressionLanguage())
       .isNull();
@@ -382,7 +383,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentDefaultLiteralExpressionLanguage() {
+  void shouldSetFluentDefaultLiteralExpressionLanguage() {
     configuration.defaultLiteralExpressionLanguage(null);
     assertThat(configuration.getDefaultLiteralExpressionLanguage())
       .isNull();
@@ -393,7 +394,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetTransformer() {
+  void shouldSetTransformer() {
     configuration.setTransformer(null);
     assertThat(configuration.getTransformer())
       .isNull();
@@ -406,7 +407,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldSetFluentTransformer() {
+  void shouldSetFluentTransformer() {
     configuration.transformer(null);
     assertThat(configuration.getTransformer())
       .isNull();
@@ -419,7 +420,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldBeFluentConfigurable() {
+  void shouldBeFluentConfigurable() {
     DefaultEngineMetricCollector metricCollector = new DefaultEngineMetricCollector();
     ArrayList<DmnDecisionTableEvaluationListener> preListeners = new ArrayList<>();
     preListeners.add(new DefaultEngineMetricCollector());
@@ -477,7 +478,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldInitDecisionTableEvaluationListeners() {
+  void shouldInitDecisionTableEvaluationListeners() {
     ArrayList<DmnDecisionTableEvaluationListener> preListeners = new ArrayList<>();
     preListeners.add(new DefaultEngineMetricCollector());
     ArrayList<DmnDecisionTableEvaluationListener> postListeners = new ArrayList<>();
@@ -497,7 +498,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldInitDecisionEvaluationListeners() {
+  void shouldInitDecisionEvaluationListeners() {
     ArrayList<DmnDecisionEvaluationListener> preListeners = new ArrayList<>();
     preListeners.add(new TestDecisionEvaluationListener());
     ArrayList<DmnDecisionEvaluationListener> postListeners = new ArrayList<>();
@@ -508,8 +509,7 @@ public class DefaultDmnEngineConfigurationApiTest {
       .customPostDecisionEvaluationListeners(postListeners)
       .buildEngine();
 
-    ArrayList<DmnDecisionEvaluationListener> expectedListeners = new ArrayList<>();
-    expectedListeners.addAll(preListeners);
+    ArrayList<DmnDecisionEvaluationListener> expectedListeners = new ArrayList<>(preListeners);
     expectedListeners.add((DefaultEngineMetricCollector) configuration.getEngineMetricCollector());
     expectedListeners.addAll(postListeners);
 
@@ -518,7 +518,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldInitFeelEngine() {
+  void shouldInitFeelEngine() {
     FeelEngineFactory feelEngineFactory = new FeelEngineFactoryImpl();
     configuration.setFeelEngineFactory(feelEngineFactory);
 
@@ -530,7 +530,7 @@ public class DefaultDmnEngineConfigurationApiTest {
   }
 
   @Test
-  public void shouldBuildDefaultDmnEngine() {
+  void shouldBuildDefaultDmnEngine() {
     DmnEngine engine = configuration.buildEngine();
     assertThat(engine)
       .isInstanceOf(DefaultDmnEngine.class)
@@ -547,6 +547,7 @@ public class DefaultDmnEngineConfigurationApiTest {
       this.evaluationEvent = evaluationEvent;
     }
 
+    @SuppressWarnings("unused")
     public DmnDecisionEvaluationEvent getEvaluationEvent() {
       return evaluationEvent;
     }

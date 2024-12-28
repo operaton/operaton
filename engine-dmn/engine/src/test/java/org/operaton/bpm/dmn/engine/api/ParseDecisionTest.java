@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
 import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
@@ -30,6 +28,9 @@ import org.operaton.commons.utils.IoUtil;
 
 import java.io.InputStream;
 import java.util.List;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
@@ -58,14 +59,14 @@ public class ParseDecisionTest extends DmnEngineTest {
   public static final String DMN13_NO_INPUT_DMN = "org/operaton/bpm/dmn/engine/api/dmn13/NoInput.dmn";
 
   @Test
-  public void shouldParseDecisionFromInputStream() {
+  void shouldParseDecisionFromInputStream() {
     InputStream inputStream = IoUtil.fileAsStream(NO_INPUT_DMN);
     decision = dmnEngine.parseDecision("decision", inputStream);
     assertDecision(decision, "decision");
   }
 
   @Test
-  public void shouldParseDecisionFromModelInstance() {
+  void shouldParseDecisionFromModelInstance() {
     InputStream inputStream = IoUtil.fileAsStream(NO_INPUT_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
 
@@ -74,7 +75,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfDecisionKeyIsUnknown() {
+  void shouldFailIfDecisionKeyIsUnknown() {
     try {
       parseDecisionFromFile("unknownDecision", NO_INPUT_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -88,7 +89,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfDecisionIdIsMissing() {
+  void shouldFailIfDecisionIdIsMissing() {
     try {
       parseDecisionsFromFile(MISSING_DECISION_ID_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -103,7 +104,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfInputIdIsMissing() {
+  void shouldFailIfInputIdIsMissing() {
     try {
       parseDecisionsFromFile(MISSING_INPUT_ID_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -118,7 +119,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfOutputIdIsMissing() {
+  void shouldFailIfOutputIdIsMissing() {
     try {
       parseDecisionsFromFile(MISSING_OUTPUT_ID_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -133,7 +134,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfRuleIdIsMissing() {
+  void shouldFailIfRuleIdIsMissing() {
     try {
       parseDecisionsFromFile(MISSING_RULE_ID_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -148,7 +149,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfCompoundOutputsNameIsMissing() {
+  void shouldFailIfCompoundOutputsNameIsMissing() {
     try {
       parseDecisionsFromFile(MISSING_COMPOUND_OUTPUT_NAME_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -163,7 +164,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfCompoundOutputsHaveDuplicateName() {
+  void shouldFailIfCompoundOutputsHaveDuplicateName() {
     try {
       parseDecisionsFromFile(DUPLICATE_COMPOUND_OUTPUT_NAME_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -179,7 +180,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfVariableIsMissing() {
+  void shouldFailIfVariableIsMissing() {
     try {
       parseDecisionsFromFile(MISSING_VARIABLE_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -194,7 +195,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfRequiredDecisionReferenceMissing() {
+  void shouldFailIfRequiredDecisionReferenceMissing() {
     try {
       parseDecisionsFromFile(MISSING_REQUIRED_DECISION_REFERENCE_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -208,7 +209,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfWrongRequiredDecisionReference() {
+  void shouldFailIfWrongRequiredDecisionReference() {
     try {
       parseDecisionsFromFile(WRONG_REQUIRED_DECISION_REFERENCE_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -222,14 +223,14 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldNotFailIfMissingRequiredDecisionAttribute() {
+  void shouldNotFailIfMissingRequiredDecisionAttribute() {
     List<DmnDecision> decisions = parseDecisionsFromFile(MISSING_REQUIRED_DECISION_ATTRIBUTE_DMN);
     assertThat(decisions).hasSize(1);
     assertThat(decisions.get(0).getRequiredDecisions()).isEmpty();
   }
 
   @Test
-  public void shouldFailIfNoInformationRequirementAttribute() {
+  void shouldFailIfNoInformationRequirementAttribute() {
     try {
       parseDecisionsFromFile(NO_INFORMATION_REQUIREMENT_ATTRIBUTE_DMN);
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -243,7 +244,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldParseDrgFromInputStream() {
+  void shouldParseDrgFromInputStream() {
     InputStream inputStream = IoUtil.fileAsStream(NO_INPUT_DMN);
     DmnDecisionRequirementsGraph drg = dmnEngine.parseDecisionRequirementsGraph(inputStream);
 
@@ -251,7 +252,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldParseDrgFromModelInstance() {
+  void shouldParseDrgFromModelInstance() {
     InputStream inputStream = IoUtil.fileAsStream(NO_INPUT_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
 
@@ -261,7 +262,7 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailIfDecisionDrgIdIsMissing() {
+  void shouldFailIfDecisionDrgIdIsMissing() {
     try {
       InputStream inputStream = IoUtil.fileAsStream(MISSING_DECISION_REQUIREMENT_DIAGRAM_ID_DMN);
       dmnEngine.parseDecisionRequirementsGraph(inputStream);
@@ -278,14 +279,14 @@ public class ParseDecisionTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldParseDecisionFromInputStream_Dmn12() {
+  void shouldParseDecisionFromInputStream_Dmn12() {
     InputStream inputStream = IoUtil.fileAsStream(DMN12_NO_INPUT_DMN);
     decision = dmnEngine.parseDecision("decision", inputStream);
     assertDecision(decision, "decision");
   }
 
   @Test
-  public void shouldParseDecisionFromInputStream_Dmn13() {
+  void shouldParseDecisionFromInputStream_Dmn13() {
     InputStream inputStream = IoUtil.fileAsStream(DMN13_NO_INPUT_DMN);
     decision = dmnEngine.parseDecision("decision", inputStream);
     assertDecision(decision, "decision");

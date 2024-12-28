@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.dmn.engine.feel;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.feel.helper.CustomFunctionProvider;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class CustomFunctionConfigTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = "custom_function.dmn")
-  public void shouldRegisterCustomFunctions() {
+  void shouldRegisterCustomFunctions() {
     // given
 
     // when

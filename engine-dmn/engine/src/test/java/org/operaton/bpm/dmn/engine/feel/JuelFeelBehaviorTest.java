@@ -16,13 +16,17 @@
  */
 package org.operaton.bpm.dmn.engine.feel;
 
-import java.util.Date;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.feel.impl.FeelException;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
-import org.junit.Test;
+
+import java.util.Date;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JuelFeelBehaviorTest extends FeelBehavior {
 
@@ -36,23 +40,23 @@ public class JuelFeelBehaviorTest extends FeelBehavior {
 
   /**
    * For expression languages, so-called context functions can be used [1].
-   *
+   * <p>
    * This test ensures that context functions cannot be called in the
    * juel as well as the scala-based implementation.
-   *
-   * [1] https://docs.operaton.org/manual/7.12/user-guide/process-engine/expression-language/#internal-context-functions
+   * </p>
+   * @see
+   * <a href="https://docs.operaton.org/manual/user-guide/process-engine/expression-language/#internal-context-functions">Internal Context Functions</a>
    */
   @Test
   @DecisionResource(resource = "context_function.dmn")
-  public void shouldFailOnInternalContextFunctions() {
-    // given
-    getVariables().putValue("myDate", new Date());
+  void shouldFailOnInternalContextFunctions() {
+    assertThrows(FeelException.class, () -> {
+      // given
+      getVariables().putValue("myDate", new Date());
 
-    // then
-    thrown.expect(FeelException.class);
-
-    // when
-    evaluateDecision().getSingleEntry();
+      // when
+      evaluateDecision().getSingleEntry();
+    });
   }
 
 }

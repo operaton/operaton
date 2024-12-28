@@ -22,7 +22,9 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionTableEvaluationEvent;
@@ -30,9 +32,6 @@ import org.operaton.bpm.dmn.engine.spi.DmnEngineMetricCollector;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.VariableMap;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
@@ -42,30 +41,30 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
   protected DmnEngineMetricCollector metricCollector;
 
-  @Before
-  public void getEngineMetricCollector() {
+  @BeforeEach
+  void getEngineMetricCollector() {
     metricCollector = dmnEngine.getConfiguration().getEngineMetricCollector();
   }
 
-  @Before
-  public void setTestVariables() {
+  @BeforeEach
+  void setTestVariables() {
     variables.putValue("status", "bronze");
     variables.putValue("sum", 100);
   }
 
-  @After
-  public void clearEngineMetrics() {
+  @AfterEach
+  void clearEngineMetrics() {
     metricCollector.clearExecutedDecisionElements();
   }
 
   @Test
-  public void testInitialExecutedDecisionElementsValue() {
+  void initialExecutedDecisionElementsValue() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
   }
 
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
-  public void testExecutedDecisionElementsOfDecisionTable() {
+  void executedDecisionElementsOfDecisionTable() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     dmnEngine.evaluateDecisionTable(decision, variables);
@@ -81,7 +80,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DISH_EXAMPLE_DMN, decisionKey = "Dish")
-  public void testExecutedDecisionElementsOfDrg() {
+  void executedDecisionElementsOfDrg() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     VariableMap variableMap = createVariables()
@@ -100,7 +99,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
   }
 
   @Test
-  public void testExecutedDecisionElementsOfDecisionLiteralExpression() {
+  void executedDecisionElementsOfDecisionLiteralExpression() {
     // evaluate one decision with a single literal expression
     dmnEngine.evaluateDecision(parseDecisionFromFile("c", DRG_WITH_LITERAL_EXPRESSIONS), createVariables());
     assertThat(metricCollector.getExecutedDecisionElements()).isEqualTo(1);
@@ -114,7 +113,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = EXAMPLE_DMN)
-  public void testClearExecutedDecisionElementsValue() {
+  void clearExecutedDecisionElementsValue() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     dmnEngine.evaluateDecisionTable(decision, variables);
@@ -126,7 +125,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DISH_EXAMPLE_DMN, decisionKey = "Dish")
-  public void testDrdDishDecisionExample() {
+  void drdDishDecisionExample() {
     assertThat(metricCollector.getExecutedDecisionElements()).isZero();
 
     dmnEngine.evaluateDecisionTable(decision, createVariables()
@@ -140,7 +139,7 @@ public class DmnEngineMetricCollectorTest extends DmnEngineTest {
   }
 
   @Test
-  public void testCustomEngineMetricCollector() {
+  void customEngineMetricCollector() {
     DmnEngineConfiguration configuration = DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
     DmnEngineMetricCollector mockMetricCollector = mock(DmnEngineMetricCollector.class);
     configuration.setEngineMetricCollector(mockMetricCollector);

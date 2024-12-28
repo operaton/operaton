@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 package org.operaton.bpm.dmn.engine.api;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -32,21 +31,21 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
 
   public static final String RESULT_TEST_DMN = "ReturnBlankTableOutputAsNull.dmn";
 
-  @Before
-  public void configure() {
+  @BeforeEach
+  void configure() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) dmnEngine.getConfiguration();
     configuration.setReturnBlankTableOutputAsNull(true);
   }
 
-  @After
-  public void reset() {
+  @AfterEach
+  void reset() {
     DefaultDmnEngineConfiguration configuration = (DefaultDmnEngineConfiguration) dmnEngine.getConfiguration();
     configuration.setReturnBlankTableOutputAsNull(false);
   }
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void shouldReturnNullWhenExpressionIsNull() {
+  void shouldReturnNullWhenExpressionIsNull() {
     // given
 
     // when
@@ -60,7 +59,7 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void shouldReturnNullWhenTextTagEmpty() {
+  void shouldReturnNullWhenTextTagEmpty() {
     // given
 
     // when
@@ -74,7 +73,7 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void shouldReturnEmpty() {
+  void shouldReturnEmpty() {
     // given
 
     // when
@@ -88,7 +87,7 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  public void shouldReturnNullWhenOutputEntryEmpty() {
+  void shouldReturnNullWhenOutputEntryEmpty() {
     // given
 
     // when

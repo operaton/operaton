@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.dmn.engine.el;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
-import org.junit.Test;
 
 public class FeelTest extends DmnEngineTest {
 
@@ -26,7 +26,7 @@ public class FeelTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = FEEL_TEST_DMN)
-  public void testStringVariable() {
+  void stringVariable() {
     variables.putValue("stringInput", "operaton");
     variables.putValue("numberInput", 13.37);
     variables.putValue("booleanInput", true);

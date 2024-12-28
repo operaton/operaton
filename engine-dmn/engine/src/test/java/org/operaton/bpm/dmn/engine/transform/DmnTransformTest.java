@@ -17,7 +17,7 @@
 package org.operaton.bpm.dmn.engine.transform;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
 import org.operaton.bpm.dmn.engine.impl.*;
@@ -51,7 +51,7 @@ public class DmnTransformTest extends DmnEngineTest {
   public static final String SELF_REQUIRED_DECISIONS_DMN = "org/operaton/bpm/dmn/engine/api/SelfRequiredDecision.dmn";
 
   @Test
-  public void shouldTransformDecisions() {
+  void shouldTransformDecisions() {
     List<DmnDecision> decisions = parseDecisionsFromFile(TRANSFORM_DMN);
     assertThat(decisions).hasSize(2);
 
@@ -69,7 +69,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldTransformDecisionTables() {
+  void shouldTransformDecisionTables() {
     List<DmnDecision> decisions = parseDecisionsFromFile(TRANSFORM_DMN);
     DmnDecision decision = decisions.get(0);
     assertThat(decision.isDecisionTable()).isTrue();
@@ -87,7 +87,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldTransformInputs() {
+  void shouldTransformInputs() {
     DmnDecisionImpl decisionEntity = (DmnDecisionImpl) parseDecisionFromFile("decision1", TRANSFORM_DMN);
     DmnDecisionTableImpl decisionTable = (DmnDecisionTableImpl) decisionEntity.getDecisionLogic();
     List<DmnDecisionTableInputImpl> inputs = decisionTable.getInputs();
@@ -125,7 +125,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldTransformOutputs() {
+  void shouldTransformOutputs() {
     DmnDecisionImpl decisionEntity = (DmnDecisionImpl) parseDecisionFromFile("decision1", TRANSFORM_DMN);
     DmnDecisionTableImpl decisionTable = (DmnDecisionTableImpl) decisionEntity.getDecisionLogic();
     List<DmnDecisionTableOutputImpl> outputs = decisionTable.getOutputs();
@@ -147,7 +147,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldTransformRules() {
+  void shouldTransformRules() {
     DmnDecisionImpl decisionEntity = (DmnDecisionImpl) parseDecisionFromFile("decision1", TRANSFORM_DMN);
     DmnDecisionTableImpl decisionTable = (DmnDecisionTableImpl) decisionEntity.getDecisionLogic();
     List<DmnDecisionTableRuleImpl> rules = decisionTable.getRules();
@@ -187,7 +187,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldTransformDecisionWithLiteralExpression() {
+  void shouldTransformDecisionWithLiteralExpression() {
     List<DmnDecision> decisions = parseDecisionsFromFile(DECISION_WITH_LITERAL_EXPRESSION_DMN);
     assertThat(decisions).hasSize(1);
 
@@ -218,7 +218,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldParseDecisionWithRequiredDecisions() {
+  void shouldParseDecisionWithRequiredDecisions() {
     InputStream inputStream = IoUtil.fileAsStream(REQUIRED_DECISIONS_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
 
@@ -241,7 +241,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldParseDecisionsWithRequiredDecisions() {
+  void shouldParseDecisionsWithRequiredDecisions() {
     InputStream inputStream = IoUtil.fileAsStream(REQUIRED_DECISIONS_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
 
@@ -271,7 +271,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldParseDecisionWithMultipleRequiredDecisions() {
+  void shouldParseDecisionWithMultipleRequiredDecisions() {
     InputStream inputStream = IoUtil.fileAsStream(MULTIPLE_REQUIRED_DECISIONS_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
     DmnDecision decision = dmnEngine.parseDecision("car",modelInstance);
@@ -286,7 +286,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldDetectLoopInParseDecisionWithRequiredDecision() {
+  void shouldDetectLoopInParseDecisionWithRequiredDecision() {
     InputStream inputStream = IoUtil.fileAsStream(LOOP_REQUIRED_DECISIONS_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
 
@@ -302,7 +302,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldDetectLoopInParseDecisionWithRequiredDecisionOfDifferentOrder() {
+  void shouldDetectLoopInParseDecisionWithRequiredDecisionOfDifferentOrder() {
     InputStream inputStream = IoUtil.fileAsStream(LOOP_REQUIRED_DECISIONS_DIFFERENT_ORDER_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
 
@@ -318,7 +318,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldDetectLoopInParseDecisionWithSelfRequiredDecision() {
+  void shouldDetectLoopInParseDecisionWithSelfRequiredDecision() {
     InputStream inputStream = IoUtil.fileAsStream(SELF_REQUIRED_DECISIONS_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
 
@@ -334,7 +334,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldNotDetectLoopInMultiLevelDecisionWithMultipleRequiredDecision() {
+  void shouldNotDetectLoopInMultiLevelDecisionWithMultipleRequiredDecision() {
     InputStream inputStream = IoUtil.fileAsStream(MULTI_LEVEL_MULTIPLE_REQUIRED_DECISIONS_DMN);
     DmnModelInstance modelInstance = Dmn.readModelFromStream(inputStream);
 
@@ -343,7 +343,7 @@ public class DmnTransformTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldTransformDecisionRequirementsGraph() {
+  void shouldTransformDecisionRequirementsGraph() {
     InputStream inputStream = IoUtil.fileAsStream(REQUIRED_DECISIONS_DMN);
     DmnDecisionRequirementsGraph drg = dmnEngine.parseDecisionRequirementsGraph(inputStream);
 

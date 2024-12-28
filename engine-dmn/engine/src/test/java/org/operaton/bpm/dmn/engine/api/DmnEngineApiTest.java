@@ -26,6 +26,7 @@ import static org.mockito.Mockito.mock;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionLogic;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
@@ -43,7 +44,6 @@ import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.commons.utils.IoUtil;
-import org.junit.Test;
 
 /**
  * Simple api test making sure the api methods are there and accept the right parameters
@@ -68,7 +68,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailParsingIfInputStreamIsNull() {
+  void shouldFailParsingIfInputStreamIsNull() {
     try{
       dmnEngine.parseDecisions((InputStream) null);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -89,7 +89,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailParsingIfInputStreamIsInvalid() {
+  void shouldFailParsingIfInputStreamIsInvalid() {
     try{
       dmnEngine.parseDecisions(createInvalidInputStream());
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -110,7 +110,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailParsingIfModelInstanceIsNull() {
+  void shouldFailParsingIfModelInstanceIsNull() {
     try{
       dmnEngine.parseDecisions((DmnModelInstance) null);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -131,7 +131,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailParsingIfDecisionKeyIsNull() {
+  void shouldFailParsingIfDecisionKeyIsNull() {
     try{
       dmnEngine.parseDecision(null, createInputStream());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -152,7 +152,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailParsingIfDecisionKeyIsUnknown() {
+  void shouldFailParsingIfDecisionKeyIsUnknown() {
     try{
       dmnEngine.parseDecision("unknown", createInputStream());
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -175,7 +175,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailParsingDrgIfInputStreamIsNull() {
+  void shouldFailParsingDrgIfInputStreamIsNull() {
     try{
       dmnEngine.parseDecisionRequirementsGraph((InputStream) null);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -187,7 +187,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailParsingDrgIfInputStreamIsInvalid() {
+  void shouldFailParsingDrgIfInputStreamIsInvalid() {
     try{
       dmnEngine.parseDecisionRequirementsGraph(createInvalidInputStream());
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -199,7 +199,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailParsingDrgIfModelInstanceIsNull() {
+  void shouldFailParsingDrgIfModelInstanceIsNull() {
     try{
       dmnEngine.parseDecisionRequirementsGraph((DmnModelInstance) null);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -211,7 +211,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingDecisionTableIfInputStreamIsNull() {
+  void shouldFailEvaluatingDecisionTableIfInputStreamIsNull() {
     try{
       dmnEngine.evaluateDecisionTable(DECISION_KEY, (InputStream) null, createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -232,7 +232,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingDecisionTableIfInputStreamIsInvalid() {
+  void shouldFailEvaluatingDecisionTableIfInputStreamIsInvalid() {
     try{
       dmnEngine.evaluateDecisionTable(DECISION_KEY, createInvalidInputStream(), createVariables());
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -253,7 +253,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingDecisionTableIfModelInstanceIsNull() {
+  void shouldFailEvaluatingDecisionTableIfModelInstanceIsNull() {
     try{
       dmnEngine.evaluateDecisionTable(DECISION_KEY, (DmnModelInstance) null, createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -274,7 +274,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingDecisionTableIfDecisionKeyIsNull() {
+  void shouldFailEvaluatingDecisionTableIfDecisionKeyIsNull() {
     try {
       dmnEngine.evaluateDecisionTable(null, createInputStream(), createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -309,7 +309,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingDecisionTableIfDecisionKeyIsUnknown() {
+  void shouldFailEvaluatingDecisionTableIfDecisionKeyIsUnknown() {
     try{
       dmnEngine.evaluateDecisionTable("unknown", createInputStream(), createVariables());
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -352,7 +352,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingDecisionTableIfDecisionIsNull() {
+  void shouldFailEvaluatingDecisionTableIfDecisionIsNull() {
     try {
       dmnEngine.evaluateDecisionTable(null, createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -372,7 +372,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldFailEvaluatingDecisionTableIfVariablesIsNull() {
+  void shouldFailEvaluatingDecisionTableIfVariablesIsNull() {
     try {
       dmnEngine.evaluateDecisionTable(DECISION_KEY, createInputStream(), (Map<String, Object>) null);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -400,7 +400,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldFailEvaluatingDecisionTableIfVariableContextIsNull() {
+  void shouldFailEvaluatingDecisionTableIfVariableContextIsNull() {
     try {
       dmnEngine.evaluateDecisionTable(DECISION_KEY, createInputStream(), (VariableContext) null);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -428,7 +428,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldFailEvaluatingDecisionTableWithEmptyVariableMap() {
+  void shouldFailEvaluatingDecisionTableWithEmptyVariableMap() {
     try {
       dmnEngine.evaluateDecisionTable(decision, createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -440,7 +440,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldFailEvaluatingDecisionTableWithEmptyVariableContext() {
+  void shouldFailEvaluatingDecisionTableWithEmptyVariableContext() {
     try {
       dmnEngine.evaluateDecisionTable(decision, emptyVariableContext());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -451,7 +451,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingIfInputStreamIsNull() {
+  void shouldFailEvaluatingIfInputStreamIsNull() {
     try{
       dmnEngine.evaluateDecision(DECISION_KEY, (InputStream) null, createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -472,7 +472,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingIfInputStreamIsInvalid() {
+  void shouldFailEvaluatingIfInputStreamIsInvalid() {
     try{
       dmnEngine.evaluateDecision(DECISION_KEY, createInvalidInputStream(), createVariables());
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -493,7 +493,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingIfModelInstanceIsNull() {
+  void shouldFailEvaluatingIfModelInstanceIsNull() {
     try{
       dmnEngine.evaluateDecision(DECISION_KEY, (DmnModelInstance) null, createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -514,7 +514,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingIfDecisionKeyIsNull() {
+  void shouldFailEvaluatingIfDecisionKeyIsNull() {
     try {
       dmnEngine.evaluateDecision(null, createInputStream(), createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -549,7 +549,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingIfDecisionKeyIsUnknown() {
+  void shouldFailEvaluatingIfDecisionKeyIsUnknown() {
     try{
       dmnEngine.evaluateDecision("unknown", createInputStream(), createVariables());
       failBecauseExceptionWasNotThrown(DmnTransformException.class);
@@ -592,7 +592,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingIfDecisionIsNull() {
+  void shouldFailEvaluatingIfDecisionIsNull() {
     try {
       dmnEngine.evaluateDecision(null, createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -612,7 +612,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldFailEvaluatingIfVariablesIsNull() {
+  void shouldFailEvaluatingIfVariablesIsNull() {
     try {
       dmnEngine.evaluateDecision(DECISION_KEY, createInputStream(), (Map<String, Object>) null);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -640,7 +640,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldFailEvaluatingIfVariableContextIsNull() {
+  void shouldFailEvaluatingIfVariableContextIsNull() {
     try {
       dmnEngine.evaluateDecision(DECISION_KEY, createInputStream(), (VariableContext) null);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -668,7 +668,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldFailEvaluatingDecisionWithEmptyVariableMap() {
+  void shouldFailEvaluatingDecisionWithEmptyVariableMap() {
     try {
       dmnEngine.evaluateDecision(decision, createVariables());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -680,7 +680,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldFailEvaluatingDecisionWithEmptyVariableContext() {
+  void shouldFailEvaluatingDecisionWithEmptyVariableContext() {
     try {
       dmnEngine.evaluateDecision(decision, emptyVariableContext());
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -692,7 +692,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DECISION_LITERAL_EXPRESSION_DMN)
-  public void shouldFailEvaluatingDecisionTableIfDecisionIsNotATable() {
+  void shouldFailEvaluatingDecisionTableIfDecisionIsNotATable() {
     try {
       dmnEngine.evaluateDecisionTable(decision, variables);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -703,7 +703,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingDecisionTableIfDecisionTypeIsNotSupported() {
+  void shouldFailEvaluatingDecisionTableIfDecisionTypeIsNotSupported() {
     try {
       dmnEngine.evaluateDecisionTable(mock(DmnDecision.class), variables);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -714,7 +714,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingDecisionIfDecisionTypeIsNotSupported() {
+  void shouldFailEvaluatingDecisionIfDecisionTypeIsNotSupported() {
     try {
       dmnEngine.evaluateDecision(mock(DmnDecision.class), variables);
       failBecauseExceptionWasNotThrown(IllegalArgumentException.class);
@@ -725,7 +725,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldFailEvaluatingDecisionIfDecisionLogicIsNotSupported() {
+  void shouldFailEvaluatingDecisionIfDecisionLogicIsNotSupported() {
     DmnDecisionImpl decision = new DmnDecisionImpl();
     decision.setKey("decision");
     decision.setDecisionLogic(mock(DmnDecisionLogic.class));
@@ -741,7 +741,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldEvaluateDecisionTableWithVariableMap() {
+  void shouldEvaluateDecisionTableWithVariableMap() {
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(decision, createVariables().putValue("input", INPUT_VALUE));
     assertThat(results)
       .hasSingleResult()
@@ -750,7 +750,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldEvaluateDecisionTableWithVariableContext() {
+  void shouldEvaluateDecisionTableWithVariableContext() {
     DmnDecisionTableResult results = dmnEngine.evaluateDecisionTable(decision, createVariables().putValue("input", INPUT_VALUE).asVariableContext());
     assertThat(results)
       .hasSingleResult()
@@ -759,7 +759,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldEvaluateDecisionWithVariableMap() {
+  void shouldEvaluateDecisionWithVariableMap() {
     DmnDecisionResult results = dmnEngine.evaluateDecision(decision, createVariables().putValue("input", INPUT_VALUE));
 
     assertThat((String) results.getSingleEntry())
@@ -769,7 +769,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = ONE_RULE_DMN)
-  public void shouldEvaluateDecisionWithVariableContext() {
+  void shouldEvaluateDecisionWithVariableContext() {
     DmnDecisionResult results = dmnEngine.evaluateDecision(decision, createVariables().putValue("input", INPUT_VALUE).asVariableContext());
 
     assertThat((String) results.getSingleEntry())
@@ -779,7 +779,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = DECISION_LITERAL_EXPRESSION_DMN)
-  public void shouldEvaluateDecisionLiteralExpression() {
+  void shouldEvaluateDecisionLiteralExpression() {
     DmnDecisionResult results = dmnEngine.evaluateDecision(decision, createVariables().putValue("input", INPUT_VALUE));
 
     assertThat((String) results.getSingleEntry())
@@ -788,7 +788,7 @@ public class DmnEngineApiTest extends DmnEngineTest {
   }
 
   @Test
-  public void shouldEvaluateDecisionOfDrg() {
+  void shouldEvaluateDecisionOfDrg() {
     DmnDecisionRequirementsGraph drd = dmnEngine.parseDecisionRequirementsGraph(createInputStream());
     decision = drd.getDecision("decision");
 

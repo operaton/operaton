@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.dmn.engine.hitpolicy;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.dmn.engine.test.asserts.DmnDecisionTableResultAssert;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.Test;
 
 /**
  * Tests the type of the result value of an evaluated decision table with
@@ -37,7 +37,7 @@ public class CollectResultValueTypeTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = COLLECT_SUM)
-  public void collectSumHitPolicy() {
+  void collectSumHitPolicy() {
     assertThatDecisionTableResult(10, 20, 50)
       .hasSingleResult()
       .hasSingleEntryTyped(Variables.integerValue(80));
@@ -53,7 +53,7 @@ public class CollectResultValueTypeTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = COLLECT_MIN)
-  public void collectMinHitPolicy() {
+  void collectMinHitPolicy() {
     assertThatDecisionTableResult(10, 20, 50)
       .hasSingleResult()
       .hasSingleEntryTyped(Variables.integerValue(10));
@@ -69,7 +69,7 @@ public class CollectResultValueTypeTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = COLLECT_MAX)
-  public void collectMaxHitPolicy() {
+  void collectMaxHitPolicy() {
     assertThatDecisionTableResult(10, 20, 50)
       .hasSingleResult()
       .hasSingleEntryTyped(Variables.integerValue(50));
@@ -85,7 +85,7 @@ public class CollectResultValueTypeTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = COLLECT_COUNT)
-  public void collectCountHitPolicy() {
+  void collectCountHitPolicy() {
     assertThatDecisionTableResult(10, 20, 50)
       .hasSingleResult()
       .hasSingleEntryTyped(Variables.integerValue(3));

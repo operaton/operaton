@@ -15,14 +15,19 @@
  * limitations under the License.
  */
 package org.operaton.bpm.dmn.engine.api;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 import org.operaton.bpm.engine.variable.Variables;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -43,13 +48,20 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
     configuration.setReturnBlankTableOutputAsNull(false);
   }
 
-  @Test
+  @ParameterizedTest(name = "{index} => {0}")
+  @CsvSource({
+    "'Expression is null', 'A'",
+    "'Text tag is empty', 'B'",
+    "'Output entry is empty', 'D'"
+  })
   @DecisionResource(resource = RESULT_TEST_DMN)
-  void shouldReturnNullWhenExpressionIsNull() {
+  @DisplayName("Test cases for null outputs")
+  @SuppressWarnings("unused")
+  void shouldReturnNullForVariousInputs(String testName, String name) {
     // given
 
     // when
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision, Variables.putValue("name", "A"));
+    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision, Variables.putValue("name", name));
 
     // then
     assertThat(decisionResult).hasSize(1);
@@ -59,20 +71,7 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
 
   @Test
   @DecisionResource(resource = RESULT_TEST_DMN)
-  void shouldReturnNullWhenTextTagEmpty() {
-    // given
-
-    // when
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision, Variables.putValue("name", "B"));
-
-    // then
-    assertThat(decisionResult).hasSize(1);
-    assertThat(decisionResult.getSingleResult().getEntryMap())
-      .containsOnly(entry("output", null));
-  }
-
-  @Test
-  @DecisionResource(resource = RESULT_TEST_DMN)
+  @DisplayName("Test case for empty output")
   void shouldReturnEmpty() {
     // given
 
@@ -84,19 +83,4 @@ public class ReturnBlankTableOutputAsNullTest extends DmnEngineTest {
     assertThat(decisionResult.getSingleResult().getEntryMap())
       .containsOnly(entry("output", ""));
   }
-
-  @Test
-  @DecisionResource(resource = RESULT_TEST_DMN)
-  void shouldReturnNullWhenOutputEntryEmpty() {
-    // given
-
-    // when
-    DmnDecisionResult decisionResult = dmnEngine.evaluateDecision(decision, Variables.putValue("name", "D"));
-
-    // then
-    assertThat(decisionResult).hasSize(1);
-    assertThat(decisionResult.getSingleResult().getEntryMap())
-      .containsOnly(entry("output", null));
-  }
-
 }

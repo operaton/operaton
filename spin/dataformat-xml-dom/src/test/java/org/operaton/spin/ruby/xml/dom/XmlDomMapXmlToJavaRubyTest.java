@@ -23,5 +23,5 @@ import org.operaton.spin.xml.dom.XmlDomMapXmlToJavaScriptTest;
  * @author Stefan Hentschel.
  */
 @ScriptEngine("ruby")
-public class XmlDomMapXmlToJavaRubyTest extends XmlDomMapXmlToJavaScriptTest {
+class XmlDomMapXmlToJavaRubyTest extends XmlDomMapXmlToJavaScriptTest {
 }

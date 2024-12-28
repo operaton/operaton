@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeCreateScriptTest;
  *
  */
 @ScriptEngine("graal.js")
-public class JsonTreeCreateJavascriptTest extends JsonTreeCreateScriptTest {
+class JsonTreeCreateJavascriptTest extends JsonTreeCreateScriptTest {
 
 }

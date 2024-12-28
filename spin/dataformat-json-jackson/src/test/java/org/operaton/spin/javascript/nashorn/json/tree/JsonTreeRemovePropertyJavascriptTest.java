@@ -20,6 +20,6 @@ import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.json.tree.JsonTreeRemovePropertyScriptTest;
 
 @ScriptEngine("nashorn")
-public class JsonTreeRemovePropertyJavascriptTest extends JsonTreeRemovePropertyScriptTest {
+class JsonTreeRemovePropertyJavascriptTest extends JsonTreeRemovePropertyScriptTest {
 
 }

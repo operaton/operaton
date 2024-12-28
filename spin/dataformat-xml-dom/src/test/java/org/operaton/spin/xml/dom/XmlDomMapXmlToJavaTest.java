@@ -16,36 +16,32 @@
  */
 package org.operaton.spin.xml.dom;
 
-import static org.assertj.core.api.Assertions.fail;
+import org.operaton.spin.xml.SpinXmlDataFormatException;
+import org.operaton.spin.xml.mapping.Order;
 import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.assertIsExampleOrder;
 
-import org.operaton.spin.xml.SpinXmlDataFormatException;
-import org.operaton.spin.xml.mapping.Order;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class XmlDomMapXmlToJavaTest {
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+class XmlDomMapXmlToJavaTest {
 
   @Test
-  public void shouldMapXmlObjectToJavaObject() {
+  void shouldMapXmlObjectToJavaObject() {
     Order order = XML(EXAMPLE_VALIDATION_XML).mapTo(Order.class);
     assertIsExampleOrder(order);
   }
 
   @Test
-  public void shouldMapByCanonicalString() {
+  void shouldMapByCanonicalString() {
     Order order = XML(EXAMPLE_VALIDATION_XML).mapTo(Order.class.getCanonicalName());
     assertIsExampleOrder(order);
   }
 
   @Test
-  public void shouldFailForMalformedTypeString() {
-    try {
-      XML(EXAMPLE_VALIDATION_XML).mapTo("rubbish");
-      fail("Expected SpinXmlDataFormatException");
-    } catch (SpinXmlDataFormatException e) {
-      // happy path
-    }
+  void shouldFailForMalformedTypeString() {
+    assertThrows(SpinXmlDataFormatException.class, () -> XML(EXAMPLE_VALIDATION_XML).mapTo("rubbish"));
   }
 }

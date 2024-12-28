@@ -20,5 +20,5 @@ import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.json.tree.JsonTreeMapJsonToJavaScriptTest;
 
 @ScriptEngine("nashorn")
-public class JsonTreeMapJsonToJavaJavascriptTest extends JsonTreeMapJsonToJavaScriptTest {
+class JsonTreeMapJsonToJavaJavascriptTest extends JsonTreeMapJsonToJavaScriptTest {
 }

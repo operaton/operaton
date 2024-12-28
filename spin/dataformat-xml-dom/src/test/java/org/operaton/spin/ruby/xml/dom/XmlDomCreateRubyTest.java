@@ -24,6 +24,6 @@ import org.operaton.spin.xml.dom.XmlDomCreateScriptTest;
  *
  */
 @ScriptEngine("ruby")
-public class XmlDomCreateRubyTest extends XmlDomCreateScriptTest {
+class XmlDomCreateRubyTest extends XmlDomCreateScriptTest {
 
 }

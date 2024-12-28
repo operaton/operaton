@@ -16,15 +16,17 @@
  */
 package org.operaton.spin.xml.dom;
 
-import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML_FILE_NAME;
-import static org.operaton.spin.xml.XmlTestConstants.assertIsExampleOrder;
-
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.xml.SpinXmlDataFormatException;
 import org.operaton.spin.xml.mapping.Order;
-import org.junit.Test;
+import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML_FILE_NAME;
+import static org.operaton.spin.xml.XmlTestConstants.assertIsExampleOrder;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Stefan Hentschel.
@@ -39,11 +41,11 @@ public abstract class XmlDomMapXmlToJavaScriptTest extends ScriptTest {
     assertIsExampleOrder(order);
   }
 
-  @Test(expected = SpinXmlDataFormatException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_VALIDATION_XML_FILE_NAME)
-  public void shouldFailMappingMalformedTypeString() throws Throwable {
-    failingWithException();
+  public void shouldFailMappingMalformedTypeString() {
+    assertThrows(SpinXmlDataFormatException.class, this::failingWithException);
   }
 
 }

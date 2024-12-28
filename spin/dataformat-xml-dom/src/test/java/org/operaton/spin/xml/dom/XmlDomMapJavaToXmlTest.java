@@ -16,21 +16,22 @@
  */
 package org.operaton.spin.xml.dom;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Fail.fail;
+import org.operaton.spin.xml.XmlTestUtil;
+import org.operaton.spin.xml.mapping.NonXmlRootElementType;
+import org.operaton.spin.xml.mapping.Order;
 import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.createExampleOrder;
 
-import org.operaton.spin.xml.XmlTestUtil;
-import org.operaton.spin.xml.mapping.NonXmlRootElementType;
-import org.operaton.spin.xml.mapping.Order;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class XmlDomMapJavaToXmlTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+
+class XmlDomMapJavaToXmlTest {
 
   @Test
-  public void shouldMapJavaToXml() {
+  void shouldMapJavaToXml() {
     Order order = createExampleOrder();
     String orderAsString = XML(order).toString();
     //In EXAMPLE_VALIDATION_XML, expected date is hardcoded in CET timezone, ignoring it so that it passes when ran in
@@ -41,7 +42,7 @@ public class XmlDomMapJavaToXmlTest {
   }
 
   @Test
-  public void shouldMapNonXmlRootElementToXml() {
+  void shouldMapNonXmlRootElementToXml() {
     NonXmlRootElementType nonXmlRootElementType = new NonXmlRootElementType();
     nonXmlRootElementType.setProperty("propValue");
 
@@ -53,12 +54,7 @@ public class XmlDomMapJavaToXmlTest {
 
   @Test
   @SuppressWarnings("unused")
-  public void shouldFailWithNull() {
-    try {
-      String s = XML(null).toString();
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected!
-    }
+  void shouldFailWithNull() {
+    assertThatIllegalArgumentException().isThrownBy(() -> XML(null));
   }
 }

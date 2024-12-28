@@ -16,10 +16,6 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
-
 import org.operaton.spin.Spin;
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
@@ -27,7 +23,13 @@ import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPropertyException;
-import org.junit.Test;
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Thorben Lindhauer
@@ -134,46 +136,42 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
 
   /**
    * One for array
-   * @throws Throwable
    */
-  @Test(expected = SpinJsonDataFormatException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailToCheckObject() throws Throwable{
-    failingWithException();
+  public void shouldFailToCheckObject(){
+    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
   }
 
   /**
    * One for child node
-   * @throws Throwable
    */
-  @Test(expected = SpinJsonDataFormatException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailToCheckObject2() throws Throwable{
-    failingWithException();
+  public void shouldFailToCheckObject2(){
+    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
   }
 
   /**
    * One for not existent property
-   * @throws Throwable
    */
-  @Test(expected = SpinJsonPropertyException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailToReadProperty() throws Throwable{
-    failingWithException();
+  public void shouldFailToReadProperty(){
+    assertThrows(SpinJsonPropertyException.class, this::failingWithException);
   }
 
   /**
    * One for property argument equals null
-   * @throws Throwable
    */
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailToReadProperty2() throws Throwable{
-    failingWithException();
+  public void shouldFailToReadProperty2(){
+    assertThrows(IllegalArgumentException.class, this::failingWithException);
   }
 
 
@@ -205,25 +203,25 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
     assertThat(value3).isEqualTo(32000.45);
   }
 
-  @Test(expected = SpinJsonDataFormatException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailToReadNumberValue() throws Throwable {
-    failingWithException();
+  public void shouldFailToReadNumberValue() {
+    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
   }
 
-  @Test(expected = SpinJsonDataFormatException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailToReadBooleanValue() throws Throwable {
-    failingWithException();
+  public void shouldFailToReadBooleanValue() {
+    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
   }
 
-  @Test(expected = SpinJsonDataFormatException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailToReadStringValue() throws Throwable {
-    failingWithException();
+  public void shouldFailToReadStringValue() {
+    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
   }
 
   @Test
@@ -294,11 +292,11 @@ public abstract class JsonTreeReadPropertyScriptTest extends ScriptTest {
     assertThat(value3).isEqualTo("orderDetails");
   }
 
-  @Test(expected = SpinJsonDataFormatException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailToReadObjectInNonArray() throws Throwable{
-    failingWithException();
+  public void shouldFailToReadObjectInNonArray(){
+    assertThrows(SpinJsonDataFormatException.class, this::failingWithException);
   }
 
   @Test

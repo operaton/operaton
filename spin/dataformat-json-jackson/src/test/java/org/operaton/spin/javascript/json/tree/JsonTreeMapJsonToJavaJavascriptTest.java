@@ -23,5 +23,5 @@ import org.operaton.spin.json.tree.JsonTreeMapJsonToJavaScriptTest;
  * @author Sebastian Menski
  */
 @ScriptEngine("graal.js")
-public class JsonTreeMapJsonToJavaJavascriptTest extends JsonTreeMapJsonToJavaScriptTest {
+class JsonTreeMapJsonToJavaJavascriptTest extends JsonTreeMapJsonToJavaScriptTest {
 }

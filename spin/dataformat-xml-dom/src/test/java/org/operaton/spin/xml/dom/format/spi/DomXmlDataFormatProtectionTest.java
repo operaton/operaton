@@ -20,51 +20,48 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
 import org.operaton.spin.xml.JdkUtil;
 import org.operaton.spin.xml.SpinXmlDataFormatException;
-import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
-public class DomXmlDataFormatProtectionTest {
+class DomXmlDataFormatProtectionTest {
 
   protected static DomXmlDataFormat format;
 
-  @BeforeClass
-  public static void setUpMocks() {
+  @BeforeAll
+  static void setUpMocks() {
     format = (DomXmlDataFormat) DataFormats.xml();
   }
 
   @Test
-  public void shouldThrowExceptionForTooManyAttributes() {
+  void shouldThrowExceptionForTooManyAttributes() {
     // IBM JDKs do not check on attribute number limits, skip the test there
-    Assume.assumeFalse(JdkUtil.runsOnIbmJDK());
+    Assumptions.assumeFalse(JdkUtil.runsOnIbmJDK());
 
     // given
     String testXml = "org/operaton/spin/xml/dom/format/spi/FeatureSecureProcessing.xml";
     InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);
 
     // when
-    assertThatThrownBy(() -> {
-      format.getReader().readInput(new InputStreamReader(testXmlAsStream));
-    })
+    assertThatThrownBy(() ->
+      format.getReader().readInput(new InputStreamReader(testXmlAsStream)))
         // then
         .isInstanceOf(SpinXmlDataFormatException.class);
   }
 
   @Test
-  public void shouldThrowExceptionForDoctype() {
+  void shouldThrowExceptionForDoctype() {
     // given
     String testXml = "org/operaton/spin/xml/dom/format/spi/XxeProcessing.xml";
     InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);
 
     // when
-    assertThatThrownBy(() -> {
-      format.getReader().readInput(new InputStreamReader(testXmlAsStream));
-    })
+    assertThatThrownBy(() ->
+      format.getReader().readInput(new InputStreamReader(testXmlAsStream)))
         // then
         .isInstanceOf(SpinXmlDataFormatException.class)
         .hasMessageContaining("SPIN/DOM-XML-01009 Unable to parse input into DOM document")

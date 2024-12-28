@@ -24,6 +24,5 @@ import org.operaton.spin.xml.dom.XmlDomCreateScriptTest;
  *
  */
 @ScriptEngine("python")
-public class XmlDomCreatePythonTest extends XmlDomCreateScriptTest {
-
+class XmlDomCreatePythonTest extends XmlDomCreateScriptTest {
 }

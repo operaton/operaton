@@ -16,21 +16,6 @@
  */
 package org.operaton.spin.json;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.DataFormats.json;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.operaton.spin.json.mapping.CustomerList;
 import org.operaton.spin.json.mapping.GenericCustomerList;
 import org.operaton.spin.json.mapping.Order;
@@ -41,12 +26,23 @@ import org.operaton.spin.json.mapping.dmn.DmnDecisionResultImpl;
 import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.spi.DataFormatReader;
 import org.operaton.spin.spi.DataFormatWriter;
-import org.junit.Test;
+import static org.operaton.spin.DataFormats.json;
 
-public class JsonSerializationTest {
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class JsonSerializationTest {
 
   @Test
-  public void testNotGenericList() throws Exception {
+  void notGenericList() throws Exception {
     CustomerList<RegularCustomer> customers = new CustomerList<>();
     customers.add(new RegularCustomer("someCustomer", 5));
 
@@ -65,7 +61,7 @@ public class JsonSerializationTest {
   }
 
   @Test
-  public void testOrder() throws Exception {
+  void order() throws Exception {
     Order order = JsonTestConstants.createExampleOrder();
 
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(order);
@@ -82,7 +78,7 @@ public class JsonSerializationTest {
   }
 
   @Test
-  public void testPlainTypeArray() throws Exception {
+  void plainTypeArray() throws Exception {
     int[] array = new int[]{5, 10};
 
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(array);
@@ -100,7 +96,7 @@ public class JsonSerializationTest {
   }
 
   @Test
-  public void testGenericList() throws Exception {
+  void genericList() throws Exception {
     GenericCustomerList<RegularCustomer> customers = new GenericCustomerList<>();
     customers.add(new RegularCustomer("someCustomer", 5));
 
@@ -120,7 +116,7 @@ public class JsonSerializationTest {
   }
 
   @Test
-  public void serializeAndDeserializeGenericCollection() throws Exception {
+  void serializeAndDeserializeGenericCollection() throws Exception {
     List<DmnDecisionResultEntries> ruleResults = new ArrayList<>();
     final DmnDecisionResultEntriesImpl result1 = new DmnDecisionResultEntriesImpl();
     result1.putValue("key1", "value1");
@@ -139,12 +135,11 @@ public class JsonSerializationTest {
     assertThat(bytes).isNotEmpty();
 
     //deserialization is not working for this kind of class
-
   }
 
   @Test
-  public void deserializeHashMap() throws Exception {
-    final byte[] bytes = new String("{\"foo\": \"bar\"}").getBytes();
+  void deserializeHashMap() throws Exception {
+    final byte[] bytes = "{\"foo\": \"bar\"}".getBytes();
     assertThat(bytes).isNotEmpty();
 
     final Object o = deserializeFromByteArray(bytes, "java.util.HashMap<java.lang.String, java.lang.String>");
@@ -159,17 +154,11 @@ public class JsonSerializationTest {
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     OutputStreamWriter outWriter = new OutputStreamWriter(out);
-    BufferedWriter bufferedWriter = new BufferedWriter(outWriter);
 
-    try {
+    try (out; outWriter; BufferedWriter bufferedWriter = new BufferedWriter(outWriter)) {
       Object mappedObject = mapper.mapJavaToInternal(deserializedObject);
       writer.writeToWriter(bufferedWriter, mappedObject);
       return out.toByteArray();
-    }
-    finally {
-      out.close();
-      outWriter.close();
-      bufferedWriter.close();
     }
   }
 
@@ -179,15 +168,10 @@ public class JsonSerializationTest {
 
     ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
     InputStreamReader inReader = new InputStreamReader(bais);
-    BufferedReader bufferedReader = new BufferedReader(inReader);
 
-    try {
+    try (bais; inReader; BufferedReader bufferedReader = new BufferedReader(inReader)) {
       Object mappedObject = reader.readInput(bufferedReader);
       return doDeserialization(mapper, mappedObject, objectTypeName);
-    } finally {
-      bais.close();
-      inReader.close();
-      bufferedReader.close();
     }
   }
 

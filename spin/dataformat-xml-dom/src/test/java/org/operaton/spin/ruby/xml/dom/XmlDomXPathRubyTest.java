@@ -23,5 +23,5 @@ import org.operaton.spin.xml.dom.XmlDomXPathScriptTest;
  * @author Sebastian Menski
  */
 @ScriptEngine("ruby")
-public class XmlDomXPathRubyTest extends XmlDomXPathScriptTest {
+class XmlDomXPathRubyTest extends XmlDomXPathScriptTest {
 }

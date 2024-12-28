@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeMapObjectToJsonScriptTest;
  *
  */
 @ScriptEngine("python")
-public class JsonTreeMapObjectToJsonPythonTest extends JsonTreeMapObjectToJsonScriptTest {
+class JsonTreeMapObjectToJsonPythonTest extends JsonTreeMapObjectToJsonScriptTest {
 
 }

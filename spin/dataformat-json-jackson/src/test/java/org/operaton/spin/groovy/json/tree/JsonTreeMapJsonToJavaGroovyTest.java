@@ -23,5 +23,5 @@ import org.operaton.spin.json.tree.JsonTreeMapJsonToJavaScriptTest;
  * @author Sebastian Menski
  */
 @ScriptEngine("groovy")
-public class JsonTreeMapJsonToJavaGroovyTest extends JsonTreeMapJsonToJavaScriptTest {
+class JsonTreeMapJsonToJavaGroovyTest extends JsonTreeMapJsonToJavaScriptTest {
 }

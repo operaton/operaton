@@ -16,23 +16,24 @@
  */
 package org.operaton.spin;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Thorben Lindhauer
  *
  */
-public class DataFormatsTest {
+class DataFormatsTest {
 
   @Test
-  public void testCustomClassLoaderForInitialization() {
+  void customClassLoaderForInitialization() {
     // when initializing data formats with a class loader
     DataFormats dataFormats = new DataFormats();
     dataFormats.registerDataFormats(DataFormats.class.getClassLoader());
 
     // then the operation was successful
-    Assert.assertEquals(0, dataFormats.getAllAvailableDataFormats().size());
+    assertThat(dataFormats.getAllAvailableDataFormats()).isEmpty();
 
     // note: this checks the existence of API that allows to initialize
     // data formats with a custom class loader; the functionality is actually tested

@@ -18,33 +18,31 @@ package org.operaton.spin.impl.xml.dom.format;
 
 import org.operaton.spin.DeserializationTypeValidator;
 import org.operaton.spin.SpinRuntimeException;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class DomXmlDeserializationValidationTest {
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class DomXmlDeserializationValidationTest {
 
   protected DeserializationTypeValidator validator;
   protected static DomXmlDataFormat format;
 
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
-
-  @BeforeClass
-  public static void setUpMocks() {
+  @BeforeAll
+  static void setUpMocks() {
     format = new DomXmlDataFormat("test");
   }
 
-  @AfterClass
-  public static void tearDown() {
+  @AfterAll
+  static void tearDown() {
     format = null;
   }
 
   @Test
-  public void shouldValidateNothingForPrimitiveClass() {
+  void shouldValidateNothingForPrimitiveClass() {
     // given
     validator = createValidatorMock(true);
 
@@ -52,11 +50,11 @@ public class DomXmlDeserializationValidationTest {
     format.getMapper().validateType(int.class, validator);
 
     // then
-    Mockito.verifyZeroInteractions(validator);
+    Mockito.verifyNoInteractions(validator);
   }
 
   @Test
-  public void shouldValidateBaseTypeOnlyForBaseClass() {
+  void shouldValidateBaseTypeOnlyForBaseClass() {
     // given
     validator = createValidatorMock(true);
 
@@ -69,7 +67,7 @@ public class DomXmlDeserializationValidationTest {
   }
 
   @Test
-  public void shouldValidateBaseTypeOnlyForComplexClass() {
+  void shouldValidateBaseTypeOnlyForComplexClass() {
     // given
     validator = createValidatorMock(true);
 
@@ -77,12 +75,13 @@ public class DomXmlDeserializationValidationTest {
     format.getMapper().validateType(Complex.class, validator);
 
     // then
-    Mockito.verify(validator).validate("org.operaton.spin.impl.xml.dom.format.DomXmlDeserializationValidationTest$Complex");
+    Mockito.verify(validator)
+        .validate("org.operaton.spin.impl.xml.dom.format.DomXmlDeserializationValidationTest$Complex");
     Mockito.verifyNoMoreInteractions(validator);
   }
 
   @Test
-  public void shouldValidateContentTypeOnlyForArrayClass() {
+  void shouldValidateContentTypeOnlyForArrayClass() {
     // given
     validator = createValidatorMock(true);
 
@@ -95,42 +94,34 @@ public class DomXmlDeserializationValidationTest {
   }
 
   @Test
-  public void shouldFailForSimpleClass() {
+  void shouldFailForSimpleClass() {
     // given
     validator = createValidatorMock(false);
-
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("'java.lang.String'");
-
     // when
-    format.getMapper().validateType(String.class, validator);
+    assertThatThrownBy(() -> format.getMapper().validateType(String.class, validator))
+        .isInstanceOf(SpinRuntimeException.class)
+        .hasMessageContaining("'java.lang.String'");
   }
 
   @Test
-  public void shouldFailForComplexClass() {
+  void shouldFailForComplexClass() {
     // given
     validator = createValidatorMock(false);
-
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("'org.operaton.spin.impl.xml.dom.format.DomXmlDeserializationValidationTest$Complex'");
-
     // when
-    format.getMapper().validateType(Complex.class, validator);
+    assertThatThrownBy(() -> format.getMapper().validateType(Complex.class, validator))
+        .isInstanceOf(SpinRuntimeException.class)
+        .hasMessageContaining("'org.operaton.spin.impl.xml.dom.format.DomXmlDeserializationValidationTest$Complex'");
   }
 
   @Test
-  public void shouldFailForArrayClass() {
+  void shouldFailForArrayClass() {
     // given
     validator = createValidatorMock(false);
 
-    // then
-    thrown.expect(SpinRuntimeException.class);
-    thrown.expectMessage("'java.lang.Integer'");
-
-    // when
-    format.getMapper().validateType(Integer[].class, validator);
+    // when, then
+    assertThatThrownBy(() -> format.getMapper().validateType(Integer[].class, validator))
+        .isInstanceOf(SpinRuntimeException.class)
+        .hasMessageContaining("'java.lang.Integer'");
   }
 
   public static class Complex {

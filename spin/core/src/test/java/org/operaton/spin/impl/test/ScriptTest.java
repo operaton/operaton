@@ -16,11 +16,11 @@
  */
 package org.operaton.spin.impl.test;
 
+import org.operaton.spin.SpinScriptException;
+
 import java.util.Map;
 
-import org.operaton.spin.SpinScriptException;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 /**
  * Base script test which loads an engine and provides the
@@ -30,11 +30,11 @@ import org.junit.Rule;
  */
 public abstract class ScriptTest {
 
-  @ClassRule
+  @RegisterExtension
   public static ScriptEngineRule scriptEngine = new ScriptEngineRule();
 
-  @Rule
-  public ScriptRule script = new ScriptRule();
+  @RegisterExtension
+  public ScriptExtension script = new ScriptExtension();
 
   protected void failingWithException() throws Throwable {
     try {

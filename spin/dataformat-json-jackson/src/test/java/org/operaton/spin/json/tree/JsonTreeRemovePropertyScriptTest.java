@@ -16,14 +16,16 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
-
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.impl.test.ScriptVariable;
 import org.operaton.spin.json.SpinJsonPropertyException;
-import org.junit.Test;
+import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Thorben Lindhauer
@@ -51,18 +53,18 @@ public abstract class JsonTreeRemovePropertyScriptTest extends ScriptTest {
     assertThat(value2).isFalse();
   }
 
-  @Test(expected = SpinJsonPropertyException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailWhileRemovingPropertyByName() throws Throwable{
-    failingWithException();
+  public void shouldFailWhileRemovingPropertyByName(){
+    assertThrows(SpinJsonPropertyException.class, this::failingWithException);
   }
 
-  @Test(expected = SpinJsonPropertyException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailWhileRemovingPropertyByList() throws Throwable{
-    failingWithException();
+  public void shouldFailWhileRemovingPropertyByList(){
+    assertThrows(SpinJsonPropertyException.class, this::failingWithException);
   }
 
 }

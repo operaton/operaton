@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeRemovePropertyScriptTest;
  *
  */
 @ScriptEngine("graal.js")
-public class JsonTreeRemovePropertyJavascriptTest extends JsonTreeRemovePropertyScriptTest {
+class JsonTreeRemovePropertyJavascriptTest extends JsonTreeRemovePropertyScriptTest {
 
 }

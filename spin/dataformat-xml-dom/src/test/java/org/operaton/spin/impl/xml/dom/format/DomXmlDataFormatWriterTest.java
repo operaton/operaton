@@ -16,7 +16,6 @@
  */
 package org.operaton.spin.impl.xml.dom.format;
 
-import org.junit.Test;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.SpinFactory;
 import org.operaton.spin.spi.DataFormat;
@@ -25,37 +24,34 @@ import org.operaton.spin.xml.SpinXmlElement;
 
 import java.io.*;
 
+import org.junit.jupiter.api.Test;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test xml transformation in DomXmlDataFormatWriter
  */
-public class DomXmlDataFormatWriterTest {
+class DomXmlDataFormatWriterTest {
 
-  private final String newLine = System.getProperty("line.separator");
+  private final String newLine = System.lineSeparator();
   private final String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order><product>Milk</product><product>Coffee</product><product> </product></order>";
 
-  private final String formattedXmlIbmJDK = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order>" + newLine
-      + "  <product>Milk</product>" + newLine
-      + "  <product>Coffee</product>" + newLine
-      + "  <product/>" + newLine
-      + "</order>";
+  private final String formattedXmlIbmJDK =
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order>" + newLine + "  <product>Milk</product>" + newLine
+          + "  <product>Coffee</product>" + newLine + "  <product/>" + newLine + "</order>";
 
   private final String formattedXml = formattedXmlIbmJDK + newLine;
 
-  private final String formattedXmlWithWhitespaceInProductIbmJDK = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order>" + newLine
-      + "  <product>Milk</product>" + newLine
-      + "  <product>Coffee</product>" + newLine
-      + "  <product> </product>" + newLine
-      + "</order>";
+  private final String formattedXmlWithWhitespaceInProductIbmJDK =
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order>" + newLine + "  <product>Milk</product>" + newLine
+          + "  <product>Coffee</product>" + newLine + "  <product> </product>" + newLine + "</order>";
 
   private final String formattedXmlWithWhitespaceInProduct = formattedXmlWithWhitespaceInProductIbmJDK + newLine;
 
-
   // this is what execution.setVariable("test", spinXml); does
   // see https://github.com/operaton/operaton/blob/main/engine-plugins/spin-plugin/src/main/java/org/operaton/spin/plugin/impl/SpinValueSerializer.java
-  private byte[] serializeValue(SpinXmlElement spinXml) throws UnsupportedEncodingException {
+  private byte[] serializeValue(SpinXmlElement spinXml) {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     OutputStreamWriter outWriter = new OutputStreamWriter(out, UTF_8);
     BufferedWriter bufferedWriter = new BufferedWriter(outWriter);
@@ -64,8 +60,7 @@ public class DomXmlDataFormatWriterTest {
     return out.toByteArray();
   }
 
-  public SpinXmlElement deserializeValue(byte[] serialized, DataFormat<SpinXmlElement> dataFormat)
-      throws UnsupportedEncodingException {
+  public SpinXmlElement deserializeValue(byte[] serialized, DataFormat<SpinXmlElement> dataFormat) {
     ByteArrayInputStream bais = new ByteArrayInputStream(serialized);
     InputStreamReader inReader = new InputStreamReader(bais, UTF_8);
     BufferedReader bufferedReader = new BufferedReader(inReader);
@@ -94,7 +89,7 @@ public class DomXmlDataFormatWriterTest {
    * standard behaviour: an unformatted XML will be formatted stored into a SPIN variable and also returned formatted.
    */
   @Test
-  public void testStandardFormatter() throws Exception {
+  void standardFormatter() {
     // given
     DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
 
@@ -120,7 +115,7 @@ public class DomXmlDataFormatWriterTest {
    * returned formatted but no additional blank lines are inserted into the XML.
    */
   @Test
-  public void testAlreadyFormattedXml() throws Exception {
+  void alreadyFormattedXml() {
     // given
     DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
 
@@ -145,10 +140,10 @@ public class DomXmlDataFormatWriterTest {
    * new feature provided by CAM-13699 - pretty print feature disabled. The XML is stored and returned as is.
    */
   @Test
-  public void testDisabledPrettyPrintUnformatted() throws Exception {
+  void disabledPrettyPrintUnformatted() {
     // given
-    DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
-    ((DomXmlDataFormat) dataFormat).setPrettyPrint(false);
+    DomXmlDataFormat dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
+    dataFormat.setPrettyPrint(false);
 
     SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(xml, dataFormat);
 
@@ -171,17 +166,15 @@ public class DomXmlDataFormatWriterTest {
    * new feature provided by CAM-13699 - pretty print feature disabled. The XML is stored and returned as is.
    */
   @Test
-  public void testDisabledPrettyPrintFormatted() throws Exception {
+  void disabledPrettyPrintFormatted() {
 
     // given
-    String expectedXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order>" + newLine
-        + "  <product>Milk</product>" + newLine
-        + "  <product>Coffee</product>" + newLine
-        + "  <product> </product>" + newLine
-        + "</order>";
+    String expectedXml =
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?><order>" + newLine + "  <product>Milk</product>" + newLine
+            + "  <product>Coffee</product>" + newLine + "  <product> </product>" + newLine + "</order>";
 
-    DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
-    ((DomXmlDataFormat) dataFormat).setPrettyPrint(false);
+    DomXmlDataFormat dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
+    dataFormat.setPrettyPrint(false);
 
     SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(formattedXmlWithWhitespaceInProduct, dataFormat);
 
@@ -201,16 +194,16 @@ public class DomXmlDataFormatWriterTest {
   }
 
   /**
-   * new feature provided by https://github.com/camunda/camunda-bpm-platform/issues/3633: custom formatting
+   * new feature provided by <a href="https://github.com/camunda/camunda-bpm-platform/issues/3633">Camunda issue#3633</a>: custom formatting
    * configuration to preserve-space.
    */
   @Test
-  public void testCustomStripSpaceXSL() throws Exception {
-    final DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
+  void customStripSpaceXSL() throws Exception {
+    final DomXmlDataFormat dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
 
-    try (final InputStream inputStream = DomXmlDataFormatWriterTest.class.getClassLoader()
+    try (InputStream inputStream = DomXmlDataFormatWriterTest.class.getClassLoader()
         .getResourceAsStream("org/operaton/spin/strip-space-preserve-space.xsl")) {
-      ((DomXmlDataFormat) dataFormat).setFormattingConfiguration(inputStream);
+      dataFormat.setFormattingConfiguration(inputStream);
     }
 
     final SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(this.xml, dataFormat);

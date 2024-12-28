@@ -18,49 +18,38 @@ package org.operaton.spin.javascript.nashorn.json.tree;
 
 import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 @ScriptEngine("nashorn")
-public class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScriptTest {
+class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScriptTest {
 
-  /**
-   * Ignored since javascript implementation changed
-   * see: https://app.camunda.com/jira/browse/CAM-3612
-   */
   @Test
-  @Ignore
+  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
   @Override
-  public void shouldFailInsertAtWithWrongObject() throws Throwable {
+  public void shouldFailInsertAtWithWrongObject() {
+    super.shouldFailInsertAtWithWrongObject();
   }
 
-  /**
-   * Ignored since javascript implementation changed
-   * see: https://app.camunda.com/jira/browse/CAM-3612
-   */
   @Test
-  @Ignore
+  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
   @Override
-  public void shouldFailInsertWrongObjectAfterSearchObject() throws Throwable {
+  public void shouldFailInsertWrongObjectAfterSearchObject() {
+    super.shouldFailInsertWrongObjectAfterSearchObject();
   }
 
-  /**
-   * Ignored since javascript implementation changed
-   * see: https://app.camunda.com/jira/browse/CAM-3612
-   */
   @Test
-  @Ignore
+  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
   @Override
-  public void shouldFailAppendWrongNode() throws Throwable {
+  public void shouldFailAppendWrongNode() {
+    super.shouldFailAppendWrongNode();
   }
 
-  /**
-   * Ignored since javascript implementation changed
-   * see: https://app.camunda.com/jira/browse/CAM-3612
-   */
   @Test
-  @Ignore
+  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
   @Override
-  public void shouldFailInsertWrongObjectBeforeSearchObject() throws Throwable {
+  public void shouldFailInsertWrongObjectBeforeSearchObject() {
+    super.shouldFailInsertWrongObjectBeforeSearchObject();
   }
 }

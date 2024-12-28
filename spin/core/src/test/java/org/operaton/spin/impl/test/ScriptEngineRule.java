@@ -16,25 +16,23 @@
  */
 package org.operaton.spin.impl.test;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-
-import org.junit.ClassRule;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * A jUnit4 {@link ClassRule} to define create a {@link ScriptEngine}
- * base on {@literal @}{@link ScriptEngineRule} annotation.
+ * A JUnit 5 extension to define and create a {@link ScriptEngine}
+ * based on {@literal @}{@link ScriptEngineRule} annotation.
  *
- * @author Sebastian Menski
+ * Author: Sebastian Menski
  */
-public class ScriptEngineRule implements TestRule {
+public class ScriptEngineRule implements BeforeAllCallback, TestInstancePostProcessor {
 
   private static final SpinTestLogger LOG = SpinTestLogger.TEST_LOGGER;
 
@@ -42,36 +40,28 @@ public class ScriptEngineRule implements TestRule {
 
   private static final String GRAAL_JS_SCRIPT_ENGINE_NAME = "Graal.js";
 
-  private javax.script.ScriptEngine scriptEngine;
-
+  private ScriptEngine scriptEngine;
 
   @Override
-  public Statement apply(final Statement base, final Description description) {
-    return new Statement() {
-      @Override
-      public void evaluate() throws Throwable {
-        scriptEngine = createScriptEngine(description);
-        if (scriptEngine != null) {
-          LOG.scriptEngineFoundForLanguage(scriptEngine.getFactory().getLanguageName());
-        }
-        base.evaluate();
-      }
-    };
+  public void beforeAll(ExtensionContext context) throws Exception {
+    scriptEngine = createScriptEngine(context);
+    if (scriptEngine != null) {
+      LOG.scriptEngineFoundForLanguage(scriptEngine.getFactory().getLanguageName());
+    }
   }
 
   /**
-   * Create script engine from {@literal @}{@link org.operaton.spin.impl.test.ScriptEngine} Annotation. The created
-   * script engines will be cached to speedup subsequent creations.
+   * Create script engine from {@literal @}{@link org.operaton.spin.impl.test.ScriptEngine} annotation. The created
+   * script engines will be cached to speed up subsequent creations.
    *
-   * @param description the {@link Description} of the test method
-   * @return the script engine or null if no suitable found
+   * @param context the {@link ExtensionContext} of the test method
+   * @return the script engine or null if none suitable is found
    */
-  private ScriptEngine createScriptEngine(Description description) {
-    org.operaton.spin.impl.test.ScriptEngine annotation = description.getTestClass().getAnnotation(org.operaton.spin.impl.test.ScriptEngine.class);
+  private ScriptEngine createScriptEngine(ExtensionContext context) {
+    org.operaton.spin.impl.test.ScriptEngine annotation = context.getRequiredTestClass().getAnnotation(org.operaton.spin.impl.test.ScriptEngine.class);
     if (annotation == null) {
       return null;
-    }
-    else {
+    } else {
       String language = annotation.value();
       if (!cachedEngines.containsKey(language)) {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName(language);
@@ -88,7 +78,7 @@ public class ScriptEngineRule implements TestRule {
   }
 
   /**
-   * Get the script engine defined by the {@literal @}{@link org.operaton.spin.impl.test.ScriptEngine} Annotation
+   * Get the script engine defined by the {@literal @}{@link org.operaton.spin.impl.test.ScriptEngine} annotation.
    *
    * @return the script engine or null if no script engine was found
    */
@@ -97,8 +87,17 @@ public class ScriptEngineRule implements TestRule {
   }
 
   protected void configureGraalJsScriptEngine(ScriptEngine scriptEngine) {
-    // make sure GraalVM JS can provide access the host and can lookup classes
+    // Ensure GraalVM JS provides access to the host and can look up classes.
     scriptEngine.getContext().setAttribute("polyglot.js.allowHostAccess", true, ScriptContext.ENGINE_SCOPE);
     scriptEngine.getContext().setAttribute("polyglot.js.allowHostClassLookup", true, ScriptContext.ENGINE_SCOPE);
   }
+
+  @Override
+  public void postProcessTestInstance(Object testInstance, ExtensionContext context) throws Exception {
+    // Attach the script engine to test instance if necessary.
+    if (testInstance instanceof ScriptEngineRule) {
+      ((ScriptEngineRule) testInstance).scriptEngine = this.scriptEngine;
+    }
+  }
 }
+

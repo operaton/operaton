@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeJsonPathScriptTest;
  *
  */
 @ScriptEngine("ruby")
-public class JsonTreeJsonPathRubyTest extends JsonTreeJsonPathScriptTest {
+class JsonTreeJsonPathRubyTest extends JsonTreeJsonPathScriptTest {
 
 }

@@ -17,8 +17,8 @@
 package org.operaton.spin.impl.test.script;
 
 import org.operaton.spin.impl.test.ScriptEngine;
-import org.operaton.spin.impl.test.ScriptRuleTest;
+import org.operaton.spin.impl.test.ScriptExtensionTest;
 
 @ScriptEngine("nashorn")
-public class JavascriptScriptRuleNashornTest extends ScriptRuleTest {
+public class JavascriptScriptExtensionNashornTest extends ScriptExtensionTest {
 }

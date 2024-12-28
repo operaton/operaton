@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
  *
  */
 @ScriptEngine("ruby")
-public class JsonTreeEditListPropertyRubyTest extends JsonTreeEditListPropertyScriptTest {
+class JsonTreeEditListPropertyRubyTest extends JsonTreeEditListPropertyScriptTest {
 
 }

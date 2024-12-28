@@ -24,8 +24,6 @@
 
   <properties>
     <json-junit-fluent.version>1.1.6</json-junit-fluent.version>
-    <powermock.version>2.0.9</powermock.version>
-    <mockito.version>3.3.3</mockito.version>
     <spin.version.old>7.22.0</spin.version.old>
 
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
@@ -56,24 +54,6 @@
         <version>${version.jackson}</version>
         <scope>import</scope>
         <type>pom</type>
-      </dependency>
-
-      <dependency>
-        <groupId>org.powermock</groupId>
-        <artifactId>powermock-module-junit4</artifactId>
-        <version>${powermock.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>${mockito.version}</version>
-      </dependency>      
-
-      <dependency>
-        <groupId>org.powermock</groupId>
-        <artifactId>powermock-api-mockito2</artifactId>
-        <version>${powermock.version}</version>
       </dependency>
 
       <dependency>
@@ -126,6 +106,19 @@
 
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
   <build>
     <pluginManagement>

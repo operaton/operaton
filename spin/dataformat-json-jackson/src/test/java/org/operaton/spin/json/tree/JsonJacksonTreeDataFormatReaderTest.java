@@ -16,7 +16,9 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.spin.DataFormats;
+import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
+import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormatReader;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_COLLECTION;
 
@@ -24,27 +26,26 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.operaton.spin.DataFormats;
-import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
-import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormatReader;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class JsonJacksonTreeDataFormatReaderTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+class JsonJacksonTreeDataFormatReaderTest {
 
   private JacksonJsonDataFormatReader reader;
   private Reader inputReader;
 
   private static final int REWINDING_LIMIT = 256;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     reader = new JacksonJsonDataFormatReader(new JacksonJsonDataFormat(DataFormats.JSON_DATAFORMAT_NAME));
   }
 
   @Test
-  public void shouldMatchJsonInput() throws IOException {
+  void shouldMatchJsonInput() throws IOException {
     inputReader = stringToReader(EXAMPLE_JSON);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();
@@ -54,7 +55,7 @@ public class JsonJacksonTreeDataFormatReaderTest {
   }
 
   @Test
-  public void shouldMatchJsonInputWithWhitespace() throws IOException {
+  void shouldMatchJsonInputWithWhitespace() throws IOException {
     inputReader = stringToReader("   " + EXAMPLE_JSON);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isTrue();
     inputReader.close();
@@ -64,7 +65,7 @@ public class JsonJacksonTreeDataFormatReaderTest {
   }
 
   @Test
-  public void shouldNotMatchInvalidJson() {
+  void shouldNotMatchInvalidJson() {
     inputReader = stringToReader("prefix " + EXAMPLE_JSON);
     assertThat(reader.canRead(inputReader, REWINDING_LIMIT)).isFalse();
   }
@@ -73,8 +74,8 @@ public class JsonJacksonTreeDataFormatReaderTest {
     return new StringReader(input);
   }
 
-  @After
-  public void tearDown() throws IOException {
+  @AfterEach
+  void tearDown() throws IOException {
     if (inputReader != null) {
       inputReader.close();
     }

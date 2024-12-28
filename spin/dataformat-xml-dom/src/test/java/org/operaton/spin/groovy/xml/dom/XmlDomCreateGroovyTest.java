@@ -24,6 +24,6 @@ import org.operaton.spin.xml.dom.XmlDomCreateScriptTest;
  *
  */
 @ScriptEngine("groovy")
-public class XmlDomCreateGroovyTest extends XmlDomCreateScriptTest {
+class XmlDomCreateGroovyTest extends XmlDomCreateScriptTest {
 
 }

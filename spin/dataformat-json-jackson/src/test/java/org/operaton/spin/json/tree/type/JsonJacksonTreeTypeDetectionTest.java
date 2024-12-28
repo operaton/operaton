@@ -16,27 +16,23 @@
  */
 package org.operaton.spin.json.tree.type;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.operaton.spin.DataFormats.json;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.operaton.spin.impl.json.jackson.format.MapJacksonJsonTypeDetector;
 import org.operaton.spin.impl.json.jackson.format.SetJacksonJsonTypeDetector;
 import org.operaton.spin.json.mapping.Customer;
 import org.operaton.spin.json.mapping.RegularCustomer;
-import org.junit.Before;
-import org.junit.Test;
+import static org.operaton.spin.DataFormats.json;
 
-public class JsonJacksonTreeTypeDetectionTest {
+import java.util.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+class JsonJacksonTreeTypeDetectionTest {
 
   public JacksonJsonDataFormat dataFormatWithSetTypeDetector =
       new JacksonJsonDataFormat(DataFormats.JSON_DATAFORMAT_NAME);
@@ -44,72 +40,102 @@ public class JsonJacksonTreeTypeDetectionTest {
   public JacksonJsonDataFormat dataFormatWithMapTypeDetector =
       new JacksonJsonDataFormat(DataFormats.JSON_DATAFORMAT_NAME);
 
-  @Before
-  public void configure() {
+  @BeforeEach
+  void configure() {
     dataFormatWithSetTypeDetector.addTypeDetector(SetJacksonJsonTypeDetector.INSTANCE);
     dataFormatWithMapTypeDetector.addTypeDetector(MapJacksonJsonTypeDetector.INSTANCE);
   }
 
   @Test
-  public void shouldDetectTypeFromObject() {
+  void shouldDetectTypeFromObject() {
+    // given
     RegularCustomer customer = new RegularCustomer();
+
+    // when
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(customer);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("org.operaton.spin.json.mapping.RegularCustomer");
   }
 
   @Test
-  public void shouldDetectListType() {
+  void shouldDetectListType() {
+    // given
     List<Customer> customers = new ArrayList<>();
     customers.add(new RegularCustomer());
 
+    // when
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(customers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.ArrayList<org.operaton.spin.json.mapping.RegularCustomer>");
   }
 
   @Test
-  public void shouldDetectListTypeFromEmptyList() {
+  void shouldDetectListTypeFromEmptyList() {
+    // given
     List<RegularCustomer> customers = new ArrayList<>();
 
+    // when
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(customers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.ArrayList<java.lang.Object>");
   }
 
   @Test
-  public void shouldDetectSetType() {
+  void shouldDetectSetType() {
+    // given
     Set<Customer> customers = new HashSet<>();
     customers.add(new RegularCustomer());
 
+    // when
     String canonicalTypeString = dataFormatWithSetTypeDetector.getCanonicalTypeName(customers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.HashSet<org.operaton.spin.json.mapping.RegularCustomer>");
   }
 
   @Test
-  public void shouldDetectSetTypeFromEmptySet() {
+  void shouldDetectSetTypeFromEmptySet() {
+    // given
     Set<RegularCustomer> customers = new HashSet<>();
 
+    // when
     String canonicalTypeString = dataFormatWithSetTypeDetector.getCanonicalTypeName(customers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.HashSet<java.lang.Object>");
   }
 
   @Test
-  public void shouldDetectMapType() {
+  void shouldDetectMapType() {
+    // given
     Map<String, Customer> customers = new HashMap<>();
     customers.put("foo", new RegularCustomer());
 
+    // when
     String canonicalTypeString = dataFormatWithMapTypeDetector.getCanonicalTypeName(customers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.Map<java.lang.String,org.operaton.spin.json.mapping.RegularCustomer>");
   }
 
   @Test
-  public void shouldDetectMapTypeFromEmptyMap() {
+  void shouldDetectMapTypeFromEmptyMap() {
+    // given
     Map<Integer, RegularCustomer> customers = new HashMap<>();
 
+    // when
     String canonicalTypeString = dataFormatWithMapTypeDetector.getCanonicalTypeName(customers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.HashMap<java.lang.Object,java.lang.Object>");
   }
 
   @Test
-  public void shouldHandleNullParameter() {
+  void shouldHandleNullParameter() {
+    // given, when, then
     try {
       json().getMapper().getCanonicalTypeName(null);
       fail("Expected IllegalArgumentException");
@@ -119,106 +145,143 @@ public class JsonJacksonTreeTypeDetectionTest {
   }
 
   @Test
-  public void shouldHandleListOfLists() {
+  void shouldHandleListOfLists() {
+    // given
     List<List<RegularCustomer>> nestedCustomers = new ArrayList<>();
     List<RegularCustomer> customers = new ArrayList<>();
     customers.add(new RegularCustomer());
     nestedCustomers.add(customers);
 
+    // when
     String canonicalTypeString = json().getMapper().getCanonicalTypeName(nestedCustomers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.ArrayList<java.util.ArrayList<org.operaton.spin.json.mapping.RegularCustomer>>");
   }
 
   @Test
-  public void shouldHandleSetOfSets() {
+  void shouldHandleSetOfSets() {
+    // given
     Set<Set<RegularCustomer>> nestedCustomers = new HashSet<>();
     Set<RegularCustomer> customers = new HashSet<>();
     customers.add(new RegularCustomer());
     nestedCustomers.add(customers);
 
-    String canonicalTypeString =
-        dataFormatWithSetTypeDetector.getCanonicalTypeName(nestedCustomers);
+    // when
+    String canonicalTypeString = dataFormatWithSetTypeDetector.getCanonicalTypeName(nestedCustomers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.HashSet<java.util.HashSet<org.operaton.spin.json.mapping.RegularCustomer>>");
   }
 
   @Test
-  public void shouldHandleSetOfLists() {
+  void shouldHandleSetOfLists() {
+    // given
     Set<List<RegularCustomer>> nestedCustomers = new HashSet<>();
     List<RegularCustomer> customers = new ArrayList<>();
     customers.add(new RegularCustomer());
     nestedCustomers.add(customers);
 
-    String canonicalTypeString =
-        dataFormatWithSetTypeDetector.getCanonicalTypeName(nestedCustomers);
+    // when
+    String canonicalTypeString = dataFormatWithSetTypeDetector.getCanonicalTypeName(nestedCustomers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.HashSet<java.util.ArrayList<org.operaton.spin.json.mapping.RegularCustomer>>");
   }
 
   @Test
-  public void shouldHandleMapOfMaps() {
+  void shouldHandleMapOfMaps() {
+    // given
     Map<String, Map<Integer, RegularCustomer>> nestedCustomers = new HashMap<>();
     Map<Integer, RegularCustomer> customers = new HashMap<>();
     customers.put(42, new RegularCustomer());
     nestedCustomers.put("foo", customers);
 
-    String canonicalTypeString =
-        dataFormatWithMapTypeDetector.getCanonicalTypeName(nestedCustomers);
+    // when
+    String canonicalTypeString = dataFormatWithMapTypeDetector.getCanonicalTypeName(nestedCustomers);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.Map<java.lang.String,java.util.Map<java.lang.Integer,org.operaton.spin.json.mapping.RegularCustomer>>");
   }
 
   @Test
-  public void shouldHandleMapWithNullAndStringValue() {
+  void shouldHandleMapWithNullAndStringValue() {
+    // given
     Map<String, Object> map = new HashMap<>();
     map.put("bar", null);
     map.put("foo", "baz");
 
+    // when
     String canonicalTypeString = dataFormatWithMapTypeDetector.getCanonicalTypeName(map);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.Map<java.lang.String,java.lang.String>");
   }
 
   @Test
-  public void shouldHandleMapWithNullAndNullValue() {
+  void shouldHandleMapWithNullAndNullValue() {
+    // given
     Map<String, Object> map = new HashMap<>();
     map.put("foo", null);
     map.put("bar", null);
 
+    // when
     String canonicalTypeString = dataFormatWithMapTypeDetector.getCanonicalTypeName(map);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.Map<java.lang.String,java.lang.Object>");
   }
 
   @Test
-  public void shouldHandleMapWithSingleNullValue() {
+  void shouldHandleMapWithSingleNullValue() {
+    // given
     Map<String, Object> map = new HashMap<>();
     map.put("bar", null);
 
+    // when
     String canonicalTypeString = dataFormatWithMapTypeDetector.getCanonicalTypeName(map);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.Map<java.lang.String,java.lang.Object>");
   }
 
   @Test
-  public void shouldHandleSetWithSingleStringValue() {
+  void shouldHandleSetWithSingleStringValue() {
+    // given
     Set<String> set = new HashSet<>();
     set.add("foo");
 
+    // when
     String canonicalTypeString = dataFormatWithSetTypeDetector.getCanonicalTypeName(set);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.HashSet<java.lang.String>");
   }
 
   @Test
-  public void shouldHandleSetWithNullAndStringValue() {
+  void shouldHandleSetWithNullAndStringValue() {
+    // given
     Set<Object> set = new HashSet<>();
     set.add(null);
     set.add("foo");
 
+    // when
     String canonicalTypeString = dataFormatWithSetTypeDetector.getCanonicalTypeName(set);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.HashSet<java.lang.String>");
   }
 
   @Test
-  public void shouldHandleSetWithNullValue() {
+  void shouldHandleSetWithNullValue() {
+    // given
     Set<String> set = new HashSet<>();
     set.add(null);
 
+    // when
     String canonicalTypeString = dataFormatWithSetTypeDetector.getCanonicalTypeName(set);
+
+    // then
     assertThat(canonicalTypeString).isEqualTo("java.util.HashSet<java.lang.Object>");
   }
 

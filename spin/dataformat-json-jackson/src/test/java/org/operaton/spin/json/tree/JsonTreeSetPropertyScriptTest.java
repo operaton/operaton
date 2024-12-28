@@ -16,23 +16,24 @@
  */
 package org.operaton.spin.json.tree;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.spin.impl.test.Script;
+import org.operaton.spin.impl.test.ScriptTest;
+import org.operaton.spin.impl.test.ScriptVariable;
+import org.operaton.spin.json.SpinJsonNode;
+import org.operaton.spin.json.SpinJsonPropertyException;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON_FILE_NAME;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.spin.impl.test.Script;
-import org.operaton.spin.impl.test.ScriptTest;
-import org.operaton.spin.impl.test.ScriptVariable;
-import org.operaton.spin.json.SpinJsonNode;
-import org.operaton.spin.json.SpinJsonPropertyException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Thorben Lindhauer
- *
  */
 public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
 
@@ -108,9 +109,9 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
   }
 
   @Test
-   @Script
-   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-   public void shouldSetLongProperty() {
+  @Script
+  @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
+  public void shouldSetLongProperty() {
     SpinJsonNode propertyNode = script.getVariable("propertyNode");
     Number value = script.getVariable("value");
 
@@ -237,22 +238,22 @@ public abstract class JsonTreeSetPropertyScriptTest extends ScriptTest {
     assertThat(newValue).isNull();
   }
 
-  @Test(expected = SpinJsonPropertyException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailWhileSettingObject() throws Throwable{
+  public void shouldFailWhileSettingObject() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("date", new Date());
-    failingWithException(variables);
+    assertThrows(SpinJsonPropertyException.class, () -> failingWithException(variables));
   }
 
-  @Test(expected = SpinJsonPropertyException.class)
+  @Test
   @Script(execute = false)
   @ScriptVariable(name = "input", file = EXAMPLE_JSON_FILE_NAME)
-  public void shouldFailWhileSettingArray() throws Throwable{
+  public void shouldFailWhileSettingArray() {
     Map<String, Object> variables = new HashMap<>();
-    variables.put("date", new Date());
-    failingWithException(variables);
+    variables.put("date", new String[] { "a", "b", "c" });
+    assertThrows(SpinJsonPropertyException.class, () -> failingWithException(variables));
   }
 
 }

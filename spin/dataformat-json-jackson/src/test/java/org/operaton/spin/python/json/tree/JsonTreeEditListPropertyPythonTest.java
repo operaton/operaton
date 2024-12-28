@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
  *
  */
 @ScriptEngine("python")
-public class JsonTreeEditListPropertyPythonTest extends JsonTreeEditListPropertyScriptTest {
+class JsonTreeEditListPropertyPythonTest extends JsonTreeEditListPropertyScriptTest {
 
 }

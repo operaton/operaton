@@ -16,14 +16,14 @@
  */
 package org.operaton.spin.impl.test;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski
  */
-public abstract class ScriptRuleTest extends ScriptTest {
+public abstract class ScriptExtensionTest extends ScriptTest {
 
   @Test
   @Script

@@ -20,5 +20,5 @@ import org.operaton.spin.impl.test.ScriptEngine;
 import org.operaton.spin.xml.dom.XmlDomAttributeScriptTest;
 
 @ScriptEngine("nashorn")
-public class XmlDomAttributeJavascriptTest extends XmlDomAttributeScriptTest {
+class XmlDomAttributeJavascriptTest extends XmlDomAttributeScriptTest {
 }

@@ -15,6 +15,11 @@
 
   <description>Operaton core internal bill of material for dependencies</description>
 
+  <properties>
+    <version.junit5>5.11.3</version.junit5>
+    <version.nashorn>15.4</version.nashorn>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -237,6 +242,12 @@
         <scope>test</scope>
       </dependency>
       <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <version>${version.mockito}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>org.osgi</groupId>
         <artifactId>org.osgi.core</artifactId>
         <version>4.2.0</version>
@@ -370,6 +381,7 @@
         <version>2.0.0-M23</version>
       </dependency>
 
+      <!-- scripting -->
       <dependency>
         <groupId>org.python</groupId>
         <artifactId>jython</artifactId>
@@ -380,6 +392,12 @@
         <groupId>org.jruby</groupId>
         <artifactId>jruby-complete</artifactId>
         <version>9.1.17.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.openjdk.nashorn</groupId>
+        <artifactId>nashorn-core</artifactId>
+        <version>${version.nashorn}</version>
       </dependency>
 
       <dependency>

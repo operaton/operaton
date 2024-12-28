@@ -16,24 +16,25 @@
  */
 package org.operaton.spin.json.tree;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.impl.util.SpinIoUtil;
 import org.operaton.spin.json.SpinJsonDataFormatException;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.json.SpinJsonPropertyException;
 import org.operaton.spin.spi.SpinDataFormatException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.spin.Spin.JSON;
 import static org.operaton.spin.json.JsonTestConstants.EXAMPLE_JSON;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Stefan Hentschel
  */
-public class JsonTreeReadPropertyTest {
+class JsonTreeReadPropertyTest {
 
   protected SpinJsonNode jsonNode;
   protected SpinJsonNode order;
@@ -44,8 +45,8 @@ public class JsonTreeReadPropertyTest {
   protected SpinJsonNode active;
   protected SpinJsonNode nullValue;
 
-  @Before
-  public void readJson() {
+  @BeforeEach
+  void readJson() {
     jsonNode = JSON(EXAMPLE_JSON);
     order = jsonNode.prop("order");
     dueUntil = jsonNode.prop("dueUntil");
@@ -57,7 +58,7 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void checkForProperty() {
+  void checkForProperty() {
     assertThat(jsonNode.hasProp("order")).isTrue();
     assertThat(order.hasProp("order")).isFalse();
     assertThat(dueUntil.hasProp("order")).isFalse();
@@ -69,7 +70,7 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldReadProperty() {
+  void shouldReadProperty() {
     assertThat(jsonNode).isNotNull();
 
     SpinJsonNode property = jsonNode.prop("order");
@@ -77,52 +78,17 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldFailToReadNonProperty() {
-    try {
-      jsonNode.prop("nonExisting");
-      fail("Expected SpinJsonTreePropertyException");
-    } catch(SpinJsonPropertyException e) {
-      // expected
-    }
-
-    try {
-      order.prop("nonExisting");
-      fail("Expected SpinJsonTreePropertyException");
-    } catch(SpinJsonPropertyException e) {
-      // expected
-    }
-
-    try {
-      customers.prop("nonExisting");
-      fail("Expected SpinJsonTreePropertyException");
-    } catch(SpinJsonPropertyException e) {
-      // expected
-    }
-
-    try {
-      jsonNode.prop(null);
-      fail("Expected IllegalArgumentException");
-    } catch(IllegalArgumentException e) {
-      // expected
-    }
-
-    try {
-      order.prop("null");
-      fail("Expected SpinJsonTreePropertyException");
-    } catch(SpinJsonPropertyException e) {
-      // expected
-    }
-
-    try {
-      customers.prop("null");
-      fail("Expected SpinJsonTreePropertyException");
-    } catch(SpinJsonPropertyException e) {
-      // expected
-    }
+  void shouldFailToReadNonProperty() {
+    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.prop("nonExisting"));
+    assertThrows(SpinJsonPropertyException.class, () -> order.prop("nonExisting"));
+    assertThrows(SpinJsonPropertyException.class, () -> customers.prop("nonExisting"));
+    assertThrows(IllegalArgumentException.class, () -> jsonNode.prop(null));
+    assertThrows(SpinJsonPropertyException.class, () -> order.prop("null"));
+    assertThrows(SpinJsonPropertyException.class, () -> customers.prop("null"));
   }
 
   @Test
-  public void checkForObjectValue() {
+  void checkForObjectValue() {
     assertThat(jsonNode.isObject()).isTrue();
     assertThat(order.isObject()).isFalse();
     assertThat(dueUntil.isObject()).isFalse();
@@ -133,30 +99,19 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldReadObjectProperty() {
+  void shouldReadObjectProperty() {
     assertThat(jsonNode.prop("order")).isNotNull();
     assertThat(orderDetails.prop("article")).isNotNull();
   }
 
   @Test
-  public void shouldFailToReadNonObject() {
-    try {
-      jsonNode.prop("order").prop("nonExisting");
-      fail("Expected SpinJsonTreePropertyException");
-    } catch(SpinJsonPropertyException e) {
-      // expected
-    }
-
-    try {
-      orderDetails.prop("roundedPrice").prop("nonExisting");
-      fail("Expected SpinJsonTreePropertyException");
-    } catch(SpinJsonPropertyException e) {
-      // expected
-    }
+  void shouldFailToReadNonObject() {
+    assertThrows(SpinJsonPropertyException.class, () -> jsonNode.prop("order").prop("nonExisting"));
+    assertThrows(SpinJsonPropertyException.class, () -> orderDetails.prop("roundedPrice").prop("nonExisting"));
   }
 
   @Test
-  public void checkForStringValue() {
+  void checkForStringValue() {
     assertThat(jsonNode.isString()).isFalse();
     assertThat(order.isString()).isTrue();
     assertThat(dueUntil.isString()).isFalse();
@@ -167,38 +122,21 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldReadStringValue() {
+  void shouldReadStringValue() {
     assertThat(order.stringValue()).isEqualTo("order1");
     assertThat(orderDetails.prop("article").stringValue()).isEqualTo("operatonBPM");
     assertThat(customers.elements().get(0).prop("name").stringValue()).isEqualTo("Kermit");
   }
 
   @Test
-  public void shouldFailToReadNonStringValue() {
-    try {
-      jsonNode.stringValue();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      dueUntil.stringValue();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      orderDetails.prop("currencies").stringValue();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+  void shouldFailToReadNonStringValue() {
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.stringValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> dueUntil.stringValue());
+    assertThrows(SpinDataFormatException.class, () -> orderDetails.prop("currencies").stringValue());
   }
 
   @Test
-  public void checkForNumberValue() {
+  void checkForNumberValue() {
     assertThat(jsonNode.isNumber()).isFalse();
     assertThat(order.isNumber()).isFalse();
     assertThat(dueUntil.isNumber()).isTrue();
@@ -209,37 +147,20 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldReadNumberValue() {
+  void shouldReadNumberValue() {
     assertThat(dueUntil.numberValue()).isEqualTo(20150112);
     assertThat(id.numberValue()).isEqualTo(1234567890987654321L);
   }
 
   @Test
-  public void shouldFailToReadNonNumberValue() {
-    try {
-      jsonNode.numberValue();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      order.numberValue();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      customers.numberValue();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+  void shouldFailToReadNonNumberValue() {
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.numberValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> order.numberValue());
+    assertThrows(SpinDataFormatException.class, () -> customers.numberValue());
   }
 
   @Test
-  public void checkForBooleanValue() {
+  void checkForBooleanValue() {
     assertThat(jsonNode.isBoolean()).isFalse();
     assertThat(order.isBoolean()).isFalse();
     assertThat(dueUntil.isBoolean()).isFalse();
@@ -250,37 +171,20 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldReadBooleanValue() {
+  void shouldReadBooleanValue() {
     assertThat(active.boolValue()).isTrue();
     assertThat(orderDetails.prop("paid").boolValue()).isFalse();
   }
 
   @Test
-  public void shouldFailToReadNonBooleanValue() {
-    try {
-      jsonNode.boolValue();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      order.boolValue();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      customers.boolValue();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+  void shouldFailToReadNonBooleanValue() {
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.boolValue());
+    assertThrows(SpinJsonDataFormatException.class, () -> order.boolValue());
+    assertThrows(SpinDataFormatException.class, () -> customers.boolValue());
   }
 
   @Test
-  public void checkForValue() {
+  void checkForValue() {
     assertThat(jsonNode.isValue()).isFalse();
     assertThat(order.isValue()).isTrue();
     assertThat(dueUntil.isValue()).isTrue();
@@ -291,46 +195,29 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldReadValue() {
+  void shouldReadValue() {
     assertThat(order.value())
-      .isInstanceOf(String.class)
-      .isEqualTo("order1");
+        .isInstanceOf(String.class)
+        .isEqualTo("order1");
 
     assertThat(dueUntil.value())
-      .isInstanceOf(Number.class)
-      .isEqualTo(20150112);
+        .isInstanceOf(Number.class)
+        .isEqualTo(20150112);
 
     assertThat(active.value())
-      .isInstanceOf(Boolean.class)
-      .isEqualTo(true);
+        .isInstanceOf(Boolean.class)
+        .isEqualTo(true);
   }
 
   @Test
-  public void shouldFailToReadNonValue() {
-    try {
-      jsonNode.value();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      customers.value();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      orderDetails.value();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+  void shouldFailToReadNonValue() {
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.value());
+    assertThrows(SpinJsonDataFormatException.class, () -> customers.value());
+    assertThrows(SpinDataFormatException.class, () -> orderDetails.value());
   }
 
   @Test
-  public void checkForArrayValue() {
+  void checkForArrayValue() {
     assertThat(jsonNode.isArray()).isFalse();
     assertThat(order.isArray()).isFalse();
     assertThat(dueUntil.isArray()).isFalse();
@@ -341,7 +228,7 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldReadArrayValue() {
+  void shouldReadArrayValue() {
     SpinList<SpinJsonNode> customerElements = customers.elements();
     SpinList<SpinJsonNode> currenciesElements = orderDetails.prop("currencies").elements();
 
@@ -353,31 +240,14 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldFailToReadNonArrayValue() {
-    try {
-      jsonNode.elements();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      order.elements();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      id.elements();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+  void shouldFailToReadNonArrayValue() {
+    assertThrows(SpinJsonDataFormatException.class, () -> jsonNode.elements());
+    assertThrows(SpinJsonDataFormatException.class, () -> order.elements());
+    assertThrows(SpinDataFormatException.class, () -> id.elements());
   }
 
   @Test
-  public void checkForNullValue() {
+  void checkForNullValue() {
     assertThat(nullValue.isNull()).isTrue();
     assertThat(jsonNode.isNull()).isFalse();
     assertThat(order.isNull()).isFalse();
@@ -389,52 +259,36 @@ public class JsonTreeReadPropertyTest {
   }
 
   @Test
-  public void shouldReadNullValue() {
+  void shouldReadNullValue() {
     assertThat(nullValue.isValue()).isTrue();
     assertThat(nullValue.value()).isNull();
   }
 
   @Test
-  public void shouldReadFieldNames() {
+  void shouldReadFieldNames() {
     assertThat(jsonNode.fieldNames()).contains("order", "dueUntil", "id", "customers", "orderDetails", "active");
     assertThat(customers.fieldNames()).isEmpty();
     assertThat(orderDetails.fieldNames()).contains("article", "price", "roundedPrice", "currencies", "paid");
   }
 
   @Test
-  public void shouldFailToReadNonFieldNames() {
-    try {
-      order.fieldNames();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      dueUntil.fieldNames();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinJsonDataFormatException e) {
-      // expected
-    }
-
-    try {
-      active.fieldNames();
-      fail("Expected SpinJsonDataFormatException");
-    } catch(SpinDataFormatException e) {
-      // expected
-    }
+  void shouldFailToReadNonFieldNames() {
+    assertThrows(SpinJsonDataFormatException.class, () -> order.fieldNames());
+    assertThrows(SpinJsonDataFormatException.class, () -> dueUntil.fieldNames());
+    assertThrows(SpinDataFormatException.class, () -> active.fieldNames());
   }
 
 
   /**
    * Tests an issue with Jackson 2.4.1
-   *
+   * <p>
    * The test contains a negative float at character position 8000 which is important
    * to provoke Jackson bug #146.
    * See also <a href="https://github.com/FasterXML/jackson-core/issues/146">the Jackson bug report</a>.
+   * </p>
    */
   @Test
-  public void shouldNotFailWithJackson146Bug() {
+  void shouldNotFailWithJackson146Bug() {
     // this should not fail
     SpinJsonNode node = JSON(SpinIoUtil.fileAsString("org/operaton/spin/json/jackson146.json"));
 
@@ -442,5 +296,4 @@ public class JsonTreeReadPropertyTest {
     // 20 characters per repeated JSON object
     assertThat(node.prop("abcdef").elements()).hasSize(200);
   }
-
 }

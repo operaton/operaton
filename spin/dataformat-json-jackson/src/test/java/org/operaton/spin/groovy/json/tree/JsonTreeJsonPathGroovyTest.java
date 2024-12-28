@@ -24,6 +24,6 @@ import org.operaton.spin.json.tree.JsonTreeJsonPathScriptTest;
  *
  */
 @ScriptEngine("groovy")
-public class JsonTreeJsonPathGroovyTest extends JsonTreeJsonPathScriptTest {
+class JsonTreeJsonPathGroovyTest extends JsonTreeJsonPathScriptTest {
 
 }

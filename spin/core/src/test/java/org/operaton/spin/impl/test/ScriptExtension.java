@@ -114,9 +114,9 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
     ScriptVariable scriptVariable = context.getRequiredTestMethod().getAnnotation(ScriptVariable.class);
     collectScriptVariable(scriptVariable);
 
-    Script script = context.getRequiredTestMethod().getAnnotation(Script.class);
-    if (script != null) {
-      for (ScriptVariable variable : script.variables()) {
+    Script scriptAnnotation = context.getRequiredTestMethod().getAnnotation(Script.class);
+    if (scriptAnnotation != null) {
+      for (ScriptVariable variable : scriptAnnotation.variables()) {
         collectScriptVariable(variable);
       }
     }
@@ -215,6 +215,7 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
     }
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T getVariable(String name) {
     try {
       if ("ECMAScript".equals(scriptEngine.getFactory().getLanguageName())) {
@@ -226,7 +227,7 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
       throw LOG.cannotCastVariableError(name, e);
     }
   }
-
+  @SuppressWarnings("unchecked")
   private Object getVariableJs(String name) {
     Object variable = variables.get(name);
     if (variable == null) {

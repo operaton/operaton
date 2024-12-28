@@ -17,6 +17,7 @@
 package org.operaton.spin.xml.dom;
 
 import org.operaton.spin.DataFormats;
+import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.spi.SpinDataFormatException;
 import org.operaton.spin.xml.SpinXmlElement;
 import static org.operaton.spin.DataFormats.xml;
@@ -37,12 +38,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 class XmlDomCreateTest {
 
+  private final DataFormat<SpinXmlElement> xmlDataFormat = xml();
+
   @Test
   void shouldCreateForString() {
     SpinXmlElement xml = XML(EXAMPLE_XML);
     assertThat(xml).isNotNull();
 
-    xml = S(EXAMPLE_XML, xml());
+    xml = S(EXAMPLE_XML, xmlDataFormat);
     assertThat(xml).isNotNull();
 
     xml = S(EXAMPLE_XML, DataFormats.XML_DATAFORMAT_NAME);
@@ -57,7 +60,7 @@ class XmlDomCreateTest {
     SpinXmlElement xml = XML(stringAsReader(EXAMPLE_XML));
     assertThat(xml).isNotNull();
 
-    xml = S(stringAsReader(EXAMPLE_XML), xml());
+    xml = S(stringAsReader(EXAMPLE_XML), xmlDataFormat);
     assertThat(xml).isNotNull();
 
     xml = S(stringAsReader(EXAMPLE_XML), DataFormats.XML_DATAFORMAT_NAME);
@@ -71,7 +74,7 @@ class XmlDomCreateTest {
   void shouldBeIdempotent() {
     SpinXmlElement xml = XML(EXAMPLE_XML);
     assertThat(xml).isEqualTo(XML(xml));
-    assertThat(xml).isEqualTo(S(xml, xml()));
+    assertThat(xml).isEqualTo(S(xml, xmlDataFormat));
     assertThat(xml).isEqualTo(S(xml, DataFormats.XML_DATAFORMAT_NAME));
     assertThat(xml).isEqualTo(S(xml));
   }
@@ -81,27 +84,27 @@ class XmlDomCreateTest {
     SpinXmlElement xmlTreeElement = null;
 
     assertThrows(IllegalArgumentException.class, () -> XML(xmlTreeElement));
-    assertThrows(IllegalArgumentException.class, () -> S(xmlTreeElement, xml()));
+    assertThrows(IllegalArgumentException.class, () -> S(xmlTreeElement, xmlDataFormat));
     assertThrows(IllegalArgumentException.class, () -> S(xmlTreeElement));
 
     Reader reader = null;
 
     assertThrows(IllegalArgumentException.class, () -> XML(reader));
-    assertThrows(IllegalArgumentException.class, () -> S(reader, xml()));
+    assertThrows(IllegalArgumentException.class, () -> S(reader, xmlDataFormat));
     assertThrows(IllegalArgumentException.class, () -> S(reader));
 
     String inputString = null;
 
     assertThrows(IllegalArgumentException.class, () -> XML(inputString));
-    assertThrows(IllegalArgumentException.class, () -> S(inputString, xml()));
+    assertThrows(IllegalArgumentException.class, () -> S(inputString, xmlDataFormat));
     assertThrows(IllegalArgumentException.class, () -> S(inputString, DataFormats.XML_DATAFORMAT_NAME));
     assertThrows(IllegalArgumentException.class, () -> S(inputString));
   }
 
   @Test
-  void shouldFailForInvalidXml() {
+  void shouldFailForInvalidxmlDataFormat () {
     assertThrows(SpinDataFormatException.class, () -> XML(EXAMPLE_INVALID_XML));
-    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML, xml()));
+    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML, xmlDataFormat));
     assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML, DataFormats.XML_DATAFORMAT_NAME));
     assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_INVALID_XML));
   }
@@ -109,7 +112,7 @@ class XmlDomCreateTest {
   @Test
   void shouldFailForEmptyString() {
     assertThrows(SpinDataFormatException.class, () -> XML(EXAMPLE_EMPTY_STRING));
-    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING, xml()));
+    assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING, xmlDataFormat));
     assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING, DataFormats.XML_DATAFORMAT_NAME));
     assertThrows(SpinDataFormatException.class, () -> S(EXAMPLE_EMPTY_STRING));
   }
@@ -117,7 +120,7 @@ class XmlDomCreateTest {
   @Test
   void shouldFailForEmptyReader() {
     assertThrows(SpinDataFormatException.class, () -> XML(stringAsReader(EXAMPLE_EMPTY_STRING)));
-    assertThrows(SpinDataFormatException.class, () -> S(stringAsReader(EXAMPLE_EMPTY_STRING), xml()));
+    assertThrows(SpinDataFormatException.class, () -> S(stringAsReader(EXAMPLE_EMPTY_STRING), xmlDataFormat));
     assertThrows(SpinDataFormatException.class, () -> S(stringAsReader(EXAMPLE_EMPTY_STRING)));
   }
 }

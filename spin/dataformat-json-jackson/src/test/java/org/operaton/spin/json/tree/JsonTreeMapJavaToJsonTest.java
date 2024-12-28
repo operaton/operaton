@@ -82,7 +82,7 @@ class JsonTreeMapJavaToJsonTest {
 
   @Test
   void shouldFailWithNull() {
-    assertThrows(IllegalArgumentException.class, () -> JSON(null).toString());
+    assertThrows(IllegalArgumentException.class, () -> JSON(null));
   }
 
   @Test

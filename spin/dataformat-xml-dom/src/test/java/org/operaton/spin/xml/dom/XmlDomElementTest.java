@@ -711,7 +711,8 @@ class XmlDomElementTest {
 
   @Test
   void cannotWriteNullTextContent() {
-    assertThrows(IllegalArgumentException.class, () -> XML("<customer/>").textContent(null));
+    SpinXmlElement xml = XML("<customer/>");
+    assertThrows(IllegalArgumentException.class, () -> xml.textContent(null));
   }
 
 }

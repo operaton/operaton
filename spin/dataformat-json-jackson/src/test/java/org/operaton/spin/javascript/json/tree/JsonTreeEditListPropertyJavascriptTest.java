@@ -29,43 +29,31 @@ import org.junit.jupiter.api.Test;
 @ScriptEngine("graal.js")
 class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScriptTest {
 
-  /**
-   * Ignored since javascript implementation changed
-   * see: <a href="https://app.camunda.com/jira/browse/CAM-3612">CAM-3612</a>
-   */
   @Test
-  @Disabled
+  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
   @Override
   public void shouldFailInsertAtWithWrongObject() {
+    super.shouldFailInsertAtWithWrongObject();
   }
 
-  /**
-   * Ignored since javascript implementation changed
-   * see: <a href="https://app.camunda.com/jira/browse/CAM-3612">CAM-3612</a>
-   */
   @Test
-  @Disabled
+  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
   @Override
   public void shouldFailInsertWrongObjectAfterSearchObject() {
+    super.shouldFailInsertWrongObjectAfterSearchObject();
   }
 
-  /**
-   * Ignored since javascript implementation changed
-   * see: <a href="https://app.camunda.com/jira/browse/CAM-3612">CAM-3612</a>
-   */
   @Test
-  @Disabled
+  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
   @Override
   public void shouldFailAppendWrongNode() {
+    super.shouldFailAppendWrongNode();
   }
 
-  /**
-   * Ignored since javascript implementation changed
-   * see: <a href="https://app.camunda.com/jira/browse/CAM-3612">CAM-3612</a>
-   */
   @Test
-  @Disabled
+  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
   @Override
   public void shouldFailInsertWrongObjectBeforeSearchObject() {
+    super.shouldFailInsertWrongObjectBeforeSearchObject();
   }
 }

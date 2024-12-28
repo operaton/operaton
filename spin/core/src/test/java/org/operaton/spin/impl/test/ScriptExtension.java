@@ -40,7 +40,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  *
  * <p>Provides support for loading scripts and managing script variables.
  */
-public class ScriptRule implements BeforeEachCallback, AfterEachCallback {
+public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
 
   private static final SpinTestLogger LOG = SpinTestLogger.TEST_LOGGER;
 
@@ -169,13 +169,13 @@ public class ScriptRule implements BeforeEachCallback, AfterEachCallback {
     }
   }
 
-  public ScriptRule execute(Map<String, Object> scriptVariables) throws Throwable {
+  public ScriptExtension execute(Map<String, Object> scriptVariables) throws Throwable {
     variables.putAll(scriptVariables);
     executeScript();
     return this;
   }
 
-  public ScriptRule execute() throws Throwable {
+  public ScriptExtension execute() throws Throwable {
     executeScript();
     return this;
   }
@@ -240,7 +240,7 @@ public class ScriptRule implements BeforeEachCallback, AfterEachCallback {
     return variable;
   }
 
-  public ScriptRule setVariable(String name, Object value) {
+  public ScriptExtension setVariable(String name, Object value) {
     variables.put(name, value);
     return this;
   }

@@ -17,11 +17,11 @@
 package org.operaton.spin.impl.test.script;
 
 import org.operaton.spin.impl.test.ScriptEngine;
-import org.operaton.spin.impl.test.ScriptRuleTest;
+import org.operaton.spin.impl.test.ScriptExtensionTest;
 
 /**
  * @author Sebastian Menski
  */
 @ScriptEngine("ruby")
-public class RubyScriptRuleTest extends ScriptRuleTest {
+public class RubyScriptExtensionTest extends ScriptExtensionTest {
 }

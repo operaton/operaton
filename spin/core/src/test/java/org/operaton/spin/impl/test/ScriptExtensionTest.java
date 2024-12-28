@@ -14,14 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.spin.impl.test.script;
+package org.operaton.spin.impl.test;
 
-import org.operaton.spin.impl.test.ScriptEngine;
-import org.operaton.spin.impl.test.ScriptRuleTest;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Sebastian Menski
  */
-@ScriptEngine("python")
-public class PythonScriptRuleTest extends ScriptRuleTest {
+public abstract class ScriptExtensionTest extends ScriptTest {
+
+  @Test
+  @Script
+  public void shouldSetFoo() {
+    Object foo = script.getVariable("foo");
+    assertThat(foo).isNotNull();
+
+    Object bar = script.getVariable("bar");
+    assertThat(bar).isNull();
+  }
+
+  @Test
+  @Script
+  public void shouldSetBar() {
+    Object foo = script.getVariable("foo");
+    assertThat(foo).isNull();
+
+    Object bar = script.getVariable("bar");
+    assertThat(bar).isNotNull();
+  }
+
 }

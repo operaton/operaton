@@ -14,35 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.spin.impl.test;
+package org.operaton.spin.impl.test.script;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.Test;
+import org.operaton.spin.impl.test.ScriptEngine;
+import org.operaton.spin.impl.test.ScriptExtensionTest;
 
 /**
  * @author Sebastian Menski
  */
-public abstract class ScriptRuleTest extends ScriptTest {
-
-  @Test
-  @Script
-  public void shouldSetFoo() {
-    Object foo = script.getVariable("foo");
-    assertThat(foo).isNotNull();
-
-    Object bar = script.getVariable("bar");
-    assertThat(bar).isNull();
-  }
-
-  @Test
-  @Script
-  public void shouldSetBar() {
-    Object foo = script.getVariable("foo");
-    assertThat(foo).isNull();
-
-    Object bar = script.getVariable("bar");
-    assertThat(bar).isNotNull();
-  }
-
+@ScriptEngine("groovy")
+public class GroovyScriptExtensionTest extends ScriptExtensionTest {
 }

@@ -37,10 +37,6 @@
   <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
   <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
   <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
-  
-  <bean id="processEngineExtension" class="org.operaton.bpm.engine.test.junit5.ProcessEngineExtension">
-    <property name="processEngine" ref="processEngine" />
-  </bean>
 
   <tx:annotation-driven transaction-manager="transactionManager"/>
 

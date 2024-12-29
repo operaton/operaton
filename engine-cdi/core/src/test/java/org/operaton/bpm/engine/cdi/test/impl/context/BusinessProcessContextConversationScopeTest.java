@@ -20,18 +20,19 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.ProcessScopedMessageBean;
 import org.operaton.bpm.engine.test.Deployment;
+
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertEquals;
-
 @RunWith(Arquillian.class)
-public class BusinessProcessContextConversationScopeTest extends CdiProcessEngineTestCase {
+class BusinessProcessContextConversationScopeTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testConversationalBeanStoreFlush() {
+  void conversationalBeanStoreFlush() {
 
     getBeanInstance(BusinessProcess.class).setVariable("testVariable", "testValue");
     String pid =  getBeanInstance(BusinessProcess.class).startProcessByKey("testConversationalBeanStoreFlush").getId();
@@ -39,10 +40,10 @@ public class BusinessProcessContextConversationScopeTest extends CdiProcessEngin
     getBeanInstance(BusinessProcess.class).associateExecutionById(pid);
 
     // assert that the variable assigned on the businessProcess bean is flushed
-    assertEquals("testValue", runtimeService.getVariable(pid, "testVariable"));
+    assertThat(runtimeService.getVariable(pid, "testVariable")).isEqualTo("testValue");
 
     // assert that the value set to the message bean in the first service task is flushed
-    assertEquals("Greetings from Berlin", getBeanInstance(ProcessScopedMessageBean.class).getMessage());
+    assertThat(getBeanInstance(ProcessScopedMessageBean.class).getMessage()).isEqualTo("Greetings from Berlin");
 
     // complete the task to allow the process instance to terminate
     taskService.complete(taskService.createTaskQuery().singleResult().getId());

@@ -16,35 +16,36 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.el;
 
-import static org.junit.Assert.assertEquals;
-
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.MessageBean;
 import org.operaton.bpm.engine.test.Deployment;
+
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class BeanPropertyElTest extends CdiProcessEngineTestCase {
+class BeanPropertyElTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void shouldSetBeanProperty() {
+  void shouldSetBeanProperty() {
     MessageBean messageBean = getBeanInstance(MessageBean.class);
     runtimeService.startProcessInstanceByKey("setBeanProperty");
-    assertEquals("Greetings from Berlin", messageBean.getMessage());
+    assertThat(messageBean.getMessage()).isEqualTo("Greetings from Berlin");
   }
 
   @Test
   @Deployment
-  public void shouldGetBeanProperty() {
+  void shouldGetBeanProperty() {
     MessageBean messageBean = getBeanInstance(MessageBean.class);
     messageBean.setMessage("Greetings from Berlin");
     runtimeService.startProcessInstanceByKey("getBeanProperty");
 
     messageBean = getBeanInstance(MessageBean.class);
-    assertEquals("", messageBean.getMessage());
+    assertThat(messageBean.getMessage()).isEqualTo("");
   }
 
 }

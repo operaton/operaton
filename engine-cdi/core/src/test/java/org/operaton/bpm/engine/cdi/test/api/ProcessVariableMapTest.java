@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.test.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -28,24 +27,24 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Michael Scholz
  */
 @RunWith(Arquillian.class)
-public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
+class ProcessVariableMapTest extends CdiProcessEngineTestCase {
 
   private static final String VARNAME_1 = "aVariable";
   private static final String VARNAME_2 = "anotherVariable";
 
   @Test
-  public void testProcessVariableMap() {
+  void processVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     VariableMap variables = (VariableMap) getBeanInstance("processVariableMap");
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
 
     ///////////////////////////////////////////////////////////////////
     // Put a variable via BusinessProcess and get it via VariableMap //
@@ -54,20 +53,20 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     businessProcess.setVariable(VARNAME_1, Variables.stringValue(aValue));
 
     // Legacy API
-    assertEquals(aValue, variables.get(VARNAME_1));
+    assertThat(variables.get(VARNAME_1)).isEqualTo(aValue);
 
     // Typed variable API
     TypedValue aTypedValue = variables.getValueTyped(VARNAME_1);
-    assertEquals(ValueType.STRING, aTypedValue.getType());
-    assertEquals(aValue, aTypedValue.getValue());
-    assertEquals(aValue, variables.getValue(VARNAME_1, String.class));
+    assertThat(aTypedValue.getType()).isEqualTo(ValueType.STRING);
+    assertThat(aTypedValue.getValue()).isEqualTo(aValue);
+    assertThat(variables.getValue(VARNAME_1, String.class)).isEqualTo(aValue);
 
     // Type API with wrong type
     try {
       variables.getValue(VARNAME_1, Integer.class);
       fail("ClassCastException expected!");
     } catch(ClassCastException ex) {
-      assertEquals("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.", ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.");
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -77,22 +76,22 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     variables.put(VARNAME_2, Variables.stringValue(anotherValue));
 
     // Legacy API
-    assertEquals(anotherValue, businessProcess.getVariable(VARNAME_2));
+    assertThat(businessProcess.getVariable(VARNAME_2)).isEqualTo(anotherValue);
 
     // Typed variable API
     TypedValue anotherTypedValue = businessProcess.getVariableTyped(VARNAME_2);
-    assertEquals(ValueType.STRING, anotherTypedValue.getType());
-    assertEquals(anotherValue, anotherTypedValue.getValue());
+    assertThat(anotherTypedValue.getType()).isEqualTo(ValueType.STRING);
+    assertThat(anotherTypedValue.getValue()).isEqualTo(anotherValue);
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testProcessVariableMapLocal() {
+  void processVariableMapLocal() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     VariableMap variables = (VariableMap) getBeanInstance("processVariableMapLocal");
-    assertNotNull(variables);
+    assertThat(variables).isNotNull();
 
     ///////////////////////////////////////////////////////////////////
     // Put a variable via BusinessProcess and get it via VariableMap //
@@ -101,20 +100,20 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     businessProcess.setVariableLocal(VARNAME_1, Variables.stringValue(aValue));
 
     // Legacy API
-    assertEquals(aValue, variables.get(VARNAME_1));
+    assertThat(variables.get(VARNAME_1)).isEqualTo(aValue);
 
     // Typed variable API
     TypedValue aTypedValue = variables.getValueTyped(VARNAME_1);
-    assertEquals(ValueType.STRING, aTypedValue.getType());
-    assertEquals(aValue, aTypedValue.getValue());
-    assertEquals(aValue, variables.getValue(VARNAME_1, String.class));
+    assertThat(aTypedValue.getType()).isEqualTo(ValueType.STRING);
+    assertThat(aTypedValue.getValue()).isEqualTo(aValue);
+    assertThat(variables.getValue(VARNAME_1, String.class)).isEqualTo(aValue);
 
     // Type API with wrong type
     try {
       variables.getValue(VARNAME_1, Integer.class);
       fail("ClassCastException expected!");
     } catch(ClassCastException ex) {
-      assertEquals("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.", ex.getMessage());
+      assertThat(ex.getMessage()).isEqualTo("Cannot cast variable named 'aVariable' with value 'aValue' to type 'class java.lang.Integer'.");
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -124,11 +123,11 @@ public class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     variables.put(VARNAME_2, Variables.stringValue(anotherValue));
 
     // Legacy API
-    assertEquals(anotherValue, businessProcess.getVariableLocal(VARNAME_2));
+    assertThat(businessProcess.getVariableLocal(VARNAME_2)).isEqualTo(anotherValue);
 
     // Typed variable API
     TypedValue anotherTypedValue = businessProcess.getVariableLocalTyped(VARNAME_2);
-    assertEquals(ValueType.STRING, anotherTypedValue.getType());
-    assertEquals(anotherValue, anotherTypedValue.getValue());
+    assertThat(anotherTypedValue.getType()).isEqualTo(ValueType.STRING);
+    assertThat(anotherTypedValue.getValue()).isEqualTo(anotherValue);
   }
 }

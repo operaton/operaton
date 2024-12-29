@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import static org.junit.Assert.assertNull;
-
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.annotation.CompleteTaskInterceptor;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.DeclarativeProcessController;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.runner.RunWith;
 
 /**
@@ -35,11 +36,11 @@ import org.junit.runner.RunWith;
  * @author Daniel Meyer
  */
 @RunWith(Arquillian.class)
-public class CompleteTaskTest extends CdiProcessEngineTestCase {
+class CompleteTaskTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/annotation/CompleteTaskTest.bpmn20.xml")
-  public void testCompleteTask() {
+  void completeTask() {
 
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
@@ -53,7 +54,7 @@ public class CompleteTaskTest extends CdiProcessEngineTestCase {
     getBeanInstance(DeclarativeProcessController.class).completeTask();
 
     // assert that now the task is completed
-    assertNull(taskService.createTaskQuery().singleResult());
+    assertThat(taskService.createTaskQuery().singleResult()).isNull();
   }
 
   

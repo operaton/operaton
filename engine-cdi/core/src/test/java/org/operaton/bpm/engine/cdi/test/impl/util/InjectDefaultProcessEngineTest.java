@@ -23,24 +23,27 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.InjectedProcessEngineBean;
 import org.operaton.bpm.engine.impl.test.TestHelper;
+
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @RunWith(Arquillian.class)
-public class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
+class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
 
   protected ProcessEngine defaultProcessEngine = null;
   protected ProcessEngine processEngine = null;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     processEngine = TestHelper.getProcessEngine("activiti.cfg.xml");
     defaultProcessEngine = BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
 
@@ -51,7 +54,7 @@ public class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
     RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(processEngine);
   }
 
-  @After
+  @AfterEach
   @Override
   public void tearDownCdiProcessEngineTestCase() {
     RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(processEngine);
@@ -62,16 +65,16 @@ public class InjectDefaultProcessEngineTest extends CdiProcessEngineTestCase {
   }
 
   @Test
-  public void testProcessEngineInject() {
+  void processEngineInject() {
     //given only default engine exist
 
     //when TestClass is created
     InjectedProcessEngineBean testClass = ProgrammaticBeanLookup.lookup(InjectedProcessEngineBean.class);
-    Assert.assertNotNull(testClass);
+    assertThat(testClass).isNotNull();
 
     //then default engine is injected
-    Assert.assertEquals("default", testClass.processEngine.getName());
-    Assert.assertTrue(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()
-        .contains("default-process-engine"));
+    assertThat(testClass.processEngine.getName()).isEqualTo("default");
+    assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()
+        .contains("default-process-engine")).isTrue();
   }
 }

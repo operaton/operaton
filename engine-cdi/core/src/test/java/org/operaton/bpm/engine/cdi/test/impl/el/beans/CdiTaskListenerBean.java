@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.el.beans;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.TaskListener;
@@ -23,8 +25,6 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Sebastian Menski
@@ -42,7 +42,7 @@ public class CdiTaskListenerBean implements TaskListener {
 
   public void notify(DelegateTask delegateTask) {
     String variable = businessProcess.getVariable(VARIABLE_NAME);
-    assertEquals(INITIAL_VALUE, variable);
+    assertThat(variable).isEqualTo(INITIAL_VALUE);
     businessProcess.setVariable(VARIABLE_NAME, UPDATED_VALUE);
   }
 }

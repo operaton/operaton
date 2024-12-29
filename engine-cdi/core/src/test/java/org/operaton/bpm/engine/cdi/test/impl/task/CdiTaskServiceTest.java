@@ -20,14 +20,14 @@ import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class CdiTaskServiceTest extends CdiProcessEngineTestCase {
-  
+class CdiTaskServiceTest extends CdiProcessEngineTestCase {
+
   @Test
-  public void testClaimTask() {
+  void claimTask() {
     Task newTask = taskService.newTask();
     taskService.saveTask(newTask);
     taskService.claim(newTask.getId(), "kermit");
@@ -36,7 +36,7 @@ public class CdiTaskServiceTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testTaskAssigneeExpression() {
+  void taskAssigneeExpression() {
     // given
     runtimeService.startProcessInstanceByKey("taskTest");
     identityService.setAuthenticatedUserId("user");

@@ -16,12 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.test.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import java.util.Collections;
 
@@ -37,19 +33,19 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Meyer
  */
 @RunWith(Arquillian.class)
-public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
+class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   /* General test asserting that the business process bean is functional */
   @Test
   @Deployment
-  public void test() {
+  void test() {
 
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
@@ -57,83 +53,83 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     businessProcess.startProcessByKey("businessProcessBeanTest").getId();
 
     // ensure that the process is started:
-    assertNotNull(processEngine.getRuntimeService().createProcessInstanceQuery().singleResult());
+    assertThat(processEngine.getRuntimeService().createProcessInstanceQuery().singleResult()).isNotNull();
 
     // ensure that there is a single task waiting
     Task task = processEngine.getTaskService().createTaskQuery().singleResult();
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     String value = "value";
     businessProcess.setVariable("key", Variables.stringValue(value));
-    assertEquals(value, businessProcess.getVariable("key"));
+    assertThat(businessProcess.getVariable("key")).isEqualTo(value);
 
     // Typed variable API
     TypedValue typedValue = businessProcess.getVariableTyped("key");
-    assertEquals(ValueType.STRING, typedValue.getType());
-    assertEquals(value, typedValue.getValue());
+    assertThat(typedValue.getType()).isEqualTo(ValueType.STRING);
+    assertThat(typedValue.getValue()).isEqualTo(value);
 
     // Local variables
     String localValue = "localValue";
     businessProcess.setVariableLocal("localKey", Variables.stringValue(localValue));
-    assertEquals(localValue, businessProcess.getVariableLocal("localKey"));
+    assertThat(businessProcess.getVariableLocal("localKey")).isEqualTo(localValue);
 
     // Local typed variable API
     TypedValue typedLocalValue = businessProcess.getVariableLocalTyped("localKey");
-    assertEquals(ValueType.STRING, typedLocalValue.getType());
-    assertEquals(localValue, typedLocalValue.getValue());
+    assertThat(typedLocalValue.getType()).isEqualTo(ValueType.STRING);
+    assertThat(typedLocalValue.getValue()).isEqualTo(localValue);
 
     // complete the task
-    assertEquals(task.getId(), businessProcess.startTask(task.getId()).getId());
+    assertThat(businessProcess.startTask(task.getId()).getId()).isEqualTo(task.getId());
     businessProcess.completeTask();
 
     // assert the task is completed
-    assertNull(processEngine.getTaskService().createTaskQuery().singleResult());
+    assertThat(processEngine.getTaskService().createTaskQuery().singleResult()).isNull();
 
     // assert that the process is ended:
-    assertNull(processEngine.getRuntimeService().createProcessInstanceQuery().singleResult());
+    assertThat(processEngine.getRuntimeService().createProcessInstanceQuery().singleResult()).isNull();
 
   }
 
   @Test
   @Deployment
-  public void testProcessWithoutWatestate() {
+  void processWithoutWatestate() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // start the process
     businessProcess.startProcessByKey("businessProcessBeanTest").getId();
 
     // assert that the process is ended:
-    assertNull(processEngine.getRuntimeService().createProcessInstanceQuery().singleResult());
+    assertThat(processEngine.getRuntimeService().createProcessInstanceQuery().singleResult()).isNull();
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testResolveProcessInstanceBean() {
+  void resolveProcessInstanceBean() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
-    assertNull(getBeanInstance(ProcessInstance.class));
-    assertNull(getBeanInstance("processInstanceId"));
-    assertNull(getBeanInstance(Execution.class));
-    assertNull(getBeanInstance("executionId"));
+    assertThat(getBeanInstance(ProcessInstance.class)).isNull();
+    assertThat(getBeanInstance("processInstanceId")).isNull();
+    assertThat(getBeanInstance(Execution.class)).isNull();
+    assertThat(getBeanInstance("executionId")).isNull();
 
     String pid = businessProcess.startProcessByKey("businessProcessBeanTest").getId();
 
     // assert that now we can resolve the ProcessInstance-bean
-    assertEquals(pid, getBeanInstance(ProcessInstance.class).getId());
-    assertEquals(pid, getBeanInstance("processInstanceId"));
-    assertEquals(pid, getBeanInstance(Execution.class).getId());
-    assertEquals(pid, getBeanInstance("executionId"));
+    assertThat(getBeanInstance(ProcessInstance.class).getId()).isEqualTo(pid);
+    assertThat(getBeanInstance("processInstanceId")).isEqualTo(pid);
+    assertThat(getBeanInstance(Execution.class).getId()).isEqualTo(pid);
+    assertThat(getBeanInstance("executionId")).isEqualTo(pid);
 
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testResolveTaskBean() {
+  void resolveTaskBean() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
-    assertNull(getBeanInstance(Task.class));
-    assertNull(getBeanInstance("taskId"));
+    assertThat(getBeanInstance(Task.class)).isNull();
+    assertThat(getBeanInstance("taskId")).isNull();
 
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
@@ -142,8 +138,8 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     businessProcess.startTask(taskId);
 
     // assert that now we can resolve the Task-bean
-    assertEquals(taskId, getBeanInstance(Task.class).getId());
-    assertEquals(taskId, getBeanInstance("taskId"));
+    assertThat(getBeanInstance(Task.class).getId()).isEqualTo(taskId);
+    assertThat(getBeanInstance("taskId")).isEqualTo(taskId);
 
     taskService.complete(taskService.createTaskQuery().singleResult().getId());
   }
@@ -151,129 +147,129 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
   @SuppressWarnings("deprecation")
-  public void testGetVariableCache() {
+  void getVariableCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getVariableCache());
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariable("aVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("aVariableName", "aVariableValue"), businessProcess.getVariableCache());
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.singletonMap("aVariableName", "aVariableValue"));
 
     // getting the variable cache does not empty it:
-    assertEquals(Collections.singletonMap("aVariableName", "aVariableValue"), businessProcess.getVariableCache());
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.singletonMap("aVariableName", "aVariableValue"));
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getVariableCache());
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariable("anotherVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getVariableCache());
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetCachedVariableMap() {
+  void getCachedVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getCachedVariableMap());
+    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariable("aVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("aVariableName", "aVariableValue"), businessProcess.getCachedVariableMap());
+    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.singletonMap("aVariableName", "aVariableValue"));
 
     // getting the variable cache does not empty it:
-    assertEquals(Collections.singletonMap("aVariableName", "aVariableValue"), businessProcess.getCachedVariableMap());
+    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.singletonMap("aVariableName", "aVariableValue"));
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getCachedVariableMap());
+    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariable("anotherVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getCachedVariableMap());
+    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
   @SuppressWarnings("deprecation")
-  public void testGetAndClearVariableCache() {
+  void getAndClearVariableCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearVariableCache());
+    assertThat(businessProcess.getAndClearVariableCache()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariable("aVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("aVariableName", "aVariableValue"), businessProcess.getAndClearVariableCache());
+    assertThat(businessProcess.getAndClearVariableCache()).isEqualTo(Collections.singletonMap("aVariableName", "aVariableValue"));
 
     // now the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearVariableCache());
+    assertThat(businessProcess.getAndClearVariableCache()).isEqualTo(Collections.EMPTY_MAP);
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getVariableCache());
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariable("anotherVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getVariableCache());
+    assertThat(businessProcess.getVariableCache()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetAndClearCachedVariableMap() {
+  void getAndClearCachedVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearCachedVariableMap());
+    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariable("aVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("aVariableName", "aVariableValue"), businessProcess.getAndClearCachedVariableMap());
+    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.singletonMap("aVariableName", "aVariableValue"));
 
     // now the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearCachedVariableMap());
+    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearCachedVariableMap());
+    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariable("anotherVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getAndClearCachedVariableMap());
+    assertThat(businessProcess.getAndClearCachedVariableMap()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
   @SuppressWarnings("deprecation")
-  public void testGetVariableLocalCache() {
+  void getVariableLocalCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getVariableLocalCache());
+    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable - this should fail before the process is started
     try {
@@ -281,31 +277,31 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
       fail("exception expected!");
     }
     catch(ProcessEngineCdiException e) {
-      assertEquals("Cannot set a local cached variable: neither a Task nor an Execution is associated.", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
     }
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getVariableLocalCache());
+    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariableLocal("anotherVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getVariableLocalCache());
+    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
 
     // getting the variable cache does not empty it:
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getVariableLocalCache());
+    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetCachedLocalVariableMap() {
+  void getCachedLocalVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getCachedLocalVariableMap());
+    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable - this should fail before the process is started
     try {
@@ -313,27 +309,27 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
       fail("exception expected!");
     }
     catch(ProcessEngineCdiException e) {
-      assertEquals("Cannot set a local cached variable: neither a Task nor an Execution is associated.", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
     }
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getCachedLocalVariableMap());
+    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariableLocal("anotherVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getCachedLocalVariableMap());
+    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
 
     // getting the variable cache does not empty it:
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getCachedLocalVariableMap());
+    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetVariableLocal()
+  void getVariableLocal()
   {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
     ProcessInstance processInstance = businessProcess.startProcessByKey("businessProcessBeanTest");
@@ -341,7 +337,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     TaskService taskService = getBeanInstance(TaskService.class);
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
-    assertNotNull(task);
+    assertThat(task).isNotNull();
 
     businessProcess.startTask(task.getId());
 
@@ -349,18 +345,18 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
     // Flushing and re-getting should retain the value (CAM-1806):
     businessProcess.flushVariableCache();
-    assertTrue(businessProcess.getCachedLocalVariableMap().isEmpty());
-    assertEquals("aVariableValue", businessProcess.getVariableLocal("aVariableName"));
+    assertThat(businessProcess.getCachedLocalVariableMap().isEmpty()).isTrue();
+    assertThat(businessProcess.getVariableLocal("aVariableName")).isEqualTo("aVariableValue");
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
   @SuppressWarnings("deprecation")
-  public void testGetAndClearVariableLocalCache() {
+  void getAndClearVariableLocalCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearVariableLocalCache());
+    assertThat(businessProcess.getAndClearVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable - this should fail before the process is started
     try {
@@ -368,31 +364,31 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
       fail("exception expected!");
     }
     catch(ProcessEngineCdiException e) {
-      assertEquals("Cannot set a local cached variable: neither a Task nor an Execution is associated.", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
     }
 
     // the variable cache is still empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearVariableLocalCache());
+    assertThat(businessProcess.getAndClearVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getVariableLocalCache());
+    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariableLocal("anotherVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getVariableLocalCache());
+    assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testGetAndClearCachedLocalVariableMap() {
+  void getAndClearCachedLocalVariableMap() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // initially the variable cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearCachedLocalVariableMap());
+    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable - this should fail before the process is started
     try {
@@ -400,27 +396,27 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
       fail("exception expected!");
     }
     catch(ProcessEngineCdiException e) {
-      assertEquals("Cannot set a local cached variable: neither a Task nor an Execution is associated.", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
     }
 
     // the variable cache is still empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearCachedLocalVariableMap());
+    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
     // now the variable cache is empty again:
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getAndClearCachedLocalVariableMap());
+    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     // set a variable
     businessProcess.setVariableLocal("anotherVariableName", "aVariableValue");
 
     // now the variable is set
-    assertEquals(Collections.singletonMap("anotherVariableName", "aVariableValue"), businessProcess.getAndClearCachedLocalVariableMap());
+    assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.singletonMap("anotherVariableName", "aVariableValue"));
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testFlushVariableCache() {
+  void flushVariableCache() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // cannot flush variable cache in absence of an association:
@@ -429,7 +425,7 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
       fail("exception expected!");
 
     } catch (ProcessEngineCdiException e) {
-      assertEquals("Cannot flush variable cache: neither a Task nor an Execution is associated.", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("Cannot flush variable cache: neither a Task nor an Execution is associated.");
 
     }
 
@@ -439,56 +435,56 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     businessProcess.setVariable("aVariableName", "aVariable");
 
     // the variable is not yet present in the execution:
-    assertNull(runtimeService.getVariable(businessProcess.getExecutionId(), "aVariableName"));
+    assertThat(runtimeService.getVariable(businessProcess.getExecutionId(), "aVariableName")).isNull();
 
     // set a local variable
     businessProcess.setVariableLocal("aVariableLocalName", "aVariableLocal");
 
     // the local variable is not yet present in the execution:
-    assertNull(runtimeService.getVariable(businessProcess.getExecutionId(), "aVariableLocalName"));
+    assertThat(runtimeService.getVariable(businessProcess.getExecutionId(), "aVariableLocalName")).isNull();
 
     // flush the cache
     businessProcess.flushVariableCache();
 
     // the variable is flushed to the execution
-    assertNotNull(runtimeService.getVariable(businessProcess.getExecutionId(), "aVariableName"));
+    assertThat(runtimeService.getVariable(businessProcess.getExecutionId(), "aVariableName")).isNotNull();
 
     // the local variable is flushed to the execution
-    assertNotNull(runtimeService.getVariable(businessProcess.getExecutionId(), "aVariableLocalName"));
+    assertThat(runtimeService.getVariable(businessProcess.getExecutionId(), "aVariableLocalName")).isNotNull();
 
     // the cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getCachedVariableMap());
+    assertThat(businessProcess.getCachedVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
     // the cache is empty
-    assertEquals(Collections.EMPTY_MAP, businessProcess.getCachedLocalVariableMap());
+    assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.EMPTY_MAP);
 
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testSaveTask() {
+  void saveTask() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // cannot save task in absence of an association:
     try {
       businessProcess.saveTask();
-      fail();
+      fail("");
     } catch (ProcessEngineCdiException e) {
-      assertEquals("No task associated. Call businessProcess.startTask() first.", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("No task associated. Call businessProcess.startTask() first.");
     }
 
     // start the process
     String processInstanceId = businessProcess.startProcessByKey("businessProcessBeanTest", Collections.singletonMap("key", (Object) "value")).getId();
-    assertEquals("value", runtimeService.getVariable(processInstanceId, "key"));
+    assertThat(runtimeService.getVariable(processInstanceId, "key")).isEqualTo("value");
 
     businessProcess.startTask(taskService.createTaskQuery().singleResult().getId());
 
     // assignee is not set to jonny
-    assertNull(taskService.createTaskQuery().taskAssignee("jonny").singleResult());
+    assertThat(taskService.createTaskQuery().taskAssignee("jonny").singleResult()).isNull();
     Task task = businessProcess.getTask();
     task.setAssignee("jonny");
 
-    assertNull(taskService.createTaskQuery().taskAssignee("jonny").singleResult());
+    assertThat(taskService.createTaskQuery().taskAssignee("jonny").singleResult()).isNull();
 
     // if we save the task
     businessProcess.saveTask();
@@ -496,32 +492,32 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     // THEN
 
     // assignee is now set to jonny
-    assertNotNull(taskService.createTaskQuery().taskAssignee("jonny").singleResult());
+    assertThat(taskService.createTaskQuery().taskAssignee("jonny").singleResult()).isNotNull();
     // business process is still associated with task:
-    assertTrue(businessProcess.isTaskAssociated());
+    assertThat(businessProcess.isTaskAssociated()).isTrue();
   }
 
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/cdi/test/api/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testStopTask() {
+  void stopTask() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // cannot stop task in absence of an association:
     try {
       businessProcess.stopTask();
-      fail();
+      fail("");
     } catch (ProcessEngineCdiException e) {
-      assertEquals("No task associated. Call businessProcess.startTask() first.", e.getMessage());
+      assertThat(e.getMessage()).isEqualTo("No task associated. Call businessProcess.startTask() first.");
     }
 
     // start the process
     String processInstanceId = businessProcess.startProcessByKey("businessProcessBeanTest", Collections.singletonMap("key", (Object) "value")).getId();
-    assertEquals("value", runtimeService.getVariable(processInstanceId, "key"));
+    assertThat(runtimeService.getVariable(processInstanceId, "key")).isEqualTo("value");
 
     businessProcess.startTask(taskService.createTaskQuery().singleResult().getId());
 
     // assignee is not set to jonny
-    assertNull(taskService.createTaskQuery().taskAssignee("jonny").singleResult());
+    assertThat(taskService.createTaskQuery().taskAssignee("jonny").singleResult()).isNull();
     Task task = businessProcess.getTask();
     task.setAssignee("jonny");
 
@@ -531,10 +527,10 @@ public class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     // THEN
 
     // assignee is not set to jonny
-    assertNull(taskService.createTaskQuery().taskAssignee("jonny").singleResult());
+    assertThat(taskService.createTaskQuery().taskAssignee("jonny").singleResult()).isNull();
     // business process is not associated with task:
-    assertFalse(businessProcess.isTaskAssociated());
-    assertFalse(businessProcess.isAssociated());
+    assertThat(businessProcess.isTaskAssociated()).isFalse();
+    assertThat(businessProcess.isAssociated()).isFalse();
   }
 
 }

@@ -16,26 +16,27 @@
  */
 package org.operaton.bpm.engine.experimental;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class ProcessVariablesTest extends CdiProcessEngineTestCase {
+class ProcessVariablesTest extends CdiProcessEngineTestCase {
 
-  @Ignore
+  @Disabled
   @Test
   @Deployment(resources = "org/activiti/cdi/BusinessProcessBeanTest.test.bpmn20.xml")
-  public void testResolveString() {
+  void resolveString() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     Map<String, Object> processVariables = new HashMap<>();
@@ -44,7 +45,7 @@ public class ProcessVariablesTest extends CdiProcessEngineTestCase {
     businessProcess.startTask(taskService.createTaskQuery().singleResult().getId());
     
     InjectProcessVariable injectProcessVariables = getBeanInstance(InjectProcessVariable.class);
-    assertEquals("testValue", injectProcessVariables.testKeyString);
+    assertThat(injectProcessVariables.testKeyString).isEqualTo("testValue");
 
     businessProcess.completeTask();
   }

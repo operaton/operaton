@@ -16,35 +16,36 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.el;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Arrays;
 
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.MessageBean;
 import org.operaton.bpm.engine.cdi.test.impl.el.beans.DependentScopedBean;
 import org.operaton.bpm.engine.test.Deployment;
+
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Meyer
  */
 @RunWith(Arquillian.class)
-public class ElTest extends CdiProcessEngineTestCase {
+class ElTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testSetBeanProperty() {
+  void setBeanProperty() {
     MessageBean messageBean = getBeanInstance(MessageBean.class);
     runtimeService.startProcessInstanceByKey("setBeanProperty");
-    assertEquals("Greetings from Berlin", messageBean.getMessage());
+    assertThat(messageBean.getMessage()).isEqualTo("Greetings from Berlin");
   }
 
   @Test
   @Deployment
-  public void testDependentScoped() {
+  void dependentScoped() {
 
     DependentScopedBean.reset();
 
@@ -52,7 +53,7 @@ public class ElTest extends CdiProcessEngineTestCase {
 
     // make sure the complete bean lifecycle (including invocation of @PreDestroy) was executed.
     // This ensures that the @Dependent scoped bean was properly destroyed.
-    assertEquals(Arrays.asList("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"), DependentScopedBean.lifecycle);
+    assertThat(DependentScopedBean.lifecycle).isEqualTo(Arrays.asList("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"));
   }
 
 }

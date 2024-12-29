@@ -24,9 +24,7 @@ import javax.enterprise.event.Observes;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ApplicationScoped
 public class TestEventListener {
@@ -48,8 +46,8 @@ public class TestEventListener {
 
   // receives all events related to "process1"
   public void onProcessEventByKey(@Observes @BusinessProcessDefinition("process1") BusinessProcessEvent businessProcessEvent) {
-    assertNotNull(businessProcessEvent);
-    assertEquals("process1", businessProcessEvent.getProcessDefinition().getKey());
+    assertThat(businessProcessEvent).isNotNull();
+    assertThat(businessProcessEvent.getProcessDefinition().getKey()).isEqualTo("process1");
     eventsReceivedByKey.add(businessProcessEvent);
   }
 
@@ -64,7 +62,7 @@ public class TestEventListener {
 
   // receives all events
   public void onProcessEvent(@Observes BusinessProcessEvent businessProcessEvent) {
-    assertNotNull(businessProcessEvent);
+    assertThat(businessProcessEvent).isNotNull();
     eventsReceived.add(businessProcessEvent);
   }
 
@@ -79,29 +77,29 @@ public class TestEventListener {
   private int takeTransition1 = 0;
 
   public void onStartActivityService1(@Observes @StartActivity("service1") BusinessProcessEvent businessProcessEvent) {
-    assertEquals("service1", businessProcessEvent.getActivityId());
-    assertNotNull(businessProcessEvent);
-    assertNull(businessProcessEvent.getTask());
-    assertNull(businessProcessEvent.getTaskId());
-    assertNull(businessProcessEvent.getTaskDefinitionKey());
+    assertThat(businessProcessEvent.getActivityId()).isEqualTo("service1");
+    assertThat(businessProcessEvent).isNotNull();
+    assertThat(businessProcessEvent.getTask()).isNull();
+    assertThat(businessProcessEvent.getTaskId()).isNull();
+    assertThat(businessProcessEvent.getTaskDefinitionKey()).isNull();
     startActivityService1 += 1;
   }
 
   public void onEndActivityService1(@Observes @EndActivity("service1") BusinessProcessEvent businessProcessEvent) {
-    assertEquals("service1", businessProcessEvent.getActivityId());
-    assertNotNull(businessProcessEvent);
-    assertNull(businessProcessEvent.getTask());
-    assertNull(businessProcessEvent.getTaskId());
-    assertNull(businessProcessEvent.getTaskDefinitionKey());
+    assertThat(businessProcessEvent.getActivityId()).isEqualTo("service1");
+    assertThat(businessProcessEvent).isNotNull();
+    assertThat(businessProcessEvent.getTask()).isNull();
+    assertThat(businessProcessEvent.getTaskId()).isNull();
+    assertThat(businessProcessEvent.getTaskDefinitionKey()).isNull();
     endActivityService1 += 1;
   }
 
   public void takeTransition1(@Observes @TakeTransition("t1") BusinessProcessEvent businessProcessEvent) {
-    assertEquals("t1", businessProcessEvent.getTransitionName());
-    assertNotNull(businessProcessEvent);
-    assertNull(businessProcessEvent.getTask());
-    assertNull(businessProcessEvent.getTaskId());
-    assertNull(businessProcessEvent.getTaskDefinitionKey());
+    assertThat(businessProcessEvent.getTransitionName()).isEqualTo("t1");
+    assertThat(businessProcessEvent).isNotNull();
+    assertThat(businessProcessEvent.getTask()).isNull();
+    assertThat(businessProcessEvent.getTaskId()).isNull();
+    assertThat(businessProcessEvent.getTaskDefinitionKey()).isNull();
     takeTransition1 += 1;
   }
 
@@ -126,34 +124,34 @@ public class TestEventListener {
   private int deleteTaskUser1 = 0;
 
   public void onCreateTask(@Observes @CreateTask("user1") BusinessProcessEvent businessProcessEvent) {
-    assertNotNull(businessProcessEvent);
-    assertNotNull(businessProcessEvent.getTask());
-    assertNotNull(businessProcessEvent.getTaskId());
-    assertEquals("user1", businessProcessEvent.getTaskDefinitionKey());
+    assertThat(businessProcessEvent).isNotNull();
+    assertThat(businessProcessEvent.getTask()).isNotNull();
+    assertThat(businessProcessEvent.getTaskId()).isNotNull();
+    assertThat(businessProcessEvent.getTaskDefinitionKey()).isEqualTo("user1");
     createTaskUser1++;
   }
 
   public void onAssignTask(@Observes @AssignTask("user1") BusinessProcessEvent businessProcessEvent) {
-    assertNotNull(businessProcessEvent);
-    assertNotNull(businessProcessEvent.getTask());
-    assertNotNull(businessProcessEvent.getTaskId());
-    assertEquals("user1", businessProcessEvent.getTaskDefinitionKey());
+    assertThat(businessProcessEvent).isNotNull();
+    assertThat(businessProcessEvent.getTask()).isNotNull();
+    assertThat(businessProcessEvent.getTaskId()).isNotNull();
+    assertThat(businessProcessEvent.getTaskDefinitionKey()).isEqualTo("user1");
     assignTaskUser1++;
   }
 
   public void onCompleteTask(@Observes @CompleteTask("user1") BusinessProcessEvent businessProcessEvent) {
-    assertNotNull(businessProcessEvent);
-    assertNotNull(businessProcessEvent.getTask());
-    assertNotNull(businessProcessEvent.getTaskId());
-    assertEquals("user1", businessProcessEvent.getTaskDefinitionKey());
+    assertThat(businessProcessEvent).isNotNull();
+    assertThat(businessProcessEvent.getTask()).isNotNull();
+    assertThat(businessProcessEvent.getTaskId()).isNotNull();
+    assertThat(businessProcessEvent.getTaskDefinitionKey()).isEqualTo("user1");
     completeTaskUser1++;
   }
 
   public void onDeleteTask(@Observes @DeleteTask("user1") BusinessProcessEvent businessProcessEvent) {
-    assertNotNull(businessProcessEvent);
-    assertNotNull(businessProcessEvent.getTask());
-    assertNotNull(businessProcessEvent.getTaskId());
-    assertEquals("user1", businessProcessEvent.getTaskDefinitionKey());
+    assertThat(businessProcessEvent).isNotNull();
+    assertThat(businessProcessEvent.getTask()).isNotNull();
+    assertThat(businessProcessEvent.getTaskId()).isNotNull();
+    assertThat(businessProcessEvent.getTaskDefinitionKey()).isEqualTo("user1");
     deleteTaskUser1++;
   }
 

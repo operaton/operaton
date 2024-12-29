@@ -20,9 +20,11 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -30,17 +32,17 @@ import org.junit.runner.RunWith;
  * @author Daniel Meyer
  */
 @RunWith(Arquillian.class)
-public class BusinessKeyTest extends CdiProcessEngineTestCase {
-  
+class BusinessKeyTest extends CdiProcessEngineTestCase {
+
   @Test
   @Deployment
-  public void testBusinessKeyInjectable() {
+  void businessKeyInjectable() {
     String businessKey = "Activiti";
     String pid = runtimeService.startProcessInstanceByKey("keyOfTheProcess", businessKey).getId();
     getBeanInstance(BusinessProcess.class).associateExecutionById(pid);
-    
+
     // assert that now the businessKey-Bean can be looked up:
-    Assert.assertEquals(businessKey, ProgrammaticBeanLookup.lookup("businessKey"));
+    assertThat(ProgrammaticBeanLookup.lookup("businessKey")).isEqualTo(businessKey);
     
   } 
 }

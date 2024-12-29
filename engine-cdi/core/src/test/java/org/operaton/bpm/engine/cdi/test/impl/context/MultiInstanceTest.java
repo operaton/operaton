@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -30,11 +30,11 @@ import org.junit.runner.RunWith;
  *
  */
 @RunWith(Arquillian.class)
-public class MultiInstanceTest extends CdiProcessEngineTestCase {
+class MultiInstanceTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testParallelMultiInstanceServiceTasks() {
+  void parallelMultiInstanceServiceTasks() {
 
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
     businessProcess.setVariable("list", Arrays.asList("1","2"));

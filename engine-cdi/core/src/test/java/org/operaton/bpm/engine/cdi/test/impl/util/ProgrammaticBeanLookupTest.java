@@ -26,7 +26,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.operaton.bpm.engine.cdi.impl.ProcessEngineServicesProducer;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
@@ -82,7 +82,7 @@ public class ProgrammaticBeanLookupTest {
   }
 
   @Test
-  public void testLookupBean() {
+  void lookupBean() {
     deployer.deploy("normal");
     Object lookup = ProgrammaticBeanLookup.lookup("testOnly");
     assertThat(lookup).isInstanceOf(TestBean.class);
@@ -90,7 +90,7 @@ public class ProgrammaticBeanLookupTest {
   }
 
   @Test
-  public void testLookupShouldFindAlternative() {
+  void lookupShouldFindAlternative() {
     deployer.deploy("withAlternative");
     Object lookup = ProgrammaticBeanLookup.lookup("testOnly");
     assertThat(lookup.getClass().getName()).isEqualTo(AlternativeTestBean.class.getName());
@@ -98,7 +98,7 @@ public class ProgrammaticBeanLookupTest {
   }
 
   @Test
-  public void testLookupShouldFindSpecialization() {
+  void lookupShouldFindSpecialization() {
     deployer.deploy("withSpecialization");
     Object lookup = ProgrammaticBeanLookup.lookup("testOnly");
     assertThat(lookup.getClass().getName()).isEqualTo(SpecializedTestBean.class.getName());
@@ -106,7 +106,7 @@ public class ProgrammaticBeanLookupTest {
   }
 
   @Test
-  public void testLookupShouldSupportProducerMethods() {
+  void lookupShouldSupportProducerMethods() {
     deployer.deploy("withProducerMethod");
     assertThat(ProgrammaticBeanLookup.lookup("producedString")).isEqualTo("exampleString");
     deployer.undeploy("withProducerMethod");

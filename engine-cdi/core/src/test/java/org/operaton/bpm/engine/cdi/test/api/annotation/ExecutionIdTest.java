@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Set;
 
 import javax.enterprise.context.spi.CreationalContext;
@@ -27,9 +25,12 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.annotation.ExecutionIdLiteral;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Assert;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -37,36 +38,36 @@ import org.junit.runner.RunWith;
  * @author Daniel Meyer
  */
 @RunWith(Arquillian.class)
-public class ExecutionIdTest extends CdiProcessEngineTestCase {
-  
+class ExecutionIdTest extends CdiProcessEngineTestCase {
+
   @Test
   @Deployment
-  public void testExecutionIdInjectableByName() {
+  void executionIdInjectableByName() {
     getBeanInstance(BusinessProcess.class).startProcessByKey("keyOfTheProcess");
     String processInstanceId = (String) getBeanInstance("processInstanceId");
-    Assert.assertNotNull(processInstanceId);
+    assertThat(processInstanceId).isNotNull();
     String executionId = (String) getBeanInstance("executionId");
-    Assert.assertNotNull(executionId);
-    
-    assertEquals(processInstanceId, executionId);
+    assertThat(executionId).isNotNull();
+
+    assertThat(executionId).isEqualTo(processInstanceId);
   }
-  
+
   @Test
   @Deployment
-  public void testExecutionIdInjectableByQualifier() {
+  void executionIdInjectableByQualifier() {
     getBeanInstance(BusinessProcess.class).startProcessByKey("keyOfTheProcess");
     
     Set<Bean<?>> beans = beanManager.getBeans(String.class, new ExecutionIdLiteral());    
     Bean<String> bean = (Bean<java.lang.String>) beanManager.resolve(beans);
     
     CreationalContext<String> ctx = beanManager.createCreationalContext(bean);
-    String executionId = (String) beanManager.getReference(bean, String.class, ctx);   
-    Assert.assertNotNull(executionId);
+    String executionId = (String) beanManager.getReference(bean, String.class, ctx);
+    assertThat(executionId).isNotNull();
     
     String processInstanceId = (String) getBeanInstance("processInstanceId");
-    Assert.assertNotNull(processInstanceId);
-    
-    assertEquals(processInstanceId, executionId);
+    assertThat(processInstanceId).isNotNull();
+
+    assertThat(executionId).isEqualTo(processInstanceId);
   }
   
 }

@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.cdi.test.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-import java.util.Collections;
-
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.ProcessEngineCdiException;
@@ -32,14 +27,20 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.jboss.arquillian.junit.Arquillian;
+
+import java.util.Collections;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
   /* General test asserting that the business process bean is functional */
@@ -474,7 +475,7 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     }
 
     // start the process
-    String processInstanceId = businessProcess.startProcessByKey("businessProcessBeanTest", Collections.singletonMap("key", (Object) "value")).getId();
+    String processInstanceId = businessProcess.startProcessByKey("businessProcessBeanTest", Collections.singletonMap("key", "value")).getId();
     assertThat(runtimeService.getVariable(processInstanceId, "key")).isEqualTo("value");
 
     businessProcess.startTask(taskService.createTaskQuery().singleResult().getId());
@@ -511,7 +512,7 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     }
 
     // start the process
-    String processInstanceId = businessProcess.startProcessByKey("businessProcessBeanTest", Collections.singletonMap("key", (Object) "value")).getId();
+    String processInstanceId = businessProcess.startProcessByKey("businessProcessBeanTest", Collections.singletonMap("key", "value")).getId();
     assertThat(runtimeService.getVariable(processInstanceId, "key")).isEqualTo("value");
 
     businessProcess.startTask(taskService.createTaskQuery().singleResult().getId());

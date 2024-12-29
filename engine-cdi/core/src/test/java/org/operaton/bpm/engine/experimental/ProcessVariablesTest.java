@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.engine.experimental;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
 
-import org.jboss.arquillian.junit.Arquillian;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-@RunWith(Arquillian.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ExtendWith(ArquillianExtension.class)
 class ProcessVariablesTest extends CdiProcessEngineTestCase {
 
   @Disabled

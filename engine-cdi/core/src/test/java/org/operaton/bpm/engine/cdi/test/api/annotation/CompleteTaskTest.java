@@ -23,11 +23,11 @@ import org.operaton.bpm.engine.cdi.test.impl.beans.DeclarativeProcessController;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 
-import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.runner.RunWith;
 
 /**
  * Testcase for assuring that the {@link CompleteTaskInterceptor} works as
@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  * 
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 class CompleteTaskTest extends CdiProcessEngineTestCase {
 
   @Test

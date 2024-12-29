@@ -56,7 +56,7 @@ import org.junit.Rule;
  */
 /**
  * When creating a new test class, extend it with this class and add a
- * @RunWith(Arquillian.class) annotation to the child class.
+ * @ExtendWith(ArquillianExtension.class) annotation to the child class.
  */
 public abstract class CdiProcessEngineTestCase {
 

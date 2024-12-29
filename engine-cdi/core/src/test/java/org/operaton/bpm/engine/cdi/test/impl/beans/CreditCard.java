@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.beans;
 
-import java.io.Serializable;
+import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;
 
 import javax.inject.Named;
-
-import org.operaton.bpm.engine.cdi.annotation.BusinessProcessScoped;
+import java.io.Serializable;
 
 /**
  * 
@@ -50,11 +49,8 @@ public class CreditCard implements Serializable {
       return false;
     CreditCard other = (CreditCard) obj;
     if (creditcardNumber == null) {
-      if (other.creditcardNumber != null)
-        return false;
-    } else if (!creditcardNumber.equals(other.creditcardNumber))
-      return false;
-    return true;
+        return other.creditcardNumber == null;
+    } else return creditcardNumber.equals(other.creditcardNumber);
   }
 
 }

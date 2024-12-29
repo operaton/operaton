@@ -16,20 +16,21 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.ProcessScopedMessageBean;
 import org.operaton.bpm.engine.test.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 class ThreadContextAssociationTest extends CdiProcessEngineTestCase {
 
   @Test
@@ -37,7 +38,7 @@ class ThreadContextAssociationTest extends CdiProcessEngineTestCase {
   void businessProcessScopedWithJobExecutor() {
     String pid = runtimeService.startProcessInstanceByKey("processkey").getId();
         
-    waitForJobExecutorToProcessAllJobs(5000l, 25l);
+    waitForJobExecutorToProcessAllJobs(5000L, 25L);
 
     assertThat(managementService.createJobQuery().singleResult()).isNull();
     

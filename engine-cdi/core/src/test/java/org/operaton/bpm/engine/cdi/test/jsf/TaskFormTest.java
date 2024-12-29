@@ -16,27 +16,25 @@
  */
 package org.operaton.bpm.engine.cdi.test.jsf;
 
-import java.util.Set;
-
-import javax.enterprise.inject.spi.Bean;
-
-import org.operaton.bpm.engine.cdi.compat.OperatonTaskForm;
 import org.operaton.bpm.engine.cdi.compat.FoxTaskForm;
+import org.operaton.bpm.engine.cdi.compat.OperatonTaskForm;
 import org.operaton.bpm.engine.cdi.jsf.TaskForm;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 
-import org.jboss.arquillian.junit.Arquillian;
+import javax.enterprise.inject.spi.Bean;
+import java.util.Set;
+
+import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.junit.jupiter.api.Assertions;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
+@ExtendWith(ArquillianExtension.class)
 class TaskFormTest extends CdiProcessEngineTestCase {
 
   @Test

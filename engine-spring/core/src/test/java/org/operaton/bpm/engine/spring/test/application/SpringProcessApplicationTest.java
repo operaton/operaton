@@ -39,7 +39,7 @@ class SpringProcessApplicationTest {
   void processApplicationDeployment() {
 
     // initially no applications are deployed:
-    assertThat(BpmPlatform.getProcessApplicationService().getProcessApplicationNames().size()).isEqualTo(0);
+    assertThat(BpmPlatform.getProcessApplicationService().getProcessApplicationNames()).isEmpty();
 
     // start a spring application context
     AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext("org/operaton/bpm/engine/spring/test/application/SpringProcessApplicationDeploymentTest-context.xml");

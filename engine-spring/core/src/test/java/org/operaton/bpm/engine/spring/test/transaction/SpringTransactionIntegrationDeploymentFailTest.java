@@ -34,6 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/transaction/SpringTransactionIntegrationDeploymentFailTest-context.xml")
 class SpringTransactionIntegrationDeploymentFailTest extends SpringProcessEngineTestCase {
 
+  @Override
   @AfterEach
   protected void tearDown(TestInfo testInfo) throws Exception {
     //must not be needed after CAM-4250 is fixed

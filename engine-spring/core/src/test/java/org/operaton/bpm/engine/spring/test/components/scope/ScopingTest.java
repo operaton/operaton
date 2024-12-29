@@ -111,7 +111,7 @@ public class ScopingTest {
 
 		List<Task> tasks = taskService.createTaskQuery().executionId(procId).list();
 
-    assertThat(tasks.size()).as("there should be 1 (one) task enqueued at this point.").isEqualTo(1);
+    assertThat(tasks).as("there should be 1 (one) task enqueued at this point.").hasSize(1);
 
 		Task t = tasks.iterator().next();
 
@@ -144,6 +144,10 @@ public class ScopingTest {
   @Test
   void startingAProcessWithScopedBeans() {
 		this.processInitiatingPojo.startScopedProcess(3243);
+		ProcessInstance processInstance = processEngine.getRuntimeService().createProcessInstanceQuery()
+			.processDefinitionKey("component-waiter")
+			.singleResult();
+		assertThat(processInstance).isNotNull();
 	}
 
 

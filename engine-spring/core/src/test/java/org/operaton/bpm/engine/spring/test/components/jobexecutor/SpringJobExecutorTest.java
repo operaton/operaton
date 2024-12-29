@@ -48,7 +48,7 @@ class SpringJobExecutorTest extends SpringProcessEngineTestCase {
 		waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 10000L, 1000L);
 
 		List<Task> activeTasks = taskService.createTaskQuery().processInstanceId(instance.getId()).list();
-    assertThat(activeTasks.size()).isEqualTo(0);
+    assertThat(activeTasks).isEmpty();
 	}
 
   @Deployment(resources = {"org/operaton/bpm/engine/spring/test/components/SpringTimersProcess.bpmn20.xml",
@@ -66,7 +66,7 @@ class SpringJobExecutorTest extends SpringProcessEngineTestCase {
     waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 10000L, 1000L);
 
     List<Task> activeTasks = taskService.createTaskQuery().processInstanceId(instance.getId()).list();
-    assertThat(activeTasks.size()).isEqualTo(1);
+    assertThat(activeTasks).hasSize(1);
   }
 
 

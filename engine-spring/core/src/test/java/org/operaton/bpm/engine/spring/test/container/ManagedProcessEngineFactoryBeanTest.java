@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.spring.test.container;
-import static org.assertj.core.api.Assertions.assertThat;
 
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.engine.spring.container.ManagedProcessEngineFactoryBean;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Testcase for {@link ManagedProcessEngineFactoryBean}</p>
@@ -37,7 +38,7 @@ class ManagedProcessEngineFactoryBeanTest {
 
     // initially, no process engine is registered:
     assertThat(BpmPlatform.getDefaultProcessEngine()).isNull();
-    assertThat(BpmPlatform.getProcessEngineService().getProcessEngines().size()).isEqualTo(0);
+    assertThat(BpmPlatform.getProcessEngineService().getProcessEngines()).isEmpty();
     
     // start spring application context
     AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext("org/operaton/bpm/engine/spring/test/container/ManagedProcessEngineFactoryBean-context.xml");
@@ -51,7 +52,7 @@ class ManagedProcessEngineFactoryBeanTest {
 
     // after closing the application context, the process engine is gone
     assertThat(BpmPlatform.getDefaultProcessEngine()).isNull();
-    assertThat(BpmPlatform.getProcessEngineService().getProcessEngines().size()).isEqualTo(0);
+    assertThat(BpmPlatform.getProcessEngineService().getProcessEngines()).isEmpty();
     
   }
     

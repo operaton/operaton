@@ -16,18 +16,17 @@
  */
 package org.operaton.bpm.engine.spring.test.expression;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Test limiting the exposed beans in expressions.
@@ -44,19 +43,16 @@ class SpringLimitedExpressionsTest extends SpringProcessEngineTestCase {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("limitedExpressionProcess");
     
     String beanOutput = (String) runtimeService.getVariable(processInstance.getId(), "beanOutput");
-    assertThat(beanOutput).isNotNull();
-    assertThat(beanOutput).isEqualTo("Activiti BPMN 2.0 process engine");
+    assertThat(beanOutput)
+        .isNotNull()
+        .isEqualTo("Activiti BPMN 2.0 process engine");
     
     // Finish the task, should continue to serviceTask which uses a bean that is present
     // in application-context, but not exposed explicitly in "beans", should throw error!
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(task).isNotNull();
     
-    try {
-      taskService.complete(task.getId());
-      fail("Exception should have been thrown");
-    } catch(ProcessEngineException ae) {
-      assertTextPresent("Unknown property used in expression", ae.getMessage());
-    }
-  }
+    assertThatThrownBy(() -> taskService.complete(task.getId()))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Unknown property used in expression");  }
 }

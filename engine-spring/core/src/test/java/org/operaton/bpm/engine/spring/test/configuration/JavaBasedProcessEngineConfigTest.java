@@ -16,16 +16,16 @@
  */
 package org.operaton.bpm.engine.spring.test.configuration;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Philipp Ossler
@@ -44,7 +44,7 @@ class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
   void delegateExpression() {
     runtimeService.startProcessInstanceByKey("SpringProcess");
 
-    assertThat(couter.getCount(), is(1));
+    assertThat(couter.getCount()).isOne();
   }
 
   @Deployment
@@ -52,7 +52,7 @@ class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
   void expression() {
     runtimeService.startProcessInstanceByKey("SpringProcess");
 
-    assertThat(couter.getCount(), is(1));
+    assertThat(couter.getCount()).isOne();
   }
 
   @Deployment
@@ -60,8 +60,8 @@ class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
   void delegateExpressionWithProcessServices() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("SpringProcess").getId();
 
-    assertThat(couter.getCount(), is(1));
-    assertThat((Integer) runtimeService.getVariable(processInstanceId, "count"), is(1));
+    assertThat(couter.getCount()).isOne();
+    assertThat((Integer) runtimeService.getVariable(processInstanceId, "count")).isOne();
   }
 
 }

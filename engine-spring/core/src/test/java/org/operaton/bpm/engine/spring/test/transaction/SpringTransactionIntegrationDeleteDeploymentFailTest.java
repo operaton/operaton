@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Svetlana Dorokhova
@@ -38,15 +39,13 @@ class SpringTransactionIntegrationDeleteDeploymentFailTest extends SpringProcess
   private String deploymentId;
 
   @AfterEach
-  void tearDown() throws Exception {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext
-          .getDeploymentManager()
-          .deleteDeployment(deploymentId, false, false, false);
-        return null;
-      }
+  protected void tearDown() throws Exception {
+    super.tearDown();
+    processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
+      commandContext
+        .getDeploymentManager()
+        .deleteDeployment(deploymentId, false, false, false);
+      return null;
     });
   }
 
@@ -61,15 +60,12 @@ class SpringTransactionIntegrationDeleteDeploymentFailTest extends SpringProcess
     // 2. it fails in post command interceptor (see FailDeleteDeploymentsPlugin)
     // 3. transaction is rolling back
     // 4. DeleteDeploymentFailListener is called
-    try {
-      processEngine.getRepositoryService().deleteDeployment(deploymentId);
-    } catch (Exception ex) {
-      //expected exception
-    }
+    assertThatThrownBy(() -> processEngine.getRepositoryService().deleteDeployment(deploymentId))
+      .isInstanceOf(ProcessEngineException.class);
 
     //then
     // DeleteDeploymentFailListener succeeded to registered deployments back
-    assertThat(processEngineConfiguration.getRegisteredDeployments().size()).isEqualTo(1);
+    assertThat(processEngineConfiguration.getRegisteredDeployments()).hasSize(1);
   }
 
 }

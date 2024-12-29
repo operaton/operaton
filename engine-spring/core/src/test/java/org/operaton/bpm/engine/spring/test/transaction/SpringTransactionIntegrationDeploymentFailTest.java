@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Svetlana Dorokhova
@@ -34,9 +34,10 @@ import org.springframework.test.context.ContextConfiguration;
 class SpringTransactionIntegrationDeploymentFailTest extends SpringProcessEngineTestCase {
 
   @AfterEach
-  void tearDown() throws Exception {
+  protected void tearDown() throws Exception {
     //must not be needed after CAM-4250 is fixed
     processEngineConfiguration.getDeploymentCache().discardProcessDefinitionCache();
+    super.tearDown();
   }
 
   @Test
@@ -57,7 +58,7 @@ class SpringTransactionIntegrationDeploymentFailTest extends SpringProcessEngine
 
     //then
     // DeploymentFailListener succeeded to remove registered deployments
-    assertThat(processEngineConfiguration.getRegisteredDeployments().size()).isEqualTo(0);
+    assertThat(processEngineConfiguration.getRegisteredDeployments().size()).isZero();
   }
 
 }

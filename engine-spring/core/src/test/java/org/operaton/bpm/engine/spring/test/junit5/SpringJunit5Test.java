@@ -14,31 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.spring.test.junit4;
+package org.operaton.bpm.engine.spring.test.junit5;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.Deployment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
  * @author Joram Barrez
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/junit4/springTypicalUsageTest-context.xml")
-public class SpringJunit4Test {
+public class SpringJunit5Test {
 
   @Autowired
   private ProcessEngine processEngine;
@@ -49,10 +48,6 @@ public class SpringJunit4Test {
   @Autowired
   private TaskService taskService;
 
-  @Autowired
-  @Rule
-  public ProcessEngineRule activitiSpringRule;
-
   @AfterEach
   void closeProcessEngine() {
     // Required, since all the other tests seem to do a specific drop on the end
@@ -60,7 +55,6 @@ public class SpringJunit4Test {
     processEngine = null;
     runtimeService = null;
     taskService = null;
-    activitiSpringRule = null;
   }
 
   @Test
@@ -72,7 +66,5 @@ public class SpringJunit4Test {
 
     taskService.complete(task.getId());
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
-
   }
-
 }

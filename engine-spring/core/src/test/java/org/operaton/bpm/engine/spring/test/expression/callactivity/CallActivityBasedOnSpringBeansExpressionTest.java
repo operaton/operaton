@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.spring.test.expression.callactivity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.Deployment;
+import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProcessEnded;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * The CallActivityBasedOnSpringBeansExpressionTest is used to test dynamically wiring in the calledElement 
@@ -63,7 +64,7 @@ class CallActivityBasedOnSpringBeansExpressionTest extends SpringProcessEngineTe
 
 		// Completing this task end the process instance
 		taskService.complete(taskAfterSubProcess.getId());
-		assertProcessEnded(processInstance.getId());
+		assertProcessEnded(processEngine, processInstance.getId());
 	}
 
 }

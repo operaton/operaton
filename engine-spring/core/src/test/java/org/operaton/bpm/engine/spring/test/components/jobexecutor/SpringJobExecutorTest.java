@@ -16,16 +16,18 @@
  */
 package org.operaton.bpm.engine.spring.test.components.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import static org.operaton.bpm.engine.impl.test.TestHelper.waitForJobExecutorToProcessAllJobs;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -43,7 +45,7 @@ class SpringJobExecutorTest extends SpringProcessEngineTestCase {
 
     assertThat(instance).isNotNull();
 
-		waitForJobExecutorToProcessAllJobs(10000);
+		waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 10000L, 1000L);
 
 		List<Task> activeTasks = taskService.createTaskQuery().processInstanceId(instance.getId()).list();
     assertThat(activeTasks.size()).isEqualTo(0);
@@ -61,7 +63,7 @@ class SpringJobExecutorTest extends SpringProcessEngineTestCase {
 
     assertThat(instance).isNotNull();
 
-    waitForJobExecutorToProcessAllJobs(10000);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 10000L, 1000L);
 
     List<Task> activeTasks = taskService.createTaskQuery().processInstanceId(instance.getId()).list();
     assertThat(activeTasks.size()).isEqualTo(1);

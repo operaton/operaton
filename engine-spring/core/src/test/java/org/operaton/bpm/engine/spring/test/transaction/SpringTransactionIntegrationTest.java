@@ -16,25 +16,23 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.concurrent.TimeUnit;
-
-import javax.sql.DataSource;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+import static org.operaton.bpm.engine.impl.test.TestHelper.waitForJobExecutorToProcessAllJobs;
+
+import javax.sql.DataSource;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
@@ -49,7 +47,8 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
   @Autowired
   protected DataSource dataSource;
 
-  private static long WAIT_TIME_MILLIS = TimeUnit.MILLISECONDS.convert(20L, TimeUnit.SECONDS);
+  private static long WAIT_TIME_MILLIS = 20000L;
+  public static final long INTERVAL_MILLIS = 1000L;
 
   @Deployment
   @Test
@@ -98,9 +97,9 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
   @Test
   void errorPropagationOnExceptionInTransaction() {
       runtimeService.startProcessInstanceByKey("process");
-      waitForJobExecutorToProcessAllJobs(WAIT_TIME_MILLIS);
+      waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
       Incident incident = runtimeService.createIncidentQuery().activityId("servicetask").singleResult();
-      assertThat(incident.getIncidentMessage(), is("error"));
+      assertThat(incident.getIncidentMessage()).isEqualTo("error");
   }
 
   @Deployment
@@ -109,7 +108,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
 
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
-    waitForJobExecutorToProcessAllJobs(WAIT_TIME_MILLIS);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
 
     Job job = managementService.createJobQuery().singleResult();
 
@@ -128,7 +127,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
 
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 
-    waitForJobExecutorToProcessAllJobs(WAIT_TIME_MILLIS);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
 
     Job job = managementService.createJobQuery().singleResult();
 
@@ -147,7 +146,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
 
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 
-    waitForJobExecutorToProcessAllJobs(WAIT_TIME_MILLIS);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
 
     Job job = managementService.createJobQuery().singleResult();
 

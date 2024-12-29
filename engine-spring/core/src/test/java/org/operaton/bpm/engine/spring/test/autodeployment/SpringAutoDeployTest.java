@@ -16,30 +16,26 @@
  */
 package org.operaton.bpm.engine.spring.test.autodeployment;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.impl.test.PvmTestCase;
-import org.operaton.bpm.engine.repository.CaseDefinition;
-import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.repository.DeploymentQuery;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
+import org.operaton.bpm.engine.repository.*;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.HashSet;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-class SpringAutoDeployTest extends PvmTestCase {
+class SpringAutoDeployTest {
 
   protected static final String CTX_PATH
     = "org/operaton/bpm/engine/spring/test/autodeployment/SpringAutoDeployTest-context.xml";

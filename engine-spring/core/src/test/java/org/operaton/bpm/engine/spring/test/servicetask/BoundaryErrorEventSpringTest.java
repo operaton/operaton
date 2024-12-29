@@ -16,17 +16,18 @@
  */
 package org.operaton.bpm.engine.spring.test.servicetask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProcessEnded;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
- * @see http://jira.codehaus.org/browse/ACT-1166
+ * @see <a href="http://jira.codehaus.org/browse/ACT-1166">ACT-1166</a>
  * @author Angel López Cima
  * @author Falko Menge
  */
@@ -49,6 +50,6 @@ class BoundaryErrorEventSpringTest extends SpringProcessEngineTestCase {
 
     // Completing the task will end the process instance
     taskService.complete(task.getId());
-    assertProcessEnded(procId);
+    assertProcessEnded(processEngine, procId);
   }
 }

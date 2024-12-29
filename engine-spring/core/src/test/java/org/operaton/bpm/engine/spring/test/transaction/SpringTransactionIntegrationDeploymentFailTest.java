@@ -19,23 +19,31 @@ package org.operaton.bpm.engine.spring.test.transaction;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Svetlana Dorokhova
  */
 
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/transaction/SpringTransactionIntegrationDeploymentFailTest-context.xml")
-public class SpringTransactionIntegrationDeploymentFailTest extends SpringProcessEngineTestCase {
+class SpringTransactionIntegrationDeploymentFailTest extends SpringProcessEngineTestCase {
 
   @Override
-  protected void tearDown() throws Exception {
+  @AfterEach
+  protected void tearDown(TestInfo testInfo) throws Exception {
     //must not be needed after CAM-4250 is fixed
     processEngineConfiguration.getDeploymentCache().discardProcessDefinitionCache();
-    super.tearDown();
+    super.tearDown(testInfo);
   }
 
-  public void testFailingAfterDeployment() {
+  @Test
+  void failingAfterDeployment() {
 //    given
     final BpmnModelInstance model = Bpmn.createExecutableProcess().startEvent().userTask().endEvent().done();
 
@@ -52,7 +60,7 @@ public class SpringTransactionIntegrationDeploymentFailTest extends SpringProces
 
     //then
     // DeploymentFailListener succeeded to remove registered deployments
-    assertEquals(0, processEngineConfiguration.getRegisteredDeployments().size());
+    assertThat(processEngineConfiguration.getRegisteredDeployments().size()).isZero();
   }
 
 }

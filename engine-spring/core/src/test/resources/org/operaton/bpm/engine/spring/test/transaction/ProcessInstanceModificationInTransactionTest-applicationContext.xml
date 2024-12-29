@@ -31,11 +31,6 @@
 
   </bean>
 
-  <bean id="processEngineRule" class="org.operaton.bpm.engine.test.ProcessEngineRule">
-    <property name="processEngine" ref="processEngine"/>
-  </bean>
-
-
   <!-- bind the default process engine as Spring Bean -->
   <bean id="processEngine"
         class="org.operaton.bpm.engine.spring.ProcessEngineFactoryBean">

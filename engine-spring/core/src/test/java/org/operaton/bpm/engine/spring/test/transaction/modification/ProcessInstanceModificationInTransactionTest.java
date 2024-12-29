@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction.modification;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import org.apache.ibatis.logging.LogFactory;
+import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -28,24 +25,23 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.apache.ibatis.logging.LogFactory;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath:org/operaton/bpm/engine/spring/test/transaction/ProcessInstanceModificationInTransactionTest-applicationContext.xml"})
-public class ProcessInstanceModificationInTransactionTest {
-
-  @Autowired
-  @Rule
-  public ProcessEngineRule rule;
+class ProcessInstanceModificationInTransactionTest {
 
   @Autowired
   public ProcessEngine processEngine;
@@ -57,15 +53,19 @@ public class ProcessInstanceModificationInTransactionTest {
   RepositoryService repositoryService;
 
   @Autowired
-  UserBean userBean;
+  HistoryService historyService;
 
-  @Before
-  public void init() {
+  @Autowired
+  UserBean userBean;
+  private Deployment deployment;
+
+  @BeforeEach
+  void init() {
     LogFactory.useSlf4jLogging();
   }
 
   @Test
-  public void shouldBeAbleToPerformModification() {
+  void shouldBeAbleToPerformModification() {
 
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("TestProcess")
@@ -83,17 +83,24 @@ public class ProcessInstanceModificationInTransactionTest {
     userBean.completeUserTaskAndModifyInstanceInOneTransaction(procInst);
 
     // then
-    VariableInstance variable = rule.getRuntimeService().createVariableInstanceQuery().processInstanceIdIn(procInst.getId()).variableName("createDate").singleResult();
-    assertNotNull(variable);
-    HistoricVariableInstance historicVariable = rule.getHistoryService().createHistoricVariableInstanceQuery().singleResult();
-    assertEquals(variable.getName(), historicVariable.getName());
-    assertEquals(HistoricVariableInstance.STATE_CREATED, historicVariable.getState());
+    VariableInstance variable =
+        runtimeService.createVariableInstanceQuery().processInstanceIdIn(procInst.getId()).variableName("createDate").singleResult();
+    assertThat(variable).isNotNull();
+    HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
+    assertThat(historicVariable.getName()).isEqualTo(variable.getName());
+    assertThat(historicVariable.getState()).isEqualTo(HistoricVariableInstance.STATE_CREATED);
+  }
+
+  @AfterEach
+  void tearDown() {
+    if (deployment != null) {
+      repositoryService.deleteDeployment(deployment.getId(), true);
+    }
   }
 
   private void deployModelInstance(BpmnModelInstance modelInstance) {
     DeploymentBuilder deploymentbuilder = repositoryService.createDeployment();
     deploymentbuilder.addModelInstance("process0.bpmn", modelInstance);
-    Deployment deployment = deploymentbuilder.deploy();
-    rule.manageDeployment(deployment);
+    deployment = deploymentbuilder.deploy();
   }
 }

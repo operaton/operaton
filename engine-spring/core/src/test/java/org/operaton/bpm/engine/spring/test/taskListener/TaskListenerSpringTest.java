@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.spring.test.taskListener;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
@@ -27,21 +31,22 @@ import org.springframework.test.context.ContextConfiguration;
  * @author Joram Barrez
  */
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/taskListener/TaskListenerDelegateExpressionTest-context.xml")
-public class TaskListenerSpringTest extends SpringProcessEngineTestCase {
-  
+class TaskListenerSpringTest extends SpringProcessEngineTestCase {
+
   @Deployment
-  public void testTaskListenerDelegateExpression() {
+  @Test
+  void taskListenerDelegateExpression() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("taskListenerDelegateExpression");
     
     // Completing first task will set variable on process instance
     Task task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
-    assertEquals("task1-complete", runtimeService.getVariable(processInstance.getId(), "calledInExpression"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "calledInExpression")).isEqualTo("task1-complete");
     
     // Completing second task will set variable on process instance
     task = taskService.createTaskQuery().singleResult();
     taskService.complete(task.getId());
-    assertEquals("task2-notify", runtimeService.getVariable(processInstance.getId(), "calledThroughNotify"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "calledThroughNotify")).isEqualTo("task2-notify");
   }
 
 }

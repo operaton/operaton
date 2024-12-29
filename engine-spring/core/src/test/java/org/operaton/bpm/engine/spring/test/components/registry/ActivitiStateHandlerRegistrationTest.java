@@ -16,25 +16,26 @@
  */
 package org.operaton.bpm.engine.spring.test.components.registry;
 
-import static org.junit.Assert.assertEquals;
+import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistration;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Map;
 
-import org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistration;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tobias Metzke
  *
  */
-public class ActivitiStateHandlerRegistrationTest {
+class ActivitiStateHandlerRegistrationTest {
 
   @Test
-  public void shouldHaveDetailledStringRepresentation() throws Exception {
+  void shouldHaveDetailedStringRepresentation() throws Exception {
     Map<Integer, String> processVariablesExpected = Collections.singletonMap(34, "testValue");
-    Method handlerMethod = this.getClass().getMethod("shouldHaveDetailledStringRepresentation");
+    Method handlerMethod = this.getClass().getDeclaredMethod("shouldHaveDetailedStringRepresentation");
     Object handler = new Object() { public Integer testValue; {testValue = 76; testValue++; }};
     String stateName = "running";
     String beanName = "testBean";
@@ -44,19 +45,20 @@ public class ActivitiStateHandlerRegistrationTest {
     ActivitiStateHandlerRegistration registration = new ActivitiStateHandlerRegistration(processVariablesExpected, 
         handlerMethod, handler, stateName, beanName,
         processVariablesIndex, processIdIndex, processName);
-    assertEquals("org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistration@" + Integer.toHexString(registration.hashCode()) + "["
-        + "processVariablesExpected={34=testValue}, "
-        + "handlerMethod=public void org.operaton.bpm.engine.spring.test.components.registry.ActivitiStateHandlerRegistrationTest.shouldHaveDetailledStringRepresentation() throws java.lang.Exception, "
-        + "handler=org.operaton.bpm.engine.spring.test.components.registry.ActivitiStateHandlerRegistrationTest$1@" + Integer.toHexString(handler.hashCode()) + ", "
-        + "stateName=running, "
-        + "beanName=testBean, "
-        + "processVariablesIndex=4, "
-        + "processIdIndex=2, "
-        + "processName=testProcess]", registration.toString());
+    assertThat(registration).hasToString("org.operaton.bpm.engine.spring.components.registry"
+        + ".ActivitiStateHandlerRegistration@" + Integer.toHexString(registration.hashCode()) + "["
+      + "processVariablesExpected={34=testValue}, "
+      + "handlerMethod=void org.operaton.bpm.engine.spring.test.components.registry.ActivitiStateHandlerRegistrationTest.shouldHaveDetailedStringRepresentation() throws java.lang.Exception, "
+      + "handler=org.operaton.bpm.engine.spring.test.components.registry.ActivitiStateHandlerRegistrationTest$1@" + Integer.toHexString(handler.hashCode()) + ", "
+      + "stateName=running, "
+      + "beanName=testBean, "
+      + "processVariablesIndex=4, "
+      + "processIdIndex=2, "
+      + "processName=testProcess]");
   }
-  
+
   @Test
-  public void shouldHaveDetailledStringRepresentationWithNullValues() {
+  void shouldHaveDetailedStringRepresentationWithNullValues() {
     Map<Integer, String> processVariablesExpected = Collections.singletonMap(34, "testValue");
     Method handlerMethod = null;
     Object handler = null;
@@ -68,14 +70,15 @@ public class ActivitiStateHandlerRegistrationTest {
     ActivitiStateHandlerRegistration registration = new ActivitiStateHandlerRegistration(processVariablesExpected, 
         handlerMethod, handler, stateName, beanName,
         processVariablesIndex, processIdIndex, processName);
-    assertEquals("org.operaton.bpm.engine.spring.components.registry.ActivitiStateHandlerRegistration@" + Integer.toHexString(registration.hashCode()) + "["
-        + "processVariablesExpected={34=testValue}, "
-        + "handlerMethod=null, "
-        + "handler=null, "
-        + "stateName=running, "
-        + "beanName=testBean, "
-        + "processVariablesIndex=4, "
-        + "processIdIndex=2, "
-        + "processName=testProcess]", registration.toString());
+    assertThat(registration).hasToString("org.operaton.bpm.engine.spring.components.registry"
+        + ".ActivitiStateHandlerRegistration@" + Integer.toHexString(registration.hashCode()) + "["
+      + "processVariablesExpected={34=testValue}, "
+      + "handlerMethod=null, "
+      + "handler=null, "
+      + "stateName=running, "
+      + "beanName=testBean, "
+      + "processVariablesIndex=4, "
+      + "processIdIndex=2, "
+      + "processName=testProcess]");
   }
 }

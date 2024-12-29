@@ -16,20 +16,20 @@
  */
 package org.operaton.bpm.engine.spring.test.components;
 
-
-import java.util.logging.Logger;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.annotations.BusinessKey;
 import org.operaton.bpm.engine.spring.annotations.ProcessVariable;
 import org.operaton.bpm.engine.spring.annotations.StartProcess;
 
+import java.util.logging.Logger;
+
 /**
- * simple class that demonstrates the annotations to implicitly handle annotation-driven process managment
+ * simple class that demonstrates the annotations to implicitly handle annotation-driven process management
  *
  * @author Josh Long
  * @since 5.3
  */
+@SuppressWarnings("unused")
 public class ProcessInitiatingPojo {
 
     private final Logger log = Logger.getLogger(getClass().getName());

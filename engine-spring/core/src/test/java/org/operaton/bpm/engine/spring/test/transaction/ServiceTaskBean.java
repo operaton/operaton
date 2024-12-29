@@ -18,20 +18,21 @@ package org.operaton.bpm.engine.spring.test.transaction;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
 import org.springframework.transaction.annotation.Transactional;
 
-
-public class ServiceTaskBean implements JavaDelegate{
+@SuppressWarnings("unused")
+public class ServiceTaskBean implements JavaDelegate {
 
   private BeanWithException beanWithException;
-  
-  public void setBeanWithException(BeanWithException bean){
+
+  public void setBeanWithException(BeanWithException bean) {
     this.beanWithException = bean;
   }
 
   @Transactional
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
     beanWithException.doSomething();
   }
 

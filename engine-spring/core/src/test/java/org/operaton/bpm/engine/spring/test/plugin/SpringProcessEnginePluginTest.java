@@ -17,17 +17,20 @@
 package org.operaton.bpm.engine.spring.test.plugin;
 
 import org.operaton.bpm.engine.spring.SpringProcessEnginePlugin;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = SpringProcessEnginePluginTest.TestConfig.class)
-public class SpringProcessEnginePluginTest {
+@SuppressWarnings("unused")
+class SpringProcessEnginePluginTest {
 
   public static class TestConfig {
 
@@ -41,7 +44,7 @@ public class SpringProcessEnginePluginTest {
   private SpringProcessEnginePlugin plugin;
 
   @Test
-  public void verifyToString() {
-    Assert.assertEquals("theBeanName", plugin.toString());
+  void verifyToString() {
+    assertThat(plugin).hasToString("theBeanName");
   }
 }

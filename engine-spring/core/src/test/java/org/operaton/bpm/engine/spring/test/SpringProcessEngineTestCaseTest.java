@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.spring.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -24,11 +28,12 @@ import org.springframework.test.context.ContextConfiguration;
  *
  */
 @ContextConfiguration(classes = ExampleConfiguration.class)
-public class SpringProcessEngineTestCaseTest extends SpringProcessEngineTestCase {
+class SpringProcessEngineTestCaseTest extends SpringProcessEngineTestCase {
 
-  public void testProgrammaticContextConfiguration() {
-    assertNotNull(processEngine);
-    assertTrue(((ProcessEngineImpl) processEngine).getProcessEngineConfiguration().isJobExecutorDeploymentAware());
+  @Test
+  void programmaticContextConfiguration() {
+    assertThat(processEngine).isNotNull();
+    assertThat(((ProcessEngineImpl) processEngine).getProcessEngineConfiguration().isJobExecutorDeploymentAware()).isTrue();
   }
 
 }

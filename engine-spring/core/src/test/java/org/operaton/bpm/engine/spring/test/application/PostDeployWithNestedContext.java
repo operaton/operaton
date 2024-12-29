@@ -19,6 +19,9 @@ package org.operaton.bpm.engine.spring.test.application;
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
+
+import java.io.Serial;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
@@ -28,7 +31,8 @@ import org.springframework.context.support.AbstractApplicationContext;
 
 public class PostDeployWithNestedContext extends SpringProcessApplication {
 
-  public class MyEvent extends ApplicationEvent {
+  public static class MyEvent extends ApplicationEvent {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public MyEvent(Object source) {
@@ -51,16 +55,12 @@ public class PostDeployWithNestedContext extends SpringProcessApplication {
     nestedContext.refresh();
     deployOnChildRefresh = deployCalled;
 
-    ((AbstractApplicationContext) mainContext).addApplicationListener(new ApplicationListener<MyEvent>() {
-
-      @Override
-      public void onApplicationEvent(MyEvent event) {
-        triggered = true;
-      }
-    });
+    ((AbstractApplicationContext) mainContext).addApplicationListener(
+        (ApplicationListener<MyEvent>) event -> triggered = true);
   }
 
   @PostDeploy
+  @SuppressWarnings("unused")
   public void registerProcessApplication(ProcessEngine processEngine) {
     deployCalled = true;
     applicationContext.publishEvent(new MyEvent(this));

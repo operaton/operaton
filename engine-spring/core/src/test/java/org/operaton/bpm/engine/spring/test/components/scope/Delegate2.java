@@ -18,29 +18,32 @@ package org.operaton.bpm.engine.spring.test.components.scope;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.junit.Assert;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Josh Long
  * @since 5,3
  */
 
+@SuppressWarnings("unused")
 public class Delegate2 implements JavaDelegate {
 
-  private final Logger log = Logger.getLogger(getClass().getName());
+  private static final Logger LOG = Logger.getLogger(Delegate2.class.getName());
 
 	@Autowired private StatefulObject statefulObject;
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
 
 		this.statefulObject.increment();
 
-		Assert.assertNotNull( "the 'scopedCustomer' reference can't be null", this.statefulObject);
-		Assert.assertNotNull( "the 'scopedCustomer.name' property should be non-null, since it was set in a previous delegate bound to this very thread", this.statefulObject.getName() );
-		log.info( "the 'uuid' value retrieved from the ScopedCustomer#name property is '" +  this.statefulObject.getName()+ "' in "+getClass().getName());
+    assertThat(this.statefulObject).as("the 'scopedCustomer' reference can't be null").isNotNull();
+    assertThat(this.statefulObject.getName()).as("the 'scopedCustomer.name' property should be non-null, since it was set in a previous delegate bound to this very thread").isNotNull();
+		LOG.info( "the 'uuid' value retrieved from the ScopedCustomer#name property is '" +  this.statefulObject.getName()+ "' in "+getClass().getName());
 	}
 }

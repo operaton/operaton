@@ -24,6 +24,7 @@ package org.operaton.bpm.engine.spring.test.expression.callactivity;
  * @author  Sang Venkatraman
  * 
  */
+@SuppressWarnings("unused")
 public class NextProcessExecutionEvaluator {
 
 	public String returnProcessDefinitionToCall() {

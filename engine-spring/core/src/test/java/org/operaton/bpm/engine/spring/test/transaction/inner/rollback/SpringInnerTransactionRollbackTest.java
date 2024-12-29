@@ -16,32 +16,27 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction.inner.rollback;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:org/operaton/bpm/engine/spring/test/transaction/"
-  + "SpringInnerTransactionRollbackTest-applicationContext.xml"})
-public class SpringInnerTransactionRollbackTest {
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-  @Rule
-  @Autowired
-  public ProcessEngineRule rule;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = {"classpath:org/operaton/bpm/engine/spring/test/transaction/SpringInnerTransactionRollbackTest-applicationContext.xml"})
+class SpringInnerTransactionRollbackTest extends SpringProcessEngineTestCase {
 
   @Autowired
   public ProcessEngine processEngine;
@@ -54,12 +49,10 @@ public class SpringInnerTransactionRollbackTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/spring/test/transaction/"
-      + "SpringInnerTransactionRollbackTest.shouldRollbackProcessData-outer.bpmn20.xml",
-    "org/operaton/bpm/engine/spring/test/transaction/"
-      + "SpringInnerTransactionRollbackTest.shouldRollbackProcessData-inner.bpmn20.xml"
+    "org/operaton/bpm/engine/spring/test/transaction/SpringInnerTransactionRollbackTest.shouldRollbackProcessData-outer.bpmn20.xml",
+    "org/operaton/bpm/engine/spring/test/transaction/SpringInnerTransactionRollbackTest.shouldRollbackProcessData-inner.bpmn20.xml"
   })
-  public void shouldRollbackProcessData() {
+  void shouldRollbackProcessData() {
     // given
 
     // when
@@ -81,10 +74,10 @@ public class SpringInnerTransactionRollbackTest {
 
 
     // historic inner PI shouldn't be available
-    List<HistoricProcessInstance> innerProcessinstances = historyService
+    List<HistoricProcessInstance> historicProcessInstances = historyService
         .createHistoricProcessInstanceQuery()
         .processDefinitionKey("InnerTxNestedTransactionTest")
         .list();
-    assertThat(innerProcessinstances).isEmpty();
+    assertThat(historicProcessInstances).isEmpty();
   }
 }

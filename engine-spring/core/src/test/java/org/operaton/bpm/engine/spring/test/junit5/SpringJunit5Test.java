@@ -14,31 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.spring.test.junit4;
-
-import static org.junit.Assert.assertEquals;
+package org.operaton.bpm.engine.spring.test.junit5;
 
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
  * @author Joram Barrez
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/junit4/springTypicalUsageTest-context.xml")
-public class SpringJunit4Test {
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/junit5/springTypicalUsageTest-context.xml")
+class SpringJunit5Test {
 
   @Autowired
   private ProcessEngine processEngine;
@@ -47,32 +48,38 @@ public class SpringJunit4Test {
   private RuntimeService runtimeService;
 
   @Autowired
-  private TaskService taskService;
+  private RepositoryService repositoryService;
 
   @Autowired
-  @Rule
-  public ProcessEngineRule activitiSpringRule;
+  private TaskService taskService;
 
-  @After
-  public void closeProcessEngine() {
-    // Required, since all the other tests seem to do a specific drop on the end
+  String deploymentId;
+
+  @BeforeEach
+  void deploy() {
+    deploymentId = repositoryService.createDeployment()
+        .addClasspathResource("org/operaton/bpm/engine/spring/test/junit5/SpringJunit5Test.simpleProcessTest.bpmn20.xml")
+        .deploy()
+        .getId();
+  }
+
+  @AfterEach
+  void closeProcessEngine() {
+    repositoryService.deleteDeployment(deploymentId, true);
     processEngine.close();
     processEngine = null;
     runtimeService = null;
     taskService = null;
-    activitiSpringRule = null;
   }
 
   @Test
   @Deployment
-  public void simpleProcessTest() {
+  void simpleProcessTest() {
     runtimeService.startProcessInstanceByKey("simpleProcess");
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("My Task", task.getName());
+    assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
-
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
-
 }

@@ -23,5 +23,5 @@ import org.springframework.test.context.TestContextManager;
  */
 public interface SpringTestHelper {
 
-  public void beforeTestClass(TestContextManager testContextManager);
+  void beforeTestClass(TestContextManager testContextManager);
 }

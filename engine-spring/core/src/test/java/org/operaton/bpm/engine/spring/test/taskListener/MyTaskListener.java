@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings("unused")
 public class MyTaskListener implements TaskListener {
 
   @Override

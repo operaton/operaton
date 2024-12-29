@@ -2,7 +2,6 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:activiti="http://www.activiti.org/schema/spring/components"
        xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
        
     <bean id="dataSource" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
@@ -42,6 +41,6 @@
     <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
     <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>
     
-    <bean id="customProcessApplicaiton" class="org.operaton.bpm.engine.spring.test.application.PostDeployWithNestedContext" />
+    <bean id="customProcessApplication" class="org.operaton.bpm.engine.spring.test.application.PostDeployWithNestedContext" />
         
 </beans>

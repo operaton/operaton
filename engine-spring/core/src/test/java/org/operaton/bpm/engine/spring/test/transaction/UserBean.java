@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
-import static org.junit.Assert.assertEquals;
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.TaskService;
 
 import javax.sql.DataSource;
 
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tom Baeyens
@@ -53,15 +54,15 @@ public class UserBean {
 
     // First insert a record in the MY_TABLE table
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-    int results = jdbcTemplate.queryForObject("select count(*) from MY_TABLE", Integer.class);
-    assertEquals(1, results);
+    Integer results = jdbcTemplate.queryForObject("select count(*) from MY_TABLE", Integer.class);
+    assertThat(results).isEqualTo(1);
     int nrOfRows = jdbcTemplate.update("insert into MY_TABLE values ('test');");
     if (nrOfRows != 1) {
       throw new RuntimeException("Insert into MY_TABLE failed");
     }
 
     results = jdbcTemplate.queryForObject("select count(*) from MY_TABLE", Integer.class);
-    assertEquals(2, results);
+    assertThat(results).isEqualTo(2);
     taskService.complete(taskId);
   }
 

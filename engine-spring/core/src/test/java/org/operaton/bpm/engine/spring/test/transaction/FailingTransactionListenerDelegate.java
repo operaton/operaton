@@ -18,22 +18,20 @@ package org.operaton.bpm.engine.spring.test.transaction;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.operaton.bpm.engine.impl.cfg.TransactionListener;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
+import java.util.Objects;
+
 public class FailingTransactionListenerDelegate implements JavaDelegate {
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
-
-    Context.getCommandContext().getTransactionContext().addTransactionListener(TransactionState.COMMITTING, new TransactionListener() {
-
-      @Override
-      public void execute(CommandContext context) {
-        throw new RuntimeException("exception in transaction listener");
-      }
+  public void execute(DelegateExecution execution) {
+    CommandContext commandContext = Context.getCommandContext();
+    Objects.requireNonNull(commandContext);
+    commandContext.getTransactionContext().addTransactionListener(TransactionState.COMMITTING, context -> {
+      throw new RuntimeException("exception in transaction listener");
     });
   }
 

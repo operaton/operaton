@@ -16,48 +16,56 @@
  */
 package org.operaton.bpm.engine.spring.test.configuration;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Philipp Ossler
  */
-@ContextConfiguration(classes = { InMemProcessEngineConfiguration.class, SpringProcessEngineServicesConfiguration.class })
-public class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
+@ContextConfiguration(classes = { InMemProcessEngineConfiguration.class,
+    SpringProcessEngineServicesConfiguration.class })
+class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
+
+  private final Counter counter;
+  private final RuntimeService runtimeService;
 
   @Autowired
-  private Counter couter;
-
-  @Autowired
-  protected RuntimeService runtimeService;
-
-  @Deployment
-  public void testDelegateExpression() {
-    runtimeService.startProcessInstanceByKey("SpringProcess");
-
-    assertThat(couter.getCount(), is(1));
+  public JavaBasedProcessEngineConfigTest(Counter counter, RuntimeService runtimeService) {
+    this.counter = counter;
+    this.runtimeService = runtimeService;
   }
 
   @Deployment
-  public void testExpression() {
+  @Test
+  void delegateExpression() {
     runtimeService.startProcessInstanceByKey("SpringProcess");
 
-    assertThat(couter.getCount(), is(1));
+    assertThat(counter.getCount()).isOne();
   }
 
   @Deployment
-  public void testDelegateExpressionWithProcessServices() {
+  @Test
+  void expression() {
+    runtimeService.startProcessInstanceByKey("SpringProcess");
+
+    assertThat(counter.getCount()).isOne();
+  }
+
+  @Deployment
+  @Test
+  void delegateExpressionWithProcessServices() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("SpringProcess").getId();
 
-    assertThat(couter.getCount(), is(1));
-    assertThat((Integer) runtimeService.getVariable(processInstanceId, "count"), is(1));
+    assertThat(counter.getCount()).isOne();
+    assertThat((Integer) runtimeService.getVariable(processInstanceId, "count")).isOne();
   }
 
 }

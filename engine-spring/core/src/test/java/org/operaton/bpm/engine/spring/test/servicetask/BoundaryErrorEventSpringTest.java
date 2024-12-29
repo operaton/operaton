@@ -19,18 +19,24 @@ package org.operaton.bpm.engine.spring.test.servicetask;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import static org.operaton.bpm.engine.impl.test.ProcessEngineAssert.assertProcessEnded;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
- * @see http://jira.codehaus.org/browse/ACT-1166
+ * @see <a href="http://jira.codehaus.org/browse/ACT-1166">ACT-1166</a>
  * @author Angel López Cima
  * @author Falko Menge
  */
-@ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/servicetask/serviceraskSpringTestCatchError-context.xml")
-public class BoundaryErrorEventSpringTest extends SpringProcessEngineTestCase {
+@ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/servicetask/servicetaskSpringTestCatchError-context.xml")
+class BoundaryErrorEventSpringTest extends SpringProcessEngineTestCase {
 
   @Deployment
-  public void testCatchErrorThrownByJavaDelegateOnServiceTask() {
+  @Test
+  void catchErrorThrownByJavaDelegateOnServiceTask() {
     String procId = runtimeService.startProcessInstanceByKey("catchErrorThrownByExpressionDelegateOnServiceTask").getId();
     assertThatErrorHasBeenCaught(procId);
   }
@@ -38,12 +44,12 @@ public class BoundaryErrorEventSpringTest extends SpringProcessEngineTestCase {
   private void assertThatErrorHasBeenCaught(String procId) {
     // The service task will throw an error event,
     // which is caught on the service task boundary
-    assertEquals("No tasks found in task list.", 1, taskService.createTaskQuery().count());
+    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isEqualTo(1);
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("Escalated Task", task.getName());
+    assertThat(task.getName()).isEqualTo("Escalated Task");
 
     // Completing the task will end the process instance
     taskService.complete(task.getId());
-    assertProcessEnded(procId);
+    assertProcessEnded(processEngine, procId);
   }
 }

@@ -16,57 +16,59 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Svetlana Dorokhova
  */
 
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/transaction/SpringTransactionIntegrationDeleteDeploymentFailTest-context.xml")
-public class SpringTransactionIntegrationDeleteDeploymentFailTest extends SpringProcessEngineTestCase {
+class SpringTransactionIntegrationDeleteDeploymentFailTest extends SpringProcessEngineTestCase {
 
   private String deploymentId;
 
   @Override
-  protected void tearDown() throws Exception {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext
-          .getDeploymentManager()
-          .deleteDeployment(deploymentId, false, false, false);
-        return null;
-      }
+  @AfterEach
+  protected void tearDown(TestInfo testInfo) throws Exception {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
+      commandContext
+        .getDeploymentManager()
+        .deleteDeployment(deploymentId, false, false, false);
+      return null;
     });
-
-
-    super.tearDown();
+    super.tearDown(testInfo);
   }
 
-  public void testFailingAfterDeleteDeployment() {
+  @Test
+  void failingAfterDeleteDeployment() {
     //given
     final BpmnModelInstance model = Bpmn.createExecutableProcess().startEvent().userTask().endEvent().done();
-    deploymentId = processEngine.getRepositoryService().createDeployment().addModelInstance("model.bpmn", model).deploy().getId();
+    RepositoryService repositoryService = processEngine.getRepositoryService();
+    deploymentId = repositoryService.createDeployment().addModelInstance("model.bpmn", model).deploy().getId();
 
     //when
     // 1. delete deployment
     // 2. it fails in post command interceptor (see FailDeleteDeploymentsPlugin)
     // 3. transaction is rolling back
     // 4. DeleteDeploymentFailListener is called
-    try {
-      processEngine.getRepositoryService().deleteDeployment(deploymentId);
-    } catch (Exception ex) {
-      //expected exception
-    }
+    assertThatThrownBy(() -> repositoryService.deleteDeployment(deploymentId))
+      .isInstanceOf(RuntimeException.class);
 
     //then
     // DeleteDeploymentFailListener succeeded to registered deployments back
-    assertEquals(1, processEngineConfiguration.getRegisteredDeployments().size());
+    assertThat(processEngineConfiguration.getRegisteredDeployments()).hasSize(1);
   }
 
 }

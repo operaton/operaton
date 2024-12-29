@@ -19,20 +19,24 @@ package org.operaton.bpm.engine.spring.test.components.scope;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.Assert;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.UUID;
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Josh Long
  * @since 5.3
  */
 
+@SuppressWarnings("unused")
 public class Delegate1 implements JavaDelegate, InitializingBean {
 
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private static final Logger LOG = Logger.getLogger(Delegate1.class.getName());
 
     @Autowired
     private ProcessInstance processInstance;
@@ -41,23 +45,23 @@ public class Delegate1 implements JavaDelegate, InitializingBean {
     private StatefulObject statefulObject;
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
 
         String pid = this.processInstance.getId();
 
-        log.info("the processInstance#id is " + pid);
+        LOG.info("the processInstance#id is " + pid);
 
-        Assert.assertNotNull("the 'scopedCustomer' reference can't be null", statefulObject);
+    assertThat(statefulObject).as("the 'scopedCustomer' reference can't be null").isNotNull();
         String uuid = UUID.randomUUID().toString();
         statefulObject.setName(uuid);
-        log.info("the 'uuid' value given to the ScopedCustomer#name property is '" + uuid + "' in " + getClass().getName());
+        LOG.info("the 'uuid' value given to the ScopedCustomer#name property is '" + uuid + "' in " + getClass().getName());
 
         this.statefulObject.increment();
     }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
-        Assert.assertNotNull("the processInstance must not be null", this.processInstance);
+  public void afterPropertiesSet() {
+    assertThat(this.processInstance).as("the processInstance must not be null").isNotNull();
 
     }
 }

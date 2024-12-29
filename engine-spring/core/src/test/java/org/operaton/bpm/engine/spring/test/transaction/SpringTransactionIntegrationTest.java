@@ -16,28 +16,30 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.util.concurrent.TimeUnit;
-
-import javax.sql.DataSource;
-
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+import static org.operaton.bpm.engine.impl.test.TestHelper.waitForJobExecutorToProcessAllJobs;
+
+import javax.sql.DataSource;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
  * @author Tom Baeyens
  */
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/transaction/SpringTransactionIntegrationTest-context.xml")
-public class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
+class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
 
   @Autowired
   protected UserBean userBean;
@@ -45,19 +47,21 @@ public class SpringTransactionIntegrationTest extends SpringProcessEngineTestCas
   @Autowired
   protected DataSource dataSource;
 
-  private static long WAIT_TIME_MILLIS = TimeUnit.MILLISECONDS.convert(20L, TimeUnit.SECONDS);
+  private static final long WAIT_TIME_MILLIS = 20000L;
+  public static final long INTERVAL_MILLIS = 1000L;
 
   @Deployment
-  public void testBasicActivitiSpringIntegration() {
+  @Test
+  void basicOperatonSpringIntegration() {
     userBean.hello();
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-    assertEquals("Hello from Printer!", runtimeService.getVariable(processInstance.getId(), "myVar"));
+    assertThat(runtimeService.getVariable(processInstance.getId(), "myVar")).isEqualTo("Hello from Printer!");
   }
 
   @Deployment
-  public void testRollbackTransactionOnActivitiException() {
-
+  @Test
+  void rollbackTransactionOnOperatonException() {
     // Create a table that the userBean is supposed to fill with some data
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
     jdbcTemplate.execute("create table MY_TABLE (MY_TEXT varchar);");
@@ -66,89 +70,88 @@ public class SpringTransactionIntegrationTest extends SpringProcessEngineTestCas
     userBean.hello();
 
     jdbcTemplate.update("insert into MY_TABLE values ('test');");
-    int results = jdbcTemplate.queryForObject("select count(*) from MY_TABLE", Integer.class);
-    assertEquals(1, results);
+    Integer results = jdbcTemplate.queryForObject("select count(*) from MY_TABLE", Integer.class);
+    assertThat(results).isOne();
 
     // The completeTask() method will write a record to the 'MY_TABLE' table and complete the user task
-    try {
-      userBean.completeTask(taskService.createTaskQuery().singleResult().getId());
-      fail();
-    } catch (Exception e) { }
+    String taskId = taskService.createTaskQuery().singleResult().getId();
+    assertThatThrownBy(() -> userBean.completeTask(taskId))
+      .isInstanceOf(Exception.class);
 
     // Since the service task after the user tasks throws an exception, both
     // the record and the process must be rolled back !
-    assertEquals("My Task", taskService.createTaskQuery().singleResult().getName());
+    assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("My Task");
     results = jdbcTemplate.queryForObject("select count(*) from MY_TABLE", Integer.class);
-    assertEquals(1, results);
+    assertThat(results).isEqualTo(1);
 
     // Cleanup
     jdbcTemplate.execute("drop table MY_TABLE if exists;");
   }
 
-  @Deployment(resources={
-      "org/operaton/bpm/engine/spring/test/transaction/SpringTransactionIntegrationTest.testErrorPropagationOnExceptionInTransaction.bpmn20.xml",
-      "org/operaton/bpm/engine/spring/test/transaction/SpringTransactionIntegrationTest.throwExceptionProcess.bpmn20.xml"
+  @Deployment(resources = {
+    "org/operaton/bpm/engine/spring/test/transaction/SpringTransactionIntegrationTest.testErrorPropagationOnExceptionInTransaction.bpmn20.xml",
+    "org/operaton/bpm/engine/spring/test/transaction/SpringTransactionIntegrationTest.throwExceptionProcess.bpmn20.xml"
   })
-  public void testErrorPropagationOnExceptionInTransaction(){
+  @Test
+  void errorPropagationOnExceptionInTransaction() {
       runtimeService.startProcessInstanceByKey("process");
-      waitForJobExecutorToProcessAllJobs(WAIT_TIME_MILLIS);
+      waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
       Incident incident = runtimeService.createIncidentQuery().activityId("servicetask").singleResult();
-      assertThat(incident.getIncidentMessage(), is("error"));
+      assertThat(incident.getIncidentMessage()).isEqualTo("error");
   }
 
   @Deployment
-  public void testTransactionRollbackInServiceTask() {
-
+  @Test
+  void transactionRollbackInServiceTask() {
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
-    waitForJobExecutorToProcessAllJobs(WAIT_TIME_MILLIS);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
 
     Job job = managementService.createJobQuery().singleResult();
 
-    assertNotNull(job);
-    assertEquals(0, job.getRetries());
-    assertEquals("Transaction rolled back because it has been marked as rollback-only", job.getExceptionMessage());
+    assertThat(job).isNotNull();
+    assertThat(job.getRetries()).isZero();
+    assertThat(job.getExceptionMessage()).isEqualTo("Transaction rolled back because it has been marked as rollback-only");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertNotNull(stacktrace);
-    assertTrue("unexpected stacktrace, was <" + stacktrace + ">", stacktrace.contains("Transaction rolled back because it has been marked as rollback-only"));
+    assertThat(stacktrace).isNotNull();
+    assertTrue(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only"), "unexpected stacktrace, was <" + stacktrace + ">");
   }
 
   @Deployment
-  public void testTransactionRollbackInServiceTaskWithCustomRetryCycle() {
-
+  @Test
+  void transactionRollbackInServiceTaskWithCustomRetryCycle() {
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 
-    waitForJobExecutorToProcessAllJobs(WAIT_TIME_MILLIS);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
 
     Job job = managementService.createJobQuery().singleResult();
 
-    assertNotNull(job);
-    assertEquals(0, job.getRetries());
-    assertEquals("Transaction rolled back because it has been marked as rollback-only", job.getExceptionMessage());
+    assertThat(job).isNotNull();
+    assertThat(job.getRetries()).isZero();
+    assertThat(job.getExceptionMessage()).isEqualTo("Transaction rolled back because it has been marked as rollback-only");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertNotNull(stacktrace);
-    assertTrue("unexpected stacktrace, was <" + stacktrace + ">", stacktrace.contains("Transaction rolled back because it has been marked as rollback-only"));
+    assertThat(stacktrace).isNotNull();
+    assertTrue(stacktrace.contains("Transaction rolled back because it has been marked as rollback-only"), "unexpected stacktrace, was <" + stacktrace + ">");
   }
 
   @Deployment
-  public void testFailingTransactionListener() {
-
+  @Test
+  void failingTransactionListener() {
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 
-    waitForJobExecutorToProcessAllJobs(WAIT_TIME_MILLIS);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
 
     Job job = managementService.createJobQuery().singleResult();
 
-    assertNotNull(job);
-    assertEquals(0, job.getRetries());
-    assertEquals("exception in transaction listener", job.getExceptionMessage());
+    assertThat(job).isNotNull();
+    assertThat(job.getRetries()).isZero();
+    assertThat(job.getExceptionMessage()).isEqualTo("exception in transaction listener");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertNotNull(stacktrace);
-    assertTrue("unexpected stacktrace, was <" + stacktrace + ">", stacktrace.contains("java.lang.RuntimeException: exception in transaction listener"));
+    assertThat(stacktrace).isNotNull();
+    assertTrue(stacktrace.contains("java.lang.RuntimeException: exception in transaction listener"), "unexpected stacktrace, was <" + stacktrace + ">");
   }
-
 
 }

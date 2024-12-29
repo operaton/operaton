@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.spring.test.autodeployment;
 
+import org.operaton.bpm.model.bpmn.Bpmn;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.operaton.bpm.model.bpmn.Bpmn;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
@@ -44,7 +45,7 @@ public class DynamicResourceProducer {
 
   public static Resource[] getResources()
   {
-    return resources.toArray(new Resource[resources.size()]);
+    return resources.toArray(new Resource[0]);
   }
 
   /*
@@ -52,7 +53,7 @@ public class DynamicResourceProducer {
    */
   public static class NamedByteArrayResource extends ByteArrayResource
   {
-    private String description;
+    private final String description;
     public NamedByteArrayResource(byte[] byteArray, String description) {
       super(byteArray, description);
       this.description = description;

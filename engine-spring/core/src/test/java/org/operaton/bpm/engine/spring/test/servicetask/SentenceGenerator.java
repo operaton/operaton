@@ -23,7 +23,7 @@ package org.operaton.bpm.engine.spring.test.servicetask;
 public class SentenceGenerator {
   
   public String getSentence() {
-    return "Activiti BPMN 2.0 process engine";
+    return "Operaton BPMN 2.0 process engine";
   }
 
 }

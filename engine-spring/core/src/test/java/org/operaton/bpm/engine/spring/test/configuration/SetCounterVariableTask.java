@@ -19,10 +19,12 @@ package org.operaton.bpm.engine.spring.test.configuration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@SuppressWarnings("unused")
 public class SetCounterVariableTask implements JavaDelegate {
 
   @Autowired
@@ -32,7 +34,7 @@ public class SetCounterVariableTask implements JavaDelegate {
   private Counter counter;
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
     int count = counter.getCount();
 
     runtimeService.setVariable(execution.getId(), "count", count);

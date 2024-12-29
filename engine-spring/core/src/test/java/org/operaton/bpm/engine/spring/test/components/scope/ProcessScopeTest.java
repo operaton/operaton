@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.spring.test.components.scope;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,7 +27,8 @@ import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
 
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.spring.components.scope.ProcessScope;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tobias Metzke
@@ -38,7 +39,7 @@ class ProcessScopeTest {
   @Test
   void shouldLogExceptionStacktrace() throws IOException {
     Logger logger = Logger.getLogger(ProcessScope.class.getName());
-    try (ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+    try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
       Handler handler = new StreamHandler(out, new SimpleFormatter());
       logger.addHandler(handler);
       try {
@@ -51,14 +52,14 @@ class ProcessScopeTest {
         logger.removeHandler(handler);
       }
       // test for logged exception
-      String message = new String(out.toByteArray(), StandardCharsets.UTF_8);
-      assertThat(message.isEmpty()).isFalse();
-      assertThat(message.contains("org.operaton.bpm.engine.spring.components.scope.ProcessScope get")).isTrue();
-      assertThat(message.contains("couldn't return value from process scope! java.lang.NullPointerException")).isTrue();
-      assertThat(message.contains("at org.operaton.bpm.engine.spring.components.scope.ProcessScope.getExecutionId(ProcessScope.java:")).isTrue();
-      assertThat(message.contains("at org.operaton.bpm.engine.spring.components.scope.ProcessScope.getConversationId(ProcessScope.java:")).isTrue();
-      assertThat(message.contains("at org.operaton.bpm.engine.spring.components.scope.ProcessScope.get(ProcessScope.java:")).isTrue();
-      assertThat(message.contains("at org.operaton.bpm.engine.spring.test.components.scope.ProcessScopeTest.shouldLogExceptionStacktrace(ProcessScopeTest.java:")).isTrue(); 
+      String message = out.toString(StandardCharsets.UTF_8);
+      assertThat(message).isNotEmpty();
+      assertThat(message).contains("org.operaton.bpm.engine.spring.components.scope.ProcessScope get")
+          .contains("couldn't return value from process scope! java.lang.NullPointerException")
+          .contains("at org.operaton.bpm.engine.spring.components.scope.ProcessScope.getExecutionId(ProcessScope.java:")
+          .contains("at org.operaton.bpm.engine.spring.components.scope.ProcessScope.getConversationId(ProcessScope.java:")
+          .contains("at org.operaton.bpm.engine.spring.components.scope.ProcessScope.get(ProcessScope.java:")
+          .contains("at org.operaton.bpm.engine.spring.test.components.scope.ProcessScopeTest.shouldLogExceptionStacktrace(ProcessScopeTest.java:");
     }
   }
 }

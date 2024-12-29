@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.spring.test.application;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.PreUndeploy;
 import org.operaton.bpm.application.ProcessApplicationExecutionException;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
+
+import java.util.concurrent.Callable;
 
 /**
  * @author Daniel Meyer
@@ -56,7 +56,7 @@ public class PostDeployRegistrationPa extends SpringProcessApplication {
   }
 
   @PreUndeploy
-  public void unregisterProcessApplicaiton(ProcessEngine processEngine) {
+  public void unregisterProcessApplication(ProcessEngine processEngine) {
 
     // unregister with the process engine
     processEngine.getManagementService()

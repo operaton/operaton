@@ -16,10 +16,13 @@
  */
 package org.operaton.bpm.engine.spring.test.components.scope;
 
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.logging.Logger;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
@@ -33,7 +36,8 @@ public class StatefulObject implements Serializable, InitializingBean {
 
     private final transient Logger logger = Logger.getLogger(getClass().getName());
 
-    public static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private String name;
     private int visitedCount = 0;
@@ -60,9 +64,6 @@ public class StatefulObject implements Serializable, InitializingBean {
 
     }
 
-    public StatefulObject() {
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,9 +72,7 @@ public class StatefulObject implements Serializable, InitializingBean {
         StatefulObject that = (StatefulObject) o;
 
         if (visitedCount != that.visitedCount) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+        return Objects.equals(name, that.name);
     }
 
     @Override
@@ -108,7 +107,7 @@ public class StatefulObject implements Serializable, InitializingBean {
     }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
         Assert.notNull(this.processInstance, "the processInstance should be equal to the currently active processInstance!");
         logger.info("the 'processInstance' property is non-null: PI ID# " + this.processInstance.getId());
     }

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.spring.test.transaction.inner.rollback;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -31,7 +32,7 @@ public class TransactionTestDelegate implements JavaDelegate {
   InnerProcessService innerProcessService;
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
 
     try {
       innerProcessService.startInnerProcess(execution);

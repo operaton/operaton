@@ -18,8 +18,8 @@ package org.operaton.bpm.engine.spring.test.transaction;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -28,20 +28,16 @@ public class TransactionRollbackDelegate implements JavaDelegate {
   private PlatformTransactionManager transactionManager;
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
     TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
     transactionTemplate.setPropagationBehavior(TransactionTemplate.PROPAGATION_REQUIRED);
 
-    transactionTemplate.execute(new TransactionCallback<Void>() {
+    transactionTemplate.execute((TransactionCallback<Void>) status -> {
 
-      @Override
-      public Void doInTransaction(TransactionStatus status) {
+      // simulate a failure that triggers the transaction rollback
+      status.setRollbackOnly();
 
-        // simulate a failure that triggers the transaction rollback
-        status.setRollbackOnly();
-
-        return null;
-      }
+      return null;
     });
   }
 

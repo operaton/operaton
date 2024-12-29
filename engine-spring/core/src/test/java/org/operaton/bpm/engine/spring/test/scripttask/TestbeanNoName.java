@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TestbeanNoName {
-  private String name = null;
+  private final String name = null;
 
   public String getName() {
     return name;

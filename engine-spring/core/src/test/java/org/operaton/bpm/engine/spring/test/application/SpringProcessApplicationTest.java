@@ -15,16 +15,17 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.spring.test.application;
-import static org.assertj.core.api.Assertions.assertThat;
 
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Testcases for {@link SpringProcessApplication}</p>
@@ -91,7 +92,8 @@ class SpringProcessApplicationTest {
       .deploy();
 
     // lookup the process application spring bean:
-    PostDeployRegistrationPa processApplication = applicationContext.getBean("customProcessApplicaiton", PostDeployRegistrationPa.class);
+    PostDeployRegistrationPa processApplication = applicationContext.getBean("customProcessApplication",
+        PostDeployRegistrationPa.class);
 
     assertThat(processApplication.isPostDeployInvoked()).isFalse();
     processApplication.deploy();
@@ -120,23 +122,23 @@ class SpringProcessApplicationTest {
 
   }
 
+  /*
+   * This test case checks if the process application deployment is done when
+   * application context is refreshed, but not when child contexts are
+   * refreshed.
+   *
+   * As a side test it checks if events thrown in the PostDeploy-method are
+   * caught by the main application context.
+   */
   @Test
   void postDeployWithNestedContext() {
-    /*
-     * This test case checks if the process application deployment is done when
-     * application context is refreshed, but not when child contexts are
-     * refreshed.
-     * 
-     * As a side test it checks if events thrown in the PostDeploy-method are
-     * catched by the main application context.
-     */
-
     AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext(
         "org/operaton/bpm/engine/spring/test/application/PostDeployWithNestedContext-context.xml");
     applicationContext.start();
 
     // lookup the process application spring bean:
-    PostDeployWithNestedContext processApplication = applicationContext.getBean("customProcessApplicaiton", PostDeployWithNestedContext.class);
+    PostDeployWithNestedContext processApplication = applicationContext.getBean("customProcessApplication",
+        PostDeployWithNestedContext.class);
 
     assertThat(processApplication.isDeployOnChildRefresh()).isFalse();
     assertThat(processApplication.isLateEventTriggered()).isTrue();

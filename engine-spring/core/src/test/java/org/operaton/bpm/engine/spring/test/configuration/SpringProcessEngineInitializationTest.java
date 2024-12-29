@@ -16,14 +16,16 @@
  */
 package org.operaton.bpm.engine.spring.test.configuration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.net.URL;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
+
+import java.net.URL;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SpringProcessEngineInitializationTest {
 
@@ -43,12 +45,11 @@ class SpringProcessEngineInitializationTest {
     assertThat(processEngine.getName()).isEqualTo("activitiContextProcessName");
   }
 
-  private URL existActivitiContext() {
+  private void existActivitiContext() {
     URL resource = ReflectUtil.getClassLoader().getResource("activiti-context.xml");
     assertThat(resource)
       .withFailMessage("activiti-context.xml not found on the classpath: " + System.getProperty("java.class.path"))
       .isNotNull();
-    return resource;
   }
   
 }

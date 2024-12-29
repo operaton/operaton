@@ -31,7 +31,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -47,7 +47,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
   @Autowired
   protected DataSource dataSource;
 
-  private static long WAIT_TIME_MILLIS = 20000L;
+  private static final long WAIT_TIME_MILLIS = 20000L;
   public static final long INTERVAL_MILLIS = 1000L;
 
   @Deployment
@@ -71,14 +71,13 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     userBean.hello();
 
     jdbcTemplate.update("insert into MY_TABLE values ('test');");
-    int results = jdbcTemplate.queryForObject("select count(*) from MY_TABLE", Integer.class);
-    assertThat(results).isEqualTo(1);
+    Integer results = jdbcTemplate.queryForObject("select count(*) from MY_TABLE", Integer.class);
+    assertThat(results).isOne();
 
     // The completeTask() method will write a record to the 'MY_TABLE' table and complete the user task
-    try {
-      userBean.completeTask(taskService.createTaskQuery().singleResult().getId());
-      fail("");
-    } catch (Exception e) { }
+    String taskId = taskService.createTaskQuery().singleResult().getId();
+    assertThatThrownBy(() -> userBean.completeTask(taskId))
+      .isInstanceOf(Exception.class);
 
     // Since the service task after the user tasks throws an exception, both
     // the record and the process must be rolled back !

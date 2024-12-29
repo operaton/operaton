@@ -19,13 +19,14 @@ package org.operaton.bpm.engine.spring.test.components.scope;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+
+import java.util.UUID;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import java.util.logging.Logger;
 
 /**
  * @author Josh Long
@@ -43,7 +44,7 @@ public class Delegate1 implements JavaDelegate, InitializingBean {
     private StatefulObject statefulObject;
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
 
         String pid = this.processInstance.getId();
 
@@ -58,7 +59,7 @@ public class Delegate1 implements JavaDelegate, InitializingBean {
     }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
     assertThat(this.processInstance).as("the processInstance must not be null").isNotNull();
 
     }

@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
-import java.util.Arrays;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
+
+import java.util.List;
 
 /**
  * @author Svetlana Dorokhova
@@ -30,8 +30,8 @@ public class FailDeleteDeploymentsPlugin implements ProcessEnginePlugin {
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
-    processEngineConfiguration.setCustomPostCommandInterceptorsTxRequired(Arrays.<CommandInterceptor>asList(new FailDeleteDeploymentCommandInterceptor()));
-    processEngineConfiguration.setCustomPostCommandInterceptorsTxRequiresNew(Arrays.<CommandInterceptor>asList(new FailDeleteDeploymentCommandInterceptor()));
+    processEngineConfiguration.setCustomPostCommandInterceptorsTxRequired(List.of(new FailDeleteDeploymentCommandInterceptor()));
+    processEngineConfiguration.setCustomPostCommandInterceptorsTxRequiresNew(List.of(new FailDeleteDeploymentCommandInterceptor()));
   }
 
   @Override

@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = SpringProcessEnginePluginTest.TestConfig.class)
+@SuppressWarnings("unused")
 class SpringProcessEnginePluginTest {
 
   public static class TestConfig {
@@ -44,6 +45,6 @@ class SpringProcessEnginePluginTest {
 
   @Test
   void verifyToString() {
-    assertThat(plugin.toString()).isEqualTo("theBeanName");
+    assertThat(plugin).hasToString("theBeanName");
   }
 }

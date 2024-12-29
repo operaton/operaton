@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test.scripttask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.jupiter.api.AfterEach;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.ScriptEvaluationException;
@@ -30,7 +23,15 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public abstract class AbstractScriptTaskTest {
 
@@ -70,10 +71,10 @@ public abstract class AbstractScriptTaskTest {
   }
 
   /**
-   * Test if a Spring bean is visible for scripting for the scripftormat
+   * Test if a Spring bean is visible for scripting for the script format
    *
    * @param scriptFormat
-   *          the scriptformat like 'javascript', 'groovy', etc.
+   *          the script format like 'javascript', 'groovy', etc.
    * @param scriptText
    *          sets execution variable 'foo' to the testbean's name property
    */

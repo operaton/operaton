@@ -60,6 +60,7 @@ public class PostDeployWithNestedContext extends SpringProcessApplication {
   }
 
   @PostDeploy
+  @SuppressWarnings("unused")
   public void registerProcessApplication(ProcessEngine processEngine) {
     deployCalled = true;
     applicationContext.publishEvent(new MyEvent(this));

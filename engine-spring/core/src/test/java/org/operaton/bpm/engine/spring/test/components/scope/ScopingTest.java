@@ -54,7 +54,7 @@ public class ScopingTest {
 	@Autowired
 	private ProcessInitiatingPojo processInitiatingPojo;
 
-	private Logger logger = Logger.getLogger(getClass().getName());
+	private static final Logger LOGGER = Logger.getLogger(ScopingTest.class.getName());
 
 	@Autowired
 	private ProcessEngine processEngine;
@@ -86,20 +86,20 @@ public class ScopingTest {
 	  processInitiatingPojo = null;
 	}
 
-	public static long CUSTOMER_ID_PROC_VAR_VALUE = 343;
+	public static final long CUSTOMER_ID_PROC_VAR_VALUE = 343;
 
-	public static String customerIdProcVarName = "customerId";
+	public static final String CUSTOMER_ID_PROC_VAR_NAME = "customerId";
 
 	/**
 	 * this code instantiates a business process that in turn delegates to a few Spring beans that in turn inject a process scoped object, {@link StatefulObject}.
 	 *
 	 * @return the StatefulObject that was injected across different components, that all share the same state.
-	 * @throws Throwable if anythign goes wrong
+	 * @throws Throwable if anything goes wrong
 	 */
 	private StatefulObject run() throws Throwable {
-		logger.info("----------------------------------------------");
+		LOGGER.info("----------------------------------------------");
 		Map<String, Object> vars = new HashMap<>();
-		vars.put(customerIdProcVarName, CUSTOMER_ID_PROC_VAR_VALUE);
+		vars.put(CUSTOMER_ID_PROC_VAR_NAME, CUSTOMER_ID_PROC_VAR_VALUE);
 		ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey("component-waiter", vars);
 		StatefulObject scopedObject = (StatefulObject) processEngine.getRuntimeService().getVariable(processInstance.getId(), "scopedTarget.c1");
     assertThat(scopedObject).as("the scopedObject can't be null").isNotNull();
@@ -117,7 +117,7 @@ public class ScopingTest {
 
 		this.taskService.claim(t.getId(), "me");
 
-		logger.info("sleeping for 10 seconds while a user performs his task. " +
+		LOGGER.info("sleeping for 10 seconds while a user performs his task. " +
 				"The first transaction has committed. A new one will start in 10 seconds");
 
 		Thread.sleep(1000 * 5);
@@ -134,7 +134,7 @@ public class ScopingTest {
 
   @Test
   void usingAnInjectedScopedProxy() throws Throwable {
-		logger.info("Running 'component-waiter' process instance with scoped beans.");
+		LOGGER.info("Running 'component-waiter' process instance with scoped beans.");
 		StatefulObject one = run();
 		StatefulObject two = run();
 		assertNotSame(one.getName(), two.getName());

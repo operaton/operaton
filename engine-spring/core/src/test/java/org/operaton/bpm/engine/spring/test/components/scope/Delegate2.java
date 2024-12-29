@@ -18,9 +18,10 @@ package org.operaton.bpm.engine.spring.test.components.scope;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,7 +37,7 @@ public class Delegate2 implements JavaDelegate {
 	@Autowired private StatefulObject statefulObject;
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
 
 		this.statefulObject.increment();
 

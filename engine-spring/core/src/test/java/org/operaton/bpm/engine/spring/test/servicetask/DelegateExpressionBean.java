@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.el.FixedValue;
  * @author Joram Barrez
  * @author Bernd Ruecker (operaton)
  */
+@SuppressWarnings("unused")
 public class DelegateExpressionBean implements JavaDelegate {
 
   private SentenceGenerator sentenceGenerator;
@@ -31,7 +32,7 @@ public class DelegateExpressionBean implements JavaDelegate {
   private FixedValue someField;
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
     execution.setVariable("myVar", sentenceGenerator.getSentence());
     if (someField != null) {
       execution.setVariable("fieldInjection", someField.getValue(execution));

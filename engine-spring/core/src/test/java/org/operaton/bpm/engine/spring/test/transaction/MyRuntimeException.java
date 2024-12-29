@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
+import java.io.Serial;
+
 public class MyRuntimeException extends RuntimeException {
   
   public MyRuntimeException(){
     super("error");
   }
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
 }

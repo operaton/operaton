@@ -76,10 +76,10 @@ class SpringInnerTransactionRollbackTest {
 
 
     // historic inner PI shouldn't be available
-    List<HistoricProcessInstance> innerProcessinstances = historyService
+    List<HistoricProcessInstance> historicProcessInstances = historyService
         .createHistoricProcessInstanceQuery()
         .processDefinitionKey("InnerTxNestedTransactionTest")
         .list();
-    assertThat(innerProcessinstances).isEmpty();
+    assertThat(historicProcessInstances).isEmpty();
   }
 }

@@ -40,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/components/ProcessStartingBeanPostProcessorTest-context.xml")
 class ProcessStartingBeanPostProcessorTest {
 
-	private Logger log = Logger.getLogger(getClass().getName());
+	private static final Logger LOG = Logger.getLogger(ProcessStartingBeanPostProcessorTest.class.getName());
 
 	@Autowired
 	private ProcessEngine processEngine;
@@ -82,11 +82,11 @@ class ProcessStartingBeanPostProcessorTest {
 
 		this.processInitiatingPojo.reset();
 
-    assertThat(this.processInitiatingPojo.getMethodState()).isEqualTo(0);
+    assertThat(this.processInitiatingPojo.getMethodState()).isZero();
 
 		this.processInitiatingPojo.startProcess(53);
 
-    assertThat(this.processInitiatingPojo.getMethodState()).isEqualTo(1);
+    assertThat(this.processInitiatingPojo.getMethodState()).isOne();
 	}
 
   @Test
@@ -105,8 +105,8 @@ class ProcessStartingBeanPostProcessorTest {
 		String processInstance = processInitiatingPojo.startProcessA(id);
 		Long customerId = (Long) processEngine.getRuntimeService().getVariable(processInstance, "customerId");
     assertThat((Long) id).as("the process variable should both exist and be equal to the value given, " + id).isEqualTo(customerId);
-		log.info("the customerId from the ProcessInstance is " + customerId);
-    assertThat(processInstance).as("processInstanc can't be null").isNotNull();
+		LOG.info("the customerId from the ProcessInstance is " + customerId);
+    assertThat(processInstance).as("processInstance can't be null").isNotNull();
     assertThat(customerId).as("the variable should be non-null").isNotNull();
 	}
 }

@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestContextManager;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -69,7 +68,6 @@ public abstract class SpringProcessEngineTestCase implements ApplicationContextA
 
   @BeforeEach
   protected void setUp() throws Exception {
-    ContextConfiguration contextConfiguration = getClass().getAnnotation(ContextConfiguration.class);
     processEngine = applicationContext.getBean(ProcessEngine.class);
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
     runtimeService = processEngine.getRuntimeService();

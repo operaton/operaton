@@ -69,7 +69,7 @@ class SpringAutoDeployTest {
   }
 
   @AfterEach
-  void tearDown() throws Exception {
+  void tearDown() {
     DynamicResourceProducer.clearResources();
     removeAllDeployments();
     this.applicationContext.close();
@@ -98,7 +98,7 @@ class SpringAutoDeployTest {
   }
 
   @Test
-  void noRedeploymentForSpringContainerRestart() throws Exception {
+  void noRedeploymentForSpringContainerRestart() {
     createAppContext(CTX_PATH);
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
     assertThat(deploymentQuery.count()).isEqualTo(1);
@@ -134,7 +134,7 @@ class SpringAutoDeployTest {
 
   // when deployChangeOnly=true, new deployment should be created only for the changed resources
   @Test
-  void deployChangeOnly() throws Exception {
+  void deployChangeOnly() {
     // given
     BpmnModelInstance model1 = Bpmn.createExecutableProcess("model1").startEvent("oldId").endEvent().done();
     BpmnModelInstance model2 = Bpmn.createExecutableProcess("model1").startEvent("newId").endEvent().done();
@@ -165,7 +165,7 @@ class SpringAutoDeployTest {
 
   // Updating the bpmn20 file should lead to a new deployment when restarting the Spring container
   @Test
-  void resourceRedeploymentAfterProcessDefinitionChange() throws Exception {
+  void resourceRedeploymentAfterProcessDefinitionChange() {
     // given
     BpmnModelInstance model1 = Bpmn.createExecutableProcess("model1").startEvent("oldId").endEvent().done();
     BpmnModelInstance model2 = Bpmn.createExecutableProcess("model1").startEvent("newId").endEvent().done();
@@ -187,7 +187,7 @@ class SpringAutoDeployTest {
     repositoryService = (RepositoryService) applicationContext.getBean("repositoryService");
 
     // then
-    // Assertions come AFTER the file write! Otherwise the process file is messed up if the assertions fail.
+    // Assertions come AFTER the file write! Otherwise, the process file is messed up if the assertions fail.
     assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(2);
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(4);
   }

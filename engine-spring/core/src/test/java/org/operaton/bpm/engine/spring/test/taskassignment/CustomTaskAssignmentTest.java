@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.spring.test.taskassignment;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -46,7 +46,7 @@ class CustomTaskAssignmentTest extends SpringProcessEngineTestCase {
     assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateUser("fozzie").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateUser("gonzo").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateUser("mispiggy").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskCandidateUser("misspiggy").count()).isZero();
   }
 
 
@@ -57,7 +57,7 @@ class CustomTaskAssignmentTest extends SpringProcessEngineTestCase {
     assertThat(taskService.createTaskQuery().taskCandidateGroup("management").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateGroup("directors").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateGroup("accountancy").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateGroup("sales").count()).isEqualTo(0);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("sales").count()).isZero();
   }
   
 }

@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Testbean {
 
-  protected String bar = "baz";
+  private final String bar = "baz";
 
   public String getBar() {
     return bar;

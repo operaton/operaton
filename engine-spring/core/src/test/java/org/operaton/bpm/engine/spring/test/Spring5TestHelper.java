@@ -28,23 +28,23 @@ public class Spring5TestHelper implements SpringTestHelper {
     testContextManager.registerTestExecutionListeners(new TestExecutionListener() {
 
       @Override
-      public void prepareTestInstance(TestContext testContext) throws Exception {
+      public void prepareTestInstance(TestContext testContext) {
       }
 
       @Override
-      public void beforeTestMethod(TestContext testContext) throws Exception {
+      public void beforeTestMethod(TestContext testContext) {
       }
 
       @Override
-      public void beforeTestClass(TestContext testContext) throws Exception {
+      public void beforeTestClass(TestContext testContext) {
       }
 
       @Override
-      public void afterTestMethod(TestContext testContext) throws Exception {
+      public void afterTestMethod(TestContext testContext) {
       }
 
       @Override
-      public void afterTestClass(TestContext testContext) throws Exception {
+      public void afterTestClass(TestContext testContext) {
         testContext.markApplicationContextDirty(HierarchyMode.EXHAUSTIVE);
       }
     });

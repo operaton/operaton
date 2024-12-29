@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Testbean {
-  private String name = "name property of testbean";
+  private final String name = "name property of testbean";
 
   public String getName() {
     return name;

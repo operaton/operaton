@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Angel López Cima
  * @author Falko Menge
  */
-@ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/servicetask/serviceraskSpringTestCatchError-context.xml")
+@ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/servicetask/servicetaskSpringTestCatchError-context.xml")
 class BoundaryErrorEventSpringTest extends SpringProcessEngineTestCase {
 
   @Deployment

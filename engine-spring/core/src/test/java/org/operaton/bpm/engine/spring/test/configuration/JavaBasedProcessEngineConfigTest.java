@@ -30,21 +30,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Philipp Ossler
  */
-@ContextConfiguration(classes = {InMemProcessEngineConfiguration.class, SpringProcessEngineServicesConfiguration.class})
+@ContextConfiguration(classes = { InMemProcessEngineConfiguration.class,
+    SpringProcessEngineServicesConfiguration.class })
 class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
 
-  @Autowired
-  private Counter couter;
+  private final Counter counter;
+  private final RuntimeService runtimeService;
 
   @Autowired
-  protected RuntimeService runtimeService;
+  public JavaBasedProcessEngineConfigTest(Counter counter, RuntimeService runtimeService) {
+    this.counter = counter;
+    this.runtimeService = runtimeService;
+  }
 
   @Deployment
   @Test
   void delegateExpression() {
     runtimeService.startProcessInstanceByKey("SpringProcess");
 
-    assertThat(couter.getCount()).isOne();
+    assertThat(counter.getCount()).isOne();
   }
 
   @Deployment
@@ -52,7 +56,7 @@ class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
   void expression() {
     runtimeService.startProcessInstanceByKey("SpringProcess");
 
-    assertThat(couter.getCount()).isOne();
+    assertThat(counter.getCount()).isOne();
   }
 
   @Deployment
@@ -60,7 +64,7 @@ class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
   void delegateExpressionWithProcessServices() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("SpringProcess").getId();
 
-    assertThat(couter.getCount()).isOne();
+    assertThat(counter.getCount()).isOne();
     assertThat((Integer) runtimeService.getVariable(processInstanceId, "count")).isOne();
   }
 

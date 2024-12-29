@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Counter {
 
-  private AtomicInteger counter = new AtomicInteger(0);
+  private final AtomicInteger counter = new AtomicInteger(0);
 
   public int getCount() {
     return counter.get();

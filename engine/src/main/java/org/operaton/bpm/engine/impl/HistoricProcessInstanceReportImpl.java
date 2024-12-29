@@ -43,8 +43,6 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
  */
 public class HistoricProcessInstanceReportImpl implements HistoricProcessInstanceReport {
 
-  private static final long serialVersionUID = 1L;
-
   protected Date startedAfter;
   protected Date startedBefore;
   protected String[] processDefinitionIdIn;

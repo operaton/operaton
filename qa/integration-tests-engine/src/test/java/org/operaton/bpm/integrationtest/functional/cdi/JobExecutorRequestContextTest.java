@@ -38,11 +38,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class JobExecutorRequestContextTest extends AbstractFoxPlatformIntegrationTest {
 
-  /**
-   *
-   */
-  private static final int _6000 = 6000;
-
   @Deployment
   public static WebArchive processArchive() {
     return initWebArchiveDeployment()

@@ -31,7 +31,6 @@ public class RetryCmdDeployment {
   public static final String FAILING_EVENT = "failingEvent";
   public static final String PROCESS_ID = "failedIntermediateThrowingEventAsync";
   private static final String SCHEDULE = "R5/PT5M";
-  private static final String PROCESS_ID_2 = "failingSignalProcess";
   public static final String MESSAGE = "start";
   private BpmnModelInstance[] bpmnModelInstances;
 

@@ -29,7 +29,6 @@ import org.junit.jupiter.api.AfterEach;
 
 public class OperatonExtensionsTest {
 
-  private DmnModelInstance originalModelInstance;
   private DmnModelInstance modelInstance;
 
    public static Collection<Object[]> parameters(){
@@ -41,7 +40,6 @@ public class OperatonExtensionsTest {
    }
 
   public void initOperatonExtensionsTest(DmnModelInstance originalModelInstance) {
-    this.originalModelInstance = originalModelInstance;
     this.modelInstance = originalModelInstance.clone();
   }
 

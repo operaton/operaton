@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.delegate.TaskListener;
 
 public class UserTaskTestCreateTaskListener implements TaskListener {
 
-  private static final long serialVersionUID = 1L;
   private Expression expression;
 
   @Override

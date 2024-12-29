@@ -48,7 +48,6 @@ public class OperatonExtensionsTest {
   private EndEvent endEvent;
   private MessageEventDefinition messageEventDefinition;
   private ParallelGateway parallelGateway;
-  private String namespace;
   private BpmnModelInstance originalModelInstance;
   private BpmnModelInstance modelInstance;
   private Error error;
@@ -62,7 +61,6 @@ public class OperatonExtensionsTest {
   }
 
   public void initOperatonExtensionsTest(String namespace, BpmnModelInstance modelInstance) {
-    this.namespace = namespace;
     this.originalModelInstance = modelInstance;
     setUp();
   }

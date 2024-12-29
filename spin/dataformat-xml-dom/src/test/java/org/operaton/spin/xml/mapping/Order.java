@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Order {
   private String order;
   private Date dueUntil;
-  private String date;
   private LinkedList<Customer> customer;
   private OrderDetails orderDetails;
 

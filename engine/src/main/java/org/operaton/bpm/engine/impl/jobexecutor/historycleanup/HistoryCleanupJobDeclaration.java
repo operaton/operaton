@@ -35,8 +35,6 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  */
 public class HistoryCleanupJobDeclaration extends JobDeclaration<HistoryCleanupContext, EverLivingJobEntity> {
 
-  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
-
   public HistoryCleanupJobDeclaration() {
     super(HistoryCleanupJobHandler.TYPE);
   }

@@ -74,9 +74,6 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
     return webArchive;
   }
 
-  @Inject
-  private BeanManager beanManager;
-
   protected void testDelegation() {
     TaskQuery taskQuery = taskService.createTaskQuery();
 

@@ -44,10 +44,6 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
-    private String beanName;
-
-    private BeanFactory beanFactory;
-
     private volatile ConcurrentHashMap<String, ActivitiStateHandlerRegistration> registrations = new ConcurrentHashMap<>();
 
     private ProcessEngine processEngine;
@@ -153,12 +149,10 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
 
   @Override
   public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        this.beanFactory = beanFactory;
     }
 
   @Override
   public void setBeanName(String name) {
-        this.beanName = name;
     }
 
   @Override

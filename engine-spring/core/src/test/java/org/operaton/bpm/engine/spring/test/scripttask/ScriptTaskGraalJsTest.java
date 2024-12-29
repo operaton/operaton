@@ -16,25 +16,25 @@
  */
 package org.operaton.bpm.engine.spring.test.scripttask;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-    "classpath:org/operaton/bpm/engine/spring/test/scripttask/ScriptTaskTest-applicationContext.xml" })
-public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
+  "classpath:org/operaton/bpm/engine/spring/test/scripttask/ScriptTaskTest-applicationContext.xml"})
+class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
 
   private static final String GRAALJS = "graal.js";
 
   @Test
-  public void shouldFindPublicSpringBeanMethodWithJavascriptGraalJs() {
+  void shouldFindPublicSpringBeanMethodWithJavascriptGraalJs() {
     testSpringBeanVisibility(GRAALJS, "execution.setVariable('foo', testbean.getName());");
   }
 
   @Test
-  public void shouldNotFindPrivateSpringBeanAttributeWithJavascriptGraalJs() {
+  void shouldNotFindPrivateSpringBeanAttributeWithJavascriptGraalJs() {
     testSpringBeanVisibility(GRAALJS, "execution.setVariable('foo', testbean.name);", false);
   }
 

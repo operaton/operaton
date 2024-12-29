@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.spring.test.configuration;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
@@ -29,8 +30,8 @@ import org.springframework.test.context.ContextConfiguration;
 /**
  * @author Philipp Ossler
  */
-@ContextConfiguration(classes = { InMemProcessEngineConfiguration.class, SpringProcessEngineServicesConfiguration.class })
-public class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
+@ContextConfiguration(classes = {InMemProcessEngineConfiguration.class, SpringProcessEngineServicesConfiguration.class})
+class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCase {
 
   @Autowired
   private Counter couter;
@@ -39,21 +40,24 @@ public class JavaBasedProcessEngineConfigTest extends SpringProcessEngineTestCas
   protected RuntimeService runtimeService;
 
   @Deployment
-  public void testDelegateExpression() {
+  @Test
+  void delegateExpression() {
     runtimeService.startProcessInstanceByKey("SpringProcess");
 
     assertThat(couter.getCount(), is(1));
   }
 
   @Deployment
-  public void testExpression() {
+  @Test
+  void expression() {
     runtimeService.startProcessInstanceByKey("SpringProcess");
 
     assertThat(couter.getCount(), is(1));
   }
 
   @Deployment
-  public void testDelegateExpressionWithProcessServices() {
+  @Test
+  void delegateExpressionWithProcessServices() {
     String processInstanceId = runtimeService.startProcessInstanceByKey("SpringProcess").getId();
 
     assertThat(couter.getCount(), is(1));

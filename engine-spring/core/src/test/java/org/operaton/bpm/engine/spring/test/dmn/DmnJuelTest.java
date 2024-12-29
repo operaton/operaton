@@ -19,9 +19,9 @@ package org.operaton.bpm.engine.spring.test.dmn;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.RepositoryService;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,8 +31,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-    "classpath:org/operaton/bpm/engine/spring/test/dmn/DmnJuelTest-applicationContext.xml" })
-public class DmnJuelTest {
+  "classpath:org/operaton/bpm/engine/spring/test/dmn/DmnJuelTest-applicationContext.xml"})
+class DmnJuelTest {
 
   @Autowired
   protected RepositoryService repositoryService;
@@ -42,21 +42,21 @@ public class DmnJuelTest {
 
   protected String deploymentId;
 
-  @Before
-  public void deploy() {
+  @BeforeEach
+  void deploy() {
     deploymentId = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/spring/test/dmn/JuelTest.dmn")
         .deploy()
         .getId();
   }
 
-  @After
-  public void clean() {
+  @AfterEach
+  void clean() {
     repositoryService.deleteDeployment(deploymentId, true);
   }
 
   @Test
-  public void shouldResolveBean() {
+  void shouldResolveBean() {
     // given
 
     // when

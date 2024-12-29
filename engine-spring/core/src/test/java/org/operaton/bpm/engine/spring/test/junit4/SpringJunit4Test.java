@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.spring.test.junit4;
 
-import static org.junit.Assert.assertEquals;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.Deployment;
-import org.junit.After;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -53,8 +53,8 @@ public class SpringJunit4Test {
   @Rule
   public ProcessEngineRule activitiSpringRule;
 
-  @After
-  public void closeProcessEngine() {
+  @AfterEach
+  void closeProcessEngine() {
     // Required, since all the other tests seem to do a specific drop on the end
     processEngine.close();
     processEngine = null;
@@ -65,13 +65,13 @@ public class SpringJunit4Test {
 
   @Test
   @Deployment
-  public void simpleProcessTest() {
+  void simpleProcessTest() {
     runtimeService.startProcessInstanceByKey("simpleProcess");
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("My Task", task.getName());
+    assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
   }
 

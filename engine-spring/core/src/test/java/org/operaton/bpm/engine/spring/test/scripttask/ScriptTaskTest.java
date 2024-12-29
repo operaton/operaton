@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.spring.test.scripttask;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-    "classpath:org/operaton/bpm/engine/spring/test/scripttask/ScriptTaskTest-applicationContext.xml" })
-public class ScriptTaskTest extends AbstractScriptTaskTest {
+  "classpath:org/operaton/bpm/engine/spring/test/scripttask/ScriptTaskTest-applicationContext.xml"})
+class ScriptTaskTest extends AbstractScriptTaskTest {
 
   private static final String JAVASCRIPT = "javascript";
   private static final String PYTHON = "python";
@@ -32,42 +32,42 @@ public class ScriptTaskTest extends AbstractScriptTaskTest {
   private static final String JUEL = "juel";
 
   @Test
-  public void shouldFindPublicSpringBeanMethodWithJavascriptGraalJs() {
+  void shouldFindPublicSpringBeanMethodWithJavascriptGraalJs() {
     testSpringBeanVisibility(JAVASCRIPT, "execution.setVariable('foo', testbean.getName());");
   }
 
   @Test
-  public void shouldFindPublicSpringBeanMethodWithGroovy() {
+  void shouldFindPublicSpringBeanMethodWithGroovy() {
     testSpringBeanVisibility(GROOVY, "execution.setVariable('foo', testbean.getName())\n");
   }
 
   @Test
-  public void shouldFindPublicSpringBeanMethodWithPython() {
+  void shouldFindPublicSpringBeanMethodWithPython() {
     testSpringBeanVisibility(PYTHON, "execution.setVariable('foo', testbean.getName())\n");
   }
 
   @Test
-  public void shouldFindPublicSpringBeanMethodWithJuel() {
+  void shouldFindPublicSpringBeanMethodWithJuel() {
     testSpringBeanVisibility(JUEL, "${execution.setVariable('foo', testbean.getName())}");
   }
 
   @Test
-  public void shouldNotFindPrivateSpringBeanAttributeWithJavascriptGraalJs() {
+  void shouldNotFindPrivateSpringBeanAttributeWithJavascriptGraalJs() {
     testSpringBeanVisibility(JAVASCRIPT, "execution.setVariable('foo', testbean.name);", false);
   }
 
   @Test
-  public void shouldFindPrivateSpringBeanAttributeWithWithGroovy() {
+  void shouldFindPrivateSpringBeanAttributeWithWithGroovy() {
     testSpringBeanVisibility(GROOVY, "execution.setVariable('foo', testbean.name)\n");
   }
 
   @Test
-  public void shouldFindPrivateSpringBeanAttributeWithPython() {
+  void shouldFindPrivateSpringBeanAttributeWithPython() {
     testSpringBeanVisibility(PYTHON, "execution.setVariable('foo', testbean.name)\n");
   }
 
   @Test
-  public void shouldFindPrivateSpringBeanAttributeWithJuel() {
+  void shouldFindPrivateSpringBeanAttributeWithJuel() {
     testSpringBeanVisibility(JUEL, "${execution.setVariable('foo', testbean.name)}");
   }
 }

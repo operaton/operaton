@@ -19,10 +19,12 @@ package org.operaton.bpm.engine.spring.test.components.scope;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.Assert;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import java.util.logging.Logger;
 
 /**
@@ -47,7 +49,7 @@ public class Delegate1 implements JavaDelegate, InitializingBean {
 
         log.info("the processInstance#id is " + pid);
 
-        Assert.assertNotNull("the 'scopedCustomer' reference can't be null", statefulObject);
+    assertThat(statefulObject).as("the 'scopedCustomer' reference can't be null").isNotNull();
         String uuid = UUID.randomUUID().toString();
         statefulObject.setName(uuid);
         log.info("the 'uuid' value given to the ScopedCustomer#name property is '" + uuid + "' in " + getClass().getName());
@@ -57,7 +59,7 @@ public class Delegate1 implements JavaDelegate, InitializingBean {
 
   @Override
   public void afterPropertiesSet() throws Exception {
-        Assert.assertNotNull("the processInstance must not be null", this.processInstance);
+    assertThat(this.processInstance).as("the processInstance must not be null").isNotNull();
 
     }
 }

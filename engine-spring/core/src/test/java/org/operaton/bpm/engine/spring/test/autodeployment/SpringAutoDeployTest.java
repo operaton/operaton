@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.spring.test.autodeployment;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.test.PvmTestCase;
 import org.operaton.bpm.engine.repository.CaseDefinition;
@@ -28,6 +30,8 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.HashSet;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +39,7 @@ import java.util.Set;
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class SpringAutoDeployTest extends PvmTestCase {
+class SpringAutoDeployTest extends PvmTestCase {
 
   protected static final String CTX_PATH
     = "org/operaton/bpm/engine/spring/test/autodeployment/SpringAutoDeployTest-context.xml";
@@ -68,16 +72,17 @@ public class SpringAutoDeployTest extends PvmTestCase {
     this.repositoryService = applicationContext.getBean(RepositoryService.class);
   }
 
-  protected void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
     DynamicResourceProducer.clearResources();
     removeAllDeployments();
     this.applicationContext.close();
     this.applicationContext = null;
     this.repositoryService = null;
-    super.tearDown();
   }
 
-  public void testBasicActivitiSpringIntegration() {
+  @Test
+  void basicActivitiSpringIntegration() {
     createAppContext(CTX_PATH);
     List<ProcessDefinition> processDefinitions = repositoryService
       .createProcessDefinitionQuery()
@@ -93,43 +98,47 @@ public class SpringAutoDeployTest extends PvmTestCase {
     expectedProcessDefinitionKeys.add("b");
     expectedProcessDefinitionKeys.add("c");
 
-    assertEquals(expectedProcessDefinitionKeys, processDefinitionKeys);
+    assertThat(processDefinitionKeys).isEqualTo(expectedProcessDefinitionKeys);
   }
 
-  public void testNoRedeploymentForSpringContainerRestart() throws Exception {
+  @Test
+  void noRedeploymentForSpringContainerRestart() throws Exception {
     createAppContext(CTX_PATH);
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
-    assertEquals(1, deploymentQuery.count());
+    assertThat(deploymentQuery.count()).isEqualTo(1);
     ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
-    assertEquals(3, processDefinitionQuery.count());
+    assertThat(processDefinitionQuery.count()).isEqualTo(3);
 
     // Creating a new app context with same resources doesn't lead to more deployments
     applicationContext.close();
     applicationContext = new ClassPathXmlApplicationContext(CTX_PATH);
-    assertEquals(1, deploymentQuery.count());
-    assertEquals(3, processDefinitionQuery.count());
+    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isEqualTo(3);
   }
 
-  public void testAutoDeployCmmn() {
+  @Test
+  void autoDeployCmmn() {
     createAppContext(CTX_CMMN_PATH);
 
     List<CaseDefinition> definitions = repositoryService.createCaseDefinitionQuery().list();
 
-    assertEquals(1, definitions.size());
+    assertThat(definitions.size()).isEqualTo(1);
   }
 
-  public void testAutoDeployCmmnAndBpmnTogether() {
+  @Test
+  void autoDeployCmmnAndBpmnTogether() {
     createAppContext(CTX_CMMN_BPMN_TOGETHER_PATH);
 
     long caseDefs = repositoryService.createCaseDefinitionQuery().count();
     long procDefs = repositoryService.createProcessDefinitionQuery().count();
 
-    assertEquals(1, caseDefs);
-    assertEquals(3, procDefs);
+    assertThat(caseDefs).isEqualTo(1);
+    assertThat(procDefs).isEqualTo(3);
   }
 
   // when deployChangeOnly=true, new deployment should be created only for the changed resources
-  public void testDeployChangeOnly() throws Exception {
+  @Test
+  void deployChangeOnly() throws Exception {
     // given
     BpmnModelInstance model1 = Bpmn.createExecutableProcess("model1").startEvent("oldId").endEvent().done();
     BpmnModelInstance model2 = Bpmn.createExecutableProcess("model1").startEvent("newId").endEvent().done();
@@ -141,7 +150,7 @@ public class SpringAutoDeployTest extends PvmTestCase {
     createAppContext(CTX_DEPLOY_CHANGE_ONLY_PATH);
 
     // assume
-    assertEquals(1, repositoryService.createDeploymentQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
 
     // when
     applicationContext.close();
@@ -154,12 +163,13 @@ public class SpringAutoDeployTest extends PvmTestCase {
     repositoryService = (RepositoryService) applicationContext.getBean("repositoryService");
 
     // then
-    assertEquals(2, repositoryService.createDeploymentQuery().count());
-    assertEquals(3, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(2);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(3);
   }
 
   // Updating the bpmn20 file should lead to a new deployment when restarting the Spring container
-  public void testResourceRedeploymentAfterProcessDefinitionChange() throws Exception {
+  @Test
+  void resourceRedeploymentAfterProcessDefinitionChange() throws Exception {
     // given
     BpmnModelInstance model1 = Bpmn.createExecutableProcess("model1").startEvent("oldId").endEvent().done();
     BpmnModelInstance model2 = Bpmn.createExecutableProcess("model1").startEvent("newId").endEvent().done();
@@ -169,7 +179,7 @@ public class SpringAutoDeployTest extends PvmTestCase {
     DynamicResourceProducer.addResource("b.bpmn", model3);
 
     createAppContext(CTX_DYNAMIC_DEPLOY_PATH);
-    assertEquals(1, repositoryService.createDeploymentQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
     applicationContext.close();
 
     // when
@@ -182,36 +192,40 @@ public class SpringAutoDeployTest extends PvmTestCase {
 
     // then
     // Assertions come AFTER the file write! Otherwise the process file is messed up if the assertions fail.
-    assertEquals(2, repositoryService.createDeploymentQuery().count());
-    assertEquals(4, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(2);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(4);
   }
 
-  public void testAutoDeployWithCreateDropOnCleanDb() {
+  @Test
+  void autoDeployWithCreateDropOnCleanDb() {
     createAppContext(CTX_CREATE_DROP_CLEAN_DB);
-    assertEquals(1, repositoryService.createDeploymentQuery().count());
-    assertEquals(3, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(3);
   }
 
-  public void testAutoDeployTenantId() {
+  @Test
+  void autoDeployTenantId() {
     createAppContext(CTX_TENANT_ID_PATH);
 
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertEquals(1, deploymentQuery.tenantIdIn("tenant1").count());
+    assertThat(deploymentQuery.tenantIdIn("tenant1").count()).isEqualTo(1);
   }
 
-  public void testAutoDeployWithoutTenantId() {
+  @Test
+  void autoDeployWithoutTenantId() {
     createAppContext(CTX_CMMN_BPMN_TOGETHER_PATH);
 
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertEquals(1, deploymentQuery.withoutTenantId().count());
+    assertThat(deploymentQuery.withoutTenantId().count()).isEqualTo(1);
   }
 
-  public void testAutoDeployCustomName() {
+  @Test
+  void autoDeployCustomName() {
     createAppContext(CTX_CUSTOM_NAME_PATH);
 
-    assertEquals(1, repositoryService.createProcessDefinitionQuery().count());
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
   }
 
   // --Helper methods ----------------------------------------------------------

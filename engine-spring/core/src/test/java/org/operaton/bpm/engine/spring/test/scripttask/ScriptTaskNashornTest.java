@@ -16,25 +16,25 @@
  */
 package org.operaton.bpm.engine.spring.test.scripttask;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-    "classpath:org/operaton/bpm/engine/spring/test/scripttask/ScriptTaskTest-applicationContext.xml" })
-public class ScriptTaskNashornTest extends AbstractScriptTaskTest {
+  "classpath:org/operaton/bpm/engine/spring/test/scripttask/ScriptTaskTest-applicationContext.xml"})
+class ScriptTaskNashornTest extends AbstractScriptTaskTest {
 
   private static final String NASHORN = "nashorn";
 
   @Test
-  public void shouldFindPublicSpringBeanMethodWithJavascriptNashorn() {
+  void shouldFindPublicSpringBeanMethodWithJavascriptNashorn() {
     testSpringBeanVisibility(NASHORN, "execution.setVariable('foo', testbean.getName());");
   }
 
   @Test
-  public void shouldFindPrivateSpringBeanAttributeWithJavascriptNashorn() {
+  void shouldFindPrivateSpringBeanAttributeWithJavascriptNashorn() {
     testSpringBeanVisibility(NASHORN, "execution.setVariable('foo', testbean.name);");
   }
 

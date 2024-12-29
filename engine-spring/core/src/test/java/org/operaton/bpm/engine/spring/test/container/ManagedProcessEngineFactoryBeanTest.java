@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.spring.test.container;
+import static org.assertj.core.api.Assertions.assertThat;
 
+
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.engine.spring.container.ManagedProcessEngineFactoryBean;
-import org.junit.Assert;
-import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -29,28 +30,28 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Daniel Meyer
  *
  */
-public class ManagedProcessEngineFactoryBeanTest {
-  
+class ManagedProcessEngineFactoryBeanTest {
+
   @Test
-  public void testProcessApplicationDeployment() {
-    
+  void processApplicationDeployment() {
+
     // initially, no process engine is registered:
-    Assert.assertNull(BpmPlatform.getDefaultProcessEngine());
-    Assert.assertEquals(0, BpmPlatform.getProcessEngineService().getProcessEngines().size());
+    assertThat(BpmPlatform.getDefaultProcessEngine()).isNull();
+    assertThat(BpmPlatform.getProcessEngineService().getProcessEngines().size()).isEqualTo(0);
     
     // start spring application context
     AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext("org/operaton/bpm/engine/spring/test/container/ManagedProcessEngineFactoryBean-context.xml");
     applicationContext.start();
-    
+
     // assert that now the process engine is registered:
-    Assert.assertNotNull(BpmPlatform.getDefaultProcessEngine());      
+    assertThat(BpmPlatform.getDefaultProcessEngine()).isNotNull();      
     
     // close the spring application context
     applicationContext.close();
-    
+
     // after closing the application context, the process engine is gone
-    Assert.assertNull(BpmPlatform.getDefaultProcessEngine());
-    Assert.assertEquals(0, BpmPlatform.getProcessEngineService().getProcessEngines().size());
+    assertThat(BpmPlatform.getDefaultProcessEngine()).isNull();
+    assertThat(BpmPlatform.getProcessEngineService().getProcessEngines().size()).isEqualTo(0);
     
   }
     

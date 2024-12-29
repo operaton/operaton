@@ -16,6 +16,11 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
@@ -28,12 +33,12 @@ import org.springframework.test.context.ContextConfiguration;
  */
 
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/transaction/SpringTransactionIntegrationDeleteDeploymentFailTest-context.xml")
-public class SpringTransactionIntegrationDeleteDeploymentFailTest extends SpringProcessEngineTestCase {
+class SpringTransactionIntegrationDeleteDeploymentFailTest extends SpringProcessEngineTestCase {
 
   private String deploymentId;
 
-  @Override
-  protected void tearDown() throws Exception {
+  @AfterEach
+  void tearDown() throws Exception {
     processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
       @Override
       public Void execute(CommandContext commandContext) {
@@ -43,12 +48,10 @@ public class SpringTransactionIntegrationDeleteDeploymentFailTest extends Spring
         return null;
       }
     });
-
-
-    super.tearDown();
   }
 
-  public void testFailingAfterDeleteDeployment() {
+  @Test
+  void failingAfterDeleteDeployment() {
     //given
     final BpmnModelInstance model = Bpmn.createExecutableProcess().startEvent().userTask().endEvent().done();
     deploymentId = processEngine.getRepositoryService().createDeployment().addModelInstance("model.bpmn", model).deploy().getId();
@@ -66,7 +69,7 @@ public class SpringTransactionIntegrationDeleteDeploymentFailTest extends Spring
 
     //then
     // DeleteDeploymentFailListener succeeded to registered deployments back
-    assertEquals(1, processEngineConfiguration.getRegisteredDeployments().size());
+    assertThat(processEngineConfiguration.getRegisteredDeployments().size()).isEqualTo(1);
   }
 
 }

@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.spring.test.transaction.modification;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.ibatis.logging.LogFactory;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -31,9 +30,9 @@ import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -59,13 +58,13 @@ public class ProcessInstanceModificationInTransactionTest {
   @Autowired
   UserBean userBean;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     LogFactory.useSlf4jLogging();
   }
 
   @Test
-  public void shouldBeAbleToPerformModification() {
+  void shouldBeAbleToPerformModification() {
 
     // given
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("TestProcess")
@@ -84,10 +83,10 @@ public class ProcessInstanceModificationInTransactionTest {
 
     // then
     VariableInstance variable = rule.getRuntimeService().createVariableInstanceQuery().processInstanceIdIn(procInst.getId()).variableName("createDate").singleResult();
-    assertNotNull(variable);
+    assertThat(variable).isNotNull();
     HistoricVariableInstance historicVariable = rule.getHistoryService().createHistoricVariableInstanceQuery().singleResult();
-    assertEquals(variable.getName(), historicVariable.getName());
-    assertEquals(HistoricVariableInstance.STATE_CREATED, historicVariable.getState());
+    assertThat(historicVariable.getName()).isEqualTo(variable.getName());
+    assertThat(historicVariable.getState()).isEqualTo(HistoricVariableInstance.STATE_CREATED);
   }
 
   private void deployModelInstance(BpmnModelInstance modelInstance) {

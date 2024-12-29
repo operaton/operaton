@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.spring.test.components;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.logging.Logger;
 
@@ -25,9 +24,9 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -38,7 +37,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/components/ProcessStartingBeanPostProcessorTest-context.xml")
-public class ProcessStartingBeanPostProcessorTest {
+class ProcessStartingBeanPostProcessorTest {
 
 	private Logger log = Logger.getLogger(getClass().getName());
 
@@ -51,16 +50,16 @@ public class ProcessStartingBeanPostProcessorTest {
 	@Autowired
 	private RepositoryService repositoryService;
 
-	@Before
-	public void before() {
+  @BeforeEach
+  void before() {
 	  repositoryService.createDeployment()
 	    .addClasspathResource("org/operaton/bpm/engine/spring/test/autodeployment/autodeploy.b.bpmn20.xml")
 	    .addClasspathResource("org/operaton/bpm/engine/spring/test/components/waiter.bpmn20.xml")
 	    .deploy();
 	}
 
-	@After
-  public void after() {
+  @AfterEach
+  void after() {
     for (Deployment deployment : repositoryService.createDeploymentQuery().list()) {
       repositoryService.deleteDeployment(deployment.getId(), true);
     }
@@ -70,43 +69,43 @@ public class ProcessStartingBeanPostProcessorTest {
     repositoryService = null;
   }
 
-	@Test
-	public void testReturnedProcessInstance() {
+  @Test
+  void returnedProcessInstance() {
 		String processInstanceId = this.processInitiatingPojo.startProcessA(22);
-		assertNotNull("the process instance id should not be null", processInstanceId);
+    assertThat(processInstanceId).as("the process instance id should not be null").isNotNull();
 	}
 
-	@Test
-	public void testReflectingSideEffects() {
-		assertNotNull("the processInitiatingPojo mustn't be null.", this.processInitiatingPojo);
+  @Test
+  void reflectingSideEffects() {
+    assertThat(this.processInitiatingPojo).as("the processInitiatingPojo mustn't be null.").isNotNull();
 
 		this.processInitiatingPojo.reset();
 
-    assertEquals(0, this.processInitiatingPojo.getMethodState());
+    assertThat(this.processInitiatingPojo.getMethodState()).isEqualTo(0);
 
 		this.processInitiatingPojo.startProcess(53);
 
-    assertEquals(1, this.processInitiatingPojo.getMethodState());
+    assertThat(this.processInitiatingPojo.getMethodState()).isEqualTo(1);
 	}
 
-	@Test
-	public void testUsingBusinessKey() {
+  @Test
+  void usingBusinessKey() {
 		long id = 5;
 		String businessKey = "usersKey" + System.currentTimeMillis();
 		ProcessInstance pi = processInitiatingPojo.enrollCustomer(businessKey, id);
-		assertEquals("the business key of the resultant ProcessInstance should match " +
-				"the one specified through the AOP-intercepted method" ,businessKey, pi.getBusinessKey());
+    assertThat(pi.getBusinessKey()).as("the business key of the resultant ProcessInstance should match " +
+      "the one specified through the AOP-intercepted method").isEqualTo(businessKey);
 
 	}
 
-	@Test
-	public void testLaunchingProcessInstance() {
+  @Test
+  void launchingProcessInstance() {
 		long id = 343;
 		String processInstance = processInitiatingPojo.startProcessA(id);
 		Long customerId = (Long) processEngine.getRuntimeService().getVariable(processInstance, "customerId");
-		assertEquals("the process variable should both exist and be equal to the value given, " + id, customerId, (Long) id);
+    assertThat((Long) id).as("the process variable should both exist and be equal to the value given, " + id).isEqualTo(customerId);
 		log.info("the customerId from the ProcessInstance is " + customerId);
-		assertNotNull("processInstanc can't be null", processInstance);
-		assertNotNull("the variable should be non-null", customerId);
+    assertThat(processInstance).as("processInstanc can't be null").isNotNull();
+    assertThat(customerId).as("the variable should be non-null").isNotNull();
 	}
 }

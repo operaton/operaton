@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -59,7 +59,7 @@ public class SpringInnerTransactionRollbackTest {
     "org/operaton/bpm/engine/spring/test/transaction/"
       + "SpringInnerTransactionRollbackTest.shouldRollbackProcessData-inner.bpmn20.xml"
   })
-  public void shouldRollbackProcessData() {
+  void shouldRollbackProcessData() {
     // given
 
     // when

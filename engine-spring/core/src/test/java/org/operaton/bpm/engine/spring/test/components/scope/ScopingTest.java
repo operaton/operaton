@@ -23,10 +23,9 @@ import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.components.ProcessInitiatingPojo;
 import org.operaton.bpm.engine.task.Task;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -34,6 +33,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -58,8 +62,8 @@ public class ScopingTest {
 	private RepositoryService repositoryService;
 	private TaskService taskService;
 
-	@Before
-	public void before() {
+  @BeforeEach
+  void before() {
 	  this.repositoryService = this.processEngine.getRepositoryService();
 		this.taskService = this.processEngine.getTaskService();
 
@@ -70,8 +74,8 @@ public class ScopingTest {
 		  .deploy();
 	}
 
-	@After
-	public void after() {
+  @AfterEach
+  void after() {
 	  for (Deployment deployment : repositoryService.createDeploymentQuery().list()) {
 	    repositoryService.deleteDeployment(deployment.getId(), true);
 	  }
@@ -98,16 +102,16 @@ public class ScopingTest {
 		vars.put(customerIdProcVarName, CUSTOMER_ID_PROC_VAR_VALUE);
 		ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceByKey("component-waiter", vars);
 		StatefulObject scopedObject = (StatefulObject) processEngine.getRuntimeService().getVariable(processInstance.getId(), "scopedTarget.c1");
-		Assert.assertNotNull("the scopedObject can't be null", scopedObject);
-		Assert.assertTrue("the 'name' property can't be null.", StringUtils.hasText(scopedObject.getName()));
-    Assert.assertEquals(2, scopedObject.getVisitedCount());
+    assertThat(scopedObject).as("the scopedObject can't be null").isNotNull();
+		assertTrue(StringUtils.hasText(scopedObject.getName()), "the 'name' property can't be null.");
+    assertThat(scopedObject.getVisitedCount()).isEqualTo(2);
 
 		// the process has paused
 		String procId = processInstance.getProcessInstanceId();
 
 		List<Task> tasks = taskService.createTaskQuery().executionId(procId).list();
 
-    Assert.assertEquals("there should be 1 (one) task enqueued at this point.", 1, tasks.size());
+    assertThat(tasks.size()).as("there should be 1 (one) task enqueued at this point.").isEqualTo(1);
 
 		Task t = tasks.iterator().next();
 
@@ -121,25 +125,24 @@ public class ScopingTest {
 		this.taskService.complete(t.getId());
 
 		scopedObject = (StatefulObject) processEngine.getRuntimeService().getVariable(processInstance.getId(), "scopedTarget.c1");
-    Assert.assertEquals(3, scopedObject.getVisitedCount());
+    assertThat(scopedObject.getVisitedCount()).isEqualTo(3);
 
-		Assert.assertEquals( "the customerId injected should " +
-					"be what was given as a processVariable parameter." ,
-				ScopingTest.CUSTOMER_ID_PROC_VAR_VALUE, scopedObject.getCustomerId()) ;
+    assertThat(scopedObject.getCustomerId()).as("the customerId injected should " +
+      "be what was given as a processVariable parameter.").isEqualTo(ScopingTest.CUSTOMER_ID_PROC_VAR_VALUE) ;
 		return scopedObject;
 	}
 
-	@Test
-	public void testUsingAnInjectedScopedProxy() throws Throwable {
+  @Test
+  void usingAnInjectedScopedProxy() throws Throwable {
 		logger.info("Running 'component-waiter' process instance with scoped beans.");
 		StatefulObject one = run();
 		StatefulObject two = run();
-		Assert.assertNotSame(one.getName(), two.getName());
-		Assert.assertEquals(one.getVisitedCount(), two.getVisitedCount());
+		assertNotSame(one.getName(), two.getName());
+    assertThat(two.getVisitedCount()).isEqualTo(one.getVisitedCount());
 	}
 
-	@Test
-	public void testStartingAProcessWithScopedBeans() {
+  @Test
+  void startingAProcessWithScopedBeans() {
 		this.processInitiatingPojo.startScopedProcess(3243);
 	}
 

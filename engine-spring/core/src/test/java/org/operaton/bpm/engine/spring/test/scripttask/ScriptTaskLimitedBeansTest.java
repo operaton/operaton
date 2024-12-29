@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.spring.test.scripttask;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-    "classpath:org/operaton/bpm/engine/spring/test/scripttask/ScriptTaskLimitedBeansTest-applicationContext.xml" })
-public class ScriptTaskLimitedBeansTest extends AbstractScriptTaskTest {
+  "classpath:org/operaton/bpm/engine/spring/test/scripttask/ScriptTaskLimitedBeansTest-applicationContext.xml"})
+class ScriptTaskLimitedBeansTest extends AbstractScriptTaskTest {
 
   private static final String JAVASCRIPT = "javascript";
   private static final String PYTHON = "python";
@@ -32,22 +32,22 @@ public class ScriptTaskLimitedBeansTest extends AbstractScriptTaskTest {
   private static final String JUEL = "juel";
 
   @Test
-  public void shouldNotFindGeneralSpringBeanWithJavascript() {
+  void shouldNotFindGeneralSpringBeanWithJavascript() {
     testSpringBeanVisibility(JAVASCRIPT, "execution.setVariable('foo', testbean.getName());", false);
   }
 
   @Test
-  public void shouldNotFindGeneralSpringBeanWithPython() {
+  void shouldNotFindGeneralSpringBeanWithPython() {
     testSpringBeanVisibility(PYTHON, "execution.setVariable('foo', testbean.getName())", false);
   }
 
   @Test
-  public void shouldNotFindGeneralSpringBeanWithGroovy() {
+  void shouldNotFindGeneralSpringBeanWithGroovy() {
     testSpringBeanVisibility(GROOVY, "execution.setVariable('foo', testbean.getName())", false);
   }
 
   @Test
-  public void shouldNotFindGeneralSpringBeanWithJuel() {
+  void shouldNotFindGeneralSpringBeanWithJuel() {
     testSpringBeanVisibility(JUEL, "${execution.setVariable('foo', testbean.getName())}", false);
   }
 }

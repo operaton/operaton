@@ -152,6 +152,7 @@
       </activation>
       <properties>
         <database.url>jdbc:h2:mem:operaton;DB_CLOSE_DELAY=1000;LOCK_TIMEOUT=10000</database.url>
+        <database.type>h2</database.type>
         <database.driver>org.h2.Driver</database.driver>
         <database.username>sa</database.username>
         <database.password />

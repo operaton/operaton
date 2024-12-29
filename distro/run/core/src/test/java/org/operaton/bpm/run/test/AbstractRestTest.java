@@ -18,9 +18,9 @@ package org.operaton.bpm.run.test;
 
 import java.util.Collections;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.test.util.LoggingInterceptor;
-import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,7 +43,7 @@ public abstract class AbstractRestTest {
   @LocalServerPort
   protected int localPort;
 
-  @Before
+  @BeforeEach
   public void enableRequestResponseLogging() {
     testRestTemplate.getRestTemplate().setInterceptors(Collections.singletonList(new LoggingInterceptor()));
   }

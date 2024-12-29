@@ -18,10 +18,10 @@ package org.operaton.bpm.run.test.config.identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,9 +31,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { OperatonBpmRun.class })
-@ActiveProfiles(profiles = { "test-auth-disabled" , "test-ldap-enabled", "test-ldap-auth-exception" })
-public class LdapConfigurationTest {
+@SpringBootTest(classes = {OperatonBpmRun.class})
+@ActiveProfiles(profiles = {"test-auth-disabled", "test-ldap-enabled", "test-ldap-auth-exception"})
+class LdapConfigurationTest {
 
   @Autowired
   OperatonBpmRunLdapProperties props;
@@ -42,7 +42,7 @@ public class LdapConfigurationTest {
   LdapIdentityProviderPlugin plugin;
 
   @Test
-  public void shouldPickUpConfiguration() {
+  void shouldPickUpConfiguration() {
     assertThat(props.isEnabled()).isTrue();
     assertThat(props.getServerUrl()).isEqualTo(plugin.getServerUrl());
     assertThat(props.getManagerDn()).isEqualTo(plugin.getManagerDn());
@@ -72,7 +72,7 @@ public class LdapConfigurationTest {
   }
 
   @Test
-  public void shouldNotIncludeSensitiveConnectionPropertiesInToString() {
+  void shouldNotIncludeSensitiveConnectionPropertiesInToString() {
     assertThat(props.toString()).doesNotContain(
         "http://foo.bar",
         "managerdn",

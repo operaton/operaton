@@ -19,14 +19,13 @@ package org.operaton.bpm.run.test.config.cors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.persistence.entity.GroupEntity;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -45,26 +44,26 @@ import org.springframework.test.context.ActiveProfiles;
  * @see https://jira.camunda.com/browse/CAM-11290
  */
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@ActiveProfiles(profiles = { "test-cors-enabled", "test-auth-enabled", "test-demo-user" }, inheritProfiles = false)
-public class CorsAuthenticationTest extends AbstractRestTest {
+@ActiveProfiles(profiles = {"test-cors-enabled", "test-auth-enabled", "test-demo-user"}, inheritProfiles = false)
+class CorsAuthenticationTest extends AbstractRestTest {
 
   TestRestTemplate authTestRestTemplate;
 
   @Autowired
   ProcessEngine processEngine;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     authTestRestTemplate = testRestTemplate.withBasicAuth("demo", "demo");
   }
 
-  @After
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     processEngine.getIdentityService().deleteGroup("groupId");
   }
 
   @Test
-  public void shouldPassAuthenticatedSimpleCorsRequest() {
+  void shouldPassAuthenticatedSimpleCorsRequest() {
     // given
     // cross origin but allowed through wildcard
     String origin = "http://other.origin";
@@ -81,7 +80,7 @@ public class CorsAuthenticationTest extends AbstractRestTest {
   }
 
   @Test
-  public void shouldPassAuthenticatedCorsRequest() {
+  void shouldPassAuthenticatedCorsRequest() {
     // given
     // cross origin but allowed through wildcard
     String origin = "http://other.origin";
@@ -106,7 +105,7 @@ public class CorsAuthenticationTest extends AbstractRestTest {
   }
 
   @Test
-  public void shouldNotPassNonAuthenticatedCorsRequest() {
+  void shouldNotPassNonAuthenticatedCorsRequest() {
     // given
     // cross origin but allowed through wildcard
     String origin = "http://other.origin";
@@ -123,7 +122,7 @@ public class CorsAuthenticationTest extends AbstractRestTest {
   }
 
   @Test
-  public void shouldPassNonAuthenticatedPreflightRequest() {
+  void shouldPassNonAuthenticatedPreflightRequest() {
     // given
     // cross origin but allowed through wildcard
     String origin = "http://other.origin";

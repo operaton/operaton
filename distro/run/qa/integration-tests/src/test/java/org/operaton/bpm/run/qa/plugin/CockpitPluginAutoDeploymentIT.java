@@ -18,7 +18,7 @@ package org.operaton.bpm.run.qa.plugin;
 
 import static io.restassured.RestAssured.when;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.fail;
 
 import io.restassured.response.Response;
 import java.io.IOException;
@@ -28,9 +28,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Response.Status;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.After;
-import org.junit.Test;
 
 public class CockpitPluginAutoDeploymentIT {
 
@@ -42,8 +42,8 @@ public class CockpitPluginAutoDeploymentIT {
 
   protected List<String> deployedPlugins = new ArrayList<>();
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     stopApp();
     undeployPlugins();
   }
@@ -72,7 +72,7 @@ public class CockpitPluginAutoDeploymentIT {
   }
 
   @Test
-  public void shouldAutoDeployCockpitPlugin() throws IOException {
+  void shouldAutoDeployCockpitPlugin() throws IOException {
     // given
     deployPlugin("operaton-bpm-run-example-plugin.jar");
     runStartScript();

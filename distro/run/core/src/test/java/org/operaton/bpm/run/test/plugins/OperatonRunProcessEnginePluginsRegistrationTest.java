@@ -29,8 +29,8 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,9 +40,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { OperatonBpmRun.class })
-@ActiveProfiles(profiles = { "test-new-plugins" }, inheritProfiles = true)
-public class OperatonRunProcessEnginePluginsRegistrationTest {
+@SpringBootTest(classes = {OperatonBpmRun.class})
+@ActiveProfiles(profiles = {"test-new-plugins"}, inheritProfiles = true)
+class OperatonRunProcessEnginePluginsRegistrationTest {
 
   @Autowired
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -52,13 +52,13 @@ public class OperatonRunProcessEnginePluginsRegistrationTest {
 
   protected List<ProcessEnginePlugin> plugins;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.plugins = processEngineConfiguration.getProcessEnginePlugins();
   }
 
   @Test
-  public void shouldPickUpAllPluginConfigurations() {
+  void shouldPickUpAllPluginConfigurations() {
     // given a OperatonBpmRunProperties instance
     String pluginOne = "org.operaton.bpm.run.test.plugins.TestFirstPlugin";
     String pluginTwo = "org.operaton.bpm.run.test.plugins.TestSecondPlugin";
@@ -90,7 +90,7 @@ public class OperatonRunProcessEnginePluginsRegistrationTest {
   }
 
   @Test
-  public void shouldRegisterYamlDefinedPluginsWithProcessEngine() {
+  void shouldRegisterYamlDefinedPluginsWithProcessEngine() {
     // given a yaml config file defining process engine plugins
 
     // then
@@ -107,7 +107,7 @@ public class OperatonRunProcessEnginePluginsRegistrationTest {
   }
 
   @Test
-  public void shouldInitializeRegisteredPlugins() {
+  void shouldInitializeRegisteredPlugins() {
     // given
     List<ProcessEnginePlugin> registeredPlugins =
         ((CompositeProcessEnginePlugin) plugins.get(0)).getPlugins();

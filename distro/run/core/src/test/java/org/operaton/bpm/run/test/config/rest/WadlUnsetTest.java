@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.run.test.config.rest;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WadlUnsetTest extends AbstractRestTest {
+class WadlUnsetTest extends AbstractRestTest {
 
   @Test
-  public void shouldReturnWadl() {
+  void shouldReturnWadl() {
     // given
 
     // when

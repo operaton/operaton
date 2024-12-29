@@ -18,13 +18,11 @@ package org.operaton.bpm.run.qa;
 
 import io.restassured.response.Response;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.runners.Parameterized.AfterParam;
 import org.junit.runners.Parameterized.BeforeParam;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -36,19 +34,12 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * Test cases for ensuring connectivity to REST API based on startup parameters
  */
-@RunWith(Parameterized.class)
 public class ComponentAvailabilityIT {
-
-  @Parameter(0)
   public String[] commands;
-  @Parameter(1)
   public boolean restAvailable;
-  @Parameter(2)
   public boolean webappsAvailable;
-  @Parameter(3)
   public boolean exampleAvailable;
 
-  @Parameters(name = "Test instance: {index}. Rest: {1}, Webapps: {2}, Example: {3}")
   public static Collection<Object[]> commands() {
     return Arrays.asList(new Object[][] {
       { new String[0], true, true, true },
@@ -87,8 +78,10 @@ public class ComponentAvailabilityIT {
     }
   }
 
-  @Test
-  public void shouldFindEngineViaRestApiRequest() {
+  @MethodSource("commands")
+  @ParameterizedTest(name = "Test instance: {index}. Rest: {1}, Webapps: {2}, Example: {3}")
+  public void shouldFindEngineViaRestApiRequest(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+    initComponentAvailabilityIT(commands, restAvailable, webappsAvailable, exampleAvailable);
     Response response = when().get(container.getBaseUrl() + "/engine-rest/engine");
     if (restAvailable) {
       response.then()
@@ -100,8 +93,10 @@ public class ComponentAvailabilityIT {
     }
   }
 
-  @Test
-  public void shouldFindWelcomeApp() {
+  @MethodSource("commands")
+  @ParameterizedTest(name = "Test instance: {index}. Rest: {1}, Webapps: {2}, Example: {3}")
+  public void shouldFindWelcomeApp(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+    initComponentAvailabilityIT(commands, restAvailable, webappsAvailable, exampleAvailable);
     Response response = when().get(container.getBaseUrl() + "/operaton/app/welcome/default");
     if (webappsAvailable) {
       response.then()
@@ -113,8 +108,10 @@ public class ComponentAvailabilityIT {
     }
   }
 
-  @Test
-  public void shouldFindExample() {
+  @MethodSource("commands")
+  @ParameterizedTest(name = "Test instance: {index}. Rest: {1}, Webapps: {2}, Example: {3}")
+  public void shouldFindExample(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+    initComponentAvailabilityIT(commands, restAvailable, webappsAvailable, exampleAvailable);
     Response response = when().get(container.getBaseUrl() + "/engine-rest/process-definition");
     if (exampleAvailable && restAvailable) {
       response.then()
@@ -127,5 +124,12 @@ public class ComponentAvailabilityIT {
       response.then()
         .statusCode(404);
     }
+  }
+
+  public void initComponentAvailabilityIT(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+    this.commands = commands;
+    this.restAvailable = restAvailable;
+    this.webappsAvailable = webappsAvailable;
+    this.exampleAvailable = exampleAvailable;
   }
 }

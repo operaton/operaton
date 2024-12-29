@@ -27,8 +27,8 @@ import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,9 +38,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { OperatonBpmRun.class })
-@ActiveProfiles(profiles = { "test-auth-disabled", "test-demo-user" })
-public class DemoUserConfigurationTest {
+@SpringBootTest(classes = {OperatonBpmRun.class})
+@ActiveProfiles(profiles = {"test-auth-disabled", "test-demo-user"})
+class DemoUserConfigurationTest {
 
   @Autowired
   ProcessEngine engine;
@@ -52,13 +52,13 @@ public class DemoUserConfigurationTest {
   @Autowired(required = false)
   LdapIdentityProviderPlugin ldapPlugin;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     identityService = engine.getIdentityService();
   }
 
   @Test
-  public void shouldFindDemoUser() {
+  void shouldFindDemoUser() {
     // given
     UserQuery userQuery = identityService.createUserQuery();
 
@@ -74,7 +74,7 @@ public class DemoUserConfigurationTest {
   }
 
   @Test
-  public void shouldNotEnableLdap() {
+  void shouldNotEnableLdap() {
     assertThat(props).isNull();
     assertThat(ldapPlugin).isNull();
   }

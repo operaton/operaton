@@ -18,8 +18,8 @@ package org.operaton.bpm.run.qa;
 
 import static io.restassured.RestAssured.when;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,12 +32,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.core.Response.Status;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.After;
-import org.junit.Test;
 
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -50,8 +49,8 @@ public class AutoDeploymentIT {
   static SpringBootManagedContainer container;
   static String baseDirectory = SpringBootManagedContainer.getRunHome();
 
-  @After
-  public void stopApp() {
+  @AfterEach
+  void stopApp() {
     try {
       if (container != null) {
         container.stop();
@@ -91,7 +90,7 @@ public class AutoDeploymentIT {
   }
 
   @Test
-  public void shouldAutoDeployProcessDefinition() throws IOException {
+  void shouldAutoDeployProcessDefinition() throws IOException {
     // given
     createBPMNFile("", "process1");
     runStartScript();
@@ -117,7 +116,7 @@ public class AutoDeploymentIT {
   }
 
   @Test
-  public void shouldAutoDeployScriptAndForms() throws IOException {
+  void shouldAutoDeployScriptAndForms() throws IOException {
     // given
     InputStream formFile = AutoDeploymentIT.class.getClassLoader().getResourceAsStream("deployment/form.html");
     InputStream  scriptFile = AutoDeploymentIT.class.getClassLoader().getResourceAsStream("deployment/script.js");
@@ -143,7 +142,7 @@ public class AutoDeploymentIT {
   }
 
   @Test
-  public void shouldSetRelativePathAsResourceName() throws IOException {
+  void shouldSetRelativePathAsResourceName() throws IOException {
     // given
     createBPMNFile("", "process1");
     createBPMNFile("nested/", "process2");

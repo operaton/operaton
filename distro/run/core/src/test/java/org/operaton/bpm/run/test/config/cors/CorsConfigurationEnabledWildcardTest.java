@@ -20,8 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -36,11 +36,11 @@ import org.springframework.test.context.ActiveProfiles;
  *
  * @see https://jira.camunda.com/browse/CAM-11290
  */
-@ActiveProfiles(profiles = { "test-cors-enabled" }, inheritProfiles = true)
-public class CorsConfigurationEnabledWildcardTest extends AbstractRestTest {
+@ActiveProfiles(profiles = {"test-cors-enabled"}, inheritProfiles = true)
+class CorsConfigurationEnabledWildcardTest extends AbstractRestTest {
 
   @Test
-  public void shouldPassCrossOriginRequest() {
+  void shouldPassCrossOriginRequest() {
     // given
     // cross origin but allowed through wildcard
     String origin = "http://other.origin";

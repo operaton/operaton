@@ -22,13 +22,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.Test;
 
-public class SqlAvailabilityIT {
+class SqlAvailabilityIT {
 
   @Test
-  public void shouldFindSqlResources() {
+  void shouldFindSqlResources() {
     Path sqlDir = Paths.get(SpringBootManagedContainer.getRunHome(), "configuration", "sql");
 
     Path createDir = sqlDir.resolve("create");

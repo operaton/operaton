@@ -20,11 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.rest.dto.runtime.FilterDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -35,12 +35,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { OperatonBpmRun.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(profiles = { "test-default-task-filter" }, inheritProfiles = true)
-public class DefaultTaskFilterTest extends AbstractRestTest{
+@SpringBootTest(classes = {OperatonBpmRun.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
+@ActiveProfiles(profiles = {"test-default-task-filter"}, inheritProfiles = true)
+class DefaultTaskFilterTest extends AbstractRestTest {
 
   @Test
-  public void shouldCreateDefaultTaskFilter() {
+  void shouldCreateDefaultTaskFilter() {
 
     // given default task filter enabled
     String url = "http://localhost:" + localPort + CONTEXT_PATH + "/filter";

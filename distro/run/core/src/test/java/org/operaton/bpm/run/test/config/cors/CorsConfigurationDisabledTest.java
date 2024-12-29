@@ -19,11 +19,10 @@ package org.operaton.bpm.run.test.config.cors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -39,12 +38,12 @@ import org.springframework.test.context.TestPropertySource;
  * 
  * @see https://jira.camunda.com/browse/CAM-11290
  */
-@ActiveProfiles(profiles = { "test-cors-enabled" }, inheritProfiles = true)
-@TestPropertySource(properties = { OperatonBpmRunCorsProperty.PREFIX + ".enabled=false" })
-public class CorsConfigurationDisabledTest extends AbstractRestTest {
+@ActiveProfiles(profiles = {"test-cors-enabled"}, inheritProfiles = true)
+@TestPropertySource(properties = {OperatonBpmRunCorsProperty.PREFIX + ".enabled=false"})
+class CorsConfigurationDisabledTest extends AbstractRestTest {
 
   @Test
-  public void shouldPassSameOriginRequest() {
+  void shouldPassSameOriginRequest() {
     // given
     // same origin
     String origin = "http://localhost:" + localPort;
@@ -64,8 +63,8 @@ public class CorsConfigurationDisabledTest extends AbstractRestTest {
   /* TestRestTemplate does not follow same origin policy. With CORS disabled a cross-origin request
    * should not be allowed by the calling client (i.e. browser or TestRestTemplate). Testing this
    * manually in a browser should work.*/
-  @Ignore
-  public void shouldFailCrossOriginRequest() {
+  @Disabled
+  void shouldFailCrossOriginRequest() {
     // given
     // cross origin
     String origin = "http://other.origin";

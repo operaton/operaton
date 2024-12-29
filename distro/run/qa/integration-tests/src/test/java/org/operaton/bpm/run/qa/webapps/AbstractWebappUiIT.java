@@ -17,11 +17,11 @@
 package org.operaton.bpm.run.qa.webapps;
 
 import org.operaton.bpm.util.SeleniumScreenshotRule;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -45,8 +45,8 @@ public class AbstractWebappUiIT extends AbstractWebIT {
   @Rule
   public SeleniumScreenshotRule screenshotRule = new SeleniumScreenshotRule(driver);
 
-  @BeforeClass
-  public static void createDriver() {
+  @BeforeAll
+  static void createDriver() {
     String chromeDriverExecutable = "chromedriver";
     if (System.getProperty( "os.name" ).toLowerCase(Locale.US).indexOf("windows") > -1) {
       chromeDriverExecutable += ".exe";
@@ -98,20 +98,20 @@ public class AbstractWebappUiIT extends AbstractWebIT {
 
   }
 
-  @Before
-  public void createClient() throws Exception {
+  @BeforeEach
+  void createClient() throws Exception {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
-  @After
-  public void after() {
+  @AfterEach
+  void after() {
     testUtil.destroy();
   }
 
-  @AfterClass
-  public static void quitDriver() {
+  @AfterAll
+  static void quitDriver() {
     driver.quit();
   }
 

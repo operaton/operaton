@@ -96,12 +96,6 @@
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
@@ -111,13 +105,6 @@
           <artifactId>asm</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    
-    <!-- Required to Run JUnit4 tests -->
-    <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-      <scope>test</scope>
     </dependency>
 
   </dependencies>

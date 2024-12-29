@@ -25,8 +25,8 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.spring.boot.starter.spin.SpringBootSpinProcessEnginePlugin;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,9 +36,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { OperatonBpmRun.class })
-@ActiveProfiles(profiles = { "test-new-plugins", "test-plugins-config-override" }, inheritProfiles = true)
-public class ProcessEnginePluginsConfigurationOverrideTest {
+@SpringBootTest(classes = {OperatonBpmRun.class})
+@ActiveProfiles(profiles = {"test-new-plugins", "test-plugins-config-override"}, inheritProfiles = true)
+class ProcessEnginePluginsConfigurationOverrideTest {
 
   @Autowired
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -52,13 +52,13 @@ public class ProcessEnginePluginsConfigurationOverrideTest {
 
   protected List<ProcessEnginePlugin> plugins;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.plugins = processEngineConfiguration.getProcessEnginePlugins();
 }
 
   @Test
-  public void shouldOverrideDefaultPluginConfiguration() {
+  void shouldOverrideDefaultPluginConfiguration() {
     // given
     List<ProcessEnginePlugin> registeredPlugins =
         ((CompositeProcessEnginePlugin) plugins.get(0)).getPlugins();

@@ -17,25 +17,24 @@
 package org.operaton.bpm.run.qa.webapps;
 
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.runners.Parameterized.AfterParam;
 import org.junit.runners.Parameterized.BeforeParam;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
@@ -47,13 +46,9 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
  * and <code>@Parameters</code> for different setups, might be removed with https://jira.camunda.com/browse/CAM-11379
  */
-@RunWith(Parameterized.class)
 public class LoginIT extends AbstractWebappUiIT {
-
-  @Parameter
   public String[] commands;
 
-  @Parameters
   public static Collection<Object[]> commands() {
     return Arrays.asList(new Object[][] {
       { new String[0] },
@@ -62,8 +57,8 @@ public class LoginIT extends AbstractWebappUiIT {
     });
   }
 
-  @Rule
-  public TestName name = new TestName();
+  
+  public String name;
 
   protected static SpringBootManagedContainer container;
 
@@ -115,8 +110,10 @@ public class LoginIT extends AbstractWebappUiIT {
     Arrays.stream(keys.split("")).forEach(c -> element.sendKeys(c));
   }
 
-  @Test
-  public void shouldLoginToCockpit() throws URISyntaxException {
+  @MethodSource("commands")
+  @ParameterizedTest
+  public void shouldLoginToCockpit(String[] commands) throws URISyntaxException {
+    initLoginIT(commands);
     try {
       loginToCockpit();
     } catch (WebDriverException e) {
@@ -135,8 +132,10 @@ public class LoginIT extends AbstractWebappUiIT {
         + appName + "/default/#/dashboard")));
   }
 
-  @Test
-  public void shouldLoginToTasklist() {
+  @MethodSource("commands")
+  @ParameterizedTest
+  public void shouldLoginToTasklist(String[] commands) {
+    initLoginIT(commands);
     try {
       loginToTasklist();
     } catch (WebDriverException e) {
@@ -155,8 +154,10 @@ public class LoginIT extends AbstractWebappUiIT {
         + appName + "/default/#/?searchQuery="));
   }
 
-  @Test
-  public void shouldLoginToAdmin() throws URISyntaxException {
+  @MethodSource("commands")
+  @ParameterizedTest
+  public void shouldLoginToAdmin(String[] commands) throws URISyntaxException {
+    initLoginIT(commands);
     try {
       loginToAdmin();
     } catch (WebDriverException e) {
@@ -175,8 +176,10 @@ public class LoginIT extends AbstractWebappUiIT {
         + "app/" + appName + "/default/#/")));
   }
 
-  @Test
-  public void shouldLoginToWelcome() throws URISyntaxException {
+  @MethodSource("commands")
+  @ParameterizedTest
+  public void shouldLoginToWelcome(String[] commands) throws URISyntaxException {
+    initLoginIT(commands);
     try {
       loginToWelcome();
     } catch (WebDriverException e) {
@@ -193,6 +196,18 @@ public class LoginIT extends AbstractWebappUiIT {
 
     wait.until(currentURIIs(new URI(appUrl
         + "app/" + appName + "/default/#!/welcome")));
+  }
+
+  @BeforeEach
+  void setup(TestInfo testInfo) {
+    Optional<Method> testMethod = testInfo.getTestMethod();
+    if (testMethod.isPresent()) {
+      this.name = testMethod.get().getName();
+    }
+  }
+
+  public void initLoginIT(String[] commands) {
+    this.commands = commands;
   }
 
 }

@@ -23,10 +23,10 @@ import com.sun.jersey.client.apache4.config.DefaultApacheHttpClient4Config;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.junit.jupiter.api.AfterEach;
 import org.operaton.bpm.TestProperties;
 import org.operaton.bpm.util.TestUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
 import java.util.logging.Logger;
@@ -54,13 +54,13 @@ public abstract class AbstractWebIT {
   public DefaultHttpClient defaultHttpClient;
   public String httpPort;
 
-  @Before
+  @BeforeEach
   public void before() throws Exception {
     testProperties = new TestProperties(48080);
     testUtil = new TestUtil(testProperties);
   }
 
-  @After
+  @AfterEach
   public void destroyClient() {
     client.destroy();
   }

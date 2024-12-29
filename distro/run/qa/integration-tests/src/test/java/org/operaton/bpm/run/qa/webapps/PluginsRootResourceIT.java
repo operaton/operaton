@@ -18,22 +18,18 @@ package org.operaton.bpm.run.qa.webapps;
 
 import com.sun.jersey.api.client.ClientResponse;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.runners.Parameterized.AfterParam;
 import org.junit.runners.Parameterized.BeforeParam;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * NOTE:
@@ -42,17 +38,12 @@ import static org.junit.Assert.assertTrue;
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
  * and changed  <code>appBasePath</code> to <code>APP_BASE_PATH</code>, might be removed with https://jira.camunda.com/browse/CAM-11379
  */
-@RunWith(Parameterized.class)
 public class PluginsRootResourceIT extends AbstractWebIT {
-
-  @Parameter(0)
   public String assetName;
-
-  @Parameter(1)
   public boolean assetAllowed;
 
-  @Before
-  public void createClient() throws Exception {
+  @BeforeEach
+  void createClient() throws Exception {
     createClient(getWebappCtxPath());
   }
 
@@ -81,7 +72,6 @@ public class PluginsRootResourceIT extends AbstractWebIT {
     }
   }
 
-  @Parameters(name = "Test instance: {index}. Asset: {0}, Allowed: {1}")
   public static Collection<Object[]> getAssets() {
     return Arrays.asList(new Object[][]{
         {"app/plugin.js", true},
@@ -92,8 +82,10 @@ public class PluginsRootResourceIT extends AbstractWebIT {
     });
   }
 
-  @Test
-  public void shouldGetAssetIfAllowed() {
+  @MethodSource("getAssets")
+  @ParameterizedTest(name = "Test instance: {index}. Asset: {0}, Allowed: {1}")
+  public void shouldGetAssetIfAllowed(String assetName, boolean assetAllowed) {
+    initPluginsRootResourceIT(assetName, assetAllowed);
     // when
     ClientResponse response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
 
@@ -110,14 +102,19 @@ public class PluginsRootResourceIT extends AbstractWebIT {
 
   protected void assertResponse(String asset, ClientResponse response) {
     if (assetAllowed) {
-      assertEquals(Status.OK.getStatusCode(), response.getStatus());
+      assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
     } else {
-      assertEquals(Status.FORBIDDEN.getStatusCode(), response.getStatus());
-      assertTrue(response.getType().toString().startsWith(MediaType.APPLICATION_JSON));
+      assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
+      assertThat(response.getType().toString().startsWith(MediaType.APPLICATION_JSON)).isTrue();
       String responseEntity = response.getEntity(String.class);
-      assertTrue(responseEntity.contains("\"type\":\"RestException\""));
-      assertTrue(responseEntity.contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\""));
+      assertThat(responseEntity.contains("\"type\":\"RestException\"")).isTrue();
+      assertThat(responseEntity.contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"")).isTrue();
     }
+  }
+
+  public void initPluginsRootResourceIT(String assetName, boolean assetAllowed) {
+    this.assetName = assetName;
+    this.assetAllowed = assetAllowed;
   }
 
 }

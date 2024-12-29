@@ -23,16 +23,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
 import org.operaton.bpm.run.utils.OperatonBpmRunProcessEnginePluginHelper;
-import org.junit.Test;
 
-public class OperatonBpmRunProcessEnginePluginsHelperTest {
+class OperatonBpmRunProcessEnginePluginsHelperTest {
 
   @Test
-  public void shouldReportMissingPluginClass() {
+  void shouldReportMissingPluginClass() {
     // given
     // a process engine plugins map with a class not on the classpath
     OperatonBpmRunProcessEnginePluginProperty pluginConfig = new OperatonBpmRunProcessEnginePluginProperty();
@@ -54,7 +54,7 @@ public class OperatonBpmRunProcessEnginePluginsHelperTest {
   }
 
   @Test
-  public void shouldReportWrongPluginClass() {
+  void shouldReportWrongPluginClass() {
     // given
     // a process engine plugins map with a class not implementing the ProcessEnginePlugin interface
     OperatonBpmRunProcessEnginePluginProperty pluginConfig = new OperatonBpmRunProcessEnginePluginProperty();
@@ -76,7 +76,7 @@ public class OperatonBpmRunProcessEnginePluginsHelperTest {
   }
 
   @Test
-  public void shouldReportMissingPluginConfigurationProperty() {
+  void shouldReportMissingPluginConfigurationProperty() {
     // given
     OperatonBpmRunProcessEnginePluginProperty pluginConfig = new OperatonBpmRunProcessEnginePluginProperty();
     pluginConfig.setPluginClass("org.operaton.bpm.run.test.plugins.TestFirstPlugin");

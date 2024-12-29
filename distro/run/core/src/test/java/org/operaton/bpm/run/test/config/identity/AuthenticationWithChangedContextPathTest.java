@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.run.test.config.identity;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.property.OperatonBpmRunAuthenticationProperties;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -39,10 +39,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
     OperatonBpmRunAuthenticationProperties.PREFIX + "=basic"
 })
-public class AuthenticationWithChangedContextPathTest extends AbstractRestTest {
+class AuthenticationWithChangedContextPathTest extends AbstractRestTest {
 
   @Test
-  public void shouldBlockRequest() {
+  void shouldBlockRequest() {
     // given
 
     // when

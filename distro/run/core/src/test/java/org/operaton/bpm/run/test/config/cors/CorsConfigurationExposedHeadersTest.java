@@ -20,9 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -38,12 +38,12 @@ import org.springframework.test.context.TestPropertySource;
  *
  * @see https://jira.camunda.com/browse/CAM-11290
  */
-@ActiveProfiles(profiles = { "test-cors-enabled" }, inheritProfiles = true)
+@ActiveProfiles(profiles = {"test-cors-enabled"}, inheritProfiles = true)
 @TestPropertySource(properties = {OperatonBpmRunCorsProperty.PREFIX + ".exposed-headers=X-CUSTOM-HEADER-ALLOWED"})
-public class CorsConfigurationExposedHeadersTest extends AbstractRestTest {
+class CorsConfigurationExposedHeadersTest extends AbstractRestTest {
 
   @Test
-  public void shouldProvideResponseWithExposedHeaders() {
+  void shouldProvideResponseWithExposedHeaders() {
     // given
     String origin = "http://other.origin";
 

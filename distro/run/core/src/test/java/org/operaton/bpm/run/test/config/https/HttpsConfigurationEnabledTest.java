@@ -23,10 +23,8 @@ import java.util.List;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.test.AbstractRestTest;
 import org.operaton.bpm.run.test.util.TestUtils;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpEntity;
@@ -36,20 +34,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.ResourceAccessException;
 
-@SpringBootTest(classes = { OperatonBpmRun.class }, webEnvironment = WebEnvironment.DEFINED_PORT)
-@ActiveProfiles(profiles = { "test-https-enabled" }, inheritProfiles = true)
-public class HttpsConfigurationEnabledTest extends AbstractRestTest {
-  
-  @Rule
-  public ExpectedException exceptionRule = ExpectedException.none();
+@SpringBootTest(classes = {OperatonBpmRun.class}, webEnvironment = WebEnvironment.DEFINED_PORT)
+@ActiveProfiles(profiles = {"test-https-enabled"}, inheritProfiles = true)
+class HttpsConfigurationEnabledTest extends AbstractRestTest {
 
-  @Before
-  public void init() throws Exception {
+  @BeforeEach
+  void init() throws Exception {
     TestUtils.trustSelfSignedSSL();
   }
 
   @Test
-  public void shouldConnectWithHttps() {
+  void shouldConnectWithHttps() {
     // given
     String url = "https://localhost:" + localPort + CONTEXT_PATH + "/task";
 
@@ -61,15 +56,14 @@ public class HttpsConfigurationEnabledTest extends AbstractRestTest {
   }
 
   @Test
-  public void shouldNotRedirect() {
-    // given
-    String url = "http://localhost:" + 8080 + CONTEXT_PATH + "/task";
+  void shouldNotRedirect() {
+    Throwable exception = assertThrows(ResourceAccessException.class, () -> {
+      // given
+      String url = "http://localhost:" + 8080 + CONTEXT_PATH + "/task";
 
-    // then
-    exceptionRule.expect(ResourceAccessException.class);
-    exceptionRule.expectMessage("Connection refused");
-
-    // then
-    ResponseEntity<String> response = testRestTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(null), String.class);
+      // then
+      ResponseEntity<String> response = testRestTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(null), String.class);
+    });
+    assertThat(exception.getMessage().contains("Connection refused")).isTrue();
   }
 }

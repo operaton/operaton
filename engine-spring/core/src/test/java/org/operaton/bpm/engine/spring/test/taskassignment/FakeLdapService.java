@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings("unused")
 public class FakeLdapService {
   
   public String findManagerForEmployee(String employee) {

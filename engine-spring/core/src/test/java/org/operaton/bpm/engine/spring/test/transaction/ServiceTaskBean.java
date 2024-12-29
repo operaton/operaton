@@ -21,12 +21,11 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 import org.springframework.transaction.annotation.Transactional;
 
-
-public class ServiceTaskBean implements JavaDelegate{
+public class ServiceTaskBean implements JavaDelegate {
 
   private BeanWithException beanWithException;
-  
-  public void setBeanWithException(BeanWithException bean){
+
+  public void setBeanWithException(BeanWithException bean) {
     this.beanWithException = bean;
   }
 

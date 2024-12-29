@@ -23,27 +23,28 @@ import java.io.Serializable;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Scope;
 
-
 @Scope(ProcessScope.PROCESS_SCOPE_NAME)
-public class ScopedCustomer implements Serializable, InitializingBean{
-	public ScopedCustomer() {
-	}
-	public ScopedCustomer(String name) {
-		this.name = name;
-	}
+@SuppressWarnings("unused")
+public class ScopedCustomer implements Serializable, InitializingBean {
+  public ScopedCustomer() {
+  }
 
-	private String name = Thread.currentThread().getId()+":" +System.currentTimeMillis();
+  public ScopedCustomer(String name) {
+    this.name = name;
+  }
 
-	public String getName() {
-		return name;
-	}
+  private String name = Thread.currentThread().getId() + ":" + System.currentTimeMillis();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
   @Override
   public void afterPropertiesSet() {
-	 System.out.println("starting ..." + this.name) ;
-	}
+    System.out.println("starting ..." + this.name);
+  }
 }

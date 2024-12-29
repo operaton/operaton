@@ -17,12 +17,14 @@
 package org.operaton.bpm.engine.spring.test.junit5;
 
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +38,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Joram Barrez
  */
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/junit4/springTypicalUsageTest-context.xml")
-public class SpringJunit5Test {
+@ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/junit5/springTypicalUsageTest-context.xml")
+class SpringJunit5Test {
 
   @Autowired
   private ProcessEngine processEngine;
@@ -46,11 +48,24 @@ public class SpringJunit5Test {
   private RuntimeService runtimeService;
 
   @Autowired
+  private RepositoryService repositoryService;
+
+  @Autowired
   private TaskService taskService;
+
+  String deploymentId;
+
+  @BeforeEach
+  void deploy() {
+    deploymentId = repositoryService.createDeployment()
+        .addClasspathResource("org/operaton/bpm/engine/spring/test/junit5/SpringJunit5Test.simpleProcessTest.bpmn20.xml")
+        .deploy()
+        .getId();
+  }
 
   @AfterEach
   void closeProcessEngine() {
-    // Required, since all the other tests seem to do a specific drop on the end
+    repositoryService.deleteDeployment(deploymentId, true);
     processEngine.close();
     processEngine = null;
     runtimeService = null;
@@ -65,6 +80,6 @@ public class SpringJunit5Test {
     assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
   }
 }

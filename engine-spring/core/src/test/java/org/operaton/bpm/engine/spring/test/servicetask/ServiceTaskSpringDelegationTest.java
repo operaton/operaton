@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.spring.test.servicetask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -36,7 +36,7 @@ class ServiceTaskSpringDelegationTest extends SpringProcessEngineTestCase {
   @Test
   void delegateExpression() {
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("delegateExpressionToSpringBean");
-    assertThat(runtimeService.getVariable(procInst.getId(), "myVar")).isEqualTo("Activiti BPMN 2.0 process engine");
+    assertThat(runtimeService.getVariable(procInst.getId(), "myVar")).isEqualTo("Operaton BPMN 2.0 process engine");
     assertThat(runtimeService.getVariable(procInst.getId(), "fieldInjection")).isEqualTo("fieldInjectionWorking");
   }
 
@@ -44,7 +44,7 @@ class ServiceTaskSpringDelegationTest extends SpringProcessEngineTestCase {
   @Test
   void delegateClass() {
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("delegateClassToSpringBean");
-    assertThat(runtimeService.getVariable(procInst.getId(), "myVar")).isEqualTo("Activiti BPMN 2.0 process engine");
+    assertThat(runtimeService.getVariable(procInst.getId(), "myVar")).isEqualTo("Operaton BPMN 2.0 process engine");
     assertThat(runtimeService.getVariable(procInst.getId(), "fieldInjection")).isEqualTo("fieldInjectionWorking");
   }
 
@@ -60,7 +60,7 @@ class ServiceTaskSpringDelegationTest extends SpringProcessEngineTestCase {
   @Test
   void methodExpressionOnSpringBean() {
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("methodExpressionOnSpringBean");
-    assertThat(runtimeService.getVariable(procInst.getId(), "myVar")).isEqualTo("ACTIVITI BPMN 2.0 PROCESS ENGINE");
+    assertThat(runtimeService.getVariable(procInst.getId(), "myVar")).isEqualTo("Operaton BPMN 2.0 PROCESS ENGINE");
   }
 
   @Deployment

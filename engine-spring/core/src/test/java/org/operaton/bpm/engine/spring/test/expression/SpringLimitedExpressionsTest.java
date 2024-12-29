@@ -45,14 +45,15 @@ class SpringLimitedExpressionsTest extends SpringProcessEngineTestCase {
     String beanOutput = (String) runtimeService.getVariable(processInstance.getId(), "beanOutput");
     assertThat(beanOutput)
         .isNotNull()
-        .isEqualTo("Activiti BPMN 2.0 process engine");
+        .isEqualTo("Operaton BPMN 2.0 process engine");
     
     // Finish the task, should continue to serviceTask which uses a bean that is present
     // in application-context, but not exposed explicitly in "beans", should throw error!
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(task).isNotNull();
-    
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+
+    String taskId = task.getId();
+    assertThatThrownBy(() -> taskService.complete(taskId))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Unknown property used in expression");  }
 }

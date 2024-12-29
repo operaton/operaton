@@ -29,6 +29,7 @@ import java.util.concurrent.Callable;
  * @author Daniel Meyer
  *
  */
+@SuppressWarnings("unused")
 public class PostDeployRegistrationPa extends SpringProcessApplication {
 
   protected boolean isPostDeployInvoked = false;

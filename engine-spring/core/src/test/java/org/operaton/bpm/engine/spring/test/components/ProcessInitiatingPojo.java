@@ -29,6 +29,7 @@ import java.util.logging.Logger;
  * @author Josh Long
  * @since 5.3
  */
+@SuppressWarnings("unused")
 public class ProcessInitiatingPojo {
 
     private final Logger log = Logger.getLogger(getClass().getName());

@@ -21,6 +21,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.test.Deployment;
 
 import java.util.List;
@@ -34,9 +35,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath:org/operaton/bpm/engine/spring/test/transaction/"
-  + "SpringInnerTransactionRollbackTest-applicationContext.xml"})
-class SpringInnerTransactionRollbackTest {
+@ContextConfiguration(locations = {"classpath:org/operaton/bpm/engine/spring/test/transaction/SpringInnerTransactionRollbackTest-applicationContext.xml"})
+class SpringInnerTransactionRollbackTest extends SpringProcessEngineTestCase {
 
   @Autowired
   public ProcessEngine processEngine;
@@ -49,10 +49,8 @@ class SpringInnerTransactionRollbackTest {
 
   @Test
   @Deployment(resources = {
-    "org/operaton/bpm/engine/spring/test/transaction/"
-      + "SpringInnerTransactionRollbackTest.shouldRollbackProcessData-outer.bpmn20.xml",
-    "org/operaton/bpm/engine/spring/test/transaction/"
-      + "SpringInnerTransactionRollbackTest.shouldRollbackProcessData-inner.bpmn20.xml"
+    "org/operaton/bpm/engine/spring/test/transaction/SpringInnerTransactionRollbackTest.shouldRollbackProcessData-outer.bpmn20.xml",
+    "org/operaton/bpm/engine/spring/test/transaction/SpringInnerTransactionRollbackTest.shouldRollbackProcessData-inner.bpmn20.xml"
   })
   void shouldRollbackProcessData() {
     // given

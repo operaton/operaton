@@ -45,7 +45,7 @@ public class DynamicResourceProducer {
 
   public static Resource[] getResources()
   {
-    return resources.toArray(new Resource[resources.size()]);
+    return resources.toArray(new Resource[0]);
   }
 
   /*

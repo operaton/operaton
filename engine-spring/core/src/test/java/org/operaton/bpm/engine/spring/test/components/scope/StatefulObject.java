@@ -55,6 +55,7 @@ public class StatefulObject implements Serializable, InitializingBean {
     String executionId;
 
     @Value("#{processVariables['customerId']}")
+    @SuppressWarnings("unused")
     public void setCustomerId(long customerId) {
 
         this.customerId = customerId;

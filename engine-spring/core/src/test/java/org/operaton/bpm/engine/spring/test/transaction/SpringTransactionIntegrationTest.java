@@ -52,7 +52,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
 
   @Deployment
   @Test
-  void basicActivitiSpringIntegration() {
+  void basicOperatonSpringIntegration() {
     userBean.hello();
 
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
@@ -61,8 +61,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
 
   @Deployment
   @Test
-  void rollbackTransactionOnActivitiException() {
-
+  void rollbackTransactionOnOperatonException() {
     // Create a table that the userBean is supposed to fill with some data
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
     jdbcTemplate.execute("create table MY_TABLE (MY_TEXT varchar);");
@@ -104,7 +103,6 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
   @Deployment
   @Test
   void transactionRollbackInServiceTask() {
-
     runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
 
     waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
@@ -112,7 +110,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     Job job = managementService.createJobQuery().singleResult();
 
     assertThat(job).isNotNull();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isEqualTo("Transaction rolled back because it has been marked as rollback-only");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
@@ -123,7 +121,6 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
   @Deployment
   @Test
   void transactionRollbackInServiceTaskWithCustomRetryCycle() {
-
     runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
 
     waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
@@ -131,7 +128,7 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     Job job = managementService.createJobQuery().singleResult();
 
     assertThat(job).isNotNull();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isEqualTo("Transaction rolled back because it has been marked as rollback-only");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
@@ -142,7 +139,6 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
   @Deployment
   @Test
   void failingTransactionListener() {
-
     runtimeService.startProcessInstanceByKey("failingTransactionListener");
 
     waitForJobExecutorToProcessAllJobs(processEngineConfiguration, WAIT_TIME_MILLIS, INTERVAL_MILLIS);
@@ -150,13 +146,12 @@ class SpringTransactionIntegrationTest extends SpringProcessEngineTestCase {
     Job job = managementService.createJobQuery().singleResult();
 
     assertThat(job).isNotNull();
-    assertThat(job.getRetries()).isEqualTo(0);
+    assertThat(job.getRetries()).isZero();
     assertThat(job.getExceptionMessage()).isEqualTo("exception in transaction listener");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
     assertThat(stacktrace).isNotNull();
     assertTrue(stacktrace.contains("java.lang.RuntimeException: exception in transaction listener"), "unexpected stacktrace, was <" + stacktrace + ">");
   }
-
 
 }

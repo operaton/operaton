@@ -35,7 +35,7 @@ class ActivitiStateHandlerRegistrationTest {
   @Test
   void shouldHaveDetailedStringRepresentation() throws Exception {
     Map<Integer, String> processVariablesExpected = Collections.singletonMap(34, "testValue");
-    Method handlerMethod = this.getClass().getMethod("shouldHaveDetailedStringRepresentation");
+    Method handlerMethod = this.getClass().getDeclaredMethod("shouldHaveDetailedStringRepresentation");
     Object handler = new Object() { public Integer testValue; {testValue = 76; testValue++; }};
     String stateName = "running";
     String beanName = "testBean";
@@ -48,7 +48,7 @@ class ActivitiStateHandlerRegistrationTest {
     assertThat(registration).hasToString("org.operaton.bpm.engine.spring.components.registry"
         + ".ActivitiStateHandlerRegistration@" + Integer.toHexString(registration.hashCode()) + "["
       + "processVariablesExpected={34=testValue}, "
-      + "handlerMethod=public void org.operaton.bpm.engine.spring.test.components.registry.ActivitiStateHandlerRegistrationTest.shouldHaveDetailedStringRepresentation() throws java.lang.Exception, "
+      + "handlerMethod=void org.operaton.bpm.engine.spring.test.components.registry.ActivitiStateHandlerRegistrationTest.shouldHaveDetailedStringRepresentation() throws java.lang.Exception, "
       + "handler=org.operaton.bpm.engine.spring.test.components.registry.ActivitiStateHandlerRegistrationTest$1@" + Integer.toHexString(handler.hashCode()) + ", "
       + "stateName=running, "
       + "beanName=testBean, "

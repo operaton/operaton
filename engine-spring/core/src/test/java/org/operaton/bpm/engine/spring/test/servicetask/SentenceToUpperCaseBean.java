@@ -22,6 +22,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings("unused")
 public class SentenceToUpperCaseBean {
   
   protected SentenceGenerator sentenceGenerator;

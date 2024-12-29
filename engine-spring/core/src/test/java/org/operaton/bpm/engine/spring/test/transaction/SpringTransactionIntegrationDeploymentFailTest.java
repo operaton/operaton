@@ -22,6 +22,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,10 +35,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SpringTransactionIntegrationDeploymentFailTest extends SpringProcessEngineTestCase {
 
   @AfterEach
-  protected void tearDown() throws Exception {
+  protected void tearDown(TestInfo testInfo) throws Exception {
     //must not be needed after CAM-4250 is fixed
     processEngineConfiguration.getDeploymentCache().discardProcessDefinitionCache();
-    super.tearDown();
+    super.tearDown(testInfo);
   }
 
   @Test

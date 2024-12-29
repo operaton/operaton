@@ -33,9 +33,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 5.3
  */
 
+@SuppressWarnings("unused")
 public class Delegate1 implements JavaDelegate, InitializingBean {
 
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private static final Logger LOG = Logger.getLogger(Delegate1.class.getName());
 
     @Autowired
     private ProcessInstance processInstance;
@@ -48,12 +49,12 @@ public class Delegate1 implements JavaDelegate, InitializingBean {
 
         String pid = this.processInstance.getId();
 
-        log.info("the processInstance#id is " + pid);
+        LOG.info("the processInstance#id is " + pid);
 
     assertThat(statefulObject).as("the 'scopedCustomer' reference can't be null").isNotNull();
         String uuid = UUID.randomUUID().toString();
         statefulObject.setName(uuid);
-        log.info("the 'uuid' value given to the ScopedCustomer#name property is '" + uuid + "' in " + getClass().getName());
+        LOG.info("the 'uuid' value given to the ScopedCustomer#name property is '" + uuid + "' in " + getClass().getName());
 
         this.statefulObject.increment();
     }

@@ -30,9 +30,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 5,3
  */
 
+@SuppressWarnings("unused")
 public class Delegate2 implements JavaDelegate {
 
-  private final Logger log = Logger.getLogger(getClass().getName());
+  private static final Logger LOG = Logger.getLogger(Delegate2.class.getName());
 
 	@Autowired private StatefulObject statefulObject;
 
@@ -43,6 +44,6 @@ public class Delegate2 implements JavaDelegate {
 
     assertThat(this.statefulObject).as("the 'scopedCustomer' reference can't be null").isNotNull();
     assertThat(this.statefulObject.getName()).as("the 'scopedCustomer.name' property should be non-null, since it was set in a previous delegate bound to this very thread").isNotNull();
-		log.info( "the 'uuid' value retrieved from the ScopedCustomer#name property is '" +  this.statefulObject.getName()+ "' in "+getClass().getName());
+		LOG.info( "the 'uuid' value retrieved from the ScopedCustomer#name property is '" +  this.statefulObject.getName()+ "' in "+getClass().getName());
 	}
 }

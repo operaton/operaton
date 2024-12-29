@@ -60,7 +60,7 @@ class ServiceTaskSpringDelegationTest extends SpringProcessEngineTestCase {
   @Test
   void methodExpressionOnSpringBean() {
     ProcessInstance procInst = runtimeService.startProcessInstanceByKey("methodExpressionOnSpringBean");
-    assertThat(runtimeService.getVariable(procInst.getId(), "myVar")).isEqualTo("Operaton BPMN 2.0 PROCESS ENGINE");
+    assertThat(runtimeService.getVariable(procInst.getId(), "myVar")).isEqualTo("OPERATON BPMN 2.0 PROCESS ENGINE");
   }
 
   @Deployment

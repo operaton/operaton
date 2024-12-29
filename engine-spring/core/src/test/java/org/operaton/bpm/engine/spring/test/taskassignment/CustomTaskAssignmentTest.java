@@ -53,7 +53,7 @@ class CustomTaskAssignmentTest extends SpringProcessEngineTestCase {
   @Deployment
   @Test
   void setCandidateGroupsThroughSpringService() {
-    runtimeService.startProcessInstanceByKey("candidateUsersThroughSpringService", CollectionUtil.singletonMap("emp", "fozzie"));
+    runtimeService.startProcessInstanceByKey("candidateGroupsThroughSpringService", CollectionUtil.singletonMap("emp", "fozzie"));
     assertThat(taskService.createTaskQuery().taskCandidateGroup("management").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateGroup("directors").count()).isEqualTo(1);
     assertThat(taskService.createTaskQuery().taskCandidateGroup("accountancy").count()).isEqualTo(1);

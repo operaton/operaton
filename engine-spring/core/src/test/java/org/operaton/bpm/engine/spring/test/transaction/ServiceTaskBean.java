@@ -21,6 +21,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 
 import org.springframework.transaction.annotation.Transactional;
 
+@SuppressWarnings("unused")
 public class ServiceTaskBean implements JavaDelegate {
 
   private BeanWithException beanWithException;

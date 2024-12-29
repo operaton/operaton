@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.spring.test.scripttask;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {
   "classpath:org/operaton/bpm/engine/spring/test/scripttask/ScriptTaskTest-applicationContext.xml"})
+@Disabled("Fails with java.lang.IncompatibleClassChangeError: Found interface org.objectweb.asm.FieldVisitor, but class was expected")
 class ScriptTaskNashornTest extends AbstractScriptTaskTest {
 
   private static final String NASHORN = "nashorn";

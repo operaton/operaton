@@ -16,18 +16,19 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import com.sun.jersey.api.client.ClientResponse;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.runners.Parameterized.AfterParam;
-import org.junit.runners.Parameterized.BeforeParam;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
-import java.util.Arrays;
-import java.util.Collection;
+
+import com.sun.jersey.api.client.ClientResponse;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,10 +48,9 @@ public class PluginsRootResourceIT extends AbstractWebIT {
     createClient(getWebappCtxPath());
   }
 
-  private static SpringBootManagedContainer container;
+  private SpringBootManagedContainer container;
 
-  @BeforeParam
-  public static void runStartScript(String assetName, boolean assetAllowed) {
+  public void startContainer(String assetName, boolean assetAllowed) {
     container = new SpringBootManagedContainer("--webapps");
     try {
       container.start();
@@ -59,8 +59,8 @@ public class PluginsRootResourceIT extends AbstractWebIT {
     }
   }
 
-  @AfterParam
-  public static void stopApp() {
+  @AfterEach
+  public void stopContainer() {
     try {
       if (container != null) {
         container.stop();
@@ -85,6 +85,7 @@ public class PluginsRootResourceIT extends AbstractWebIT {
   @MethodSource("getAssets")
   @ParameterizedTest(name = "Test instance: {index}. Asset: {0}, Allowed: {1}")
   public void shouldGetAssetIfAllowed(String assetName, boolean assetAllowed) {
+    startContainer(assetName, assetAllowed);
     initPluginsRootResourceIT(assetName, assetAllowed);
     // when
     ClientResponse response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);

@@ -16,25 +16,23 @@
  */
 package org.operaton.bpm.run.test.config.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.rest.dto.runtime.FilterDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.runner.RunWith;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(classes = {OperatonBpmRun.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = {"test-default-task-filter"}, inheritProfiles = true)
 class DefaultTaskFilterTest extends AbstractRestTest {

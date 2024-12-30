@@ -16,6 +16,12 @@
  */
 package org.operaton.bpm.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Logger;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -26,15 +32,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Logger;
-
 /**
- * Allows to take screenshots in case of an selenium test error.
+ * Allows to take screenshots in case of a Selenium test error.
+ * @deprecated Rewrite test to JUnit 5 and use {@link SeleniumScreenshotExtension} instead.
  */
+@Deprecated
 public class SeleniumScreenshotRule implements TestRule {
 
   private static final String OUTPUT_DIR_PROPERTY_NAME = "selenium.screenshot.directory";

@@ -16,26 +16,24 @@
  */
 package org.operaton.bpm.run.test.plugins;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.spring.boot.starter.spin.SpringBootSpinProcessEnginePlugin;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = {OperatonBpmRun.class})
 @ActiveProfiles(profiles = {"test-new-plugins", "test-plugins-config-override"}, inheritProfiles = true)
 class ProcessEnginePluginsConfigurationOverrideTest {

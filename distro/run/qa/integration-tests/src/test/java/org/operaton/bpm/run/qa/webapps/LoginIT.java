@@ -17,16 +17,6 @@
 package org.operaton.bpm.run.qa.webapps;
 
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.runners.Parameterized.AfterParam;
-import org.junit.runners.Parameterized.BeforeParam;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -35,6 +25,16 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
@@ -60,12 +60,11 @@ public class LoginIT extends AbstractWebappUiIT {
   
   public String name;
 
-  protected static SpringBootManagedContainer container;
+  protected SpringBootManagedContainer container;
 
   protected WebDriverWait wait;
 
-  @BeforeParam
-  public static void runStartScript(String[] commands) {
+  public void startContainer(String[] commands) {
     container = new SpringBootManagedContainer(commands);
     try {
       container.start();
@@ -74,8 +73,8 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  @AfterParam
-  public static void stopApp() {
+  @AfterEach
+  public void stopContainer() {
     try {
       if (container != null) {
         container.stop();
@@ -87,7 +86,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void login(String appName) {
+  void login(String appName) {
     driver.manage().deleteAllCookies();
 
     driver.get(appUrl + "app/" + appName + "/default/");
@@ -104,15 +103,15 @@ public class LoginIT extends AbstractWebappUiIT {
         .submit();
   }
 
-  public void sendKeys(WebElement element, String keys)  {
-
+  void sendKeys(WebElement element, String keys)  {
     // fix for CAM-13548
-    Arrays.stream(keys.split("")).forEach(c -> element.sendKeys(c));
+    Arrays.stream(keys.split("")).forEach(element::sendKeys);
   }
 
   @MethodSource("commands")
   @ParameterizedTest
   public void shouldLoginToCockpit(String[] commands) throws URISyntaxException {
+    startContainer(commands);
     initLoginIT(commands);
     try {
       loginToCockpit();
@@ -135,6 +134,7 @@ public class LoginIT extends AbstractWebappUiIT {
   @MethodSource("commands")
   @ParameterizedTest
   public void shouldLoginToTasklist(String[] commands) {
+    startContainer(commands);
     initLoginIT(commands);
     try {
       loginToTasklist();
@@ -143,7 +143,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void loginToTasklist() {
+  void loginToTasklist() {
     String appName = "tasklist";
     login(appName);
     wait.until(textToBePresentInElementLocated(
@@ -165,7 +165,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void loginToAdmin() throws URISyntaxException {
+  void loginToAdmin() throws URISyntaxException {
     String appName = "admin";
     login(appName);
     wait.until(textToBePresentInElementLocated(
@@ -201,9 +201,7 @@ public class LoginIT extends AbstractWebappUiIT {
   @BeforeEach
   void setup(TestInfo testInfo) {
     Optional<Method> testMethod = testInfo.getTestMethod();
-    if (testMethod.isPresent()) {
-      this.name = testMethod.get().getName();
-    }
+    testMethod.ifPresent(method -> this.name = method.getName());
   }
 
   public void initLoginIT(String[] commands) {

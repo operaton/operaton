@@ -16,34 +16,35 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import org.operaton.bpm.util.SeleniumScreenshotRule;
-import org.junit.Rule;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.operaton.bpm.util.SeleniumScreenshotExtension;
 
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Locale;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+
 /**
  * NOTE: copied from
  * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/test/java/org/operaton/bpm/AbstractWebappUiIntegrationTest.java">platform</a>,
  * might be removed with https://jira.camunda.com/browse/CAM-11379
  */
-public class AbstractWebappUiIT extends AbstractWebIT {
+public abstract class AbstractWebappUiIT extends AbstractWebIT {
 
   protected static WebDriver driver;
 
-  @Rule
-  public SeleniumScreenshotRule screenshotRule = new SeleniumScreenshotRule(driver);
+  @RegisterExtension
+  private SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
 
   @BeforeAll
   static void createDriver() {

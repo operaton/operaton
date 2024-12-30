@@ -16,21 +16,19 @@
  */
 package org.operaton.bpm.run.test;
 
+import org.operaton.bpm.run.OperatonBpmRun;
+import org.operaton.bpm.run.test.util.LoggingInterceptor;
+
 import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.operaton.bpm.run.OperatonBpmRun;
-import org.operaton.bpm.run.test.util.LoggingInterceptor;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { OperatonBpmRun.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = { "test-auth-disabled" })
 public abstract class AbstractRestTest {

@@ -16,32 +16,30 @@
  */
 package org.operaton.bpm.run.test.plugins;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = {OperatonBpmRun.class})
-@ActiveProfiles(profiles = {"test-new-plugins"}, inheritProfiles = true)
+@ActiveProfiles(profiles = {"test-new-plugins"})
 class OperatonRunProcessEnginePluginsRegistrationTest {
 
   @Autowired

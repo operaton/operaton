@@ -16,25 +16,22 @@
  */
 package org.operaton.bpm.run.test.config.cors;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.run.test.AbstractRestTest;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Note: To run this test via an IDE you must set the system property
  * {@code sun.net.http.allowRestrictedHeaders} to {@code true}. (e.g.
  * System.setProperty("sun.net.http.allowRestrictedHeaders", "true");)
- * 
- * @see https://jira.camunda.com/browse/CAM-11290
+ *
+ * @see <a href="https://jira.camunda.com/browse/CAM-11290">CAM-11290</a>
  */
 @ActiveProfiles(profiles = {"test-cors-enabled"}, inheritProfiles = true)
 class CorsAccessControlHeadersTest extends AbstractRestTest {

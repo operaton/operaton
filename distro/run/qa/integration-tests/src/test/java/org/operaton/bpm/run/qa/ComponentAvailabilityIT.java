@@ -16,16 +16,15 @@
  */
 package org.operaton.bpm.run.qa;
 
-import io.restassured.response.Response;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.runners.Parameterized.AfterParam;
-import org.junit.runners.Parameterized.BeforeParam;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -34,7 +33,7 @@ import static org.hamcrest.CoreMatchers.is;
 /**
  * Test cases for ensuring connectivity to REST API based on startup parameters
  */
-public class ComponentAvailabilityIT {
+class ComponentAvailabilityIT {
   public String[] commands;
   public boolean restAvailable;
   public boolean webappsAvailable;
@@ -42,21 +41,20 @@ public class ComponentAvailabilityIT {
 
   public static Collection<Object[]> commands() {
     return Arrays.asList(new Object[][] {
-      { new String[0], true, true, true },
-      { new String[]{"--rest"}, true, false, false },
-      { new String[]{"--rest", "--webapps"}, true, true, false },
-      { new String[]{"--rest", "--example"}, true, false, true },
-      { new String[]{"--webapps"}, false, true, false },
-      { new String[]{"--rest", "--webapps"}, true, true, false },
-      { new String[]{"--rest", "--webapps", "--example"}, true, true, true },
-      { new String[]{"--rest", "--webapps", "--example", "--oauth2"}, true, true, true }
+        { new String[0], true, true, true },
+        { new String[]{"--rest"}, true, false, false },
+        { new String[]{"--rest", "--webapps"}, true, true, false },
+        { new String[]{"--rest", "--example"}, true, false, true },
+        { new String[]{"--webapps"}, false, true, false },
+        { new String[]{"--rest", "--webapps"}, true, true, false },
+        { new String[]{"--rest", "--webapps", "--example"}, true, true, true },
+        { new String[]{"--rest", "--webapps", "--example", "--oauth2"}, true, true, true }
     });
   }
 
-  private static SpringBootManagedContainer container;
+  private SpringBootManagedContainer container;
 
-  @BeforeParam
-  public static void runStartScript(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+  void startContainer(String[] commands) {
     container = new SpringBootManagedContainer(commands);
     try {
       container.start();
@@ -65,8 +63,8 @@ public class ComponentAvailabilityIT {
     }
   }
 
-  @AfterParam
-  public static void stopApp() {
+  @AfterEach
+  void stopContainer() {
     try {
       if (container != null) {
         container.stop();
@@ -78,51 +76,54 @@ public class ComponentAvailabilityIT {
     }
   }
 
-  @MethodSource("commands")
   @ParameterizedTest(name = "Test instance: {index}. Rest: {1}, Webapps: {2}, Example: {3}")
-  public void shouldFindEngineViaRestApiRequest(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+  @MethodSource("commands")
+  void shouldFindEngineViaRestApiRequest(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+    startContainer(commands);
     initComponentAvailabilityIT(commands, restAvailable, webappsAvailable, exampleAvailable);
     Response response = when().get(container.getBaseUrl() + "/engine-rest/engine");
     if (restAvailable) {
       response.then()
-        .body("size()", is(1))
-        .body("name[0]", is("default"));
+          .body("size()", is(1))
+          .body("name[0]", is("default"));
     } else {
       response.then()
-        .statusCode(404);
+          .statusCode(404);
     }
   }
 
-  @MethodSource("commands")
   @ParameterizedTest(name = "Test instance: {index}. Rest: {1}, Webapps: {2}, Example: {3}")
-  public void shouldFindWelcomeApp(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+  @MethodSource("commands")
+  void shouldFindWelcomeApp(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+    startContainer(commands);
     initComponentAvailabilityIT(commands, restAvailable, webappsAvailable, exampleAvailable);
     Response response = when().get(container.getBaseUrl() + "/operaton/app/welcome/default");
     if (webappsAvailable) {
       response.then()
-        .statusCode(200)
-        .body("html.head.title", equalTo("Operaton Welcome"));
+          .statusCode(200)
+          .body("html.head.title", equalTo("Operaton Welcome"));
     } else {
       response.then()
-        .statusCode(404);
+          .statusCode(404);
     }
   }
 
-  @MethodSource("commands")
   @ParameterizedTest(name = "Test instance: {index}. Rest: {1}, Webapps: {2}, Example: {3}")
-  public void shouldFindExample(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+  @MethodSource("commands")
+  void shouldFindExample(String[] commands, boolean restAvailable, boolean webappsAvailable, boolean exampleAvailable) {
+    startContainer(commands);
     initComponentAvailabilityIT(commands, restAvailable, webappsAvailable, exampleAvailable);
     Response response = when().get(container.getBaseUrl() + "/engine-rest/process-definition");
     if (exampleAvailable && restAvailable) {
       response.then()
-        .body("size()", is(3))
-        .body("key[0]", is("ReviewInvoice"));
+          .body("size()", is(3))
+          .body("key[0]", is("ReviewInvoice"));
     } else if (restAvailable) {
       response.then()
-        .body("size()", is(0));
+          .body("size()", is(0));
     } else {
       response.then()
-        .statusCode(404);
+          .statusCode(404);
     }
   }
 

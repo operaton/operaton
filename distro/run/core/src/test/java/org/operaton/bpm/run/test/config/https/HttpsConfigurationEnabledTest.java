@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.run.test.config.https;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.test.AbstractRestTest;
 import org.operaton.bpm.run.test.util.TestUtils;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,6 +32,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.ResourceAccessException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(classes = {OperatonBpmRun.class}, webEnvironment = WebEnvironment.DEFINED_PORT)
 @ActiveProfiles(profiles = {"test-https-enabled"}, inheritProfiles = true)
@@ -57,13 +59,11 @@ class HttpsConfigurationEnabledTest extends AbstractRestTest {
 
   @Test
   void shouldNotRedirect() {
-    Throwable exception = assertThrows(ResourceAccessException.class, () -> {
-      // given
-      String url = "http://localhost:" + 8080 + CONTEXT_PATH + "/task";
-
-      // then
-      ResponseEntity<String> response = testRestTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(null), String.class);
-    });
-    assertThat(exception.getMessage().contains("Connection refused")).isTrue();
+    // given
+    String url = "http://localhost:" + 8080 + CONTEXT_PATH + "/task";
+    // when
+    Throwable exception = assertThrows(ResourceAccessException.class, () ->
+        testRestTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(null), String.class));
+    assertThat(exception.getMessage()).contains("Connection refused");
   }
 }

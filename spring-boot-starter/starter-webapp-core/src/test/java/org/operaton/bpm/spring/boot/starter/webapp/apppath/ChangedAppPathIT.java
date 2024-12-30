@@ -17,9 +17,11 @@
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -27,14 +29,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_DEFAULT_VALUE;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NAME;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NONCE_PLACEHOLDER;
 
 @SpringBootTest(
     classes = { WebappTestApp.class },
@@ -46,8 +42,8 @@ public class ChangedAppPathIT {
 
   protected static final String MY_APP_PATH = "/my/application/path";
 
-  @Rule
-  public HttpClientRule httpClientRule = new HttpClientRule();
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
@@ -60,12 +56,12 @@ public class ChangedAppPathIT {
     // given
 
     // when
-    httpClientRule.performRequest("http://localhost:" + port + MY_APP_PATH +
+    httpClientExtension.performRequest("http://localhost:" + port + MY_APP_PATH +
         "/app/tasklist/default");
 
     // then
-    String xsrfCookieValue = httpClientRule.getXsrfCookie();
-    String xsrfTokenHeader = httpClientRule.getXsrfTokenHeader();
+    String xsrfCookieValue = httpClientExtension.getXsrfCookie();
+    String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     assertThat(xsrfCookieValue).matches("XSRF-TOKEN=[A-Z0-9]{32};" +
         "Path=" + MY_APP_PATH + ";SameSite=Lax");
@@ -79,10 +75,10 @@ public class ChangedAppPathIT {
     // given
 
     // when
-    httpClientRule.performRequest("http://localhost:" + port + "/");
+    httpClientExtension.performRequest("http://localhost:" + port + "/");
 
     // then
-    assertThat(httpClientRule.getHeader("Location")).isEqualTo("http://localhost:" + port +
+    assertThat(httpClientExtension.getHeader("Location")).isEqualTo("http://localhost:" + port +
         MY_APP_PATH + "/app/");
   }
 

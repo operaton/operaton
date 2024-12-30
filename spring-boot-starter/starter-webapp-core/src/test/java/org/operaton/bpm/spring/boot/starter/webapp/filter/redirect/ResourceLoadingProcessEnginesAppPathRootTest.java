@@ -16,21 +16,19 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import org.apache.commons.io.IOUtils;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = { FilterTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -40,8 +38,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DirtiesContext
 public class ResourceLoadingProcessEnginesAppPathRootTest {
 
-  @Rule
-  public HttpClientRule rule = new HttpClientRule().followRedirects(true);
+  @RegisterExtension
+  HttpClientExtension rule = new HttpClientExtension().followRedirects(true);
 
   @LocalServerPort
   public int port;

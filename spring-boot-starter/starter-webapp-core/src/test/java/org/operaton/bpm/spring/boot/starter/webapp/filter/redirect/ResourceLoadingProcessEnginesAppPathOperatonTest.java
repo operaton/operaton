@@ -16,16 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 
-import org.junit.Rule;
-import org.junit.runner.RunWith;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import java.net.HttpURLConnection;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.net.HttpURLConnection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,8 +36,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext
 public class ResourceLoadingProcessEnginesAppPathOperatonTest {
 
-  @Rule
-  public HttpClientRule rule = new HttpClientRule().followRedirects(true);
+  @RegisterExtension
+  HttpClientExtension rule = new HttpClientExtension().followRedirects(true);
 
   @LocalServerPort
   public int port;

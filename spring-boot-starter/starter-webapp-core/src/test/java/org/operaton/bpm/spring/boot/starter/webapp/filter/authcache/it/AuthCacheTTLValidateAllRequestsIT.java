@@ -17,19 +17,17 @@
 package org.operaton.bpm.spring.boot.starter.webapp.filter.authcache.it;
 
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,8 +40,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext
 public class AuthCacheTTLValidateAllRequestsIT {
 
-  @Rule
-  public HttpClientRule httpClientRule = new HttpClientRule();
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
@@ -54,23 +52,23 @@ public class AuthCacheTTLValidateAllRequestsIT {
   @Test
   public void shouldRemoveCache() {
     // given
-    httpClientRule.performRequest("http://localhost:" + port + "/operaton/app/welcome/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/welcome/default");
 
     Map<String, String> headers = new HashMap<>();
-    headers.put("X-XSRF-TOKEN", httpClientRule.getHeaderXsrfToken());
-    headers.put("Cookie", httpClientRule.getSessionCookieValue());
+    headers.put("X-XSRF-TOKEN", httpClientExtension.getHeaderXsrfToken());
+    headers.put("Cookie", httpClientExtension.getSessionCookieValue());
     headers.put("Content-Type", "application/x-www-form-urlencoded");
     headers.put("Accept", "application/json");
-    httpClientRule.performPostRequest("http://localhost:" + port +
+    httpClientExtension.performPostRequest("http://localhost:" + port +
         "/operaton/api/admin/auth/user/default/login/welcome", headers, "username=demo&password=demo");
 
     headers = new HashMap<>();
-    headers.put("Cookie", httpClientRule.getSessionCookieValue());
+    headers.put("Cookie", httpClientExtension.getSessionCookieValue());
     headers.put("Accept", "application/json");
     doGetRequestToProfileEndpoint(headers);
 
     // assume
-    assertThat(httpClientRule.getHeader("X-Authorized-Apps"))
+    assertThat(httpClientExtension.getHeader("X-Authorized-Apps"))
         .isEqualTo("admin,tasklist,welcome,cockpit");
 
     identityService.deleteUser("demo");
@@ -79,14 +77,14 @@ public class AuthCacheTTLValidateAllRequestsIT {
     doGetRequestToProfileEndpoint(headers);
 
     // then
-    assertThat(httpClientRule.getErrorResponseContent())
+    assertThat(httpClientExtension.getErrorResponseContent())
         .contains("\"status\":401,\"error\":\"Unauthorized\"");
   }
 
   protected void doGetRequestToProfileEndpoint(Map<String, String> headers) {
     String baseUrl = "http://localhost:" + port;
     String profileEndpointPath = "/operaton/api/engine/engine/default/user/demo/profile";
-    httpClientRule.performRequest( baseUrl + profileEndpointPath, headers);
+    httpClientExtension.performRequest( baseUrl + profileEndpointPath, headers);
   }
 
 }

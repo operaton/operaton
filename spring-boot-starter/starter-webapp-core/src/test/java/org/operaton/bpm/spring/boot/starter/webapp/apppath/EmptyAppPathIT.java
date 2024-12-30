@@ -17,15 +17,13 @@
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,8 +37,8 @@ public class EmptyAppPathIT {
 
   protected static final String MY_APP_PATH = "";
 
-  @Rule
-  public HttpClientRule httpClientRule = new HttpClientRule();
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
@@ -53,12 +51,12 @@ public class EmptyAppPathIT {
     // given
 
     // when
-    httpClientRule.performRequest("http://localhost:" + port + MY_APP_PATH +
+    httpClientExtension.performRequest("http://localhost:" + port + MY_APP_PATH +
         "/app/tasklist/default");
 
     // then
-    String xsrfCookieValue = httpClientRule.getXsrfCookie();
-    String xsrfTokenHeader = httpClientRule.getXsrfTokenHeader();
+    String xsrfCookieValue = httpClientExtension.getXsrfCookie();
+    String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     assertThat(xsrfCookieValue).matches("XSRF-TOKEN=[A-Z0-9]{32};Path=/;SameSite=Lax");
     assertThat(xsrfTokenHeader).matches("[A-Z0-9]{32}");

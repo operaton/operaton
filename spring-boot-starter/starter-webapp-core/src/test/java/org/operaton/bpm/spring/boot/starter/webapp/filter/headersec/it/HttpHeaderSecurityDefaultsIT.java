@@ -16,32 +16,28 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
+
 import org.junit.Before;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_DEFAULT_VALUE;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NAME;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NONCE_PLACEHOLDER;
 
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HttpHeaderSecurityDefaultsIT {
 
-  @Rule
-  public HttpClientRule httpClientRule;
+  @RegisterExtension
+  HttpClientExtension httpClientExtension;
 
   @LocalServerPort
   public int port;
 
   @Before
   public void assignRule() {
-    httpClientRule = new HttpClientRule(port);
+    httpClientExtension = new HttpClientExtension(port);
   }
 
   @Test
@@ -49,10 +45,10 @@ public class HttpHeaderSecurityDefaultsIT {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientRule.getHeader("X-XSS-Protection")).isEqualTo("1; mode=block");
+    assertThat(httpClientExtension.getHeader("X-XSS-Protection")).isEqualTo("1; mode=block");
   }
 
   @Test
@@ -60,11 +56,11 @@ public class HttpHeaderSecurityDefaultsIT {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
     String expectedHeaderPattern = HEADER_DEFAULT_VALUE.replace(HEADER_NONCE_PLACEHOLDER, "'nonce-([-_a-zA-Z\\d]*)'");
-    assertThat(httpClientRule.getHeader(HEADER_NAME)).matches(expectedHeaderPattern);
+    assertThat(httpClientExtension.getHeader(HEADER_NAME)).matches(expectedHeaderPattern);
   }
 
   @Test
@@ -72,10 +68,10 @@ public class HttpHeaderSecurityDefaultsIT {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientRule.getHeader("X-Content-Type-Options")).isEqualTo("nosniff");
+    assertThat(httpClientExtension.getHeader("X-Content-Type-Options")).isEqualTo("nosniff");
   }
 
 }

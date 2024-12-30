@@ -17,15 +17,13 @@
 package org.operaton.bpm.spring.boot.starter.webapp.filter.csrf.it.properties;
 
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,18 +34,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext
 public class SameSiteOptionLaxIT {
 
-  @Rule
-  public HttpClientRule httpClientRule = new HttpClientRule();
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
 
   @Test
   public void shouldSetSameSiteCookieOptionLax() {
-    httpClientRule.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
 
-    String xsrfCookieValue = httpClientRule.getXsrfCookie();
-    String xsrfTokenHeader = httpClientRule.getXsrfTokenHeader();
+    String xsrfCookieValue = httpClientExtension.getXsrfCookie();
+    String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     assertThat(xsrfCookieValue).matches("XSRF-TOKEN=[A-Z0-9]{32};" +
         "Path=" + WebappProperty.DEFAULT_APP_PATH + ";SameSite=Lax");

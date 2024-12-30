@@ -17,17 +17,15 @@
 package org.operaton.bpm.spring.boot.starter.webapp.filter.csrf.it;
 
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
 import java.io.IOException;
 import java.net.URLConnection;
+
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -37,18 +35,18 @@ import static org.assertj.core.api.Assertions.fail;
 @DirtiesContext
 public class CsrfPreventionIT {
 
-  @Rule
-  public HttpClientRule httpClientRule = new HttpClientRule();
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
 
   @Test
   public void shouldSetCookieWebapp() {
-    httpClientRule.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
 
-    String xsrfCookieValue = httpClientRule.getXsrfCookie();
-    String xsrfTokenHeader = httpClientRule.getXsrfTokenHeader();
+    String xsrfCookieValue = httpClientExtension.getXsrfCookie();
+    String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     assertThat(xsrfCookieValue).matches("XSRF-TOKEN=[A-Z0-9]{32};" +
         "Path=" + WebappProperty.DEFAULT_APP_PATH + ";SameSite=Lax");
@@ -59,10 +57,10 @@ public class CsrfPreventionIT {
 
   @Test
   public void shouldSetCookieWebappRest() {
-    httpClientRule.performRequest("http://localhost:" + port + "/operaton/api/engine/engine/");
+    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/api/engine/engine/");
 
-    String xsrfCookieValue = httpClientRule.getXsrfCookie();
-    String xsrfTokenHeader = httpClientRule.getXsrfTokenHeader();
+    String xsrfCookieValue = httpClientExtension.getXsrfCookie();
+    String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     assertThat(xsrfCookieValue).matches("XSRF-TOKEN=[A-Z0-9]{32};" +
         "Path=" + WebappProperty.DEFAULT_APP_PATH + ";SameSite=Lax");
@@ -76,7 +74,7 @@ public class CsrfPreventionIT {
     // given
 
     // when
-    URLConnection urlConnection = httpClientRule.performPostRequest("http://localhost:" + port +
+    URLConnection urlConnection = httpClientExtension.performPostRequest("http://localhost:" + port +
             "/operaton/api/admin/auth/user/default/login/welcome", "Content-Type",
         "application/x-www-form-urlencoded");
 
@@ -86,8 +84,8 @@ public class CsrfPreventionIT {
     } catch (IOException e) {
       // then
       assertThat(e).hasMessageContaining("Server returned HTTP response code: 403 for URL");
-      assertThat(httpClientRule.getHeaderXsrfToken()).isEqualTo("Required");
-      assertThat(httpClientRule.getErrorResponseContent()).contains("CSRFPreventionFilter: Token provided via HTTP Header is absent/empty.");
+      assertThat(httpClientExtension.getHeaderXsrfToken()).isEqualTo("Required");
+      assertThat(httpClientExtension.getErrorResponseContent()).contains("CSRFPreventionFilter: Token provided via HTTP Header is absent/empty.");
     }
 
   }

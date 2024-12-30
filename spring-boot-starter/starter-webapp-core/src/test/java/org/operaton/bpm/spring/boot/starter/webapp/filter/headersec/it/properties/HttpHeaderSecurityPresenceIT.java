@@ -16,16 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it.properties;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
 import org.junit.Before;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,15 +37,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext
 public class HttpHeaderSecurityPresenceIT {
 
-  @Rule
-  public HttpClientRule httpClientRule;
+  @RegisterExtension
+  HttpClientExtension httpClientExtension;
 
   @LocalServerPort
   public int port;
 
   @Before
   public void assignRule() {
-    httpClientRule = new HttpClientRule(port);
+    httpClientExtension = new HttpClientExtension(port);
   }
 
   @Test
@@ -55,10 +53,10 @@ public class HttpHeaderSecurityPresenceIT {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientRule.headerExists("X-XSS-Protection")).isTrue();
+    assertThat(httpClientExtension.headerExists("X-XSS-Protection")).isTrue();
   }
 
   @Test
@@ -66,10 +64,10 @@ public class HttpHeaderSecurityPresenceIT {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientRule.headerExists("Content-Security-Policy")).isTrue();
+    assertThat(httpClientExtension.headerExists("Content-Security-Policy")).isTrue();
   }
 
   @Test
@@ -77,10 +75,10 @@ public class HttpHeaderSecurityPresenceIT {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientRule.headerExists("X-Content-Type-Options")).isTrue();
+    assertThat(httpClientExtension.headerExists("X-Content-Type-Options")).isTrue();
   }
 
   @Test
@@ -88,10 +86,10 @@ public class HttpHeaderSecurityPresenceIT {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientRule.headerExists("Strict-Transport-Security")).isTrue();
+    assertThat(httpClientExtension.headerExists("Strict-Transport-Security")).isTrue();
   }
 
 }

@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.util;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.rules.ExternalResource;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -31,9 +27,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class HttpClientRule extends ExternalResource {
+public class HttpClientExtension implements AfterEachCallback {
 
   public static final String PORT_PLACEHOLDER_WEBAPP_URL = "{PORT}";
   public static final String WEBAPP_URL = "http://localhost:" + PORT_PLACEHOLDER_WEBAPP_URL +
@@ -43,19 +44,18 @@ public class HttpClientRule extends ExternalResource {
   protected HttpURLConnection connection = null;
   protected boolean followRedirects;
 
-  public HttpClientRule() {
+  public HttpClientExtension() {
   }
 
-  public HttpClientRule(int port) {
+  public HttpClientExtension(int port) {
     this.port = port;
   }
 
   @Override
-  protected void after() {
+  public void afterEach(ExtensionContext context) throws Exception {
     port = null;
     connection = null;
   }
-
   public HttpURLConnection performRequest() {
     return performRequest(WEBAPP_URL.replace(PORT_PLACEHOLDER_WEBAPP_URL, String.valueOf(port)), null, null, null);
   }
@@ -241,8 +241,9 @@ public class HttpClientRule extends ExternalResource {
     return regex.toString();
   }
 
-  public HttpClientRule followRedirects(boolean followRedirects) {
+  public HttpClientExtension followRedirects(boolean followRedirects) {
     this.followRedirects = followRedirects;
     return this;
   }
+
 }

@@ -25,7 +25,6 @@ import org.operaton.bpm.run.property.OperatonBpmRunProperties;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,7 +68,7 @@ class OperatonRunProcessEnginePluginsRegistrationTest {
     assertThat(pluginConfigs).hasSize(3);
     List<String> pluginClasses = pluginConfigs.stream()
         .map(OperatonBpmRunProcessEnginePluginProperty::getPluginClass)
-        .collect(Collectors.toList());
+        .toList();
     assertThat(pluginClasses)
         .contains(pluginOne, pluginTwo, pluginThree);
 
@@ -97,11 +96,12 @@ class OperatonRunProcessEnginePluginsRegistrationTest {
     CompositeProcessEnginePlugin compositePlugin =
         (CompositeProcessEnginePlugin) plugins.get(0);
 
-    // the composite plugin contains all of the registered plugins
+    // the composite plugin contains all the registered plugins
     List<ProcessEnginePlugin> registeredPlugins = compositePlugin.getPlugins();
-    List<Class> classList = registeredPlugins.stream().map(ProcessEnginePlugin::getClass)
-        .collect(Collectors.toList());
-    assertThat(classList).contains(TestFirstPlugin.class, TestSecondPlugin.class, TestDefaultValuesPlugin.class);
+    var classList = registeredPlugins.stream().map(ProcessEnginePlugin::getClass)
+        .map(Class::getName).toList();
+    assertThat(classList).contains(TestFirstPlugin.class.getName(), TestSecondPlugin.class.getName(),
+        TestDefaultValuesPlugin.class.getName());
   }
 
   @Test
@@ -113,12 +113,12 @@ class OperatonRunProcessEnginePluginsRegistrationTest {
     // then
     // the test plugins are correctly initialized
     TestFirstPlugin firstPlugin = (TestFirstPlugin) registeredPlugins.stream()
-        .filter(plugin -> plugin instanceof TestFirstPlugin).findFirst().get();
+        .filter(TestFirstPlugin.class::isInstance).findFirst().orElseThrow();
     assertThat(firstPlugin.getParameterOne()).isEqualTo("valueOne");
     assertThat(firstPlugin.getParameterTwo()).isTrue();
 
     TestSecondPlugin secondPlugin = (TestSecondPlugin) registeredPlugins.stream()
-        .filter(plugin -> plugin instanceof TestSecondPlugin).findFirst().get();
+        .filter(TestSecondPlugin.class::isInstance).findFirst().orElseThrow();
     assertThat(secondPlugin.getParameterOne()).isEqualTo(1.222);
     assertThat(secondPlugin.getParameterTwo()).isFalse();
     assertThat(secondPlugin.getParameterThree()).isEqualTo(123);

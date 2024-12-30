@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.run.test.config.cors;
 
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.run.test.AbstractRestTest;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,11 +34,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @see <a href="https://jira.camunda.com/browse/CAM-11290">CAM-11290</a>
  */
-@ActiveProfiles(profiles = {"test-cors-enabled"}, inheritProfiles = true)
+@ActiveProfiles(profiles = {"test-cors-enabled"})
 class CorsAccessControlHeadersTest extends AbstractRestTest {
-
-  @Autowired
-  ProcessEngine processEngine;
 
   @Test
   void shouldRespondWithAccessControlHeaders() {
@@ -52,7 +50,7 @@ class CorsAccessControlHeadersTest extends AbstractRestTest {
     headers.add(HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS, HttpHeaders.ORIGIN);
 
     // when
-    ResponseEntity<String> response = testRestTemplate.exchange(CONTEXT_PATH + "/task", HttpMethod.OPTIONS, new HttpEntity<>(headers), String.class);
+    var response = testRestTemplate.exchange(CONTEXT_PATH + "/task", HttpMethod.OPTIONS, new HttpEntity<>(headers), String.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

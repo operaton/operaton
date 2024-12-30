@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.run.test.config.rest;
 
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.property.OperatonBpmRunRestProperties;
 import org.operaton.bpm.run.test.AbstractRestTest;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +33,7 @@ class WadlEnabledTest extends AbstractRestTest {
     // given
 
     // when
-    ResponseEntity<String> response = testRestTemplate.getForEntity(CONTEXT_PATH + "/application.wadl", String.class);
+    var response = testRestTemplate.getForEntity(CONTEXT_PATH + "/application.wadl", String.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

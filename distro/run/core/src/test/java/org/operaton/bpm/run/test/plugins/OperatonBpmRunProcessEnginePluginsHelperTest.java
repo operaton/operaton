@@ -16,18 +16,20 @@
  */
 package org.operaton.bpm.run.test.plugins;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
 import org.operaton.bpm.run.utils.OperatonBpmRunProcessEnginePluginHelper;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class OperatonBpmRunProcessEnginePluginsHelperTest {
 
@@ -37,15 +39,14 @@ class OperatonBpmRunProcessEnginePluginsHelperTest {
     // a process engine plugins map with a class not on the classpath
     OperatonBpmRunProcessEnginePluginProperty pluginConfig = new OperatonBpmRunProcessEnginePluginProperty();
     pluginConfig.setPluginClass("org.operaton.bpm.run.test.plugins.TestThirdPlugin");
-    pluginConfig.setPluginParameters(Collections.EMPTY_MAP);
+    pluginConfig.setPluginParameters(emptyMap());
     // a process engine plugins map with a plugin not configured properly
     List<OperatonBpmRunProcessEnginePluginProperty> plugins =
         Collections.singletonList(pluginConfig);
-    List<ProcessEnginePlugin> pluginList = Collections.EMPTY_LIST;
+    List<ProcessEnginePlugin> pluginList = emptyList();
 
     // when
-    assertThatThrownBy(() -> OperatonBpmRunProcessEnginePluginHelper.registerYamlPlugins(pluginList,
-                                                                                        plugins))
+    assertThatThrownBy(() -> OperatonBpmRunProcessEnginePluginHelper.registerYamlPlugins(pluginList, plugins))
         // then
         // an exception is thrown with a user-friendly message asking to check the plugin class
         .isInstanceOf(ProcessEngineException.class)
@@ -59,15 +60,14 @@ class OperatonBpmRunProcessEnginePluginsHelperTest {
     // a process engine plugins map with a class not implementing the ProcessEnginePlugin interface
     OperatonBpmRunProcessEnginePluginProperty pluginConfig = new OperatonBpmRunProcessEnginePluginProperty();
     pluginConfig.setPluginClass("org.operaton.bpm.run.test.plugins.TestFalsePlugin");
-    pluginConfig.setPluginParameters(Collections.EMPTY_MAP);
+    pluginConfig.setPluginParameters(emptyMap());
     // a process engine plugins map with a plugin not configured properly
     List<OperatonBpmRunProcessEnginePluginProperty> plugins =
         Collections.singletonList(pluginConfig);
-    List<ProcessEnginePlugin> pluginList = Collections.EMPTY_LIST;
+    List<ProcessEnginePlugin> pluginList = emptyList();
 
     // when
-    assertThatThrownBy(() -> OperatonBpmRunProcessEnginePluginHelper.registerYamlPlugins(pluginList,
-                                                                                        plugins))
+    assertThatThrownBy(() -> OperatonBpmRunProcessEnginePluginHelper.registerYamlPlugins(pluginList, plugins))
         // then
         // an exception is thrown with a user-friendly message asking to check the plugin class
         .isInstanceOf(ProcessEngineException.class)
@@ -87,8 +87,7 @@ class OperatonBpmRunProcessEnginePluginsHelperTest {
     List<ProcessEnginePlugin> pluginList = new ArrayList<>();
 
     // when
-    assertThatThrownBy(() -> OperatonBpmRunProcessEnginePluginHelper.registerYamlPlugins(pluginList,
-                                                                                        plugins))
+    assertThatThrownBy(() -> OperatonBpmRunProcessEnginePluginHelper.registerYamlPlugins(pluginList, plugins))
         // then
         // an exception is thrown with a user-friendly message asking to check the config options
         .isInstanceOf(ProcessEngineException.class)

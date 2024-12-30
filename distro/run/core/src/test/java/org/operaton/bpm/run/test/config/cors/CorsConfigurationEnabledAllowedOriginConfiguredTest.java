@@ -16,43 +16,43 @@
  */
 package org.operaton.bpm.run.test.config.cors;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
+import org.operaton.bpm.run.test.AbstractRestTest;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
-import org.operaton.bpm.run.test.AbstractRestTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Note: To run this test via an IDE you must set the system property
  * {@code sun.net.http.allowRestrictedHeaders} to {@code true}.
  * (e.g. System.setProperty("sun.net.http.allowRestrictedHeaders", "true");)
  *
- * @see https://jira.camunda.com/browse/CAM-11290
+ * @see <a href="https://jira.camunda.com/browse/CAM-11290">CAM-11290</a>
  */
-@ActiveProfiles(profiles = {"test-cors-enabled"}, inheritProfiles = true)
+@ActiveProfiles(profiles = {"test-cors-enabled"})
 @TestPropertySource(properties = {OperatonBpmRunCorsProperty.PREFIX + ".allowed-origins=http://other.origin:8081"})
 class CorsConfigurationEnabledAllowedOriginConfiguredTest extends AbstractRestTest {
 
   @Test
   void shouldFailCrossOriginRequestFromNotAllowedOrigin() {
     // given
-    // cross origin and not allowed
+    // cross-origin and not allowed
     String origin = "http://other.origin";
 
     HttpHeaders headers = new HttpHeaders();
     headers.add("Origin", origin);
 
     // when
-    ResponseEntity<List> response = testRestTemplate.exchange(CONTEXT_PATH + "/task", HttpMethod.GET, new HttpEntity<>(headers), List.class);
+    var response = testRestTemplate.exchange(CONTEXT_PATH + "/task", HttpMethod.GET, new HttpEntity<>(headers), List.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
@@ -62,14 +62,14 @@ class CorsConfigurationEnabledAllowedOriginConfiguredTest extends AbstractRestTe
   @Test
   void shouldPassCrossOriginRequestFromAllowedOrigin() {
     // given
-    // cross origin but allowed
+    // cross-origin but allowed
     String origin = "http://other.origin:8081";
 
     HttpHeaders headers = new HttpHeaders();
     headers.add("Origin", origin);
 
     // when
-    ResponseEntity<List> response = testRestTemplate.exchange(CONTEXT_PATH + "/task", HttpMethod.GET, new HttpEntity<>(headers), List.class);
+    var response = testRestTemplate.exchange(CONTEXT_PATH + "/task", HttpMethod.GET, new HttpEntity<>(headers), List.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

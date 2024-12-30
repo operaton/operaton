@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @SpringBootTest(classes = {OperatonBpmRun.class})
-@ActiveProfiles(profiles = {"test-new-plugins", "test-plugins-config-override"}, inheritProfiles = true)
+@ActiveProfiles(profiles = {"test-new-plugins", "test-plugins-config-override"})
 class ProcessEnginePluginsConfigurationOverrideTest {
 
   @Autowired
@@ -64,7 +64,7 @@ class ProcessEnginePluginsConfigurationOverrideTest {
     // then
     // the Spin plugin properties are correctly applied
     SpringBootSpinProcessEnginePlugin overriddenSpinPlugin = (SpringBootSpinProcessEnginePlugin) registeredPlugins.stream()
-        .filter(plugin -> plugin instanceof SpringBootSpinProcessEnginePlugin).findFirst().get();
+        .filter(SpringBootSpinProcessEnginePlugin.class::isInstance).findFirst().orElseThrow();
     assertThat(overriddenSpinPlugin).isSameAs(spinPlugin);
     assertThat(overriddenSpinPlugin.isEnableXxeProcessing()).isTrue();
     assertThat(overriddenSpinPlugin.isEnableSecureXmlProcessing()).isFalse();

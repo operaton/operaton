@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.run.test.config.identity;
 
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.property.OperatonBpmRunAuthenticationProperties;
 import org.operaton.bpm.run.test.AbstractRestTest;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,7 +46,7 @@ class AuthenticationWithChangedContextPathTest extends AbstractRestTest {
     // given
 
     // when
-    ResponseEntity<List> response = testRestTemplate.exchange("/rest/task",
+    var response = testRestTemplate.exchange("/rest/task",
         HttpMethod.GET, HttpEntity.EMPTY, List.class);
 
     // then

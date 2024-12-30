@@ -34,7 +34,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = {OperatonBpmRun.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(profiles = {"test-default-task-filter"}, inheritProfiles = true)
+@ActiveProfiles(profiles = {"test-default-task-filter"})
 class DefaultTaskFilterTest extends AbstractRestTest {
 
   @Test
@@ -44,7 +44,9 @@ class DefaultTaskFilterTest extends AbstractRestTest {
     String url = "http://localhost:" + localPort + CONTEXT_PATH + "/filter";
 
     // when
-    ResponseEntity<List<FilterDto>> response = testRestTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<FilterDto>>() {});
+    ResponseEntity<List<FilterDto>> response = testRestTemplate.exchange(url, HttpMethod.GET, null,
+        new ParameterizedTypeReference<>() {
+        });
 
     // then
     List<FilterDto> filters = response.getBody();

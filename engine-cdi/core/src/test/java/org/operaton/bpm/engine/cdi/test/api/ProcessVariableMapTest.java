@@ -77,7 +77,7 @@ class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     variables.put(VARNAME_2, Variables.stringValue(anotherValue));
 
     // Legacy API
-    assertThat(businessProcess.getVariable(VARNAME_2)).isEqualTo(anotherValue);
+    assertThat(businessProcess.getVariable(VARNAME_2).toString()).isEqualTo(anotherValue);
 
     // Typed variable API
     TypedValue anotherTypedValue = businessProcess.getVariableTyped(VARNAME_2);
@@ -124,7 +124,7 @@ class ProcessVariableMapTest extends CdiProcessEngineTestCase {
     variables.put(VARNAME_2, Variables.stringValue(anotherValue));
 
     // Legacy API
-    assertThat(businessProcess.getVariableLocal(VARNAME_2)).isEqualTo(anotherValue);
+    assertThat(businessProcess.getVariableLocal(VARNAME_2).toString()).isEqualTo(anotherValue);
 
     // Typed variable API
     TypedValue anotherTypedValue = businessProcess.getVariableLocalTyped(VARNAME_2);

@@ -51,7 +51,7 @@ class StartProcessTest extends CdiProcessEngineTestCase {
 
     assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNotNull();
 
-    assertThat(businessProcess.getVariable("name")).isEqualTo("operaton");
+    assertThat(businessProcess.<String>getVariable("name")).isEqualTo("operaton");
 
     TypedValue nameTypedValue = businessProcess.getVariableTyped("name");
     assertThat(nameTypedValue).isNotNull();
@@ -59,7 +59,7 @@ class StartProcessTest extends CdiProcessEngineTestCase {
     assertThat(nameTypedValue.getType()).isEqualTo(ValueType.STRING);
     assertThat(nameTypedValue.getValue()).isEqualTo("operaton");
 
-    assertThat(businessProcess.getVariable("untypedName")).isEqualTo("untypedName");
+    assertThat(businessProcess.<String>getVariable("untypedName")).isEqualTo("untypedName");
 
     TypedValue untypedNameTypedValue = businessProcess.getVariableTyped("untypedName");
     assertThat(untypedNameTypedValue).isNotNull();
@@ -68,7 +68,7 @@ class StartProcessTest extends CdiProcessEngineTestCase {
     assertThat(untypedNameTypedValue.getValue()).isEqualTo("untypedName");
 
 
-    assertThat(businessProcess.getVariable("typedName")).isEqualTo("typedName");
+    assertThat(businessProcess.<String>getVariable("typedName")).isEqualTo("typedName");
 
     TypedValue typedNameTypedValue = businessProcess.getVariableTyped("typedName");
     assertThat(typedNameTypedValue).isNotNull();

@@ -62,7 +62,7 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
     String value = "value";
     businessProcess.setVariable("key", Variables.stringValue(value));
-    assertThat(businessProcess.getVariable("key")).isEqualTo(value);
+    assertThat(businessProcess.<String>getVariable("key")).isEqualTo(value);
 
     // Typed variable API
     TypedValue typedValue = businessProcess.getVariableTyped("key");
@@ -72,7 +72,7 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     // Local variables
     String localValue = "localValue";
     businessProcess.setVariableLocal("localKey", Variables.stringValue(localValue));
-    assertThat(businessProcess.getVariableLocal("localKey")).isEqualTo(localValue);
+    assertThat(businessProcess.<String>getVariableLocal("localKey")).isEqualTo(localValue);
 
     // Local typed variable API
     TypedValue typedLocalValue = businessProcess.getVariableLocalTyped("localKey");
@@ -347,7 +347,7 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     // Flushing and re-getting should retain the value (CAM-1806):
     businessProcess.flushVariableCache();
     assertThat(businessProcess.getCachedLocalVariableMap().isEmpty()).isTrue();
-    assertThat(businessProcess.getVariableLocal("aVariableName")).isEqualTo("aVariableValue");
+    assertThat(businessProcess.<String>getVariableLocal("aVariableName")).isEqualTo("aVariableValue");
   }
 
   @Test

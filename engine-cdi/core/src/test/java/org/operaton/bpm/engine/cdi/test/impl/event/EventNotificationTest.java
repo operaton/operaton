@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
 
 @ExtendWith(ArquillianExtension.class)
 class EventNotificationTest extends CdiProcessEngineTestCase {
@@ -132,12 +131,12 @@ class EventNotificationTest extends CdiProcessEngineTestCase {
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
-    assertThat(listenerBean.getEventsReceived().size(), is(0));
+    assertThat(listenerBean.getEventsReceived()).isEmpty();
     runtimeService.startProcessInstanceByKey("process1");
     waitForJobExecutorToProcessAllJobs(TimeUnit.SECONDS.toMillis(5L), 500L);
 
     Task task = taskService.createTaskQuery().singleResult();
-    assertThat(task.getName(), is("User Task"));
+    assertThat(task.getName()).isEqualTo("User Task");
 
     // 2: start event (start + end)
     // 1: transition to first mi activity
@@ -149,7 +148,7 @@ class EventNotificationTest extends CdiProcessEngineTestCase {
     // 1: transition to the user task
     // 2: user task (start + task create event)
     // = 19
-    assertThat(listenerBean.getEventsReceived().size(), is(19));
+    assertThat(listenerBean.getEventsReceived()).hasSize(19);
   }
 
   @Test
@@ -174,7 +173,7 @@ class EventNotificationTest extends CdiProcessEngineTestCase {
     // 2: one end event instance (start + end)
     // = 5
     Set<BusinessProcessEvent> eventsReceived = listenerBean.getEventsReceived();
-    assertThat(eventsReceived.size(), is(10));
+    assertThat(eventsReceived).hasSize(10);
   }
 
 }

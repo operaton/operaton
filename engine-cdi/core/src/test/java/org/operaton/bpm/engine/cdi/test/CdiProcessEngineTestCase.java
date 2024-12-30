@@ -16,40 +16,28 @@
  */
 package org.operaton.bpm.engine.cdi.test;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Callable;
-import java.util.logging.Logger;
-
-import javax.enterprise.inject.spi.BeanManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.util.LogUtil;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import javax.enterprise.inject.spi.BeanManager;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Callable;
+import java.util.logging.Logger;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Rule;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 /**
  * @author Daniel Meyer
@@ -74,8 +62,8 @@ public abstract class CdiProcessEngineTestCase {
       .addAsManifestResource("META-INF/beans.xml", "beans.xml");
   }
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+  @RegisterExtension
+  static ProcessEngineExtension processEngineExtension = ProcessEngineExtension.builder().build();
 
   protected BeanManager beanManager;
 
@@ -99,12 +87,12 @@ public abstract class CdiProcessEngineTestCase {
   public void setUpCdiProcessEngineTestCase() {
 
     if(BpmPlatform.getProcessEngineService().getDefaultProcessEngine() == null) {
-      RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(processEngineRule.getProcessEngine());
+      RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(processEngineExtension.getProcessEngine());
     }
 
     beanManager = ProgrammaticBeanLookup.lookup(BeanManager.class);
-    processEngine = processEngineRule.getProcessEngine();
-    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngineRule.getProcessEngine().getProcessEngineConfiguration();
+    processEngine = processEngineExtension.getProcessEngine();
+    processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngineExtension.getProcessEngine().getProcessEngineConfiguration();
     formService = processEngine.getFormService();
     historyService = processEngine.getHistoryService();
     identityService = processEngine.getIdentityService();
@@ -137,7 +125,7 @@ public abstract class CdiProcessEngineTestCase {
     externalTaskService = null;
     caseService = null;
     decisionService = null;
-    processEngineRule = null;
+    processEngineExtension = null;
   }
 
   protected void endConversationAndBeginNew(String processInstanceId) {

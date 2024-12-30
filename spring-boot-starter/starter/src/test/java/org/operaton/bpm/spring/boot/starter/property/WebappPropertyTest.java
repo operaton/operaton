@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.junit.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;

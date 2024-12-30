@@ -21,7 +21,6 @@ import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.subscription.configuration.NotInitializedExceptionConfiguration;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

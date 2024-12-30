@@ -19,7 +19,6 @@ package org.operaton.bpm.client.spring.subscription;
 import org.operaton.bpm.client.spring.SpringTopicSubscription;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.configuration.DefaultConfiguration;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;

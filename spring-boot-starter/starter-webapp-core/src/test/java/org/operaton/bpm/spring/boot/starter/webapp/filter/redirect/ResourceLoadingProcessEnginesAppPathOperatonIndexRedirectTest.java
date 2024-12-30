@@ -17,7 +17,6 @@
 package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
@@ -30,7 +29,6 @@ import java.net.HttpURLConnection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { FilterTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
     properties = {

@@ -20,7 +20,6 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.AnnotatedBean;
-import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import java.util.Optional;
 

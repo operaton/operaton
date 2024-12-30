@@ -21,7 +21,6 @@ import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.client.configuration.BackoffStrategyConfiguration;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 

@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.impl.history.HistoryLevelAudit;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;

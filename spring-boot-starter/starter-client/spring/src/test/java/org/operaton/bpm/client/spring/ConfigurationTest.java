@@ -26,7 +26,6 @@ import java.util.Map;
 import org.operaton.bpm.client.spring.configuration.FullConfiguration;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
 import org.junit.Before;
-import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

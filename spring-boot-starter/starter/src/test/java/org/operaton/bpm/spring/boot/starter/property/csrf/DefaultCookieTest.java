@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.property.csrf;
 
 import org.operaton.bpm.spring.boot.starter.property.CsrfProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -17,7 +17,6 @@
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;

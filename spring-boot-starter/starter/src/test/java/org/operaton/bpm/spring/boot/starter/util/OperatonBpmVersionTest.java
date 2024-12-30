@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.util;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.springframework.core.env.PropertiesPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;

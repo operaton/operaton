@@ -23,7 +23,6 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.junit.Before;
-import org.junit.Test;
 
 public class DefaultMetricsConfigurationTest {
   private final DefaultMetricsConfiguration defaultMetricsConfiguration = new DefaultMetricsConfiguration();

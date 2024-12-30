@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.spring.boot.starter.AbstractOperatonAutoConfigurationIT;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultJobConfiguration.JobConfiguration;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,7 +37,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
  * @see <a href=
  *      "https://github.com/operaton/operaton-bpm-spring-boot-starter/issues/209">#209</a>
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { MultipleTaskExecutorsIT.MultipleTaskExecutorsConfig.class })
 public class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT {
 

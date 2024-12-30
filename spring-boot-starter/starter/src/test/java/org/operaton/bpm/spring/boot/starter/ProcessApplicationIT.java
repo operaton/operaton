@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.operaton.bpm.spring.boot.starter.event.PostDeployEvent;
 import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
@@ -32,7 +31,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Svetlana Dorokhova.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(
   classes = { TestProcessApplication.class, ProcessApplicationIT.DummyComponent.class },
   webEnvironment = SpringBootTest.WebEnvironment.NONE

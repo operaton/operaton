@@ -18,7 +18,6 @@ package org.operaton.bpm.client.spring.boot.starter.subscription;
 
 import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
 import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
-import org.junit.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;

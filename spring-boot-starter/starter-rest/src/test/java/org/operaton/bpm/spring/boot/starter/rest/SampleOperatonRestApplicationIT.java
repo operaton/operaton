@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,7 +43,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import my.own.custom.spring.boot.project.SampleOperatonRestApplication;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = SampleOperatonRestApplication.class, webEnvironment = RANDOM_PORT)
 public class SampleOperatonRestApplicationIT {
 

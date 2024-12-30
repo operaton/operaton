@@ -20,7 +20,6 @@ import org.operaton.bpm.client.spring.SpringTopicSubscription;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.configuration.FullConfiguration;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;

@@ -27,7 +27,6 @@ import org.operaton.bpm.client.spring.boot.starter.impl.ClientAutoConfiguration;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.junit.MockitoJUnit;
@@ -51,7 +50,6 @@ import static org.mockito.Mockito.verify;
     SimpleSubscriptionConfiguration.class,
     RequestInterceptorConfiguration.class
 })
-@RunWith(SpringRunner.class)
 public class BasicAuthAndInterceptorConfigurationTest extends ParsePropertiesHelper {
 
   protected static ExternalTaskClientBuilder clientBuilder;

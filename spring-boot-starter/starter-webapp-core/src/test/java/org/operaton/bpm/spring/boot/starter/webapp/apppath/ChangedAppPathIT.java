@@ -19,7 +19,6 @@ package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,7 +36,6 @@ import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.im
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NAME;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NONCE_PLACEHOLDER;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(
     classes = { WebappTestApp.class },
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

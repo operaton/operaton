@@ -26,7 +26,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import jakarta.annotation.PostConstruct;
 import java.util.Map;
 
-@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = ParsePropertiesHelper.TestConfig.class)
 public abstract class ParsePropertiesHelper {
 

@@ -19,7 +19,6 @@ package org.operaton.bpm.client.spring.boot.starter.subscription;
 import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.FullSubscriptionConfiguration;
 import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
 import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
-import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 

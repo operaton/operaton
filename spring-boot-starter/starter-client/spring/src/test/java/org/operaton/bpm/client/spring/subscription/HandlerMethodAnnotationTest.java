@@ -20,7 +20,6 @@ import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
 import org.operaton.bpm.client.spring.subscription.configuration.HandlerMethodAnnotationConfiguration;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 

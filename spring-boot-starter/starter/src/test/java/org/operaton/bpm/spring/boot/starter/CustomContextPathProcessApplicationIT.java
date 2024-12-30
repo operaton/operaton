@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNotNull;
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
 import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +29,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(
   classes = { TestProcessApplication.class },
   webEnvironment = SpringBootTest.WebEnvironment.NONE

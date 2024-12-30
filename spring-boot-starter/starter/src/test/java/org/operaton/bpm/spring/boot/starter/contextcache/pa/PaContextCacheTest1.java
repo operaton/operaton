@@ -34,7 +34,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.in
  *
  * @author Nikola Koevski
  */
-@RunWith(SpringRunner.class)
 @ActiveProfiles("contextcaching")
 @SpringBootTest(
   classes = { TestProcessApplication.class },

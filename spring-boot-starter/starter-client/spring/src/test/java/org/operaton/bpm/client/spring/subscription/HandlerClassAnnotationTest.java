@@ -19,7 +19,6 @@ package org.operaton.bpm.client.spring.subscription;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
 import org.operaton.bpm.client.spring.subscription.configuration.HandlerClassAnnotationConfiguration;
-import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.mockito.Mockito.times;

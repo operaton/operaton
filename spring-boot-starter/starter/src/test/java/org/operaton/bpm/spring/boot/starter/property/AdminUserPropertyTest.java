@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.property;
 
 import org.operaton.bpm.engine.identity.User;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.assertj.core.api.Assertions.assertThat;

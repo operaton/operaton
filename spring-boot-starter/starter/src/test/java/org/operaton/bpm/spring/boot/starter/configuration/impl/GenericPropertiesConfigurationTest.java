@@ -22,7 +22,6 @@ import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterException;
 import org.junit.Before;
-import org.junit.Test;
 
 public class GenericPropertiesConfigurationTest {
 

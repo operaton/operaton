@@ -17,7 +17,6 @@
 package org.operaton.bpm.client.spring.boot.starter.client;
 
 import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
-import org.junit.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;

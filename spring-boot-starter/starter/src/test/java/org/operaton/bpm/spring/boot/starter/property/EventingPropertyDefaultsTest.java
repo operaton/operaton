@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EventingPropertyDefaultsTest extends ParsePropertiesHelper {

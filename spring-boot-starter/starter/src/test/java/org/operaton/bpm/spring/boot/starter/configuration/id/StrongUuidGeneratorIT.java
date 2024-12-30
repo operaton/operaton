@@ -22,7 +22,6 @@ import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,7 +32,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * StrongUuidGenerator is the default one.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { TestApplication.class })
 public class StrongUuidGeneratorIT {
 

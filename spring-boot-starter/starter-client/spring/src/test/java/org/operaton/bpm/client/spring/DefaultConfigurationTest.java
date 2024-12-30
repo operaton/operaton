@@ -18,7 +18,6 @@ package org.operaton.bpm.client.spring;
 
 import org.operaton.bpm.client.spring.configuration.DefaultConfiguration;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;

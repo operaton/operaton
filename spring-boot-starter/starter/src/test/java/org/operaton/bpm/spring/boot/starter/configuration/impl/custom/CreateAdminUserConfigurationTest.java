@@ -27,7 +27,6 @@ import org.operaton.bpm.spring.boot.starter.test.helper.StandaloneInMemoryTestCo
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;

@@ -17,7 +17,6 @@
 package org.operaton.bpm.spring.boot.starter.disabled;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,7 +28,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(
   classes = {OperatonAutoConfigurationDisabledIT.NoOperatonApplication.class},
   webEnvironment = WebEnvironment.NONE,

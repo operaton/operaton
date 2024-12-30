@@ -18,7 +18,6 @@ package org.operaton.bpm.client.spring.boot.starter.it;
 
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.SpringTopicSubscription;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class ClientAutoConfigurationIT {
 

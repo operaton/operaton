@@ -21,7 +21,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTest;
 import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -38,7 +37,6 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.in
  *
  * @author Nikola Koevski
  */
-@RunWith(SpringRunner.class)
 @ActiveProfiles("contextcaching")
 @SpringBootTest(
   classes = { TestProcessApplication.class },

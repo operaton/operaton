@@ -22,7 +22,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.env.Environment;
 

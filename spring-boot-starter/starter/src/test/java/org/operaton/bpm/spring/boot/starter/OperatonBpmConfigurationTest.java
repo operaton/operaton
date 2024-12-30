@@ -25,7 +25,6 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-import org.junit.Test;
 
 public class OperatonBpmConfigurationTest {
 

@@ -121,6 +121,12 @@
       <groupId>org.operaton.commons</groupId>
       <artifactId>operaton-commons-testing</artifactId>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.uuid</groupId>

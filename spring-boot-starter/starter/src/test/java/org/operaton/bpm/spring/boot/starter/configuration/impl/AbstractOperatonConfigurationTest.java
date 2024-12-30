@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
 
 import static java.util.Arrays.asList;

@@ -21,12 +21,12 @@ import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil;
-import org.junit.runner.RunWith;
+import static org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration.PREFIXED;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration.PREFIXED;
 
 @SpringBootTest(
   classes = {TestApplication.class},

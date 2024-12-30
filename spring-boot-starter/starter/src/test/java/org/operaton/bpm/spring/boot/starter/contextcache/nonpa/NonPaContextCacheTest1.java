@@ -18,13 +18,11 @@ package org.operaton.bpm.spring.boot.starter.contextcache.nonpa;
 
 import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTest;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
+import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
+
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 
 /**
  * Tests {@link NonPaContextCacheTest1}, {@link NonPaContextCacheTest2}, {@link NonPaContextCacheTest3},

@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.nonpa.service;
 
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
 
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

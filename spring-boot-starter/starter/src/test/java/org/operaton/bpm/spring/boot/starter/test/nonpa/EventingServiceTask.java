@@ -18,6 +18,7 @@ package org.operaton.bpm.spring.boot.starter.test.nonpa;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
 import org.springframework.stereotype.Component;
 
 @Component("eventingServiceTask")

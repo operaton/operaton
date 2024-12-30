@@ -16,27 +16,24 @@
  */
 package org.operaton.bpm.spring.boot.starter.jdbc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Collections;
-
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.HistoryLevelAudit;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
+import java.util.Collections;
+
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class HistoryLevelDeterminatorJdbcTemplateImplTest {
 
   @Mock

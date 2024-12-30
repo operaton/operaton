@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.springframework.test.context.TestPropertySource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @TestPropertySource(properties = {"operaton.bpm.metrics.enabled=false", "operaton.bpm.metrics.db-reporter-activate=false"})
 public class MetricsPropertiesTest extends ParsePropertiesHelper {

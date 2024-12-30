@@ -20,8 +20,10 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.AnnotatedBean;
-import org.springframework.context.ApplicationContext;
+
 import java.util.Optional;
+
+import org.springframework.context.ApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -34,11 +25,19 @@ import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.connect.plugin.impl.ConnectProcessEnginePlugin;
 import org.operaton.spin.plugin.impl.SpinObjectValueSerializer;
 import org.operaton.spin.plugin.impl.SpinProcessEnginePlugin;
-import org.junit.runner.RunWith;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 
 @SpringBootTest(classes = { TestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class OperatonBpmAutoConfigurationIT {

@@ -20,16 +20,17 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskService;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskService;
 
 /**
  * @author Nikola Koevski

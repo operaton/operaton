@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.util.ReflectionTestUtils.invokeMethod;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
-
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 import org.junit.Before;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 public class DefaultMetricsConfigurationTest {
   private final DefaultMetricsConfiguration defaultMetricsConfiguration = new DefaultMetricsConfiguration();

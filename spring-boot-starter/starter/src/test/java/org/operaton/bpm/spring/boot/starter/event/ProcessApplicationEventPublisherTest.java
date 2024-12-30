@@ -16,21 +16,16 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextClosedEvent;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 public class ProcessApplicationEventPublisherTest {
 
   @InjectMocks

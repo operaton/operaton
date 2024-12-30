@@ -16,24 +16,23 @@
  */
 package org.operaton.bpm.spring.boot.starter.actuator;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.spring.boot.starter.actuator.JobExecutorHealthIndicator.Details;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.operaton.bpm.spring.boot.starter.actuator.JobExecutorHealthIndicator.Details;
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class JobExecutorHealthIndicatorTest {
 
   private static final String LOCK_OWNER = "lockowner";

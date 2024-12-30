@@ -16,17 +16,16 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.telemetry.dto.ApplicationServerImpl;
 import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
-import org.junit.runner.RunWith;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
   classes = {TestProcessApplication.class},

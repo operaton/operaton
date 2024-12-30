@@ -16,17 +16,16 @@
  */
 package org.operaton.bpm.spring.boot.starter.actuator;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
 import org.operaton.bpm.engine.ProcessEngine;
-import org.junit.runner.RunWith;
+
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class ProcessEngineHealthIndicatorTest {
 
   private static final String PROCESS_ENGINE_NAME = "process engine name";

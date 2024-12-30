@@ -16,16 +16,15 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import org.junit.Before;
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Before;
+import org.springframework.test.util.ReflectionTestUtils;
 
 public class DefaultProcessEngineConfigurationTest {
 

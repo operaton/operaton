@@ -18,6 +18,7 @@ package org.operaton.bpm.spring.boot.starter.property;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 

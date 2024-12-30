@@ -17,15 +17,15 @@
 package org.operaton.bpm.spring.boot.starter.util;
 
 import org.operaton.bpm.engine.ProcessEngine;
+import static org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion.key;
+
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.springframework.core.env.PropertiesPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion.key;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.junit.Ignore;
 
 public class OperatonBpmVersionTest {
 

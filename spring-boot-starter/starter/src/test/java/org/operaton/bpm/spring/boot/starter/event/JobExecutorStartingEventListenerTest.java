@@ -16,18 +16,15 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.junit.runner.RunWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 public class JobExecutorStartingEventListenerTest {
 
   @Mock

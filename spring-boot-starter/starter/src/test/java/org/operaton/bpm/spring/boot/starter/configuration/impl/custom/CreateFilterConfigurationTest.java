@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.Filter;
@@ -34,11 +25,18 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.helper.StandaloneInMemoryTestConfiguration;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
+
+import java.util.List;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class CreateFilterConfigurationTest {
 

@@ -17,6 +17,7 @@
 package org.operaton.bpm.spring.boot.starter.runlistener;
 
 import org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.mockito.ArgumentCaptor;

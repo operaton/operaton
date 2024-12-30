@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.mock;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import javax.sql.DataSource;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.transaction.PlatformTransactionManager;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.mock;
+
+@ExtendWith(MockitoExtension.class)
 public class DefaultDatasourceConfigurationTest {
 
   @Mock

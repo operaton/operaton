@@ -16,19 +16,17 @@
  */
 package org.operaton.bpm.spring.boot.starter.util.it;
 
-
 import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation;
-import org.junit.runner.RunWith;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;

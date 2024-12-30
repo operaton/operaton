@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
-
-import java.util.Arrays;
-
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.NotifyAcquisitionRejectedJobsHandler;
@@ -31,13 +23,18 @@ import org.operaton.bpm.engine.impl.jobexecutor.RejectedJobsHandler;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
+
+import java.util.List;
+
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @SpringBootTest(
   classes = {TestApplication.class},
@@ -69,7 +66,7 @@ public class DefaultJobConfigurationTest {
   public void addJobHandler() {
     JobHandler<?> jobHandler = mock(JobHandler.class);
     when(jobHandler.getType()).thenReturn("MockHandler");
-    setField(jobConfiguration, "customJobHandlers", Arrays.<JobHandler<?>> asList(jobHandler));
+    setField(jobConfiguration, "customJobHandlers", List.<JobHandler<?>>of(jobHandler));
 
     assertThat(processEngineConfiguration.getCustomJobHandlers()).isNull();
     jobConfiguration.registerCustomJobHandlers(processEngineConfiguration);

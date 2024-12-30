@@ -17,6 +17,7 @@
 package org.operaton.bpm.spring.boot.starter.test.pa;
 
 import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**

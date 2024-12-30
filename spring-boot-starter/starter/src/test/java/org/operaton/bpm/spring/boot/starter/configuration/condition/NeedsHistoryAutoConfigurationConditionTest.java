@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.condition;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.env.Environment;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class NeedsHistoryAutoConfigurationConditionTest {
 

@@ -16,23 +16,22 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 @SpringBootTest(classes = { TestApplication.class },
   webEnvironment = WebEnvironment.NONE,

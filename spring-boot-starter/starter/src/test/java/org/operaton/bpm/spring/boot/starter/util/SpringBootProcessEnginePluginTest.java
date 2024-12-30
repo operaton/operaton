@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.spring.boot.starter.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+
 import org.junit.Rule;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SpringBootProcessEnginePluginTest {
 

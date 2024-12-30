@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
@@ -26,10 +23,13 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.helper.StandaloneInMemoryTestConfiguration;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Rule;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import org.junit.Rule;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.junit.Assert.assertEquals;
-
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterException;
+
 import org.junit.Before;
+
+import static org.junit.Assert.assertEquals;
 
 public class GenericPropertiesConfigurationTest {
 

@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.junit.Assert.assertNotNull;
-
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-import org.junit.runner.RunWith;
+
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertNotNull;
 
 @SpringBootTest(classes = TestApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class OperatonJobExecutionAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {

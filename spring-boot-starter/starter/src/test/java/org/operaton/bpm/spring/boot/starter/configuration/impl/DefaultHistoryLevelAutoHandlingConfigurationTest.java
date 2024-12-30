@@ -16,20 +16,17 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminator;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 public class DefaultHistoryLevelAutoHandlingConfigurationTest {
 
   @Mock

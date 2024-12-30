@@ -51,7 +51,7 @@ public class AbstractSubProcessBuilder<B extends AbstractSubProcessBuilder<B>> e
    *
    * @return the builder object
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public B operatonAsync() {
     element.setOperatonAsyncBefore(true);
     return myself;
@@ -65,7 +65,7 @@ public class AbstractSubProcessBuilder<B extends AbstractSubProcessBuilder<B>> e
    * @param isOperatonAsync  the async state of the task
    * @return the builder object
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public B operatonAsync(boolean isOperatonAsync) {
     element.setOperatonAsyncBefore(isOperatonAsync);
     return myself;

@@ -50,7 +50,7 @@ public class AbstractCallActivityBuilder<B extends AbstractCallActivityBuilder<B
    *
    * @return the builder object
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public B operatonAsync() {
     element.setOperatonAsyncBefore(true);
     return myself;
@@ -64,7 +64,7 @@ public class AbstractCallActivityBuilder<B extends AbstractCallActivityBuilder<B
    * @param isOperatonAsync  the async state of the task
    * @return the builder object
    */
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public B operatonAsync(boolean isOperatonAsync) {
     element.setOperatonAsyncBefore(isOperatonAsync);
     return myself;

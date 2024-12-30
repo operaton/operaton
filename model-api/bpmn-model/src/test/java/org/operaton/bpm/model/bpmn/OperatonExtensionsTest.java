@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.model.bpmn;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -23,8 +30,6 @@ import org.operaton.bpm.model.bpmn.instance.Error;
 import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.instance.operaton.*;
-
-import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
@@ -65,7 +70,7 @@ public class OperatonExtensionsTest {
     setUp();
   }
 
-  public void setUp(){
+  public void setUp() {
     modelInstance = originalModelInstance.clone();
     process = modelInstance.getModelElementById(PROCESS_ID);
     startEvent = modelInstance.getModelElementById(START_EVENT_ID);
@@ -95,17 +100,17 @@ public class OperatonExtensionsTest {
   @ParameterizedTest(name = "Namespace: {0}")
   void testAsync(String namespace, BpmnModelInstance modelInstance) {
     initOperatonExtensionsTest(namespace, modelInstance);
-    assertThat(startEvent.isOperatonAsync()).isFalse();
-    assertThat(userTask.isOperatonAsync()).isTrue();
-    assertThat(parallelGateway.isOperatonAsync()).isTrue();
+    assertThat(startEvent.isOperatonAsyncBefore()).isTrue();
+    assertThat(userTask.isOperatonAsyncBefore()).isTrue();
+    assertThat(parallelGateway.isOperatonAsyncBefore()).isTrue();
 
-    startEvent.setOperatonAsync(true);
-    userTask.setOperatonAsync(false);
-    parallelGateway.setOperatonAsync(false);
+    startEvent.setOperatonAsyncBefore(false);
+    userTask.setOperatonAsyncBefore(false);
+    parallelGateway.setOperatonAsyncBefore(false);
 
-    assertThat(startEvent.isOperatonAsync()).isTrue();
-    assertThat(userTask.isOperatonAsync()).isFalse();
-    assertThat(parallelGateway.isOperatonAsync()).isFalse();
+    assertThat(startEvent.isOperatonAsyncBefore()).isFalse();
+    assertThat(userTask.isOperatonAsyncBefore()).isFalse();
+    assertThat(parallelGateway.isOperatonAsyncBefore()).isFalse();
   }
 
   @MethodSource("parameters")
@@ -325,7 +330,6 @@ public class OperatonExtensionsTest {
     businessRuleTask.setOperatonMapDecisionResult(TEST_STRING_API);
     assertThat(businessRuleTask.getOperatonMapDecisionResult()).isEqualTo(TEST_STRING_API);
   }
-
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
@@ -861,7 +865,8 @@ public class OperatonExtensionsTest {
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonModelerProperties(String namespace, BpmnModelInstance modelInstance) {
     initOperatonExtensionsTest(namespace, modelInstance);
-    OperatonProperties operatonProperties = endEvent.getExtensionElements().getElementsQuery().filterByType(OperatonProperties.class).singleResult();
+    OperatonProperties operatonProperties = endEvent.getExtensionElements().getElementsQuery()
+        .filterByType(OperatonProperties.class).singleResult();
     assertThat(operatonProperties).isNotNull();
     assertThat(operatonProperties.getOperatonProperties()).hasSize(2);
 
@@ -937,7 +942,8 @@ public class OperatonExtensionsTest {
   @ParameterizedTest(name = "Namespace: {0}")
   void testOperatonConnector(String namespace, BpmnModelInstance modelInstance) {
     initOperatonExtensionsTest(namespace, modelInstance);
-    OperatonConnector operatonConnector = serviceTask.getExtensionElements().getElementsQuery().filterByType(OperatonConnector.class).singleResult();
+    OperatonConnector operatonConnector = serviceTask.getExtensionElements().getElementsQuery()
+        .filterByType(OperatonConnector.class).singleResult();
     assertThat(operatonConnector).isNotNull();
 
     OperatonConnectorId operatonConnectorId = operatonConnector.getOperatonConnectorId();
@@ -1114,8 +1120,7 @@ public class OperatonExtensionsTest {
     for (OperatonEntry entry : map.getOperatonEntries()) {
       if (entry.getOperatonKey().equals("foo")) {
         assertThat(entry.getTextContent()).isEqualTo("bar");
-      }
-      else {
+      } else {
         assertThat(entry.getOperatonKey()).isEqualTo("hello");
         assertThat(entry.getTextContent()).isEqualTo("world");
       }

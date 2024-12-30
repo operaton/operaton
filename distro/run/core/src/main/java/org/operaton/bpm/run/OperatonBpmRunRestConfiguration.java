@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.run;
 
-import jakarta.servlet.Filter;
-import org.apache.catalina.filters.CorsFilter;
 import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
 import org.operaton.bpm.run.property.OperatonBpmRunAuthenticationProperties;
 import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
@@ -25,6 +23,12 @@ import org.operaton.bpm.run.property.OperatonBpmRunProperties;
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
 import org.operaton.bpm.spring.boot.starter.rest.OperatonBpmRestInitializer;
 import org.operaton.bpm.spring.boot.starter.rest.OperatonJerseyResourceConfig;
+
+import java.util.Collections;
+
+import jakarta.servlet.Filter;
+
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -34,8 +38,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Collections;
 
 @EnableConfigurationProperties(OperatonBpmRunProperties.class)
 @Configuration
@@ -59,8 +61,8 @@ public class OperatonBpmRunRestConfiguration {
    * preflight requests must not contain authentication. The CORS filter will
    * not invoke the next filter in the chain for preflight requests.
    */
-  private static int CORS_FILTER_PRECEDENCE = 0;
-  private static int AUTH_FILTER_PRECEDENCE = 1;
+  private static final int CORS_FILTER_PRECEDENCE = 0;
+  private static final int AUTH_FILTER_PRECEDENCE = 1;
 
   @Bean
   @ConditionalOnProperty(name = "enabled", havingValue = "true", prefix = OperatonBpmRunAuthenticationProperties.PREFIX)

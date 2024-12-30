@@ -16,25 +16,23 @@
  */
 package org.operaton.bpm.run.test.config.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.impl.plugin.AdministratorAuthorizationPlugin;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.property.OperatonBpmRunAdministratorAuthorizationProperties;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { OperatonBpmRun.class })
-@ActiveProfiles(profiles = { "test-auth-enabled" , "test-admin-auth-enabled" })
-public class AdminAuthorizationConfigurationTest {
+@SpringBootTest(classes = {OperatonBpmRun.class})
+@ActiveProfiles(profiles = {"test-auth-enabled", "test-admin-auth-enabled"})
+class AdminAuthorizationConfigurationTest {
 
   @Autowired
   protected AdministratorAuthorizationPlugin authorizationPlugin;
@@ -43,7 +41,7 @@ public class AdminAuthorizationConfigurationTest {
   protected OperatonBpmRunProperties properties;
 
   @Test
-  public void shouldPickUpConfiguration() {
+  void shouldPickUpConfiguration() {
     // given
     OperatonBpmRunAdministratorAuthorizationProperties adminProps = properties.getAdminAuth();
 

@@ -16,23 +16,26 @@
  */
 package org.operaton.bpm.run.qa.plugin;
 
-import static io.restassured.RestAssured.when;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
-import io.restassured.response.Response;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ws.rs.core.Response.Status;
-import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.After;
-import org.junit.Test;
 
-public class CockpitPluginAutoDeploymentIT {
+import javax.ws.rs.core.Response.Status;
+
+import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+class CockpitPluginAutoDeploymentIT {
 
   static final String EXAMPLE_PLUGIN_HOME = "example.plugin.home";
   static final String PLUGIN_ENDPOINT = "/operaton/api/cockpit/plugin/test-cockpit-plugin/test-string";
@@ -42,13 +45,13 @@ public class CockpitPluginAutoDeploymentIT {
 
   protected List<String> deployedPlugins = new ArrayList<>();
 
-  @After
-  public void teardown() {
+  @AfterEach
+  void teardown() {
     stopApp();
     undeployPlugins();
   }
 
-  public void stopApp() {
+  void stopApp() {
     try {
       if (container != null) {
         container.stop();
@@ -60,7 +63,7 @@ public class CockpitPluginAutoDeploymentIT {
     }
   }
 
-  public void runStartScript() {
+  void runStartScript() {
     container = new SpringBootManagedContainer();
     container.replaceConfigurationYml(SpringBootManagedContainer.APPLICATION_YML_PATH,
         SpringBootManagedContainer.class.getClassLoader().getResourceAsStream("base-test-application.yml"));
@@ -72,7 +75,7 @@ public class CockpitPluginAutoDeploymentIT {
   }
 
   @Test
-  public void shouldAutoDeployCockpitPlugin() throws IOException {
+  void shouldAutoDeployCockpitPlugin() throws IOException {
     // given
     deployPlugin("operaton-bpm-run-example-plugin.jar");
     runStartScript();
@@ -88,7 +91,7 @@ public class CockpitPluginAutoDeploymentIT {
     assertThat(responseBody).isEqualTo("test string");
   }
 
-  protected void deployPlugin(String jarName) throws IOException {
+  void deployPlugin(String jarName) throws IOException {
     Path runUserlibDir = Paths.get(baseDirectory, SpringBootManagedContainer.USERLIB_PATH);
     String pluginHome = System.getProperty(EXAMPLE_PLUGIN_HOME);
 
@@ -103,7 +106,7 @@ public class CockpitPluginAutoDeploymentIT {
     deployedPlugins.add(copy.toString());
   }
 
-  protected void undeployPlugins() {
+  void undeployPlugins() {
     for (String pluginPath : deployedPlugins) {
       try {
         Files.delete(Paths.get(pluginPath));

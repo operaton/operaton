@@ -16,33 +16,30 @@
  */
 package org.operaton.bpm.run.test.plugins;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { OperatonBpmRun.class })
-@ActiveProfiles(profiles = { "test-new-plugins" }, inheritProfiles = true)
-public class OperatonRunProcessEnginePluginsRegistrationTest {
+@SpringBootTest(classes = {OperatonBpmRun.class})
+@ActiveProfiles(profiles = {"test-new-plugins"})
+class OperatonRunProcessEnginePluginsRegistrationTest {
 
   @Autowired
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -52,13 +49,13 @@ public class OperatonRunProcessEnginePluginsRegistrationTest {
 
   protected List<ProcessEnginePlugin> plugins;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.plugins = processEngineConfiguration.getProcessEnginePlugins();
   }
 
   @Test
-  public void shouldPickUpAllPluginConfigurations() {
+  void shouldPickUpAllPluginConfigurations() {
     // given a OperatonBpmRunProperties instance
     String pluginOne = "org.operaton.bpm.run.test.plugins.TestFirstPlugin";
     String pluginTwo = "org.operaton.bpm.run.test.plugins.TestSecondPlugin";
@@ -71,7 +68,7 @@ public class OperatonRunProcessEnginePluginsRegistrationTest {
     assertThat(pluginConfigs).hasSize(3);
     List<String> pluginClasses = pluginConfigs.stream()
         .map(OperatonBpmRunProcessEnginePluginProperty::getPluginClass)
-        .collect(Collectors.toList());
+        .toList();
     assertThat(pluginClasses)
         .contains(pluginOne, pluginTwo, pluginThree);
 
@@ -90,7 +87,7 @@ public class OperatonRunProcessEnginePluginsRegistrationTest {
   }
 
   @Test
-  public void shouldRegisterYamlDefinedPluginsWithProcessEngine() {
+  void shouldRegisterYamlDefinedPluginsWithProcessEngine() {
     // given a yaml config file defining process engine plugins
 
     // then
@@ -99,15 +96,16 @@ public class OperatonRunProcessEnginePluginsRegistrationTest {
     CompositeProcessEnginePlugin compositePlugin =
         (CompositeProcessEnginePlugin) plugins.get(0);
 
-    // the composite plugin contains all of the registered plugins
+    // the composite plugin contains all the registered plugins
     List<ProcessEnginePlugin> registeredPlugins = compositePlugin.getPlugins();
-    List<Class> classList = registeredPlugins.stream().map(ProcessEnginePlugin::getClass)
-        .collect(Collectors.toList());
-    assertThat(classList).contains(TestFirstPlugin.class, TestSecondPlugin.class, TestDefaultValuesPlugin.class);
+    var classList = registeredPlugins.stream().map(ProcessEnginePlugin::getClass)
+        .map(Class::getName).toList();
+    assertThat(classList).contains(TestFirstPlugin.class.getName(), TestSecondPlugin.class.getName(),
+        TestDefaultValuesPlugin.class.getName());
   }
 
   @Test
-  public void shouldInitializeRegisteredPlugins() {
+  void shouldInitializeRegisteredPlugins() {
     // given
     List<ProcessEnginePlugin> registeredPlugins =
         ((CompositeProcessEnginePlugin) plugins.get(0)).getPlugins();
@@ -115,12 +113,12 @@ public class OperatonRunProcessEnginePluginsRegistrationTest {
     // then
     // the test plugins are correctly initialized
     TestFirstPlugin firstPlugin = (TestFirstPlugin) registeredPlugins.stream()
-        .filter(plugin -> plugin instanceof TestFirstPlugin).findFirst().get();
+        .filter(TestFirstPlugin.class::isInstance).findFirst().orElseThrow();
     assertThat(firstPlugin.getParameterOne()).isEqualTo("valueOne");
     assertThat(firstPlugin.getParameterTwo()).isTrue();
 
     TestSecondPlugin secondPlugin = (TestSecondPlugin) registeredPlugins.stream()
-        .filter(plugin -> plugin instanceof TestSecondPlugin).findFirst().get();
+        .filter(TestSecondPlugin.class::isInstance).findFirst().orElseThrow();
     assertThat(secondPlugin.getParameterOne()).isEqualTo(1.222);
     assertThat(secondPlugin.getParameterTwo()).isFalse();
     assertThat(secondPlugin.getParameterThree()).isEqualTo(123);

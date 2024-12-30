@@ -37,8 +37,6 @@
       <artifactId>operaton-engine</artifactId>
       <scope>provided</scope>
     </dependency>
-
-    <!-- test dependencies -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>

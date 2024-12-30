@@ -18,20 +18,20 @@ package org.operaton.bpm.run.test.config.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.property.OperatonBpmRunRestProperties;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@TestPropertySource(properties = { OperatonBpmRunRestProperties.PREFIX + ".disable-wadl=true" })
-public class WadlDisabledTest extends AbstractRestTest {
+@TestPropertySource(properties = {OperatonBpmRunRestProperties.PREFIX + ".disable-wadl=true"})
+class WadlDisabledTest extends AbstractRestTest {
 
   @Test
-  public void shouldReturn404() {
+  void shouldReturn404() {
     // given
 
     // when

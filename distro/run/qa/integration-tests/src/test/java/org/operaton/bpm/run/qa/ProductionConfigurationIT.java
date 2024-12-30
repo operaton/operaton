@@ -19,20 +19,19 @@ package org.operaton.bpm.run.qa;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.is;
 import javax.ws.rs.core.Response.Status;
-
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.AfterClass;
-import org.junit.Test;
-import org.junit.BeforeClass;
 
 import io.restassured.response.Response;
 
-public class ProductionConfigurationIT {
+class ProductionConfigurationIT {
 
   static SpringBootManagedContainer container;
 
-  @AfterClass
-  public static void stopApp() {
+  @AfterAll
+  static void stopApp() {
     try {
       if (container != null) {
         container.stop();
@@ -44,8 +43,8 @@ public class ProductionConfigurationIT {
     }
   }
 
-  @BeforeClass
-  public static void runStartScript() {
+  @BeforeAll
+  static void runStartScript() {
     container = new SpringBootManagedContainer("--production");
 
     container.createConfigurationYml("configuration/production.yml",
@@ -59,7 +58,7 @@ public class ProductionConfigurationIT {
   }
 
   @Test
-  public void shouldStartWithProductionConfiguration() {
+  void shouldStartWithProductionConfiguration() {
     // when
     Response engineResponse = when().get(container.getBaseUrl() + "/engine-rest/engine");
 
@@ -71,7 +70,7 @@ public class ProductionConfigurationIT {
   }
 
   @Test
-  public void shouldNotProvideExampleInProductionConfiguration() {
+  void shouldNotProvideExampleInProductionConfiguration() {
     // when
     Response response = when().get(container.getBaseUrl() + "/engine-rest/engine/production/process-definition");
 

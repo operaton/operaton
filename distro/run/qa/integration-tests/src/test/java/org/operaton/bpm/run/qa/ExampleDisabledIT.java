@@ -18,19 +18,19 @@ package org.operaton.bpm.run.qa;
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.is;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.Before;
 
 import io.restassured.response.Response;
 
-public class ExampleDisabledIT {
+class ExampleDisabledIT {
 
   static SpringBootManagedContainer container;
 
-  @After
-  public void stopApp() {
+  @AfterEach
+  void stopApp() {
     try {
       if (container != null) {
         container.stop();
@@ -42,8 +42,8 @@ public class ExampleDisabledIT {
     }
   }
 
-  @Before
-  public void runStartScript() {
+  @BeforeEach
+  void runStartScript() {
     container = new SpringBootManagedContainer();
 
     container.replaceConfigurationYml(SpringBootManagedContainer.APPLICATION_YML_PATH,
@@ -57,7 +57,7 @@ public class ExampleDisabledIT {
   }
 
   @Test
-  public void shouldNotProvideExample() {
+  void shouldNotProvideExample() {
     // when
     Response response = when().get(container.getBaseUrl() + "/engine-rest/process-definition");
 

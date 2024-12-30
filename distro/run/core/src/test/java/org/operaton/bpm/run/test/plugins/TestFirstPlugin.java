@@ -20,6 +20,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 
+@SuppressWarnings("unused")
 public class TestFirstPlugin implements ProcessEnginePlugin {
 
   protected String parameterOne;
@@ -27,17 +28,17 @@ public class TestFirstPlugin implements ProcessEnginePlugin {
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
-
+    // just for test purposes
   }
 
   @Override
   public void postInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
-
+    // just for test purposes
   }
 
   @Override
   public void postProcessEngineBuild(ProcessEngine processEngine) {
-
+    // just for test purposes
   }
 
   public String getParameterOne() {

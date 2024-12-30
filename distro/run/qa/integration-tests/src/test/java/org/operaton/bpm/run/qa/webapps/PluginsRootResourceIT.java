@@ -16,50 +16,42 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import com.sun.jersey.api.client.ClientResponse;
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.AfterParam;
-import org.junit.runners.Parameterized.BeforeParam;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
+
+import com.sun.jersey.api.client.ClientResponse;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * NOTE:
  * copied from
  * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/PluginsRootResourceIT.java">platform</a>
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
- * and changed  <code>appBasePath</code> to <code>APP_BASE_PATH</code>, might be removed with https://jira.camunda.com/browse/CAM-11379
+ * and changed  <code>appBasePath</code> to <code>APP_BASE_PATH</code>, might be removed with
+ * <a href="https://jira.camunda.com/browse/CAM-11379">CAM-11379</a>
  */
-@RunWith(Parameterized.class)
-public class PluginsRootResourceIT extends AbstractWebIT {
+class PluginsRootResourceIT extends AbstractWebIT {
+  String assetName;
+  boolean assetAllowed;
 
-  @Parameter(0)
-  public String assetName;
-
-  @Parameter(1)
-  public boolean assetAllowed;
-
-  @Before
-  public void createClient() throws Exception {
+  @BeforeEach
+  void createClient() throws Exception {
     createClient(getWebappCtxPath());
   }
 
-  private static SpringBootManagedContainer container;
+  private SpringBootManagedContainer container;
 
-  @BeforeParam
-  public static void runStartScript(String assetName, boolean assetAllowed) {
+  void startContainer() {
     container = new SpringBootManagedContainer("--webapps");
     try {
       container.start();
@@ -68,8 +60,8 @@ public class PluginsRootResourceIT extends AbstractWebIT {
     }
   }
 
-  @AfterParam
-  public static void stopApp() {
+  @AfterEach
+  void stopContainer() {
     try {
       if (container != null) {
         container.stop();
@@ -81,8 +73,7 @@ public class PluginsRootResourceIT extends AbstractWebIT {
     }
   }
 
-  @Parameters(name = "Test instance: {index}. Asset: {0}, Allowed: {1}")
-  public static Collection<Object[]> getAssets() {
+  static Collection<Object[]> getAssets() {
     return Arrays.asList(new Object[][]{
         {"app/plugin.js", true},
         {"app/plugin.css", true},
@@ -92,8 +83,11 @@ public class PluginsRootResourceIT extends AbstractWebIT {
     });
   }
 
-  @Test
-  public void shouldGetAssetIfAllowed() {
+  @MethodSource("getAssets")
+  @ParameterizedTest(name = "Test instance: {index}. Asset: {0}, Allowed: {1}")
+  void shouldGetAssetIfAllowed(String assetName, boolean assetAllowed) {
+    startContainer();
+    initPluginsRootResourceIT(assetName, assetAllowed);
     // when
     ClientResponse response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
 
@@ -110,14 +104,19 @@ public class PluginsRootResourceIT extends AbstractWebIT {
 
   protected void assertResponse(String asset, ClientResponse response) {
     if (assetAllowed) {
-      assertEquals(Status.OK.getStatusCode(), response.getStatus());
+      assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
     } else {
-      assertEquals(Status.FORBIDDEN.getStatusCode(), response.getStatus());
-      assertTrue(response.getType().toString().startsWith(MediaType.APPLICATION_JSON));
+      assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
+      assertThat(response.getType().toString()).startsWith(MediaType.APPLICATION_JSON);
       String responseEntity = response.getEntity(String.class);
-      assertTrue(responseEntity.contains("\"type\":\"RestException\""));
-      assertTrue(responseEntity.contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\""));
+      assertThat(responseEntity).contains("\"type\":\"RestException\"");
+      assertThat(responseEntity).contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
     }
+  }
+
+  void initPluginsRootResourceIT(String assetName, boolean assetAllowed) {
+    this.assetName = assetName;
+    this.assetAllowed = assetAllowed;
   }
 
 }

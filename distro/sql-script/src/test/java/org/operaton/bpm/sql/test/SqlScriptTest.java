@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.sql.test;
 
+import org.operaton.commons.utils.IoUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -28,7 +30,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 import liquibase.Contexts;
 import liquibase.Liquibase;
@@ -57,7 +58,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
-import org.operaton.commons.utils.IoUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -241,7 +241,7 @@ class SqlScriptTest {
     return changeSetsToApply.stream()
         .flatMap(cs -> cs.getChanges().stream())
         .map(Change::getDescription)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   static class CustomDiffOutputControl extends DiffOutputControl {

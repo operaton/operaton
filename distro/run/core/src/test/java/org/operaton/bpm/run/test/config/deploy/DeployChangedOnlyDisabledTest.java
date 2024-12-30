@@ -16,23 +16,23 @@
  */
 package org.operaton.bpm.run.test.config.deploy;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.run.OperatonBpmRunProcessEngineConfiguration;
 import org.operaton.bpm.run.property.OperatonBpmRunDeploymentProperties;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@TestPropertySource(properties = { OperatonBpmRunDeploymentProperties.PREFIX + ".deploy-changed-only=false" })
-public class DeployChangedOnlyDisabledTest extends AbstractRestTest {
+@TestPropertySource(properties = {OperatonBpmRunDeploymentProperties.PREFIX + ".deploy-changed-only=false"})
+class DeployChangedOnlyDisabledTest extends AbstractRestTest {
 
   @Autowired
   private OperatonBpmRunProcessEngineConfiguration engineConfig;
 
   @Test
-  public void shouldEnableDeployChangedOnlyOnOperatonRunProperty() {
+  void shouldEnableDeployChangedOnlyOnOperatonRunProperty() {
     assertThat(engineConfig.isDeployChangedOnly()).isFalse();
   }
 }

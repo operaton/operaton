@@ -16,29 +16,27 @@
  */
 package org.operaton.bpm.run.test.plugins;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.run.OperatonBpmRun;
 import org.operaton.bpm.spring.boot.starter.spin.SpringBootSpinProcessEnginePlugin;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { OperatonBpmRun.class })
-@ActiveProfiles(profiles = { "test-new-plugins", "test-plugins-config-override" }, inheritProfiles = true)
-public class ProcessEnginePluginsConfigurationOverrideTest {
+@SpringBootTest(classes = {OperatonBpmRun.class})
+@ActiveProfiles(profiles = {"test-new-plugins", "test-plugins-config-override"})
+class ProcessEnginePluginsConfigurationOverrideTest {
 
   @Autowired
   protected ProcessEngineConfigurationImpl processEngineConfiguration;
@@ -52,13 +50,13 @@ public class ProcessEnginePluginsConfigurationOverrideTest {
 
   protected List<ProcessEnginePlugin> plugins;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.plugins = processEngineConfiguration.getProcessEnginePlugins();
 }
 
   @Test
-  public void shouldOverrideDefaultPluginConfiguration() {
+  void shouldOverrideDefaultPluginConfiguration() {
     // given
     List<ProcessEnginePlugin> registeredPlugins =
         ((CompositeProcessEnginePlugin) plugins.get(0)).getPlugins();
@@ -66,7 +64,7 @@ public class ProcessEnginePluginsConfigurationOverrideTest {
     // then
     // the Spin plugin properties are correctly applied
     SpringBootSpinProcessEnginePlugin overriddenSpinPlugin = (SpringBootSpinProcessEnginePlugin) registeredPlugins.stream()
-        .filter(plugin -> plugin instanceof SpringBootSpinProcessEnginePlugin).findFirst().get();
+        .filter(SpringBootSpinProcessEnginePlugin.class::isInstance).findFirst().orElseThrow();
     assertThat(overriddenSpinPlugin).isSameAs(spinPlugin);
     assertThat(overriddenSpinPlugin.isEnableXxeProcessing()).isTrue();
     assertThat(overriddenSpinPlugin.isEnableSecureXmlProcessing()).isFalse();

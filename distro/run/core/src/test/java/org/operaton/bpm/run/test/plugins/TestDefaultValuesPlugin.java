@@ -20,23 +20,24 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 
+@SuppressWarnings("unused")
 public class TestDefaultValuesPlugin implements ProcessEnginePlugin {
   
   protected String parameterOne = "defaultValue";
 
   @Override
   public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
-    
+    // just for test purposes
   }
 
   @Override
   public void postInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
-
+    // just for test purposes
   }
 
   @Override
   public void postProcessEngineBuild(ProcessEngine processEngine) {
-
+    // just for test purposes
   }
 
   protected String getParameterOne() {

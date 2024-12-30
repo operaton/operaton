@@ -16,36 +16,36 @@
  */
 package org.operaton.bpm.run.test.config.cors;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
+import org.operaton.bpm.run.test.AbstractRestTest;
 
 import java.util.List;
 
-import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
-import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Note: To run this test via an IDE you must set the system property
  * {@code sun.net.http.allowRestrictedHeaders} to {@code true}.
  * (e.g. System.setProperty("sun.net.http.allowRestrictedHeaders", "true");)
  *
- * @see https://jira.camunda.com/browse/CAM-11290
+ * @see <a href="https://jira.camunda.com/browse/CAM-11290">CAM-11290</a>
  */
-@ActiveProfiles(profiles = { "test-cors-enabled" }, inheritProfiles = true)
+@ActiveProfiles(profiles = {"test-cors-enabled"})
 @TestPropertySource(properties = {
     OperatonBpmRunCorsProperty.PREFIX + ".allowed-origins=http://other.origin:8081",
     OperatonBpmRunCorsProperty.PREFIX + ".allow-credentials=true"})
-public class CorsConfigAllowCredentialsTest extends AbstractRestTest {
+class CorsConfigAllowCredentialsTest extends AbstractRestTest {
 
   @Test
-  public void shouldRespondWithSupportedCredentials() {
+  void shouldRespondWithSupportedCredentials() {
     // given
     String origin = "http://other.origin:8081";
 
@@ -54,7 +54,7 @@ public class CorsConfigAllowCredentialsTest extends AbstractRestTest {
     headers.add(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, HttpMethod.GET.name());
 
     // when
-    ResponseEntity<List> response = testRestTemplate
+    var response = testRestTemplate
         .exchange(CONTEXT_PATH + "/task",
                   HttpMethod.OPTIONS,
                   new HttpEntity<>(headers),

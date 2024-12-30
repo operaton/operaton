@@ -18,19 +18,23 @@ package org.operaton.bpm.run.test.config.cors;
 
 import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
 import org.operaton.bpm.run.test.AbstractRestTest;
-import org.junit.Test;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
+/*
+ * The purpose of the test is to check if the path of the CORS filter can be changed.
+ * The CORS behavior is tested elsewhere.
+ */
 @ActiveProfiles(profiles = {
     "test-cors-enabled",
     "test-changed-rest-context-path"
@@ -38,14 +42,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
     OperatonBpmRunCorsProperty.PREFIX + ".allowed-origins=http://other.origin:8081"
 })
-/*
- * The purpose of the test is to check if the path of the CORS filter can be changed.
- * The CORS behavior is tested elsewhere.
- */
-public class CorsWithChangedContextPathTest extends AbstractRestTest {
+class CorsWithChangedContextPathTest extends AbstractRestTest {
 
   @Test
-  public void shouldCheckCorsAvailabilityOnPathChange() {
+  void shouldCheckCorsAvailabilityOnPathChange() {
     // given
     String origin = "http://other.origin:8081";
 
@@ -53,7 +53,7 @@ public class CorsWithChangedContextPathTest extends AbstractRestTest {
     headers.add(HttpHeaders.ORIGIN, origin);
 
     // when
-    ResponseEntity<List> response = testRestTemplate.exchange("/rest/task",
+    var response = testRestTemplate.exchange("/rest/task",
         HttpMethod.GET, new HttpEntity<>(headers), List.class);
 
     // then

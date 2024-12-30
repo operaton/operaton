@@ -17,25 +17,24 @@
 package org.operaton.bpm.run.qa.webapps;
 
 import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.AfterParam;
-import org.junit.runners.Parameterized.BeforeParam;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
@@ -45,16 +44,13 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
  * copied from
  * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/LoginIT.java">platform</a>
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
- * and <code>@Parameters</code> for different setups, might be removed with https://jira.camunda.com/browse/CAM-11379
+ * and <code>@Parameters</code> for different setups, might be removed with
+ * <a href="https://jira.camunda.com/browse/CAM-11379">CAM-11379</a>
  */
-@RunWith(Parameterized.class)
-public class LoginIT extends AbstractWebappUiIT {
+class LoginIT extends AbstractWebappUiIT {
+  String[] commands;
 
-  @Parameter
-  public String[] commands;
-
-  @Parameters
-  public static Collection<Object[]> commands() {
+  static Collection<Object[]> commands() {
     return Arrays.asList(new Object[][] {
       { new String[0] },
       { new String[]{"--rest", "--webapps"} },
@@ -62,15 +58,14 @@ public class LoginIT extends AbstractWebappUiIT {
     });
   }
 
-  @Rule
-  public TestName name = new TestName();
+  
+  String name;
 
-  protected static SpringBootManagedContainer container;
+  protected SpringBootManagedContainer container;
 
   protected WebDriverWait wait;
 
-  @BeforeParam
-  public static void runStartScript(String[] commands) {
+  void startContainer(String[] commands) {
     container = new SpringBootManagedContainer(commands);
     try {
       container.start();
@@ -79,8 +74,8 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  @AfterParam
-  public static void stopApp() {
+  @AfterEach
+  void stopContainer() {
     try {
       if (container != null) {
         container.stop();
@@ -92,7 +87,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void login(String appName) {
+  void login(String appName) {
     driver.manage().deleteAllCookies();
 
     driver.get(appUrl + "app/" + appName + "/default/");
@@ -109,14 +104,16 @@ public class LoginIT extends AbstractWebappUiIT {
         .submit();
   }
 
-  public void sendKeys(WebElement element, String keys)  {
-
+  void sendKeys(WebElement element, String keys)  {
     // fix for CAM-13548
-    Arrays.stream(keys.split("")).forEach(c -> element.sendKeys(c));
+    Arrays.stream(keys.split("")).forEach(element::sendKeys);
   }
 
-  @Test
-  public void shouldLoginToCockpit() throws URISyntaxException {
+  @MethodSource("commands")
+  @ParameterizedTest
+  void shouldLoginToCockpit(String[] commands) throws URISyntaxException {
+    startContainer(commands);
+    initLoginIT(commands);
     try {
       loginToCockpit();
     } catch (WebDriverException e) {
@@ -124,7 +121,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void loginToCockpit() throws URISyntaxException {
+  void loginToCockpit() throws URISyntaxException {
     String appName = "cockpit";
     login(appName);
     wait.until(textToBePresentInElementLocated(
@@ -135,8 +132,11 @@ public class LoginIT extends AbstractWebappUiIT {
         + appName + "/default/#/dashboard")));
   }
 
-  @Test
-  public void shouldLoginToTasklist() {
+  @MethodSource("commands")
+  @ParameterizedTest
+  void shouldLoginToTasklist(String[] commands) {
+    startContainer(commands);
+    initLoginIT(commands);
     try {
       loginToTasklist();
     } catch (WebDriverException e) {
@@ -144,7 +144,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void loginToTasklist() {
+  void loginToTasklist() {
     String appName = "tasklist";
     login(appName);
     wait.until(textToBePresentInElementLocated(
@@ -155,8 +155,10 @@ public class LoginIT extends AbstractWebappUiIT {
         + appName + "/default/#/?searchQuery="));
   }
 
-  @Test
-  public void shouldLoginToAdmin() throws URISyntaxException {
+  @MethodSource("commands")
+  @ParameterizedTest
+  void shouldLoginToAdmin(String[] commands) throws URISyntaxException {
+    initLoginIT(commands);
     try {
       loginToAdmin();
     } catch (WebDriverException e) {
@@ -164,7 +166,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void loginToAdmin() throws URISyntaxException {
+  void loginToAdmin() throws URISyntaxException {
     String appName = "admin";
     login(appName);
     wait.until(textToBePresentInElementLocated(
@@ -175,8 +177,10 @@ public class LoginIT extends AbstractWebappUiIT {
         + "app/" + appName + "/default/#/")));
   }
 
-  @Test
-  public void shouldLoginToWelcome() throws URISyntaxException {
+  @MethodSource("commands")
+  @ParameterizedTest
+  void shouldLoginToWelcome(String[] commands) throws URISyntaxException {
+    initLoginIT(commands);
     try {
       loginToWelcome();
     } catch (WebDriverException e) {
@@ -184,7 +188,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void loginToWelcome() throws URISyntaxException {
+  void loginToWelcome() throws URISyntaxException {
     String appName = "welcome";
     login(appName);
     wait.until(textToBePresentInElementLocated(
@@ -193,6 +197,16 @@ public class LoginIT extends AbstractWebappUiIT {
 
     wait.until(currentURIIs(new URI(appUrl
         + "app/" + appName + "/default/#!/welcome")));
+  }
+
+  @BeforeEach
+  void setup(TestInfo testInfo) {
+    Optional<Method> testMethod = testInfo.getTestMethod();
+    testMethod.ifPresent(method -> this.name = method.getName());
+  }
+
+  void initLoginIT(String[] commands) {
+    this.commands = commands;
   }
 
 }

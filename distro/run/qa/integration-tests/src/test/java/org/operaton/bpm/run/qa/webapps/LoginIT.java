@@ -44,12 +44,13 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
  * copied from
  * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/LoginIT.java">platform</a>
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
- * and <code>@Parameters</code> for different setups, might be removed with https://jira.camunda.com/browse/CAM-11379
+ * and <code>@Parameters</code> for different setups, might be removed with
+ * <a href="https://jira.camunda.com/browse/CAM-11379">CAM-11379</a>
  */
-public class LoginIT extends AbstractWebappUiIT {
-  public String[] commands;
+class LoginIT extends AbstractWebappUiIT {
+  String[] commands;
 
-  public static Collection<Object[]> commands() {
+  static Collection<Object[]> commands() {
     return Arrays.asList(new Object[][] {
       { new String[0] },
       { new String[]{"--rest", "--webapps"} },
@@ -58,13 +59,13 @@ public class LoginIT extends AbstractWebappUiIT {
   }
 
   
-  public String name;
+  String name;
 
   protected SpringBootManagedContainer container;
 
   protected WebDriverWait wait;
 
-  public void startContainer(String[] commands) {
+  void startContainer(String[] commands) {
     container = new SpringBootManagedContainer(commands);
     try {
       container.start();
@@ -74,7 +75,7 @@ public class LoginIT extends AbstractWebappUiIT {
   }
 
   @AfterEach
-  public void stopContainer() {
+  void stopContainer() {
     try {
       if (container != null) {
         container.stop();
@@ -110,7 +111,7 @@ public class LoginIT extends AbstractWebappUiIT {
 
   @MethodSource("commands")
   @ParameterizedTest
-  public void shouldLoginToCockpit(String[] commands) throws URISyntaxException {
+  void shouldLoginToCockpit(String[] commands) throws URISyntaxException {
     startContainer(commands);
     initLoginIT(commands);
     try {
@@ -120,7 +121,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void loginToCockpit() throws URISyntaxException {
+  void loginToCockpit() throws URISyntaxException {
     String appName = "cockpit";
     login(appName);
     wait.until(textToBePresentInElementLocated(
@@ -133,7 +134,7 @@ public class LoginIT extends AbstractWebappUiIT {
 
   @MethodSource("commands")
   @ParameterizedTest
-  public void shouldLoginToTasklist(String[] commands) {
+  void shouldLoginToTasklist(String[] commands) {
     startContainer(commands);
     initLoginIT(commands);
     try {
@@ -156,7 +157,7 @@ public class LoginIT extends AbstractWebappUiIT {
 
   @MethodSource("commands")
   @ParameterizedTest
-  public void shouldLoginToAdmin(String[] commands) throws URISyntaxException {
+  void shouldLoginToAdmin(String[] commands) throws URISyntaxException {
     initLoginIT(commands);
     try {
       loginToAdmin();
@@ -178,7 +179,7 @@ public class LoginIT extends AbstractWebappUiIT {
 
   @MethodSource("commands")
   @ParameterizedTest
-  public void shouldLoginToWelcome(String[] commands) throws URISyntaxException {
+  void shouldLoginToWelcome(String[] commands) throws URISyntaxException {
     initLoginIT(commands);
     try {
       loginToWelcome();
@@ -187,7 +188,7 @@ public class LoginIT extends AbstractWebappUiIT {
     }
   }
 
-  public void loginToWelcome() throws URISyntaxException {
+  void loginToWelcome() throws URISyntaxException {
     String appName = "welcome";
     login(appName);
     wait.until(textToBePresentInElementLocated(
@@ -204,7 +205,7 @@ public class LoginIT extends AbstractWebappUiIT {
     testMethod.ifPresent(method -> this.name = method.getName());
   }
 
-  public void initLoginIT(String[] commands) {
+  void initLoginIT(String[] commands) {
     this.commands = commands;
   }
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -29,6 +26,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public class LoginIT extends AbstractWebappUiIntegrationTest {
 
@@ -55,16 +56,18 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   public void sendKeys(WebElement element, String keys)  {
 
     // fix for CAM-13548
-    Arrays.stream(keys.split("")).forEach(c -> element.sendKeys(c));
+    Arrays.stream(keys.split("")).forEach(element::sendKeys);
   }
 
   @Test
-  public void shouldLoginToCockpit() throws URISyntaxException {
-    try {
-      loginToCockpit();
-    } catch (WebDriverException e) {
-      loginToCockpit();
-    }
+  public void shouldLoginToCockpit() {
+    assertThatCode(() -> {
+      try {
+        loginToCockpit();
+      } catch (WebDriverException e) {
+        loginToCockpit();
+      }
+    }).doesNotThrowAnyException();
   }
 
   public void loginToCockpit() throws URISyntaxException {
@@ -80,11 +83,13 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
 
   @Test
   public void shouldLoginToTasklist() {
-    try {
-      loginToTasklist();
-    } catch (WebDriverException e) {
-      loginToTasklist();
-    }
+    assertThatCode(() -> {
+      try {
+        loginToTasklist();
+      } catch (WebDriverException e) {
+        loginToTasklist();
+      }
+    }).doesNotThrowAnyException();
   }
 
   public void loginToTasklist() {
@@ -99,12 +104,14 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   }
 
   @Test
-  public void shouldLoginToAdmin() throws URISyntaxException {
-    try {
-      loginToAdmin();
-    } catch (WebDriverException e) {
-      loginToAdmin();
-    }
+  public void shouldLoginToAdmin() {
+    assertThatCode(() -> {
+      try {
+        loginToAdmin();
+      } catch (WebDriverException e) {
+        loginToAdmin();
+      }
+    }).doesNotThrowAnyException();
   }
 
   public void loginToAdmin() throws URISyntaxException {
@@ -119,12 +126,14 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   }
 
   @Test
-  public void shouldLoginToWelcome() throws URISyntaxException {
-    try {
-      loginToWelcome();
-    } catch (WebDriverException e) {
-      loginToWelcome();
-    }
+  public void shouldLoginToWelcome() {
+    assertThatCode(() -> {
+      try {
+        loginToWelcome();
+      } catch (WebDriverException e) {
+        loginToWelcome();
+      }
+    }).doesNotThrowAnyException();
   }
 
   public void loginToWelcome() throws URISyntaxException {

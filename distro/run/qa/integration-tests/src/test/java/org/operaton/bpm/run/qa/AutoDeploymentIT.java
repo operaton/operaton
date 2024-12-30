@@ -16,10 +16,9 @@
  */
 package org.operaton.bpm.run.qa;
 
-import static io.restassured.RestAssured.when;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.hamcrest.CoreMatchers.is;
+import org.operaton.bpm.model.bpmn.Bpmn;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,16 +31,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.core.Response.Status;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.bpmn.Bpmn;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
-public class AutoDeploymentIT {
+import static io.restassured.RestAssured.when;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.hamcrest.CoreMatchers.is;
+
+class AutoDeploymentIT {
   static final String PROCESS_DEFINITION_ENDPOINT = "/engine-rest/process-definition";
   static final String DEPLOYMENT_ENDPOINT = "/engine-rest/deployment";
 
@@ -62,7 +63,7 @@ public class AutoDeploymentIT {
     }
   }
 
-  public void runStartScript() {
+  void runStartScript() {
     container = new SpringBootManagedContainer();
     container.replaceConfigurationYml(SpringBootManagedContainer.APPLICATION_YML_PATH,
         AutoDeploymentIT.class.getClassLoader().getResourceAsStream("example-disabled.yml"));
@@ -73,7 +74,7 @@ public class AutoDeploymentIT {
     }
   }
 
-  public void createBPMNFile(String path, String processDefinitionId) throws IOException {
+  void createBPMNFile(String path, String processDefinitionId) throws IOException {
     Path resourcesDir = Paths.get(baseDirectory, SpringBootManagedContainer.RESOURCES_PATH, path);
     resourcesDir.toFile().mkdirs();
     File bpmnFile = Paths.get(resourcesDir.toString(), "process.bpmn").toFile();
@@ -180,6 +181,6 @@ public class AutoDeploymentIT {
         return;
       }
     }
-    fail("Expected file " + name + "to be any of " + dummyFiles.stream().map(f -> f.getName()).collect(Collectors.joining(", ")));
+    fail("Expected file " + name + "to be any of " + dummyFiles.stream().map(File::getName).collect(Collectors.joining(", ")));
   }
 }

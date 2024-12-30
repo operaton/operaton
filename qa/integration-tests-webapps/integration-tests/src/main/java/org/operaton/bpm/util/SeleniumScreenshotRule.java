@@ -36,7 +36,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
  * Allows to take screenshots in case of a Selenium test error.
  * @deprecated Rewrite test to JUnit 5 and use {@link SeleniumScreenshotExtension} instead.
  */
-@Deprecated
+@Deprecated(since = "1.0.0-beta-3")
 public class SeleniumScreenshotRule implements TestRule {
 
   private static final String OUTPUT_DIR_PROPERTY_NAME = "selenium.screenshot.directory";

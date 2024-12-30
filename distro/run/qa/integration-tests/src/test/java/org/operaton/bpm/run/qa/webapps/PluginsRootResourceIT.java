@@ -37,11 +37,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * copied from
  * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/PluginsRootResourceIT.java">platform</a>
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
- * and changed  <code>appBasePath</code> to <code>APP_BASE_PATH</code>, might be removed with https://jira.camunda.com/browse/CAM-11379
+ * and changed  <code>appBasePath</code> to <code>APP_BASE_PATH</code>, might be removed with
+ * <a href="https://jira.camunda.com/browse/CAM-11379">CAM-11379</a>
  */
-public class PluginsRootResourceIT extends AbstractWebIT {
-  public String assetName;
-  public boolean assetAllowed;
+class PluginsRootResourceIT extends AbstractWebIT {
+  String assetName;
+  boolean assetAllowed;
 
   @BeforeEach
   void createClient() throws Exception {
@@ -50,7 +51,7 @@ public class PluginsRootResourceIT extends AbstractWebIT {
 
   private SpringBootManagedContainer container;
 
-  public void startContainer(String assetName, boolean assetAllowed) {
+  void startContainer() {
     container = new SpringBootManagedContainer("--webapps");
     try {
       container.start();
@@ -60,7 +61,7 @@ public class PluginsRootResourceIT extends AbstractWebIT {
   }
 
   @AfterEach
-  public void stopContainer() {
+  void stopContainer() {
     try {
       if (container != null) {
         container.stop();
@@ -72,7 +73,7 @@ public class PluginsRootResourceIT extends AbstractWebIT {
     }
   }
 
-  public static Collection<Object[]> getAssets() {
+  static Collection<Object[]> getAssets() {
     return Arrays.asList(new Object[][]{
         {"app/plugin.js", true},
         {"app/plugin.css", true},
@@ -84,8 +85,8 @@ public class PluginsRootResourceIT extends AbstractWebIT {
 
   @MethodSource("getAssets")
   @ParameterizedTest(name = "Test instance: {index}. Asset: {0}, Allowed: {1}")
-  public void shouldGetAssetIfAllowed(String assetName, boolean assetAllowed) {
-    startContainer(assetName, assetAllowed);
+  void shouldGetAssetIfAllowed(String assetName, boolean assetAllowed) {
+    startContainer();
     initPluginsRootResourceIT(assetName, assetAllowed);
     // when
     ClientResponse response = getAsset("api/admin/plugin/adminPlugins/static/" + assetName);
@@ -106,14 +107,14 @@ public class PluginsRootResourceIT extends AbstractWebIT {
       assertThat(response.getStatus()).isEqualTo(Status.OK.getStatusCode());
     } else {
       assertThat(response.getStatus()).isEqualTo(Status.FORBIDDEN.getStatusCode());
-      assertThat(response.getType().toString().startsWith(MediaType.APPLICATION_JSON)).isTrue();
+      assertThat(response.getType().toString()).startsWith(MediaType.APPLICATION_JSON);
       String responseEntity = response.getEntity(String.class);
-      assertThat(responseEntity.contains("\"type\":\"RestException\"")).isTrue();
-      assertThat(responseEntity.contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"")).isTrue();
+      assertThat(responseEntity).contains("\"type\":\"RestException\"");
+      assertThat(responseEntity).contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
     }
   }
 
-  public void initPluginsRootResourceIT(String assetName, boolean assetAllowed) {
+  void initPluginsRootResourceIT(String assetName, boolean assetAllowed) {
     this.assetName = assetName;
     this.assetAllowed = assetAllowed;
   }

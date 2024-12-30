@@ -25,11 +25,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-import org.junit.jupiter.api.Test;
 class ProcessEngineHealthIndicatorTest {
 
   private static final String PROCESS_ENGINE_NAME = "process engine name";
@@ -37,9 +37,10 @@ class ProcessEngineHealthIndicatorTest {
   @Mock
   private ProcessEngine processEngine;
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void nullTest() {
-    new ProcessEngineHealthIndicator(null);
+    assertThatIllegalArgumentException().isThrownBy(() -> new ProcessEngineHealthIndicator(null))
+      .withMessage("ProcessEngine must not be null");
   }
 
   @Test

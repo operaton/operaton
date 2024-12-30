@@ -21,7 +21,7 @@ import org.operaton.bpm.client.ExternalTaskClientBuilder;
 
 import org.mockito.MockedStatic;
 
-import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.Mockito.*;
 
 public class MockHelper {

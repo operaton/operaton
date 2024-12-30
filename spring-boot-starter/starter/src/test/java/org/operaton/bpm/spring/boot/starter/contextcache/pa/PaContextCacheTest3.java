@@ -63,11 +63,11 @@ class PaContextCacheTest3 extends AbstractContextCacheTest {
   void testContextCaching() {
     int appContextHash = applicationContext.hashCode();
 
-    assertThat(appContextHash).isEqualTo(contextMap.get("paTest1"));
-    assertThat(appContextHash).isNotEqualTo(contextMap.get("paTest2"));
+    assertThat(appContextHash)
+        .isEqualTo(contextMap.get("paTest1"))
+        .isNotEqualTo(contextMap.get("paTest2"));
   }
 
-  @Override
   @Test
   void testDbIsolation() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("TestProcess");

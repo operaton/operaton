@@ -23,7 +23,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.util.ReflectionTestUtils.invokeMethod;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
+
 class DefaultMetricsConfigurationTest {
   private final DefaultMetricsConfiguration defaultMetricsConfiguration = new DefaultMetricsConfiguration();
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();

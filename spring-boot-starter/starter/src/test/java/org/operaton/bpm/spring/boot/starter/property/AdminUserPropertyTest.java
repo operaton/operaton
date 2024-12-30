@@ -18,22 +18,17 @@ package org.operaton.bpm.spring.boot.starter.property;
 
 import org.operaton.bpm.engine.identity.User;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-class AdminUserPropertyTest {
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
-  @Rule
-  public final ExpectedException thrown = ExpectedException.none();
+class AdminUserPropertyTest {
 
   @Test
   void fillMissingFields_fail_no_id() {
-    thrown.expect(NullPointerException.class);
-    thrown.expectMessage("missing field: operaton.bpm.admin-user.id");
-
-    adminUser(null, null, null, null, null).init();
+    AdminUserProperty adminUserProperty = adminUser(null, null, null, null, null);
+    assertThatNullPointerException().isThrownBy(adminUserProperty::init);
   }
 
   @Test

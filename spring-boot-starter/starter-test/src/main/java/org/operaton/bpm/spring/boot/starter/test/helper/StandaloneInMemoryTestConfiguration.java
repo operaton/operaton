@@ -19,19 +19,21 @@ package org.operaton.bpm.spring.boot.starter.test.helper;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.mock.MockExpressionManager;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-class StandaloneInMemoryTestConfiguration extends StandaloneInMemProcessEngineConfiguration {
+
+import static java.util.Collections.emptyList;
+
+public class StandaloneInMemoryTestConfiguration extends StandaloneInMemProcessEngineConfiguration {
 
   public StandaloneInMemoryTestConfiguration(ProcessEnginePlugin... plugins) {
     this(Optional.ofNullable(plugins)
       .map(Arrays::asList)
-      .orElse(Collections.EMPTY_LIST)
+      .orElse(emptyList())
     );
   }
 
@@ -45,7 +47,11 @@ class StandaloneInMemoryTestConfiguration extends StandaloneInMemProcessEngineCo
     getProcessEnginePlugins().addAll(plugins);
   }
 
-  public ProcessEngineRule rule() {
-    return new ProcessEngineRule(buildProcessEngine());
+  public ProcessEngineExtension extension() {
+    var extension = new ProcessEngineExtension();
+    var processEngine = buildProcessEngine();
+    extension.setProcessEngine(processEngine);
+
+    return extension;
   }
 }

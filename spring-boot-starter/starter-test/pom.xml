@@ -33,6 +33,13 @@
       <scope>compile</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bpm-junit5</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
   </dependencies>
 
   <description>${project.name}</description>

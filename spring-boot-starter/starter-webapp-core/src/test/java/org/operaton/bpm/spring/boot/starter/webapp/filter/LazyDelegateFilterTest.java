@@ -20,6 +20,7 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.Ini
 
 import jakarta.servlet.*;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
@@ -27,10 +28,8 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
-import org.junit.jupiter.api.Test;
 
 @ExtendWith(MockitoExtension.class)
 class LazyDelegateFilterTest {
@@ -59,7 +58,7 @@ class LazyDelegateFilterTest {
   @Test
   void lazyInitTest() throws Exception {
     try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
-      LazyDelegateFilter<Filter> delegateFilter = spy(new LazyDelegateFilter<Filter>(filterMock.getClass()));
+      LazyDelegateFilter<Filter> delegateFilter = spy(new LazyDelegateFilter<>(filterMock.getClass()));
       delegateFilter.init(filterConfigMock);
       doReturn(filterMock).when(delegateFilter).createNewFilterInstance();
       delegateFilter.lazyInit();
@@ -70,7 +69,7 @@ class LazyDelegateFilterTest {
   @Test
   void lazyInitWithHookTest() throws Exception {
     try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
-      LazyDelegateFilter<Filter> delegateFilter = spy(new LazyDelegateFilter<Filter>(filterMock.getClass()));
+      LazyDelegateFilter<Filter> delegateFilter = spy(new LazyDelegateFilter<>(filterMock.getClass()));
       delegateFilter.setInitHook(initHookMock);
       delegateFilter.init(filterConfigMock);
       doReturn(filterMock).when(delegateFilter).createNewFilterInstance();

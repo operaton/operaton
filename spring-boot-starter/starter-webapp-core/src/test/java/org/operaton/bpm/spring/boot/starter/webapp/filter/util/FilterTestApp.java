@@ -17,17 +17,15 @@
 package org.operaton.bpm.spring.boot.starter.webapp.filter.util;
 
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties(OperatonBpmProperties.class)
-import org.junit.jupiter.api.Test;
-class FilterTestApp {
-
+public class FilterTestApp {
   public static void main(String[] args) {
     SpringApplication.run(FilterTestApp.class, args);
   }
-
 }

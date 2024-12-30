@@ -120,8 +120,8 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-suite</artifactId>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-suite</artifactId>
         <version>1.11.4</version>
         <scope>test</scope>
       </dependency>

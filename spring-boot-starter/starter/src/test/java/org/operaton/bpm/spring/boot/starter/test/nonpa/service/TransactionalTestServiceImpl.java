@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-import org.junit.jupiter.api.Test;
 class TransactionalTestServiceImpl implements TransactionalTestService {
 
   @Autowired

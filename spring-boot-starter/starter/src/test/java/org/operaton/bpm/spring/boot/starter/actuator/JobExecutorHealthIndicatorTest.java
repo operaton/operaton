@@ -31,6 +31,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -64,9 +65,9 @@ class JobExecutorHealthIndicatorTest {
     when(jobExecutor.getProcessEngines()).thenReturn(PROCESS_ENGINES);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void nullTest() {
-    new JobExecutorHealthIndicator(null);
+    assertThatNullPointerException().isThrownBy(() -> new JobExecutorHealthIndicator(null));
   }
 
   @Test

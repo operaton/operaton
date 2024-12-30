@@ -17,14 +17,14 @@
 package org.operaton.bpm.spring.boot.starter.webapp;
 
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties(OperatonBpmProperties.class)
-import org.junit.jupiter.api.Test;
-class WebappTestApp {
+public class WebappTestApp {
 
   public static void main(String[] args) {
     SpringApplication.run(WebappTestApp.class, args);

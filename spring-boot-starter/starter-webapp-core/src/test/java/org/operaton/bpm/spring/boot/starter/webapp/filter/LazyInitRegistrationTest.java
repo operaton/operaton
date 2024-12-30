@@ -23,8 +23,8 @@ import java.util.Set;
 
 import jakarta.servlet.Filter;
 
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
@@ -32,10 +32,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationContext;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import org.junit.jupiter.api.Test;
 
 @ExtendWith(MockitoExtension.class)
 class LazyInitRegistrationTest {
@@ -131,9 +130,12 @@ class LazyInitRegistrationTest {
     assertFalse(LazyInitRegistration.getRegistrations().contains(lazyDelegateFilterMock));
   }
 
-  @Test(expected = UnsupportedOperationException.class)
+  @Test
   public void getRegistrationsTest() {
-    LazyInitRegistration.getRegistrations().add(lazyDelegateFilterMock);
+    var registrations = LazyInitRegistration.getRegistrations();
+
+    assertThatThrownBy(() -> registrations.add(lazyDelegateFilterMock))
+      .isInstanceOf(UnsupportedOperationException.class);
   }
 
   @Test

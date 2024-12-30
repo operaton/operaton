@@ -55,14 +55,17 @@ package org.operaton.bpm.spring.boot.starter.contextcache.pa;
  *
  * @author Nikola Koevski
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
+
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+
+@Suite
+@SelectClasses({
   PaContextCacheTest1.class,
   PaContextCacheTest2.class,
   PaContextCacheTest3.class,
   PaContextCacheTest4.class,
   PaContextCacheTest5.class
 })
-import org.junit.jupiter.api.Test;
 class PaContextCacheSuiteTest {
 }

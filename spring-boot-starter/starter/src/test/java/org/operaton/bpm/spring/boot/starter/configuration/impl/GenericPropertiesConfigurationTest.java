@@ -23,6 +23,9 @@ import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class GenericPropertiesConfigurationTest {
 
   private SpringProcessEngineConfiguration processEngineConfiguration;
@@ -53,10 +56,12 @@ class GenericPropertiesConfigurationTest {
     assertEquals(batchPollTimeValue, processEngineConfiguration.getBatchPollTime());
   }
 
-  @Test(expected = SpringBootStarterException.class)
+  @Test
   public void genericBindingTestWithNotExistingProperty() {
     final int dontExistValue = Integer.MAX_VALUE;
     operatonBpmProperties.getGenericProperties().getProperties().put("dont-exist", dontExistValue);
-    genericPropertiesConfiguration.preInit(processEngineConfiguration);
+
+    assertThatThrownBy(() -> genericPropertiesConfiguration.preInit(processEngineConfiguration))
+      .isInstanceOf(SpringBootStarterException.class);
   }
 }

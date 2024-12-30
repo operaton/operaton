@@ -16,15 +16,13 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.helper;
 
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-import org.junit.Rule;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-@RunWith(ProcessEngineRuleRunner.class)
 public abstract class AbstractProcessEngineRuleTest {
 
-  @Rule
-  public final ProcessEngineRule processEngine = new StandaloneInMemoryTestConfiguration().rule();
+  @RegisterExtension
+  protected static final ProcessEngineExtension processEngine = new StandaloneInMemoryTestConfiguration().extension();
 
 }

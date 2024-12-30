@@ -40,13 +40,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
 @SpringBootTest(classes = { TestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class OperatonBpmAutoConfigurationIT {
+class OperatonBpmAutoConfigurationIT {
+
+  private final ProcessEngineConfigurationImpl processEngineConfiguration;
+  private final ApplicationContext appContext;
 
   @Autowired
-  ProcessEngineConfigurationImpl processEngineConfiguration;
-
-  @Autowired
-  private ApplicationContext appContext;
+  public OperatonBpmAutoConfigurationIT(ProcessEngineConfigurationImpl processEngineConfiguration, ApplicationContext appContext) {
+      this.processEngineConfiguration = processEngineConfiguration;
+      this.appContext = appContext;
+  }
 
   @Test
   void ensureProcessEngineServicesAreExposedAsBeans() {
@@ -54,7 +57,9 @@ public class OperatonBpmAutoConfigurationIT {
       Object bean = appContext.getBean(classToCheck);
       assertNotNull(classToCheck + " must be exposed as @Bean. Check configuration", bean);
       String beanName = convertToBeanName(classToCheck);
-      assertSame(classToCheck + " must be exposed as '" + beanName + "'. Check configuration", bean, appContext.getBean(beanName));
+      assertThat(appContext.getBean(beanName))
+          .withFailMessage(classToCheck + " must be exposed as '" + beanName + "'. Check configuration")
+          .isSameAs(bean);
     }
 
   }
@@ -74,7 +79,7 @@ public class OperatonBpmAutoConfigurationIT {
         && s.getSerializationDataformat().equals("application/json"));
 
     // then
-    assertThat(plugins.stream().anyMatch(plugin -> plugin instanceof SpinProcessEnginePlugin)).isTrue();
+    assertThat(plugins.stream().anyMatch(SpinProcessEnginePlugin.class::isInstance)).isTrue();
     assertThat(isJacksonJsonDataFormat).isTrue();
   }
 
@@ -88,7 +93,7 @@ public class OperatonBpmAutoConfigurationIT {
     }
 
     // then
-    assertThat(plugins.stream().anyMatch(plugin -> plugin instanceof ConnectProcessEnginePlugin)).isTrue();
+    assertThat(plugins.stream().anyMatch(ConnectProcessEnginePlugin.class::isInstance)).isTrue();
   }
 
   private String convertToBeanName(Class<?> beanClass) {

@@ -26,6 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(
@@ -34,10 +35,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @ActiveProfiles("customContextPath")
-public class CustomContextPathWebProcessApplicationIT {
+class CustomContextPathWebProcessApplicationIT {
+
+  private final SpringProcessApplication application;
 
   @Autowired
-  private SpringProcessApplication application;
+  public CustomContextPathWebProcessApplicationIT(SpringProcessApplication application) {
+      this.application = application;
+  }
 
   @Test
   void testPostDeployEvent() {

@@ -20,22 +20,21 @@ import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.filter.FilterQuery;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.helper.StandaloneInMemoryTestConfiguration;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
 
 import java.util.List;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 class CreateFilterConfigurationTest {
@@ -46,41 +45,37 @@ class CreateFilterConfigurationTest {
     operatonBpmProperties.getFilter().setCreate("All");
   }
 
-  private final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
+  private static final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
 
   {
     ReflectionTestUtils.setField(configuration, "operatonBpmProperties", operatonBpmProperties);
     configuration.init();
   }
 
-  @Rule
-  public final ProcessEngineRule processEngineRule = new StandaloneInMemoryTestConfiguration(configuration).rule();
+  @RegisterExtension
+  static final ProcessEngineExtension processEngineExtension =
+      new StandaloneInMemoryTestConfiguration(configuration).extension();
 
-  @Rule
-  public final ExpectedException thrown = ExpectedException.none();
-
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
       .watch(SpringBootProcessEngineLogger.PACKAGE);
 
   @Test
   void createAdminUser() {
-    assertThat(processEngineRule.getFilterService().createFilterQuery().filterName("All").singleResult()).isNotNull();
+    assertThat(processEngineExtension.getFilterService().createFilterQuery().filterName("All").singleResult()).isNotNull();
   }
 
   @Test
   void fail_if_not_configured_onInit() {
-    thrown.expect(IllegalStateException.class);
     OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
     final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
     ReflectionTestUtils.setField(configuration, "operatonBpmProperties", operatonBpmProperties);
-    configuration.init();
+
+    assertThatIllegalStateException().isThrownBy(configuration::init);
   }
 
   @Test
   void fail_if_not_configured_onExecution() {
-    thrown.expect(NullPointerException.class);
-
     OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
     operatonBpmProperties.getFilter().setCreate("All");
     final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
@@ -88,7 +83,8 @@ class CreateFilterConfigurationTest {
     configuration.init();
     configuration.filterName = null;
 
-    configuration.postProcessEngineBuild(mock(ProcessEngine.class));
+    ProcessEngine processEngine = mock(ProcessEngine.class);
+    assertThatNullPointerException().isThrownBy(() -> configuration.postProcessEngineBuild(processEngine));
   }
 
   @Test
@@ -118,7 +114,7 @@ class CreateFilterConfigurationTest {
   }
 
   protected void verifyLogs(Level logLevel, String message) {
-    List<ILoggingEvent> logs = loggingRule.getLog();
+    List<ILoggingEvent> logs = loggingExtension.getLog();
     assertThat(logs).hasSize(1);
     assertThat(logs.get(0).getLevel()).isEqualTo(logLevel);
     assertThat(logs.get(0).getMessage()).containsIgnoringCase(message);

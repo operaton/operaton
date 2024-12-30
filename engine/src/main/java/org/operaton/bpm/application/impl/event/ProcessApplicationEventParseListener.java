@@ -42,15 +42,15 @@ public class ProcessApplicationEventParseListener implements BpmnParseListener {
   public static final TaskListener TASK_LISTENER = new ProcessApplicationEventListenerDelegate();
 
   protected void addEndEventListener(ScopeImpl activity) {
-    activity.addExecutionListener(ExecutionListener.EVENTNAME_END, EXECUTION_LISTENER);
+    activity.addListener(ExecutionListener.EVENTNAME_END, EXECUTION_LISTENER);
   }
 
   protected void addStartEventListener(ScopeImpl activity) {
-    activity.addExecutionListener(ExecutionListener.EVENTNAME_START, EXECUTION_LISTENER);
+    activity.addListener(ExecutionListener.EVENTNAME_START, EXECUTION_LISTENER);
   }
 
   protected void addTakeEventListener(TransitionImpl transition) {
-    transition.addExecutionListener(EXECUTION_LISTENER);
+    transition.addListener(ExecutionListener.EVENTNAME_TAKE, EXECUTION_LISTENER);
   }
 
   protected void addTaskAssignmentListeners(TaskDefinition taskDefinition) {

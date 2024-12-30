@@ -17,20 +17,20 @@
 package org.operaton.bpm.spring.boot.starter.security;
 
 import jakarta.annotation.PostConstruct;
+
 import my.own.custom.spring.boot.project.SampleApplication;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = SampleApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OperatonBpmSampleApplicationTest {
+class OperatonBpmSampleApplicationTest {
 
   private String baseUrl;
 
@@ -46,13 +46,13 @@ public class OperatonBpmSampleApplicationTest {
   }
 
   @Test
-  public void webappApiIsAvailableAndAuthorized() {
+  void webappApiIsAvailableAndAuthorized() {
     ResponseEntity<String> entity = testRestTemplate.getForEntity(baseUrl + "/operaton/api/engine/engine/default/user", String.class);
     assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 
   @Test
-  public void restApiIsAvailable() {
+  void restApiIsAvailable() {
     ResponseEntity<String> entity = testRestTemplate.getForEntity(baseUrl + "/engine-rest/engine/", String.class);
     assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(entity.getBody()).isEqualTo("[{\"name\":\"default\"}]");

@@ -20,14 +20,17 @@ import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminator;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultHistoryLevelAutoHandlingConfigurationTest {
+class DefaultHistoryLevelAutoHandlingConfigurationTest {
 
   @Mock
   private SpringProcessEngineConfiguration springProcessEngineConfiguration;
@@ -39,8 +42,8 @@ public class DefaultHistoryLevelAutoHandlingConfigurationTest {
 
   private DefaultHistoryLevelAutoHandlingConfiguration historyLevelAutoHandlingConfiguration;
 
-  @Before
-  public void before() {
+  @BeforeEach
+  void before() {
     operatonBpmProperties = new OperatonBpmProperties();
     historyLevelAutoHandlingConfiguration = new DefaultHistoryLevelAutoHandlingConfiguration();
     historyLevelAutoHandlingConfiguration.operatonBpmProperties = operatonBpmProperties;
@@ -48,7 +51,7 @@ public class DefaultHistoryLevelAutoHandlingConfigurationTest {
   }
 
   @Test
-  public void acceptTest() {
+  void acceptTest() {
     when(historyLevelDeterminator.determineHistoryLevel()).thenReturn("audit");
     historyLevelAutoHandlingConfiguration.preInit(springProcessEngineConfiguration);
     verify(historyLevelDeterminator).determineHistoryLevel();
@@ -56,7 +59,7 @@ public class DefaultHistoryLevelAutoHandlingConfigurationTest {
   }
 
   @Test
-  public void notAcceptTest() {
+  void notAcceptTest() {
     when(historyLevelDeterminator.determineHistoryLevel()).thenReturn(null);
     historyLevelAutoHandlingConfiguration.preInit(springProcessEngineConfiguration);
     verify(historyLevelDeterminator).determineHistoryLevel();

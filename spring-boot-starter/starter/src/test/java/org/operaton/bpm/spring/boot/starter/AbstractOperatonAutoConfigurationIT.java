@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
 
-import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractOperatonAutoConfigurationIT {
@@ -70,7 +70,7 @@ public abstract class AbstractOperatonAutoConfigurationIT {
   @Autowired
   protected ProcessEngine processEngine;
 
-  @After
+  @AfterEach
   public void cleanup() {
     //remove history level from database
     ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequired().execute(new Command<Void>() {

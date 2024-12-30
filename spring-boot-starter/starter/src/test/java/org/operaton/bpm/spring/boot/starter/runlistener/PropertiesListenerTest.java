@@ -18,13 +18,12 @@ package org.operaton.bpm.spring.boot.starter.runlistener;
 
 import org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion;
 
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MutablePropertySources;
@@ -33,11 +32,9 @@ import org.springframework.core.env.PropertiesPropertySource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+@ExtendWith(MockitoExtension.class)
+class PropertiesListenerTest {
 
-public class PropertiesListenerTest {
-
-  @Rule
-  public final MockitoRule mockito = MockitoJUnit.rule();
 
   @Mock
   private ConfigurableEnvironment environment;
@@ -51,14 +48,14 @@ public class PropertiesListenerTest {
   @Captor
   private ArgumentCaptor<PropertiesPropertySource> propertiesPropertySource;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     when(event.getEnvironment()).thenReturn(environment);
     when(environment.getPropertySources()).thenReturn(mutablePropertySources);
   }
 
   @Test
-  public void addPropertiesPropertySource() {
+  void addPropertiesPropertySource() {
     final OperatonBpmVersion version = new OperatonBpmVersion();
 
     new PropertiesListener(version).onApplicationEvent(event);

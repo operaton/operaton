@@ -17,6 +17,8 @@
 package org.operaton.bpm.client.spring.boot.starter.client;
 
 import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,10 +37,10 @@ import static org.assertj.core.api.Assertions.assertThat;
     "operaton.bpm.client.basic-auth.username=username",
     "operaton.bpm.client.basic-auth.password=password",
 })
-public class ClientConfigurationTest extends ParsePropertiesHelper {
+class ClientConfigurationTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckProperties() {
+  void shouldCheckProperties() {
     assertThat(properties.getBaseUrl()).isEqualTo("base-url");
     assertThat(properties.getWorkerId()).isEqualTo("worker-id");
     assertThat(properties.getMaxTasks()).isEqualTo(111);

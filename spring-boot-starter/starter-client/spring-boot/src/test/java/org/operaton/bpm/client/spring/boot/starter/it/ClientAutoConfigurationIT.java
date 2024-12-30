@@ -18,14 +18,14 @@ package org.operaton.bpm.client.spring.boot.starter.it;
 
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.SpringTopicSubscription;
-import org.junit.runner.RunWith;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
 import org.mockito.Answers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
@@ -40,7 +40,7 @@ public class ClientAutoConfigurationIT {
   protected List<SpringTopicSubscription> topicSubscriptions;
 
   @Test
-  public void startup() {
+  void startup() {
     assertThat(topicSubscriptions).hasSize(2);
     assertThat(topicSubscriptions)
         .extracting("topicName", "autoOpen", "businessKey", "lockDuration", "processDefinitionKey")

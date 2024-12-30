@@ -23,7 +23,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties(OperatonBpmProperties.class)
-public class FilterTestApp {
+import org.junit.jupiter.api.Test;
+class FilterTestApp {
 
   public static void main(String[] args) {
     SpringApplication.run(FilterTestApp.class, args);

@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.spring.boot.starter.jdbc;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = { HistoryLevelDeterminatorJdbcTemplateImplTestApplication.class })
 public class HistoryLevelDeterminatorJdbcTemplateImplIT {
@@ -28,7 +29,7 @@ public class HistoryLevelDeterminatorJdbcTemplateImplIT {
   private HistoryLevelDeterminator historyLevelDeterminator;
 
   @Test
-  public void test() {
+  void test() {
     assertEquals("full", historyLevelDeterminator.determineHistoryLevel());
   }
 }

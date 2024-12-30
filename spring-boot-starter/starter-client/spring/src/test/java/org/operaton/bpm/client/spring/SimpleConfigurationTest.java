@@ -19,6 +19,8 @@ package org.operaton.bpm.client.spring;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
 import org.operaton.bpm.client.spring.configuration.SimpleSubscriptionConfiguration;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,21 +32,21 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
     SimpleClientConfiguration.class,
     SimpleSubscriptionConfiguration.class,
 })
-public class SimpleConfigurationTest extends MockedTest {
+class SimpleConfigurationTest extends MockedTest {
 
   @Autowired
   @Qualifier("handler")
   protected ExternalTaskHandler handler;
 
   @Test
-  public void shouldVerifySimpleClientConfiguration() {
+  void shouldVerifySimpleClientConfiguration() {
     verify(clientBuilder).baseUrl("http://localhost:8080/engine-rest");
     verify(clientBuilder).build();
     verifyNoMoreInteractions(clientBuilder);
   }
 
   @Test
-  public void shouldVerifySimpleSubscriptionConfiguration() {
+  void shouldVerifySimpleSubscriptionConfiguration() {
     verify(client).subscribe("topic-name");
     verify(subscriptionBuilder).handler(handler);
     verify(subscriptionBuilder).open();

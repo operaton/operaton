@@ -18,14 +18,16 @@ package org.operaton.bpm.spring.boot.starter.event;
 
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
-public class JobExecutorStartingEventListenerTest {
+class JobExecutorStartingEventListenerTest {
 
   @Mock
   private JobExecutor jobExecutor;
@@ -34,21 +36,21 @@ public class JobExecutorStartingEventListenerTest {
   private JobExecutorStartingEventListener jobExecutorStartingEventListener;
 
   @Test
-  public void handleProcessApplicationStartedEventTest() {
+  void handleProcessApplicationStartedEventTest() {
     JobExecutorStartingEventListener spy = Mockito.spy(jobExecutorStartingEventListener);
     spy.handleProcessApplicationStartedEvent(null);
     verify(spy).activate();
   }
 
   @Test
-  public void activateIfNotStartedTest() {
+  void activateIfNotStartedTest() {
     when(jobExecutor.isActive()).thenReturn(false);
     jobExecutorStartingEventListener.activate();
     verify(jobExecutor).start();
   }
 
   @Test
-  public void doNotActivateIfAlreadyStartedTest() {
+  void doNotActivateIfAlreadyStartedTest() {
     when(jobExecutor.isActive()).thenReturn(true);
     jobExecutorStartingEventListener.activate();
     verify(jobExecutor, times(0)).start();

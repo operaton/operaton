@@ -37,15 +37,16 @@ import java.util.Collections;
 import java.util.Date;
 
 import org.assertj.core.util.DateUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 
-import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 @SpringBootTest(
   classes = {TestApplication.class},
@@ -65,13 +66,13 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
 
   private ProcessInstance instance;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     eventCaptor.clear();
   }
 
-  @After
-  public void stop() {
+  @AfterEach
+  void stop() {
     if (instance != null) {
       // update stale instance
       instance = runtime.createProcessInstanceQuery().processInstanceId(instance.getProcessInstanceId()).active().singleResult();
@@ -338,7 +339,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public void shouldEventHistoryTaskAttributeChanges() {
+  void shouldEventHistoryTaskAttributeChanges() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -360,7 +361,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public void shouldEventHistoryTaskMultipleAssignmentChanges() {
+  void shouldEventHistoryTaskMultipleAssignmentChanges() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -408,7 +409,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public void shouldEventHistoryTaskFollowUpDateChanges() {
+  void shouldEventHistoryTaskFollowUpDateChanges() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -452,7 +453,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public void shouldEventHistoryTaskVariableChange() {
+  void shouldEventHistoryTaskVariableChange() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -485,7 +486,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public void shouldEventHistoryTaskPriorityChange() {
+  void shouldEventHistoryTaskPriorityChange() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -512,7 +513,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public void shouldEventHistoryTaskAddDeleteAttachment() {
+  void shouldEventHistoryTaskAddDeleteAttachment() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();

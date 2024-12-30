@@ -27,6 +27,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskSe
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -51,7 +52,7 @@ public abstract class AbstractContextCacheTest {
   protected String processEngineName;
 
   @Test
-  public void testBpmAssert() {
+  void testBpmAssert() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TestProcess");
 
@@ -65,7 +66,7 @@ public abstract class AbstractContextCacheTest {
   }
 
   @Test
-  public void testDbIsolation() {
+  void testDbIsolation() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TestProcess");
 
@@ -76,14 +77,14 @@ public abstract class AbstractContextCacheTest {
   }
 
   @Test
-  public void testEngineName()
+  void testEngineName()
   {
     // do
     assertThat(processEngine.getName()).isEqualTo(processEngineName);
   }
 
   @Test
-  public void testEngineRegistration()
+  void testEngineRegistration()
   {
     // do
     ProcessEngine registeredEngine = ProcessEngines.getProcessEngine("default");

@@ -19,6 +19,8 @@ package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -47,7 +49,7 @@ public class EmptyAppPathIT {
   protected TestRestTemplate restClient;
 
   @Test
-  public void shouldCheckCsrfCookiePath() {
+  void shouldCheckCsrfCookiePath() {
     // given
 
     // when

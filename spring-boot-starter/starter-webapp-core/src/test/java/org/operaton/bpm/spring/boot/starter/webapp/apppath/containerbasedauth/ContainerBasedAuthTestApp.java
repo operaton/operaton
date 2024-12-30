@@ -23,7 +23,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties(OperatonBpmProperties.class)
-public class ContainerBasedAuthTestApp {
+import org.junit.jupiter.api.Test;
+class ContainerBasedAuthTestApp {
 
   public static void main(String[] args) {
     SpringApplication.run(ContainerBasedAuthTestApp.class, args);

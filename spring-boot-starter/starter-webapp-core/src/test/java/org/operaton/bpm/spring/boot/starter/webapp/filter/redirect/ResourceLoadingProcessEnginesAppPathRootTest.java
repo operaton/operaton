@@ -23,12 +23,14 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 @SpringBootTest(classes = { FilterTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -36,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         "operaton.bpm.webapp.application-path=/",
         "operaton.bpm.webapp.index-redirect-enabled=false" })
 @DirtiesContext
-public class ResourceLoadingProcessEnginesAppPathRootTest {
+class ResourceLoadingProcessEnginesAppPathRootTest {
 
   @RegisterExtension
   HttpClientExtension rule = new HttpClientExtension().followRedirects(true);
@@ -45,7 +47,7 @@ public class ResourceLoadingProcessEnginesAppPathRootTest {
   public int port;
 
   @Test
-  public void shouldRedirectToStaticContent() throws IOException {
+  void shouldRedirectToStaticContent() throws IOException {
     // given
     // send GET request to /
     HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/");

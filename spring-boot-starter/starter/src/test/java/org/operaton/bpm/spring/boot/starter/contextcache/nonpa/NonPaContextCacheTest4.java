@@ -22,7 +22,8 @@ import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTes
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -46,10 +47,10 @@ import static org.assertj.core.api.Assertions.assertThat;
   },
   webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
-public class NonPaContextCacheTest4 extends AbstractContextCacheTest {
+class NonPaContextCacheTest4 extends AbstractContextCacheTest {
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.testName = "nonPaTest4";
     contextMap.put(this.testName, applicationContext.hashCode());
 
@@ -58,7 +59,7 @@ public class NonPaContextCacheTest4 extends AbstractContextCacheTest {
   }
 
   @Test
-  public void testContextCaching() {
+  void testContextCaching() {
     assertThat(applicationContext.hashCode()).isNotEqualTo(contextMap.get("nonPaTest1"));
     assertThat(applicationContext.hashCode()).isNotEqualTo(contextMap.get("nonPaTest3"));
 
@@ -67,7 +68,7 @@ public class NonPaContextCacheTest4 extends AbstractContextCacheTest {
 
   @Override
   @Test
-  public void testEngineName()
+  void testEngineName()
   {
     assertThat(processEngine.getName()).isNotEqualTo(ProcessEngines.NAME_DEFAULT);
     assertThat(processEngine.getName()).containsPattern("processEngine\\w{10}");
@@ -75,7 +76,7 @@ public class NonPaContextCacheTest4 extends AbstractContextCacheTest {
 
   @Override
   @Test
-  public void testDbIsolation() {
+  void testDbIsolation() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("TestProcess");
     assertThat(instance).isNotNull();
 

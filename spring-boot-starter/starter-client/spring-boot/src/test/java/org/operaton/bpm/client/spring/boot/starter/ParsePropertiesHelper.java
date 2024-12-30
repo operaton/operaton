@@ -17,14 +17,14 @@
 package org.operaton.bpm.client.spring.boot.starter;
 
 import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
-import org.junit.runner.RunWith;
+
+import java.util.Map;
+
+import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import jakarta.annotation.PostConstruct;
-import java.util.Map;
 
 @ContextConfiguration(classes = ParsePropertiesHelper.TestConfig.class)
 public abstract class ParsePropertiesHelper {

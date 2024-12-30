@@ -25,6 +25,7 @@ import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
@@ -37,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TelemetryNonPaIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
-  public void shouldSubmitApplicationServerData() {
+  void shouldSubmitApplicationServerData() {
     DiagnosticsRegistry diagnosticsRegistry = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getDiagnosticsRegistry();
 
     // then
@@ -48,7 +49,7 @@ public class TelemetryNonPaIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public void shouldAddOperatonIntegration() {
+  void shouldAddOperatonIntegration() {
     // given default configuration
     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
 

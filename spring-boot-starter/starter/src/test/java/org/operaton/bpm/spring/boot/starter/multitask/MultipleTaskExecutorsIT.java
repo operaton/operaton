@@ -19,6 +19,7 @@ package org.operaton.bpm.spring.boot.starter.multitask;
 import org.operaton.bpm.spring.boot.starter.AbstractOperatonAutoConfigurationIT;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultJobConfiguration.JobConfiguration;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -47,7 +48,7 @@ public class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT
   private TaskExecutor operatonTaskExecutor;
 
   @Test
-  public void startWithMultipleTaskExecutorsTest() {
+  void startWithMultipleTaskExecutorsTest() {
     assertThat(taskExecutors.length).isGreaterThan(1);
     assertThat(taskExecutors).contains(operatonTaskExecutor);
   }

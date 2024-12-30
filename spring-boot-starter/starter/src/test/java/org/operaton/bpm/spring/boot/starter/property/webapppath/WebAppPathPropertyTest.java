@@ -18,6 +18,7 @@ package org.operaton.bpm.spring.boot.starter.property.webapppath;
 
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,10 +26,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
     "operaton.bpm.webapp.applicationPath=/my-custom-application/path",
 })
-public class WebAppPathPropertyTest extends ParsePropertiesHelper {
+class WebAppPathPropertyTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldSetAppPath() {
+  void shouldSetAppPath() {
     // given
 
     // when

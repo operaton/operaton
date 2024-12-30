@@ -29,11 +29,11 @@ import java.util.List;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.junit.Rule;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-public class CreateAdminUserConfigurationTest {
+class CreateAdminUserConfigurationTest {
 
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
   {
@@ -57,14 +57,14 @@ public class CreateAdminUserConfigurationTest {
       .watch(SpringBootProcessEngineLogger.PACKAGE);
 
   @Test
-  public void createAdminUser() {
+  void createAdminUser() {
     User user = processEngineRule.getIdentityService().createUserQuery().userId("admin").singleResult();
     assertThat(user).isNotNull();
     assertThat(user.getEmail()).isEqualTo("admin@localhost");
   }
 
   @Test
-  public void shouldLogInitialAdminUserCreationOnDebug() {
+  void shouldLogInitialAdminUserCreationOnDebug() {
     processEngineConfiguration.buildProcessEngine();
     verifyLogs(Level.DEBUG, "STARTER-SB010 Creating initial Admin User: AdminUserProperty[id=admin, firstName=Admin, lastName=Admin, email=admin@localhost, password=******]");
   }

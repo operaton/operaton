@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.client.spring.subscription;
 
-import org.operaton.bpm.client.spring.SpringTopicSubscription;
 import org.operaton.bpm.client.spring.MockedTest;
+import org.operaton.bpm.client.spring.SpringTopicSubscription;
 import org.operaton.bpm.client.spring.configuration.FullConfiguration;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
@@ -32,7 +34,7 @@ import static org.assertj.core.api.Assertions.entry;
     FullConfiguration.class
 })
 @DirtiesContext // context cannot be reused since the mocks need to be reinitialized completely
-public class SubscriptionTest extends MockedTest {
+class SubscriptionTest extends MockedTest {
 
   @Autowired
   @Qualifier("handlerSubscription")
@@ -42,7 +44,7 @@ public class SubscriptionTest extends MockedTest {
   protected ExternalTaskHandler handler;
 
   @Test
-  public void shouldVerifyTopicSubscription() {
+  void shouldVerifyTopicSubscription() {
     assertThat(subscription.getTopicName()).isEqualTo("topic-name");
     assertThat(subscription.getLockDuration()).isEqualTo(1111);
     assertThat(subscription.getExternalTaskHandler()).isEqualTo(handler);

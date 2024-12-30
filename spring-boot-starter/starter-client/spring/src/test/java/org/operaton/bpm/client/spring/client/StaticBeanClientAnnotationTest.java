@@ -19,6 +19,8 @@ package org.operaton.bpm.client.spring.client;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.client.configuration.StaticBeanConfiguration;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -26,7 +28,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @ContextConfiguration(classes = {StaticBeanConfiguration.class})
-public class StaticBeanClientAnnotationTest extends MockedTest {
+class StaticBeanClientAnnotationTest extends MockedTest {
 
   @Autowired
   public ExternalTaskClient client;
@@ -36,7 +38,7 @@ public class StaticBeanClientAnnotationTest extends MockedTest {
    * defined in a class with class level. Make sure that static methods are filtered out.
    */
   @Test
-  public void shouldVerifyStaticBeanIsNotInterpretedAsClientBean() {
+  void shouldVerifyStaticBeanIsNotInterpretedAsClientBean() {
     verify(clientBuilder).baseUrl("http://localhost:8080/engine-rest");
     verify(clientBuilder).build();
     verifyNoMoreInteractions(clientBuilder);

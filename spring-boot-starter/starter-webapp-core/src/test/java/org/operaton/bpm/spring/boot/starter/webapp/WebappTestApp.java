@@ -23,7 +23,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties(OperatonBpmProperties.class)
-public class WebappTestApp {
+import org.junit.jupiter.api.Test;
+class WebappTestApp {
 
   public static void main(String[] args) {
     SpringApplication.run(WebappTestApp.class, args);

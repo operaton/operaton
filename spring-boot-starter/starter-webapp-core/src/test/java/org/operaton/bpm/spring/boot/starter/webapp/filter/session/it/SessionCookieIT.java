@@ -19,6 +19,8 @@ package org.operaton.bpm.spring.boot.starter.webapp.filter.session.it;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
@@ -37,7 +39,7 @@ public class SessionCookieIT {
   public int port;
 
   @Test
-  public void shouldSetCookieWebapp() {
+  void shouldSetCookieWebapp() {
     httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
 
     String sessionCookieValue = httpClientExtension.getSessionCookie();
@@ -46,7 +48,7 @@ public class SessionCookieIT {
   }
 
   @Test
-  public void shouldSetCookieWebappRest() {
+  void shouldSetCookieWebappRest() {
     httpClientExtension.performRequest("http://localhost:" + port + "/operaton/api/engine/engine/");
 
     String sessionCookieValue = httpClientExtension.getSessionCookie();

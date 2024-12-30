@@ -20,6 +20,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,7 +44,7 @@ public class OperatonAutoConfigurationDisabledIT {
   private Optional<ProcessEngine> processEngine;
 
   @Test
-  public void processEngineNotConfigured() {
+  void processEngineNotConfigured() {
     assertThat(processEngine.isPresent()).isFalse();
   }
 

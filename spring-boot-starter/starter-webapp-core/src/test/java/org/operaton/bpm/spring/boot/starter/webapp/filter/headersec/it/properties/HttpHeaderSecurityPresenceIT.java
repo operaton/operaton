@@ -19,7 +19,9 @@ package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it.properti
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
@@ -43,13 +45,13 @@ public class HttpHeaderSecurityPresenceIT {
   @LocalServerPort
   public int port;
 
-  @Before
-  public void assignRule() {
+  @BeforeEach
+  void assignRule() {
     httpClientExtension = new HttpClientExtension(port);
   }
 
   @Test
-  public void shouldCheckPresenceOfXssProtectionHeader() {
+  void shouldCheckPresenceOfXssProtectionHeader() {
     // given
 
     // when
@@ -60,7 +62,7 @@ public class HttpHeaderSecurityPresenceIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfContentSecurityPolicyHeader() {
+  void shouldCheckPresenceOfContentSecurityPolicyHeader() {
     // given
 
     // when
@@ -71,7 +73,7 @@ public class HttpHeaderSecurityPresenceIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfContentTypeOptions() {
+  void shouldCheckPresenceOfContentTypeOptions() {
     // given
 
     // when
@@ -82,7 +84,7 @@ public class HttpHeaderSecurityPresenceIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfHsts() {
+  void shouldCheckPresenceOfHsts() {
     // given
 
     // when

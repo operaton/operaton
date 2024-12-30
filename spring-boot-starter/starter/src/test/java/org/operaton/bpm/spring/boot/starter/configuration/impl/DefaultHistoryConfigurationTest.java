@@ -23,14 +23,17 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultHistoryConfigurationTest {
+class DefaultHistoryConfigurationTest {
 
   @Mock
   private SpringProcessEngineConfiguration springProcessEngineConfiguration;
@@ -39,34 +42,34 @@ public class DefaultHistoryConfigurationTest {
 
   private DefaultHistoryConfiguration defaultHistoryConfiguration;
 
-  @Before
-  public void before() {
+  @BeforeEach
+  void before() {
     operatonBpmProperties = new OperatonBpmProperties();
     defaultHistoryConfiguration = new DefaultHistoryConfiguration();
     defaultHistoryConfiguration.operatonBpmProperties = operatonBpmProperties;
   }
 
   @Test
-  public void defaultHistoryLevelTest() {
+  void defaultHistoryLevelTest() {
     defaultHistoryConfiguration.preInit(springProcessEngineConfiguration);
     verify(springProcessEngineConfiguration, times(1)).setHistory(HistoryLevel.HISTORY_LEVEL_FULL.getName());
   }
 
   @Test
-  public void historyLevelTest() {
+  void historyLevelTest() {
     operatonBpmProperties.setHistoryLevel(HistoryLevel.HISTORY_LEVEL_AUDIT.getName());
     defaultHistoryConfiguration.preInit(springProcessEngineConfiguration);
     verify(springProcessEngineConfiguration).setHistory(HistoryLevel.HISTORY_LEVEL_AUDIT.getName());
   }
 
   @Test
-  public void noHistoryEventHandlerTest() {
+  void noHistoryEventHandlerTest() {
     defaultHistoryConfiguration.preInit(springProcessEngineConfiguration);
     verify(springProcessEngineConfiguration, times(0)).setHistoryEventHandler(Mockito.any(HistoryEventHandler.class));
   }
 
   @Test
-  public void historyEventHandlerTest() {
+  void historyEventHandlerTest() {
     HistoryEventHandler historyEventHandlerMock = mock(HistoryEventHandler.class);
     List customHandlersList = mock(List.class);
     when(springProcessEngineConfiguration.getCustomHistoryEventHandlers()).thenReturn(customHandlersList);

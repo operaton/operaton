@@ -21,6 +21,8 @@ import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.client.configuration.BackoffStrategyConfiguration;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -31,7 +33,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
     SimpleClientConfiguration.class,
     BackoffStrategyConfiguration.class
 })
-public class BackoffStrategyConfigurationTest extends MockedTest {
+class BackoffStrategyConfigurationTest extends MockedTest {
 
   @Autowired
   public ExternalTaskClient client;
@@ -40,7 +42,7 @@ public class BackoffStrategyConfigurationTest extends MockedTest {
   public BackoffStrategy backoffStrategy;
 
   @Test
-  public void shouldVerifyBackoffStrategyAdded() {
+  void shouldVerifyBackoffStrategyAdded() {
     verify(clientBuilder).baseUrl("http://localhost:8080/engine-rest");
     verify(clientBuilder).backoffStrategy(backoffStrategy);
     verify(clientBuilder).build();

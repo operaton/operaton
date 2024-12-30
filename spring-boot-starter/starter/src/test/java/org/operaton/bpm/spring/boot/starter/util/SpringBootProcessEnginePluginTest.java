@@ -20,16 +20,14 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 
-import org.junit.Rule;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SpringBootProcessEnginePluginTest {
-
-  @Rule
-  public final MockitoRule mockito = MockitoJUnit.rule();
+@ExtendWith(MockitoExtension.class)
+class SpringBootProcessEnginePluginTest {
 
   private class DummySpringPlugin extends SpringBootProcessEnginePlugin {
 
@@ -49,7 +47,7 @@ public class SpringBootProcessEnginePluginTest {
   }
 
   @Test
-  public void delegate_for_springConfig() {
+  void delegate_for_springConfig() {
     ProcessEngineConfigurationImpl c = new SpringProcessEngineConfiguration();
 
     DummySpringPlugin plugin = new DummySpringPlugin();
@@ -62,7 +60,7 @@ public class SpringBootProcessEnginePluginTest {
   }
 
   @Test
-  public void no_delegate_for_standaloneConfig() {
+  void no_delegate_for_standaloneConfig() {
     ProcessEngineConfigurationImpl c = new StandaloneInMemProcessEngineConfiguration();
 
     DummySpringPlugin plugin = new DummySpringPlugin();

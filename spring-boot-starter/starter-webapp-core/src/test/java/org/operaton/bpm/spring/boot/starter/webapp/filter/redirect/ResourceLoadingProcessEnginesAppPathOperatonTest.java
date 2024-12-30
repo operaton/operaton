@@ -21,11 +21,13 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtensi
 
 import java.net.HttpURLConnection;
 
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 @SpringBootTest(classes = { FilterTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -34,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         "operaton.bpm.webapp.index-redirect-enabled=false",
         "operaton.bpm.admin-user.id=admin" })
 @DirtiesContext
-public class ResourceLoadingProcessEnginesAppPathOperatonTest {
+class ResourceLoadingProcessEnginesAppPathOperatonTest {
 
   @RegisterExtension
   HttpClientExtension rule = new HttpClientExtension().followRedirects(true);
@@ -43,7 +45,7 @@ public class ResourceLoadingProcessEnginesAppPathOperatonTest {
   public int port;
 
   @Test
-  public void shouldRedirectRequestToTasklist_contextRoot() {
+  void shouldRedirectRequestToTasklist_contextRoot() {
     // when
     // send GET request to /operaton
     HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/operaton");

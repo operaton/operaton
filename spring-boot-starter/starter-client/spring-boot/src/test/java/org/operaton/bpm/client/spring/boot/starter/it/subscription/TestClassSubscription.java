@@ -20,6 +20,7 @@ import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
 import org.operaton.bpm.client.task.ExternalTaskService;
+
 import org.springframework.stereotype.Component;
 
 @ExternalTaskSubscription(

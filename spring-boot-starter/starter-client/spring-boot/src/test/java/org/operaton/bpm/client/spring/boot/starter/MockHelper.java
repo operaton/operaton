@@ -18,13 +18,11 @@ package org.operaton.bpm.client.spring.boot.starter;
 
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
+
 import org.mockito.MockedStatic;
 
 import static org.junit.Assume.assumeTrue;
-import static org.mockito.Mockito.RETURNS_SELF;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class MockHelper {
 

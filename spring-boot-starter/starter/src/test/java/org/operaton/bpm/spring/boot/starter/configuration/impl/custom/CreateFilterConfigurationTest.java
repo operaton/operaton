@@ -31,14 +31,14 @@ import java.util.List;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.junit.Rule;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-
-public class CreateFilterConfigurationTest {
+class CreateFilterConfigurationTest {
 
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
 
@@ -64,12 +64,12 @@ public class CreateFilterConfigurationTest {
       .watch(SpringBootProcessEngineLogger.PACKAGE);
 
   @Test
-  public void createAdminUser() {
+  void createAdminUser() {
     assertThat(processEngineRule.getFilterService().createFilterQuery().filterName("All").singleResult()).isNotNull();
   }
 
   @Test
-  public void fail_if_not_configured_onInit() {
+  void fail_if_not_configured_onInit() {
     thrown.expect(IllegalStateException.class);
     OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
     final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
@@ -78,7 +78,7 @@ public class CreateFilterConfigurationTest {
   }
 
   @Test
-  public void fail_if_not_configured_onExecution() {
+  void fail_if_not_configured_onExecution() {
     thrown.expect(NullPointerException.class);
 
     OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
@@ -92,7 +92,7 @@ public class CreateFilterConfigurationTest {
   }
 
   @Test
-  public void do_not_create_when_already_exist() {
+  void do_not_create_when_already_exist() {
     OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
     operatonBpmProperties.getFilter().setCreate("All");
     final CreateFilterConfiguration configuration = new CreateFilterConfiguration();

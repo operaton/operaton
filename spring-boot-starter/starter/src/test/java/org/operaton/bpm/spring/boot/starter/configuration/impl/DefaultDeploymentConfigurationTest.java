@@ -22,24 +22,24 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.io.Resource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-public class DefaultDeploymentConfigurationTest {
+class DefaultDeploymentConfigurationTest {
 
   private final DefaultDeploymentConfiguration defaultDeploymentConfiguration = new DefaultDeploymentConfiguration();
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
   private final SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
 
-  @Before
-  public void before() {
+  @BeforeEach
+  void before() {
     defaultDeploymentConfiguration.operatonBpmProperties = operatonBpmProperties;
   }
 
   @Test
-  public void noDeploymentTest() {
+  void noDeploymentTest() {
     operatonBpmProperties.setAutoDeploymentEnabled(false);
     defaultDeploymentConfiguration.preInit(configuration);
 
@@ -47,7 +47,7 @@ public class DefaultDeploymentConfigurationTest {
   }
 
   @Test
-  public void deploymentTest() {
+  void deploymentTest() {
     operatonBpmProperties.setAutoDeploymentEnabled(true);
     defaultDeploymentConfiguration.preInit(configuration);
 

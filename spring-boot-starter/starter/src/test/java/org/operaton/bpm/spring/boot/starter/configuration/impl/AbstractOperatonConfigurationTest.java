@@ -21,12 +21,13 @@ import static org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil.j
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
-public class AbstractOperatonConfigurationTest {
+import static org.assertj.core.api.Assertions.assertThat;
+class AbstractOperatonConfigurationTest {
 
   @Test
-  public void joinLists() {
+  void joinLists() {
     assertThat(join(List.of("a"), List.of("b"))).containsExactly("a", "b");
     assertThat(join(null, List.of("b"))).containsExactly("b");
     assertThat(join(new ArrayList<String>(), List.of("b"))).containsExactly("b");

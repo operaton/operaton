@@ -17,15 +17,17 @@
 package org.operaton.bpm.client.spring.boot.starter.client;
 
 import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestPropertySource(properties = {"operaton.bpm.client.foo=bar"})
-public class DefaultClientConfigurationTest extends ParsePropertiesHelper {
+class DefaultClientConfigurationTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckProperties() {
+  void shouldCheckProperties() {
     assertThat(properties.getBaseUrl()).isNull();
     assertThat(properties.getWorkerId()).isNull();
     assertThat(properties.getMaxTasks()).isNull();

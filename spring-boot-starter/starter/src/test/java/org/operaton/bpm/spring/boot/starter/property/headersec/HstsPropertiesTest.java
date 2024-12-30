@@ -19,6 +19,7 @@ package org.operaton.bpm.spring.boot.starter.property.headersec;
 import org.operaton.bpm.spring.boot.starter.property.HeaderSecurityProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,10 +30,10 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.headerSecurity.hstsMaxAge=47",
   "operaton.bpm.webapp.headerSecurity.hstsValue=Foo"
 })
-public class HstsPropertiesTest extends ParsePropertiesHelper {
+class HstsPropertiesTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckHstsProperties() {
+  void shouldCheckHstsProperties() {
     // given
     
     // when

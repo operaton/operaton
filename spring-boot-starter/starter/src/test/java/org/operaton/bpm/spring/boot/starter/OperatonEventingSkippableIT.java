@@ -27,8 +27,9 @@ import org.operaton.bpm.spring.boot.starter.event.TaskEvent;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestEventCaptor;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -60,13 +61,13 @@ public class OperatonEventingSkippableIT extends AbstractOperatonAutoConfigurati
 
   private ProcessInstance instance;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     eventCaptor.clear();
   }
 
-  @After
-  public void stop() {
+  @AfterEach
+  void stop() {
     if (instance != null) {
       // update stale instance
       instance = runtime.createProcessInstanceQuery().processInstanceId(instance.getProcessInstanceId()).active().singleResult();

@@ -18,15 +18,19 @@ package org.operaton.bpm.spring.boot.starter.actuator;
 
 import org.operaton.bpm.engine.ProcessEngine;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ProcessEngineHealthIndicatorTest {
+import org.junit.jupiter.api.Test;
+class ProcessEngineHealthIndicatorTest {
 
   private static final String PROCESS_ENGINE_NAME = "process engine name";
 
@@ -39,7 +43,7 @@ public class ProcessEngineHealthIndicatorTest {
   }
 
   @Test
-  public void upTest() {
+  void upTest() {
     when(processEngine.getName()).thenReturn(PROCESS_ENGINE_NAME);
     Health health = new ProcessEngineHealthIndicator(processEngine).health();
     assertEquals(Status.UP, health.getStatus());

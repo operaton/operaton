@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.condition;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.env.Environment;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
-
-public class NeedsHistoryAutoConfigurationConditionTest {
+class NeedsHistoryAutoConfigurationConditionTest {
 
   @Test
-  public void isHistoryAutoSupportedTest() {
+  void isHistoryAutoSupportedTest() {
     NeedsHistoryAutoConfigurationCondition condition = new NeedsHistoryAutoConfigurationCondition();
     assertFalse(condition.isHistoryAutoSupported());
     condition.historyAutoFieldName = "DB_SCHEMA_UPDATE_FALSE";
@@ -34,7 +34,7 @@ public class NeedsHistoryAutoConfigurationConditionTest {
   }
 
   @Test
-  public void needsNoAdditionalConfigurationTest1() {
+  void needsNoAdditionalConfigurationTest1() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
@@ -43,7 +43,7 @@ public class NeedsHistoryAutoConfigurationConditionTest {
   }
 
   @Test
-  public void needsNoAdditionalConfigurationTest2() {
+  void needsNoAdditionalConfigurationTest2() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
@@ -54,7 +54,7 @@ public class NeedsHistoryAutoConfigurationConditionTest {
   }
 
   @Test
-  public void needsAdditionalConfigurationTest() {
+  void needsAdditionalConfigurationTest() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
@@ -65,7 +65,7 @@ public class NeedsHistoryAutoConfigurationConditionTest {
   }
 
   @Test
-  public void getMatchOutcomeMatchTest() {
+  void getMatchOutcomeMatchTest() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
@@ -76,7 +76,7 @@ public class NeedsHistoryAutoConfigurationConditionTest {
   }
 
   @Test
-  public void getMatchOutcomeNoMatchTest() {
+  void getMatchOutcomeNoMatchTest() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);

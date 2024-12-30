@@ -16,32 +16,25 @@
  */
 package org.operaton.bpm.spring.boot.starter.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-
-import java.io.ByteArrayInputStream;
-
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.junit.runner.RunWith;
+
+import java.io.ByteArrayInputStream;
+
+import my.own.custom.spring.boot.project.SampleOperatonRestApplication;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
-import my.own.custom.spring.boot.project.SampleOperatonRestApplication;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(classes = SampleOperatonRestApplication.class, webEnvironment = RANDOM_PORT)
 public class SampleOperatonRestApplicationIT {
@@ -56,14 +49,14 @@ public class SampleOperatonRestApplicationIT {
   private OperatonBpmProperties operatonBpmProperties;
 
   @Test
-  public void restApiIsAvailable() {
+  void restApiIsAvailable() {
     ResponseEntity<String> entity = testRestTemplate.getForEntity("/engine-rest/engine/", String.class);
     assertEquals(HttpStatus.OK, entity.getStatusCode());
     assertEquals("[{\"name\":\"testEngine\"}]", entity.getBody());
   }
 
   @Test
-  public void startProcessInstanceByCustomResource() {
+  void startProcessInstanceByCustomResource() {
     ResponseEntity<ProcessInstanceDto> entity = testRestTemplate.postForEntity("/engine-rest/process/start", HttpEntity.EMPTY, ProcessInstanceDto.class);
     assertEquals(HttpStatus.OK, entity.getStatusCode());
     assertNotNull(entity.getBody());
@@ -74,7 +67,7 @@ public class SampleOperatonRestApplicationIT {
   }
 
   @Test
-  public void multipartFileUploadOperatonRestIsWorking() {
+  void multipartFileUploadOperatonRestIsWorking() {
     final String variableName = "testvariable";
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TestProcess");
     LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -97,7 +90,7 @@ public class SampleOperatonRestApplicationIT {
   }
 
   @Test
-  public void fetchAndLockExternalTaskWithLongPollingIsRunning() {
+  void fetchAndLockExternalTaskWithLongPollingIsRunning() {
 
     String requestJson = "{"
       + "  \"workerId\":\"aWorkerId\","

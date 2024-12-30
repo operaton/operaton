@@ -23,13 +23,14 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-
-public class OperatonBpmConfigurationTest {
+class OperatonBpmConfigurationTest {
 
   @Test
-  public void processEngineConfigurationImplTest() {
+  void processEngineConfigurationImplTest() {
     OperatonBpmConfiguration operatonBpmConfiguration = new OperatonBpmConfiguration();
     List<ProcessEnginePlugin> processEnginePlugins = createUnordedList();
     ProcessEngineConfigurationImpl processEngineConfigurationImpl = operatonBpmConfiguration.processEngineConfigurationImpl(processEnginePlugins);

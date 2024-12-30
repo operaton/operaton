@@ -26,10 +26,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.csrf.sameSiteCookieValue=aCustomValue"
 })
-public class CookieSameSiteOptionValueTest extends ParsePropertiesHelper {
+import org.junit.jupiter.api.Test;
+class CookieSameSiteOptionValueTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckSameSiteCookieValue() {
+  void shouldCheckSameSiteCookieValue() {
     CsrfProperties properties = webapp.getCsrf();
 
     assertThat(properties.getSameSiteCookieValue()).isEqualTo("aCustomValue");

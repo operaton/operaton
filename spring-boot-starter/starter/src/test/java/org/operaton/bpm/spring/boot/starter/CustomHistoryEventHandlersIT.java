@@ -24,6 +24,7 @@ import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CustomHistoryEventHandlersIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
-  public void shouldUsePublishHistoryEventHandler() {
+  void shouldUsePublishHistoryEventHandler() {
     // given
     ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl) processEngine
       .getProcessEngineConfiguration();

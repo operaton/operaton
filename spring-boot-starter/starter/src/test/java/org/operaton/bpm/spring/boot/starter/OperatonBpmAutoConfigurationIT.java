@@ -31,13 +31,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
 @SpringBootTest(classes = { TestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class OperatonBpmAutoConfigurationIT {
@@ -49,7 +49,7 @@ public class OperatonBpmAutoConfigurationIT {
   private ApplicationContext appContext;
 
   @Test
-  public void ensureProcessEngineServicesAreExposedAsBeans() {
+  void ensureProcessEngineServicesAreExposedAsBeans() {
     for (Class<?> classToCheck : getProcessEngineServicesClasses()) {
       Object bean = appContext.getBean(classToCheck);
       assertNotNull(classToCheck + " must be exposed as @Bean. Check configuration", bean);
@@ -60,7 +60,7 @@ public class OperatonBpmAutoConfigurationIT {
   }
 
   @Test
-  public void ensureSpinProcessEnginePluginIsCorrectlyLoaded() {
+  void ensureSpinProcessEnginePluginIsCorrectlyLoaded() {
     // given
     List<ProcessEnginePlugin> plugins = processEngineConfiguration.getProcessEnginePlugins();
     List<TypedValueSerializer<?>> serializers = processEngineConfiguration.getVariableSerializers().getSerializers();
@@ -79,7 +79,7 @@ public class OperatonBpmAutoConfigurationIT {
   }
 
   @Test
-  public void ensureConnectProcessEnginePluginIsCorrectlyLoaded() {
+  void ensureConnectProcessEnginePluginIsCorrectlyLoaded() {
     // given
     List<ProcessEnginePlugin> plugins = processEngineConfiguration.getProcessEnginePlugins();
 

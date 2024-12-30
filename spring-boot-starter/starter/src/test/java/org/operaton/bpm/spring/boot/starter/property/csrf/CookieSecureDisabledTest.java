@@ -26,10 +26,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.csrf.enableSecureCookie=false"
 })
-public class CookieSecureDisabledTest extends ParsePropertiesHelper {
+import org.junit.jupiter.api.Test;
+class CookieSecureDisabledTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckSecureCookieDisabled() {
+  void shouldCheckSecureCookieDisabled() {
     CsrfProperties properties = webapp.getCsrf();
 
     assertThat(properties.isEnableSecureCookie()).isFalse();

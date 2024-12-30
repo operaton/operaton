@@ -23,30 +23,31 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import java.util.Optional;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-public class DefaultProcessEngineConfigurationTest {
+class DefaultProcessEngineConfigurationTest {
 
   private final DefaultProcessEngineConfiguration instance = new DefaultProcessEngineConfiguration();
   private final SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
   private final OperatonBpmProperties properties = new OperatonBpmProperties();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     ReflectionTestUtils.setField(instance, "operatonBpmProperties", properties);
     initIdGenerator(null);
   }
 
   @Test
-  public void setName_if_not_empty() {
+  void setName_if_not_empty() {
     properties.setProcessEngineName("foo");
     instance.preInit(configuration);
     assertThat(configuration.getProcessEngineName()).isEqualTo("foo");
   }
 
   @Test
-  public void setName_ignore_empty() {
+  void setName_ignore_empty() {
     properties.setProcessEngineName(null);
     instance.preInit(configuration);
     assertThat(configuration.getProcessEngineName()).isEqualTo(ProcessEngines.NAME_DEFAULT);
@@ -57,14 +58,14 @@ public class DefaultProcessEngineConfigurationTest {
   }
 
   @Test
-  public void setName_ignore_hyphen() {
+  void setName_ignore_hyphen() {
     properties.setProcessEngineName("foo-bar");
     instance.preInit(configuration);
     assertThat(configuration.getProcessEngineName()).isEqualTo(ProcessEngines.NAME_DEFAULT);
   }
 
   @Test
-  public void setDefaultSerializationFormat() {
+  void setDefaultSerializationFormat() {
     final String defaultSerializationFormat = "testformat";
     properties.setDefaultSerializationFormat(defaultSerializationFormat);
     instance.preInit(configuration);
@@ -72,7 +73,7 @@ public class DefaultProcessEngineConfigurationTest {
   }
 
   @Test
-  public void setDefaultSerializationFormat_ignore_null() {
+  void setDefaultSerializationFormat_ignore_null() {
     final String defaultSerializationFormat = configuration.getDefaultSerializationFormat();
     properties.setDefaultSerializationFormat(null);
     instance.preInit(configuration);
@@ -80,7 +81,7 @@ public class DefaultProcessEngineConfigurationTest {
   }
 
   @Test
-  public void setDefaultSerializationFormat_ignore_empty() {
+  void setDefaultSerializationFormat_ignore_empty() {
     final String defaultSerializationFormat = configuration.getDefaultSerializationFormat();
     properties.setDefaultSerializationFormat(" ");
     instance.preInit(configuration);
@@ -88,7 +89,7 @@ public class DefaultProcessEngineConfigurationTest {
   }
 
   @Test
-  public void setJobExecutorAcquireByPriority() {
+  void setJobExecutorAcquireByPriority() {
     properties.setJobExecutorAcquireByPriority(null);
     instance.preInit(configuration);
     assertThat(configuration.isJobExecutorAcquireByPriority()).isFalse();
@@ -99,7 +100,7 @@ public class DefaultProcessEngineConfigurationTest {
   }
 
   @Test
-  public void setDefaultNumberOfRetries() {
+  void setDefaultNumberOfRetries() {
     properties.setDefaultNumberOfRetries(null);
     instance.preInit(configuration);
     assertThat(configuration.getDefaultNumberOfRetries()).isEqualTo(3);

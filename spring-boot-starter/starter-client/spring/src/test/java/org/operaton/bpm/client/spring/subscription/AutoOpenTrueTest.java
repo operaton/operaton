@@ -16,9 +16,11 @@
  */
 package org.operaton.bpm.client.spring.subscription;
 
-import org.operaton.bpm.client.spring.SpringTopicSubscription;
 import org.operaton.bpm.client.spring.MockedTest;
+import org.operaton.bpm.client.spring.SpringTopicSubscription;
 import org.operaton.bpm.client.spring.configuration.DefaultConfiguration;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,13 +31,13 @@ import static org.assertj.core.api.Assertions.assertThat;
     DefaultConfiguration.class
 })
 @DirtiesContext // context cannot be reused since the mocks need to be reinitialized completely
-public class AutoOpenTrueTest extends MockedTest {
+class AutoOpenTrueTest extends MockedTest {
 
   @Autowired
   protected SpringTopicSubscription subscription;
 
   @Test
-  public void shouldVerifyOpenedSubscription() {
+  void shouldVerifyOpenedSubscription() {
     assertThat(subscription.isOpen()).isTrue();
     assertThat(subscription.isAutoOpen()).isTrue();
   }

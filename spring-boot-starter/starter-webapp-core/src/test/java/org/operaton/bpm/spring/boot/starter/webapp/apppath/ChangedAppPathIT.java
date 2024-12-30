@@ -22,6 +22,8 @@ import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.im
 
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -52,7 +54,7 @@ public class ChangedAppPathIT {
   protected TestRestTemplate restClient;
 
   @Test
-  public void shouldCheckPresenceOfCsrfPreventionFilter() {
+  void shouldCheckPresenceOfCsrfPreventionFilter() {
     // given
 
     // when
@@ -71,7 +73,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfRedirection() {
+  void shouldCheckPresenceOfRedirection() {
     // given
 
     // when
@@ -83,7 +85,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfHeaderSecurityFilter() {
+  void shouldCheckPresenceOfHeaderSecurityFilter() {
     // given
 
     // when
@@ -99,7 +101,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfCacheControlFilter() {
+  void shouldCheckPresenceOfCacheControlFilter() {
     // given
 
     // when
@@ -114,7 +116,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfRestApi() {
+  void shouldCheckPresenceOfRestApi() {
     // given
 
     // when
@@ -126,7 +128,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfSecurityFilter() {
+  void shouldCheckPresenceOfSecurityFilter() {
     // given
 
     // when
@@ -138,7 +140,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfLibResources() {
+  void shouldCheckPresenceOfLibResources() {
     // given
 
     // when
@@ -150,7 +152,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfAppResources() {
+  void shouldCheckPresenceOfAppResources() {
     // given
 
     // when
@@ -162,7 +164,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfApiResources() {
+  void shouldCheckPresenceOfApiResources() {
     // given
 
     // when

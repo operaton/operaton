@@ -19,7 +19,9 @@ package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
@@ -40,13 +42,13 @@ public class HstsIT {
   @LocalServerPort
   public int port;
 
-  @Before
-  public void assignRule() {
+  @BeforeEach
+  void assignRule() {
     httpClientExtension = new HttpClientExtension(port);
   }
 
   @Test
-  public void shouldConfigureHsts() {
+  void shouldConfigureHsts() {
     // given
 
     // when

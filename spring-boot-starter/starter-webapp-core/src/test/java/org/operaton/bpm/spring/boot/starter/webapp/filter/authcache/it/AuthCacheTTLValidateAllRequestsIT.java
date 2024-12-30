@@ -23,6 +23,8 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtensi
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -50,7 +52,7 @@ public class AuthCacheTTLValidateAllRequestsIT {
   protected IdentityService identityService;
 
   @Test
-  public void shouldRemoveCache() {
+  void shouldRemoveCache() {
     // given
     httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/welcome/default");
 

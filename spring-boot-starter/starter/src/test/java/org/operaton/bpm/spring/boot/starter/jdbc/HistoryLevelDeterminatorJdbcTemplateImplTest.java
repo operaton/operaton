@@ -24,30 +24,33 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import java.util.Collections;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class HistoryLevelDeterminatorJdbcTemplateImplTest {
+class HistoryLevelDeterminatorJdbcTemplateImplTest {
 
   @Mock
   private JdbcTemplate jdbcTemplate;
 
   private OperatonBpmProperties operatonBpmProperties;
 
-  @Before
-  public void before() {
+  @BeforeEach
+  void before() {
     operatonBpmProperties = new OperatonBpmProperties();
   }
 
   @Test
-  public void afterPropertiesSetTest1() throws Exception {
+  void afterPropertiesSetTest1() throws Exception {
     operatonBpmProperties = new OperatonBpmProperties();
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     determinator.setJdbcTemplate(jdbcTemplate);
@@ -57,7 +60,7 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
   }
 
   @Test
-  public void afterPropertiesSetTest2() throws Exception {
+  void afterPropertiesSetTest2() throws Exception {
     operatonBpmProperties = new OperatonBpmProperties();
     final String historyLevelDefault = "defaultValue";
     operatonBpmProperties.setHistoryLevelDefault(historyLevelDefault);
@@ -88,7 +91,7 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
   }
 
   @Test
-  public void determinedTest() throws Exception {
+  void determinedTest() throws Exception {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     final String defaultHistoryLevel = "test";
     determinator.setDefaultHistoryLevel(defaultHistoryLevel);
@@ -102,7 +105,7 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
   }
 
   @Test
-  public void determinedExceptionIgnoringTest() throws Exception {
+  void determinedExceptionIgnoringTest() throws Exception {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     final String defaultHistoryLevel = "test";
     determinator.setDefaultHistoryLevel(defaultHistoryLevel);
@@ -129,7 +132,7 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
   }
 
   @Test
-  public void getSqlTest() {
+  void getSqlTest() {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     determinator.setOperatonBpmProperties(operatonBpmProperties);
     assertEquals("SELECT VALUE_ FROM ACT_GE_PROPERTY WHERE NAME_='historyLevel'", determinator.getSql());
@@ -138,7 +141,7 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
   }
 
   @Test
-  public void getHistoryLevelFromTest() {
+  void getHistoryLevelFromTest() {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     assertEquals(determinator.getDefaultHistoryLevel(), determinator.getHistoryLevelFrom(-1));
     assertFalse(determinator.historyLevels.isEmpty());

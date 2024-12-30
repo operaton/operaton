@@ -18,6 +18,7 @@ package org.operaton.bpm.client.spring.client.configuration;
 
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
+
 import org.springframework.context.annotation.Bean;
 
 @EnableExternalTaskClient

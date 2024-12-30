@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.impl.db.DbIdGenerator;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import static org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration.SIMPLE;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -35,7 +36,7 @@ public class SimpleUuidGeneratorIT {
   private ProcessEngine processEngine;
 
   @Test
-  public void configured_idGenerator_is_uuid() {
+  void configured_idGenerator_is_uuid() {
     IdGenerator idGenerator = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getIdGenerator();
 
     assertThat(idGenerator).isInstanceOf(DbIdGenerator.class);

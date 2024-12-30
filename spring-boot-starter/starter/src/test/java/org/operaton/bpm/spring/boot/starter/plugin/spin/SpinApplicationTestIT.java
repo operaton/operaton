@@ -19,14 +19,14 @@ package org.operaton.bpm.spring.boot.starter.plugin.spin;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RuntimeService;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 @SpringBootTest(classes = { SpinApplication.class },
                 webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class SpinApplicationTestIT {
+class SpinApplicationTestIT {
 
   @Autowired
   RuntimeService runtimeService;
@@ -35,7 +35,7 @@ public class SpinApplicationTestIT {
   HistoryService historyService;
 
   @Test
-  public void shouldDeserializeSuccessfully() {
+  void shouldDeserializeSuccessfully() {
     // when
     runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess");
 

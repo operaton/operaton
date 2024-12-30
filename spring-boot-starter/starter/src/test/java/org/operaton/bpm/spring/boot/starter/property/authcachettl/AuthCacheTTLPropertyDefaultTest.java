@@ -18,12 +18,13 @@ package org.operaton.bpm.spring.boot.starter.property.authcachettl;
 
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
-public class AuthCacheTTLPropertyDefaultTest extends ParsePropertiesHelper {
+import static org.assertj.core.api.Assertions.assertThat;
+class AuthCacheTTLPropertyDefaultTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldDefaultToEnabledAndTTLFiveMinutes() {
+  void shouldDefaultToEnabledAndTTLFiveMinutes() {
     // given
 
     // when

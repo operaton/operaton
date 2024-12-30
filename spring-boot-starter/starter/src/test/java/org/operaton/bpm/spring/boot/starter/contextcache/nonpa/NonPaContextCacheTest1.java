@@ -20,7 +20,7 @@ import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTes
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -42,10 +42,10 @@ import org.springframework.test.context.ActiveProfiles;
   },
   webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
-public class NonPaContextCacheTest1 extends AbstractContextCacheTest {
+class NonPaContextCacheTest1 extends AbstractContextCacheTest {
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.processEngineName = "foo";
     this.testName = "nonPaTest1";
 

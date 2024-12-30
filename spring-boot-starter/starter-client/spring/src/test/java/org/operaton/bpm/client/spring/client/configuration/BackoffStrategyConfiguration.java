@@ -18,9 +18,10 @@ package org.operaton.bpm.client.spring.client.configuration;
 
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.task.ExternalTask;
-import org.springframework.context.annotation.Bean;
 
 import java.util.List;
+
+import org.springframework.context.annotation.Bean;
 
 public class BackoffStrategyConfiguration {
 

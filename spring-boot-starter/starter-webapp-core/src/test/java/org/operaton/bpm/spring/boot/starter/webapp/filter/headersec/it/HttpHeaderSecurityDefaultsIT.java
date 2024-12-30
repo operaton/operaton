@@ -20,7 +20,9 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
@@ -35,13 +37,13 @@ public class HttpHeaderSecurityDefaultsIT {
   @LocalServerPort
   public int port;
 
-  @Before
-  public void assignRule() {
+  @BeforeEach
+  void assignRule() {
     httpClientExtension = new HttpClientExtension(port);
   }
 
   @Test
-  public void shouldCheckDefaultOfXssProtectionHeader() {
+  void shouldCheckDefaultOfXssProtectionHeader() {
     // given
 
     // when
@@ -52,7 +54,7 @@ public class HttpHeaderSecurityDefaultsIT {
   }
 
   @Test
-  public void shouldCheckDefaultOfContentSecurityPolicyHeader() {
+  void shouldCheckDefaultOfContentSecurityPolicyHeader() {
     // given
 
     // when
@@ -64,7 +66,7 @@ public class HttpHeaderSecurityDefaultsIT {
   }
 
   @Test
-  public void shouldCheckDefaultOfContentTypeOptions() {
+  void shouldCheckDefaultOfContentTypeOptions() {
     // given
 
     // when

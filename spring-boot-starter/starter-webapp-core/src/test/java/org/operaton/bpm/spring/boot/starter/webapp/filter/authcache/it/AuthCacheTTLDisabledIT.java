@@ -26,6 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -52,13 +55,13 @@ public class AuthCacheTTLDisabledIT {
   @Autowired
   protected IdentityService identityService;
 
-  @After
-  public void reset() {
+  @AfterEach
+  void reset() {
     ClockUtil.reset();
   }
 
   @Test
-  public void shouldNotRemoveCache() {
+  void shouldNotRemoveCache() {
     // given
     httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/welcome/default");
 

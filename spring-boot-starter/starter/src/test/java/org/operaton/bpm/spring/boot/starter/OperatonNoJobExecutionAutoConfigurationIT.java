@@ -18,11 +18,12 @@ package org.operaton.bpm.spring.boot.starter;
 
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest(classes = { TestApplication.class },
   webEnvironment = WebEnvironment.NONE,
@@ -34,7 +35,7 @@ import static org.junit.Assert.assertNull;
 public class OperatonNoJobExecutionAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
-  public void jobConfigurationTest() {
+  void jobConfigurationTest() {
     assertNull(jobExecutor);
   }
 

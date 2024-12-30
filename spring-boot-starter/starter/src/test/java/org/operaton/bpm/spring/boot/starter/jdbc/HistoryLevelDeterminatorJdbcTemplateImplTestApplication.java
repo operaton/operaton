@@ -29,7 +29,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 @EnableAutoConfiguration(exclude = OperatonBpmAutoConfiguration.class)
-public class HistoryLevelDeterminatorJdbcTemplateImplTestApplication {
+class HistoryLevelDeterminatorJdbcTemplateImplTestApplication {
 
   @Bean
   public OperatonBpmProperties operatonBpmProperties() {

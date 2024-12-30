@@ -20,6 +20,8 @@ import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
@@ -41,7 +43,7 @@ public class SameSiteCustomValueIT {
   public int port;
 
   @Test
-  public void shouldSetSameSiteCookieCustomValue() {
+  void shouldSetSameSiteCookieCustomValue() {
     httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
 
     String xsrfCookieValue = httpClientExtension.getXsrfCookie();

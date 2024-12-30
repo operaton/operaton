@@ -24,17 +24,16 @@ import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
 import org.operaton.bpm.client.spring.boot.starter.client.configuration.RequestInterceptorConfiguration;
 import org.operaton.bpm.client.spring.boot.starter.client.configuration.SimpleSubscriptionConfiguration;
 import org.operaton.bpm.client.spring.boot.starter.impl.ClientAutoConfiguration;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -50,20 +49,18 @@ import static org.mockito.Mockito.verify;
     SimpleSubscriptionConfiguration.class,
     RequestInterceptorConfiguration.class
 })
-public class BasicAuthAndInterceptorConfigurationTest extends ParsePropertiesHelper {
+@ExtendWith(MockitoExtension.class)
+class BasicAuthAndInterceptorConfigurationTest extends ParsePropertiesHelper {
 
   protected static ExternalTaskClientBuilder clientBuilder;
   
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-  @BeforeClass
-  public static void initMocks() {
+  @BeforeAll
+  static void initMocks() {
     MockHelper.initMocks();
     clientBuilder = MockHelper.getClientBuilder();
   }
 
-  @AfterClass
+  @AfterAll
   public static void reset() {
     MockHelper.reset();
   }
@@ -75,7 +72,7 @@ public class BasicAuthAndInterceptorConfigurationTest extends ParsePropertiesHel
   protected ClientRequestInterceptor interceptorTwo;
 
   @Test
-  public void shouldVerifyBasicAuthAndInterceptors() {
+  void shouldVerifyBasicAuthAndInterceptors() {
     ArgumentCaptor<ClientRequestInterceptor> interceptorCaptor =
         ArgumentCaptor.forClass(ClientRequestInterceptor.class);
     verify(clientBuilder, times(3))

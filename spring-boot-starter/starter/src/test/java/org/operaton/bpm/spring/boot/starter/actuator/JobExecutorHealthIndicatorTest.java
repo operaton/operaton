@@ -23,17 +23,19 @@ import org.operaton.bpm.spring.boot.starter.actuator.JobExecutorHealthIndicator.
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
-public class JobExecutorHealthIndicatorTest {
+class JobExecutorHealthIndicatorTest {
 
   private static final String LOCK_OWNER = "lockowner";
   private static final int LOCK_TIME_IN_MILLIS = 5;
@@ -52,8 +54,8 @@ public class JobExecutorHealthIndicatorTest {
   @Mock
   private JobExecutor jobExecutor;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     when(jobExecutor.getLockOwner()).thenReturn(LOCK_OWNER);
     when(jobExecutor.getLockTimeInMillis()).thenReturn(LOCK_TIME_IN_MILLIS);
     when(jobExecutor.getMaxJobsPerAcquisition()).thenReturn(MAX_JOBS_PER_ACQUISITION);
@@ -68,7 +70,7 @@ public class JobExecutorHealthIndicatorTest {
   }
 
   @Test
-  public void upTest() {
+  void upTest() {
     when(jobExecutor.isActive()).thenReturn(true);
     JobExecutorHealthIndicator indicator = new JobExecutorHealthIndicator(jobExecutor);
     Health health = indicator.health();
@@ -77,7 +79,7 @@ public class JobExecutorHealthIndicatorTest {
   }
 
   @Test
-  public void downTest() {
+  void downTest() {
     when(jobExecutor.isActive()).thenReturn(false);
     JobExecutorHealthIndicator indicator = new JobExecutorHealthIndicator(jobExecutor);
     Health health = indicator.health();

@@ -18,12 +18,13 @@ package org.operaton.bpm.spring.boot.starter;
 
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.Assert.assertTrue;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @SpringBootTest(classes = { TestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConfigurationIT{
@@ -32,13 +33,13 @@ public class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConf
   private TestRestTemplate testRestTemplate;
 
   @Test
-  public void jobExecutorHealthIndicatorTest() {
+  void jobExecutorHealthIndicatorTest() {
     final String body = getHealthBody();
     assertTrue("wrong body " + body, body.contains("jobExecutor\":{\"status\":\"UP\""));
   }
 
   @Test
-  public void processEngineHealthIndicatorTest() {
+  void processEngineHealthIndicatorTest() {
     final String body = getHealthBody();
     assertTrue("wrong body " + body, body.contains("processEngine\":{\"status\":\"UP\",\"details\":{\"name\":\"testEngine\"}}"));
   }

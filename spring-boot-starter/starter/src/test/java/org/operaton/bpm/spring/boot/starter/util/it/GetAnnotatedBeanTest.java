@@ -21,6 +21,7 @@ import org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAn
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,7 +37,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
   webEnvironment = NONE
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class GetAnnotatedBeanTest {
+class GetAnnotatedBeanTest {
 
   @SpringBootApplication
   @EnableProcessApplication("withNameApplication")
@@ -65,7 +66,7 @@ public class GetAnnotatedBeanTest {
    * @throws Exception
    */
   @Test
-  public void gets_annotated_bean() throws Exception {
+  void gets_annotated_bean() throws Exception {
     Optional<GetProcessApplicationNameFromAnnotation.AnnotatedBean> bean = GetProcessApplicationNameFromAnnotation.getAnnotatedBean.apply(ctx);
 
     assertThat(bean.isPresent()).isTrue();

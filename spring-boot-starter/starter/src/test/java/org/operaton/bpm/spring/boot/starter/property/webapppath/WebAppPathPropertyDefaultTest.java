@@ -18,12 +18,13 @@ package org.operaton.bpm.spring.boot.starter.property.webapppath;
 
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
-public class WebAppPathPropertyDefaultTest extends ParsePropertiesHelper {
+import static org.assertj.core.api.Assertions.assertThat;
+class WebAppPathPropertyDefaultTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldDefaultToOperatonPrefix() {
+  void shouldDefaultToOperatonPrefix() {
     // given
 
     // when

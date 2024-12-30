@@ -22,6 +22,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -40,14 +41,14 @@ public class StrongUuidGeneratorIT {
   private ProcessEngine processEngine;
 
   @Test
-  public void configured_idGenerator_is_uuid() {
+  void configured_idGenerator_is_uuid() {
     IdGenerator idGenerator = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getIdGenerator();
 
     assertThat(idGenerator).isOfAnyClassIn(StrongUuidGenerator.class);
   }
 
   @Test
-  public void nextId_is_uuid() {
+  void nextId_is_uuid() {
     assertThat(idGenerator.getNextId().split("-")).hasSize(5);
   }
 }

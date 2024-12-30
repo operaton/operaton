@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.id;
 
-
 import org.junit.Rule;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-public class PrefixedUuidGeneratorTest {
+class PrefixedUuidGeneratorTest {
 
   @Rule
   public final ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void prefixed_uuid() {
+  void prefixed_uuid() {
 
     final String id = new PrefixedUuidGenerator("foo").getNextId();
     assertThat(id).startsWith("foo-");
@@ -36,7 +35,7 @@ public class PrefixedUuidGeneratorTest {
   }
 
   @Test
-  public void fails_on_null() {
+  void fails_on_null() {
     thrown.expect(NullPointerException.class);
     thrown.expectMessage("spring.application.name");
 

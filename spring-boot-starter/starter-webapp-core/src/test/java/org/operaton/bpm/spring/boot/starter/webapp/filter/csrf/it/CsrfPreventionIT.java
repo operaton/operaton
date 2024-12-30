@@ -23,6 +23,8 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtensi
 import java.io.IOException;
 import java.net.URLConnection;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
@@ -42,7 +44,7 @@ public class CsrfPreventionIT {
   public int port;
 
   @Test
-  public void shouldSetCookieWebapp() {
+  void shouldSetCookieWebapp() {
     httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
 
     String xsrfCookieValue = httpClientExtension.getXsrfCookie();
@@ -56,7 +58,7 @@ public class CsrfPreventionIT {
   }
 
   @Test
-  public void shouldSetCookieWebappRest() {
+  void shouldSetCookieWebappRest() {
     httpClientExtension.performRequest("http://localhost:" + port + "/operaton/api/engine/engine/");
 
     String xsrfCookieValue = httpClientExtension.getXsrfCookie();
@@ -70,7 +72,7 @@ public class CsrfPreventionIT {
   }
 
   @Test
-  public void shouldRejectModifyingRequest() {
+  void shouldRejectModifyingRequest() {
     // given
 
     // when

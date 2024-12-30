@@ -21,7 +21,8 @@ import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTes
 import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
 import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -45,10 +46,10 @@ import static org.assertj.core.api.Assertions.assertThat;
   },
   webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
-public class PaContextCacheTest3 extends AbstractContextCacheTest {
+class PaContextCacheTest3 extends AbstractContextCacheTest {
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.processEngineName = "foo";
     this.testName = "paTest3";
 
@@ -59,7 +60,7 @@ public class PaContextCacheTest3 extends AbstractContextCacheTest {
   }
 
   @Test
-  public void testContextCaching() {
+  void testContextCaching() {
     int appContextHash = applicationContext.hashCode();
 
     assertThat(appContextHash).isEqualTo(contextMap.get("paTest1"));
@@ -68,7 +69,7 @@ public class PaContextCacheTest3 extends AbstractContextCacheTest {
 
   @Override
   @Test
-  public void testDbIsolation() {
+  void testDbIsolation() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("TestProcess");
     assertThat(instance).isNotNull();
 

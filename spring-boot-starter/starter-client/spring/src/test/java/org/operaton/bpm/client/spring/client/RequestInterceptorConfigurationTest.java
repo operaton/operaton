@@ -21,6 +21,8 @@ import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.client.configuration.RequestInterceptorConfiguration;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,7 +34,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
     SimpleClientConfiguration.class,
     RequestInterceptorConfiguration.class
 })
-public class RequestInterceptorConfigurationTest extends MockedTest {
+class RequestInterceptorConfigurationTest extends MockedTest {
 
   @Autowired
   public ExternalTaskClient client;
@@ -46,7 +48,7 @@ public class RequestInterceptorConfigurationTest extends MockedTest {
   public ClientRequestInterceptor interceptorTwo;
 
   @Test
-  public void shouldVerifyRequestInterceptorAdded() {
+  void shouldVerifyRequestInterceptorAdded() {
     verify(clientBuilder).baseUrl("http://localhost:8080/engine-rest");
     verify(clientBuilder).addInterceptor(interceptorOne);
     verify(clientBuilder).addInterceptor(interceptorTwo);

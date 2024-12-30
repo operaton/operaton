@@ -20,17 +20,17 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 import org.junit.Rule;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-public class OperatonBpmPropertiesTest {
+class OperatonBpmPropertiesTest {
 
   @Rule
   public final ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void initResourcePatterns() {
+  void initResourcePatterns() {
     final String[] patterns = OperatonBpmProperties.initDeploymentResourcePattern();
 
     assertThat(patterns)
@@ -40,7 +40,7 @@ public class OperatonBpmPropertiesTest {
   }
 
   @Test
-  public void restrict_allowed_values_for_dbUpdate() {
+  void restrict_allowed_values_for_dbUpdate() {
     new OperatonBpmProperties().getDatabase().setSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
     new OperatonBpmProperties().getDatabase().setSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_FALSE);
     new OperatonBpmProperties().getDatabase().setSchemaUpdate(ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_CREATE);

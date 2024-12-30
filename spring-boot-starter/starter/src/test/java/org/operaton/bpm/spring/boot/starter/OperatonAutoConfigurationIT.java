@@ -21,6 +21,7 @@ import org.operaton.bpm.spring.boot.starter.AdditionalCammundaBpmConfigurations.
 import org.operaton.bpm.spring.boot.starter.AdditionalCammundaBpmConfigurations.BeforeStandardConfiguration;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
@@ -34,24 +35,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OperatonAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
-  public void autoDeploymentTest() {
+  void autoDeploymentTest() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionName("TestProcess").singleResult();
     assertThat(processDefinition).isNotNull();
   }
 
   @Test
-  public void jobConfigurationTest() {
+  void jobConfigurationTest() {
     assertThat(jobExecutor.isActive()).isTrue();
   }
 
   @Test
-  public void orderedConfigurationTest() {
+  void orderedConfigurationTest() {
     assertThat(BeforeStandardConfiguration.PROCESSED).isTrue();
     assertThat(AfterStandardConfiguration.PROCESSED).isTrue();
   }
 
   @Test
-  public void adminUserCreatedWithDefaultPassword() {
+  void adminUserCreatedWithDefaultPassword() {
     assertThat(identityService.checkPassword("admin", "admin")).isTrue();
   }
 }

@@ -19,17 +19,17 @@ package org.operaton.bpm.spring.boot.starter.property;
 import org.operaton.bpm.engine.identity.User;
 
 import org.junit.Rule;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-public class AdminUserPropertyTest {
+class AdminUserPropertyTest {
 
   @Rule
   public final ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void fillMissingFields_fail_no_id() {
+  void fillMissingFields_fail_no_id() {
     thrown.expect(NullPointerException.class);
     thrown.expectMessage("missing field: operaton.bpm.admin-user.id");
 
@@ -37,7 +37,7 @@ public class AdminUserPropertyTest {
   }
 
   @Test
-  public void fillMissingFields_null() {
+  void fillMissingFields_null() {
     User adminUser = adminUser("admin", "foo", null, null, null).init();
 
     assertThat(adminUser.getId()).isEqualTo("admin");
@@ -48,7 +48,7 @@ public class AdminUserPropertyTest {
   }
 
   @Test
-  public void fillMissingFields_blank() {
+  void fillMissingFields_blank() {
     User adminUser = adminUser("admin", "foo", "", "", "").init();
 
     assertThat(adminUser.getId()).isEqualTo("admin");
@@ -59,7 +59,7 @@ public class AdminUserPropertyTest {
   }
 
   @Test
-  public void paswordDefaultsToUserId() {
+  void paswordDefaultsToUserId() {
     User adminUser = adminUser("admin", null, "", "", "").init();
 
     assertThat(adminUser.getId()).isEqualTo("admin");

@@ -17,6 +17,7 @@
 package org.operaton.bpm.spring.boot.starter.test.helper;
 
 import org.operaton.bpm.engine.test.ProcessEngineRule;
+
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 

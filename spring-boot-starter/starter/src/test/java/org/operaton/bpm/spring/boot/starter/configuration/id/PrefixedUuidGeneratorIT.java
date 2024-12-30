@@ -23,6 +23,7 @@ import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil;
 import static org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration.PREFIXED;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -46,19 +47,19 @@ public class PrefixedUuidGeneratorIT {
   private ProcessEngine processEngine;
 
   @Test
-  public void property_is_set() {
+  void property_is_set() {
     assertThat(properties.getIdGenerator()).isEqualTo(IdGeneratorConfiguration.PREFIXED);
   }
 
   @Test
-  public void configured_idGenerator_is_uuid() {
+  void configured_idGenerator_is_uuid() {
     final IdGenerator idGenerator = OperatonSpringBootUtil.get(processEngine).getIdGenerator();
 
     assertThat(idGenerator).isOfAnyClassIn(PrefixedUuidGenerator.class);
   }
 
   @Test
-  public void nextId_is_uuid() {
+  void nextId_is_uuid() {
     assertThat(idGenerator.getNextId().split("-")).hasSize(6).startsWith("myapp");
   }
 }

@@ -26,8 +26,9 @@ import org.operaton.bpm.spring.boot.starter.test.nonpa.TestEventCaptor;
 
 import jakarta.transaction.Transactional;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -54,8 +55,8 @@ public class OperatonEventingDisabledIT extends AbstractOperatonAutoConfiguratio
 
   private ProcessInstance instance;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("eventing")
       .singleResult();
@@ -65,7 +66,7 @@ public class OperatonEventingDisabledIT extends AbstractOperatonAutoConfiguratio
     instance = runtime.startProcessInstanceByKey("eventing");
   }
 
-  @After
+  @AfterEach
   public void stop() {
     if (instance != null) {
       // update stale instance

@@ -19,17 +19,19 @@ package org.operaton.bpm.spring.boot.starter.property.csrf;
 import org.operaton.bpm.spring.boot.starter.property.CsrfProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestPropertySource(properties = {
-  "operaton.bpm.webapp.csrf.enableSecureCookie=true"
+  "(.*)"
 })
-public class CookieSecureEnabledTest extends ParsePropertiesHelper {
+
+class CookieSecureEnabledTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckSecureCookieEnabled() {
+  void shouldCheckSecureCookieEnabled() {
     CsrfProperties properties = webapp.getCsrf();
 
     assertThat(properties.isEnableSecureCookie()).isTrue();

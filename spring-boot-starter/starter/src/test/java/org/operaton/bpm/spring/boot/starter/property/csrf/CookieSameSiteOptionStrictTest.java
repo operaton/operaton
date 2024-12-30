@@ -26,10 +26,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.csrf.sameSiteCookieOption=strict"
 })
-public class CookieSameSiteOptionStrictTest extends ParsePropertiesHelper {
+import org.junit.jupiter.api.Test;
+class CookieSameSiteOptionStrictTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckSameSiteCookieOptionStrict() {
+  void shouldCheckSameSiteCookieOptionStrict() {
     CsrfProperties properties = webapp.getCsrf();
 
     assertThat(properties.getSameSiteCookieOption()).isEqualTo("strict");

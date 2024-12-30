@@ -19,6 +19,7 @@ package org.operaton.bpm.spring.boot.starter;
 import org.operaton.bpm.spring.boot.starter.event.PostDeployEvent;
 import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.event.EventListener;
@@ -41,7 +42,7 @@ public class ProcessApplicationIT {
   private DummyComponent dummyComponent;
 
   @Test
-  public void testPostDeployEvent() {
+  void testPostDeployEvent() {
     assertThat(dummyComponent.isPostDeployEventOccurred()).isTrue();
   }
 

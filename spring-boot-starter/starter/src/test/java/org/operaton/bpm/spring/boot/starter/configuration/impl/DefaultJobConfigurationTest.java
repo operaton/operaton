@@ -26,7 +26,8 @@ import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,12 +36,11 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
-
 @SpringBootTest(
   classes = {TestApplication.class},
   webEnvironment = WebEnvironment.NONE
 )
-public class DefaultJobConfigurationTest {
+class DefaultJobConfigurationTest {
 
   private final SpringProcessEngineConfiguration processEngineConfiguration = new SpringProcessEngineConfiguration();
   private final DefaultJobConfiguration jobConfiguration = new DefaultJobConfiguration();
@@ -49,13 +49,13 @@ public class DefaultJobConfigurationTest {
   @Autowired
   JobExecutor jobExecutor;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     setField(jobConfiguration, "operatonBpmProperties", properties);
   }
 
   @Test
-  public void delegate_to_specialized_configurations() {
+  void delegate_to_specialized_configurations() {
     DefaultJobConfiguration configurationSpy = Mockito.spy(jobConfiguration);
     configurationSpy.preInit(processEngineConfiguration);
     verify(configurationSpy).configureJobExecutor(processEngineConfiguration);
@@ -63,7 +63,7 @@ public class DefaultJobConfigurationTest {
   }
 
   @Test
-  public void addJobHandler() {
+  void addJobHandler() {
     JobHandler<?> jobHandler = mock(JobHandler.class);
     when(jobHandler.getType()).thenReturn("MockHandler");
     setField(jobConfiguration, "customJobHandlers", List.<JobHandler<?>>of(jobHandler));
@@ -75,7 +75,7 @@ public class DefaultJobConfigurationTest {
   }
 
   @Test
-  public void shouldUseDefaultRejectedJobsHandler() {
+  void shouldUseDefaultRejectedJobsHandler() {
     // given default configuration
 
     // when

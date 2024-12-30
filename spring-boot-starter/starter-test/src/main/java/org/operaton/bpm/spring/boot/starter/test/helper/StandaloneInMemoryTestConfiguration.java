@@ -16,22 +16,17 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.helper;
 
-
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.mock.MockExpressionManager;
-import org.operaton.bpm.engine.impl.history.HistoryLevel;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-/**
- * Default in memory configuration, pre-configured with mock, dbSchema and metrics.
- */
-public class StandaloneInMemoryTestConfiguration extends StandaloneInMemProcessEngineConfiguration {
+class StandaloneInMemoryTestConfiguration extends StandaloneInMemProcessEngineConfiguration {
 
   public StandaloneInMemoryTestConfiguration(ProcessEnginePlugin... plugins) {
     this(Optional.ofNullable(plugins)

@@ -21,17 +21,20 @@ import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import javax.sql.DataSource;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultDatasourceConfigurationTest {
+class DefaultDatasourceConfigurationTest {
 
   @Mock
   private PlatformTransactionManager platformTransactionManager;
@@ -43,22 +46,22 @@ public class DefaultDatasourceConfigurationTest {
 
   private SpringProcessEngineConfiguration configuration;
 
-  @Before
-  public void before() {
+  @BeforeEach
+  void before() {
     configuration = new SpringProcessEngineConfiguration();
     operatonBpmProperties = new OperatonBpmProperties();
     defaultDatasourceConfiguration.operatonBpmProperties = operatonBpmProperties;
   }
 
   @Test
-  public void transactionManagerTest() {
+  void transactionManagerTest() {
     defaultDatasourceConfiguration.dataSource = mock(DataSource.class);
     defaultDatasourceConfiguration.preInit(configuration);
     assertSame(platformTransactionManager, configuration.getTransactionManager());
   }
 
   @Test
-  public void operatonTransactionManagerTest() {
+  void operatonTransactionManagerTest() {
     defaultDatasourceConfiguration.dataSource = mock(DataSource.class);
     PlatformTransactionManager operatonTransactionManager = mock(PlatformTransactionManager.class);
     defaultDatasourceConfiguration.operatonTransactionManager = operatonTransactionManager;
@@ -67,7 +70,7 @@ public class DefaultDatasourceConfigurationTest {
   }
 
   @Test
-  public void defaultDataSourceTest() {
+  void defaultDataSourceTest() {
     DataSource datasourceMock = mock(DataSource.class);
     defaultDatasourceConfiguration.dataSource = datasourceMock;
     defaultDatasourceConfiguration.preInit(configuration);
@@ -75,7 +78,7 @@ public class DefaultDatasourceConfigurationTest {
   }
 
   @Test
-  public void operatonDataSourceTest() {
+  void operatonDataSourceTest() {
     DataSource operatonDatasourceMock = mock(DataSource.class);
     defaultDatasourceConfiguration.operatonDataSource = operatonDatasourceMock;
     defaultDatasourceConfiguration.dataSource = mock(DataSource.class);

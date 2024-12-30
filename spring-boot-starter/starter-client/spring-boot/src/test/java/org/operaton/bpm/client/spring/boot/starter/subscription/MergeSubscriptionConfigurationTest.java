@@ -18,9 +18,11 @@ package org.operaton.bpm.client.spring.boot.starter.subscription;
 
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.SpringTopicSubscription;
-import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.FullSubscriptionConfiguration;
 import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
 import org.operaton.bpm.client.spring.boot.starter.impl.ClientAutoConfiguration;
+import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.FullSubscriptionConfiguration;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -39,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
     ClientAutoConfiguration.class,
     FullSubscriptionConfiguration.class
 })
-public class MergeSubscriptionConfigurationTest extends ParsePropertiesHelper {
+class MergeSubscriptionConfigurationTest extends ParsePropertiesHelper {
 
   @MockBean
   public ExternalTaskClient externalTaskClient;
@@ -48,7 +50,7 @@ public class MergeSubscriptionConfigurationTest extends ParsePropertiesHelper {
   public SpringTopicSubscription subscription;
 
   @Test
-  public void shouldCheckTopicOneProperties() {
+  void shouldCheckTopicOneProperties() {
     // annotated properties
     assertThat(subscription.getLockDuration()).isEqualTo(1111);
     assertThat(subscription.isLocalVariables()).isTrue();

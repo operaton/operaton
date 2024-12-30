@@ -19,6 +19,7 @@ package org.operaton.bpm.spring.boot.starter.property.headersec;
 import org.operaton.bpm.spring.boot.starter.property.HeaderSecurityProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,10 +30,10 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.headerSecurity.contentTypeOptionsDisabled=false",
   "operaton.bpm.webapp.headerSecurity.hstsDisabled=false"
 })
-public class HttpHeaderSecurityEnabledTest extends ParsePropertiesHelper {
+class HttpHeaderSecurityEnabledTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckXssProtectionEnabled() {
+  void shouldCheckXssProtectionEnabled() {
     HeaderSecurityProperties properties = webapp.getHeaderSecurity();
 
     assertThat(properties.isXssProtectionDisabled()).isFalse();
@@ -40,7 +41,7 @@ public class HttpHeaderSecurityEnabledTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckContentSecurityPolicyEnabled() {
+  void shouldCheckContentSecurityPolicyEnabled() {
     HeaderSecurityProperties properties = webapp.getHeaderSecurity();
 
     assertThat(properties.isContentSecurityPolicyDisabled()).isFalse();
@@ -48,7 +49,7 @@ public class HttpHeaderSecurityEnabledTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckContentTypeOptionsEnabled() {
+  void shouldCheckContentTypeOptionsEnabled() {
     HeaderSecurityProperties properties = webapp.getHeaderSecurity();
 
     assertThat(properties.isContentTypeOptionsDisabled()).isFalse();
@@ -56,7 +57,7 @@ public class HttpHeaderSecurityEnabledTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckHstsEnabled() {
+  void shouldCheckHstsEnabled() {
     // given
     
     // when

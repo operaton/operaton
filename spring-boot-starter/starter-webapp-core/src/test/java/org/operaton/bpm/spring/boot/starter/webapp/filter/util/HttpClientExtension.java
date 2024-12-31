@@ -245,4 +245,7 @@ public class HttpClientExtension implements AfterEachCallback {
     return this;
   }
 
+  public void setPort(int port) {
+    this.port = port;
+  }
 }

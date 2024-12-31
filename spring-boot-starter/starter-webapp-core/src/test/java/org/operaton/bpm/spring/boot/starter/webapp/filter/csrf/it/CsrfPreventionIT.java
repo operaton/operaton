@@ -23,6 +23,7 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtensi
 import java.io.IOException;
 import java.net.URLConnection;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,6 +43,11 @@ class CsrfPreventionIT {
 
   @LocalServerPort
   public int port;
+
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
+  }
 
   @Test
   void shouldSetCookieWebapp() {

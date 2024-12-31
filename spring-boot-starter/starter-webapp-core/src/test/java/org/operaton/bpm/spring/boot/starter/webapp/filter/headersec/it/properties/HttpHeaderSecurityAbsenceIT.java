@@ -41,14 +41,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class HttpHeaderSecurityAbsenceIT {
 
   @RegisterExtension
-  HttpClientExtension httpClientExtension;
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
 
   @BeforeEach
-  void assignRule() {
-    httpClientExtension = new HttpClientExtension(port);
+  void assignPort() {
+    httpClientExtension.setPort(port);
   }
 
   @ParameterizedTest(name = "{index} => header={0}")

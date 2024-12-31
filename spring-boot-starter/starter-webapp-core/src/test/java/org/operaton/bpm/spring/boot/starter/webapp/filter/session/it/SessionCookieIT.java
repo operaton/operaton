@@ -19,6 +19,7 @@ package org.operaton.bpm.spring.boot.starter.webapp.filter.session.it;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +38,11 @@ class SessionCookieIT {
 
   @LocalServerPort
   public int port;
+
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
+  }
 
   @Test
   void shouldSetCookieWebapp() {

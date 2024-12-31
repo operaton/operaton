@@ -19,6 +19,7 @@ package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,11 @@ class EmptyAppPathIT {
 
   @LocalServerPort
   public int port;
+
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
+  }
 
   @Autowired
   protected TestRestTemplate restClient;

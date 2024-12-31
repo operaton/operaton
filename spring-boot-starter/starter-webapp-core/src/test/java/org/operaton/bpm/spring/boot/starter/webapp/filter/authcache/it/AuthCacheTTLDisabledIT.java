@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,11 @@ class AuthCacheTTLDisabledIT {
 
   @LocalServerPort
   public int port;
+
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
+  }
 
   @Autowired
   protected IdentityService identityService;

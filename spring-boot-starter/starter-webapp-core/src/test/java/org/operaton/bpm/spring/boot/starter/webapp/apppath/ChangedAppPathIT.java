@@ -22,6 +22,7 @@ import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.im
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -51,6 +52,11 @@ class ChangedAppPathIT {
 
   @LocalServerPort
   public int port;
+
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
+  }
 
   @Autowired
   protected TestRestTemplate restClient;

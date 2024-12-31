@@ -33,11 +33,11 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(classes = SampleOperatonRestApplication.class, webEnvironment = RANDOM_PORT)
-public class SampleOperatonRestApplicationIT {
+class SampleOperatonRestApplicationIT {
 
   @Autowired
   private TestRestTemplate testRestTemplate;
@@ -51,19 +51,19 @@ public class SampleOperatonRestApplicationIT {
   @Test
   void restApiIsAvailable() {
     ResponseEntity<String> entity = testRestTemplate.getForEntity("/engine-rest/engine/", String.class);
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertEquals("[{\"name\":\"testEngine\"}]", entity.getBody());
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(entity.getBody()).isEqualTo("[{\"name\":\"testEngine\"}]");
   }
 
   @Test
   void startProcessInstanceByCustomResource() {
     ResponseEntity<ProcessInstanceDto> entity = testRestTemplate.postForEntity("/engine-rest/process/start", HttpEntity.EMPTY, ProcessInstanceDto.class);
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertNotNull(entity.getBody());
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(entity.getBody()).isNotNull();
 
     // find the process instance
     final ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(entity.getBody().getId()).singleResult();
-    assertEquals(processInstance.getProcessInstanceId(), entity.getBody().getId());
+    assertThat(entity.getBody().getId()).isEqualTo(processInstance.getProcessInstanceId());
   }
 
   @Test
@@ -81,12 +81,12 @@ public class SampleOperatonRestApplicationIT {
     ResponseEntity<String> exchange = testRestTemplate.exchange("/engine-rest/engine/{enginename}/process-instance/{id}/variables/{variableName}/data",
         HttpMethod.POST, requestEntity, String.class, operatonBpmProperties.getProcessEngineName(), processInstance.getId(), variableName);
 
-    assertEquals(HttpStatus.NO_CONTENT, exchange.getStatusCode());
+    assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().processInstanceIdIn(processInstance.getId()).variableName(variableName)
         .singleResult();
     ByteArrayInputStream byteArrayInputStream = (ByteArrayInputStream) variableInstance.getValue();
-    assertTrue(byteArrayInputStream.available() > 0);
+    assertThat(byteArrayInputStream.available() > 0).isTrue();
   }
 
   @Test
@@ -105,8 +105,8 @@ public class SampleOperatonRestApplicationIT {
     HttpEntity<String> requestEntity = new HttpEntity<>(requestJson, headers);
     ResponseEntity<String> entity = testRestTemplate.postForEntity("/engine-rest/engine/{enginename}/external-task/fetchAndLock", requestEntity, String.class,
       operatonBpmProperties.getProcessEngineName());
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertEquals("[]", entity.getBody());
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(entity.getBody()).isEqualTo("[]");
   }
 
 }

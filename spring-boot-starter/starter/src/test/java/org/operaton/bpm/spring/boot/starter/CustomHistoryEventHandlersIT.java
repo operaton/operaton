@@ -30,7 +30,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = { TestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CustomHistoryEventHandlersIT extends AbstractOperatonAutoConfigurationIT {
+class CustomHistoryEventHandlersIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
   void shouldUsePublishHistoryEventHandler() {

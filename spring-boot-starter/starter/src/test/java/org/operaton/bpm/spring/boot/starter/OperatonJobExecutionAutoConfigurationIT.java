@@ -21,14 +21,14 @@ import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = TestApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
-public class OperatonJobExecutionAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonJobExecutionAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
   void jobConfigurationTest() {
-    assertNotNull(jobExecutor);
+    assertThat(jobExecutor).isNotNull();
   }
 
 }

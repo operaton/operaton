@@ -20,17 +20,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.env.Environment;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
+
 class NeedsHistoryAutoConfigurationConditionTest {
 
   @Test
   void isHistoryAutoSupportedTest() {
     NeedsHistoryAutoConfigurationCondition condition = new NeedsHistoryAutoConfigurationCondition();
-    assertFalse(condition.isHistoryAutoSupported());
+    assertThat(condition.isHistoryAutoSupported()).isFalse();
     condition.historyAutoFieldName = "DB_SCHEMA_UPDATE_FALSE";
-    assertFalse(condition.isHistoryAutoSupported());
+    assertThat(condition.isHistoryAutoSupported()).isFalse();
   }
 
   @Test
@@ -39,7 +39,7 @@ class NeedsHistoryAutoConfigurationConditionTest {
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
     when(context.getEnvironment()).thenReturn(environment);
-    assertFalse(condition.needsAdditionalConfiguration(context));
+    assertThat(condition.needsAdditionalConfiguration(context)).isFalse();
   }
 
   @Test
@@ -50,7 +50,7 @@ class NeedsHistoryAutoConfigurationConditionTest {
     when(context.getEnvironment()).thenReturn(environment);
     when(environment.getProperty("operaton.bpm.history-level")).thenReturn(NeedsHistoryAutoConfigurationCondition.HISTORY_AUTO);
     when(condition.isHistoryAutoSupported()).thenReturn(true);
-    assertFalse(condition.needsAdditionalConfiguration(context));
+    assertThat(condition.needsAdditionalConfiguration(context)).isFalse();
   }
 
   @Test
@@ -61,7 +61,7 @@ class NeedsHistoryAutoConfigurationConditionTest {
     when(context.getEnvironment()).thenReturn(environment);
     when(environment.getProperty("operaton.bpm.history-level")).thenReturn(NeedsHistoryAutoConfigurationCondition.HISTORY_AUTO);
     when(condition.isHistoryAutoSupported()).thenReturn(false);
-    assertTrue(condition.needsAdditionalConfiguration(context));
+    assertThat(condition.needsAdditionalConfiguration(context)).isTrue();
   }
 
   @Test
@@ -72,7 +72,7 @@ class NeedsHistoryAutoConfigurationConditionTest {
     when(context.getEnvironment()).thenReturn(environment);
     when(environment.getProperty("operaton.bpm.history-level")).thenReturn(NeedsHistoryAutoConfigurationCondition.HISTORY_AUTO);
     when(condition.needsAdditionalConfiguration(context)).thenReturn(true);
-    assertTrue(condition.getMatchOutcome(context, null).isMatch());
+    assertThat(condition.getMatchOutcome(context, null).isMatch()).isTrue();
   }
 
   @Test
@@ -83,7 +83,7 @@ class NeedsHistoryAutoConfigurationConditionTest {
     when(context.getEnvironment()).thenReturn(environment);
     when(environment.getProperty("operaton.bpm.history-level")).thenReturn(NeedsHistoryAutoConfigurationCondition.HISTORY_AUTO);
     when(condition.needsAdditionalConfiguration(context)).thenReturn(false);
-    assertFalse(condition.getMatchOutcome(context, null).isMatch());
+    assertThat(condition.getMatchOutcome(context, null).isMatch()).isFalse();
   }
 
 }

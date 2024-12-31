@@ -31,17 +31,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
-@SpringBootTest(classes = { TestApplication.class },
+@SpringBootTest(classes = {TestApplication.class},
   webEnvironment = WebEnvironment.NONE,
   properties = {
     "operaton.bpm.generate-unique-process-application-name=true",
     "spring.datasource.generate-unique-name=true",
   })
 @ActiveProfiles("nojpa")
-public class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   @Autowired
   private TestEntityRepository testEntityRepository;
@@ -53,9 +53,9 @@ public class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfig
     variables.put("test", testEntity);
     try {
       runtimeService.startProcessInstanceByKey("TestProcess", variables);
-      fail();
+      fail("");
     } catch (ProcessEngineException e) {
-      assertNotNull(e);
+      assertThat(e).isNotNull();
     }
   }
 
@@ -64,7 +64,7 @@ public class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfig
     Map<String, Object> variables = new HashMap<>();
     Pojo pojo = new Pojo();
     variables.put("test", pojo);
-    assertNotNull(runtimeService.startProcessInstanceByKey("TestProcess", variables));
+    assertThat(runtimeService.startProcessInstanceByKey("TestProcess", variables)).isNotNull();
   }
 
   public static class Pojo implements Serializable {

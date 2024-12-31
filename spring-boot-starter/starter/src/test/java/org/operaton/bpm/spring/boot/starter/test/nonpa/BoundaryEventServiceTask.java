@@ -33,7 +33,7 @@ public class BoundaryEventServiceTask implements JavaDelegate {
   @Override
   public void execute(DelegateExecution delegateExecution) throws Exception {
     Optional.ofNullable(delegateExecution.getVariable(ERROR_NAME))
-      .map(value -> (String) value)
+      .map(String.class::cast)
       .filter(StringUtils::isNotBlank)
       .ifPresent(value -> {
          throw new BpmnError(value);

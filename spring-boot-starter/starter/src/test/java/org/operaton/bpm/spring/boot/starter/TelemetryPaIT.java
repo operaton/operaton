@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   webEnvironment = WebEnvironment.RANDOM_PORT
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class TelemetryPaIT extends AbstractOperatonAutoConfigurationIT {
+class TelemetryPaIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
   void shouldSubmitApplicationServerData() {

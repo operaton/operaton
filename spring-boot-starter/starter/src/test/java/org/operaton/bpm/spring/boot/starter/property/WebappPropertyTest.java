@@ -37,21 +37,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 class WebappPropertyTest extends ParsePropertiesHelper {
 
   @Test
-  void testIndexRedirectEnabled() {
+  void indexRedirectEnabled() {
     // given Operaton properties are set
     // then
     assertThat(webapp.isIndexRedirectEnabled()).isFalse();
   }
 
   @Test
-  void testCsrfProperty() {
+  void csrfProperty() {
     // given Operaton properties are set
     // then
     assertThat(webapp.getCsrf()).isNotNull();
   }
 
   @Test
-  void testCsrfTargetOriginProperty() {
+  void csrfTargetOriginProperty() {
     // given the Operaton CSRF TargetOrigin property is defined
     // then
     assertThat(webapp.getCsrf().getTargetOrigin()).isNotNull();
@@ -60,7 +60,7 @@ class WebappPropertyTest extends ParsePropertiesHelper {
   }
 
   @Test
-  void testCsrfDenyStatusProperty() {
+  void csrfDenyStatusProperty() {
     // given the Operaton CSRF DenyStatus property is defined
     // then
     assertThat(webapp.getCsrf().getDenyStatus()).isNotNull();
@@ -68,7 +68,7 @@ class WebappPropertyTest extends ParsePropertiesHelper {
   }
 
   @Test
-  void testCsrfRandomClassProperty() {
+  void csrfRandomClassProperty() {
     // given the Operaton CSRF RandomClass property is defined
     // then
     assertThat(webapp.getCsrf().getRandomClass()).isNotNull();
@@ -76,7 +76,7 @@ class WebappPropertyTest extends ParsePropertiesHelper {
   }
 
   @Test
-  void testCsrfEntryPointsProperty() {
+  void csrfEntryPointsProperty() {
     // given the Operaton CSRF EntryPoints property is defined
     // then
     assertThat(webapp.getCsrf().getEntryPoints()).isNotNull();

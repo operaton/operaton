@@ -26,8 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
   classes = { TestProcessApplication.class },
@@ -35,15 +34,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @ActiveProfiles("customContextPath")
-public class CustomContextPathProcessApplicationIT {
+class CustomContextPathProcessApplicationIT {
+
+  private final SpringProcessApplication application;
 
   @Autowired
-  private SpringProcessApplication application;
+  CustomContextPathProcessApplicationIT(SpringProcessApplication application) {
+      this.application = application;
+  }
 
   @Test
-  void testPostDeployEvent() {
-    assertNotNull(application);
-    assertEquals("/", application.getProperties().get(ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH));
+  void postDeployEvent() {
+    assertThat(application).isNotNull();
+    assertThat(application.getProperties().get(ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH)).isEqualTo("/");
   }
 
 }

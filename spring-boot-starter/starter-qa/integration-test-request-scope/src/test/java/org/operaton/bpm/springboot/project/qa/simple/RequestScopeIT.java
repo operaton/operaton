@@ -34,11 +34,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RequestScopeIT {
 
-  @Autowired
-  protected RepositoryService repositoryService;
+  private final RepositoryService repositoryService;
+  private final RuntimeService runtimeService;
 
   @Autowired
-  protected RuntimeService runtimeService;
+  public RequestScopeIT(RepositoryService repositoryService, RuntimeService runtimeService) {
+      this.repositoryService = repositoryService;
+      this.runtimeService = runtimeService;
+  }
 
   @Test
   void shouldEvaluateScript(CapturedOutput logs) {

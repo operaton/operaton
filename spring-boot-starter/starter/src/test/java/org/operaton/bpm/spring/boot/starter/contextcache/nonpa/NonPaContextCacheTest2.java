@@ -58,12 +58,12 @@ class NonPaContextCacheTest2 extends AbstractContextCacheTest {
   }
 
   @Test
-  void testContextCaching() {
+  void contextCaching() {
     assertThat(applicationContext.hashCode()).isNotEqualTo(contextMap.get("nonPaTest1"));
   }
 
   @Test
-  void testEngineName()
+  void engineName()
   {
     assertThat(processEngine.getName())
         .isNotEqualTo(ProcessEngines.NAME_DEFAULT)

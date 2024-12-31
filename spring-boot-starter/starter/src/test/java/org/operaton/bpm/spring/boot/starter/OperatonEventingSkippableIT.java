@@ -78,7 +78,7 @@ public class OperatonEventingSkippableIT extends AbstractOperatonAutoConfigurati
   }
 
   @Test
-  public final void shouldEventTaskDelete() {
+  final void shouldEventTaskDelete() {
     // given
     startEventingInstance();
     final Task task = taskService.createTaskQuery().active().singleResult();
@@ -92,7 +92,7 @@ public class OperatonEventingSkippableIT extends AbstractOperatonAutoConfigurati
   }
 
   @Test
-  public final void shouldEventModificationWithSkipListeners() {
+  final void shouldEventModificationWithSkipListeners() {
     // given
     startEventingInstance();
     final TaskEntity task = (TaskEntity)taskService.createTaskQuery().active().singleResult();

@@ -32,9 +32,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -58,7 +56,7 @@ class HistoryLevelDeterminatorJdbcTemplateImplTest {
     determinator.setJdbcTemplate(jdbcTemplate);
     determinator.setOperatonBpmProperties(operatonBpmProperties);
     determinator.afterPropertiesSet();
-    assertEquals(ProcessEngineConfiguration.HISTORY_FULL, determinator.defaultHistoryLevel);
+    assertThat(determinator.defaultHistoryLevel).isEqualTo(ProcessEngineConfiguration.HISTORY_FULL);
   }
 
   @Test
@@ -70,7 +68,7 @@ class HistoryLevelDeterminatorJdbcTemplateImplTest {
     determinator.setJdbcTemplate(jdbcTemplate);
     determinator.setOperatonBpmProperties(operatonBpmProperties);
     determinator.afterPropertiesSet();
-    assertEquals(historyLevelDefault, determinator.defaultHistoryLevel);
+    assertThat(determinator.defaultHistoryLevel).isEqualTo(historyLevelDefault);
   }
 
   @Test
@@ -107,7 +105,7 @@ class HistoryLevelDeterminatorJdbcTemplateImplTest {
     HistoryLevel historyLevel = new HistoryLevelAudit();
     when(jdbcTemplate.queryForObject(determinator.getSql(), Integer.class)).thenReturn(historyLevel.getId());
     String determineHistoryLevel = determinator.determineHistoryLevel();
-    assertEquals(historyLevel.getName(), determineHistoryLevel);
+    assertThat(determineHistoryLevel).isEqualTo(historyLevel.getName());
   }
 
   @Test
@@ -120,7 +118,7 @@ class HistoryLevelDeterminatorJdbcTemplateImplTest {
     determinator.afterPropertiesSet();
     when(jdbcTemplate.queryForObject(determinator.getSql(), Integer.class)).thenThrow(new DataRetrievalFailureException(""));
     String determineHistoryLevel = determinator.determineHistoryLevel();
-    assertEquals(determinator.defaultHistoryLevel, determineHistoryLevel);
+    assertThat(determineHistoryLevel).isEqualTo(determinator.defaultHistoryLevel);
     verify(jdbcTemplate).queryForObject(determinator.getSql(), Integer.class);
   }
 
@@ -143,16 +141,16 @@ class HistoryLevelDeterminatorJdbcTemplateImplTest {
   void getSqlTest() {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     determinator.setOperatonBpmProperties(operatonBpmProperties);
-    assertEquals("SELECT VALUE_ FROM ACT_GE_PROPERTY WHERE NAME_='historyLevel'", determinator.getSql());
+    assertThat(determinator.getSql()).isEqualTo("SELECT VALUE_ FROM ACT_GE_PROPERTY WHERE NAME_='historyLevel'");
     operatonBpmProperties.getDatabase().setTablePrefix("TEST_");
-    assertEquals("SELECT VALUE_ FROM TEST_ACT_GE_PROPERTY WHERE NAME_='historyLevel'", determinator.getSql());
+    assertThat(determinator.getSql()).isEqualTo("SELECT VALUE_ FROM TEST_ACT_GE_PROPERTY WHERE NAME_='historyLevel'");
   }
 
   @Test
   void getHistoryLevelFromTest() {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
-    assertEquals(determinator.getDefaultHistoryLevel(), determinator.getHistoryLevelFrom(-1));
-    assertFalse(determinator.historyLevels.isEmpty());
+    assertThat(determinator.getHistoryLevelFrom(-1)).isEqualTo(determinator.getDefaultHistoryLevel());
+    assertThat(determinator.historyLevels.isEmpty()).isFalse();
     HistoryLevel customHistoryLevel = new HistoryLevel() {
 
       @Override
@@ -172,10 +170,10 @@ class HistoryLevelDeterminatorJdbcTemplateImplTest {
     };
 
     determinator.addCustomHistoryLevels(Collections.singleton(customHistoryLevel));
-    assertTrue(determinator.historyLevels.contains(customHistoryLevel));
+    assertThat(determinator.historyLevels.contains(customHistoryLevel)).isTrue();
 
     for (HistoryLevel historyLevel : determinator.historyLevels) {
-      assertEquals(historyLevel.getName(), determinator.getHistoryLevelFrom(historyLevel.getId()));
+      assertThat(determinator.getHistoryLevelFrom(historyLevel.getId())).isEqualTo(historyLevel.getName());
     }
   }
 

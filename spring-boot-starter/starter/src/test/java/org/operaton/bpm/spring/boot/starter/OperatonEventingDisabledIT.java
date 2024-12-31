@@ -42,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 )
 @ActiveProfiles("noeventing")
 @Transactional
-public class OperatonEventingDisabledIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonEventingDisabledIT extends AbstractOperatonAutoConfigurationIT {
 
   @Autowired
   private RuntimeService runtime;
@@ -67,7 +67,7 @@ public class OperatonEventingDisabledIT extends AbstractOperatonAutoConfiguratio
   }
 
   @AfterEach
-  public void stop() {
+  void stop() {
     if (instance != null) {
       // update stale instance
       instance = runtime.createProcessInstanceQuery().processInstanceId(instance.getProcessInstanceId()).active().singleResult();
@@ -78,7 +78,7 @@ public class OperatonEventingDisabledIT extends AbstractOperatonAutoConfiguratio
   }
 
   @Test
-  public final void shouldEventTaskCreation() {
+  final void shouldEventTaskCreation() {
 
     Task task = taskService.createTaskQuery().active().singleResult();
     taskService.complete(task.getId());

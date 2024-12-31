@@ -48,7 +48,7 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void test_bpmIsNotDisabled_and_webappIsNotDisabled_shouldInitWebapp() {
+  void bpm_is_not_disabled_and_webapp_is_not_disabled_should_init_webapp() {
     contextRunner.run(context -> {
       assertThat(context).hasNotFailed();
       assertThat(context).hasSingleBean(OperatonBpmWebappInitializer.class);
@@ -56,7 +56,7 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void test_bpmIsEnabled_and_webappIsNotDisabled_shouldInitWebapp() {
+  void bpm_is_enabled_and_webapp_is_not_disabled_should_init_webapp() {
     contextRunner.withPropertyValues(bpmEnabled).run(context -> {
       assertThat(context).hasNotFailed();
       assertThat(context).hasSingleBean(OperatonBpmWebappInitializer.class);
@@ -64,7 +64,7 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void test_bpmIsDisabled_and_webappIsNotDisabled_shouldNotInitWebapp() {
+  void bpm_is_disabled_and_webapp_is_not_disabled_should_not_init_webapp() {
     contextRunner.withPropertyValues(bpmDisabled).run(context -> {
       assertThat(context).hasNotFailed();
       assertThat(context).doesNotHaveBean(OperatonBpmWebappInitializer.class);
@@ -72,7 +72,7 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void test_bpmIsNotDisabled_and_webappIsEnabled_shouldInitWebapp() {
+  void bpm_is_not_disabled_and_webapp_is_enabled_should_init_webapp() {
     contextRunner.withPropertyValues(webappEnabled).run(context -> {
       assertThat(context).hasNotFailed();
       assertThat(context).hasSingleBean(OperatonBpmWebappInitializer.class);
@@ -80,7 +80,7 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void test_bpmIsEnabled_and_webappIsEnabled_shouldInitWebapp() {
+  void bpm_is_enabled_and_webapp_is_enabled_should_init_webapp() {
     contextRunner.withPropertyValues(bpmEnabled, webappEnabled).run(context -> {
       assertThat(context).hasNotFailed();
       assertThat(context).hasSingleBean(OperatonBpmWebappInitializer.class);
@@ -88,7 +88,7 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void test_bpmIsDisabled_and_webappIsEnabled_shouldNotInitWebapp() {
+  void bpm_is_disabled_and_webapp_is_enabled_should_not_init_webapp() {
     contextRunner.withPropertyValues(bpmDisabled, webappEnabled).run(context -> {
       assertThat(context).hasNotFailed();
       assertThat(context).doesNotHaveBean(OperatonBpmWebappInitializer.class);
@@ -96,7 +96,7 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void test_bpmIsNotDisabled_and_webappIsDisabled_shouldNotInitWebapp() {
+  void bpm_is_not_disabled_and_webapp_is_disabled_should_not_init_webapp() {
     contextRunner.withPropertyValues(webappDisabled).run(context -> {
       assertThat(context).hasNotFailed();
       assertThat(context).doesNotHaveBean(OperatonBpmWebappInitializer.class);
@@ -104,7 +104,7 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void test_bpmIsEnabled_and_webappIsDisabled_shouldNotInitWebapp() {
+  void bpm_is_enabled_and_webapp_is_disabled_should_not_init_webapp() {
     contextRunner.withPropertyValues(bpmEnabled, webappDisabled).run(context -> {
       assertThat(context).hasNotFailed();
       assertThat(context).doesNotHaveBean(OperatonBpmWebappInitializer.class);
@@ -112,7 +112,7 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void test_bpmIsDisabled_and_webappIsDisabled_shouldNotInitWebapp() {
+  void bpm_is_disabled_and_webapp_is_disabled_should_not_init_webapp() {
     contextRunner.withPropertyValues(bpmDisabled, webappDisabled).run(context -> {
       assertThat(context).hasNotFailed();
       assertThat(context).doesNotHaveBean(OperatonBpmWebappInitializer.class);

@@ -37,8 +37,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see <a href=
  *      "https://github.com/operaton/operaton-bpm-spring-boot-starter/issues/209">#209</a>
  */
-@SpringBootTest(classes = { MultipleTaskExecutorsIT.MultipleTaskExecutorsConfig.class })
-public class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT {
+@SpringBootTest(classes = {MultipleTaskExecutorsIT.MultipleTaskExecutorsConfig.class})
+class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT {
 
   @Autowired
   private TaskExecutor[] taskExecutors;

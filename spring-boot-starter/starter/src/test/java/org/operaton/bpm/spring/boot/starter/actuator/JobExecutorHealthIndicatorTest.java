@@ -31,10 +31,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class JobExecutorHealthIndicatorTest {
 
@@ -66,7 +67,7 @@ class JobExecutorHealthIndicatorTest {
   }
 
   @Test
-  public void nullTest() {
+  void nullTest() {
     assertThatNullPointerException().isThrownBy(() -> new JobExecutorHealthIndicator(null));
   }
 
@@ -75,7 +76,7 @@ class JobExecutorHealthIndicatorTest {
     when(jobExecutor.isActive()).thenReturn(true);
     JobExecutorHealthIndicator indicator = new JobExecutorHealthIndicator(jobExecutor);
     Health health = indicator.health();
-    assertEquals(Status.UP, health.getStatus());
+    assertThat(health.getStatus()).isEqualTo(Status.UP);
     assertDetails(health);
   }
 
@@ -84,18 +85,18 @@ class JobExecutorHealthIndicatorTest {
     when(jobExecutor.isActive()).thenReturn(false);
     JobExecutorHealthIndicator indicator = new JobExecutorHealthIndicator(jobExecutor);
     Health health = indicator.health();
-    assertEquals(Status.DOWN, health.getStatus());
+    assertThat(health.getStatus()).isEqualTo(Status.DOWN);
     assertDetails(health);
   }
 
   private void assertDetails(Health health) {
     Details details = (Details) health.getDetails().get("jobExecutor");
-    assertEquals(LOCK_OWNER, details.getLockOwner());
-    assertEquals(LOCK_TIME_IN_MILLIS, details.getLockTimeInMillis());
-    assertEquals(MAX_JOBS_PER_ACQUISITION, details.getMaxJobsPerAcquisition());
-    assertEquals(JOB_EXECUTOR_NAME, details.getName());
-    assertEquals(WAIT_TIME_IN_MILLIS, details.getWaitTimeInMillis());
-    assertEquals(PROCESS_ENGINES.size(), details.getProcessEngineNames().size());
-    assertEquals(PROCESS_ENGINE_NAME, details.getProcessEngineNames().iterator().next());
+    assertThat(details.getLockOwner()).isEqualTo(LOCK_OWNER);
+    assertThat(details.getLockTimeInMillis()).isEqualTo(LOCK_TIME_IN_MILLIS);
+    assertThat(details.getMaxJobsPerAcquisition()).isEqualTo(MAX_JOBS_PER_ACQUISITION);
+    assertThat(details.getName()).isEqualTo(JOB_EXECUTOR_NAME);
+    assertThat(details.getWaitTimeInMillis()).isEqualTo(WAIT_TIME_IN_MILLIS);
+    assertThat(details.getProcessEngineNames().size()).isEqualTo(PROCESS_ENGINES.size());
+    assertThat(details.getProcessEngineNames().iterator().next()).isEqualTo(PROCESS_ENGINE_NAME);
   }
 }

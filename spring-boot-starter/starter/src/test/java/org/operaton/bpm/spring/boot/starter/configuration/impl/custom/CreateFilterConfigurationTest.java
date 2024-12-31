@@ -18,7 +18,6 @@ package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.filter.FilterQuery;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
@@ -40,13 +39,11 @@ import static org.mockito.Mockito.*;
 class CreateFilterConfigurationTest {
 
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
-
   {
     operatonBpmProperties.getFilter().setCreate("All");
   }
 
   private static final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
-
   {
     ReflectionTestUtils.setField(configuration, "operatonBpmProperties", operatonBpmProperties);
     configuration.init();
@@ -67,45 +64,44 @@ class CreateFilterConfigurationTest {
 
   @Test
   void fail_if_not_configured_onInit() {
-    OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
-    final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
-    ReflectionTestUtils.setField(configuration, "operatonBpmProperties", operatonBpmProperties);
+    OperatonBpmProperties bpmProperties = new OperatonBpmProperties();
+    final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration();
+    ReflectionTestUtils.setField(filterConfiguration, "bpmProperties", bpmProperties);
 
-    assertThatIllegalStateException().isThrownBy(configuration::init);
+    assertThatIllegalStateException().isThrownBy(filterConfiguration::init);
   }
 
   @Test
   void fail_if_not_configured_onExecution() {
-    OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
-    operatonBpmProperties.getFilter().setCreate("All");
-    final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
-    ReflectionTestUtils.setField(configuration, "operatonBpmProperties", operatonBpmProperties);
-    configuration.init();
-    configuration.filterName = null;
+    OperatonBpmProperties bpmProperties = new OperatonBpmProperties();
+    bpmProperties.getFilter().setCreate("All");
+    final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration();
+    ReflectionTestUtils.setField(filterConfiguration, "bpmProperties", bpmProperties);
+    filterConfiguration.init();
+    filterConfiguration.filterName = null;
 
     ProcessEngine processEngine = mock(ProcessEngine.class);
-    assertThatNullPointerException().isThrownBy(() -> configuration.postProcessEngineBuild(processEngine));
+    assertThatNullPointerException().isThrownBy(() -> filterConfiguration.postProcessEngineBuild(processEngine));
   }
 
   @Test
   void do_not_create_when_already_exist() {
-    OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
-    operatonBpmProperties.getFilter().setCreate("All");
-    final CreateFilterConfiguration configuration = new CreateFilterConfiguration();
-    ReflectionTestUtils.setField(configuration, "operatonBpmProperties", operatonBpmProperties);
-    configuration.init();
+    OperatonBpmProperties bpmProperties = new OperatonBpmProperties();
+    bpmProperties.getFilter().setCreate("All");
+    final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration();
+    ReflectionTestUtils.setField(filterConfiguration, "bpmProperties", bpmProperties);
+    filterConfiguration.init();
 
     ProcessEngine engine = mock(ProcessEngine.class);
     FilterService filterService = mock(FilterService.class);
     FilterQuery filterQuery = mock(FilterQuery.class);
-    Filter filter = mock(Filter.class);
 
     when(engine.getFilterService()).thenReturn(filterService);
     when(filterService.createFilterQuery()).thenReturn(filterQuery);
     when(filterQuery.filterName(anyString())).thenReturn(filterQuery);
     when(filterQuery.count()).thenReturn(1L);
 
-    configuration.postProcessEngineBuild(engine);
+    filterConfiguration.postProcessEngineBuild(engine);
 
     verifyLogs(Level.INFO, "the filter with this name already exists");
     verify(filterService).createFilterQuery();

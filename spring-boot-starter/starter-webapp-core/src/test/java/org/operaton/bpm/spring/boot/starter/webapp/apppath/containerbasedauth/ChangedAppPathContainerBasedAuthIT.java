@@ -27,12 +27,12 @@ import org.springframework.test.context.TestPropertySource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-    classes = { ContainerBasedAuthTestApp.class },
+    classes = {ContainerBasedAuthTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
     "operaton.bpm.webapp.applicationPath=" + ChangedAppPathContainerBasedAuthIT.MY_APP_PATH
 })
-public class ChangedAppPathContainerBasedAuthIT {
+class ChangedAppPathContainerBasedAuthIT {
 
   protected static final String MY_APP_PATH = "/my/application/path";
 

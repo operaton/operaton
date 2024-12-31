@@ -26,8 +26,8 @@ import org.springframework.http.ResponseEntity;
 
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
-@SpringBootTest(classes = { TestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConfigurationIT{
+@SpringBootTest(classes = {TestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   @Autowired
   private TestRestTemplate testRestTemplate;

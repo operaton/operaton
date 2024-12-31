@@ -31,8 +31,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * StrongUuidGenerator is the default one.
  */
-@SpringBootTest(classes = { TestApplication.class })
-public class StrongUuidGeneratorIT {
+@SpringBootTest(classes = {TestApplication.class})
+class StrongUuidGeneratorIT {
 
   @Autowired
   private IdGenerator idGenerator;

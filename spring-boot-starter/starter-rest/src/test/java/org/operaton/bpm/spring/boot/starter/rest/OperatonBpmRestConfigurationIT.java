@@ -28,10 +28,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { TestRestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OperatonBpmRestConfigurationIT {
+@SpringBootTest(classes = {TestRestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class OperatonBpmRestConfigurationIT {
 
   @Autowired
   private TestRestTemplate testRestTemplate;
@@ -47,7 +47,7 @@ public class OperatonBpmRestConfigurationIT {
     ResponseEntity<ProcessDefinitionDto> entity = testRestTemplate.getForEntity("/engine-rest/engine/{engineName}/process-definition/key/TestProcess/",
         ProcessDefinitionDto.class, operatonBpmProperties.getProcessEngineName());
 
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertEquals("TestProcess", entity.getBody().getKey());
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(entity.getBody().getKey()).isEqualTo("TestProcess");
   }
 }

@@ -61,7 +61,7 @@ class BasicAuthAndInterceptorConfigurationTest extends ParsePropertiesHelper {
   }
 
   @AfterAll
-  public static void reset() {
+  static void reset() {
     MockHelper.reset();
   }
 

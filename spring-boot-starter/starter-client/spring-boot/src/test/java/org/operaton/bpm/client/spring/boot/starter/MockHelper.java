@@ -34,9 +34,11 @@ public class MockHelper {
 
     mockedStatic = mockStatic(ExternalTaskClient.class);
     clientBuilder = mock(ExternalTaskClientBuilder.class, RETURNS_SELF);
-    when(ExternalTaskClient.create()).thenReturn(clientBuilder);
-    ExternalTaskClient client = mock(ExternalTaskClient.class);
-    when(clientBuilder.build()).thenReturn(client);
+    try (MockedStatic<ExternalTaskClient> mockExternalTaskClient = mockStatic(ExternalTaskClient.class)) {
+      mockExternalTaskClient.when(ExternalTaskClient.create()).thenReturn(clientBuilder);
+      ExternalTaskClient client = mock(ExternalTaskClient.class);
+      when(clientBuilder.build()).thenReturn(client);
+    }
   }
 
   public static void reset() {

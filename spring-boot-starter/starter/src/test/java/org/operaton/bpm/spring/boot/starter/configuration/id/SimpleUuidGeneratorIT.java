@@ -29,8 +29,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { TestApplication.class }, properties = "operaton.bpm.id-generator=" + SIMPLE)
-public class SimpleUuidGeneratorIT {
+@SpringBootTest(classes = {TestApplication.class}, properties = "operaton.bpm.id-generator=" + SIMPLE)
+class SimpleUuidGeneratorIT {
 
   @Autowired
   private ProcessEngine processEngine;

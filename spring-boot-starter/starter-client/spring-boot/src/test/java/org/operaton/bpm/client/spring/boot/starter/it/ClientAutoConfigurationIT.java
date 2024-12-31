@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 @SpringBootTest
-public class ClientAutoConfigurationIT {
+class ClientAutoConfigurationIT {
 
   @MockBean(answer = Answers.RETURNS_DEEP_STUBS)
   protected ExternalTaskClient externalTaskClient;

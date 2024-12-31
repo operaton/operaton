@@ -38,13 +38,13 @@ class OperatonBpmVersionTest {
   }
 
   @BeforeAll
-  public static void setUp() {
+  static void setUp() {
     currentVersion = ProcessEngine.class.getPackage().getImplementationVersion();
   }
 
   @Test
   @Disabled("FIXME: This test is failing")
-  public void currentVersion() {
+  void currentVersion() {
     final OperatonBpmVersion version =  new OperatonBpmVersion();
     assertThat(version.isEnterprise()).isFalse();
     assertThat(version.get()).startsWith(currentVersion);

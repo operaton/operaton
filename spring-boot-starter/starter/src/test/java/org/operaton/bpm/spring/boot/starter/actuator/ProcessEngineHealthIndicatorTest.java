@@ -25,8 +25,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,7 +38,7 @@ class ProcessEngineHealthIndicatorTest {
   private ProcessEngine processEngine;
 
   @Test
-  public void nullTest() {
+  void nullTest() {
     assertThatIllegalArgumentException().isThrownBy(() -> new ProcessEngineHealthIndicator(null))
       .withMessage("ProcessEngine must not be null");
   }
@@ -47,7 +47,7 @@ class ProcessEngineHealthIndicatorTest {
   void upTest() {
     when(processEngine.getName()).thenReturn(PROCESS_ENGINE_NAME);
     Health health = new ProcessEngineHealthIndicator(processEngine).health();
-    assertEquals(Status.UP, health.getStatus());
-    assertEquals(PROCESS_ENGINE_NAME, health.getDetails().get("name"));
+    assertThat(health.getStatus()).isEqualTo(Status.UP);
+    assertThat(health.getDetails().get("name")).isEqualTo(PROCESS_ENGINE_NAME);
   }
 }

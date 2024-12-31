@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
     "operaton.bpm.id-generator=" + PREFIXED,
     "spring.application.name=myapp"
   })
-public class PrefixedUuidGeneratorIT {
+class PrefixedUuidGeneratorIT {
 
   @Autowired
   private IdGenerator idGenerator;

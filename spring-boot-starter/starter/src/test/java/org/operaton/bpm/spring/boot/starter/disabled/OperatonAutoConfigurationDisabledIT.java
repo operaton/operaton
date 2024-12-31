@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   webEnvironment = WebEnvironment.NONE,
   properties = {"operaton.bpm.enabled=false"}
 )
-public class OperatonAutoConfigurationDisabledIT {
+class OperatonAutoConfigurationDisabledIT {
 
   @SpringBootApplication
   public static class NoOperatonApplication {

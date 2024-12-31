@@ -28,11 +28,11 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-  classes = { TestApplication.class, AdditionalCammundaBpmConfigurations.class },
+  classes = {TestApplication.class, AdditionalCammundaBpmConfigurations.class},
   webEnvironment = WebEnvironment.NONE,
-  properties = { "operaton.bpm.admin-user.id=admin"}
+  properties = {"operaton.bpm.admin-user.id=admin"}
 )
-public class OperatonAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
   void autoDeploymentTest() {
@@ -47,7 +47,7 @@ public class OperatonAutoConfigurationIT extends AbstractOperatonAutoConfigurati
 
   @Test
   void orderedConfigurationTest() {
-    assertThat(BeforeStandardConfiguration.PROCESSED).isTrue();
+    assertThat(BeforeStandardConfiguration.processed).isTrue();
     assertThat(AfterStandardConfiguration.PROCESSED).isTrue();
   }
 

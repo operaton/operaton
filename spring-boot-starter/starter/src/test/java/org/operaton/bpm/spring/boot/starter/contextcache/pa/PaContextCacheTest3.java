@@ -60,7 +60,7 @@ class PaContextCacheTest3 extends AbstractContextCacheTest {
   }
 
   @Test
-  void testContextCaching() {
+  void contextCaching() {
     int appContextHash = applicationContext.hashCode();
 
     assertThat(appContextHash)
@@ -69,7 +69,7 @@ class PaContextCacheTest3 extends AbstractContextCacheTest {
   }
 
   @Test
-  void testDbIsolation() {
+  void dbIsolation() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("TestProcess");
     assertThat(instance).isNotNull();
 

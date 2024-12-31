@@ -28,7 +28,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,7 +49,7 @@ class LazyDelegateFilterTest {
       LazyDelegateFilter<Filter> delegateFilter = new LazyDelegateFilter<>(filterMock.getClass());
       delegateFilter.delegate = filterMock;
       delegateFilter.init(filterConfigMock);
-      assertSame(filterConfigMock, delegateFilter.filterConfig);
+      assertThat(delegateFilter.filterConfig).isSameAs(filterConfigMock);
       verify(filterMock, times(0)).init(Mockito.any(FilterConfig.class));
       theMock.verify(() -> LazyInitRegistration.lazyInit(delegateFilter));
     }

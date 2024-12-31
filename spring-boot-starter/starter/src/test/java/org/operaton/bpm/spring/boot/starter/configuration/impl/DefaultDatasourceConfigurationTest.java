@@ -30,7 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,7 +57,7 @@ class DefaultDatasourceConfigurationTest {
   void transactionManagerTest() {
     defaultDatasourceConfiguration.dataSource = mock(DataSource.class);
     defaultDatasourceConfiguration.preInit(configuration);
-    assertSame(platformTransactionManager, configuration.getTransactionManager());
+    assertThat(configuration.getTransactionManager()).isSameAs(platformTransactionManager);
   }
 
   @Test
@@ -66,7 +66,7 @@ class DefaultDatasourceConfigurationTest {
     PlatformTransactionManager operatonTransactionManager = mock(PlatformTransactionManager.class);
     defaultDatasourceConfiguration.operatonTransactionManager = operatonTransactionManager;
     defaultDatasourceConfiguration.preInit(configuration);
-    assertSame(operatonTransactionManager, configuration.getTransactionManager());
+    assertThat(configuration.getTransactionManager()).isSameAs(operatonTransactionManager);
   }
 
   @Test
@@ -74,7 +74,7 @@ class DefaultDatasourceConfigurationTest {
     DataSource datasourceMock = mock(DataSource.class);
     defaultDatasourceConfiguration.dataSource = datasourceMock;
     defaultDatasourceConfiguration.preInit(configuration);
-    assertSame(datasourceMock, getDataSourceFromConfiguration());
+    assertThat(getDataSourceFromConfiguration()).isSameAs(datasourceMock);
   }
 
   @Test
@@ -83,7 +83,7 @@ class DefaultDatasourceConfigurationTest {
     defaultDatasourceConfiguration.operatonDataSource = operatonDatasourceMock;
     defaultDatasourceConfiguration.dataSource = mock(DataSource.class);
     defaultDatasourceConfiguration.preInit(configuration);
-    assertSame(operatonDatasourceMock, getDataSourceFromConfiguration());
+    assertThat(getDataSourceFromConfiguration()).isSameAs(operatonDatasourceMock);
   }
 
   private DataSource getDataSourceFromConfiguration() {

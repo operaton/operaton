@@ -19,8 +19,8 @@ package org.operaton.bpm.spring.boot.starter.webapp;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = { WebappTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OperatonBpmWebappConfigurationIT {
+@SpringBootTest(classes = {WebappTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class OperatonBpmWebappConfigurationIT {
 
   @Test
   void startUpTest() {

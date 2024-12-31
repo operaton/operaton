@@ -23,8 +23,8 @@ import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GenericPropertiesConfigurationTest {
 
@@ -45,7 +45,7 @@ class GenericPropertiesConfigurationTest {
     final int batchPollTimeValue = Integer.MAX_VALUE;
     operatonBpmProperties.getGenericProperties().getProperties().put("batch-poll-time", batchPollTimeValue);
     genericPropertiesConfiguration.preInit(processEngineConfiguration);
-    assertEquals(batchPollTimeValue, processEngineConfiguration.getBatchPollTime());
+    assertThat(processEngineConfiguration.getBatchPollTime()).isEqualTo(batchPollTimeValue);
   }
 
   @Test
@@ -53,11 +53,11 @@ class GenericPropertiesConfigurationTest {
     final int batchPollTimeValue = Integer.MAX_VALUE;
     operatonBpmProperties.getGenericProperties().getProperties().put("batch-poll-time", Integer.valueOf(batchPollTimeValue).toString());
     genericPropertiesConfiguration.preInit(processEngineConfiguration);
-    assertEquals(batchPollTimeValue, processEngineConfiguration.getBatchPollTime());
+    assertThat(processEngineConfiguration.getBatchPollTime()).isEqualTo(batchPollTimeValue);
   }
 
   @Test
-  public void genericBindingTestWithNotExistingProperty() {
+  void genericBindingTestWithNotExistingProperty() {
     final int dontExistValue = Integer.MAX_VALUE;
     operatonBpmProperties.getGenericProperties().getProperties().put("dont-exist", dontExistValue);
 

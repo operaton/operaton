@@ -32,17 +32,17 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Svetlana Dorokhova.
  */
 @SpringBootTest(
-  classes = { TestProcessApplication.class, ProcessApplicationIT.DummyComponent.class },
+  classes = {TestProcessApplication.class, ProcessApplicationIT.DummyComponent.class},
   webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class ProcessApplicationIT {
+class ProcessApplicationIT {
 
   @Autowired
   private DummyComponent dummyComponent;
 
   @Test
-  void testPostDeployEvent() {
+  void postDeployEvent() {
     assertThat(dummyComponent.isPostDeployEventOccurred()).isTrue();
   }
 

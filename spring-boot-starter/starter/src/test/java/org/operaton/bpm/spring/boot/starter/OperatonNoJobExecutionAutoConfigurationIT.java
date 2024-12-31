@@ -23,20 +23,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = { TestApplication.class },
+@SpringBootTest(classes = {TestApplication.class},
   webEnvironment = WebEnvironment.NONE,
   properties = {
     "operaton.bpm.generate-unique-process-application-name=true",
     "spring.datasource.generate-unique-name=true",
   })
 @ActiveProfiles("nojobexecution")
-public class OperatonNoJobExecutionAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonNoJobExecutionAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
   void jobConfigurationTest() {
-    assertNull(jobExecutor);
+    assertThat(jobExecutor).isNull();
   }
 
 }

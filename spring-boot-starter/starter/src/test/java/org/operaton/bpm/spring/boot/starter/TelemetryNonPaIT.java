@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   classes = {TestApplication.class},
   webEnvironment = WebEnvironment.RANDOM_PORT
 )
-public class TelemetryNonPaIT extends AbstractOperatonAutoConfigurationIT {
+class TelemetryNonPaIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
   void shouldSubmitApplicationServerData() {

@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JobExecutorPropertiesTest extends ParsePropertiesHelper {
 
   @Test
-  void testDefaultJobExecutorProperties() {
+  void defaultJobExecutorProperties() {
     assertThat(jobExecution.getCorePoolSize()).isEqualTo(3);
     assertThat(jobExecution.getMaxPoolSize()).isEqualTo(10);
     assertThat(jobExecution.getQueueCapacity()).isEqualTo(3);

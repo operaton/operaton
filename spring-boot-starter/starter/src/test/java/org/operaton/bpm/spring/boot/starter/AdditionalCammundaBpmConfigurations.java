@@ -25,8 +25,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @TestConfiguration
 public class AdditionalCammundaBpmConfigurations {
@@ -44,12 +43,12 @@ public class AdditionalCammundaBpmConfigurations {
   @Order(Ordering.DEFAULT_ORDER - 1)
   public static class BeforeStandardConfiguration extends AbstractProcessEnginePlugin {
 
-    static boolean PROCESSED = false;
+    static boolean processed = false;
 
     @Override
     public void preInit(ProcessEngineConfigurationImpl configuration) {
-      assertNull(configuration.getDataSource());
-      PROCESSED = true;
+      assertThat(configuration.getDataSource()).isNull();
+      processed = true;
     }
   }
 
@@ -60,7 +59,7 @@ public class AdditionalCammundaBpmConfigurations {
 
     @Override
     public void preInit(ProcessEngineConfigurationImpl configuration) {
-      assertNotNull(configuration.getDataSource());
+      assertThat(configuration.getDataSource()).isNotNull();
       PROCESSED = true;
     }
   }

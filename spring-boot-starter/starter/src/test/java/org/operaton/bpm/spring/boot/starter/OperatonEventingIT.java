@@ -53,7 +53,7 @@ import static org.assertj.core.api.Assertions.fail;
   webEnvironment = WebEnvironment.NONE
 )
 @ActiveProfiles("eventing")
-public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
 
   @Autowired
   private RuntimeService runtime;
@@ -86,7 +86,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventTaskCreation() {
+  final void shouldEventTaskCreation() {
     // when
     startEventingInstance();
 
@@ -96,7 +96,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventTaskCreationWithAssignment() {
+  final void shouldEventTaskCreationWithAssignment() {
     // when
     instance = runtime.startProcessInstanceByKey("eventingWithAssignment");
 
@@ -107,7 +107,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventTaskUpdate() {
+  final void shouldEventTaskUpdate() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -121,7 +121,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventTaskAssignment() {
+  final void shouldEventTaskAssignment() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -136,7 +136,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventTaskComplete() {
+  final void shouldEventTaskComplete() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -150,7 +150,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventTaskDelete() {
+  final void shouldEventTaskDelete() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -164,7 +164,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldNotInvokeHandlerWhenSkippingCustomListeners() {
+  final void shouldNotInvokeHandlerWhenSkippingCustomListeners() {
     // given
     startEventingInstance();
     eventCaptor.clear();
@@ -177,7 +177,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventExecution() {
+  final void shouldEventExecution() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -199,7 +199,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventExecutionWhenIntermediateCatchExists() {
+  final void shouldEventExecutionWhenIntermediateCatchExists() {
     // given
     eventCaptor.clear();
     instance = runtime.startProcessInstanceByKey("eventingWithIntermediateCatch");
@@ -215,7 +215,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventExecutionWhenBoundaryEventExists() {
+  final void shouldEventExecutionWhenBoundaryEventExists() {
     // given
     eventCaptor.clear();
     instance = runtime.startProcessInstanceByKey("eventingWithBoundaryEvent");
@@ -235,7 +235,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventExecutionWhenBoundaryEventWithErrorExists() {
+  final void shouldEventExecutionWhenBoundaryEventWithErrorExists() {
     // given
     eventCaptor.clear();
     instance = runtime.startProcessInstanceByKey("eventingWithBoundaryEvent",
@@ -257,7 +257,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldEventHistoryTaskAssignmentChanges() {
+  final void shouldEventHistoryTaskAssignmentChanges() {
     // given
     startEventingInstance();
     Task task = taskService.createTaskQuery().active().singleResult();
@@ -434,7 +434,7 @@ public class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
   }
 
   @Test
-  public final void shouldNotInvokeHandlerOnModificationWhenSkippingCustomListeners() {
+  final void shouldNotInvokeHandlerOnModificationWhenSkippingCustomListeners() {
     // given
     startEventingInstance();
     final TaskEntity task = (TaskEntity)taskService.createTaskQuery().active().singleResult();

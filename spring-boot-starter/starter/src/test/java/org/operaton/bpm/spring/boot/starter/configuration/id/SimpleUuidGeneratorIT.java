@@ -32,8 +32,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = {TestApplication.class}, properties = "operaton.bpm.id-generator=" + SIMPLE)
 class SimpleUuidGeneratorIT {
 
+private final ProcessEngine processEngine;
+
   @Autowired
-  private ProcessEngine processEngine;
+  public SimpleUuidGeneratorIT(ProcessEngine processEngine) {
+      this.processEngine = processEngine;
+  }
 
   @Test
   void configured_idGenerator_is_uuid() {

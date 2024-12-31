@@ -39,8 +39,6 @@ class DefaultDatasourceConfigurationTest {
   @Mock
   private PlatformTransactionManager platformTransactionManager;
 
-  private OperatonBpmProperties operatonBpmProperties;
-
   @InjectMocks
   private DefaultDatasourceConfiguration defaultDatasourceConfiguration;
 
@@ -49,8 +47,7 @@ class DefaultDatasourceConfigurationTest {
   @BeforeEach
   void before() {
     configuration = new SpringProcessEngineConfiguration();
-    operatonBpmProperties = new OperatonBpmProperties();
-    defaultDatasourceConfiguration.operatonBpmProperties = operatonBpmProperties;
+    defaultDatasourceConfiguration.operatonBpmProperties = new OperatonBpmProperties();
   }
 
   @Test

@@ -33,11 +33,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = {TestRestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class OperatonBpmRestConfigurationIT {
 
-  @Autowired
-  private TestRestTemplate testRestTemplate;
+  private final TestRestTemplate testRestTemplate;
+  private final OperatonBpmProperties operatonBpmProperties;
 
   @Autowired
-  private OperatonBpmProperties operatonBpmProperties;
+  public OperatonBpmRestConfigurationIT(TestRestTemplate testRestTemplate, OperatonBpmProperties operatonBpmProperties) {
+      this.testRestTemplate = testRestTemplate;
+      this.operatonBpmProperties = operatonBpmProperties;
+  }
 
   @Test
   void processDefinitionTest() {

@@ -28,7 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
  * Tests {@link PaContextCacheTest1}, {@link PaContextCacheTest2}, {@link PaContextCacheTest3}
  * {@link PaContextCacheTest4} and {@link PaContextCacheTest5} are meant to be run together
  * so that ApplicationContext caching is tested.
- * See {@link PaContextCacheSuiteTest} for a detailed explanation.
+ * See {@link PaContextCacheTestSuite} for a detailed explanation.
  *
  * @author Nikola Koevski
  */

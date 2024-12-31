@@ -40,17 +40,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = {MultipleTaskExecutorsIT.MultipleTaskExecutorsConfig.class})
 class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT {
 
-  @Autowired
-  private TaskExecutor[] taskExecutors;
+  private final TaskExecutor[] taskExecutors;
+  private final TaskExecutor operatonTaskExecutor;
 
   @Autowired
-  @Qualifier(JobConfiguration.CAMUNDA_TASK_EXECUTOR_QUALIFIER)
-  private TaskExecutor operatonTaskExecutor;
+  public MultipleTaskExecutorsIT(TaskExecutor[] taskExecutors, @Qualifier(JobConfiguration.CAMUNDA_TASK_EXECUTOR_QUALIFIER) TaskExecutor operatonTaskExecutor) {
+      this.taskExecutors = taskExecutors;
+      this.operatonTaskExecutor = operatonTaskExecutor;
+  }
 
   @Test
   void startWithMultipleTaskExecutorsTest() {
-    assertThat(taskExecutors.length).isGreaterThan(1);
-    assertThat(taskExecutors).contains(operatonTaskExecutor);
+    assertThat(taskExecutors)
+        .hasSizeGreaterThan(1)
+        .contains(operatonTaskExecutor);
   }
 
   @SpringBootApplication
@@ -58,7 +61,8 @@ class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT {
 
     @Configuration
     @EnableWebSocketMessageBroker
-    public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    @SuppressWarnings("unused")
+    public static class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
       @Override
       public void configureMessageBroker(MessageBrokerRegistry config) {

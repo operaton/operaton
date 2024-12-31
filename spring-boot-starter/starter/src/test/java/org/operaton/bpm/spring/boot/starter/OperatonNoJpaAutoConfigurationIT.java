@@ -21,6 +21,7 @@ import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,8 +44,12 @@ import static org.assertj.core.api.Assertions.fail;
 @ActiveProfiles("nojpa")
 class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
+  private final TestEntityRepository testEntityRepository;
+
   @Autowired
-  private TestEntityRepository testEntityRepository;
+  public OperatonNoJpaAutoConfigurationIT(TestEntityRepository testEntityRepository) {
+      this.testEntityRepository = testEntityRepository;
+  }
 
   @Test
   void jpaDisabledTest() {
@@ -68,8 +73,7 @@ class OperatonNoJpaAutoConfigurationIT extends AbstractOperatonAutoConfiguration
   }
 
   public static class Pojo implements Serializable {
-
+    @Serial
     private static final long serialVersionUID = 1L;
-
   }
 }

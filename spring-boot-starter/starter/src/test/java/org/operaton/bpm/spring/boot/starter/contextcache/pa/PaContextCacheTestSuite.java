@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.spring.boot.starter.contextcache.pa;
 
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+
 /**
  * This JUnit Suite combines {@link PaContextCacheTest1}, {@link PaContextCacheTest2}
  * and {@link PaContextCacheTest3} so that ApplicationContext caching is tested. All three
@@ -55,10 +58,6 @@ package org.operaton.bpm.spring.boot.starter.contextcache.pa;
  *
  * @author Nikola Koevski
  */
-
-import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.Suite;
-
 @Suite
 @SelectClasses({
   PaContextCacheTest1.class,
@@ -67,5 +66,5 @@ import org.junit.platform.suite.api.Suite;
   PaContextCacheTest4.class,
   PaContextCacheTest5.class
 })
-class PaContextCacheSuiteTest {
+class PaContextCacheTestSuite {
 }

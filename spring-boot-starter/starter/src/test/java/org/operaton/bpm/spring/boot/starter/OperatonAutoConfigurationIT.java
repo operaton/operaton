@@ -48,7 +48,7 @@ class OperatonAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
   @Test
   void orderedConfigurationTest() {
     assertThat(BeforeStandardConfiguration.processed).isTrue();
-    assertThat(AfterStandardConfiguration.PROCESSED).isTrue();
+    assertThat(AfterStandardConfiguration.processed).isTrue();
   }
 
   @Test

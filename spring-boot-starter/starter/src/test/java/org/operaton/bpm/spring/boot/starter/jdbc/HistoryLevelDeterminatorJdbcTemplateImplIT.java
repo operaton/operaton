@@ -25,8 +25,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = {HistoryLevelDeterminatorJdbcTemplateImplTestApplication.class})
 class HistoryLevelDeterminatorJdbcTemplateImplIT {
 
+  private final HistoryLevelDeterminator historyLevelDeterminator;
+
   @Autowired
-  private HistoryLevelDeterminator historyLevelDeterminator;
+  public HistoryLevelDeterminatorJdbcTemplateImplIT(HistoryLevelDeterminator historyLevelDeterminator) {
+      this.historyLevelDeterminator = historyLevelDeterminator;
+  }
 
   @Test
   void test() {

@@ -34,17 +34,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = {TestApplication.class})
 class StrongUuidGeneratorIT {
 
-  @Autowired
-  private IdGenerator idGenerator;
+  private final IdGenerator idGenerator;
+  private final ProcessEngine processEngine;
 
   @Autowired
-  private ProcessEngine processEngine;
+  public StrongUuidGeneratorIT(IdGenerator idGenerator, ProcessEngine processEngine) {
+      this.idGenerator = idGenerator;
+      this.processEngine = processEngine;
+  }
 
   @Test
   void configured_idGenerator_is_uuid() {
-    IdGenerator idGenerator = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getIdGenerator();
+    IdGenerator theIdGenerator = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getIdGenerator();
 
-    assertThat(idGenerator).isOfAnyClassIn(StrongUuidGenerator.class);
+    assertThat(theIdGenerator).isOfAnyClassIn(StrongUuidGenerator.class);
   }
 
   @Test

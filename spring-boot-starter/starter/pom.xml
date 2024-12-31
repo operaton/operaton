@@ -25,7 +25,7 @@
   <dependencies>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-spring</artifactId>
+      <artifactId>operaton-engine-spring-6</artifactId>
     </dependency>
 
     <!-- Spring dependencies required by operaton-engine-spring -->

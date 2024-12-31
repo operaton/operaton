@@ -38,8 +38,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class ProcessApplicationIT {
 
+private final DummyComponent dummyComponent;
+
   @Autowired
-  private DummyComponent dummyComponent;
+  public ProcessApplicationIT(DummyComponent dummyComponent) {
+      this.dummyComponent = dummyComponent;
+  }
 
   @Test
   void postDeployEvent() {
@@ -52,6 +56,7 @@ class ProcessApplicationIT {
     private boolean postDeployEventOccurred;
 
     @EventListener
+    @SuppressWarnings("unused")
     public void eventOccurred(PostDeployEvent event) {
       this.postDeployEventOccurred = true;
     }

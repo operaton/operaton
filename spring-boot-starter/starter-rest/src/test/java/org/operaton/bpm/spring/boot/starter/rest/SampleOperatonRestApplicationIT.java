@@ -39,14 +39,16 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(classes = SampleOperatonRestApplication.class, webEnvironment = RANDOM_PORT)
 class SampleOperatonRestApplicationIT {
 
-  @Autowired
-  private TestRestTemplate testRestTemplate;
+  private final TestRestTemplate testRestTemplate;
+  private final RuntimeService runtimeService;
+  private final OperatonBpmProperties operatonBpmProperties;
 
   @Autowired
-  private RuntimeService runtimeService;
-
-  @Autowired
-  private OperatonBpmProperties operatonBpmProperties;
+  public SampleOperatonRestApplicationIT(TestRestTemplate testRestTemplate, RuntimeService runtimeService, OperatonBpmProperties operatonBpmProperties) {
+      this.testRestTemplate = testRestTemplate;
+      this.runtimeService = runtimeService;
+      this.operatonBpmProperties = operatonBpmProperties;
+  }
 
   @Test
   void restApiIsAvailable() {

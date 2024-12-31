@@ -33,11 +33,14 @@ import org.springframework.stereotype.Service;
 @Service
 class TransactionalTestServiceImpl implements TransactionalTestService {
 
-  @Autowired
-  private TestEntityRepository testEntityRepository;
+  private final TestEntityRepository testEntityRepository;
+  private final RuntimeService runtimeService;
 
   @Autowired
-  private RuntimeService runtimeService;
+  public TransactionalTestServiceImpl(TestEntityRepository testEntityRepository, RuntimeService runtimeService) {
+      this.testEntityRepository = testEntityRepository;
+      this.runtimeService = runtimeService;
+  }
 
   @Override
   public ProcessInstance doOk() {

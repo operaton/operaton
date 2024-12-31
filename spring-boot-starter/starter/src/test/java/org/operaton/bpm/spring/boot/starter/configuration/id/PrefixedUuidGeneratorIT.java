@@ -37,14 +37,16 @@ import static org.assertj.core.api.Assertions.assertThat;
   })
 class PrefixedUuidGeneratorIT {
 
-  @Autowired
-  private IdGenerator idGenerator;
+  private final IdGenerator idGenerator;
+  private final OperatonBpmProperties properties;
+  private final ProcessEngine processEngine;
 
   @Autowired
-  private OperatonBpmProperties properties;
-
-  @Autowired
-  private ProcessEngine processEngine;
+  public PrefixedUuidGeneratorIT(IdGenerator idGenerator, OperatonBpmProperties properties, ProcessEngine processEngine) {
+      this.idGenerator = idGenerator;
+      this.properties = properties;
+      this.processEngine = processEngine;
+  }
 
   @Test
   void property_is_set() {
@@ -53,9 +55,9 @@ class PrefixedUuidGeneratorIT {
 
   @Test
   void configured_idGenerator_is_uuid() {
-    final IdGenerator idGenerator = OperatonSpringBootUtil.get(processEngine).getIdGenerator();
+    final IdGenerator theIdGenerator = OperatonSpringBootUtil.get(processEngine).getIdGenerator();
 
-    assertThat(idGenerator).isOfAnyClassIn(PrefixedUuidGenerator.class);
+    assertThat(theIdGenerator).isOfAnyClassIn(PrefixedUuidGenerator.class);
   }
 
   @Test

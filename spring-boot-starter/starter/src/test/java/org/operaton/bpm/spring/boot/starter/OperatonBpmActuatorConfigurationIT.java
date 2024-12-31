@@ -29,8 +29,12 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 @SpringBootTest(classes = {TestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
+  private final TestRestTemplate testRestTemplate;
+
   @Autowired
-  private TestRestTemplate testRestTemplate;
+  public OperatonBpmActuatorConfigurationIT(TestRestTemplate testRestTemplate) {
+      this.testRestTemplate = testRestTemplate;
+  }
 
   @Test
   void jobExecutorHealthIndicatorTest() {

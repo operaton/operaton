@@ -62,13 +62,11 @@ class GetAnnotatedBeanTest {
 
   /**
    * see issue #187 ... this failed when static bean definitions where used inside the springBootApplication
-   *
-   * @throws Exception
    */
   @Test
-  void gets_annotated_bean() throws Exception {
+  void gets_annotated_bean() {
     Optional<GetProcessApplicationNameFromAnnotation.AnnotatedBean> bean = GetProcessApplicationNameFromAnnotation.getAnnotatedBean.apply(ctx);
 
-    assertThat(bean.isPresent()).isTrue();
+    assertThat(bean).isPresent();
   }
 }

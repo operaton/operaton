@@ -57,7 +57,7 @@ class LazyInitRegistrationTest {
   @Test
   void registerTest() {
     LazyInitRegistration.register(lazyDelegateFilterMock);
-    assertThat(LazyInitRegistration.getRegistrations().contains(lazyDelegateFilterMock)).isTrue();
+    assertThat(LazyInitRegistration.getRegistrations()).contains(lazyDelegateFilterMock);
   }
 
   @Test
@@ -115,7 +115,7 @@ class LazyInitRegistrationTest {
     assertThat(LazyInitRegistration.lazyInit(lazyDelegateFilterMock)).isTrue();
     verify(lazyDelegateFilterMock, times(1)).setInitHook(initHookMock);
     verify(lazyDelegateFilterMock, times(1)).lazyInit();
-    assertThat(LazyInitRegistration.getRegistrations().contains(lazyDelegateFilterMock)).isFalse();
+    assertThat(LazyInitRegistration.getRegistrations()).doesNotContain(lazyDelegateFilterMock);
   }
 
   @Test
@@ -127,7 +127,7 @@ class LazyInitRegistrationTest {
     assertThat(LazyInitRegistration.lazyInit(lazyDelegateFilterMock)).isTrue();
     verify(lazyDelegateFilterMock, times(1)).setInitHook(null);
     verify(lazyDelegateFilterMock, times(1)).lazyInit();
-    assertThat(LazyInitRegistration.getRegistrations().contains(lazyDelegateFilterMock)).isFalse();
+    assertThat(LazyInitRegistration.getRegistrations()).doesNotContain(lazyDelegateFilterMock);
   }
 
   @Test
@@ -144,7 +144,7 @@ class LazyInitRegistrationTest {
       LazyInitRegistration.register(lazyDelegateFilterMock);
       Set<LazyDelegateFilter<? extends Filter>> registrations = new HashSet<>();
       registrations.add(lazyDelegateFilterMock);
-      theMock.when(() -> LazyInitRegistration.getRegistrations()).thenReturn(registrations);
+      theMock.when(LazyInitRegistration::getRegistrations).thenReturn(registrations);
   
       new LazyInitRegistration().setApplicationContext(applicationContextMock);
 

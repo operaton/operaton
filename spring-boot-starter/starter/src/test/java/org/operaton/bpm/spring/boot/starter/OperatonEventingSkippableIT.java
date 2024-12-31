@@ -47,17 +47,19 @@ import static org.assertj.core.api.Assertions.assertThat;
   webEnvironment = WebEnvironment.NONE
 )
 @ActiveProfiles("eventing-skippable")
-public class OperatonEventingSkippableIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonEventingSkippableIT extends AbstractOperatonAutoConfigurationIT {
 
   public static final String SERVICE_TASK = "service_task";
-  @Autowired
-  private RuntimeService runtime;
+  private final RuntimeService runtime;
+  private final TaskService taskService;
+  private final TestEventCaptor eventCaptor;
 
   @Autowired
-  private TaskService taskService;
-
-  @Autowired
-  private TestEventCaptor eventCaptor;
+  public OperatonEventingSkippableIT(RuntimeService runtime, TaskService taskService, TestEventCaptor eventCaptor) {
+      this.runtime = runtime;
+      this.taskService = taskService;
+      this.eventCaptor = eventCaptor;
+  }
 
   private ProcessInstance instance;
 

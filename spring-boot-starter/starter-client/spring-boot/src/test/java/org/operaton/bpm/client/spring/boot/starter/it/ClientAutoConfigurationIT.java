@@ -34,10 +34,11 @@ import static org.assertj.core.api.Assertions.tuple;
 class ClientAutoConfigurationIT {
 
   @MockBean(answer = Answers.RETURNS_DEEP_STUBS)
-  protected ExternalTaskClient externalTaskClient;
+  @SuppressWarnings("unused")
+  ExternalTaskClient externalTaskClient;
 
   @Autowired
-  protected List<SpringTopicSubscription> topicSubscriptions;
+  List<SpringTopicSubscription> topicSubscriptions;
 
   @Test
   void startup() {

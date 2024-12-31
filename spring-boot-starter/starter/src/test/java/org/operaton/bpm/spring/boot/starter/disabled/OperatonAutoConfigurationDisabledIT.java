@@ -41,11 +41,12 @@ class OperatonAutoConfigurationDisabledIT {
   }
 
   @Autowired
+  @SuppressWarnings("unused")
   private Optional<ProcessEngine> processEngine;
 
   @Test
   void processEngineNotConfigured() {
-    assertThat(processEngine.isPresent()).isFalse();
+    assertThat(processEngine).isEmpty();
   }
 
 }

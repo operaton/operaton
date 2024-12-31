@@ -28,6 +28,7 @@ import org.springframework.core.annotation.Order;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestConfiguration
+@SuppressWarnings("unused")
 public class AdditionalCammundaBpmConfigurations {
 
   @Bean
@@ -55,12 +56,12 @@ public class AdditionalCammundaBpmConfigurations {
   @Order(Ordering.DEFAULT_ORDER + 1)
   public static class AfterStandardConfiguration extends  AbstractProcessEnginePlugin {
 
-    static boolean PROCESSED = false;
+    static boolean processed = false;
 
     @Override
     public void preInit(ProcessEngineConfigurationImpl configuration) {
       assertThat(configuration.getDataSource()).isNotNull();
-      PROCESSED = true;
+      processed = true;
     }
   }
 }

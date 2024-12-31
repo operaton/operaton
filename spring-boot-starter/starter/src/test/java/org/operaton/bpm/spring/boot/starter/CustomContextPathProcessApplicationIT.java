@@ -46,7 +46,7 @@ class CustomContextPathProcessApplicationIT {
   @Test
   void postDeployEvent() {
     assertThat(application).isNotNull();
-    assertThat(application.getProperties().get(ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH)).isEqualTo("/");
+    assertThat(application.getProperties()).containsEntry(ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH, "/");
   }
 
 }

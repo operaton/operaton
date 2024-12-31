@@ -30,20 +30,21 @@ import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
+@SuppressWarnings("unused")
 public class TestEventCaptor {
 
-  public Stack<HistoryEvent> historyEvents = new Stack<>();
-  public Stack<TaskEvent> taskEvents = new Stack<>();
-  public Stack<TaskEvent> immutableTaskEvents = new Stack<>();
-  public Stack<ExecutionEvent> executionEvents = new Stack<>();
-  public Stack<ExecutionEvent> immutableExecutionEvents = new Stack<>();
+  public final Stack<HistoryEvent> historyEvents = new Stack<>();
+  public final Stack<TaskEvent> taskEvents = new Stack<>();
+  public final Stack<TaskEvent> immutableTaskEvents = new Stack<>();
+  public final Stack<ExecutionEvent> executionEvents = new Stack<>();
+  public final Stack<ExecutionEvent> immutableExecutionEvents = new Stack<>();
 
   // Transactional Listener Events
-  public Stack<HistoryEvent> transactionHistoryEvents = new Stack<>();
-  public Stack<TaskEvent> transactionTaskEvents = new Stack<>();
-  public Stack<TaskEvent> transactionImmutableTaskEvents = new Stack<>();
-  public Stack<ExecutionEvent> transactionExecutionEvents = new Stack<>();
-  public Stack<ExecutionEvent> transactionImmutableExecutionEvents = new Stack<>();
+  public final Stack<HistoryEvent> transactionHistoryEvents = new Stack<>();
+  public final Stack<TaskEvent> transactionTaskEvents = new Stack<>();
+  public final Stack<TaskEvent> transactionImmutableTaskEvents = new Stack<>();
+  public final Stack<ExecutionEvent> transactionExecutionEvents = new Stack<>();
+  public final Stack<ExecutionEvent> transactionImmutableExecutionEvents = new Stack<>();
 
   @EventListener
   public void onEvent(HistoryEvent event) {

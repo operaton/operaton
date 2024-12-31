@@ -17,8 +17,8 @@
 package org.operaton.bpm.spring.boot.starter;
 
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.spring.boot.starter.AdditionalCammundaBpmConfigurations.AfterStandardConfiguration;
-import org.operaton.bpm.spring.boot.starter.AdditionalCammundaBpmConfigurations.BeforeStandardConfiguration;
+import org.operaton.bpm.spring.boot.starter.AdditionalOperatonBpmConfigurations.AfterStandardConfiguration;
+import org.operaton.bpm.spring.boot.starter.AdditionalOperatonBpmConfigurations.BeforeStandardConfiguration;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(
-  classes = {TestApplication.class, AdditionalCammundaBpmConfigurations.class},
+  classes = {TestApplication.class, AdditionalOperatonBpmConfigurations.class},
   webEnvironment = WebEnvironment.NONE,
   properties = {"operaton.bpm.admin-user.id=admin"}
 )

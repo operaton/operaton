@@ -29,9 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(MockitoExtension.class)
 class SpringBootProcessEnginePluginTest {
 
-  private class DummySpringPlugin extends SpringBootProcessEnginePlugin {
-
-
+  private static class DummySpringPlugin extends SpringBootProcessEnginePlugin {
     public boolean preInit;
     public boolean postInit;
 

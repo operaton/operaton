@@ -53,7 +53,7 @@ class CreateAdminUserConfigurationTest {
   static final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration).extension();
 
   @RegisterExtension
-  public ProcessEngineLoggingExtension loggingRule = new ProcessEngineLoggingExtension()
+  public ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
       .watch(SpringBootProcessEngineLogger.PACKAGE);
 
   @Test
@@ -70,7 +70,7 @@ class CreateAdminUserConfigurationTest {
   }
 
   protected void verifyLogs(Level logLevel, String message) {
-    List<ILoggingEvent> logs = loggingRule.getLog();
+    List<ILoggingEvent> logs = loggingExtension.getLog();
     assertThat(logs).hasSize(1);
     assertThat(logs.get(0).getLevel()).isEqualTo(logLevel);
     assertThat(logs.get(0).getFormattedMessage()).containsIgnoringCase(message);

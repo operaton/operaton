@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestConfiguration
 @SuppressWarnings("unused")
-public class AdditionalCammundaBpmConfigurations {
+public class AdditionalOperatonBpmConfigurations {
 
   @Bean
   public ProcessEnginePlugin beforeStandardConfiguration() {

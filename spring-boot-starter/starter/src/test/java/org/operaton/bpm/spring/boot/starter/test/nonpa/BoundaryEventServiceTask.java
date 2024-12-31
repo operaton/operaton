@@ -31,7 +31,7 @@ public class BoundaryEventServiceTask implements JavaDelegate {
   public static final String ERROR_NAME = "errorName";
 
   @Override
-  public void execute(DelegateExecution delegateExecution) throws Exception {
+  public void execute(DelegateExecution delegateExecution) {
     Optional.ofNullable(delegateExecution.getVariable(ERROR_NAME))
       .map(String.class::cast)
       .filter(StringUtils::isNotBlank)

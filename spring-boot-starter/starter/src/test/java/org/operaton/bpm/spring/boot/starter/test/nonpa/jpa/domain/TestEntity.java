@@ -22,6 +22,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
+@SuppressWarnings("unused")
 public class TestEntity {
 
   @Id

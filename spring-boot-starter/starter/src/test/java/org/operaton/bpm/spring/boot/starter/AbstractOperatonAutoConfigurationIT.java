@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyEntity;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@SuppressWarnings("unused")
 public abstract class AbstractOperatonAutoConfigurationIT {
 
   @Autowired

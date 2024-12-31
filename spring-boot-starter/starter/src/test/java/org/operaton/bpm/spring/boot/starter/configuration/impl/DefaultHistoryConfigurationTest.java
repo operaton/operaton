@@ -71,7 +71,7 @@ class DefaultHistoryConfigurationTest {
   @Test
   void historyEventHandlerTest() {
     HistoryEventHandler historyEventHandlerMock = mock(HistoryEventHandler.class);
-    List customHandlersList = mock(List.class);
+    var customHandlersList = mock(List.class);
     when(springProcessEngineConfiguration.getCustomHistoryEventHandlers()).thenReturn(customHandlersList);
 
     defaultHistoryConfiguration.historyEventHandler = historyEventHandlerMock;

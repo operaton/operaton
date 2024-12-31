@@ -32,11 +32,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
+@SuppressWarnings("unused")
 public class TestApplication {
 
   @ConditionalOnProperty(prefix = "operaton.bpm", name = "process-engine-name", havingValue = "nojpaTestEngine")
   @Configuration
-  public class TestConfiguration {
+  public static class TestConfiguration {
 
     @Bean(name = "spinProcessEnginePlugin")
     public ProcessEnginePlugin spinProcessEnginePlugin() {

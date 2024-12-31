@@ -37,6 +37,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
   webEnvironment = NONE
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@SuppressWarnings("unused")
 class GetAnnotatedBeanTest {
 
   @SpringBootApplication

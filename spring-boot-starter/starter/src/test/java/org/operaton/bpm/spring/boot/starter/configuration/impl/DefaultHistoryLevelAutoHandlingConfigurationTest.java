@@ -38,15 +38,12 @@ class DefaultHistoryLevelAutoHandlingConfigurationTest {
   @Mock
   private HistoryLevelDeterminator historyLevelDeterminator;
 
-  private OperatonBpmProperties operatonBpmProperties;
-
   private DefaultHistoryLevelAutoHandlingConfiguration historyLevelAutoHandlingConfiguration;
 
   @BeforeEach
   void before() {
-    operatonBpmProperties = new OperatonBpmProperties();
     historyLevelAutoHandlingConfiguration = new DefaultHistoryLevelAutoHandlingConfiguration();
-    historyLevelAutoHandlingConfiguration.operatonBpmProperties = operatonBpmProperties;
+    historyLevelAutoHandlingConfiguration.operatonBpmProperties = new OperatonBpmProperties();
     historyLevelAutoHandlingConfiguration.historyLevelDeterminator = historyLevelDeterminator;
   }
 

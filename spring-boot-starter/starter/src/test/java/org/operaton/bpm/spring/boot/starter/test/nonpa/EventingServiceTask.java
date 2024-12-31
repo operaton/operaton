@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 public class EventingServiceTask implements JavaDelegate {
 
   @Override
-  public void execute(DelegateExecution delegateExecution) throws Exception {
+  public void execute(DelegateExecution delegateExecution) {
     // NOTHING TO DO HERE
   }
 }

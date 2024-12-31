@@ -54,7 +54,7 @@ class AdminUserPropertyTest {
   }
 
   @Test
-  void paswordDefaultsToUserId() {
+  void passwordDefaultsToUserId() {
     User adminUser = adminUser("admin", null, "", "", "").init();
 
     assertThat(adminUser.getId()).isEqualTo("admin");

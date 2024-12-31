@@ -50,7 +50,6 @@ class OperatonBpmActuatorConfigurationIT extends AbstractOperatonAutoConfigurati
 
   private String getHealthBody() {
     ResponseEntity<String> entity = testRestTemplate.getForEntity("/actuator/health", String.class);
-    final String body = entity.getBody();
-    return body;
+    return entity.getBody();
   }
 }

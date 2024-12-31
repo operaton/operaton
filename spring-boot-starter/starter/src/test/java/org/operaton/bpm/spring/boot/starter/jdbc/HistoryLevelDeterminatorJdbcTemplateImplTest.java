@@ -16,52 +16,51 @@
  */
 package org.operaton.bpm.spring.boot.starter.jdbc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Collections;
-
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.HistoryLevelAudit;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import java.util.Collections;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-@RunWith(MockitoJUnitRunner.class)
-public class HistoryLevelDeterminatorJdbcTemplateImplTest {
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class HistoryLevelDeterminatorJdbcTemplateImplTest {
 
   @Mock
   private JdbcTemplate jdbcTemplate;
 
   private OperatonBpmProperties operatonBpmProperties;
 
-  @Before
-  public void before() {
+  @BeforeEach
+  void before() {
     operatonBpmProperties = new OperatonBpmProperties();
   }
 
   @Test
-  public void afterPropertiesSetTest1() throws Exception {
+  void afterPropertiesSetTest1() throws Exception {
     operatonBpmProperties = new OperatonBpmProperties();
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     determinator.setJdbcTemplate(jdbcTemplate);
     determinator.setOperatonBpmProperties(operatonBpmProperties);
     determinator.afterPropertiesSet();
-    assertEquals(ProcessEngineConfiguration.HISTORY_FULL, determinator.defaultHistoryLevel);
+    assertThat(determinator.defaultHistoryLevel).isEqualTo(ProcessEngineConfiguration.HISTORY_FULL);
   }
 
   @Test
-  public void afterPropertiesSetTest2() throws Exception {
+  void afterPropertiesSetTest2() throws Exception {
     operatonBpmProperties = new OperatonBpmProperties();
     final String historyLevelDefault = "defaultValue";
     operatonBpmProperties.setHistoryLevelDefault(historyLevelDefault);
@@ -69,30 +68,34 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
     determinator.setJdbcTemplate(jdbcTemplate);
     determinator.setOperatonBpmProperties(operatonBpmProperties);
     determinator.afterPropertiesSet();
-    assertEquals(historyLevelDefault, determinator.defaultHistoryLevel);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void afterPropertiesSetTest3() throws Exception {
-    new HistoryLevelDeterminatorJdbcTemplateImpl().afterPropertiesSet();
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void afterPropertiesSetTest4() throws Exception {
-    HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
-    determinator.setJdbcTemplate(jdbcTemplate);
-    determinator.afterPropertiesSet();
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void afterPropertiesSetTest5() throws Exception {
-    HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
-    determinator.setOperatonBpmProperties(operatonBpmProperties);
-    determinator.afterPropertiesSet();
+    assertThat(determinator.defaultHistoryLevel).isEqualTo(historyLevelDefault);
   }
 
   @Test
-  public void determinedTest() throws Exception {
+  void afterPropertiesSetTest3() {
+    var historyLevelDeterminatorJdbcTemplate = new HistoryLevelDeterminatorJdbcTemplateImpl();
+
+    assertThatIllegalArgumentException().isThrownBy(historyLevelDeterminatorJdbcTemplate::afterPropertiesSet);
+  }
+
+  @Test
+  void afterPropertiesSetTest4() {
+    HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
+    determinator.setJdbcTemplate(jdbcTemplate);
+
+    assertThatIllegalArgumentException().isThrownBy(determinator::afterPropertiesSet);
+  }
+
+  @Test
+  void afterPropertiesSetTest5() {
+    HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
+    determinator.setOperatonBpmProperties(operatonBpmProperties);
+
+    assertThatIllegalArgumentException().isThrownBy(determinator::afterPropertiesSet);
+  }
+
+  @Test
+  void determinedTest() throws Exception {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     final String defaultHistoryLevel = "test";
     determinator.setDefaultHistoryLevel(defaultHistoryLevel);
@@ -102,11 +105,11 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
     HistoryLevel historyLevel = new HistoryLevelAudit();
     when(jdbcTemplate.queryForObject(determinator.getSql(), Integer.class)).thenReturn(historyLevel.getId());
     String determineHistoryLevel = determinator.determineHistoryLevel();
-    assertEquals(historyLevel.getName(), determineHistoryLevel);
+    assertThat(determineHistoryLevel).isEqualTo(historyLevel.getName());
   }
 
   @Test
-  public void determinedExceptionIgnoringTest() throws Exception {
+  void determinedExceptionIgnoringTest() throws Exception {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     final String defaultHistoryLevel = "test";
     determinator.setDefaultHistoryLevel(defaultHistoryLevel);
@@ -115,12 +118,12 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
     determinator.afterPropertiesSet();
     when(jdbcTemplate.queryForObject(determinator.getSql(), Integer.class)).thenThrow(new DataRetrievalFailureException(""));
     String determineHistoryLevel = determinator.determineHistoryLevel();
-    assertEquals(determinator.defaultHistoryLevel, determineHistoryLevel);
+    assertThat(determineHistoryLevel).isEqualTo(determinator.defaultHistoryLevel);
     verify(jdbcTemplate).queryForObject(determinator.getSql(), Integer.class);
   }
 
-  @Test(expected = DataRetrievalFailureException.class)
-  public void determinedExceptionNotIgnoringTest() throws Exception {
+  @Test
+  void determinedExceptionNotIgnoringTest() throws Exception {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     determinator.setIgnoreDataAccessException(false);
     final String defaultHistoryLevel = "test";
@@ -129,23 +132,25 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
     determinator.setOperatonBpmProperties(operatonBpmProperties);
     determinator.afterPropertiesSet();
     when(jdbcTemplate.queryForObject(determinator.getSql(), Integer.class)).thenThrow(new DataRetrievalFailureException(""));
-    determinator.determineHistoryLevel();
+
+    assertThatThrownBy(determinator::determineHistoryLevel)
+      .isInstanceOf(DataRetrievalFailureException.class);
   }
 
   @Test
-  public void getSqlTest() {
+  void getSqlTest() {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
     determinator.setOperatonBpmProperties(operatonBpmProperties);
-    assertEquals("SELECT VALUE_ FROM ACT_GE_PROPERTY WHERE NAME_='historyLevel'", determinator.getSql());
+    assertThat(determinator.getSql()).isEqualTo("SELECT VALUE_ FROM ACT_GE_PROPERTY WHERE NAME_='historyLevel'");
     operatonBpmProperties.getDatabase().setTablePrefix("TEST_");
-    assertEquals("SELECT VALUE_ FROM TEST_ACT_GE_PROPERTY WHERE NAME_='historyLevel'", determinator.getSql());
+    assertThat(determinator.getSql()).isEqualTo("SELECT VALUE_ FROM TEST_ACT_GE_PROPERTY WHERE NAME_='historyLevel'");
   }
 
   @Test
-  public void getHistoryLevelFromTest() {
+  void getHistoryLevelFromTest() {
     HistoryLevelDeterminatorJdbcTemplateImpl determinator = new HistoryLevelDeterminatorJdbcTemplateImpl();
-    assertEquals(determinator.getDefaultHistoryLevel(), determinator.getHistoryLevelFrom(-1));
-    assertFalse(determinator.historyLevels.isEmpty());
+    assertThat(determinator.getHistoryLevelFrom(-1)).isEqualTo(determinator.getDefaultHistoryLevel());
+    assertThat(determinator.historyLevels.isEmpty()).isFalse();
     HistoryLevel customHistoryLevel = new HistoryLevel() {
 
       @Override
@@ -165,10 +170,10 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTest {
     };
 
     determinator.addCustomHistoryLevels(Collections.singleton(customHistoryLevel));
-    assertTrue(determinator.historyLevels.contains(customHistoryLevel));
+    assertThat(determinator.historyLevels.contains(customHistoryLevel)).isTrue();
 
     for (HistoryLevel historyLevel : determinator.historyLevels) {
-      assertEquals(historyLevel.getName(), determinator.getHistoryLevelFrom(historyLevel.getId()));
+      assertThat(determinator.getHistoryLevelFrom(historyLevel.getId())).isEqualTo(historyLevel.getName());
     }
   }
 

@@ -16,25 +16,25 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl.custom;
 
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.helper.StandaloneInMemoryTestConfiguration;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CreateAdminUserConfigurationTest {
+class CreateAdminUserConfigurationTest {
 
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
   {
@@ -42,7 +42,7 @@ public class CreateAdminUserConfigurationTest {
     operatonBpmProperties.getAdminUser().setPassword("password");
   }
 
-  private final CreateAdminUserConfiguration createAdminUserConfiguration = new CreateAdminUserConfiguration();
+  private static final CreateAdminUserConfiguration createAdminUserConfiguration = new CreateAdminUserConfiguration();
   {
     ReflectionTestUtils.setField(createAdminUserConfiguration, "operatonBpmProperties", operatonBpmProperties);
     createAdminUserConfiguration.init();
@@ -50,28 +50,28 @@ public class CreateAdminUserConfigurationTest {
 
   private final ProcessEngineConfigurationImpl processEngineConfiguration = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration);
 
-  @Rule
-  public final ProcessEngineRule processEngineRule = new ProcessEngineRule(processEngineConfiguration.buildProcessEngine());
+  @RegisterExtension
+  final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration).extension();
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule()
+  @RegisterExtension
+  public ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
       .watch(SpringBootProcessEngineLogger.PACKAGE);
 
   @Test
-  public void createAdminUser() {
-    User user = processEngineRule.getIdentityService().createUserQuery().userId("admin").singleResult();
+  void createAdminUser() {
+    User user = processEngineExtension.getIdentityService().createUserQuery().userId("admin").singleResult();
     assertThat(user).isNotNull();
     assertThat(user.getEmail()).isEqualTo("admin@localhost");
   }
 
   @Test
-  public void shouldLogInitialAdminUserCreationOnDebug() {
+  void shouldLogInitialAdminUserCreationOnDebug() {
     processEngineConfiguration.buildProcessEngine();
     verifyLogs(Level.DEBUG, "STARTER-SB010 Creating initial Admin User: AdminUserProperty[id=admin, firstName=Admin, lastName=Admin, email=admin@localhost, password=******]");
   }
 
   protected void verifyLogs(Level logLevel, String message) {
-    List<ILoggingEvent> logs = loggingRule.getLog();
+    List<ILoggingEvent> logs = loggingExtension.getLog();
     assertThat(logs).hasSize(1);
     assertThat(logs.get(0).getLevel()).isEqualTo(logLevel);
     assertThat(logs.get(0).getFormattedMessage()).containsIgnoringCase(message);

@@ -18,14 +18,14 @@ package org.operaton.bpm.spring.boot.starter.property.headersec;
 
 import org.operaton.bpm.spring.boot.starter.property.HeaderSecurityProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-public class HttpHeaderSecurityDefaultsTest extends ParsePropertiesHelper {
+class HttpHeaderSecurityDefaultsTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckXssProtection() {
+  void shouldCheckXssProtection() {
     // given
 
     // when
@@ -37,7 +37,7 @@ public class HttpHeaderSecurityDefaultsTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckContentSecurityPolicy() {
+  void shouldCheckContentSecurityPolicy() {
     // given
 
     // when
@@ -49,7 +49,7 @@ public class HttpHeaderSecurityDefaultsTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckContentTypeOptions() {
+  void shouldCheckContentTypeOptions() {
     // given
 
     // when
@@ -61,7 +61,7 @@ public class HttpHeaderSecurityDefaultsTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckHsts() {
+  void shouldCheckHsts() {
     // given
 
     // when

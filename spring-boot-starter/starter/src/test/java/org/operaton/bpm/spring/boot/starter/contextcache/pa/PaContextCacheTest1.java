@@ -18,23 +18,20 @@ package org.operaton.bpm.spring.boot.starter.contextcache.pa;
 
 import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTest;
 import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 
 /**
  * Tests {@link PaContextCacheTest1}, {@link PaContextCacheTest2}, {@link PaContextCacheTest3}
  * {@link PaContextCacheTest4} and {@link PaContextCacheTest5} are meant to be run together
  * so that ApplicationContext caching is tested.
- * See {@link PaContextCacheSuiteTest} for a detailed explanation.
+ * See {@link PaContextCacheTestSuite} for a detailed explanation.
  *
  * @author Nikola Koevski
  */
-@RunWith(SpringRunner.class)
 @ActiveProfiles("contextcaching")
 @SpringBootTest(
   classes = { TestProcessApplication.class },
@@ -45,10 +42,10 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.in
   },
   webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
-public class PaContextCacheTest1 extends AbstractContextCacheTest {
+class PaContextCacheTest1 extends AbstractContextCacheTest {
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.processEngineName = "foo";
     this.testName = "paTest1";
 

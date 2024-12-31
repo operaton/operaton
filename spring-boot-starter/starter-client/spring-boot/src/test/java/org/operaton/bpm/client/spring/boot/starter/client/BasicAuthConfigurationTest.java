@@ -22,17 +22,16 @@ import org.operaton.bpm.client.spring.boot.starter.MockHelper;
 import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
 import org.operaton.bpm.client.spring.boot.starter.client.configuration.SimpleSubscriptionConfiguration;
 import org.operaton.bpm.client.spring.boot.starter.impl.ClientAutoConfiguration;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -46,27 +45,25 @@ import static org.mockito.Mockito.verify;
     ClientAutoConfiguration.class,
     SimpleSubscriptionConfiguration.class
 })
-@RunWith(SpringRunner.class)
-public class BasicAuthConfigurationTest extends ParsePropertiesHelper {
+@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
+class BasicAuthConfigurationTest extends ParsePropertiesHelper {
 
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
-  
   protected static ExternalTaskClientBuilder clientBuilder;
 
-  @BeforeClass
-  public static void initMocks() {
+  @BeforeAll
+  static void initMocks() {
     MockHelper.initMocks();
     clientBuilder = MockHelper.getClientBuilder();
   }
 
-  @AfterClass
-  public static void reset() {
+  @AfterAll
+  static void reset() {
     MockHelper.reset();
   }
 
   @Test
-  public void shouldVerifyBasicAuthCredentials() {
+  void shouldVerifyBasicAuthCredentials() {
     ArgumentCaptor<ClientRequestInterceptor> argumentCaptor =
         ArgumentCaptor.forClass(ClientRequestInterceptor.class);
     verify(clientBuilder).addInterceptor(argumentCaptor.capture());

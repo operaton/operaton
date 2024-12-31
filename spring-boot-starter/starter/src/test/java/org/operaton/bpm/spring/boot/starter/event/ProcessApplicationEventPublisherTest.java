@@ -16,23 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter.event;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextClosedEvent;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ProcessApplicationEventPublisherTest {
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class ProcessApplicationEventPublisherTest {
 
   @InjectMocks
   private ProcessApplicationEventPublisher processApplicationEventPublisher;
@@ -41,14 +38,14 @@ public class ProcessApplicationEventPublisherTest {
   private ApplicationContext publisherMock;
 
   @Test
-  public void handleApplicationReadyEventTest() {
+  void handleApplicationReadyEventTest() {
     ApplicationReadyEvent applicationReadyEventMock = mock(ApplicationReadyEvent.class);
     processApplicationEventPublisher.handleApplicationReadyEvent(applicationReadyEventMock);
     verify(publisherMock).publishEvent(Mockito.any(ProcessApplicationStartedEvent.class));
   }
 
   @Test
-  public void handleContextStoppedEventTest() {
+  void handleContextStoppedEventTest() {
     processApplicationEventPublisher.setApplicationContext(publisherMock);
     ContextClosedEvent contextClosedEventMock = mock(ContextClosedEvent.class);
     processApplicationEventPublisher.handleContextStoppedEvent(contextClosedEventMock);

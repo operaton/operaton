@@ -17,18 +17,17 @@
 package org.operaton.bpm.spring.boot.starter.util;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion.key;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.env.PropertiesPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion.key;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.junit.Ignore;
-
-public class OperatonBpmVersionTest {
+class OperatonBpmVersionTest {
 
   protected static String currentVersion;
 
@@ -38,14 +37,14 @@ public class OperatonBpmVersionTest {
     return new OperatonBpmVersion(pkg);
   }
 
-  @BeforeClass
-  public static void setUp() {
+  @BeforeAll
+  static void setUp() {
     currentVersion = ProcessEngine.class.getPackage().getImplementationVersion();
   }
 
   @Test
-  @Ignore //FIXME
-  public void currentVersion() {
+  @Disabled("FIXME: This test is failing")
+  void currentVersion() {
     final OperatonBpmVersion version =  new OperatonBpmVersion();
     assertThat(version.isEnterprise()).isFalse();
     assertThat(version.get()).startsWith(currentVersion);
@@ -59,12 +58,12 @@ public class OperatonBpmVersionTest {
   }
 
   @Test
-  public void isEnterprise_true() {
+  void isEnterprise_true() {
     assertThat(operatonBpmVersion("7.6.0-alpha3-ee").isEnterprise()).isTrue();
   }
 
   @Test
-  public void isEnterprise_false() {
+  void isEnterprise_false() {
     assertThat(operatonBpmVersion("7.6.0-alpha3").isEnterprise()).isFalse();
   }
 }

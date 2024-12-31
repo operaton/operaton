@@ -19,6 +19,7 @@ package org.operaton.bpm.springboot.project.qa.simple;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.model.bpmn.Bpmn;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RequestScopeIT {
 
-  @Autowired
-  protected RepositoryService repositoryService;
+  private final RepositoryService repositoryService;
+  private final RuntimeService runtimeService;
 
   @Autowired
-  protected RuntimeService runtimeService;
+  public RequestScopeIT(RepositoryService repositoryService, RuntimeService runtimeService) {
+      this.repositoryService = repositoryService;
+      this.runtimeService = runtimeService;
+  }
 
   @Test
   void shouldEvaluateScript(CapturedOutput logs) {

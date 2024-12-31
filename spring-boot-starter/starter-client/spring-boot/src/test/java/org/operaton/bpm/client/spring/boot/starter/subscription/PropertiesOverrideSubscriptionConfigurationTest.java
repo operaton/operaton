@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.subscription;
 
-import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.FullSubscriptionConfiguration;
 import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
+import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.FullSubscriptionConfiguration;
 import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -47,10 +50,11 @@ import static org.assertj.core.api.Assertions.entry;
     ParsePropertiesHelper.TestConfig.class,
     FullSubscriptionConfiguration.class
 })
-public class PropertiesOverrideSubscriptionConfigurationTest extends ParsePropertiesHelper {
+@ExtendWith(SpringExtension.class)
+class PropertiesOverrideSubscriptionConfigurationTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckTopicOneProperties() {
+  void shouldCheckTopicOneProperties() {
     SubscriptionConfiguration subscriptionOne = subscriptions.get("topic-one");
 
     assertThat(subscriptionOne.getAutoOpen()).isFalse();

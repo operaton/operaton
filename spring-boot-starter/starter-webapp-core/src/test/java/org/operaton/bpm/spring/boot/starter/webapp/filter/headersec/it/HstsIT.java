@@ -16,48 +16,46 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
     "operaton.bpm.webapp.headerSecurity.hstsDisabled=false",
     "operaton.bpm.webapp.headerSecurity.hstsMaxAge=8",
     "operaton.bpm.webapp.headerSecurity.hstsIncludeSubdomainsDisabled=false"
 })
-public class HstsIT {
+class HstsIT {
 
-  @Rule
-  public HttpClientRule httpClientRule;
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
 
-  @Before
-  public void assignRule() {
-    httpClientRule = new HttpClientRule(port);
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
   }
 
   @Test
-  public void shouldConfigureHsts() {
+  void shouldConfigureHsts() {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientRule.getHeader("Strict-Transport-Security"))
+    assertThat(httpClientExtension.getHeader("Strict-Transport-Security"))
         .isEqualTo("max-age=8; includeSubDomains");
   }
 

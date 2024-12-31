@@ -16,73 +16,71 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.mock;
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 
 import javax.sql.DataSource;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.transaction.PlatformTransactionManager;
 
-@RunWith(MockitoJUnitRunner.class)
-public class DefaultDatasourceConfigurationTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+
+@ExtendWith(MockitoExtension.class)
+class DefaultDatasourceConfigurationTest {
 
   @Mock
   private PlatformTransactionManager platformTransactionManager;
-
-  private OperatonBpmProperties operatonBpmProperties;
 
   @InjectMocks
   private DefaultDatasourceConfiguration defaultDatasourceConfiguration;
 
   private SpringProcessEngineConfiguration configuration;
 
-  @Before
-  public void before() {
+  @BeforeEach
+  void before() {
     configuration = new SpringProcessEngineConfiguration();
-    operatonBpmProperties = new OperatonBpmProperties();
-    defaultDatasourceConfiguration.operatonBpmProperties = operatonBpmProperties;
+    defaultDatasourceConfiguration.operatonBpmProperties = new OperatonBpmProperties();
   }
 
   @Test
-  public void transactionManagerTest() {
+  void transactionManagerTest() {
     defaultDatasourceConfiguration.dataSource = mock(DataSource.class);
     defaultDatasourceConfiguration.preInit(configuration);
-    assertSame(platformTransactionManager, configuration.getTransactionManager());
+    assertThat(configuration.getTransactionManager()).isSameAs(platformTransactionManager);
   }
 
   @Test
-  public void operatonTransactionManagerTest() {
+  void operatonTransactionManagerTest() {
     defaultDatasourceConfiguration.dataSource = mock(DataSource.class);
     PlatformTransactionManager operatonTransactionManager = mock(PlatformTransactionManager.class);
     defaultDatasourceConfiguration.operatonTransactionManager = operatonTransactionManager;
     defaultDatasourceConfiguration.preInit(configuration);
-    assertSame(operatonTransactionManager, configuration.getTransactionManager());
+    assertThat(configuration.getTransactionManager()).isSameAs(operatonTransactionManager);
   }
 
   @Test
-  public void defaultDataSourceTest() {
+  void defaultDataSourceTest() {
     DataSource datasourceMock = mock(DataSource.class);
     defaultDatasourceConfiguration.dataSource = datasourceMock;
     defaultDatasourceConfiguration.preInit(configuration);
-    assertSame(datasourceMock, getDataSourceFromConfiguration());
+    assertThat(getDataSourceFromConfiguration()).isSameAs(datasourceMock);
   }
 
   @Test
-  public void operatonDataSourceTest() {
+  void operatonDataSourceTest() {
     DataSource operatonDatasourceMock = mock(DataSource.class);
     defaultDatasourceConfiguration.operatonDataSource = operatonDatasourceMock;
     defaultDatasourceConfiguration.dataSource = mock(DataSource.class);
     defaultDatasourceConfiguration.preInit(configuration);
-    assertSame(operatonDatasourceMock, getDataSourceFromConfiguration());
+    assertThat(getDataSourceFromConfiguration()).isSameAs(operatonDatasourceMock);
   }
 
   private DataSource getDataSourceFromConfiguration() {

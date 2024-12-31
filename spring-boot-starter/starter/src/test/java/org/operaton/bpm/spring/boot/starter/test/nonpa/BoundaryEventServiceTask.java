@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.nonpa;
 
-import org.apache.commons.lang3.StringUtils;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 @Component("boundaryEventServiceTask")
 public class BoundaryEventServiceTask implements JavaDelegate {
@@ -30,9 +31,9 @@ public class BoundaryEventServiceTask implements JavaDelegate {
   public static final String ERROR_NAME = "errorName";
 
   @Override
-  public void execute(DelegateExecution delegateExecution) throws Exception {
+  public void execute(DelegateExecution delegateExecution) {
     Optional.ofNullable(delegateExecution.getVariable(ERROR_NAME))
-      .map(value -> (String) value)
+      .map(String.class::cast)
       .filter(StringUtils::isNotBlank)
       .ifPresent(value -> {
          throw new BpmnError(value);

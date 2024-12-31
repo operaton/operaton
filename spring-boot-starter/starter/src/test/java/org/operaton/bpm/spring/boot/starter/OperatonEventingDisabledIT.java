@@ -23,42 +23,42 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestEventCaptor;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import jakarta.transaction.Transactional;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import jakarta.transaction.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(
   classes = {TestApplication.class},
   webEnvironment = WebEnvironment.NONE
 )
 @ActiveProfiles("noeventing")
 @Transactional
-public class OperatonEventingDisabledIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonEventingDisabledIT extends AbstractOperatonAutoConfigurationIT {
+
+  private final RuntimeService runtime;
+  private final TaskService taskService;
+  private final TestEventCaptor eventCaptor;
 
   @Autowired
-  private RuntimeService runtime;
-
-  @Autowired
-  private TaskService taskService;
-
-  @Autowired
-  private TestEventCaptor eventCaptor;
+  public OperatonEventingDisabledIT(RuntimeService runtime, TaskService taskService, TestEventCaptor eventCaptor) {
+      this.runtime = runtime;
+      this.taskService = taskService;
+      this.eventCaptor = eventCaptor;
+  }
 
   private ProcessInstance instance;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("eventing")
       .singleResult();
@@ -68,8 +68,8 @@ public class OperatonEventingDisabledIT extends AbstractOperatonAutoConfiguratio
     instance = runtime.startProcessInstanceByKey("eventing");
   }
 
-  @After
-  public void stop() {
+  @AfterEach
+  void stop() {
     if (instance != null) {
       // update stale instance
       instance = runtime.createProcessInstanceQuery().processInstanceId(instance.getProcessInstanceId()).active().singleResult();
@@ -80,7 +80,7 @@ public class OperatonEventingDisabledIT extends AbstractOperatonAutoConfiguratio
   }
 
   @Test
-  public final void shouldEventTaskCreation() {
+  final void shouldEventTaskCreation() {
 
     Task task = taskService.createTaskQuery().active().singleResult();
     taskService.complete(task.getId());

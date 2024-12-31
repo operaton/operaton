@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.contextcache.nonpa;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
 /**
  * This JUnit Suite combines {@link NonPaContextCacheTest1}, {@link NonPaContextCacheTest2}
@@ -58,13 +58,13 @@ import org.junit.runners.Suite;
  *
  * @author Nikola Koevski
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
   NonPaContextCacheTest1.class,
   NonPaContextCacheTest2.class,
   NonPaContextCacheTest3.class,
   NonPaContextCacheTest4.class,
   NonPaContextCacheTest5.class
 })
-public class NonPaContextCacheSuiteTest {
+class NonPaContextCacheTestSuite {
 }

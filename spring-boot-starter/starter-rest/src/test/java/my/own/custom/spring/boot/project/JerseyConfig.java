@@ -16,9 +16,10 @@
  */
 package my.own.custom.spring.boot.project;
 
+import org.operaton.bpm.spring.boot.starter.rest.OperatonJerseyResourceConfig;
+
 import jakarta.ws.rs.ApplicationPath;
 
-import org.operaton.bpm.spring.boot.starter.rest.OperatonJerseyResourceConfig;
 import org.springframework.stereotype.Component;
 
 @Component

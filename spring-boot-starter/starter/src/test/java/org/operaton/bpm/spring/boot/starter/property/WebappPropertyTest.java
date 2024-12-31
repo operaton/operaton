@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.junit.Test;
-import org.springframework.test.context.TestPropertySource;
-
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,24 +34,24 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.csrf.entryPoints[0]=/api/engine/engine/default/history/task/count",
   "operaton.bpm.webapp.csrf.entryPoints[1]=/api/engine/engine/default/history/variable/count"
 })
-public class WebappPropertyTest extends ParsePropertiesHelper {
+class WebappPropertyTest extends ParsePropertiesHelper {
 
   @Test
-  public void testIndexRedirectEnabled() {
+  void indexRedirectEnabled() {
     // given Operaton properties are set
     // then
     assertThat(webapp.isIndexRedirectEnabled()).isFalse();
   }
 
   @Test
-  public void testCsrfProperty() {
+  void csrfProperty() {
     // given Operaton properties are set
     // then
     assertThat(webapp.getCsrf()).isNotNull();
   }
 
   @Test
-  public void testCsrfTargetOriginProperty() {
+  void csrfTargetOriginProperty() {
     // given the Operaton CSRF TargetOrigin property is defined
     // then
     assertThat(webapp.getCsrf().getTargetOrigin()).isNotNull();
@@ -60,7 +60,7 @@ public class WebappPropertyTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void testCsrfDenyStatusProperty() {
+  void csrfDenyStatusProperty() {
     // given the Operaton CSRF DenyStatus property is defined
     // then
     assertThat(webapp.getCsrf().getDenyStatus()).isNotNull();
@@ -68,7 +68,7 @@ public class WebappPropertyTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void testCsrfRandomClassProperty() {
+  void csrfRandomClassProperty() {
     // given the Operaton CSRF RandomClass property is defined
     // then
     assertThat(webapp.getCsrf().getRandomClass()).isNotNull();
@@ -76,7 +76,7 @@ public class WebappPropertyTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void testCsrfEntryPointsProperty() {
+  void csrfEntryPointsProperty() {
     // given the Operaton CSRF EntryPoints property is defined
     // then
     assertThat(webapp.getCsrf().getEntryPoints()).isNotNull();

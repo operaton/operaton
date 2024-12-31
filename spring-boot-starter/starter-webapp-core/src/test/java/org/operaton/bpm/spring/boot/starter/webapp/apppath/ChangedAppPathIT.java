@@ -17,10 +17,16 @@
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -28,46 +34,44 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_DEFAULT_VALUE;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NAME;
-import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.HEADER_NONCE_PLACEHOLDER;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(
     classes = { WebappTestApp.class },
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
     "operaton.bpm.webapp.applicationPath=" + ChangedAppPathIT.MY_APP_PATH
 })
-public class ChangedAppPathIT {
+class ChangedAppPathIT {
 
   protected static final String MY_APP_PATH = "/my/application/path";
 
-  @Rule
-  public HttpClientRule httpClientRule = new HttpClientRule();
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
+
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
+  }
 
   @Autowired
   protected TestRestTemplate restClient;
 
   @Test
-  public void shouldCheckPresenceOfCsrfPreventionFilter() {
+  void shouldCheckPresenceOfCsrfPreventionFilter() {
     // given
 
     // when
-    httpClientRule.performRequest("http://localhost:" + port + MY_APP_PATH +
+    httpClientExtension.performRequest("http://localhost:" + port + MY_APP_PATH +
         "/app/tasklist/default");
 
     // then
-    String xsrfCookieValue = httpClientRule.getXsrfCookie();
-    String xsrfTokenHeader = httpClientRule.getXsrfTokenHeader();
+    String xsrfCookieValue = httpClientExtension.getXsrfCookie();
+    String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     assertThat(xsrfCookieValue).matches("XSRF-TOKEN=[A-Z0-9]{32};" +
         "Path=" + MY_APP_PATH + ";SameSite=Lax");
@@ -77,19 +81,19 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfRedirection() {
+  void shouldCheckPresenceOfRedirection() {
     // given
 
     // when
-    httpClientRule.performRequest("http://localhost:" + port + "/");
+    httpClientExtension.performRequest("http://localhost:" + port + "/");
 
     // then
-    assertThat(httpClientRule.getHeader("Location")).isEqualTo("http://localhost:" + port +
+    assertThat(httpClientExtension.getHeader("Location")).isEqualTo("http://localhost:" + port +
         MY_APP_PATH + "/app/");
   }
 
   @Test
-  public void shouldCheckPresenceOfHeaderSecurityFilter() {
+  void shouldCheckPresenceOfHeaderSecurityFilter() {
     // given
 
     // when
@@ -105,7 +109,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfCacheControlFilter() {
+  void shouldCheckPresenceOfCacheControlFilter() {
     // given
 
     // when
@@ -120,7 +124,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfRestApi() {
+  void shouldCheckPresenceOfRestApi() {
     // given
 
     // when
@@ -132,7 +136,7 @@ public class ChangedAppPathIT {
   }
 
   @Test
-  public void shouldCheckPresenceOfSecurityFilter() {
+  void shouldCheckPresenceOfSecurityFilter() {
     // given
 
     // when
@@ -143,40 +147,19 @@ public class ChangedAppPathIT {
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 
-  @Test
-  public void shouldCheckPresenceOfLibResources() {
+  @ParameterizedTest(name = "{index} => path={0}")
+  @CsvSource({
+      "/lib/deps.js",
+      "/app/admin/styles/user-styles.css",
+      "/api/admin/plugin/adminPlugins/static/app/plugin.css"
+  })
+  void shouldCheckPresenceOfResources(String path) {
     // given
 
     // when
-    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
-        "/lib/deps.js", String.class);
+    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH + path, String.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
   }
-
-  @Test
-  public void shouldCheckPresenceOfAppResources() {
-    // given
-
-    // when
-    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
-        "/app/admin/styles/user-styles.css", String.class);
-
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-  }
-
-  @Test
-  public void shouldCheckPresenceOfApiResources() {
-    // given
-
-    // when
-    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
-        "/api/admin/plugin/adminPlugins/static/app/plugin.css", String.class);
-
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-  }
-
 }

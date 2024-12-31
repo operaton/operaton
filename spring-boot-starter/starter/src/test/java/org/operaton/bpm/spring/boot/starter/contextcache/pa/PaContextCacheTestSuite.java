@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.contextcache.pa;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
 /**
  * This JUnit Suite combines {@link PaContextCacheTest1}, {@link PaContextCacheTest2}
@@ -58,13 +58,13 @@ import org.junit.runners.Suite;
  *
  * @author Nikola Koevski
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
   PaContextCacheTest1.class,
   PaContextCacheTest2.class,
   PaContextCacheTest3.class,
   PaContextCacheTest4.class,
   PaContextCacheTest5.class
 })
-public class PaContextCacheSuiteTest {
+class PaContextCacheTestSuite {
 }

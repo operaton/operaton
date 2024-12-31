@@ -21,46 +21,47 @@ import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration.PREFIXED;
 
-@RunWith(SpringRunner.class)
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(
   classes = {TestApplication.class},
   properties = {
     "operaton.bpm.id-generator=" + PREFIXED,
     "spring.application.name=myapp"
   })
-public class PrefixedUuidGeneratorIT {
+class PrefixedUuidGeneratorIT {
+
+  private final IdGenerator idGenerator;
+  private final OperatonBpmProperties properties;
+  private final ProcessEngine processEngine;
 
   @Autowired
-  private IdGenerator idGenerator;
-
-  @Autowired
-  private OperatonBpmProperties properties;
-
-  @Autowired
-  private ProcessEngine processEngine;
+  public PrefixedUuidGeneratorIT(IdGenerator idGenerator, OperatonBpmProperties properties, ProcessEngine processEngine) {
+      this.idGenerator = idGenerator;
+      this.properties = properties;
+      this.processEngine = processEngine;
+  }
 
   @Test
-  public void property_is_set() {
+  void property_is_set() {
     assertThat(properties.getIdGenerator()).isEqualTo(IdGeneratorConfiguration.PREFIXED);
   }
 
   @Test
-  public void configured_idGenerator_is_uuid() {
-    final IdGenerator idGenerator = OperatonSpringBootUtil.get(processEngine).getIdGenerator();
+  void configured_idGenerator_is_uuid() {
+    final IdGenerator theIdGenerator = OperatonSpringBootUtil.get(processEngine).getIdGenerator();
 
-    assertThat(idGenerator).isOfAnyClassIn(PrefixedUuidGenerator.class);
+    assertThat(theIdGenerator).isOfAnyClassIn(PrefixedUuidGenerator.class);
   }
 
   @Test
-  public void nextId_is_uuid() {
+  void nextId_is_uuid() {
     assertThat(idGenerator.getNextId().split("-")).hasSize(6).startsWith("myapp");
   }
 }

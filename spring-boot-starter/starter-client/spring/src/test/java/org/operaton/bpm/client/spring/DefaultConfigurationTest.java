@@ -18,32 +18,25 @@ package org.operaton.bpm.client.spring;
 
 import org.operaton.bpm.client.spring.configuration.DefaultConfiguration;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {DefaultConfiguration.class})
 @DirtiesContext // context cannot be reused since the mocks need to be reinitialized completely
-public class DefaultConfigurationTest extends MockedTest {
+class DefaultConfigurationTest extends MockedTest {
 
   @Autowired
   @Qualifier("handler")
   protected ExternalTaskHandler handler;
 
   @Test
-  public void shouldVerifyClientDefaults() {
+  void shouldVerifyClientDefaults() {
     verify(clientBuilder, never()).baseUrl(anyString());
     verify(clientBuilder, never()).workerId(anyString());
     verify(clientBuilder, never()).maxTasks(anyInt());
@@ -61,7 +54,7 @@ public class DefaultConfigurationTest extends MockedTest {
   }
 
   @Test
-  public void shouldVerifySubscriptionDefaults() {
+  void shouldVerifySubscriptionDefaults() {
     verify(client).subscribe("topic-name");
     verify(subscriptionBuilder).handler(handler);
     verify(subscriptionBuilder, never()).variables(any());

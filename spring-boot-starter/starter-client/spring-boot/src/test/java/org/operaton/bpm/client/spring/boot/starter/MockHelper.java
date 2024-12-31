@@ -18,13 +18,10 @@ package org.operaton.bpm.client.spring.boot.starter;
 
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
+
 import org.mockito.MockedStatic;
 
-import static org.junit.Assume.assumeTrue;
-import static org.mockito.Mockito.RETURNS_SELF;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class MockHelper {
 
@@ -32,8 +29,6 @@ public class MockHelper {
   protected static ExternalTaskClientBuilder clientBuilder;
 
   public static void initMocks() {
-    assumeTrue(jdkSupportsMockito());
-
     mockedStatic = mockStatic(ExternalTaskClient.class);
     clientBuilder = mock(ExternalTaskClientBuilder.class, RETURNS_SELF);
     when(ExternalTaskClient.create()).thenReturn(clientBuilder);
@@ -42,23 +37,11 @@ public class MockHelper {
   }
 
   public static void reset() {
-    if(jdkSupportsMockito()) {
-      mockedStatic.close();
-    }
+    mockedStatic.close();
   }
 
   public static ExternalTaskClientBuilder getClientBuilder() {
     return clientBuilder;
-  }
-
-  public static boolean jdkSupportsMockito() {
-    String jvmVendor = System.getProperty("java.vm.vendor");
-    String javaVersion = System.getProperty("java.version");
-
-    boolean isIbmJDK = jvmVendor != null && jvmVendor.contains("IBM");
-    boolean isJava8 = javaVersion != null && javaVersion.startsWith("1.8");
-
-    return !(isIbmJDK && isJava8);
   }
 
 }

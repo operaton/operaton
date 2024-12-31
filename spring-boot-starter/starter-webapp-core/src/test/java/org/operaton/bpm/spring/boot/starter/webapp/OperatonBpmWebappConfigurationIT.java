@@ -16,17 +16,25 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.context.ApplicationContext;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { WebappTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OperatonBpmWebappConfigurationIT {
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest(classes = {WebappTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class OperatonBpmWebappConfigurationIT {
+
+  private final ApplicationContext ctx;
+
+  @Autowired
+  public OperatonBpmWebappConfigurationIT (ApplicationContext ctx) {
+    this.ctx = ctx;
+  }
 
   @Test
-  public void startUpTest() {
-    // context init test
+  void startUpTest() {
+    assertThat(ctx).isNotNull();
   }
 }

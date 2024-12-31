@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.jdbc.HistoryLevelDeterminator;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class DefaultHistoryLevelAutoHandlingConfigurationTest {
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class DefaultHistoryLevelAutoHandlingConfigurationTest {
 
   @Mock
   private SpringProcessEngineConfiguration springProcessEngineConfiguration;
@@ -39,20 +38,17 @@ public class DefaultHistoryLevelAutoHandlingConfigurationTest {
   @Mock
   private HistoryLevelDeterminator historyLevelDeterminator;
 
-  private OperatonBpmProperties operatonBpmProperties;
-
   private DefaultHistoryLevelAutoHandlingConfiguration historyLevelAutoHandlingConfiguration;
 
-  @Before
-  public void before() {
-    operatonBpmProperties = new OperatonBpmProperties();
+  @BeforeEach
+  void before() {
     historyLevelAutoHandlingConfiguration = new DefaultHistoryLevelAutoHandlingConfiguration();
-    historyLevelAutoHandlingConfiguration.operatonBpmProperties = operatonBpmProperties;
+    historyLevelAutoHandlingConfiguration.operatonBpmProperties = new OperatonBpmProperties();
     historyLevelAutoHandlingConfiguration.historyLevelDeterminator = historyLevelDeterminator;
   }
 
   @Test
-  public void acceptTest() {
+  void acceptTest() {
     when(historyLevelDeterminator.determineHistoryLevel()).thenReturn("audit");
     historyLevelAutoHandlingConfiguration.preInit(springProcessEngineConfiguration);
     verify(historyLevelDeterminator).determineHistoryLevel();
@@ -60,7 +56,7 @@ public class DefaultHistoryLevelAutoHandlingConfigurationTest {
   }
 
   @Test
-  public void notAcceptTest() {
+  void notAcceptTest() {
     when(historyLevelDeterminator.determineHistoryLevel()).thenReturn(null);
     historyLevelAutoHandlingConfiguration.preInit(springProcessEngineConfiguration);
     verify(historyLevelDeterminator).determineHistoryLevel();

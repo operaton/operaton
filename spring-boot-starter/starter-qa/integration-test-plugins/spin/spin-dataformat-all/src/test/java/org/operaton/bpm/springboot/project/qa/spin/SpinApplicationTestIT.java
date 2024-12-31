@@ -16,15 +16,16 @@
  */
 package org.operaton.bpm.springboot.project.qa.spin;
 
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.RuntimeService;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = {SpinApplication.class},
     webEnvironment = SpringBootTest.WebEnvironment.NONE)

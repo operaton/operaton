@@ -16,23 +16,24 @@
  */
 package org.operaton.bpm.spring.boot.starter.jdbc;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { HistoryLevelDeterminatorJdbcTemplateImplTestApplication.class })
-public class HistoryLevelDeterminatorJdbcTemplateImplIT {
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest(classes = {HistoryLevelDeterminatorJdbcTemplateImplTestApplication.class})
+class HistoryLevelDeterminatorJdbcTemplateImplIT {
+
+  private final HistoryLevelDeterminator historyLevelDeterminator;
 
   @Autowired
-  private HistoryLevelDeterminator historyLevelDeterminator;
+  public HistoryLevelDeterminatorJdbcTemplateImplIT(HistoryLevelDeterminator historyLevelDeterminator) {
+      this.historyLevelDeterminator = historyLevelDeterminator;
+  }
 
   @Test
-  public void test() {
-    assertEquals("full", historyLevelDeterminator.determineHistoryLevel());
+  void test() {
+    assertThat(historyLevelDeterminator.determineHistoryLevel()).isEqualTo("full");
   }
 }

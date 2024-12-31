@@ -18,7 +18,8 @@ package org.operaton.bpm.spring.boot.starter.property.headersec;
 
 import org.operaton.bpm.spring.boot.starter.property.HeaderSecurityProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,10 +27,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.headerSecurity.xssProtectionOption=anOption"
 })
-public class XssProtectionOptionTest extends ParsePropertiesHelper {
+class XssProtectionOptionTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckXssProtectionOptionTest() {
+  void shouldCheckXssProtectionOptionTest() {
     HeaderSecurityProperties properties = webapp.getHeaderSecurity();
 
     assertThat(properties.getXssProtectionOption()).isEqualTo("anOption");

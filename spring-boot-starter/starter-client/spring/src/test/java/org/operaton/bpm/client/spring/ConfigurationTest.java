@@ -16,39 +16,39 @@
  */
 package org.operaton.bpm.client.spring;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import org.operaton.bpm.client.spring.configuration.FullConfiguration;
+import org.operaton.bpm.client.task.ExternalTaskHandler;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.operaton.bpm.client.spring.configuration.FullConfiguration;
-import org.operaton.bpm.client.task.ExternalTaskHandler;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
 @ContextConfiguration(classes = {FullConfiguration.class})
 @DirtiesContext // context cannot be reused since the mocks need to be reinitialized completely
-public class ConfigurationTest extends MockedTest {
+class ConfigurationTest extends MockedTest {
 
   @Autowired
   @Qualifier("handler")
   protected ExternalTaskHandler handler;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     when(clientBuilder.orderByCreateTime()).thenReturn(clientBuilder);
     when(clientBuilder.asc()).thenReturn(clientBuilder);
   }
 
   @Test
-  public void shouldVerifyClientConfiguration() {
+  void shouldVerifyClientConfiguration() {
     verify(clientBuilder).baseUrl("url");
     verify(clientBuilder).maxTasks(1111);
     verify(clientBuilder).workerId("worker-id");
@@ -67,7 +67,7 @@ public class ConfigurationTest extends MockedTest {
   }
 
   @Test
-  public void shouldVerifySubscriptionConfiguration() {
+  void shouldVerifySubscriptionConfiguration() {
     verify(client).subscribe("topic-name");
     verify(subscriptionBuilder).handler(handler);
     verify(subscriptionBuilder).variables("variable-one", "variable-two");

@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import org.operaton.bpm.engine.impl.cfg.AbstractProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.spring.boot.starter.configuration.Ordering;
+
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @TestConfiguration
-public class AdditionalCammundaBpmConfigurations {
+@SuppressWarnings("unused")
+public class AdditionalOperatonBpmConfigurations {
 
   @Bean
   public ProcessEnginePlugin beforeStandardConfiguration() {
@@ -43,24 +44,24 @@ public class AdditionalCammundaBpmConfigurations {
   @Order(Ordering.DEFAULT_ORDER - 1)
   public static class BeforeStandardConfiguration extends AbstractProcessEnginePlugin {
 
-    static boolean PROCESSED = false;
+    static boolean processed = false;
 
     @Override
     public void preInit(ProcessEngineConfigurationImpl configuration) {
-      assertNull(configuration.getDataSource());
-      PROCESSED = true;
+      assertThat(configuration.getDataSource()).isNull();
+      processed = true;
     }
   }
 
   @Order(Ordering.DEFAULT_ORDER + 1)
   public static class AfterStandardConfiguration extends  AbstractProcessEnginePlugin {
 
-    static boolean PROCESSED = false;
+    static boolean processed = false;
 
     @Override
     public void preInit(ProcessEngineConfigurationImpl configuration) {
-      assertNotNull(configuration.getDataSource());
-      PROCESSED = true;
+      assertThat(configuration.getDataSource()).isNotNull();
+      processed = true;
     }
   }
 }

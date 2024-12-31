@@ -16,42 +16,42 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.id;
 
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * StrongUuidGenerator is the default one.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { TestApplication.class })
-public class StrongUuidGeneratorIT {
+@SpringBootTest(classes = {TestApplication.class})
+class StrongUuidGeneratorIT {
+
+  private final IdGenerator idGenerator;
+  private final ProcessEngine processEngine;
 
   @Autowired
-  private IdGenerator idGenerator;
-
-  @Autowired
-  private ProcessEngine processEngine;
-
-  @Test
-  public void configured_idGenerator_is_uuid() {
-    IdGenerator idGenerator = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getIdGenerator();
-
-    assertThat(idGenerator).isOfAnyClassIn(StrongUuidGenerator.class);
+  public StrongUuidGeneratorIT(IdGenerator idGenerator, ProcessEngine processEngine) {
+      this.idGenerator = idGenerator;
+      this.processEngine = processEngine;
   }
 
   @Test
-  public void nextId_is_uuid() {
+  void configured_idGenerator_is_uuid() {
+    IdGenerator theIdGenerator = ((ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration()).getIdGenerator();
+
+    assertThat(theIdGenerator).isOfAnyClassIn(StrongUuidGenerator.class);
+  }
+
+  @Test
+  void nextId_is_uuid() {
     assertThat(idGenerator.getNextId().split("-")).hasSize(5);
   }
 }

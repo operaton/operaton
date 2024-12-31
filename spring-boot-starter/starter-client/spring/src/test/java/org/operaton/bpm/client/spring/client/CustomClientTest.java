@@ -20,11 +20,12 @@ import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.client.configuration.CustomClientConfiguration;
 import org.operaton.bpm.client.spring.configuration.SimpleSubscriptionConfiguration;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -34,13 +35,13 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
     SimpleSubscriptionConfiguration.class,
     CustomClientConfiguration.class
 })
-public class CustomClientTest extends MockedTest {
+class CustomClientTest extends MockedTest {
 
   @Autowired
   public List<ExternalTaskClient> clients;
 
   @Test
-  public void shouldVerifyCustomClientPresent() {
+  void shouldVerifyCustomClientPresent() {
     verify(clientBuilder).baseUrl("http://localhost:8080/engine-rest");
     verify(clientBuilder).workerId("custom-client");
     verify(clientBuilder).build();

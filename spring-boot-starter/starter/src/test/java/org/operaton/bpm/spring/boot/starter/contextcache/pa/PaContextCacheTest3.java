@@ -19,25 +19,23 @@ package org.operaton.bpm.spring.boot.starter.contextcache.pa;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.spring.boot.starter.contextcache.AbstractContextCacheTest;
 import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 
 /**
  * Tests {@link PaContextCacheTest1}, {@link PaContextCacheTest2}, {@link PaContextCacheTest3}
  * {@link PaContextCacheTest4} and {@link PaContextCacheTest5} are meant to be run together
  * so that ApplicationContext caching is tested.
- * See {@link PaContextCacheSuiteTest} for a detailed explanation.
+ * See {@link PaContextCacheTestSuite} for a detailed explanation.
  *
  * @author Nikola Koevski
  */
-@RunWith(SpringRunner.class)
 @ActiveProfiles("contextcaching")
 @SpringBootTest(
   classes = { TestProcessApplication.class },
@@ -48,30 +46,31 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.in
   },
   webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
-public class PaContextCacheTest3 extends AbstractContextCacheTest {
+class PaContextCacheTest3 extends AbstractContextCacheTest {
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     this.processEngineName = "foo";
     this.testName = "paTest3";
 
-    this.contextMap.put(this.testName, applicationContext.hashCode());
+    contextMap.put(this.testName, applicationContext.hashCode());
 
     // ensure that Operaton Assert is using the non-default engine
     init(processEngine);
   }
 
   @Test
-  public void testContextCaching() {
+  void contextCaching() {
     int appContextHash = applicationContext.hashCode();
 
-    assertThat(appContextHash).isEqualTo(contextMap.get("paTest1"));
-    assertThat(appContextHash).isNotEqualTo(contextMap.get("paTest2"));
+    assertThat(appContextHash)
+        .isEqualTo(contextMap.get("paTest1"))
+        .isNotEqualTo(contextMap.get("paTest2"));
   }
 
   @Override
   @Test
-  public void testDbIsolation() {
+  protected void dbIsolation() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("TestProcess");
     assertThat(instance).isNotNull();
 

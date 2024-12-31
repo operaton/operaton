@@ -16,36 +16,37 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import org.operaton.bpm.application.ProcessApplicationInfo;
 import org.operaton.bpm.engine.spring.application.SpringProcessApplication;
 import org.operaton.bpm.spring.boot.starter.test.pa.TestProcessApplication;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(
   classes = { TestProcessApplication.class },
   webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @ActiveProfiles("customContextPath")
-public class CustomContextPathProcessApplicationIT {
+class CustomContextPathProcessApplicationIT {
+
+  private final SpringProcessApplication application;
 
   @Autowired
-  private SpringProcessApplication application;
+  CustomContextPathProcessApplicationIT(SpringProcessApplication application) {
+      this.application = application;
+  }
 
   @Test
-  public void testPostDeployEvent() {
-    assertNotNull(application);
-    assertEquals("/", application.getProperties().get(ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH));
+  void postDeployEvent() {
+    assertThat(application).isNotNull();
+    assertThat(application.getProperties()).containsEntry(ProcessApplicationInfo.PROP_SERVLET_CONTEXT_PATH, "/");
   }
 
 }

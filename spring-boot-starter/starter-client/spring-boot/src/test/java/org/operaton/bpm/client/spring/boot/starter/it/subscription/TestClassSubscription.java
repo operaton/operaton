@@ -20,6 +20,7 @@ import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
 import org.operaton.bpm.client.task.ExternalTaskService;
+
 import org.springframework.stereotype.Component;
 
 @ExternalTaskSubscription(
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Component;
     businessKey = "business-key"
 )
 @Component
+@SuppressWarnings({"unused", "java:S1186"})
 public class TestClassSubscription implements ExternalTaskHandler {
 
   @Override

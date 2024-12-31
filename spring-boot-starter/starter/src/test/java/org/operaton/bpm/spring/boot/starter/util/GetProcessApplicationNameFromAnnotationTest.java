@@ -20,15 +20,16 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.operaton.bpm.spring.boot.starter.util.GetProcessApplicationNameFromAnnotation.AnnotatedBean;
-import org.junit.Test;
-import org.springframework.context.ApplicationContext;
+
 import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-public class GetProcessApplicationNameFromAnnotationTest {
+class GetProcessApplicationNameFromAnnotationTest {
 
   @EnableProcessApplication("withNameApplication")
   public static class WithName {
@@ -42,65 +43,65 @@ public class GetProcessApplicationNameFromAnnotationTest {
   private final GetProcessApplicationNameFromAnnotation function = GetProcessApplicationNameFromAnnotation.processApplicationNameFromAnnotation(applicationContext);
 
   @Test
-  public void getBean_WithName() throws Exception {
+  void getBean_WithName() {
     WithName w = new WithName();
     when(applicationContext.getBeansWithAnnotation(EnableProcessApplication.class)).thenReturn(Variables.putValue("withName", w));
-    assertThat(GetProcessApplicationNameFromAnnotation.getAnnotatedBean.apply(applicationContext).get()).isEqualTo(AnnotatedBean.of("withName", w));
+    assertThat(GetProcessApplicationNameFromAnnotation.getAnnotatedBean.apply(applicationContext)).contains(AnnotatedBean.of("withName", w));
   }
 
   @Test
-  public void getBean_NoName() throws Exception {
+  void getBean_NoName() {
     NoName n = new NoName();
     when(applicationContext.getBeansWithAnnotation(EnableProcessApplication.class)).thenReturn(Variables.putValue("noName", n));
-    assertThat(GetProcessApplicationNameFromAnnotation.getAnnotatedBean.apply(applicationContext).get()).isEqualTo(AnnotatedBean.of("noName", n.getClass().getAnnotation(EnableProcessApplication.class)));
+    assertThat(GetProcessApplicationNameFromAnnotation.getAnnotatedBean.apply(applicationContext)).contains(AnnotatedBean.of("noName", n.getClass().getAnnotation(EnableProcessApplication.class)));
   }
 
 
   @Test
-  public void getAnnotation() {
+  void getAnnotation() {
 
     assertThat(WithName.class.getAnnotation(EnableProcessApplication.class)).isNotNull();
     assertThat(NoName.class.getAnnotation(EnableProcessApplication.class)).isNotNull();
   }
 
   @Test
-  public void findProcessEngineNameForValue() throws Exception {
+  void findProcessEngineNameForValue() {
     when(applicationContext.getBeansWithAnnotation(EnableProcessApplication.class)).thenReturn(Variables.putValue("withName", new WithName()));
-    assertThat(GetProcessApplicationNameFromAnnotation.getProcessApplicationName.apply(applicationContext).get()).isEqualTo("withNameApplication");
+    assertThat(GetProcessApplicationNameFromAnnotation.getProcessApplicationName.apply(applicationContext)).contains("withNameApplication");
   }
 
   @Test
-  public void returnEmptyWhenNoNameIsGiven() throws Exception {
+  void returnEmptyWhenNoNameIsGiven() {
     when(applicationContext.getBeansWithAnnotation(EnableProcessApplication.class)).thenReturn(Variables.putValue("noName", new NoName()));
-    assertThat(GetProcessApplicationNameFromAnnotation.getProcessApplicationName.apply(applicationContext).get()).isEqualTo("noName");
+    assertThat(GetProcessApplicationNameFromAnnotation.getProcessApplicationName.apply(applicationContext)).contains("noName");
   }
 
   @Test
-  public void getProcessApplicationNameFromContext_valuePresent() {
+  void getProcessApplicationNameFromContext_valuePresent() {
     assumeAnnotatedBeans(Variables.putValue("app", new WithName()));
 
-    assertThat(function.apply(Optional.empty())).isEqualTo(Optional.of("withNameApplication"));
+    assertThat(function.apply(Optional.empty())).contains("withNameApplication");
   }
 
   @Test
-  public void getProcessApplicationNameFromContext_beanName() {
+  void getProcessApplicationNameFromContext_beanName() {
     assumeAnnotatedBeans(Variables.putValue("app2", new NoName()));
 
-    assertThat(function.apply(Optional.empty())).isEqualTo(Optional.of("app2"));
+    assertThat(function.apply(Optional.empty())).contains("app2");
   }
 
   @Test
-  public void getProcessApplicationNameFromContext_annotationNotPresent() {
+  void getProcessApplicationNameFromContext_annotationNotPresent() {
     assumeAnnotatedBeans(Variables.createVariables());
 
-    assertThat(function.apply(Optional.empty())).isEqualTo(Optional.empty());
+    assertThat(function.apply(Optional.empty())).isEmpty();
   }
 
   @Test
-  public void getProcessApplicationNameFromContext_annotationNotPresent_fallbackProperty() {
+  void getProcessApplicationNameFromContext_annotationNotPresent_fallbackProperty() {
     assumeAnnotatedBeans(Variables.createVariables());
 
-    assertThat(function.apply(Optional.of("foo"))).isEqualTo(Optional.of("foo"));
+    assertThat(function.apply(Optional.of("foo"))).contains("foo");
   }
 
   private void assumeAnnotatedBeans(VariableMap beans) {

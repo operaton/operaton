@@ -16,26 +16,24 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
-public class DefaultHistoryConfigurationTest {
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class DefaultHistoryConfigurationTest {
 
   @Mock
   private SpringProcessEngineConfiguration springProcessEngineConfiguration;
@@ -44,36 +42,36 @@ public class DefaultHistoryConfigurationTest {
 
   private DefaultHistoryConfiguration defaultHistoryConfiguration;
 
-  @Before
-  public void before() {
+  @BeforeEach
+  void before() {
     operatonBpmProperties = new OperatonBpmProperties();
     defaultHistoryConfiguration = new DefaultHistoryConfiguration();
     defaultHistoryConfiguration.operatonBpmProperties = operatonBpmProperties;
   }
 
   @Test
-  public void defaultHistoryLevelTest() {
+  void defaultHistoryLevelTest() {
     defaultHistoryConfiguration.preInit(springProcessEngineConfiguration);
     verify(springProcessEngineConfiguration, times(1)).setHistory(HistoryLevel.HISTORY_LEVEL_FULL.getName());
   }
 
   @Test
-  public void historyLevelTest() {
+  void historyLevelTest() {
     operatonBpmProperties.setHistoryLevel(HistoryLevel.HISTORY_LEVEL_AUDIT.getName());
     defaultHistoryConfiguration.preInit(springProcessEngineConfiguration);
     verify(springProcessEngineConfiguration).setHistory(HistoryLevel.HISTORY_LEVEL_AUDIT.getName());
   }
 
   @Test
-  public void noHistoryEventHandlerTest() {
+  void noHistoryEventHandlerTest() {
     defaultHistoryConfiguration.preInit(springProcessEngineConfiguration);
     verify(springProcessEngineConfiguration, times(0)).setHistoryEventHandler(Mockito.any(HistoryEventHandler.class));
   }
 
   @Test
-  public void historyEventHandlerTest() {
+  void historyEventHandlerTest() {
     HistoryEventHandler historyEventHandlerMock = mock(HistoryEventHandler.class);
-    List customHandlersList = mock(List.class);
+    var customHandlersList = mock(List.class);
     when(springProcessEngineConfiguration.getCustomHistoryEventHandlers()).thenReturn(customHandlersList);
 
     defaultHistoryConfiguration.historyEventHandler = historyEventHandlerMock;

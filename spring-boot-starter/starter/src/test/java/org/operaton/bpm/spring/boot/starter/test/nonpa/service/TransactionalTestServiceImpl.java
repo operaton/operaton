@@ -16,27 +16,31 @@
  */
 package org.operaton.bpm.spring.boot.starter.test.nonpa.service;
 
+import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
+import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
 
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.domain.TestEntity;
-import org.operaton.bpm.spring.boot.starter.test.nonpa.jpa.repository.TestEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransactionalTestServiceImpl implements TransactionalTestService {
+class TransactionalTestServiceImpl implements TransactionalTestService {
+
+  private final TestEntityRepository testEntityRepository;
+  private final RuntimeService runtimeService;
 
   @Autowired
-  private TestEntityRepository testEntityRepository;
-
-  @Autowired
-  private RuntimeService runtimeService;
+  public TransactionalTestServiceImpl(TestEntityRepository testEntityRepository, RuntimeService runtimeService) {
+      this.testEntityRepository = testEntityRepository;
+      this.runtimeService = runtimeService;
+  }
 
   @Override
   public ProcessInstance doOk() {

@@ -19,18 +19,17 @@ package org.operaton.bpm.client.spring.subscription;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
 import org.operaton.bpm.client.spring.subscription.configuration.HandlerClassAnnotationConfiguration;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {SimpleClientConfiguration.class, HandlerClassAnnotationConfiguration.class})
-public class HandlerClassAnnotationTest extends MockedTest {
+class HandlerClassAnnotationTest extends MockedTest {
 
   @Test
-  public void shouldSubscribeByClassAnnotation() {
+  void shouldSubscribeByClassAnnotation() {
     verify(client, times(1)).subscribe("topic-name");
     verifyNoMoreInteractions(client);
   }

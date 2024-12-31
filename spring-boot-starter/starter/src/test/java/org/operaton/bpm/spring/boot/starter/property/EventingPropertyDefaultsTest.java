@@ -16,14 +16,13 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-public class EventingPropertyDefaultsTest extends ParsePropertiesHelper {
+class EventingPropertyDefaultsTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldLoadProperties() {
+  void shouldLoadProperties() {
     assertThat(properties.getEventing().isExecution()).isTrue();
     assertThat(properties.getEventing().isTask()).isTrue();
     assertThat(properties.getEventing().isHistory()).isTrue();

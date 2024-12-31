@@ -16,30 +16,30 @@
  */
 package org.operaton.bpm.client.spring.subscription;
 
-import org.operaton.bpm.client.spring.exception.NotInitializedException;
 import org.operaton.bpm.client.spring.MockedTest;
+import org.operaton.bpm.client.spring.exception.NotInitializedException;
 import org.operaton.bpm.client.spring.subscription.configuration.NotInitializedExceptionConfiguration;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+class NotInitializedExceptionTest {
 
-public class NotInitializedExceptionTest {
-
-  @Before
-  public void setup() {
+  @BeforeEach
+  void setup() {
     MockedTest.mockClient();
   }
 
-  @After
-  public void reset() {
+  @AfterEach
+  void reset() {
     MockedTest.close();
   }
 
   @Test
-  public void shouldThrowException() {
+  void shouldThrowException() {
     Class<?> clazz = NotInitializedExceptionConfiguration.class;
     assertThatThrownBy(() -> new AnnotationConfigApplicationContext(clazz))
         .isInstanceOf(NotInitializedException.class)

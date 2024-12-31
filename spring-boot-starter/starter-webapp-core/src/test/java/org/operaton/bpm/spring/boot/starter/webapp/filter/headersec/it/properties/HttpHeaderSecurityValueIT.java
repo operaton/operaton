@@ -16,21 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it.properties;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.headerSecurity.xssProtectionValue=aValue",
@@ -40,61 +39,33 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.headerSecurity.hstsValue=aValue"
 })
 @DirtiesContext
-public class HttpHeaderSecurityValueIT {
+class HttpHeaderSecurityValueIT {
 
-  @Rule
-  public HttpClientRule httpClientRule;
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension() ;
 
   @LocalServerPort
   public int port;
 
-  @Before
-  public void assignRule() {
-    httpClientRule = new HttpClientRule(port);
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
   }
 
-  @Test
-  public void shouldCheckValueOfXssProtectionHeader() {
+  @ParameterizedTest(name = "{index} => header={0}, expectedValue={1}")
+  @CsvSource({
+      "X-XSS-Protection, aValue",
+      "Content-Security-Policy, aValue",
+      "X-Content-Type-Options, aValue",
+      "Strict-Transport-Security, aValue"
+  })
+  void shouldCheckValueOfHeaders(String header, String expectedValue) {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientRule.getHeader("X-XSS-Protection")).isEqualTo("aValue");
+    assertThat(httpClientExtension.getHeader(header)).isEqualTo(expectedValue);
   }
-
-  @Test
-  public void shouldCheckValueOfContentSecurityPolicyHeader() {
-    // given
-
-    // when
-    httpClientRule.performRequest();
-
-    // then
-    assertThat(httpClientRule.getHeader("Content-Security-Policy")).isEqualTo("aValue");
-  }
-
-  @Test
-  public void shouldCheckValueOfContentTypeOptions() {
-    // given
-
-    // when
-    httpClientRule.performRequest();
-
-    // then
-    assertThat(httpClientRule.getHeader("X-Content-Type-Options")).isEqualTo("aValue");
-  }
-
-  @Test
-  public void shouldCheckValueOfHsts() {
-    // given
-
-    // when
-    httpClientRule.performRequest();
-
-    // then
-    assertThat(httpClientRule.getHeader("Strict-Transport-Security")).isEqualTo("aValue");
-  }
-
 }

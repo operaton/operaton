@@ -19,15 +19,15 @@ package org.operaton.bpm.client.spring.client;
 import org.operaton.bpm.client.spring.client.configuration.AnotherSimpleClientConfiguration;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
 import org.operaton.bpm.client.spring.exception.SpringExternalTaskClientException;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-public class MultipleClientAnnotationsExceptionTest {
+class MultipleClientAnnotationsExceptionTest {
 
   @Test
-  public void shouldThrowException() {
+  void shouldThrowException() {
     Class<?> clazzOne = SimpleClientConfiguration.class;
     Class<?> clazzTwo = AnotherSimpleClientConfiguration.class;
     assertThatThrownBy(() -> new AnnotationConfigApplicationContext(clazzOne, clazzTwo))

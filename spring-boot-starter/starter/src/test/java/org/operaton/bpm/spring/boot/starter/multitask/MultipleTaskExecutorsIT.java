@@ -16,12 +16,10 @@
  */
 package org.operaton.bpm.spring.boot.starter.multitask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.spring.boot.starter.AbstractOperatonAutoConfigurationIT;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.DefaultJobConfiguration.JobConfiguration;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,30 +27,33 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @see <a href=
  *      "https://github.com/operaton/operaton-bpm-spring-boot-starter/issues/209">#209</a>
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { MultipleTaskExecutorsIT.MultipleTaskExecutorsConfig.class })
-public class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT {
+@SpringBootTest(classes = {MultipleTaskExecutorsIT.MultipleTaskExecutorsConfig.class})
+class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT {
+
+  private final TaskExecutor[] taskExecutors;
+  private final TaskExecutor operatonTaskExecutor;
 
   @Autowired
-  private TaskExecutor[] taskExecutors;
-
-  @Autowired
-  @Qualifier(JobConfiguration.CAMUNDA_TASK_EXECUTOR_QUALIFIER)
-  private TaskExecutor operatonTaskExecutor;
+  public MultipleTaskExecutorsIT(TaskExecutor[] taskExecutors, @Qualifier(JobConfiguration.CAMUNDA_TASK_EXECUTOR_QUALIFIER) TaskExecutor operatonTaskExecutor) {
+      this.taskExecutors = taskExecutors;
+      this.operatonTaskExecutor = operatonTaskExecutor;
+  }
 
   @Test
-  public void startWithMultipleTaskExecutorsTest() {
-    assertThat(taskExecutors.length).isGreaterThan(1);
-    assertThat(taskExecutors).contains(operatonTaskExecutor);
+  void startWithMultipleTaskExecutorsTest() {
+    assertThat(taskExecutors)
+        .hasSizeGreaterThan(1)
+        .contains(operatonTaskExecutor);
   }
 
   @SpringBootApplication
@@ -60,7 +61,8 @@ public class MultipleTaskExecutorsIT extends AbstractOperatonAutoConfigurationIT
 
     @Configuration
     @EnableWebSocketMessageBroker
-    public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    @SuppressWarnings("unused")
+    public static class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
       @Override
       public void configureMessageBroker(MessageBrokerRegistry config) {

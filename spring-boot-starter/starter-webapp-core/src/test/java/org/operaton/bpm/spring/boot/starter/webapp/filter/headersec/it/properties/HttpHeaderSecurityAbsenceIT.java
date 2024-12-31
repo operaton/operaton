@@ -16,21 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.headersec.it.properties;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.headerSecurity.xssProtectionDisabled=true",
@@ -39,61 +38,33 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.headerSecurity.hstsDisabled=true"
 })
 @DirtiesContext
-public class HttpHeaderSecurityAbsenceIT {
+class HttpHeaderSecurityAbsenceIT {
 
-  @Rule
-  public HttpClientRule httpClientRule;
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
 
-  @Before
-  public void assignRule() {
-    httpClientRule = new HttpClientRule(port);
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
   }
 
-  @Test
-  public void shouldCheckAbsenceOfXssProtectionHeader() {
+  @ParameterizedTest(name = "{index} => header={0}")
+  @CsvSource({
+      "X-XSS-Protection",
+      "Content-Security-Policy",
+      "X-Content-Type-Options",
+      "Strict-Transport-Security"
+  })
+  void shouldCheckAbsenceOfHeaders(String header) {
     // given
 
     // when
-    httpClientRule.performRequest();
+    httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientRule.headerExists("X-XSS-Protection")).isFalse();
+    assertThat(httpClientExtension.headerExists(header)).isFalse();
   }
-
-  @Test
-  public void shouldCheckAbsenceOfContentSecurityPolicyHeader() {
-    // given
-
-    // when
-    httpClientRule.performRequest();
-
-    // then
-    assertThat(httpClientRule.headerExists("Content-Security-Policy")).isFalse();
-  }
-
-  @Test
-  public void shouldCheckAbsenceOfContentTypeOptions() {
-    // given
-
-    // when
-    httpClientRule.performRequest();
-
-    // then
-    assertThat(httpClientRule.headerExists("X-Content-Type-Options")).isFalse();
-  }
-
-  @Test
-  public void shouldCheckAbsenceOfHsts() {
-    // given
-
-    // when
-    httpClientRule.performRequest();
-
-    // then
-    assertThat(httpClientRule.headerExists("Strict-Transport-Security")).isFalse();
-  }
-
 }

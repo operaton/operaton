@@ -19,10 +19,10 @@ package org.operaton.bpm.client.spring.configuration;
 import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
 import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
+import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.ProcessVariable;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.ProcessVariable;
 
 @Configuration
 @EnableExternalTaskClient(

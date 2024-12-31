@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.spring.boot.starter.jdbc;
 
-import javax.sql.DataSource;
-
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
+import javax.sql.DataSource;
+
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 @EnableAutoConfiguration(exclude = OperatonBpmAutoConfiguration.class)
-public class HistoryLevelDeterminatorJdbcTemplateImplTestApplication {
+@SuppressWarnings("unused")
+class HistoryLevelDeterminatorJdbcTemplateImplTestApplication {
 
   @Bean
   public OperatonBpmProperties operatonBpmProperties() {
@@ -38,9 +39,8 @@ public class HistoryLevelDeterminatorJdbcTemplateImplTestApplication {
   @Bean
   public DataSource dataSource() {
     EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-    EmbeddedDatabase db = builder.setName("testdbForHistoryLevelDetermination").setType(EmbeddedDatabaseType.H2)
+    return builder.setName("testdbForHistoryLevelDetermination").setType(EmbeddedDatabaseType.H2)
         .addScript("/org/operaton/bpm/engine/db/create/activiti.h2.create.engine.sql").addScript("db/sql/insert-history-data.sql").continueOnError(true).build();
-    return db;
   }
 
   @Bean

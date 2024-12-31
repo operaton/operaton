@@ -16,77 +16,74 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.condition;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.env.Environment;
 
-public class NeedsHistoryAutoConfigurationConditionTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+class NeedsHistoryAutoConfigurationConditionTest {
 
   @Test
-  public void isHistoryAutoSupportedTest() {
+  void isHistoryAutoSupportedTest() {
     NeedsHistoryAutoConfigurationCondition condition = new NeedsHistoryAutoConfigurationCondition();
-    assertFalse(condition.isHistoryAutoSupported());
+    assertThat(condition.isHistoryAutoSupported()).isFalse();
     condition.historyAutoFieldName = "DB_SCHEMA_UPDATE_FALSE";
-    assertFalse(condition.isHistoryAutoSupported());
+    assertThat(condition.isHistoryAutoSupported()).isFalse();
   }
 
   @Test
-  public void needsNoAdditionalConfigurationTest1() {
+  void needsNoAdditionalConfigurationTest1() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
     when(context.getEnvironment()).thenReturn(environment);
-    assertFalse(condition.needsAdditionalConfiguration(context));
+    assertThat(condition.needsAdditionalConfiguration(context)).isFalse();
   }
 
   @Test
-  public void needsNoAdditionalConfigurationTest2() {
+  void needsNoAdditionalConfigurationTest2() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
     when(context.getEnvironment()).thenReturn(environment);
     when(environment.getProperty("operaton.bpm.history-level")).thenReturn(NeedsHistoryAutoConfigurationCondition.HISTORY_AUTO);
     when(condition.isHistoryAutoSupported()).thenReturn(true);
-    assertFalse(condition.needsAdditionalConfiguration(context));
+    assertThat(condition.needsAdditionalConfiguration(context)).isFalse();
   }
 
   @Test
-  public void needsAdditionalConfigurationTest() {
+  void needsAdditionalConfigurationTest() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
     when(context.getEnvironment()).thenReturn(environment);
     when(environment.getProperty("operaton.bpm.history-level")).thenReturn(NeedsHistoryAutoConfigurationCondition.HISTORY_AUTO);
     when(condition.isHistoryAutoSupported()).thenReturn(false);
-    assertTrue(condition.needsAdditionalConfiguration(context));
+    assertThat(condition.needsAdditionalConfiguration(context)).isTrue();
   }
 
   @Test
-  public void getMatchOutcomeMatchTest() {
+  void getMatchOutcomeMatchTest() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
     when(context.getEnvironment()).thenReturn(environment);
     when(environment.getProperty("operaton.bpm.history-level")).thenReturn(NeedsHistoryAutoConfigurationCondition.HISTORY_AUTO);
     when(condition.needsAdditionalConfiguration(context)).thenReturn(true);
-    assertTrue(condition.getMatchOutcome(context, null).isMatch());
+    assertThat(condition.getMatchOutcome(context, null).isMatch()).isTrue();
   }
 
   @Test
-  public void getMatchOutcomeNoMatchTest() {
+  void getMatchOutcomeNoMatchTest() {
     NeedsHistoryAutoConfigurationCondition condition = spy(new NeedsHistoryAutoConfigurationCondition());
     ConditionContext context = mock(ConditionContext.class);
     Environment environment = mock(Environment.class);
     when(context.getEnvironment()).thenReturn(environment);
     when(environment.getProperty("operaton.bpm.history-level")).thenReturn(NeedsHistoryAutoConfigurationCondition.HISTORY_AUTO);
     when(condition.needsAdditionalConfiguration(context)).thenReturn(false);
-    assertFalse(condition.getMatchOutcome(context, null).isMatch());
+    assertThat(condition.getMatchOutcome(context, null).isMatch()).isFalse();
   }
 
 }

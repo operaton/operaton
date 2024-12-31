@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,10 +26,10 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.eventing.task=false",
   "operaton.bpm.eventing.history=false",
   "operaton.bpm.eventing.skippable=false"})
-public class EventingPropertyTest extends ParsePropertiesHelper {
+class EventingPropertyTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldLoadProperties() {
+  void shouldLoadProperties() {
     assertThat(properties.getEventing().isExecution()).isFalse();
     assertThat(properties.getEventing().isTask()).isFalse();
     assertThat(properties.getEventing().isHistory()).isFalse();

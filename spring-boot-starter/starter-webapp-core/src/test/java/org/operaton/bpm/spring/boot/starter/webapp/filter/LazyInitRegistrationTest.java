@@ -16,31 +16,28 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.InitHook;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.servlet.Filter;
 
-import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.InitHook;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationContext;
 
-@RunWith(MockitoJUnitRunner.class)
-public class LazyInitRegistrationTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class LazyInitRegistrationTest {
 
   @Mock
   private LazyDelegateFilter<ResourceLoaderDependingFilter> lazyDelegateFilterMock;
@@ -51,104 +48,107 @@ public class LazyInitRegistrationTest {
   @Mock
   private InitHook<ResourceLoaderDependingFilter> initHookMock;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     LazyInitRegistration.APPLICATION_CONTEXT = null;
     LazyInitRegistration.REGISTRATION.clear();
   }
 
   @Test
-  public void registerTest() {
+  void registerTest() {
     LazyInitRegistration.register(lazyDelegateFilterMock);
-    assertTrue(LazyInitRegistration.getRegistrations().contains(lazyDelegateFilterMock));
+    assertThat(LazyInitRegistration.getRegistrations()).contains(lazyDelegateFilterMock);
   }
 
   @Test
-  public void getInitHookWithoutApplicationContextTest() {
-    assertNull(LazyInitRegistration.getInitHook());
+  void getInitHookWithoutApplicationContextTest() {
+    assertThat(LazyInitRegistration.getInitHook()).isNull();
   }
 
   @Test
-  public void getInitHookWithoutResourceLoaderDependingInitHook() {
+  void getInitHookWithoutResourceLoaderDependingInitHook() {
     LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
     when(applicationContextMock.containsBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK)).thenReturn(false);
-    assertNull(LazyInitRegistration.getInitHook());
+    assertThat(LazyInitRegistration.getInitHook()).isNull();
   }
 
   @Test
-  public void getInitHookWithResourceLoaderDependingInitHook() {
+  void getInitHookWithResourceLoaderDependingInitHook() {
     LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
     when(applicationContextMock.containsBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK)).thenReturn(true);
     when(applicationContextMock.getBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK, InitHook.class)).thenReturn(initHookMock);
 
-    assertEquals(initHookMock, LazyInitRegistration.getInitHook());
+    assertThat(LazyInitRegistration.getInitHook()).isEqualTo(initHookMock);
   }
 
   @Test
-  public void isRegisteredTest() {
-    assertFalse(LazyInitRegistration.isRegistered(lazyDelegateFilterMock));
+  void isRegisteredTest() {
+    assertThat(LazyInitRegistration.isRegistered(lazyDelegateFilterMock)).isFalse();
     LazyInitRegistration.register(lazyDelegateFilterMock);
-    assertTrue(LazyInitRegistration.isRegistered(lazyDelegateFilterMock));
+    assertThat(LazyInitRegistration.isRegistered(lazyDelegateFilterMock)).isTrue();
   }
 
   @SuppressWarnings("unchecked")
   @Test
-  public void lazyInitWithoutApplicationContext() {
-    assertFalse(LazyInitRegistration.lazyInit(lazyDelegateFilterMock));
+  void lazyInitWithoutApplicationContext() {
+    assertThat(LazyInitRegistration.lazyInit(lazyDelegateFilterMock)).isFalse();
     verify(lazyDelegateFilterMock, times(0)).setInitHook(Mockito.any(InitHook.class));
     verify(lazyDelegateFilterMock, times(0)).lazyInit();
   }
 
   @SuppressWarnings("unchecked")
   @Test
-  public void lazyInitWithoutRegistration() {
+  void lazyInitWithoutRegistration() {
     LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
-    assertFalse(LazyInitRegistration.lazyInit(lazyDelegateFilterMock));
+    assertThat(LazyInitRegistration.lazyInit(lazyDelegateFilterMock)).isFalse();
     verify(lazyDelegateFilterMock, times(0)).setInitHook(Mockito.any(InitHook.class));
     verify(lazyDelegateFilterMock, times(0)).lazyInit();
   }
 
   @Test
-  public void lazyInitWithRegistration() {
+  void lazyInitWithRegistration() {
     LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
     LazyInitRegistration.register(lazyDelegateFilterMock);
     when(applicationContextMock.containsBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK)).thenReturn(true);
     when(applicationContextMock.getBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK, InitHook.class)).thenReturn(initHookMock);
 
-    assertTrue(LazyInitRegistration.lazyInit(lazyDelegateFilterMock));
+    assertThat(LazyInitRegistration.lazyInit(lazyDelegateFilterMock)).isTrue();
     verify(lazyDelegateFilterMock, times(1)).setInitHook(initHookMock);
     verify(lazyDelegateFilterMock, times(1)).lazyInit();
-    assertFalse(LazyInitRegistration.getRegistrations().contains(lazyDelegateFilterMock));
+    assertThat(LazyInitRegistration.getRegistrations()).doesNotContain(lazyDelegateFilterMock);
   }
 
   @Test
-  public void lazyInitWithoutInitHook() {
+  void lazyInitWithoutInitHook() {
     LazyInitRegistration.APPLICATION_CONTEXT = applicationContextMock;
     LazyInitRegistration.register(lazyDelegateFilterMock);
     when(applicationContextMock.containsBean(LazyInitRegistration.RESOURCE_LOADER_DEPENDING_INIT_HOOK)).thenReturn(false);
 
-    assertTrue(LazyInitRegistration.lazyInit(lazyDelegateFilterMock));
+    assertThat(LazyInitRegistration.lazyInit(lazyDelegateFilterMock)).isTrue();
     verify(lazyDelegateFilterMock, times(1)).setInitHook(null);
     verify(lazyDelegateFilterMock, times(1)).lazyInit();
-    assertFalse(LazyInitRegistration.getRegistrations().contains(lazyDelegateFilterMock));
-  }
-
-  @Test(expected = UnsupportedOperationException.class)
-  public void getRegistrationsTest() {
-    LazyInitRegistration.getRegistrations().add(lazyDelegateFilterMock);
+    assertThat(LazyInitRegistration.getRegistrations()).doesNotContain(lazyDelegateFilterMock);
   }
 
   @Test
-  public void setApplicationContextTest() {
+  void getRegistrationsTest() {
+    var registrations = LazyInitRegistration.getRegistrations();
+
+    assertThatThrownBy(() -> registrations.add(lazyDelegateFilterMock))
+      .isInstanceOf(UnsupportedOperationException.class);
+  }
+
+  @Test
+  void setApplicationContextTest() {
     try (MockedStatic<LazyInitRegistration> theMock = Mockito.mockStatic(LazyInitRegistration.class)) {
       LazyInitRegistration.register(lazyDelegateFilterMock);
       Set<LazyDelegateFilter<? extends Filter>> registrations = new HashSet<>();
       registrations.add(lazyDelegateFilterMock);
-      theMock.when(() -> LazyInitRegistration.getRegistrations()).thenReturn(registrations);
+      theMock.when(LazyInitRegistration::getRegistrations).thenReturn(registrations);
   
       new LazyInitRegistration().setApplicationContext(applicationContextMock);
-  
-      assertEquals(LazyInitRegistration.APPLICATION_CONTEXT, applicationContextMock);
+
+      assertThat(applicationContextMock).isEqualTo(LazyInitRegistration.APPLICATION_CONTEXT);
       theMock.verify(() -> LazyInitRegistration.lazyInit(lazyDelegateFilterMock));
     }
   }

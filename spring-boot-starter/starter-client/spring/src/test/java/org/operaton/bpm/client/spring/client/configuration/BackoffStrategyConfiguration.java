@@ -18,18 +18,20 @@ package org.operaton.bpm.client.spring.client.configuration;
 
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.task.ExternalTask;
-import org.springframework.context.annotation.Bean;
 
 import java.util.List;
+
+import org.springframework.context.annotation.Bean;
 
 public class BackoffStrategyConfiguration {
 
   @Bean
+  @SuppressWarnings("unused")
   public BackoffStrategy backoffStrategy() {
     return new BackoffStrategy() {
       @Override
+      @SuppressWarnings("java:S1186")
       public void reconfigure(List<ExternalTask> list) {
-
       }
 
       @Override

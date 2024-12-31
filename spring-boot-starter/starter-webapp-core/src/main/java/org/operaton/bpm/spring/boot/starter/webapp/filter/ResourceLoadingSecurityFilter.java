@@ -16,25 +16,28 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
+import org.operaton.bpm.engine.impl.util.IoUtil;
+import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
+import org.operaton.bpm.webapp.impl.security.filter.SecurityFilter;
+import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 
-import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
-import org.operaton.bpm.webapp.impl.security.filter.SecurityFilter;
-import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
-public class ResourceLoadingSecurityFilter extends SecurityFilter implements ResourceLoaderDependingFilter {
+@SuppressWarnings("unused")
+class ResourceLoadingSecurityFilter extends SecurityFilter implements ResourceLoaderDependingFilter {
 
   private ResourceLoader resourceLoader;
 
   private WebappProperty webappProperty;
   @Override
+  @SuppressWarnings("java:S112")
   protected void loadFilterRules(FilterConfig filterConfig, String applicationPath) throws ServletException {
     String configFileName = filterConfig.getInitParameter("configFile");
     Resource resource = resourceLoader.getResource("classpath:" +webappProperty.getWebjarClasspath() + configFileName);

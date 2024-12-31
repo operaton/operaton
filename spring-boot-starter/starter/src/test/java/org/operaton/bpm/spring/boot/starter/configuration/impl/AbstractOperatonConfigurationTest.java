@@ -16,23 +16,23 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import org.junit.Test;
-
-import java.util.ArrayList;
-
-import static java.util.Arrays.asList;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.spring.boot.starter.util.OperatonSpringBootUtil.join;
 
-public class AbstractOperatonConfigurationTest {
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+class AbstractOperatonConfigurationTest {
 
   @Test
-  public void joinLists() {
-    assertThat(join(asList("a"), asList("b"))).containsExactly("a", "b");
-    assertThat(join(null, asList("b"))).containsExactly("b");
-    assertThat(join(new ArrayList<String>(), asList("b"))).containsExactly("b");
-    assertThat(join(asList("a"), null)).containsExactly("a");
-    assertThat(join(asList("a"), new ArrayList<String>())).containsExactly("a");
+  void joinLists() {
+    assertThat(join(List.of("a"), List.of("b"))).containsExactly("a", "b");
+    assertThat(join(null, List.of("b"))).containsExactly("b");
+    assertThat(join(new ArrayList<String>(), List.of("b"))).containsExactly("b");
+    assertThat(join(List.of("a"), null)).containsExactly("a");
+    assertThat(join(List.of("a"), new ArrayList<String>())).containsExactly("a");
     assertThat(join(null, null)).isEmpty();
   }
 

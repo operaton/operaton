@@ -16,26 +16,23 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.apppath.containerbasedauth;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(
-    classes = { ContainerBasedAuthTestApp.class },
+    classes = {ContainerBasedAuthTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
     "operaton.bpm.webapp.applicationPath=" + ChangedAppPathContainerBasedAuthIT.MY_APP_PATH
 })
-public class ChangedAppPathContainerBasedAuthIT {
+class ChangedAppPathContainerBasedAuthIT {
 
   protected static final String MY_APP_PATH = "/my/application/path";
 
@@ -43,7 +40,7 @@ public class ChangedAppPathContainerBasedAuthIT {
   protected TestRestTemplate testRestTemplate;
 
   @Test
-  public void shouldCheckContainerBasedAuthFilterAvailable() {
+  void shouldCheckContainerBasedAuthFilterAvailable() {
     // given
 
     // when

@@ -20,6 +20,7 @@ import org.operaton.bpm.client.spring.SpringTopicSubscription;
 import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
 import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

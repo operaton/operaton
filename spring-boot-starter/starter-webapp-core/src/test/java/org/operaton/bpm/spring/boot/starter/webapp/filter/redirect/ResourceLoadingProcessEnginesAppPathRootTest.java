@@ -16,40 +16,38 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import org.apache.commons.io.IOUtils;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(classes = { FilterTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
     properties = {
         "operaton.bpm.webapp.application-path=/",
         "operaton.bpm.webapp.index-redirect-enabled=false" })
 @DirtiesContext
-public class ResourceLoadingProcessEnginesAppPathRootTest {
+class ResourceLoadingProcessEnginesAppPathRootTest {
 
-  @Rule
-  public HttpClientRule rule = new HttpClientRule().followRedirects(true);
+  @RegisterExtension
+  HttpClientExtension rule = new HttpClientExtension().followRedirects(true);
 
   @LocalServerPort
   public int port;
 
   @Test
-  public void shouldRedirectToStaticContent() throws IOException {
+  void shouldRedirectToStaticContent() throws IOException {
     // given
     // send GET request to /
     HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/");
@@ -61,10 +59,11 @@ public class ResourceLoadingProcessEnginesAppPathRootTest {
     // then
     assertThat(con.getResponseCode()).isEqualTo(200);
     // since index-redirect-enabled=false, Operaton should not redirect to Tasklist
-    assertThat(body).doesNotContain("Tasklist").doesNotContain("Operaton");
-    // the static index.html from /src/test/resources/static was served instead
-    // this is the default Spring Boot behavior that we document for this case
-    assertThat(body).contains("Hello World!");
+    assertThat(body).doesNotContain("Tasklist")
+        .doesNotContain("Operaton")
+        // the static index.html from /src/test/resources/static was served instead
+        // this is the default Spring Boot behavior that we document for this case
+        .contains("Hello World!");
   }
 
 }

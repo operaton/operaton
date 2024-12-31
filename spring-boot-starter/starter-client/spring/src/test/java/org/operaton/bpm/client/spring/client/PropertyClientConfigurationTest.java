@@ -19,7 +19,8 @@ package org.operaton.bpm.client.spring.client;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.client.configuration.PropertyPlaceholderConfiguration;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -27,13 +28,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @ContextConfiguration(classes = {PropertyPlaceholderConfiguration.class})
-public class PropertyClientConfigurationTest extends MockedTest {
+class PropertyClientConfigurationTest extends MockedTest {
 
   @Autowired
   public ExternalTaskClient client;
 
   @Test
-  public void shouldVerifyPropertiesSet() {
+  void shouldVerifyPropertiesSet() {
     verify(clientBuilder).baseUrl("http://localhost:8080/engine-rest");
     verify(clientBuilder).workerId("worker-id");
     verify(clientBuilder).dateFormat("date-format");

@@ -16,29 +16,27 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.junit.Assert.assertNull;
-
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { TestApplication.class },
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest(classes = {TestApplication.class},
   webEnvironment = WebEnvironment.NONE,
   properties = {
     "operaton.bpm.generate-unique-process-application-name=true",
     "spring.datasource.generate-unique-name=true",
   })
 @ActiveProfiles("nojobexecution")
-public class OperatonNoJobExecutionAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonNoJobExecutionAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
-  public void jobConfigurationTest() {
-    assertNull(jobExecutor);
+  void jobConfigurationTest() {
+    assertThat(jobExecutor).isNull();
   }
 
 }

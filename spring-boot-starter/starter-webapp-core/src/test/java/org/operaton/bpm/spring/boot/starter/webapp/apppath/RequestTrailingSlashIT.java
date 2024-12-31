@@ -16,35 +16,34 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(
     classes = { WebappTestApp.class },
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RequestTrailingSlashIT {
+class RequestTrailingSlashIT {
 
   public static final List<String> REDIRECT_PATHS = List.of("/app", "/app/cockpit", "/app/admin", "/app/tasklist", "/app/welcome");
 
-  TestRestTemplate client = new TestRestTemplate();
+  final TestRestTemplate client = new TestRestTemplate();
 
   @LocalServerPort
   public int port;
 
   @Test
-  public void shouldRedirectPathWithMissingTrailingSlash() {
+  void shouldRedirectPathWithMissingTrailingSlash() {
     // given
     List<ResponseEntity<String>> responses = new ArrayList<>();
 

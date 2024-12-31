@@ -16,32 +16,30 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Svetlana Dorokhova.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(
   classes = WebappExampleApplication.class,
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-public class WebappTest {
+@SuppressWarnings("unused")
+class WebappTest {
 
   @Autowired
   private TestRestTemplate testRestTemplate;
 
   @Test
-  public void testEeResourceNotAvailable() {
+  void testEeResourceNotAvailable() {
     ResponseEntity<String> response =
         testRestTemplate.getForEntity("/operaton/plugin/adminEE/app/plugin.js", String.class);
 
@@ -49,7 +47,7 @@ public class WebappTest {
   }
 
   @Test
-  public void testAdminEndpointAvailable() {
+  void testAdminEndpointAvailable() {
     ResponseEntity<String> response =
         testRestTemplate.getForEntity("/operaton/app/admin/", String.class);
 

@@ -16,18 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
-import static java.util.Collections.singletonMap;
-import static org.glassfish.jersey.servlet.ServletProperties.JAXRS_APPLICATION_CLASS;
-
-import jakarta.servlet.DispatcherType;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterRegistration;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletRegistration;
-import jakarta.servlet.SessionTrackingMode;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Map;
 import org.operaton.bpm.admin.impl.web.AdminApplication;
 import org.operaton.bpm.admin.impl.web.bootstrap.AdminContainerBootstrap;
 import org.operaton.bpm.cockpit.impl.web.CockpitApplication;
@@ -50,21 +38,33 @@ import org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListene
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 import org.operaton.bpm.welcome.impl.web.WelcomeApplication;
 import org.operaton.bpm.welcome.impl.web.bootstrap.WelcomeContainerBootstrap;
+
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Map;
+
+import jakarta.servlet.*;
+
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
+
+import static java.util.Collections.singletonMap;
+import static org.glassfish.jersey.servlet.ServletProperties.JAXRS_APPLICATION_CLASS;
 
 /**
  * Inspired by:
  * https://groups.google.com/forum/#!msg/operaton-bpm-users/BQHdcLIivzs
  * /iNVix8GkhYAJ (Christoph Berg)
  */
-public class OperatonBpmWebappInitializer implements ServletContextInitializer {
+class OperatonBpmWebappInitializer implements ServletContextInitializer {
 
   private static final Logger log = LoggerFactory.getLogger(OperatonBpmWebappInitializer.class);
 
   private static final EnumSet<DispatcherType> DISPATCHER_TYPES = EnumSet.of(DispatcherType.REQUEST);
+  public static final String API_WILDCARD_PATH = "/api/*";
+  public static final String APP_WILDCARD_PATH = "/app/*";
 
   private ServletContext servletContext;
 
@@ -101,16 +101,16 @@ public class OperatonBpmWebappInitializer implements ServletContextInitializer {
         applicationPath + "/app/welcome");
     registerFilter("Authentication Filter", AuthenticationFilter.class,
         Collections.singletonMap("cacheTimeToLive", getAuthCacheTTL(webapp)),
-        applicationPath + "/api/*", applicationPath + "/app/*");
+        applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);
     registerFilter("Security Filter", LazySecurityFilter.class,
         singletonMap("configFile", webapp.getSecurityConfigFile()),
-        applicationPath + "/api/*", applicationPath + "/app/*");
+        applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);
     registerFilter("CsrfPreventionFilter", CsrfPreventionFilter.class,
         webapp.getCsrf().getInitParams(),
-        applicationPath + "/api/*", applicationPath + "/app/*");
+        applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);
     registerFilter("SessionCookieFilter", SessionCookieFilter.class,
         webapp.getSessionCookie().getInitParams(),
-        applicationPath + "/api/*", applicationPath + "/app/*");
+        applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);
 
     Map<String, String> headerSecurityProperties = webapp
       .getHeaderSecurity()
@@ -118,19 +118,19 @@ public class OperatonBpmWebappInitializer implements ServletContextInitializer {
 
     registerFilter("HttpHeaderSecurity", HttpHeaderSecurityFilter.class,
         headerSecurityProperties,
-        applicationPath + "/api/*", applicationPath + "/app/*");
+        applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);
 
     registerFilter("Engines Filter", LazyProcessEnginesFilter.class,
-        applicationPath + "/api/*",
-                   applicationPath + "/app/*",
+        applicationPath + API_WILDCARD_PATH,
+                   applicationPath + APP_WILDCARD_PATH,
                    applicationPath + "/",
                    applicationPath);
 
     registerFilter("EmptyBodyFilter", EmptyBodyFilter.class,
-        applicationPath + "/api/*", applicationPath + "/app/*");
+        applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);
 
     registerFilter("CacheControlFilter", CacheControlFilter.class,
-        applicationPath + "/api/*", applicationPath + "/app/*", applicationPath + "/assets/*");
+        applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH, applicationPath + "/assets/*");
 
     registerServlet("Cockpit Api", CockpitApplication.class,
         applicationPath + "/api/cockpit/*");

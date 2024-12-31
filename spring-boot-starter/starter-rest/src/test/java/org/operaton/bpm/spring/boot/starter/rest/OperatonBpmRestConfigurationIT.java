@@ -16,40 +16,41 @@
  */
 package org.operaton.bpm.spring.boot.starter.rest;
 
-import static org.junit.Assert.assertEquals;
-
 import org.operaton.bpm.engine.rest.dto.repository.ProcessDefinitionDto;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.rest.test.TestRestApplication;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { TestRestApplication.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OperatonBpmRestConfigurationIT {
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest(classes = {TestRestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class OperatonBpmRestConfigurationIT {
+
+  private final TestRestTemplate testRestTemplate;
+  private final OperatonBpmProperties operatonBpmProperties;
 
   @Autowired
-  private TestRestTemplate testRestTemplate;
-
-  @Autowired
-  private OperatonBpmProperties operatonBpmProperties;
+  public OperatonBpmRestConfigurationIT(TestRestTemplate testRestTemplate, OperatonBpmProperties operatonBpmProperties) {
+      this.testRestTemplate = testRestTemplate;
+      this.operatonBpmProperties = operatonBpmProperties;
+  }
 
   @Test
-  public void processDefinitionTest() {
+  void processDefinitionTest() {
     // start process
     testRestTemplate.postForEntity("/engine-rest/start/process", HttpEntity.EMPTY, String.class);
 
     ResponseEntity<ProcessDefinitionDto> entity = testRestTemplate.getForEntity("/engine-rest/engine/{engineName}/process-definition/key/TestProcess/",
         ProcessDefinitionDto.class, operatonBpmProperties.getProcessEngineName());
 
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertEquals("TestProcess", entity.getBody().getKey());
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(entity.getBody().getKey()).isEqualTo("TestProcess");
   }
 }

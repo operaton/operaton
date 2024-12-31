@@ -17,7 +17,8 @@
 package org.operaton.bpm.spring.boot.starter.property.authcachettl;
 
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,10 +27,10 @@ import static org.assertj.core.api.Assertions.assertThat;
     "operaton.bpm.webapp.auth.cache.ttl-enabled=false",
     "operaton.bpm.webapp.auth.cache.time-to-live=6",
 })
-public class AuthCacheTTLPropertyTest extends ParsePropertiesHelper {
+class AuthCacheTTLPropertyTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldBeConfigurable() {
+  void shouldBeConfigurable() {
     // given
 
     // when

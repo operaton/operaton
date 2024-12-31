@@ -16,22 +16,23 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
+import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.util.ReflectionTestUtils.invokeMethod;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
-import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.junit.Before;
-import org.junit.Test;
-
-public class DefaultMetricsConfigurationTest {
+class DefaultMetricsConfigurationTest {
   private final DefaultMetricsConfiguration defaultMetricsConfiguration = new DefaultMetricsConfiguration();
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
   private final SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     setField(defaultMetricsConfiguration, "operatonBpmProperties", operatonBpmProperties);
     defaultMetricsConfiguration.init();
 
@@ -39,7 +40,7 @@ public class DefaultMetricsConfigurationTest {
   }
 
   @Test
-  public void enabled() {
+  void enabled() {
     assertThat(configuration.isMetricsEnabled()).isTrue();
     assertThat(operatonBpmProperties.getMetrics().isEnabled()).isTrue();
 
@@ -53,7 +54,7 @@ public class DefaultMetricsConfigurationTest {
   }
 
   @Test
-  public void dbMetricsReporterActivate() {
+  void dbMetricsReporterActivate() {
     assertThat(configuration.isDbMetricsReporterActivate()).isTrue();
     assertThat(operatonBpmProperties.getMetrics().isDbReporterActivate()).isTrue();
 

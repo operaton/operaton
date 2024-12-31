@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import org.junit.runner.RunWith;
+import jakarta.annotation.PostConstruct;
+
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import jakarta.annotation.PostConstruct;
-
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ParsePropertiesHelper.TestConfig.class)
 public abstract class ParsePropertiesHelper {
 

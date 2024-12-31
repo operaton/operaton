@@ -18,8 +18,11 @@ package org.operaton.bpm.client.spring.boot.starter.subscription;
 
 import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
 import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -43,10 +46,11 @@ import static org.assertj.core.api.Assertions.entry;
 
     "operaton.bpm.client.subscriptions.topic-two.lock-duration=6666",
 })
-public class SubscriptionConfigurationTest extends ParsePropertiesHelper {
+@ExtendWith(SpringExtension.class)
+class SubscriptionConfigurationTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckSubscriptionOneProperties() {
+  void shouldCheckSubscriptionOneProperties() {
     SubscriptionConfiguration subscriptionOne = subscriptions.get("topic-one");
 
     assertThat(subscriptionOne.getAutoOpen()).isFalse();
@@ -67,7 +71,7 @@ public class SubscriptionConfigurationTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckSubscriptionTwoProperties() {
+  void shouldCheckSubscriptionTwoProperties() {
     SubscriptionConfiguration subscriptionTwo = subscriptions.get("topic-two");
 
     assertThat(subscriptionTwo.getAutoOpen()).isNull();

@@ -18,7 +18,8 @@ package org.operaton.bpm.spring.boot.starter.property.csrf;
 
 import org.operaton.bpm.spring.boot.starter.property.CsrfProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,10 +27,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.csrf.enableSecureCookie=false"
 })
-public class CookieSecureDisabledTest extends ParsePropertiesHelper {
+class CookieSecureDisabledTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckSecureCookieDisabled() {
+  void shouldCheckSecureCookieDisabled() {
     CsrfProperties properties = webapp.getCsrf();
 
     assertThat(properties.isEnableSecureCookie()).isFalse();

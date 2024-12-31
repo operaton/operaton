@@ -16,22 +16,24 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import static org.junit.Assert.assertEquals;
-
 import org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootStarterException;
-import org.junit.Before;
-import org.junit.Test;
 
-public class GenericPropertiesConfigurationTest {
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class GenericPropertiesConfigurationTest {
 
   private SpringProcessEngineConfiguration processEngineConfiguration;
   private GenericPropertiesConfiguration genericPropertiesConfiguration;
   private OperatonBpmProperties operatonBpmProperties;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     processEngineConfiguration = new SpringProcessEngineConfiguration();
     genericPropertiesConfiguration = new GenericPropertiesConfiguration();
     operatonBpmProperties = new OperatonBpmProperties();
@@ -39,25 +41,27 @@ public class GenericPropertiesConfigurationTest {
   }
 
   @Test
-  public void genericBindingTestWithType() {
+  void genericBindingTestWithType() {
     final int batchPollTimeValue = Integer.MAX_VALUE;
     operatonBpmProperties.getGenericProperties().getProperties().put("batch-poll-time", batchPollTimeValue);
     genericPropertiesConfiguration.preInit(processEngineConfiguration);
-    assertEquals(batchPollTimeValue, processEngineConfiguration.getBatchPollTime());
+    assertThat(processEngineConfiguration.getBatchPollTime()).isEqualTo(batchPollTimeValue);
   }
 
   @Test
-  public void genericBindingTestAsString() {
+  void genericBindingTestAsString() {
     final int batchPollTimeValue = Integer.MAX_VALUE;
     operatonBpmProperties.getGenericProperties().getProperties().put("batch-poll-time", Integer.valueOf(batchPollTimeValue).toString());
     genericPropertiesConfiguration.preInit(processEngineConfiguration);
-    assertEquals(batchPollTimeValue, processEngineConfiguration.getBatchPollTime());
+    assertThat(processEngineConfiguration.getBatchPollTime()).isEqualTo(batchPollTimeValue);
   }
 
-  @Test(expected = SpringBootStarterException.class)
-  public void genericBindingTestWithNotExistingProperty() {
+  @Test
+  void genericBindingTestWithNotExistingProperty() {
     final int dontExistValue = Integer.MAX_VALUE;
     operatonBpmProperties.getGenericProperties().getProperties().put("dont-exist", dontExistValue);
-    genericPropertiesConfiguration.preInit(processEngineConfiguration);
+
+    assertThatThrownBy(() -> genericPropertiesConfiguration.preInit(processEngineConfiguration))
+      .isInstanceOf(SpringBootStarterException.class);
   }
 }

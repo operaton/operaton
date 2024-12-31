@@ -16,46 +16,50 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.session.it;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
     properties = {"server.error.include-message=always"})
 @DirtiesContext
-public class SessionCookieIT {
+class SessionCookieIT {
 
-  @Rule
-  public HttpClientRule httpClientRule = new HttpClientRule();
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
 
-  @Test
-  public void shouldSetCookieWebapp() {
-    httpClientRule.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
-
-    String sessionCookieValue = httpClientRule.getSessionCookie();
-
-    assertThat(sessionCookieValue).matches(httpClientRule.getSessionCookieRegex("Lax"));
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
   }
 
   @Test
-  public void shouldSetCookieWebappRest() {
-    httpClientRule.performRequest("http://localhost:" + port + "/operaton/api/engine/engine/");
+  void shouldSetCookieWebapp() {
+    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
 
-    String sessionCookieValue = httpClientRule.getSessionCookie();
+    String sessionCookieValue = httpClientExtension.getSessionCookie();
 
-    assertThat(sessionCookieValue).matches(httpClientRule.getSessionCookieRegex("Lax"));
+    assertThat(sessionCookieValue).matches(httpClientExtension.getSessionCookieRegex("Lax"));
+  }
+
+  @Test
+  void shouldSetCookieWebappRest() {
+    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/api/engine/engine/");
+
+    String sessionCookieValue = httpClientExtension.getSessionCookie();
+
+    assertThat(sessionCookieValue).matches(httpClientExtension.getSessionCookieRegex("Lax"));
   }
 
 }

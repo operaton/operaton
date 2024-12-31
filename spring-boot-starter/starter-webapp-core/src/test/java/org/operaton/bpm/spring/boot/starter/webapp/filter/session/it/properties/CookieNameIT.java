@@ -16,45 +16,49 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.session.it.properties;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.session-cookie.cookieName=myFancyCookieName",
   "server.servlet.session.cookie.name=myFancyCookieName"
 })
 @DirtiesContext
-public class CookieNameIT {
+class CookieNameIT {
 
-  @Rule
-  public HttpClientRule httpClientRule = new HttpClientRule();
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
 
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
+  }
+
   @Test
-  public void shouldChangeCookieName() {
+  void shouldChangeCookieName() {
     // given
 
     // when
-    httpClientRule.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
 
-    String sessionCookieValue = httpClientRule.getCookie("myFancyCookieName");
+    String sessionCookieValue = httpClientExtension.getCookie("myFancyCookieName");
 
     // then
-    assertThat(sessionCookieValue).matches(httpClientRule.getSessionCookieRegex("myFancyCookieName", "Lax"));
+    assertThat(sessionCookieValue).matches(httpClientExtension.getSessionCookieRegex("myFancyCookieName", "Lax"));
   }
 
 }

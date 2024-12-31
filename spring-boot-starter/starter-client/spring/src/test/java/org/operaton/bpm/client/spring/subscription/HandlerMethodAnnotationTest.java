@@ -20,25 +20,24 @@ import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.MockedTest;
 import org.operaton.bpm.client.spring.configuration.SimpleClientConfiguration;
 import org.operaton.bpm.client.spring.subscription.configuration.HandlerMethodAnnotationConfiguration;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {
     SimpleClientConfiguration.class,
     HandlerMethodAnnotationConfiguration.class
 })
-public class HandlerMethodAnnotationTest extends MockedTest {
+class HandlerMethodAnnotationTest extends MockedTest {
 
   @Autowired
   public ExternalTaskClient externalTaskClient;
 
   @Test
-  public void shouldSubscribeByMethodAnnotation() {
+  void shouldSubscribeByMethodAnnotation() {
     verify(client, times(1)).subscribe("topic-name");
     verifyNoMoreInteractions(client);
   }

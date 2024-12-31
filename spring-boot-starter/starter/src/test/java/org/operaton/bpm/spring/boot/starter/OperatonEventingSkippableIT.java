@@ -26,15 +26,14 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.spring.boot.starter.event.TaskEvent;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestEventCaptor;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,33 +42,34 @@ import static org.assertj.core.api.Assertions.assertThat;
  * execution listener. The default value is true, so this test
  * covers the case when the listener is treated as not skippable.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(
   classes = {TestApplication.class},
   webEnvironment = WebEnvironment.NONE
 )
 @ActiveProfiles("eventing-skippable")
-public class OperatonEventingSkippableIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonEventingSkippableIT extends AbstractOperatonAutoConfigurationIT {
 
   public static final String SERVICE_TASK = "service_task";
-  @Autowired
-  private RuntimeService runtime;
+  private final RuntimeService runtime;
+  private final TaskService taskService;
+  private final TestEventCaptor eventCaptor;
 
   @Autowired
-  private TaskService taskService;
-
-  @Autowired
-  private TestEventCaptor eventCaptor;
+  public OperatonEventingSkippableIT(RuntimeService runtime, TaskService taskService, TestEventCaptor eventCaptor) {
+      this.runtime = runtime;
+      this.taskService = taskService;
+      this.eventCaptor = eventCaptor;
+  }
 
   private ProcessInstance instance;
 
-  @Before
-  public void init() {
+  @BeforeEach
+  void init() {
     eventCaptor.clear();
   }
 
-  @After
-  public void stop() {
+  @AfterEach
+  void stop() {
     if (instance != null) {
       // update stale instance
       instance = runtime.createProcessInstanceQuery().processInstanceId(instance.getProcessInstanceId()).active().singleResult();
@@ -80,7 +80,7 @@ public class OperatonEventingSkippableIT extends AbstractOperatonAutoConfigurati
   }
 
   @Test
-  public final void shouldEventTaskDelete() {
+  final void shouldEventTaskDelete() {
     // given
     startEventingInstance();
     final Task task = taskService.createTaskQuery().active().singleResult();
@@ -94,7 +94,7 @@ public class OperatonEventingSkippableIT extends AbstractOperatonAutoConfigurati
   }
 
   @Test
-  public final void shouldEventModificationWithSkipListeners() {
+  final void shouldEventModificationWithSkipListeners() {
     // given
     startEventingInstance();
     final TaskEntity task = (TaskEntity)taskService.createTaskQuery().active().singleResult();

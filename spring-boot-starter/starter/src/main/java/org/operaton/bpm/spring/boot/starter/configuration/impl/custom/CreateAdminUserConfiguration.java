@@ -27,16 +27,18 @@ import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.spring.boot.starter.configuration.impl.AbstractOperatonConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.AdminUserProperty;
-import org.springframework.beans.BeanUtils;
-
-import jakarta.annotation.PostConstruct;
-import java.util.Optional;
-
-import static java.util.Objects.requireNonNull;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
 import static org.operaton.bpm.engine.authorization.Groups.OPERATON_ADMIN;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
+
+import java.util.Optional;
+
+import jakarta.annotation.PostConstruct;
+
+import org.springframework.beans.BeanUtils;
+
+import static java.util.Objects.requireNonNull;
 
 public class CreateAdminUserConfiguration extends AbstractOperatonConfiguration {
 

@@ -16,67 +16,60 @@
  */
 package org.operaton.bpm.spring.boot.starter.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-
-import java.io.ByteArrayInputStream;
-
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.rest.dto.runtime.ProcessInstanceDto;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import java.io.ByteArrayInputStream;
+
+import my.own.custom.spring.boot.project.SampleOperatonRestApplication;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
-import my.own.custom.spring.boot.project.SampleOperatonRestApplication;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
 @SpringBootTest(classes = SampleOperatonRestApplication.class, webEnvironment = RANDOM_PORT)
-public class SampleOperatonRestApplicationIT {
+class SampleOperatonRestApplicationIT {
+
+  private final TestRestTemplate testRestTemplate;
+  private final RuntimeService runtimeService;
+  private final OperatonBpmProperties operatonBpmProperties;
 
   @Autowired
-  private TestRestTemplate testRestTemplate;
-
-  @Autowired
-  private RuntimeService runtimeService;
-
-  @Autowired
-  private OperatonBpmProperties operatonBpmProperties;
-
-  @Test
-  public void restApiIsAvailable() {
-    ResponseEntity<String> entity = testRestTemplate.getForEntity("/engine-rest/engine/", String.class);
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertEquals("[{\"name\":\"testEngine\"}]", entity.getBody());
+  public SampleOperatonRestApplicationIT(TestRestTemplate testRestTemplate, RuntimeService runtimeService, OperatonBpmProperties operatonBpmProperties) {
+      this.testRestTemplate = testRestTemplate;
+      this.runtimeService = runtimeService;
+      this.operatonBpmProperties = operatonBpmProperties;
   }
 
   @Test
-  public void startProcessInstanceByCustomResource() {
+  void restApiIsAvailable() {
+    ResponseEntity<String> entity = testRestTemplate.getForEntity("/engine-rest/engine/", String.class);
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(entity.getBody()).isEqualTo("[{\"name\":\"testEngine\"}]");
+  }
+
+  @Test
+  void startProcessInstanceByCustomResource() {
     ResponseEntity<ProcessInstanceDto> entity = testRestTemplate.postForEntity("/engine-rest/process/start", HttpEntity.EMPTY, ProcessInstanceDto.class);
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertNotNull(entity.getBody());
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(entity.getBody()).isNotNull();
 
     // find the process instance
     final ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(entity.getBody().getId()).singleResult();
-    assertEquals(processInstance.getProcessInstanceId(), entity.getBody().getId());
+    assertThat(entity.getBody().getId()).isEqualTo(processInstance.getProcessInstanceId());
   }
 
   @Test
-  public void multipartFileUploadOperatonRestIsWorking() {
+  void multipartFileUploadOperatonRestIsWorking() {
     final String variableName = "testvariable";
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TestProcess");
     LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -90,16 +83,16 @@ public class SampleOperatonRestApplicationIT {
     ResponseEntity<String> exchange = testRestTemplate.exchange("/engine-rest/engine/{enginename}/process-instance/{id}/variables/{variableName}/data",
         HttpMethod.POST, requestEntity, String.class, operatonBpmProperties.getProcessEngineName(), processInstance.getId(), variableName);
 
-    assertEquals(HttpStatus.NO_CONTENT, exchange.getStatusCode());
+    assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().processInstanceIdIn(processInstance.getId()).variableName(variableName)
         .singleResult();
     ByteArrayInputStream byteArrayInputStream = (ByteArrayInputStream) variableInstance.getValue();
-    assertTrue(byteArrayInputStream.available() > 0);
+    assertThat(byteArrayInputStream.available()).isPositive();
   }
 
   @Test
-  public void fetchAndLockExternalTaskWithLongPollingIsRunning() {
+  void fetchAndLockExternalTaskWithLongPollingIsRunning() {
 
     String requestJson = "{"
       + "  \"workerId\":\"aWorkerId\","
@@ -114,8 +107,8 @@ public class SampleOperatonRestApplicationIT {
     HttpEntity<String> requestEntity = new HttpEntity<>(requestJson, headers);
     ResponseEntity<String> entity = testRestTemplate.postForEntity("/engine-rest/engine/{enginename}/external-task/fetchAndLock", requestEntity, String.class,
       operatonBpmProperties.getProcessEngineName());
-    assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertEquals("[]", entity.getBody());
+    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(entity.getBody()).isEqualTo("[]");
   }
 
 }

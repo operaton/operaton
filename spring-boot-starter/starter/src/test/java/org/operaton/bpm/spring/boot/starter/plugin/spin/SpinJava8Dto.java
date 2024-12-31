@@ -18,6 +18,7 @@ package org.operaton.bpm.spring.boot.starter.plugin.spin;
 
 import java.time.LocalDateTime;
 
+@SuppressWarnings("unused")
 public class SpinJava8Dto {
 
   protected LocalDateTime dateTime;

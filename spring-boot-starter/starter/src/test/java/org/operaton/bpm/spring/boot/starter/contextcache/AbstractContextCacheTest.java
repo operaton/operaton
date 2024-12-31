@@ -20,17 +20,18 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
+import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskService;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
-import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.taskService;
 
 /**
  * @author Nikola Koevski
@@ -51,7 +52,7 @@ public abstract class AbstractContextCacheTest {
   protected String processEngineName;
 
   @Test
-  public void testBpmAssert() {
+  protected void bpmAssert() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TestProcess");
 
@@ -65,7 +66,7 @@ public abstract class AbstractContextCacheTest {
   }
 
   @Test
-  public void testDbIsolation() {
+  protected void dbIsolation() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TestProcess");
 
@@ -76,15 +77,13 @@ public abstract class AbstractContextCacheTest {
   }
 
   @Test
-  public void testEngineName()
-  {
+  protected void engineName() {
     // do
     assertThat(processEngine.getName()).isEqualTo(processEngineName);
   }
 
   @Test
-  public void testEngineRegistration()
-  {
+  protected void engineRegistration() {
     // do
     ProcessEngine registeredEngine = ProcessEngines.getProcessEngine("default");
     assertThat(registeredEngine).isNotSameAs(processEngine);

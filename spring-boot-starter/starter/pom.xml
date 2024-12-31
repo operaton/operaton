@@ -118,11 +118,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.operaton.commons</groupId>
-      <artifactId>operaton-commons-testing</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.fasterxml.uuid</groupId>
       <artifactId>java-uuid-generator</artifactId>
       <exclusions>
@@ -156,6 +151,11 @@
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
       <version>${version.xml.jaxb-impl4}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite</artifactId>
     </dependency>
   </dependencies>
 

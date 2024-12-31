@@ -18,19 +18,16 @@ package org.operaton.bpm.spring.boot.starter.property;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-public class OperatonBpmPropertiesTest {
-
-  @Rule
-  public final ExpectedException thrown = ExpectedException.none();
+class OperatonBpmPropertiesTest {
 
   @Test
-  public void initResourcePatterns() {
+  void initResourcePatterns() {
     final String[] patterns = OperatonBpmProperties.initDeploymentResourcePattern();
 
     assertThat(patterns)
@@ -40,17 +37,15 @@ public class OperatonBpmPropertiesTest {
   }
 
   @Test
-  public void restrict_allowed_values_for_dbUpdate() {
+  void restrict_allowed_values_for_dbUpdate() {
     new OperatonBpmProperties().getDatabase().setSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
     new OperatonBpmProperties().getDatabase().setSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_FALSE);
     new OperatonBpmProperties().getDatabase().setSchemaUpdate(ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_CREATE);
     new OperatonBpmProperties().getDatabase().setSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP);
     new OperatonBpmProperties().getDatabase().setSchemaUpdate(ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_DROP_CREATE);
 
-    thrown.expect(IllegalArgumentException.class);
-    thrown.expectMessage("foo");
-
-    new OperatonBpmProperties().getDatabase().setSchemaUpdate("foo");
+    DatabaseProperty databaseProperty = new OperatonBpmProperties().getDatabase();
+    assertThatIllegalArgumentException().isThrownBy(() -> databaseProperty.setSchemaUpdate("foo"));
   }
 
 

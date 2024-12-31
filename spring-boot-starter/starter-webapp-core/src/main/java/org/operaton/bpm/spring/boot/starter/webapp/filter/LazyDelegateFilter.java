@@ -17,14 +17,11 @@
 package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 
+@SuppressWarnings("unused")
 public class LazyDelegateFilter<T extends Filter> implements Filter {
 
   protected final Class<? extends T> delegateClass;
@@ -37,6 +34,7 @@ public class LazyDelegateFilter<T extends Filter> implements Filter {
     LazyInitRegistration.register(this);
   }
 
+  @SuppressWarnings("java:S112")
   public void lazyInit() {
     try {
       delegate = createNewFilterInstance();
@@ -50,7 +48,7 @@ public class LazyDelegateFilter<T extends Filter> implements Filter {
   }
 
   @Override
-  public void init(FilterConfig filterConfig) throws ServletException {
+  public void init(FilterConfig filterConfig) {
     this.filterConfig = filterConfig;
     LazyInitRegistration.lazyInit(this);
   }
@@ -79,8 +77,9 @@ public class LazyDelegateFilter<T extends Filter> implements Filter {
     return delegateClass;
   }
 
-  protected T createNewFilterInstance() throws InstantiationException, IllegalAccessException {
-    return delegateClass.newInstance();
+  protected T createNewFilterInstance()
+      throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    return delegateClass.getDeclaredConstructor().newInstance();
   }
 
   public static interface InitHook<T extends Filter> {

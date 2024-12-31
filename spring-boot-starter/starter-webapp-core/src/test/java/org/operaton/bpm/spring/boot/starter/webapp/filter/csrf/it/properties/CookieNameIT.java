@@ -17,42 +17,46 @@
 package org.operaton.bpm.spring.boot.starter.webapp.filter.csrf.it.properties;
 
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
   "operaton.bpm.webapp.csrf.cookieName=myFancyCookieName"
 })
 @DirtiesContext
-public class CookieNameIT {
+class CookieNameIT {
 
-  @Rule
-  public HttpClientRule httpClientRule = new HttpClientRule();
+  @RegisterExtension
+  HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
 
+  @BeforeEach
+  void assignPort() {
+    httpClientExtension.setPort(port);
+  }
+
   @Test
-  public void shouldChangeCookieName() {
+  void shouldChangeCookieName() {
     // given
 
     // when
-    httpClientRule.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
 
-    String xsrfCookieValue = httpClientRule.getCookie("myFancyCookieName");
-    String xsrfTokenHeader = httpClientRule.getXsrfTokenHeader();
+    String xsrfCookieValue = httpClientExtension.getCookie("myFancyCookieName");
+    String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     // then
     assertThat(xsrfCookieValue).matches("myFancyCookieName=[A-Z0-9]{32};" +

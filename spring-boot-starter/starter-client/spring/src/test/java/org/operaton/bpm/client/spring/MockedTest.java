@@ -16,27 +16,23 @@
  */
 package org.operaton.bpm.client.spring;
 
-import static org.junit.Assume.assumeTrue;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.RETURNS_SELF;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
-
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
 import org.operaton.bpm.client.topic.TopicSubscription;
 import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
-import org.mockito.MockedStatic;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.MockedStatic;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
 public abstract class MockedTest {
 
   protected static ExternalTaskClient client;
@@ -45,16 +41,12 @@ public abstract class MockedTest {
 
   protected static MockedStatic<ExternalTaskClient> mockedStatic;
   
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-  @BeforeClass
+  @BeforeAll
   public static void mockClient() {
-    assumeTrue(jdkSupportsMockito());
-
     mockedStatic = mockStatic(ExternalTaskClient.class);
     clientBuilder = mock(ExternalTaskClientBuilder.class, RETURNS_SELF);
-    mockedStatic.when(() -> ExternalTaskClient.create()).thenReturn(clientBuilder);
+    mockedStatic.when(ExternalTaskClient::create).thenReturn(clientBuilder);
     client = mock(ExternalTaskClient.class);
     mockedStatic.when(() -> clientBuilder.build()).thenReturn(client);
     subscriptionBuilder = mock(TopicSubscriptionBuilder.class, RETURNS_SELF);
@@ -63,21 +55,9 @@ public abstract class MockedTest {
     when(subscriptionBuilder.open()).thenReturn(topicSubscription);
   }
 
-  @AfterClass
+  @AfterAll
   public static void close() {
-    if(jdkSupportsMockito()) {
-      mockedStatic.close();
-    }
-  }
-
-  protected static boolean jdkSupportsMockito() {
-    String jvmVendor = System.getProperty("java.vm.vendor");
-    String javaVersion = System.getProperty("java.version");
-
-    boolean isIbmJDK = jvmVendor != null && jvmVendor.contains("IBM");
-    boolean isJava8 = javaVersion != null && javaVersion.startsWith("1.8");
-
-    return !(isIbmJDK && isJava8);
+    mockedStatic.close();
   }
 
 }

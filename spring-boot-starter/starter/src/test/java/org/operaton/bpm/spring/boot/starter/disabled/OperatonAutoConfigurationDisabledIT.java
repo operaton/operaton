@@ -17,25 +17,23 @@
 package org.operaton.bpm.spring.boot.starter.disabled;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(
   classes = {OperatonAutoConfigurationDisabledIT.NoOperatonApplication.class},
   webEnvironment = WebEnvironment.NONE,
   properties = {"operaton.bpm.enabled=false"}
 )
-public class OperatonAutoConfigurationDisabledIT {
+class OperatonAutoConfigurationDisabledIT {
 
   @SpringBootApplication
   public static class NoOperatonApplication {
@@ -43,11 +41,12 @@ public class OperatonAutoConfigurationDisabledIT {
   }
 
   @Autowired
+  @SuppressWarnings("unused")
   private Optional<ProcessEngine> processEngine;
 
   @Test
-  public void processEngineNotConfigured() {
-    assertThat(processEngine.isPresent()).isFalse();
+  void processEngineNotConfigured() {
+    assertThat(processEngine).isEmpty();
   }
 
 }

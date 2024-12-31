@@ -18,14 +18,14 @@ package org.operaton.bpm.spring.boot.starter.property.csrf;
 
 import org.operaton.bpm.spring.boot.starter.property.CsrfProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-public class DefaultCookieTest extends ParsePropertiesHelper {
+class DefaultCookieTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckSecureCookie() {
+  void shouldCheckSecureCookie() {
     // given
 
     // when
@@ -37,7 +37,7 @@ public class DefaultCookieTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckSameSiteCookie() {
+  void shouldCheckSameSiteCookie() {
     // given
 
     // when
@@ -49,7 +49,7 @@ public class DefaultCookieTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckSameSiteCookieOption() {
+  void shouldCheckSameSiteCookieOption() {
     // given
 
     // when
@@ -61,7 +61,7 @@ public class DefaultCookieTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckSameSiteCookieValue() {
+  void shouldCheckSameSiteCookieValue() {
     // given
 
     // when
@@ -73,7 +73,7 @@ public class DefaultCookieTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckDefaultCookieName() {
+  void shouldCheckDefaultCookieName() {
     // given
 
     // when

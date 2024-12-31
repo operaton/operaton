@@ -16,45 +16,43 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.spring.boot.starter.AdditionalCammundaBpmConfigurations.AfterStandardConfiguration;
-import org.operaton.bpm.spring.boot.starter.AdditionalCammundaBpmConfigurations.BeforeStandardConfiguration;
+import org.operaton.bpm.spring.boot.starter.AdditionalOperatonBpmConfigurations.AfterStandardConfiguration;
+import org.operaton.bpm.spring.boot.starter.AdditionalOperatonBpmConfigurations.BeforeStandardConfiguration;
 import org.operaton.bpm.spring.boot.starter.test.nonpa.TestApplication;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(
-  classes = { TestApplication.class, AdditionalCammundaBpmConfigurations.class },
+  classes = {TestApplication.class, AdditionalOperatonBpmConfigurations.class},
   webEnvironment = WebEnvironment.NONE,
-  properties = { "operaton.bpm.admin-user.id=admin"}
+  properties = {"operaton.bpm.admin-user.id=admin"}
 )
-public class OperatonAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
+class OperatonAutoConfigurationIT extends AbstractOperatonAutoConfigurationIT {
 
   @Test
-  public void autoDeploymentTest() {
+  void autoDeploymentTest() {
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionName("TestProcess").singleResult();
     assertThat(processDefinition).isNotNull();
   }
 
   @Test
-  public void jobConfigurationTest() {
+  void jobConfigurationTest() {
     assertThat(jobExecutor.isActive()).isTrue();
   }
 
   @Test
-  public void orderedConfigurationTest() {
-    assertThat(BeforeStandardConfiguration.PROCESSED).isTrue();
-    assertThat(AfterStandardConfiguration.PROCESSED).isTrue();
+  void orderedConfigurationTest() {
+    assertThat(BeforeStandardConfiguration.processed).isTrue();
+    assertThat(AfterStandardConfiguration.processed).isTrue();
   }
 
   @Test
-  public void adminUserCreatedWithDefaultPassword() {
+  void adminUserCreatedWithDefaultPassword() {
     assertThat(identityService.checkPassword("admin", "admin")).isTrue();
   }
 }

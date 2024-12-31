@@ -16,21 +16,19 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
-import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientRule;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
 import java.net.HttpURLConnection;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.annotation.DirtiesContext;
 
-@RunWith(SpringRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
 @SpringBootTest(classes = { FilterTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
     properties = {
@@ -38,16 +36,16 @@ import static org.assertj.core.api.Assertions.assertThat;
         "operaton.bpm.webapp.index-redirect-enabled=true",
         "operaton.bpm.admin-user.id=admin" })
 @DirtiesContext
-public class ResourceLoadingProcessEnginesAppPathRootIndexRedirectTest {
+class ResourceLoadingProcessEnginesAppPathRootIndexRedirectTest {
 
-  @Rule
-  public HttpClientRule rule = new HttpClientRule().followRedirects(true);
+  @RegisterExtension
+  HttpClientExtension rule = new HttpClientExtension().followRedirects(true);
 
   @LocalServerPort
   public int port;
 
   @Test
-  public void shouldRedirectToTasklist() {
+  void shouldRedirectToTasklist() {
     // when
     // send GET request to /
     HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/");

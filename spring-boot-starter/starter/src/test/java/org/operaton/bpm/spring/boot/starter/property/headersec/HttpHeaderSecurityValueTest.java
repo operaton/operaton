@@ -18,7 +18,8 @@ package org.operaton.bpm.spring.boot.starter.property.headersec;
 
 import org.operaton.bpm.spring.boot.starter.property.HeaderSecurityProperties;
 import org.operaton.bpm.spring.boot.starter.property.ParsePropertiesHelper;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,10 +30,10 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.headerSecurity.contentTypeOptionsValue=aValue",
   "operaton.bpm.webapp.headerSecurity.hstsValue=aValue"
 })
-public class HttpHeaderSecurityValueTest extends ParsePropertiesHelper {
+class HttpHeaderSecurityValueTest extends ParsePropertiesHelper {
 
   @Test
-  public void shouldCheckXssProtectionValue() {
+  void shouldCheckXssProtectionValue() {
     HeaderSecurityProperties properties = webapp.getHeaderSecurity();
 
     assertThat(properties.getXssProtectionValue()).isEqualTo("aValue");
@@ -40,7 +41,7 @@ public class HttpHeaderSecurityValueTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckContentSecurityPolicyValue() {
+  void shouldCheckContentSecurityPolicyValue() {
     HeaderSecurityProperties properties = webapp.getHeaderSecurity();
 
     assertThat(properties.getContentSecurityPolicyValue()).isEqualTo("aValue");
@@ -48,7 +49,7 @@ public class HttpHeaderSecurityValueTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckContentTypeOptionsValue() {
+  void shouldCheckContentTypeOptionsValue() {
     HeaderSecurityProperties properties = webapp.getHeaderSecurity();
 
     assertThat(properties.getContentTypeOptionsValue()).isEqualTo("aValue");
@@ -56,7 +57,7 @@ public class HttpHeaderSecurityValueTest extends ParsePropertiesHelper {
   }
 
   @Test
-  public void shouldCheckHstsValue() {
+  void shouldCheckHstsValue() {
     // given
     
     // when

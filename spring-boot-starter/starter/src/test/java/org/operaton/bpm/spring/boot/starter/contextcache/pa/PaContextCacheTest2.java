@@ -63,8 +63,9 @@ class PaContextCacheTest2 extends AbstractContextCacheTest {
     assertThat(applicationContext.hashCode()).isNotEqualTo(contextMap.get("paTest1"));
   }
 
+  @Override
   @Test
-  void engineName()
+  protected void engineName()
   {
     assertThat(processEngine.getName())
         .isNotEqualTo(ProcessEngines.NAME_DEFAULT)

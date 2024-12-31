@@ -25,7 +25,7 @@ import org.springframework.test.context.TestPropertySource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestPropertySource(properties = {
-  "(.*)"
+  "operaton.bpm.webapp.csrf.enableSecureCookie=true"
 })
 
 class CookieSecureEnabledTest extends ParsePropertiesHelper {

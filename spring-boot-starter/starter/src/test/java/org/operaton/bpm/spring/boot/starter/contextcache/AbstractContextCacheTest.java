@@ -52,7 +52,7 @@ public abstract class AbstractContextCacheTest {
   protected String processEngineName;
 
   @Test
-  void bpmAssert() {
+  protected void bpmAssert() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TestProcess");
 
@@ -66,7 +66,7 @@ public abstract class AbstractContextCacheTest {
   }
 
   @Test
-  void dbIsolation() {
+  protected void dbIsolation() {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("TestProcess");
 
@@ -77,15 +77,13 @@ public abstract class AbstractContextCacheTest {
   }
 
   @Test
-  void engineName()
-  {
+  protected void engineName() {
     // do
     assertThat(processEngine.getName()).isEqualTo(processEngineName);
   }
 
   @Test
-  void engineRegistration()
-  {
+  protected void engineRegistration() {
     // do
     ProcessEngine registeredEngine = ProcessEngines.getProcessEngine("default");
     assertThat(registeredEngine).isNotSameAs(processEngine);

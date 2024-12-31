@@ -48,7 +48,7 @@ public class LazyDelegateFilter<T extends Filter> implements Filter {
   }
 
   @Override
-  public void init(FilterConfig filterConfig) throws ServletException {
+  public void init(FilterConfig filterConfig) {
     this.filterConfig = filterConfig;
     LazyInitRegistration.lazyInit(this);
   }

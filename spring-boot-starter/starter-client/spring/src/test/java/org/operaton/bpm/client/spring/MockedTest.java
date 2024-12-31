@@ -27,7 +27,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -43,11 +42,9 @@ public abstract class MockedTest {
 
   @BeforeAll
   public static void mockClient() {
-    assumeTrue(jdkSupportsMockito());
-
     mockedStatic = mockStatic(ExternalTaskClient.class);
     clientBuilder = mock(ExternalTaskClientBuilder.class, RETURNS_SELF);
-    mockedStatic.when(() -> ExternalTaskClient.create()).thenReturn(clientBuilder);
+    mockedStatic.when(ExternalTaskClient::create).thenReturn(clientBuilder);
     client = mock(ExternalTaskClient.class);
     mockedStatic.when(() -> clientBuilder.build()).thenReturn(client);
     subscriptionBuilder = mock(TopicSubscriptionBuilder.class, RETURNS_SELF);
@@ -58,19 +55,7 @@ public abstract class MockedTest {
 
   @AfterAll
   public static void close() {
-    if(jdkSupportsMockito()) {
-      mockedStatic.close();
-    }
-  }
-
-  protected static boolean jdkSupportsMockito() {
-    String jvmVendor = System.getProperty("java.vm.vendor");
-    String javaVersion = System.getProperty("java.version");
-
-    boolean isIbmJDK = jvmVendor != null && jvmVendor.contains("IBM");
-    boolean isJava8 = javaVersion != null && javaVersion.startsWith("1.8");
-
-    return !(isIbmJDK && isJava8);
+    mockedStatic.close();
   }
 
 }

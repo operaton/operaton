@@ -68,8 +68,9 @@ class PaContextCacheTest3 extends AbstractContextCacheTest {
         .isNotEqualTo(contextMap.get("paTest2"));
   }
 
+  @Override
   @Test
-  void dbIsolation() {
+  protected void dbIsolation() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("TestProcess");
     assertThat(instance).isNotNull();
 

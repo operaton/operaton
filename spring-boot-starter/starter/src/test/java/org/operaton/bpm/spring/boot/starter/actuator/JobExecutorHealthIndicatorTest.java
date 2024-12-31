@@ -33,8 +33,7 @@ import org.springframework.boot.actuate.health.Status;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class JobExecutorHealthIndicatorTest {
@@ -58,12 +57,12 @@ class JobExecutorHealthIndicatorTest {
 
   @BeforeEach
   void init() {
-    when(jobExecutor.getLockOwner()).thenReturn(LOCK_OWNER);
-    when(jobExecutor.getLockTimeInMillis()).thenReturn(LOCK_TIME_IN_MILLIS);
-    when(jobExecutor.getMaxJobsPerAcquisition()).thenReturn(MAX_JOBS_PER_ACQUISITION);
-    when(jobExecutor.getName()).thenReturn(JOB_EXECUTOR_NAME);
-    when(jobExecutor.getWaitTimeInMillis()).thenReturn(WAIT_TIME_IN_MILLIS);
-    when(jobExecutor.getProcessEngines()).thenReturn(PROCESS_ENGINES);
+    lenient().when(jobExecutor.getLockOwner()).thenReturn(LOCK_OWNER);
+    lenient().when(jobExecutor.getLockTimeInMillis()).thenReturn(LOCK_TIME_IN_MILLIS);
+    lenient().when(jobExecutor.getMaxJobsPerAcquisition()).thenReturn(MAX_JOBS_PER_ACQUISITION);
+    lenient().when(jobExecutor.getName()).thenReturn(JOB_EXECUTOR_NAME);
+    lenient().when(jobExecutor.getWaitTimeInMillis()).thenReturn(WAIT_TIME_IN_MILLIS);
+    lenient().when(jobExecutor.getProcessEngines()).thenReturn(PROCESS_ENGINES);
   }
 
   @Test
@@ -96,7 +95,7 @@ class JobExecutorHealthIndicatorTest {
     assertThat(details.getMaxJobsPerAcquisition()).isEqualTo(MAX_JOBS_PER_ACQUISITION);
     assertThat(details.getName()).isEqualTo(JOB_EXECUTOR_NAME);
     assertThat(details.getWaitTimeInMillis()).isEqualTo(WAIT_TIME_IN_MILLIS);
-    assertThat(details.getProcessEngineNames().size()).isEqualTo(PROCESS_ENGINES.size());
+    assertThat(details.getProcessEngineNames()).hasSameSizeAs(PROCESS_ENGINES);
     assertThat(details.getProcessEngineNames().iterator().next()).isEqualTo(PROCESS_ENGINE_NAME);
   }
 }

@@ -40,7 +40,7 @@ class ProcessEngineHealthIndicatorTest {
   @Test
   void nullTest() {
     assertThatIllegalArgumentException().isThrownBy(() -> new ProcessEngineHealthIndicator(null))
-      .withMessage("ProcessEngine must not be null");
+      .withMessage("processEngine must not be null");
   }
 
   @Test
@@ -48,6 +48,6 @@ class ProcessEngineHealthIndicatorTest {
     when(processEngine.getName()).thenReturn(PROCESS_ENGINE_NAME);
     Health health = new ProcessEngineHealthIndicator(processEngine).health();
     assertThat(health.getStatus()).isEqualTo(Status.UP);
-    assertThat(health.getDetails().get("name")).isEqualTo(PROCESS_ENGINE_NAME);
+    assertThat(health.getDetails()).containsEntry("name", PROCESS_ENGINE_NAME);
   }
 }

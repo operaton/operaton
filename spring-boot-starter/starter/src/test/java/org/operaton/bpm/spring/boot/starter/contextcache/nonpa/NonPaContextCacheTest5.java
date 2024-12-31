@@ -64,8 +64,9 @@ class NonPaContextCacheTest5 extends AbstractContextCacheTest {
         .isNotEqualTo(contextMap.get("nonPaTest2"));
   }
 
+  @Override
   @Test
-  void engineName()
+  protected void engineName()
   {
     assertThat(processEngine.getName())
         .isNotEqualTo(ProcessEngines.NAME_DEFAULT)

@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.csrf.enableSameSiteCookie=false"
 })
 @DirtiesContext
-public class SameSiteDisabledIT {
+class SameSiteDisabledIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();

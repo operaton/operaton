@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.csrf.sameSiteCookieOption=lax"
 })
 @DirtiesContext
-public class SameSiteOptionLaxIT {
+class SameSiteOptionLaxIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();

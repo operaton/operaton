@@ -88,7 +88,7 @@ class SampleOperatonRestApplicationIT {
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().processInstanceIdIn(processInstance.getId()).variableName(variableName)
         .singleResult();
     ByteArrayInputStream byteArrayInputStream = (ByteArrayInputStream) variableInstance.getValue();
-    assertThat(byteArrayInputStream.available() > 0).isTrue();
+    assertThat(byteArrayInputStream.available()).isPositive();
   }
 
   @Test

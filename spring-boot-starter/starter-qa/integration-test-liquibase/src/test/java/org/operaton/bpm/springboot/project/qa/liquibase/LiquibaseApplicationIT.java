@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.springboot.project.qa.liquibase;
 
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
 
 import org.junit.jupiter.api.Test;
@@ -31,9 +30,6 @@ class LiquibaseApplicationIT {
 
   @Autowired
   RuntimeService runtimeService;
-
-  @Autowired
-  ProcessEngine processEngine;
 
   @Test
   void shouldStartApplicationSuccessfully() {

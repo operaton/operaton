@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
     "operaton.bpm.webapp.headerSecurity.hstsMaxAge=8",
     "operaton.bpm.webapp.headerSecurity.hstsIncludeSubdomainsDisabled=false"
 })
-public class HstsIT {
+class HstsIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension;

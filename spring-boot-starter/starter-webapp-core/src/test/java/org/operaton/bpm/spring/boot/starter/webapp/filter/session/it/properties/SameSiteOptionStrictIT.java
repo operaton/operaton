@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.session-cookie.sameSiteCookieOption=strict"
 })
 @DirtiesContext
-public class SameSiteOptionStrictIT {
+class SameSiteOptionStrictIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();

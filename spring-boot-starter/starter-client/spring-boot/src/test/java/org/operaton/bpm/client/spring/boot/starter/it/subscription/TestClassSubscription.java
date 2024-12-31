@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
     businessKey = "business-key"
 )
 @Component
+@SuppressWarnings({"unused", "java:S1186"})
 public class TestClassSubscription implements ExternalTaskHandler {
 
   @Override

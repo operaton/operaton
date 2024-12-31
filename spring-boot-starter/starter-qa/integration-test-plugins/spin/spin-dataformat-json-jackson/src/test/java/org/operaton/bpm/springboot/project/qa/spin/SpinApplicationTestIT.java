@@ -24,10 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@SpringBootTest(classes = {SpinApplication.class},
-    webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = {SpinApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SpinApplicationTestIT {
 
   @Autowired
@@ -48,10 +47,7 @@ class SpinApplicationTestIT {
 
   @Test
   void shouldFailWithSpinException() {
-    Throwable exception = assertThrows(Exception.class, () ->
-
-      // when
-      runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"));
-    assertThat(exception.getMessage().contains("SPIN/JACKSON-JSON-01006 Cannot deserialize")).isTrue();
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("spinJava8ServiceProcess"))
+      .hasMessageContaining("SPIN/JACKSON-JSON-01006 Cannot deserialize");
   }
 }

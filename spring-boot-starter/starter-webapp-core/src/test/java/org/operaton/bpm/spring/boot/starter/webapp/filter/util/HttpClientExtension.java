@@ -127,6 +127,7 @@ public class HttpClientExtension implements AfterEachCallback {
       try {
         connection.getContent();
       } catch (IOException e) {
+        throw new RuntimeException(e);
       }
     }
 
@@ -183,9 +184,8 @@ public class HttpClientExtension implements AfterEachCallback {
       IOUtils.copy(connection.getInputStream(), writer, UTF_8);
       return writer.toString();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
-    return null;
   }
 
   public String getErrorResponseContent() {
@@ -195,9 +195,8 @@ public class HttpClientExtension implements AfterEachCallback {
       IOUtils.copy(connection.getErrorStream(), writer, UTF_8);
       return writer.toString();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
-    return null;
   }
 
   public List<String> getHeaders(String name) {

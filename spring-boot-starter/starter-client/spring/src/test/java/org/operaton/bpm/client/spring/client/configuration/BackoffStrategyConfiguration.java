@@ -26,11 +26,12 @@ import org.springframework.context.annotation.Bean;
 public class BackoffStrategyConfiguration {
 
   @Bean
+  @SuppressWarnings("unused")
   public BackoffStrategy backoffStrategy() {
     return new BackoffStrategy() {
       @Override
+      @SuppressWarnings("java:S1186")
       public void reconfigure(List<ExternalTask> list) {
-
       }
 
       @Override

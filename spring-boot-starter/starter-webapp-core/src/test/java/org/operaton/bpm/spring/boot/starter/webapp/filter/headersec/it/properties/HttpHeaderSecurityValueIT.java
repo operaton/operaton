@@ -20,8 +20,9 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
@@ -38,7 +39,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.headerSecurity.hstsValue=aValue"
 })
 @DirtiesContext
-public class HttpHeaderSecurityValueIT {
+class HttpHeaderSecurityValueIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension;
@@ -51,48 +52,20 @@ public class HttpHeaderSecurityValueIT {
     httpClientExtension = new HttpClientExtension(port);
   }
 
-  @Test
-  void shouldCheckValueOfXssProtectionHeader() {
+  @ParameterizedTest(name = "{index} => header={0}, expectedValue={1}")
+  @CsvSource({
+      "X-XSS-Protection, aValue",
+      "Content-Security-Policy, aValue",
+      "X-Content-Type-Options, aValue",
+      "Strict-Transport-Security, aValue"
+  })
+  void shouldCheckValueOfHeaders(String header, String expectedValue) {
     // given
 
     // when
     httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientExtension.getHeader("X-XSS-Protection")).isEqualTo("aValue");
+    assertThat(httpClientExtension.getHeader(header)).isEqualTo(expectedValue);
   }
-
-  @Test
-  void shouldCheckValueOfContentSecurityPolicyHeader() {
-    // given
-
-    // when
-    httpClientExtension.performRequest();
-
-    // then
-    assertThat(httpClientExtension.getHeader("Content-Security-Policy")).isEqualTo("aValue");
-  }
-
-  @Test
-  void shouldCheckValueOfContentTypeOptions() {
-    // given
-
-    // when
-    httpClientExtension.performRequest();
-
-    // then
-    assertThat(httpClientExtension.getHeader("X-Content-Type-Options")).isEqualTo("aValue");
-  }
-
-  @Test
-  void shouldCheckValueOfHsts() {
-    // given
-
-    // when
-    httpClientExtension.performRequest();
-
-    // then
-    assertThat(httpClientExtension.getHeader("Strict-Transport-Security")).isEqualTo("aValue");
-  }
-
 }

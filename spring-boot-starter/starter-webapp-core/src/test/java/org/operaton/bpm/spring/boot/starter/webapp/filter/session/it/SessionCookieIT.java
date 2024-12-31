@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
     properties = {"server.error.include-message=always"})
 @DirtiesContext
-public class SessionCookieIT {
+class SessionCookieIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();

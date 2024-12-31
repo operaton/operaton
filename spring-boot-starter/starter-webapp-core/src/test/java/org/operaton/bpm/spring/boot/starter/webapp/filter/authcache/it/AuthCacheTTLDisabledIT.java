@@ -43,7 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.auth.cache.ttl-enabled=false"
 })
 @DirtiesContext
-public class AuthCacheTTLDisabledIT {
+class AuthCacheTTLDisabledIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();

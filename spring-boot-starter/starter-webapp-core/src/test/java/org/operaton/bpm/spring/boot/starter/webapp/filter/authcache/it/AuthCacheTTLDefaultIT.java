@@ -42,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.admin-user.password=demo"
 })
 @DirtiesContext
-public class AuthCacheTTLDefaultIT {
+class AuthCacheTTLDefaultIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();

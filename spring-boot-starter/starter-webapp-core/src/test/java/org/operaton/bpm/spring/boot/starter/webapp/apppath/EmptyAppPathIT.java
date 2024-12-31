@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
     "operaton.bpm.webapp.applicationPath=" + EmptyAppPathIT.MY_APP_PATH
 })
-public class EmptyAppPathIT {
+class EmptyAppPathIT {
 
   protected static final String MY_APP_PATH = "";
 

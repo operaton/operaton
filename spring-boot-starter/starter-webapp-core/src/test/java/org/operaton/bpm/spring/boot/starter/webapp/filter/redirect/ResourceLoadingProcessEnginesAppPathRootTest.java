@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -30,7 +31,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.Test;
 
 @SpringBootTest(classes = { FilterTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -59,10 +59,11 @@ class ResourceLoadingProcessEnginesAppPathRootTest {
     // then
     assertThat(con.getResponseCode()).isEqualTo(200);
     // since index-redirect-enabled=false, Operaton should not redirect to Tasklist
-    assertThat(body).doesNotContain("Tasklist").doesNotContain("Operaton");
-    // the static index.html from /src/test/resources/static was served instead
-    // this is the default Spring Boot behavior that we document for this case
-    assertThat(body).contains("Hello World!");
+    assertThat(body).doesNotContain("Tasklist")
+        .doesNotContain("Operaton")
+        // the static index.html from /src/test/resources/static was served instead
+        // this is the default Spring Boot behavior that we document for this case
+        .contains("Hello World!");
   }
 
 }

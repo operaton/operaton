@@ -32,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   classes = WebappExampleApplication.class,
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
+@SuppressWarnings("unused")
 class WebappTest {
 
   @Autowired

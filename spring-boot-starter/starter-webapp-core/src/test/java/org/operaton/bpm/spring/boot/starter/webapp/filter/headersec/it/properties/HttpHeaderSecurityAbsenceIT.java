@@ -20,8 +20,9 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
@@ -37,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.headerSecurity.hstsDisabled=true"
 })
 @DirtiesContext
-public class HttpHeaderSecurityAbsenceIT {
+class HttpHeaderSecurityAbsenceIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension;
@@ -50,48 +51,20 @@ public class HttpHeaderSecurityAbsenceIT {
     httpClientExtension = new HttpClientExtension(port);
   }
 
-  @Test
-  void shouldCheckAbsenceOfXssProtectionHeader() {
+  @ParameterizedTest(name = "{index} => header={0}")
+  @CsvSource({
+      "X-XSS-Protection",
+      "Content-Security-Policy",
+      "X-Content-Type-Options",
+      "Strict-Transport-Security"
+  })
+  void shouldCheckAbsenceOfHeaders(String header) {
     // given
 
     // when
     httpClientExtension.performRequest();
 
     // then
-    assertThat(httpClientExtension.headerExists("X-XSS-Protection")).isFalse();
+    assertThat(httpClientExtension.headerExists(header)).isFalse();
   }
-
-  @Test
-  void shouldCheckAbsenceOfContentSecurityPolicyHeader() {
-    // given
-
-    // when
-    httpClientExtension.performRequest();
-
-    // then
-    assertThat(httpClientExtension.headerExists("Content-Security-Policy")).isFalse();
-  }
-
-  @Test
-  void shouldCheckAbsenceOfContentTypeOptions() {
-    // given
-
-    // when
-    httpClientExtension.performRequest();
-
-    // then
-    assertThat(httpClientExtension.headerExists("X-Content-Type-Options")).isFalse();
-  }
-
-  @Test
-  void shouldCheckAbsenceOfHsts() {
-    // given
-
-    // when
-    httpClientExtension.performRequest();
-
-    // then
-    assertThat(httpClientExtension.headerExists("Strict-Transport-Security")).isFalse();
-  }
-
 }

@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "server.servlet.session.cookie.name=myFancyCookieName"
 })
 @DirtiesContext
-public class CookieNameIT {
+class CookieNameIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();

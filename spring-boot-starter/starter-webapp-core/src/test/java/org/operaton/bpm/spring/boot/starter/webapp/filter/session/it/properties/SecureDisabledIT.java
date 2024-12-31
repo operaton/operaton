@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "operaton.bpm.webapp.session-cookie.enableSecureCookie=false"
 })
 @DirtiesContext
-public class SecureDisabledIT {
+class SecureDisabledIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();

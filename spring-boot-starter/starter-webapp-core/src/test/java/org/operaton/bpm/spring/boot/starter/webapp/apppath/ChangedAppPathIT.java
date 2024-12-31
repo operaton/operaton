@@ -24,6 +24,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -40,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
     "operaton.bpm.webapp.applicationPath=" + ChangedAppPathIT.MY_APP_PATH
 })
-public class ChangedAppPathIT {
+class ChangedAppPathIT {
 
   protected static final String MY_APP_PATH = "/my/application/path";
 
@@ -139,40 +141,19 @@ public class ChangedAppPathIT {
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 
-  @Test
-  void shouldCheckPresenceOfLibResources() {
+  @ParameterizedTest(name = "{index} => path={0}")
+  @CsvSource({
+      "/lib/deps.js",
+      "/app/admin/styles/user-styles.css",
+      "/api/admin/plugin/adminPlugins/static/app/plugin.css"
+  })
+  void shouldCheckPresenceOfResources(String path) {
     // given
 
     // when
-    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
-        "/lib/deps.js", String.class);
+    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH + path, String.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
   }
-
-  @Test
-  void shouldCheckPresenceOfAppResources() {
-    // given
-
-    // when
-    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
-        "/app/admin/styles/user-styles.css", String.class);
-
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-  }
-
-  @Test
-  void shouldCheckPresenceOfApiResources() {
-    // given
-
-    // when
-    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
-        "/api/admin/plugin/adminPlugins/static/app/plugin.css", String.class);
-
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-  }
-
 }

@@ -33,11 +33,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(
     classes = { WebappTestApp.class },
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RequestTrailingSlashIT {
+class RequestTrailingSlashIT {
 
   public static final List<String> REDIRECT_PATHS = List.of("/app", "/app/cockpit", "/app/admin", "/app/tasklist", "/app/welcome");
 
-  TestRestTemplate client = new TestRestTemplate();
+  final TestRestTemplate client = new TestRestTemplate();
 
   @LocalServerPort
   public int port;

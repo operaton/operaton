@@ -29,7 +29,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = { FilterTestApp.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HttpHeaderSecurityDefaultsIT {
+class HttpHeaderSecurityDefaultsIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension;

@@ -74,7 +74,7 @@ public class HistoryAuthorizationQueryPerformanceTest extends AuthorizationPerfo
     ProcessEngine processEngine = PerfTestProcessEngine.getInstance();
     HistoryService historyService = processEngine.getHistoryService();
 
-    queryResourcesAndPermissions = Arrays.<Object[]>asList(
+    queryResourcesAndPermissions = Arrays.asList(
         new Object[] {
             "HistoricProcessInstanceQuery",
             historyService.createHistoricProcessInstanceQuery(),

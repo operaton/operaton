@@ -77,7 +77,7 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
     RuntimeService runtimeService = processEngine.getRuntimeService();
     TaskService taskService = processEngine.getTaskService();
 
-    queryResourcesAndPermissions = Arrays.<Object[]>asList(
+    queryResourcesAndPermissions = Arrays.asList(
         new Object[] {
             "ProcessInstanceQuery",
             runtimeService.createProcessInstanceQuery(),

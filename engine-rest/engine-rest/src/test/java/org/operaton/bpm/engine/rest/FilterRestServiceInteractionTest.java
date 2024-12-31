@@ -169,7 +169,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     when(filterServiceMock.getFilter(eq(EXAMPLE_FILTER_ID))).thenReturn(filterMock);
     when(filterServiceMock.getFilter(eq(MockProvider.NON_EXISTING_ID))).thenReturn(null);
 
-    List<Object> mockTasks = Collections.<Object>singletonList(new TaskEntity());
+    List<Object> mockTasks = Collections.singletonList(new TaskEntity());
 
     when(filterServiceMock.singleResult(eq(EXAMPLE_FILTER_ID)))
       .thenReturn(mockTasks.get(0));

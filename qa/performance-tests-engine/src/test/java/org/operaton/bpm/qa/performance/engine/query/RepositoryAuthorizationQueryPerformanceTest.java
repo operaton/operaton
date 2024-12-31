@@ -74,7 +74,7 @@ public class RepositoryAuthorizationQueryPerformanceTest extends AuthorizationPe
     ProcessEngine processEngine = PerfTestProcessEngine.getInstance();
     RepositoryService repositoryService = processEngine.getRepositoryService();
 
-    queryResourcesAndPermissions = Arrays.<Object[]>asList(
+    queryResourcesAndPermissions = Arrays.asList(
         new Object[] {
             "DeploymentQuery",
             repositoryService.createDeploymentQuery(),

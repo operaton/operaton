@@ -66,5 +66,5 @@ import org.junit.platform.suite.api.Suite;
   NonPaContextCacheTest4.class,
   NonPaContextCacheTest5.class
 })
-class NonPaContextCacheSuiteTest {
+class NonPaContextCacheTestSuite {
 }

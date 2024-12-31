@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests {@link NonPaContextCacheTest1}, {@link NonPaContextCacheTest2}, {@link NonPaContextCacheTest3},
  * {@link NonPaContextCacheTest4}and {@link NonPaContextCacheTest5} are meant to be run together so that
  * ApplicationContext caching is tested.
- * See {@link NonPaContextCacheSuiteTest} for a detailed explanation.
+ * See {@link NonPaContextCacheTestSuite} for a detailed explanation.
  *
  * @author Nikola Koevski
  */

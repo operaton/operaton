@@ -31,11 +31,13 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpClientExtension implements AfterEachCallback {
-
+  private static final Logger LOG = LoggerFactory.getLogger(HttpClientExtension.class);
   public static final String PORT_PLACEHOLDER_WEBAPP_URL = "{PORT}";
   public static final String WEBAPP_URL = "http://localhost:" + PORT_PLACEHOLDER_WEBAPP_URL +
       "/operaton/app/tasklist/default";
@@ -184,7 +186,8 @@ public class HttpClientExtension implements AfterEachCallback {
       IOUtils.copy(connection.getInputStream(), writer, UTF_8);
       return writer.toString();
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      LOG.warn("Error reading content: {}: {}", e.getClass(), e.getMessage());
+      return null;
     }
   }
 

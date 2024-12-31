@@ -34,6 +34,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -50,6 +51,7 @@ import static org.mockito.Mockito.verify;
     RequestInterceptorConfiguration.class
 })
 @ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
 class BasicAuthAndInterceptorConfigurationTest extends ParsePropertiesHelper {
 
   protected static ExternalTaskClientBuilder clientBuilder;

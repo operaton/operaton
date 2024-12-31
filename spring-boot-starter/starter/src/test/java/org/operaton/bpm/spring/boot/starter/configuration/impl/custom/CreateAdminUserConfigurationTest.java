@@ -33,6 +33,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 class CreateAdminUserConfigurationTest {
 
   private final OperatonBpmProperties operatonBpmProperties = new OperatonBpmProperties();
@@ -50,7 +51,7 @@ class CreateAdminUserConfigurationTest {
   private final ProcessEngineConfigurationImpl processEngineConfiguration = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration);
 
   @RegisterExtension
-  static final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration).extension();
+  final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(createAdminUserConfiguration).extension();
 
   @RegisterExtension
   public ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()

@@ -59,7 +59,8 @@ class NonPaContextCacheTest2 extends AbstractContextCacheTest {
 
   @Test
   void contextCaching() {
-    assertThat(applicationContext.hashCode()).isNotEqualTo(contextMap.get("nonPaTest1"));
+    assertThat(applicationContext.hashCode())
+        .isNotEqualTo(contextMap.get("nonPaTest1"));
   }
 
   @Override

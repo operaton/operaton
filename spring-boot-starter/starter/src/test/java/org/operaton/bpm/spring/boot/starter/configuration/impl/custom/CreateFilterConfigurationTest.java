@@ -50,8 +50,7 @@ class CreateFilterConfigurationTest {
   }
 
   @RegisterExtension
-  static final ProcessEngineExtension processEngineExtension =
-      new StandaloneInMemoryTestConfiguration(configuration).extension();
+  final ProcessEngineExtension processEngineExtension = new StandaloneInMemoryTestConfiguration(configuration).extension();
 
   @RegisterExtension
   ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension()
@@ -66,7 +65,7 @@ class CreateFilterConfigurationTest {
   void fail_if_not_configured_onInit() {
     OperatonBpmProperties bpmProperties = new OperatonBpmProperties();
     final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration();
-    ReflectionTestUtils.setField(filterConfiguration, "bpmProperties", bpmProperties);
+    ReflectionTestUtils.setField(filterConfiguration, "operatonBpmProperties", bpmProperties);
 
     assertThatIllegalStateException().isThrownBy(filterConfiguration::init);
   }
@@ -76,7 +75,7 @@ class CreateFilterConfigurationTest {
     OperatonBpmProperties bpmProperties = new OperatonBpmProperties();
     bpmProperties.getFilter().setCreate("All");
     final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration();
-    ReflectionTestUtils.setField(filterConfiguration, "bpmProperties", bpmProperties);
+    ReflectionTestUtils.setField(filterConfiguration, "operatonBpmProperties", bpmProperties);
     filterConfiguration.init();
     filterConfiguration.filterName = null;
 
@@ -89,7 +88,7 @@ class CreateFilterConfigurationTest {
     OperatonBpmProperties bpmProperties = new OperatonBpmProperties();
     bpmProperties.getFilter().setCreate("All");
     final CreateFilterConfiguration filterConfiguration = new CreateFilterConfiguration();
-    ReflectionTestUtils.setField(filterConfiguration, "bpmProperties", bpmProperties);
+    ReflectionTestUtils.setField(filterConfiguration, "operatonBpmProperties", bpmProperties);
     filterConfiguration.init();
 
     ProcessEngine engine = mock(ProcessEngine.class);

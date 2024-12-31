@@ -21,8 +21,10 @@ import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.Fu
 import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -48,6 +50,7 @@ import static org.assertj.core.api.Assertions.entry;
     ParsePropertiesHelper.TestConfig.class,
     FullSubscriptionConfiguration.class
 })
+@ExtendWith(SpringExtension.class)
 class PropertiesOverrideSubscriptionConfigurationTest extends ParsePropertiesHelper {
 
   @Test

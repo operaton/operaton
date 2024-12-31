@@ -18,6 +18,46 @@ package org.operaton.bpm.spring.boot.starter.contextcache.nonpa;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
+
+/**
+ * This JUnit Suite combines {@link NonPaContextCacheTest1}, {@link NonPaContextCacheTest2}
+ * and {@link NonPaContextCacheTest3} so that ApplicationContext caching is tested. All three
+ * tests store a <code>hashCode()</code> of their ApplicationContext in a static <code>Map</code>
+ * for comparison. The tests replicate the following scenario:
+ * <ol>
+ *   <li>
+ *     {@link NonPaContextCacheTest1} creates an ApplicationContext
+ *     with a unique ProcessEngine name and database. It asserts that
+ *     the ProcessEngine, and its name, are not the "default" one.
+ *   </li>
+ *   <li>
+ *     {@link NonPaContextCacheTest2} creates a second ApplicationContext
+ *     with a unique ProcessEngine name and database. It asserts that
+ *     the ProcessEngine, and its name, are not the "default" one, and that
+ *     the current ApplicationContext is different than the one created
+ *     by {@link NonPaContextCacheTest1}.
+ *   </li>
+ *   <li>
+ *     {@link NonPaContextCacheTest3} tests if the first ApplicationContext
+ *     (from {@link NonPaContextCacheTest1}) is reused. It expects to share the
+ *     same ProcessEngine and database.
+ *   </li>
+ *   <li>
+ *     {@link NonPaContextCacheTest4} tests if the second ApplicationContext
+ *     (from {@link NonPaContextCacheTest2}) is reused. It expects to share the
+ *     same (unique-named) ProcessEngine and database.
+ *   </li>
+ *   <li>
+ *     {@link NonPaContextCacheTest5} creates a third ApplicationContext
+ *     with a unique ProcessEngine name and database. It asserts that
+ *     the ProcessEngine, and its name, are not the "default" one, and that
+ *     the current ApplicationContext is different than the one created
+ *     by {@link NonPaContextCacheTest1} and {@link NonPaContextCacheTest2}.
+ *   </li>
+ * </ol>
+ *
+ * @author Nikola Koevski
+ */
 @Suite
 @SelectClasses({
   NonPaContextCacheTest1.class,

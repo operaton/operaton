@@ -48,8 +48,9 @@ public class StandaloneInMemoryTestConfiguration extends StandaloneInMemProcessE
   }
 
   public ProcessEngineExtension extension() {
-    var extension = new ProcessEngineExtension();
     var processEngine = buildProcessEngine();
+    var extension = new ProcessEngineExtension();
+    extension.setProcessEngineConfiguration(this);
     extension.setProcessEngine(processEngine);
 
     return extension;

@@ -20,7 +20,9 @@ import org.operaton.bpm.client.spring.boot.starter.ParsePropertiesHelper;
 import org.operaton.bpm.client.spring.impl.subscription.SubscriptionConfiguration;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -44,6 +46,7 @@ import static org.assertj.core.api.Assertions.entry;
 
     "operaton.bpm.client.subscriptions.topic-two.lock-duration=6666",
 })
+@ExtendWith(SpringExtension.class)
 class SubscriptionConfigurationTest extends ParsePropertiesHelper {
 
   @Test

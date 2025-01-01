@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 public class NoopDelegate implements JavaDelegate {
 
   @Override
-  public void execute(DelegateExecution execution) throws Exception {
+  public void execute(DelegateExecution execution) {
 
   }
 

@@ -29,7 +29,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 public class ProcessEngineQueryPerformanceTestCase {
 
   @RegisterExtension
-  static ProcessEngineExtension processEngineExtension = new ProcessEngineExtension(PerfTestProcessEngine.getInstance());
+  protected static ProcessEngineExtension processEngineExtension =
+      ProcessEngineExtension.builder().useProcessEngine(PerfTestProcessEngine.getInstance()).build();
 
   protected ProcessEngine engine;
 

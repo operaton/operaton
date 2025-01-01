@@ -16,23 +16,17 @@
  */
 package org.operaton.bpm.qa.performance.engine.junit;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestBuilder;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestConfiguration;
-import org.junit.Rule;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 /**
  * @author Daniel Meyer
@@ -40,14 +34,11 @@ import org.junit.rules.RuleChain;
  */
 public abstract class AuthorizationPerformanceTestCase {
 
-  public PerfTestConfigurationRule testConfigurationRule = new PerfTestConfigurationRule();
+  @RegisterExtension
+  protected static PerfTestConfigurationExtension testConfigurationRule = new PerfTestConfigurationExtension();
 
-  public PerfTestResultRecorderRule resultRecorderRule = new PerfTestResultRecorderRule();
-
-  @Rule
-  public RuleChain ruleChain = RuleChain
-    .outerRule(testConfigurationRule)
-    .around(resultRecorderRule);
+  @RegisterExtension
+  protected PerfTestResultRecorderExtension resultRecorderRule = new PerfTestResultRecorderExtension();
 
   protected ProcessEngine engine;
   protected TaskService taskService;

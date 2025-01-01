@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.qa.performance.engine.bpmn;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceByMessageStep;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceStep;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class StartEventPerformanceTest extends ProcessEnginePerformanceTestCase {
+class StartEventPerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void noneStartEvent() {
+  void noneStartEvent() {
 
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
@@ -40,7 +40,7 @@ public class StartEventPerformanceTest extends ProcessEnginePerformanceTestCase 
 
   @Test
   @Deployment
-  public void messageStartEvent() {
+  void messageStartEvent() {
 
     performanceTest()
       .step(new StartProcessInstanceByMessageStep(engine, "message"))

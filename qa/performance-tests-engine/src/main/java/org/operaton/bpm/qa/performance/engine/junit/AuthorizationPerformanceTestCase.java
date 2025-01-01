@@ -30,8 +30,8 @@ import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestBuilder;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestConfiguration;
-import org.junit.Before;
 import org.junit.Rule;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.rules.RuleChain;
 
 /**
@@ -55,7 +55,7 @@ public abstract class AuthorizationPerformanceTestCase {
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
 
-  @Before
+  @BeforeEach
   public void setup() {
     engine = PerfTestProcessEngine.getInstance();
     taskService = engine.getTaskService();

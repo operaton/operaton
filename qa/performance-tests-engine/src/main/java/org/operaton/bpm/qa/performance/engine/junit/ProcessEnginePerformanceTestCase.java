@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.qa.performance.engine.junit;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
@@ -24,7 +24,6 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestBuilder;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestConfiguration;
-import org.junit.Before;
 import org.junit.Rule;
 
 /**
@@ -50,7 +49,7 @@ public abstract class ProcessEnginePerformanceTestCase {
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
 
-  @Before
+  @BeforeEach
   public void setup() {
     engine = processEngineRule.getProcessEngine();
     taskService = engine.getTaskService();

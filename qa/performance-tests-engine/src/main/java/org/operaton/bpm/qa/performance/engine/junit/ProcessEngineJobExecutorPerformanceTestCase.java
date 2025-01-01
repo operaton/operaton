@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 package org.operaton.bpm.qa.performance.engine.junit;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
-import org.junit.After;
-import org.junit.Before;
 
 public abstract class ProcessEngineJobExecutorPerformanceTestCase extends ProcessEnginePerformanceTestCase {
 
   protected JobExecutor jobExecutor;
 
   @Override
-  @Before
+  @BeforeEach
   public void setup() {
     super.setup();
     ProcessEngineConfigurationImpl engineConfiguration = ((ProcessEngineImpl) engine).getProcessEngineConfiguration();
@@ -35,7 +34,7 @@ public abstract class ProcessEngineJobExecutorPerformanceTestCase extends Proces
     jobExecutor.start();
   }
 
-  @After
+  @AfterEach
   public void tearDown() {
     jobExecutor.shutdown();
   }

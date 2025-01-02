@@ -18,8 +18,8 @@ package org.operaton.spin.plugin.impl.feel.integration;
 
 import org.operaton.bpm.dmn.feel.impl.scala.ScalaFeelLogger;
 import org.operaton.bpm.dmn.feel.impl.scala.spin.SpinValueMapperFactory;
-import org.operaton.commons.testing.ProcessEngineLoggingRule;
-import org.operaton.commons.testing.WatchLogger;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
+import org.operaton.bpm.engine.test.junit5.WatchLogger;
 import org.operaton.spin.Spin;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.xml.SpinXmlElement;
@@ -33,9 +33,9 @@ import org.camunda.feel.syntaxtree.ValList;
 import org.camunda.feel.syntaxtree.ValString;
 import org.camunda.feel.valuemapper.CustomValueMapper;
 import org.camunda.feel.valuemapper.ValueMapper;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static camundajar.impl.scala.jdk.CollectionConverters.ListHasAsScala;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,8 +44,8 @@ public class SpinValueMapperTest {
 
   protected static ValueMapper valueMapper;
 
-  @Rule
-  public ProcessEngineLoggingRule loggingRule = new ProcessEngineLoggingRule();
+  @RegisterExtension
+  ProcessEngineLoggingExtension loggingExtension = new ProcessEngineLoggingExtension();
 
   @BeforeAll
   static void setUp() {
@@ -116,10 +116,10 @@ public class SpinValueMapperTest {
   @Test
   void shouldMapOperatonSpinXMLObjectWithAttributes() {
     // given
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("@name", new ValString("Kermit"));
     xmlInnerMap.put("@language", new ValString("en"));
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("customer", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -135,12 +135,12 @@ public class SpinValueMapperTest {
   @Test
   void shouldMapOperatonSpinXMLObjectWithChildObject() {
     // given
-    Map<String, Val> xmlAttrMap = new HashMap();
+    Map<String, Val> xmlAttrMap = new HashMap<>();
     xmlAttrMap.put("@city", new ValString("Berlin"));
     xmlAttrMap.put("@zipCode", new ValString("10961"));
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("address", valueMapper.toVal(xmlAttrMap));
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("customer", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -167,20 +167,20 @@ public class SpinValueMapperTest {
     Map<String, Val> xmlProviderAttrMap = new HashMap();
     xmlProviderAttrMap.put("@name", new ValString("Foobar"));
 
-    Map<String, Val> xmlCustomerAttrMap1 = new HashMap();
+    Map<String, Val> xmlCustomerAttrMap1 = new HashMap<>();
     xmlCustomerAttrMap1.put("@name", new ValString("Kermit"));
     xmlCustomerAttrMap1.put("@language", new ValString("en"));
 
-    Map<String, Val> xmlCustomerAttrMap2 = new HashMap();
+    Map<String, Val> xmlCustomerAttrMap2 = new HashMap<>();
     xmlCustomerAttrMap2.put("@name", new ValString("John"));
     xmlCustomerAttrMap2.put("@language", new ValString("de"));
 
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("provider", valueMapper.toVal(xmlProviderAttrMap));
     xmlInnerMap.put("customer",
                     valueMapper.toVal(Arrays.asList(xmlCustomerAttrMap1, xmlCustomerAttrMap2)));
 
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("data", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -197,10 +197,10 @@ public class SpinValueMapperTest {
     // given
     SpinXmlElement xml = Spin.XML("<customer>Kermit</customer>");
 
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("$content", new ValString("Kermit"));
 
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("customer", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -233,15 +233,15 @@ public class SpinValueMapperTest {
                                           "<p:customer p:name=\"Kermit\" language=\"en\" />" +
                                         "</data>");
 
-    Map<String, Val> xmlAttrMap = new HashMap();
+    Map<String, Val> xmlAttrMap = new HashMap<>();
     xmlAttrMap.put("@p$name", new ValString("Kermit"));
     xmlAttrMap.put("@language", new ValString("en"));
 
-    Map<String, Val> xmlInnerMap = new HashMap();
+    Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("p$customer", valueMapper.toVal(xmlAttrMap));
     xmlInnerMap.put("@xmlns$p", new ValString("http://www.example.org"));
 
-    Map<String, Val> xmlContextMap = new HashMap();
+    Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("data", valueMapper.toVal(xmlInnerMap));
 
     ValContext context = (ValContext) valueMapper.toVal(xmlContextMap);
@@ -269,7 +269,7 @@ public class SpinValueMapperTest {
     mapperFactory.createInstance();
 
     // then
-    assertThat(loggingRule.getFilteredLog("Spin value mapper detected").size()).isOne();
+    assertThat(loggingExtension.getFilteredLog("Spin value mapper detected").size()).isOne();
   }
 
 }

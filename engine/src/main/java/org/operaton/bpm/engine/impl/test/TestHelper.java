@@ -53,6 +53,7 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Consumer;
 
 import org.slf4j.Logger;
 

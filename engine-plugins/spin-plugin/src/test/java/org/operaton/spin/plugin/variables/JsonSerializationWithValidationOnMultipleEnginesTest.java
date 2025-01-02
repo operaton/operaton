@@ -46,27 +46,28 @@ public class JsonSerializationWithValidationOnMultipleEnginesTest {
 
   @RegisterExtension
   static ProcessEngineExtension engineRulePositive = ProcessEngineExtension.builder()
-          .configurator(configuration -> {
-            DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
-            when(validatorMock.validate(anyString())).thenReturn(true);
-            configuration
-                    .setDeserializationTypeValidator(validatorMock)
-                    .setDeserializationTypeValidationEnabled(true)
-                    .setJdbcUrl("jdbc:h2:mem:positive");
-          })
-          .build();
+      .configurator(configuration -> {
+        DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
+        when(validatorMock.validate(anyString())).thenReturn(true);
+        configuration
+            .setDeserializationTypeValidator(validatorMock)
+            .setDeserializationTypeValidationEnabled(true)
+            .setJdbcUrl("jdbc:h2:mem:positive");
+      })
+      .build();
 
   @RegisterExtension
   static ProcessEngineExtension engineRuleNegative = ProcessEngineExtension.builder()
-          .configurator(configuration -> {
-              DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
-              when(validatorMock.validate(anyString())).thenReturn(false);
-              configuration
-                      .setDeserializationTypeValidator(validatorMock)
-                      .setDeserializationTypeValidationEnabled(true)
-                      .setJdbcUrl("jdbc:h2:mem:negative");
-          })
-          .build();
+      .configurator(configuration -> {
+        DeserializationTypeValidator validatorMock = mock(DeserializationTypeValidator.class);
+        when(validatorMock.validate(anyString())).thenReturn(false);
+        configuration
+            .setDeserializationTypeValidator(validatorMock)
+            .setDeserializationTypeValidationEnabled(true)
+            .setJdbcUrl("jdbc:h2:mem:negative");
+      })
+      .cacheForConfigurationResource(false)
+      .build();
 
   @Test
   void shouldUsePositiveValidator() {
@@ -98,15 +99,14 @@ public class JsonSerializationWithValidationOnMultipleEnginesTest {
 
     // add serialized value
     JsonSerializable bean = new JsonSerializable("a String", 42, true);
-
-    Assertions.assertThatThrownBy(() -> engineRuleNegative.getRuntimeService().setVariable(instance.getId(), "simpleBean",
-            objectValue(bean).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create()))
-            .isExactlyInstanceOf(ProcessEngineException.class)
-            .hasMessage("Cannot deserialize")
-            .hasCauseExactlyInstanceOf(SpinJsonException.class);
+    engineRuleNegative.getRuntimeService().setVariable(instance.getId(), "simpleBean",
+        objectValue(bean).serializationDataFormat(DataFormats.JSON_DATAFORMAT_NAME).create());
 
     // when
-    engineRuleNegative.getRuntimeService().getVariable(instance.getId(), "simpleBean");
+    Assertions.assertThatThrownBy(() -> engineRuleNegative.getRuntimeService().getVariable(instance.getId(), "simpleBean"))
+        .isExactlyInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot deserialize")
+        .hasCauseExactlyInstanceOf(SpinJsonException.class);
   }
 
   protected BpmnModelInstance getOneTaskModel() {

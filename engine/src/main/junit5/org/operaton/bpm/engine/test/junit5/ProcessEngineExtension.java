@@ -16,22 +16,18 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.extension.*;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.slf4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -40,6 +36,10 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.extension.*;
+import org.slf4j.Logger;
 
 /**
  * JUnit 5 Extension to create and inject a {@link ProcessEngine} into test classes.
@@ -162,14 +162,13 @@ public class ProcessEngineExtension implements TestWatcher,
 
   protected Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator;
 
+  private boolean cacheForConfigurationResource = true;
+
   // SETUP
 
   protected void initializeProcessEngine() {
-    processEngine = TestHelper.getProcessEngine(configurationResource);
+    processEngine = TestHelper.getProcessEngine(configurationResource, processEngineConfigurator, cacheForConfigurationResource);
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-    if (processEngineConfigurator != null) {
-      processEngineConfigurator.accept(processEngineConfiguration);
-    }
   }
 
   protected void initializeServices() {
@@ -276,14 +275,18 @@ public class ProcessEngineExtension implements TestWatcher,
   }
 
   private void deleteHistoryCleanupJob() {
-    final List<Job> jobs = processEngine.getHistoryService().findHistoryCleanupJobs();
+    List<Job> jobs;
+    try {
+      jobs = processEngine.getHistoryService().findHistoryCleanupJobs();
+    } catch (ProcessEngineException e) {
+      jobs = Collections.emptyList();
+    }
+
     for (final Job job: jobs) {
-      ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequired().execute(new Command<Void>() {
-        public Void execute(CommandContext commandContext) {
-          commandContext.getJobManager().deleteJob((JobEntity) job);
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
-          return null;
-        }
+      ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
+        commandContext.getJobManager().deleteJob((JobEntity) job);
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
+        return null;
       });
     }
   }
@@ -366,6 +369,11 @@ public class ProcessEngineExtension implements TestWatcher,
 
   public ProcessEngineExtension configurator (Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
     this.processEngineConfigurator = processEngineConfigurator;
+    return this;
+  }
+
+  public ProcessEngineExtension cacheForConfigurationResource(boolean cacheForConfigurationResource) {
+    this.cacheForConfigurationResource = cacheForConfigurationResource;
     return this;
   }
 

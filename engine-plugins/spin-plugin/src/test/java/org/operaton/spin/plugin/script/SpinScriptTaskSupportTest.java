@@ -51,7 +51,7 @@ public class SpinScriptTaskSupportTest {
   RuntimeService runtimeService;
 
   @RegisterExtension
-  DeploymentExtension deploymentExtension;
+  static DeploymentExtension deploymentExtension = new DeploymentExtension();
 
   @MethodSource("data")
   @ParameterizedTest(name = "{index}: {0}")

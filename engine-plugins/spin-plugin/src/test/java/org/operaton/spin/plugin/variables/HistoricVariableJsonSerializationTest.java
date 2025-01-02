@@ -17,7 +17,6 @@
 package org.operaton.spin.plugin.variables;
 
 import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
@@ -49,7 +48,6 @@ public class HistoricVariableJsonSerializationTest {
 
   protected static final String JSON_FORMAT_NAME = DataFormats.json().getName();
 
-  ProcessEngine processEngine;
   HistoryService historyService;
   ProcessEngineConfigurationImpl processEngineConfiguration;
   RuntimeService runtimeService;
@@ -64,7 +62,7 @@ public class HistoricVariableJsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  void selectHistoricVariableInstances() throws JSONException {
+  void selectHistoricVariableInstances() {
     if (processEngineConfiguration.getHistoryLevel().getId() >=
         HistoryLevel.HISTORY_LEVEL_AUDIT.getId()) {
       ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");

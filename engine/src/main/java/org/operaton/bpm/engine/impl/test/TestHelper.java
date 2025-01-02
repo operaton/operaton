@@ -53,6 +53,7 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Consumer;
 
 import org.slf4j.Logger;
 
@@ -513,12 +514,19 @@ public abstract class TestHelper {
   }
 
   public static ProcessEngine getProcessEngine(String configurationResource) {
+    return getProcessEngine(configurationResource, null, true);
+  }
+
+  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator, boolean cacheForConfigurationResource) {
     ProcessEngine processEngine = processEngines.get(configurationResource);
-    if (processEngine==null) {
+    if (processEngine==null || !cacheForConfigurationResource) {
       LOG.debug("==== BUILDING PROCESS ENGINE ========================================================================");
-      processEngine = ProcessEngineConfiguration
-        .createProcessEngineConfigurationFromResource(configurationResource)
-        .buildProcessEngine();
+      ProcessEngineConfiguration configuration = ProcessEngineConfiguration
+              .createProcessEngineConfigurationFromResource(configurationResource);
+      if (processEngineConfigurator != null) {
+        processEngineConfigurator.accept((ProcessEngineConfigurationImpl) configuration);
+      }
+      processEngine = configuration.buildProcessEngine();
       LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
       processEngines.put(configurationResource, processEngine);
     }

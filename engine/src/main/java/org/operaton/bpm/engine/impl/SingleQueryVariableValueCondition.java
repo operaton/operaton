@@ -59,9 +59,9 @@ public class SingleQueryVariableValueCondition extends AbstractQueryVariableValu
   public void initializeValue(VariableSerializers serializers, TypedValue typedValue, String dbType) {
     TypedValueSerializer serializer = determineSerializer(serializers, typedValue);
 
-    if(typedValue instanceof UntypedValueImpl) {
+    if(typedValue instanceof UntypedValueImpl impl) {
       // type has been detected
-      typedValue = serializer.convertToTypedValue((UntypedValueImpl) typedValue);
+      typedValue = serializer.convertToTypedValue(impl);
     }
     serializer.writeValue(typedValue, this);
     this.type = serializer.getName();

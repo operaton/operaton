@@ -63,8 +63,7 @@ public abstract class SpinValueSerializer extends AbstractSerializableValueSeria
   }
 
   protected boolean canSerializeValue(Object value) {
-    if (value instanceof Spin<?>) {
-      Spin<?> wrapper = (Spin<?>) value;
+    if (value instanceof Spin<?> wrapper) {
       return wrapper.getDataFormatName().equals(serializationDataFormat);
     }
 

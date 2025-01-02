@@ -393,8 +393,7 @@ public class GetHistoricVariableUpdatesForOptimizeTest {
 
   private Object extractVariableValue(HistoricVariableUpdate variableUpdate) {
     final TypedValue typedValue = variableUpdate.getTypedValue();
-    if (typedValue instanceof ObjectValue) {
-      ObjectValue objectValue = (ObjectValue) typedValue;
+    if (typedValue instanceof ObjectValue objectValue) {
       return objectValue.isDeserialized() ? objectValue.getValue() : objectValue.getValueSerialized();
     } else {
       return typedValue.getValue();

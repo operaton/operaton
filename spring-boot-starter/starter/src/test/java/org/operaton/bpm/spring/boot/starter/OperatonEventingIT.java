@@ -281,10 +281,10 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     // Remove candidate group
     HistoryEvent candidateGroupEvent = eventCaptor.historyEvents.pop();
     assertThat(candidateGroupEvent.getEventType()).isEqualTo("delete-identity-link");
-    if (candidateGroupEvent instanceof HistoricIdentityLinkLogEventEntity) {
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateGroupEvent).getType()).isEqualTo("candidate");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateGroupEvent).getOperationType()).isEqualTo("delete");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateGroupEvent).getGroupId()).isEqualTo("groupId");
+    if (candidateGroupEvent instanceof HistoricIdentityLinkLogEventEntity entity) {
+      assertThat(entity.getType()).isEqualTo("candidate");
+      assertThat(entity.getOperationType()).isEqualTo("delete");
+      assertThat(entity.getGroupId()).isEqualTo("groupId");
     } else {
       fail("Expected identity link log event");
     }
@@ -297,10 +297,10 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     // Remove candidate user
     HistoryEvent candidateUserEvent = eventCaptor.historyEvents.pop();
     assertThat(candidateUserEvent.getEventType()).isEqualTo("delete-identity-link");
-    if (candidateUserEvent instanceof HistoricIdentityLinkLogEventEntity) {
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getType()).isEqualTo("candidate");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getOperationType()).isEqualTo("delete");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getUserId()).isEqualTo("userId");
+    if (candidateUserEvent instanceof HistoricIdentityLinkLogEventEntity entity) {
+      assertThat(entity.getType()).isEqualTo("candidate");
+      assertThat(entity.getOperationType()).isEqualTo("delete");
+      assertThat(entity.getUserId()).isEqualTo("userId");
     } else {
       fail("Expected identity link log event");
     }
@@ -313,10 +313,10 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     // Add candidate group
     candidateGroupEvent = eventCaptor.historyEvents.pop();
     assertThat(candidateGroupEvent.getEventType()).isEqualTo("add-identity-link");
-    if (candidateGroupEvent instanceof HistoricIdentityLinkLogEventEntity) {
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateGroupEvent).getType()).isEqualTo("candidate");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateGroupEvent).getOperationType()).isEqualTo("add");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateGroupEvent).getGroupId()).isEqualTo("groupId");
+    if (candidateGroupEvent instanceof HistoricIdentityLinkLogEventEntity entity) {
+      assertThat(entity.getType()).isEqualTo("candidate");
+      assertThat(entity.getOperationType()).isEqualTo("add");
+      assertThat(entity.getGroupId()).isEqualTo("groupId");
     } else {
       fail("Expected identity link log event");
     }
@@ -329,10 +329,10 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     // Add candidate user
     candidateUserEvent = eventCaptor.historyEvents.pop();
     assertThat(candidateUserEvent.getEventType()).isEqualTo("add-identity-link");
-    if (candidateUserEvent instanceof HistoricIdentityLinkLogEventEntity) {
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getType()).isEqualTo("candidate");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getOperationType()).isEqualTo("add");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getUserId()).isEqualTo("userId");
+    if (candidateUserEvent instanceof HistoricIdentityLinkLogEventEntity entity) {
+      assertThat(entity.getType()).isEqualTo("candidate");
+      assertThat(entity.getOperationType()).isEqualTo("add");
+      assertThat(entity.getUserId()).isEqualTo("userId");
     } else {
       fail("Expected identity link log event");
     }
@@ -354,8 +354,8 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     // then
     HistoryEvent taskChangeEvent = eventCaptor.historyEvents.pop();
     assertThat(taskChangeEvent.getEventType()).isEqualTo("update");
-    if (taskChangeEvent instanceof HistoricTaskInstanceEventEntity) {
-      assertThat(((HistoricTaskInstanceEventEntity) taskChangeEvent).getName()).isEqualTo("new Name");
+    if (taskChangeEvent instanceof HistoricTaskInstanceEventEntity entity) {
+      assertThat(entity.getName()).isEqualTo("new Name");
     } else {
       fail("Expected task instance change event");
     }
@@ -383,10 +383,10 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     // Add candidate user
     HistoryEvent candidateUserEvent = eventCaptor.historyEvents.pop();
     assertThat(candidateUserEvent.getEventType()).isEqualTo("add-identity-link");
-    if (candidateUserEvent instanceof HistoricIdentityLinkLogEventEntity) {
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getType()).isEqualTo("candidate");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getOperationType()).isEqualTo("add");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getUserId()).isEqualTo("user2");
+    if (candidateUserEvent instanceof HistoricIdentityLinkLogEventEntity entity) {
+      assertThat(entity.getType()).isEqualTo("candidate");
+      assertThat(entity.getOperationType()).isEqualTo("add");
+      assertThat(entity.getUserId()).isEqualTo("user2");
     } else {
       fail("Expected identity link log event");
     }
@@ -399,10 +399,10 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     // Add candidate user
     candidateUserEvent = eventCaptor.historyEvents.pop();
     assertThat(candidateUserEvent.getEventType()).isEqualTo("add-identity-link");
-    if (candidateUserEvent instanceof HistoricIdentityLinkLogEventEntity) {
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getType()).isEqualTo("candidate");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getOperationType()).isEqualTo("add");
-      assertThat(((HistoricIdentityLinkLogEventEntity) candidateUserEvent).getUserId()).isEqualTo("user1");
+    if (candidateUserEvent instanceof HistoricIdentityLinkLogEventEntity entity) {
+      assertThat(entity.getType()).isEqualTo("candidate");
+      assertThat(entity.getOperationType()).isEqualTo("add");
+      assertThat(entity.getUserId()).isEqualTo("user1");
     } else {
       fail("Expected identity link log event");
     }
@@ -426,8 +426,8 @@ class OperatonEventingIT extends AbstractOperatonAutoConfigurationIT {
     // then
     HistoryEvent taskChangeEvent = eventCaptor.historyEvents.pop();
     assertThat(taskChangeEvent.getEventType()).isEqualTo("update");
-    if (taskChangeEvent instanceof HistoricTaskInstanceEventEntity) {
-      assertThat(((HistoricTaskInstanceEventEntity) taskChangeEvent).getFollowUpDate()).isEqualTo(now);
+    if (taskChangeEvent instanceof HistoricTaskInstanceEventEntity entity) {
+      assertThat(entity.getFollowUpDate()).isEqualTo(now);
     } else {
       fail("Expected task instance change event");
     }

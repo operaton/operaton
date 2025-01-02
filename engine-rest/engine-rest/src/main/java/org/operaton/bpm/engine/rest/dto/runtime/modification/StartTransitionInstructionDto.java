@@ -56,8 +56,8 @@ public class StartTransitionInstructionDto extends ProcessInstanceModificationIn
     checkValidity();
 
     builder.startTransition(transitionId);
-    if (builder instanceof ProcessInstantiationBuilder) {
-      applyVariables((ProcessInstantiationBuilder) builder, engine, mapper);
+    if (builder instanceof ProcessInstantiationBuilder instantiationBuilder) {
+      applyVariables(instantiationBuilder, engine, mapper);
     }
   }
 

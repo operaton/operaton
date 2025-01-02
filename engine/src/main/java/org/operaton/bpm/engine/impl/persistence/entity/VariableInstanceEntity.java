@@ -295,10 +295,10 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
     TypedValue newValue = value;
 
     ValueType newType = null;
-    if (newValue instanceof UntypedValueImpl) {
+    if (newValue instanceof UntypedValueImpl impl) {
       newValue = getSerializers()
           .findSerializerForValue(newValue, getFallbackSerializerFactory())
-          .convertToTypedValue((UntypedValueImpl) newValue);
+          .convertToTypedValue(impl);
       newType = newValue.getType();
     }
 

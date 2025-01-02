@@ -45,12 +45,10 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
   }
 
   private void log(HttpMessage message) throws IOException {
-    if(message instanceof HttpRequest) {
-      HttpRequest request = (HttpRequest) message;
+    if(message instanceof HttpRequest request) {
       log.info("URI: {}", request.getURI());
       log.info("Method: {}", request.getMethod());
-    } else if(message instanceof ClientHttpResponse) {
-      ClientHttpResponse response = (ClientHttpResponse) message;
+    } else if(message instanceof ClientHttpResponse response) {
       log.info("Status code: {}", response.getStatusCode());
     } else {
       return;

@@ -95,8 +95,8 @@ public class ScriptEngineRule implements BeforeAllCallback, TestInstancePostProc
   @Override
   public void postProcessTestInstance(Object testInstance, ExtensionContext context) throws Exception {
     // Attach the script engine to test instance if necessary.
-    if (testInstance instanceof ScriptEngineRule) {
-      ((ScriptEngineRule) testInstance).scriptEngine = this.scriptEngine;
+    if (testInstance instanceof ScriptEngineRule rule) {
+      rule.scriptEngine = this.scriptEngine;
     }
   }
 }

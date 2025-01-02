@@ -340,8 +340,8 @@ public class Variables {
    */
   public static TypedValue untypedValue(Object value) {
     Object untypedValue = value;
-    if (untypedValue instanceof TypedValueBuilder) {
-      untypedValue = ((TypedValueBuilder<?>) untypedValue).create();
+    if (untypedValue instanceof TypedValueBuilder<?> builder) {
+      untypedValue = builder.create();
     }
     if (untypedValue instanceof TypedValue typedvalue) {
       return untypedValue(typedvalue, typedvalue.isTransient());
@@ -356,8 +356,8 @@ public class Variables {
   public static TypedValue untypedValue(Object value, boolean isTransient) {
     if(value == null) {
       return untypedNullValue(isTransient);
-    } else if (value instanceof TypedValueBuilder<?>) {
-      return ((TypedValueBuilder<?>) value).setTransient(isTransient).create();
+    } else if (value instanceof TypedValueBuilder<?> builder) {
+      return builder.setTransient(isTransient).create();
     } else if (value instanceof TypedValue transientValue) {
       if (value instanceof NullValueImpl) {
         transientValue = untypedNullValue(isTransient);

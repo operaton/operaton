@@ -41,8 +41,7 @@ public class RecordingAcquireJobsRunnable extends SequentialJobAcquisitionRunnab
   @Override
   protected void suspendAcquisition(long millis) {
     LOG.debugJobAcquisitionThreadSleeping(millis);
-    if (jobExecutor instanceof ControllableJobExecutor) {
-      ControllableJobExecutor controllableExecutor = (ControllableJobExecutor) jobExecutor;
+    if (jobExecutor instanceof ControllableJobExecutor controllableExecutor) {
       if (controllableExecutor.isSyncAsSuspendEnabled()) {
         controllableExecutor.getAcquisitionThreadControl().sync();
       }

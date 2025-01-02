@@ -69,8 +69,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
         boolean atLeastOneOnPartsValid = false;
 
         for (OnPart onPart : onParts) {
-          if (onPart instanceof PlanItemOnPart) {
-            PlanItemOnPart planItemOnPart = (PlanItemOnPart) onPart;
+          if (onPart instanceof PlanItemOnPart planItemOnPart) {
             if (planItemOnPart.getSource() != null && planItemOnPart.getStandardEvent() != null) {
               atLeastOneOnPartsValid = true;
               break;
@@ -111,8 +110,8 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
   public void initializeOnParts(Sentry sentry, CmmnHandlerContext context) {
     Collection<OnPart> onParts = sentry.getOnParts();
     for (OnPart onPart : onParts) {
-      if (onPart instanceof PlanItemOnPart) {
-        initializeOnPart((PlanItemOnPart) onPart, sentry, context);
+      if (onPart instanceof PlanItemOnPart part) {
+        initializeOnPart(part, sentry, context);
       } else {
         initializeOnPart((CaseFileItemOnPart) onPart, sentry, context);
       }

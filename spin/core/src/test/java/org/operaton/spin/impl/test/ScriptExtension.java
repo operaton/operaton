@@ -61,8 +61,8 @@ public class ScriptExtension implements BeforeEachCallback, AfterEachCallback {
   @Override
   public void afterEach(ExtensionContext context) {
     for (Object variable : variables.values()) {
-      if (variable instanceof Reader) {
-        SpinIoUtil.closeSilently((Reader) variable);
+      if (variable instanceof Reader reader) {
+        SpinIoUtil.closeSilently(reader);
       }
     }
   }

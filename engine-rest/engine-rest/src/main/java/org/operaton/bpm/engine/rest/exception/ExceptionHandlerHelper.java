@@ -84,14 +84,14 @@ public class ExceptionHandlerHelper {
 
   public ExceptionDto fromException(Throwable e) {
     ExceptionDto exceptionDto;
-    if (e instanceof MigratingProcessInstanceValidationException) {
-      exceptionDto = MigratingProcessInstanceValidationExceptionDto.from((MigratingProcessInstanceValidationException)e);
-    } else if (e instanceof MigrationPlanValidationException) {
-      exceptionDto = MigrationPlanValidationExceptionDto.from((MigrationPlanValidationException)e);
-    } else if (e instanceof AuthorizationException) {
-      exceptionDto = AuthorizationExceptionDto.fromException((AuthorizationException)e);
-    } else if (e instanceof ParseException){
-      exceptionDto = ParseExceptionDto.fromException((ParseException) e);
+    if (e instanceof MigratingProcessInstanceValidationException exception) {
+      exceptionDto = MigratingProcessInstanceValidationExceptionDto.from(exception);
+    } else if (e instanceof MigrationPlanValidationException exception) {
+      exceptionDto = MigrationPlanValidationExceptionDto.from(exception);
+    } else if (e instanceof AuthorizationException exception) {
+      exceptionDto = AuthorizationExceptionDto.fromException(exception);
+    } else if (e instanceof ParseException exception){
+      exceptionDto = ParseExceptionDto.fromException(exception);
     } else {
       exceptionDto = ExceptionDto.fromException(e);
     }
@@ -103,15 +103,15 @@ public class ExceptionHandlerHelper {
   public Response.Status getStatus(Throwable exception) {
     Response.Status responseStatus = Response.Status.INTERNAL_SERVER_ERROR;
 
-    if (exception instanceof ProcessEngineException) {
-      responseStatus = getStatus((ProcessEngineException)exception);
+    if (exception instanceof ProcessEngineException engineException) {
+      responseStatus = getStatus(engineException);
     }
     else if (exception instanceof RestException restException) {
       responseStatus = getStatus(restException);
     }
-    else if (exception instanceof WebApplicationException) {
+    else if (exception instanceof WebApplicationException applicationException) {
       //we need to check this, as otherwise the logic for processing WebApplicationException will be overridden
-      final int statusCode = ((WebApplicationException) exception).getResponse().getStatus();
+      final int statusCode = applicationException.getResponse().getStatus();
       responseStatus = Response.Status.fromStatusCode(statusCode);
     }
     return responseStatus;

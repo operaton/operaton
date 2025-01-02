@@ -34,8 +34,7 @@ public class StageItemHandler extends ItemHandler {
   @Override
   protected void initializeAutoComplete(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
     PlanItemDefinition definition = getDefinition(element);
-    if (definition instanceof Stage) {
-      Stage stage = (Stage) definition;
+    if (definition instanceof Stage stage) {
       activity.setProperty(PROPERTY_AUTO_COMPLETE, stage.isAutoComplete());
     }
   }

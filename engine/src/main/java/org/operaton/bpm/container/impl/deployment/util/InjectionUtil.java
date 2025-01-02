@@ -70,9 +70,7 @@ public class InjectionUtil {
 
       boolean injectionResolved = false;
 
-      if(parameterType instanceof Class) {
-
-        Class<?> parameterClass = (Class<?>)parameterType;
+      if(parameterType instanceof Class<?> parameterClass) {
 
         // support injection of the default process engine
         if(ProcessEngine.class.isAssignableFrom(parameterClass)) {

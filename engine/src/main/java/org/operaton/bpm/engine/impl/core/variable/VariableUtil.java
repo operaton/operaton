@@ -52,10 +52,8 @@ public class VariableUtil {
     ProcessEngineConfigurationImpl processEngineConfiguration =
         Context.getProcessEngineConfiguration();
 
-    if (value instanceof SerializableValue
+    if (value instanceof SerializableValue serializableValue
         && !processEngineConfiguration.isJavaSerializationFormatEnabled()) {
-
-      SerializableValue serializableValue = (SerializableValue) value;
 
       // if Java serialization is prohibited
       if (!serializableValue.isDeserialized()) {
@@ -90,8 +88,8 @@ public class VariableUtil {
     if (variables != null) {
       for (String variableName : variables.keySet()) {
         Object value = null;
-        if (variables instanceof VariableMap) {
-          value = ((VariableMap) variables).getValueTyped(variableName);
+        if (variables instanceof VariableMap map) {
+          value = map.getValueTyped(variableName);
 
         } else {
           value = variables.get(variableName);

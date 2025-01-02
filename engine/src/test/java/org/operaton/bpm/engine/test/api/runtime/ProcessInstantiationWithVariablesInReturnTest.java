@@ -16,19 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
-import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
-import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.util.Arrays;
-import java.util.List;
-
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
@@ -44,11 +31,21 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
+import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
+import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
+
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static junit.framework.TestCase.*;
 
 /**
  * Represents the test class for the process instantiation on which
@@ -89,8 +86,8 @@ public class ProcessInstantiationWithVariablesInReturnTest {
       Object mapValue = map.getValueTyped(instance.getName()).getValue();
       if (instanceValue == null) {
         assertNull(mapValue);
-      } else if (instanceValue instanceof byte[]) {
-        assertTrue(Arrays.equals((byte[]) instanceValue, (byte[]) mapValue));
+      } else if (instanceValue instanceof byte[] bytes) {
+        assertTrue(Arrays.equals(bytes, (byte[]) mapValue));
       } else {
         assertEquals(instanceValue, mapValue);
       }

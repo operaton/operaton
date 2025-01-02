@@ -41,12 +41,10 @@ public class SpinValueMapper extends JavaCustomValueMapper {
 
   @Override
   public Optional<Val> toValue(Object x, Function<Object, Val> innerValueMapper) {
-    if (x instanceof SpinJsonNode) {
-      SpinJsonNode node = (SpinJsonNode) x;
+    if (x instanceof SpinJsonNode node) {
       return Optional.of(this.spinJsonToVal(node, innerValueMapper));
 
-    } else if (x instanceof SpinXmlElement) {
-      SpinXmlElement element = (SpinXmlElement) x;
+    } else if (x instanceof SpinXmlElement element) {
       return Optional.of(this.spinXmlToVal(element, innerValueMapper));
 
     } else {

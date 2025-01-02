@@ -283,13 +283,11 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
     if (planItemTransformer != null) {
       CmmnActivity newActivity = planItemTransformer.handleElement(planItem, context);
 
-      if (definition instanceof Stage) {
-        Stage stage = (Stage) definition;
+      if (definition instanceof Stage stage) {
         transformStage(stage, newActivity);
         context.setParent(parent);
 
-      } else if (definition instanceof HumanTask) {
-        HumanTask humanTask = (HumanTask) definition;
+      } else if (definition instanceof HumanTask humanTask) {
 
         // According to the specification: A HumanTask can only contain
         // one planningTable, the XSD allows multiple planningTables!
@@ -301,22 +299,22 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
       }
 
       for (CmmnTransformListener transformListener : transformListeners) {
-        if (definition instanceof HumanTask) {
-          transformListener.transformHumanTask(planItem, (HumanTask) definition, newActivity);
-        } else if (definition instanceof ProcessTask) {
-          transformListener.transformProcessTask(planItem, (ProcessTask) definition, newActivity);
-        } else if (definition instanceof CaseTask) {
-          transformListener.transformCaseTask(planItem, (CaseTask) definition, newActivity);
-        } else if (definition instanceof DecisionTask) {
-          transformListener.transformDecisionTask(planItem, (DecisionTask) definition, newActivity);
-        } else if (definition instanceof Task) {
-          transformListener.transformTask(planItem, (Task) definition, newActivity);
-        } else if (definition instanceof Stage) {
-          transformListener.transformStage(planItem, (Stage) definition, newActivity);
-        } else if (definition instanceof Milestone) {
-          transformListener.transformMilestone(planItem, (Milestone) definition, newActivity);
-        } else if (definition instanceof EventListener) {
-          transformListener.transformEventListener(planItem, (EventListener) definition, newActivity);
+        if (definition instanceof HumanTask task) {
+          transformListener.transformHumanTask(planItem, task, newActivity);
+        } else if (definition instanceof ProcessTask task) {
+          transformListener.transformProcessTask(planItem, task, newActivity);
+        } else if (definition instanceof CaseTask task) {
+          transformListener.transformCaseTask(planItem, task, newActivity);
+        } else if (definition instanceof DecisionTask task) {
+          transformListener.transformDecisionTask(planItem, task, newActivity);
+        } else if (definition instanceof Task task) {
+          transformListener.transformTask(planItem, task, newActivity);
+        } else if (definition instanceof Stage stage) {
+          transformListener.transformStage(planItem, stage, newActivity);
+        } else if (definition instanceof Milestone milestone) {
+          transformListener.transformMilestone(planItem, milestone, newActivity);
+        } else if (definition instanceof EventListener listener) {
+          transformListener.transformEventListener(planItem, listener, newActivity);
         }
       }
     }

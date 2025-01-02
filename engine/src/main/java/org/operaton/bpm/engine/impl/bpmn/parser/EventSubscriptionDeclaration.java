@@ -171,10 +171,10 @@ public class EventSubscriptionDeclaration implements Serializable {
    */
   public String resolveExpressionOfEventName(VariableScope scope) {
     if (isExpressionAvailable()) {
-      if(scope instanceof BaseDelegateExecution) {
+      if(scope instanceof BaseDelegateExecution execution) {
         // the variable scope execution is also the current context execution
         // during expression evaluation the current context is updated with the scope execution
-        return (String) eventName.getValue(scope, (BaseDelegateExecution) scope);
+        return (String) eventName.getValue(scope, execution);
       } else {
         return (String) eventName.getValue(scope);
       }

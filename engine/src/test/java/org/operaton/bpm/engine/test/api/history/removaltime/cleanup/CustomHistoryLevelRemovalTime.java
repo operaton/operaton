@@ -56,8 +56,7 @@ public class CustomHistoryLevelRemovalTime implements HistoryLevel {
   }
 
   protected boolean isRootProcessInstance(Object entity) {
-    if (entity instanceof ProcessInstance) {
-      ProcessInstance processInstance = (ProcessInstance) entity;
+    if (entity instanceof ProcessInstance processInstance) {
       return processInstance.getId().equals(processInstance.getRootProcessInstanceId());
     }
 

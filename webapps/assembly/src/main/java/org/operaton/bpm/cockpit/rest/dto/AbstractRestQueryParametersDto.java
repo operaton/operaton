@@ -166,8 +166,7 @@ public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters 
 
       for (int j = 0; j < methodAnnotations.length; j++) {
         Annotation annotation = methodAnnotations[j];
-        if (annotation instanceof OperatonQueryParam) {
-          OperatonQueryParam parameterAnnotation = (OperatonQueryParam) annotation;
+        if (annotation instanceof OperatonQueryParam parameterAnnotation) {
           if (parameterAnnotation.value().equals(parameterName)) {
             result.add(method);
           }
@@ -182,8 +181,7 @@ public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters 
 
     for (int j = 0; j < methodAnnotations.length; j++) {
       Annotation annotation = methodAnnotations[j];
-      if (annotation instanceof OperatonQueryParam) {
-        OperatonQueryParam parameterAnnotation = (OperatonQueryParam) annotation;
+      if (annotation instanceof OperatonQueryParam parameterAnnotation) {
         return parameterAnnotation.converter();
       }
     }

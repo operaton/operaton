@@ -37,8 +37,7 @@ public class ListJacksonJsonTypeDetector extends AbstractJacksonJsonTypeDetector
   protected JavaType constructType(Object object) {
     TypeFactory typeFactory = TypeFactory.defaultInstance();
 
-    if (object instanceof List && !((List<?>) object).isEmpty()) {
-      List<?> list = (List<?>) object;
+    if (object instanceof List<?> list && !list.isEmpty()) {
       Object firstElement = list.get(0);
       if (bindingsArePresent(list.getClass())) {
         final JavaType elementType = constructType(firstElement);

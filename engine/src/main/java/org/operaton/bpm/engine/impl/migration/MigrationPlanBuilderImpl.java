@@ -62,8 +62,8 @@ public class MigrationPlanBuilderImpl implements MigrationInstructionBuilder, Mi
 
   @Override
   public MigrationPlanBuilder setVariables(Map<String, ?> variables) {
-    if (variables instanceof VariableMapImpl) {
-      this.variables = (VariableMapImpl) variables;
+    if (variables instanceof VariableMapImpl impl) {
+      this.variables = impl;
     } else if (variables != null) {
       this.variables = new VariableMapImpl(new HashMap<>(variables));
     }

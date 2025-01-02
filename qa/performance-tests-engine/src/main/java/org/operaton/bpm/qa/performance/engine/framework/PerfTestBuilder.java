@@ -65,6 +65,7 @@ public class PerfTestBuilder {
         throw new PerfTestException(e);
       }
     } catch (Exception e) {
+      Thread.currentThread().interrupt();
       throw new PerfTestException(e);
     }
 

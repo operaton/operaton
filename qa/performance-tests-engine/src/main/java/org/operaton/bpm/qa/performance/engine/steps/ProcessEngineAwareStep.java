@@ -33,7 +33,7 @@ public abstract class ProcessEngineAwareStep implements PerfTestStepBehavior {
   protected TaskService taskService;
   protected RepositoryService repositoryService;
 
-  public ProcessEngineAwareStep(ProcessEngine processEngine) {
+  protected ProcessEngineAwareStep(ProcessEngine processEngine) {
     this.processEngine = processEngine;
     runtimeService = processEngine.getRuntimeService();
     taskService = processEngine.getTaskService();

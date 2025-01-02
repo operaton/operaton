@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.qa.performance.engine.benchmark;
 
-import java.io.File;
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultAggregator;
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
 import org.operaton.bpm.qa.performance.engine.framework.report.HtmlReportBuilder;
 import org.operaton.bpm.qa.performance.engine.util.CsvUtil;
 import org.operaton.bpm.qa.performance.engine.util.FileUtil;
 import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
+
+import java.io.File;
 
 /**
  * @author Daniel Meyer, Ingo Richtsmeier
@@ -62,19 +63,16 @@ public class BenchmarkReport {
           longTermBenchmarkResultFilename);
     }
 
-    writeReport(
-        resultsFolder,
-        reportsFolder,
+    writeReport(reportsFolder,
         "benchmark",
         new BenchmarkAggregator(resultsFolder),
         "Benchmark Duration Report");
   }
 
-  private static void writeReport(String resultsFolder,
-      String reportsFolder,
-      String benchmarkName,
-      TabularResultAggregator aggregator,
-      String reportDescription) {
+  private static void writeReport(String reportsFolder,
+                                  String benchmarkName,
+                                  TabularResultAggregator aggregator,
+                                  String reportDescription) {
 
     final String htmlReportFilename = reportsFolder + File.separatorChar + benchmarkName+"-report.html";
 

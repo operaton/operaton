@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.qa.performance.engine.loadgenerator;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
@@ -30,13 +24,18 @@ import org.operaton.bpm.qa.performance.engine.junit.PerfTestProcessEngine;
 import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.DeployFileTask;
 import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.StartProcessInstanceTask;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @author Daniel Meyer
  *
  */
 public class StartProcessInstancesInDirectory {
 
-  public static final String[] DEPLOYABLE_FILE_EXTENSIONS = new String[] {
+  private static final String[] DEPLOYABLE_FILE_EXTENSIONS = new String[] {
       ".bpmn",
       ".bpmn20.xml"
   };
@@ -88,18 +87,13 @@ public class StartProcessInstancesInDirectory {
 
     final List<String> result = new ArrayList<>();
 
-    String[] localNames = dir.list(new FilenameFilter() {
-
-      @Override
-      public boolean accept(File dir, String name) {
-        for (String extension : DEPLOYABLE_FILE_EXTENSIONS) {
-          if(name.endsWith(extension)) {
-            return true;
-          }
+    String[] localNames = dir.list((dir1, name) -> {
+      for (String extension : DEPLOYABLE_FILE_EXTENSIONS) {
+        if(name.endsWith(extension)) {
+          return true;
         }
-        return false;
       }
-
+      return false;
     });
 
     if(localNames != null) {

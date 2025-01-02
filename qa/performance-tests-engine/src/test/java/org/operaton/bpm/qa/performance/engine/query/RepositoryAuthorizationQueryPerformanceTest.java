@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.qa.performance.engine.query;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
@@ -30,14 +24,19 @@ import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.query.Query;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepBehavior;
 import org.operaton.bpm.qa.performance.engine.junit.AuthorizationPerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.junit.PerfTestProcessEngine;
-import org.junit.jupiter.api.BeforeEach;
-
-import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
+import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * @author Daniel Meyer
@@ -135,34 +134,28 @@ public class RepositoryAuthorizationQueryPerformanceTest extends AuthorizationPe
 
   @MethodSource("params")
   @ParameterizedTest(name = "{0} - {4}")
-  public void queryList(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
+  void queryList(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
     initRepositoryAuthorizationQueryPerformanceTest(name, query, resource, permissions, authentication);
-    performanceTest().step(new PerfTestStepBehavior() {
-      @Override
-      public void execute(PerfTestRunContext context) {
-        try {
-          engine.getIdentityService().setAuthentication(authentication);
-          query.listPage(0, 15);
-        } finally {
-          engine.getIdentityService().clearAuthentication();
-        }
+    performanceTest().step(context -> {
+      try {
+        engine.getIdentityService().setAuthentication(authentication);
+        query.listPage(0, 15);
+      } finally {
+        engine.getIdentityService().clearAuthentication();
       }
     }).run();
   }
 
   @MethodSource("params")
   @ParameterizedTest(name = "{0} - {4}")
-  public void queryCount(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
+  void queryCount(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
     initRepositoryAuthorizationQueryPerformanceTest(name, query, resource, permissions, authentication);
-    performanceTest().step(new PerfTestStepBehavior() {
-      @Override
-      public void execute(PerfTestRunContext context) {
-        try {
-          engine.getIdentityService().setAuthentication(authentication);
-          query.count();
-        } finally {
-          engine.getIdentityService().clearAuthentication();
-        }
+    performanceTest().step(context -> {
+      try {
+        engine.getIdentityService().setAuthentication(authentication);
+        query.count();
+      } finally {
+        engine.getIdentityService().clearAuthentication();
       }
     }).run();
   }

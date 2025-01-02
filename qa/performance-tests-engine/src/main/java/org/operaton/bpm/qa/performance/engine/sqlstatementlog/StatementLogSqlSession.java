@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.qa.performance.engine.sqlstatementlog;
 
+import org.operaton.bpm.qa.performance.engine.util.DelegatingSqlSession;
+import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +26,6 @@ import java.util.Map;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.operaton.bpm.qa.performance.engine.util.DelegatingSqlSession;
-import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
 
 /**
  * <p>This SqlSession wraps an actual SqlSession and logs executed sql statements. (Calls to the
@@ -258,7 +259,7 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
    * starts logging any statements executed by the calling thread.
    */
   public static void startLogging() {
-    threadStatementLog.set(new ArrayList<StatementLogSqlSession.SqlStatementLog>());
+    threadStatementLog.set(new ArrayList<>());
   }
 
   // log classes //////////////////////////////////////
@@ -280,7 +281,7 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
       this.statement = statement;
       this.durationMs = duration;
       try {
-        statementParameters = JsonUtil.getMapper().writeValueAsString(parameters).replaceAll("\"", "'");
+        statementParameters = JsonUtil.getMapper().writeValueAsString(parameters).replace("\"", "'");
       } catch (Exception e) {
 //        e.printStackTrace();
       }
@@ -304,7 +305,7 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
 
   }
 
-  public static enum SqlStatementType {
+  public enum SqlStatementType {
     SELECT, SELECT_ONE, SELECT_LIST, SELECT_MAP,
     INSERT,
     UPDATE,

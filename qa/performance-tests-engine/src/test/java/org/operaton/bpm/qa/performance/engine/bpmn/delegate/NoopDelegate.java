@@ -27,7 +27,7 @@ public class NoopDelegate implements JavaDelegate {
 
   @Override
   public void execute(DelegateExecution execution) {
-
+    // do nothing
   }
 
 }

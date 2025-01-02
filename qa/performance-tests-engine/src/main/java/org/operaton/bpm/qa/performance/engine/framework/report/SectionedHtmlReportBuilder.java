@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.report;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import org.operaton.bpm.engine.impl.form.engine.HtmlDocumentBuilder;
 import org.operaton.bpm.engine.impl.form.engine.HtmlElementWriter;
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
 
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+@SuppressWarnings("java:S1192")
 public class SectionedHtmlReportBuilder {
 
   protected String reportName;
@@ -79,8 +80,8 @@ public class SectionedHtmlReportBuilder {
   }
 
   protected void addHtmlSections(HtmlDocumentBuilder builder, Map<String, Object> sections, int level) {
-    for (String section : sections.keySet()) {
-      addHtmlSection(builder, section, sections.get(section), level);
+    for (var entry : sections.entrySet()) {
+      addHtmlSection(builder, entry.getKey(), entry.getValue(), level);
     }
   }
 
@@ -88,8 +89,8 @@ public class SectionedHtmlReportBuilder {
   protected void addHtmlSection(HtmlDocumentBuilder builder, String title, Object section, int level) {
     // add heading
     builder.startElement(new HtmlElementWriter("h" + level).textContent(title)).endElement();
-    if (section instanceof Map sections) {
-      addHtmlSections(builder, sections, level + 1);
+    if (section instanceof Map sec) {
+      addHtmlSections(builder, sec, level + 1);
     }
     else {
       TabularResultSet resultSet = (TabularResultSet) section;

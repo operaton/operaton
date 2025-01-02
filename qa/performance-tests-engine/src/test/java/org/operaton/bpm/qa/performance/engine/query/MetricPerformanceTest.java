@@ -16,15 +16,17 @@
  */
 package org.operaton.bpm.qa.performance.engine.query;
 
-import java.util.Arrays;
-import java.util.Date;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.GenerateMetricsTask;
 import org.operaton.bpm.qa.performance.engine.steps.MetricIntervalStep;
 import org.operaton.bpm.qa.performance.engine.steps.MetricSumStep;
+
+import java.util.Arrays;
+import java.util.Date;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  *
@@ -51,14 +53,14 @@ public class MetricPerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @MethodSource("params")
   @ParameterizedTest(name = "{index}")
-  public void metricInterval(String name, Date startDate, Date endDate) {
+  void metricInterval(String name, Date startDate, Date endDate) {
     initMetricPerformanceTest(name, startDate, endDate);
     performanceTest().step(new MetricIntervalStep(name, startDate, endDate, engine)).run();
   }
 
   @MethodSource("params")
   @ParameterizedTest(name = "{index}")
-  public void metricSum(String name, Date startDate, Date endDate) {
+  void metricSum(String name, Date startDate, Date endDate) {
     initMetricPerformanceTest(name, startDate, endDate);
     performanceTest().step(new MetricSumStep(name, startDate, endDate, engine)).run();
   }

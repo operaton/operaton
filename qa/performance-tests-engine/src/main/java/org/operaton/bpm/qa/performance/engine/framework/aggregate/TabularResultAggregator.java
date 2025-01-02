@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.aggregate;
 
-import java.io.File;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
 import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
+
+import java.io.File;
+import java.util.Comparator;
 
 /**
  * A result aggregator is used to aggregate the results of a
@@ -41,7 +39,7 @@ public abstract class TabularResultAggregator {
   protected File resultDirectory;
   private boolean isSortingEnabled = true;
 
-  public TabularResultAggregator(String resultsFolderPath) {
+  protected TabularResultAggregator(String resultsFolderPath) {
     resultDirectory = new File(resultsFolderPath);
     if(!resultDirectory.exists()) {
       throw new PerfTestException("Folder "+resultsFolderPath+ " does not exist.");
@@ -64,12 +62,7 @@ public abstract class TabularResultAggregator {
     }
 
     if(isSortingEnabled) {
-      Collections.sort(tabularResultSet.getResults(), new Comparator<List<Object>>() {
-        @Override
-        public int compare(List<Object> o1, List<Object> o2) {
-          return o1.get(0).toString().compareTo(o2.get(0).toString());
-        }
-      });
+      tabularResultSet.getResults().sort(Comparator.comparing(o -> o.get(0).toString()));
     }
 
     postProcessResultSet(tabularResultSet);

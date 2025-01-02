@@ -50,7 +50,7 @@ public class PerfTestResultRecorderExtension implements TestWatcher {
     if (results != null) {
       String testName = context.getRequiredTestClass().getSimpleName() + "." + context.getRequiredTestMethod().getName();
       results.setTestName(testName);
-      LOG.log(Level.INFO, results.toString());
+      LOG.log(Level.INFO, () -> results.toString());
 
       String resultFileName = formatResultFileName(context);
 

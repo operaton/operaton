@@ -28,6 +28,7 @@ import java.util.concurrent.Executors;
  * @author Daniel Meyer
  *
  */
+@SuppressWarnings("java:S106")
 public class LoadGenerator {
 
   public static final String ANSI_RESET = "\u001B[0m";
@@ -109,7 +110,7 @@ public class LoadGenerator {
 
   static class ProgressReporter extends TimerTask {
 
-    private int totalWork;
+    private final int totalWork;
     protected CountDownLatch sync;
 
     protected boolean color;

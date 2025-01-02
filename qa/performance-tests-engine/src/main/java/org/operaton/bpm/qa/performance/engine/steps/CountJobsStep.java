@@ -32,6 +32,7 @@ public class CountJobsStep implements PerfTestStepBehavior {
   }
 
   @Override
+  @SuppressWarnings("java:S106")
   public void execute(PerfTestRunContext context) {
     long failedJobs = processEngine.getHistoryService().createHistoricJobLogQuery().failureLog().count();
     long createdJobs = processEngine.getHistoryService().createHistoricJobLogQuery().creationLog().count();

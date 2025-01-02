@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.qa.performance.engine.query;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
@@ -35,11 +29,18 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepBehavior;
 import org.operaton.bpm.qa.performance.engine.junit.AuthorizationPerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.junit.PerfTestProcessEngine;
-import org.junit.jupiter.api.BeforeEach;
-
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * @author Daniel Meyer
@@ -144,7 +145,7 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
 
   @MethodSource("params")
   @ParameterizedTest(name = "{0} - {4}")
-  public void queryList(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
+  void queryList(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
     initRuntimeAuthorizationQueryPerformanceTest(name, query, resource, permissions, authentication);
     performanceTest().step(new PerfTestStepBehavior() {
       @Override
@@ -161,7 +162,7 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
 
   @MethodSource("params")
   @ParameterizedTest(name = "{0} - {4}")
-  public void queryCount(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
+  void queryCount(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
     initRuntimeAuthorizationQueryPerformanceTest(name, query, resource, permissions, authentication);
     performanceTest().step(new PerfTestStepBehavior() {
       @Override

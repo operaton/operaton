@@ -18,12 +18,9 @@ package org.operaton.bpm.qa.performance.engine.framework;
 
 import static org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestWatcher.WATCH_ALL_ACTIVITIES;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
+import static java.util.Collections.emptyList;
 
 /**
  * Configuration of a performance test
@@ -120,7 +117,7 @@ public class PerfTestConfiguration {
 
   protected List<String> parseWatchActivities(String watchActivitiesString) {
     if (watchActivitiesString == null || watchActivitiesString.trim().isEmpty()) {
-      return null;
+      return emptyList();
     }
     else if (watchActivitiesString.trim().equalsIgnoreCase(WATCH_ALL_ACTIVITIES.get(0))) {
       return WATCH_ALL_ACTIVITIES;

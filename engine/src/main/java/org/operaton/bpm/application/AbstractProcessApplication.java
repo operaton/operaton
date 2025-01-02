@@ -162,7 +162,7 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
 
   @Override
   public Map<String, String> getProperties() {
-    return Collections.<String, String>emptyMap();
+    return Collections.emptyMap();
   }
 
   @Override

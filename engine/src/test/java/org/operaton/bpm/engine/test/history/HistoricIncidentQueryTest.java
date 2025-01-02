@@ -760,7 +760,7 @@ public class HistoricIncidentQueryTest {
   protected void startProcessInstances(String key, int numberOfInstances) {
 
     for (int i = 0; i < numberOfInstances; i++) {
-      Map<String, Object> variables = Collections.<String, Object>singletonMap("message", "exception" + i);
+      Map<String, Object> variables = Collections.singletonMap("message", "exception" + i);
 
       runtimeService.startProcessInstanceByKey(key, i + "", variables);
     }

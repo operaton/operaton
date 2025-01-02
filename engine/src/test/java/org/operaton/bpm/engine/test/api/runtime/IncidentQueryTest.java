@@ -90,7 +90,7 @@ public class IncidentQueryTest {
 
     processInstanceIds = new ArrayList<>();
     for (int i = 0; i < 4; i++) {
-      Map<String, Object> variables = Collections.<String, Object>singletonMap("message", "exception" + i);
+      Map<String, Object> variables = Collections.singletonMap("message", "exception" + i);
 
       processInstanceIds.add(engineRule.getRuntimeService()
         .startProcessInstanceByKey(PROCESS_DEFINITION_KEY, i + "", variables).getId()

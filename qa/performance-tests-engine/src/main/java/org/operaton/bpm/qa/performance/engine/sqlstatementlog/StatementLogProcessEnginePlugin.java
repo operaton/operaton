@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.qa.performance.engine.sqlstatementlog;
 
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.operaton.bpm.engine.impl.cfg.AbstractProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
+
+import org.apache.ibatis.session.SqlSessionFactory;
 
 /**
  * <p>ProcessEnginePlugin activating statement logging.</p>
@@ -41,7 +42,7 @@ public class StatementLogProcessEnginePlugin extends AbstractProcessEnginePlugin
     StatementLogSqlSessionFactory wrappedSessionFactory = new StatementLogSqlSessionFactory(sqlSessionFactory);
     processEngineConfiguration.setSqlSessionFactory(wrappedSessionFactory);
 
-    // replace the sqlSessionFacorty used by the DbSqlSessionFactory as well
+    // replace the sqlSessionFactory used by the DbSqlSessionFactory as well
     DbSqlSessionFactory dbSqlSessionFactory = processEngineConfiguration.getDbSqlSessionFactory();
     dbSqlSessionFactory.setSqlSessionFactory(wrappedSessionFactory);
   }

@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.qa.performance.engine.util;
 
+import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-
-import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
+import java.nio.file.Files;
 
 /**
  * @author Daniel Meyer, Ingo Richtsmeier
@@ -37,24 +37,19 @@ public class FileUtil {
   }
 
   public static void writeStringToFile(String value, String filePath, boolean deleteFile) {
-
-    BufferedOutputStream outputStream = null;
+    File file = new File(filePath);
     try {
-      File file = new File(filePath);
       if (file.exists() && deleteFile) {
-        file.delete();
+        Files.delete(file.toPath());
       }
 
-      outputStream = new BufferedOutputStream(new FileOutputStream(file, true));
-      outputStream.write(value.getBytes());
-      outputStream.flush();
-
+      try (var outputStream = new BufferedOutputStream(new FileOutputStream(file, true))) {
+        outputStream.write(value.getBytes());
+        outputStream.flush();
+      }
     } catch (Exception e) {
       throw new PerfTestException("Could not write report to file", e);
-    } finally {
-      IoUtil.closeSilently(outputStream);
     }
-
   }
 
   public static void appendStringToFile(String value, String filePath) {

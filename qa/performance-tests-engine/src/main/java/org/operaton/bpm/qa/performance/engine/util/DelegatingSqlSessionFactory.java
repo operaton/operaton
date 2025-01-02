@@ -18,11 +18,7 @@ package org.operaton.bpm.qa.performance.engine.util;
 
 import java.sql.Connection;
 
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.TransactionIsolationLevel;
+import org.apache.ibatis.session.*;
 
 /**
  * <p>Implements the {@link SqlSessionFactory} delegating
@@ -33,7 +29,7 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
  */
 public class DelegatingSqlSessionFactory implements SqlSessionFactory {
 
-  protected SqlSessionFactory wrappedSessionFactory;
+  protected final SqlSessionFactory wrappedSessionFactory;
 
   public DelegatingSqlSessionFactory(SqlSessionFactory wrappSqlSessionFactory) {
     wrappedSessionFactory = wrappSqlSessionFactory;

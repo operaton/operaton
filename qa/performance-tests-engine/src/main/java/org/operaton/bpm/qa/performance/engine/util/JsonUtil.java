@@ -19,6 +19,7 @@ package org.operaton.bpm.qa.performance.engine.util;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestException;
 
 import java.io.File;
+import java.nio.file.Files;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
@@ -26,7 +27,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 /**
  * @author Daniel Meyer
- *
  */
 public class JsonUtil {
 
@@ -42,15 +42,15 @@ public class JsonUtil {
     try {
 
       File resultFile = new File(filename);
-      if(resultFile.exists()) {
-        resultFile.delete();
+      if (resultFile.exists()) {
+        Files.delete(resultFile.toPath());
       }
       resultFile.createNewFile();
 
       mapper.writerWithDefaultPrettyPrinter().writeValue(resultFile, object);
 
-    } catch(Exception e) {
-      throw new PerfTestException("Cannot write object to file "+filename, e);
+    } catch (Exception e) {
+      throw new PerfTestException("Cannot write object to file " + filename, e);
 
     }
 
@@ -63,17 +63,16 @@ public class JsonUtil {
     try {
       return mapper.readValue(new File(filename), type);
 
-    } catch(Exception e) {
-      throw new PerfTestException("Cannot read object from file "+filename, e);
+    } catch (Exception e) {
+      throw new PerfTestException("Cannot read object from file " + filename, e);
 
     }
   }
 
   public static ObjectMapper getMapper() {
-    if(mapper == null) {
+    if (mapper == null) {
       mapper = new ObjectMapper();
-      SerializationConfig config = mapper
-          .getSerializationConfig()
+      SerializationConfig config = mapper.getSerializationConfig()
           .withSerializationInclusion(Inclusion.NON_EMPTY)
           .without(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS);
       mapper.setSerializationConfig(config);

@@ -16,13 +16,9 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestResult;
+
+import java.util.*;
 
 /**
  * @author Daniel Meyer
@@ -34,9 +30,9 @@ public class PerfTestResult {
 
   protected int numberOfThreads;
 
-  protected List<PerfTestStepResult> stepResults = Collections.synchronizedList(new ArrayList<PerfTestStepResult>());
+  protected List<PerfTestStepResult> stepResults = Collections.synchronizedList(new ArrayList<>());
 
-  protected final Map<String, List<ActivityPerfTestResult>> activityResults = Collections.synchronizedMap(new HashMap<String, List<ActivityPerfTestResult>>());
+  protected final Map<String, List<ActivityPerfTestResult>> activityResults = Collections.synchronizedMap(new HashMap<>());
 
   public long getDuration() {
     return duration;
@@ -68,9 +64,6 @@ public class PerfTestResult {
 
   /**
    * log a step result. NOTE: this is expensive as it requires synchronization on the stepResultList.
-   *
-   * @param currentStep
-   * @param stepResult
    */
   public void logStepResult(PerfTestStep currentStep, Object stepResult) {
     stepResults.add(new PerfTestStepResult(currentStep.getStepName(), stepResult));

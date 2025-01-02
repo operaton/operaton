@@ -18,7 +18,6 @@ package org.operaton.bpm.qa.performance.engine.steps;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
-import org.operaton.bpm.engine.impl.cfg.TransactionListener;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -27,18 +26,13 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunner;
 public class SignalTestRunListener implements ExecutionListener {
 
   @Override
-  public void notify(final DelegateExecution execution) throws Exception {
+  public void notify(final DelegateExecution execution) {
     final String runId = (String) execution.getVariable(PerfTestConstants.RUN_ID);
     CommandContext commandContext = Context.getCommandContext();
     if (runId != null && commandContext != null) {
       commandContext.getTransactionContext()
-        .addTransactionListener(TransactionState.COMMITTED, new TransactionListener() {
-        @Override
-        public void execute(CommandContext commandContext) {
-            // signal run after the transaction was committed
-            PerfTestRunner.signalRun(runId);
-          }
-        });
+        // signal run after the transaction was committed
+        .addTransactionListener(TransactionState.COMMITTED, commandContext1 -> PerfTestRunner.signalRun(runId));
     }
   }
 

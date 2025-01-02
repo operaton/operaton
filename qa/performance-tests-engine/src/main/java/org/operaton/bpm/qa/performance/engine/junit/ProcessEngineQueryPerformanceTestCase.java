@@ -17,9 +17,10 @@
 package org.operaton.bpm.qa.performance.engine.junit;
 
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
-import org.junit.Before;
-import org.junit.Rule;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 /**
  * @author Daniel Meyer
@@ -27,14 +28,15 @@ import org.junit.Rule;
  */
 public class ProcessEngineQueryPerformanceTestCase {
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule(PerfTestProcessEngine.getInstance());
+  @RegisterExtension
+  protected static ProcessEngineExtension processEngineExtension =
+      ProcessEngineExtension.builder().useProcessEngine(PerfTestProcessEngine.getInstance()).build();
 
   protected ProcessEngine engine;
 
-  @Before
-  public void setup() {
-    engine = processEngineRule.getProcessEngine();
+  @BeforeEach
+  void setup() {
+    engine = processEngineExtension.getProcessEngine();
   }
 
 }

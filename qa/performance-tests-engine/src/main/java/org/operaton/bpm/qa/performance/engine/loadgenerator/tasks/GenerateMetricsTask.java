@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.qa.performance.engine.loadgenerator.tasks;
 
-import java.util.Date;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.metrics.MetricsRegistry;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
+import java.util.Date;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
- * Represents an task which generates metrics of an year.
+ * Represents a task which generates metrics of a year.
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
@@ -50,13 +51,7 @@ public class GenerateMetricsTask implements Runnable {
   /**
    * The thread id which identifies the current thread.
    */
-  public static final ThreadLocal<Integer> THREAD_ID = new ThreadLocal<>() {
-
-    @Override
-    protected Integer initialValue() {
-      return THREAD_ID_GENERATOR.getAndIncrement();
-    }
-  };
+  public static final ThreadLocal<Integer> THREAD_ID = ThreadLocal.withInitial(THREAD_ID_GENERATOR::getAndIncrement);
 
   /**
    * The start time on which the thread should begin to generate metrics.
@@ -64,23 +59,17 @@ public class GenerateMetricsTask implements Runnable {
    * and the milliseconds per year. That means each thread generated
    * data in a different year.
    */
-  public static final ThreadLocal<Long> START_TIME = new ThreadLocal<>() {
-
-    @Override
-    protected Long initialValue() {
-      return MS_COUNT_PER_YEAR * THREAD_ID.get();
-    }
-  };
+  public static final ThreadLocal<Long> START_TIME = ThreadLocal.withInitial(() -> MS_COUNT_PER_YEAR * THREAD_ID.get());
 
   /**
    * The interval length in milliseconds.
    */
-  public static final long INTERVAL = 15 * 60 * 1000;
+  public static final long INTERVAL = 15 * 60 * 1000L;
 
   /**
    * The process engine configuration, which is used for the metric reporting.
    */
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected final ProcessEngineConfigurationImpl processEngineConfiguration;
 
   public GenerateMetricsTask(ProcessEngine processEngine) {
     this.processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();

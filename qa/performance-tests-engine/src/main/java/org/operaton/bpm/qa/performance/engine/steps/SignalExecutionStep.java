@@ -25,7 +25,7 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
  */
 public class SignalExecutionStep extends ProcessEngineAwareStep {
 
-  protected String executionIdVariableName;
+  protected final String executionIdVariableName;
 
   public SignalExecutionStep(ProcessEngine processEngine, String executionIdVariableName) {
     super(processEngine);

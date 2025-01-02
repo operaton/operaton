@@ -21,17 +21,18 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepBehavior;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class CountJobsStep implements PerfTestStepBehavior {
 
-  ProcessEngine processEngine;
+  final ProcessEngine processEngine;
 
   public CountJobsStep(ProcessEngine processEngine) {
     this.processEngine = processEngine;
   }
 
   @Override
+  @SuppressWarnings("java:S106")
   public void execute(PerfTestRunContext context) {
     long failedJobs = processEngine.getHistoryService().createHistoricJobLogQuery().failureLog().count();
     long createdJobs = processEngine.getHistoryService().createHistoricJobLogQuery().creationLog().count();

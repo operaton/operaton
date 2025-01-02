@@ -16,36 +16,27 @@
  */
 package org.operaton.bpm.qa.performance.engine.query;
 
-import java.util.Arrays;
-import java.util.Date;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.loadgenerator.tasks.GenerateMetricsTask;
 import org.operaton.bpm.qa.performance.engine.steps.MetricIntervalStep;
 import org.operaton.bpm.qa.performance.engine.steps.MetricSumStep;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+
+import java.util.Arrays;
+import java.util.Date;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-@RunWith(Parameterized.class)
 public class MetricPerformanceTest extends ProcessEnginePerformanceTestCase {
-
-  @Parameter(0)
   public String name;
-
-  @Parameter(1)
   public Date startDate;
-
-  @Parameter(2)
   public Date endDate;
 
-  @Parameters(name="{index}")
   public static Iterable<Object[]> params() {
     return Arrays.asList(new Object[][]
     {
@@ -60,13 +51,23 @@ public class MetricPerformanceTest extends ProcessEnginePerformanceTestCase {
     });
   }
 
-  @Test
-  public void metricInterval() {
+  @MethodSource("params")
+  @ParameterizedTest(name = "{index}")
+  void metricInterval(String name, Date startDate, Date endDate) {
+    initMetricPerformanceTest(name, startDate, endDate);
     performanceTest().step(new MetricIntervalStep(name, startDate, endDate, engine)).run();
   }
 
-  @Test
-  public void metricSum() {
+  @MethodSource("params")
+  @ParameterizedTest(name = "{index}")
+  void metricSum(String name, Date startDate, Date endDate) {
+    initMetricPerformanceTest(name, startDate, endDate);
     performanceTest().step(new MetricSumStep(name, startDate, endDate, engine)).run();
+  }
+
+  public void initMetricPerformanceTest(String name, Date startDate, Date endDate) {
+    this.name = name;
+    this.startDate = startDate;
+    this.endDate = endDate;
   }
 }

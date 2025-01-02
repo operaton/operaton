@@ -16,10 +16,11 @@
  */
 package org.operaton.bpm.qa.performance.engine.steps;
 
-import java.util.Date;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.management.MetricsQuery;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
+
+import java.util.Date;
 
 /**
  *
@@ -27,9 +28,9 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
  */
 public class MetricIntervalStep extends ProcessEngineAwareStep {
 
-  protected String name;
-  protected Date startDate;
-  protected Date endDate;
+  protected final String name;
+  protected final Date startDate;
+  protected final Date endDate;
 
   public MetricIntervalStep(String name, Date startDate, Date endDate, ProcessEngine processEngine) {
     super(processEngine);

@@ -22,11 +22,11 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 import java.util.Random;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class RandomSleepDelegate implements JavaDelegate {
 
-  Random rand;
+  final Random rand;
 
   public RandomSleepDelegate() {
     rand = new Random();

@@ -24,8 +24,8 @@ import java.util.concurrent.CountDownLatch;
  */
 public class CompletionSignalingRunnable implements Runnable {
 
-  protected Runnable delegate;
-  protected CountDownLatch latch;
+  protected final Runnable delegate;
+  protected final CountDownLatch latch;
 
   public CompletionSignalingRunnable(Runnable delegate, CountDownLatch latch) {
     this.delegate = delegate;

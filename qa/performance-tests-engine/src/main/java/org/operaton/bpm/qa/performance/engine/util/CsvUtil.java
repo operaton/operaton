@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.qa.performance.engine.util;
 
-import java.util.List;
-
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
+
+import java.util.List;
 
 /**
  * <p>Provides export functionality for exporting a {@link TabularResultSet}
@@ -46,8 +46,8 @@ public class CsvUtil {
     if (writeHeadline) {
       // write headline
       List<String> resultColumnNames = resultSet.getResultColumnNames();
-      for (int i = 0; i < resultColumnNames.size(); i++) {
-        builder.append(resultColumnNames.get(i));
+      for (String resultColumnName : resultColumnNames) {
+        builder.append(resultColumnName);
         builder.append(";");
       }
       builder.append("\n");
@@ -57,7 +57,7 @@ public class CsvUtil {
     List<List<Object>> results = resultSet.getResults();
     for (List<Object> row : results) {
       for (Object object : row) {
-        builder.append(String.valueOf(object));
+        builder.append(object);
         builder.append(";");
       }
       builder.append("\n");

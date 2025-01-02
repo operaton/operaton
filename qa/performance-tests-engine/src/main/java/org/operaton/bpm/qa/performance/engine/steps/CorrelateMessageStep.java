@@ -26,8 +26,8 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
  */
 public class CorrelateMessageStep extends ProcessEngineAwareStep {
 
-  protected String message;
-  protected String processInstanceKey;
+  protected final String message;
+  protected final String processInstanceKey;
 
   public CorrelateMessageStep(ProcessEngine processEngine, String message, String processInstanceKey) {
     super(processEngine);
@@ -39,7 +39,7 @@ public class CorrelateMessageStep extends ProcessEngineAwareStep {
   public void execute(PerfTestRunContext context) {
     Execution execution = runtimeService.createExecutionQuery()
       .messageEventSubscriptionName(message)
-      .processInstanceId((String)context.getVariable(processInstanceKey))
+      .processInstanceId(context.getVariable(processInstanceKey))
       .singleResult();
 
     runtimeService.messageEventReceived(message, execution.getId());

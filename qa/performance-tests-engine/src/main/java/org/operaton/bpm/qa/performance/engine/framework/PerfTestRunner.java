@@ -16,18 +16,13 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
+import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestWatcher;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
-import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestWatcher;
+import java.util.concurrent.*;
 
 /**
  * @author Daniel Meyer, Ingo Richtsmeier
@@ -36,8 +31,8 @@ import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerf
 public class PerfTestRunner {
 
   protected ExecutorService executor;
-  protected PerfTest test;
-  protected PerfTestConfiguration configuration;
+  protected final PerfTest test;
+  protected final PerfTestConfiguration configuration;
 
   // global state
   public static PerfTestPass currentPass;
@@ -67,7 +62,7 @@ public class PerfTestRunner {
       watchers = new ArrayList<>();
       String[] watcherClassNames = testWatchers.split(",");
       for (String watcherClassName : watcherClassNames) {
-        if(watcherClassName.length() > 0) {
+        if(!watcherClassName.isEmpty()) {
           Object watcher = ReflectUtil.instantiate(watcherClassName);
           if(watcher instanceof PerfTestWatcher perfTestWatcher) {
             watchers.add(perfTestWatcher);
@@ -90,20 +85,17 @@ public class PerfTestRunner {
   public Future<PerfTestResults> execute() {
 
     // run a pass for each number of threads
-    new Thread() {
-      @Override
-      public void run() {
-        for (int i = 1; i <= configuration.getNumberOfThreads(); i++) {
-          runPassWithThreadCount(i);
-        }
-
-        synchronized (doneMonitor) {
-          isDone = true;
-          doneMonitor.notifyAll();
-        }
-
+    new Thread(() -> {
+      for (int i = 1; i <= configuration.getNumberOfThreads(); i++) {
+        runPassWithThreadCount(i);
       }
-    }.start();
+
+      synchronized (doneMonitor) {
+        isDone = true;
+        doneMonitor.notifyAll();
+      }
+
+    }).start();
 
     return new Future<>() {
 
@@ -120,7 +112,7 @@ public class PerfTestRunner {
       }
 
       @Override
-      public PerfTestResults get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+      public PerfTestResults get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException {
         synchronized (doneMonitor) {
           if(!isDone) {
             doneMonitor.wait(unit.convert(timeout, TimeUnit.MILLISECONDS));
@@ -156,6 +148,7 @@ public class PerfTestRunner {
     return executor;
   }
 
+  @SuppressWarnings("java:S1215")
   protected void runPassWithThreadCount(int passNumberOfThreads) {
 
     currentPass = new PerfTestPass(passNumberOfThreads);
@@ -192,10 +185,11 @@ public class PerfTestRunner {
           try {
             executor.awaitTermination(60, TimeUnit.SECONDS);
           } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             exception = e;
           }
-
         } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
           throw new PerfTestException("Interrupted wile waiting for pass "+ passNumberOfThreads +" to complete.");
         }
       }
@@ -287,12 +281,7 @@ public class PerfTestRunner {
     final PerfTestRun run = currentPass.getRun(runId);
     if (run.isWaitingForSignal()) {
       // only complete step if the run is already waiting for a signal
-      run.getRunner().getExecutor().execute(new Runnable() {
-        @Override
-        public void run() {
-          run.getRunner().completedStep(run, run.getCurrentStep());
-        }
-      });
+      run.getRunner().getExecutor().execute(() -> run.getRunner().completedStep(run, run.getCurrentStep()));
     }
   }
 

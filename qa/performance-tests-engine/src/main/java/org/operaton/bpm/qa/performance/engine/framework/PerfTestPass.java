@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
+import org.operaton.bpm.engine.impl.cfg.IdGenerator;
+import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
+import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestResult;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
-
-import org.operaton.bpm.engine.impl.cfg.IdGenerator;
-import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
-import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerfTestResult;
 
 /**
  * A step in a performance test.
@@ -32,14 +32,15 @@ import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerf
  * @author Daniel Meyer
  *
  */
+@SuppressWarnings("unused")
 public class PerfTestPass {
 
   protected static final IdGenerator idGenerator = new StrongUuidGenerator();
 
   // pass state
-  protected int numberOfThreads;
-  protected AtomicLong completedRuns;
-  protected PerfTestResult result;
+  protected final int numberOfThreads;
+  protected final AtomicLong completedRuns;
+  protected final PerfTestResult result;
   protected boolean completed;
   protected Map<String, PerfTestRun> runs;
   protected long startTime;

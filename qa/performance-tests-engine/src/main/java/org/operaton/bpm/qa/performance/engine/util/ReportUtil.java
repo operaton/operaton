@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.qa.performance.engine.util;
 
-import java.io.File;
-
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultAggregator;
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
 import org.operaton.bpm.qa.performance.engine.framework.report.HtmlReportBuilder;
+
+import java.io.File;
 
 /**
  * @author Daniel Meyer
@@ -31,11 +31,10 @@ public class ReportUtil {
   private ReportUtil() {
   }
 
-  public static void writeReport(String resultsFolder,
-      String reportsFolder,
-      String benchmarkName,
-      TabularResultAggregator aggregator,
-      String reportDescription) {
+  public static void writeReport(String reportsFolder,
+                                 String benchmarkName,
+                                 TabularResultAggregator aggregator,
+                                 String reportDescription) {
 
     final String htmlReportFilename = reportsFolder + File.separatorChar + benchmarkName+"-report.html";
 

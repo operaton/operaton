@@ -16,25 +16,27 @@
  */
 package org.operaton.bpm.qa.performance.engine.bpmn;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.qa.performance.engine.bpmn.delegate.NoopDelegate;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceStep;
-import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class ServiceTaskPerformanceTest extends ProcessEnginePerformanceTestCase {
+class ServiceTaskPerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
-  public void threeServiceTasksAndAGateway() {
+  void threeServiceTasksAndAGateway() {
 
     Map<String, Object> variables = new HashMap<>();
     variables.put("approved", true);
@@ -53,14 +55,13 @@ public class ServiceTaskPerformanceTest extends ProcessEnginePerformanceTestCase
       .endEvent()
       .done();
 
-    Deployment deployment = repositoryService.createDeployment()
+    assertThatCode(() -> repositoryService.createDeployment()
       .addModelInstance("process.bpmn", process)
-      .deploy();
+      .deploy()).doesNotThrowAnyException();
 
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process", variables))
     .run();
-
   }
 
 }

@@ -16,29 +16,25 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.activitylog;
 
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.history.HistoricActivityInstance;
+import org.operaton.bpm.engine.history.HistoricProcessInstance;
+import org.operaton.bpm.qa.performance.engine.framework.*;
+import org.operaton.bpm.qa.performance.engine.junit.PerfTestProcessEngine;
+import org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTest;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestPass;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestRun;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestStep;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestWatcher;
-import org.operaton.bpm.qa.performance.engine.junit.PerfTestProcessEngine;
-import org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants;
-
 public class ActivityPerfTestWatcher implements PerfTestWatcher {
 
   public static final List<String> WATCH_ALL_ACTIVITIES = Collections.singletonList("ALL");
 
-  protected List<String> activityIds;
-  protected boolean watchAllActivities;
+  protected final List<String> activityIds;
+  protected final boolean watchAllActivities;
 
   public ActivityPerfTestWatcher(List<String> activityIds) {
     this.activityIds = activityIds;

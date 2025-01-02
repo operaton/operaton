@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.qa.performance.engine.query;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
@@ -30,54 +25,44 @@ import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.query.Query;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepBehavior;
 import org.operaton.bpm.qa.performance.engine.junit.AuthorizationPerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.junit.PerfTestProcessEngine;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
-
+import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import static java.util.Collections.emptyList;
 
 /**
  * @author Daniel Meyer
  *
  */
 @SuppressWarnings("rawtypes")
-@RunWith(Parameterized.class)
 public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerformanceTestCase {
+  public String name;
+  public Query query;
+  public Resource resource;
+  public Permission[] permissions;
+  public Authentication authentication;
 
-  @Parameter(0)
-  public static String name;
+  static final List<Object[]> queryResourcesAndPermissions;
 
-  @Parameter(1)
-  public static Query query;
-
-  @Parameter(2)
-  public static Resource resource;
-
-  @Parameter(3)
-  public static Permission[] permissions;
-
-  @Parameter(4)
-  public static Authentication authentication;
-
-  static List<Object[]> queryResourcesAndPermissions;
-
-  static List<Authentication> authentications;
+  static final List<Authentication> authentications;
 
   static {
     ProcessEngine processEngine = PerfTestProcessEngine.getInstance();
     RuntimeService runtimeService = processEngine.getRuntimeService();
     TaskService taskService = processEngine.getTaskService();
 
-    queryResourcesAndPermissions = Arrays.<Object[]>asList(
+    queryResourcesAndPermissions = Arrays.asList(
         new Object[] {
             "ProcessInstanceQuery",
             runtimeService.createProcessInstanceQuery(),
@@ -99,13 +84,13 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
     );
 
     authentications = Arrays.asList(
-        new Authentication(null, Collections.<String>emptyList()){
+        new Authentication(null, emptyList()){
           @Override
           public String toString() {
             return "without authentication";
           }
         },
-        new Authentication("test", Collections.<String>emptyList()){
+        new Authentication("test", emptyList()){
           @Override
           public String toString() {
             return "with authenticated user without groups";
@@ -127,7 +112,6 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
 
   }
 
-  @Parameters(name="{0} - {4}")
   public static Iterable<Object[]> params() {
     final ArrayList<Object[]> params = new ArrayList<>();
 
@@ -143,8 +127,8 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
     return params;
   }
 
-  @Before
-  public void createAuthorizations() {
+  @BeforeEach
+  void createAuthorizations() {
     AuthorizationService authorizationService = engine.getAuthorizationService();
     List<Authorization> auths = authorizationService.createAuthorizationQuery().list();
     for (Authorization authorization : auths) {
@@ -153,39 +137,45 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
 
     userGrant("test", resource, permissions);
     for (int i = 0; i < 5; i++) {
-      grouptGrant("g"+i, resource, permissions);
+      groupGrant("g"+i, resource, permissions);
     }
     engine.getProcessEngineConfiguration().setAuthorizationEnabled(true);
   }
 
-  @Test
-  public void queryList() {
-    performanceTest().step(new PerfTestStepBehavior() {
-      @Override
-      public void execute(PerfTestRunContext context) {
-        try {
-          engine.getIdentityService().setAuthentication(authentication);
-          query.listPage(0, 15);
-        } finally {
-          engine.getIdentityService().clearAuthentication();
-        }
+  @MethodSource("params")
+  @ParameterizedTest(name = "{0} - {4}")
+  void queryList(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
+    initRuntimeAuthorizationQueryPerformanceTest(name, query, resource, permissions, authentication);
+    performanceTest().step(context -> {
+      try {
+        engine.getIdentityService().setAuthentication(authentication);
+        query.listPage(0, 15);
+      } finally {
+        engine.getIdentityService().clearAuthentication();
       }
     }).run();
   }
 
-  @Test
-  public void queryCount() {
-    performanceTest().step(new PerfTestStepBehavior() {
-      @Override
-      public void execute(PerfTestRunContext context) {
-        try {
-          engine.getIdentityService().setAuthentication(authentication);
-          query.count();
-        } finally {
-          engine.getIdentityService().clearAuthentication();
-        }
+  @MethodSource("params")
+  @ParameterizedTest(name = "{0} - {4}")
+  void queryCount(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
+    initRuntimeAuthorizationQueryPerformanceTest(name, query, resource, permissions, authentication);
+    performanceTest().step(context -> {
+      try {
+        engine.getIdentityService().setAuthentication(authentication);
+        query.count();
+      } finally {
+        engine.getIdentityService().clearAuthentication();
       }
     }).run();
+  }
+
+  public void initRuntimeAuthorizationQueryPerformanceTest(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
+    this.name = name;
+    this.query = query;
+    this.resource = resource;
+    this.permissions = permissions;
+    this.authentication = authentication;
   }
 
 }

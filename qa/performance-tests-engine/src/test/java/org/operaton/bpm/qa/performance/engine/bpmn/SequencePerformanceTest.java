@@ -18,21 +18,21 @@ package org.operaton.bpm.qa.performance.engine.bpmn;
 
 import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.PROCESS_INSTANCE_ID;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.steps.SignalExecutionStep;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceStep;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class SequencePerformanceTest extends ProcessEnginePerformanceTestCase {
+class SequencePerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void syncSequence1Step() {
+  void syncSequence1Step() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
     .run();
@@ -40,7 +40,7 @@ public class SequencePerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void syncSequence5Steps() {
+  void syncSequence5Steps() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
     .run();
@@ -48,7 +48,7 @@ public class SequencePerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void syncSequence15Steps() {
+  void syncSequence15Steps() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
     .run();
@@ -56,7 +56,7 @@ public class SequencePerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void asyncSequence1Step() {
+  void asyncSequence1Step() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
       .step(new SignalExecutionStep(engine, PROCESS_INSTANCE_ID))
@@ -65,7 +65,7 @@ public class SequencePerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void asyncSequence5Steps() {
+  void asyncSequence5Steps() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
       .steps(5, new SignalExecutionStep(engine, PROCESS_INSTANCE_ID))
@@ -74,7 +74,7 @@ public class SequencePerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void asyncSequence15Steps() {
+  void asyncSequence15Steps() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
       .steps(15, new SignalExecutionStep(engine, PROCESS_INSTANCE_ID))

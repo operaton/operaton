@@ -16,19 +16,20 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.aggregate;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepResult;
 import org.operaton.bpm.qa.performance.engine.sqlstatementlog.StatementLogSqlSession.SqlStatementType;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+
 /**
  * Aggregates the results from a Sql Statement Test run.
- *
+ * <p>
  * This aggregator will count the statement types for each {@link SqlStatementType}
  * and add the counts to the resultset.
+ * </p>
  *
  * @author Daniel Meyer
  *

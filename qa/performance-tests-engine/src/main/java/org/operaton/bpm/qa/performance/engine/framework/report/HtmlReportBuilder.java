@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.report;
 
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.form.engine.HtmlDocumentBuilder;
 import org.operaton.bpm.engine.impl.form.engine.HtmlElementWriter;
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
+
+import java.util.List;
 
 /**
  * Uses a {@link TabularResultSet} and renders it as a Html Table.
@@ -30,7 +30,7 @@ import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultS
  */
 public class HtmlReportBuilder {
 
-  protected TabularResultSet resultSet;
+  protected final TabularResultSet resultSet;
   protected String resultsBaseFolder;
   protected String jsonSourceFileName;
   protected String csvSourceFileName;
@@ -66,6 +66,7 @@ public class HtmlReportBuilder {
     return this;
   }
 
+  @SuppressWarnings("java:S1192")
   public String execute() {
 
     HtmlDocumentBuilder documentBuilder = new HtmlDocumentBuilder(new HtmlElementWriter("html"));

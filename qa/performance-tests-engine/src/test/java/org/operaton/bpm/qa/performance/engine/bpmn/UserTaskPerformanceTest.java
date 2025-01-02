@@ -18,21 +18,21 @@ package org.operaton.bpm.qa.performance.engine.bpmn;
 
 import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.TASK_ID;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.steps.CompleteTaskStep;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceStep;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class UserTaskPerformanceTest extends ProcessEnginePerformanceTestCase {
+class UserTaskPerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void singleTask() {
+  void singleTask() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
       .step(new CompleteTaskStep(engine, TASK_ID))

@@ -21,17 +21,18 @@ import org.operaton.bpm.qa.performance.engine.junit.ProcessEngineJobExecutorPerf
 import org.operaton.bpm.qa.performance.engine.steps.CountJobsStep;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceStep;
 import org.operaton.bpm.qa.performance.engine.steps.WaitStep;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
-public class MultiInstancePerformanceTest extends ProcessEngineJobExecutorPerformanceTestCase {
+class MultiInstancePerformanceTest extends ProcessEngineJobExecutorPerformanceTestCase {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/qa/performance/engine/bpmn/MultiInstancePerformanceTest.oneAsyncServiceTask.bpmn",
-      "org/operaton/bpm/qa/performance/engine/bpmn/MultiInstancePerformanceTest.subProcessWithAsyncCallActivity.bpmn"})
-  public void subProcessWithAsyncCallActivity() {
+    "org/operaton/bpm/qa/performance/engine/bpmn/MultiInstancePerformanceTest.subProcessWithAsyncCallActivity.bpmn"})
+  void subProcessWithAsyncCallActivity() {
 
     performanceTest()
         .step(new StartProcessInstanceStep(engine, "mainprocess"))

@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
-import java.util.concurrent.ExecutionException;
+import org.operaton.bpm.qa.performance.engine.junit.PerfTestResultRecorderExtension;
 
-import org.operaton.bpm.qa.performance.engine.junit.PerfTestResultRecorderRule;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -28,11 +28,11 @@ import org.operaton.bpm.qa.performance.engine.junit.PerfTestResultRecorderRule;
 public class PerfTestBuilder {
 
   protected final PerfTest perfTest;
-  protected PerfTestConfiguration perfTestConfiguration;
-  protected PerfTestResultRecorderRule resultRecorder;
+  protected final PerfTestConfiguration perfTestConfiguration;
+  protected final PerfTestResultRecorderExtension resultRecorder;
 
   public PerfTestBuilder(PerfTestConfiguration perfTestConfiguration,
-                                  PerfTestResultRecorderRule resultRecorder) {
+                                  PerfTestResultRecorderExtension resultRecorder) {
     this.perfTestConfiguration = perfTestConfiguration;
     this.resultRecorder = resultRecorder;
     perfTest = new PerfTest();
@@ -65,6 +65,7 @@ public class PerfTestBuilder {
         throw new PerfTestException(e);
       }
     } catch (Exception e) {
+      Thread.currentThread().interrupt();
       throw new PerfTestException(e);
     }
 

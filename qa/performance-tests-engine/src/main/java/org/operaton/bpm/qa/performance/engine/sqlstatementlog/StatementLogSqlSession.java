@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.qa.performance.engine.sqlstatementlog;
 
+import org.operaton.bpm.qa.performance.engine.util.DelegatingSqlSession;
+import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +26,6 @@ import java.util.Map;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.operaton.bpm.qa.performance.engine.util.DelegatingSqlSession;
-import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
 
 /**
  * <p>This SqlSession wraps an actual SqlSession and logs executed sql statements. (Calls to the
@@ -35,7 +36,7 @@ import org.operaton.bpm.qa.performance.engine.util.JsonUtil;
  */
 public class StatementLogSqlSession extends DelegatingSqlSession {
 
-  protected static ThreadLocal<List<SqlStatementLog>> threadStatementLog = new ThreadLocal<>();
+  protected static final ThreadLocal<List<SqlStatementLog>> threadStatementLog = new ThreadLocal<>();
 
   public StatementLogSqlSession(SqlSession wrappedSession) {
     super(wrappedSession);
@@ -77,13 +78,13 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
   }
 
   @Override
-  public int insert(String statement, Object paremeter) {
+  public int insert(String statement, Object parameter) {
     long start = System.currentTimeMillis();
 
-    int result = super.insert(statement, paremeter);
+    int result = super.insert(statement, parameter);
 
     long duration = System.currentTimeMillis() - start;
-    logStatement(SqlStatementType.INSERT, paremeter, statement, duration);
+    logStatement(SqlStatementType.INSERT, parameter, statement, duration);
     return result;
   }
 
@@ -258,20 +259,20 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
    * starts logging any statements executed by the calling thread.
    */
   public static void startLogging() {
-    threadStatementLog.set(new ArrayList<StatementLogSqlSession.SqlStatementLog>());
+    threadStatementLog.set(new ArrayList<>());
   }
 
   // log classes //////////////////////////////////////
 
   public static class SqlStatementLog {
 
-    protected SqlStatementType statementType;
+    protected final SqlStatementType statementType;
 
     /** the statement (sql string) */
-    protected String statement;
+    protected final String statement;
 
     /** the duration the statement took to execute in Milliseconds */
-    protected long durationMs;
+    protected final long durationMs;
 
     protected String statementParameters;
 
@@ -280,7 +281,7 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
       this.statement = statement;
       this.durationMs = duration;
       try {
-        statementParameters = JsonUtil.getMapper().writeValueAsString(parameters).replaceAll("\"", "'");
+        statementParameters = JsonUtil.getMapper().writeValueAsString(parameters).replace("\"", "'");
       } catch (Exception e) {
 //        e.printStackTrace();
       }
@@ -304,7 +305,7 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
 
   }
 
-  public static enum SqlStatementType {
+  public enum SqlStatementType {
     SELECT, SELECT_ONE, SELECT_LIST, SELECT_MAP,
     INSERT,
     UPDATE,

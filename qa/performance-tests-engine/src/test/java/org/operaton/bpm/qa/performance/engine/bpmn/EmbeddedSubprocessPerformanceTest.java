@@ -18,21 +18,21 @@ package org.operaton.bpm.qa.performance.engine.bpmn;
 
 import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.EXECUTION_ID;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.steps.SignalExecutionStep;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceStep;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class EmbeddedSubprocessPerformanceTest extends ProcessEnginePerformanceTestCase {
+class EmbeddedSubprocessPerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void sync1Subprocess() {
+  void sync1Subprocess() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
     .run();
@@ -40,7 +40,7 @@ public class EmbeddedSubprocessPerformanceTest extends ProcessEnginePerformanceT
 
   @Test
   @Deployment
-  public void sync2Subprocesses() {
+  void sync2Subprocesses() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
     .run();
@@ -48,7 +48,7 @@ public class EmbeddedSubprocessPerformanceTest extends ProcessEnginePerformanceT
 
   @Test
   @Deployment
-  public void sync3Subprocesses() {
+  void sync3Subprocesses() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
     .run();
@@ -56,16 +56,7 @@ public class EmbeddedSubprocessPerformanceTest extends ProcessEnginePerformanceT
 
   @Test
   @Deployment
-  public void async1Subprocess() {
-    performanceTest()
-      .step(new StartProcessInstanceStep(engine, "process"))
-      .step(new SignalExecutionStep(engine, EXECUTION_ID))
-    .run();
-  }
-
-  @Test
-  @Deployment
-  public void async2Subprocesses() {
+  void async1Subprocess() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
       .step(new SignalExecutionStep(engine, EXECUTION_ID))
@@ -74,7 +65,16 @@ public class EmbeddedSubprocessPerformanceTest extends ProcessEnginePerformanceT
 
   @Test
   @Deployment
-  public void async3Subprocesses() {
+  void async2Subprocesses() {
+    performanceTest()
+      .step(new StartProcessInstanceStep(engine, "process"))
+      .step(new SignalExecutionStep(engine, EXECUTION_ID))
+    .run();
+  }
+
+  @Test
+  @Deployment
+  void async3Subprocesses() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
       .step(new SignalExecutionStep(engine, EXECUTION_ID))

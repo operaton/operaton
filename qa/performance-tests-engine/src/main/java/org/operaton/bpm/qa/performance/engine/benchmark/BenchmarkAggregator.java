@@ -16,14 +16,15 @@
  */
 package org.operaton.bpm.qa.performance.engine.benchmark;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResult;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultAggregator;
 import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultSet;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The default benchmark aggregator records the duration
@@ -73,13 +74,14 @@ public class BenchmarkAggregator extends TabularResultAggregator {
       }
     }
     double speedUp = durationForSequential / passResult.getDuration();
-    BigDecimal bigDecimalSpeedUp = new BigDecimal(speedUp);
-    bigDecimalSpeedUp.setScale(1, BigDecimal.ROUND_HALF_UP);
+    BigDecimal bigDecimalSpeedUp = BigDecimal.valueOf(speedUp);
+    bigDecimalSpeedUp = bigDecimalSpeedUp.setScale(1, RoundingMode.HALF_UP);
     row.add(bigDecimalSpeedUp.doubleValue());
   }
 
+  @Override
   protected void postProcessResultSet(TabularResultSet tabularResultSet) {
-    if(tabularResultSet.getResults().size() > 0) {
+    if(!tabularResultSet.getResults().isEmpty()) {
       int columnSize = tabularResultSet.getResults().get(0).size();
 
       ArrayList<String> columnNames = new ArrayList<>();

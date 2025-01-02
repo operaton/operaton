@@ -16,16 +16,13 @@
  */
 package org.operaton.bpm.qa.performance.engine.junit;
 
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
+import org.operaton.bpm.engine.*;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestBuilder;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestConfiguration;
-import org.junit.Before;
-import org.junit.Rule;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 /**
  * <p>Base class for implementing a process engine performance test</p>
@@ -35,14 +32,15 @@ import org.junit.Rule;
  */
 public abstract class ProcessEnginePerformanceTestCase {
 
-  @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule(PerfTestProcessEngine.getInstance());
+  @RegisterExtension
+  protected static ProcessEngineExtension processEngineExtension =
+      ProcessEngineExtension.builder().useProcessEngine(PerfTestProcessEngine.getInstance()).build();
 
-  @Rule
-  public PerfTestConfigurationRule testConfigurationRule = new PerfTestConfigurationRule();
+  @RegisterExtension
+  static PerfTestConfigurationExtension testConfigurationRule = new PerfTestConfigurationExtension();
 
-  @Rule
-  public PerfTestResultRecorderRule resultRecorderRule = new PerfTestResultRecorderRule();
+  @RegisterExtension
+  PerfTestResultRecorderExtension resultRecorderRule = new PerfTestResultRecorderExtension();
 
   protected ProcessEngine engine;
   protected TaskService taskService;
@@ -50,9 +48,9 @@ public abstract class ProcessEnginePerformanceTestCase {
   protected RuntimeService runtimeService;
   protected RepositoryService repositoryService;
 
-  @Before
+  @BeforeEach
   public void setup() {
-    engine = processEngineRule.getProcessEngine();
+    engine = processEngineExtension.getProcessEngine();
     taskService = engine.getTaskService();
     historyService = engine.getHistoryService();
     runtimeService = engine.getRuntimeService();

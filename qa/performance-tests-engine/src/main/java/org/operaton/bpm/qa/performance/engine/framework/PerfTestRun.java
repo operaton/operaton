@@ -16,18 +16,17 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
+import org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants;
-
 /**
  * An individual run of a performance test. Holds all state related to a test run.
  *
  * @author Daniel Meyer
- *
  */
 public class PerfTestRun implements PerfTestRunContext, Runnable {
 
@@ -40,11 +39,11 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
   protected long stepEndTime;
 
   protected volatile PerfTestStep currentStep;
-  protected AtomicInteger state = new AtomicInteger();
+  protected final AtomicInteger state = new AtomicInteger();
 
-  protected PerfTestRunner runner;
+  protected final PerfTestRunner runner;
 
-  protected Map<String, Object> runContext = new HashMap<>();
+  protected final Map<String, Object> runContext = new HashMap<>();
 
   public PerfTestRun(PerfTestRunner runner, String runId, PerfTestStep firstStep) {
     this.runner = runner;
@@ -66,25 +65,23 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
   @Override
   public void run() {
     try {
-      if(!isStarted) {
+      if (!isStarted) {
         startRun();
       }
 
       PerfTestRunContext.currentContext.set(this);
 
-      if(!currentStep.isWaitStep()) {
+      if (!currentStep.isWaitStep()) {
         continueRun();
-      }
-      else {
+      } else {
         pauseRun();
       }
 
-    } catch(Throwable t) {
+    } catch (Exception t) {
       runner.failed(this, t);
 
     } finally {
       PerfTestRunContext.currentContext.remove();
-
     }
   }
 
@@ -104,11 +101,11 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
 
   @Override
   public <T> T getVariable(String name) {
-    Object var = runContext.get(name);
-    if(var == null) {
+    Object variable = runContext.get(name);
+    if (variable == null) {
       return null;
     } else {
-      return (T) var;
+      return (T) variable;
     }
   }
 
@@ -121,10 +118,12 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
     this.currentStep = currentStep;
   }
 
+  @SuppressWarnings("unused")
   public long getRunStartTime() {
     return runStartTime;
   }
 
+  @SuppressWarnings("unused")
   public long getRunEndTime() {
     return runEndTime;
   }
@@ -137,10 +136,12 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
     return runner;
   }
 
+  @SuppressWarnings("unused")
   public long getStepEndTime() {
     return stepEndTime;
   }
 
+  @SuppressWarnings("unused")
   public long getStepStartTime() {
     return stepStartTime;
   }
@@ -148,7 +149,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
   /**
    * Sets the run into waiting state and returns if the run
    * was already signaled.
-   *
+   * <p>
    * Note: This method will change the state of the run
    * to waiting.
    *
@@ -162,7 +163,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
   /**
    * Signals the run and returns if the run was already
    * waiting for a signal.
-   *
+   * <p>
    * Note: This method will change the state of the run
    * to signaled.
    *
@@ -175,7 +176,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
 
   protected void notifyWatchersStartRun() {
     List<PerfTestWatcher> watchers = runner.getWatchers();
-    if(watchers != null) {
+    if (watchers != null) {
       for (PerfTestWatcher perfTestWatcher : watchers) {
         perfTestWatcher.beforeRun(runner.getTest(), this);
       }
@@ -184,7 +185,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
 
   protected void notifyWatchersEndRun() {
     List<PerfTestWatcher> watchers = runner.getWatchers();
-    if(watchers != null) {
+    if (watchers != null) {
       for (PerfTestWatcher perfTestWatcher : watchers) {
         perfTestWatcher.afterRun(runner.getTest(), this);
       }

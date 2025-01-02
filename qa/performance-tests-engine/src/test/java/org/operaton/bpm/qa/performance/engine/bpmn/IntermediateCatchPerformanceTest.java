@@ -18,21 +18,21 @@ package org.operaton.bpm.qa.performance.engine.bpmn;
 
 import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.PROCESS_INSTANCE_ID;
 
+import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.steps.CorrelateMessageStep;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceStep;
-import org.junit.Test;
 
 /**
  * @author Daniel Meyer
  *
  */
-public class IntermediateCatchPerformanceTest extends ProcessEnginePerformanceTestCase {
+class IntermediateCatchPerformanceTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment
-  public void singleMessage() {
+  void singleMessage() {
     performanceTest()
       .step(new StartProcessInstanceStep(engine, "process"))
       .step(new CorrelateMessageStep(engine, "message", PROCESS_INSTANCE_ID))

@@ -25,8 +25,8 @@ import org.operaton.bpm.engine.RuntimeService;
  */
 public class StartProcessInstanceTask implements Runnable {
 
-  protected ProcessEngine processEngine;
-  protected String processDefinitionKey;
+  protected final ProcessEngine processEngine;
+  protected final String processDefinitionKey;
 
   public StartProcessInstanceTask(ProcessEngine processEngine, String processDefinitionKey) {
     this.processEngine = processEngine;

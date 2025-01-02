@@ -31,12 +31,13 @@ import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import static java.util.Collections.emptyList;
 
 /**
  * @author Daniel Meyer
@@ -44,15 +45,15 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 @SuppressWarnings("rawtypes")
 public class RepositoryAuthorizationQueryPerformanceTest extends AuthorizationPerformanceTestCase {
-  public static String name;
-  public static Query query;
-  public static Resource resource;
-  public static Permission[] permissions;
-  public static Authentication authentication;
+  public String name;
+  public Query query;
+  public Resource resource;
+  public Permission[] permissions;
+  public Authentication authentication;
 
-  static List<Object[]> queryResourcesAndPermissions;
+  static final List<Object[]> queryResourcesAndPermissions;
 
-  static List<Authentication> authentications;
+  static final List<Authentication> authentications;
 
   static {
     ProcessEngine processEngine = PerfTestProcessEngine.getInstance();
@@ -74,13 +75,13 @@ public class RepositoryAuthorizationQueryPerformanceTest extends AuthorizationPe
     );
 
     authentications = Arrays.asList(
-        new Authentication(null, Collections.<String>emptyList()){
+        new Authentication(null, emptyList()){
           @Override
           public String toString() {
             return "without authentication";
           }
         },
-        new Authentication("test", Collections.<String>emptyList()){
+        new Authentication("test", emptyList()){
           @Override
           public String toString() {
             return "with authenticated user without groups";
@@ -127,7 +128,7 @@ public class RepositoryAuthorizationQueryPerformanceTest extends AuthorizationPe
 
     userGrant("test", resource, permissions);
     for (int i = 0; i < 5; i++) {
-      grouptGrant("g"+i, resource, permissions);
+      groupGrant("g"+i, resource, permissions);
     }
     engine.getProcessEngineConfiguration().setAuthorizationEnabled(true);
   }

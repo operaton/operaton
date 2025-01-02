@@ -28,8 +28,8 @@ import java.util.concurrent.ExecutionException;
 public class PerfTestBuilder {
 
   protected final PerfTest perfTest;
-  protected PerfTestConfiguration perfTestConfiguration;
-  protected PerfTestResultRecorderExtension resultRecorder;
+  protected final PerfTestConfiguration perfTestConfiguration;
+  protected final PerfTestResultRecorderExtension resultRecorder;
 
   public PerfTestBuilder(PerfTestConfiguration perfTestConfiguration,
                                   PerfTestResultRecorderExtension resultRecorder) {

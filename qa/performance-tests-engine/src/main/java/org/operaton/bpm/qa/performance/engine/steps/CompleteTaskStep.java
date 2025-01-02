@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.qa.performance.engine.steps;
 
-import java.util.Map;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
+
+import java.util.Map;
 
 /**
  * @author Daniel Meyer, Ingo Richtsmeier
@@ -27,8 +27,8 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
  */
 public class CompleteTaskStep extends ProcessEngineAwareStep {
 
-  protected String taskIdKey;
-  private Map<String, Object> processVariables;
+  protected final String taskIdKey;
+  private final Map<String, Object> processVariables;
 
   public CompleteTaskStep(ProcessEngine processEngine, String taskIdKey) {
     this(processEngine, taskIdKey, null);

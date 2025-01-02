@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework.activitylog;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestConfiguration;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResult;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestResults;
@@ -30,13 +24,15 @@ import org.operaton.bpm.qa.performance.engine.framework.aggregate.TabularResultS
 import org.operaton.bpm.qa.performance.engine.framework.report.SectionedHtmlReportBuilder;
 import org.operaton.bpm.qa.performance.engine.framework.report.SectionedHtmlReportBuilder.TableCell;
 
+import java.util.*;
+
 public class ActivityCountAggregator extends TabularResultAggregator {
 
   public static final long INTERVAL = 1000;
   public static final long TIME_UNIT = 1000;
   public static final long INTERVAL_SECONDS = INTERVAL / 1000;
 
-  protected SectionedHtmlReportBuilder htmlBuilder;
+  protected final SectionedHtmlReportBuilder htmlBuilder;
 
   public ActivityCountAggregator(String resultsFolderPath, SectionedHtmlReportBuilder htmlBuilder) {
     super(resultsFolderPath);
@@ -182,7 +178,7 @@ public class ActivityCountAggregator extends TabularResultAggregator {
     return Math.round((date.getTime() - firstTimestamp) / INTERVAL);
   }
 
-  class ActivityCount {
+  static class ActivityCount {
     int started = 0;
     int ended = 0;
     long duration = 0;

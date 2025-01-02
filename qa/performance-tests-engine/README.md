@@ -13,7 +13,7 @@ This testsuite allows running different kinds of performance tests against the p
 
 > **Design Rationale**: This testsuite does not try to produce absolute numbers. The goal is not to produce numbers that show "how fast the process engine is". On the contrary, the idea is to produce relative numbers that can be compared over time. The benchmarks allow us to get a sense of whether a certain change to the codebase made the process engine faster or slower compared to the numbers we were getting before. Other performance tests like the Sql Statement Log are meant to serve as a tool for gaining insight into the inner workings of the process engine and may be used for tracking down the source of performance degradations or for finding potential for optimization.
 
-<a name="benchmark"></a>
+<a id="benchmark"></a>
 ## The Benchmark
 
 The benchmark runs the performance testsuite in multiple passes. Each pass will perform a configurable number of iterations on a certain number of threads. The first pass will use one thread, the second one two threads, the third one three theads and so forth. The benchmark gives some relative numbers as to how long it takes to run a certain process in a number of iterations with a given amount of threads. It will also show to which extent adding more threads will influence the performance numbers (scale up).
@@ -57,7 +57,7 @@ The raw JSON result files are located in the `target/results/` folder and provid
   }, ...
 }
 ```
-<a name="longterm-results" />
+<a id="longterm-results"></a>
 ### Collect longterm results
 
 You could collect your benchmarks over a longer time if you pass the absolute filename
@@ -219,12 +219,12 @@ The raw JSON result files allow you to inspect the activity execution on a fine 
 ```
 
 
-<a name="configuration" />
+<a id="configuration"></a>
 ## Configuration
 
 The process engine testsuie can be configured through the maven build.
 
-<a name="configuration-database" />
+<a id="configuration-database"></a>
 ### Selecting a database
 
 Databases are selected using maven profiles:
@@ -253,7 +253,7 @@ mvn clean install -Pbenchmark,mysql \
                   -Ddatabase.password=s3cret \
 ```
 
-<a name="configuration-history" />
+<a id="configuration-history"></a>
 ### Selecting a history level
 
 History levels can be selected using a maven profile:
@@ -263,7 +263,7 @@ mvn clean install -Pbenchmark,mysql,history-level-none
 mvn clean install -Pbenchmark,mysql,history-level-full
 ```
 
-<a name="configuration-tests" />
+<a id="configuration-tests"></a>
 ### Selecting tests
 
 A test or a group of tests can be selected using the properties `test.includes` and `test.excludes`:

@@ -36,7 +36,7 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class StatementLogSqlSession extends DelegatingSqlSession {
 
-  protected static ThreadLocal<List<SqlStatementLog>> threadStatementLog = new ThreadLocal<>();
+  protected static final ThreadLocal<List<SqlStatementLog>> threadStatementLog = new ThreadLocal<>();
 
   public StatementLogSqlSession(SqlSession wrappedSession) {
     super(wrappedSession);
@@ -78,13 +78,13 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
   }
 
   @Override
-  public int insert(String statement, Object paremeter) {
+  public int insert(String statement, Object parameter) {
     long start = System.currentTimeMillis();
 
-    int result = super.insert(statement, paremeter);
+    int result = super.insert(statement, parameter);
 
     long duration = System.currentTimeMillis() - start;
-    logStatement(SqlStatementType.INSERT, paremeter, statement, duration);
+    logStatement(SqlStatementType.INSERT, parameter, statement, duration);
     return result;
   }
 
@@ -266,13 +266,13 @@ public class StatementLogSqlSession extends DelegatingSqlSession {
 
   public static class SqlStatementLog {
 
-    protected SqlStatementType statementType;
+    protected final SqlStatementType statementType;
 
     /** the statement (sql string) */
-    protected String statement;
+    protected final String statement;
 
     /** the duration the statement took to execute in Milliseconds */
-    protected long durationMs;
+    protected final long durationMs;
 
     protected String statementParameters;
 

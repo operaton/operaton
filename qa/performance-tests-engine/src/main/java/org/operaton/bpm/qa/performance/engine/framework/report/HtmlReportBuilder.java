@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class HtmlReportBuilder {
 
-  protected TabularResultSet resultSet;
+  protected final TabularResultSet resultSet;
   protected String resultsBaseFolder;
   protected String jsonSourceFileName;
   protected String csvSourceFileName;

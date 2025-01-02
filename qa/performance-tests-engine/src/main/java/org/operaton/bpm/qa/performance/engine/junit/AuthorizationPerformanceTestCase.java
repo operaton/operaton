@@ -62,7 +62,7 @@ public abstract class AuthorizationPerformanceTestCase {
   }
 
 
-  protected void grouptGrant(String groupId, Resource resource, Permission... perms) {
+  protected void groupGrant(String groupId, Resource resource, Permission... perms) {
 
     AuthorizationService authorizationService = engine.getAuthorizationService();
     Authorization groupGrant = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);

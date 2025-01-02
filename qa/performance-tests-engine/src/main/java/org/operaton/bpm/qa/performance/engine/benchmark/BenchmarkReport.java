@@ -40,9 +40,7 @@ public class BenchmarkReport {
     if (longTermBenchmarkResultFilename != null) {
       File longTermBenchmarkResultFile = new File(longTermBenchmarkResultFilename);
       longTermBenchmarkResultFile.getParentFile().mkdirs();
-      if (longTermBenchmarkResultFile.exists()) {
-        // Do nothing, append current results later 
-      } else {
+      if (!longTermBenchmarkResultFile.exists()) {
         FileUtil.appendStringToFile(
             "name;"
             + "number of runs;"

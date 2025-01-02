@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.qa.performance.engine.loadgenerator.tasks;
 
-import java.io.File;
+import org.operaton.bpm.engine.ProcessEngine;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
-import org.operaton.bpm.engine.ProcessEngine;
 
 /**
  * @author Daniel Meyer
@@ -28,8 +27,8 @@ import org.operaton.bpm.engine.ProcessEngine;
  */
 public class DeployFileTask implements Runnable {
 
-  protected ProcessEngine processEngine;
-  protected String filename;
+  protected final ProcessEngine processEngine;
+  protected final String filename;
 
   public DeployFileTask(ProcessEngine processEngine, String filename) {
     this.processEngine = processEngine;
@@ -40,7 +39,7 @@ public class DeployFileTask implements Runnable {
   public void run() {
 
     try {
-      FileInputStream fis = new FileInputStream(new File(filename));
+      FileInputStream fis = new FileInputStream(filename);
       processEngine.getRepositoryService()
         .createDeployment()
         .addInputStream(filename, fis)

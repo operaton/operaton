@@ -24,8 +24,6 @@ import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.query.Query;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
-import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepBehavior;
 import org.operaton.bpm.qa.performance.engine.junit.AuthorizationPerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.junit.PerfTestProcessEngine;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
@@ -33,12 +31,13 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import static java.util.Collections.emptyList;
 
 /**
  * @author Daniel Meyer
@@ -46,15 +45,15 @@ import org.junit.jupiter.params.provider.MethodSource;
  */
 @SuppressWarnings("rawtypes")
 public class HistoryAuthorizationQueryPerformanceTest extends AuthorizationPerformanceTestCase {
-  public static String name;
-  public static Query query;
-  public static Resource resource;
-  public static Permission[] permissions;
-  public static Authentication authentication;
+  public String name;
+  public Query query;
+  public Resource resource;
+  public Permission[] permissions;
+  public Authentication authentication;
 
-  static List<Object[]> queryResourcesAndPermissions;
+  static final List<Object[]> queryResourcesAndPermissions;
 
-  static List<Authentication> authentications;
+  static final List<Authentication> authentications;
 
   static {
     ProcessEngine processEngine = PerfTestProcessEngine.getInstance();
@@ -76,13 +75,13 @@ public class HistoryAuthorizationQueryPerformanceTest extends AuthorizationPerfo
     );
 
     authentications = Arrays.asList(
-        new Authentication(null, Collections.emptyList()){
+        new Authentication(null, emptyList()){
           @Override
           public String toString() {
             return "without authentication";
           }
         },
-        new Authentication("test", Collections.<String>emptyList()){
+        new Authentication("test", emptyList()){
           @Override
           public String toString() {
             return "with authenticated user without groups";
@@ -129,7 +128,7 @@ public class HistoryAuthorizationQueryPerformanceTest extends AuthorizationPerfo
 
     userGrant("test", resource, permissions);
     for (int i = 0; i < 5; i++) {
-      grouptGrant("g"+i, resource, permissions);
+      groupGrant("g"+i, resource, permissions);
     }
     engine.getProcessEngineConfiguration().setAuthorizationEnabled(true);
   }
@@ -138,15 +137,12 @@ public class HistoryAuthorizationQueryPerformanceTest extends AuthorizationPerfo
   @ParameterizedTest(name = "{0} - {4}")
   void queryList(String name, Query query, Resource resource, Permission[] permissions, Authentication authentication) {
     initHistoryAuthorizationQueryPerformanceTest(name, query, resource, permissions, authentication);
-    performanceTest().step(new PerfTestStepBehavior() {
-      @Override
-      public void execute(PerfTestRunContext context) {
-        try {
-          engine.getIdentityService().setAuthentication(authentication);
-          query.listPage(0, 15);
-        } finally {
-          engine.getIdentityService().clearAuthentication();
-        }
+    performanceTest().step(context -> {
+      try {
+        engine.getIdentityService().setAuthentication(authentication);
+        query.listPage(0, 15);
+      } finally {
+        engine.getIdentityService().clearAuthentication();
       }
     }).run();
   }

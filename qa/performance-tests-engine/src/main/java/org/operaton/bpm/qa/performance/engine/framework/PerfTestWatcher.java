@@ -17,7 +17,7 @@
 package org.operaton.bpm.qa.performance.engine.framework;
 
 /**
- * Allows to follows the progress of a {@link PerfTestRun}.
+ * Allows to follow the progress of a {@link PerfTestRun}.
  *
  * @author Daniel Meyer
  *
@@ -42,9 +42,10 @@ public interface PerfTestWatcher {
   /**
    * Invoked before a {@link PerfTestRun} starts an individual
    * step in the performance test.
-   *
+   * <p>
    * This method is called by the same {@link Thread} which will
    * execute the step.
+   * </p>
    *
    * @param step the {@link PerfTestStep} about to be executed.
    * @param run the current {@link PerfTestRun}
@@ -54,9 +55,10 @@ public interface PerfTestWatcher {
   /**
    * Invoked after a {@link PerfTestRun} ends an individual
    * step in the performance test.
-   *
+   * <p>
    * This method is called by the same {@link Thread} which
    * executed the step.
+   * </p>
    *
    * @param step the {@link PerfTestStep} which has been executed.
    * @param run the current {@link PerfTestRun}

@@ -26,17 +26,18 @@ import java.util.Comparator;
 /**
  * A result aggregator is used to aggregate the results of a
  * performance testsuite run as a table.
- *
- * The aggegator needs to be pointed to a directory containing the
+ * <p>
+ * The aggregator needs to be pointed to a directory containing the
  * result files. It will read the result file by file and delegate the
  * actual processing to a subclass implementation of this class.
+ * </p>
  *
  * @author Daniel Meyer
  *
  */
 public abstract class TabularResultAggregator {
 
-  protected File resultDirectory;
+  protected final File resultDirectory;
   private boolean isSortingEnabled = true;
 
   protected TabularResultAggregator(String resultsFolderPath) {

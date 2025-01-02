@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Represents an task which generates metrics of an year.
+ * Represents a task which generates metrics of a year.
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
@@ -69,7 +69,7 @@ public class GenerateMetricsTask implements Runnable {
   /**
    * The process engine configuration, which is used for the metric reporting.
    */
-  protected ProcessEngineConfigurationImpl processEngineConfiguration;
+  protected final ProcessEngineConfigurationImpl processEngineConfiguration;
 
   public GenerateMetricsTask(ProcessEngine processEngine) {
     this.processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();

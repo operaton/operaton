@@ -31,7 +31,7 @@ import java.util.List;
 public class PerfTest {
 
   /** the individual steps that make up the performance test */
-  protected List<PerfTestStep> steps = new ArrayList<>();
+  protected final List<PerfTestStep> steps = new ArrayList<>();
 
   public void addStep(PerfTestStep step) {
     if(steps.isEmpty()) {

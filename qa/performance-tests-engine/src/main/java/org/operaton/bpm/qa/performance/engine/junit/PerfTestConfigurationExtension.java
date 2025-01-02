@@ -57,7 +57,7 @@ public class PerfTestConfigurationExtension implements BeforeAllCallback, TestWa
   static PerfTestConfiguration perfTestConfiguration;
 
   @Override
-  public void beforeAll(ExtensionContext context) throws Exception {
+  public void beforeAll(ExtensionContext context) {
     if (perfTestConfiguration == null) {
       File file = IoUtil.getFile(PROPERTY_FILE_NAME);
       if (!file.exists()) {

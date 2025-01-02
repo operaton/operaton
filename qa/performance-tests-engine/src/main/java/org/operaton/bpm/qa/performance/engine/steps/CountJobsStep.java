@@ -21,11 +21,11 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepBehavior;
 
 /**
- * @author: Johannes Heinemann
+ * @author Johannes Heinemann
  */
 public class CountJobsStep implements PerfTestStepBehavior {
 
-  ProcessEngine processEngine;
+  final ProcessEngine processEngine;
 
   public CountJobsStep(ProcessEngine processEngine) {
     this.processEngine = processEngine;

@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.qa.performance.engine.dmn;
 
-import java.util.Map;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.qa.performance.engine.junit.ProcessEnginePerformanceTestCase;
 import org.operaton.bpm.qa.performance.engine.steps.StartProcessInstanceStep;
+
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Execute process definitions which contains a DMN business rule task.
@@ -72,7 +74,7 @@ class DmnBusinessRuleTaskTest extends ProcessEnginePerformanceTestCase {
 
   @Test
   @Deployment(resources = {BPMN, DMN_DIR + "DmnEnginePerformanceTest.oneHundredRules.dmn"})
-  void onehundredRules() {
+  void oneHundredRules() {
     performanceTest()
       .step(startProcessInstanceStep(ONE_HUNDRED_RULES))
     .run();

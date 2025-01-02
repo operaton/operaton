@@ -39,11 +39,11 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
   protected long stepEndTime;
 
   protected volatile PerfTestStep currentStep;
-  protected AtomicInteger state = new AtomicInteger();
+  protected final AtomicInteger state = new AtomicInteger();
 
-  protected PerfTestRunner runner;
+  protected final PerfTestRunner runner;
 
-  protected Map<String, Object> runContext = new HashMap<>();
+  protected final Map<String, Object> runContext = new HashMap<>();
 
   public PerfTestRun(PerfTestRunner runner, String runId, PerfTestStep firstStep) {
     this.runner = runner;
@@ -118,10 +118,12 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
     this.currentStep = currentStep;
   }
 
+  @SuppressWarnings("unused")
   public long getRunStartTime() {
     return runStartTime;
   }
 
+  @SuppressWarnings("unused")
   public long getRunEndTime() {
     return runEndTime;
   }
@@ -134,10 +136,12 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
     return runner;
   }
 
+  @SuppressWarnings("unused")
   public long getStepEndTime() {
     return stepEndTime;
   }
 
+  @SuppressWarnings("unused")
   public long getStepStartTime() {
     return stepStartTime;
   }

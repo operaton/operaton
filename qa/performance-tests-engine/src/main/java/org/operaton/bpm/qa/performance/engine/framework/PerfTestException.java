@@ -16,12 +16,15 @@
  */
 package org.operaton.bpm.qa.performance.engine.framework;
 
+import java.io.Serial;
+
 /**
  * @author Daniel Meyer
  *
  */
 public class PerfTestException extends RuntimeException {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   public PerfTestException() {

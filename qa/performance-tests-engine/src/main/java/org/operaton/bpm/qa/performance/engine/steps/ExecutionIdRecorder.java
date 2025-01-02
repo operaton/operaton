@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.qa.performance.engine.steps;
 
-import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.EXECUTION_ID;
-
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
+import static org.operaton.bpm.qa.performance.engine.steps.PerfTestConstants.EXECUTION_ID;
 
 /**
  * <p>{@link ExecutionListener} recording the current execution id in the {@link PerfTestRunContext}
@@ -34,7 +33,7 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestRunContext;
 public class ExecutionIdRecorder implements ExecutionListener {
 
   @Override
-  public void notify(DelegateExecution execution) throws Exception {
+  public void notify(DelegateExecution execution) {
     PerfTestRunContext perfTestRunContext = PerfTestRunContext.currentContext.get();
     if(perfTestRunContext != null) {
       perfTestRunContext.setVariable(EXECUTION_ID, execution.getId());

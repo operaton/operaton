@@ -28,10 +28,10 @@ import org.operaton.bpm.qa.performance.engine.framework.PerfTestStepBehavior;
  */
 public abstract class ProcessEngineAwareStep implements PerfTestStepBehavior {
 
-  protected ProcessEngine processEngine;
-  protected RuntimeService runtimeService;
-  protected TaskService taskService;
-  protected RepositoryService repositoryService;
+  protected final ProcessEngine processEngine;
+  protected final RuntimeService runtimeService;
+  protected final TaskService taskService;
+  protected final RepositoryService repositoryService;
 
   protected ProcessEngineAwareStep(ProcessEngine processEngine) {
     this.processEngine = processEngine;

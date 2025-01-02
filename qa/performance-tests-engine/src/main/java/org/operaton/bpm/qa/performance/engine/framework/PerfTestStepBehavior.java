@@ -29,6 +29,6 @@ public interface PerfTestStepBehavior {
    *
    * @param context the current run
    */
-  public void execute(PerfTestRunContext context);
+  void execute(PerfTestRunContext context);
 
 }

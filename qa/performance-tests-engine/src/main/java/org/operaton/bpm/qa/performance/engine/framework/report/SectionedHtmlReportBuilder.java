@@ -27,9 +27,9 @@ import java.util.TreeMap;
 @SuppressWarnings("java:S1192")
 public class SectionedHtmlReportBuilder {
 
-  protected String reportName;
+  protected final String reportName;
 
-  protected Map<String, Object> sections = new TreeMap<>();
+  protected final Map<String, Object> sections = new TreeMap<>();
 
   public SectionedHtmlReportBuilder(String reportName) {
     this.reportName = reportName;
@@ -138,7 +138,7 @@ public class SectionedHtmlReportBuilder {
 
   public static class TableCell {
 
-    private String text;
+    private final String text;
     private int colspan = 1;
     private boolean header = false;
 

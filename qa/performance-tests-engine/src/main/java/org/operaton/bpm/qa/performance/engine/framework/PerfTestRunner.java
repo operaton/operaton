@@ -31,8 +31,8 @@ import java.util.concurrent.*;
 public class PerfTestRunner {
 
   protected ExecutorService executor;
-  protected PerfTest test;
-  protected PerfTestConfiguration configuration;
+  protected final PerfTest test;
+  protected final PerfTestConfiguration configuration;
 
   // global state
   public static PerfTestPass currentPass;
@@ -85,20 +85,17 @@ public class PerfTestRunner {
   public Future<PerfTestResults> execute() {
 
     // run a pass for each number of threads
-    new Thread() {
-      @Override
-      public void run() {
-        for (int i = 1; i <= configuration.getNumberOfThreads(); i++) {
-          runPassWithThreadCount(i);
-        }
-
-        synchronized (doneMonitor) {
-          isDone = true;
-          doneMonitor.notifyAll();
-        }
-
+    new Thread(() -> {
+      for (int i = 1; i <= configuration.getNumberOfThreads(); i++) {
+        runPassWithThreadCount(i);
       }
-    }.start();
+
+      synchronized (doneMonitor) {
+        isDone = true;
+        doneMonitor.notifyAll();
+      }
+
+    }).start();
 
     return new Future<>() {
 
@@ -115,7 +112,7 @@ public class PerfTestRunner {
       }
 
       @Override
-      public PerfTestResults get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+      public PerfTestResults get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException {
         synchronized (doneMonitor) {
           if(!isDone) {
             doneMonitor.wait(unit.convert(timeout, TimeUnit.MILLISECONDS));
@@ -284,12 +281,7 @@ public class PerfTestRunner {
     final PerfTestRun run = currentPass.getRun(runId);
     if (run.isWaitingForSignal()) {
       // only complete step if the run is already waiting for a signal
-      run.getRunner().getExecutor().execute(new Runnable() {
-        @Override
-        public void run() {
-          run.getRunner().completedStep(run, run.getCurrentStep());
-        }
-      });
+      run.getRunner().getExecutor().execute(() -> run.getRunner().completedStep(run, run.getCurrentStep()));
     }
   }
 

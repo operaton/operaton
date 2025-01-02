@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
  * @author Daniel Meyer
  *
  */
-@SuppressWarnings("java:S106")
+@SuppressWarnings({"unused", "java:S106"})
 public class LoadGenerator {
 
   public static final String ANSI_RESET = "\u001B[0m";
@@ -44,7 +44,7 @@ public class LoadGenerator {
   public static final String ANSI_CLEAR_LINE = "\u001B[2K";
   public static final String CLEAR_LINE = ANSI_CLEAR_LINE + "\r";
 
-  protected LoadGeneratorConfiguration configuration;
+  protected final LoadGeneratorConfiguration configuration;
 
   public LoadGenerator(LoadGeneratorConfiguration configuration) {
     this.configuration = configuration;
@@ -111,9 +111,9 @@ public class LoadGenerator {
   static class ProgressReporter extends TimerTask {
 
     private final int totalWork;
-    protected CountDownLatch sync;
+    protected final CountDownLatch sync;
 
-    protected boolean color;
+    protected final boolean color;
 
     public ProgressReporter(int totalWork, CountDownLatch latch, boolean color) {
       this.totalWork = totalWork;

@@ -85,7 +85,7 @@ public class SectionedHtmlReportBuilder {
     }
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "java:S3740", "rawtypes"})
   protected void addHtmlSection(HtmlDocumentBuilder builder, String title, Object section, int level) {
     // add heading
     builder.startElement(new HtmlElementWriter("h" + level).textContent(title)).endElement();

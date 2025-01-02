@@ -54,7 +54,7 @@ public class PerfTestConfigurationExtension implements BeforeAllCallback, TestWa
 
   private static final String PROPERTY_FILE_NAME = "perf-test-config.properties";
 
-  static PerfTestConfiguration perfTestConfiguration;
+  private PerfTestConfiguration perfTestConfiguration;
 
   @Override
   public void beforeAll(ExtensionContext context) {

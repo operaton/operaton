@@ -75,7 +75,7 @@ public class BenchmarkAggregator extends TabularResultAggregator {
     }
     double speedUp = durationForSequential / passResult.getDuration();
     BigDecimal bigDecimalSpeedUp = BigDecimal.valueOf(speedUp);
-    bigDecimalSpeedUp.setScale(1, RoundingMode.HALF_UP);
+    bigDecimalSpeedUp = bigDecimalSpeedUp.setScale(1, RoundingMode.HALF_UP);
     row.add(bigDecimalSpeedUp.doubleValue());
   }
 

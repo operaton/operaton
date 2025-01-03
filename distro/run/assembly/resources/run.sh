@@ -15,7 +15,7 @@ OPTIONS_HELP="Options:
   --rest       - Enables the REST API
   --example    - Enables the example application
   --production - Applies the production.yaml configuration file
-  --detached   - Starts Operaton Run as a detached process
+  --detached   - Starts Operaton as a detached process
 "
 
 # set environment parameters
@@ -44,7 +44,7 @@ if [ "$1" = "start" ] ; then
   JAVA_VERSION=$("$JAVA" -version 2>&1 | head -1 | cut -d'"' -f2 | sed '/^0\./s///' | cut -d'.' -f1)
   echo Java version is $("$JAVA" -version 2>&1 | head -1 | cut -d'"' -f2)
   if [[ "$JAVA_VERSION" -lt "$EXPECTED_JAVA_VERSION" ]]; then
-    echo You must use at least JDK 17 to start Operaton Run.
+    echo You must use at least JDK 17 to start Operaton.
     exit 1
   fi
 
@@ -77,7 +77,7 @@ if [ "$1" = "start" ] ; then
                      ;;
       # the background flag shouldn't influence the optional component flags
       --detached )   detachProcess=true
-                     echo Operaton Run will start in the background. Use the shutdown.sh script to stop it
+                     echo Operaton will start in the background. Use the shutdown.sh script to stop it
                      ;;
       --help )       printf "%s" "$OPTIONS_HELP"
                      exit 0
@@ -105,7 +105,7 @@ if [ "$1" = "start" ] ; then
 
   # if Swagger UI is enabled but REST is not, warn the user
   if [ "$swaggeruiChosen" = "true" ] && [ "$restChosen" = "false" ]; then
-    echo You did not enable the REST API. Swagger UI will not be able to send any requests to this Operaton Run instance.
+    echo You did not enable the REST API. Swagger UI will not be able to send any requests to this Operaton instance.
   fi
 
   echo classpath: $classPath
@@ -113,36 +113,37 @@ if [ "$1" = "start" ] ; then
   # start the application
   if [ "$detachProcess" = "true" ]; then
 
-    # check if a Operaton Run instance is already in operation
+    # check if an Operaton instance is already in operation
     if [ -s "$PID_PATH" ]; then
       echo "
-A Operaton Run instance is already in operation (process id $(cat $PID_PATH)).
+An Operaton instance is already in operation (process id $(cat $PID_PATH)).
 
 Please stop it or remove the file $PID_PATH."
       exit 1
     fi
 
-    # start Operaton Run detached
-    "$JAVA" -Dloader.path="$classPath" -Doperaton.deploymentDir="$DEPLOYMENT_DIR" $JAVA_OPTS -jar "$BASEDIR/operaton-bpm-run-core.jar" --spring.config.location=file:"$configuration" &
+    # start Operaton detached
+    echo ""
+    "$JAVA" -Dloader.path="$classPath" -Doperaton.deploymentDir="$DEPLOYMENT_DIR" $JAVA_OPTS -jar "$BASEDIR/operaton-bpm.jar" --spring.config.location=file:"$configuration" &
     # store the process id
     echo $! > "$PID_PATH"
 
   else
-    "$JAVA" -Dloader.path="$classPath" -Doperaton.deploymentDir="$DEPLOYMENT_DIR" $JAVA_OPTS -jar "$BASEDIR/operaton-bpm-run-core.jar" --spring.config.location=file:"$configuration"
+    "$JAVA" -Dloader.path="$classPath" -Doperaton.deploymentDir="$DEPLOYMENT_DIR" $JAVA_OPTS -jar "$BASEDIR/operaton-bpm.jar" --spring.config.location=file:"$configuration"
   fi
 
 elif [ "$1" = "stop" ] ; then
 
   if [ -s "$PID_PATH" ]; then
-    # stop Operaton Run if the process is still running
+    # stop Operaton if the process is still running
     kill $(cat "$PID_PATH")
 
     # remove process ID file
     rm "$PID_PATH"
 
-    echo "Operaton Run is shutting down."
+    echo "Operaton is shutting down."
   else
-    echo "There is no instance of Operaton Run to shut down."
+    echo "There is no instance of Operaton to shut down."
     exit 1
   fi
 

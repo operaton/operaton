@@ -116,6 +116,7 @@
   </dependencies>
 
   <build>
+    <finalName>operaton-bpm-core</finalName>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>

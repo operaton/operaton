@@ -18,7 +18,7 @@
       <includes>
         <include>org.operaton.bpm.run:operaton-bpm-run-core</include>
       </includes>
-      <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+      <outputFileNameMapping>operaton-bpm.jar</outputFileNameMapping>
     </dependencySet>
     <dependencySet>
       <outputDirectory>internal/oauth2/</outputDirectory>

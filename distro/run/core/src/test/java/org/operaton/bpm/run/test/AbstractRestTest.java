@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.run.test;
 
-import org.operaton.bpm.run.OperatonBpmRun;
+import org.operaton.bpm.run.OperatonApp;
 import org.operaton.bpm.run.test.util.LoggingInterceptor;
 
 import java.util.Collections;
@@ -29,7 +29,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest(classes = { OperatonBpmRun.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = { OperatonApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = { "test-auth-disabled" })
 public abstract class AbstractRestTest {
 

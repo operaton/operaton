@@ -192,8 +192,8 @@ signing:
 
 files:
   artifacts:
-    - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.tar.gz'
-    - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.zip'
+    - path: 'distro/run/distro/target/operaton-bpm-{{projectVersion}}.tar.gz'
+    - path: 'distro/run/distro/target/operaton-bpm-{{projectVersion}}.zip'
     - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.tar.gz'
     - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.zip'
     - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.tar.gz'
@@ -212,11 +212,11 @@ distributions:
       - 'bpmn'
       - 'process automation'
     artifacts:
-      - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.zip'
+      - path: 'distro/run/distro/target/operaton-bpm-{{projectVersion}}.zip'
         platform: linux
-      - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.zip'
+      - path: 'distro/run/distro/target/operaton-bpm-{{projectVersion}}.zip'
         platform: osx
-      - path: 'distro/run/distro/target/operaton-bpm-run-{{projectVersion}}.zip'
+      - path: 'distro/run/distro/target/operaton-bpm-{{projectVersion}}.zip'
         platform: windows
     brew:
       active: RELEASE

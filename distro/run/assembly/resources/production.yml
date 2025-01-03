@@ -68,10 +68,10 @@ server:
 # do not use the provided certificate in production
   ssl:
     key-store: classpath:keystore.p12
-    key-store-password: camunda
+    key-store-password: operaton
     key-store-type: pkcs12
-    key-alias: camunda
-    key-password: camunda
+    key-alias: operaton
+    key-password: operaton
   port: 8443
 
 # https://docs.operaton.org/manual/latest/user-guide/security/#http-header-security-in-webapps
@@ -83,8 +83,8 @@ server:
 # https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#logging
 # https://docs.operaton.org/manual/latest/user-guide/logging/#process-engine
 logging:
-   level.root: INFO
-   file.name: logs/operaton-bpm-run.log
+  level.root: INFO
+  file.name: logs/operaton-bpm-run.log
 
 # datasource configuration is required
 # do not use the H2 databse in production

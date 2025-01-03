@@ -19,7 +19,7 @@ package org.operaton.bpm.run.test.plugins;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-import org.operaton.bpm.run.OperatonBpmRun;
+import org.operaton.bpm.run.OperatonApp;
 import org.operaton.bpm.spring.boot.starter.spin.SpringBootSpinProcessEnginePlugin;
 
 import java.util.List;
@@ -34,7 +34,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@SpringBootTest(classes = {OperatonBpmRun.class})
+@SpringBootTest(classes = {OperatonApp.class})
 @ActiveProfiles(profiles = {"test-new-plugins", "test-plugins-config-override"})
 class ProcessEnginePluginsConfigurationOverrideTest {
 

@@ -19,7 +19,7 @@ package org.operaton.bpm.run.test.plugins;
 import org.operaton.bpm.engine.impl.cfg.CompositeProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
-import org.operaton.bpm.run.OperatonBpmRun;
+import org.operaton.bpm.run.OperatonApp;
 import org.operaton.bpm.run.property.OperatonBpmRunProcessEnginePluginProperty;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
 
@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@SpringBootTest(classes = {OperatonBpmRun.class})
+@SpringBootTest(classes = {OperatonApp.class})
 @ActiveProfiles(profiles = {"test-new-plugins"})
 class OperatonRunProcessEnginePluginsRegistrationTest {
 

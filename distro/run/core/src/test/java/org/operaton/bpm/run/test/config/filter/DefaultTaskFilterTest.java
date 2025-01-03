@@ -18,7 +18,7 @@ package org.operaton.bpm.run.test.config.filter;
 
 import org.operaton.bpm.engine.rest.dto.runtime.FilterDto;
 import org.operaton.bpm.engine.rest.dto.task.TaskQueryDto;
-import org.operaton.bpm.run.OperatonBpmRun;
+import org.operaton.bpm.run.OperatonApp;
 import org.operaton.bpm.run.test.AbstractRestTest;
 
 import java.util.List;
@@ -33,7 +33,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = {OperatonBpmRun.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {OperatonApp.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = {"test-default-task-filter"})
 class DefaultTaskFilterTest extends AbstractRestTest {
 

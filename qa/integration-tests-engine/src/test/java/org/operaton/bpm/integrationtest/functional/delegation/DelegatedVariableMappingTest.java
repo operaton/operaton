@@ -17,8 +17,8 @@
 package org.operaton.bpm.integrationtest.functional.delegation;
 
 import org.operaton.bpm.integrationtest.functional.delegation.beans.DelegateVarMapping;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.inject.Inject;
+import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.inject.Inject;
 import static junit.framework.TestCase.assertEquals;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;

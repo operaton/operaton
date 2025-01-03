@@ -20,14 +20,14 @@ import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.ProcessApplication;
 
 /**
- * {@link org.operaton.bpm.application.impl.ServletProcessApplication} is fine on all containers as the tests
+ * {@link org.operaton.bpm.application.impl.JakartaServletProcessApplication} is fine on all containers as the tests
  * don't require Java EE features
  *
  * @author Thorben Lindhauer
  */
 @ProcessApplication
 // Using fully-qualified class name instead of import statement to allow for automatic Jakarta transformation
-public class ReferenceStoringProcessApplication extends org.operaton.bpm.application.impl.ServletProcessApplication {
+public class ReferenceStoringProcessApplication extends org.operaton.bpm.application.impl.JakartaServletProcessApplication {
 
   public static ReferenceStoringProcessApplication INSTANCE = null;
 

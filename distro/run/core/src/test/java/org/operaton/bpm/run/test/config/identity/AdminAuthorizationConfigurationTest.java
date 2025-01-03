@@ -17,7 +17,7 @@
 package org.operaton.bpm.run.test.config.identity;
 
 import org.operaton.bpm.engine.impl.plugin.AdministratorAuthorizationPlugin;
-import org.operaton.bpm.run.OperatonBpmRun;
+import org.operaton.bpm.run.OperatonApp;
 import org.operaton.bpm.run.property.OperatonBpmRunAdministratorAuthorizationProperties;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
 
@@ -30,7 +30,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@SpringBootTest(classes = {OperatonBpmRun.class})
+@SpringBootTest(classes = {OperatonApp.class})
 @ActiveProfiles(profiles = {"test-auth-enabled", "test-admin-auth-enabled"})
 class AdminAuthorizationConfigurationTest {
 

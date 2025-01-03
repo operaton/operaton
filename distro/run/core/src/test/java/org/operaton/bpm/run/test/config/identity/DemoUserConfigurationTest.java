@@ -21,7 +21,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
-import org.operaton.bpm.run.OperatonBpmRun;
+import org.operaton.bpm.run.OperatonApp;
 import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
 
 import java.util.List;
@@ -36,7 +36,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@SpringBootTest(classes = {OperatonBpmRun.class})
+@SpringBootTest(classes = {OperatonApp.class})
 @ActiveProfiles(profiles = {"test-auth-disabled", "test-demo-user"})
 class DemoUserConfigurationTest {
 

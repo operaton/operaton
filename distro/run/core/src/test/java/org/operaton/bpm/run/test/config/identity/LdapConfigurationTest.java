@@ -17,7 +17,7 @@
 package org.operaton.bpm.run.test.config.identity;
 
 import org.operaton.bpm.identity.impl.ldap.plugin.LdapIdentityProviderPlugin;
-import org.operaton.bpm.run.OperatonBpmRun;
+import org.operaton.bpm.run.OperatonApp;
 import org.operaton.bpm.run.property.OperatonBpmRunLdapProperties;
 
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@SpringBootTest(classes = {OperatonBpmRun.class})
+@SpringBootTest(classes = {OperatonApp.class})
 @ActiveProfiles(profiles = {"test-auth-disabled", "test-ldap-enabled", "test-ldap-auth-exception"})
 class LdapConfigurationTest {
 

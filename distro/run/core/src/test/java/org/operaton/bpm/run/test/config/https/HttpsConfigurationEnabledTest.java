@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.run.test.config.https;
 
-import org.operaton.bpm.run.OperatonBpmRun;
+import org.operaton.bpm.run.OperatonApp;
 import org.operaton.bpm.run.test.AbstractRestTest;
 import org.operaton.bpm.run.test.util.TestUtils;
 
@@ -33,9 +33,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.ResourceAccessException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = {OperatonBpmRun.class}, webEnvironment = WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = {OperatonApp.class}, webEnvironment = WebEnvironment.DEFINED_PORT)
 @ActiveProfiles(profiles = {"test-https-enabled"})
 class HttpsConfigurationEnabledTest extends AbstractRestTest {
 
@@ -59,7 +59,7 @@ class HttpsConfigurationEnabledTest extends AbstractRestTest {
   @Test
   void shouldNotRedirect() {
     // given
-    String url = "http://localhost:" + 8080 + CONTEXT_PATH + "/task";
+    String url = "http://localhost:8899" + CONTEXT_PATH + "/task";
     // when
     HttpEntity<Object> requestEntity = new HttpEntity<>(null);
     Throwable exception = assertThrows(ResourceAccessException.class, () ->

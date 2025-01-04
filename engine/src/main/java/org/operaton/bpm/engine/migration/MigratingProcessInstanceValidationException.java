@@ -28,7 +28,7 @@ public class MigratingProcessInstanceValidationException extends ProcessEngineEx
 
   private static final long serialVersionUID = 1L;
 
-  protected MigratingProcessInstanceValidationReport validationReport;
+  protected final MigratingProcessInstanceValidationReport validationReport;
 
   public MigratingProcessInstanceValidationException(String message, MigratingProcessInstanceValidationReport validationReport) {
     super(message);

@@ -16,27 +16,32 @@
  */
 package org.operaton.bpm.engine;
 
+import org.operaton.bpm.engine.impl.bpmn.parser.ResourceReportImpl;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.operaton.bpm.engine.impl.bpmn.parser.ResourceReportImpl;
 
 public class ParseException extends ProcessEngineException {
 
   private static final long serialVersionUID = 1L;
 
-  protected List<ResourceReport> resorceReports;
+  protected final List<ResourceReport> resourceReports;
 
   public ParseException(String exceptionMessage, String resource, List<Problem> errors, List<Problem> warnings) {
     super(exceptionMessage);
     ResourceReportImpl resourceReport = new ResourceReportImpl(resource, errors, warnings);
     List<ResourceReport> reports = new ArrayList<>();
     reports.add(resourceReport);
-    this.resorceReports = reports;
+    this.resourceReports = reports;
   }
 
+  @Deprecated(forRemoval = true)
   public List<ResourceReport> getResorceReports() {
-    return resorceReports;
+    return resourceReports;
+  }
+
+  public List<ResourceReport> getResourceReports() {
+    return resourceReports;
   }
 
 }

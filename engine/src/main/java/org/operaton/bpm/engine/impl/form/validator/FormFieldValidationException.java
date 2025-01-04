@@ -29,10 +29,12 @@ public class FormFieldValidationException extends FormException {
   private static final long serialVersionUID = 1L;
 
   /** optional object for detailing the nature of the validation error */
-  protected Object detail;
+  protected final Object detail;
 
   public FormFieldValidationException() {
     super();
+
+    this.detail = null;
   }
 
   public FormFieldValidationException(Object detail) {

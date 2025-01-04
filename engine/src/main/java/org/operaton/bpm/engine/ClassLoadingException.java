@@ -26,14 +26,15 @@ public class ClassLoadingException extends ProcessEngineException {
 
   private static final long serialVersionUID = 1L;
 
-  protected String className;
+  protected final String className;
 
   public ClassLoadingException(String message, Throwable cause) {
     super(message, cause);
+    this.className = null;
   }
 
   public ClassLoadingException(String message, String className, Throwable cause) {
-    this(message, cause);
+    super(message, cause);
     this.className = className;
   }
 
@@ -43,6 +44,5 @@ public class ClassLoadingException extends ProcessEngineException {
   public String getClassName() {
     return className;
   }
-
 
 }

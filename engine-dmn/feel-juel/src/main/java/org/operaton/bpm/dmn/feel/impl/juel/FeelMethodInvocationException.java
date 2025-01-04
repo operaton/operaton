@@ -24,8 +24,8 @@ import org.operaton.bpm.dmn.feel.impl.FeelException;
  */
 public class FeelMethodInvocationException extends FeelException {
 
-  protected String method;
-  protected String[] parameters;
+  protected final String method;
+  protected final String[] parameters;
 
   public FeelMethodInvocationException(String message, String method, String... parameters) {
     super(message);

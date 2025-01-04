@@ -16,6 +16,11 @@
  */
 package org.operaton.connect.httpclient.impl;
 
+import org.operaton.connect.httpclient.HttpBaseRequest;
+import org.operaton.connect.httpclient.HttpResponse;
+import org.operaton.connect.httpclient.impl.util.ParseUtil;
+import org.operaton.connect.impl.AbstractConnector;
+
 import java.io.ByteArrayInputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -24,24 +29,10 @@ import java.util.Optional;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.config.RequestConfig.Builder;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpOptions;
-import org.apache.http.client.methods.HttpPatch;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.methods.HttpTrace;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.operaton.connect.httpclient.HttpBaseRequest;
-import org.operaton.connect.httpclient.HttpResponse;
-import org.operaton.connect.httpclient.impl.util.ParseUtil;
-import org.operaton.connect.impl.AbstractConnector;
 
 public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R extends HttpResponse> extends AbstractConnector<Q, R> {
 
@@ -95,9 +86,6 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
   }
 
   protected abstract R createResponse(CloseableHttpResponse response);
-
-  @Override
-  public abstract Q createRequest();
 
   /**
    * creates a apache Http* representation of the request.

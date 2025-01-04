@@ -16,13 +16,14 @@
  */
 package org.operaton.bpm.engine.rest.dto.converter;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 
 import javax.ws.rs.core.Response.Status;
 import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Thorben Lindhauer
@@ -30,9 +31,6 @@ import java.io.IOException;
 public abstract class JacksonAwareStringToTypeConverter<T> implements StringToTypeConverter<T> {
 
   protected ObjectMapper objectMapper;
-
-  @Override
-  public abstract T convertQueryParameterToType(String value);
 
   public void setObjectMapper(ObjectMapper objectMapper) {
     this.objectMapper = objectMapper;

@@ -16,20 +16,6 @@
  */
 package org.operaton.bpm.webapp.impl.security.auth;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.Tenant;
@@ -37,6 +23,17 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.webapp.impl.WebappLogger;
 import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Jax-Rs resource allowing users to authenticate with username and password</p>
@@ -121,7 +118,7 @@ public class UserAuthenticationResource {
     }
 
     if(isWebappsAuthenticationLoggingEnabled(processEngine)) {
-      LOGGER.infoWebappSuccessfulLogin(username);
+      LOGGER.infoWebappSuccessfulLogin(username.replaceAll("[\n\r]", "_"));
     }
     return Response.ok(AuthenticationDto.fromAuthentication(authentication)).build();
   }

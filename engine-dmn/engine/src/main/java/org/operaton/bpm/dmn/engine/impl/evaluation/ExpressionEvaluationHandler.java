@@ -16,19 +16,7 @@
  */
 package org.operaton.bpm.dmn.engine.impl.evaluation;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
-import javax.script.Bindings;
-import javax.script.Compilable;
-import javax.script.CompiledScript;
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
-
-import org.operaton.bpm.dmn.engine.impl.CachedCompiledScriptSupport;
-import org.operaton.bpm.dmn.engine.impl.CachedExpressionSupport;
-import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.operaton.bpm.dmn.engine.impl.DmnEngineLogger;
-import org.operaton.bpm.dmn.engine.impl.DmnExpressionImpl;
+import org.operaton.bpm.dmn.engine.impl.*;
 import org.operaton.bpm.dmn.engine.impl.el.VariableContextScriptBindings;
 import org.operaton.bpm.dmn.engine.impl.spi.el.DmnScriptEngineResolver;
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElExpression;
@@ -36,10 +24,13 @@ import org.operaton.bpm.dmn.engine.impl.spi.el.ElProvider;
 import org.operaton.bpm.dmn.feel.impl.FeelEngine;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.commons.utils.StringUtil;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
+
+import javax.script.*;
 
 public class ExpressionEvaluationHandler {
 
-  protected static final DmnEngineLogger LOG = DmnEngineLogger.ENGINE_LOGGER;
+  protected static final DmnEngineLogger LOG = DmnLogger.ENGINE_LOGGER;
 
   protected final DmnScriptEngineResolver scriptEngineResolver;
   protected final ElProvider elProvider;

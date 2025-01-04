@@ -22,6 +22,8 @@ import org.operaton.bpm.engine.impl.migration.instance.MigratingIncident;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingJobInstance;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
+import static org.operaton.bpm.engine.runtime.Incident.EXTERNAL_TASK_HANDLER_TYPE;
+import static org.operaton.bpm.engine.runtime.Incident.FAILED_JOB_HANDLER_TYPE;
 
 /**
  * @author Thorben Lindhauer
@@ -52,7 +54,7 @@ public class IncidentInstanceHandler implements MigratingInstanceParseHandler<In
   }
 
   protected boolean isFailedJobIncident(IncidentEntity incident) {
-    return IncidentEntity.FAILED_JOB_HANDLER_TYPE.equals(incident.getIncidentType());
+    return FAILED_JOB_HANDLER_TYPE.equals(incident.getIncidentType());
   }
 
   protected void handleFailedJobIncident(MigratingInstanceParseContext parseContext, IncidentEntity incident) {
@@ -71,7 +73,7 @@ public class IncidentInstanceHandler implements MigratingInstanceParseHandler<In
   }
 
   protected boolean isExternalTaskIncident(IncidentEntity incident) {
-    return IncidentEntity.EXTERNAL_TASK_HANDLER_TYPE.equals(incident.getIncidentType());
+    return EXTERNAL_TASK_HANDLER_TYPE.equals(incident.getIncidentType());
   }
 
   protected void handleExternalTaskIncident(MigratingInstanceParseContext parseContext, IncidentEntity incident) {

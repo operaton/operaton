@@ -16,50 +16,30 @@
  */
 package org.operaton.bpm.engine.rest.dto.task;
 
-import static java.lang.Boolean.TRUE;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response.Status;
-
 import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.impl.QueryEntityRelationCondition;
-import org.operaton.bpm.engine.impl.QueryOrderingProperty;
-import org.operaton.bpm.engine.impl.TaskQueryImpl;
-import org.operaton.bpm.engine.impl.TaskQueryProperty;
-import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
-import org.operaton.bpm.engine.impl.VariableInstanceQueryProperty;
-import org.operaton.bpm.engine.impl.VariableOrderProperty;
+import org.operaton.bpm.engine.impl.*;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
 import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.query.QueryProperty;
-import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
-import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
-import org.operaton.bpm.engine.rest.dto.SortingDto;
-import org.operaton.bpm.engine.rest.dto.VariableQueryParameterDto;
-import org.operaton.bpm.engine.rest.dto.VariableValueDto;
-import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
-import org.operaton.bpm.engine.rest.dto.converter.DateConverter;
-import org.operaton.bpm.engine.rest.dto.converter.DelegationStateConverter;
-import org.operaton.bpm.engine.rest.dto.converter.IntegerConverter;
-import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
-import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
-import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
+import org.operaton.bpm.engine.rest.dto.*;
+import org.operaton.bpm.engine.rest.dto.converter.*;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
+
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response.Status;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static java.lang.Boolean.TRUE;
 
 @JsonInclude(Include.NON_NULL)
 public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
@@ -1389,19 +1369,19 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(VariableQueryParameterDto.EQUALS_OPERATOR_NAME)) {
+        if (op.equals(EQUALS_OPERATOR_NAME)) {
           query.taskVariableValueEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
           query.taskVariableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OPERATOR_NAME)) {
+        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
           query.taskVariableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
           query.taskVariableValueGreaterThanOrEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OPERATOR_NAME)) {
+        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
           query.taskVariableValueLessThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
           query.taskVariableValueLessThanOrEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LIKE_OPERATOR_NAME)) {
+        } else if (op.equals(LIKE_OPERATOR_NAME)) {
           query.taskVariableValueLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid task variable comparator specified: " + op);
@@ -1416,21 +1396,21 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(VariableQueryParameterDto.EQUALS_OPERATOR_NAME)) {
+        if (op.equals(EQUALS_OPERATOR_NAME)) {
           query.processVariableValueEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
           query.processVariableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OPERATOR_NAME)) {
+        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
           query.processVariableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
           query.processVariableValueGreaterThanOrEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OPERATOR_NAME)) {
+        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
           query.processVariableValueLessThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
           query.processVariableValueLessThanOrEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LIKE_OPERATOR_NAME)) {
+        } else if (op.equals(LIKE_OPERATOR_NAME)) {
           query.processVariableValueLike(variableName, String.valueOf(variableValue));
-        } else if (op.equals(VariableQueryParameterDto.NOT_LIKE_OPERATOR_NAME)) {
+        } else if (op.equals(NOT_LIKE_OPERATOR_NAME)) {
           query.processVariableValueNotLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid process variable comparator specified: " + op);
@@ -1445,19 +1425,19 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(VariableQueryParameterDto.EQUALS_OPERATOR_NAME)) {
+        if (op.equals(EQUALS_OPERATOR_NAME)) {
           query.caseInstanceVariableValueEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
           query.caseInstanceVariableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OPERATOR_NAME)) {
+        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
           query.caseInstanceVariableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
           query.caseInstanceVariableValueGreaterThanOrEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OPERATOR_NAME)) {
+        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
           query.caseInstanceVariableValueLessThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
           query.caseInstanceVariableValueLessThanOrEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LIKE_OPERATOR_NAME)) {
+        } else if (op.equals(LIKE_OPERATOR_NAME)) {
           query.caseInstanceVariableValueLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid case variable comparator specified: " + op);

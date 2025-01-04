@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.variable.value.builder.ObjectValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuilder;
 import org.operaton.bpm.engine.variable.value.builder.TypedValueBuilder;
 
+import javax.activation.FileTypeMap;
 import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.Serializable;
@@ -395,7 +396,7 @@ public class Variables {
    * The name is set to the file name and the mime type is detected via {@link MimetypesFileTypeMap}.
    */
   public static FileValue fileValue(File file){
-    String contentType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file);
+    String contentType = FileTypeMap.getDefaultFileTypeMap().getContentType(file);
     return new FileValueBuilderImpl(file.getName()).file(file).mimeType(contentType).create();
   }
 
@@ -404,7 +405,7 @@ public class Variables {
    * The name is set to the file name and the mime type is detected via {@link MimetypesFileTypeMap}.
    */
   public static FileValue fileValue(File file, boolean isTransient){
-    String contentType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file);
+    String contentType = FileTypeMap.getDefaultFileTypeMap().getContentType(file);
     return new FileValueBuilderImpl(file.getName()).file(file).mimeType(contentType).setTransient(isTransient).create();
   }
 

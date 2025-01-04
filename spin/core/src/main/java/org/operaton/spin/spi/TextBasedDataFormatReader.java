@@ -16,11 +16,12 @@
  */
 package org.operaton.spin.spi;
 
+import org.operaton.spin.impl.logging.SpinCoreLogger;
+import org.operaton.spin.impl.logging.SpinLogger;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.regex.Pattern;
-
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 
 /**
  * Can be used as a base class to determine whether an input reader
@@ -30,7 +31,7 @@ import org.operaton.spin.impl.logging.SpinCoreLogger;
  */
 public abstract class TextBasedDataFormatReader implements DataFormatReader {
 
-  private static final SpinCoreLogger LOG = SpinCoreLogger.CORE_LOGGER;
+  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
 
   @Override
   public boolean canRead(Reader input, int readLimit) {

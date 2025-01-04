@@ -16,30 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
-import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
-
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.db.DbEntity;
-import org.operaton.bpm.engine.impl.db.DbEntityLifecycleAware;
-import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
-import org.operaton.bpm.engine.impl.db.HasDbReferences;
-import org.operaton.bpm.engine.impl.db.HasDbRevision;
+import org.operaton.bpm.engine.impl.db.*;
 import org.operaton.bpm.engine.impl.incident.IncidentContext;
 import org.operaton.bpm.engine.impl.incident.IncidentHandling;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobPriorityProvider;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
@@ -50,6 +33,13 @@ import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
+import static org.operaton.bpm.engine.impl.DefaultPriorityProvider.DEFAULT_PRIORITY;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
+import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Stub of the common parts of a Job. You will normally work with a subclass of
@@ -92,7 +82,7 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   protected String jobDefinitionId;
 
-  protected long priority = DefaultJobPriorityProvider.DEFAULT_PRIORITY;
+  protected long priority = DEFAULT_PRIORITY;
 
   protected String tenantId;
 

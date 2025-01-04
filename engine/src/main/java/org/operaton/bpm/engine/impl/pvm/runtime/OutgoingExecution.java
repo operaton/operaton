@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmTransition;
  */
 public class OutgoingExecution {
 
-  private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
   protected PvmExecutionImpl outgoingExecution;
   protected PvmTransition outgoingTransition;

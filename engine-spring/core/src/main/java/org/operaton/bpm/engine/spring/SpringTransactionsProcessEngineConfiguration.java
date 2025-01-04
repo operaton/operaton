@@ -16,31 +16,29 @@
  */
 package org.operaton.bpm.engine.spring;
 
-import javax.sql.DataSource;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.interceptor.*;
+import org.operaton.bpm.engine.repository.DeploymentBuilder;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.interceptor.CommandContextInterceptor;
-import org.operaton.bpm.engine.impl.interceptor.CommandCounterInterceptor;
-import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
-import org.operaton.bpm.engine.impl.interceptor.LogInterceptor;
-import org.operaton.bpm.engine.impl.interceptor.ProcessApplicationContextInterceptor;
-import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ContextResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionTemplate;
+
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRED;
+import static org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW;
 
 /**
  * @author Tom Baeyens
@@ -79,7 +77,7 @@ public class SpringTransactionsProcessEngineConfiguration extends ProcessEngineC
     defaultCommandInterceptorsTxRequired.add(new LogInterceptor());
     defaultCommandInterceptorsTxRequired.add(new CommandCounterInterceptor(this));
     defaultCommandInterceptorsTxRequired.add(new ProcessApplicationContextInterceptor(this));
-    defaultCommandInterceptorsTxRequired.add(new SpringTransactionInterceptor(transactionManager, TransactionTemplate.PROPAGATION_REQUIRED, this));
+    defaultCommandInterceptorsTxRequired.add(new SpringTransactionInterceptor(transactionManager, PROPAGATION_REQUIRED, this));
     CommandContextInterceptor commandContextInterceptor = new CommandContextInterceptor(commandContextFactory, this);
     defaultCommandInterceptorsTxRequired.add(commandContextInterceptor);
     return defaultCommandInterceptorsTxRequired;
@@ -93,7 +91,7 @@ public class SpringTransactionsProcessEngineConfiguration extends ProcessEngineC
     defaultCommandInterceptorsTxRequiresNew.add(new LogInterceptor());
     defaultCommandInterceptorsTxRequiresNew.add(new CommandCounterInterceptor(this));
     defaultCommandInterceptorsTxRequiresNew.add(new ProcessApplicationContextInterceptor(this));
-    defaultCommandInterceptorsTxRequiresNew.add(new SpringTransactionInterceptor(transactionManager, TransactionTemplate.PROPAGATION_REQUIRES_NEW, this));
+    defaultCommandInterceptorsTxRequiresNew.add(new SpringTransactionInterceptor(transactionManager, PROPAGATION_REQUIRES_NEW, this));
     CommandContextInterceptor commandContextInterceptor = new CommandContextInterceptor(commandContextFactory, this, true);
     defaultCommandInterceptorsTxRequiresNew.add(commandContextInterceptor);
     return defaultCommandInterceptorsTxRequiresNew;

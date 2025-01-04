@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.interceptor;
 
 
 import org.operaton.bpm.engine.delegate.ProcessEngineServicesAware;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -54,7 +55,7 @@ import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
  */
 public class CommandContextInterceptor extends CommandInterceptor {
 
-  private static final CommandLogger LOG = CommandLogger.CMD_LOGGER;
+  private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected CommandContextFactory commandContextFactory;
   protected ProcessEngineConfigurationImpl processEngineConfiguration;

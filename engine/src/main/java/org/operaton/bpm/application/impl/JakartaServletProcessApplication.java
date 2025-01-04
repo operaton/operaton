@@ -16,13 +16,15 @@
  */
 package org.operaton.bpm.application.impl;
 
+import org.operaton.bpm.application.AbstractProcessApplication;
+import org.operaton.bpm.engine.delegate.JavaDelegate;
+import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
+import org.operaton.bpm.engine.impl.util.JakartaClassLoaderUtil;
+
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import java.lang.ref.WeakReference;
-import org.operaton.bpm.application.AbstractProcessApplication;
-import org.operaton.bpm.engine.delegate.JavaDelegate;
-import org.operaton.bpm.engine.impl.util.JakartaClassLoaderUtil;
 
 /**
  * <p>
@@ -110,7 +112,7 @@ public class JakartaServletProcessApplication extends AbstractServletProcessAppl
     if (getClass().equals(JakartaServletProcessApplication.class)) {
       return JakartaClassLoaderUtil.getServletContextClassloader(sce);
     } else {
-      return JakartaClassLoaderUtil.getClassloader(getClass());
+      return ClassLoaderUtil.getClassloader(getClass());
     }
   }
 

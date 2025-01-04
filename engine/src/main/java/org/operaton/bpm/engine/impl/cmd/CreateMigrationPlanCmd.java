@@ -16,12 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.core.variable.VariableUtil;
@@ -31,22 +28,19 @@ import org.operaton.bpm.engine.impl.migration.MigrationInstructionGenerator;
 import org.operaton.bpm.engine.impl.migration.MigrationLogger;
 import org.operaton.bpm.engine.impl.migration.MigrationPlanBuilderImpl;
 import org.operaton.bpm.engine.impl.migration.MigrationPlanImpl;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.MigrationInstructionValidationReportImpl;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.MigrationInstructionValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.MigrationPlanValidationReportImpl;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.MigrationVariableValidationReportImpl;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.ValidatingMigrationInstruction;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.ValidatingMigrationInstructionImpl;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.ValidatingMigrationInstructions;
+import org.operaton.bpm.engine.impl.migration.validation.instruction.*;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
-import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Thorben Lindhauer
@@ -54,7 +48,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
 
-  public static final MigrationLogger LOG = EngineUtilLogger.MIGRATION_LOGGER;
+  public static final MigrationLogger LOG = ProcessEngineLogger.MIGRATION_LOGGER;
 
   protected MigrationPlanBuilderImpl migrationBuilder;
 

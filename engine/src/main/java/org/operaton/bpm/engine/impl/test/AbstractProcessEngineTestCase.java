@@ -16,30 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Callable;
-
-import org.apache.ibatis.logging.LogFactory;
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.FilterService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -52,9 +31,13 @@ import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.slf4j.Logger;
+
+import java.util.*;
+import java.util.concurrent.Callable;
 
 import junit.framework.AssertionFailedError;
+import org.apache.ibatis.logging.LogFactory;
+import org.slf4j.Logger;
 
 
 /**
@@ -72,7 +55,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
    * It should be removed once those Test classes are migrated to JUnit 4.
    */
 
-  private static final Logger LOG = TestLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   static {
     // this ensures that mybatis uses slf4j logging

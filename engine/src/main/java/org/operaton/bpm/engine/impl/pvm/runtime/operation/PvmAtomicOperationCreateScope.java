@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
@@ -26,7 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public abstract class PvmAtomicOperationCreateScope implements PvmAtomicOperation {
 
-  private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
   @Override
   public void execute(PvmExecutionImpl execution) {

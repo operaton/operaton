@@ -16,17 +16,19 @@
  */
 package org.operaton.bpm.client.spring.impl.client;
 
-import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_ASC_VALUE;
-import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_DESC_VALUE;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.interceptor.ClientRequestInterceptor;
 import org.operaton.bpm.client.spring.exception.SpringExternalTaskClientException;
 import org.operaton.bpm.client.spring.impl.client.util.ClientLoggerUtil;
+import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
+import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_ASC_VALUE;
+import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_DESC_VALUE;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ import org.springframework.core.env.PropertySourcesPropertyResolver;
 public class ClientFactory
     implements FactoryBean<ExternalTaskClient>, InitializingBean {
 
-  protected static final ClientLoggerUtil LOG = ClientLoggerUtil.CLIENT_LOGGER;
+  protected static final ClientLoggerUtil LOG = LoggerUtil.CLIENT_LOGGER;
 
   protected ClientConfiguration clientConfiguration;
 

@@ -16,16 +16,18 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
+import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
+
 import java.text.ParseException;
 import java.util.Date;
-import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
 
 /**
  * @author Svetlana Dorokhova.
  */
 public class BatchWindowConfiguration {
 
-  protected static final ConfigurationLogger LOG = ConfigurationLogger.CONFIG_LOGGER;
+  protected static final ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
 
   private String startTime;
 

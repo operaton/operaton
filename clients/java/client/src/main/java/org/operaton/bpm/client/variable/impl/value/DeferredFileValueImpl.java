@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.client.variable.impl.value;
 
-import java.io.InputStream;
-
 import org.operaton.bpm.client.impl.EngineClient;
 import org.operaton.bpm.client.impl.EngineClientException;
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.variable.value.DeferredFileValue;
 import org.operaton.bpm.engine.variable.impl.value.FileValueImpl;
-import org.operaton.bpm.engine.variable.type.PrimitiveValueType;
+import static org.operaton.bpm.engine.variable.type.ValueType.FILE;
+
+import java.io.InputStream;
 
 /**
  * @author Tassilo Weidner
@@ -41,7 +41,7 @@ public class DeferredFileValueImpl extends FileValueImpl implements DeferredFile
   protected EngineClient engineClient;
 
   public DeferredFileValueImpl(String filename, EngineClient engineClient) {
-    super(PrimitiveValueType.FILE, filename);
+    super(FILE, filename);
     this.engineClient = engineClient;
   }
 

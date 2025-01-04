@@ -20,6 +20,13 @@ import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient;
 import org.operaton.bpm.client.spring.impl.client.util.ClientLoggerUtil;
 import org.operaton.bpm.client.spring.impl.util.AnnotationUtil;
+import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
@@ -30,14 +37,9 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.core.type.AnnotationMetadata;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 public class ClientPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
-  protected static final ClientLoggerUtil LOG = ClientLoggerUtil.CLIENT_LOGGER;
+  protected static final ClientLoggerUtil LOG = LoggerUtil.CLIENT_LOGGER;
 
   protected static final String BEAN_NAME = "externalTaskClient";
 

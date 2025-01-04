@@ -19,11 +19,16 @@ package org.operaton.bpm.client.spring.impl.subscription;
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.spring.SpringTopicSubscription;
 import org.operaton.bpm.client.spring.event.SubscriptionInitializedEvent;
-import org.operaton.bpm.client.spring.impl.client.util.ClientLoggerUtil;
 import org.operaton.bpm.client.spring.impl.subscription.util.SubscriptionLoggerUtil;
+import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
 import org.operaton.bpm.client.topic.TopicSubscription;
 import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
+
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
@@ -31,14 +36,10 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
-
 public class SpringTopicSubscriptionImpl
     implements SpringTopicSubscription, InitializingBean {
 
-  protected static final SubscriptionLoggerUtil LOG = ClientLoggerUtil.SUBSCRIPTION_LOGGER;
+  protected static final SubscriptionLoggerUtil LOG = LoggerUtil.SUBSCRIPTION_LOGGER;
 
   protected SubscriptionConfiguration subscriptionConfiguration;
   protected ExternalTaskHandler externalTaskHandler;

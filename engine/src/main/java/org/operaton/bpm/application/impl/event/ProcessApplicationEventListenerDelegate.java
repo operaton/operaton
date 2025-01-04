@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.application.impl.event;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -27,9 +25,12 @@ import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.TaskListener;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+
+import java.util.concurrent.Callable;
 
 /**
  * <p>{@link ExecutionListener} and {@link TaskListener} implementation delegating to
@@ -52,16 +53,13 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
  */
 public class ProcessApplicationEventListenerDelegate implements ExecutionListener, TaskListener {
 
-  private static final ProcessApplicationLogger LOG = ProcessApplicationLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   @Override
   public void notify(final DelegateExecution execution) throws Exception {
-    Callable<Void> notification = new Callable<>() {
-      @Override
-      public Void call() throws Exception {
-        notifyExecutionListener(execution);
-        return null;
-      }
+    Callable<Void> notification = () -> {
+      notifyExecutionListener(execution);
+      return null;
     };
     performNotification(execution, notification);
   }
@@ -72,12 +70,9 @@ public class ProcessApplicationEventListenerDelegate implements ExecutionListene
       LOG.taskNotRelatedToExecution(delegateTask);
     } else {
       final DelegateExecution execution = delegateTask.getExecution();
-      Callable<Void> notification = new Callable<>() {
-        @Override
-        public Void call() throws Exception {
-          notifyTaskListener(delegateTask);
-          return null;
-        }
+      Callable<Void> notification = () -> {
+        notifyTaskListener(delegateTask);
+        return null;
       };
       try {
         performNotification(execution, notification);
@@ -124,7 +119,7 @@ public class ProcessApplicationEventListenerDelegate implements ExecutionListene
     }
   }
 
-  protected void notifyTaskListener(DelegateTask task) throws Exception {
+  protected void notifyTaskListener(DelegateTask task) {
     ProcessApplicationReference processApp = Context.getCurrentProcessApplication();
     try {
       ProcessApplicationInterface processApplication = processApp.getProcessApplication();

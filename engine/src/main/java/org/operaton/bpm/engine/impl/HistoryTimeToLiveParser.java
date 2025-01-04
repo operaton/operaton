@@ -17,9 +17,6 @@
 
 package org.operaton.bpm.engine.impl;
 
-import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse.OPERATON_BPMN_EXTENSIONS_NS;
-
-import java.util.Objects;
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.cfg.ConfigurationLogger;
@@ -30,13 +27,16 @@ import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.impl.util.xml.Element;
 import org.operaton.bpm.model.cmmn.instance.Case;
 import org.operaton.bpm.model.dmn.instance.Decision;
+import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse.OPERATON_BPMN_EXTENSIONS_NS;
+
+import java.util.Objects;
 
 /**
  * Class that encapsulates the business logic of parsing HistoryTimeToLive of different deployable resources (process, definition, case).
  */
 public class HistoryTimeToLiveParser {
 
-  protected static final ConfigurationLogger LOG = ConfigurationLogger.CONFIG_LOGGER;
+  protected static final ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
 
   protected final boolean enforceNonNullValue;
   protected final String httlConfigValue;

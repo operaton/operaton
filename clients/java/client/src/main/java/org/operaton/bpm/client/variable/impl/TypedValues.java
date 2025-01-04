@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.client.variable.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.engine.variable.VariableMap;
@@ -26,6 +23,9 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TypedValues {
 
@@ -44,8 +44,8 @@ public class TypedValues {
       for (String variableName : variables.keySet()) {
 
         Object variableValue = null;
-        if (variables instanceof VariableMap) {
-          variableValue = ((VariableMap) variables).getValueTyped(variableName);
+        if (variables instanceof VariableMap variableMap) {
+          variableValue = variableMap.getValueTyped(variableName);
         }
         else {
           variableValue = variables.get(variableName);
@@ -56,7 +56,7 @@ public class TypedValues {
           TypedValueField typedValueField = toTypedValueField(typedValue);
           result.put(variableName, typedValueField);
         }
-        catch (Throwable e) {
+        catch (Exception e) {
           throw LOG.cannotSerializeVariable(variableName, e);
         }
 
@@ -91,8 +91,8 @@ public class TypedValues {
   protected <T extends TypedValue> TypedValueField toTypedValueField(T typedValue) {
     ValueMapper<T> serializer = findSerializer(typedValue);
 
-    if(typedValue instanceof UntypedValueImpl) {
-      typedValue = serializer.convertToTypedValue((UntypedValueImpl) typedValue);
+    if(typedValue instanceof UntypedValueImpl untypedValue) {
+      typedValue = serializer.convertToTypedValue(untypedValue);
     }
 
     TypedValueField typedValueField = new TypedValueField();
@@ -115,10 +115,10 @@ public class TypedValues {
   }
 
   protected TypedValue createTypedValue(Object value) {
-    TypedValue typedValue = null;
+    TypedValue typedValue;
 
-    if (value instanceof TypedValue) {
-      typedValue = (TypedValue) value;
+    if (value instanceof TypedValue v) {
+      typedValue = v;
     }
     else {
       typedValue = Variables.untypedValue(value);

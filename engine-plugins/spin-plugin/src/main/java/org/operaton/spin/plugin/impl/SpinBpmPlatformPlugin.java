@@ -16,8 +16,6 @@
  */
 package org.operaton.spin.plugin.impl;
 
-import java.util.List;
-
 import org.operaton.bpm.application.AbstractProcessApplication;
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.container.impl.plugin.BpmPlatformPlugin;
@@ -25,6 +23,8 @@ import org.operaton.bpm.engine.impl.variable.serializer.DefaultVariableSerialize
 import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 import org.operaton.spin.DataFormats;
+
+import java.util.List;
 
 /**
  * @author Thorben Lindhauer
@@ -37,8 +37,8 @@ public class SpinBpmPlatformPlugin implements BpmPlatformPlugin {
   @Override
   public void postProcessApplicationDeploy(ProcessApplicationInterface processApplication) {
     ProcessApplicationInterface rawPa = processApplication.getRawObject();
-    if (rawPa instanceof AbstractProcessApplication) {
-      initializeVariableSerializers((AbstractProcessApplication) rawPa);
+    if (rawPa instanceof AbstractProcessApplication application) {
+      initializeVariableSerializers(application);
     }
     else {
       LOG.logNoDataFormatsInitiailized("process application data formats", "process application is not a sub class of " + AbstractProcessApplication.class.getName());

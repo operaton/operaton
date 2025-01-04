@@ -23,8 +23,8 @@ import org.operaton.bpm.application.ProcessApplicationInterface;
  */
 public interface BpmPlatformPlugin {
 
-  public void postProcessApplicationDeploy(ProcessApplicationInterface processApplication);
+  void postProcessApplicationDeploy(ProcessApplicationInterface processApplication);
 
-  public void postProcessApplicationUndeploy(ProcessApplicationInterface processApplication);
+  void postProcessApplicationUndeploy(ProcessApplicationInterface processApplication);
 
 }

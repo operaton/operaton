@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.client.variable.impl.mapper;
 
-import static org.operaton.bpm.engine.variable.type.SerializableValueType.VALUE_INFO_OBJECT_TYPE_NAME;
-import static org.operaton.bpm.engine.variable.type.SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT;
-import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
-
-import java.util.Map;
-
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
 import org.operaton.bpm.client.spi.DataFormat;
 import org.operaton.bpm.client.variable.impl.AbstractTypedValueMapper;
@@ -32,6 +26,11 @@ import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+import static org.operaton.bpm.engine.variable.type.SerializableValueType.VALUE_INFO_OBJECT_TYPE_NAME;
+import static org.operaton.bpm.engine.variable.type.SerializableValueType.VALUE_INFO_SERIALIZATION_DATA_FORMAT;
+import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
+
+import java.util.Map;
 
 public class ObjectValueMapper extends AbstractTypedValueMapper<ObjectValue> {
 
@@ -132,8 +131,7 @@ public class ObjectValueMapper extends AbstractTypedValueMapper<ObjectValue> {
       return false;
     }
 
-    if (typedValue instanceof SerializableValue) {
-      SerializableValue serializableValue = (SerializableValue) typedValue;
+    if (typedValue instanceof SerializableValue serializableValue) {
       String requestedDataFormat = serializableValue.getSerializationDataFormat();
       if (!serializableValue.isDeserialized()) {
         // serialized object => dataformat must match

@@ -25,9 +25,9 @@ import org.operaton.bpm.client.spring.boot.starter.subscription.configuration.Fu
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 class MergeSubscriptionConfigurationTest extends ParsePropertiesHelper {
 
-  @MockBean
+  @MockitoBean
   public ExternalTaskClient externalTaskClient;
 
   @Autowired

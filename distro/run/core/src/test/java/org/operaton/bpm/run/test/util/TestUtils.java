@@ -16,36 +16,59 @@
  */
 package org.operaton.bpm.run.test.util;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
+import javax.net.ssl.*;
+import java.io.InputStream;
+import java.security.KeyStore;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 public class TestUtils {
-  private TestUtils() {
+
+  public static ClientHttpRequestFactory createClientHttpRequestFactory() throws Exception {
+    SSLContext sslContext = trustSelfSignedSSL();
+    DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(sslContext, HttpsURLConnection.getDefaultHostnameVerifier());
+    PoolingHttpClientConnectionManager connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+        .setTlsSocketStrategy(tlsStrategy)
+        .build();
+    CloseableHttpClient httpClient = HttpClients.custom()
+        .setConnectionManager(connectionManager)
+        .build();
+    return new HttpComponentsClientHttpRequestFactory(httpClient);
   }
 
-  public static void trustSelfSignedSSL() throws NoSuchAlgorithmException, KeyManagementException {
-    SSLContext ctx = SSLContext.getInstance("SSL");
-    X509TrustManager tm = new X509TrustManager() {
-
-      @Override
-      public void checkClientTrusted(X509Certificate[] xcs, String string) {
+  public static SSLContext trustSelfSignedSSL() throws Exception {
+    // Load the keystore from the classpath
+    try (InputStream keyStoreStream = TestUtils.class.getResourceAsStream("/keystore.p12")) {
+      if (keyStoreStream == null) {
+        throw new RuntimeException("Keystore not found in classpath");
       }
 
-      @Override
-      public void checkServerTrusted(X509Certificate[] xcs, String string) {
-      }
+      KeyStore keyStore = KeyStore.getInstance("PKCS12");
+      keyStore.load(keyStoreStream, "operaton".toCharArray());
 
-      @Override
-      public X509Certificate[] getAcceptedIssuers() {
-        return null;
-      }
-    };
-    ctx.init(null, new TrustManager[] { tm }, null);
-    SSLContext.setDefault(ctx);
+      // Initialize the TrustManagerFactory with the keystore
+      TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+      tmf.init(keyStore);
+
+      // Get the TrustManagers from the factory
+      TrustManager[] trustManagers = tmf.getTrustManagers();
+
+      // Initialize the SSLContext with the TrustManagers
+      SSLContext sc = SSLContext.getInstance("TLS");
+      sc.init(null, trustManagers, new java.security.SecureRandom());
+      HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+      // Set a HostnameVerifier that bypasses hostname verification
+      HostnameVerifier allHostsValid = (hostname, session) -> true;
+      HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+
+      return sc;
+    }
   }
 }

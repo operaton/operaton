@@ -1,8 +1,8 @@
 server:
   ssl:
     key-store: classpath:keystore.p12
-    key-store-password: camunda
+    key-store-password: operaton
     key-store-type: pkcs12
-    key-alias: camunda
-    key-password: camunda
+    key-alias: localhost
+    key-password: operaton
   port: 8443

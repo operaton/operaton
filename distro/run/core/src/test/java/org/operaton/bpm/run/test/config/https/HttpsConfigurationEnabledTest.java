@@ -26,22 +26,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = {OperatonBpmRun.class}, webEnvironment = WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = {OperatonBpmRun.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = {"test-https-enabled"})
 class HttpsConfigurationEnabledTest extends AbstractRestTest {
+  @LocalServerPort
+  private int localPort;
+
+  private RestTemplate restTemplate;
 
   @BeforeEach
   void init() throws Exception {
-    TestUtils.trustSelfSignedSSL();
+    restTemplate = new RestTemplate(TestUtils.createClientHttpRequestFactory());
   }
 
   @Test
@@ -50,7 +56,7 @@ class HttpsConfigurationEnabledTest extends AbstractRestTest {
     String url = "https://localhost:" + localPort + CONTEXT_PATH + "/task";
 
     // when
-    var response = testRestTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(null), List.class);
+    var response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(null), List.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -59,11 +65,11 @@ class HttpsConfigurationEnabledTest extends AbstractRestTest {
   @Test
   void shouldNotRedirect() {
     // given
-    String url = "http://localhost:" + 8080 + CONTEXT_PATH + "/task";
+    String url = "http://localhost:8999" + CONTEXT_PATH + "/task";
     // when
     HttpEntity<Object> requestEntity = new HttpEntity<>(null);
     Throwable exception = assertThrows(ResourceAccessException.class, () ->
-        testRestTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class));
+        restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class));
     assertThat(exception.getMessage()).contains("Connection refused");
   }
 }

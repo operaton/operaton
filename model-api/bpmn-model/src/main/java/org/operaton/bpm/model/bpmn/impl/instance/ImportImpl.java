@@ -20,7 +20,6 @@ import org.operaton.bpm.model.bpmn.instance.Import;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
@@ -40,12 +39,7 @@ public class ImportImpl extends BpmnModelElementInstanceImpl implements Import {
   public static void registerType(ModelBuilder bpmnModelBuilder) {
     ModelElementTypeBuilder typeBuilder = bpmnModelBuilder.defineType(Import.class, BPMN_ELEMENT_IMPORT)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Import>() {
-      @Override
-      public Import newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ImportImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ImportImpl(instanceContext));
 
     namespaceAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAMESPACE)
       .required()

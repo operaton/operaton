@@ -30,7 +30,6 @@ import org.operaton.bpm.model.cmmn.instance.OutputDecisionParameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -85,12 +84,7 @@ public class DecisionImpl extends CmmnElementImpl implements Decision {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Decision.class, CMMN_ELEMENT_DECISION)
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(new ModelTypeInstanceProvider<Decision>() {
-      @Override
-      public Decision newInstance(ModelTypeInstanceContext instanceContext) {
-            return new DecisionImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new DecisionImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

@@ -27,9 +27,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.tree.ActivityExecutionHierarchyWalker;
 import org.operaton.bpm.engine.impl.tree.ActivityExecutionMappingCollector;
-import org.operaton.bpm.engine.impl.tree.ActivityExecutionTuple;
 import org.operaton.bpm.engine.impl.tree.OutputVariablesPropagator;
-import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
 
 /**
  * Helper class handling the propagation of BPMN Errors.
@@ -111,13 +109,7 @@ public class BpmnExceptionHandler {
 
     try {
 
-      walker.walkUntil(new ReferenceWalker.WalkCondition<ActivityExecutionTuple>() {
-
-        @Override
-        public boolean isFulfilled(ActivityExecutionTuple element) {
-          return errorDeclarationFinder.getErrorEventDefinition() != null || element == null;
-        }
-      });
+      walker.walkUntil(element -> errorDeclarationFinder.getErrorEventDefinition() != null || element == null);
 
     } catch(Exception e) {
       LOG.errorPropagationException(execution.getActivityInstanceId(), e);

@@ -33,7 +33,6 @@ import org.operaton.bpm.model.cmmn.instance.Task;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -116,12 +115,7 @@ public class ProcessTaskImpl extends TaskImpl implements ProcessTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ProcessTask.class, CMMN_ELEMENT_PROCESS_TASK)
         .namespaceUri(CMMN11_NS)
         .extendsType(Task.class)
-        .instanceProvider(new ModelTypeInstanceProvider<ProcessTask>() {
-      @Override
-      public ProcessTask newInstance(ModelTypeInstanceContext instanceContext) {
-            return new ProcessTaskImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new ProcessTaskImpl(instanceContext));
 
     processRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_PROCESS_REF)
         .build();

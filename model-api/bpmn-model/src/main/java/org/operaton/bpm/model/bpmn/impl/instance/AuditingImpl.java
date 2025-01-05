@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_AUDITING;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN auditing element
@@ -37,12 +36,7 @@ public class AuditingImpl extends BaseElementImpl implements Auditing {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Auditing.class, BPMN_ELEMENT_AUDITING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Auditing>() {
-      @Override
-      public Auditing newInstance(ModelTypeInstanceContext instanceContext) {
-          return new AuditingImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new AuditingImpl(instanceContext));
 
     typeBuilder.build();
   }

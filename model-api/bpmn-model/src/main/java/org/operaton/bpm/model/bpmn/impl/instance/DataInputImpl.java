@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN dataInput element
@@ -40,12 +39,7 @@ public class DataInputImpl extends ItemAwareElementImpl implements DataInput {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataInput.class, BPMN_ELEMENT_DATA_INPUT)
       .namespaceUri(BPMN20_NS)
       .extendsType(ItemAwareElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DataInput>() {
-      @Override
-      public DataInput newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DataInputImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DataInputImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

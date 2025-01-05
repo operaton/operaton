@@ -66,7 +66,6 @@ import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.form.type.AbstractFormFieldType;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
@@ -1202,13 +1201,9 @@ public class FormServiceTest {
 
     // when
     final boolean hasLoadedAnyVariables =
-      processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Boolean>() {
-
-        @Override
-        public Boolean execute(CommandContext commandContext) {
-          formService.submitTaskForm(task.getId(), null);
-          return !commandContext.getDbEntityManager().getCachedEntitiesByType(VariableInstanceEntity.class).isEmpty();
-        }
+      processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+        formService.submitTaskForm(task.getId(), null);
+        return !commandContext.getDbEntityManager().getCachedEntitiesByType(VariableInstanceEntity.class).isEmpty();
       });
 
     // then

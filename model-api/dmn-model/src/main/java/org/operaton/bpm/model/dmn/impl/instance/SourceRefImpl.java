@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.SourceRef;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class SourceRefImpl extends DmnElementReferenceImpl implements SourceRef {
 
@@ -36,12 +35,7 @@ public class SourceRefImpl extends DmnElementReferenceImpl implements SourceRef 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SourceRef.class, DMN_ELEMENT_SOURCE_REF)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<SourceRef>() {
-      @Override
-      public SourceRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new SourceRefImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new SourceRefImpl(instanceContext));
 
     typeBuilder.build();
   }

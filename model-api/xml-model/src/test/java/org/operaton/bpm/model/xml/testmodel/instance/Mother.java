@@ -22,7 +22,6 @@ import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAME
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class Mother extends AnimalReference {
 
@@ -34,12 +33,7 @@ public class Mother extends AnimalReference {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Mother.class, ELEMENT_NAME_MOTHER)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(AnimalReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Mother>() {
-      @Override
-      public Mother newInstance(ModelTypeInstanceContext instanceContext) {
-          return new Mother(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new Mother(instanceContext));
 
     typeBuilder.build();
   }

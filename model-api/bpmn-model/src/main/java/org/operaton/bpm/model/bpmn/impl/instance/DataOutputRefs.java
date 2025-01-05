@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_DATA_OUTPUT_REFS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN dataOutputRefs element of the BPMN tOutputSet type
@@ -34,12 +33,7 @@ public class DataOutputRefs extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataOutputRefs.class, BPMN_ELEMENT_DATA_OUTPUT_REFS)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<DataOutputRefs>() {
-      @Override
-      public DataOutputRefs newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DataOutputRefs(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DataOutputRefs(instanceContext));
 
     typeBuilder.build();
   }

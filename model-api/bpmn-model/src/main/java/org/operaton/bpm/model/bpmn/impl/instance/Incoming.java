@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_INCOMING;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN incoming element of the BPMN tFlowNode type
@@ -34,12 +33,7 @@ public class Incoming extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Incoming.class, BPMN_ELEMENT_INCOMING)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Incoming>() {
-      @Override
-      public Incoming newInstance(ModelTypeInstanceContext instanceContext) {
-          return new Incoming(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new Incoming(instanceContext));
   
     typeBuilder.build();
   } 

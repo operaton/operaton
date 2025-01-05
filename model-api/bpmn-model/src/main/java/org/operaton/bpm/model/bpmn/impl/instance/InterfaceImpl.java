@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN interface element
@@ -46,12 +45,7 @@ public class InterfaceImpl extends RootElementImpl implements Interface {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Interface.class, BPMN_ELEMENT_INTERFACE)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Interface>() {
-      @Override
-      public Interface newInstance(ModelTypeInstanceContext instanceContext) {
-          return new InterfaceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new InterfaceImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .required()

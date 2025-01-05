@@ -32,7 +32,6 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonScript;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -54,12 +53,7 @@ public class OperatonCaseExecutionListenerImpl extends CmmnModelElementInstanceI
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonCaseExecutionListener.class, OPERATON_ELEMENT_CASE_EXECUTION_LISTENER)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonCaseExecutionListener>() {
-      @Override
-      public OperatonCaseExecutionListener newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonCaseExecutionListenerImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonCaseExecutionListenerImpl(instanceContext));
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
       .namespace(CAMUNDA_NS)

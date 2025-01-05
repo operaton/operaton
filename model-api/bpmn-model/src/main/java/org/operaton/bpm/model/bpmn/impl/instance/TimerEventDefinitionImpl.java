@@ -25,7 +25,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TIMER_EVENT_DEFINITION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN timerEventDefinition element
@@ -42,12 +41,7 @@ public class TimerEventDefinitionImpl extends EventDefinitionImpl implements Tim
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimerEventDefinition.class, BPMN_ELEMENT_TIMER_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<TimerEventDefinition>() {
-      @Override
-      public TimerEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TimerEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new TimerEventDefinitionImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

@@ -51,7 +51,6 @@ import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.auth.DefaultAuthorizationProvider;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
@@ -96,16 +95,13 @@ public class TaskAuthorizationTest extends AuthorizationTest {
   public void tearDown() {
     super.tearDown();
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-        List<HistoricVariableInstance> variables = historyService.createHistoricVariableInstanceQuery().includeDeleted().list();
-        for (HistoricVariableInstance variable : variables) {
-          commandContext.getDbEntityManager().delete((HistoricVariableInstanceEntity) variable);
-        }
-        return null;
+      List<HistoricVariableInstance> variables = historyService.createHistoricVariableInstanceQuery().includeDeleted().list();
+      for (HistoricVariableInstance variable : variables) {
+        commandContext.getDbEntityManager().delete((HistoricVariableInstanceEntity) variable);
       }
+      return null;
     });
   }
 

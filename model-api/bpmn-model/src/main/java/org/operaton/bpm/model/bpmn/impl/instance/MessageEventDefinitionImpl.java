@@ -54,12 +54,7 @@ public class MessageEventDefinitionImpl extends EventDefinitionImpl implements M
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(MessageEventDefinition.class, BPMN_ELEMENT_MESSAGE_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<MessageEventDefinition>() {
-      @Override
-      public MessageEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new MessageEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new MessageEventDefinitionImpl(instanceContext));
 
     messageRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_MESSAGE_REF)
       .qNameAttributeReference(Message.class)

@@ -31,7 +31,6 @@ import org.operaton.bpm.model.cmmn.instance.Task;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -92,12 +91,7 @@ public class TaskImpl extends PlanItemDefinitionImpl implements Task {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Task.class, CMMN_ELEMENT_TASK)
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanItemDefinition.class)
-        .instanceProvider(new ModelTypeInstanceProvider<Task>() {
-      @Override
-      public Task newInstance(ModelTypeInstanceContext instanceContext) {
-            return new TaskImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new TaskImpl(instanceContext));
 
     isBlockingAttribute = typeBuilder.booleanAttribute(CMMN_ATTRIBUTE_IS_BLOCKING)
         .defaultValue(true)

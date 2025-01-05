@@ -24,7 +24,6 @@ import org.operaton.bpm.model.bpmn.instance.operaton.OperatonOutputParameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -39,12 +38,7 @@ public class OperatonOutputParameterImpl extends OperatonGenericValueElementImpl
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonOutputParameter.class, OPERATON_ELEMENT_OUTPUT_PARAMETER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonOutputParameter>() {
-      @Override
-      public OperatonOutputParameter newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonOutputParameterImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonOutputParameterImpl(instanceContext));
 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.util;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -713,33 +712,30 @@ public final class JsonUtil {
   public static Gson createGsonMapper() {
     return new GsonBuilder()
       .serializeNulls()
-      .registerTypeAdapter(Map.class, new JsonDeserializer<Map<String,Object>>() {
-        @Override
-        public Map<String, Object> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+      .registerTypeAdapter(Map.class, (JsonDeserializer<Map<String, Object>>) (json, typeOfT, context) -> {
 
-          Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
-          for (Map.Entry<String, JsonElement> entry : getObject(json).entrySet()) {
-            if (entry != null) {
-              String key = entry.getKey();
-              JsonElement jsonElement = entry.getValue();
+        for (Map.Entry<String, JsonElement> entry : getObject(json).entrySet()) {
+          if (entry != null) {
+            String key = entry.getKey();
+            JsonElement jsonElement = entry.getValue();
 
-              if (jsonElement != null && jsonElement.isJsonNull()) {
-                map.put(key, null);
+            if (jsonElement != null && jsonElement.isJsonNull()) {
+              map.put(key, null);
 
-              } else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
+            } else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
 
-                Object rawValue = asPrimitiveObject((JsonPrimitive) jsonElement);
-                if (rawValue != null) {
-                  map.put(key, rawValue);
+              Object rawValue = asPrimitiveObject((JsonPrimitive) jsonElement);
+              if (rawValue != null) {
+                map.put(key, rawValue);
 
-                }
               }
             }
           }
-
-          return map;
         }
+
+        return map;
       })
       .create();
   }

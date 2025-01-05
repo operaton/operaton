@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN receiveTask element
@@ -47,12 +46,7 @@ public class ReceiveTaskImpl extends TaskImpl implements ReceiveTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ReceiveTask.class, BPMN_ELEMENT_RECEIVE_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ReceiveTask>() {
-      @Override
-      public ReceiveTask newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ReceiveTaskImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ReceiveTaskImpl(instanceContext));
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##WebService")

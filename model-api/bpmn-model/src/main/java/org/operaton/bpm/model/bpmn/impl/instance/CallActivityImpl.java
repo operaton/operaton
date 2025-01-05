@@ -39,7 +39,6 @@ import org.operaton.bpm.model.bpmn.instance.CallActivity;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -71,12 +70,7 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CallActivity.class, BPMN_ELEMENT_CALL_ACTIVITY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Activity.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CallActivity>() {
-      @Override
-      public CallActivity newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CallActivityImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new CallActivityImpl(instanceContext));
 
     calledElementAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_CALLED_ELEMENT)
       .build();

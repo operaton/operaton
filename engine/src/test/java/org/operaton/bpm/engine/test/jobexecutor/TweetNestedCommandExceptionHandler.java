@@ -53,12 +53,7 @@ public class TweetNestedCommandExceptionHandler implements JobHandler<JobHandler
 
   @Override
   public JobHandlerConfiguration newConfiguration(String canonicalString) {
-    return new JobHandlerConfiguration() {
-      @Override
-      public String toCanonicalString() {
-        return null;
-      }
-    };
+    return () -> null;
   }
 
   @Override

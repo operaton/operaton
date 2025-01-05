@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_STRING;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN string operaton extension element
@@ -36,12 +35,7 @@ public class OperatonStringImpl extends BpmnModelElementInstanceImpl implements 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonString.class, OPERATON_ELEMENT_STRING)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonString>() {
-      @Override
-      public OperatonString newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonStringImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonStringImpl(instanceContext));
 
     typeBuilder.build();
   }

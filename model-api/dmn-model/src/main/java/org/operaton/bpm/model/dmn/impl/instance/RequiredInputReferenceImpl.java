@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.RequiredInputReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class RequiredInputReferenceImpl extends DmnElementReferenceImpl implements RequiredInputReference {
 
@@ -36,12 +35,7 @@ public class RequiredInputReferenceImpl extends DmnElementReferenceImpl implemen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredInputReference.class, DMN_ELEMENT_REQUIRED_INPUT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<RequiredInputReference>() {
-      @Override
-      public RequiredInputReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new RequiredInputReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new RequiredInputReferenceImpl(instanceContext));
 
     typeBuilder.build();
   }

@@ -28,7 +28,6 @@ import org.operaton.bpm.model.dmn.instance.NamedElement;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 
@@ -49,12 +48,7 @@ public class ElementCollectionImpl extends NamedElementImpl implements ElementCo
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ElementCollection.class, DMN_ELEMENT_ELEMENT_COLLECTION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ElementCollection>() {
-      @Override
-      public ElementCollection newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ElementCollectionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ElementCollectionImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

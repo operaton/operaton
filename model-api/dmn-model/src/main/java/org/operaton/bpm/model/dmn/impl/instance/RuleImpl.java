@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.Rule;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class RuleImpl extends DecisionRuleImpl implements Rule {
 
@@ -36,12 +35,7 @@ public class RuleImpl extends DecisionRuleImpl implements Rule {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Rule.class, DMN_ELEMENT_RULE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DecisionRule.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Rule>() {
-      @Override
-      public Rule newInstance(ModelTypeInstanceContext instanceContext) {
-          return new RuleImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new RuleImpl(instanceContext));
 
     typeBuilder.build();
   }

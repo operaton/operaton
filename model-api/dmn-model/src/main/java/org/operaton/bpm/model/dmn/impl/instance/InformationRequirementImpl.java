@@ -27,7 +27,6 @@ import org.operaton.bpm.model.dmn.instance.RequiredInputReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.ElementReference;
 
@@ -63,12 +62,7 @@ public class InformationRequirementImpl extends DmnModelElementInstanceImpl impl
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InformationRequirement.class, DMN_ELEMENT_INFORMATION_REQUIREMENT)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<InformationRequirement>() {
-      @Override
-      public InformationRequirement newInstance(ModelTypeInstanceContext instanceContext) {
-          return new InformationRequirementImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new InformationRequirementImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

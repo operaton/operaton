@@ -115,18 +115,15 @@ public class MetricsManagerForCleanupTest {
     // given
     prepareTaskMetrics();
 
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        // when
-        List<String> taskMetricIdsForCleanup = commandContext.getMeterLogManager()
-            .findTaskMetricsForCleanup(batchSize, taskMetricHistoryTTL, 0, 59);
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute((Command<Object>) commandContext -> {
+      // when
+      List<String> taskMetricIdsForCleanup = commandContext.getMeterLogManager()
+          .findTaskMetricsForCleanup(batchSize, taskMetricHistoryTTL, 0, 59);
 
-        // then
-        assertThat(taskMetricIdsForCleanup).hasSize(resultCount);
+      // then
+      assertThat(taskMetricIdsForCleanup).hasSize(resultCount);
 
-        return null;
-      }
+      return null;
     });
   }
 

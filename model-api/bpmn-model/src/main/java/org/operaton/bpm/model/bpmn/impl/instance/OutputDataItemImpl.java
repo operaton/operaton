@@ -37,12 +37,7 @@ public class OutputDataItemImpl extends DataOutputImpl implements OutputDataItem
       .defineType(OutputDataItem.class, BPMN_ELEMENT_OUTPUT_DATA_ITEM)
       .namespaceUri(BPMN20_NS)
       .extendsType(DataOutput.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<OutputDataItem>() {
-      @Override
-      public OutputDataItem newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OutputDataItemImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OutputDataItemImpl(instanceContext));
 
     typeBuilder.build();
   }

@@ -31,7 +31,6 @@ import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN correlationProperty element
@@ -49,12 +48,7 @@ public class CorrelationPropertyImpl extends RootElementImpl implements Correlat
     typeBuilder = modelBuilder.defineType(CorrelationProperty.class, BPMN_ELEMENT_CORRELATION_PROPERTY)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CorrelationProperty>() {
-      @Override
-      public CorrelationProperty newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CorrelationPropertyImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new CorrelationPropertyImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

@@ -142,29 +142,21 @@ public class MultiTenancyJobExecutorTest {
   }
 
   protected static DelegateExecutionAsserter hasAuthenticatedTenantId(final String expectedTenantId) {
-    return new DelegateExecutionAsserter() {
+    return execution -> {
+      IdentityService identityService = execution.getProcessEngineServices().getIdentityService();
 
-      @Override
-      public void doAssert(DelegateExecution execution) {
-        IdentityService identityService = execution.getProcessEngineServices().getIdentityService();
-
-        Authentication currentAuthentication = identityService.getCurrentAuthentication();
-        assertThat(currentAuthentication).isNotNull();
-        assertThat(currentAuthentication.getTenantIds()).contains(expectedTenantId);
-      }
+      Authentication currentAuthentication = identityService.getCurrentAuthentication();
+      assertThat(currentAuthentication).isNotNull();
+      assertThat(currentAuthentication.getTenantIds()).contains(expectedTenantId);
     };
   }
 
   protected static DelegateExecutionAsserter hasNoAuthenticatedTenantId() {
-    return new DelegateExecutionAsserter() {
+    return execution -> {
+      IdentityService identityService = execution.getProcessEngineServices().getIdentityService();
 
-      @Override
-      public void doAssert(DelegateExecution execution) {
-        IdentityService identityService = execution.getProcessEngineServices().getIdentityService();
-
-        Authentication currentAuthentication = identityService.getCurrentAuthentication();
-        assertThat(currentAuthentication).isNull();
-      }
+      Authentication currentAuthentication = identityService.getCurrentAuthentication();
+      assertThat(currentAuthentication).isNull();
     };
   }
 

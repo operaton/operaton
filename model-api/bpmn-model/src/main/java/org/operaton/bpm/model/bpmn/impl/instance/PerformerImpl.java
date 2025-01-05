@@ -36,12 +36,7 @@ public class PerformerImpl extends ResourceRoleImpl implements Performer {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Performer.class, BPMN_ELEMENT_PERFORMER)
       .namespaceUri(BPMN20_NS)
       .extendsType(ResourceRole.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<Performer>() {
-      @Override
-      public Performer newInstance(ModelTypeInstanceContext instanceContext) {
-          return new PerformerImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new PerformerImpl(instanceContext));
     typeBuilder.build();
   }
 

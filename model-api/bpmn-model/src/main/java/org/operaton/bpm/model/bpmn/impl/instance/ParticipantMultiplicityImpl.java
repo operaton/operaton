@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN participantMultiplicity element
@@ -40,12 +39,7 @@ public class ParticipantMultiplicityImpl extends BaseElementImpl implements Part
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ParticipantMultiplicity.class, BPMN_ELEMENT_PARTICIPANT_MULTIPLICITY)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ParticipantMultiplicity>() {
-      @Override
-      public ParticipantMultiplicity newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ParticipantMultiplicityImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ParticipantMultiplicityImpl(instanceContext));
 
     minimumAttribute = typeBuilder.integerAttribute(BPMN_ATTRIBUTE_MINIMUM)
       .defaultValue(0)

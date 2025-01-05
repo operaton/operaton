@@ -92,17 +92,14 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
 
       deleteAuthorizations(Resources.USER, userId);
 
-      Context.getCommandContext().runWithoutAuthorization(new Callable<Void>() {
-        @Override
-        public Void call() throws Exception {
-          final List<Tenant> tenants = createTenantQuery().userMember(userId).list();
-          if (tenants != null && !tenants.isEmpty()) {
-            for (Tenant tenant : tenants) {
-              deleteAuthorizationsForUser(Resources.TENANT, tenant.getId(), userId);
-            }
+      Context.getCommandContext().runWithoutAuthorization((Callable<Void>) () -> {
+        final List<Tenant> tenants = createTenantQuery().userMember(userId).list();
+        if (tenants != null && !tenants.isEmpty()) {
+          for (Tenant tenant : tenants) {
+            deleteAuthorizationsForUser(Resources.TENANT, tenant.getId(), userId);
           }
-          return null;
         }
+        return null;
       });
 
       getDbEntityManager().delete(user);
@@ -222,17 +219,14 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
 
       deleteAuthorizations(Resources.GROUP, groupId);
 
-      Context.getCommandContext().runWithoutAuthorization(new Callable<Void>() {
-        @Override
-        public Void call() throws Exception {
-          final List<Tenant> tenants = createTenantQuery().groupMember(groupId).list();
-          if (tenants != null && !tenants.isEmpty()) {
-            for (Tenant tenant : tenants) {
-              deleteAuthorizationsForGroup(Resources.TENANT, tenant.getId(), groupId);
-            }
+      Context.getCommandContext().runWithoutAuthorization((Callable<Void>) () -> {
+        final List<Tenant> tenants = createTenantQuery().groupMember(groupId).list();
+        if (tenants != null && !tenants.isEmpty()) {
+          for (Tenant tenant : tenants) {
+            deleteAuthorizationsForGroup(Resources.TENANT, tenant.getId(), groupId);
           }
-          return null;
         }
+        return null;
       });
       getDbEntityManager().delete(group);
       return new IdentityOperationResult(null, IdentityOperationResult.OPERATION_DELETE);

@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.EncapsulatedDecisionReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class EncapsulatedDecisionReferenceImpl extends DmnElementReferenceImpl implements EncapsulatedDecisionReference {
 
@@ -36,12 +35,7 @@ public class EncapsulatedDecisionReferenceImpl extends DmnElementReferenceImpl i
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EncapsulatedDecisionReference.class, DMN_ELEMENT_ENCAPSULATED_DECISION_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<EncapsulatedDecisionReference>() {
-      @Override
-      public EncapsulatedDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new EncapsulatedDecisionReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new EncapsulatedDecisionReferenceImpl(instanceContext));
 
     typeBuilder.build();
   }

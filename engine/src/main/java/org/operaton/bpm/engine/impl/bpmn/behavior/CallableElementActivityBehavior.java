@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import java.util.concurrent.Callable;
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -89,13 +88,7 @@ public abstract class CallableElementActivityBehavior extends AbstractBpmnActivi
     ProcessApplicationReference targetProcessApplication
             = ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution);
     if (ProcessApplicationContextUtil.requiresContextSwitch(targetProcessApplication)) {
-      return Context.executeWithinProcessApplication(new Callable<Object>() {
-
-        @Override
-        public Object call() throws Exception {
-          return resolveDelegateClass(execution);
-        }
-      }, targetProcessApplication, new InvocationContext(execution));
+      return Context.executeWithinProcessApplication(() -> resolveDelegateClass(execution), targetProcessApplication, new InvocationContext(execution));
     } else {
       return instantiateDelegateClass(execution);
     }

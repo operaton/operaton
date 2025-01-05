@@ -28,7 +28,6 @@ import org.operaton.bpm.model.cmmn.instance.TransformationExpression;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
@@ -82,12 +81,7 @@ public class ParameterMappingImpl extends CmmnElementImpl implements ParameterMa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ParameterMapping.class, CMMN_ELEMENT_PARAMETER_MAPPING)
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(new ModelTypeInstanceProvider<ParameterMapping>() {
-      @Override
-      public ParameterMapping newInstance(ModelTypeInstanceContext instanceContext) {
-            return new ParameterMappingImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new ParameterMappingImpl(instanceContext));
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
         .idAttributeReference(Parameter.class)

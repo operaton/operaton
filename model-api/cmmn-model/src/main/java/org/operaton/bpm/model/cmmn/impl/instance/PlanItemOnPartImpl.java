@@ -33,7 +33,6 @@ import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
@@ -104,12 +103,7 @@ public class PlanItemOnPartImpl extends OnPartImpl implements PlanItemOnPart {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanItemOnPart.class, CMMN_ELEMENT_PLAN_ITEM_ON_PART)
         .extendsType(OnPart.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(new ModelTypeInstanceProvider<PlanItemOnPart>() {
-      @Override
-      public PlanItemOnPart newInstance(ModelTypeInstanceContext instanceContext) {
-            return new PlanItemOnPartImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new PlanItemOnPartImpl(instanceContext));
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
         .idAttributeReference(PlanItem.class)

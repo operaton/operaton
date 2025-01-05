@@ -16,23 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
@@ -47,8 +32,18 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.MessageEventDefinition;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
 
@@ -949,16 +944,12 @@ public class FoxJobRetryCmdTest extends PluggableProcessEngineTest {
   }
 
   protected List<AcquirableJobEntity> findAndLockAcquirableJobs() {
-    return processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<List<AcquirableJobEntity>>() {
-
-      @Override
-      public List<AcquirableJobEntity> execute(CommandContext commandContext) {
-        List<AcquirableJobEntity> jobs = commandContext.getJobManager().findNextJobsToExecute(new Page(0, 100));
-        for (AcquirableJobEntity job : jobs) {
-          job.setLockOwner("test");
-        }
-        return jobs;
+    return processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      List<AcquirableJobEntity> jobs = commandContext.getJobManager().findNextJobsToExecute(new Page(0, 100));
+      for (AcquirableJobEntity job : jobs) {
+        job.setLockOwner("test");
       }
+      return jobs;
     });
   }
 

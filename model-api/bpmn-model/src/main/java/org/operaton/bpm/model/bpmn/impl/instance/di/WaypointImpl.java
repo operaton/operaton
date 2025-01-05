@@ -25,7 +25,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DI_ELEMENT_WAYPOINT;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DI_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The DI waypoint element of the DI Edge type
@@ -38,12 +37,7 @@ public class WaypointImpl extends PointImpl implements Waypoint {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Waypoint.class, DI_ELEMENT_WAYPOINT)
       .namespaceUri(DI_NS)
       .extendsType(Point.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Waypoint>() {
-      @Override
-      public Waypoint newInstance(ModelTypeInstanceContext instanceContext) {
-          return new WaypointImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new WaypointImpl(instanceContext));
 
     typeBuilder.build();
   }

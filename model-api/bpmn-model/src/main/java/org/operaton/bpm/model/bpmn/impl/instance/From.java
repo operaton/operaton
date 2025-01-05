@@ -35,12 +35,7 @@ public class From extends ExpressionImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(From.class, BPMN_ELEMENT_FROM)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<From>() {
-      @Override
-      public From newInstance(ModelTypeInstanceContext instanceContext) {
-          return new From(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new From(instanceContext));
 
     typeBuilder.build();
   }

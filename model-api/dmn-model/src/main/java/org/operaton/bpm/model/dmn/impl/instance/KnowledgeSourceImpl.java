@@ -31,7 +31,6 @@ import org.operaton.bpm.model.dmn.instance.Type;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -89,12 +88,7 @@ public class KnowledgeSourceImpl extends DrgElementImpl implements KnowledgeSour
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(KnowledgeSource.class, DMN_ELEMENT_KNOWLEDGE_SOURCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<KnowledgeSource>() {
-      @Override
-      public KnowledgeSource newInstance(ModelTypeInstanceContext instanceContext) {
-          return new KnowledgeSourceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new KnowledgeSourceImpl(instanceContext));
 
     locationUriAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_LOCATION_URI)
       .build();

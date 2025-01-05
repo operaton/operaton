@@ -36,12 +36,7 @@ public class PotentialOwnerImpl extends HumanPerformerImpl implements PotentialO
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PotentialOwner.class, BPMN_ELEMENT_POTENTIAL_OWNER)
       .namespaceUri(BPMN20_NS)
       .extendsType(HumanPerformer.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<PotentialOwner>() {
-      @Override
-      public PotentialOwner newInstance(ModelTypeInstanceContext instanceContext) {
-          return new PotentialOwnerImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new PotentialOwnerImpl(instanceContext));
     typeBuilder.build();
   }
 

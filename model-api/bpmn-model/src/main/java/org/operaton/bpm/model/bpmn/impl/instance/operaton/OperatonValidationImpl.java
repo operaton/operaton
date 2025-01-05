@@ -29,7 +29,6 @@ import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_VALIDATION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN validation operaton extension element
@@ -43,12 +42,7 @@ public class OperatonValidationImpl extends BpmnModelElementInstanceImpl impleme
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonValidation.class, OPERATON_ELEMENT_VALIDATION)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonValidation>() {
-      @Override
-      public OperatonValidation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonValidationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonValidationImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

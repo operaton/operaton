@@ -39,7 +39,6 @@ import org.operaton.bpm.model.cmmn.instance.Sentry;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -161,12 +160,7 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanItem.class, CMMN_ELEMENT_PLAN_ITEM)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(new ModelTypeInstanceProvider<PlanItem>() {
-      @Override
-      public PlanItem newInstance(ModelTypeInstanceContext instanceContext) {
-            return new PlanItemImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new PlanItemImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

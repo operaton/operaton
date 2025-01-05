@@ -38,12 +38,7 @@ public class CasePlanModel extends StageImpl implements org.operaton.bpm.model.c
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(org.operaton.bpm.model.cmmn.instance.CasePlanModel.class, CMMN_ELEMENT_CASE_PLAN_MODEL)
       .namespaceUri(CMMN11_NS)
       .extendsType(Stage.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<CasePlanModel>() {
-      @Override
-      public CasePlanModel newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CasePlanModel(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new CasePlanModel(instanceContext));
 
     typeBuilder.build();
   }

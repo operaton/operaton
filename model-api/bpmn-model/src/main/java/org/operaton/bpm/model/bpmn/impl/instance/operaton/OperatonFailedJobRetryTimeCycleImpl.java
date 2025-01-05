@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_FAILED_JOB_RETRY_TIME_CYCLE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN failedJobRetryTimeCycle operaton extension element
@@ -36,12 +35,7 @@ public class OperatonFailedJobRetryTimeCycleImpl extends BpmnModelElementInstanc
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFailedJobRetryTimeCycle.class, OPERATON_ELEMENT_FAILED_JOB_RETRY_TIME_CYCLE)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonFailedJobRetryTimeCycle>() {
-      @Override
-      public OperatonFailedJobRetryTimeCycle newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonFailedJobRetryTimeCycleImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonFailedJobRetryTimeCycleImpl(instanceContext));
 
     typeBuilder.build();
   }

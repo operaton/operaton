@@ -56,7 +56,6 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.history.event.HistoricDecisionInputInstanceEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoricDecisionOutputInstanceEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoricExternalTaskLogEntity;
-import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
@@ -483,23 +482,20 @@ public class BulkHistoryDeleteTest {
 
   void assertDataDeleted(final List<String> inputIds, final List<String> inputByteArrayIds, final List<String> outputIds,
     final List<String> outputByteArrayIds) {
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        for (String inputId : inputIds) {
-          assertNull(commandContext.getDbEntityManager().selectById(HistoricDecisionInputInstanceEntity.class, inputId));
-        }
-        for (String inputByteArrayId : inputByteArrayIds) {
-          assertNull(commandContext.getDbEntityManager().selectById(ByteArrayEntity.class, inputByteArrayId));
-        }
-        for (String outputId : outputIds) {
-          assertNull(commandContext.getDbEntityManager().selectById(HistoricDecisionOutputInstanceEntity.class, outputId));
-        }
-        for (String outputByteArrayId : outputByteArrayIds) {
-          assertNull(commandContext.getDbEntityManager().selectById(ByteArrayEntity.class, outputByteArrayId));
-        }
-        return null;
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
+      for (String inputId : inputIds) {
+        assertNull(commandContext.getDbEntityManager().selectById(HistoricDecisionInputInstanceEntity.class, inputId));
       }
+      for (String inputByteArrayId : inputByteArrayIds) {
+        assertNull(commandContext.getDbEntityManager().selectById(ByteArrayEntity.class, inputByteArrayId));
+      }
+      for (String outputId : outputIds) {
+        assertNull(commandContext.getDbEntityManager().selectById(HistoricDecisionOutputInstanceEntity.class, outputId));
+      }
+      for (String outputByteArrayId : outputByteArrayIds) {
+        assertNull(commandContext.getDbEntityManager().selectById(ByteArrayEntity.class, outputByteArrayId));
+      }
+      return null;
     });
   }
 
@@ -629,14 +625,11 @@ public class BulkHistoryDeleteTest {
   }
 
   private void verifyByteArraysWereRemoved(final String... errorDetailsByteArrayIds) {
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        for (String errorDetailsByteArrayId : errorDetailsByteArrayIds) {
-          assertNull(commandContext.getDbEntityManager().selectOne("selectByteArray", errorDetailsByteArrayId));
-        }
-        return null;
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
+      for (String errorDetailsByteArrayId : errorDetailsByteArrayIds) {
+        assertNull(commandContext.getDbEntityManager().selectOne("selectByteArray", errorDetailsByteArrayId));
       }
+      return null;
     });
   }
 

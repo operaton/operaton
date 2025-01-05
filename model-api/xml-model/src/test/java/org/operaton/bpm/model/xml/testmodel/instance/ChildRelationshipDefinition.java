@@ -19,7 +19,6 @@ package org.operaton.bpm.model.xml.testmodel.instance;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.TYPE_NAME_CHILD_RELATIONSHIP_DEFINITION;
@@ -33,13 +32,7 @@ public class ChildRelationshipDefinition extends RelationshipDefinition {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ChildRelationshipDefinition.class, TYPE_NAME_CHILD_RELATIONSHIP_DEFINITION)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(RelationshipDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ChildRelationshipDefinition>() {
-
-      @Override
-      public ChildRelationshipDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ChildRelationshipDefinition(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ChildRelationshipDefinition(instanceContext));
 
     typeBuilder.build();
   }

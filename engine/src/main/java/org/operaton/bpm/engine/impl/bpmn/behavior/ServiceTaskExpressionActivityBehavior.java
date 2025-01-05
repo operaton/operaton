@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 
@@ -43,17 +41,14 @@ public class ServiceTaskExpressionActivityBehavior extends TaskActivityBehavior 
 
   @Override
   public void performExecution(final ActivityExecution execution) throws Exception {
-    executeWithErrorPropagation(execution, new Callable<>() {
-      @Override
-      public Void call() throws Exception {
-        //getValue() can have side-effects, that's why we have to call it independently from the result variable
-        Object value = expression.getValue(execution);
-        if (resultVariable != null) {
-          execution.setVariable(resultVariable, value);
-        }
-        leave(execution);
-        return null;
+    executeWithErrorPropagation(execution, () -> {
+      //getValue() can have side-effects, that's why we have to call it independently from the result variable
+      Object value = expression.getValue(execution);
+      if (resultVariable != null) {
+        execution.setVariable(resultVariable, value);
       }
+      leave(execution);
+      return null;
     });
 
   }

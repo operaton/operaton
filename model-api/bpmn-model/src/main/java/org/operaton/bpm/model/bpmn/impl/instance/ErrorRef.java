@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_ERROR_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN errorRef element of the BPMN tOperation type
@@ -34,12 +33,7 @@ public class ErrorRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ErrorRef.class, BPMN_ELEMENT_ERROR_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<ErrorRef>() {
-      @Override
-      public ErrorRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ErrorRef(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ErrorRef(instanceContext));
 
     typeBuilder.build();
   }

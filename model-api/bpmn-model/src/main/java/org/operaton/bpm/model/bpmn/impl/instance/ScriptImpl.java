@@ -23,7 +23,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_SCRIPT;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN script element
@@ -35,12 +34,7 @@ public class ScriptImpl extends BpmnModelElementInstanceImpl implements Script {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Script.class, BPMN_ELEMENT_SCRIPT)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Script>() {
-      @Override
-      public Script newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ScriptImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ScriptImpl(instanceContext));
 
     typeBuilder.build();
   }

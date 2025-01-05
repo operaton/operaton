@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_RENDERING;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN rendering element
@@ -37,12 +36,7 @@ public class RenderingImpl extends BaseElementImpl implements Rendering {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Rendering.class, BPMN_ELEMENT_RENDERING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Rendering>() {
-      @Override
-      public Rendering newInstance(ModelTypeInstanceContext instanceContext) {
-          return new RenderingImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new RenderingImpl(instanceContext));
 
     typeBuilder.build();
   }

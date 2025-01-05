@@ -25,8 +25,6 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionEntity;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.repository.CaseDefinition;
@@ -281,14 +279,7 @@ public class MultiTenancyRepositoryServiceTest {
   }
 
   protected <T extends ResourceDefinitionEntity> T getPreviousDefinition(final T definitionEntity) {
-    return ((ProcessEngineConfigurationImpl) processEngineConfiguration).getCommandExecutorTxRequired().execute(new Command<T>() {
-
-      @SuppressWarnings("unchecked")
-      @Override
-      public T execute(CommandContext commandContext) {
-        return (T) definitionEntity.getPreviousDefinition();
-      }
-    });
+    return ((ProcessEngineConfigurationImpl) processEngineConfiguration).getCommandExecutorTxRequired().execute(commandContext -> (T) definitionEntity.getPreviousDefinition());
   }
 
   protected DeploymentBuilder createDeploymentBuilder() {

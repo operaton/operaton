@@ -20,7 +20,6 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ELEMENT_NAME_RELATIONSHIP_DEFINITION_REF;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
@@ -33,13 +32,7 @@ public class RelationshipDefinitionRef extends ModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RelationshipDefinitionRef.class, ELEMENT_NAME_RELATIONSHIP_DEFINITION_REF)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(new ModelTypeInstanceProvider<RelationshipDefinitionRef>() {
-
-      @Override
-      public RelationshipDefinitionRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new RelationshipDefinitionRef(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new RelationshipDefinitionRef(instanceContext));
 
     typeBuilder.build();
   }

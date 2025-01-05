@@ -16,20 +16,19 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import java.util.List;
-
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ClockTestUtil;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -89,15 +88,9 @@ public abstract class AbstractJobExecutorAcquireJobsTest {
   }
 
   protected List<AcquirableJobEntity> findAcquirableJobs() {
-    return configuration.getCommandExecutorTxRequired().execute(new Command<List<AcquirableJobEntity>>() {
-
-      @Override
-      public List<AcquirableJobEntity> execute(CommandContext commandContext) {
-        return commandContext
-          .getJobManager()
-          .findNextJobsToExecute(new Page(0, 100));
-      }
-    });
+    return configuration.getCommandExecutorTxRequired().execute(commandContext -> commandContext
+        .getJobManager()
+        .findNextJobsToExecute(new Page(0, 100)));
   }
 
   protected String startProcess(String processDefinitionKey, String activity) {

@@ -25,7 +25,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_EXPRESSION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_ERROR_EVENT_DEFINITION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class OperatonErrorEventDefinitionImpl extends ErrorEventDefinitionImpl implements OperatonErrorEventDefinition {
 
@@ -34,12 +33,7 @@ public class OperatonErrorEventDefinitionImpl extends ErrorEventDefinitionImpl i
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonErrorEventDefinition.class, OPERATON_ELEMENT_ERROR_EVENT_DEFINITION)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonErrorEventDefinition>() {
-      @Override
-      public OperatonErrorEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonErrorEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonErrorEventDefinitionImpl(instanceContext));
 
     operatonExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EXPRESSION)
         .namespace(OPERATON_NS)

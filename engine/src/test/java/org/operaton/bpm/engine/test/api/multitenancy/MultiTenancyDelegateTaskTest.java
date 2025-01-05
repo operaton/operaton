@@ -45,13 +45,8 @@ public class MultiTenancyDelegateTaskTest extends PluggableProcessEngineTest {
   }
 
   protected static DelegateTaskAsserter hasTenantId(final String expectedTenantId) {
-    return new DelegateTaskAsserter() {
-
-      @Override
-      public void doAssert(DelegateTask task) {
+    return task ->
         assertThat(task.getTenantId()).isEqualTo(expectedTenantId);
-      }
-    };
   }
 
   @After

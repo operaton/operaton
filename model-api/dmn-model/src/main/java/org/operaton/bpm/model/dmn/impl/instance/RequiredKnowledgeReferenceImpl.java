@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.RequiredKnowledgeReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class RequiredKnowledgeReferenceImpl extends DmnElementReferenceImpl implements RequiredKnowledgeReference {
 
@@ -36,12 +35,7 @@ public class RequiredKnowledgeReferenceImpl extends DmnElementReferenceImpl impl
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredKnowledgeReference.class, DMN_ELEMENT_REQUIRED_KNOWLEDGE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<RequiredKnowledgeReference>() {
-      @Override
-      public RequiredKnowledgeReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new RequiredKnowledgeReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new RequiredKnowledgeReferenceImpl(instanceContext));
 
     typeBuilder.build();
   }

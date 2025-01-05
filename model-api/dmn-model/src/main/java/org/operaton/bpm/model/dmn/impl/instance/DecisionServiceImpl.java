@@ -32,7 +32,6 @@ import org.operaton.bpm.model.dmn.instance.OutputDecisionReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 
@@ -71,12 +70,7 @@ public class DecisionServiceImpl extends NamedElementImpl implements DecisionSer
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionService.class, DMN_ELEMENT_DECISION_SERVICE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DecisionService>() {
-      @Override
-      public DecisionService newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DecisionServiceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DecisionServiceImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

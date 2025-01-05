@@ -25,7 +25,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN messageFlowAssociation element
@@ -41,12 +40,7 @@ public class MessageFlowAssociationImpl extends BaseElementImpl implements Messa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(MessageFlowAssociation.class, BPMN_ELEMENT_MESSAGE_FLOW_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<MessageFlowAssociation>() {
-      @Override
-      public MessageFlowAssociation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new MessageFlowAssociationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new MessageFlowAssociationImpl(instanceContext));
 
     innerMessageFlowRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_INNER_MESSAGE_FLOW_REF)
       .required()

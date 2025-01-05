@@ -40,12 +40,7 @@ public class CompletionConditionImpl extends ExpressionImpl implements Completio
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(
-        new ModelElementTypeBuilder.ModelTypeInstanceProvider<CompletionCondition>() {
-          @Override
-          public CompletionCondition newInstance(ModelTypeInstanceContext instanceContext) {
-            return new CompletionConditionImpl(instanceContext);
-          }
-        });
+      instanceContext -> new CompletionConditionImpl(instanceContext));
 
     typeBuilder.build();
   }

@@ -194,12 +194,7 @@ public class DefinitionsImpl extends CmmnModelElementInstanceImpl implements Def
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Definitions.class, CMMN_ELEMENT_DEFINITIONS)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<Definitions>() {
-      @Override
-      public Definitions newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DefinitionsImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DefinitionsImpl(instanceContext));
 
     idAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_ID)
         .idAttribute()

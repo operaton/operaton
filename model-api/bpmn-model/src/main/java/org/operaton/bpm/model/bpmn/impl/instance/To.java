@@ -23,7 +23,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TO;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN to element of the BPMN tAssignment type
@@ -36,12 +35,7 @@ public class To extends ExpressionImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(To.class, BPMN_ELEMENT_TO)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<To>() {
-      @Override
-      public To newInstance(ModelTypeInstanceContext instanceContext) {
-          return new To(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new To(instanceContext));
 
     typeBuilder.build();
   }

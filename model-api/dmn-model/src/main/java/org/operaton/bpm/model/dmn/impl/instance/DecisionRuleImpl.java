@@ -28,7 +28,6 @@ import org.operaton.bpm.model.dmn.instance.OutputEntry;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -55,12 +54,7 @@ public class DecisionRuleImpl extends DmnElementImpl implements DecisionRule {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionRule.class, DMN_ELEMENT_DECISION_RULE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DecisionRule>() {
-      @Override
-      public DecisionRule newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DecisionRuleImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DecisionRuleImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CORRELATION_PROPERTY_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN correlationPropertyRef element of the BPMN tCorrelationKey type
@@ -34,12 +33,7 @@ public class CorrelationPropertyRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationPropertyRef.class, BPMN_ELEMENT_CORRELATION_PROPERTY_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<CorrelationPropertyRef>() {
-      @Override
-      public CorrelationPropertyRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CorrelationPropertyRef(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new CorrelationPropertyRef(instanceContext));
 
     typeBuilder.build();
   }

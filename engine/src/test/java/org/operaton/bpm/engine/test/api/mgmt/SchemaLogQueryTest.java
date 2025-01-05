@@ -16,28 +16,25 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.schemaLogEntryByTimestamp;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-
-import java.util.Date;
-import java.util.List;
-
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManagerFactory;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogEntryEntity;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
+
+import java.util.Date;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Miklas Boskamp
@@ -146,29 +143,23 @@ public class SchemaLogQueryTest {
   }
 
   private void populateTable() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-        DbEntityManagerFactory dbEntityManagerFactory = new DbEntityManagerFactory(Context.getProcessEngineConfiguration().getIdGenerator());
-        DbEntityManager newEntityManager = dbEntityManagerFactory.openSession();
-        newEntityManager.insert(dummySchemaLogEntry);
-        newEntityManager.flush();
-        return null;
-      }
+      DbEntityManagerFactory dbEntityManagerFactory = new DbEntityManagerFactory(Context.getProcessEngineConfiguration().getIdGenerator());
+      DbEntityManager newEntityManager = dbEntityManagerFactory.openSession();
+      newEntityManager.insert(dummySchemaLogEntry);
+      newEntityManager.flush();
+      return null;
     });
     assertThat(managementService.createSchemaLogQuery().count()).isEqualTo(initialEntryCount + 1);
   }
 
   private void cleanupTable() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        DbEntityManager dbEntityManager = commandContext.getDbEntityManager();
-        dbEntityManager.delete(dummySchemaLogEntry);
-        dbEntityManager.flush();
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      DbEntityManager dbEntityManager = commandContext.getDbEntityManager();
+      dbEntityManager.delete(dummySchemaLogEntry);
+      dbEntityManager.flush();
+      return null;
     });
     assertThat(managementService.createSchemaLogQuery().count()).isEqualTo(initialEntryCount);
   }

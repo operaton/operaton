@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_EXPRESSION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN expression element
@@ -37,12 +36,7 @@ public class ExpressionImpl extends BaseElementImpl implements Expression {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Expression.class, BPMN_ELEMENT_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Expression>() {
-      @Override
-      public Expression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ExpressionImpl(instanceContext));
 
     typeBuilder.build();
   }

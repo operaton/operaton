@@ -27,7 +27,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_RESOURCE_ASSIGNMENT_EXPRESSION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN resourceAssignmentExpression element
@@ -42,12 +41,7 @@ public class ResourceAssignmentExpressionImpl extends BaseElementImpl implements
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceAssignmentExpression.class, BPMN_ELEMENT_RESOURCE_ASSIGNMENT_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ResourceAssignmentExpression>() {
-      @Override
-      public ResourceAssignmentExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ResourceAssignmentExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ResourceAssignmentExpressionImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

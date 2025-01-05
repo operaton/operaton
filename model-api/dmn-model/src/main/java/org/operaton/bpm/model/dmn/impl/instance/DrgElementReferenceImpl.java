@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.DrgElementReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class DrgElementReferenceImpl extends DmnElementReferenceImpl implements DrgElementReference {
 
@@ -36,12 +35,7 @@ public class DrgElementReferenceImpl extends DmnElementReferenceImpl implements 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DrgElementReference.class, DMN_ELEMENT_DRG_ELEMENT_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DrgElementReference>() {
-      @Override
-      public DrgElementReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DrgElementReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DrgElementReferenceImpl(instanceContext));
 
     typeBuilder.build();
   }

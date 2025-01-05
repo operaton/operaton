@@ -216,12 +216,7 @@ public class ProcessDiagramRetrievalTest {
       // we need to run this in the ProcessEngine context
       processDiagramLayout = engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired()
-        .execute(new Command<DiagramLayout>() {
-          @Override
-          public DiagramLayout execute(CommandContext commandContext) {
-            return new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream);
-          }
-        });
+        .execute(commandContext -> new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream));
     }
     assertLayoutCorrect(processDiagramLayout);
   }

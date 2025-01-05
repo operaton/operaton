@@ -36,7 +36,6 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRI
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_EXPRESSION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_EXECUTION_LISTENER;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN executionListener operaton extension element
@@ -55,12 +54,7 @@ public class OperatonExecutionListenerImpl extends BpmnModelElementInstanceImpl 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExecutionListener.class, OPERATON_ELEMENT_EXECUTION_LISTENER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonExecutionListener>() {
-      @Override
-      public OperatonExecutionListener newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonExecutionListenerImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonExecutionListenerImpl(instanceContext));
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
       .namespace(OPERATON_NS)

@@ -26,7 +26,6 @@ import org.operaton.bpm.model.cmmn.instance.TimerExpression;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -67,12 +66,7 @@ public class TimerEventListenerImpl extends EventListenerImpl implements TimerEv
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimerEventListener.class, CMMN_ELEMENT_TIMER_EVENT_LISTENER)
         .namespaceUri(CMMN11_NS)
         .extendsType(EventListener.class)
-        .instanceProvider(new ModelTypeInstanceProvider<TimerEventListener>() {
-      @Override
-      public TimerEventListener newInstance(ModelTypeInstanceContext instanceContext) {
-            return new TimerEventListenerImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new TimerEventListenerImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

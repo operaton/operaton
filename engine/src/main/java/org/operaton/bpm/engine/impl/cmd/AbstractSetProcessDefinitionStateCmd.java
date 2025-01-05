@@ -103,15 +103,12 @@ public abstract class AbstractSetProcessDefinitionStateCmd extends AbstractSetSt
       processDefinitionManager.updateProcessDefinitionSuspensionStateByKey(processDefinitionKey, suspensionState);
     }
 
-    commandContext.runWithoutAuthorization(new Callable<Void>() {
-      @Override
-      public Void call() throws Exception {
-        UpdateJobDefinitionSuspensionStateBuilderImpl jobDefinitionSuspensionStateBuilder = createJobDefinitionCommandBuilder();
-        AbstractSetJobDefinitionStateCmd jobDefinitionCmd = getSetJobDefinitionStateCmd(jobDefinitionSuspensionStateBuilder);
-        jobDefinitionCmd.disableLogUserOperation();
-        jobDefinitionCmd.execute(commandContext);
-        return null;
-      }
+    commandContext.runWithoutAuthorization((Callable<Void>) () -> {
+      UpdateJobDefinitionSuspensionStateBuilderImpl jobDefinitionSuspensionStateBuilder = createJobDefinitionCommandBuilder();
+      AbstractSetJobDefinitionStateCmd jobDefinitionCmd = getSetJobDefinitionStateCmd(jobDefinitionSuspensionStateBuilder);
+      jobDefinitionCmd.disableLogUserOperation();
+      jobDefinitionCmd.execute(commandContext);
+      return null;
     });
   }
 

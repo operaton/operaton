@@ -28,7 +28,6 @@ import org.operaton.bpm.model.cmmn.instance.OnPart;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
@@ -72,12 +71,7 @@ public class CaseFileItemOnPartImpl extends OnPartImpl implements CaseFileItemOn
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileItemOnPart.class, CMMN_ELEMENT_CASE_FILE_ITEM_ON_PART)
         .extendsType(OnPart.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(new ModelTypeInstanceProvider<CaseFileItemOnPart>() {
-      @Override
-      public CaseFileItemOnPart newInstance(ModelTypeInstanceContext instanceContext) {
-            return new CaseFileItemOnPartImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new CaseFileItemOnPartImpl(instanceContext));
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
         .idAttributeReference(CaseFileItem.class)

@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN field operaton extension element
@@ -46,12 +45,7 @@ public class OperatonFieldImpl extends BpmnModelElementInstanceImpl implements O
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonField.class, OPERATON_ELEMENT_FIELD)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonField>() {
-      @Override
-      public OperatonField newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonFieldImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonFieldImpl(instanceContext));
 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)

@@ -26,9 +26,6 @@ import java.io.InputStream;
 
 import org.operaton.bpm.engine.impl.bpmn.diagram.ProcessDiagramLayoutFactory;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.repository.DiagramLayout;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
@@ -75,12 +72,7 @@ public class ProcessDiagramParseTest {
       // when we run this in the ProcessEngine context
       engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired()
-        .execute(new Command<DiagramLayout>() {
-          @Override
-          public DiagramLayout execute(CommandContext commandContext) {
-            return new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream);
-          }
-        });
+        .execute(commandContext -> new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream));
       fail("The test model contains a DOCTYPE declaration! The test should fail.");
     } catch (FileNotFoundException ex) {
       fail("The test BPMN model file is missing. " + ex.getMessage());
@@ -106,12 +98,7 @@ public class ProcessDiagramParseTest {
       // when we run this in the ProcessEngine context
       engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired()
-        .execute(new Command<DiagramLayout>() {
-          @Override
-          public DiagramLayout execute(CommandContext commandContext) {
-            return new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream);
-          }
-        });
+        .execute(commandContext -> new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream));
       fail("The test model contains a DOCTYPE declaration! The test should fail.");
     } catch (FileNotFoundException ex) {
       fail("The test BPMN model file is missing. " + ex.getMessage());

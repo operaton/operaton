@@ -23,7 +23,6 @@ import org.operaton.bpm.model.dmn.instance.AllowedAnswers;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class AllowedAnswersImpl extends DmnModelElementInstanceImpl implements AllowedAnswers {
 
@@ -34,12 +33,7 @@ public class AllowedAnswersImpl extends DmnModelElementInstanceImpl implements A
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(AllowedAnswers.class, DMN_ELEMENT_ALLOWED_ANSWERS)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<AllowedAnswers>() {
-      @Override
-      public AllowedAnswers newInstance(ModelTypeInstanceContext instanceContext) {
-          return new AllowedAnswersImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new AllowedAnswersImpl(instanceContext));
 
     typeBuilder.build();
   }

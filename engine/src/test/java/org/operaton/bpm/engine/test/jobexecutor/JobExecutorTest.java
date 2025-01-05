@@ -16,26 +16,17 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricJobLog;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
+
+import java.util.*;
+
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Tom Baeyens
@@ -45,19 +36,16 @@ public class JobExecutorTest extends JobExecutorTestCase {
   @Test
   public void testBasicJobExecutorOperation() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        JobManager jobManager = commandContext.getJobManager();
-        jobManager.send(createTweetMessage("message-one"));
-        jobManager.send(createTweetMessage("message-two"));
-        jobManager.send(createTweetMessage("message-three"));
-        jobManager.send(createTweetMessage("message-four"));
+    commandExecutor.execute(commandContext -> {
+      JobManager jobManager = commandContext.getJobManager();
+      jobManager.send(createTweetMessage("message-one"));
+      jobManager.send(createTweetMessage("message-two"));
+      jobManager.send(createTweetMessage("message-three"));
+      jobManager.send(createTweetMessage("message-four"));
 
-        jobManager.schedule(createTweetTimer("timer-one", new Date()));
-        jobManager.schedule(createTweetTimer("timer-two", new Date()));
-        return null;
-      }
+      jobManager.schedule(createTweetTimer("timer-one", new Date()));
+      jobManager.schedule(createTweetTimer("timer-two", new Date()));
+      return null;
     });
 
     testRule.executeAvailableJobs();
@@ -73,24 +61,20 @@ public class JobExecutorTest extends JobExecutorTestCase {
 
     assertEquals(new TreeSet<String>(expectedMessages), new TreeSet<String>(messages));
 
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        List<HistoricJobLog> historicJobLogs = processEngineConfiguration
-            .getHistoryService()
-            .createHistoricJobLogQuery()
-            .list();
+    commandExecutor.execute(commandContext -> {
+      List<HistoricJobLog> historicJobLogs = processEngineConfiguration
+          .getHistoryService()
+          .createHistoricJobLogQuery()
+          .list();
 
-        for (HistoricJobLog historicJobLog : historicJobLogs) {
-          commandContext
+      for (HistoricJobLog historicJobLog : historicJobLogs) {
+        commandContext
             .getHistoricJobLogManager()
             .deleteHistoricJobLogById(historicJobLog.getId());
 
 
-
-        }
-        return null;
       }
+      return null;
     });
   }
 

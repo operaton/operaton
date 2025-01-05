@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN scriptTask element
@@ -50,12 +49,7 @@ public class ScriptTaskImpl extends TaskImpl implements ScriptTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ScriptTask.class, BPMN_ELEMENT_SCRIPT_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ScriptTask>() {
-      @Override
-      public ScriptTask newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ScriptTaskImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ScriptTaskImpl(instanceContext));
 
     scriptFormatAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_SCRIPT_FORMAT)
       .build();

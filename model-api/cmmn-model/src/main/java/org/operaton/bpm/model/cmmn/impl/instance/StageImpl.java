@@ -36,7 +36,6 @@ import org.operaton.bpm.model.cmmn.instance.Stage;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -121,12 +120,7 @@ public class StageImpl extends PlanFragmentImpl implements Stage {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Stage.class, CMMN_ELEMENT_STAGE)
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanFragment.class)
-        .instanceProvider(new ModelTypeInstanceProvider<Stage>() {
-      @Override
-      public Stage newInstance(ModelTypeInstanceContext instanceContext) {
-            return new StageImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new StageImpl(instanceContext));
 
     autoCompleteAttribute = typeBuilder.booleanAttribute(CMMN_ATTRIBUTE_AUTO_COMPLETE)
         .defaultValue(false)

@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_END_EVENT;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN endEvent element
@@ -39,12 +38,7 @@ public class EndEventImpl extends ThrowEventImpl implements EndEvent {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EndEvent.class, BPMN_ELEMENT_END_EVENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(ThrowEvent.class)
-      .instanceProvider(new ModelTypeInstanceProvider<EndEvent>() {
-      @Override
-      public EndEvent newInstance(ModelTypeInstanceContext instanceContext) {
-          return new EndEventImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new EndEventImpl(instanceContext));
     
     typeBuilder.build();
   }

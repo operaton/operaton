@@ -28,7 +28,6 @@ import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_SUB_CONVERSATION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN subConversation element
@@ -43,12 +42,7 @@ public class SubConversationImpl extends ConversationNodeImpl implements SubConv
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SubConversation.class, BPMN_ELEMENT_SUB_CONVERSATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(ConversationNode.class)
-      .instanceProvider(new ModelTypeInstanceProvider<SubConversation>() {
-      @Override
-      public SubConversation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new SubConversationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new SubConversationImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

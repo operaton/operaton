@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN categoryValue element
@@ -39,12 +38,7 @@ public class CategoryValueImpl extends BaseElementImpl implements CategoryValue 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CategoryValue.class, BPMN_ELEMENT_CATEGORY_VALUE)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CategoryValue>() {
-      @Override
-      public CategoryValue newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CategoryValueImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new CategoryValueImpl(instanceContext));
 
     valueAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_VALUE)
       .build();

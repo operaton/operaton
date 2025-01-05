@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_FORM_DATA;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN formData operaton extension element
@@ -43,12 +42,7 @@ public class OperatonFormDataImpl extends BpmnModelElementInstanceImpl implement
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormData.class, OPERATON_ELEMENT_FORM_DATA)
       .namespaceUri(BpmnModelConstants.OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonFormData>() {
-      @Override
-      public OperatonFormData newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonFormDataImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonFormDataImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

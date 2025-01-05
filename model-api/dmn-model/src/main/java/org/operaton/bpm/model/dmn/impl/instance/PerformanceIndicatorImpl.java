@@ -28,7 +28,6 @@ import org.operaton.bpm.model.dmn.instance.PerformanceIndicator;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 
@@ -49,12 +48,7 @@ public class PerformanceIndicatorImpl extends BusinessContextElementImpl impleme
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PerformanceIndicator.class, DMN_ELEMENT_PERFORMANCE_INDICATOR)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(BusinessContextElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<PerformanceIndicator>() {
-      @Override
-      public PerformanceIndicator newInstance(ModelTypeInstanceContext instanceContext) {
-          return new PerformanceIndicatorImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new PerformanceIndicatorImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

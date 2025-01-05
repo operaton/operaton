@@ -20,7 +20,6 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -43,12 +42,7 @@ public class Animals extends ModelElementInstanceImpl {
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Animals.class, ELEMENT_NAME_ANIMALS)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(new ModelTypeInstanceProvider<Animals>() {
-      @Override
-      public Animals newInstance(ModelTypeInstanceContext instanceContext) {
-          return new Animals(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new Animals(instanceContext));
 
     SequenceBuilder sequence = typeBuilder.sequence();
 

@@ -27,7 +27,6 @@ import org.operaton.bpm.model.cmmn.instance.Parameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
@@ -69,12 +68,7 @@ public class CaseParameterImpl extends ParameterImpl implements CaseParameter {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseParameter.class, CMMN_ELEMENT_CASE_PARAMETER)
         .namespaceUri(CMMN11_NS)
         .extendsType(Parameter.class)
-        .instanceProvider(new ModelTypeInstanceProvider<CaseParameter>() {
-      @Override
-      public CaseParameter newInstance(ModelTypeInstanceContext instanceContext) {
-            return new CaseParameterImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new CaseParameterImpl(instanceContext));
 
     bindingRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_BINDING_REF)
          .idAttributeReference(CaseFileItem.class)

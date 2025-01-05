@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManagerFactory;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
-import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
@@ -117,36 +116,27 @@ public class JdbcStatementTimeoutTest extends ConcurrencyTestHelper {
   }
 
   private void createJobEntity() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<JobEntity>() {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      MessageEntity jobEntity = new MessageEntity();
+      jobEntity.setId(JOB_ENTITY_ID);
+      jobEntity.insert();
 
-      @Override
-      public JobEntity execute(CommandContext commandContext) {
-        MessageEntity jobEntity = new MessageEntity();
-        jobEntity.setId(JOB_ENTITY_ID);
-        jobEntity.insert();
-
-        return jobEntity;
-      }
+      return jobEntity;
     });
   }
 
   private void deleteJobEntities() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-
-      @Override
-      public Void execute(CommandContext commandContext) {
-        List<Job> jobs = commandContext.getDbEntityManager().createJobQuery().list();
-        for (Job job : jobs) {
-          commandContext.getJobManager().deleteJob((JobEntity) job, false);
-        }
-
-        for (HistoricJobLog jobLog : commandContext.getDbEntityManager().createHistoricJobLogQuery().list()) {
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogById(jobLog.getId());
-        }
-
-        return null;
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      List<Job> jobs = commandContext.getDbEntityManager().createJobQuery().list();
+      for (Job job : jobs) {
+        commandContext.getJobManager().deleteJob((JobEntity) job, false);
       }
 
+      for (HistoricJobLog jobLog : commandContext.getDbEntityManager().createHistoricJobLogQuery().list()) {
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogById(jobLog.getId());
+      }
+
+      return null;
     });
   }
 

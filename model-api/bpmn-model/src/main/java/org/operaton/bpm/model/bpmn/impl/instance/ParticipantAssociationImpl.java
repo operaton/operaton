@@ -27,7 +27,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_PARTICIPANT_ASSOCIATION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN participantAssociation element
@@ -43,12 +42,7 @@ public class ParticipantAssociationImpl extends BaseElementImpl implements Parti
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ParticipantAssociation.class, BPMN_ELEMENT_PARTICIPANT_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ParticipantAssociation>() {
-      @Override
-      public ParticipantAssociation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ParticipantAssociationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ParticipantAssociationImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

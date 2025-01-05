@@ -23,7 +23,6 @@ import org.operaton.bpm.model.cmmn.instance.Body;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 
 /**
@@ -39,12 +38,7 @@ public class BodyImpl extends CmmnModelElementInstanceImpl implements Body {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Body.class, CMMN_ELEMENT_BODY)
       .namespaceUri(CMMN10_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Body>() {
-      @Override
-      public Body newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BodyImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new BodyImpl(instanceContext));
 
     typeBuilder.build();
   }

@@ -26,7 +26,6 @@ import org.operaton.bpm.model.dmn.instance.ImportedValues;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -65,12 +64,7 @@ public class ImportedValuesImpl extends ImportImpl implements ImportedValues {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ImportedValues.class, DMN_ELEMENT_IMPORTED_VALUES)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Import.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ImportedValues>() {
-      @Override
-      public ImportedValues newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ImportedValuesImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ImportedValuesImpl(instanceContext));
 
     expressionLanguageAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_EXPRESSION_LANGUAGE)
       .build();

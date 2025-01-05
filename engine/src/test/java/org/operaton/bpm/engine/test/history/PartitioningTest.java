@@ -16,24 +16,13 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Collections;
-import java.util.List;
-
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.HistoricJobLogQueryImpl;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.batch.history.HistoricBatchEntity;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEntity;
@@ -46,10 +35,16 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tassilo Weidner
@@ -92,18 +87,15 @@ public class PartitioningTest {
     // given
     final String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    commandExecutor.execute(commandContext -> {
 
-        HistoricProcessInstanceEntity historicProcessInstanceEntity =
+      HistoricProcessInstanceEntity historicProcessInstanceEntity =
           (HistoricProcessInstanceEntity) historyService.createHistoricProcessInstanceQuery().singleResult();
 
-        commandContext.getDbEntityManager()
+      commandContext.getDbEntityManager()
           .delete(historicProcessInstanceEntity);
 
-        return null;
-      }
+      return null;
     });
 
     // assume
@@ -124,18 +116,15 @@ public class PartitioningTest {
     // given
     deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    commandExecutor.execute(commandContext -> {
 
-        HistoricTaskInstanceEntity historicTaskInstanceEntity =
+      HistoricTaskInstanceEntity historicTaskInstanceEntity =
           (HistoricTaskInstanceEntity) historyService.createHistoricTaskInstanceQuery().singleResult();
 
-        commandContext.getDbEntityManager()
+      commandContext.getDbEntityManager()
           .delete(historicTaskInstanceEntity);
 
-        return null;
-      }
+      return null;
     });
 
     // assume
@@ -157,15 +146,12 @@ public class PartitioningTest {
     // given
     final String processInstanceId = deployAndStartProcess(PROCESS_WITH_USERTASK).getId();
 
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    commandExecutor.execute(commandContext -> {
 
-        commandContext.getHistoricActivityInstanceManager()
+      commandContext.getHistoricActivityInstanceManager()
           .deleteHistoricActivityInstancesByProcessInstanceIds(Collections.singletonList(processInstanceId));
 
-        return null;
-      }
+      return null;
     });
 
     // assume
@@ -192,15 +178,12 @@ public class PartitioningTest {
     String incidentId = engineRule.getRuntimeService()
       .createIncident("foo", execution.getId(), execution.getActivityId(), "bar").getId();
 
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    commandExecutor.execute(commandContext -> {
 
-        commandContext.getHistoricIncidentManager()
+      commandContext.getHistoricIncidentManager()
           .deleteHistoricIncidentsByProcessInstanceIds(Collections.singletonList(processInstanceId));
 
-        return null;
-      }
+      return null;
     });
 
     // assume
@@ -225,18 +208,15 @@ public class PartitioningTest {
     // assume
     assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1L);
 
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    commandExecutor.execute(commandContext -> {
 
-        HistoricBatchEntity historicBatchEntity = (HistoricBatchEntity) historyService.createHistoricBatchQuery()
+      HistoricBatchEntity historicBatchEntity = (HistoricBatchEntity) historyService.createHistoricBatchQuery()
           .singleResult();
 
-        commandContext.getDbEntityManager()
+      commandContext.getDbEntityManager()
           .delete(historicBatchEntity);
 
-        return null;
-      }
+      return null;
     });
 
     // assume
@@ -274,25 +254,22 @@ public class PartitioningTest {
   }
 
   protected void cleanUp(final String processInstanceId) {
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    commandExecutor.execute(commandContext -> {
 
-        commandContext.getHistoricActivityInstanceManager()
+      commandContext.getHistoricActivityInstanceManager()
           .deleteHistoricActivityInstancesByProcessInstanceIds(Collections.singletonList(processInstanceId));
 
-        commandContext.getHistoricTaskInstanceManager()
+      commandContext.getHistoricTaskInstanceManager()
           .deleteHistoricTaskInstancesByProcessInstanceIds(Collections.singletonList(processInstanceId), true);
 
-        List<HistoricJobLog> historicJobLogs = commandContext.getHistoricJobLogManager()
+      List<HistoricJobLog> historicJobLogs = commandContext.getHistoricJobLogManager()
           .findHistoricJobLogsByQueryCriteria(new HistoricJobLogQueryImpl(), new Page(0, 100));
 
-        for (HistoricJobLog historicJobLog : historicJobLogs) {
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(historicJobLog.getJobId());
-        }
-
-        return null;
+      for (HistoricJobLog historicJobLog : historicJobLogs) {
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(historicJobLog.getJobId());
       }
+
+      return null;
     });
   }
 

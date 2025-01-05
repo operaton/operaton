@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TARGET_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN targetRef element of the BPMN tDataAssociation type
@@ -34,12 +33,7 @@ public class TargetRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TargetRef.class, BPMN_ELEMENT_TARGET_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<TargetRef>() {
-      @Override
-      public TargetRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TargetRef(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new TargetRef(instanceContext));
 
     typeBuilder.build();
   }

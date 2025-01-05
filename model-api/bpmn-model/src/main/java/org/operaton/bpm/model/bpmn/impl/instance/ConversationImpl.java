@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CONVERSATION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN conversation element
@@ -37,12 +36,7 @@ public class ConversationImpl extends ConversationNodeImpl implements Conversati
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Conversation.class, BPMN_ELEMENT_CONVERSATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(ConversationNode.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Conversation>() {
-      @Override
-      public Conversation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ConversationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ConversationImpl(instanceContext));
 
     typeBuilder.build();
   }

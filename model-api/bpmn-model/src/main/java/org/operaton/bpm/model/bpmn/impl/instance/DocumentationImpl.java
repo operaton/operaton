@@ -20,7 +20,6 @@ import org.operaton.bpm.model.bpmn.instance.Documentation;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
@@ -40,12 +39,7 @@ public class DocumentationImpl extends BpmnModelElementInstanceImpl implements D
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Documentation.class, BPMN_ELEMENT_DOCUMENTATION)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Documentation>() {
-      @Override
-      public Documentation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DocumentationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DocumentationImpl(instanceContext));
 
     idAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ID)
       .idAttribute()

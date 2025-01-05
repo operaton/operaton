@@ -24,7 +24,6 @@ import org.operaton.bpm.model.bpmn.instance.ComplexBehaviorDefinition;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN 2.0 complexBehaviorDefinition element
@@ -38,12 +37,7 @@ public class ComplexBehaviorDefinitionImpl extends BaseElementImpl implements Co
       .defineType(ComplexBehaviorDefinition.class, BPMN_ELEMENT_COMPLEX_BEHAVIOR_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ComplexBehaviorDefinition>() {
-      @Override
-      public ComplexBehaviorDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ComplexBehaviorDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ComplexBehaviorDefinitionImpl(instanceContext));
 
     typeBuilder.build();
   }

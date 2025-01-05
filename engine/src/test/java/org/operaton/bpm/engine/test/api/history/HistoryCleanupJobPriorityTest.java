@@ -16,22 +16,21 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.impl.DefaultPriorityProvider;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HistoryCleanupJobPriorityTest {
 
@@ -59,19 +58,16 @@ public class HistoryCleanupJobPriorityTest {
   }
 
   private void resetDatabase() {
-    config.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        List<Job> jobs = historyService.findHistoryCleanupJobs();
+    config.getCommandExecutorTxRequired().execute(commandContext -> {
+      List<Job> jobs = historyService.findHistoryCleanupJobs();
 
-        for (Job job : jobs) {
-          commandContext.getJobManager().deleteJob((JobEntity) job);
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
-        }
-        commandContext.getMeterLogManager().deleteAll();
-
-        return null;
+      for (Job job : jobs) {
+        commandContext.getJobManager().deleteJob((JobEntity) job);
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
       }
+      commandContext.getMeterLogManager().deleteAll();
+
+      return null;
     });
   }
 

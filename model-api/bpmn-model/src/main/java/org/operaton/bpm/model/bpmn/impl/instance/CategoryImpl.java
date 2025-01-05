@@ -28,7 +28,6 @@ import org.operaton.bpm.model.bpmn.instance.RootElement;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -49,12 +48,7 @@ public class CategoryImpl extends RootElementImpl implements Category {
             .namespaceUri(BPMN20_NS)
             .extendsType(RootElement.class)
             .instanceProvider(
-                new ModelTypeInstanceProvider<Category>() {
-                  @Override
-                  public Category newInstance(ModelTypeInstanceContext instanceContext) {
-                    return new CategoryImpl(instanceContext);
-                  }
-                });
+          instanceContext -> new CategoryImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME).required().build();
 

@@ -23,7 +23,6 @@ import org.operaton.bpm.model.dmn.instance.Question;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class QuestionImpl extends DmnModelElementInstanceImpl implements Question {
 
@@ -34,12 +33,7 @@ public class QuestionImpl extends DmnModelElementInstanceImpl implements Questio
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Question.class, DMN_ELEMENT_QUESTION)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Question>() {
-      @Override
-      public Question newInstance(ModelTypeInstanceContext instanceContext) {
-          return new QuestionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new QuestionImpl(instanceContext));
 
     typeBuilder.build();
   }

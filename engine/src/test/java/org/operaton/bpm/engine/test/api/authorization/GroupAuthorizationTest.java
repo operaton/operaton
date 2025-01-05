@@ -69,22 +69,19 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
   @Test
   public void testTaskQueryWithoutGroupAuthorizations() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
 
-        TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
-        AuthorizationCheck authCheck = spy(new AuthorizationCheck());
-        when(taskQuery.getAuthCheck()).thenReturn(authCheck);
+      TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
+      AuthorizationCheck authCheck = spy(new AuthorizationCheck());
+      when(taskQuery.getAuthCheck()).thenReturn(authCheck);
 
-        taskQuery.list();
+      taskQuery.list();
 
-        verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
-        verify(authCheck).setAuthGroupIds(eq(Collections.<String>emptyList()));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
+      verify(authCheck).setAuthGroupIds(eq(Collections.<String>emptyList()));
 
-        return null;
-      }
+      return null;
     });
   }
 
@@ -92,22 +89,19 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   public void testTaskQueryWithOneGroupAuthorization() {
     createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, testGroupIds.get(0));
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
 
-        TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
-        AuthorizationCheck authCheck = spy(new AuthorizationCheck());
-        when(taskQuery.getAuthCheck()).thenReturn(authCheck);
+      TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
+      AuthorizationCheck authCheck = spy(new AuthorizationCheck());
+      when(taskQuery.getAuthCheck()).thenReturn(authCheck);
 
-        taskQuery.list();
+      taskQuery.list();
 
-        verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
-        verify(authCheck).setAuthGroupIds(eq(testGroupIds.subList(0, 1)));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
+      verify(authCheck).setAuthGroupIds(eq(testGroupIds.subList(0, 1)));
 
-        return null;
-      }
+      return null;
     });
   }
 
@@ -117,21 +111,18 @@ public class GroupAuthorizationTest extends AuthorizationTest {
       createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, testGroupId);
     }
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
 
-        TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
-        AuthorizationCheck authCheck = spy(new AuthorizationCheck());
-        when(taskQuery.getAuthCheck()).thenReturn(authCheck);
+      TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
+      AuthorizationCheck authCheck = spy(new AuthorizationCheck());
+      when(taskQuery.getAuthCheck()).thenReturn(authCheck);
 
-        taskQuery.list();
+      taskQuery.list();
 
-        verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
-        verify(authCheck, atLeastOnce()).setAuthGroupIds(eq(testGroupIds));
-        return null;
-      }
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
+      verify(authCheck, atLeastOnce()).setAuthGroupIds(eq(testGroupIds));
+      return null;
     });
   }
 
@@ -139,45 +130,39 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   public void testTaskQueryWithUserWithoutGroups() {
     identityService.setAuthentication(testUserId, null);
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
 
-        TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
-        AuthorizationCheck authCheck = spy(new AuthorizationCheck());
-        when(taskQuery.getAuthCheck()).thenReturn(authCheck);
+      TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
+      AuthorizationCheck authCheck = spy(new AuthorizationCheck());
+      when(taskQuery.getAuthCheck()).thenReturn(authCheck);
 
-        taskQuery.list();
+      taskQuery.list();
 
-        verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq((List<String>) null));
-        verify(authCheck).setAuthGroupIds(eq(Collections.<String>emptyList()));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq((List<String>) null));
+      verify(authCheck).setAuthGroupIds(eq(Collections.<String>emptyList()));
 
-        return null;
-      }
+      return null;
     });
   }
 
   @Test
   public void testCheckAuthorizationWithoutGroupAuthorizations() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
-        DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+      DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
 
-        authorizationService.isUserAuthorized(testUserId, testGroupIds, Permissions.READ, Resources.TASK);
+      authorizationService.isUserAuthorized(testUserId, testGroupIds, Permissions.READ, Resources.TASK);
 
-        verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
 
-        ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
-        verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
+      ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
+      verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
 
-        AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
-        assertTrue(authorizationCheck.getAuthGroupIds().isEmpty());
+      AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
+      assertTrue(authorizationCheck.getAuthGroupIds().isEmpty());
 
-        return null;
-      }
+      return null;
     });
   }
 
@@ -185,24 +170,21 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   public void testCheckAuthorizationWithOneGroupAuthorizations() {
     createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, testGroupIds.get(0));
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
-        DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+      DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
 
-        authorizationService.isUserAuthorized(testUserId, testGroupIds, Permissions.READ, Resources.TASK);
+      authorizationService.isUserAuthorized(testUserId, testGroupIds, Permissions.READ, Resources.TASK);
 
-        verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
 
-        ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
-        verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
+      ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
+      verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
 
-        AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
-        assertEquals(testGroupIds.subList(0, 1), authorizationCheck.getAuthGroupIds());
+      AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
+      assertEquals(testGroupIds.subList(0, 1), authorizationCheck.getAuthGroupIds());
 
-        return null;
-      }
+      return null;
     });
   }
 
@@ -212,47 +194,41 @@ public class GroupAuthorizationTest extends AuthorizationTest {
       createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, testGroupId);
     }
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
-        DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
+    processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+      DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
 
-        authorizationService.isUserAuthorized(testUserId, testGroupIds, Permissions.READ, Resources.TASK);
+      authorizationService.isUserAuthorized(testUserId, testGroupIds, Permissions.READ, Resources.TASK);
 
-        verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq(testGroupIds));
 
-        ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
-        verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
+      ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
+      verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
 
-        AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
-        assertThat(authorizationCheck.getAuthGroupIds()).containsExactlyInAnyOrderElementsOf(testGroupIds);
+      AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
+      assertThat(authorizationCheck.getAuthGroupIds()).containsExactlyInAnyOrderElementsOf(testGroupIds);
 
-        return null;
-      }
+      return null;
     });
   }
 
   @Test
   public void testCheckAuthorizationWithUserWithoutGroups() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
-        DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+      DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
 
-        authorizationService.isUserAuthorized(testUserId, null, Permissions.READ, Resources.TASK);
+      authorizationService.isUserAuthorized(testUserId, null, Permissions.READ, Resources.TASK);
 
-        verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq((List<String>) null));
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(eq((List<String>) null));
 
-        ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
-        verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
+      ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
+      verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
 
-        AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
-        assertTrue(authorizationCheck.getAuthGroupIds().isEmpty());
+      AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
+      assertTrue(authorizationCheck.getAuthGroupIds().isEmpty());
 
-        return null;
-      }
+      return null;
     });
   }
 

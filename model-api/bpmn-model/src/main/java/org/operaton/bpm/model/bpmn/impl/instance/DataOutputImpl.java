@@ -25,7 +25,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Sebastian Menski
@@ -39,12 +38,7 @@ public class DataOutputImpl extends ItemAwareElementImpl implements DataOutput {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataOutput.class,BpmnModelConstants.BPMN_ELEMENT_DATA_OUTPUT)
       .namespaceUri(BPMN20_NS)
       .extendsType(ItemAwareElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DataOutput>() {
-      @Override
-      public DataOutput newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DataOutputImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DataOutputImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

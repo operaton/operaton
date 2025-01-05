@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_ACTIVATION_CONDITION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN element activationCondition of the BPMN tComplexGateway type
@@ -37,12 +36,7 @@ public class ActivationConditionImpl extends ExpressionImpl implements Activatio
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ActivationCondition.class, BPMN_ELEMENT_ACTIVATION_CONDITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ActivationCondition>() {
-      @Override
-      public ActivationCondition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ActivationConditionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ActivationConditionImpl(instanceContext));
 
     typeBuilder.build();
   }

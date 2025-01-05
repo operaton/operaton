@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_ATTRIBUTE_BPMN_ELEMENT;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_ELEMENT_BPMN_PLANE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMNDI BPMNPlane element
@@ -43,12 +42,7 @@ public class BpmnPlaneImpl extends PlaneImpl implements BpmnPlane {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnPlane.class, BPMNDI_ELEMENT_BPMN_PLANE)
       .namespaceUri(BPMNDI_NS)
       .extendsType(Plane.class)
-      .instanceProvider(new ModelTypeInstanceProvider<BpmnPlane>() {
-      @Override
-      public BpmnPlane newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BpmnPlaneImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new BpmnPlaneImpl(instanceContext));
 
     bpmnElementAttribute = typeBuilder.stringAttribute(BPMNDI_ATTRIBUTE_BPMN_ELEMENT)
       .qNameAttributeReference(BaseElement.class)

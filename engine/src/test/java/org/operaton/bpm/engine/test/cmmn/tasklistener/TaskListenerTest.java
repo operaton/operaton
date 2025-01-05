@@ -22,7 +22,6 @@ import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
-import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
@@ -421,17 +420,12 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
     // when
     processEngineConfiguration
       .getCommandExecutorTxRequired()
-      .execute(new Command<Void>() {
-
-        @Override
-        public Void execute(CommandContext commandContext) {
-          commandContext
-            .getCaseExecutionManager()
-            .deleteCaseInstance(caseInstanceId, null);
-          return null;
-        }
-
-      });
+      .execute(commandContext -> {
+      commandContext
+          .getCaseExecutionManager()
+          .deleteCaseInstance(caseInstanceId, null);
+      return null;
+    });
 
     // then
     assertEquals(1, TaskDeleteListener.eventCounter);
@@ -1362,19 +1356,14 @@ public class TaskListenerTest extends PluggableProcessEngineTest {
   protected void terminate(final String caseExecutionId) {
     processEngineConfiguration
       .getCommandExecutorTxRequired()
-      .execute(new Command<Void>() {
-
-        @Override
-        public Void execute(CommandContext commandContext) {
-          CmmnExecution caseTask = (CmmnExecution) caseService
-              .createCaseExecutionQuery()
-              .caseExecutionId(caseExecutionId)
-              .singleResult();
-          caseTask.terminate();
-          return null;
-        }
-
-      });
+      .execute(commandContext -> {
+      CmmnExecution caseTask = (CmmnExecution) caseService
+          .createCaseExecutionQuery()
+          .caseExecutionId(caseExecutionId)
+          .singleResult();
+      caseTask.terminate();
+      return null;
+    });
   }
 
 }

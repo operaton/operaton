@@ -97,36 +97,30 @@ public class ProcessEngineContextTest {
 
     // given
     // a new CommandContext is explicitly declared for an engine API call
-    ProcessEngineContext.withNewProcessEngineContext(new Callable<Void>() {
-      @Override
-      public Void call() throws Exception {
-
-        return engineRule.getProcessEngineConfiguration()
-          .getCommandExecutorTxRequired()
-          .execute(
+    ProcessEngineContext.withNewProcessEngineContext(() -> engineRule.getProcessEngineConfiguration()
+        .getCommandExecutorTxRequired()
+        .execute(
             // a Command is executed with the new Context
             new OuterCommand<Void>(
-              // and a nested Command reuses that context
-              new NestedCommand<Void>() {
-                @Override
-                public Void call() {
-                  // then
-                  // the outer CommandContext should be reused
-                  assertThat(getOuterCommandContext()).isEqualTo(getCommandContext());
-                  /*
-                   the queried Process Instance object in the nested command
-                   should be the same from the queried PI object of the outer
-                   command (shared CommandContext and DB cache)
-                   */
-                  assertThat(getNestedPiObject()).isEqualTo(getOuterCommand().getOuterPiObject());
+                // and a nested Command reuses that context
+                new NestedCommand<Void>() {
+                  @Override
+                  public Void call() {
+                    // then
+                    // the outer CommandContext should be reused
+                    assertThat(getOuterCommandContext()).isEqualTo(getCommandContext());
+                    /*
+                     the queried Process Instance object in the nested command
+                     should be the same from the queried PI object of the outer
+                     command (shared CommandContext and DB cache)
+                     */
+                    assertThat(getNestedPiObject()).isEqualTo(getOuterCommand().getOuterPiObject());
 
-                  return null;
-                }
-            }, false
-          )
-        );
-      }
-    });
+                    return null;
+                  }
+                }, false
+            )
+        ));
   }
 
   protected class OuterCommand<T> implements Command<T> {
@@ -153,13 +147,7 @@ public class ProcessEngineContextTest {
 
       if (requiresNew) {
         try {
-          ProcessEngineContext.withNewProcessEngineContext(new Callable<T>() {
-            @Override
-            public T call() {
-
-              return executeNestedCommand();
-            }
-          });
+          ProcessEngineContext.withNewProcessEngineContext(() -> executeNestedCommand());
         } catch (Exception e) {
           fail("Test failed with exception: " + e.getMessage());
         }

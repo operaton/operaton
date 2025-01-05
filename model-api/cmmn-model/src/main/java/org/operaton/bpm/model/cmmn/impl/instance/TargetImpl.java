@@ -23,7 +23,6 @@ import org.operaton.bpm.model.cmmn.instance.Target;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -34,12 +33,7 @@ public class TargetImpl extends CmmnModelElementInstanceImpl implements Target {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Target.class, CMMN_ELEMENT_TARGET)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Target>() {
-      @Override
-      public Target newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TargetImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new TargetImpl(instanceContext));
 
     typeBuilder.build();
   }

@@ -21,8 +21,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.SourceExecutableScript;
@@ -141,12 +139,7 @@ public class ScriptCompilationTest extends PluggableProcessEngineTest {
   protected Object executeScript(final ExecutableScript script) {
     final ScriptingEnvironment scriptingEnvironment = processEngineConfiguration.getScriptingEnvironment();
     return processEngineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-          return scriptingEnvironment.execute(script, null);
-        }
-      });
+      .execute(commandContext -> scriptingEnvironment.execute(script, null));
   }
 
 }

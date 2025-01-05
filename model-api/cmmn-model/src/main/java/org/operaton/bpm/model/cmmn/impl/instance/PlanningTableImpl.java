@@ -27,7 +27,6 @@ import org.operaton.bpm.model.cmmn.instance.TableItem;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -58,12 +57,7 @@ public class PlanningTableImpl extends TableItemImpl implements PlanningTable {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanningTable.class, CMMN_ELEMENT_PLANNING_TABLE)
         .namespaceUri(CMMN11_NS)
         .extendsType(TableItem.class)
-        .instanceProvider(new ModelTypeInstanceProvider<PlanningTable>() {
-      @Override
-      public PlanningTable newInstance(ModelTypeInstanceContext instanceContext) {
-            return new PlanningTableImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new PlanningTableImpl(instanceContext));
 
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

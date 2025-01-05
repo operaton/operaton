@@ -61,12 +61,7 @@ public class CorrelateAllMessageCmd extends AbstractCorrelateMessageCmd implemen
 
     final CorrelationHandler correlationHandler = Context.getProcessEngineConfiguration().getCorrelationHandler();
     final CorrelationSet correlationSet = new CorrelationSet(builder);
-    List<CorrelationHandlerResult> correlationResults = commandContext.runWithoutAuthorization(new Callable<List<CorrelationHandlerResult>>() {
-      @Override
-      public List<CorrelationHandlerResult> call() throws Exception {
-        return correlationHandler.correlateMessages(commandContext, messageName, correlationSet);
-      }
-    });
+    List<CorrelationHandlerResult> correlationResults = commandContext.runWithoutAuthorization((Callable<List<CorrelationHandlerResult>>) () -> correlationHandler.correlateMessages(commandContext, messageName, correlationSet));
 
     // check authorization
     for (CorrelationHandlerResult correlationResult : correlationResults) {

@@ -20,7 +20,6 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.testmodel.TestModelConstants;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -49,12 +48,7 @@ public class Bird extends FlyingAnimal {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Bird.class, ELEMENT_NAME_BIRD)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(FlyingAnimal.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Bird>() {
-      @Override
-      public Bird newInstance(ModelTypeInstanceContext instanceContext) {
-          return new Bird(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new Bird(instanceContext));
 
     SequenceBuilder sequence = typeBuilder.sequence();
 

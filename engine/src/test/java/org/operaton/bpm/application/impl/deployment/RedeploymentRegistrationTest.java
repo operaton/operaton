@@ -513,15 +513,11 @@ public class RedeploymentRegistrationTest {
 
       @Override
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
-        return new Command<>() {
-
-          @Override
-          public ProcessApplicationReference execute(CommandContext commandContext) {
-            ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
-            DeploymentCache deploymentCache = configuration.getDeploymentCache();
-            ProcessDefinitionEntity definition = deploymentCache.findDeployedProcessDefinitionById(definitionId);
-            return ProcessApplicationContextUtil.getTargetProcessApplication(definition);
-          }
+        return commandContext -> {
+          ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
+          DeploymentCache deploymentCache = configuration.getDeploymentCache();
+          ProcessDefinitionEntity definition = deploymentCache.findDeployedProcessDefinitionById(definitionId);
+          return ProcessApplicationContextUtil.getTargetProcessApplication(definition);
         };
       }
 
@@ -538,15 +534,11 @@ public class RedeploymentRegistrationTest {
 
       @Override
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
-        return new Command<>() {
-
-          @Override
-          public ProcessApplicationReference execute(CommandContext commandContext) {
-            ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
-            DeploymentCache deploymentCache = configuration.getDeploymentCache();
-            CaseDefinitionEntity definition = deploymentCache.findDeployedCaseDefinitionById(definitionId);
-            return ProcessApplicationContextUtil.getTargetProcessApplication(definition);
-          }
+        return commandContext -> {
+          ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
+          DeploymentCache deploymentCache = configuration.getDeploymentCache();
+          CaseDefinitionEntity definition = deploymentCache.findDeployedCaseDefinitionById(definitionId);
+          return ProcessApplicationContextUtil.getTargetProcessApplication(definition);
         };
       }
 
@@ -563,15 +555,11 @@ public class RedeploymentRegistrationTest {
 
       @Override
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
-        return new Command<>() {
-
-          @Override
-          public ProcessApplicationReference execute(CommandContext commandContext) {
-            ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
-            DeploymentCache deploymentCache = configuration.getDeploymentCache();
-            DecisionDefinitionEntity definition = deploymentCache.findDeployedDecisionDefinitionById(definitionId);
-            return ProcessApplicationContextUtil.getTargetProcessApplication(definition);
-          }
+        return commandContext -> {
+          ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
+          DeploymentCache deploymentCache = configuration.getDeploymentCache();
+          DecisionDefinitionEntity definition = deploymentCache.findDeployedDecisionDefinitionById(definitionId);
+          return ProcessApplicationContextUtil.getTargetProcessApplication(definition);
         };
       }
 
@@ -588,15 +576,11 @@ public class RedeploymentRegistrationTest {
 
       @Override
       public Command<ProcessApplicationReference> createGetProcessApplicationCommand(final String definitionId) {
-        return new Command<>() {
-
-          @Override
-          public ProcessApplicationReference execute(CommandContext commandContext) {
-            ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
-            DeploymentCache deploymentCache = configuration.getDeploymentCache();
-            DecisionRequirementsDefinitionEntity definition = deploymentCache.findDeployedDecisionRequirementsDefinitionById(definitionId);
-            return ProcessApplicationContextUtil.getTargetProcessApplication(definition);
-          }
+        return commandContext -> {
+          ProcessEngineConfigurationImpl configuration = commandContext.getProcessEngineConfiguration();
+          DeploymentCache deploymentCache = configuration.getDeploymentCache();
+          DecisionRequirementsDefinitionEntity definition = deploymentCache.findDeployedDecisionRequirementsDefinitionById(definitionId);
+          return ProcessApplicationContextUtil.getTargetProcessApplication(definition);
         };
       }
 

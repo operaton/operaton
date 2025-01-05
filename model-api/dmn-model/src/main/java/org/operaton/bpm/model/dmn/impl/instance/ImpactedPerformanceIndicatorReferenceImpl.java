@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.ImpactedPerformanceIndicatorReference
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class ImpactedPerformanceIndicatorReferenceImpl extends DmnElementReferenceImpl implements ImpactedPerformanceIndicatorReference {
 
@@ -36,12 +35,7 @@ public class ImpactedPerformanceIndicatorReferenceImpl extends DmnElementReferen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ImpactedPerformanceIndicatorReference.class, DMN_ELEMENT_IMPACTED_PERFORMANCE_INDICATOR)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ImpactedPerformanceIndicatorReference>() {
-      @Override
-      public ImpactedPerformanceIndicatorReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ImpactedPerformanceIndicatorReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ImpactedPerformanceIndicatorReferenceImpl(instanceContext));
 
     typeBuilder.build();
   }

@@ -39,12 +39,7 @@ public class OutputsCaseParameterImpl extends CaseParameterImpl implements Outpu
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputsCaseParameter.class, CMMN_ELEMENT_OUTPUTS)
       .namespaceUri(CMMN10_NS)
       .extendsType(CaseParameter.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<OutputsCaseParameter>() {
-      @Override
-      public OutputsCaseParameter newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OutputsCaseParameterImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OutputsCaseParameterImpl(instanceContext));
 
     typeBuilder.build();
   }

@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.UnaryTests;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class OutputValuesImpl extends UnaryTestsImpl implements OutputValues {
 
@@ -36,12 +35,7 @@ public class OutputValuesImpl extends UnaryTestsImpl implements OutputValues {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputValues.class, DMN_ELEMENT_OUTPUT_VALUES)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(UnaryTests.class)
-      .instanceProvider(new ModelTypeInstanceProvider<OutputValues>() {
-      @Override
-      public OutputValues newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OutputValuesImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OutputValuesImpl(instanceContext));
 
     typeBuilder.build();
   }

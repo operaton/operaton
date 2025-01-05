@@ -35,7 +35,6 @@ import org.operaton.bpm.model.cmmn.instance.Task;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -142,12 +141,7 @@ public class DecisionTaskImpl extends TaskImpl implements DecisionTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionTask.class, CMMN_ELEMENT_DECISION_TASK)
         .namespaceUri(CMMN11_NS)
         .extendsType(Task.class)
-        .instanceProvider(new ModelTypeInstanceProvider<DecisionTask>() {
-      @Override
-      public DecisionTask newInstance(ModelTypeInstanceContext instanceContext) {
-            return new DecisionTaskImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new DecisionTaskImpl(instanceContext));
 
     decisionRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_DECISION_REF)
         .build();

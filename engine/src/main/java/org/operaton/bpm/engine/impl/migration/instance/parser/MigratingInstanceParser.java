@@ -35,7 +35,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
-import org.operaton.bpm.engine.impl.tree.TreeVisitor;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
@@ -105,24 +104,16 @@ public class MigratingInstanceParser {
 
     ActivityInstanceWalker activityInstanceWalker = new ActivityInstanceWalker(activityInstance);
 
-    activityInstanceWalker.addPreVisitor(new TreeVisitor<ActivityInstance>() {
-      @Override
-      public void visit(ActivityInstance obj) {
-        activityInstanceHandler.handle(parseContext, obj);
-      }
-    });
+    activityInstanceWalker.addPreVisitor(obj ->
+        activityInstanceHandler.handle(parseContext, obj));
 
     activityInstanceWalker.walkWhile();
 
     CompensationEventSubscriptionWalker compensateSubscriptionsWalker = new CompensationEventSubscriptionWalker(
         parseContext.getMigratingActivityInstances());
 
-    compensateSubscriptionsWalker.addPreVisitor(new TreeVisitor<EventSubscriptionEntity>() {
-      @Override
-      public void visit(EventSubscriptionEntity obj) {
-        compensationInstanceHandler.handle(parseContext, obj);
-      }
-    });
+    compensateSubscriptionsWalker.addPreVisitor(obj ->
+        compensationInstanceHandler.handle(parseContext, obj));
 
     compensateSubscriptionsWalker.walkWhile();
 

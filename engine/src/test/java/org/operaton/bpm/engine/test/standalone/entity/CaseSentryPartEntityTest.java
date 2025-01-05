@@ -16,15 +16,14 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseSentryPartEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseSentryPartQueryImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Kristin Polenz
@@ -45,13 +44,9 @@ public class CaseSentryPartEntityTest extends PluggableProcessEngineTest {
   }
 
   protected void insertCaseSentryPart(final CaseSentryPartEntity caseSentryPartEntity) {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseSentryPartManager().insert(caseSentryPartEntity);
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      commandContext.getCaseSentryPartManager().insert(caseSentryPartEntity);
+      return null;
     });
   }
 
@@ -61,13 +56,9 @@ public class CaseSentryPartEntityTest extends PluggableProcessEngineTest {
   }
 
   protected void deleteCaseSentryPart(final CaseSentryPartEntity caseSentryPartEntity) {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseSentryPartManager().delete(caseSentryPartEntity);
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      commandContext.getCaseSentryPartManager().delete(caseSentryPartEntity);
+      return null;
     });
   }
 

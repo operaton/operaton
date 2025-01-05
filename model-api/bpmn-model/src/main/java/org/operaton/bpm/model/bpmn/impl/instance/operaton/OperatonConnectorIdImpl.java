@@ -24,7 +24,6 @@ import org.operaton.bpm.model.bpmn.instance.operaton.OperatonConnectorId;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN connectorId operaton extension element
@@ -36,12 +35,7 @@ public class OperatonConnectorIdImpl extends BpmnModelElementInstanceImpl implem
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConnectorId.class, OPERATON_ELEMENT_CONNECTOR_ID)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonConnectorId>() {
-      @Override
-      public OperatonConnectorId newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonConnectorIdImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonConnectorIdImpl(instanceContext));
 
     typeBuilder.build();
   }

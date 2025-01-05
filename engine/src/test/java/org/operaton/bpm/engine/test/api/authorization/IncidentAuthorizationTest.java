@@ -16,25 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Date;
-import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendProcessDefinitionHandler;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentEntity;
@@ -42,8 +27,20 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.IncidentQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.*;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+
+import java.util.Date;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Roman Smirnov
@@ -583,20 +580,17 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
 
   protected void clearDatabase() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        HistoryLevel historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
-        if (historyLevel.equals(HistoryLevel.HISTORY_LEVEL_FULL)) {
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerSuspendProcessDefinitionHandler.TYPE);
-          List<HistoricIncident> incidents = Context.getProcessEngineConfiguration().getHistoryService().createHistoricIncidentQuery().list();
-          for (HistoricIncident incident : incidents) {
-            commandContext.getHistoricIncidentManager().delete((HistoricIncidentEntity) incident);
-          }
+    commandExecutor.execute(commandContext -> {
+      HistoryLevel historyLevel = Context.getProcessEngineConfiguration().getHistoryLevel();
+      if (historyLevel.equals(HistoryLevel.HISTORY_LEVEL_FULL)) {
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerSuspendProcessDefinitionHandler.TYPE);
+        List<HistoricIncident> incidents = Context.getProcessEngineConfiguration().getHistoryService().createHistoricIncidentQuery().list();
+        for (HistoricIncident incident : incidents) {
+          commandContext.getHistoricIncidentManager().delete((HistoricIncidentEntity) incident);
         }
-
-        return null;
       }
+
+      return null;
     });
   }
 

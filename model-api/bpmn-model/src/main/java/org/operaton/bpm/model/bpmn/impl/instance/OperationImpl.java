@@ -31,7 +31,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN operation element
@@ -50,12 +49,7 @@ public class OperationImpl extends BaseElementImpl implements Operation {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Operation.class, BPMN_ELEMENT_OPERATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Operation>() {
-      @Override
-      public Operation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperationImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .required()

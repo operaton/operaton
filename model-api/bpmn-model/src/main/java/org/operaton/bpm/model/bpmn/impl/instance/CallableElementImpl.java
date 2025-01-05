@@ -19,7 +19,6 @@ package org.operaton.bpm.model.bpmn.impl.instance;
 import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
-import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
@@ -30,7 +29,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN callableElement element
@@ -49,12 +47,7 @@ public class CallableElementImpl extends RootElementImpl implements CallableElem
     ModelElementTypeBuilder typeBuilder = bpmnModelBuilder.defineType(CallableElement.class, BPMN_ELEMENT_CALLABLE_ELEMENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ModelElementInstance>() {
-      @Override
-      public ModelElementInstance newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CallableElementImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new CallableElementImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

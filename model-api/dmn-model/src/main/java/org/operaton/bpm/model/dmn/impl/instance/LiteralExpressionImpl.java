@@ -27,7 +27,6 @@ import org.operaton.bpm.model.dmn.instance.Text;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -77,12 +76,7 @@ public class LiteralExpressionImpl extends ExpressionImpl implements LiteralExpr
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(LiteralExpression.class, DMN_ELEMENT_LITERAL_EXPRESSION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<LiteralExpression>() {
-      @Override
-      public LiteralExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new LiteralExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new LiteralExpressionImpl(instanceContext));
 
     expressionLanguageAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_EXPRESSION_LANGUAGE)
       .build();

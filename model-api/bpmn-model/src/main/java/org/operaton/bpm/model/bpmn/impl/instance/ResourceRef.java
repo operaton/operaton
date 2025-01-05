@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_RESOURCE_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN resourceRef element of the BPMN tResourceRole type
@@ -34,12 +33,7 @@ public class ResourceRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceRef.class, BPMN_ELEMENT_RESOURCE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<ResourceRef>() {
-      @Override
-      public ResourceRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ResourceRef(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ResourceRef(instanceContext));
 
     typeBuilder.build();
   }

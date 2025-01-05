@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN relationship element
@@ -47,12 +46,7 @@ public class RelationshipImpl extends BaseElementImpl implements Relationship {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Relationship.class, BPMN_ELEMENT_RELATIONSHIP)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Relationship>() {
-      @Override
-      public Relationship newInstance(ModelTypeInstanceContext instanceContext) {
-          return new RelationshipImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new RelationshipImpl(instanceContext));
 
     typeAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_TYPE)
       .required()

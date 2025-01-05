@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
@@ -35,15 +33,12 @@ public class DelegateTaskFormHandler extends DelegateFormHandler implements Task
 
   @Override
   public TaskFormData createTaskForm(final TaskEntity task) {
-    return performContextSwitch(new Callable<TaskFormData> () {
-      @Override
-      public TaskFormData call() throws Exception {
-        CreateTaskFormInvocation invocation = new CreateTaskFormInvocation((TaskFormHandler) formHandler, task);
-        Context.getProcessEngineConfiguration()
-            .getDelegateInterceptor()
-            .handleInvocation(invocation);
-        return (TaskFormData) invocation.getInvocationResult();
-      }
+    return performContextSwitch(() -> {
+      CreateTaskFormInvocation invocation = new CreateTaskFormInvocation((TaskFormHandler) formHandler, task);
+      Context.getProcessEngineConfiguration()
+          .getDelegateInterceptor()
+          .handleInvocation(invocation);
+      return (TaskFormData) invocation.getInvocationResult();
     });
   }
 

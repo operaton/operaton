@@ -39,12 +39,7 @@ public class InputCaseParameterImpl extends CaseParameterImpl implements InputCa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputCaseParameter.class, CMMN_ELEMENT_INPUT)
       .namespaceUri(CMMN11_NS)
       .extendsType(CaseParameter.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<InputCaseParameter>() {
-      @Override
-      public InputCaseParameter newInstance(ModelTypeInstanceContext instanceContext) {
-          return new InputCaseParameterImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new InputCaseParameterImpl(instanceContext));
 
     typeBuilder.build();
   }

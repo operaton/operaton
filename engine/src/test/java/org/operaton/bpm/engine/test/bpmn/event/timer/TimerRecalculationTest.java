@@ -16,17 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupJobHandler;
@@ -36,8 +26,17 @@ import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.After;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 
 /**
@@ -168,38 +167,29 @@ public class TimerRecalculationTest extends PluggableProcessEngineTest {
   
   protected void clearMeterLog() {
     processEngineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-          commandContext.getMeterLogManager().deleteAll();
+      .execute(commandContext -> {
+      commandContext.getMeterLogManager().deleteAll();
 
-          return null;
-        }
-      });
+      return null;
+    });
   }
   
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
+      return null;
     });
   }
   
   protected void clearJob(final String jobId) {
     processEngineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-          JobEntity job = commandContext.getJobManager().findJobById(jobId);
-          if (job != null) {
-            commandContext.getJobManager().delete(job);
-          }
-          return null;
-        }
-      });
+      .execute(commandContext -> {
+      JobEntity job = commandContext.getJobManager().findJobById(jobId);
+      if (job != null) {
+        commandContext.getJobManager().delete(job);
+      }
+      return null;
+    });
   }
 }

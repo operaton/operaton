@@ -46,12 +46,7 @@ public class DataObjectReferenceImpl extends FlowElementImpl implements DataObje
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataObjectReference.class, BPMN_ELEMENT_DATA_OBJECT_REFERENCE)
       .namespaceUri(BPMN20_NS)
       .extendsType(FlowElement.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<DataObjectReference>() {
-      @Override
-      public DataObjectReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DataObjectReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DataObjectReferenceImpl(instanceContext));
 
     itemSubjectRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ITEM_SUBJECT_REF)
       .qNameAttributeReference(ItemDefinition.class)

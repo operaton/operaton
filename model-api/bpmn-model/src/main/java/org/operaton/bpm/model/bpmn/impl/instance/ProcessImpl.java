@@ -49,7 +49,6 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.impl.util.StringUtil;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -94,12 +93,7 @@ public class ProcessImpl extends CallableElementImpl implements Process {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Process.class, BPMN_ELEMENT_PROCESS)
       .namespaceUri(BPMN20_NS)
       .extendsType(CallableElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Process>() {
-      @Override
-      public Process newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ProcessImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ProcessImpl(instanceContext));
 
     processTypeAttribute = typeBuilder.enumAttribute(BPMN_ATTRIBUTE_PROCESS_TYPE, ProcessType.class)
       .defaultValue(ProcessType.None)

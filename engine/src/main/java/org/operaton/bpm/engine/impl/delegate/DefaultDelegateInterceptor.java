@@ -52,12 +52,9 @@ public class DefaultDelegateInterceptor implements DelegateInterceptor {
     final ProcessApplicationReference processApplication = getProcessApplicationForInvocation(invocation);
 
     if (processApplication != null && ProcessApplicationContextUtil.requiresContextSwitch(processApplication)) {
-      Context.executeWithinProcessApplication(new Callable<Void>() {
-        @Override
-        public Void call() throws Exception {
-          handleInvocation(invocation);
-          return null;
-        }
+      Context.executeWithinProcessApplication(() -> {
+        handleInvocation(invocation);
+        return null;
       }, processApplication, new InvocationContext(invocation.getContextExecution()));
     }
     else {

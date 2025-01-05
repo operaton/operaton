@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_OUTER_PARTICIPANT_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN outerParticipantRef element of the BPMN tParticipantAssociation type
@@ -34,12 +33,7 @@ public class OuterParticipantRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OuterParticipantRef.class, BPMN_ELEMENT_OUTER_PARTICIPANT_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OuterParticipantRef>() {
-      @Override
-      public OuterParticipantRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OuterParticipantRef(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OuterParticipantRef(instanceContext));
 
     typeBuilder.build();
   }

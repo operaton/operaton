@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_OPERATION_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN operationRef element of the BPMN tMessageEventDefinition type
@@ -34,12 +33,7 @@ public class OperationRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperationRef.class, BPMN_ELEMENT_OPERATION_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperationRef>() {
-      @Override
-      public OperationRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperationRef(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperationRef(instanceContext));
 
     typeBuilder.build();
   }

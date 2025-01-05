@@ -146,22 +146,18 @@ public class BoundedNumberOfMaxResultsTest {
 
     engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired()
-        .execute(new Command<Void>() {
+        .execute((Command<Void>) commandContext -> {
+      // when
+      List<Task> tasks = commandContext.getProcessEngineConfiguration()
+          .getTaskService()
+          .createTaskQuery()
+          .list();
 
-          @Override
-          public Void execute(CommandContext commandContext) {
-            // when
-            List<Task> tasks = commandContext.getProcessEngineConfiguration()
-                .getTaskService()
-                .createTaskQuery()
-                .list();
+      // then
+      assertThat(tasks).hasSize(1);
 
-            // then
-            assertThat(tasks).hasSize(1);
-
-            return null;
-          }
-        });
+      return null;
+    });
 
     // clear
     taskService.deleteTask(task.getId(), true);

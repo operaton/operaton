@@ -19,7 +19,6 @@ package org.operaton.bpm.model.xml.testmodel.instance;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.TYPE_NAME_FRIEND_RELATIONSHIP_DEFINITION;
@@ -33,13 +32,7 @@ public class FriendRelationshipDefinition extends RelationshipDefinition {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FriendRelationshipDefinition.class, TYPE_NAME_FRIEND_RELATIONSHIP_DEFINITION)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(RelationshipDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<FriendRelationshipDefinition>() {
-
-      @Override
-      public FriendRelationshipDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new FriendRelationshipDefinition(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new FriendRelationshipDefinition(instanceContext));
 
     typeBuilder.build();
   }

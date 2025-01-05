@@ -25,8 +25,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobsCmd;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
@@ -58,11 +56,7 @@ import org.junit.runners.Parameterized;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * @author Joram Barrez
@@ -163,18 +157,15 @@ public class JobQueryTest {
     messageDueDate = startTime.getTime();
 
     // Create one message
-    messageId = commandExecutor.execute(new Command<String>() {
-      @Override
-      public String execute(CommandContext commandContext) {
-        MessageEntity message = new MessageEntity();
+    messageId = commandExecutor.execute(commandContext -> {
+      MessageEntity message = new MessageEntity();
 
-        if (ensureJobDueDateSet) {
-          message.setDuedate(messageDueDate);
-        }
-
-        commandContext.getJobManager().send(message);
-        return message.getId();
+      if (ensureJobDueDateSet) {
+        message.setDuedate(messageDueDate);
       }
+
+      commandContext.getJobManager().send(message);
+      return message.getId();
     });
   }
 
@@ -868,15 +859,10 @@ public class JobQueryTest {
 
   private void setRetries(final String processInstanceId, final int retries) {
     final Job job = managementService.createJobQuery().processInstanceId(processInstanceId).singleResult();
-    commandExecutor.execute(new Command<Void>() {
-
-      @Override
-      public Void execute(CommandContext commandContext) {
-        JobEntity timer = commandContext.getDbEntityManager().selectById(JobEntity.class, job.getId());
-        timer.setRetries(retries);
-        return null;
-      }
-
+    commandExecutor.execute(commandContext -> {
+      JobEntity timer = commandContext.getDbEntityManager().selectById(JobEntity.class, job.getId());
+      timer.setRetries(retries);
+      return null;
     });
   }
 
@@ -932,78 +918,69 @@ public class JobQueryTest {
   }
 
   private void createJobWithoutExceptionMsg() {
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        JobManager jobManager = commandContext.getJobManager();
+    commandExecutor.execute(commandContext -> {
+      JobManager jobManager = commandContext.getJobManager();
 
-        timerEntity = new TimerEntity();
-        timerEntity.setLockOwner(UUID.randomUUID().toString());
-        timerEntity.setDuedate(new Date());
-        timerEntity.setRetries(0);
+      timerEntity = new TimerEntity();
+      timerEntity.setLockOwner(UUID.randomUUID().toString());
+      timerEntity.setDuedate(new Date());
+      timerEntity.setRetries(0);
 
-        StringWriter stringWriter = new StringWriter();
-        NullPointerException exception = new NullPointerException();
-        exception.printStackTrace(new PrintWriter(stringWriter));
-        timerEntity.setExceptionStacktrace(stringWriter.toString());
+      StringWriter stringWriter = new StringWriter();
+      NullPointerException exception = new NullPointerException();
+      exception.printStackTrace(new PrintWriter(stringWriter));
+      timerEntity.setExceptionStacktrace(stringWriter.toString());
 
-        jobManager.insert(timerEntity);
+      jobManager.insert(timerEntity);
 
-        assertNotNull(timerEntity.getId());
+      assertNotNull(timerEntity.getId());
 
-        return null;
+      return null;
 
-      }
     });
 
   }
 
   private void createJobWithoutExceptionStacktrace() {
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        JobManager jobManager = commandContext.getJobManager();
+    commandExecutor.execute(commandContext -> {
+      JobManager jobManager = commandContext.getJobManager();
 
-        timerEntity = new TimerEntity();
-        timerEntity.setLockOwner(UUID.randomUUID().toString());
-        timerEntity.setDuedate(new Date());
-        timerEntity.setRetries(0);
-        timerEntity.setExceptionMessage("I'm supposed to fail");
+      timerEntity = new TimerEntity();
+      timerEntity.setLockOwner(UUID.randomUUID().toString());
+      timerEntity.setDuedate(new Date());
+      timerEntity.setRetries(0);
+      timerEntity.setExceptionMessage("I'm supposed to fail");
 
-        jobManager.insert(timerEntity);
+      jobManager.insert(timerEntity);
 
-        assertNotNull(timerEntity.getId());
+      assertNotNull(timerEntity.getId());
 
-        return null;
+      return null;
 
-      }
     });
 
   }
 
   private void deleteJobInDatabase() {
-      commandExecutor.execute(new Command<Void>() {
-        @Override
-        public Void execute(CommandContext commandContext) {
+      commandExecutor.execute(commandContext -> {
 
-          timerEntity.delete();
+        timerEntity.delete();
 
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(timerEntity.getId());
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(timerEntity.getId());
 
-          List<HistoricIncident> historicIncidents = Context
-              .getProcessEngineConfiguration()
-              .getHistoryService()
-              .createHistoricIncidentQuery()
-              .list();
+        List<HistoricIncident> historicIncidents = Context
+            .getProcessEngineConfiguration()
+            .getHistoryService()
+            .createHistoricIncidentQuery()
+            .list();
 
-          for (HistoricIncident historicIncident : historicIncidents) {
-            commandContext
+        for (HistoricIncident historicIncident : historicIncidents) {
+          commandContext
               .getDbEntityManager()
               .delete((DbEntity) historicIncident);
-          }
-
-          return null;
         }
+
+        return null;
       });
   }
 

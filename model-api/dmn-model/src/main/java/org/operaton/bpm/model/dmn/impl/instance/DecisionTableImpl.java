@@ -36,7 +36,6 @@ import org.operaton.bpm.model.dmn.instance.Rule;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -115,12 +114,7 @@ public class DecisionTableImpl extends ExpressionImpl implements DecisionTable {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionTable.class, DMN_ELEMENT_DECISION_TABLE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DecisionTable>() {
-      @Override
-      public DecisionTable newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DecisionTableImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new DecisionTableImpl(instanceContext));
 
     hitPolicyAttribute = typeBuilder.namedEnumAttribute(DMN_ATTRIBUTE_HIT_POLICY, HitPolicy.class)
       .defaultValue(HitPolicy.UNIQUE)

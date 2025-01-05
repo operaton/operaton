@@ -16,18 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.delegate;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import org.operaton.bpm.engine.delegate.DelegateExecution;
-import org.operaton.bpm.engine.test.api.delegate.AssertingJavaDelegate.DelegateExecutionAsserter;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
+
 import org.junit.After;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests for the execution hierarchy methods exposed in delegate execution
@@ -54,13 +49,10 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
     .done());
 
     AssertingJavaDelegate.addAsserts(
-      new DelegateExecutionAsserter() {
-        @Override
-        public void doAssert(DelegateExecution execution) {
+        execution -> {
           assertEquals(execution, execution.getProcessInstance());
           assertNull(execution.getSuperExecution());
         }
-      }
     );
 
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -84,13 +76,10 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
           .done());
 
     AssertingJavaDelegate.addAsserts(
-      new DelegateExecutionAsserter() {
-        @Override
-        public void doAssert(DelegateExecution execution) {
+        execution -> {
           assertFalse(execution.equals(execution.getProcessInstance()));
           assertNull(execution.getSuperExecution());
         }
-      }
     );
 
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -112,13 +101,10 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
       .done());
 
     AssertingJavaDelegate.addAsserts(
-      new DelegateExecutionAsserter() {
-        @Override
-        public void doAssert(DelegateExecution execution) {
+        execution -> {
           assertFalse(execution.equals(execution.getProcessInstance()));
           assertNull(execution.getSuperExecution());
         }
-      }
     );
 
     runtimeService.startProcessInstanceByKey("testProcess");
@@ -142,13 +128,10 @@ public class DelegateExecutionHierarchyTest extends PluggableProcessEngineTest {
       .done());
 
     AssertingJavaDelegate.addAsserts(
-      new DelegateExecutionAsserter() {
-        @Override
-        public void doAssert(DelegateExecution execution) {
+        execution -> {
           assertTrue(execution.equals(execution.getProcessInstance()));
           assertNotNull(execution.getSuperExecution());
         }
-      }
     );
 
     runtimeService.startProcessInstanceByKey("testProcess");

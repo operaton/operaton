@@ -31,7 +31,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMNDI BPMNShape element
@@ -53,12 +52,7 @@ public class BpmnShapeImpl extends LabeledShapeImpl implements BpmnShape {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnShape.class, BPMNDI_ELEMENT_BPMN_SHAPE)
       .namespaceUri(BPMNDI_NS)
       .extendsType(LabeledShape.class)
-      .instanceProvider(new ModelTypeInstanceProvider<BpmnShape>() {
-      @Override
-      public BpmnShape newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BpmnShapeImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new BpmnShapeImpl(instanceContext));
 
     bpmnElementAttribute = typeBuilder.stringAttribute(BPMNDI_ATTRIBUTE_BPMN_ELEMENT)
       .qNameAttributeReference(BaseElement.class)

@@ -28,7 +28,6 @@ import org.operaton.bpm.model.cmmn.instance.ManualActivationRule;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -82,12 +81,7 @@ public class ManualActivationRuleImpl extends CmmnElementImpl implements ManualA
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ManualActivationRule.class, CMMN_ELEMENT_MANUAL_ACTIVATION_RULE)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(new ModelTypeInstanceProvider<ManualActivationRule>() {
-      @Override
-      public ManualActivationRule newInstance(ModelTypeInstanceContext instanceContext) {
-            return new ManualActivationRuleImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new ManualActivationRuleImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

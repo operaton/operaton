@@ -22,7 +22,6 @@ import java.util.List;
 import org.operaton.bpm.engine.impl.migration.instance.MigratingProcessElementInstanceTopDownWalker.MigrationContext;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.tree.FlowScopeWalker;
-import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
 
 /**
@@ -99,21 +98,10 @@ public abstract class MigratingProcessElementInstanceVisitor implements TreeVisi
   protected List<ScopeImpl> collectNonExistingFlowScopes(ScopeImpl scope, final MigratingScopeInstanceBranch migratingExecutionBranch) {
     FlowScopeWalker walker = new FlowScopeWalker(scope);
     final List<ScopeImpl> result = new LinkedList<>();
-    walker.addPreVisitor(new TreeVisitor<ScopeImpl>() {
+    walker.addPreVisitor(obj ->
+        result.add(0, obj));
 
-      @Override
-      public void visit(ScopeImpl obj) {
-        result.add(0, obj);
-      }
-    });
-
-    walker.walkWhile(new ReferenceWalker.WalkCondition<ScopeImpl>() {
-
-      @Override
-      public boolean isFulfilled(ScopeImpl element) {
-        return migratingExecutionBranch.hasInstance(element);
-      }
-    });
+    walker.walkWhile(element -> migratingExecutionBranch.hasInstance(element));
 
     return result;
   }

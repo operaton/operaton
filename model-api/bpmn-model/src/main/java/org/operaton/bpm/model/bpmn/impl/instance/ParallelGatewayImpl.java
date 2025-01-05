@@ -29,7 +29,6 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_PARALLEL_GATEWAY;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ASYNC;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN parallelGateway element
@@ -44,12 +43,7 @@ public class ParallelGatewayImpl extends GatewayImpl implements ParallelGateway 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ParallelGateway.class, BPMN_ELEMENT_PARALLEL_GATEWAY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ParallelGateway>() {
-      @Override
-      public ParallelGateway newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ParallelGatewayImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ParallelGatewayImpl(instanceContext));
 
     /** operaton extensions */
 

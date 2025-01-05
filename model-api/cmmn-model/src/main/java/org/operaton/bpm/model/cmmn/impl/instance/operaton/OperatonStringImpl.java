@@ -24,7 +24,6 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonString;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -35,12 +34,7 @@ public class OperatonStringImpl extends CmmnModelElementInstanceImpl implements 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonString.class, OPERATON_ELEMENT_STRING)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonString>() {
-      @Override
-      public OperatonString newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonStringImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonStringImpl(instanceContext));
 
     typeBuilder.build();
   }

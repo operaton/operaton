@@ -16,18 +16,17 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.UUID;
-
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.db.DbEntity;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.UUID;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CaseDefinitionIdUpdateTest extends PluggableProcessEngineTest {
 
@@ -109,90 +108,59 @@ public class CaseDefinitionIdUpdateTest extends PluggableProcessEngineTest {
   }
 
   private CaseExecutionEntity findCaseExecution(final String id) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<CaseExecutionEntity>() {
-      @Override
-      public CaseExecutionEntity execute(CommandContext commandContext) {
-        return commandContext.getCaseExecutionManager().findCaseExecutionById(id);
-      }
-    });
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> commandContext.getCaseExecutionManager().findCaseExecutionById(id));
   }
 
   private Void deleteCaseExecution(final CaseExecutionEntity caseExecutionEntity) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseExecutionManager().deleteCaseExecution(caseExecutionEntity);
-        return null;
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getCaseExecutionManager().deleteCaseExecution(caseExecutionEntity);
+      return null;
     });
   }
 
   private void createCaseExecution(final CaseExecutionEntity caseExecutionEntity) {
-    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseExecutionManager().insertCaseExecution(caseExecutionEntity);
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getCaseExecutionManager().insertCaseExecution(caseExecutionEntity);
+      return null;
     });
   }
 
   private void update(final DbEntity entity) {
-    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getDbEntityManager().merge(entity);
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getDbEntityManager().merge(entity);
+      return null;
     });
   }
 
   private void createCaseDefinition(final CaseDefinitionEntity caseDefinitionEntity) {
-    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseDefinitionManager().insertCaseDefinition(caseDefinitionEntity);
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getCaseDefinitionManager().insertCaseDefinition(caseDefinitionEntity);
+      return null;
     });
   }
 
   private Void deleteCaseDefinition(final CaseDefinitionEntity caseDefinitionEntity) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseDefinitionManager().deleteCaseDefinitionsByDeploymentId(caseDefinitionEntity.getDeploymentId());
-        return null;
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getCaseDefinitionManager().deleteCaseDefinitionsByDeploymentId(caseDefinitionEntity.getDeploymentId());
+      return null;
     });
   }
 
   private void createTask(final TaskEntity taskEntity) {
-    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getTaskManager().insertTask(taskEntity);
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getTaskManager().insertTask(taskEntity);
+      return null;
     });
   }
 
   private void deleteTask(final TaskEntity taskEntity) {
-    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getTaskManager().delete(taskEntity);
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getTaskManager().delete(taskEntity);
+      return null;
     });
   }
 
   private TaskEntity findTask(final String id) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<TaskEntity>() {
-      @Override
-      public TaskEntity execute(CommandContext commandContext) {
-        return commandContext.getTaskManager().findTaskById(id);
-      }
-    });
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> commandContext.getTaskManager().findTaskById(id));
   }
 }

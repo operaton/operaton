@@ -16,14 +16,7 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Date;
-
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -31,7 +24,13 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.Date;
+
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  *
@@ -92,17 +91,13 @@ public class AcquireJobsCmdTest extends PluggableProcessEngineTest {
 
   protected void makeSureJobDue(final Job job) {
     processEngineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-          Date currentTime = ClockUtil.getCurrentTime();
-          commandContext.getJobManager()
-            .findJobById(job.getId())
-            .setDuedate(new Date(currentTime.getTime() - 10000));
-          return null;
-        }
-
-      });
+      .execute(commandContext -> {
+      Date currentTime = ClockUtil.getCurrentTime();
+      commandContext.getJobManager()
+          .findJobById(job.getId())
+          .setDuedate(new Date(currentTime.getTime() - 10000));
+      return null;
+    });
   }
 
   private AcquiredJobs executeAcquireJobsCommand() {

@@ -29,7 +29,6 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonString;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -49,12 +48,7 @@ public class OperatonFieldImpl extends CmmnModelElementInstanceImpl implements O
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonField.class, OPERATON_ELEMENT_FIELD)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonField>() {
-      @Override
-      public OperatonField newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonFieldImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OperatonFieldImpl(instanceContext));
 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(CAMUNDA_NS)

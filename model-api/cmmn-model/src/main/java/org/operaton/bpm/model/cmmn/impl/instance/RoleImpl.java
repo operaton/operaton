@@ -25,7 +25,6 @@ import org.operaton.bpm.model.cmmn.instance.Role;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -54,12 +53,7 @@ public class RoleImpl extends CmmnElementImpl implements Role {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Role.class, CMMN_ELEMENT_ROLE)
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(new ModelTypeInstanceProvider<Role>() {
-      @Override
-      public Role newInstance(ModelTypeInstanceContext instanceContext) {
-            return new RoleImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new RoleImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

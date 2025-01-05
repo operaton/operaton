@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.InputClause;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class InputImpl extends InputClauseImpl implements Input {
 
@@ -36,12 +35,7 @@ public class InputImpl extends InputClauseImpl implements Input {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Input.class, DMN_ELEMENT_INPUT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InputClause.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Input>() {
-      @Override
-      public Input newInstance(ModelTypeInstanceContext instanceContext) {
-          return new InputImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new InputImpl(instanceContext));
 
     typeBuilder.build();
   }

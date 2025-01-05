@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.deploy.cache;
 
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.cmd.CommandLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.deploy.Deployer;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
@@ -43,27 +41,21 @@ public class CacheDeployer {
   }
 
   public void deploy(final DeploymentEntity deployment) {
-    Context.getCommandContext().runWithoutAuthorization(new Callable<Void>() {
-      @Override
-      public Void call() throws Exception {
-        for (Deployer deployer : deployers) {
-          deployer.deploy(deployment);
-        }
-        return null;
+    Context.getCommandContext().runWithoutAuthorization((Callable<Void>) () -> {
+      for (Deployer deployer : deployers) {
+        deployer.deploy(deployment);
       }
+      return null;
     });
   }
 
   public void deployOnlyGivenResourcesOfDeployment(final DeploymentEntity deployment, String... resourceNames) {
     initDeployment(deployment, resourceNames);
-    Context.getCommandContext().runWithoutAuthorization(new Callable<Void>() {
-      @Override
-      public Void call() throws Exception {
-        for (Deployer deployer : deployers) {
-          deployer.deploy(deployment);
-        }
-        return null;
+    Context.getCommandContext().runWithoutAuthorization((Callable<Void>) () -> {
+      for (Deployer deployer : deployers) {
+        deployer.deploy(deployment);
       }
+      return null;
     });
     deployment.setResources(null);
   }

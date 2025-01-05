@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime.cleanup;
 
-import org.junit.*;
-import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.AuthorizationQuery;
@@ -29,8 +27,6 @@ import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.DefaultHistoryRemovalTimeProvider;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogEventEntity;
@@ -51,16 +47,19 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.*;
+import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
 
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.junit.*;
+import org.junit.rules.RuleChain;
+
 import static org.apache.commons.lang3.time.DateUtils.addDays;
 import static org.apache.commons.lang3.time.DateUtils.addMinutes;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.*;
-import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
 
 /**
  * @author Tassilo Weidner
@@ -2196,38 +2195,29 @@ public class HistoryCleanupRemovalTimeTest {
 
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
+      return null;
     });
   }
 
   protected void clearJob(final String jobId) {
     engineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        JobEntity job = commandContext.getJobManager().findJobById(jobId);
-        if (job != null) {
-          commandContext.getJobManager().delete(job);
-        }
-        return null;
+      .execute(commandContext -> {
+      JobEntity job = commandContext.getJobManager().findJobById(jobId);
+      if (job != null) {
+        commandContext.getJobManager().delete(job);
       }
+      return null;
     });
   }
 
   protected void clearMeterLog() {
     engineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getMeterLogManager().deleteAll();
+      .execute(commandContext -> {
+      commandContext.getMeterLogManager().deleteAll();
 
-        return null;
-      }
+      return null;
     });
   }
 

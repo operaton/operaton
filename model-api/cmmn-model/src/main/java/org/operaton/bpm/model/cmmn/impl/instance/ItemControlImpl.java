@@ -24,7 +24,6 @@ import org.operaton.bpm.model.cmmn.instance.PlanItemControl;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -40,12 +39,7 @@ public class ItemControlImpl extends PlanItemControlImpl implements ItemControl 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ItemControl.class, CMMN_ELEMENT_ITEM_CONTROL)
       .namespaceUri(CMMN11_NS)
       .extendsType(PlanItemControl.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ItemControl>() {
-      @Override
-      public ItemControl newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ItemControlImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ItemControlImpl(instanceContext));
 
     typeBuilder.build();
   }

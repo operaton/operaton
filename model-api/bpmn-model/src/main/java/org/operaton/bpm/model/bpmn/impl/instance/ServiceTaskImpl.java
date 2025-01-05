@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN serviceTask element
@@ -54,12 +53,7 @@ public class ServiceTaskImpl extends TaskImpl implements ServiceTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ServiceTask.class, BPMN_ELEMENT_SERVICE_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ServiceTask>() {
-      @Override
-      public ServiceTask newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ServiceTaskImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ServiceTaskImpl(instanceContext));
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##WebService")

@@ -24,9 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.tree.ActivityExecutionHierarchyWalker;
 import org.operaton.bpm.engine.impl.tree.ActivityExecutionMappingCollector;
-import org.operaton.bpm.engine.impl.tree.ActivityExecutionTuple;
 import org.operaton.bpm.engine.impl.tree.OutputVariablesPropagator;
-import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
 
 /**
  * Helper class handling the propagation of escalation.
@@ -62,13 +60,7 @@ public class EscalationHandler {
     walker.addExecutionPreVisitor(activityExecutionMappingCollector);
     walker.addExecutionPreVisitor(new OutputVariablesPropagator());
 
-    walker.walkUntil(new ReferenceWalker.WalkCondition<ActivityExecutionTuple>() {
-
-      @Override
-      public boolean isFulfilled(ActivityExecutionTuple element) {
-        return escalationEventDefinitionFinder.getEscalationEventDefinition() != null || element == null;
-      }
-    });
+    walker.walkUntil(element -> escalationEventDefinitionFinder.getEscalationEventDefinition() != null || element == null);
 
     EscalationEventDefinition escalationEventDefinition = escalationEventDefinitionFinder.getEscalationEventDefinition();
     if (escalationEventDefinition != null) {

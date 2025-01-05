@@ -31,12 +31,7 @@ public class ClassLoaderUtil {
 
   public static ClassLoader getContextClassloader() {
     if(System.getSecurityManager() != null) {
-      return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
-        @Override
-        public ClassLoader run() {
-          return Thread.currentThread().getContextClassLoader();
-        }
-      });
+      return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> Thread.currentThread().getContextClassLoader());
     } else {
       return Thread.currentThread().getContextClassLoader();
     }
@@ -44,12 +39,7 @@ public class ClassLoaderUtil {
 
   public static ClassLoader getClassloader(final Class<?> clazz) {
     if(System.getSecurityManager() != null) {
-      return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
-        @Override
-        public ClassLoader run() {
-          return clazz.getClassLoader();
-        }
-      });
+      return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> clazz.getClassLoader());
     } else {
       return clazz.getClassLoader();
     }
@@ -57,12 +47,9 @@ public class ClassLoaderUtil {
 
   public static void setContextClassloader(final ClassLoader classLoader) {
     if(System.getSecurityManager() != null) {
-      AccessController.doPrivileged(new PrivilegedAction<Void>() {
-        @Override
-        public Void run() {
-          Thread.currentThread().setContextClassLoader(classLoader);
-          return null;
-        }
+      AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
+        Thread.currentThread().setContextClassLoader(classLoader);
+        return null;
       });
     } else {
       Thread.currentThread().setContextClassLoader(classLoader);
@@ -71,12 +58,7 @@ public class ClassLoaderUtil {
 
   public static ClassLoader getServletContextClassloader(final ServletContextEvent sce) {
     if(System.getSecurityManager() != null) {
-      return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
-        @Override
-        public ClassLoader run() {
-          return sce.getServletContext().getClassLoader();
-        }
-      });
+      return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> sce.getServletContext().getClassLoader());
     } else {
       return sce.getServletContext().getClassLoader();
     }

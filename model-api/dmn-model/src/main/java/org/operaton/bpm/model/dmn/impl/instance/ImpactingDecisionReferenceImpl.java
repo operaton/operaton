@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.ImpactingDecisionReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class ImpactingDecisionReferenceImpl extends DmnElementReferenceImpl implements ImpactingDecisionReference {
 
@@ -36,12 +35,7 @@ public class ImpactingDecisionReferenceImpl extends DmnElementReferenceImpl impl
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ImpactingDecisionReference.class, DMN_ELEMENT_IMPACTING_DECISION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ImpactingDecisionReference>() {
-      @Override
-      public ImpactingDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ImpactingDecisionReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ImpactingDecisionReferenceImpl(instanceContext));
 
     typeBuilder.build();
   }

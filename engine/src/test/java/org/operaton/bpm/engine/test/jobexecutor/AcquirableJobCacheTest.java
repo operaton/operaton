@@ -16,18 +16,11 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
@@ -40,10 +33,16 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 public class AcquirableJobCacheTest {
 
@@ -147,50 +146,38 @@ public class AcquirableJobCacheTest {
   }
 
   protected JobEntity fetchJobAfterCachedAcquirableJob() {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<JobEntity>() {
-      @Override
-      public JobEntity execute(CommandContext commandContext) {
-        JobManager jobManager = commandContext.getJobManager();
-        List<AcquirableJobEntity> acquirableJobs = jobManager.findNextJobsToExecute(new Page(0, 100));
-        JobEntity job = jobManager.findJobById(acquirableJobs.get(0).getId());
-        return job;
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      JobManager jobManager = commandContext.getJobManager();
+      List<AcquirableJobEntity> acquirableJobs = jobManager.findNextJobsToExecute(new Page(0, 100));
+      JobEntity job = jobManager.findJobById(acquirableJobs.get(0).getId());
+      return job;
     });
   }
 
   protected TimerEntity fetchTimerJobAfterCachedAcquirableJob(final String executionId) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<TimerEntity>() {
-      @Override
-      public TimerEntity execute(CommandContext commandContext) {
-        JobManager jobManager = commandContext.getJobManager();
-        jobManager.findNextJobsToExecute(new Page(0, 100));
-        List<TimerEntity> timerJobs = jobManager.findTimersByExecutionId(executionId);
-        return timerJobs.get(0);
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      JobManager jobManager = commandContext.getJobManager();
+      jobManager.findNextJobsToExecute(new Page(0, 100));
+      List<TimerEntity> timerJobs = jobManager.findTimersByExecutionId(executionId);
+      return timerJobs.get(0);
     });
   }
 
   protected AcquirableJobEntity fetchAcquirableJobAfterCachedTimerEntity(final String executionId) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<AcquirableJobEntity>() {
-      @Override
-      public AcquirableJobEntity execute(CommandContext commandContext) {
-        JobManager jobManager = commandContext.getJobManager();
-        jobManager.findTimersByExecutionId(executionId);
-        List<AcquirableJobEntity> acquirableJob = jobManager.findNextJobsToExecute(new Page(0, 100));
-        return acquirableJob.get(0);
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      JobManager jobManager = commandContext.getJobManager();
+      jobManager.findTimersByExecutionId(executionId);
+      List<AcquirableJobEntity> acquirableJob = jobManager.findNextJobsToExecute(new Page(0, 100));
+      return acquirableJob.get(0);
     });
   }
 
   protected AcquirableJobEntity fetchAcquirableJobAfterCachedJob(final String processInstanceId) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<AcquirableJobEntity>() {
-      @Override
-      public AcquirableJobEntity execute(CommandContext commandContext) {
-        JobManager jobManager = commandContext.getJobManager();
-        jobManager.findJobsByProcessInstanceId(processInstanceId);
-        List<AcquirableJobEntity> acquirableJobs = jobManager.findNextJobsToExecute(new Page(0, 100));
-        return acquirableJobs.get(0);
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      JobManager jobManager = commandContext.getJobManager();
+      jobManager.findJobsByProcessInstanceId(processInstanceId);
+      List<AcquirableJobEntity> acquirableJobs = jobManager.findNextJobsToExecute(new Page(0, 100));
+      return acquirableJobs.get(0);
     });
   }
 }

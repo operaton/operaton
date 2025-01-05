@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_SOURCE_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN sourceRef element of the BPMN tDataAssociation type
@@ -34,12 +33,7 @@ public class SourceRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SourceRef.class, BPMN_ELEMENT_SOURCE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<SourceRef>() {
-      @Override
-      public SourceRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new SourceRef(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new SourceRef(instanceContext));
 
     typeBuilder.build();
   }

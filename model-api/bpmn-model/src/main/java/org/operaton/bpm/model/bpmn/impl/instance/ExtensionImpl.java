@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN extension element
@@ -44,12 +43,7 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Extension.class, BPMN_ELEMENT_EXTENSION)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Extension>() {
-      @Override
-      public Extension newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ExtensionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ExtensionImpl(instanceContext));
 
     // TODO: qname reference extension definition
     definitionAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_DEFINITION)

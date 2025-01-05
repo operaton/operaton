@@ -29,7 +29,6 @@ import org.operaton.bpm.model.dmn.instance.OrganizationUnit;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 
@@ -56,12 +55,7 @@ public class OrganizationUnitImpl extends BusinessContextElementImpl implements 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OrganizationUnit.class, DMN_ELEMENT_ORGANIZATION_UNIT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(BusinessContextElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<OrganizationUnit>() {
-      @Override
-      public OrganizationUnit newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OrganizationUnitImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OrganizationUnitImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

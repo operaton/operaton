@@ -25,7 +25,6 @@ import org.operaton.bpm.model.dmn.instance.Variable;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -61,12 +60,7 @@ public class ContextEntryImpl extends DmnModelElementInstanceImpl implements Con
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ContextEntry.class, DMN_ELEMENT_CONTEXT_ENTRY)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<ContextEntry>() {
-      @Override
-      public ContextEntry newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ContextEntryImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ContextEntryImpl(instanceContext));
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

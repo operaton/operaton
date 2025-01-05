@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN messageFlow element
@@ -46,12 +45,7 @@ public class MessageFlowImpl extends BaseElementImpl implements MessageFlow {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(MessageFlow.class, BPMN_ELEMENT_MESSAGE_FLOW)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<MessageFlow>() {
-      @Override
-      public MessageFlow newInstance(ModelTypeInstanceContext instanceContext) {
-          return new MessageFlowImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new MessageFlowImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

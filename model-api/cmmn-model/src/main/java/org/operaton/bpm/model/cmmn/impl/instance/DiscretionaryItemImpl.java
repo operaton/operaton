@@ -32,7 +32,6 @@ import org.operaton.bpm.model.cmmn.instance.TableItem;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -101,12 +100,7 @@ public class DiscretionaryItemImpl extends TableItemImpl implements Discretionar
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DiscretionaryItem.class, CMMN_ELEMENT_DISCRETIONARY_ITEM)
         .namespaceUri(CMMN11_NS)
         .extendsType(TableItem.class)
-        .instanceProvider(new ModelTypeInstanceProvider<DiscretionaryItem>() {
-      @Override
-      public DiscretionaryItem newInstance(ModelTypeInstanceContext instanceContext) {
-            return new DiscretionaryItemImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new DiscretionaryItemImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

@@ -16,29 +16,21 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.lang3.time.DateUtils;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import java.util.*;
+
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -46,6 +38,8 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -110,26 +104,23 @@ public class HistoricBatchManagerBatchesForCleanupTest {
     batchOperationsMap.put(batchType, historicBatchHistoryTTL);
 
 
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        // when
-        List<String> historicBatchIdsForCleanup = commandContext.getHistoricBatchManager().findHistoricBatchIdsForCleanup(batchSize, batchOperationsMap, 0, 59);
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
+      // when
+      List<String> historicBatchIdsForCleanup = commandContext.getHistoricBatchManager().findHistoricBatchIdsForCleanup(batchSize, batchOperationsMap, 0, 59);
 
-        // then
-        assertEquals(resultCount, historicBatchIdsForCleanup.size());
+      // then
+      assertEquals(resultCount, historicBatchIdsForCleanup.size());
 
-        if (resultCount > 0) {
+      if (resultCount > 0) {
 
-          List<HistoricBatch> historicBatches = historyService.createHistoricBatchQuery().list();
+        List<HistoricBatch> historicBatches = historyService.createHistoricBatchQuery().list();
 
-          for (HistoricBatch historicBatch : historicBatches) {
-            historicBatch.getEndTime().before(DateUtils.addDays(ClockUtil.getCurrentTime(), historicBatchHistoryTTL));
-          }
+        for (HistoricBatch historicBatch : historicBatches) {
+          historicBatch.getEndTime().before(DateUtils.addDays(ClockUtil.getCurrentTime(), historicBatchHistoryTTL));
         }
-
-        return null;
       }
+
+      return null;
     });
   }
 

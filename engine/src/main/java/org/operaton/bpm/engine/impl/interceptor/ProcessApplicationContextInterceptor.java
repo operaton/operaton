@@ -51,13 +51,7 @@ public class ProcessApplicationContextInterceptor extends CommandInterceptor {
 
       try {
         ProcessApplicationReference reference = getPaReference(processApplicationIdentifier);
-        return Context.executeWithinProcessApplication(new Callable<T>() {
-
-          @Override
-          public T call() throws Exception {
-            return next.execute(command);
-          }
-        },
+        return Context.executeWithinProcessApplication((Callable<T>) () -> next.execute(command),
         reference);
 
       }

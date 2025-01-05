@@ -33,7 +33,6 @@ import org.operaton.bpm.model.cmmn.instance.Task;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -118,12 +117,7 @@ public class CaseTaskImpl extends TaskImpl implements CaseTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseTask.class, CMMN_ELEMENT_CASE_TASK)
         .extendsType(Task.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(new ModelTypeInstanceProvider<CaseTask>() {
-      @Override
-      public CaseTask newInstance(ModelTypeInstanceContext instanceContext) {
-            return new CaseTaskImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new CaseTaskImpl(instanceContext));
 
     caseRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_CASE_REF)
         .build();

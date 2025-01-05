@@ -57,7 +57,6 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailVariableInstanceUpdateEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
@@ -1406,13 +1405,9 @@ public class TaskServiceTest {
 
     // when
     final boolean hasLoadedAnyVariables =
-      processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Boolean>() {
-
-        @Override
-        public Boolean execute(CommandContext commandContext) {
-          taskService.complete(task.getId());
-          return !commandContext.getDbEntityManager().getCachedEntitiesByType(VariableInstanceEntity.class).isEmpty();
-        }
+      processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+        taskService.complete(task.getId());
+        return !commandContext.getDbEntityManager().getCachedEntitiesByType(VariableInstanceEntity.class).isEmpty();
       });
 
     // then

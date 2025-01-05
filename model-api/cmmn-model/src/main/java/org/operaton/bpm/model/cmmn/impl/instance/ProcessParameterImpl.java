@@ -24,7 +24,6 @@ import org.operaton.bpm.model.cmmn.instance.ProcessParameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -40,12 +39,7 @@ public class ProcessParameterImpl extends ParameterImpl implements ProcessParame
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ProcessParameter.class, CMMN_ELEMENT_PROCESS_PARAMETER)
         .namespaceUri(CMMN11_NS)
         .extendsType(Parameter.class)
-        .instanceProvider(new ModelTypeInstanceProvider<ProcessParameter>() {
-      @Override
-      public ProcessParameter newInstance(ModelTypeInstanceContext instanceContext) {
-            return new ProcessParameterImpl(instanceContext);
-          }
-        });
+        .instanceProvider(instanceContext -> new ProcessParameterImpl(instanceContext));
 
     typeBuilder.build();
   }

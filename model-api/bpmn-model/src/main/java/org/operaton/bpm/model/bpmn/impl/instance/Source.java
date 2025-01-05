@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_SOURCE;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN source element of the BPMN tRelationship and tLinkEventDefinition type
@@ -34,12 +33,7 @@ public class Source extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Source.class, BPMN_ELEMENT_SOURCE)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Source>() {
-      @Override
-      public Source newInstance(ModelTypeInstanceContext instanceContext) {
-          return new Source(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new Source(instanceContext));
 
     typeBuilder.build();
   }

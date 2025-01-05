@@ -30,7 +30,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN outputSet element
@@ -49,12 +48,7 @@ public class OutputSetImpl extends BaseElementImpl implements OutputSet {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputSet.class, BPMN_ELEMENT_OUTPUT_SET)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<OutputSet>() {
-      @Override
-      public OutputSet newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OutputSetImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new OutputSetImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

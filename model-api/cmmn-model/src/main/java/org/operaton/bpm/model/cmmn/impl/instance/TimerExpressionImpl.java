@@ -39,12 +39,7 @@ public class TimerExpressionImpl extends ExpressionImpl implements TimerExpressi
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimerExpression.class, CMMN_ELEMENT_TIMER_EXPRESSION)
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<TimerExpression>() {
-      @Override
-      public TimerExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TimerExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new TimerExpressionImpl(instanceContext));
 
     typeBuilder.build();
   }

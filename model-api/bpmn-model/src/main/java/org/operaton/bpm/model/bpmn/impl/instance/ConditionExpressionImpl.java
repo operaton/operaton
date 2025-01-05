@@ -29,7 +29,6 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRI
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.XSI_ATTRIBUTE_TYPE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.XSI_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN conditionExpression element of the BPMN tSequenceFlow type
@@ -45,12 +44,7 @@ public class ConditionExpressionImpl extends FormalExpressionImpl implements Con
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ConditionExpression.class, BPMN_ELEMENT_CONDITION_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ConditionExpression>() {
-      @Override
-      public ConditionExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ConditionExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new ConditionExpressionImpl(instanceContext));
 
     typeAttribute = typeBuilder.stringAttribute(XSI_ATTRIBUTE_TYPE)
       .namespace(XSI_NS)

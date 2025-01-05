@@ -47,7 +47,6 @@ import org.operaton.bpm.model.bpmn.instance.OutputDataItem;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -84,13 +83,7 @@ public class MultiInstanceLoopCharacteristicsImpl extends LoopCharacteristicsImp
       .defineType(MultiInstanceLoopCharacteristics.class, BPMN_ELEMENT_MULTI_INSTANCE_LOOP_CHARACTERISTICS)
       .namespaceUri(BPMN20_NS)
       .extendsType(LoopCharacteristics.class)
-      .instanceProvider(new ModelTypeInstanceProvider<MultiInstanceLoopCharacteristics>() {
-
-      @Override
-      public MultiInstanceLoopCharacteristics newInstance(ModelTypeInstanceContext instanceContext) {
-          return new MultiInstanceLoopCharacteristicsImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new MultiInstanceLoopCharacteristicsImpl(instanceContext));
 
     isSequentialAttribute = typeBuilder.booleanAttribute(BPMN_ELEMENT_IS_SEQUENTIAL)
       .defaultValue(false)

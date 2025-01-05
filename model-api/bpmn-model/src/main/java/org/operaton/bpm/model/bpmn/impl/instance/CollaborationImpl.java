@@ -27,7 +27,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN collaboration element
@@ -53,12 +52,7 @@ public class CollaborationImpl extends RootElementImpl implements Collaboration 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Collaboration.class, BPMN_ELEMENT_COLLABORATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Collaboration>() {
-      @Override
-      public Collaboration newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CollaborationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new CollaborationImpl(instanceContext));
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

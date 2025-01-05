@@ -30,7 +30,6 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_SIGNAL_EVENT_DEFINITION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ASYNC;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN signalEventDefinition element
@@ -46,12 +45,7 @@ public class SignalEventDefinitionImpl extends EventDefinitionImpl implements Si
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SignalEventDefinition.class, BPMN_ELEMENT_SIGNAL_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<SignalEventDefinition>() {
-      @Override
-      public SignalEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new SignalEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(instanceContext -> new SignalEventDefinitionImpl(instanceContext));
 
     signalRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_SIGNAL_REF)
       .qNameAttributeReference(Signal.class)

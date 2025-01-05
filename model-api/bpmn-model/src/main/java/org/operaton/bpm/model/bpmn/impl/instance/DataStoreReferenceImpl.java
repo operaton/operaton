@@ -42,12 +42,7 @@ public class DataStoreReferenceImpl extends FlowElementImpl implements DataStore
         ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataStoreReference.class, BPMN_ELEMENT_DATA_STORE_REFERENCE)
                 .namespaceUri(BPMN20_NS)
                 .extendsType(FlowElement.class)
-                .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<DataStoreReference>() {
-                    @Override
-                    public DataStoreReference newInstance(ModelTypeInstanceContext instanceContext) {
-                        return new DataStoreReferenceImpl(instanceContext);
-                    }
-                });
+                .instanceProvider(instanceContext -> new DataStoreReferenceImpl(instanceContext));
 
         itemSubjectRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ITEM_SUBJECT_REF)
                 .qNameAttributeReference(ItemDefinition.class)

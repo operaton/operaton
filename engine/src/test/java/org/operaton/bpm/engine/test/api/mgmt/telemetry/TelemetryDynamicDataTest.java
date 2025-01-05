@@ -156,21 +156,13 @@ public class TelemetryDynamicDataTest {
 
     // when
     // execute anonymous class
-    configuration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-
-      @Override
-      public Void execute(CommandContext commandContext) {
-        System.out.println("Test anonymous command.");
-        return null;
-      }
+    configuration.getCommandExecutorTxRequired().execute(commandContext -> {
+      System.out.println("Test anonymous command.");
+      return null;
     });
-    configuration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-
-      @Override
-      public Void execute(CommandContext commandContext) {
-        System.out.println("Test anonymous command.");
-        return null;
-      }
+    configuration.getCommandExecutorTxRequired().execute(commandContext -> {
+      System.out.println("Test anonymous command.");
+      return null;
     });
 
     // then

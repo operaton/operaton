@@ -17,7 +17,6 @@
 package org.operaton.connect.httpclient;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 
@@ -39,6 +38,8 @@ import org.operaton.connect.Connectors;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 import org.operaton.connect.spi.Connector;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class HttpConnectorTest {
 
@@ -64,24 +65,16 @@ public class HttpConnectorTest {
 
   @Test
   void shouldFailWithoutMethod() {
-    try {
-      connector.createRequest().url("localhost").execute();
-      fail("No method specified");
-    }
-    catch (ConnectorRequestException e) {
-      // expected
-    }
+    HttpRequest request = connector.createRequest().url("localhost");
+    assertThatThrownBy(request::execute)
+      .isInstanceOf(ConnectorRequestException.class);
   }
 
   @Test
   void shouldFailWithoutUrl() {
-    try {
-      connector.createRequest().execute();
-      fail("No url specified");
-    }
-    catch (ConnectorRequestException e) {
-      // expected
-    }
+    HttpRequest request = connector.createRequest();
+    assertThatThrownBy(request::execute)
+      .isInstanceOf(ConnectorRequestException.class);
   }
 
   @Test

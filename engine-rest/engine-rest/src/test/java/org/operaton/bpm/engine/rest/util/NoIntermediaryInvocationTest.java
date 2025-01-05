@@ -18,16 +18,18 @@ package org.operaton.bpm.engine.rest.util;
 
 import static org.operaton.bpm.engine.rest.helper.NoIntermediaryInvocation.immediatelyAfter;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.exceptions.base.MockitoAssertionError;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 /**
  * @author Thorben Lindhauer
  */
+@SuppressWarnings("java:S5778")
 public class NoIntermediaryInvocationTest {
 
   protected Foo foo;
@@ -38,7 +40,7 @@ public class NoIntermediaryInvocationTest {
   }
 
   @Test
-  public void testSucceess() {
+  public void testSucceeds() {
 
     // given
     foo.getFoo();
@@ -64,12 +66,8 @@ public class NoIntermediaryInvocationTest {
     inOrder.verify(foo).getFoo();
 
     // then
-    try {
-      inOrder.verify(foo, immediatelyAfter()).getBar();
-      Assert.fail("should not verify");
-    } catch (MockitoAssertionError e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> inOrder.verify(foo, immediatelyAfter()).getBar())
+      .isInstanceOf(MockitoAssertionError.class);
   }
 
   @Test
@@ -82,12 +80,8 @@ public class NoIntermediaryInvocationTest {
     inOrder.verify(foo).getFoo();
 
     // then
-    try {
-      inOrder.verify(foo, immediatelyAfter()).getBar();
-      Assert.fail("should not verify");
-    } catch (MockitoAssertionError e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> inOrder.verify(foo, immediatelyAfter()).getBar())
+      .isInstanceOf(MockitoAssertionError.class);
   }
 
   @Test
@@ -101,12 +95,8 @@ public class NoIntermediaryInvocationTest {
     inOrder.verify(foo).getFoo();
 
     // then
-    try {
-      inOrder.verify(foo, immediatelyAfter()).getBar();
-      Assert.fail("should not verify");
-    } catch (MockitoAssertionError e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> inOrder.verify(foo, immediatelyAfter()).getBar())
+      .isInstanceOf(MockitoAssertionError.class);
   }
 
   @Test
@@ -121,15 +111,11 @@ public class NoIntermediaryInvocationTest {
     inOrder.verify(foo).getFoo();
 
     // then
-    try {
-      inOrder.verify(foo, immediatelyAfter()).getBar();
-      Assert.fail("should not verify");
-    } catch (MockitoAssertionError e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> inOrder.verify(foo, immediatelyAfter()).getBar())
+      .isInstanceOf(MockitoAssertionError.class);
   }
 
-  public static interface Foo {
+  public interface Foo {
 
     String getFoo();
 

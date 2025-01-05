@@ -41,6 +41,8 @@ import org.operaton.connect.httpclient.soap.SoapHttpConnector;
 import org.operaton.connect.plugin.util.TestConnector;
 import org.operaton.connect.spi.Connector;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 class ConnectProcessEnginePluginTest {
 
   @RegisterExtension
@@ -75,26 +77,18 @@ class ConnectProcessEnginePluginTest {
 
   @Test
   void connectorIdMissing() {
-    try {
-      repositoryService.createDeployment().addClasspathResource("org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorIdMissing.bpmn")
-        .deploy();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      assertFalse(e instanceof BpmnParseException);
-    }
+    var deployment = repositoryService.createDeployment()
+        .addClasspathResource("org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorIdMissing.bpmn");
+    assertThatThrownBy(deployment::deploy)
+      .isInstanceOf(ProcessEngineException.class)
+      .isNotInstanceOf(BpmnParseException.class);
   }
 
   @Deployment
   @Test
   void connectorIdUnknown() {
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess");
-      fail("Exception expected");
-    }
-    catch (ConnectorException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
+      .isInstanceOf(ConnectorException.class);
   }
 
   @Deployment
@@ -171,11 +165,10 @@ class ConnectProcessEnginePluginTest {
     Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "in");
     variables.put("exception", new RuntimeException(exceptionMessage));
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess", variables);
-    } catch(RuntimeException re){
-      assertThat(re.getMessage()).contains(exceptionMessage);
-    }
+
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining(exceptionMessage);
   }
 
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn")
@@ -197,11 +190,10 @@ class ConnectProcessEnginePluginTest {
     Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "out");
     variables.put("exception", new RuntimeException(exceptionMessage));
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess", variables);
-    } catch(RuntimeException re){
-      assertThat(re.getMessage()).contains(exceptionMessage);
-    }
+
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining(exceptionMessage);
   }
 
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
@@ -223,11 +215,10 @@ class ConnectProcessEnginePluginTest {
     Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "in");
     variables.put("exception", new RuntimeException(exceptionMessage));
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess", variables);
-    } catch(RuntimeException re){
-      assertThat(re.getMessage()).contains(exceptionMessage);
-    }
+
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining(exceptionMessage);
   }
 
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
@@ -249,11 +240,10 @@ class ConnectProcessEnginePluginTest {
     Map<String, Object> variables = new HashMap<>();
     variables.put("throwInMapping", "out");
     variables.put("exception", new RuntimeException(exceptionMessage));
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess", variables);
-    } catch(RuntimeException re){
-      assertThat(re.getMessage()).contains(exceptionMessage);
-    }
+
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining(exceptionMessage);
   }
 
   @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorBpmnErrorThrownInScriptResourceNoAsyncAfterJobIsCreated.bpmn")
@@ -279,11 +269,9 @@ class ConnectProcessEnginePluginTest {
   @Deployment
   @Test
   void followingExceptionIsNotHandledByConnector() {
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess");
-    } catch(RuntimeException re){
-      assertThat(re.getMessage()).contains("Invalid format");
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining("Invalid format");
   }
 
   @Deployment
@@ -296,8 +284,7 @@ class ConnectProcessEnginePluginTest {
 
     Map<String, Object> vars = new HashMap<>();
     vars.put("someInputVariable", inputVariableValue);
-    ProcessInstance processInstance = runtimeService
-        .startProcessInstanceByKey("process_sending_with_connector", vars);
+    runtimeService.startProcessInstanceByKey("process_sending_with_connector", vars);
 
     // validate input parameter
     assertNotNull(TestConnector.requestParameters.get("reqParam1"));
@@ -319,8 +306,7 @@ class ConnectProcessEnginePluginTest {
 
     Map<String, Object> vars = new HashMap<>();
     vars.put("someInputVariable", inputVariableValue);
-    ProcessInstance processInstance = runtimeService
-        .startProcessInstanceByKey("process_sending_with_connector", vars);
+    runtimeService.startProcessInstanceByKey("process_sending_with_connector", vars);
 
     // validate input parameter
     assertNotNull(TestConnector.requestParameters.get("reqParam1"));

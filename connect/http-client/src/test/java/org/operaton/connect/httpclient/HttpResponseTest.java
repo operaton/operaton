@@ -19,10 +19,11 @@ package org.operaton.connect.httpclient;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.assertj.core.api.Assertions;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class HttpResponseTest {
 
@@ -124,28 +125,26 @@ class HttpResponseTest {
   void testServerErrorResponseWithConfigOptionSet() {
     // given
     testResponse.statusCode(500);
-    try {
-      // when
-      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
-      Assertions.fail("ConnectorRequestException should be thrown");
-    } catch (ConnectorRequestException e) {
+    HttpRequest request = connector.createRequest().configOption("throw-http-error", "TRUE").url("https://operaton.org").get();
+
+    // when
+    assertThatThrownBy(request::execute)
       // then
-      assertThat(e).hasMessageContaining("HTTP request failed with Status Code: 500");
-    }
+      .isInstanceOf(ConnectorRequestException.class)
+      .hasMessageContaining("HTTP request failed with Status Code: 500");
   }
 
   @Test
   void testMalformedRequestWithConfigOptionSet() {
     // given
     testResponse.statusCode(400);
-    try {
-      // when
-      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
-      Assertions.fail("ConnectorRequestException should be thrown");
-    } catch (ConnectorRequestException e) {
+    HttpRequest request = connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get();
+
+    // when
+    assertThatThrownBy(request::execute)
       // then
-      assertThat(e).hasMessageContaining("HTTP request failed with Status Code: 400");
-    }
+      .isInstanceOf(ConnectorRequestException.class)
+      .hasMessageContaining("HTTP request failed with Status Code: 400");
   }
 
   @Test
@@ -153,7 +152,7 @@ class HttpResponseTest {
     // given
     testResponse.statusCode(200);
     // when
-    connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
+    connector.createRequest().configOption("throw-http-error", "TRUE").url("http://operaton.org").get().execute();
     // then
     HttpResponse response = getResponse();
     assertThat(response.getStatusCode()).isEqualTo(200);
@@ -164,7 +163,7 @@ class HttpResponseTest {
     // given
     testResponse.statusCode(400);
     // when
-    connector.createRequest().configOption("throw-http-error", "FALSE").url("http://camunda.com").get().execute();
+    connector.createRequest().configOption("throw-http-error", "FALSE").url("http://operaton.org").get().execute();
     // then
     HttpResponse response = getResponse();
     assertThat(response.getStatusCode()).isEqualTo(400);

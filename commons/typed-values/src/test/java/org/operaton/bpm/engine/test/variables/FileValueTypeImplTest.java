@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.variables;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.type.FileValueTypeImpl;
 import org.operaton.bpm.engine.variable.value.FileValue;
@@ -35,10 +33,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ronny Bräunlich
@@ -81,14 +83,15 @@ class FileValueTypeImplTest {
 
   @Test
   void convertingThrowsException() {
-    assertThrows(IllegalArgumentException.class, () ->
-      type.convertFromTypedValue(Variables.untypedNullValue()));
+    TypedValue untypedNullValue = Variables.untypedNullValue();
+    assertThatThrownBy(() -> type.convertFromTypedValue(untypedNullValue))
+      .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
   void createValueFromFile() throws URISyntaxException {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/variables/simpleFile.txt").toURI());
-    TypedValue value = type.createValue(file, Collections.<String, Object> singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
+    TypedValue value = type.createValue(file, Collections.singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
     assertThat(value).isInstanceOf(FileValue.class);
     assertThat(value.getType()).isInstanceOf(FileValueTypeImpl.class);
     checkStreamFromValue(value, "text");
@@ -97,7 +100,7 @@ class FileValueTypeImplTest {
   @Test
   void createValueFromStream() {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
-    TypedValue value = type.createValue(file, Collections.<String, Object> singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
+    TypedValue value = type.createValue(file, Collections.singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
     assertThat(value).isInstanceOf(FileValue.class);
     assertThat(value.getType()).isInstanceOf(FileValueTypeImpl.class);
     checkStreamFromValue(value, "text");
@@ -106,7 +109,7 @@ class FileValueTypeImplTest {
   @Test
   void createValueFromBytes() throws Exception {
     File file = new File(this.getClass().getClassLoader().getResource("org/operaton/bpm/engine/test/variables/simpleFile.txt").toURI());
-    TypedValue value = type.createValue(Files.readAllBytes(file.toPath()), Collections.<String, Object> singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
+    TypedValue value = type.createValue(Files.readAllBytes(file.toPath()), Collections.singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt"));
     assertThat(value).isInstanceOf(FileValue.class);
     assertThat(value.getType()).isInstanceOf(FileValueTypeImpl.class);
     checkStreamFromValue(value, "text");
@@ -114,8 +117,9 @@ class FileValueTypeImplTest {
 
   @Test
   void createValueFromObject() {
-    assertThrows(IllegalArgumentException.class, () ->
-      type.createValue(new Object(), Collections.<String, Object>singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt")));
+    Object value = new Object();
+    Map<String, Object> valueInfo = Collections.singletonMap(FileValueTypeImpl.VALUE_INFO_FILE_NAME, "simpleFile.txt");
+    assertThrows(IllegalArgumentException.class, () -> type.createValue(value, valueInfo));
   }
 
   @Test
@@ -174,15 +178,17 @@ class FileValueTypeImplTest {
   @Test
   void cannotCreateFileWithoutName() {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
-    assertThrows(IllegalArgumentException.class, () ->
-      type.createValue(file, Collections.<String, Object>emptyMap()));
+    Map<String, Object> emptyValueInfo = emptyMap();
+
+    assertThatThrownBy(() -> type.createValue(file, emptyValueInfo))
+      .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
   void cannotCreateFileWithoutValueInfo() {
     InputStream file = this.getClass().getClassLoader().getResourceAsStream("org/operaton/bpm/engine/test/variables/simpleFile.txt");
-    assertThrows(IllegalArgumentException.class, () ->
-      type.createValue(file, null));
+    assertThatThrownBy(() -> type.createValue(file, null))
+      .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
@@ -191,12 +197,9 @@ class FileValueTypeImplTest {
     Map<String, Object> info = new HashMap<>();
     info.put("filename", "bar");
     info.put("transient", "foo");
-    try {
-      type.createValue(file, info);
-    } catch (IllegalArgumentException e) {
-      assertThat(e.getMessage()).contains("The property 'transient' should have a value of type 'boolean'.");
-    }
-    
+    assertThatThrownBy(() -> type.createValue(file, info))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessageContaining("The property 'transient' should have a value of type 'boolean'.");
   }
 
   @Test

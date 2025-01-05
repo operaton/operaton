@@ -35,7 +35,6 @@ import java.util.List;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -56,6 +55,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class JsonSerializationTest {
 
@@ -105,7 +106,7 @@ public class JsonSerializationTest {
 
     assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
     assertEquals(JsonSerializable.class.getName(), typedValue.getObjectTypeName());
-    JSONAssert.assertEquals(bean.toExpectedJsonString(), new String(typedValue.getValueSerialized()), true);
+    JSONAssert.assertEquals(bean.toExpectedJsonString(), typedValue.getValueSerialized(), true);
   }
 
   @Test
@@ -131,7 +132,7 @@ public class JsonSerializationTest {
     assertTrue(typedValue.isDeserialized());
     assertEquals(JSON_FORMAT_NAME, typedValue.getSerializationDataFormat());
     assertNotNull(typedValue.getObjectTypeName());
-    JSONAssert.assertEquals(toExpectedJsonArray(beans), new String(typedValue.getValueSerialized()), true);
+    JSONAssert.assertEquals(toExpectedJsonArray(beans), typedValue.getValueSerialized(), true);
 
   }
 
@@ -142,85 +143,60 @@ public class JsonSerializationTest {
 
     FailingSerializationBean failingBean = new FailingSerializationBean("a String", 42, true);
 
-    try {
-      runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(failingBean).serializationDataFormat(JSON_FORMAT_NAME));
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    String instanceId = instance.getId();
+    var value = objectValue(failingBean).serializationDataFormat(JSON_FORMAT_NAME).create();
+    assertThatThrownBy(() -> runtimeService.setVariable(instanceId, "simpleBean", value))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
   public void testFailingDeserialization() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
 
     FailingDeserializationBean failingBean = new FailingDeserializationBean("a String", 42, true);
 
-    runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(failingBean).serializationDataFormat(JSON_FORMAT_NAME));
+    runtimeService.setVariable(instanceId, "simpleBean", objectValue(failingBean).serializationDataFormat(JSON_FORMAT_NAME));
 
-    try {
-      runtimeService.getVariable(instance.getId(), "simpleBean");
-      fail("exception expected");
-    }
-    catch(ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
+      .isInstanceOf(ProcessEngineException.class);
 
-    try {
-      runtimeService.getVariableTyped(instance.getId(), "simpleBean");
-      fail("exception expected");
-    }
-    catch(ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.getVariableTyped(instanceId, "simpleBean"))
+      .isInstanceOf(ProcessEngineException.class);
 
     // However, I can access the serialized value
-    ObjectValue objectValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean", false);
+    ObjectValue objectValue = runtimeService.getVariableTyped(instanceId, "simpleBean", false);
     assertFalse(objectValue.isDeserialized());
     assertNotNull(objectValue.getObjectTypeName());
     assertNotNull(objectValue.getValueSerialized());
+
     // but not the deserialized properties
-    try {
-      objectValue.getValue();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-      testRule.assertTextPresent("Object is not deserialized", e.getMessage());
-    }
+    assertThatThrownBy(objectValue::getValue)
+      .isInstanceOf(IllegalStateException.class)
+      .hasMessageContaining("Object is not deserialized");
 
-    try {
-      objectValue.getValue(JsonSerializable.class);
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-      testRule.assertTextPresent("Object is not deserialized", e.getMessage());
-    }
+    assertThatThrownBy(() -> objectValue.getValue(JsonSerializable.class))
+      .isInstanceOf(IllegalStateException.class)
+      .hasMessageContaining("Object is not deserialized");
 
-    try {
-      objectValue.getObjectType();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-      testRule.assertTextPresent("Object is not deserialized", e.getMessage());
-    }
-
+    assertThatThrownBy(objectValue::getObjectType)
+      .isInstanceOf(IllegalStateException.class)
+      .hasMessageContaining("Object is not deserialized");
   }
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
   public void testFailForNonExistingSerializationFormat() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String instanceId = instance.getId();
 
     JsonSerializable jsonSerializable = new JsonSerializable();
 
-    try {
-      runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(jsonSerializable).serializationDataFormat("non existing data format"));
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot find serializer for value", e.getMessage());
-      // happy path
-    }
+    var objectValue = objectValue(jsonSerializable).serializationDataFormat("non existing data format").create();
+    assertThatThrownBy(() -> runtimeService.setVariable(instanceId, "simpleBean", objectValue))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find serializer for value");
   }
 
   @Test
@@ -228,10 +204,8 @@ public class JsonSerializationTest {
   public void testVariableValueCaching() {
     final ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
-
-      @Override
-      public Void execute(CommandContext commandContext) {
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(
+      (Command<Void>) commandContext -> {
         JsonSerializable bean = new JsonSerializable("a String", 42, true);
         runtimeService.setVariable(instance.getId(), "simpleBean", bean);
 
@@ -239,8 +213,7 @@ public class JsonSerializationTest {
         assertSame(bean, returnedBean);
 
         return null;
-      }
-    });
+      });
 
     VariableInstance variableInstance = runtimeService.createVariableInstanceQuery().singleResult();
 
@@ -265,7 +238,7 @@ public class JsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetSerializedVariableValue() throws JSONException {
+  public void testSetSerializedVariableValue() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     JsonSerializable bean = new JsonSerializable("a String", 42, true);
     String beanAsJson = bean.toExpectedJsonString();
@@ -289,7 +262,7 @@ public class JsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetSerializedVariableValueNoTypeName() throws JSONException {
+  public void testSetSerializedVariableValueNoTypeName() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     JsonSerializable bean = new JsonSerializable("a String", 42, true);
     String beanAsJson = bean.toExpectedJsonString();
@@ -298,18 +271,14 @@ public class JsonSerializationTest {
       .serializationDataFormat(JSON_FORMAT_NAME);
       // no type name
 
-    try {
-      runtimeService.setVariable(instance.getId(), "simpleBean", serializedValue);
-      fail("Exception expected.");
-    }
-    catch(Exception e) {
-      testRule.assertTextPresent("no 'objectTypeName' provided for non-null value", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.setVariable(instance.getId(), "simpleBean", serializedValue))
+      .isInstanceOf(Exception.class)
+      .hasMessageContaining("no 'objectTypeName' provided for non-null value");
   }
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetSerializedVariableValueMismatchingTypeName() throws JSONException {
+  public void testSetSerializedVariableValueMismatchingTypeName() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     JsonSerializable bean = new JsonSerializable("a String", 42, true);
     String beanAsJson = bean.toExpectedJsonString();
@@ -345,7 +314,7 @@ public class JsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetSerializedVariableValueNull() throws JSONException {
+  public void testSetSerializedVariableValueNull() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     SerializedObjectValueBuilder serializedValue = serializedObjectValue()
@@ -369,7 +338,7 @@ public class JsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testSetSerializedVariableValueNullNoTypeName() throws JSONException {
+  public void testSetSerializedVariableValueNullNoTypeName() {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     SerializedObjectValueBuilder serializedValue = serializedObjectValue()
@@ -523,7 +492,7 @@ public class JsonSerializationTest {
 
   @Test
   @Deployment(resources = ONE_TASK_PROCESS)
-  public void testRemoveVariable() throws JSONException {
+  public void testRemoveVariable() {
     // given a serialized json variable
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     JsonSerializable bean = new JsonSerializable("a String", 42, true);

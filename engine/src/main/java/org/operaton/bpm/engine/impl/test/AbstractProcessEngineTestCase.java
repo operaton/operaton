@@ -160,8 +160,8 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
       deploymentIds.add(deploymentId);
     }
 
-    for(String deploymentId : deploymentIds) {
-      TestHelper.annotationDeploymentTearDown(processEngine, deploymentId, getClass(), getName());
+    for(String deployment : deploymentIds) {
+      TestHelper.annotationDeploymentTearDown(processEngine, deployment, getClass(), getName());
     }
 
     deploymentId = null;

@@ -16,40 +16,29 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
+import org.operaton.bpm.engine.delegate.Expression;
+import org.operaton.bpm.engine.impl.cmmn.handler.CasePlanModelHandler;
+import org.operaton.bpm.engine.impl.cmmn.handler.SentryHandler;
+import org.operaton.bpm.engine.impl.cmmn.handler.TaskItemHandler;
+import org.operaton.bpm.engine.impl.cmmn.model.*;
+import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformException;
+import org.operaton.bpm.model.cmmn.PlanItemTransition;
+import org.operaton.bpm.model.cmmn.VariableTransition;
+import org.operaton.bpm.model.cmmn.instance.*;
+import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableOnPart;
+import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableTransitionEvent;
+
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import org.operaton.bpm.engine.delegate.Expression;
-import org.operaton.bpm.engine.impl.cmmn.handler.CasePlanModelHandler;
-import org.operaton.bpm.engine.impl.cmmn.handler.SentryHandler;
-import org.operaton.bpm.engine.impl.cmmn.handler.TaskItemHandler;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnIfPartDeclaration;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnOnPartDeclaration;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnVariableOnPartDeclaration;
-import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformException;
-import org.operaton.bpm.model.cmmn.PlanItemTransition;
-import org.operaton.bpm.model.cmmn.VariableTransition;
-import org.operaton.bpm.model.cmmn.instance.Body;
-import org.operaton.bpm.model.cmmn.instance.ConditionExpression;
-import org.operaton.bpm.model.cmmn.instance.ExtensionElements;
-import org.operaton.bpm.model.cmmn.instance.IfPart;
-import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.operaton.bpm.model.cmmn.instance.PlanItemOnPart;
-import org.operaton.bpm.model.cmmn.instance.PlanItemTransitionStandardEvent;
-import org.operaton.bpm.model.cmmn.instance.Sentry;
-import org.operaton.bpm.model.cmmn.instance.Task;
-import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableOnPart;
-import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableTransitionEvent;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -59,10 +48,8 @@ public class SentryHandlerTest extends CmmnElementHandlerTest {
 
   protected Sentry sentry;
   protected PlanItemOnPart onPart;
-  protected OperatonVariableOnPart variableOnPart;
   protected Task task;
   protected PlanItem planItem;
-  protected ExtensionElements extensionElements;
   protected TaskItemHandler taskItemHandler = new TaskItemHandler();
   protected SentryHandler sentryHandler = new SentryHandler();
 

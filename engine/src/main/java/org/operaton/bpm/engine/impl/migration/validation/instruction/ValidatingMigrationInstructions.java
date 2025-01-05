@@ -16,17 +16,11 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
+
+import java.util.*;
 
 /**
  * @author Thorben Lindhauer
@@ -73,24 +67,24 @@ public class ValidatingMigrationInstructions {
   }
 
   public List<ValidatingMigrationInstruction> getInstructionsBySourceScope(ScopeImpl scope) {
-    List<ValidatingMigrationInstruction> instructions = instructionsBySourceScope.get(scope);
+    List<ValidatingMigrationInstruction> validatingMigrationInstructions = instructionsBySourceScope.get(scope);
 
-    if (instructions == null) {
+    if (validatingMigrationInstructions == null) {
       return Collections.emptyList();
     }
     else {
-      return instructions;
+      return validatingMigrationInstructions;
     }
   }
 
   public List<ValidatingMigrationInstruction> getInstructionsByTargetScope(ScopeImpl scope) {
-    List<ValidatingMigrationInstruction> instructions = instructionsByTargetScope.get(scope);
+    List<ValidatingMigrationInstruction> validatingMigrationInstructions = instructionsByTargetScope.get(scope);
 
-    if (instructions == null) {
+    if (validatingMigrationInstructions == null) {
       return Collections.emptyList();
     }
     else {
-      return instructions;
+      return validatingMigrationInstructions;
     }
   }
 
@@ -113,13 +107,13 @@ public class ValidatingMigrationInstructions {
   }
 
   public List<MigrationInstruction> asMigrationInstructions() {
-    List<MigrationInstruction> instructions = new ArrayList<>();
+    List<MigrationInstruction> migrationInstructions = new ArrayList<>();
 
     for (ValidatingMigrationInstruction instruction : this.instructions) {
-      instructions.add(instruction.toMigrationInstruction());
+      migrationInstructions.add(instruction.toMigrationInstruction());
     }
 
-    return instructions;
+    return migrationInstructions;
   }
 
   public boolean contains(ValidatingMigrationInstruction instruction) {

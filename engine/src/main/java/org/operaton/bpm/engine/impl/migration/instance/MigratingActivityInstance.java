@@ -16,15 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.migration.instance;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.delegate.CoreActivityBehavior;
@@ -42,6 +35,8 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ModificationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
+
+import java.util.*;
 
 /**
  * @author Thorben Lindhauer
@@ -191,9 +186,9 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
       migratingInstance.migrateDependentEntities();
     }
 
-    ExecutionEntity representativeExecution = resolveRepresentativeExecution();
+    ExecutionEntity representativeExec = resolveRepresentativeExecution();
     for (EmergingInstance emergingInstance : emergingDependentInstances) {
-      emergingInstance.create(representativeExecution);
+      emergingInstance.create(representativeExec);
     }
   }
 
@@ -531,9 +526,9 @@ public class MigratingActivityInstance extends MigratingScopeInstance implements
 
     @Override
     public boolean isDetached() {
-      ExecutionEntity representativeExecution = resolveRepresentativeExecution();
-      return representativeExecution != representativeExecution.getProcessInstance()
-        && representativeExecution.getParent() == null;
+      ExecutionEntity representativeExec = resolveRepresentativeExecution();
+      return representativeExec != representativeExec.getProcessInstance()
+        && representativeExec.getParent() == null;
     }
 
     @Override

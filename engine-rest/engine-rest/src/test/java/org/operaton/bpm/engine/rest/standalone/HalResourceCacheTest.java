@@ -16,26 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
-import static org.operaton.bpm.engine.rest.hal.cache.HalRelationCacheConfiguration.CONFIG_CACHES;
-import static org.operaton.bpm.engine.rest.hal.cache.HalRelationCacheConfiguration.CONFIG_CACHE_IMPLEMENTATION;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -53,10 +33,26 @@ import org.operaton.bpm.engine.rest.hal.cache.HalRelationCacheConfigurationExcep
 import org.operaton.bpm.engine.rest.hal.identitylink.HalIdentityLink;
 import org.operaton.bpm.engine.rest.hal.user.HalUser;
 import org.operaton.bpm.engine.task.IdentityLink;
+import static org.operaton.bpm.engine.rest.hal.cache.HalRelationCacheConfiguration.CONFIG_CACHES;
+import static org.operaton.bpm.engine.rest.hal.cache.HalRelationCacheConfiguration.CONFIG_CACHE_IMPLEMENTATION;
+
+import java.io.IOException;
+import java.util.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class HalResourceCacheTest extends AbstractRestServiceTest {
 
@@ -164,10 +160,10 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
 
     contextListener.configureCaches(contextParameter);
 
-    Cache cache = Hal.getInstance().getHalRelationCache(HalUser.class);
-    assertNotNull(cache);
-    assertEquals(123, ((DefaultHalResourceCache) cache).getCapacity());
-    assertEquals(123, ((DefaultHalResourceCache) cache).getSecondsToLive());
+    Cache userCache = Hal.getInstance().getHalRelationCache(HalUser.class);
+    assertNotNull(userCache);
+    assertEquals(123, ((DefaultHalResourceCache) userCache).getCapacity());
+    assertEquals(123, ((DefaultHalResourceCache) userCache).getSecondsToLive());
   }
 
   @Test
@@ -208,9 +204,9 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
     contextListener.configureCaches(configuration);
 
     // cache exists and is empty
-    DefaultHalResourceCache cache = (DefaultHalResourceCache) Hal.getInstance().getHalRelationCache(HalUser.class);
-    assertNotNull(cache);
-    assertEquals(0, cache.size());
+    DefaultHalResourceCache userCache = (DefaultHalResourceCache) Hal.getInstance().getHalRelationCache(HalUser.class);
+    assertNotNull(userCache);
+    assertEquals(0, userCache.size());
 
     // get link resolver and resolve user
     HalLinkResolver linkResolver = Hal.getInstance().getLinkResolver(UserRestService.class);
@@ -223,7 +219,7 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
     assertEquals("kermit", halUser.getFirstName());
 
     // cache contains user
-    assertEquals(1, cache.size());
+    assertEquals(1, userCache.size());
 
     // change user mock
     when(user.getFirstName()).thenReturn("fritz");
@@ -237,7 +233,7 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
     halUser = (HalUser) halUsers.get(0);
     assertEquals("kermit", halUser.getFirstName());
 
-    forwardTime(cache.getSecondsToLive() * 3);
+    forwardTime(userCache.getSecondsToLive() * 3);
 
     // resolve users again
     halUsers = linkResolver.resolveLinks(userIds, processEngine);
@@ -270,18 +266,18 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
     contextListener.configureCaches(configuration);
 
     // cache exists and is empty
-    DefaultHalResourceCache cache = (DefaultHalResourceCache) Hal.getInstance().getHalRelationCache(HalIdentityLink.class);
-    assertNotNull(cache);
-    assertEquals(0, cache.size());
+    DefaultHalResourceCache identityLinkCache = (DefaultHalResourceCache) Hal.getInstance().getHalRelationCache(HalIdentityLink.class);
+    assertNotNull(identityLinkCache);
+    assertEquals(0, identityLinkCache.size());
 
     // get link resolver and resolve identity link
     HalLinkResolver linkResolver = Hal.getInstance().getLinkResolver(IdentityRestService.class);
     List<HalResource<?>> halIdentityLinks = linkResolver.resolveLinks(taskIds, processEngine);
 
     assertEquals(2, halIdentityLinks.size());
-    assertEquals(1, cache.size());
+    assertEquals(1, identityLinkCache.size());
 
-    assertEquals(halIdentityLinks, cache.get(taskIds[0]));
+    assertEquals(halIdentityLinks, identityLinkCache.get(taskIds[0]));
   }
 
   protected void forwardTime(long seconds) {

@@ -17,13 +17,6 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
@@ -37,6 +30,9 @@ import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Daniel Meyer
@@ -154,17 +150,17 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
 
   protected void addToExecution() {
     // add reference in execution
-    ExecutionEntity execution = getExecution();
-    if(execution != null) {
-      execution.addEventSubscription(this);
+    ExecutionEntity exec = getExecution();
+    if(exec != null) {
+      exec.addEventSubscription(this);
     }
   }
 
   protected void removeFromExecution() {
     // remove reference in execution
-    ExecutionEntity execution = getExecution();
-    if(execution != null) {
-      execution.removeEventSubscription(this);
+    ExecutionEntity exec = getExecution();
+    if(exec != null) {
+      exec.removeEventSubscription(this);
     }
   }
 
@@ -212,8 +208,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
 
   public ProcessDefinitionEntity getProcessDefinition() {
     if (executionId != null) {
-      ExecutionEntity execution = getExecution();
-      return execution.getProcessDefinition();
+      return getExecution().getProcessDefinition();
     }
     else {
       // this assumes that start event subscriptions have the process definition id

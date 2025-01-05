@@ -16,7 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.authorization.*;
+import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
+import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -29,35 +34,20 @@ import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.DASHBOARD;
 import static org.operaton.bpm.engine.authorization.Resources.REPORT;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.authorization.Authorization;
-import org.operaton.bpm.engine.authorization.BatchPermissions;
-import org.operaton.bpm.engine.authorization.Permission;
-import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.Resource;
-import org.operaton.bpm.engine.authorization.Resources;
-import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.After;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Daniel Meyer
@@ -65,8 +55,8 @@ import org.junit.Test;
  */
 public class AuthorizationServiceTest extends PluggableProcessEngineTest {
 
-  protected String userId = "test";
-  protected String groupId = "accounting";
+  protected String testUserId = "test";
+  protected String testGroupId = "accounting";
 
   @After
   public void tearDown() {
@@ -692,21 +682,21 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
   @Test
   public void testReportResourceAuthorization() {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setUserId(userId);
+    authorization.setUserId(testUserId);
     authorization.addPermission(ALL);
     authorization.setResource(REPORT);
     authorization.setResourceId(ANY);
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertEquals(true, authorizationService.isUserAuthorized(userId, Arrays.asList(groupId), ALL, REPORT));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, REPORT));
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
   @Test
   public void testReportResourcePermissions() {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setUserId(userId);
+    authorization.setUserId(testUserId);
     authorization.addPermission(CREATE);
     authorization.addPermission(READ);
     authorization.addPermission(UPDATE);
@@ -716,31 +706,31 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, CREATE, REPORT));
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, READ, REPORT));
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, UPDATE, REPORT));
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, DELETE, REPORT));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, CREATE, REPORT));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, READ, REPORT));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, UPDATE, REPORT));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, DELETE, REPORT));
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
   @Test
   public void testDashboardResourceAuthorization() {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setUserId(userId);
+    authorization.setUserId(testUserId);
     authorization.addPermission(ALL);
     authorization.setResource(DASHBOARD);
     authorization.setResourceId(ANY);
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertEquals(true, authorizationService.isUserAuthorized(userId, Arrays.asList(groupId), ALL, DASHBOARD));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, Arrays.asList(testGroupId), ALL, DASHBOARD));
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 
   @Test
   public void testDashboardResourcePermission() {
     Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setUserId(userId);
+    authorization.setUserId(testUserId);
     authorization.addPermission(CREATE);
     authorization.addPermission(READ);
     authorization.addPermission(UPDATE);
@@ -750,10 +740,10 @@ public class AuthorizationServiceTest extends PluggableProcessEngineTest {
     authorizationService.saveAuthorization(authorization);
 
     processEngineConfiguration.setAuthorizationEnabled(true);
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, CREATE, DASHBOARD));
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, READ, DASHBOARD));
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, UPDATE, DASHBOARD));
-    assertEquals(true, authorizationService.isUserAuthorized(userId, null, DELETE, DASHBOARD));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, CREATE, DASHBOARD));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, READ, DASHBOARD));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, UPDATE, DASHBOARD));
+    assertEquals(true, authorizationService.isUserAuthorized(testUserId, null, DELETE, DASHBOARD));
     processEngineConfiguration.setAuthorizationEnabled(false);
   }
 

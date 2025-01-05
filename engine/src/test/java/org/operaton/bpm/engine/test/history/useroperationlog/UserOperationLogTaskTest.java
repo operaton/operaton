@@ -16,29 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ASSIGN;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CLAIM;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_COMPLETE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELEGATE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_RESOLVE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SET_OWNER;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELEGATION;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELETE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PRIORITY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.Date;
-import java.util.HashMap;
-
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -51,8 +28,25 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELEGATION;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.DELETE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.PRIORITY;
+
+import java.util.Date;
+import java.util.HashMap;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Danny Gräf
@@ -379,11 +373,11 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
   @Test
   public void testDeleteTask() {
     // given
-    Task task = taskService.newTask();
-    taskService.saveTask(task);
+    Task newTask = taskService.newTask();
+    taskService.saveTask(newTask);
 
     // when
-    taskService.deleteTask(task.getId());
+    taskService.deleteTask(newTask.getId());
 
     // then
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_DELETE);
@@ -396,7 +390,7 @@ public class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     assertThat(log.getNewValue()).isEqualTo("true");
     assertThat(log.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_TASK_WORKER);
 
-    historyService.deleteHistoricTaskInstance(task.getId());
+    historyService.deleteHistoricTaskInstance(newTask.getId());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})

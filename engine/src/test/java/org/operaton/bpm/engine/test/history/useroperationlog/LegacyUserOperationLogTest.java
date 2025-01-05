@@ -16,19 +16,8 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-
-import org.operaton.bpm.engine.EntityTypes;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -41,12 +30,15 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+import org.junit.*;
 import org.junit.rules.RuleChain;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Roman Smirnov
@@ -84,15 +76,10 @@ public class LegacyUserOperationLogTest {
 
   @After
   public void removeBatch() {
-    Batch batch = managementService.createBatchQuery().singleResult();
-    if (batch != null) {
-      managementService.deleteBatch(batch.getId(), true);
-    }
-
-    HistoricBatch historicBatch = historyService.createHistoricBatchQuery().singleResult();
-    if (historicBatch != null) {
-      historyService.deleteHistoricBatch(historicBatch.getId());
-    }
+    Optional.ofNullable(managementService.createBatchQuery().singleResult())
+        .ifPresent(b -> managementService.deleteBatch(b.getId(), true));
+    Optional.ofNullable(historyService.createHistoricBatchQuery().singleResult())
+        .ifPresent(b -> historyService.deleteHistoricBatch(b.getId()));
   }
 
   @Test

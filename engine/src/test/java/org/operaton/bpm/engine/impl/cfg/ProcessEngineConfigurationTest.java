@@ -16,21 +16,23 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngineException;
+import static org.operaton.bpm.engine.impl.ProcessEngineLogger.CONFIG_LOGGER;
+
+import java.sql.Connection;
+
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.impl.ProcessEngineLogger.CONFIG_LOGGER;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.sql.Connection;
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
 
 public class ProcessEngineConfigurationTest {
 
@@ -57,18 +59,18 @@ public class ProcessEngineConfigurationTest {
   @Test
   public void shouldEnableStandaloneTasksByDefault() {
     // when
-    ProcessEngineConfigurationImpl engineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+    ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
 
     // then
-    assertThat(engineConfiguration.isStandaloneTasksEnabled()).isTrue();
+    assertThat(engineCfg.isStandaloneTasksEnabled()).isTrue();
   }
 
   @Test
   public void shouldEnableImplicitUpdatesDetectionByDefault() {
     // when
-    ProcessEngineConfigurationImpl engineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
+    ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
     // then
-    assertThat(engineConfiguration.isImplicitVariableUpdateDetectionEnabled()).isTrue();
+    assertThat(engineCfg.isImplicitVariableUpdateDetectionEnabled()).isTrue();
   }
 
   @Test
@@ -104,9 +106,9 @@ public class ProcessEngineConfigurationTest {
   @Test
   public void validIsolationLevelPropertyFromFileIsSetCorrectly() {
     // given
-    ProcessEngineConfigurationImpl engineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
+    ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("operaton.cfg.skipIsolationLevelCheckEnabled.xml");
     // then
-    assertTrue(engineConfiguration.skipIsolationLevelCheck);
+    assertTrue(engineCfg.skipIsolationLevelCheck);
   }
 }

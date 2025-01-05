@@ -16,21 +16,21 @@
  */
 package org.operaton.bpm.engine.test.api.variable;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.value.NullValueImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+import static org.operaton.bpm.engine.variable.Variables.*;
+import static org.operaton.bpm.engine.variable.type.ValueType.*;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.operaton.bpm.engine.variable.Variables.*;
-import static org.operaton.bpm.engine.variable.type.ValueType.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Philipp Ossler *
@@ -72,12 +72,12 @@ public class PrimitiveValueTest {
     assertEquals(initValue, variables.getValueTyped(variableName).getValue());
 
     // no type information present
-    TypedValue typedValue = variables.getValueTyped(variableName);
-    if (!(typedValue instanceof NullValueImpl)) {
-      assertNull(typedValue.getType());
-      assertEquals(variables.get(variableName), typedValue.getValue());
+    TypedValue typed = variables.getValueTyped(variableName);
+    if (!(typed instanceof NullValueImpl)) {
+      assertNull(typed.getType());
+      assertEquals(variables.get(variableName), typed.getValue());
     } else {
-      assertEquals(NULL, typedValue.getType());
+      assertEquals(NULL, typed.getType());
     }
   }
 

@@ -16,26 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.batch;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import org.assertj.core.api.Assertions;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -49,12 +30,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.EventSubscription;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
@@ -63,14 +39,21 @@ import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateEvent;
 import org.operaton.bpm.engine.test.bpmn.multiinstance.DelegateExecutionListener;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+
+import java.util.*;
+
+import org.assertj.core.api.Assertions;
+import org.junit.*;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 @RunWith(Parameterized.class)
 public class BatchMigrationTest {
@@ -437,17 +420,17 @@ public class BatchMigrationTest {
 
   @Test
   public void testDefaultBatchConfiguration() {
-    ProcessEngineConfigurationImpl configuration = engineRule.getProcessEngineConfiguration();
-    assertEquals(100, configuration.getBatchJobsPerSeed());
-    assertEquals(1, configuration.getInvocationsPerBatchJob());
-    assertEquals(30, configuration.getBatchPollTime());
+    ProcessEngineConfigurationImpl cfg = engineRule.getProcessEngineConfiguration();
+    assertEquals(100, cfg.getBatchJobsPerSeed());
+    assertEquals(1, cfg.getInvocationsPerBatchJob());
+    assertEquals(30, cfg.getBatchPollTime());
   }
 
   @Test
   public void testCustomNumberOfJobsCreateBySeedJob() {
-    ProcessEngineConfigurationImpl configuration = engineRule.getProcessEngineConfiguration();
-    configuration.setBatchJobsPerSeed(2);
-    configuration.setInvocationsPerBatchJob(5);
+    ProcessEngineConfigurationImpl cfg = engineRule.getProcessEngineConfiguration();
+    cfg.setBatchJobsPerSeed(2);
+    cfg.setInvocationsPerBatchJob(5);
 
     // when
     Batch batch = helper.migrateProcessInstancesAsync(20);
@@ -631,7 +614,6 @@ public class BatchMigrationTest {
 
   @Test
   public void testBatchCreationWithProcessInstanceQuery() {
-    RuntimeService runtimeService = engineRule.getRuntimeService();
     int processInstanceCount = 15;
 
     ProcessDefinition sourceProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
@@ -660,7 +642,6 @@ public class BatchMigrationTest {
 
   @Test
   public void testBatchCreationWithOverlappingProcessInstanceIdsAndQuery() {
-    RuntimeService runtimeService = engineRule.getRuntimeService();
     int processInstanceCount = 15;
 
     ProcessDefinition sourceProcessDefinition = migrationRule.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);

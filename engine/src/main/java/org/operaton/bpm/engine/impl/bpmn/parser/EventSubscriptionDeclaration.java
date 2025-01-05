@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.Map;
-
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
@@ -34,6 +30,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
+
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * @author Daniel Meyer
@@ -138,8 +138,8 @@ public class EventSubscriptionDeclaration implements Serializable {
     EventSubscriptionEntity eventSubscriptionEntity = new EventSubscriptionEntity(eventType);
 
     VariableScope scopeForExpression = StartProcessVariableScope.getSharedInstance();
-    String eventName = resolveExpressionOfEventName(scopeForExpression);
-    eventSubscriptionEntity.setEventName(eventName);
+    String event = resolveExpressionOfEventName(scopeForExpression);
+    eventSubscriptionEntity.setEventName(event);
     eventSubscriptionEntity.setActivityId(activityId);
     eventSubscriptionEntity.setConfiguration(processDefinition.getId());
     eventSubscriptionEntity.setTenantId(processDefinition.getTenantId());
@@ -153,8 +153,8 @@ public class EventSubscriptionDeclaration implements Serializable {
   public EventSubscriptionEntity createSubscriptionForExecution(ExecutionEntity execution) {
     EventSubscriptionEntity eventSubscriptionEntity = new EventSubscriptionEntity(execution, eventType);
 
-    String eventName = resolveExpressionOfEventName(execution);
-    eventSubscriptionEntity.setEventName(eventName);
+    String event = resolveExpressionOfEventName(execution);
+    eventSubscriptionEntity.setEventName(event);
     if (activityId != null) {
       ActivityImpl activity = execution.getProcessDefinition().findActivity(activityId);
       eventSubscriptionEntity.setActivity(activity);
@@ -188,8 +188,8 @@ public class EventSubscriptionDeclaration implements Serializable {
   }
 
   public void updateSubscription(EventSubscriptionEntity eventSubscription) {
-    String eventName = resolveExpressionOfEventName(eventSubscription.getExecution());
-    eventSubscription.setEventName(eventName);
+    String event = resolveExpressionOfEventName(eventSubscription.getExecution());
+    eventSubscription.setEventName(event);
     eventSubscription.setActivityId(activityId);
   }
 

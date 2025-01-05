@@ -90,32 +90,32 @@ public class ChildElementCollectionBuilderImpl<T extends ModelElementInstance> i
 
   @Override
   public <V extends ModelElementInstance> ElementReferenceCollectionBuilder<V, T> qNameElementReferenceCollection(Class<V> referenceTargetType) {
-    ChildElementCollectionImpl<T> collection = (ChildElementCollectionImpl<T>) build();
-    QNameElementReferenceCollectionBuilderImpl<V,T> builder = new QNameElementReferenceCollectionBuilderImpl<>(childElementType, referenceTargetType, collection);
+    ChildElementCollectionImpl<T> childElementCollection = (ChildElementCollectionImpl<T>) build();
+    QNameElementReferenceCollectionBuilderImpl<V,T> builder = new QNameElementReferenceCollectionBuilderImpl<>(childElementType, referenceTargetType, childElementCollection);
     setReferenceBuilder(builder);
     return builder;
   }
 
   @Override
   public <V extends ModelElementInstance> ElementReferenceCollectionBuilder<V, T> idElementReferenceCollection(Class<V> referenceTargetType) {
-    ChildElementCollectionImpl<T> collection = (ChildElementCollectionImpl<T>) build();
-    ElementReferenceCollectionBuilder<V,T> builder = new ElementReferenceCollectionBuilderImpl<>(childElementType, referenceTargetType, collection);
+    ChildElementCollectionImpl<T> childElementCollection = (ChildElementCollectionImpl<T>) build();
+    ElementReferenceCollectionBuilder<V,T> builder = new ElementReferenceCollectionBuilderImpl<>(childElementType, referenceTargetType, childElementCollection);
     setReferenceBuilder(builder);
     return builder;
   }
 
   @Override
   public <V extends ModelElementInstance> ElementReferenceCollectionBuilder<V, T> idsElementReferenceCollection(Class<V> referenceTargetType) {
-    ChildElementCollectionImpl<T> collection = (ChildElementCollectionImpl<T>) build();
-    ElementReferenceCollectionBuilder<V,T> builder = new IdsElementReferenceCollectionBuilderImpl<>(childElementType, referenceTargetType, collection);
+    ChildElementCollectionImpl<T> childElementCollection = (ChildElementCollectionImpl<T>) build();
+    ElementReferenceCollectionBuilder<V,T> builder = new IdsElementReferenceCollectionBuilderImpl<>(childElementType, referenceTargetType, childElementCollection);
     setReferenceBuilder(builder);
     return builder;
   }
 
   @Override
   public <V extends ModelElementInstance> ElementReferenceCollectionBuilder<V, T> uriElementReferenceCollection(Class<V> referenceTargetType) {
-    ChildElementCollectionImpl<T> collection = (ChildElementCollectionImpl<T>) build();
-    ElementReferenceCollectionBuilder<V,T> builder = new UriElementReferenceCollectionBuilderImpl<>(childElementType, referenceTargetType, collection);
+    ChildElementCollectionImpl<T> childElementCollection = (ChildElementCollectionImpl<T>) build();
+    ElementReferenceCollectionBuilder<V,T> builder = new UriElementReferenceCollectionBuilderImpl<>(childElementType, referenceTargetType, childElementCollection);
     setReferenceBuilder(builder);
     return builder;
   }

@@ -43,8 +43,8 @@ class DmnEngineConfigurationApiTest {
 
   @Test
   void shouldCreateDefaultEngineConfiguration() {
-    DmnEngineConfiguration configuration = DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
-    assertThat(configuration).isInstanceOf(DefaultDmnEngineConfiguration.class).isNotNull();
+    DmnEngineConfiguration cfg = DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
+    assertThat(cfg).isInstanceOf(DefaultDmnEngineConfiguration.class).isNotNull();
   }
 
   @Test
@@ -218,12 +218,12 @@ class DmnEngineConfigurationApiTest {
       .customPostDecisionEvaluationListeners(postDecisionListeners)
       .buildEngine();
 
-    DmnEngineConfiguration configuration = engine.getConfiguration();
-    assertThat(configuration.getEngineMetricCollector()).isEqualTo(metricCollector);
-    assertThat(configuration.getCustomPreDecisionTableEvaluationListeners()).containsExactlyElementsOf(preListeners);
-    assertThat(configuration.getCustomPostDecisionTableEvaluationListeners()).containsExactlyElementsOf(postListeners);
-    assertThat(configuration.getCustomPreDecisionEvaluationListeners()).containsExactlyElementsOf(preDecisionListeners);
-    assertThat(configuration.getCustomPostDecisionEvaluationListeners()).containsExactlyElementsOf(
+    DmnEngineConfiguration cfg = engine.getConfiguration();
+    assertThat(cfg.getEngineMetricCollector()).isEqualTo(metricCollector);
+    assertThat(cfg.getCustomPreDecisionTableEvaluationListeners()).containsExactlyElementsOf(preListeners);
+    assertThat(cfg.getCustomPostDecisionTableEvaluationListeners()).containsExactlyElementsOf(postListeners);
+    assertThat(cfg.getCustomPreDecisionEvaluationListeners()).containsExactlyElementsOf(preDecisionListeners);
+    assertThat(cfg.getCustomPostDecisionEvaluationListeners()).containsExactlyElementsOf(
       postDecisionListeners);
   }
 

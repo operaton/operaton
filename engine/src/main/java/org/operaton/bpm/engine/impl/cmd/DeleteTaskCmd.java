@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serializable;
-import java.util.Collection;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -27,6 +24,9 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
+
+import java.io.Serializable;
+import java.util.Collection;
 
 
 /**
@@ -57,9 +57,7 @@ public class DeleteTaskCmd implements Command<Void>, Serializable {
     if (taskId != null) {
       deleteTask(taskId, commandContext);
     } else if (taskIds != null) {
-        for (String taskId : taskIds) {
-          deleteTask(taskId, commandContext);
-        }
+      taskIds.forEach(id -> deleteTask(id, commandContext));
     } else {
       throw new ProcessEngineException("taskId and taskIds are null");
     }

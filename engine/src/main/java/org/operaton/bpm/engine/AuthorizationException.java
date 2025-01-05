@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine;
 
+import org.operaton.bpm.engine.authorization.MissingAuthorization;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.operaton.bpm.engine.authorization.MissingAuthorization;
 
 /**
  * <p>Exception thrown by the process engine in case a user tries to
@@ -88,11 +88,11 @@ public class AuthorizationException extends ProcessEngineException {
    */
   @Deprecated
   public String getResourceType() {
-    String resourceType = null;
+    String result = null;
     if (missingAuthorizations.size() == 1) {
-      resourceType = missingAuthorizations.get(0).getResourceType();
+      result = missingAuthorizations.get(0).getResourceType();
     }
-    return resourceType;
+    return result;
   }
 
   /**

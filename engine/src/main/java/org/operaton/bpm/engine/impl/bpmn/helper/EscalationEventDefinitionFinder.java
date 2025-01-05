@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.bpmn.parser.EscalationEventDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
+
+import java.util.List;
 
 public class EscalationEventDefinitionFinder implements TreeVisitor<PvmScope> {
 
@@ -42,17 +42,17 @@ public class EscalationEventDefinitionFinder implements TreeVisitor<PvmScope> {
   }
 
   protected EscalationEventDefinition findMatchingEscalationEventDefinition(List<EscalationEventDefinition> escalationEventDefinitions) {
-    for (EscalationEventDefinition escalationEventDefinition : escalationEventDefinitions) {
-      if (isMatchingEscalationCode(escalationEventDefinition) && !isReThrowingEscalationEventSubprocess(escalationEventDefinition)) {
-        return escalationEventDefinition;
+    for (EscalationEventDefinition definition : escalationEventDefinitions) {
+      if (isMatchingEscalationCode(definition) && !isReThrowingEscalationEventSubprocess(definition)) {
+        return definition;
       }
     }
     return null;
   }
 
   protected boolean isMatchingEscalationCode(EscalationEventDefinition escalationEventDefinition) {
-    String escalationCode = escalationEventDefinition.getEscalationCode();
-    return escalationCode == null || escalationCode.equals(this.escalationCode);
+    String code = escalationEventDefinition.getEscalationCode();
+    return code == null || code.equals(this.escalationCode);
   }
 
   protected boolean isReThrowingEscalationEventSubprocess(EscalationEventDefinition escalationEventDefinition) {

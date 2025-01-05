@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.model.xml.impl.type;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
@@ -39,6 +31,8 @@ import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
+
+import java.util.*;
 
 /**
  * @author Daniel Meyer
@@ -174,10 +168,10 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   @Override
   public Collection<ModelElementType> getAllExtendingTypes() {
-    HashSet<ModelElementType> extendingTypes = new HashSet<>();
-    extendingTypes.add(this);
-    resolveExtendingTypes(extendingTypes);
-    return extendingTypes;
+    HashSet<ModelElementType> result = new HashSet<>();
+    result.add(this);
+    resolveExtendingTypes(result);
+    return result;
   }
 
   /**
@@ -303,8 +297,8 @@ public class ModelElementTypeImpl implements ModelElementType {
     List<Attribute<?>> allAttributes = new ArrayList<>();
     allAttributes.addAll(getAttributes());
     Collection<ModelElementType> baseTypes = ModelUtil.calculateAllBaseTypes(this);
-    for (ModelElementType baseType : baseTypes) {
-      allAttributes.addAll(baseType.getAttributes());
+    for (ModelElementType type : baseTypes) {
+      allAttributes.addAll(type.getAttributes());
     }
     return allAttributes;
   }

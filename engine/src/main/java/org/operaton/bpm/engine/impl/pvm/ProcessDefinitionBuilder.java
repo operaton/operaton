@@ -16,18 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.pvm;
 
+import org.operaton.bpm.engine.delegate.ExecutionListener;
+import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
+import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
+import org.operaton.bpm.engine.impl.pvm.process.*;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-import org.operaton.bpm.engine.delegate.ExecutionListener;
-import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
-import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
-import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-import org.operaton.bpm.engine.impl.pvm.process.ActivityStartBehavior;
-import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
-import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
 
 
 
@@ -134,13 +131,13 @@ public class ProcessDefinitionBuilder {
 
   public PvmProcessDefinition buildProcessDefinition() {
     for (Object[] unresolvedTransition: unresolvedTransitions) {
-      TransitionImpl transition = (TransitionImpl) unresolvedTransition[0];
+      TransitionImpl trans = (TransitionImpl) unresolvedTransition[0];
       String destinationActivityName = (String) unresolvedTransition[1];
       ActivityImpl destination = processDefinition.findActivity(destinationActivityName);
       if (destination == null) {
-        throw new RuntimeException("destination '"+destinationActivityName+"' not found.  (referenced from transition in '"+transition.getSource().getId()+"')");
+        throw new RuntimeException("destination '"+destinationActivityName+"' not found.  (referenced from transition in '"+trans.getSource().getId()+"')");
       }
-      transition.setDestination(destination);
+      trans.setDestination(destination);
     }
     return processDefinition;
   }

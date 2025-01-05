@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.cmmn.handler;
 
-import java.util.HashMap;
-
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.handler.CmmnHandlerContext;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
@@ -25,11 +23,10 @@ import org.operaton.bpm.engine.impl.el.JuelExpressionManager;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
-import org.operaton.bpm.model.cmmn.instance.Case;
-import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
-import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstance;
-import org.operaton.bpm.model.cmmn.instance.Definitions;
-import org.operaton.bpm.model.cmmn.instance.ExtensionElements;
+import org.operaton.bpm.model.cmmn.instance.*;
+
+import java.util.HashMap;
+
 import org.junit.Before;
 
 /**
@@ -56,9 +53,9 @@ public abstract class CmmnElementHandlerTest {
 
     context = new CmmnHandlerContext();
 
-    CaseDefinitionEntity caseDefinition = new CaseDefinitionEntity();
-    caseDefinition.setTaskDefinitions(new HashMap<>());
-    context.setCaseDefinition(caseDefinition);
+    CaseDefinitionEntity caseDef = new CaseDefinitionEntity();
+    caseDef.setTaskDefinitions(new HashMap<>());
+    context.setCaseDefinition(caseDef);
 
     ExpressionManager expressionManager = new JuelExpressionManager();
     context.setExpressionManager(expressionManager);

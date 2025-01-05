@@ -27,7 +27,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Stefan Hentschel
@@ -197,7 +197,7 @@ class JsonTreeSetPropertyTest {
 
   @Test
   void replaceBooleanProperty() {
-    SpinJsonNode active = jsonNode.prop("active");
+    active = jsonNode.prop("active");
 
     Boolean oldValue = active.boolValue();
     Boolean value = !oldValue;
@@ -274,8 +274,8 @@ class JsonTreeSetPropertyTest {
 
     jsonNode.prop("customers", list1);
     jsonNode.prop("active", list1);
-    SpinJsonNode customers = jsonNode.prop("customers");
-    SpinJsonNode active = jsonNode.prop("active");
+    customers = jsonNode.prop("customers");
+    active = jsonNode.prop("active");
 
     assertThat(customers.isArray()).isTrue();
     assertThat(customers.elements()).hasSize(5);
@@ -344,7 +344,7 @@ class JsonTreeSetPropertyTest {
     assertThat(active.isBoolean()).isTrue();
 
     jsonNode.prop("active", JSON(json));
-    SpinJsonNode active = jsonNode.prop("active");
+    active = jsonNode.prop("active");
     assertThat(active.isBoolean()).isFalse();
     assertThat(active.isObject()).isTrue();
     assertThat(active.prop("agent").stringValue()).isEqualTo("Smith");

@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd.batch;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.BatchPermissions;
 import org.operaton.bpm.engine.batch.Batch;
@@ -37,6 +32,11 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * @author Askar Akhmerov
@@ -86,22 +86,22 @@ public class DeleteProcessInstanceBatchCmd implements Command<Batch> {
   protected BatchElementConfiguration collectProcessInstanceIds(CommandContext commandContext) {
     BatchElementConfiguration elementConfiguration = new BatchElementConfiguration();
 
-    List<String> processInstanceIds = this.getProcessInstanceIds();
-    if (!CollectionUtil.isEmpty(processInstanceIds)) {
+    List<String> instanceIds = this.getProcessInstanceIds();
+    if (!CollectionUtil.isEmpty(instanceIds)) {
       ProcessInstanceQueryImpl query = new ProcessInstanceQueryImpl();
-      query.processInstanceIds(new HashSet<>(processInstanceIds));
+      query.processInstanceIds(new HashSet<>(instanceIds));
       elementConfiguration.addDeploymentMappings(
-          commandContext.runWithoutAuthorization(query::listDeploymentIdMappings), processInstanceIds);
+          commandContext.runWithoutAuthorization(query::listDeploymentIdMappings), instanceIds);
     }
 
-    ProcessInstanceQueryImpl processInstanceQuery = (ProcessInstanceQueryImpl) this.processInstanceQuery;
-    if (processInstanceQuery != null) {
-      elementConfiguration.addDeploymentMappings(processInstanceQuery.listDeploymentIdMappings());
+    ProcessInstanceQueryImpl instanceQuery = (ProcessInstanceQueryImpl) this.processInstanceQuery;
+    if (instanceQuery != null) {
+      elementConfiguration.addDeploymentMappings(instanceQuery.listDeploymentIdMappings());
     }
 
-    HistoricProcessInstanceQueryImpl historicProcessInstanceQuery = (HistoricProcessInstanceQueryImpl) this.historicProcessInstanceQuery;
-    if (historicProcessInstanceQuery != null) {
-      elementConfiguration.addDeploymentMappings(historicProcessInstanceQuery.listDeploymentIdMappings());
+    HistoricProcessInstanceQueryImpl historicProcessInstanceQueryImpl = (HistoricProcessInstanceQueryImpl) this.historicProcessInstanceQuery;
+    if (historicProcessInstanceQueryImpl != null) {
+      elementConfiguration.addDeploymentMappings(historicProcessInstanceQueryImpl.listDeploymentIdMappings());
     }
 
     return elementConfiguration;

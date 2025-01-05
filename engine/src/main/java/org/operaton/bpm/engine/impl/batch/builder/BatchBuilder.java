@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.batch.builder;
 
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.batch.Batch;
@@ -28,6 +26,9 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+
+import java.util.List;
+import java.util.Map;
 
 public class BatchBuilder {
 
@@ -126,10 +127,10 @@ public class BatchBuilder {
     Map<String, JobHandler> jobHandlers = engineConfig.getJobHandlers();
     BatchJobHandler jobHandler = (BatchJobHandler) jobHandlers.get(type);
 
-    String type = jobHandler.getType();
-    batch.setType(type);
+    String typeName = jobHandler.getType();
+    batch.setType(typeName);
 
-    int invocationPerBatchJobCount = jobHandler.calculateInvocationsPerBatchJob(type, config);
+    int invocationPerBatchJobCount = jobHandler.calculateInvocationsPerBatchJob(typeName, config);
     batch.setInvocationsPerBatchJob(invocationPerBatchJobCount);
 
     batch.setTenantId(tenantId);
@@ -154,9 +155,9 @@ public class BatchBuilder {
       List<String> instanceIds = config.getIds();
 
       int instanceCount = instanceIds.size();
-      int totalJobsCount = calculateTotalJobs(instanceCount, invocationPerBatchJobCount);
+      int totalJobs = calculateTotalJobs(instanceCount, invocationPerBatchJobCount);
 
-      batch.setTotalJobs(totalJobsCount);
+      batch.setTotalJobs(totalJobs);
     }
   }
 

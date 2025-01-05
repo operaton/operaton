@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.dmn.entity.repository;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -31,6 +27,10 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DecisionDefinitionEntity extends DmnDecisionImpl implements DecisionDefinition, ResourceDefinitionEntity<DecisionDefinitionEntity>, DbEntity, HasDbRevision, Serializable {
 
@@ -215,17 +215,17 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
   public DecisionDefinitionEntity getPreviousDefinition() {
     DecisionDefinitionEntity previousDecisionDefinition = null;
 
-    String previousDecisionDefinitionId = getPreviousDecisionDefinitionId();
-    if (previousDecisionDefinitionId != null) {
+    String previousDecisionDefId = getPreviousDecisionDefinitionId();
+    if (previousDecisionDefId != null) {
 
-      previousDecisionDefinition = loadDecisionDefinition(previousDecisionDefinitionId);
+      previousDecisionDefinition = loadDecisionDefinition(previousDecisionDefId);
 
       if (previousDecisionDefinition == null) {
         resetPreviousDecisionDefinitionId();
-        previousDecisionDefinitionId = getPreviousDecisionDefinitionId();
+        previousDecisionDefId = getPreviousDecisionDefinitionId();
 
-        if (previousDecisionDefinitionId != null) {
-          previousDecisionDefinition = loadDecisionDefinition(previousDecisionDefinitionId);
+        if (previousDecisionDefId != null) {
+          previousDecisionDefinition = loadDecisionDefinition(previousDecisionDefId);
         }
       }
     }

@@ -16,18 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.instruction;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.engine.impl.bpmn.behavior.CallActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CaseCallActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
+
+import java.util.*;
 
 public class SameBehaviorInstructionValidator implements MigrationInstructionValidator {
 
@@ -78,9 +74,9 @@ public class SameBehaviorInstructionValidator implements MigrationInstructionVal
       return true;
     }
     else {
-      Set<Class<?>> equivalentBehaviors = this.equivalentBehaviors.get(sourceBehavior);
-      if (equivalentBehaviors != null) {
-        return equivalentBehaviors.contains(targetBehavior);
+      Set<Class<?>> behaviors = this.equivalentBehaviors.get(sourceBehavior);
+      if (behaviors != null) {
+        return behaviors.contains(targetBehavior);
       }
       else {
         return false;

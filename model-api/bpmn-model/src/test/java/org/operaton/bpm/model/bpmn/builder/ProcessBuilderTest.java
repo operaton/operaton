@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.model.bpmn.builder;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.operaton.bpm.model.bpmn.*;
 import org.operaton.bpm.model.bpmn.instance.Error;
 import org.operaton.bpm.model.bpmn.instance.Process;
@@ -27,17 +24,21 @@ import org.operaton.bpm.model.bpmn.instance.operaton.*;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
+import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
+import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Fail.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.operaton.bpm.model.bpmn.BpmnTestConstants.*;
-import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -915,7 +916,7 @@ public class ProcessBuilderTest {
 
   @Test
   void testSubProcessBuilder() {
-    BpmnModelInstance modelInstance = Bpmn.createProcess()
+    BpmnModelInstance bpmnModelInstance = Bpmn.createProcess()
       .startEvent()
       .subProcess(SUB_PROCESS_ID)
         .operatonAsyncBefore()
@@ -928,8 +929,8 @@ public class ProcessBuilderTest {
       .endEvent()
       .done();
 
-    SubProcess subProcess = modelInstance.getModelElementById(SUB_PROCESS_ID);
-    ServiceTask serviceTask = modelInstance.getModelElementById(SERVICE_TASK_ID);
+    SubProcess subProcess = bpmnModelInstance.getModelElementById(SUB_PROCESS_ID);
+    ServiceTask serviceTask = bpmnModelInstance.getModelElementById(SERVICE_TASK_ID);
     assertThat(subProcess.isOperatonAsyncBefore()).isTrue();
     assertThat(subProcess.isOperatonExclusive()).isTrue();
     assertThat(subProcess.getChildElementsByType(Event.class)).hasSize(2);
@@ -1026,7 +1027,7 @@ public class ProcessBuilderTest {
 
   @Test
   void testTransactionBuilder() {
-    BpmnModelInstance modelInstance = Bpmn.createProcess()
+    BpmnModelInstance bpmnModelInstance = Bpmn.createProcess()
       .startEvent()
       .transaction(TRANSACTION_ID)
         .operatonAsyncBefore()
@@ -1040,8 +1041,8 @@ public class ProcessBuilderTest {
       .endEvent()
       .done();
 
-    Transaction transaction = modelInstance.getModelElementById(TRANSACTION_ID);
-    ServiceTask serviceTask = modelInstance.getModelElementById(SERVICE_TASK_ID);
+    Transaction transaction = bpmnModelInstance.getModelElementById(TRANSACTION_ID);
+    ServiceTask serviceTask = bpmnModelInstance.getModelElementById(SERVICE_TASK_ID);
     assertThat(transaction.isOperatonAsyncBefore()).isTrue();
     assertThat(transaction.isOperatonExclusive()).isTrue();
     assertThat(transaction.getMethod()).isEqualTo(TransactionMethod.Image);

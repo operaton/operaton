@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.helper;
 
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.bpmn.parser.ErrorEventDefinition;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.PvmScope;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
+
+import java.util.List;
 
 public class ErrorDeclarationForProcessInstanceFinder implements TreeVisitor<PvmScope> {
   protected Exception exception;
@@ -40,13 +40,13 @@ public class ErrorDeclarationForProcessInstanceFinder implements TreeVisitor<Pvm
   @Override
   public void visit(PvmScope scope) {
     List<ErrorEventDefinition> errorEventDefinitions = scope.getProperties().get(BpmnProperties.ERROR_EVENT_DEFINITIONS);
-    for (ErrorEventDefinition errorEventDefinition : errorEventDefinitions) {
-      PvmActivity activityHandler = scope.getProcessDefinition().findActivity(errorEventDefinition.getHandlerActivityId());
-      if ((!isReThrowingErrorEventSubprocess(activityHandler)) && ((exception != null && errorEventDefinition.catchesException(exception))
-        || (exception == null && errorEventDefinition.catchesError(errorCode)))) {
+    for (ErrorEventDefinition definition : errorEventDefinitions) {
+      PvmActivity activityHandler = scope.getProcessDefinition().findActivity(definition.getHandlerActivityId());
+      if ((!isReThrowingErrorEventSubprocess(activityHandler)) && ((exception != null && definition.catchesException(exception))
+        || (exception == null && definition.catchesError(errorCode)))) {
 
         errorHandlerActivity = activityHandler;
-        this.errorEventDefinition = errorEventDefinition;
+        this.errorEventDefinition = definition;
         break;
       }
     }

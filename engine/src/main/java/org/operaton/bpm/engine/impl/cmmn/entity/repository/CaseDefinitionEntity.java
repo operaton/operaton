@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.entity.repository;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -33,6 +30,9 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.repository.CaseDefinition;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Roman Smirnov
@@ -174,17 +174,17 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
   public CaseDefinitionEntity getPreviousDefinition() {
     CaseDefinitionEntity previousCaseDefinition = null;
 
-    String previousCaseDefinitionId = getPreviousCaseDefinitionId();
-    if (previousCaseDefinitionId != null) {
+    String previousCaseDefId = getPreviousCaseDefinitionId();
+    if (previousCaseDefId != null) {
 
-      previousCaseDefinition = loadCaseDefinition(previousCaseDefinitionId);
+      previousCaseDefinition = loadCaseDefinition(previousCaseDefId);
 
       if (previousCaseDefinition == null) {
         resetPreviousCaseDefinitionId();
-        previousCaseDefinitionId = getPreviousCaseDefinitionId();
+        previousCaseDefId = getPreviousCaseDefinitionId();
 
-        if (previousCaseDefinitionId != null) {
-          previousCaseDefinition = loadCaseDefinition(previousCaseDefinitionId);
+        if (previousCaseDefId != null) {
+          previousCaseDefinition = loadCaseDefinition(previousCaseDefId);
         }
       }
     }

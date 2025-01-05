@@ -16,19 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.batch.Batch;
@@ -41,6 +28,21 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.AbstractAsyncOperationsTest;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Askar Akhmerov
@@ -577,13 +579,13 @@ public class ManagementServiceAsyncOperationsTest extends AbstractAsyncOperation
   }
 
   protected List<String> startTestProcesses(int numberOfProcesses) {
-    ArrayList<String> ids = new ArrayList<>();
+    ArrayList<String> processIds = new ArrayList<>();
 
     for (int i = 0; i < numberOfProcesses; i++) {
-      ids.add(runtimeService.startProcessInstanceByKey(TEST_PROCESS).getProcessInstanceId());
+      processIds.add(runtimeService.startProcessInstanceByKey(TEST_PROCESS).getProcessInstanceId());
     }
 
-    return ids;
+    return processIds;
   }
 
   protected void assertRetries(List<String> allJobIds, int i) {

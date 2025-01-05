@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.execution;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.CmmnModelExecutionContext;
@@ -42,6 +35,9 @@ import org.operaton.bpm.engine.impl.pvm.runtime.ExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Roman Smirnov
@@ -177,13 +173,13 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   @Override
   public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey, String caseInstanceId) {
-    ExecutionImpl subProcessInstance = (ExecutionImpl) processDefinition.createProcessInstance(businessKey, caseInstanceId);
+    ExecutionImpl subProcess = (ExecutionImpl) processDefinition.createProcessInstance(businessKey, caseInstanceId);
 
     // manage bidirectional super-subprocess relation
-    subProcessInstance.setSuperCaseExecution(this);
-    setSubProcessInstance(subProcessInstance);
+    subProcess.setSuperCaseExecution(this);
+    setSubProcessInstance(subProcess);
 
-    return subProcessInstance;
+    return subProcess;
   }
 
   // sub-/super- case instance ////////////////////////////////////////////////////
@@ -205,13 +201,13 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   @Override
   public CaseExecutionImpl createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey) {
-    CaseExecutionImpl caseInstance = (CaseExecutionImpl) caseDefinition.createCaseInstance(businessKey);
+    CaseExecutionImpl result = (CaseExecutionImpl) caseDefinition.createCaseInstance(businessKey);
 
     // manage bidirectional super-sub-case-instances relation
     subCaseInstance.setSuperCaseExecution(this);
     setSubCaseInstance(subCaseInstance);
 
-    return caseInstance;
+    return result;
   }
 
   @Override

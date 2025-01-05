@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.testmodel.instance;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.ModelInstance;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
@@ -26,14 +24,18 @@ import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.testmodel.TestModelParser;
 import org.operaton.bpm.model.xml.type.ModelElementType;
+import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Sebastian Menski
@@ -81,12 +83,12 @@ class UnknownAnimalTest {
     List<ModelElementInstance> unknownAnimals = new ArrayList<>(modelInstance.getModelElementsByType(unknownAnimalType));
     assertThat(unknownAnimals).hasSize(2);
 
-    ModelElementInstance wanda = unknownAnimals.get(0);
+    wanda = unknownAnimals.get(0);
     assertThat(wanda.getAttributeValue("id")).isEqualTo("wanda");
     assertThat(wanda.getAttributeValue("gender")).isEqualTo("Female");
     assertThat(wanda.getAttributeValue("species")).isEqualTo("fish");
 
-    ModelElementInstance flipper = unknownAnimals.get(1);
+    flipper = unknownAnimals.get(1);
     assertThat(flipper.getAttributeValue("id")).isEqualTo("flipper");
     assertThat(flipper.getAttributeValue("gender")).isEqualTo("Male");
     assertThat(flipper.getAttributeValue("species")).isEqualTo("dolphin");

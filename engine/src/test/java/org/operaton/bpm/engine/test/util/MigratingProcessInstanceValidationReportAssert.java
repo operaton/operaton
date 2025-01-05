@@ -16,16 +16,18 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Arrays;
-import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.operaton.bpm.engine.migration.MigratingActivityInstanceValidationReport;
 import org.operaton.bpm.engine.migration.MigratingProcessInstanceValidationReport;
 import org.operaton.bpm.engine.migration.MigratingTransitionInstanceValidationReport;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.assertj.core.api.Assertions;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class MigratingProcessInstanceValidationReportAssert {
 
@@ -92,7 +94,7 @@ public class MigratingProcessInstanceValidationReportAssert {
   protected void assertFailures(String sourceScopeId, List<String> expectedFailures, List<String> actualFailures) {
     // Transform expected failures into predicates that check for the presence of substrings.
     List<String> unmatchedFailures = expectedFailures.stream()
-        .filter(expected -> actualFailures.stream().noneMatch(actual -> actual.contains(expected)))
+        .filter(expected -> actualFailures.stream().noneMatch(failure -> failure.contains(expected)))
         .toList();
 
     // Use AssertJ's assertion with helpful error message formatting.

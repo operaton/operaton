@@ -16,13 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.util.xml;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import java.util.*;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 
@@ -100,16 +97,16 @@ public class Element {
   }
 
   public Element elementNS(Namespace nameSpace, String tagName) {
-    List<Element> elements = elementsNS(nameSpace.getNamespaceUri(), tagName);
-    if (elements.size() == 0 && nameSpace.hasAlternativeUri()) {
-      elements = elementsNS(nameSpace.getAlternativeUri(), tagName);
+    List<Element> elementList = elementsNS(nameSpace.getNamespaceUri(), tagName);
+    if (elementList.size() == 0 && nameSpace.hasAlternativeUri()) {
+      elementList = elementsNS(nameSpace.getAlternativeUri(), tagName);
     }
-    if (elements.size() == 0) {
+    if (elementList.size() == 0) {
       return null;
-    } else if (elements.size() > 1) {
+    } else if (elementList.size() > 1) {
       throw new ProcessEngineException("Parsing exception: multiple elements with tag name " + tagName + " found");
     }
-    return elements.get(0);
+    return elementList.get(0);
   }
 
   public void add(Element element) {

@@ -16,22 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_DELETE;
-import static org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler.FORM_REF_BINDING_VERSION;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineServices;
@@ -84,6 +68,12 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.UserTask;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
+import static org.operaton.bpm.engine.delegate.TaskListener.EVENTNAME_DELETE;
+import static org.operaton.bpm.engine.impl.form.handler.DefaultFormHandler.FORM_REF_BINDING_VERSION;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Tom Baeyens
@@ -252,16 +242,16 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public void propagateParentTaskTenantId() {
     if (parentTaskId != null) {
 
-      final TaskEntity parentTask = Context
+      final TaskEntity parentTaskEntity = Context
           .getCommandContext()
           .getTaskManager()
           .findTaskById(parentTaskId);
 
-      if(tenantId != null && !tenantIdIsSame(parentTask)) {
-        throw LOG.cannotSetDifferentTenantIdOnSubtask(parentTaskId, parentTask.getTenantId(), tenantId);
+      if(tenantId != null && !tenantIdIsSame(parentTaskEntity)) {
+        throw LOG.cannotSetDifferentTenantIdOnSubtask(parentTaskId, parentTaskEntity.getTenantId(), tenantId);
       }
 
-      setTenantId(parentTask.getTenantId());
+      setTenantId(parentTaskEntity.getTenantId());
     }
   }
 
@@ -343,9 +333,9 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       // then call signal an the associated
       // execution.
       if (executionId !=null) {
-        ExecutionEntity execution = getExecution();
-        execution.removeTask(this);
-        execution.signal(null, null);
+        ExecutionEntity exec = getExecution();
+        exec.removeTask(this);
+        exec.signal(null, null);
       }
     }
   }
@@ -379,8 +369,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     .deleteTask(this, deleteReason, cascade, skipCustomListeners);
 
     if (executionId != null) {
-      ExecutionEntity execution = getExecution();
-      execution.removeTask(this);
+      getExecution().removeTask(this);
     }
   }
 
@@ -465,14 +454,14 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   public void ensureParentTaskActive() {
     if (parentTaskId != null) {
-      TaskEntity parentTask = Context
+      TaskEntity parentTaskEntity = Context
           .getCommandContext()
           .getTaskManager()
           .findTaskById(parentTaskId);
 
-      ensureNotNull(NullValueException.class, "Parent task with id '"+parentTaskId+"' does not exist", "parentTask", parentTask);
+      ensureNotNull(NullValueException.class, "Parent task with id '"+parentTaskId+"' does not exist", "parentTask", parentTaskEntity);
 
-      if (parentTask.suspensionState == SuspensionState.SUSPENDED.getStateCode()) {
+      if (parentTaskEntity.suspensionState == SuspensionState.SUSPENDED.getStateCode()) {
         throw LOG.suspendedEntityException("parent task", id);
       }
     }
@@ -1078,19 +1067,19 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   protected boolean invokeListener(String taskEventName, TaskListener taskListener) {
     boolean popProcessDataContext = false;
     CommandInvocationContext commandInvocationContext = Context.getCommandInvocationContext();
-    CoreExecution execution = getExecution();
-    if (execution == null) {
-      execution = getCaseExecution();
+    CoreExecution exec = getExecution();
+    if (exec == null) {
+      exec = getCaseExecution();
     } else {
       if (commandInvocationContext != null) {
-        popProcessDataContext = commandInvocationContext.getProcessDataContext().pushSection((ExecutionEntity) execution);
+        popProcessDataContext = commandInvocationContext.getProcessDataContext().pushSection((ExecutionEntity) exec);
       }
     }
-    if (execution != null) {
+    if (exec != null) {
       setEventName(taskEventName);
     }
     try {
-      boolean result = invokeListener(execution, taskEventName, taskListener);
+      boolean result = invokeListener(exec, taskEventName, taskListener);
       if (popProcessDataContext) {
         commandInvocationContext.getProcessDataContext().popSection();
       }
@@ -1439,17 +1428,17 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public void initializeFormKey() {
     isFormKeyInitialized = true;
     if(taskDefinitionKey != null) {
-      TaskDefinition taskDefinition = getTaskDefinition();
-      if(taskDefinition != null) {
+      TaskDefinition taskDef = getTaskDefinition();
+      if(taskDef != null) {
         // initialize formKey
-        Expression formKey = taskDefinition.getFormKey();
-        if(formKey != null) {
-          this.formKey = (String) formKey.getValue(this);
+        Expression taskDefFormKey = taskDef.getFormKey();
+        if(taskDefFormKey != null) {
+          this.formKey = (String) taskDefFormKey.getValue(this);
         } else {
           // initialize form reference
-          Expression formRef = taskDefinition.getOperatonFormDefinitionKey();
-          String formRefBinding = taskDefinition.getOperatonFormDefinitionBinding();
-          Expression formRefVersion = taskDefinition.getOperatonFormDefinitionVersion();
+          Expression formRef = taskDef.getOperatonFormDefinitionKey();
+          String formRefBinding = taskDef.getOperatonFormDefinitionBinding();
+          Expression formRefVersion = taskDef.getOperatonFormDefinitionVersion();
           if (formRef != null && formRefBinding != null) {
             String formRefValue = (String) formRef.getValue(this);
             if (formRefValue != null) {

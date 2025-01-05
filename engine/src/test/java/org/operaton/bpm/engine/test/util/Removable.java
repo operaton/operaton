@@ -17,20 +17,8 @@
 
 package org.operaton.bpm.engine.test.util;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.history.HistoricCaseInstance;
-import org.operaton.bpm.engine.history.HistoricDecisionInstance;
-import org.operaton.bpm.engine.history.HistoricIncident;
-import org.operaton.bpm.engine.history.HistoricJobLog;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
+import org.operaton.bpm.engine.*;
+import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
@@ -46,6 +34,12 @@ import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +57,7 @@ public final class Removable {
    * New Domain Classes & the deletion of their respective Entities goes here.
    */
   private Removable(ProcessEngine engine) {
-    Map<Class<?>, ThrowingRunnable> mappings = new HashMap<>();
+    this.mappings = new HashMap<>();
 
     mappings.put(Task.class, this::removeAllTasks);
     mappings.put(ProcessInstance.class, this::removeAllProcessInstances);
@@ -81,7 +75,6 @@ public final class Removable {
     // Add here new mappings with [class - associated remove method]
 
     this.engine = engine;
-    this.mappings = mappings;
   }
 
   /**

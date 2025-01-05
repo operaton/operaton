@@ -16,26 +16,27 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.rest.dto.converter.TaskReportResultToCsvConverter;
 import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
 import org.operaton.bpm.engine.task.TaskCountByCandidateGroupResult;
 import org.operaton.bpm.engine.task.TaskReport;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_GROUP_ID;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockTaskCountByCandidateGroupReport;
+
+import javax.ws.rs.core.Response.Status;
+import java.util.List;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import javax.ws.rs.core.Response.Status;
-import java.util.List;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_GROUP_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_COUNT_BY_CANDIDATE_GROUP;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockTaskCountByCandidateGroupReport;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -63,14 +64,14 @@ public class TaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   private TaskReport setUpMockHistoricProcessInstanceReportQuery() {
-    TaskReport mockedReportQuery = mock(TaskReport.class);
+    TaskReport taskReport = mock(TaskReport.class);
 
     List<TaskCountByCandidateGroupResult> taskCountByCandidateGroupResults = createMockTaskCountByCandidateGroupReport();
-    when(mockedReportQuery.taskCountByCandidateGroup()).thenReturn(taskCountByCandidateGroupResults);
+    when(taskReport.taskCountByCandidateGroup()).thenReturn(taskCountByCandidateGroupResults);
 
-    when(processEngine.getTaskService().createTaskReport()).thenReturn(mockedReportQuery);
+    when(processEngine.getTaskService().createTaskReport()).thenReturn(taskReport);
 
-    return mockedReportQuery;
+    return taskReport;
   }
 
   @Test

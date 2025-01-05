@@ -16,15 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineServices;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
@@ -44,11 +35,7 @@ import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
 import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.impl.core.variable.event.VariableEvent;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableCollectionProvider;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceFactory;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableListenerInvocationListener;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore;
+import org.operaton.bpm.engine.impl.core.variable.scope.*;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore.VariablesProvider;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
@@ -90,6 +77,8 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.FlowElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
+
+import java.util.*;
 
 /**
  * @author Tom Baeyens
@@ -298,21 +287,21 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   public ExecutionEntity createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey, String caseInstanceId) {
     shouldQueryForSubprocessInstance = true;
 
-    ExecutionEntity subProcessInstance = (ExecutionEntity) super.createSubProcessInstance(processDefinition, businessKey, caseInstanceId);
+    ExecutionEntity subProcess = (ExecutionEntity) super.createSubProcessInstance(processDefinition, businessKey, caseInstanceId);
 
     // inherit the tenant-id from the process definition
     String tenantId = ((ProcessDefinitionEntity) processDefinition).getTenantId();
     if (tenantId != null) {
-      subProcessInstance.setTenantId(tenantId);
+      subProcess.setTenantId(tenantId);
     }
     else {
       // if process definition has no tenant id, inherit this process instance's tenant id
-      subProcessInstance.setTenantId(this.tenantId);
+      subProcess.setTenantId(this.tenantId);
     }
 
     fireHistoricActivityInstanceUpdate();
 
-    return subProcessInstance;
+    return subProcess;
   }
 
   protected static ExecutionEntity createNewExecution() {
@@ -337,25 +326,25 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   @Override
   public CaseExecutionEntity createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey) {
-    CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) caseDefinition.createCaseInstance(businessKey);
+    CaseExecutionEntity subCase = (CaseExecutionEntity) caseDefinition.createCaseInstance(businessKey);
 
     // inherit the tenant-id from the case definition
     String tenantId = ((CaseDefinitionEntity) caseDefinition).getTenantId();
     if (tenantId != null) {
-      subCaseInstance.setTenantId(tenantId);
+      subCase.setTenantId(tenantId);
     }
     else {
       // if case definition has no tenant id, inherit this process instance's tenant id
-      subCaseInstance.setTenantId(this.tenantId);
+      subCase.setTenantId(this.tenantId);
     }
 
     // manage bidirectional super-process-sub-case-instances relation
-    subCaseInstance.setSuperExecution(this);
-    setSubCaseInstance(subCaseInstance);
+    subCase.setSuperExecution(this);
+    setSubCaseInstance(subCase);
 
     fireHistoricActivityInstanceUpdate();
 
-    return subCaseInstance;
+    return subCase;
   }
 
   // helper ///////////////////////////////////////////////////////////////////
@@ -445,8 +434,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     if (getSuperExecution() == null) {
       setRootProcessInstanceId(processInstanceId);
     } else {
-      ExecutionEntity superExecution = getSuperExecution();
-      setRootProcessInstanceId(superExecution.getRootProcessInstanceId());
+      setRootProcessInstanceId(getSuperExecution().getRootProcessInstanceId());
     }
 
     // determine tenant Id if null
@@ -1052,8 +1040,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected void removeEventSubscriptionsExceptCompensation() {
     // remove event subscriptions which are not compensate event subscriptions
-    List<EventSubscriptionEntity> eventSubscriptions = getEventSubscriptions();
-    for (EventSubscriptionEntity eventSubscriptionEntity : eventSubscriptions) {
+    List<EventSubscriptionEntity> subscriptions = getEventSubscriptions();
+    for (EventSubscriptionEntity eventSubscriptionEntity : subscriptions) {
       if (!EventType.COMPENSATE.name().equals(eventSubscriptionEntity.getEventType())) {
         eventSubscriptionEntity.delete();
       }
@@ -1291,21 +1279,21 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    *
    */
   protected void ensureExecutionTreeInitialized() {
-    List<ExecutionEntity> executions = Context.getCommandContext()
+    List<ExecutionEntity> executionEntities = Context.getCommandContext()
       .getExecutionManager()
       .findExecutionsByProcessInstanceId(processInstanceId);
 
-    ExecutionEntity processInstance = isProcessInstanceExecution() ? this : null;
+    ExecutionEntity procInstance = isProcessInstanceExecution() ? this : null;
 
-    if(processInstance == null) {
-      for (ExecutionEntity execution : executions) {
+    if(procInstance == null) {
+      for (ExecutionEntity execution : executionEntities) {
         if (execution.isProcessInstanceExecution()) {
-          processInstance = execution;
+          procInstance = execution;
         }
       }
     }
 
-    processInstance.restoreProcessInstance(executions, null, null, null, null, null, null);
+    procInstance.restoreProcessInstance(executionEntities, null, null, null, null, null, null);
   }
 
   /**
@@ -1365,18 +1353,18 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
         execution.variableStore.setVariablesProvider(
             new VariableCollectionProvider<>(variablesByScope.get(execution.id)));
       }
-      String parentId = execution.getParentId();
-      ExecutionEntity parent = executionsMap.get(parentId);
+      String parentid = execution.getParentId();
+      ExecutionEntity parentExecution = executionsMap.get(parentid);
       if (!execution.isProcessInstanceExecution()) {
-        if (parent == null) {
-          throw LOG.resolveParentOfExecutionFailedException(parentId, execution.getId());
+        if (parentExecution == null) {
+          throw LOG.resolveParentOfExecutionFailedException(parentid, execution.getId());
         }
         execution.processInstance = this;
-        execution.parent = parent;
-        if (parent.executions == null) {
-          parent.executions = new ArrayList<>();
+        execution.parent = parentExecution;
+        if (parentExecution.executions == null) {
+          parentExecution.executions = new ArrayList<>();
         }
-        parent.executions.add(execution);
+        parentExecution.executions.add(execution);
       } else {
         execution.processInstance = execution;
       }
@@ -1497,9 +1485,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   public List<EventSubscriptionEntity> getCompensateEventSubscriptions() {
-    List<EventSubscriptionEntity> eventSubscriptions = getEventSubscriptionsInternal();
-    List<EventSubscriptionEntity> result = new ArrayList<>(eventSubscriptions.size());
-    for (EventSubscriptionEntity eventSubscriptionEntity : eventSubscriptions) {
+    List<EventSubscriptionEntity> subscriptions = getEventSubscriptionsInternal();
+    List<EventSubscriptionEntity> result = new ArrayList<>(subscriptions.size());
+    for (EventSubscriptionEntity eventSubscriptionEntity : subscriptions) {
       if (eventSubscriptionEntity.isSubscriptionForEventType(EventType.COMPENSATE)) {
         result.add(eventSubscriptionEntity);
       }
@@ -1508,9 +1496,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   public List<EventSubscriptionEntity> getCompensateEventSubscriptions(String activityId) {
-    List<EventSubscriptionEntity> eventSubscriptions = getEventSubscriptionsInternal();
-    List<EventSubscriptionEntity> result = new ArrayList<>(eventSubscriptions.size());
-    for (EventSubscriptionEntity eventSubscriptionEntity : eventSubscriptions) {
+    List<EventSubscriptionEntity> subscriptions = getEventSubscriptionsInternal();
+    List<EventSubscriptionEntity> result = new ArrayList<>(subscriptions.size());
+    for (EventSubscriptionEntity eventSubscriptionEntity : subscriptions) {
       if (eventSubscriptionEntity.isSubscriptionForEventType(EventType.COMPENSATE)
               && activityId.equals(eventSubscriptionEntity.getActivityId())) {
           result.add(eventSubscriptionEntity);
@@ -1803,8 +1791,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
     if (isProcessInstanceExecution()) {
       return rootProcessInstanceId;
     } else {
-      ExecutionEntity processInstance = getProcessInstance();
-      return processInstance.rootProcessInstanceId;
+      return getProcessInstance().rootProcessInstanceId;
     }
   }
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.migration.instance;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.migration.MigrationLogger;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -26,6 +23,9 @@ import org.operaton.bpm.engine.impl.pvm.PvmActivity;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Thorben Lindhauer
@@ -135,10 +135,10 @@ public class MigratingTransitionInstance extends MigratingProcessElementInstance
 
   @Override
   public void migrateState() {
-    ExecutionEntity representativeExecution = resolveRepresentativeExecution();
+    ExecutionEntity representativeExec = resolveRepresentativeExecution();
 
-    representativeExecution.setProcessDefinition(targetScope.getProcessDefinition());
-    representativeExecution.setActivity((PvmActivity) targetScope);
+    representativeExec.setProcessDefinition(targetScope.getProcessDefinition());
+    representativeExec.setActivity((PvmActivity) targetScope);
   }
 
   @Override

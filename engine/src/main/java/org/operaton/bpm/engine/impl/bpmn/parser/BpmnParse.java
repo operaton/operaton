@@ -2037,7 +2037,7 @@ public class BpmnParse extends Parse {
     }
 
     // find all outgoing sequence flows:
-    List<Element> sequenceFlows = parentElement.elements("sequenceFlow");
+    List<Element> seqFlows = parentElement.elements("sequenceFlow");
 
     // collect all siblings in a map
     Map<String, Element> siblingsMap = new HashMap<>();
@@ -2046,7 +2046,7 @@ public class BpmnParse extends Parse {
       siblingsMap.put(sibling.attribute("id"), sibling);
     }
 
-    for (Element sequenceFlow : sequenceFlows) {
+    for (Element sequenceFlow : seqFlows) {
 
       String sourceRef = sequenceFlow.attribute("sourceRef");
       String targetRef = sequenceFlow.attribute("targetRef");

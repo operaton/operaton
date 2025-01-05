@@ -73,23 +73,20 @@ public class BaseCallableElement {
   }
 
   public boolean isLatestBinding() {
-    CallableElementBinding binding = getBinding();
-    return binding == null || CallableElementBinding.LATEST.equals(binding);
+    CallableElementBinding elementBinding = getBinding();
+    return elementBinding == null || CallableElementBinding.LATEST.equals(elementBinding);
   }
 
   public boolean isDeploymentBinding() {
-    CallableElementBinding binding = getBinding();
-    return CallableElementBinding.DEPLOYMENT.equals(binding);
+    return CallableElementBinding.DEPLOYMENT.equals(getBinding());
   }
 
   public boolean isVersionBinding() {
-    CallableElementBinding binding = getBinding();
-    return CallableElementBinding.VERSION.equals(binding);
+    return CallableElementBinding.VERSION.equals(getBinding());
   }
 
   public boolean isVersionTagBinding() {
-    CallableElementBinding binding = getBinding();
-    return CallableElementBinding.VERSION_TAG.equals(binding);
+    return CallableElementBinding.VERSION_TAG.equals(getBinding());
   }
 
   public Integer getVersion(VariableScope variableScope) {

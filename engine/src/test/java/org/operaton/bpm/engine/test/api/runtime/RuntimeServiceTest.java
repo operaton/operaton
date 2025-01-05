@@ -16,42 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_PROCESS;
-import static org.operaton.bpm.engine.variable.Variables.createVariables;
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.ProcessEngines;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
@@ -69,14 +34,7 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailVariableInstanceUpdateEntity;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.TransitionInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
@@ -96,11 +54,29 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.SubProcessBuilder;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+import static org.operaton.bpm.engine.test.util.ExecutableProcessUtil.USER_TASK_PROCESS;
+import static org.operaton.bpm.engine.variable.Variables.createVariables;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
+
+import java.io.ByteArrayInputStream;
+import java.util.*;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Frederik Heremans
@@ -2738,10 +2714,10 @@ public class RuntimeServiceTest {
     ProcessEngines.destroy();
 
     // Creating the DB schema (without building a process engine)
-    ProcessEngineConfigurationImpl processEngineConfiguration = new StandaloneInMemProcessEngineConfiguration();
-    processEngineConfiguration.setProcessEngineName("reboot-test-schema");
-    processEngineConfiguration.setJdbcUrl("jdbc:h2:mem:activiti-reboot-test;DB_CLOSE_DELAY=1000");
-    ProcessEngine schemaProcessEngine = processEngineConfiguration.buildProcessEngine();
+    ProcessEngineConfigurationImpl processEngineCfg = new StandaloneInMemProcessEngineConfiguration();
+    processEngineCfg.setProcessEngineName("reboot-test-schema");
+    processEngineCfg.setJdbcUrl("jdbc:h2:mem:activiti-reboot-test;DB_CLOSE_DELAY=1000");
+    ProcessEngine schemaProcessEngine = processEngineCfg.buildProcessEngine();
 
     // Create process engine and deploy test process
     ProcessEngine processEngine = new StandaloneProcessEngineConfiguration()
@@ -2790,12 +2766,12 @@ public class RuntimeServiceTest {
     assertNotNull(processInstance);
 
     // Complete the task.  That will end the process instance
-    TaskService taskService = processEngine.getTaskService();
-    Task task = taskService
+    TaskService processEngineTaskService = processEngine.getTaskService();
+    Task task = processEngineTaskService
       .createTaskQuery()
       .list()
       .get(0);
-    taskService.complete(task.getId());
+    processEngineTaskService.complete(task.getId());
 
     // Check if the process instance has really ended.  This means that the process definition has
     // re-loaded into the process definition cache

@@ -16,24 +16,11 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import static java.lang.Boolean.TRUE;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
@@ -44,7 +31,12 @@ import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.type.ValueType;
-import org.operaton.bpm.engine.impl.history.HistoryLevel;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
+import java.util.*;
+
+import static java.lang.Boolean.TRUE;
 
 /**
  * @author Joram Barrez
@@ -282,10 +274,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskAssigneeIn(String... assignees) {
     ensureNotNull("Assignees", assignees);
 
-    Set<String> assigneeIn = new HashSet<>(assignees.length);
-    assigneeIn.addAll(Arrays.asList(assignees));
+    Set<String> assigneeInIds = new HashSet<>(assignees.length);
+    assigneeInIds.addAll(Arrays.asList(assignees));
 
-    this.assigneeIn = assigneeIn;
+    this.assigneeIn = assigneeInIds;
     expressions.remove("taskAssigneeIn");
 
     return this;
@@ -295,10 +287,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   public TaskQuery taskAssigneeNotIn(String... assignees) {
     ensureNotNull("Assignees", assignees);
 
-    Set<String> assigneeNotIn = new HashSet<>(assignees.length);
-    assigneeNotIn.addAll(Arrays.asList(assignees));
+    Set<String> assigneeNotInIds = new HashSet<>(assignees.length);
+    assigneeNotInIds.addAll(Arrays.asList(assignees));
 
-    this.assigneeNotIn = assigneeNotIn;
+    this.assigneeNotIn = assigneeNotInIds;
     expressions.remove("taskAssigneeNotIn");
 
     return this;
@@ -1194,9 +1186,9 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   protected List<String> getGroupsForCandidateUser(String candidateUser) {
-    Map<String, List<String>> cachedUserGroups = getCachedUserGroups();
-    if (cachedUserGroups.containsKey(candidateUser)) {
-      return cachedUserGroups.get(candidateUser);
+    Map<String, List<String>> userGroups = getCachedUserGroups();
+    if (userGroups.containsKey(candidateUser)) {
+      return userGroups.get(candidateUser);
     }
 
     List<Group> groups = Context.getCommandContext()
@@ -1210,7 +1202,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       groupIds.add(group.getId());
     }
 
-    cachedUserGroups.put(candidateUser, groupIds);
+    userGroups.put(candidateUser, groupIds);
 
     return groupIds;
   }

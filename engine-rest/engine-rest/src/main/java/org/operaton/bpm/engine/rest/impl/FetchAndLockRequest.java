@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.rest.impl;
 
-import java.util.Date;
-
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.rest.dto.externaltask.FetchExternalTasksExtendedDto;
 
 import javax.ws.rs.container.AsyncResponse;
+import java.util.Date;
 
 /**
  * @author Tassilo Weidner
@@ -81,10 +80,9 @@ public class FetchAndLockRequest {
   }
 
   public long getTimeoutTimestamp() {
-    FetchExternalTasksExtendedDto dto = getDto();
-    long requestTime = getRequestTime().getTime();
-    long asyncResponseTimeout = dto.getAsyncResponseTimeout();
-    return requestTime + asyncResponseTimeout;
+    long reqTime = getRequestTime().getTime();
+    long asyncResponseTimeout = getDto().getAsyncResponseTimeout();
+    return reqTime + asyncResponseTimeout;
   }
 
   @Override

@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 import org.operaton.bpm.engine.FilterService;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
@@ -28,8 +24,15 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 
 import java.util.*;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Sebastian Menski
@@ -52,9 +55,7 @@ public class FilterPropertiesTest {
 
   @After
   public void tearDown() {
-    for (Filter filter : filterService.createFilterQuery().list()) {
-      filterService.deleteFilter(filter.getId());
-    }
+    filterService.createFilterQuery().list().stream().map(Filter::getId).forEach(filterService::deleteFilter);
   }
 
 

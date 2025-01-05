@@ -16,17 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.TransitionInstance;
+
+import java.util.*;
 
 /**
  * @author Thorben Lindhauer
@@ -49,8 +46,8 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
 
   @Override
   public Void execute(final CommandContext commandContext) {
-    ActivityInstance activityInstanceTree = getActivityInstanceTree(commandContext);
-    List<AbstractInstanceCancellationCmd> commands = createActivityInstanceCancellations(activityInstanceTree, commandContext);
+    ActivityInstance actInstTree = getActivityInstanceTree(commandContext);
+    List<AbstractInstanceCancellationCmd> commands = createActivityInstanceCancellations(actInstTree, commandContext);
 
     for (AbstractInstanceCancellationCmd cmd : commands) {
       cmd.setSkipCustomListeners(skipCustomListeners);

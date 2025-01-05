@@ -15,12 +15,11 @@
  */
 package org.operaton.bpm.impl.juel;
 
+import jakarta.el.ELContext;
+import jakarta.el.ELException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import jakarta.el.ELContext;
-import jakarta.el.ELException;
 
 
 public class AstFunction extends AstRightValue implements FunctionNode {
@@ -53,14 +52,14 @@ public class AstFunction extends AstRightValue implements FunctionNode {
 	protected Object invoke(Bindings bindings, ELContext context, Object base, Method method)
 		throws InvocationTargetException, IllegalAccessException {
 		Class<?>[] types = method.getParameterTypes();
-		Object[] params = null;
+		Object[] invocationParams = null;
 		if (types.length > 0) {
-			params = new Object[types.length];
+			invocationParams = new Object[types.length];
 			if (varargs && method.isVarArgs()) {
-				for (int i = 0; i < params.length - 1; i++) {
+				for (int i = 0; i < invocationParams.length - 1; i++) {
 					Object param = getParam(i).eval(bindings, context);
 					if (param != null || types[i].isPrimitive()) {
-						params[i] = bindings.convert(param, types[i]);
+						invocationParams[i] = bindings.convert(param, types[i]);
 					}
 				}
 				int varargIndex = types.length - 1;
@@ -97,17 +96,17 @@ public class AstFunction extends AstRightValue implements FunctionNode {
 						}
 					}
 				}
-				params[varargIndex] = array;
+				invocationParams[varargIndex] = array;
 			} else {
-				for (int i = 0; i < params.length; i++) {
+				for (int i = 0; i < invocationParams.length; i++) {
 					Object param = getParam(i).eval(bindings, context);
 					if (param != null || types[i].isPrimitive()) {
-						params[i] = bindings.convert(param, types[i]);
+						invocationParams[i] = bindings.convert(param, types[i]);
 					}
 				}
 			}
 		}
-		return method.invoke(base, params);
+		return method.invoke(base, invocationParams);
 	}
 
 	@Override 

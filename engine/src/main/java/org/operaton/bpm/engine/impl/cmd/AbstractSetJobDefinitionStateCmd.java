@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Date;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,11 +24,9 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerChangeJobDefinitionSuspensionStateJobHandler.JobDefinitionSuspensionStateConfiguration;
 import org.operaton.bpm.engine.impl.management.UpdateJobDefinitionSuspensionStateBuilderImpl;
 import org.operaton.bpm.engine.impl.management.UpdateJobSuspensionStateBuilderImpl;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
-import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
+import org.operaton.bpm.engine.impl.persistence.entity.*;
+
+import java.util.Date;
 
 /**
  * @author Daniel Meyer
@@ -76,11 +72,11 @@ public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateC
         JobDefinitionEntity jobDefinition = jobDefinitionManager.findById(jobDefinitionId);
 
         if (jobDefinition != null && jobDefinition.getProcessDefinitionKey() != null) {
-          String processDefinitionKey = jobDefinition.getProcessDefinitionKey();
-          checker.checkUpdateProcessDefinitionByKey(processDefinitionKey);
+          String procDefKey = jobDefinition.getProcessDefinitionKey();
+          checker.checkUpdateProcessDefinitionByKey(procDefKey);
 
           if (includeSubResources) {
-            checker.checkUpdateProcessInstanceByProcessDefinitionKey(processDefinitionKey);
+            checker.checkUpdateProcessInstanceByProcessDefinitionKey(procDefKey);
           }
         }
 

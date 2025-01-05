@@ -16,30 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import static io.restassured.RestAssured.expect;
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.operaton.bpm.engine.rest.util.QueryParamUtils.arrayAsCommaSeperatedList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
-
 import org.operaton.bpm.engine.history.HistoricTaskInstance;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
 import org.operaton.bpm.engine.impl.HistoricTaskInstanceQueryImpl;
@@ -49,6 +25,14 @@ import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.util.OrderingBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import static org.operaton.bpm.engine.rest.util.QueryParamUtils.arrayAsCommaSeperatedList;
+
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
+import java.util.*;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -57,8 +41,17 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 
@@ -2513,8 +2506,8 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   @Test
   public void testOrQuery() {
     // given
-    HistoricTaskInstanceQueryImpl mockedQuery = mock(HistoricTaskInstanceQueryImpl.class);
-    when(processEngine.getHistoryService().createHistoricTaskInstanceQuery()).thenReturn(mockedQuery);
+    HistoricTaskInstanceQueryImpl historicTaskInstanceQuery = mock(HistoricTaskInstanceQueryImpl.class);
+    when(processEngine.getHistoryService().createHistoricTaskInstanceQuery()).thenReturn(historicTaskInstanceQuery);
 
     String payload = "{ \"orQueries\": [{" +
         "\"processDefinitionKey\": \"aKey\", " +
@@ -2533,7 +2526,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
     ArgumentCaptor<HistoricTaskInstanceQueryImpl> argument =
         ArgumentCaptor.forClass(HistoricTaskInstanceQueryImpl.class);
 
-    verify(mockedQuery).addOrQuery(argument.capture());
+    verify(historicTaskInstanceQuery).addOrQuery(argument.capture());
 
     // then
     assertThat(argument.getValue().getProcessDefinitionKey()).isEqualTo("aKey");

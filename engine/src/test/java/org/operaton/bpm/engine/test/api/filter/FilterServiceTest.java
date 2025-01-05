@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
-import java.util.HashMap;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
@@ -30,9 +23,17 @@ import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.query.Query;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.HashMap;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
@@ -56,9 +57,7 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
   @After
   public void tearDown() {
     // delete all existing filters
-    for (Filter filter : filterService.createTaskFilterQuery().list()) {
-      filterService.deleteFilter(filter.getId());
-    }
+    filterService.createTaskFilterQuery().list().forEach(f -> filterService.deleteFilter(f.getId()));
   }
 
   @Test

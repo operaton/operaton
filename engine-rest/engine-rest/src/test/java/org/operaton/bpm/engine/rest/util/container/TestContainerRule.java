@@ -49,13 +49,11 @@ public class TestContainerRule implements TestRule {
       Iterator<ContainerSpecifics> it = serviceLoader.iterator();
 
       if (it.hasNext()) {
-        ContainerSpecifics containerSpecifics = it.next();
-
-        this.containerSpecifics = containerSpecifics;
+        this.containerSpecifics = it.next();
 
         if (it.hasNext()) {
           LOGGER.warning("There is more than one test runtime container implementation present on the classpath. "
-              + "Using " + containerSpecifics.getClass().getName());
+              + "Using " + this.containerSpecifics.getClass().getName());
         }
       }
       else {

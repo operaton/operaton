@@ -16,34 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.OptimisticLockingException;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.ProcessEngines;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.identity.Group;
@@ -58,10 +31,25 @@ import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.commons.testing.ProcessEngineLoggingRule;
 import org.operaton.commons.testing.WatchLogger;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Frederik Heremans
@@ -986,33 +974,33 @@ public class IdentityServiceTest {
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/custom.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
 
-    IdentityService identityService = processEngine.getIdentityService();
+    IdentityService processEngineIdentityService = processEngine.getIdentityService();
 
     String invalidUserId = "johnDoe";
     String invalidGroupId = "johnsGroup";
     String invalidTenantId = "johnsTenant";
 
-    User user = identityService.newUser(invalidUserId);
+    User user = processEngineIdentityService.newUser(invalidUserId);
 
     try {
-      identityService.saveUser(user);
+      processEngineIdentityService.saveUser(user);
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
       assertEquals(String.format(INVALID_ID_MESSAGE, "User", invalidUserId), ex.getMessage());
     }
 
-    Group johnsGroup = identityService.newGroup("johnsGroup");
+    Group johnsGroup = processEngineIdentityService.newGroup("johnsGroup");
 
     try {
-      identityService.saveGroup(johnsGroup);
+      processEngineIdentityService.saveGroup(johnsGroup);
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
       assertEquals(String.format(INVALID_ID_MESSAGE, "Group", invalidGroupId), ex.getMessage());
     }
 
-    Tenant tenant = identityService.newTenant(invalidTenantId);
+    Tenant tenant = processEngineIdentityService.newTenant(invalidTenantId);
     try {
-      identityService.saveTenant(tenant);
+      processEngineIdentityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
       assertEquals(String.format(INVALID_ID_MESSAGE, "Tenant", invalidTenantId), ex.getMessage());
@@ -1025,36 +1013,36 @@ public class IdentityServiceTest {
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/custom.resource.whitelist.operaton.cfg.xml")
       .buildProcessEngine();
 
-    IdentityService identityService = processEngine.getIdentityService();
+    IdentityService processEngineIdentityService = processEngine.getIdentityService();
 
     String invalidUserId = "12345";
     String invalidGroupId = "johnsGroup";
     String invalidTenantId = "!@##$%";
 
-    User user = identityService.newUser(invalidUserId);
+    User user = processEngineIdentityService.newUser(invalidUserId);
 
     // pattern: [a-zA-Z]+
     try {
-      identityService.saveUser(user);
+      processEngineIdentityService.saveUser(user);
       fail("Invalid user id exception expected!");
     } catch (ProcessEngineException ex) {
       assertEquals(String.format(INVALID_ID_MESSAGE, "User", invalidUserId), ex.getMessage());
     }
 
-    Group group = identityService.newGroup(invalidGroupId);
+    Group group = processEngineIdentityService.newGroup(invalidGroupId);
 
     // pattern: \d+
     try {
-      identityService.saveGroup(group);
+      processEngineIdentityService.saveGroup(group);
       fail("Invalid group id exception expected!");
     } catch (ProcessEngineException ex) {
       assertEquals(String.format(INVALID_ID_MESSAGE, "Group", invalidGroupId), ex.getMessage());
     }
 
-    Tenant tenant = identityService.newTenant(invalidTenantId);
+    Tenant tenant = processEngineIdentityService.newTenant(invalidTenantId);
     // new general pattern (used for tenant whitelisting): [a-zA-Z0-9]+
     try {
-      identityService.saveTenant(tenant);
+      processEngineIdentityService.saveTenant(tenant);
       fail("Invalid tenant id exception expected!");
     } catch (ProcessEngineException ex) {
       assertEquals(String.format(INVALID_ID_MESSAGE, "Tenant", invalidTenantId), ex.getMessage());

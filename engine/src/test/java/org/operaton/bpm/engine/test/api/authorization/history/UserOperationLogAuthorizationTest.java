@@ -16,33 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.UPDATE_HISTORY;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
-import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions.DELETE;
-import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions.READ;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_ADMIN;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_TASK_WORKER;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
-import java.util.Date;
-import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.HistoricTaskPermissions;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.Resources;
-import org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions;
+import org.operaton.bpm.engine.authorization.*;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -56,9 +32,31 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.UPDATE_HISTORY;
+import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
+import static org.operaton.bpm.engine.authorization.Resources.OPERATION_LOG_CATEGORY;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions.DELETE;
+import static org.operaton.bpm.engine.authorization.UserOperationLogCategoryPermissions.READ;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_ADMIN;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_TASK_WORKER;
+
+import java.util.Date;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * @author Roman Smirnov
@@ -72,7 +70,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
   protected static final String TIMER_BOUNDARY_PROCESS_KEY = "timerBoundaryProcess";
 
   protected String deploymentId;
-  protected String taskId;
+  protected String testTaskId;
 
   @Override
   @Before
@@ -91,9 +89,9 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     super.tearDown();
     processEngineConfiguration.setEnableHistoricInstancePermissions(false);
 
-    if (taskId != null) {
-      deleteTask(taskId, true);
-      taskId = null;
+    if (testTaskId != null) {
+      deleteTask(testTaskId, true);
+      testTaskId = null;
 
     }
   }
@@ -585,14 +583,14 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
-    taskId = "aTaskId";
-    createTask(taskId);
+    testTaskId = "aTaskId";
+    createTask(testTaskId);
 
     disableAuthorization();
-    taskService.setAssignee(taskId, userId);
+    taskService.setAssignee(testTaskId, userId);
     enableAuthorization();
 
-    createGrantAuthorizationWithoutAuthentication(HISTORIC_TASK, taskId, userId,
+    createGrantAuthorizationWithoutAuthentication(HISTORIC_TASK, testTaskId, userId,
         HistoricTaskPermissions.READ);
 
     // when
@@ -601,7 +599,7 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     // then
     assertThat(query.list())
         .extracting("taskId")
-        .containsExactly(taskId, taskId);
+        .containsExactly(testTaskId, testTaskId);
   }
 
   @Test
@@ -609,13 +607,13 @@ public class UserOperationLogAuthorizationTest extends AuthorizationTest {
     // given
     processEngineConfiguration.setEnableHistoricInstancePermissions(true);
 
-    taskId = "aTaskId";
-    createTask(taskId);
+    testTaskId = "aTaskId";
+    createTask(testTaskId);
     disableAuthorization();
-    taskService.setAssignee(taskId, userId);
+    taskService.setAssignee(testTaskId, userId);
     enableAuthorization();
 
-    createGrantAuthorizationWithoutAuthentication(HISTORIC_TASK, taskId, userId,
+    createGrantAuthorizationWithoutAuthentication(HISTORIC_TASK, testTaskId, userId,
         HistoricTaskPermissions.NONE);
 
     // when

@@ -1172,8 +1172,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     parsedBatchOperationsForHistoryCleanup = new HashMap<>();
     if (batchOperationsForHistoryCleanup != null) {
       for (String operation : batchOperationsForHistoryCleanup.keySet()) {
-        Integer historyTimeToLive = ParseUtil.parseHistoryTimeToLive(batchOperationsForHistoryCleanup.get(operation));
-        parsedBatchOperationsForHistoryCleanup.put(operation, historyTimeToLive);
+        Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationsForHistoryCleanup.get(operation));
+        parsedBatchOperationsForHistoryCleanup.put(operation, historyTTL);
       }
     }
   }
@@ -1431,8 +1431,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (service instanceof ServiceImpl serviceImpl) {
       serviceImpl.setCommandExecutor(commandExecutorTxRequired);
     }
-    if (service instanceof RepositoryServiceImpl repositoryService) {
-      repositoryService.setDeploymentCharset(getDefaultCharset());
+    if (service instanceof RepositoryServiceImpl repositorySrvc) {
+      repositorySrvc.setDeploymentCharset(getDefaultCharset());
     }
   }
 
@@ -1962,18 +1962,18 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       }
     }
     if (deploymentCache == null) {
-      List<Deployer> deployers = new ArrayList<>();
+      List<Deployer> deployerList = new ArrayList<>();
       if (customPreDeployers != null) {
-        deployers.addAll(customPreDeployers);
+        deployerList.addAll(customPreDeployers);
       }
-      deployers.addAll(getDefaultDeployers());
+      deployerList.addAll(getDefaultDeployers());
       if (customPostDeployers != null) {
-        deployers.addAll(customPostDeployers);
+        deployerList.addAll(customPostDeployers);
       }
 
       initCacheFactory();
       deploymentCache = new DeploymentCache(cacheFactory, cacheCapacity);
-      deploymentCache.setDeployers(deployers);
+      deploymentCache.setDeployers(deployerList);
     }
   }
 
@@ -2233,9 +2233,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       historyLevel = HistoryLevel.HISTORY_LEVEL_ACTIVITY;
       LOG.usingDeprecatedHistoryLevelVariable();
     } else {
-      for (HistoryLevel historyLevel : historyLevels) {
-        if (historyLevel.getName().equalsIgnoreCase(history)) {
-          this.historyLevel = historyLevel;
+      for (HistoryLevel historyLvl : historyLevels) {
+        if (historyLvl.getName().equalsIgnoreCase(history)) {
+          this.historyLevel = historyLvl;
         }
       }
     }
@@ -2758,9 +2758,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public HistoryLevel getDefaultHistoryLevel() {
     if (historyLevels != null) {
-      for (HistoryLevel historyLevel : historyLevels) {
-        if (HISTORY_DEFAULT != null && HISTORY_DEFAULT.equalsIgnoreCase(historyLevel.getName())) {
-          return historyLevel;
+      for (HistoryLevel historyLvl : historyLevels) {
+        if (HISTORY_DEFAULT != null && HISTORY_DEFAULT.equalsIgnoreCase(historyLvl.getName())) {
+          return historyLvl;
         }
       }
     }
@@ -4472,19 +4472,19 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   public List<MigrationInstructionValidator> getDefaultMigrationInstructionValidators() {
-    List<MigrationInstructionValidator> migrationInstructionValidators = new ArrayList<>();
-    migrationInstructionValidators.add(new SameBehaviorInstructionValidator());
-    migrationInstructionValidators.add(new SameEventTypeValidator());
-    migrationInstructionValidators.add(new OnlyOnceMappedActivityInstructionValidator());
-    migrationInstructionValidators.add(new CannotAddMultiInstanceBodyValidator());
-    migrationInstructionValidators.add(new CannotAddMultiInstanceInnerActivityValidator());
-    migrationInstructionValidators.add(new CannotRemoveMultiInstanceInnerActivityValidator());
-    migrationInstructionValidators.add(new GatewayMappingValidator());
-    migrationInstructionValidators.add(new SameEventScopeInstructionValidator());
-    migrationInstructionValidators.add(new UpdateEventTriggersValidator());
-    migrationInstructionValidators.add(new AdditionalFlowScopeInstructionValidator());
-    migrationInstructionValidators.add(new ConditionalEventUpdateEventTriggerValidator());
-    return migrationInstructionValidators;
+    List<MigrationInstructionValidator> validators = new ArrayList<>();
+    validators.add(new SameBehaviorInstructionValidator());
+    validators.add(new SameEventTypeValidator());
+    validators.add(new OnlyOnceMappedActivityInstructionValidator());
+    validators.add(new CannotAddMultiInstanceBodyValidator());
+    validators.add(new CannotAddMultiInstanceInnerActivityValidator());
+    validators.add(new CannotRemoveMultiInstanceInnerActivityValidator());
+    validators.add(new GatewayMappingValidator());
+    validators.add(new SameEventScopeInstructionValidator());
+    validators.add(new UpdateEventTriggersValidator());
+    validators.add(new AdditionalFlowScopeInstructionValidator());
+    validators.add(new ConditionalEventUpdateEventTriggerValidator());
+    return validators;
   }
 
   public void setMigratingActivityInstanceValidators(List<MigratingActivityInstanceValidator> migratingActivityInstanceValidators) {
@@ -4520,24 +4520,24 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   public List<MigratingActivityInstanceValidator> getDefaultMigratingActivityInstanceValidators() {
-    List<MigratingActivityInstanceValidator> migratingActivityInstanceValidators = new ArrayList<>();
+    List<MigratingActivityInstanceValidator> validators = new ArrayList<>();
 
-    migratingActivityInstanceValidators.add(new NoUnmappedLeafInstanceValidator());
-    migratingActivityInstanceValidators.add(new VariableConflictActivityInstanceValidator());
-    migratingActivityInstanceValidators.add(new SupportedActivityInstanceValidator());
+    validators.add(new NoUnmappedLeafInstanceValidator());
+    validators.add(new VariableConflictActivityInstanceValidator());
+    validators.add(new SupportedActivityInstanceValidator());
 
-    return migratingActivityInstanceValidators;
+    return validators;
   }
 
   public List<MigratingTransitionInstanceValidator> getDefaultMigratingTransitionInstanceValidators() {
-    List<MigratingTransitionInstanceValidator> migratingTransitionInstanceValidators = new ArrayList<>();
+    List<MigratingTransitionInstanceValidator> validators = new ArrayList<>();
 
-    migratingTransitionInstanceValidators.add(new NoUnmappedLeafInstanceValidator());
-    migratingTransitionInstanceValidators.add(new AsyncAfterMigrationValidator());
-    migratingTransitionInstanceValidators.add(new AsyncProcessStartMigrationValidator());
-    migratingTransitionInstanceValidators.add(new AsyncMigrationValidator());
+    validators.add(new NoUnmappedLeafInstanceValidator());
+    validators.add(new AsyncAfterMigrationValidator());
+    validators.add(new AsyncProcessStartMigrationValidator());
+    validators.add(new AsyncMigrationValidator());
 
-    return migratingTransitionInstanceValidators;
+    return validators;
   }
 
   public List<CommandChecker> getCommandCheckers() {

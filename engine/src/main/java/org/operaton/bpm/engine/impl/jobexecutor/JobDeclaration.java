@@ -76,8 +76,8 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
     T job = newJobInstance(context);
 
     // set job definition id
-    String jobDefinitionId = resolveJobDefinitionId(context);
-    job.setJobDefinitionId(jobDefinitionId);
+    String jobDefId = resolveJobDefinitionId(context);
+    job.setJobDefinitionId(jobDefId);
 
     //set batch id for monitor and seed jobs (BatchEntity) and batch execution jobs (BatchJobContext)
     if (context instanceof BatchEntity batch) {
@@ -86,11 +86,11 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
       job.setBatchId(batchJobContext.getBatch().getId());
     }
 
-    if(jobDefinitionId != null) {
+    if(jobDefId != null) {
 
       JobDefinitionEntity jobDefinition = Context.getCommandContext()
         .getJobDefinitionManager()
-        .findById(jobDefinitionId);
+        .findById(jobDefId);
 
       if(jobDefinition != null) {
         // if job definition is suspended while creating a job instance,
@@ -121,7 +121,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
       long priority = Context
           .getProcessEngineConfiguration()
           .getJobPriorityProvider()
-          .determinePriority(contextExecution, this, jobDefinitionId);
+          .determinePriority(contextExecution, this, jobDefId);
 
       job.setPriority(priority);
     }

@@ -16,15 +16,15 @@
  */
 package org.operaton.bpm.engine.rest.helper;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.Date;
-
 import org.operaton.bpm.engine.form.OperatonFormRef;
 import org.operaton.bpm.engine.impl.form.OperatonFormRefImpl;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
+
+import java.util.Date;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MockTaskBuilder {
 
@@ -159,9 +159,9 @@ public class MockTaskBuilder {
   }
 
   public MockTaskBuilder operatonFormRef(String key, String binding, Integer version) {
-    OperatonFormRefImpl operatonFormRef = new OperatonFormRefImpl(key, binding);
-    operatonFormRef.setVersion(version);
-    this.operatonFormRef = operatonFormRef;
+    OperatonFormRefImpl formRef = new OperatonFormRefImpl(key, binding);
+    formRef.setVersion(version);
+    this.operatonFormRef = formRef;
     return this;
   }
 

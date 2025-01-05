@@ -16,15 +16,6 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.DataFormats.json;
-import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
-import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
 import org.operaton.bpm.engine.runtime.VariableInstance;
@@ -41,8 +32,18 @@ import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.JsonValue;
 import org.operaton.spin.plugin.variable.value.builder.JsonValueBuilder;
+import static org.operaton.spin.DataFormats.json;
+import static org.operaton.spin.plugin.variable.SpinValues.jsonValue;
+import static org.operaton.spin.plugin.variable.type.SpinValueType.JSON;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -193,8 +194,8 @@ public class JsonValueTest extends PluggableProcessEngineTestCase {
   @Deployment(resources = "org/operaton/spin/plugin/jsonConditionProcess.bpmn20.xml")
   public void testJsonValueInCondition() {
     // given
-    String jsonString = "{\"age\": 22 }";
-    JsonValue value = jsonValue(jsonString).create();
+    String json = "{\"age\": 22 }";
+    JsonValue value = jsonValue(json).create();
     VariableMap variables = Variables.createVariables().putValueTyped("customer", value);
 
     // when

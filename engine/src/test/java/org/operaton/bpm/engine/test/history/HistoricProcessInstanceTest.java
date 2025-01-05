@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import org.apache.commons.lang3.time.DateUtils;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.exception.NullValueException;
@@ -50,14 +45,29 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionKey;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionName;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessDefinitionVersion;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historicProcessInstanceByProcessInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Tom Baeyens
@@ -1899,7 +1909,6 @@ public class HistoricProcessInstanceTest {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess");
 
-    TaskService taskService = engineRule.getTaskService();
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertNotNull(task);
     taskService.complete(task.getId());
@@ -1918,7 +1927,6 @@ public class HistoricProcessInstanceTest {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subprocess");
 
-    TaskService taskService = engineRule.getTaskService();
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     assertThat(task).isNotNull();
     taskService.complete(task.getId());
@@ -1939,7 +1947,6 @@ public class HistoricProcessInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
-    TaskService taskService = engineRule.getTaskService();
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     taskService.complete(task.getId());
 
@@ -1973,7 +1980,6 @@ public class HistoricProcessInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingSubProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("failingSubProcess");
 
-    TaskService taskService = engineRule.getTaskService();
     Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
     taskService.complete(task.getId());
 

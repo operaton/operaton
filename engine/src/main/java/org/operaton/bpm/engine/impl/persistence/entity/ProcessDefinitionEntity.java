@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -42,6 +35,8 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.task.IdentityLinkType;
+
+import java.util.*;
 
 
 /**
@@ -218,17 +213,17 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   public ProcessDefinitionEntity getPreviousDefinition() {
     ProcessDefinitionEntity previousProcessDefinition = null;
 
-    String previousProcessDefinitionId = getPreviousProcessDefinitionId();
-    if (previousProcessDefinitionId != null) {
+    String previousProcessDefId = getPreviousProcessDefinitionId();
+    if (previousProcessDefId != null) {
 
-      previousProcessDefinition = loadProcessDefinition(previousProcessDefinitionId);
+      previousProcessDefinition = loadProcessDefinition(previousProcessDefId);
 
       if (previousProcessDefinition == null) {
         resetPreviousProcessDefinitionId();
-        previousProcessDefinitionId = getPreviousProcessDefinitionId();
+        previousProcessDefId = getPreviousProcessDefinitionId();
 
-        if (previousProcessDefinitionId != null) {
-          previousProcessDefinition = loadProcessDefinition(previousProcessDefinitionId);
+        if (previousProcessDefId != null) {
+          previousProcessDefinition = loadProcessDefinition(previousProcessDefId);
         }
       }
     }

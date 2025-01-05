@@ -17,7 +17,6 @@
 package org.operaton.spin.impl.util;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
 
@@ -211,7 +210,6 @@ class RewindableReaderTest {
   }
 
   protected RewindableReader newReaderInstance(String input, int bufferSize) {
-    Reader reader = new StringReader(input);
-    return new RewindableReader(reader, bufferSize);
+    return new RewindableReader(new StringReader(input), bufferSize);
   }
 }

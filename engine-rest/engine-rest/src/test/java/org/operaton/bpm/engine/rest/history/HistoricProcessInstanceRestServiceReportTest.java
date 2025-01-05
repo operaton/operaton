@@ -16,33 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
-import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_AFTER;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_PROCESS_INSTANCE_STARTED_BEFORE;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_AVG;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MAX;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_MIN;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_PROC_INST_DURATION_REPORT_PERIOD;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricProcessInstanceDurationReportByMonth;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricProcessInstanceDurationReportByQuarter;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.DurationReportResult;
@@ -52,15 +25,34 @@ import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.dto.converter.ReportResultToCsvConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
+import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
+import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
+
+import javax.ws.rs.core.Response.Status;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import javax.ws.rs.core.Response.Status;
-
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Roman Smirnov
@@ -81,24 +73,24 @@ public class HistoricProcessInstanceRestServiceReportTest extends AbstractRestSe
   }
 
   private HistoricProcessInstanceReport setUpMockHistoricProcessInstanceReportQuery() {
-    HistoricProcessInstanceReport mockedReportQuery = mock(HistoricProcessInstanceReport.class);
+    HistoricProcessInstanceReport historicProcessInstanceReport = mock(HistoricProcessInstanceReport.class);
 
-    when(mockedReportQuery.processDefinitionIdIn(anyString())).thenReturn(mockedReportQuery);
-    when(mockedReportQuery.processDefinitionKeyIn(anyString())).thenReturn(mockedReportQuery);
-    when(mockedReportQuery.startedAfter(any(Date.class))).thenReturn(mockedReportQuery);
-    when(mockedReportQuery.startedBefore(any(Date.class))).thenReturn(mockedReportQuery);
+    when(historicProcessInstanceReport.processDefinitionIdIn(anyString())).thenReturn(historicProcessInstanceReport);
+    when(historicProcessInstanceReport.processDefinitionKeyIn(anyString())).thenReturn(historicProcessInstanceReport);
+    when(historicProcessInstanceReport.startedAfter(any(Date.class))).thenReturn(historicProcessInstanceReport);
+    when(historicProcessInstanceReport.startedBefore(any(Date.class))).thenReturn(historicProcessInstanceReport);
 
     List<DurationReportResult> durationReportByMonth = createMockHistoricProcessInstanceDurationReportByMonth();
-    when(mockedReportQuery.duration(MONTH)).thenReturn(durationReportByMonth);
+    when(historicProcessInstanceReport.duration(MONTH)).thenReturn(durationReportByMonth);
 
     List<DurationReportResult> durationReportByQuarter = createMockHistoricProcessInstanceDurationReportByQuarter();
-    when(mockedReportQuery.duration(QUARTER)).thenReturn(durationReportByQuarter);
+    when(historicProcessInstanceReport.duration(QUARTER)).thenReturn(durationReportByQuarter);
 
-    when(mockedReportQuery.duration(null)).thenThrow(new NotValidException("periodUnit is null"));
+    when(historicProcessInstanceReport.duration(null)).thenThrow(new NotValidException("periodUnit is null"));
 
-    when(processEngine.getHistoryService().createHistoricProcessInstanceReport()).thenReturn(mockedReportQuery);
+    when(processEngine.getHistoryService().createHistoricProcessInstanceReport()).thenReturn(historicProcessInstanceReport);
 
-    return mockedReportQuery;
+    return historicProcessInstanceReport;
   }
 
   @Test

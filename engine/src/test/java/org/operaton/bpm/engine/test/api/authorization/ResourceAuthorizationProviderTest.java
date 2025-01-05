@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
-import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.Resources.USER;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-import java.util.Collections;
-
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.TaskService;
@@ -41,11 +30,19 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.operaton.bpm.engine.authorization.Permissions.ALL;
+import static org.operaton.bpm.engine.authorization.Resources.AUTHORIZATION;
+import static org.operaton.bpm.engine.authorization.Resources.TASK;
+import static org.operaton.bpm.engine.authorization.Resources.USER;
+
+import java.util.Collections;
+
+import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author Roman Smirnov
@@ -66,8 +63,8 @@ public class ResourceAuthorizationProviderTest {
 
   protected String userId = "test";
   protected String groupId = "accounting";
-  protected User user;
-  protected Group group;
+  protected User testUser;
+  protected Group testGroup;
 
   @Before
   public void setUp() {
@@ -78,8 +75,8 @@ public class ResourceAuthorizationProviderTest {
     taskService = engineRule.getTaskService();
     authorizationService = engineRule.getAuthorizationService();
 
-    user = createUser(userId);
-    group = createGroup(groupId);
+    testUser = createUser(userId);
+    testGroup = createGroup(groupId);
 
     identityService.createMembership(userId, groupId);
 

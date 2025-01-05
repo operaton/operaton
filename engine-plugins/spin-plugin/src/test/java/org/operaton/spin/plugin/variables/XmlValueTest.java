@@ -16,15 +16,6 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.spin.DataFormats.xml;
-import static org.operaton.spin.plugin.variable.SpinValues.xmlValue;
-import static org.operaton.spin.plugin.variable.type.SpinValueType.XML;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.test.PluggableProcessEngineTestCase;
 import org.operaton.bpm.engine.runtime.VariableInstance;
@@ -41,6 +32,15 @@ import org.operaton.spin.plugin.variable.type.SpinValueType;
 import org.operaton.spin.plugin.variable.value.XmlValue;
 import org.operaton.spin.plugin.variable.value.builder.XmlValueBuilder;
 import org.operaton.spin.xml.SpinXmlElement;
+import static org.operaton.spin.DataFormats.xml;
+import static org.operaton.spin.plugin.variable.SpinValues.xmlValue;
+import static org.operaton.spin.plugin.variable.type.SpinValueType.XML;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Roman Smirnov
@@ -180,8 +180,8 @@ public class XmlValueTest extends PluggableProcessEngineTestCase {
   @Deployment(resources = "org/operaton/spin/plugin/xmlConditionProcess.bpmn20.xml")
   public void testXmlValueInCondition() {
     // given
-    String xmlString = "<customer age=\"22\" />";
-    XmlValue value = xmlValue(xmlString).create();
+    String xml = "<customer age=\"22\" />";
+    XmlValue value = xmlValue(xml).create();
     VariableMap variables = Variables.createVariables().putValueTyped("customer", value);
 
     // when

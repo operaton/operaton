@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.standalone.identity;
 
-import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.identity.PasswordPolicy;
@@ -31,6 +26,12 @@ import org.operaton.bpm.engine.impl.identity.*;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 
+import org.assertj.core.api.Assertions;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class DefaultPasswordPolicyTest {
 
   @Rule
-  public ProcessEngineRule rule = new ProvidedProcessEngineRule();
+  public ProcessEngineRule engineRule = new ProvidedProcessEngineRule();
 
   protected IdentityService identityService;
 
@@ -50,16 +51,16 @@ public class DefaultPasswordPolicyTest {
 
   @Before
   public void init() {
-    identityService = rule.getIdentityService();
+    identityService = engineRule.getIdentityService();
 
-    rule.getProcessEngineConfiguration()
+    engineRule.getProcessEngineConfiguration()
       .setPasswordPolicy(new DefaultPasswordPolicyImpl())
       .setEnablePasswordPolicy(true);
   }
 
   @After
   public void resetProcessEngineConfig() {
-    rule.getProcessEngineConfiguration()
+    engineRule.getProcessEngineConfiguration()
       .setPasswordPolicy(null)
       .setEnablePasswordPolicy(false);
   }

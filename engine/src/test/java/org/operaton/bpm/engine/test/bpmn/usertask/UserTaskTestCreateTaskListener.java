@@ -43,14 +43,12 @@ public class UserTaskTestCreateTaskListener implements TaskListener {
 
     if (this.expression != null && this.expression.getValue(delegateTask) != null) {
       // get the expression variable
-      String expression = this.expression.getValue(delegateTask).toString();
+      String expressionVariable = this.expression.getValue(delegateTask).toString();
 
       // this expression will be evaluated when completing the task
-      delegateTask.setVariableLocal("validationRule", expression);
+      delegateTask.setVariableLocal("validationRule", expressionVariable);
     }
-
   }
-
 }
 
 

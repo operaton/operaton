@@ -58,8 +58,8 @@ public class DatabaseHistoryPropertyAutoTest {
   @Test
   public void failWhenSecondEngineDoesNotHaveTheSameHistoryLevel() {
     buildEngine(config("true", ProcessEngineConfiguration.HISTORY_FULL));
-
     ProcessEngineConfigurationImpl config = config(ProcessEngineConfiguration.HISTORY_AUDIT);
+
     assertThatThrownBy(() -> buildEngine(config))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("historyLevel mismatch: configuration says HistoryLevelAudit(name=audit, id=2) and database says HistoryLevelFull(name=full, id=3)");

@@ -19,19 +19,22 @@ package org.operaton.bpm.application.impl.deployment.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import org.operaton.bpm.application.impl.metadata.ProcessesXmlParse;
 import org.operaton.bpm.application.impl.metadata.ProcessesXmlParser;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * <p>The testcases for the {@link ProcessesXmlParser}</p>
@@ -194,8 +197,8 @@ public class ProcessesXmlParserTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5961")
   public void testParseProcessesXmlTwoArchivesAndTwoEngines() {
-
     ProcessesXml processesXml = parser.createParse()
       .sourceUrl(getStreamUrl("process_xml_two_archives_two_engines.xml"))
       .execute()
@@ -267,21 +270,17 @@ public class ProcessesXmlParserTest {
   public void testParseProcessesXmlEngineNoName() {
 
     // this test is to make sure that XML Schema Validation works.
-    try {
-      parser.createParse()
-        .sourceUrl(getStreamUrl("process_xml_engine_no_name.xml"))
-        .execute();
+    ProcessesXmlParse processesXmlParse = parser
+      .createParse()
+      .sourceUrl(getStreamUrl("process_xml_engine_no_name.xml"));
 
-      fail("exception expected");
-
-    } catch(ProcessEngineException e) {
-      // expected
-    }
-
+    assertThatThrownBy(processesXmlParse::execute)
+      .isInstanceOf(ProcessEngineException.class);
   }
 
-  public void FAILING_testParseProcessesXmlClassLineBreak() {
-
+  @Test
+  @Ignore("FIXME")
+  public void testParseProcessesXmlClassLineBreak() {
     ProcessesXml processesXml = parser.createParse()
         .sourceUrl(getStreamUrl("process_xml_one_archive_with_line_break.xml"))
         .execute()

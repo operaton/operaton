@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;

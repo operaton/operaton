@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -37,81 +37,62 @@ public class CompositeIncidentHandlerTest {
   @Test
   public void shouldUseCompositeIncidentHandlerWithMainIncidentHandlerAddNullHandler() {
     CompositeIncidentHandler compositeIncidentHandler = new CompositeIncidentHandler(new DefaultIncidentHandler(""));
-    try {
-      compositeIncidentHandler.add(null);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("Incident handler is null");
-    }
+
+    assertThatThrownBy(() -> compositeIncidentHandler.add(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Incident handler is null");
   }
 
   @Test
   public void shouldUseCompositeIncidentHandlerArgumentConstructorWithNullMainHandler() {
-    try {
-      new CompositeIncidentHandler(null);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("Incident handler is null");
-    }
+    assertThatThrownBy(() -> new CompositeIncidentHandler(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Incident handler is null");
   }
 
   @Test
   public void shouldUseCompositeIncidentHandlerArgumentConstructorWithNullVarargs() {
     IncidentHandler incidentHandler = null;
-    try {
-      new CompositeIncidentHandler(null, incidentHandler);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("Incident handlers contains null value");
-    }
+    assertThatThrownBy(() -> new CompositeIncidentHandler(null, incidentHandler))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Incident handlers contains null value");
   }
 
   @Test
   public void shouldUseCompositeIncidentHandlerArgumentConstructorWithNullList() {
     List<IncidentHandler> incidentHandler = null;
-    try {
-      new CompositeIncidentHandler(null, incidentHandler);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("Incident handler is null");
-    }
+    assertThatThrownBy(() -> new CompositeIncidentHandler(null, incidentHandler))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Incident handler is null");
   }
 
   @Test
   public void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndNullVarargValue() {
     IncidentHandler mainIncidentHandler = new DefaultIncidentHandler("failedJob");
     IncidentHandler incidentHandler = null;
-    try {
-      new CompositeIncidentHandler(mainIncidentHandler, incidentHandler);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("Incident handlers contains null value");
-    }
+    assertThatThrownBy(() -> new CompositeIncidentHandler(mainIncidentHandler, incidentHandler))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Incident handlers contains null value");
   }
 
   @Test
   public void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndNullVarargs() {
     IncidentHandler mainIncidentHandler = new DefaultIncidentHandler("failedJob");
     IncidentHandler[] incidentHandler = null;
-    try {
-      new CompositeIncidentHandler(mainIncidentHandler, incidentHandler);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("Incident handlers is null");
-    }
+
+    assertThatThrownBy(() -> new CompositeIncidentHandler(mainIncidentHandler, incidentHandler))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Incident handlers is null");
   }
 
   @Test
   public void shouldUseCompositeIncidentHandlerArgumentConstructorWithMainHandlersAndNullList() {
     IncidentHandler mainIncidentHandler = new DefaultIncidentHandler("failedJob");
-
     List<IncidentHandler> incidentHandler = null;
-    try {
-      new CompositeIncidentHandler(mainIncidentHandler, incidentHandler);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("Incident handlers is null");
-    }
+
+    assertThatThrownBy(() -> new CompositeIncidentHandler(mainIncidentHandler, incidentHandler))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Incident handlers is null");
   }
 
   @Test
@@ -121,26 +102,20 @@ public class CompositeIncidentHandlerTest {
     List<IncidentHandler> incidentHandler = new ArrayList<>();
     incidentHandler.add(null);
     incidentHandler.add(null);
-    try {
-      new CompositeIncidentHandler(mainIncidentHandler, incidentHandler);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("Incident handler is null");
-    }
+
+    assertThatThrownBy(() -> new CompositeIncidentHandler(mainIncidentHandler, incidentHandler))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Incident handler is null");
   }
 
   @Test
   public void shouldUseCompositeIncidentHandlerWithAnotherIncidentType() {
-    CompositeIncidentHandler compositeIncidentHandler = new CompositeIncidentHandler(
-        new DefaultIncidentHandler("failedJob"));
-    try {
-      compositeIncidentHandler.add(new DefaultIncidentHandler("failedExternalTask"));
-      fail("Non expected message expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).containsIgnoringCase(
-          "Incorrect incident type handler in composite handler with type: failedJob");
-    }
-  }
+    CompositeIncidentHandler compositeIncidentHandler = new CompositeIncidentHandler(new DefaultIncidentHandler("failedJob"));
+    DefaultIncidentHandler incidentHandler = new DefaultIncidentHandler("failedExternalTask");
+
+    assertThatThrownBy(() -> compositeIncidentHandler.add(incidentHandler))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Incorrect incident type handler in composite handler with type: failedJob");  }
 
   @Test
   public void shouldCallAllHandlersWhenCreatingIncident() {

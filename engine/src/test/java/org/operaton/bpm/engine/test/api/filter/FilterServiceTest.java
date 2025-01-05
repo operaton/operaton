@@ -30,10 +30,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
@@ -72,29 +72,14 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testCreateInvalidFilter() {
-    try {
-      filter.setName(null);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> filter.setName(null))
+      .isInstanceOf(ProcessEngineException.class);// when
 
-    try {
-      filter.setName("");
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> filter.setName(""))
+      .isInstanceOf(ProcessEngineException.class);// when
 
-    try {
-      filter.setQuery((Query<?, ?>) null);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> filter.setQuery((Query<?, ?>) null))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -172,13 +157,9 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
     long count = filterService.createFilterQuery().count();
     assertEquals(0, count);
 
-    try {
-      filterService.deleteFilter(filter.getId());
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    String filterId = filter.getId();
+    assertThatThrownBy(() -> filterService.deleteFilter(filterId))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   public static void compareFilter(Filter filter1, Filter filter2) {

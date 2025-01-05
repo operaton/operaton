@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -94,14 +95,10 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     assertNull(query.singleResult());
     assertEquals(0, query.list().size());
     assertEquals(0, query.count());
+    FilterQuery filterQuery = filterService.createFilterQuery();
 
-    try {
-      filterService.createFilterQuery().filterId(null);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> filterQuery.filterId(null))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -124,14 +121,10 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     assertNull(query.singleResult());
     assertEquals(0, query.list().size());
     assertEquals(0, query.count());
+    FilterQuery filterQuery = filterService.createFilterQuery();
 
-    try {
-      filterService.createFilterQuery().filterResourceType(null);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> filterQuery.filterResourceType(null))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -156,14 +149,10 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     assertNull(query.singleResult());
     assertEquals(0, query.list().size());
     assertEquals(0, query.count());
+    FilterQuery filterQuery = filterService.createFilterQuery();
 
-    try {
-      filterService.createFilterQuery().filterName(null);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> filterQuery.filterName(null))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -180,14 +169,10 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     assertNull(query.singleResult());
     assertEquals(0, query.list().size());
     assertEquals(0, query.count());
+    FilterQuery filterQuery = filterService.createFilterQuery();
 
-    try {
-      filterService.createFilterQuery().filterOwner(null);
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> filterQuery.filterOwner(null))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -211,7 +196,6 @@ public class FilterQueryTest extends PluggableProcessEngineTest {
     assertEquals(4, query.listPage(0, 15).size()); // there are only 4 tasks
   }
 
-  @SuppressWarnings({ "unchecked", "deprecation" })
   @Test
   public void testQuerySorting() {
     List<String> sortedIds = new ArrayList<>(filterIds);

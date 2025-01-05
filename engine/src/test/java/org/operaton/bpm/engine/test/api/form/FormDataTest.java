@@ -16,11 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
+import static org.assertj.core.api.InstanceOfAssertFactories.type;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -39,7 +39,10 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * <p>Testcase verifying support for form matadata provided using
@@ -65,16 +68,16 @@ public class FormDataTest extends PluggableProcessEngineTest {
     // validate field 1
     FormField formField1 = formFields.get(0);
     assertNotNull(formField1);
-    assertEquals(formField1.getId(), "formField1");
-    assertEquals(formField1.getLabel(), "Form Field 1");
+    assertEquals("formField1", formField1.getId());
+    assertEquals("Form Field 1", formField1.getLabel());
     assertEquals("string", formField1.getTypeName());
     assertNotNull(formField1.getType());
 
     // validate field 2
     FormField formField2 = formFields.get(1);
     assertNotNull(formField2);
-    assertEquals(formField2.getId(), "formField2");
-    assertEquals(formField2.getLabel(), "Form Field 2");
+    assertEquals("formField2", formField2.getId());
+    assertEquals("Form Field 2", formField2.getLabel());
     assertEquals("boolean", formField2.getTypeName());
     assertNotNull(formField1.getType());
 
@@ -205,30 +208,29 @@ public class FormDataTest extends PluggableProcessEngineTest {
     formValues.put("stringField", "1234");
     formValues.put("longField", 9L);
     formValues.put("customField", "validValue");
-    try {
-      formService.submitTaskForm(task.getId(), formValues);
-      fail();
-    } catch (FormFieldValidatorException e) {
-      assertEquals(e.getName(), "minlength");
-    }
+    String taskId = task.getId();
+    var finalFormValues = formValues;
+    assertThatThrownBy(() -> formService.submitTaskForm(taskId, finalFormValues))
+      .isInstanceOf(FormFieldValidatorException.class)
+      .asInstanceOf(type(FormFieldValidatorException.class))
+      .extracting(FormFieldValidatorException::getName)
+      .isEqualTo("minlength");
 
     // invalid submit 2
     formValues = new HashMap<>();
 
     formValues.put("customFieldWithValidationDetails", "C");
-    try {
-      formService.submitTaskForm(task.getId(), formValues);
-      fail();
-    } catch (FormFieldValidatorException e) {
-      assertEquals(e.getName(), "validator");
-      assertEquals(e.getId(), "customFieldWithValidationDetails");
-
-      assertTrue(e.getCause() instanceof FormFieldValidationException);
-
-      FormFieldValidationException exception = (FormFieldValidationException) e.getCause();
-      assertEquals(exception.getDetail(), "EXPIRED");
-    }
-
+    var finalFormValues2 = formValues;
+    assertThatThrownBy(() -> formService.submitTaskForm(taskId, finalFormValues2))
+      .isInstanceOf(FormFieldValidatorException.class)
+      .hasCauseInstanceOf(FormFieldValidationException.class)
+      .asInstanceOf(type(FormFieldValidatorException.class))
+      .satisfies(e -> {
+        assertEquals("validator", e.getName());
+        assertEquals("customFieldWithValidationDetails", e.getId());
+        FormFieldValidationException exception = (FormFieldValidationException) e.getCause();
+        assertEquals(exception.getDetail(), "EXPIRED");
+      });
   }
 
   @Deployment
@@ -282,7 +284,7 @@ public class FormDataTest extends PluggableProcessEngineTest {
     // given
     HashMap<String, Object> variables = new HashMap<>();
     variables.put("foo", "This is a \"Test\" message!");
-    ProcessInstance pi = runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
+    runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
     Task taskWithForm = taskService.createTaskQuery().singleResult();
 
     // when

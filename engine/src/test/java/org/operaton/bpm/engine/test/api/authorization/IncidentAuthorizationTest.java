@@ -372,7 +372,8 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // when & then
-    assertThatThrownBy(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), "my annotation"))
+    String incidentId = incident.getId();
+    assertThatThrownBy(() -> runtimeService.setAnnotationForIncidentById(incidentId, "my annotation"))
       .isInstanceOf(AuthorizationException.class)
       .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE, PROCESS_INSTANCE))
       .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE_INSTANCE, PROCESS_DEFINITION));
@@ -451,7 +452,8 @@ public class IncidentAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // when & then
-    assertThatThrownBy(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()))
+    String incidentId = incident.getId();
+    assertThatThrownBy(() -> runtimeService.clearAnnotationForIncidentById(incidentId))
       .isInstanceOf(AuthorizationException.class)
       .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE, PROCESS_INSTANCE))
       .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE_INSTANCE, PROCESS_DEFINITION));

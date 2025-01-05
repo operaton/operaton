@@ -16,6 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.authorization.Authorization;
+import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
+import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
+import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
+import org.operaton.bpm.engine.impl.pvm.ReadOnlyProcessDefinition;
+import org.operaton.bpm.engine.repository.*;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.ALL;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
@@ -26,31 +35,21 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.SUSPEND_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.authorization.Authorization;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.ProcessInstancePermissions;
-import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
-import org.operaton.bpm.engine.impl.pvm.ReadOnlyProcessDefinition;
-import org.operaton.bpm.engine.repository.CalledProcessDefinition;
-import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.repository.DiagramLayout;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.repository.ProcessDefinitionQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -1223,18 +1222,13 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   public void testDecisionDefinitionUpdateTimeToLiveWithoutAuthorizations() {
     //given
     ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    try {
-      //when
-      repositoryService.updateProcessDefinitionHistoryTimeToLive(definition.getId(), 6);
-      fail("Exception expected");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    String definitionId = definition.getId();
+    assertThatThrownBy(() -> repositoryService.updateProcessDefinitionHistoryTimeToLive(definitionId, 6))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
   }
 

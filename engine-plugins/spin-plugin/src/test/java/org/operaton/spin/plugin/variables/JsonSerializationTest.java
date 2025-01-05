@@ -16,22 +16,6 @@
  */
 package org.operaton.spin.plugin.variables;
 
-import static org.operaton.bpm.engine.variable.Variables.objectValue;
-import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
-import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueDeserializedNull;
-import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueSerializedNull;
-import static org.operaton.spin.plugin.variables.TypedValueAssert.assertUntypedNullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -51,11 +35,23 @@ import org.operaton.bpm.engine.variable.value.builder.SerializedObjectValueBuild
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.spin.DataFormats;
+import static org.operaton.bpm.engine.variable.Variables.objectValue;
+import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
+import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueDeserializedNull;
+import static org.operaton.spin.plugin.variables.TypedValueAssert.assertObjectValueSerializedNull;
+import static org.operaton.spin.plugin.variables.TypedValueAssert.assertUntypedNullValue;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.*;
 
 public class JsonSerializationTest {
 
@@ -142,12 +138,10 @@ public class JsonSerializationTest {
 
     FailingSerializationBean failingBean = new FailingSerializationBean("a String", 42, true);
 
-    try {
-      runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(failingBean).serializationDataFormat(JSON_FORMAT_NAME));
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // happy path
-    }
+    String instanceId = instance.getId();
+    var value = objectValue(failingBean).serializationDataFormat(JSON_FORMAT_NAME).create();
+    assertThatThrownBy(() -> runtimeService.setVariable(instanceId, "simpleBean", value))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -157,26 +151,17 @@ public class JsonSerializationTest {
 
     FailingDeserializationBean failingBean = new FailingDeserializationBean("a String", 42, true);
 
-    runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(failingBean).serializationDataFormat(JSON_FORMAT_NAME));
+    String instanceId = instance.getId();
+    runtimeService.setVariable(instanceId, "simpleBean", objectValue(failingBean).serializationDataFormat(JSON_FORMAT_NAME));
 
-    try {
-      runtimeService.getVariable(instance.getId(), "simpleBean");
-      fail("exception expected");
-    }
-    catch(ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.getVariable(instanceId, "simpleBean"))
+      .isInstanceOf(ProcessEngineException.class);
 
-    try {
-      runtimeService.getVariableTyped(instance.getId(), "simpleBean");
-      fail("exception expected");
-    }
-    catch(ProcessEngineException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> runtimeService.getVariableTyped(instanceId, "simpleBean"))
+      .isInstanceOf(ProcessEngineException.class);
 
     // However, I can access the serialized value
-    ObjectValue objectValue = runtimeService.getVariableTyped(instance.getId(), "simpleBean", false);
+    ObjectValue objectValue = runtimeService.getVariableTyped(instanceId, "simpleBean", false);
     assertFalse(objectValue.isDeserialized());
     assertNotNull(objectValue.getObjectTypeName());
     assertNotNull(objectValue.getValueSerialized());
@@ -214,13 +199,11 @@ public class JsonSerializationTest {
 
     JsonSerializable jsonSerializable = new JsonSerializable();
 
-    try {
-      runtimeService.setVariable(instance.getId(), "simpleBean", objectValue(jsonSerializable).serializationDataFormat("non existing data format"));
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot find serializer for value", e.getMessage());
-      // happy path
-    }
+    String instanceId = instance.getId();
+    var objectValue = objectValue(jsonSerializable).serializationDataFormat("non existing data format").create();
+    assertThatThrownBy(() -> runtimeService.setVariable(instanceId, "simpleBean", objectValue))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find serializer for value");
   }
 
   @Test

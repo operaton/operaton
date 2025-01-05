@@ -16,28 +16,27 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.exception.NotAllowedException;
+import org.operaton.bpm.engine.exception.NotFoundException;
+import org.operaton.bpm.engine.exception.NotValidException;
+import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.exception.NotAllowedException;
-import org.operaton.bpm.engine.exception.NotFoundException;
-import org.operaton.bpm.engine.exception.NotValidException;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -85,20 +84,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testCreateByInvalidKey() {
-    try {
-      caseService
-          .withCaseDefinitionByKey("invalid")
-          .create();
-      fail();
-    } catch (NotFoundException e) { }
+    CaseInstanceBuilder builder = caseService.withCaseDefinitionByKey("invalid");
+    assertThatThrownBy(builder::create)
+        .isInstanceOf(NotFoundException.class);
 
-    try {
-      caseService
-          .withCaseDefinitionByKey(null)
-          .create();
-      fail();
-    } catch (NotValidException e) { }
-
+    CaseInstanceBuilder builder2 = caseService
+        .withCaseDefinitionByKey(null);
+    assertThatThrownBy(builder2::create)
+        .isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -142,20 +135,14 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testCreateByInvalidId() {
-    try {
-      caseService
-          .withCaseDefinition("invalid")
-          .create();
-      fail();
-    } catch (NotFoundException e) { }
+    CaseInstanceBuilder builder = caseService.withCaseDefinition("invalid");
+    assertThatThrownBy(builder::create)
+        .isInstanceOf(NotFoundException.class);
 
-    try {
-      caseService
-          .withCaseDefinition(null)
-          .create();
-      fail();
-    } catch (NotValidException e) { }
-
+    CaseInstanceBuilder builder2 = caseService
+        .withCaseDefinition(null);
+    assertThatThrownBy(builder2::create)
+        .isInstanceOf(NotValidException.class);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -438,13 +425,11 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .getId();
 
     // when
-    try {
-      caseService
-        .withCaseExecution(caseInstanceId)
-        .manualStart();
-      fail("It should not be possible to start a case instance manually.");
-    } catch (NotAllowedException e) {
-    }
+    CaseExecutionCommandBuilder builder = caseService
+        .withCaseExecution(caseInstanceId);
+    assertThatThrownBy(builder::manualStart)
+        .isInstanceOf(NotAllowedException.class)
+        .hasMessageContaining("It should not be possible to start a case instance manually.");
 
   }
 
@@ -465,13 +450,11 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .getId();
 
     // when
-    try {
-      caseService
-        .withCaseExecution(caseInstanceId)
-        .disable();
-      fail("It should not be possible to disable a case instance.");
-    } catch (NotAllowedException e) {
-    }
+    CaseExecutionCommandBuilder builder = caseService
+        .withCaseExecution(caseInstanceId);
+    assertThatThrownBy(builder::disable)
+        .isInstanceOf(NotAllowedException.class)
+        .hasMessageContaining("It should not be possible to disable a case instance.");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -491,13 +474,11 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
         .getId();
 
     // when
-    try {
-      caseService
-        .withCaseExecution(caseInstanceId)
-        .reenable();
-      fail("It should not be possible to re-enable a case instance.");
-    } catch (NotAllowedException e) {
-    }
+    CaseExecutionCommandBuilder builder = caseService
+        .withCaseExecution(caseInstanceId);
+    assertThatThrownBy(builder::reenable)
+        .isInstanceOf(NotAllowedException.class)
+        .hasMessageContaining("It should not be possible to re-enable a case instance.");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCaseWithManualActivation.cmmn"})
@@ -614,12 +595,10 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
 
     // when
 
-    try {
-      caseService
-        .withCaseExecution(caseInstanceId)
-        .complete();
-      fail("It should not be possible to complete a case instance containing an active task.");
-    } catch (ProcessEngineException e) {}
+    CaseExecutionCommandBuilder builder = caseService.withCaseExecution(caseInstanceId);
+    assertThatThrownBy(builder::complete)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("It should not be possible to complete a case instance containing an active task.");
 
     // then
 
@@ -664,12 +643,10 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
 
     // when
 
-    try {
-      caseService
-        .withCaseExecution(caseInstanceId)
-        .complete();
-      fail("It should not be possible to complete a case instance containing an active stage.");
-    } catch (ProcessEngineException e) {}
+    CaseExecutionCommandBuilder builder = caseService.withCaseExecution(caseInstanceId);
+    assertThatThrownBy(builder::complete)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("It should not be possible to complete a case instance containing an active stage.");
 
     // then
 
@@ -731,14 +708,9 @@ public class CaseServiceCaseInstanceTest extends PluggableProcessEngineTest {
        .create()
        .getId();
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(caseInstanceId)
-        .close();
-      fail("It should not be possible to close an active case instance.");
-    } catch (ProcessEngineException e) {
-    }
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseInstanceId);
+    assertThatThrownBy(commandBuilder::close)
+        .isInstanceOf(ProcessEngineException.class);
 
     // then
     CaseInstance caseInstance = caseService

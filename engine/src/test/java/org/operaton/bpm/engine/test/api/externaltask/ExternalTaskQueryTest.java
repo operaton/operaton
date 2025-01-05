@@ -16,29 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.externaltask;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskById;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByLockExpirationTime;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessDefinitionId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessDefinitionKey;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.externalTaskByProcessInstanceId;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
@@ -52,9 +29,21 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
+
+import java.util.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Thorben Lindhauer
@@ -218,12 +207,9 @@ public class ExternalTaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testFailQueryByActivityIdInNull() {
-    try {
-      externalTaskService.createExternalTaskQuery()
-          .activityIdIn((String) null);
-      fail("expected exception");
-    } catch (NullValueException e) {
-    }
+    ExternalTaskQuery externalTaskQuery = externalTaskService.createExternalTaskQuery();
+    assertThatThrownBy(() -> externalTaskQuery.activityIdIn((String) null))
+        .isInstanceOf(NullValueException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/parallelExternalTaskProcess.bpmn20.xml")
@@ -318,13 +304,9 @@ public class ExternalTaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryByProcessInstanceIdNull() {
-    try {
-      externalTaskService.createExternalTaskQuery()
-        .processInstanceIdIn((String) null);
-
-      fail("expected exception");
-    } catch (NullValueException e) {
-    }
+    ExternalTaskQuery externalTaskQuery = externalTaskService.createExternalTaskQuery();
+    assertThatThrownBy(() -> externalTaskQuery.processInstanceIdIn((String) null))
+        .isInstanceOf(NullValueException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -408,68 +390,50 @@ public class ExternalTaskQueryTest extends PluggableProcessEngineTest {
 
   @Test
   public void testQueryWithNullValues() {
-    try {
-      externalTaskService.createExternalTaskQuery().externalTaskId(null).list();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("externalTaskId is null", e.getMessage());
-    }
+    ExternalTaskQuery externalTaskQuery = externalTaskService.createExternalTaskQuery().externalTaskId(null);
+    assertThatThrownBy(externalTaskQuery::list)
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("externalTaskId is null");
 
-    try {
-      externalTaskService.createExternalTaskQuery().activityId(null).list();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("activityId is null", e.getMessage());
-    }
+    ExternalTaskQuery externalTaskQuery1 = externalTaskService.createExternalTaskQuery().activityId(null);
+    assertThatThrownBy(externalTaskQuery1::list)
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("activityId is null");
 
-    try {
-      externalTaskService.createExternalTaskQuery().executionId(null).list();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("executionId is null", e.getMessage());
-    }
+    ExternalTaskQuery externalTaskQuery2 = externalTaskService.createExternalTaskQuery().executionId(null);
+    assertThatThrownBy(externalTaskQuery2::list)
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("executionId is null");
 
-    try {
-      externalTaskService.createExternalTaskQuery().lockExpirationAfter(null).list();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("lockExpirationAfter is null", e.getMessage());
-    }
+    ExternalTaskQuery externalTaskQuery3 = externalTaskService.createExternalTaskQuery().lockExpirationAfter(null);
+    assertThatThrownBy(externalTaskQuery3::list)
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("lockExpirationAfter is null");
 
-    try {
-      externalTaskService.createExternalTaskQuery().lockExpirationBefore(null).list();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("lockExpirationBefore is null", e.getMessage());
-    }
+    ExternalTaskQuery externalTaskQuery4 = externalTaskService.createExternalTaskQuery().lockExpirationBefore(null);
+    assertThatThrownBy(externalTaskQuery4::list)
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("lockExpirationBefore is null");
 
-    try {
-      externalTaskService.createExternalTaskQuery().processDefinitionId(null).list();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("processDefinitionId is null", e.getMessage());
-    }
+    ExternalTaskQuery externalTaskQuery5 = externalTaskService.createExternalTaskQuery().processDefinitionId(null);
+    assertThatThrownBy(externalTaskQuery5::list)
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("processDefinitionId is null");
 
-    try {
-      externalTaskService.createExternalTaskQuery().processInstanceId(null).list();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("processInstanceId is null", e.getMessage());
-    }
+    ExternalTaskQuery externalTaskQuery6 = externalTaskService.createExternalTaskQuery().processInstanceId(null);
+    assertThatThrownBy(externalTaskQuery6::list)
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("processInstanceId is null");
 
-    try {
-      externalTaskService.createExternalTaskQuery().topicName(null).list();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("topicName is null", e.getMessage());
-    }
+    ExternalTaskQuery externalTaskQuery7 = externalTaskService.createExternalTaskQuery().topicName(null);
+    assertThatThrownBy(externalTaskQuery7::list)
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("topicName is null");
 
-    try {
-      externalTaskService.createExternalTaskQuery().workerId(null).list();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("workerId is null", e.getMessage());
-    }
+    ExternalTaskQuery externalTaskQuery8 = externalTaskService.createExternalTaskQuery().workerId(null);
+    assertThatThrownBy(externalTaskQuery8::list)
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("workerId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",

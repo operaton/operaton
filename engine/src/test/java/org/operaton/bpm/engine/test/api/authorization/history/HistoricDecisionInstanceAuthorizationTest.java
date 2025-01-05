@@ -16,19 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
-import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.apache.commons.lang3.time.DateUtils;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -42,9 +29,25 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.Variables;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
+import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * @author Philipp Ossler
@@ -209,15 +212,10 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
     HistoricDecisionInstance historicDecisionInstance = query.includeInputs().includeOutputs().singleResult();
 
-    try {
-      // when
-      historyService.deleteHistoricDecisionInstanceByInstanceId(historicDecisionInstance.getId());
-      fail("expect authorization exception");
-    } catch (AuthorizationException e) {
-      // then
-      assertThat(e.getMessage()).isEqualTo(
-          "The user with id 'test' does not have 'DELETE_HISTORY' permission on resource 'testDecision' of type 'DecisionDefinition'.");
-    }
+    String historicDecisionInstanceId = historicDecisionInstance.getId();
+    assertThatThrownBy(() -> historyService.deleteHistoricDecisionInstanceByInstanceId(historicDecisionInstanceId))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessage("The user with id 'test' does not have 'DELETE_HISTORY' permission on resource 'testDecision' of type 'DecisionDefinition'.");
   }
 
   @Test

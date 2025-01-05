@@ -48,8 +48,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
@@ -99,15 +99,9 @@ public class HistoryCleanupAuthorizationTest extends AuthorizationTest {
 
     ClockUtil.setCurrentTime(new Date());
 
-    try {
-      // when
-      historyService.cleanUpHistoryAsync(true).getId();
-      fail("Exception expected: It should not be possible to execute the history cleanup");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent("ENGINE-03029 Required admin authenticated group or user.", message);
-    }
+    assertThatThrownBy(() -> historyService.cleanUpHistoryAsync(true))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("ENGINE-03029 Required admin authenticated group or user.");
   }
 
   protected void prepareInstances(Integer processInstanceTimeToLive, Integer decisionTimeToLive, Integer caseTimeToLive) {

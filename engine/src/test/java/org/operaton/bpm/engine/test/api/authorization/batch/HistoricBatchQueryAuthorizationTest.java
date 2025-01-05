@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.apache.commons.lang3.time.DateUtils;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -35,6 +24,7 @@ import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
+import org.operaton.bpm.engine.history.CleanableHistoricBatchReport;
 import org.operaton.bpm.engine.history.CleanableHistoricBatchReportResult;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.migration.MigrationPlan;
@@ -46,12 +36,17 @@ import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestBase
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+
+import java.util.*;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.*;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Thorben Lindhauer
@@ -240,18 +235,14 @@ public class HistoricBatchQueryAuthorizationTest {
     String migrationOperationsTTL = "P0D";
     prepareBatch(migrationOperationsTTL);
 
-    assertThatThrownBy(() -> {
-      authRule.enableAuthorization("user");
-      try {
-        // when
-        engineRule.getHistoryService().createCleanableHistoricBatchReport().list();
-      } finally {
-        authRule.disableAuthorization();
-      }
-    })
-    // then
-      .isInstanceOf(AuthorizationException.class);
-
+    authRule.enableAuthorization("user");
+    try {
+      CleanableHistoricBatchReport batchReport = engineRule.getHistoryService().createCleanableHistoricBatchReport();
+      assertThatThrownBy(batchReport::list)
+          .isInstanceOf(AuthorizationException.class);
+    } finally {
+      authRule.disableAuthorization();
+    }
   }
 
   private void prepareBatch(String migrationOperationsTTL) {

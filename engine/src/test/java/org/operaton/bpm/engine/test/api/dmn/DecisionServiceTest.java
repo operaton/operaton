@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.dmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.dmn.DecisionsEvaluationBuilder;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
@@ -34,11 +32,15 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Philipp Ossler
@@ -177,9 +179,10 @@ public class DecisionServiceTest {
 	public void evaluateDecisionTableByKeyWithNonExistingVersion() {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
-    assertThatThrownBy(() -> decisionService.evaluateDecisionTableByKeyAndVersion(decisionDefinition.getKey(), 42, null))
-      .isInstanceOf(NotFoundException.class)
-      .hasMessageContaining("no decision definition deployed with key = 'decision' and version = '42'");
+    String key = decisionDefinition.getKey();
+    assertThatThrownBy(() -> decisionService.evaluateDecisionTableByKeyAndVersion(key, 42, null))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("no decision definition deployed with key = 'decision' and version = '42'");
   }
 
   @Deployment(resources = DMN_DECISION_LITERAL_EXPRESSION)
@@ -249,28 +252,32 @@ public class DecisionServiceTest {
 
   @Test
   public void evaluateDecisionByNullId() {
-    assertThatThrownBy(() -> decisionService.evaluateDecisionById(null).evaluate())
+    DecisionsEvaluationBuilder builder = decisionService.evaluateDecisionById(null);
+    assertThatThrownBy(builder::evaluate)
       .isInstanceOf(NotValidException.class)
       .hasMessageContaining("either decision definition id or key must be set");
   }
 
   @Test
   public void evaluateDecisionByNonExistingId() {
-    assertThatThrownBy(() -> decisionService.evaluateDecisionById("unknown").evaluate())
+    DecisionsEvaluationBuilder builder = decisionService.evaluateDecisionById("unknown");
+    assertThatThrownBy(builder::evaluate)
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("no deployed decision definition found with id 'unknown'");
   }
 
   @Test
   public void evaluateDecisionByNullKey() {
-    assertThatThrownBy(() -> decisionService.evaluateDecisionByKey(null).evaluate())
+    DecisionsEvaluationBuilder builder = decisionService.evaluateDecisionByKey(null);
+    assertThatThrownBy(builder::evaluate)
       .isInstanceOf(NotValidException.class)
       .hasMessageContaining("either decision definition id or key must be set");
   }
 
   @Test
   public void evaluateDecisionByNonExistingKey() {
-    assertThatThrownBy(() -> decisionService.evaluateDecisionByKey("unknown").evaluate())
+    DecisionsEvaluationBuilder builder = decisionService.evaluateDecisionByKey("unknown");
+    assertThatThrownBy(builder::evaluate)
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("no decision definition deployed with key 'unknown'");
   }
@@ -280,10 +287,10 @@ public class DecisionServiceTest {
   public void evaluateDecisionByKeyWithNonExistingVersion() {
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
-    assertThatThrownBy(() -> decisionService
+    DecisionsEvaluationBuilder builder = decisionService
         .evaluateDecisionByKey(decisionDefinition.getKey())
-        .version(42)
-        .evaluate())
+        .version(42);
+    assertThatThrownBy(builder::evaluate)
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("no decision definition deployed with key = 'decision' and version = '42'");
   }

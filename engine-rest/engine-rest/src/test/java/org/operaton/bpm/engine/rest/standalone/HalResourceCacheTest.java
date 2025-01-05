@@ -44,6 +44,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -138,13 +139,10 @@ public class HalResourceCacheTest extends AbstractRestServiceTest {
 
   @Test
   public void testCacheImplementationNotImplementingCache() {
-    try {
-      contextListener.configureCaches("{\"" + CONFIG_CACHE_IMPLEMENTATION +"\": \"" + getClass().getName() + "\" }");
-      fail("Exception expected");
-    }
-    catch (HalRelationCacheConfigurationException e) {
-      assertTrue(e.getMessage().contains(Cache.class.getName()));
-    }
+    String contextParameter = "{\"" + CONFIG_CACHE_IMPLEMENTATION + "\": \"" + getClass().getName() + "\" }";
+    assertThatThrownBy(() -> contextListener.configureCaches(contextParameter))
+      .isInstanceOf(HalRelationCacheConfigurationException.class)
+      .hasMessageContaining(Cache.class.getName());
   }
 
   @Test

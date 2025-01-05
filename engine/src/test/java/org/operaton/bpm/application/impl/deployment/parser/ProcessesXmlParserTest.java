@@ -16,22 +16,24 @@
  */
 package org.operaton.bpm.application.impl.deployment.parser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
-
+import org.operaton.bpm.application.impl.metadata.ProcessesXmlParse;
 import org.operaton.bpm.application.impl.metadata.ProcessesXmlParser;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.metadata.spi.ProcessEngineXml;
 import org.operaton.bpm.engine.ProcessEngineException;
+
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * <p>The testcases for the {@link ProcessesXmlParser}</p>
@@ -267,17 +269,10 @@ public class ProcessesXmlParserTest {
   public void testParseProcessesXmlEngineNoName() {
 
     // this test is to make sure that XML Schema Validation works.
-    try {
-      parser.createParse()
-        .sourceUrl(getStreamUrl("process_xml_engine_no_name.xml"))
-        .execute();
-
-      fail("exception expected");
-
-    } catch(ProcessEngineException e) {
-      // expected
-    }
-
+    ProcessesXmlParse processesXmlParse = parser.createParse()
+        .sourceUrl(getStreamUrl("process_xml_engine_no_name.xml"));
+    assertThatThrownBy(processesXmlParse::execute)
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   public void FAILING_testParseProcessesXmlClassLineBreak() {

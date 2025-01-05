@@ -19,13 +19,15 @@ package org.operaton.bpm.engine.impl.incident;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.runtime.Incident;
-import org.junit.Test;
-import org.mockito.internal.verification.Times;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Test;
+import org.mockito.internal.verification.Times;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
@@ -134,14 +136,10 @@ public class CompositeIncidentHandlerTest {
   public void shouldUseCompositeIncidentHandlerWithAnotherIncidentType() {
     CompositeIncidentHandler compositeIncidentHandler = new CompositeIncidentHandler(
         new DefaultIncidentHandler("failedJob"));
-    try {
-      compositeIncidentHandler.add(new DefaultIncidentHandler("failedExternalTask"));
-      fail("Non expected message expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).containsIgnoringCase(
-          "Incorrect incident type handler in composite handler with type: failedJob");
-    }
-  }
+    DefaultIncidentHandler incidentHandler = new DefaultIncidentHandler("failedExternalTask");
+    assertThatThrownBy(() -> compositeIncidentHandler.add(incidentHandler))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Incorrect incident type handler in composite handler with type: failedJob");  }
 
   @Test
   public void shouldCallAllHandlersWhenCreatingIncident() {

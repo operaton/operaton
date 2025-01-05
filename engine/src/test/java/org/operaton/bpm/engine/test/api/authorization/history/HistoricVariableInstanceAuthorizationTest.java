@@ -16,18 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
-import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.READ_HISTORY_VARIABLE;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
@@ -40,9 +28,24 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
+import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.READ_HISTORY_VARIABLE;
+import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * @author Roman Smirnov
@@ -588,18 +591,15 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
     ProcessInstance instance = startProcessInstanceByKey(PROCESS_KEY, getVariables());
     verifyVariablesCreated();
 
-    try {
-      // when
-      historyService.deleteHistoricVariableInstancesByProcessInstanceId(instance.getId());
-      fail("Exception expected: It should not be possible to delete the historic variable instance");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE_HISTORY.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when
+    String instanceId = instance.getId();
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstancesByProcessInstanceId(instanceId))
+        // then
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE_HISTORY.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test

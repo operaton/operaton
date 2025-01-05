@@ -34,8 +34,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * @author Ronny Bräunlich
@@ -121,30 +121,23 @@ public class DatabaseTableSchemaTest {
 
   @Test
   public void testCreateConfigurationWithMismatchtingSchemaAndPrefix() {
-    try {
-      StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
-      configuration.setDatabaseSchema("foo");
-      configuration.setDatabaseTablePrefix("bar");
-      configuration.buildProcessEngine();
-      fail("Should throw exception");
-    } catch (ProcessEngineException e) {
-      // as expected
-      assertTrue(e.getMessage().contains("When setting a schema the prefix has to be schema + '.'"));
-    }
+    StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
+    configuration.setDatabaseSchema("foo");
+    configuration.setDatabaseTablePrefix("bar");
+
+    assertThatThrownBy(configuration::buildProcessEngine)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("When setting a schema the prefix has to be schema + '.'");
   }
 
   @Test
   public void testCreateConfigurationWithMissingDotInSchemaAndPrefix() {
-    try {
-      StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
-      configuration.setDatabaseSchema("foo");
-      configuration.setDatabaseTablePrefix("foo");
-      configuration.buildProcessEngine();
-      fail("Should throw exception");
-    } catch (ProcessEngineException e) {
-      // as expected
-      assertTrue(e.getMessage().contains("When setting a schema the prefix has to be schema + '.'"));
-    }
+    StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
+    configuration.setDatabaseSchema("foo");
+    configuration.setDatabaseTablePrefix("foo");
+
+    assertThatThrownBy(configuration::buildProcessEngine).isInstanceOf(ProcessEngineException.class)
+  .hasMessageContaining("When setting a schema the prefix has to be schema + '.'");
   }
 
   // ----------------------- TEST HELPERS -----------------------

@@ -48,6 +48,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -1116,13 +1117,9 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    try {
-      filterService.singleResult(testFilter.getId());
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    String filterId = testFilter.getId();
+    assertThatThrownBy(() -> filterService.singleResult(filterId))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   @Test

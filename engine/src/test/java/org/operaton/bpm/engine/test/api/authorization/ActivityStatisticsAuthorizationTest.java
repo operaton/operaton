@@ -16,25 +16,27 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.management.ActivityStatistics;
+import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
+import org.operaton.bpm.engine.management.IncidentStatistics;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.management.ActivityStatistics;
-import org.operaton.bpm.engine.management.ActivityStatisticsQuery;
-import org.operaton.bpm.engine.management.IncidentStatistics;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -61,18 +63,14 @@ public class ActivityStatisticsAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_INCIDENT_PROCESS_KEY).getId();
 
-    try {
-      // when
-      managementService.createActivityStatisticsQuery(processDefinitionId).list();
-      fail("Exception expected: It should not be possible to execute the activity statistics query");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(ONE_INCIDENT_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when
+    ActivityStatisticsQuery activityStatisticsQuery = managementService.createActivityStatisticsQuery(processDefinitionId);
+    assertThatThrownBy(activityStatisticsQuery::list)
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(READ.getName())
+      .hasMessageContaining(ONE_INCIDENT_PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   // including instances //////////////////////////////////////////////////////////////

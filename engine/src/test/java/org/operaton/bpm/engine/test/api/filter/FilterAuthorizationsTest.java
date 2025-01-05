@@ -16,12 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
-import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -35,10 +29,19 @@ import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
@@ -152,13 +155,9 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
   public void testDeleteFilterNotPermitted() {
     Filter filter = createTestFilter();
 
-    try {
-      filterService.deleteFilter(filter.getId());
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId = filter.getId();
+    assertThatThrownBy(() -> filterService.deleteFilter(filterId))
+      .isInstanceOf(AuthorizationException.class);
   }
 
   @Test
@@ -183,45 +182,25 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertNull(returnedFilter);
 
-    try {
-      filterService.getFilter(filter.getId());
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId = filter.getId();
+    assertThatThrownBy(() -> filterService.getFilter(filterId))
+      .isInstanceOf(AuthorizationException.class);
 
-    try {
-      filterService.singleResult(filter.getId());
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId1 = filter.getId();
+    assertThatThrownBy(() -> filterService.singleResult(filterId1))
+      .isInstanceOf(AuthorizationException.class);
 
-    try {
-      filterService.list(filter.getId());
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId2 = filter.getId();
+    assertThatThrownBy(() -> filterService.list(filterId2))
+      .isInstanceOf(AuthorizationException.class);
 
-    try {
-      filterService.listPage(filter.getId(), 1, 2);
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId3 = filter.getId();
+    assertThatThrownBy(() -> filterService.listPage(filterId3, 1, 2))
+      .isInstanceOf(AuthorizationException.class);
 
-    try {
-      filterService.count(filter.getId());
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId4 = filter.getId();
+    assertThatThrownBy(() -> filterService.count(filterId4))
+      .isInstanceOf(AuthorizationException.class);
   }
 
   @Test
@@ -277,45 +256,25 @@ public class FilterAuthorizationsTest extends PluggableProcessEngineTest {
     Filter returnedFilter = filterService.createFilterQuery().filterId(filter.getId()).singleResult();
     assertNull(returnedFilter);
 
-    try {
-      filterService.getFilter(filter.getId());
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId1 = filter.getId();
+    assertThatThrownBy(() -> filterService.getFilter(filterId1))
+      .isInstanceOf(AuthorizationException.class);
 
-    try {
-      filterService.singleResult(filter.getId());
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId2 = filter.getId();
+    assertThatThrownBy(() -> filterService.singleResult(filterId2))
+      .isInstanceOf(AuthorizationException.class);
 
-    try {
-      filterService.list(filter.getId());
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId3 = filter.getId();
+    assertThatThrownBy(() -> filterService.list(filterId3))
+      .isInstanceOf(AuthorizationException.class);
 
-    try {
-      filterService.listPage(filter.getId(), 1, 2);
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId4 = filter.getId();
+    assertThatThrownBy(() -> filterService.listPage(filterId4, 1, 2))
+      .isInstanceOf(AuthorizationException.class);
 
-    try {
-      filterService.count(filter.getId());
-      fail("Exception expected");
-    }
-    catch (AuthorizationException e) {
-      // expected
-    }
+    String filterId5 = filter.getId();
+    assertThatThrownBy(() -> filterService.count(filterId5))
+      .isInstanceOf(AuthorizationException.class);
   }
 
   @Test

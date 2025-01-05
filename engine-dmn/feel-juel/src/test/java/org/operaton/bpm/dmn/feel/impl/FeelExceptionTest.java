@@ -19,6 +19,7 @@ package org.operaton.bpm.dmn.feel.impl;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineFactoryImpl;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.context.VariableContext;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -28,6 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class FeelExceptionTest {
@@ -45,13 +47,10 @@ public class FeelExceptionTest {
 
   @Test
   void simpleExpressionNotSupported() {
-    try {
-      feelEngine.evaluateSimpleExpression("12 == 12", Variables.emptyVariableContext());
-      failBecauseExceptionWasNotThrown(UnsupportedOperationException.class);
-    }
-    catch (UnsupportedOperationException e) {
-      assertThat(e).hasMessageStartingWith("FEEL-01016");
-    }
+    VariableContext emptyVariableContext = Variables.emptyVariableContext();
+    assertThatThrownBy(() -> feelEngine.evaluateSimpleExpression("12 == 12", emptyVariableContext))
+      .isInstanceOf(UnsupportedOperationException.class)
+      .hasMessageStartingWith("FEEL-01016");
   }
 
   @BeforeEach

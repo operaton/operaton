@@ -30,6 +30,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -172,13 +173,9 @@ public class FilterServiceTest extends PluggableProcessEngineTest {
     long count = filterService.createFilterQuery().count();
     assertEquals(0, count);
 
-    try {
-      filterService.deleteFilter(filter.getId());
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // expected
-    }
+    String filterId = filter.getId();
+    assertThatThrownBy(() -> filterService.deleteFilter(filterId))
+      .isInstanceOf(ProcessEngineException.class);
   }
 
   public static void compareFilter(Filter filter1, Filter filter2) {

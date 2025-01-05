@@ -16,16 +16,6 @@
  */
 package org.operaton.bpm.application.impl.context;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -36,10 +26,22 @@ import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.concurrent.Callable;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Thorben Lindhauer
@@ -167,20 +169,16 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
   }
 
   @Test
-  public void testCannotExecuteInUnregisteredPaContext() throws Exception {
+  public void testCannotExecuteInUnregisteredPaContext() {
     String nonExistingName = pa.getName() + pa.getName();
 
-    try {
-      ProcessApplicationContext.withProcessApplicationContext((Callable<Void>) () -> {
-        getCurrentContextApplication();
-        return null;
-      }, nonExistingName);
-      fail("should not succeed");
-
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("A process application with name '" + nonExistingName + "' is not registered", e.getMessage());
-    }
-
+    Callable<Void> voidCallable = () -> {
+      getCurrentContextApplication();
+      return null;
+    };
+    assertThatThrownBy(() -> ProcessApplicationContext.withProcessApplicationContext(voidCallable, nonExistingName))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("A process application with name '" + nonExistingName + "' is not registered");
   }
 
   @SuppressWarnings("unchecked")

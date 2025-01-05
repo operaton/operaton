@@ -16,16 +16,15 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.authorization.Authorization;
+import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
+import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.value.TypedValue;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.ALL;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
-import static org.operaton.bpm.engine.authorization.Permissions.CREATE_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Permissions.READ;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
-import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Permissions.*;
 import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.READ_INSTANCE_VARIABLE;
 import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.SUSPEND_INSTANCE;
 import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.UPDATE_INSTANCE_VARIABLE;
@@ -34,29 +33,22 @@ import static org.operaton.bpm.engine.authorization.ProcessInstancePermissions.U
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.authorization.Authorization;
-import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.variable.VariableMap;
-import org.operaton.bpm.engine.variable.value.TypedValue;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -477,15 +469,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     // no authorization to start a process instance
 
-    try {
-      // when
-      runtimeService.createProcessInstanceByKey(PROCESS_KEY).startBeforeActivity("theTask").execute();
-      fail("Exception expected: It should not be possible to start a process instance");
-    } catch (AuthorizationException e) {
-
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'", e.getMessage());
-    }
+    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey(PROCESS_KEY).startBeforeActivity("theTask");
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'");
   }
 
   @Test
@@ -493,15 +480,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
 
-    try {
-      // when
-      runtimeService.createProcessInstanceByKey(PROCESS_KEY).startBeforeActivity("theTask").execute();
-      fail("Exception expected: It should not be possible to start a process instance");
-    } catch (AuthorizationException e) {
-
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE_INSTANCE' permission on resource 'oneTaskProcess' of type 'ProcessDefinition'", e.getMessage());
-    }
+    ProcessInstantiationBuilder builder = runtimeService.createProcessInstanceByKey(PROCESS_KEY).startBeforeActivity("theTask");
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have 'CREATE_INSTANCE' permission on resource 'oneTaskProcess' of type 'ProcessDefinition'");
   }
 
   @Test
@@ -509,15 +491,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, CREATE_INSTANCE);
 
-    try {
-      // when
-      runtimeService.createProcessInstanceByKey(PROCESS_KEY).startBeforeActivity("theTask").execute();
-      fail("Exception expected: It should not be possible to start a process instance");
-    } catch (AuthorizationException e) {
-
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'", e.getMessage());
-    }
+    ProcessInstantiationBuilder builder = runtimeService.createProcessInstanceByKey(PROCESS_KEY).startBeforeActivity("theTask");
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'");
   }
 
   @Test
@@ -545,15 +522,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
-    try {
-      // when
-      runtimeService.createProcessInstanceById(processDefinitionId).startBeforeActivity("theTask").execute();
-      fail("Exception expected: It should not be possible to start a process instance");
-    } catch (AuthorizationException e) {
-
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'", e.getMessage());
-    }
+    ProcessInstantiationBuilder builder = runtimeService.createProcessInstanceById(processDefinitionId).startBeforeActivity("theTask");
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'");
   }
 
   @Test
@@ -563,15 +535,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
-    try {
-      // when
-      runtimeService.createProcessInstanceById(processDefinitionId).startBeforeActivity("theTask").execute();
-      fail("Exception expected: It should not be possible to start a process instance");
-    } catch (AuthorizationException e) {
-
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE_INSTANCE' permission on resource 'oneTaskProcess' of type 'ProcessDefinition'", e.getMessage());
-    }
+    ProcessInstantiationBuilder builder = runtimeService.createProcessInstanceById(processDefinitionId).startBeforeActivity("theTask");
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have 'CREATE_INSTANCE' permission on resource 'oneTaskProcess' of type 'ProcessDefinition'");
   }
 
   @Test
@@ -581,15 +548,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     String processDefinitionId = selectProcessDefinitionByKey(PROCESS_KEY).getId();
 
-    try {
-      // when
-      runtimeService.createProcessInstanceById(processDefinitionId).startBeforeActivity("theTask").execute();
-      fail("Exception expected: It should not be possible to start a process instance");
-    } catch (AuthorizationException e) {
-
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'", e.getMessage());
-    }
+    ProcessInstantiationBuilder builder = runtimeService.createProcessInstanceById(processDefinitionId).startBeforeActivity("theTask");
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'");
   }
 
   // start process instance by message //////////////////////////////////////////////
@@ -1656,23 +1618,17 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     String processInstanceId = startProcessInstanceByKey(MESSAGE_BOUNDARY_PROCESS_KEY).getId();
 
-    try {
-      // when
-      runtimeService
-        .createMessageCorrelation("boundaryInvoiceMessage")
-        .correlateAll();
-      fail("Exception expected: It should not be possible to correlate a message.");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(processInstanceId, message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(MESSAGE_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    MessageCorrelationBuilder builder = runtimeService
+        .createMessageCorrelation("boundaryInvoiceMessage");
+    assertThatThrownBy(builder::correlateAll)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(processInstanceId)
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(MESSAGE_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1752,23 +1708,17 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
 
     createGrantAuthorization(PROCESS_INSTANCE, firstProcessInstanceId, userId, UPDATE);
 
-    try {
-      // when
-      runtimeService
-        .createMessageCorrelation("boundaryInvoiceMessage")
-        .correlateAll();
-      fail("Exception expected: It should not be possible to trigger a signal event");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(secondProcessInstanceId, message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-      testRule.assertTextPresent(MESSAGE_BOUNDARY_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    MessageCorrelationBuilder builder = runtimeService
+        .createMessageCorrelation("boundaryInvoiceMessage");
+    assertThatThrownBy(builder::correlateAll)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(secondProcessInstanceId)
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(UPDATE_INSTANCE.getName())
+        .hasMessageContaining(MESSAGE_BOUNDARY_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1801,16 +1751,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   public void testCorrelateAllProcessDefinitionWithoutAuthorization() {
     // given
 
-    try {
-      // when
-      runtimeService
-        .createMessageCorrelation("startInvoiceMessage")
-        .correlateAll();
-      fail("Exception expected: It should not be possible to correlate a message.");
-    } catch (AuthorizationException e) {
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'", e.getMessage());
-    }
+    MessageCorrelationBuilder builder = runtimeService.createMessageCorrelation("startInvoiceMessage");
+    assertThatThrownBy(builder::correlateAll)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'");
   }
 
   @Test
@@ -1818,17 +1762,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
 
-    try {
-      // when
-      runtimeService
-        .createMessageCorrelation("startInvoiceMessage")
-        .correlateAll();
-      fail("Exception expected: It should not be possible to correlate a message.");
-    } catch (AuthorizationException e) {
-
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE_INSTANCE' permission on resource 'messageStartProcess' of type 'ProcessDefinition'", e.getMessage());
-    }
+    MessageCorrelationBuilder builder = runtimeService.createMessageCorrelation("startInvoiceMessage");
+    assertThatThrownBy(builder::correlateAll)
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have 'CREATE_INSTANCE' permission on resource 'messageStartProcess' of type 'ProcessDefinition'");
   }
 
   @Test
@@ -1836,17 +1773,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     createGrantAuthorization(PROCESS_DEFINITION, MESSAGE_START_PROCESS_KEY, userId, CREATE_INSTANCE);
 
-    try {
-      // when
-      runtimeService
-        .createMessageCorrelation("startInvoiceMessage")
-        .correlateAll();
-      fail("Exception expected: It should not be possible to correlate a message.");
-    } catch (AuthorizationException e) {
-
-      // then
-      testRule.assertTextPresent("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'", e.getMessage());
-    }
+    MessageCorrelationBuilder builder = runtimeService.createMessageCorrelation("startInvoiceMessage");
+    assertThatThrownBy(builder::correlateAll)
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining("The user with id 'test' does not have 'CREATE' permission on resource 'ProcessInstance'");
   }
 
   @Test
@@ -4067,37 +3997,26 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
 
-    try {
-      // when
-      runtimeService.getVariables(processInstanceId, Arrays.asList(VARIABLE_NAME));
-      fail("Exception expected: It should not be to retrieve the variable instances");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(processInstanceId, message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(READ_INSTANCE.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    List<String> variableNames = List.of(VARIABLE_NAME);
+    assertThatThrownBy(() -> runtimeService.getVariables(processInstanceId, variableNames))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(processInstanceId)
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(READ_INSTANCE.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // given (2)
     setReadVariableAsDefaultReadVariablePermission();
 
-    try {
-      // when (2)
-      runtimeService.getVariables(processInstanceId, Arrays.asList(VARIABLE_NAME));
-      fail("Exception expected: It should not be to retrieve the variable instances");
-    } catch (AuthorizationException e) {
-      // then (2)
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ_INSTANCE_VARIABLE.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> runtimeService.getVariables(processInstanceId, variableNames))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_INSTANCE_VARIABLE.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4203,37 +4122,26 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
 
-    try {
-      // when
-      runtimeService.getVariablesLocal(processInstanceId, Arrays.asList(VARIABLE_NAME));
-      fail("Exception expected: It should not be to retrieve the variable instances");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(processInstanceId, message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(READ_INSTANCE.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    List<String> variableNames = List.of(VARIABLE_NAME);
+    assertThatThrownBy(() -> runtimeService.getVariablesLocal(processInstanceId, variableNames))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(processInstanceId)
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(READ_INSTANCE.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // given (2)
     setReadVariableAsDefaultReadVariablePermission();
 
-    try {
-      // when (2)
-      runtimeService.getVariablesLocal(processInstanceId, Arrays.asList(VARIABLE_NAME));
-      fail("Exception expected: It should not be to retrieve the variable instances");
-    } catch (AuthorizationException e) {
-      // then (2)
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ_INSTANCE_VARIABLE.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> runtimeService.getVariablesLocal(processInstanceId, variableNames))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_INSTANCE_VARIABLE.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4339,37 +4247,26 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
 
-    try {
-      // when
-      runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
-      fail("Exception expected: It should not be to retrieve the variable instances");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(processInstanceId, message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(READ_INSTANCE.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    List<String> variableNames = List.of(VARIABLE_NAME);
+    assertThatThrownBy(() -> runtimeService.getVariablesTyped(processInstanceId, variableNames, false))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(processInstanceId)
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(READ_INSTANCE.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // given (2)
     setReadVariableAsDefaultReadVariablePermission();
 
-    try {
-      // when (2)
-      runtimeService.getVariablesTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
-      fail("Exception expected: It should not be to retrieve the variable instances");
-    } catch (AuthorizationException e) {
-      // then (2)
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ_INSTANCE_VARIABLE.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> runtimeService.getVariablesTyped(processInstanceId, variableNames, false))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_INSTANCE_VARIABLE.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4475,37 +4372,26 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
 
-    try {
-      // when
-      runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
-      fail("Exception expected: It should not be to retrieve the variable instances");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(processInstanceId, message);
-      testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-      testRule.assertTextPresent(READ_INSTANCE.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    List<String> variableNames = List.of(VARIABLE_NAME);
+    assertThatThrownBy(() -> runtimeService.getVariablesLocalTyped(processInstanceId, variableNames, false))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ.getName())
+        .hasMessageContaining(processInstanceId)
+        .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+        .hasMessageContaining(READ_INSTANCE.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // given (2)
     setReadVariableAsDefaultReadVariablePermission();
 
-    try {
-      // when (2)
-      runtimeService.getVariablesLocalTyped(processInstanceId, Arrays.asList(VARIABLE_NAME), false);
-      fail("Exception expected: It should not be to retrieve the variable instances");
-    } catch (AuthorizationException e) {
-      // then (2)
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ_INSTANCE_VARIABLE.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> runtimeService.getVariablesLocalTyped(processInstanceId, variableNames, false))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(READ_INSTANCE_VARIABLE.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4804,14 +4690,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    try {
-      // when
-      runtimeService.setVariables(processInstanceId, getVariables());
-      fail("Exception expected: It should not be to set a variable");
-    } catch (AuthorizationException e) {
-      // then
-      verifyMessageIsValid(processInstanceId, e.getMessage());
-    }
+    var variableMap = getVariables();
+    assertThatThrownBy(() -> runtimeService.setVariables(processInstanceId, variableMap))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(processInstanceId);
   }
 
   @Test
@@ -4892,15 +4774,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   public void testSetVariablesLocalWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
+    var variableMap = getVariables();
 
-    try {
-      // when
-      runtimeService.setVariablesLocal(processInstanceId, getVariables());
-      fail("Exception expected: It should not be to set a variable");
-    } catch (AuthorizationException e) {
-      // then
-      verifyMessageIsValid(processInstanceId, e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.setVariablesLocal(processInstanceId, variableMap))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(processInstanceId);
   }
 
   @Test
@@ -5160,14 +5038,10 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
 
-    try {
-      // when
-      runtimeService.removeVariables(processInstanceId, Arrays.asList(VARIABLE_NAME));
-      fail("Exception expected: It should not be to set a variable");
-    } catch (AuthorizationException e) {
-      // then
-      verifyMessageIsValid(processInstanceId, e.getMessage());
-    }
+    List<String> variableNames = List.of(VARIABLE_NAME);
+    assertThatThrownBy(() -> runtimeService.removeVariables(processInstanceId, variableNames))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(processInstanceId);
   }
 
   @Test
@@ -5248,15 +5122,11 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   public void testRemoveVariablesLocalWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
+    List<String> variableNames = List.of(VARIABLE_NAME);
 
-    try {
-      // when
-      runtimeService.removeVariablesLocal(processInstanceId, Arrays.asList(VARIABLE_NAME));
-      fail("Exception expected: It should not be to set a variable");
-    } catch (AuthorizationException e) {
-      // then
-      verifyMessageIsValid(processInstanceId, e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.removeVariablesLocal(processInstanceId, variableNames))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(processInstanceId);
   }
 
   @Test
@@ -5337,28 +5207,22 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   public void testUpdateVariablesWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
+    var variableMap = getVariables();
+    RuntimeServiceImpl runtimeServiceImpl = (RuntimeServiceImpl) runtimeService;
 
-    try {
-      // when (1)
-      ((RuntimeServiceImpl)runtimeService).updateVariables(processInstanceId, getVariables(), null);
-      fail("Exception expected: It should not be to set a variable");
-    } catch (AuthorizationException e) {
-      // then (1)
-      verifyMessageIsValid(processInstanceId, e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeServiceImpl.updateVariables(processInstanceId, variableMap, null))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(processInstanceId);
 
-    try {
-      // when (2)
-      ((RuntimeServiceImpl)runtimeService).updateVariables(processInstanceId, null, Arrays.asList(VARIABLE_NAME));
-      fail("Exception expected: It should not be to set a variable");
-    } catch (AuthorizationException e) {
-      // then (2)
-      verifyMessageIsValid(processInstanceId, e.getMessage());
-    }
+    // when (2)
+    List<String> variableNames = List.of(VARIABLE_NAME);
+    assertThatThrownBy(() -> runtimeServiceImpl.updateVariables(processInstanceId, null, variableNames))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(processInstanceId);
 
     try {
       // when (3)
-      ((RuntimeServiceImpl)runtimeService).updateVariables(processInstanceId, getVariables(), Arrays.asList(VARIABLE_NAME));
+      runtimeServiceImpl.updateVariables(processInstanceId, variableMap, variableNames);
       fail("Exception expected: It should not be to set a variable");
     } catch (AuthorizationException e) {
       // then (3)
@@ -5445,33 +5309,20 @@ public class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
 
-    try {
-      // when (1)
-      ((RuntimeServiceImpl)runtimeService).updateVariablesLocal(processInstanceId, getVariables(), null);
-      fail("Exception expected: It should not be to set a variable");
-    } catch (AuthorizationException e) {
-      // then (1)
-      verifyMessageIsValid(processInstanceId, e.getMessage());
-    }
+    var variableMap = getVariables();
+    RuntimeServiceImpl runtimeServiceImpl = (RuntimeServiceImpl) runtimeService;
+    assertThatThrownBy(() -> runtimeServiceImpl.updateVariablesLocal(processInstanceId, variableMap, null))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(processInstanceId);
 
-    try {
-      // when (2)
-      ((RuntimeServiceImpl)runtimeService).updateVariablesLocal(processInstanceId, null, Arrays.asList(VARIABLE_NAME));
-      fail("Exception expected: It should not be to set a variable");
-    } catch (AuthorizationException e) {
-      // then (2)
-      verifyMessageIsValid(processInstanceId, e.getMessage());
-    }
+    List<String> variableNames = List.of(VARIABLE_NAME);
+    assertThatThrownBy(() -> runtimeServiceImpl.updateVariablesLocal(processInstanceId, null, variableNames))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(processInstanceId);
 
-    try {
-      // when (3)
-      ((RuntimeServiceImpl)runtimeService).updateVariablesLocal(processInstanceId, getVariables(), Arrays.asList(VARIABLE_NAME));
-      fail("Exception expected: It should not be to set a variable");
-    } catch (AuthorizationException e) {
-      // then (3)
-      verifyMessageIsValid(processInstanceId, e.getMessage());
-    }
-  }
+    assertThatThrownBy(() -> runtimeServiceImpl.updateVariablesLocal(processInstanceId, variableMap, variableNames))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(processInstanceId);  }
 
   @Test
   public void testUpdateVariablesLocalWithUpdatePermissionOnProcessInstance() {

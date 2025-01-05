@@ -16,18 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.form;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.form.FormField;
 import org.operaton.bpm.engine.form.FormFieldValidationConstraint;
 import org.operaton.bpm.engine.form.TaskFormData;
@@ -39,7 +27,16 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.*;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <p>Testcase verifying support for form matadata provided using
@@ -205,30 +202,27 @@ public class FormDataTest extends PluggableProcessEngineTest {
     formValues.put("stringField", "1234");
     formValues.put("longField", 9L);
     formValues.put("customField", "validValue");
-    try {
-      formService.submitTaskForm(task.getId(), formValues);
-      fail();
-    } catch (FormFieldValidatorException e) {
-      assertEquals(e.getName(), "minlength");
-    }
+    String taskId1 = task.getId();
+    var finalFormValues = formValues;
+    assertThatThrownBy(() -> formService.submitTaskForm(taskId1, finalFormValues))
+      .isInstanceOf(FormFieldValidatorException.class)
+      .hasFieldOrPropertyWithValue("name", "minlength");
 
     // invalid submit 2
     formValues = new HashMap<>();
 
     formValues.put("customFieldWithValidationDetails", "C");
-    try {
-      formService.submitTaskForm(task.getId(), formValues);
-      fail();
-    } catch (FormFieldValidatorException e) {
-      assertEquals(e.getName(), "validator");
-      assertEquals(e.getId(), "customFieldWithValidationDetails");
-
-      assertTrue(e.getCause() instanceof FormFieldValidationException);
-
-      FormFieldValidationException exception = (FormFieldValidationException) e.getCause();
-      assertEquals(exception.getDetail(), "EXPIRED");
-    }
-
+    String taskId = task.getId();
+    var finalFormValues2 = formValues;
+    assertThatThrownBy(() -> formService.submitTaskForm(taskId, finalFormValues2))
+      .isInstanceOf(FormFieldValidatorException.class)
+      .satisfies(e -> {
+        assertEquals("validator", ((FormFieldValidatorException) e).getName());
+        assertEquals("customFieldWithValidationDetails", ((FormFieldValidatorException) e).getId());
+        assertTrue(e.getCause() instanceof FormFieldValidationException);
+        FormFieldValidationException exception = (FormFieldValidationException) e.getCause();
+        assertEquals("EXPIRED", exception.getDetail());
+      });
   }
 
   @Deployment

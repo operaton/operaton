@@ -16,13 +16,16 @@
  */
 package org.operaton.connect.httpclient;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.assertj.core.api.Assertions;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class HttpResponseTest {
 
@@ -124,14 +127,10 @@ class HttpResponseTest {
   void testServerErrorResponseWithConfigOptionSet() {
     // given
     testResponse.statusCode(500);
-    try {
-      // when
-      connector.createRequest().configOption("throw-http-error", "TRUE").url("http://camunda.com").get().execute();
-      Assertions.fail("ConnectorRequestException should be thrown");
-    } catch (ConnectorRequestException e) {
-      // then
-      assertThat(e).hasMessageContaining("HTTP request failed with Status Code: 500");
-    }
+    HttpRequest request = connector.createRequest().configOption("throw-http-error", "TRUE").url("https://operaton.org").get();
+    assertThatThrownBy(request::execute)
+      .isInstanceOf(ConnectorRequestException.class)
+      .hasMessageContaining("HTTP request failed with Status Code: 500");
   }
 
   @Test

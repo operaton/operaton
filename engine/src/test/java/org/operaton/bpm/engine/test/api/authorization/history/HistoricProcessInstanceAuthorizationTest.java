@@ -16,31 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.authorization.Authorization.ANY;
-import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
-import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
-import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import org.apache.commons.lang3.time.DateUtils;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.authorization.AuthorizationQuery;
-import org.operaton.bpm.engine.authorization.HistoricProcessInstancePermissions;
-import org.operaton.bpm.engine.authorization.MissingAuthorization;
-import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
-import org.operaton.bpm.engine.authorization.Resources;
-import org.operaton.bpm.engine.history.CleanableHistoricProcessInstanceReportResult;
-import org.operaton.bpm.engine.history.DurationReportResult;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
+import org.operaton.bpm.engine.authorization.*;
+import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.query.PeriodUnit;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -48,9 +27,25 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.api.authorization.AuthorizationTest;
+import static org.operaton.bpm.engine.authorization.Authorization.ANY;
+import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
+import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
+import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 /**
  * @author Roman Smirnov
@@ -367,22 +362,19 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     taskService.complete(taskId);
     enableAuthorization();
 
-    try {
-      // when
-      historyService
-          .createHistoricProcessInstanceReport()
-          .duration(PeriodUnit.MONTH);
-      fail("Exception expected: It should not be possible to create a historic process instance report");
-    } catch (AuthorizationException e) {
-      // then
-      List<MissingAuthorization> missingAuthorizations = e.getMissingAuthorizations();
-      assertEquals(1, missingAuthorizations.size());
+    HistoricProcessInstanceReport report = historyService
+        .createHistoricProcessInstanceReport();
+    assertThatThrownBy(() -> report.duration(PeriodUnit.MONTH))
+        .isInstanceOf(AuthorizationException.class)
+        .satisfies(e -> {
+          List<MissingAuthorization> missingAuthorizations = ((AuthorizationException) e).getMissingAuthorizations();
+          assertEquals(1, missingAuthorizations.size());
 
-      MissingAuthorization missingAuthorization = missingAuthorizations.get(0);
-      assertEquals(READ_HISTORY.toString(), missingAuthorization.getViolatedPermissionName());
-      assertEquals(PROCESS_DEFINITION.resourceName(), missingAuthorization.getResourceType());
-      assertEquals(ANY, missingAuthorization.getResourceId());
-    }
+          MissingAuthorization missingAuthorization = missingAuthorizations.get(0);
+          assertEquals(READ_HISTORY.toString(), missingAuthorization.getViolatedPermissionName());
+          assertEquals(PROCESS_DEFINITION.resourceName(), missingAuthorization.getResourceType());
+          assertEquals(ANY, missingAuthorization.getResourceId());
+        });
   }
 
   @Test
@@ -437,16 +429,11 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     enableAuthorization();
 
     // when
-    try {
-      historyService
-        .createHistoricProcessInstanceReport()
-        .duration(PeriodUnit.MONTH);
+    HistoricProcessInstanceReport report = historyService.createHistoricProcessInstanceReport();
 
-      // then
-      fail("Exception expected: It should not be possible to create a historic process instance report");
-    } catch (AuthorizationException e) {
-
-    }
+    // then
+    assertThatThrownBy(() -> report.duration(PeriodUnit.MONTH))
+        .isInstanceOf(AuthorizationException.class);
   }
 
   @Test
@@ -485,17 +472,11 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_HISTORY);
 
     // when
-    try {
-      historyService
+    HistoricProcessInstanceReport report = historyService
         .createHistoricProcessInstanceReport()
-        .processDefinitionKeyIn(PROCESS_KEY, MESSAGE_START_PROCESS_KEY)
-        .duration(PeriodUnit.MONTH);
-
-      // then
-      fail("Exception expected: It should not be possible to create a historic process instance report");
-    } catch (AuthorizationException e) {
-
-    }
+        .processDefinitionKeyIn(PROCESS_KEY, MESSAGE_START_PROCESS_KEY);
+    assertThatThrownBy(() -> report.duration(PeriodUnit.MONTH))
+        .isInstanceOf(AuthorizationException.class);
   }
 
   @Test
@@ -582,20 +563,14 @@ public class HistoricProcessInstanceAuthorizationTest extends AuthorizationTest 
     enableAuthorization();
 
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, READ_HISTORY);
+    HistoricProcessInstanceReport report = historyService
+        .createHistoricProcessInstanceReport()
+        .processDefinitionKeyIn(PROCESS_KEY)
+        .processDefinitionIdIn(processInstance2.getProcessDefinitionId());
 
     // when
-    try {
-    historyService
-      .createHistoricProcessInstanceReport()
-      .processDefinitionKeyIn(PROCESS_KEY)
-      .processDefinitionIdIn(processInstance2.getProcessDefinitionId())
-      .duration(PeriodUnit.MONTH);
-
-      // then
-      fail("Exception expected: It should not be possible to create a historic process instance report");
-    } catch (AuthorizationException e) {
-
-    }
+    assertThatThrownBy(() -> report.duration(PeriodUnit.MONTH))
+        .isInstanceOf(AuthorizationException.class);
   }
 
   @Test

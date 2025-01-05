@@ -16,6 +16,16 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.batch.Batch;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
+import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.ProcessInstanceModificationBuilder;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.util.ExecutionTree;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.BatchPermissions.CREATE_BATCH_MODIFY_PROCESS_INSTANCES;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
@@ -29,24 +39,16 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertTha
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.batch.Batch;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.junit.After;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class SingleProcessInstanceModificationAsyncAuthorizationTest extends AuthorizationTest {
 
@@ -128,19 +130,15 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    try {
-      // when
-      runtimeService
+    // when
+    ProcessInstanceModificationBuilder builder = runtimeService
         .createProcessInstanceModification(processInstance.getId())
-        .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
-        .executeAsync();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // then
-      assertTrue(e.getMessage().contains("The user with id 'test' does not have"));
-      assertTrue(e.getMessage().contains("'CREATE' permission on resource 'Batch'"));
-      assertTrue(e.getMessage().contains("'CREATE_BATCH_MODIFY_PROCESS_INSTANCES' permission on resource 'Batch'"));
-    }
+        .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"));
+    assertThatThrownBy(builder::executeAsync)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("The user with id 'test' does not have")
+        .hasMessageContaining("'CREATE' permission on resource 'Batch'")
+        .hasMessageContaining("'CREATE_BATCH_MODIFY_PROCESS_INSTANCES' permission on resource 'Batch'");
   }
 
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
@@ -155,19 +153,15 @@ public class SingleProcessInstanceModificationAsyncAuthorizationTest extends Aut
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
-    try {
-      // when
-      runtimeService
+    // when
+    ProcessInstanceModificationBuilder builder = runtimeService
         .createProcessInstanceModification(processInstance.getId())
-        .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
-        .executeAsync();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // then
-      assertTrue(e.getMessage().contains("The user with id 'test' does not have"));
-      assertTrue(e.getMessage().contains("'CREATE' permission on resource 'Batch'"));
-      assertTrue(e.getMessage().contains("'CREATE_BATCH_MODIFY_PROCESS_INSTANCES' permission on resource 'Batch'"));
-    }
+        .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"));
+    assertThatThrownBy(builder::executeAsync)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("The user with id 'test' does not have")
+        .hasMessageContaining("'CREATE' permission on resource 'Batch'")
+        .hasMessageContaining("'CREATE_BATCH_MODIFY_PROCESS_INSTANCES' permission on resource 'Batch'");
   }
 
   protected String getInstanceIdForActivity(ActivityInstance activityInstance, String activityId) {

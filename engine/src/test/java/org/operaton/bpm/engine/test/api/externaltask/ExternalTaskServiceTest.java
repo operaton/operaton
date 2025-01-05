@@ -16,35 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.externaltask;
 
-import static java.util.Comparator.reverseOrder;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.entry;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
-import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.commons.lang3.time.DateUtils;
-import org.apache.ibatis.jdbc.RuntimeSqlException;
-import org.joda.time.DateTime;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -54,21 +25,15 @@ import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.exception.NullValueException;
-import org.operaton.bpm.engine.externaltask.ExternalTask;
-import org.operaton.bpm.engine.externaltask.ExternalTaskQuery;
-import org.operaton.bpm.engine.externaltask.ExternalTaskQueryBuilder;
-import org.operaton.bpm.engine.externaltask.LockedExternalTask;
+import org.operaton.bpm.engine.externaltask.*;
 import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.runtime.ActivityInstance;
-import org.operaton.bpm.engine.runtime.Incident;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
-import org.operaton.bpm.engine.runtime.VariableInstance;
+import org.operaton.bpm.engine.repository.DeploymentBuilder;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
@@ -79,6 +44,32 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
+import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.ibatis.jdbc.RuntimeSqlException;
+import org.joda.time.DateTime;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import static java.util.Comparator.reverseOrder;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.entry;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Thorben Lindhauer
@@ -108,17 +99,14 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
   @Test
   public void testFailOnMalformedpriorityInput() {
-    try {
-      repositoryService
+    DeploymentBuilder deploymentBuilder = repositoryService
         .createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/api/externaltask/externalTaskInvalidPriority.bpmn20.xml")
-        .deploy();
-      fail("deploying a process with malformed priority should not succeed");
-    } catch (ParseException e) {
-      testRule.assertTextPresentIgnoreCase("value 'NOTaNumber' for attribute 'taskPriority' "
-          + "is not a valid number", e.getMessage());
-      assertThat(e.getResorceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("externalTaskWithPrio");
-    }
+        .addClasspathResource("org/operaton/bpm/engine/test/api/externaltask/externalTaskInvalidPriority.bpmn20.xml");
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("value 'NOTaNumber' for attribute 'taskPriority' is not a valid number")
+        .extracting("resorceReports[0].errors[0].mainElementId")
+        .isEqualTo("externalTaskWithPrio");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -395,10 +383,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
   @Test
   public void shouldThrowExceptionOnSubscribeWithInvalidOrderConfig() {
     // when
-    assertThatThrownBy(() -> externalTaskService.fetchAndLock()
+    ExternalTaskQueryTopicBuilder builder = externalTaskService.fetchAndLock()
         .orderByCreateTime()
-        .subscribe()
-        .execute())
+        .subscribe();
+    assertThatThrownBy(builder::execute)
         // then
         .isInstanceOf(NotValidException.class)
         .hasMessage("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
@@ -407,10 +395,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
   @Test
   public void shouldThrowExceptionOnChainedSortingConfigs() {
     // when
-    assertThatThrownBy(() -> externalTaskService.fetchAndLock()
+    FetchAndLockBuilder builder = externalTaskService.fetchAndLock()
         .orderByCreateTime()
-        .desc()
-        .desc())
+        .desc();
+    assertThatThrownBy(builder::desc)
         // then
         .isInstanceOf(NotValidException.class)
         .hasMessage("Invalid query: can specify only one direction desc() or asc() for an ordering constraint: direction is not null");
@@ -419,8 +407,8 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
   @Test
   public void shouldThrowExceptionOnUnspecifiedSortingField() {
     // when
-    assertThatThrownBy(() -> externalTaskService.fetchAndLock()
-        .desc())
+    FetchAndLockBuilder builder = externalTaskService.fetchAndLock();
+    assertThatThrownBy(builder::desc)
         // then
         .isInstanceOf(NotValidException.class)
         .hasMessage("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
@@ -584,14 +572,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
     // when
-    try {
-      externalTaskService.fetchAndLock(1, WORKER_ID)
-        .topic(null, LOCK_TIME)
-        .execute();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("topicName is null", e.getMessage());
-    }
+    ExternalTaskQueryTopicBuilder builder = externalTaskService.fetchAndLock(1, WORKER_ID)
+        .topic(null, LOCK_TIME);
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("topicName is null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -601,14 +586,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
     // when
-    try {
-      externalTaskService.fetchAndLock(1, null)
-        .topic(TOPIC_NAME, LOCK_TIME)
-        .execute();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("workerId is null", e.getMessage());
-    }
+    ExternalTaskQueryTopicBuilder builder = externalTaskService.fetchAndLock(1, null)
+        .topic(TOPIC_NAME, LOCK_TIME);
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("workerId is null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -618,14 +600,12 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
     // when
-    try {
-      externalTaskService.fetchAndLock(-1, WORKER_ID)
-        .topic(TOPIC_NAME, LOCK_TIME)
-        .execute();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("maxResults is not greater than or equal to 0", e.getMessage());
-    }
+    ExternalTaskQueryTopicBuilder builder = externalTaskService
+        .fetchAndLock(-1, WORKER_ID)
+        .topic(TOPIC_NAME, LOCK_TIME);
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("maxResults is not greater than or equal to 0");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -650,14 +630,12 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
     // when
-    try {
-      externalTaskService.fetchAndLock(1, WORKER_ID)
-        .topic(TOPIC_NAME, -1L)
-        .execute();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("lockTime is not greater than 0", e.getMessage());
-    }
+    ExternalTaskQueryTopicBuilder builder = externalTaskService
+        .fetchAndLock(1, WORKER_ID)
+        .topic(TOPIC_NAME, -1L);
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("lockTime is not greater than 0");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -667,14 +645,12 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
 
     // when
-    try {
-      externalTaskService.fetchAndLock(1, WORKER_ID)
-        .topic(TOPIC_NAME, 0L)
-        .execute();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("lockTime is not greater than 0", e.getMessage());
-    }
+    ExternalTaskQueryTopicBuilder builder = externalTaskService
+        .fetchAndLock(1, WORKER_ID)
+        .topic(TOPIC_NAME, 0L);
+    assertThatThrownBy(builder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("lockTime is not greater than 0");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -1385,7 +1361,8 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     externalTaskService.lock(externalTask.getId(), WORKER_ID, LOCK_TIME);
 
     // when/then
-    assertThatThrownBy(() -> externalTaskService.lock(externalTask.getId(), aSecondWorkerId, LOCK_TIME))
+    String taskId = externalTask.getId();
+    assertThatThrownBy(() -> externalTaskService.lock(taskId, aSecondWorkerId, LOCK_TIME))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("External Task " + externalTask.getId()
       + " cannot be locked by worker '" + aSecondWorkerId
@@ -1400,7 +1377,8 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().notLocked().singleResult();
 
     // when/then
-    assertThatThrownBy(() -> externalTaskService.lock(externalTask.getId(), null, LOCK_TIME))
+    String taskId = externalTask.getId();
+    assertThatThrownBy(() -> externalTaskService.lock(taskId, null, LOCK_TIME))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("workerId is null");
   }
@@ -1518,12 +1496,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then it is not possible to complete the task with a different worker id
-    try {
-      externalTaskService.complete(externalTasks.get(0).getId(), "someCrazyWorkerId");
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("cannot be completed by worker 'someCrazyWorkerId'. It is locked by worker '" + WORKER_ID + "'.", e.getMessage());
-    }
+    String taskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.complete(taskId, "someCrazyWorkerId"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("cannot be completed by worker 'someCrazyWorkerId'. It is locked by worker '" + WORKER_ID + "'.");
   }
 
   @Test
@@ -1558,12 +1534,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     LockedExternalTask task = tasks.get(0);
 
-    try {
-      externalTaskService.complete(task.getId(), null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("workerId is null", e.getMessage());
-    }
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.complete(taskId, null))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("workerId is null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -1581,12 +1555,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
     // then the external task cannot be completed
-    try {
-      externalTaskService.complete(task.getId(), WORKER_ID);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ExternalTask with id '" + task.getId() + "' is suspended", e.getMessage());
-    }
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.complete(taskId, WORKER_ID))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("ExternalTask with id '" + task.getId() + "' is suspended");
 
     testRule.assertProcessNotEnded(processInstance.getId());
 
@@ -1689,7 +1661,8 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // then
     // expression evaluation failed due to missing variable
-    assertThatThrownBy(() -> externalTaskService.complete(task.getId(), WORKER_ID))
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.complete(taskId, WORKER_ID))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Unknown property used in expression");
   }
@@ -1797,7 +1770,8 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // when mapping variable does not exist
     // then output mapping fails due to missing variables
-    assertThatThrownBy(() -> externalTaskService.complete(task.getId(), WORKER_ID))
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.complete(taskId, WORKER_ID))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Propagation of bpmn error errorCode failed.");
   }
@@ -2022,7 +1996,8 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // when mapping variable does not exist
     // then output mapping fails due to missing variables
-    assertThatThrownBy(() -> externalTaskService.handleFailure(task.getId(), WORKER_ID, ERROR_MESSAGE, 0, 3000L))
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.handleFailure(taskId, WORKER_ID, ERROR_MESSAGE, 0, 3000L))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Propagation of bpmn error errorCode failed.");
   }
@@ -2247,7 +2222,8 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     // when NotFoundException occurs in the same transaction
     // then a ProcessEngineException is thrown
-    assertThatThrownBy(() -> externalTaskService.complete(task.getId(), WORKER_ID))
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.complete(taskId, WORKER_ID))
         .isExactlyInstanceOf(ProcessEngineException.class)
         .isNotInstanceOf(NotFoundException.class)
         .hasMessageContaining("Unable to find resource at path foo");
@@ -2329,12 +2305,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then the first worker cannot complete the task
-    try {
-      externalTaskService.complete(externalTasks.get(0).getId(), WORKER_ID);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("cannot be completed by worker '" + WORKER_ID + "'. It is locked by worker 'anotherWorkerId'.", e.getMessage());
-    }
+    String taskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.complete(taskId, WORKER_ID))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("cannot be completed by worker '" + WORKER_ID + "'. It is locked by worker 'anotherWorkerId'.");
 
     // and the second worker can
     externalTaskService.complete(reclaimedTasks.get(0).getId(), "anotherWorkerId");
@@ -2716,14 +2690,11 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then it is not possible to complete the task with a different worker id
-    try {
-      externalTaskService.handleFailure(externalTasks.get(0).getId(), "someCrazyWorkerId", ERROR_MESSAGE, 5, LOCK_TIME);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent("Failure of External Task " + externalTasks.get(0).getId()
-          + " cannot be reported by worker 'someCrazyWorkerId'. It is locked by worker '" + WORKER_ID + "'.",
-        e.getMessage());
-    }
+    String taskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.handleFailure(taskId, "someCrazyWorkerId", ERROR_MESSAGE, 5, LOCK_TIME))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Failure of External Task " + externalTasks.get(0).getId()
+          + " cannot be reported by worker 'someCrazyWorkerId'. It is locked by worker '" + WORKER_ID + "'.");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -2761,13 +2732,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    try {
-      externalTaskService.handleFailure(externalTasks.get(0).getId(), null, ERROR_MESSAGE, 5, LOCK_TIME);
-      fail("exception expected");
-    } catch (NullValueException e) {
-      testRule.assertTextPresent("workerId is null", e.getMessage());
-    }
-
+    String taskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.handleFailure(taskId, null, ERROR_MESSAGE, 5, LOCK_TIME))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("workerId is null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -2782,12 +2750,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    try {
-      externalTaskService.handleFailure(externalTasks.get(0).getId(), WORKER_ID, ERROR_MESSAGE, 5, - LOCK_TIME);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("retryDuration is not greater than or equal to 0", e.getMessage());
-    }
+    String taskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.handleFailure(taskId, WORKER_ID, ERROR_MESSAGE, 5, -LOCK_TIME))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("retryDuration is not greater than or equal to 0");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -2802,12 +2768,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then
-    try {
-      externalTaskService.handleFailure(externalTasks.get(0).getId(), WORKER_ID, ERROR_MESSAGE, -5, LOCK_TIME);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("retries is not greater than or equal to 0", e.getMessage());
-    }
+    String taskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.handleFailure(taskId, WORKER_ID, ERROR_MESSAGE, -5, LOCK_TIME))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("retries is not greater than or equal to 0");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -2846,12 +2810,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
     // then a failure cannot be reported
-    try {
-      externalTaskService.handleFailure(externalTasks.get(0).getId(), WORKER_ID, ERROR_MESSAGE, 5, LOCK_TIME);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ExternalTask with id '" + task.getId() + "' is suspended", e.getMessage());
-    }
+    String taskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.handleFailure(taskId, WORKER_ID, ERROR_MESSAGE, 5, LOCK_TIME))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ExternalTask with id '" + task.getId() + "' is suspended");
 
     testRule.assertProcessNotEnded(processInstance.getId());
 
@@ -3011,13 +2973,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
         .topic(TOPIC_NAME, LOCK_TIME)
         .execute();
 
-    try {
-      // when
-      externalTaskService.setRetries(externalTasks.get(0).getId(), -5);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("retries is not greater than or equal to 0", e.getMessage());
-    }
+    String taskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.setRetries(taskId, -5))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("retries is not greater than or equal to 0");
   }
 
   @Test
@@ -3270,15 +3229,14 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
       .execute();
 
     // then the first worker cannot complete the task
-    try {
-      externalTaskService.handleBpmnError(externalTasks.get(0).getId(), WORKER_ID, "ERROR-OCCURED");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Bpmn error of External Task " + externalTasks.get(0).getId() + " cannot be reported by worker '" + WORKER_ID + "'. It is locked by worker 'anotherWorkerId'.", e.getMessage());
-      if (includeVariables) {
-        List<VariableInstance> list = runtimeService.createVariableInstanceQuery().list();
-        assertEquals(0, list.size());
-      }
+    String taskId = externalTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.handleBpmnError(taskId, WORKER_ID, "ERROR-OCCURED"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Bpmn error of External Task " + externalTasks.get(0).getId() + " cannot be reported by worker '" + WORKER_ID + "'. It is locked by worker 'anotherWorkerId'.");
+
+    if (includeVariables) {
+      List<VariableInstance> list = runtimeService.createVariableInstanceQuery().list();
+      assertEquals(0, list.size());
     }
 
     // and the second worker can
@@ -3325,12 +3283,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     //then
     LockedExternalTask task = tasks.get(0);
-    try {
-      externalTaskService.handleBpmnError(task.getId(), WORKER_ID, null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("errorCode is null", e.getMessage());
-    }
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.handleBpmnError(taskId, WORKER_ID, null))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("errorCode is null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3344,12 +3300,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     LockedExternalTask task = tasks.get(0);
 
-    try {
-      externalTaskService.handleBpmnError(task.getId(), null,"ERROR-OCCURED");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("workerId is null", e.getMessage());
-    }
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.handleBpmnError(taskId, null, "ERROR-OCCURED"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("workerId is null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3367,12 +3321,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
     // then the external task cannot be completed
-    try {
-      externalTaskService.handleBpmnError(task.getId(), WORKER_ID, "ERROR-OCCURED");
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ExternalTask with id '" + task.getId() + "' is suspended", e.getMessage());
-    }
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.handleBpmnError(taskId, WORKER_ID, "ERROR-OCCURED"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ExternalTask with id '" + task.getId() + "' is suspended");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
@@ -3746,13 +3698,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     ClockUtil.setCurrentTime(nowPlus(2));
     // when
-    try {
-      externalTaskService.extendLock(lockedTasks.get(0).getId(), WORKER_ID, 100);
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      // then
-      assertTrue(e.getMessage().contains("Cannot extend a lock that expired"));
-    }
+    String lockedTaskId = lockedTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.extendLock(lockedTaskId, WORKER_ID, 100))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot extend a lock that expired");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3763,12 +3712,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().singleResult();
     // when
-    try {
-      externalTaskService.extendLock(externalTask.getId(), WORKER_ID, 100);
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      assertTrue(e.getMessage().contains("The lock of the External Task " + externalTask.getId() + " cannot be extended by worker '" + WORKER_ID));
-    }
+    String taskId = externalTask.getId();
+    assertThatThrownBy(() -> externalTaskService.extendLock(taskId, WORKER_ID, 100))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The lock of the External Task " + taskId + " cannot be extended by worker '" + WORKER_ID + "'");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3785,13 +3732,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertEquals(1, lockedTasks.size());
 
     // when
-    try {
-      externalTaskService.extendLock(lockedTasks.get(0).getId(), WORKER_ID, 0);
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      // then
-      assertTrue(e.getMessage().contains("lockTime is not greater than 0"));
-    }
+    String lockedTaskId = lockedTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.extendLock(lockedTaskId, WORKER_ID, 0))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("lockTime is not greater than 0");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3808,13 +3752,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertEquals(1, lockedTasks.size());
 
     // when
-    try {
-      externalTaskService.extendLock(lockedTasks.get(0).getId(), WORKER_ID, -1);
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      // then
-      assertTrue(e.getMessage().contains("lockTime is not greater than 0"));
-    }
+    String lockedTaskId = lockedTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.extendLock(lockedTaskId, WORKER_ID, -1))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("lockTime is not greater than 0");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3831,13 +3772,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
     assertEquals(1, lockedTasks.size());
 
     // when
-    try {
-      externalTaskService.extendLock(lockedTasks.get(0).getId(), null, 100);
-      fail("Exception expected");
-    } catch (NullValueException e) {
-      // then
-      assertTrue(e.getMessage().contains("workerId is null"));
-    }
+    String lockedTaskId = lockedTasks.get(0).getId();
+    assertThatThrownBy(() -> externalTaskService.extendLock(lockedTaskId, null, 100))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("workerId is null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3855,12 +3793,10 @@ public class ExternalTaskServiceTest extends PluggableProcessEngineTest {
 
     LockedExternalTask task = lockedTasks.get(0);
     // when
-    try {
-      externalTaskService.extendLock(task.getId(),"anAnotherWorkerId", 100);
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      assertTrue(e.getMessage().contains("The lock of the External Task " + task.getId() + " cannot be extended by worker 'anAnotherWorkerId'"));
-    }
+    String taskId = task.getId();
+    assertThatThrownBy(() -> externalTaskService.extendLock(taskId, "anAnotherWorkerId", 100))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("The lock of the External Task " + taskId + " cannot be extended by worker 'anAnotherWorkerId'");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")

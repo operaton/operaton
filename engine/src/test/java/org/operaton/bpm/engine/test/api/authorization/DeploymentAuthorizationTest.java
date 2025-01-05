@@ -16,38 +16,36 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.operaton.bpm.application.ProcessApplicationReference;
+import org.operaton.bpm.application.ProcessApplicationRegistration;
+import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.authorization.*;
+import org.operaton.bpm.engine.repository.Deployment;
+import org.operaton.bpm.engine.repository.DeploymentQuery;
+import org.operaton.bpm.engine.repository.Resource;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.CREATE;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.DEPLOYMENT;
+
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import org.operaton.bpm.application.ProcessApplicationReference;
-import org.operaton.bpm.application.ProcessApplicationRegistration;
-import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.authorization.Authorization;
-import org.operaton.bpm.engine.authorization.AuthorizationQuery;
-import org.operaton.bpm.engine.authorization.Groups;
-import org.operaton.bpm.engine.authorization.Resources;
-import org.operaton.bpm.engine.authorization.SystemPermissions;
-import org.operaton.bpm.engine.repository.Deployment;
-import org.operaton.bpm.engine.repository.DeploymentQuery;
-import org.operaton.bpm.engine.repository.Resource;
-import org.junit.Test;
 
 /**
  * @author Roman Smirnov
@@ -173,21 +171,16 @@ public class DeploymentAuthorizationTest extends AuthorizationTest {
   @Test
   public void testCreateDeploymentWithoutAuthoriatzion() {
     // given
+    var deploymentBuilder = repositoryService
+        .createDeployment()
+        .addClasspathResource(FIRST_RESOURCE);
 
-    try {
-      // when
-      repositoryService
-          .createDeployment()
-          .addClasspathResource(FIRST_RESOURCE)
-          .deploy();
-      fail("Exception expected: It should not be possible to create a new deployment");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(CREATE.getName(), message);
-      testRule.assertTextPresent(DEPLOYMENT.resourceName(), message);
-    }
+    // when
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(CREATE.getName())
+      .hasMessageContaining(DEPLOYMENT.resourceName());
   }
 
   @Test

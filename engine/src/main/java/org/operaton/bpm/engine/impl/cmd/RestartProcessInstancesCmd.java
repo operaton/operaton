@@ -199,7 +199,7 @@ public class RestartProcessInstancesCmd extends AbstractRestartProcessInstanceCm
 
     // legacy behavior < 7.13: the initial flag is never set for instances started
     // in these versions. We must perform the old logic of finding initial variables
-    if (historicDetails.size() == 0) {
+    if (historicDetails.isEmpty()) {
       HistoricActivityInstance startActivityInstance = resolveStartActivityInstance(processInstance);
 
       if (startActivityInstance != null) {

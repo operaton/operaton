@@ -292,7 +292,7 @@ public class TableDataManager extends AbstractManager {
       throw LOG.retrieveMetadataException(e);
     }
 
-    if(result.getColumnNames().size() == 0) {
+    if(result.getColumnNames().isEmpty()) {
       // According to API, when a table doesn't exist, null should be returned
       result = null;
     }

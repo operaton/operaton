@@ -74,7 +74,7 @@ public class DeployBarTask extends Task {
       ProcessEngine processEngine = ProcessEngines.getProcessEngine(processEngineName);
       if (processEngine == null) {
         List<ProcessEngineInfo> processEngineInfos = ProcessEngines.getProcessEngineInfos();
-        if( processEngineInfos != null && processEngineInfos.size() > 0 )
+        if( processEngineInfos != null && !processEngineInfos.isEmpty() )
         {
           // Since no engine with the given name is found, we can't be 100% sure which ProcessEngineInfo
           // is causing the error. We should show ALL errors and process engine names / resource URL's.

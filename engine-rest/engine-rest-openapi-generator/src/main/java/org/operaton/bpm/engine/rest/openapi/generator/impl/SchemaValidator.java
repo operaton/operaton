@@ -44,7 +44,7 @@ public class SchemaValidator {
 
     Set<ValidationMessage> errors = schema.validate(inputNode);
 
-    if (errors.size() > 0) {
+    if (!errors.isEmpty()) {
       String messages = errors.stream()
                               .map(ValidationMessage::getMessage)
                               .collect(Collectors.joining("\n"));

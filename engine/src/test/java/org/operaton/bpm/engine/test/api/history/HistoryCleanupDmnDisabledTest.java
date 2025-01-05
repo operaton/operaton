@@ -85,7 +85,7 @@ public class HistoryCleanupDmnDisabledTest {
       public Void execute(CommandContext commandContext) {
 
         List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
-        if (jobs.size() > 0) {
+        if (!jobs.isEmpty()) {
           assertEquals(1, jobs.size());
           String jobId = jobs.get(0).getId();
           commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));

@@ -4831,7 +4831,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
    * verify that either the first or the last task of the list belong to the given process instance
    */
   protected void verifyFirstOrLastTask(List<Task> tasks, ProcessInstance belongingProcessInstance) {
-    if (tasks.size() == 0) {
+    if (tasks.isEmpty()) {
       fail("no tasks given");
     }
 

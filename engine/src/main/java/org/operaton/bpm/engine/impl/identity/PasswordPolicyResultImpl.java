@@ -37,7 +37,7 @@ public class PasswordPolicyResultImpl implements PasswordPolicyResult {
 
   @Override
   public boolean isValid() {
-    return violatedRules == null || violatedRules.size() == 0;
+    return violatedRules == null || violatedRules.isEmpty();
   }
 
   @Override

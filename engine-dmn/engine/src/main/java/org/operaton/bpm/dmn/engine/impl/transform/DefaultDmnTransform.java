@@ -181,7 +181,7 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
       List<DmnDecision> requiredDmnDecisions = getRequiredDmnDecisions(dec, dmnDecisions);
       DmnDecisionImpl dmnDecision = dmnDecisions.get(dec.getId());
 
-      if(requiredDmnDecisions.size() > 0) {
+      if(!requiredDmnDecisions.isEmpty()) {
         dmnDecision.setRequiredDecision(requiredDmnDecisions);
       }
     }

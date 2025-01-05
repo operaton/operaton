@@ -80,7 +80,7 @@ public class ExpectedActivityInstance {
     for (int i = 0; i < childTransitionInstances.size(); i++) {
       ExpectedTransitionInstance transitionInstance = childTransitionInstances.get(i);
       boolean transitionIsTail = (i == (childTransitionInstances.size() - 1))
-          && (childActivityInstances.size() == 0);
+          && (childActivityInstances.isEmpty());
       writeTransition(transitionInstance, writer, prefix +  (isTail ? "    " : "│   "), transitionIsTail);
     }
 

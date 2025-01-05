@@ -71,7 +71,7 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
     super.cleanBatch();
     List<HistoricProcessInstance> list = historyService.createHistoricProcessInstanceQuery().list();
 
-    if (list.size() > 0) {
+    if (!list.isEmpty()) {
       List<String> instances = new ArrayList<>();
       for (HistoricProcessInstance hpi : list) {
         instances.add(hpi.getId());

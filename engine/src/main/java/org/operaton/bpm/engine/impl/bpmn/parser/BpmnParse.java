@@ -600,7 +600,7 @@ public class BpmnParse extends Parse {
   protected void parseLaneSets(Element parentElement, ProcessDefinitionEntity processDefinition) {
     List<Element> laneSets = parentElement.elements("laneSet");
 
-    if (laneSets != null && laneSets.size() > 0) {
+    if (laneSets != null && !laneSets.isEmpty()) {
       for (Element laneSetElement : laneSets) {
         LaneSet newLaneSet = new LaneSet();
 
@@ -616,7 +616,7 @@ public class BpmnParse extends Parse {
 
   protected void parseLanes(Element laneSetElement, LaneSet laneSet) {
     List<Element> lanes = laneSetElement.elements("lane");
-    if (lanes != null && lanes.size() > 0) {
+    if (lanes != null && !lanes.isEmpty()) {
       for (Element laneElement : lanes) {
         // Parse basic attributes
         Lane lane = new Lane();
@@ -625,7 +625,7 @@ public class BpmnParse extends Parse {
 
         // Parse ID's of flow-nodes that live inside this lane
         List<Element> flowNodeElements = laneElement.elements("flowNodeRef");
-        if (flowNodeElements != null && flowNodeElements.size() > 0) {
+        if (flowNodeElements != null && !flowNodeElements.isEmpty()) {
           for (Element flowNodeElement : flowNodeElements) {
             lane.getFlowNodeIds().add(flowNodeElement.getText());
           }
@@ -872,7 +872,7 @@ public class BpmnParse extends Parse {
   public void parseStartEvents(Element parentElement, ScopeImpl scope) {
     List<Element> startEventElements = parentElement.elements("startEvent");
     List<ActivityImpl> startEventActivities = new ArrayList<>();
-    if (startEventElements.size() > 0) {
+    if (!startEventElements.isEmpty()) {
       for (Element startEventElement : startEventElements) {
 
         ActivityImpl startEventActivity = createActivityOnScope(startEventElement, scope);
@@ -1359,7 +1359,7 @@ public class BpmnParse extends Parse {
     for (ActivityImpl activity : activities) {
       validateActivity(activity);
       // check children if it is an own scope / subprocess / ...
-      if (activity.getActivities().size() > 0) {
+      if (!activity.getActivities().isEmpty()) {
         validateActivities(activity.getActivities());
       }
     }
@@ -1384,7 +1384,7 @@ public class BpmnParse extends Parse {
   }
 
   public void validateExclusiveGateway(ActivityImpl activity) {
-    if (activity.getOutgoingTransitions().size() == 0) {
+    if (activity.getOutgoingTransitions().isEmpty()) {
       // TODO: double check if this is valid (I think in Activiti yes, since we
       // need start events we will need an end event as well)
       addError("Exclusive Gateway '" + activity.getId() + "' has no outgoing sequence flows.", null, activity.getId());

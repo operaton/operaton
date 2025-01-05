@@ -98,10 +98,10 @@ public class Element {
 
   public Element elementNS(Namespace nameSpace, String tagName) {
     List<Element> elementList = elementsNS(nameSpace.getNamespaceUri(), tagName);
-    if (elementList.size() == 0 && nameSpace.hasAlternativeUri()) {
+    if (elementList.isEmpty() && nameSpace.hasAlternativeUri()) {
       elementList = elementsNS(nameSpace.getAlternativeUri(), tagName);
     }
-    if (elementList.size() == 0) {
+    if (elementList.isEmpty()) {
       return null;
     } else if (elementList.size() > 1) {
       throw new ProcessEngineException("Parsing exception: multiple elements with tag name " + tagName + " found");

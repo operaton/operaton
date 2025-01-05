@@ -44,7 +44,7 @@ public class DmnDecisionTableResultImpl implements DmnDecisionTableResult {
 
   @Override
   public DmnDecisionRuleResult getFirstResult() {
-    if (size() > 0) {
+    if (!isEmpty()) {
       return get(0);
     } else {
       return null;

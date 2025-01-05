@@ -99,7 +99,7 @@ public class BpmnActivityBehavior {
 
       execution.leaveActivityViaTransition(transitionsToTake.get(0));
 
-    } else if (transitionsToTake.size() >= 1) {
+    } else if (!transitionsToTake.isEmpty()) {
       execution.leaveActivityViaTransitions(transitionsToTake, Arrays.asList(execution));
     } else {
 

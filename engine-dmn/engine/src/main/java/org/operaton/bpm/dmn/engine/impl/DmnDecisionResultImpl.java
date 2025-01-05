@@ -42,7 +42,7 @@ public class DmnDecisionResultImpl implements DmnDecisionResult {
 
   @Override
   public DmnDecisionResultEntries getFirstResult() {
-    if (size() > 0) {
+    if (!isEmpty()) {
       return get(0);
     } else {
       return null;

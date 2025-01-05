@@ -306,7 +306,7 @@ public class RuntimeServiceTest {
     // if we DO skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, true);
     // the custom listener is not invoked
-    assertTrue(TestExecutionListener.collectedEvents.size() == 0);
+    assertTrue(TestExecutionListener.collectedEvents.isEmpty());
     TestExecutionListener.reset();
   }
 
@@ -327,7 +327,7 @@ public class RuntimeServiceTest {
     // if we DO skip the custom listeners,
     runtimeService.deleteProcessInstance(processInstance.getId(), null, true);
     // the custom listener is not invoked
-    assertTrue(TestExecutionListener.collectedEvents.size() == 0);
+    assertTrue(TestExecutionListener.collectedEvents.isEmpty());
     TestExecutionListener.reset();
   }
 

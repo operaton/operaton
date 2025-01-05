@@ -633,7 +633,7 @@ public class LegacyBehavior {
   public static void createMissingHistoricVariables(PvmExecutionImpl execution) {
     Collection<VariableInstanceEntity> variables = ((ExecutionEntity) execution).getVariablesInternal();
 
-    if (variables != null && variables.size() > 0) {
+    if (variables != null && !variables.isEmpty()) {
       // trigger historic creation if the history is not presented already
       for (VariableInstanceEntity variable : variables) {
 

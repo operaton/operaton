@@ -78,7 +78,7 @@ public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformInteg
 
     // then
     List<Job> failedJobs = managementService.createJobQuery().noRetriesLeft().list();
-    assertTrue(failedJobs.size() > 0);
+    assertTrue(!failedJobs.isEmpty());
     for (Job job : failedJobs) {
       String jobExceptionStacktrace = managementService.getJobExceptionStacktrace(job.getId());
       assertFalse(jobExceptionStacktrace.contains("ClassNotFoundException"));

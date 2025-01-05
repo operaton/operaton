@@ -88,7 +88,7 @@ public class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Con
           .execute((Command<Void>) commandContext -> {
 
             List<Job> jobs = otherProcessEngine.getManagementService().createJobQuery().list();
-            if (jobs.size() > 0) {
+            if (!jobs.isEmpty()) {
               assertEquals(1, jobs.size());
               String jobId = jobs.get(0).getId();
               commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
@@ -108,7 +108,7 @@ public class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Con
     processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
 
       List<Job> jobs = processEngine.getManagementService().createJobQuery().list();
-      if (jobs.size() > 0) {
+      if (!jobs.isEmpty()) {
         assertEquals(1, jobs.size());
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));

@@ -79,7 +79,7 @@ public class SameEventScopeInstructionValidator implements MigrationInstructionV
       }
       else {
         List<ValidatingMigrationInstruction> eventScopeInstructions = instructions.getInstructionsBySourceScope(sourceEventScope);
-        if (eventScopeInstructions.size() > 0) {
+        if (!eventScopeInstructions.isEmpty()) {
           return eventScopeInstructions.get(0).getTargetActivity();
         }
       }

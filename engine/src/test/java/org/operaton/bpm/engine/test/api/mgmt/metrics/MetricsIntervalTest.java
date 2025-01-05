@@ -510,7 +510,7 @@ public class MetricsIntervalTest extends AbstractMetricsIntervalTest {
     List<MetricIntervalValue> metrics = managementService.createMetricsQuery().interval();
 
     // assume
-    assertTrue(metrics.size() > 0);
+    assertTrue(!metrics.isEmpty());
 
     // when
     List<MetricIntervalValue> aggregatedMetrics = managementService.createMetricsQuery().aggregateByReporter().interval();

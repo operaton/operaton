@@ -22,7 +22,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.DECISION_DEFINITION;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -45,6 +44,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Philipp Ossler
@@ -155,15 +156,9 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     startProcessInstanceAndEvaluateDecision();
     String decisionDefinitionId = selectDecisionDefinitionByKey(DECISION_DEFINITION_KEY).getId();
 
-    try {
-      // when
-      historyService.deleteHistoricDecisionInstanceByDefinitionId(decisionDefinitionId);
-      fail("expect authorization exception");
-    } catch (AuthorizationException e) {
-      // then
-      assertThat(e.getMessage()).isEqualTo(
-          "The user with id 'test' does not have 'DELETE_HISTORY' permission on resource 'testDecision' of type 'DecisionDefinition'.");
-    }
+    assertThatThrownBy(() -> historyService.deleteHistoricDecisionInstanceByDefinitionId(decisionDefinitionId))
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessage("The user with id 'test' does not have 'DELETE_HISTORY' permission on resource 'testDecision' of type 'DecisionDefinition'.");
   }
 
   @Test
@@ -207,17 +202,11 @@ public class HistoricDecisionInstanceAuthorizationTest extends AuthorizationTest
     startProcessInstanceAndEvaluateDecision();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
-    HistoricDecisionInstance historicDecisionInstance = query.includeInputs().includeOutputs().singleResult();
+    String historicDecisionInstanceId = query.includeInputs().includeOutputs().singleResult().getId();
 
-    try {
-      // when
-      historyService.deleteHistoricDecisionInstanceByInstanceId(historicDecisionInstance.getId());
-      fail("expect authorization exception");
-    } catch (AuthorizationException e) {
-      // then
-      assertThat(e.getMessage()).isEqualTo(
-          "The user with id 'test' does not have 'DELETE_HISTORY' permission on resource 'testDecision' of type 'DecisionDefinition'.");
-    }
+    assertThatThrownBy(() -> historyService.deleteHistoricDecisionInstanceByInstanceId(historicDecisionInstanceId))
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessage("The user with id 'test' does not have 'DELETE_HISTORY' permission on resource 'testDecision' of type 'DecisionDefinition'.");
   }
 
   @Test

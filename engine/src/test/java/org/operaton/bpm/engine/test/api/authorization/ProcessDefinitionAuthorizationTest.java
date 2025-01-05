@@ -26,6 +26,8 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.SUSPEND_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -180,18 +182,15 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
     // given
     String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
 
-    try {
-      // when
-      repositoryService.getProcessDefinition(processDefinitionId);
-      fail("Exception expected: It should not be possible to get the process definition");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> repositoryService.getProcessDefinition(processDefinitionId))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(READ.getName(), message);
-      testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+      .withFailMessage("Exception expected: It should not be possible to get the process definition")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(READ.getName())
+      .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -1222,19 +1221,16 @@ public class ProcessDefinitionAuthorizationTest extends AuthorizationTest {
   @Test
   public void testDecisionDefinitionUpdateTimeToLiveWithoutAuthorizations() {
     //given
-    ProcessDefinition definition = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY);
-    try {
-      //when
-      repositoryService.updateProcessDefinitionHistoryTimeToLive(definition.getId(), 6);
-      fail("Exception expected");
-    } catch (AuthorizationException e) {
+    String processDefinitionId = selectProcessDefinitionByKey(ONE_TASK_PROCESS_KEY).getId();
+
+    // when
+    assertThatThrownBy(() -> repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitionId, 6))
       // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(UPDATE.getName(), message);
-      testRule.assertTextPresent(ONE_TASK_PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(UPDATE.getName())
+        .hasMessageContaining(ONE_TASK_PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
   }
 

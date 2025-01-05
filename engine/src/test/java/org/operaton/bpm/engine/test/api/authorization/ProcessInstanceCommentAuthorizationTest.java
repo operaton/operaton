@@ -29,6 +29,8 @@ import org.operaton.bpm.engine.task.Comment;
 import org.operaton.bpm.engine.test.Deployment;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
   protected static final String ONE_TASK_PROCESS_KEY = "oneTaskProcess";
 
@@ -39,17 +41,14 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
     createTask(TASK_ID);
 
-    Comment createdComment = createComment(TASK_ID, processInstanceId, "aComment");
+    String createdCommentId = createComment(TASK_ID, processInstanceId, "aComment").getId();
 
-    try {
-      // when
-      taskService.deleteProcessInstanceComment(processInstanceId, createdComment.getId());
-      fail("Exception expected: It should not be possible to delete a task.");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteProcessInstanceComment(processInstanceId, createdCommentId))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'UPDATE'",
-          e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'UPDATE'");
 
     // triggers a db clean up
     deleteTask(TASK_ID, true);
@@ -125,17 +124,14 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
     // given
     createTask(TASK_ID);
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
-    Comment createdComment = createComment(TASK_ID, processInstanceId, "originalComment");
+    String createdCommentId = createComment(TASK_ID, processInstanceId, "originalComment").getId();
 
-    try {
-      // when
-      taskService.updateProcessInstanceComment(processInstanceId, createdComment.getId(), "updateMessage");
-      fail("Exception expected: It should not be possible to delete a task.");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.updateProcessInstanceComment(processInstanceId, createdCommentId, "updateMessage"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'UPDATE'",
-          e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'UPDATE'");
 
     deleteTask(TASK_ID, true);
   }
@@ -170,18 +166,14 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
   public void testDeleteProcessInstanceCommentWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
+    String createdCommentId = createComment(null, processInstanceId, "aComment").getId();
 
-    Comment createdComment = createComment(null, processInstanceId, "aComment");
-
-    try {
-      // when
-      taskService.deleteProcessInstanceComment(processInstanceId, createdComment.getId());
-      fail("Exception expected: It should not be possible to delete a task.");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.deleteProcessInstanceComment(processInstanceId, createdCommentId))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'UPDATE'",
-          e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'UPDATE'");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
@@ -241,17 +233,14 @@ public class ProcessInstanceCommentAuthorizationTest extends AuthorizationTest {
   public void testUpdateProcessInstanceCommentWithoutAuthorization() {
     // given
     String processInstanceId = startProcessInstanceByKey(ONE_TASK_PROCESS_KEY).getId();
-    Comment createdComment = createComment(null, processInstanceId, "originalComment");
+    String createdCommentId = createComment(null, processInstanceId, "originalComment").getId();
 
-    try {
-      // when
-      taskService.updateProcessInstanceComment(processInstanceId, createdComment.getId(), "updateMessage");
-      fail("Exception expected: It should not be possible to delete a task.");
-    } catch (AuthorizationException e) {
+    // when
+    assertThatThrownBy(() -> taskService.updateProcessInstanceComment(processInstanceId, createdCommentId, "updateMessage"))
       // then
-      testRule.assertTextPresent("The user with id 'test' does not have one of the following permissions: 'UPDATE'",
-          e.getMessage());
-    }
+      .withFailMessage("Exception expected: It should not be possible to delete a task.")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining("The user with id 'test' does not have one of the following permissions: 'UPDATE'");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_HISTORY;
@@ -24,8 +23,9 @@ import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.HISTORIC_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import org.operaton.bpm.engine.AuthorizationException;
@@ -476,18 +476,13 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
     assertEquals(1L, historyService.createHistoricDetailQuery().count());
     enableAuthorization();
 
-    try {
-      // when
-      historyService.deleteHistoricVariableInstance(variableInstanceId);
-      fail("Exception expected: It should not be possible to delete the historic variable instance");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE_HISTORY.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstance(variableInstanceId))
+      .withFailMessage("Exception expected: It should not be possible to delete the historic variable instance")
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId)
+      .hasMessageContaining(DELETE_HISTORY.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -501,12 +496,9 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
     assertEquals(1L, historyService.createHistoricDetailQuery().count());
     enableAuthorization();
 
-    try {
-      // when
-      historyService.deleteHistoricVariableInstance(variableInstanceId);
-    } catch (AuthorizationException e) {
-      fail("It should be possible to delete the historic variable instance with granted permissions");
-    }
+    assertThatCode(() -> historyService.deleteHistoricVariableInstance(variableInstanceId))
+      .withFailMessage("It should be possible to delete the historic variable instance with granted permissions")
+      .doesNotThrowAnyException();
     // then
     verifyVariablesDeleted();
   }
@@ -529,13 +521,11 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
     assertEquals(1L, historyService.createHistoricDetailQuery().count());
     enableAuthorization();
 
-    try {
-      // when
-      historyService.deleteHistoricVariableInstance(variableInstanceId);
-    } catch (AuthorizationException e) {
-      fail("It should be possible to delete the historic variable instance with granted permissions after the process definition is deleted");
-    }
-    // then
+    // when
+    assertThatCode(() -> historyService.deleteHistoricVariableInstance(variableInstanceId))
+      // then
+      .withFailMessage("It should be possible to delete the historic variable instance with granted permissions after the process definition is deleted")
+      .doesNotThrowAnyException();
     verifyVariablesDeleted();
     cleanUpAfterDeploymentDeletion();
   }
@@ -586,36 +576,32 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
   public void testDeleteHistoricProcessVariableInstancesWithoutAuthorization() {
     // given
     ProcessInstance instance = startProcessInstanceByKey(PROCESS_KEY, getVariables());
+    String instanceId = instance.getId();
     verifyVariablesCreated();
 
-    try {
-      // when
-      historyService.deleteHistoricVariableInstancesByProcessInstanceId(instance.getId());
-      fail("Exception expected: It should not be possible to delete the historic variable instance");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent(userId, message);
-      testRule.assertTextPresent(DELETE_HISTORY.getName(), message);
-      testRule.assertTextPresent(PROCESS_KEY, message);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-    }
+    // when
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstancesByProcessInstanceId(instanceId))
+        // then
+        .isInstanceOf(AuthorizationException.class)
+        .hasMessageContaining(userId)
+        .hasMessageContaining(DELETE_HISTORY.getName())
+        .hasMessageContaining(PROCESS_KEY)
+        .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
   public void testDeleteHistoricProcessVariableInstancesWithDeleteHistoryPermissionOnProcessDefinition() {
     // given
     ProcessInstance instance = startProcessInstanceByKey(PROCESS_KEY, getVariables());
+    String instanceId = instance.getId();
     verifyVariablesCreated();
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, DELETE_HISTORY);
 
-    try {
-      // when
-      historyService.deleteHistoricVariableInstancesByProcessInstanceId(instance.getId());
-    } catch (AuthorizationException e) {
-      fail("It should be possible to delete the historic variable instance with granted permissions");
-    }
-    // then
+    // when
+    assertThatCode(() -> historyService.deleteHistoricVariableInstancesByProcessInstanceId(instanceId))
+      // then
+      .withFailMessage("It should be possible to delete the historic variable instance with granted permissions")
+      .doesNotThrowAnyException();
     verifyVariablesDeleted();
   }
 
@@ -623,7 +609,7 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
   @Test
   public void testDeleteHistoricProcessVariableInstancesAfterDeletingDeployment() {
     // given
-    ProcessInstance instance = startProcessInstanceByKey(PROCESS_KEY, getVariables());
+    String processInstanceId = startProcessInstanceByKey(PROCESS_KEY, getVariables()).getId();
     String taskId = selectSingleTask().getId();
     disableAuthorization();
     taskService.complete(taskId);
@@ -636,12 +622,9 @@ public class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest
     repositoryService.deleteDeployment(deploymentId);
     enableAuthorization();
 
-    try {
-      // when
-      historyService.deleteHistoricVariableInstancesByProcessInstanceId(instance.getId());
-    } catch (AuthorizationException e) {
-      fail("It should be possible to delete the historic variable instance with granted permissions after the process definition is deleted");
-    }
+    assertThatCode(() -> historyService.deleteHistoricVariableInstancesByProcessInstanceId(processInstanceId))
+      .withFailMessage("It should be possible to delete the historic variable instance with granted permissions after the process definition is deleted")
+      .doesNotThrowAnyException();
 
     // then
     verifyVariablesDeleted();

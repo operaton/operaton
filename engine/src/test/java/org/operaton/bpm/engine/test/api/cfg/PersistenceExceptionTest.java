@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
-
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -34,6 +31,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Svetlana Dorokhova.
@@ -63,13 +62,11 @@ public class PersistenceExceptionTest {
     }
     final BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("process1").operatonHistoryTimeToLive(180).startEvent().userTask(longString.toString()).endEvent().done();
     testRule.deploy(modelInstance);
-    try {
-      runtimeService.startProcessInstanceByKey("process1").getId();
-      fail("persistence exception is expected");
-    } catch (ProcessEngineException ex) {
-      Throwable cause = ex.getCause();
-      assertThat(cause.getMessage()).contains("insertHistoricTaskInstanceEvent");
-    }
-  }
 
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process1"))
+      .isInstanceOf(ProcessEngineException.class)
+      .extracting(e -> e.getCause().getMessage())
+      .asString()
+      .contains("insertHistoricTaskInstanceEvent");
+  }
 }

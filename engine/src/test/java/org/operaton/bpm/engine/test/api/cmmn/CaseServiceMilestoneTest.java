@@ -18,15 +18,18 @@ package org.operaton.bpm.engine.test.api.cmmn;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.exception.NotAllowedException;
 import org.operaton.bpm.engine.runtime.CaseExecution;
+import org.operaton.bpm.engine.runtime.CaseExecutionCommandBuilder;
 import org.operaton.bpm.engine.runtime.CaseInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -37,85 +40,63 @@ public class CaseServiceMilestoneTest extends PluggableProcessEngineTest {
   protected final String DEFINITION_KEY = "oneMilestoneCase";
   protected final String MILESTONE_KEY = "PI_Milestone_1";
 
-  @Deployment(resources={
-      "org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"
-      })
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"})
   @Test
   public void testManualStart() {
     // given
     createCaseInstance(DEFINITION_KEY).getId();
     String caseTaskId = queryCaseExecutionByActivityId(MILESTONE_KEY).getId();
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseTaskId);
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(caseTaskId)
-        .manualStart();
-      fail();
-    } catch (NotAllowedException e) {
-    }
+    // when
+    assertThatThrownBy(commandBuilder::manualStart)
+      // then
+      .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
-      "org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"
-      })
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"})
   @Test
   public void testDisable() {
     // given
     createCaseInstance(DEFINITION_KEY).getId();
     String caseTaskId = queryCaseExecutionByActivityId(MILESTONE_KEY).getId();
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseTaskId);
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(caseTaskId)
-        .disable();
-      fail();
-    } catch (NotAllowedException e) {
-    }
+    // when
+    assertThatThrownBy(commandBuilder::disable)
+      // then
+      .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
-      "org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"
-      })
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"})
   @Test
   public void testReenable() {
     // given
     createCaseInstance(DEFINITION_KEY).getId();
     String caseTaskId = queryCaseExecutionByActivityId(MILESTONE_KEY).getId();
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseTaskId);
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(caseTaskId)
-        .reenable();
-      fail();
-    } catch (NotAllowedException e) {
-    }
+    // when
+    assertThatThrownBy(commandBuilder::reenable)
+      // then
+      .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
-      "org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"
-      })
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"})
   @Test
   public void testComplete() {
     // given
     createCaseInstance(DEFINITION_KEY).getId();
     String caseTaskId = queryCaseExecutionByActivityId(MILESTONE_KEY).getId();
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(caseTaskId);
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(caseTaskId)
-        .complete();
-      fail();
-    } catch (NotAllowedException e) {
-    }
+    // when
+    assertThatThrownBy(commandBuilder::complete)
+      // then
+      .isInstanceOf(NotAllowedException.class);
   }
 
-  @Deployment(resources={
-      "org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"
-      })
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"})
   @Test
   public void testTerminate() {
     // given
@@ -131,9 +112,7 @@ public class CaseServiceMilestoneTest extends PluggableProcessEngineTest {
     assertNull(caseMilestone);
   }
 
-  @Deployment(resources={
-      "org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"
-      })
+  @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneMilestoneCase.cmmn"})
   @Test
   public void testTerminateNonFluent() {
     // given

@@ -16,6 +16,18 @@
  */
 package org.operaton.bpm.engine.test.api.cmmn;
 
+import org.operaton.bpm.engine.exception.NotAllowedException;
+import org.operaton.bpm.engine.runtime.*;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -23,19 +35,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import org.operaton.bpm.engine.exception.NotAllowedException;
-import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.runtime.VariableInstance;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -228,15 +229,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
 
     ProcessInstance processInstance = queryProcessInstance();
     assertNull(processInstance);
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .reenable();
-      fail("It should not be possible to re-enable an enabled process task.");
-    } catch (NotAllowedException e) {
-    }
+    // when
+    assertThatThrownBy(commandBuilder::reenable)
+      // then
+      .withFailMessage("It should not be possible to re-enable an enabled process task.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={
@@ -275,15 +274,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .reenable();
-      fail("It should not be possible to re-enable an active process task.");
-    } catch (NotAllowedException e) {
-    }
+    // when
+    assertThatThrownBy(commandBuilder::reenable)
+      // then
+      .withFailMessage("It should not be possible to re-enable an active process task.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
@@ -317,14 +314,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
       .withCaseExecution(processTaskId)
       .disable();
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .disable();
-      fail("It should not be possible to disable a already disabled process task.");
-    } catch (NotAllowedException e) {
-    }
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
+
+    // when
+    assertThatThrownBy(commandBuilder::disable)
+      // then
+      .withFailMessage("It should not be possible to disable a already disabled process task.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={
@@ -336,15 +332,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     // given
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
 
     // when
-    try {
-      caseService
-        .withCaseExecution(processTaskId)
-        .disable();
-      fail("It should not be possible to disable an active process task.");
-    } catch (NotAllowedException e) {
-    }
+    assertThatThrownBy(commandBuilder::disable)
+      // then
+      .withFailMessage("It should not be possible to disable an active process task.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
@@ -358,14 +352,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
       .withCaseExecution(processTaskId)
       .disable();
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .manualStart();
-      fail("It should not be possible to start a disabled process task manually.");
-    } catch (NotAllowedException e) {
-    }
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
+
+    // when
+    assertThatThrownBy(commandBuilder::manualStart)
+      // then
+      .withFailMessage("It should not be possible to start a disabled process task manually.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={
@@ -378,14 +371,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .manualStart();
-      fail("It should not be possible to start an already active process task manually.");
-    } catch (NotAllowedException e) {
-    }
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
+
+    // when
+    assertThatThrownBy(commandBuilder::manualStart)
+      // then
+      .withFailMessage("It should not be possible to start an already active process task manually.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={
@@ -398,14 +390,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .complete();
-      fail("It should not be possible to complete a process task, while the process instance is still running.");
-    } catch (NotAllowedException e) {}
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
 
+    // when
+    assertThatThrownBy(commandBuilder::complete)
+      // then
+      .withFailMessage("It should not be possible to complete a process task, while the process instance is still running.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={
@@ -470,13 +461,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .complete();
-      fail("Should not be able to complete an enabled process task.");
-    } catch (NotAllowedException e) {}
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
+
+    // when
+    assertThatThrownBy(commandBuilder::complete)
+      // then
+      .withFailMessage("It should not be possible to complete an enabled process task.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskWithManualActivationAndOneHumanTaskCase.cmmn"})
@@ -490,13 +481,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
       .withCaseExecution(processTaskId)
       .disable();
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .complete();
-      fail("Should not be able to complete a disabled process task.");
-    } catch (NotAllowedException e) {}
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
+
+    // when
+    assertThatThrownBy(commandBuilder::complete)
+      // then
+      .withFailMessage("It should not be possible to complete a disabled process task.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneProcessTaskCaseWithManualActivation.cmmn"})
@@ -506,16 +497,13 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     createCaseInstance(DEFINITION_KEY);
     String processTaskId = queryCaseExecutionByActivityId(PROCESS_TASK_KEY).getId();
 
-    try {
-      // when
-      caseService
-        .withCaseExecution(processTaskId)
-        .close();
-      fail("It should not be possible to close a process task.");
-    } catch (NotAllowedException e) {
+    CaseExecutionCommandBuilder commandBuilder = caseService.withCaseExecution(processTaskId);
 
-    }
-
+    // when
+    assertThatThrownBy(commandBuilder::close)
+      // then
+      .withFailMessage("It should not be possible to close a process task.")
+      .isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources={
@@ -568,15 +556,15 @@ public class CaseServiceProcessTaskTest extends PluggableProcessEngineTest {
     createCaseInstance(DEFINITION_KEY);
     CaseExecution processTask = queryCaseExecutionByActivityId(PROCESS_TASK_KEY);
     assertTrue(processTask.isEnabled());
-    
-    try {
-      // when
-      caseService.terminateCaseExecution(processTask.getId());
-      fail("It should not be possible to terminate a task.");
-    } catch (NotAllowedException e) {
-      boolean result = e.getMessage().contains("The case execution must be in state 'active' to terminate");
-      assertTrue(result);
-    }
+
+    String taskId = processTask.getId();
+
+    // when
+    assertThatThrownBy(() -> caseService.terminateCaseExecution(taskId))
+      // then
+      .withFailMessage("It should not be possible to terminate a task.")
+      .isInstanceOf(NotAllowedException.class)
+      .hasMessageContaining("The case execution must be in state 'active' to terminate");
   }
 
   protected CaseInstance createCaseInstance(String caseDefinitionKey) {

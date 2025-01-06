@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.junit5.registerExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -45,9 +45,9 @@ class RegisterProcessEngineExtensionTest {
     Task task = taskService
         .createTaskQuery()
         .singleResult();
-    assertEquals("Test something", task.getName());
+    assertThat(task.getName()).isEqualTo("Test something");
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().list().size());
+    assertThat(runtimeService.createProcessInstanceQuery().list().size()).isEqualTo(0);
   }
 
 }

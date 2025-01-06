@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.junit5;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,10 +47,10 @@ public class ProcessEngineExtensionParameterizedJunit5Test {
 
     TaskService taskService = engine.getTaskService();
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("My Task", task.getName());
+    assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
   }
 
   @ParameterizedTest
@@ -65,10 +64,10 @@ public class ProcessEngineExtensionParameterizedJunit5Test {
 
     TaskService taskService = engine.getTaskService();
     Task task = taskService.createTaskQuery().singleResult();
-    assertEquals("My Task", task.getName());
+    assertThat(task.getName()).isEqualTo("My Task");
 
     taskService.complete(task.getId());
-    assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(0);
 
     HistoryService historyService = engine.getHistoryService();
     HistoricVariableInstance variableInstance = historyService.createHistoricVariableInstanceQuery().singleResult();
@@ -81,7 +80,7 @@ public class ProcessEngineExtensionParameterizedJunit5Test {
   @ParameterizedTest
   @EmptySource
   public void testWithoutDeploymentAnnotation(String argument) {
-    assertEquals("aString", "aString");
+    assertThat("aString").isEqualTo("aString");
   }
 
 }

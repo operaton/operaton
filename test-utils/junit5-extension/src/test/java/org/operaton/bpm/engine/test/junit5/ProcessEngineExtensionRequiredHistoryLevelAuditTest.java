@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.junit5;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -40,7 +40,6 @@ class ProcessEngineExtensionRequiredHistoryLevelAuditTest {
   @Test
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   void testRequiredHistoryLevelMatch() {
-    assertEquals(
-      ProcessEngineConfiguration.HISTORY_AUDIT, extension.getProcessEngineConfiguration().getHistoryLevel().getName());
+    assertThat(extension.getProcessEngineConfiguration().getHistoryLevel().getName()).isEqualTo(ProcessEngineConfiguration.HISTORY_AUDIT);
   }
 }

@@ -41,7 +41,7 @@ public class ResourceAssignmentExpressionImpl extends BaseElementImpl implements
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceAssignmentExpression.class, BPMN_ELEMENT_RESOURCE_ASSIGNMENT_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ResourceAssignmentExpressionImpl(instanceContext));
+      .instanceProvider(ResourceAssignmentExpressionImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

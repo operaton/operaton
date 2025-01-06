@@ -48,7 +48,7 @@ public class CategoryImpl extends RootElementImpl implements Category {
             .namespaceUri(BPMN20_NS)
             .extendsType(RootElement.class)
             .instanceProvider(
-          instanceContext -> new CategoryImpl(instanceContext));
+          CategoryImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME).required().build();
 

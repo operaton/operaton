@@ -36,7 +36,7 @@ public class AuditingImpl extends BaseElementImpl implements Auditing {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Auditing.class, BPMN_ELEMENT_AUDITING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new AuditingImpl(instanceContext));
+      .instanceProvider(AuditingImpl::new);
 
     typeBuilder.build();
   }

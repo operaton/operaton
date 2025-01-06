@@ -43,7 +43,7 @@ public class ErrorImpl extends RootElementImpl implements Error {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Error.class, BPMN_ELEMENT_ERROR)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new ErrorImpl(instanceContext));
+      .instanceProvider(ErrorImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

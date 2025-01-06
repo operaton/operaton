@@ -44,7 +44,7 @@ public class ResourceImpl extends RootElementImpl implements Resource {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Resource.class, BPMN_ELEMENT_RESOURCE)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new ResourceImpl(instanceContext));
+      .instanceProvider(ResourceImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .required()

@@ -35,7 +35,7 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Extension.class, DI_ELEMENT_EXTENSION)
       .namespaceUri(DI_NS)
-      .instanceProvider(instanceContext -> new ExtensionImpl(instanceContext));
+      .instanceProvider(ExtensionImpl::new);
 
     typeBuilder.build();
   }

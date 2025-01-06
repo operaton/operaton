@@ -35,7 +35,7 @@ public class ImpactedPerformanceIndicatorReferenceImpl extends DmnElementReferen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ImpactedPerformanceIndicatorReference.class, DMN_ELEMENT_IMPACTED_PERFORMANCE_INDICATOR)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new ImpactedPerformanceIndicatorReferenceImpl(instanceContext));
+      .instanceProvider(ImpactedPerformanceIndicatorReferenceImpl::new);
 
     typeBuilder.build();
   }

@@ -98,7 +98,7 @@ public class ItemDefinitionImpl extends NamedElementImpl implements ItemDefiniti
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ItemDefinition.class, DMN_ELEMENT_ITEM_DEFINITION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
-      .instanceProvider(instanceContext -> new ItemDefinitionImpl(instanceContext));
+      .instanceProvider(ItemDefinitionImpl::new);
 
     typeLanguageAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_TYPE_LANGUAGE)
       .build();

@@ -52,7 +52,7 @@ public class OperatonVariableListenerImpl extends CmmnModelElementInstanceImpl i
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableListener.class, OPERATON_ELEMENT_VARIABLE_LISTENER)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(instanceContext -> new OperatonVariableListenerImpl(instanceContext));
+      .instanceProvider(OperatonVariableListenerImpl::new);
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
       .namespace(CAMUNDA_NS)

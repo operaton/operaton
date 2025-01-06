@@ -43,7 +43,7 @@ public class OperatonInputOutputImpl extends BpmnModelElementInstanceImpl implem
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputOutput.class, OPERATON_ELEMENT_INPUT_OUTPUT)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonInputOutputImpl(instanceContext));
+      .instanceProvider(OperatonInputOutputImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

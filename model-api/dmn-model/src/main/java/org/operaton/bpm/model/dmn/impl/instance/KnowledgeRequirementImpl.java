@@ -49,7 +49,7 @@ public class KnowledgeRequirementImpl extends DmnModelElementInstanceImpl implem
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(KnowledgeRequirement.class, DMN_ELEMENT_KNOWLEDGE_REQUIREMENT)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new KnowledgeRequirementImpl(instanceContext));
+      .instanceProvider(KnowledgeRequirementImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

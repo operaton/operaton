@@ -53,7 +53,7 @@ public class OperatonCaseExecutionListenerImpl extends CmmnModelElementInstanceI
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonCaseExecutionListener.class, OPERATON_ELEMENT_CASE_EXECUTION_LISTENER)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(instanceContext -> new OperatonCaseExecutionListenerImpl(instanceContext));
+      .instanceProvider(OperatonCaseExecutionListenerImpl::new);
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
       .namespace(CAMUNDA_NS)

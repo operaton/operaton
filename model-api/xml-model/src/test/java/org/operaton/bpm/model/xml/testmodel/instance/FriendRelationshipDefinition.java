@@ -32,7 +32,7 @@ public class FriendRelationshipDefinition extends RelationshipDefinition {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FriendRelationshipDefinition.class, TYPE_NAME_FRIEND_RELATIONSHIP_DEFINITION)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(RelationshipDefinition.class)
-      .instanceProvider(instanceContext -> new FriendRelationshipDefinition(instanceContext));
+      .instanceProvider(FriendRelationshipDefinition::new);
 
     typeBuilder.build();
   }

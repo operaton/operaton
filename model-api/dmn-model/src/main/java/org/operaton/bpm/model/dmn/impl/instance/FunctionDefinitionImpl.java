@@ -59,7 +59,7 @@ public class FunctionDefinitionImpl extends ExpressionImpl implements FunctionDe
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FunctionDefinition.class, DMN_ELEMENT_FUNCTION_DEFINITION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new FunctionDefinitionImpl(instanceContext));
+      .instanceProvider(FunctionDefinitionImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

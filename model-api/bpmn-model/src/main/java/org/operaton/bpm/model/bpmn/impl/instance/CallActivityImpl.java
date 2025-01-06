@@ -70,7 +70,7 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CallActivity.class, BPMN_ELEMENT_CALL_ACTIVITY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Activity.class)
-      .instanceProvider(instanceContext -> new CallActivityImpl(instanceContext));
+      .instanceProvider(CallActivityImpl::new);
 
     calledElementAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_CALLED_ELEMENT)
       .build();

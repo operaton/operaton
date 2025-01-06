@@ -58,7 +58,7 @@ public class PlanFragmentImpl extends PlanItemDefinitionImpl implements PlanFrag
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanFragment.class, CMMN_ELEMENT_PLAN_FRAGMENT)
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanItemDefinition.class)
-        .instanceProvider(instanceContext -> new PlanFragmentImpl(instanceContext));
+        .instanceProvider(PlanFragmentImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

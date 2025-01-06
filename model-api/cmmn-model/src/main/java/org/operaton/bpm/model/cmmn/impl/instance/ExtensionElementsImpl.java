@@ -41,7 +41,7 @@ public class ExtensionElementsImpl extends CmmnModelElementInstanceImpl implemen
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ExtensionElements.class, CMMN_ELEMENT_EXTENSION_ELEMENTS)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(instanceContext -> new ExtensionElementsImpl(instanceContext));
+      .instanceProvider(ExtensionElementsImpl::new);
 
     typeBuilder.build();
   }

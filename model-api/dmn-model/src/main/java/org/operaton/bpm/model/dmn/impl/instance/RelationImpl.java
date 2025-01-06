@@ -54,7 +54,7 @@ public class RelationImpl extends ExpressionImpl implements Relation {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Relation.class, DMN_ELEMENT_RELATION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new RelationImpl(instanceContext));
+      .instanceProvider(RelationImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

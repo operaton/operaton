@@ -78,7 +78,7 @@ public class AssociationImpl extends ArtifactImpl implements Association {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Association.class, DMN_ELEMENT_ASSOCIATION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Artifact.class)
-      .instanceProvider(instanceContext -> new AssociationImpl(instanceContext));
+      .instanceProvider(AssociationImpl::new);
 
     associationDirectionAttribute = typeBuilder.enumAttribute(DMN_ATTRIBUTE_ASSOCIATION_DIRECTION, AssociationDirection.class)
       .defaultValue(AssociationDirection.None)

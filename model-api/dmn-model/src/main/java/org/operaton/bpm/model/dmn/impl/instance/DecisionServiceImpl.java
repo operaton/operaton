@@ -70,7 +70,7 @@ public class DecisionServiceImpl extends NamedElementImpl implements DecisionSer
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionService.class, DMN_ELEMENT_DECISION_SERVICE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
-      .instanceProvider(instanceContext -> new DecisionServiceImpl(instanceContext));
+      .instanceProvider(DecisionServiceImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

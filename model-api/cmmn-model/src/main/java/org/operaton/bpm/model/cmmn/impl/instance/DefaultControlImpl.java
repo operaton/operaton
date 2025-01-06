@@ -39,7 +39,7 @@ public class DefaultControlImpl extends PlanItemControlImpl implements DefaultCo
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DefaultControl.class, CMMN_ELEMENT_DEFAULT_CONTROL)
       .namespaceUri(CMMN11_NS)
       .extendsType(PlanItemControl.class)
-      .instanceProvider(instanceContext -> new DefaultControlImpl(instanceContext));
+      .instanceProvider(DefaultControlImpl::new);
 
     typeBuilder.build();
   }

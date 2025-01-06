@@ -33,7 +33,7 @@ public class Supports extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Supports.class, BPMN_ELEMENT_SUPPORTS)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new Supports(instanceContext));
+      .instanceProvider(Supports::new);
 
     typeBuilder.build();
   }

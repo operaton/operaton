@@ -48,7 +48,7 @@ public class ElementCollectionImpl extends NamedElementImpl implements ElementCo
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ElementCollection.class, DMN_ELEMENT_ELEMENT_COLLECTION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
-      .instanceProvider(instanceContext -> new ElementCollectionImpl(instanceContext));
+      .instanceProvider(ElementCollectionImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

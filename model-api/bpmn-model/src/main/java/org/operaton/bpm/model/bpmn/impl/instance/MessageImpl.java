@@ -41,7 +41,7 @@ public class MessageImpl extends RootElementImpl implements Message {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Message.class, BPMN_ELEMENT_MESSAGE)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new MessageImpl(instanceContext));
+      .instanceProvider(MessageImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

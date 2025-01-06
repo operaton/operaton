@@ -42,7 +42,7 @@ public class OperatonPropertiesImpl extends BpmnModelElementInstanceImpl impleme
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonProperties.class, OPERATON_ELEMENT_PROPERTIES)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonPropertiesImpl(instanceContext));
+      .instanceProvider(OperatonPropertiesImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

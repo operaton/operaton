@@ -84,7 +84,7 @@ public class ProcessImpl extends CmmnElementImpl implements Process {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Process.class, CMMN_ELEMENT_PROCESS)
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new ProcessImpl(instanceContext));
+        .instanceProvider(ProcessImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

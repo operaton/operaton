@@ -38,7 +38,7 @@ public class CaseFileItemTransitionStandardEventImpl extends CmmnModelElementIns
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileItemTransitionStandardEvent.class, CMMN_ELEMENT_STANDARD_EVENT)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(instanceContext -> new CaseFileItemTransitionStandardEventImpl(instanceContext));
+      .instanceProvider(CaseFileItemTransitionStandardEventImpl::new);
 
     typeBuilder.build();
   }

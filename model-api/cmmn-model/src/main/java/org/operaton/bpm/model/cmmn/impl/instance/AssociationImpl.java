@@ -80,7 +80,7 @@ public class AssociationImpl extends ArtifactImpl implements Association {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Association.class, CMMN_ELEMENT_ASSOCIATION)
       .namespaceUri(CMMN11_NS)
       .extendsType(Artifact.class)
-      .instanceProvider(instanceContext -> new AssociationImpl(instanceContext));
+      .instanceProvider(AssociationImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
       .idAttributeReference(CmmnElement.class)

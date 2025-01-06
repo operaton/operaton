@@ -37,7 +37,7 @@ public class InputDataItemImpl extends DataInputImpl implements InputDataItem {
       .defineType(InputDataItem.class, BPMN_ELEMENT_INPUT_DATA_ITEM)
       .namespaceUri(BPMN20_NS)
       .extendsType(DataInput.class)
-      .instanceProvider(instanceContext -> new InputDataItemImpl(instanceContext));
+      .instanceProvider(InputDataItemImpl::new);
 
     typeBuilder.build();
   }

@@ -49,7 +49,7 @@ public class ScriptTaskImpl extends TaskImpl implements ScriptTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ScriptTask.class, BPMN_ELEMENT_SCRIPT_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(instanceContext -> new ScriptTaskImpl(instanceContext));
+      .instanceProvider(ScriptTaskImpl::new);
 
     scriptFormatAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_SCRIPT_FORMAT)
       .build();

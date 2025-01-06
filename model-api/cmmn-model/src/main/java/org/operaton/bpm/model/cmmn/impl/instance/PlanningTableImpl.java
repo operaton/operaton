@@ -57,7 +57,7 @@ public class PlanningTableImpl extends TableItemImpl implements PlanningTable {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanningTable.class, CMMN_ELEMENT_PLANNING_TABLE)
         .namespaceUri(CMMN11_NS)
         .extendsType(TableItem.class)
-        .instanceProvider(instanceContext -> new PlanningTableImpl(instanceContext));
+        .instanceProvider(PlanningTableImpl::new);
 
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

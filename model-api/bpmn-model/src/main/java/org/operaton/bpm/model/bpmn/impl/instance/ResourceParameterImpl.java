@@ -42,7 +42,7 @@ public class ResourceParameterImpl extends BaseElementImpl implements ResourcePa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceParameter.class, BPMN_ELEMENT_RESOURCE_PARAMETER)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ResourceParameterImpl(instanceContext));
+      .instanceProvider(ResourceParameterImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

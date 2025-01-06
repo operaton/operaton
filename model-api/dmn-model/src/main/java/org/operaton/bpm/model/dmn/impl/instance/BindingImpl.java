@@ -60,7 +60,7 @@ public class BindingImpl extends DmnModelElementInstanceImpl implements Binding 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Binding.class, DMN_ELEMENT_BINDING)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new BindingImpl(instanceContext));
+      .instanceProvider(BindingImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

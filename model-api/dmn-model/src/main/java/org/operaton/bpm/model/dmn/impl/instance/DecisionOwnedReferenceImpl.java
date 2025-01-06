@@ -35,7 +35,7 @@ public class DecisionOwnedReferenceImpl extends DmnElementReferenceImpl implemen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionOwnedReference.class, DMN_ELEMENT_DECISION_OWNED)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new DecisionOwnedReferenceImpl(instanceContext));
+      .instanceProvider(DecisionOwnedReferenceImpl::new);
 
     typeBuilder.build();
   }

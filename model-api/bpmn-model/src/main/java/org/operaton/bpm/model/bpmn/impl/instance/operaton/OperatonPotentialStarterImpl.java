@@ -40,7 +40,7 @@ public class OperatonPotentialStarterImpl extends BpmnModelElementInstanceImpl i
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonPotentialStarter.class, OPERATON_ELEMENT_POTENTIAL_STARTER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonPotentialStarterImpl(instanceContext));
+      .instanceProvider(OperatonPotentialStarterImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

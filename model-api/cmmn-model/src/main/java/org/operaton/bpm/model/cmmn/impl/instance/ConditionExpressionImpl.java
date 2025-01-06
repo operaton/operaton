@@ -39,7 +39,7 @@ public class ConditionExpressionImpl extends ExpressionImpl implements Condition
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ConditionExpression.class, CMMN_ELEMENT_CONDITION)
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new ConditionExpressionImpl(instanceContext));
+      .instanceProvider(ConditionExpressionImpl::new);
 
     typeBuilder.build();
   }

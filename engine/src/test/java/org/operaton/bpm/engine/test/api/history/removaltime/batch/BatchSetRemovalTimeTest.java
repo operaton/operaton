@@ -2238,7 +2238,7 @@ public class BatchSetRemovalTimeTest {
       .byQuery(query);
 
     // when/then
-    assertThatThrownBy(() -> batchBuilder.executeAsync())
+    assertThatThrownBy(batchBuilder::executeAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("removalTime is null");
   }
@@ -2252,7 +2252,7 @@ public class BatchSetRemovalTimeTest {
       .byQuery(query);
 
     // when/then
-    assertThatThrownBy(() -> batchBuilder.executeAsync())
+    assertThatThrownBy(batchBuilder::executeAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("removalTime is null");
   }
@@ -2266,7 +2266,7 @@ public class BatchSetRemovalTimeTest {
       .byQuery(query);
 
     // when/then
-    assertThatThrownBy(() -> batchBuilder.executeAsync())
+    assertThatThrownBy(batchBuilder::executeAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("removalTime is null");
   }
@@ -2279,7 +2279,7 @@ public class BatchSetRemovalTimeTest {
       .absoluteRemovalTime(new Date());
 
     // when/then
-    assertThatThrownBy(() -> batchBuilder.executeAsync())
+    assertThatThrownBy(batchBuilder::executeAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Neither query nor ids provided.");
   }
@@ -2292,7 +2292,7 @@ public class BatchSetRemovalTimeTest {
       .absoluteRemovalTime(new Date());
 
     // when/then
-    assertThatThrownBy(() -> batchBuilder.executeAsync())
+    assertThatThrownBy(batchBuilder::executeAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Neither query nor ids provided.");
   }
@@ -2305,7 +2305,7 @@ public class BatchSetRemovalTimeTest {
       .absoluteRemovalTime(new Date());
 
     // when/then
-    assertThatThrownBy(() -> batchBuilder.executeAsync())
+    assertThatThrownBy(batchBuilder::executeAsync)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Neither query nor ids provided.");
   }
@@ -2540,7 +2540,7 @@ public class BatchSetRemovalTimeTest {
     builder.calculatedRemovalTime();
 
     // when/then
-    assertThatThrownBy(() -> builder.clearedRemovalTime())
+    assertThatThrownBy(builder::clearedRemovalTime)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("The removal time modes are mutually exclusive: mode is not null");
   }
@@ -2564,7 +2564,7 @@ public class BatchSetRemovalTimeTest {
     builder.calculatedRemovalTime();
 
     // when/then
-    assertThatThrownBy(() -> builder.clearedRemovalTime())
+    assertThatThrownBy(builder::clearedRemovalTime)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("The removal time modes are mutually exclusive: mode is not null");
   }
@@ -2588,7 +2588,7 @@ public class BatchSetRemovalTimeTest {
     builder.calculatedRemovalTime();
 
     // when/then
-    assertThatThrownBy(() -> builder.clearedRemovalTime())
+    assertThatThrownBy(builder::clearedRemovalTime)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("The removal time modes are mutually exclusive: mode is not null");
   }

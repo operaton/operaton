@@ -45,7 +45,7 @@ public class OperatonFieldImpl extends BpmnModelElementInstanceImpl implements O
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonField.class, OPERATON_ELEMENT_FIELD)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonFieldImpl(instanceContext));
+      .instanceProvider(OperatonFieldImpl::new);
 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)

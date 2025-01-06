@@ -36,7 +36,7 @@ public class ActivationConditionImpl extends ExpressionImpl implements Activatio
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ActivationCondition.class, BPMN_ELEMENT_ACTIVATION_CONDITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new ActivationConditionImpl(instanceContext));
+      .instanceProvider(ActivationConditionImpl::new);
 
     typeBuilder.build();
   }

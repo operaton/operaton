@@ -45,7 +45,7 @@ public class InterfaceImpl extends RootElementImpl implements Interface {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Interface.class, BPMN_ELEMENT_INTERFACE)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new InterfaceImpl(instanceContext));
+      .instanceProvider(InterfaceImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .required()

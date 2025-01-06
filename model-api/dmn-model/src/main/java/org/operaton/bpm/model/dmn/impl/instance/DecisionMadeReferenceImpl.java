@@ -35,7 +35,7 @@ public class DecisionMadeReferenceImpl extends DmnElementReferenceImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionMadeReference.class, DMN_ELEMENT_DECISION_MADE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new DecisionMadeReferenceImpl(instanceContext));
+      .instanceProvider(DecisionMadeReferenceImpl::new);
 
     typeBuilder.build();
   }

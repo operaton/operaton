@@ -35,7 +35,7 @@ public class DefaultOutputEntryImpl extends LiteralExpressionImpl implements Def
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DefaultOutputEntry.class, DMN_ELEMENT_DEFAULT_OUTPUT_ENTRY)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
-      .instanceProvider(instanceContext -> new DefaultOutputEntryImpl(instanceContext));
+      .instanceProvider(DefaultOutputEntryImpl::new);
 
     typeBuilder.build();
   }

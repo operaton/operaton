@@ -36,7 +36,7 @@ public class CancelEventDefinitionImpl extends EventDefinitionImpl implements Ca
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CancelEventDefinition.class, BPMN_ELEMENT_CANCEL_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(instanceContext -> new CancelEventDefinitionImpl(instanceContext));
+      .instanceProvider(CancelEventDefinitionImpl::new);
 
     typeBuilder.build();
   }

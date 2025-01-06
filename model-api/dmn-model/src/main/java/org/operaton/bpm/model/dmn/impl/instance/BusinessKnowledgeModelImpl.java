@@ -79,7 +79,7 @@ public class BusinessKnowledgeModelImpl extends DrgElementImpl implements Busine
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BusinessKnowledgeModel.class, DMN_ELEMENT_BUSINESS_KNOWLEDGE_MODEL)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
-      .instanceProvider(instanceContext -> new BusinessKnowledgeModelImpl(instanceContext));
+      .instanceProvider(BusinessKnowledgeModelImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

@@ -53,7 +53,7 @@ public class RoleImpl extends CmmnElementImpl implements Role {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Role.class, CMMN_ELEMENT_ROLE)
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new RoleImpl(instanceContext));
+        .instanceProvider(RoleImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

@@ -38,7 +38,7 @@ public class EndEventImpl extends ThrowEventImpl implements EndEvent {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EndEvent.class, BPMN_ELEMENT_END_EVENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(ThrowEvent.class)
-      .instanceProvider(instanceContext -> new EndEventImpl(instanceContext));
+      .instanceProvider(EndEventImpl::new);
     
     typeBuilder.build();
   }

@@ -33,7 +33,7 @@ public class SupportedInterfaceRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SupportedInterfaceRef.class, BPMN_ELEMENT_SUPPORTED_INTERFACE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new SupportedInterfaceRef(instanceContext));
+      .instanceProvider(SupportedInterfaceRef::new);
 
     typeBuilder.build();
   }

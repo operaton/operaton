@@ -77,7 +77,7 @@ public class SentryImpl extends CmmnElementImpl implements Sentry {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Sentry.class, CMMN_ELEMENT_SENTRY)
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new SentryImpl(instanceContext));
+        .instanceProvider(SentryImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

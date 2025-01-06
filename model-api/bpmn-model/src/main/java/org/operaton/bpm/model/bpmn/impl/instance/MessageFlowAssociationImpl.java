@@ -40,7 +40,7 @@ public class MessageFlowAssociationImpl extends BaseElementImpl implements Messa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(MessageFlowAssociation.class, BPMN_ELEMENT_MESSAGE_FLOW_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new MessageFlowAssociationImpl(instanceContext));
+      .instanceProvider(MessageFlowAssociationImpl::new);
 
     innerMessageFlowRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_INNER_MESSAGE_FLOW_REF)
       .required()

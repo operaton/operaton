@@ -49,7 +49,7 @@ public class ConditionalEventDefinitionImpl extends EventDefinitionImpl implemen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ConditionalEventDefinition.class, BPMN_ELEMENT_CONDITIONAL_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(instanceContext -> new ConditionalEventDefinitionImpl(instanceContext));
+      .instanceProvider(ConditionalEventDefinitionImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

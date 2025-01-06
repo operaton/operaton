@@ -68,7 +68,7 @@ public class CaseParameterImpl extends ParameterImpl implements CaseParameter {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseParameter.class, CMMN_ELEMENT_CASE_PARAMETER)
         .namespaceUri(CMMN11_NS)
         .extendsType(Parameter.class)
-        .instanceProvider(instanceContext -> new CaseParameterImpl(instanceContext));
+        .instanceProvider(CaseParameterImpl::new);
 
     bindingRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_BINDING_REF)
          .idAttributeReference(CaseFileItem.class)

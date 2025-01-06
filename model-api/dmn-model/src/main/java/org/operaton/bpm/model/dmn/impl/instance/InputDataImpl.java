@@ -50,7 +50,7 @@ public class InputDataImpl extends DrgElementImpl implements InputData {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputData.class, DMN_ELEMENT_INPUT_DATA)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
-      .instanceProvider(instanceContext -> new InputDataImpl(instanceContext));
+      .instanceProvider(InputDataImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

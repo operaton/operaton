@@ -46,7 +46,7 @@ public class ReceiveTaskImpl extends TaskImpl implements ReceiveTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ReceiveTask.class, BPMN_ELEMENT_RECEIVE_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(instanceContext -> new ReceiveTaskImpl(instanceContext));
+      .instanceProvider(ReceiveTaskImpl::new);
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##WebService")

@@ -33,7 +33,7 @@ public class OperatonErrorEventDefinitionImpl extends ErrorEventDefinitionImpl i
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonErrorEventDefinition.class, OPERATON_ELEMENT_ERROR_EVENT_DEFINITION)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonErrorEventDefinitionImpl(instanceContext));
+      .instanceProvider(OperatonErrorEventDefinitionImpl::new);
 
     operatonExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EXPRESSION)
         .namespace(OPERATON_NS)

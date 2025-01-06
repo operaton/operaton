@@ -41,7 +41,7 @@ public class SignalImpl extends BaseElementImpl implements Signal {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Signal.class, BPMN_ELEMENT_SIGNAL)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new SignalImpl(instanceContext));
+      .instanceProvider(SignalImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

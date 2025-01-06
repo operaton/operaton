@@ -33,7 +33,7 @@ public class Target extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Target.class, BPMN_ELEMENT_TARGET)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new Target(instanceContext));
+      .instanceProvider(Target::new);
 
     typeBuilder.build();
   }

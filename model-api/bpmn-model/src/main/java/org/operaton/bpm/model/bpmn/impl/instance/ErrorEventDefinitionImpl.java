@@ -49,7 +49,7 @@ public class ErrorEventDefinitionImpl extends EventDefinitionImpl implements Err
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ErrorEventDefinition.class, BPMN_ELEMENT_ERROR_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(instanceContext -> new ErrorEventDefinitionImpl(instanceContext));
+      .instanceProvider(ErrorEventDefinitionImpl::new);
 
     errorRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ERROR_REF)
       .qNameAttributeReference(Error.class)

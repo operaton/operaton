@@ -40,7 +40,7 @@ public class TransactionImpl extends SubProcessImpl implements Transaction {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Transaction.class, BPMN_ELEMENT_TRANSACTION)
       .namespaceUri(BPMN20_NS)
       .extendsType(SubProcess.class)
-      .instanceProvider(instanceContext -> new TransactionImpl(instanceContext));
+      .instanceProvider(TransactionImpl::new);
 
     methodAttribute = typeBuilder.namedEnumAttribute(BPMN_ATTRIBUTE_METHOD, TransactionMethod.class)
       .defaultValue(TransactionMethod.Compensate)

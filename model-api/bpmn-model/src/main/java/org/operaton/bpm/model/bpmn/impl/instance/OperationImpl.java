@@ -49,7 +49,7 @@ public class OperationImpl extends BaseElementImpl implements Operation {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Operation.class, BPMN_ELEMENT_OPERATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new OperationImpl(instanceContext));
+      .instanceProvider(OperationImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .required()

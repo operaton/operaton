@@ -45,7 +45,7 @@ public class OperatonOutImpl extends CmmnModelElementInstanceImpl implements Ope
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonOut.class, OPERATON_ELEMENT_OUT)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(instanceContext -> new OperatonOutImpl(instanceContext));
+      .instanceProvider(OperatonOutImpl::new);
 
     operatonSourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE)
       .namespace(CAMUNDA_NS)

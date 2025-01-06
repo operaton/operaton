@@ -39,7 +39,7 @@ public class OutputProcessParameterImpl extends ProcessParameterImpl implements 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputProcessParameter.class, CMMN_ELEMENT_OUTPUT)
       .namespaceUri(CMMN11_NS)
       .extendsType(ProcessParameter.class)
-      .instanceProvider(instanceContext -> new OutputProcessParameterImpl(instanceContext));
+      .instanceProvider(OutputProcessParameterImpl::new);
 
     typeBuilder.build();
   }

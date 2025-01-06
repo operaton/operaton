@@ -42,7 +42,7 @@ public class EventBasedGatewayImpl extends GatewayImpl implements EventBasedGate
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EventBasedGateway.class, BPMN_ELEMENT_EVENT_BASED_GATEWAY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
-      .instanceProvider(instanceContext -> new EventBasedGatewayImpl(instanceContext));
+      .instanceProvider(EventBasedGatewayImpl::new);
 
     instantiateAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_INSTANTIATE)
       .defaultValue(false)

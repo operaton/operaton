@@ -39,7 +39,7 @@ public class UserEventImpl extends EventImpl implements UserEvent {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UserEvent.class, CMMN_ELEMENT_USER_EVENT)
         .namespaceUri(CMMN10_NS)
         .extendsType(Event.class)
-        .instanceProvider(instanceContext -> new UserEventImpl(instanceContext));
+        .instanceProvider(UserEventImpl::new);
 
     typeBuilder.build();
   }

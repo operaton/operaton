@@ -49,7 +49,7 @@ public class SubProcessImpl extends ActivityImpl implements SubProcess {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SubProcess.class, BPMN_ELEMENT_SUB_PROCESS)
       .namespaceUri(BPMN20_NS)
       .extendsType(Activity.class)
-      .instanceProvider(instanceContext -> new SubProcessImpl(instanceContext));
+      .instanceProvider(SubProcessImpl::new);
 
     triggeredByEventAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_TRIGGERED_BY_EVENT)
       .defaultValue(false)

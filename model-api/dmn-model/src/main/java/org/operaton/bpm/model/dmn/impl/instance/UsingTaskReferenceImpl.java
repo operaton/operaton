@@ -35,7 +35,7 @@ public class UsingTaskReferenceImpl extends DmnElementReferenceImpl implements U
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UsingTaskReference.class, DMN_ELEMENT_USING_TASK)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new UsingTaskReferenceImpl(instanceContext));
+      .instanceProvider(UsingTaskReferenceImpl::new);
 
     typeBuilder.build();
   }

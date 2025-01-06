@@ -49,7 +49,7 @@ public class InformationItemImpl extends NamedElementImpl implements Information
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InformationItem.class, DMN_ELEMENT_INFORMATION_ITEM)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
-      .instanceProvider(instanceContext -> new InformationItemImpl(instanceContext));
+      .instanceProvider(InformationItemImpl::new);
 
     typeRefAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_TYPE_REF)
       .build();

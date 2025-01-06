@@ -88,7 +88,7 @@ public class KnowledgeSourceImpl extends DrgElementImpl implements KnowledgeSour
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(KnowledgeSource.class, DMN_ELEMENT_KNOWLEDGE_SOURCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
-      .instanceProvider(instanceContext -> new KnowledgeSourceImpl(instanceContext));
+      .instanceProvider(KnowledgeSourceImpl::new);
 
     locationUriAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_LOCATION_URI)
       .build();

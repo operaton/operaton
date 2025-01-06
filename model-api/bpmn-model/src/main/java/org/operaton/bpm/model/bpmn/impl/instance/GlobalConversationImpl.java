@@ -36,7 +36,7 @@ public class GlobalConversationImpl extends CollaborationImpl implements GlobalC
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(GlobalConversation.class, BPMN_ELEMENT_GLOBAL_CONVERSATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Collaboration.class)
-      .instanceProvider(instanceContext -> new GlobalConversationImpl(instanceContext));
+      .instanceProvider(GlobalConversationImpl::new);
 
     typeBuilder.build();
   }

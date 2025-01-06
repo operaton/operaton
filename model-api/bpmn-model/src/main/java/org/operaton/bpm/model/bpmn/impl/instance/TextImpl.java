@@ -34,7 +34,7 @@ public class TextImpl extends BpmnModelElementInstanceImpl implements Text {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Text.class, BPMN_ELEMENT_TEXT)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new TextImpl(instanceContext));
+      .instanceProvider(TextImpl::new);
 
     typeBuilder.build();
   }

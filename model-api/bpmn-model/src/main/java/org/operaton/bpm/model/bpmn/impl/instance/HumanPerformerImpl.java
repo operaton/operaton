@@ -36,7 +36,7 @@ public class HumanPerformerImpl extends PerformerImpl implements HumanPerformer 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(HumanPerformer.class, BPMN_ELEMENT_HUMAN_PERFORMER)
       .namespaceUri(BPMN20_NS)
       .extendsType(Performer.class)
-      .instanceProvider(instanceContext -> new HumanPerformerImpl(instanceContext));
+      .instanceProvider(HumanPerformerImpl::new);
     typeBuilder.build();
   }
 

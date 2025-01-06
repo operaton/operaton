@@ -38,7 +38,7 @@ public class ManualTaskImpl extends TaskImpl implements ManualTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ManualTask.class, BPMN_ELEMENT_MANUAL_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(instanceContext -> new ManualTaskImpl(instanceContext));
+      .instanceProvider(ManualTaskImpl::new);
 
     typeBuilder.build();
   }

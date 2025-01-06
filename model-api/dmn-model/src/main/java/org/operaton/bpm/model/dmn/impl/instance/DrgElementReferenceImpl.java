@@ -35,7 +35,7 @@ public class DrgElementReferenceImpl extends DmnElementReferenceImpl implements 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DrgElementReference.class, DMN_ELEMENT_DRG_ELEMENT_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new DrgElementReferenceImpl(instanceContext));
+      .instanceProvider(DrgElementReferenceImpl::new);
 
     typeBuilder.build();
   }

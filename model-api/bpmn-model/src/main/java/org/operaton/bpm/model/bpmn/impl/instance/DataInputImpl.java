@@ -39,7 +39,7 @@ public class DataInputImpl extends ItemAwareElementImpl implements DataInput {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataInput.class, BPMN_ELEMENT_DATA_INPUT)
       .namespaceUri(BPMN20_NS)
       .extendsType(ItemAwareElement.class)
-      .instanceProvider(instanceContext -> new DataInputImpl(instanceContext));
+      .instanceProvider(DataInputImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

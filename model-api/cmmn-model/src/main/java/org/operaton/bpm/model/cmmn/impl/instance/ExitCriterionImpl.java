@@ -39,7 +39,7 @@ public class ExitCriterionImpl extends CriterionImpl implements ExitCriterion {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ExitCriterion.class, CMMN_ELEMENT_EXIT_CRITERION)
         .extendsType(Criterion.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new ExitCriterionImpl(instanceContext));
+        .instanceProvider(ExitCriterionImpl::new);
 
     typeBuilder.build();
   }

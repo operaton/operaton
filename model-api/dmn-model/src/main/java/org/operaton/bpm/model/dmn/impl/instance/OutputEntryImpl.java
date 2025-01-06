@@ -35,7 +35,7 @@ public class OutputEntryImpl extends LiteralExpressionImpl implements OutputEntr
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputEntry.class, DMN_ELEMENT_OUTPUT_ENTRY)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
-      .instanceProvider(instanceContext -> new OutputEntryImpl(instanceContext));
+      .instanceProvider(OutputEntryImpl::new);
 
     typeBuilder.build();
   }

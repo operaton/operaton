@@ -39,7 +39,7 @@ public class ProcessParameterImpl extends ParameterImpl implements ProcessParame
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ProcessParameter.class, CMMN_ELEMENT_PROCESS_PARAMETER)
         .namespaceUri(CMMN11_NS)
         .extendsType(Parameter.class)
-        .instanceProvider(instanceContext -> new ProcessParameterImpl(instanceContext));
+        .instanceProvider(ProcessParameterImpl::new);
 
     typeBuilder.build();
   }

@@ -76,7 +76,7 @@ public class UserTaskImpl extends TaskImpl implements UserTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UserTask.class, BPMN_ELEMENT_USER_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(instanceContext -> new UserTaskImpl(instanceContext));
+      .instanceProvider(UserTaskImpl::new);
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##unspecified")

@@ -48,7 +48,7 @@ public class PerformanceIndicatorImpl extends BusinessContextElementImpl impleme
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PerformanceIndicator.class, DMN_ELEMENT_PERFORMANCE_INDICATOR)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(BusinessContextElement.class)
-      .instanceProvider(instanceContext -> new PerformanceIndicatorImpl(instanceContext));
+      .instanceProvider(PerformanceIndicatorImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

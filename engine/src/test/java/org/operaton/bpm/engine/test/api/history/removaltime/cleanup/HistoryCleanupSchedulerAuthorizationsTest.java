@@ -45,8 +45,7 @@ import org.junit.rules.RuleChain;
 public class HistoryCleanupSchedulerAuthorizationsTest extends AbstractHistoryCleanupSchedulerTest {
 
   @ClassRule
-  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(configuration ->
-      configure(configuration));
+  public static ProcessEngineBootstrapRule bootstrapRule = new ProcessEngineBootstrapRule(AbstractHistoryCleanupSchedulerTest::configure);
   protected ProvidedProcessEngineRule engineRule = new ProvidedProcessEngineRule(bootstrapRule);
   protected ProcessEngineTestRule testRule = new ProcessEngineTestRule(engineRule);
 

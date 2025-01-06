@@ -120,7 +120,7 @@ public class StageImpl extends PlanFragmentImpl implements Stage {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Stage.class, CMMN_ELEMENT_STAGE)
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanFragment.class)
-        .instanceProvider(instanceContext -> new StageImpl(instanceContext));
+        .instanceProvider(StageImpl::new);
 
     autoCompleteAttribute = typeBuilder.booleanAttribute(CMMN_ATTRIBUTE_AUTO_COMPLETE)
         .defaultValue(false)

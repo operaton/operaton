@@ -35,7 +35,7 @@ public class ParameterImpl extends InformationItemImpl implements Parameter {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Parameter.class, DMN_ELEMENT_PARAMETER)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
-      .instanceProvider(instanceContext -> new ParameterImpl(instanceContext));
+      .instanceProvider(ParameterImpl::new);
 
     typeBuilder.build();
   }

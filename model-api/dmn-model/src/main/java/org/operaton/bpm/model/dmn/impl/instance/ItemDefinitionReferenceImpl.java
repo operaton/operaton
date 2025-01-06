@@ -35,7 +35,7 @@ public class ItemDefinitionReferenceImpl extends DmnElementReferenceImpl impleme
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ItemDefinitionReference.class, DMN_ELEMENT_ITEM_DEFINITION_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new ItemDefinitionReferenceImpl(instanceContext));
+      .instanceProvider(ItemDefinitionReferenceImpl::new);
 
     typeBuilder.build();
   }

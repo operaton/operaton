@@ -132,7 +132,7 @@ public class CaseFileItemImpl extends CmmnElementImpl implements CaseFileItem {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileItem.class, CMMN_ELEMENT_CASE_FILE_ITEM)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new CaseFileItemImpl(instanceContext));
+        .instanceProvider(CaseFileItemImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

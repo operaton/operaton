@@ -35,7 +35,7 @@ public class OwnerReferenceImpl extends DmnElementReferenceImpl implements Owner
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OwnerReference.class, DMN_ELEMENT_OWNER)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new OwnerReferenceImpl(instanceContext));
+      .instanceProvider(OwnerReferenceImpl::new);
 
     typeBuilder.build();
   }

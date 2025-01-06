@@ -54,7 +54,7 @@ public class OperatonExecutionListenerImpl extends BpmnModelElementInstanceImpl 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExecutionListener.class, OPERATON_ELEMENT_EXECUTION_LISTENER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonExecutionListenerImpl(instanceContext));
+      .instanceProvider(OperatonExecutionListenerImpl::new);
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
       .namespace(OPERATON_NS)

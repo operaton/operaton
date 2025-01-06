@@ -32,7 +32,7 @@ public class FlightInstructor extends ModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FlightInstructor.class, ELEMENT_NAME_FLIGHT_INSTRUCTOR)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(instanceContext -> new FlightInstructor(instanceContext));
+      .instanceProvider(FlightInstructor::new);
 
     typeBuilder.build();
   }

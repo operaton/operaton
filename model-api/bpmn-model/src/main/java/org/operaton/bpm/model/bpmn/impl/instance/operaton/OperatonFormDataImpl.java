@@ -42,7 +42,7 @@ public class OperatonFormDataImpl extends BpmnModelElementInstanceImpl implement
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormData.class, OPERATON_ELEMENT_FORM_DATA)
       .namespaceUri(BpmnModelConstants.OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonFormDataImpl(instanceContext));
+      .instanceProvider(OperatonFormDataImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

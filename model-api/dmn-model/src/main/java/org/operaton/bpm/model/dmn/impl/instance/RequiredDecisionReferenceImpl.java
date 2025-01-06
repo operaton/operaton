@@ -35,7 +35,7 @@ public class RequiredDecisionReferenceImpl extends DmnElementReferenceImpl imple
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredDecisionReference.class, DMN_ELEMENT_REQUIRED_DECISION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new RequiredDecisionReferenceImpl(instanceContext));
+      .instanceProvider(RequiredDecisionReferenceImpl::new);
 
     typeBuilder.build();
   }

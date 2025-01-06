@@ -32,7 +32,7 @@ public class ChildRelationshipDefinition extends RelationshipDefinition {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ChildRelationshipDefinition.class, TYPE_NAME_CHILD_RELATIONSHIP_DEFINITION)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(RelationshipDefinition.class)
-      .instanceProvider(instanceContext -> new ChildRelationshipDefinition(instanceContext));
+      .instanceProvider(ChildRelationshipDefinition::new);
 
     typeBuilder.build();
   }

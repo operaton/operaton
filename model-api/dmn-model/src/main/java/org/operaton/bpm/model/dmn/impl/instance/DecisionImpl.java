@@ -199,7 +199,7 @@ public class DecisionImpl extends DrgElementImpl implements Decision {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Decision.class, DMN_ELEMENT_DECISION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
-      .instanceProvider(instanceContext -> new DecisionImpl(instanceContext));
+      .instanceProvider(DecisionImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

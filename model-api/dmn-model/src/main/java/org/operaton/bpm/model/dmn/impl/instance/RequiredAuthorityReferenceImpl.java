@@ -35,7 +35,7 @@ public class RequiredAuthorityReferenceImpl extends DmnElementReferenceImpl impl
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredAuthorityReference.class, DMN_ELEMENT_REQUIRED_AUTHORITY)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new RequiredAuthorityReferenceImpl(instanceContext));
+      .instanceProvider(RequiredAuthorityReferenceImpl::new);
 
     typeBuilder.build();
   }

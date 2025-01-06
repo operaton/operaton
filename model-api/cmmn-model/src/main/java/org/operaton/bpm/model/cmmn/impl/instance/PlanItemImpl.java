@@ -160,7 +160,7 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanItem.class, CMMN_ELEMENT_PLAN_ITEM)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new PlanItemImpl(instanceContext));
+        .instanceProvider(PlanItemImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

@@ -33,7 +33,7 @@ public class OperationRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperationRef.class, BPMN_ELEMENT_OPERATION_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new OperationRef(instanceContext));
+      .instanceProvider(OperationRef::new);
 
     typeBuilder.build();
   }

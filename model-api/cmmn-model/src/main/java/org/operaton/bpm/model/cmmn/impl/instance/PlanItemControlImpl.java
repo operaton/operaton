@@ -78,7 +78,7 @@ public class PlanItemControlImpl extends CmmnElementImpl implements PlanItemCont
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanItemControl.class, CMMN_ELEMENT_PLAN_ITEM_CONTROL)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new PlanItemControlImpl(instanceContext));
+        .instanceProvider(PlanItemControlImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

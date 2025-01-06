@@ -36,7 +36,7 @@ public class EndPointImpl extends RootElementImpl implements EndPoint {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EndPoint.class, BPMN_ELEMENT_END_POINT)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new EndPointImpl(instanceContext));
+      .instanceProvider(EndPointImpl::new);
 
     typeBuilder.build();
   }

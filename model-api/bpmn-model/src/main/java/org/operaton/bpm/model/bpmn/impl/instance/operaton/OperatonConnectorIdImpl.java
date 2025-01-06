@@ -35,7 +35,7 @@ public class OperatonConnectorIdImpl extends BpmnModelElementInstanceImpl implem
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConnectorId.class, OPERATON_ELEMENT_CONNECTOR_ID)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonConnectorIdImpl(instanceContext));
+      .instanceProvider(OperatonConnectorIdImpl::new);
 
     typeBuilder.build();
   }

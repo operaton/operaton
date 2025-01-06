@@ -36,7 +36,7 @@ public class TerminateEventDefinitionImpl extends EventDefinitionImpl implements
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TerminateEventDefinition.class, BPMN_ELEMENT_TERMINATE_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(instanceContext -> new TerminateEventDefinitionImpl(instanceContext));
+      .instanceProvider(TerminateEventDefinitionImpl::new);
 
     typeBuilder.build();
   }

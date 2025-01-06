@@ -36,7 +36,7 @@ public class TimeCycleImpl extends ExpressionImpl implements TimeCycle {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimeCycle.class, BPMN_ELEMENT_TIME_CYCLE)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new TimeCycleImpl(instanceContext));
+      .instanceProvider(TimeCycleImpl::new);
 
     typeBuilder.build();
   }

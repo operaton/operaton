@@ -42,7 +42,7 @@ public class CorrelationPropertyRetrievalExpressionImpl extends BaseElementImpl 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationPropertyRetrievalExpression.class, BPMN_ELEMENT_CORRELATION_PROPERTY_RETRIEVAL_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new CorrelationPropertyRetrievalExpressionImpl(instanceContext));
+      .instanceProvider(CorrelationPropertyRetrievalExpressionImpl::new);
 
     messageRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_MESSAGE_REF)
       .required()

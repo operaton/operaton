@@ -35,7 +35,7 @@ public class TargetRefImpl extends DmnElementReferenceImpl implements TargetRef 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TargetRef.class, DMN_ELEMENT_TARGET_REF)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new TargetRefImpl(instanceContext));
+      .instanceProvider(TargetRefImpl::new);
 
     typeBuilder.build();
   }

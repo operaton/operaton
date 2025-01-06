@@ -44,7 +44,7 @@ public class GroupImpl extends ArtifactImpl implements Group {
             .namespaceUri(BPMN20_NS)
             .extendsType(Artifact.class)
             .instanceProvider(
-          instanceContext -> new GroupImpl(instanceContext));
+          GroupImpl::new);
 
     categoryValueRefAttribute =
         typeBuilder

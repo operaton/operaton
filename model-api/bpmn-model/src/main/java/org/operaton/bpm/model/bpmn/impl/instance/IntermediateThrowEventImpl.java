@@ -38,7 +38,7 @@ public class IntermediateThrowEventImpl extends ThrowEventImpl implements Interm
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(IntermediateThrowEvent.class, BPMN_ELEMENT_INTERMEDIATE_THROW_EVENT)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(ThrowEvent.class)
-      .instanceProvider(instanceContext -> new IntermediateThrowEventImpl(instanceContext));
+      .instanceProvider(IntermediateThrowEventImpl::new);
 
     typeBuilder.build();
   }

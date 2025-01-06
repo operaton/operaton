@@ -147,7 +147,7 @@ public class ProcessEngineContextTest {
 
       if (requiresNew) {
         try {
-          ProcessEngineContext.withNewProcessEngineContext(() -> executeNestedCommand());
+          ProcessEngineContext.withNewProcessEngineContext(this::executeNestedCommand);
         } catch (Exception e) {
           fail("Test failed with exception: " + e.getMessage());
         }

@@ -39,7 +39,7 @@ public class OperatonPropertyImpl extends BpmnModelElementInstanceImpl implement
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonProperty.class, OPERATON_ELEMENT_PROPERTY)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonPropertyImpl(instanceContext));
+      .instanceProvider(OperatonPropertyImpl::new);
 
     operatonIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ID)
       .namespace(OPERATON_NS)

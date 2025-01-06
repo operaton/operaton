@@ -64,7 +64,7 @@ public class TextAnnotationImpl extends ArtifactImpl implements TextAnnotation {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TextAnnotation.class, DMN_ELEMENT_TEXT_ANNOTATION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Artifact.class)
-      .instanceProvider(instanceContext -> new TextAnnotationImpl(instanceContext));
+      .instanceProvider(TextAnnotationImpl::new);
 
     textFormatAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_TEXT_FORMAT)
       .defaultValue("text/plain")

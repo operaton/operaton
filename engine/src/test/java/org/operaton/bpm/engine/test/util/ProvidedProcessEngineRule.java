@@ -42,7 +42,7 @@ public class ProvidedProcessEngineRule extends ProcessEngineRule {
   }
 
   public ProvidedProcessEngineRule(final ProcessEngineBootstrapRule bootstrapRule) {
-    this(() -> bootstrapRule.getProcessEngine());
+    this(bootstrapRule::getProcessEngine);
   }
 
   public ProvidedProcessEngineRule(Callable<ProcessEngine> processEngineProvider) {

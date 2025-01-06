@@ -39,7 +39,7 @@ public class EntryCriterionImpl extends CriterionImpl implements EntryCriterion 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EntryCriterion.class, CMMN_ELEMENT_ENTRY_CRITERION)
         .extendsType(Criterion.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new EntryCriterionImpl(instanceContext));
+        .instanceProvider(EntryCriterionImpl::new);
 
     typeBuilder.build();
   }

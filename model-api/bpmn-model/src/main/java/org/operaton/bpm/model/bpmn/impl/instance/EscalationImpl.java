@@ -42,7 +42,7 @@ public class EscalationImpl extends RootElementImpl implements Escalation {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Escalation.class, BPMN_ELEMENT_ESCALATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new EscalationImpl(instanceContext));
+      .instanceProvider(EscalationImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

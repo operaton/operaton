@@ -49,7 +49,7 @@ public class OperatonInImpl extends CmmnModelElementInstanceImpl implements Oper
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonIn.class, OPERATON_ELEMENT_IN)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(instanceContext -> new OperatonInImpl(instanceContext));
+      .instanceProvider(OperatonInImpl::new);
 
     operatonSourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE)
       .namespace(CAMUNDA_NS)

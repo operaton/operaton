@@ -39,7 +39,7 @@ public class MilestoneImpl extends PlanItemDefinitionImpl implements Milestone {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Milestone.class, CMMN_ELEMENT_MILESTONE)
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanItemDefinition.class)
-        .instanceProvider(instanceContext -> new MilestoneImpl(instanceContext));
+        .instanceProvider(MilestoneImpl::new);
 
     typeBuilder.build();
   }

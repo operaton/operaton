@@ -35,7 +35,7 @@ public class DataPath extends FormalExpressionImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataPath.class, BPMN_ELEMENT_DATA_PATH)
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
-      .instanceProvider(instanceContext -> new DataPath(instanceContext));
+      .instanceProvider(DataPath::new);
 
     typeBuilder.build();
   }

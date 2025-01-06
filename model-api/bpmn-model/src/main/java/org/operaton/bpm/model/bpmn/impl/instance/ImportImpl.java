@@ -39,7 +39,7 @@ public class ImportImpl extends BpmnModelElementInstanceImpl implements Import {
   public static void registerType(ModelBuilder bpmnModelBuilder) {
     ModelElementTypeBuilder typeBuilder = bpmnModelBuilder.defineType(Import.class, BPMN_ELEMENT_IMPORT)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new ImportImpl(instanceContext));
+      .instanceProvider(ImportImpl::new);
 
     namespaceAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAMESPACE)
       .required()

@@ -53,7 +53,7 @@ public class ServiceTaskImpl extends TaskImpl implements ServiceTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ServiceTask.class, BPMN_ELEMENT_SERVICE_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(instanceContext -> new ServiceTaskImpl(instanceContext));
+      .instanceProvider(ServiceTaskImpl::new);
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##WebService")

@@ -42,7 +42,7 @@ public class CorrelationPropertyBindingImpl extends BaseElementImpl implements C
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationPropertyBinding.class, BPMN_ELEMENT_CORRELATION_PROPERTY_BINDING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new CorrelationPropertyBindingImpl(instanceContext));
+      .instanceProvider(CorrelationPropertyBindingImpl::new);
 
     correlationPropertyRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_CORRELATION_PROPERTY_REF)
       .required()

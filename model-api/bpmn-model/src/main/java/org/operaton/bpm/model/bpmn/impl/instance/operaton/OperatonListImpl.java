@@ -41,7 +41,7 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonList.class, OPERATON_ELEMENT_LIST)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonListImpl(instanceContext));
+      .instanceProvider(OperatonListImpl::new);
 
     typeBuilder.build();
   }

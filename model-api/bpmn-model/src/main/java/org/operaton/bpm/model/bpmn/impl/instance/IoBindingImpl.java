@@ -39,7 +39,7 @@ public class IoBindingImpl extends BaseElementImpl implements IoBinding {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(IoBinding.class, BPMN_ELEMENT_IO_BINDING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new IoBindingImpl(instanceContext));
+      .instanceProvider(IoBindingImpl::new);
 
     operationRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_OPERATION_REF)
       .required()

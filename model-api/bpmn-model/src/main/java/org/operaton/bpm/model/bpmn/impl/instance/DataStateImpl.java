@@ -38,7 +38,7 @@ public class DataStateImpl extends BaseElementImpl implements DataState {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataState.class, BPMN_ELEMENT_DATA_STATE)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new DataStateImpl(instanceContext));
+      .instanceProvider(DataStateImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

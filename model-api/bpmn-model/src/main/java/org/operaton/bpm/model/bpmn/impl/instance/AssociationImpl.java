@@ -42,7 +42,7 @@ public class AssociationImpl extends ArtifactImpl implements Association {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Association.class, BPMN_ELEMENT_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Artifact.class)
-      .instanceProvider(instanceContext -> new AssociationImpl(instanceContext));
+      .instanceProvider(AssociationImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_SOURCE_REF)
       .required()

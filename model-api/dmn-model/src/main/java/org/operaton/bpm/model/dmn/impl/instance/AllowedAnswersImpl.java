@@ -33,7 +33,7 @@ public class AllowedAnswersImpl extends DmnModelElementInstanceImpl implements A
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(AllowedAnswers.class, DMN_ELEMENT_ALLOWED_ANSWERS)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new AllowedAnswersImpl(instanceContext));
+      .instanceProvider(AllowedAnswersImpl::new);
 
     typeBuilder.build();
   }

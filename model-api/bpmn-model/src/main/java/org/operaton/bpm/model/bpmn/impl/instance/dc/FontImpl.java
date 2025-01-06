@@ -42,7 +42,7 @@ public class FontImpl extends BpmnModelElementInstanceImpl implements Font {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Font.class, DC_ELEMENT_FONT)
       .namespaceUri(DC_NS)
-      .instanceProvider(instanceContext -> new FontImpl(instanceContext));
+      .instanceProvider(FontImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(DC_ATTRIBUTE_NAME)
       .build();

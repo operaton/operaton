@@ -47,7 +47,7 @@ public class ComplexGatewayImpl extends GatewayImpl implements ComplexGateway {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ComplexGateway.class, BPMN_ELEMENT_COMPLEX_GATEWAY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
-      .instanceProvider(instanceContext -> new ComplexGatewayImpl(instanceContext));
+      .instanceProvider(ComplexGatewayImpl::new);
 
     defaultAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_DEFAULT)
       .idAttributeReference(SequenceFlow.class)

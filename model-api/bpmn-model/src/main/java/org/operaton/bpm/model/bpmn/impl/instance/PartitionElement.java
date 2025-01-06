@@ -35,7 +35,7 @@ public class PartitionElement extends BaseElementImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PartitionElement.class, BPMN_ELEMENT_PARTITION_ELEMENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new PartitionElement(instanceContext));
+      .instanceProvider(PartitionElement::new);
 
     typeBuilder.build();
   }

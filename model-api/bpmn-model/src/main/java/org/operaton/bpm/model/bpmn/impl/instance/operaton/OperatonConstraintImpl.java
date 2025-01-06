@@ -38,7 +38,7 @@ public class OperatonConstraintImpl extends BpmnModelElementInstanceImpl impleme
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConstraint.class, OPERATON_ELEMENT_CONSTRAINT)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonConstraintImpl(instanceContext));
+      .instanceProvider(OperatonConstraintImpl::new);
 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)

@@ -40,7 +40,7 @@ public class BoundsImpl extends BpmnModelElementInstanceImpl implements Bounds {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Bounds.class, DC_ELEMENT_BOUNDS)
       .namespaceUri(DC_NS)
-      .instanceProvider(instanceContext -> new BoundsImpl(instanceContext));
+      .instanceProvider(BoundsImpl::new);
 
     xAttribute = typeBuilder.doubleAttribute(DC_ATTRIBUTE_X)
       .required()

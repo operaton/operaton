@@ -35,7 +35,7 @@ public class OutputImpl extends OutputClauseImpl implements Output {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Output.class, DMN_ELEMENT_OUTPUT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(OutputClause.class)
-      .instanceProvider(instanceContext -> new OutputImpl(instanceContext));
+      .instanceProvider(OutputImpl::new);
 
     typeBuilder.build();
   }

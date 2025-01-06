@@ -38,7 +38,7 @@ public class BodyImpl extends CmmnModelElementInstanceImpl implements Body {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Body.class, CMMN_ELEMENT_BODY)
       .namespaceUri(CMMN10_NS)
-      .instanceProvider(instanceContext -> new BodyImpl(instanceContext));
+      .instanceProvider(BodyImpl::new);
 
     typeBuilder.build();
   }

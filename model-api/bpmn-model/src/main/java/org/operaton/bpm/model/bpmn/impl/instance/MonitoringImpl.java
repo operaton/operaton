@@ -36,7 +36,7 @@ public class MonitoringImpl extends BaseElementImpl implements Monitoring {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Monitoring.class, BPMN_ELEMENT_MONITORING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new MonitoringImpl(instanceContext));
+      .instanceProvider(MonitoringImpl::new);
 
     typeBuilder.build();
   }

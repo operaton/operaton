@@ -33,7 +33,7 @@ public class Description extends ModelElementInstanceImpl {
     public static void registerType(ModelBuilder modelBuilder) {
       ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Description.class, ELEMENT_NAME_DESCRIPTION)
         .namespaceUri(MODEL_NAMESPACE)
-        .instanceProvider(instanceContext -> new Description(instanceContext));
+        .instanceProvider(Description::new);
 
       typeBuilder.build();
     }

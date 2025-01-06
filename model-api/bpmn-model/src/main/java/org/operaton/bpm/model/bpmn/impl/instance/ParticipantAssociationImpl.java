@@ -42,7 +42,7 @@ public class ParticipantAssociationImpl extends BaseElementImpl implements Parti
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ParticipantAssociation.class, BPMN_ELEMENT_PARTICIPANT_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ParticipantAssociationImpl(instanceContext));
+      .instanceProvider(ParticipantAssociationImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

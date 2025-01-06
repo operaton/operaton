@@ -35,7 +35,7 @@ public class RowImpl extends ListImpl implements Row {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Row.class, DMN_ELEMENT_ROW)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(List.class)
-      .instanceProvider(instanceContext -> new RowImpl(instanceContext));
+      .instanceProvider(RowImpl::new);
 
     typeBuilder.build();
   }

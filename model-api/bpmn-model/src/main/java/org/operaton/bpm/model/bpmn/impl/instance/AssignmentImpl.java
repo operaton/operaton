@@ -41,7 +41,7 @@ public class AssignmentImpl extends BaseElementImpl implements Assignment {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Assignment.class, BPMN_ELEMENT_ASSIGNMENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new AssignmentImpl(instanceContext));
+      .instanceProvider(AssignmentImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

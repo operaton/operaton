@@ -33,7 +33,7 @@ public class SourceRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SourceRef.class, BPMN_ELEMENT_SOURCE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new SourceRef(instanceContext));
+      .instanceProvider(SourceRef::new);
 
     typeBuilder.build();
   }

@@ -43,7 +43,7 @@ public class ExtensionElementsImpl extends BpmnModelElementInstanceImpl implemen
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ExtensionElements.class, BPMN_ELEMENT_EXTENSION_ELEMENTS)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new ExtensionElementsImpl(instanceContext));
+      .instanceProvider(ExtensionElementsImpl::new);
 
     typeBuilder.build();
   }

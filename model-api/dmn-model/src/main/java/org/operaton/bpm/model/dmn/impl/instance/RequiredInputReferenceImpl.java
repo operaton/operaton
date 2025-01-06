@@ -35,7 +35,7 @@ public class RequiredInputReferenceImpl extends DmnElementReferenceImpl implemen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredInputReference.class, DMN_ELEMENT_REQUIRED_INPUT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new RequiredInputReferenceImpl(instanceContext));
+      .instanceProvider(RequiredInputReferenceImpl::new);
 
     typeBuilder.build();
   }

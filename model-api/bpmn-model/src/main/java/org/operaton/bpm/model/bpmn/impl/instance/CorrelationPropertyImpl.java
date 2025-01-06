@@ -48,7 +48,7 @@ public class CorrelationPropertyImpl extends RootElementImpl implements Correlat
     typeBuilder = modelBuilder.defineType(CorrelationProperty.class, BPMN_ELEMENT_CORRELATION_PROPERTY)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new CorrelationPropertyImpl(instanceContext));
+      .instanceProvider(CorrelationPropertyImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

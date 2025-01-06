@@ -33,7 +33,7 @@ public class InterfaceRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InterfaceRef.class, BPMN_ELEMENT_INTERFACE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new InterfaceRef(instanceContext));
+      .instanceProvider(InterfaceRef::new);
 
     typeBuilder.build();
   }

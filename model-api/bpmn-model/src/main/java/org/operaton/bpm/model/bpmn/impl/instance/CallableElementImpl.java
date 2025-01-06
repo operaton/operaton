@@ -47,7 +47,7 @@ public class CallableElementImpl extends RootElementImpl implements CallableElem
     ModelElementTypeBuilder typeBuilder = bpmnModelBuilder.defineType(CallableElement.class, BPMN_ELEMENT_CALLABLE_ELEMENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new CallableElementImpl(instanceContext));
+      .instanceProvider(CallableElementImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

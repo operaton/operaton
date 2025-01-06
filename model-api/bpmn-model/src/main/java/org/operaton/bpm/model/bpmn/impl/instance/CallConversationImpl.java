@@ -45,7 +45,7 @@ public class CallConversationImpl extends ConversationNodeImpl implements CallCo
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CallConversation.class, BPMN_ELEMENT_CALL_CONVERSATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(ConversationNode.class)
-      .instanceProvider(instanceContext -> new CallConversationImpl(instanceContext));
+      .instanceProvider(CallConversationImpl::new);
 
     calledCollaborationRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_CALLED_COLLABORATION_REF)
       .qNameAttributeReference(GlobalConversation.class)

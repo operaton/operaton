@@ -5150,9 +5150,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
         .processInstanceId(processInstance.getId())
         .singleResult();
 
-    assertThatThrownBy(() -> {
-      task2.getOperatonFormRef();
-    }).isInstanceOf(BadUserRequestException.class)
+    assertThatThrownBy(task2::getOperatonFormRef).isInstanceOf(BadUserRequestException.class)
     .hasMessage("ENGINE-03052 The form key / form reference is not initialized. You must call initializeFormKeys() on the task query before you can retrieve the form key or the form reference.");
   }
 
@@ -5497,9 +5495,7 @@ public class TaskQueryTest extends PluggableProcessEngineTest {
     assertThat(withFormKeys).hasSize(1);
 
     Task taskWithoutFormKey = withoutFormKeys.get(0);
-    assertThatThrownBy(() -> {
-      taskWithoutFormKey.getOperatonFormRef();
-    }).isInstanceOf(BadUserRequestException.class)
+    assertThatThrownBy(taskWithoutFormKey::getOperatonFormRef).isInstanceOf(BadUserRequestException.class)
     .hasMessage("ENGINE-03052 The form key / form reference is not initialized. You must call initializeFormKeys() on the task query before you can retrieve the form key or the form reference.");
 
     Task taskWithFormKey = withFormKeys.get(0);

@@ -35,7 +35,7 @@ public class InputValuesImpl extends UnaryTestsImpl implements InputValues {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputValues.class, DMN_ELEMENT_INPUT_VALUES)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(UnaryTests.class)
-      .instanceProvider(instanceContext -> new InputValuesImpl(instanceContext));
+      .instanceProvider(InputValuesImpl::new);
 
     typeBuilder.build();
   }

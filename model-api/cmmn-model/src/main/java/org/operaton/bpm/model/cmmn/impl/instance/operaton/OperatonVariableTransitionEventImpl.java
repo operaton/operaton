@@ -35,7 +35,7 @@ public class OperatonVariableTransitionEventImpl  extends CmmnModelElementInstan
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableTransitionEvent.class, OPERATON_ELEMENT_VARIABLE_EVENT)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(instanceContext -> new OperatonVariableTransitionEventImpl(instanceContext));
+      .instanceProvider(OperatonVariableTransitionEventImpl::new);
 
     typeBuilder.build();
   }

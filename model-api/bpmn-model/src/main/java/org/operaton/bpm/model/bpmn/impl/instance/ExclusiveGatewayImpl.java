@@ -41,7 +41,7 @@ public class ExclusiveGatewayImpl extends GatewayImpl implements ExclusiveGatewa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ExclusiveGateway.class, BPMN_ELEMENT_EXCLUSIVE_GATEWAY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
-      .instanceProvider(instanceContext -> new ExclusiveGatewayImpl(instanceContext));
+      .instanceProvider(ExclusiveGatewayImpl::new);
 
     defaultAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_DEFAULT)
       .idAttributeReference(SequenceFlow.class)

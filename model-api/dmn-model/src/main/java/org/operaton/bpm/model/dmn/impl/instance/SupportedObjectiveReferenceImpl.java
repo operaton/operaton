@@ -35,7 +35,7 @@ public class SupportedObjectiveReferenceImpl extends DmnElementReferenceImpl imp
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SupportedObjectiveReference.class, DMN_ELEMENT_SUPPORTED_OBJECT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new SupportedObjectiveReferenceImpl(instanceContext));
+      .instanceProvider(SupportedObjectiveReferenceImpl::new);
 
     typeBuilder.build();
   }

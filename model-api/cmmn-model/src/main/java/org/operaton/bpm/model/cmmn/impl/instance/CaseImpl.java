@@ -134,7 +134,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Case.class, CMMN_ELEMENT_CASE)
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new CaseImpl(instanceContext));
+        .instanceProvider(CaseImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

@@ -39,7 +39,7 @@ public class ItemControlImpl extends PlanItemControlImpl implements ItemControl 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ItemControl.class, CMMN_ELEMENT_ITEM_CONTROL)
       .namespaceUri(CMMN11_NS)
       .extendsType(PlanItemControl.class)
-      .instanceProvider(instanceContext -> new ItemControlImpl(instanceContext));
+      .instanceProvider(ItemControlImpl::new);
 
     typeBuilder.build();
   }

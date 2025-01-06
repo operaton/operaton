@@ -52,7 +52,7 @@ public class OperatonFormFieldImpl extends BpmnModelElementInstanceImpl implemen
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormField.class, OPERATON_ELEMENT_FORM_FIELD)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonFormFieldImpl(instanceContext));
+      .instanceProvider(OperatonFormFieldImpl::new);
 
     operatonIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ID)
       .namespace(OPERATON_NS)

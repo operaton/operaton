@@ -36,7 +36,7 @@ public class TimeDurationImpl extends ExpressionImpl implements TimeDuration {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimeDuration.class, BPMN_ELEMENT_TIME_DURATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new TimeDurationImpl(instanceContext));
+      .instanceProvider(TimeDurationImpl::new);
 
     typeBuilder.build();
   }

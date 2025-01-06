@@ -38,7 +38,7 @@ public class OperatonOutputParameterImpl extends OperatonGenericValueElementImpl
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonOutputParameter.class, OPERATON_ELEMENT_OUTPUT_PARAMETER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonOutputParameterImpl(instanceContext));
+      .instanceProvider(OperatonOutputParameterImpl::new);
 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)

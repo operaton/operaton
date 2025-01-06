@@ -46,7 +46,7 @@ public class RelationshipImpl extends BaseElementImpl implements Relationship {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Relationship.class, BPMN_ELEMENT_RELATIONSHIP)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new RelationshipImpl(instanceContext));
+      .instanceProvider(RelationshipImpl::new);
 
     typeAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_TYPE)
       .required()

@@ -54,7 +54,7 @@ public class DecisionRuleImpl extends DmnElementImpl implements DecisionRule {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionRule.class, DMN_ELEMENT_DECISION_RULE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElement.class)
-      .instanceProvider(instanceContext -> new DecisionRuleImpl(instanceContext));
+      .instanceProvider(DecisionRuleImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

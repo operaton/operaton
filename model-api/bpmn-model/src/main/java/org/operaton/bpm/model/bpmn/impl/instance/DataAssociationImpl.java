@@ -48,7 +48,7 @@ public class DataAssociationImpl extends BaseElementImpl implements DataAssociat
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataAssociation.class, BPMN_ELEMENT_DATA_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new DataAssociationImpl(instanceContext));
+      .instanceProvider(DataAssociationImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

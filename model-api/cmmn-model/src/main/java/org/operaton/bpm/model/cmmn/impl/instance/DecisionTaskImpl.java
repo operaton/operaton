@@ -141,7 +141,7 @@ public class DecisionTaskImpl extends TaskImpl implements DecisionTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionTask.class, CMMN_ELEMENT_DECISION_TASK)
         .namespaceUri(CMMN11_NS)
         .extendsType(Task.class)
-        .instanceProvider(instanceContext -> new DecisionTaskImpl(instanceContext));
+        .instanceProvider(DecisionTaskImpl::new);
 
     decisionRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_DECISION_REF)
         .build();

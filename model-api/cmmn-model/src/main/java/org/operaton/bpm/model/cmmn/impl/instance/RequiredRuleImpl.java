@@ -81,7 +81,7 @@ public class RequiredRuleImpl extends CmmnElementImpl implements RequiredRule {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredRule.class, CMMN_ELEMENT_REQUIRED_RULE)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new RequiredRuleImpl(instanceContext));
+        .instanceProvider(RequiredRuleImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

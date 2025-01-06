@@ -47,7 +47,7 @@ public class DataStoreImpl extends RootElementImpl implements DataStore {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataStore.class, BPMN_ELEMENT_DATA_STORE)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new DataStoreImpl(instanceContext));
+      .instanceProvider(DataStoreImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
         .build();

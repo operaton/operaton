@@ -44,7 +44,7 @@ public class IoSpecificationImpl extends BaseElementImpl implements IoSpecificat
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(IoSpecification.class, BPMN_ELEMENT_IO_SPECIFICATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new IoSpecificationImpl(instanceContext));
+      .instanceProvider(IoSpecificationImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

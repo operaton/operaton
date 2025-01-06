@@ -36,7 +36,7 @@ public class ConditionImpl extends ExpressionImpl implements Condition {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Condition.class, BPMN_ELEMENT_CONDITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new ConditionImpl(instanceContext));
+      .instanceProvider(ConditionImpl::new);
 
     typeBuilder.build();
   }

@@ -44,7 +44,7 @@ public class OperatonVariableOnPartImpl extends CmmnModelElementInstanceImpl imp
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableOnPart.class, OPERATON_ELEMENT_VARIABLE_ON_PART)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(instanceContext -> new OperatonVariableOnPartImpl(instanceContext));
+      .instanceProvider(OperatonVariableOnPartImpl::new);
 
     operatonVariableNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE_NAME)
       .namespace(CAMUNDA_NS)

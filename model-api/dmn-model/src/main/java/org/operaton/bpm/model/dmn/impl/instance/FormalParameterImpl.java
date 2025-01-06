@@ -35,7 +35,7 @@ public class FormalParameterImpl extends InformationItemImpl implements FormalPa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FormalParameter.class, DMN_ELEMENT_FORMAL_PARAMETER)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
-      .instanceProvider(instanceContext -> new FormalParameterImpl(instanceContext));
+      .instanceProvider(FormalParameterImpl::new);
 
     typeBuilder.build();
   }

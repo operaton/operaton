@@ -45,7 +45,7 @@ public class LinkEventDefinitionImpl extends EventDefinitionImpl implements Link
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(LinkEventDefinition.class, BPMN_ELEMENT_LINK_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(instanceContext -> new LinkEventDefinitionImpl(instanceContext));
+      .instanceProvider(LinkEventDefinitionImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .required()

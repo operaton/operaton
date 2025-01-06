@@ -93,7 +93,7 @@ public class ProcessImpl extends CallableElementImpl implements Process {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Process.class, BPMN_ELEMENT_PROCESS)
       .namespaceUri(BPMN20_NS)
       .extendsType(CallableElement.class)
-      .instanceProvider(instanceContext -> new ProcessImpl(instanceContext));
+      .instanceProvider(ProcessImpl::new);
 
     processTypeAttribute = typeBuilder.enumAttribute(BPMN_ATTRIBUTE_PROCESS_TYPE, ProcessType.class)
       .defaultValue(ProcessType.None)

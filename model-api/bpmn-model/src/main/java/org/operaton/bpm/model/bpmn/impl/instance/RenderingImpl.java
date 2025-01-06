@@ -36,7 +36,7 @@ public class RenderingImpl extends BaseElementImpl implements Rendering {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Rendering.class, BPMN_ELEMENT_RENDERING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new RenderingImpl(instanceContext));
+      .instanceProvider(RenderingImpl::new);
 
     typeBuilder.build();
   }

@@ -38,7 +38,7 @@ public class CategoryValueImpl extends BaseElementImpl implements CategoryValue 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CategoryValue.class, BPMN_ELEMENT_CATEGORY_VALUE)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new CategoryValueImpl(instanceContext));
+      .instanceProvider(CategoryValueImpl::new);
 
     valueAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_VALUE)
       .build();

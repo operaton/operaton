@@ -50,7 +50,7 @@ public class BpmnEdgeImpl extends LabeledEdgeImpl implements BpmnEdge {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnEdge.class, BPMNDI_ELEMENT_BPMN_EDGE)
       .namespaceUri(BPMNDI_NS)
       .extendsType(LabeledEdge.class)
-      .instanceProvider(instanceContext -> new BpmnEdgeImpl(instanceContext));
+      .instanceProvider(BpmnEdgeImpl::new);
 
     bpmnElementAttribute = typeBuilder.stringAttribute(BPMNDI_ATTRIBUTE_BPMN_ELEMENT)
       .qNameAttributeReference(BaseElement.class)

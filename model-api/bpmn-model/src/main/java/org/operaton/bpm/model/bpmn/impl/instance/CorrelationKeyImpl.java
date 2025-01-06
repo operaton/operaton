@@ -44,7 +44,7 @@ public class CorrelationKeyImpl extends BaseElementImpl implements CorrelationKe
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationKey.class, BPMN_ELEMENT_CORRELATION_KEY)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new CorrelationKeyImpl(instanceContext));
+      .instanceProvider(CorrelationKeyImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

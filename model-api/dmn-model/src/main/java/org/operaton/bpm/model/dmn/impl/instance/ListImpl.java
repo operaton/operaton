@@ -46,7 +46,7 @@ public class ListImpl extends ExpressionImpl implements List {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(List.class, DMN_ELEMENT_LIST)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new ListImpl(instanceContext));
+      .instanceProvider(ListImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

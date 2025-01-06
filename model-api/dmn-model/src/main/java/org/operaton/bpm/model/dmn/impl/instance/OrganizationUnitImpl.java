@@ -55,7 +55,7 @@ public class OrganizationUnitImpl extends BusinessContextElementImpl implements 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OrganizationUnit.class, DMN_ELEMENT_ORGANIZATION_UNIT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(BusinessContextElement.class)
-      .instanceProvider(instanceContext -> new OrganizationUnitImpl(instanceContext));
+      .instanceProvider(OrganizationUnitImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

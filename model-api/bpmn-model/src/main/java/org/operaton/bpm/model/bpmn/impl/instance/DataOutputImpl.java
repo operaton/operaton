@@ -38,7 +38,7 @@ public class DataOutputImpl extends ItemAwareElementImpl implements DataOutput {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataOutput.class,BpmnModelConstants.BPMN_ELEMENT_DATA_OUTPUT)
       .namespaceUri(BPMN20_NS)
       .extendsType(ItemAwareElement.class)
-      .instanceProvider(instanceContext -> new DataOutputImpl(instanceContext));
+      .instanceProvider(DataOutputImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

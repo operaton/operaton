@@ -41,7 +41,7 @@ public class FormalExpressionImpl extends ExpressionImpl implements FormalExpres
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FormalExpression.class, BPMN_ELEMENT_FORMAL_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new FormalExpressionImpl(instanceContext));
+      .instanceProvider(FormalExpressionImpl::new);
 
     languageAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_LANGUAGE)
       .build();

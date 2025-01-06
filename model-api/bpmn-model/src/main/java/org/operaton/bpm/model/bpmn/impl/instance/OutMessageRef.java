@@ -33,7 +33,7 @@ public class OutMessageRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutMessageRef.class, BPMN_ELEMENT_OUT_MESSAGE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new OutMessageRef(instanceContext));
+      .instanceProvider(OutMessageRef::new);
 
     typeBuilder.build();
   }

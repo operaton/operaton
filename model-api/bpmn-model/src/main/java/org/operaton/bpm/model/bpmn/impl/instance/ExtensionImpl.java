@@ -43,7 +43,7 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Extension.class, BPMN_ELEMENT_EXTENSION)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new ExtensionImpl(instanceContext));
+      .instanceProvider(ExtensionImpl::new);
 
     // TODO: qname reference extension definition
     definitionAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_DEFINITION)

@@ -81,7 +81,7 @@ public class ParameterMappingImpl extends CmmnElementImpl implements ParameterMa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ParameterMapping.class, CMMN_ELEMENT_PARAMETER_MAPPING)
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new ParameterMappingImpl(instanceContext));
+        .instanceProvider(ParameterMappingImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
         .idAttributeReference(Parameter.class)

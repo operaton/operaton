@@ -36,7 +36,7 @@ public class ExpressionImpl extends BaseElementImpl implements Expression {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Expression.class, BPMN_ELEMENT_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ExpressionImpl(instanceContext));
+      .instanceProvider(ExpressionImpl::new);
 
     typeBuilder.build();
   }

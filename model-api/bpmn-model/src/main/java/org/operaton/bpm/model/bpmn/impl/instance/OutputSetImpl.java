@@ -48,7 +48,7 @@ public class OutputSetImpl extends BaseElementImpl implements OutputSet {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputSet.class, BPMN_ELEMENT_OUTPUT_SET)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new OutputSetImpl(instanceContext));
+      .instanceProvider(OutputSetImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

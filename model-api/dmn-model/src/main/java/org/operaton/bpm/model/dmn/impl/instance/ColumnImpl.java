@@ -35,7 +35,7 @@ public class ColumnImpl extends InformationItemImpl implements Column {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Column.class, DMN_ELEMENT_COLUMN)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
-      .instanceProvider(instanceContext -> new ColumnImpl(instanceContext));
+      .instanceProvider(ColumnImpl::new);
 
     typeBuilder.build();
   }

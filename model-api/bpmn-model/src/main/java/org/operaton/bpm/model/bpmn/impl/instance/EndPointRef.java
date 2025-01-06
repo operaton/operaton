@@ -33,7 +33,7 @@ public class EndPointRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EndPointRef.class, BPMN_ELEMENT_END_POINT_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new EndPointRef(instanceContext));
+      .instanceProvider(EndPointRef::new);
 
     typeBuilder.build();
   }

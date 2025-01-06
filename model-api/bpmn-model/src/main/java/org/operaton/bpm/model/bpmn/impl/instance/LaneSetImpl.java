@@ -44,7 +44,7 @@ public class LaneSetImpl extends BaseElementImpl implements LaneSet {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(LaneSet.class, BPMN_ELEMENT_LANE_SET)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new LaneSetImpl(instanceContext));
+      .instanceProvider(LaneSetImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

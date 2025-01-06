@@ -56,7 +56,7 @@ public class OperatonTaskListenerImpl extends BpmnModelElementInstanceImpl imple
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonTaskListener.class, OPERATON_ELEMENT_TASK_LISTENER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonTaskListenerImpl(instanceContext));
+      .instanceProvider(OperatonTaskListenerImpl::new);
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
       .namespace(OPERATON_NS)

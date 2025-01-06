@@ -33,7 +33,7 @@ public class Incoming extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Incoming.class, BPMN_ELEMENT_INCOMING)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new Incoming(instanceContext));
+      .instanceProvider(Incoming::new);
   
     typeBuilder.build();
   } 

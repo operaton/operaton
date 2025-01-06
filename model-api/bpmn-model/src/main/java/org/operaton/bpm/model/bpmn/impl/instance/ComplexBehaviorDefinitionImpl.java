@@ -37,7 +37,7 @@ public class ComplexBehaviorDefinitionImpl extends BaseElementImpl implements Co
       .defineType(ComplexBehaviorDefinition.class, BPMN_ELEMENT_COMPLEX_BEHAVIOR_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ComplexBehaviorDefinitionImpl(instanceContext));
+      .instanceProvider(ComplexBehaviorDefinitionImpl::new);
 
     typeBuilder.build();
   }

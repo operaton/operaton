@@ -35,7 +35,7 @@ public class OperatonStringImpl extends BpmnModelElementInstanceImpl implements 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonString.class, OPERATON_ELEMENT_STRING)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonStringImpl(instanceContext));
+      .instanceProvider(OperatonStringImpl::new);
 
     typeBuilder.build();
   }

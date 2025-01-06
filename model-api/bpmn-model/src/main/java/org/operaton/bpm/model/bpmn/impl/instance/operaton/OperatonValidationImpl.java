@@ -42,7 +42,7 @@ public class OperatonValidationImpl extends BpmnModelElementInstanceImpl impleme
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonValidation.class, OPERATON_ELEMENT_VALIDATION)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonValidationImpl(instanceContext));
+      .instanceProvider(OperatonValidationImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

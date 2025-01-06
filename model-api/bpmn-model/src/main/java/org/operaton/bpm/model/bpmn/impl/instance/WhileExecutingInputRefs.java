@@ -33,7 +33,7 @@ public class WhileExecutingInputRefs extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(WhileExecutingInputRefs.class, BPMN_ELEMENT_WHILE_EXECUTING_INPUT_REFS)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new WhileExecutingInputRefs(instanceContext));
+      .instanceProvider(WhileExecutingInputRefs::new);
 
     typeBuilder.build();
   }

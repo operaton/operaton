@@ -33,7 +33,7 @@ public class ImportedElementImpl extends DmnModelElementInstanceImpl implements 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ImportedElement.class, DMN_ELEMENT_IMPORTED_ELEMENT)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new ImportedElementImpl(instanceContext));
+      .instanceProvider(ImportedElementImpl::new);
 
     typeBuilder.build();
   }

@@ -32,7 +32,7 @@ public class RelationshipDefinitionRef extends ModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RelationshipDefinitionRef.class, ELEMENT_NAME_RELATIONSHIP_DEFINITION_REF)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(instanceContext -> new RelationshipDefinitionRef(instanceContext));
+      .instanceProvider(RelationshipDefinitionRef::new);
 
     typeBuilder.build();
   }

@@ -38,7 +38,7 @@ public class IntermediateCatchEventImpl extends CatchEventImpl implements Interm
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(IntermediateCatchEvent.class, BPMN_ELEMENT_INTERMEDIATE_CATCH_EVENT)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(CatchEvent.class)
-      .instanceProvider(instanceContext -> new IntermediateCatchEventImpl(instanceContext));
+      .instanceProvider(IntermediateCatchEventImpl::new);
 
     typeBuilder.build();
   }

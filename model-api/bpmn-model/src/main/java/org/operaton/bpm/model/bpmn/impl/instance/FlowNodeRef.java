@@ -33,7 +33,7 @@ public class FlowNodeRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FlowNodeRef.class, BPMN_ELEMENT_FLOW_NODE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new FlowNodeRef(instanceContext));
+      .instanceProvider(FlowNodeRef::new);
 
     typeBuilder.build();
   }

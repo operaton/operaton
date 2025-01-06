@@ -46,7 +46,7 @@ public class ResourceRoleImpl extends BaseElementImpl implements ResourceRole {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceRole.class, BPMN_ELEMENT_RESOURCE_ROLE)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ResourceRoleImpl(instanceContext));
+      .instanceProvider(ResourceRoleImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

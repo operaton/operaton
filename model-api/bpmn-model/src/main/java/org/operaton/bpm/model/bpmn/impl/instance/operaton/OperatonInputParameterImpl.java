@@ -38,7 +38,7 @@ public class OperatonInputParameterImpl extends OperatonGenericValueElementImpl 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputParameter.class, OPERATON_ELEMENT_INPUT_PARAMETER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonInputParameterImpl(instanceContext));
+      .instanceProvider(OperatonInputParameterImpl::new);
 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)

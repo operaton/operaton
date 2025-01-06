@@ -115,7 +115,7 @@ public class ProcessTaskImpl extends TaskImpl implements ProcessTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ProcessTask.class, CMMN_ELEMENT_PROCESS_TASK)
         .namespaceUri(CMMN11_NS)
         .extendsType(Task.class)
-        .instanceProvider(instanceContext -> new ProcessTaskImpl(instanceContext));
+        .instanceProvider(ProcessTaskImpl::new);
 
     processRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_PROCESS_REF)
         .build();

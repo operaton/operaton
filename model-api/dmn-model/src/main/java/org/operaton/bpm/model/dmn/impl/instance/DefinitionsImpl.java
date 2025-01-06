@@ -144,7 +144,7 @@ public class DefinitionsImpl extends NamedElementImpl implements Definitions {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Definitions.class, DMN_ELEMENT_DEFINITIONS)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
-      .instanceProvider(instanceContext -> new DefinitionsImpl(instanceContext));
+      .instanceProvider(DefinitionsImpl::new);
 
     expressionLanguageAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_EXPRESSION_LANGUAGE)
       .defaultValue("http://www.omg.org/spec/FEEL/20140401")

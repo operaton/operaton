@@ -76,7 +76,7 @@ public class LiteralExpressionImpl extends ExpressionImpl implements LiteralExpr
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(LiteralExpression.class, DMN_ELEMENT_LITERAL_EXPRESSION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new LiteralExpressionImpl(instanceContext));
+      .instanceProvider(LiteralExpressionImpl::new);
 
     expressionLanguageAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_EXPRESSION_LANGUAGE)
       .build();

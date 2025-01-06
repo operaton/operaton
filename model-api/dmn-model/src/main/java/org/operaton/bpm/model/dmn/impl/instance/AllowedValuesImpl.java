@@ -35,7 +35,7 @@ public class AllowedValuesImpl extends UnaryTestsImpl implements AllowedValues {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(AllowedValues.class, DMN_ELEMENT_ALLOWED_VALUE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
-      .instanceProvider(instanceContext -> new AllowedValuesImpl(instanceContext));
+      .instanceProvider(AllowedValuesImpl::new);
 
     typeBuilder.build();
   }

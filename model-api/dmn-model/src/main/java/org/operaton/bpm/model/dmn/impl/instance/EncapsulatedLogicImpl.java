@@ -35,7 +35,7 @@ public class EncapsulatedLogicImpl extends FunctionDefinitionImpl implements Enc
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EncapsulatedLogic.class, DMN_ELEMENT_ENCAPSULATED_LOGIC)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(FunctionDefinition.class)
-      .instanceProvider(instanceContext -> new EncapsulatedLogicImpl(instanceContext));
+      .instanceProvider(EncapsulatedLogicImpl::new);
 
     typeBuilder.build();
   }

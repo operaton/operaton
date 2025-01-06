@@ -45,7 +45,7 @@ public class CorrelationSubscriptionImpl extends BaseElementImpl implements Corr
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationSubscription.class, BPMN_ELEMENT_CORRELATION_SUBSCRIPTION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new CorrelationSubscriptionImpl(instanceContext));
+      .instanceProvider(CorrelationSubscriptionImpl::new);
 
     correlationKeyAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_CORRELATION_KEY_REF)
       .required()

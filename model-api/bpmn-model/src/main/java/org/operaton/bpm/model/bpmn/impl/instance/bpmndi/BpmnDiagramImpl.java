@@ -47,7 +47,7 @@ public class BpmnDiagramImpl extends DiagramImpl implements BpmnDiagram {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnDiagram.class, BPMNDI_ELEMENT_BPMN_DIAGRAM)
       .namespaceUri(BPMNDI_NS)
       .extendsType(Diagram.class)
-      .instanceProvider(instanceContext -> new BpmnDiagramImpl(instanceContext));
+      .instanceProvider(BpmnDiagramImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

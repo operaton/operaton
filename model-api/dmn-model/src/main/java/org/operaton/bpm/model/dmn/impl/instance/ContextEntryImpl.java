@@ -60,7 +60,7 @@ public class ContextEntryImpl extends DmnModelElementInstanceImpl implements Con
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ContextEntry.class, DMN_ELEMENT_CONTEXT_ENTRY)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new ContextEntryImpl(instanceContext));
+      .instanceProvider(ContextEntryImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

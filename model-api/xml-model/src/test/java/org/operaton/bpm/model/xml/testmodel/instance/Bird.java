@@ -48,7 +48,7 @@ public class Bird extends FlyingAnimal {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Bird.class, ELEMENT_NAME_BIRD)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(FlyingAnimal.class)
-      .instanceProvider(instanceContext -> new Bird(instanceContext));
+      .instanceProvider(Bird::new);
 
     SequenceBuilder sequence = typeBuilder.sequence();
 

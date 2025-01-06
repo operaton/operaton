@@ -33,7 +33,7 @@ public class OutputSetRefs extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputSetRefs.class, BPMN_ELEMENT_OUTPUT_SET_REFS)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new OutputSetRefs(instanceContext));
+      .instanceProvider(OutputSetRefs::new);
 
     typeBuilder.build();
   }

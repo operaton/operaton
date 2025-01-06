@@ -33,7 +33,7 @@ public class ResourceRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceRef.class, BPMN_ELEMENT_RESOURCE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new ResourceRef(instanceContext));
+      .instanceProvider(ResourceRef::new);
 
     typeBuilder.build();
   }

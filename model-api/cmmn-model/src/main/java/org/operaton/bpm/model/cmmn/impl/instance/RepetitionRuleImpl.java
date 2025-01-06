@@ -96,7 +96,7 @@ public class RepetitionRuleImpl extends CmmnElementImpl implements RepetitionRul
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RepetitionRule.class, CMMN_ELEMENT_REPETITION_RULE)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new RepetitionRuleImpl(instanceContext));
+        .instanceProvider(RepetitionRuleImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

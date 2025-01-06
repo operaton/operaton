@@ -42,7 +42,7 @@ public class BpmnPlaneImpl extends PlaneImpl implements BpmnPlane {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnPlane.class, BPMNDI_ELEMENT_BPMN_PLANE)
       .namespaceUri(BPMNDI_NS)
       .extendsType(Plane.class)
-      .instanceProvider(instanceContext -> new BpmnPlaneImpl(instanceContext));
+      .instanceProvider(BpmnPlaneImpl::new);
 
     bpmnElementAttribute = typeBuilder.stringAttribute(BPMNDI_ATTRIBUTE_BPMN_ELEMENT)
       .qNameAttributeReference(BaseElement.class)

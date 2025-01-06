@@ -35,7 +35,7 @@ public class InputDataReferenceImpl extends DmnElementReferenceImpl implements I
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputDataReference.class, DMN_ELEMENT_INPUT_DATA_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new InputDataReferenceImpl(instanceContext));
+      .instanceProvider(InputDataReferenceImpl::new);
 
     typeBuilder.build();
   }

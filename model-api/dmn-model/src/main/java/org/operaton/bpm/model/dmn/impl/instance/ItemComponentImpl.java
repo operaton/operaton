@@ -35,7 +35,7 @@ public class ItemComponentImpl extends ItemDefinitionImpl implements ItemCompone
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ItemComponent.class, DMN_ELEMENT_ITEM_COMPONENT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(ItemDefinition.class)
-      .instanceProvider(instanceContext -> new ItemComponentImpl(instanceContext));
+      .instanceProvider(ItemComponentImpl::new);
 
     typeBuilder.build();
   }

@@ -47,7 +47,7 @@ public class ContextImpl extends ExpressionImpl implements Context {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Context.class, DMN_ELEMENT_CONTEXT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new ContextImpl(instanceContext));
+      .instanceProvider(ContextImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

@@ -40,7 +40,7 @@ public class ItemDefinitionImpl extends RootElementImpl implements ItemDefinitio
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ItemDefinition.class,BpmnModelConstants.BPMN_ELEMENT_ITEM_DEFINITION)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new ItemDefinitionImpl(instanceContext));
+      .instanceProvider(ItemDefinitionImpl::new);
 
     structureRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_STRUCTURE_REF)
       .build();

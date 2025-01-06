@@ -33,7 +33,7 @@ public class TypeRefImpl extends DmnModelElementInstanceImpl implements TypeRef 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TypeRef.class, DMN_ELEMENT_TYPE_REF)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new TypeRefImpl(instanceContext));
+      .instanceProvider(TypeRefImpl::new);
 
     typeBuilder.build();
   }

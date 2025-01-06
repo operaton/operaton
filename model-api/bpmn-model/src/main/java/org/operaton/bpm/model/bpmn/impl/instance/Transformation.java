@@ -35,7 +35,7 @@ public class Transformation extends FormalExpressionImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Transformation.class, BPMN_ELEMENT_TRANSFORMATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
-      .instanceProvider(instanceContext -> new Transformation(instanceContext));
+      .instanceProvider(Transformation::new);
 
     typeBuilder.build();
   }

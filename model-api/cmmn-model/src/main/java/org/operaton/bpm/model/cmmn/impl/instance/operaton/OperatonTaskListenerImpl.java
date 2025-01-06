@@ -53,7 +53,7 @@ public class OperatonTaskListenerImpl extends CmmnModelElementInstanceImpl imple
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonTaskListener.class, OPERATON_ELEMENT_TASK_LISTENER)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(instanceContext -> new OperatonTaskListenerImpl(instanceContext));
+      .instanceProvider(OperatonTaskListenerImpl::new);
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
       .namespace(CAMUNDA_NS)

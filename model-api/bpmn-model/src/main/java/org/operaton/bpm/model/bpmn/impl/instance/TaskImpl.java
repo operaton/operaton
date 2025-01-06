@@ -44,7 +44,7 @@ public class TaskImpl extends ActivityImpl implements Task {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Task.class, BPMN_ELEMENT_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Activity.class)
-      .instanceProvider(instanceContext -> new TaskImpl(instanceContext));
+      .instanceProvider(TaskImpl::new);
 
     /** operaton extensions */
 

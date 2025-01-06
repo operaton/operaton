@@ -83,7 +83,7 @@ public class ApplicabilityRuleImpl extends CmmnElementImpl implements Applicabil
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ApplicabilityRule.class, CMMN_ELEMENT_APPLICABILITY_RULE)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new ApplicabilityRuleImpl(instanceContext));
+        .instanceProvider(ApplicabilityRuleImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

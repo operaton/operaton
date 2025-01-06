@@ -33,7 +33,7 @@ public class CategoryValueRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CategoryValueRef.class, BPMN_ELEMENT_CATEGORY_VALUE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new CategoryValueRef(instanceContext));
+      .instanceProvider(CategoryValueRef::new);
 
     typeBuilder.build();
   }

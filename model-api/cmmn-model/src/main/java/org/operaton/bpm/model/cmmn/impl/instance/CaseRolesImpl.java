@@ -49,7 +49,7 @@ public class CaseRolesImpl extends CmmnElementImpl implements CaseRoles {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseRoles.class, CMMN_ELEMENT_CASE_ROLES)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(instanceContext -> new CaseRolesImpl(instanceContext));
+      .instanceProvider(CaseRolesImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

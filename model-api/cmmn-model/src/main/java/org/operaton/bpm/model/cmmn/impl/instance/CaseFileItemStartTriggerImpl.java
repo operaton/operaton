@@ -71,7 +71,7 @@ public class CaseFileItemStartTriggerImpl extends StartTriggerImpl implements Ca
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileItemStartTrigger.class, CMMN_ELEMENT_CASE_FILE_ITEM_START_TRIGGER)
         .extendsType(StartTrigger.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new CaseFileItemStartTriggerImpl(instanceContext));
+        .instanceProvider(CaseFileItemStartTriggerImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
         .idAttributeReference(CaseFileItem.class)

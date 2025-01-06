@@ -33,7 +33,7 @@ public class SourceImpl extends CmmnModelElementInstanceImpl implements Source {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Source.class, CMMN_ELEMENT_SOURCE)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(instanceContext -> new SourceImpl(instanceContext));
+      .instanceProvider(SourceImpl::new);
 
     typeBuilder.build();
   }

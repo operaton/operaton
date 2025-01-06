@@ -44,7 +44,7 @@ public class AnimalReference extends ModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(AnimalReference.class, ELEMENT_NAME_ANIMAL_REFERENCE)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(instanceContext -> new AnimalReference(instanceContext));
+      .instanceProvider(AnimalReference::new);
 
     hrefAttribute = typeBuilder.stringAttribute("href")
       .required()

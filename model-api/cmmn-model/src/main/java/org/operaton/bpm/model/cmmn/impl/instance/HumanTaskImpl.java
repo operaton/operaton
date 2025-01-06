@@ -198,7 +198,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(HumanTask.class, CMMN_ELEMENT_HUMAN_TASK)
         .namespaceUri(CMMN11_NS)
         .extendsType(Task.class)
-        .instanceProvider(instanceContext -> new HumanTaskImpl(instanceContext));
+        .instanceProvider(HumanTaskImpl::new);
 
     performerRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_PERFORMER_REF)
         .idAttributeReference(Role.class)

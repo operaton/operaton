@@ -64,7 +64,7 @@ public class ImportedValuesImpl extends ImportImpl implements ImportedValues {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ImportedValues.class, DMN_ELEMENT_IMPORTED_VALUES)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Import.class)
-      .instanceProvider(instanceContext -> new ImportedValuesImpl(instanceContext));
+      .instanceProvider(ImportedValuesImpl::new);
 
     expressionLanguageAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_EXPRESSION_LANGUAGE)
       .build();

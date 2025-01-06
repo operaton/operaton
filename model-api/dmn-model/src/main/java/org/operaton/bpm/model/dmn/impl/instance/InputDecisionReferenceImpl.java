@@ -35,7 +35,7 @@ public class InputDecisionReferenceImpl extends DmnElementReferenceImpl implemen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputDecisionReference.class, DMN_ELEMENT_INPUT_DECISION_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new InputDecisionReferenceImpl(instanceContext));
+      .instanceProvider(InputDecisionReferenceImpl::new);
 
     typeBuilder.build();
   }

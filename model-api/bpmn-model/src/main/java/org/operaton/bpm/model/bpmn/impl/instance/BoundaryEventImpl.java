@@ -43,7 +43,7 @@ public class BoundaryEventImpl extends CatchEventImpl implements BoundaryEvent {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BoundaryEvent.class, BPMN_ELEMENT_BOUNDARY_EVENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(CatchEvent.class)
-      .instanceProvider(instanceContext -> new BoundaryEventImpl(instanceContext));
+      .instanceProvider(BoundaryEventImpl::new);
 
     cancelActivityAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_CANCEL_ACTIVITY)
       .defaultValue(true)

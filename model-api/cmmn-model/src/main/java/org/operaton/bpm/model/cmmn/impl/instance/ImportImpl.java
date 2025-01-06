@@ -75,7 +75,7 @@ public class ImportImpl extends CmmnModelElementInstanceImpl implements Import {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Import.class, CMMN_ELEMENT_IMPORT)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(instanceContext -> new ImportImpl(instanceContext));
+      .instanceProvider(ImportImpl::new);
 
     namespaceAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAMESPACE)
       .build();

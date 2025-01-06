@@ -39,7 +39,7 @@ public class ProcessRefExpressionImpl extends ExpressionImpl implements ProcessR
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ProcessRefExpression.class, CMMN_ELEMENT_PROCESS_REF_EXPRESSION)
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new ProcessRefExpressionImpl(instanceContext));
+      .instanceProvider(ProcessRefExpressionImpl::new);
 
     typeBuilder.build();
   }

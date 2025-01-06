@@ -42,7 +42,7 @@ public class SubConversationImpl extends ConversationNodeImpl implements SubConv
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SubConversation.class, BPMN_ELEMENT_SUB_CONVERSATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(ConversationNode.class)
-      .instanceProvider(instanceContext -> new SubConversationImpl(instanceContext));
+      .instanceProvider(SubConversationImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

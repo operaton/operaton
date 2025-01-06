@@ -59,7 +59,7 @@ public class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BusinessRuleTask.class, BPMN_ELEMENT_BUSINESS_RULE_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(instanceContext -> new BusinessRuleTaskImpl(instanceContext));
+      .instanceProvider(BusinessRuleTaskImpl::new);
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##unspecified")

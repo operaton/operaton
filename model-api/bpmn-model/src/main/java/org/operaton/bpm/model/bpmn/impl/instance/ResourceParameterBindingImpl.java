@@ -43,7 +43,7 @@ public class ResourceParameterBindingImpl extends BaseElementImpl implements Res
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceParameterBinding.class, BPMN_ELEMENT_RESOURCE_PARAMETER_BINDING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ResourceParameterBindingImpl(instanceContext));
+      .instanceProvider(ResourceParameterBindingImpl::new);
 
     parameterRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_PARAMETER_REF)
       .required()

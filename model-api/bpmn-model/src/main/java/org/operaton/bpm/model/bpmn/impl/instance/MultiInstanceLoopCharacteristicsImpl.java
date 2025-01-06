@@ -83,7 +83,7 @@ public class MultiInstanceLoopCharacteristicsImpl extends LoopCharacteristicsImp
       .defineType(MultiInstanceLoopCharacteristics.class, BPMN_ELEMENT_MULTI_INSTANCE_LOOP_CHARACTERISTICS)
       .namespaceUri(BPMN20_NS)
       .extendsType(LoopCharacteristics.class)
-      .instanceProvider(instanceContext -> new MultiInstanceLoopCharacteristicsImpl(instanceContext));
+      .instanceProvider(MultiInstanceLoopCharacteristicsImpl::new);
 
     isSequentialAttribute = typeBuilder.booleanAttribute(BPMN_ELEMENT_IS_SEQUENTIAL)
       .defaultValue(false)

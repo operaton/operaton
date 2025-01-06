@@ -35,7 +35,7 @@ public class ImpactingDecisionReferenceImpl extends DmnElementReferenceImpl impl
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ImpactingDecisionReference.class, DMN_ELEMENT_IMPACTING_DECISION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new ImpactingDecisionReferenceImpl(instanceContext));
+      .instanceProvider(ImpactingDecisionReferenceImpl::new);
 
     typeBuilder.build();
   }

@@ -40,7 +40,7 @@ public class CompletionConditionImpl extends ExpressionImpl implements Completio
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
       .instanceProvider(
-      instanceContext -> new CompletionConditionImpl(instanceContext));
+      CompletionConditionImpl::new);
 
     typeBuilder.build();
   }

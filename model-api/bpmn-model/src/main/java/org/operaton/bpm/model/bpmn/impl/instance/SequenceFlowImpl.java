@@ -49,7 +49,7 @@ public class SequenceFlowImpl extends FlowElementImpl implements SequenceFlow {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SequenceFlow.class, BPMN_ELEMENT_SEQUENCE_FLOW)
       .namespaceUri(BPMN20_NS)
       .extendsType(FlowElement.class)
-      .instanceProvider(instanceContext -> new SequenceFlowImpl(instanceContext));
+      .instanceProvider(SequenceFlowImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_SOURCE_REF)
       .required()

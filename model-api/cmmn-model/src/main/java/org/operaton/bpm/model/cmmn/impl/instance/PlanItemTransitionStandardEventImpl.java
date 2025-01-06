@@ -38,7 +38,7 @@ public class PlanItemTransitionStandardEventImpl extends CmmnModelElementInstanc
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanItemTransitionStandardEvent.class, CMMN_ELEMENT_STANDARD_EVENT)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(instanceContext -> new PlanItemTransitionStandardEventImpl(instanceContext));
+      .instanceProvider(PlanItemTransitionStandardEventImpl::new);
 
     typeBuilder.build();
   }

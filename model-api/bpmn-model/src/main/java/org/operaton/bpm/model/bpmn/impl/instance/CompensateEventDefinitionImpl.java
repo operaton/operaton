@@ -41,7 +41,7 @@ public class CompensateEventDefinitionImpl extends EventDefinitionImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CompensateEventDefinition.class, BPMN_ELEMENT_COMPENSATE_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(instanceContext -> new CompensateEventDefinitionImpl(instanceContext));
+      .instanceProvider(CompensateEventDefinitionImpl::new);
 
     waitForCompletionAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_WAIT_FOR_COMPLETION)
       .build();

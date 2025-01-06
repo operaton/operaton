@@ -41,7 +41,7 @@ public class InclusiveGatewayImpl extends GatewayImpl implements InclusiveGatewa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InclusiveGateway.class, BPMN_ELEMENT_INCLUSIVE_GATEWAY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
-      .instanceProvider(instanceContext -> new InclusiveGatewayImpl(instanceContext));
+      .instanceProvider(InclusiveGatewayImpl::new);
 
     defaultAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_DEFAULT)
       .idAttributeReference(SequenceFlow.class)

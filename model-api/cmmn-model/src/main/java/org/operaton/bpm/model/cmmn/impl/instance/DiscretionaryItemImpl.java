@@ -100,7 +100,7 @@ public class DiscretionaryItemImpl extends TableItemImpl implements Discretionar
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DiscretionaryItem.class, CMMN_ELEMENT_DISCRETIONARY_ITEM)
         .namespaceUri(CMMN11_NS)
         .extendsType(TableItem.class)
-        .instanceProvider(instanceContext -> new DiscretionaryItemImpl(instanceContext));
+        .instanceProvider(DiscretionaryItemImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

@@ -77,7 +77,7 @@ public class IfPartImpl extends CmmnElementImpl implements IfPart {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(IfPart.class, CMMN_ELEMENT_IF_PART)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new IfPartImpl(instanceContext));
+        .instanceProvider(IfPartImpl::new);
 
     contextRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_CONTEXT_REF)
         .idAttributeReference(CaseFileItem.class)

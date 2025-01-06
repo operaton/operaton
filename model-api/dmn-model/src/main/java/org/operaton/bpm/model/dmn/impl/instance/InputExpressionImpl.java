@@ -35,7 +35,7 @@ public class InputExpressionImpl extends LiteralExpressionImpl implements InputE
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputExpression.class, DMN_ELEMENT_INPUT_EXPRESSION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
-      .instanceProvider(instanceContext -> new InputExpressionImpl(instanceContext));
+      .instanceProvider(InputExpressionImpl::new);
 
     typeBuilder.build();
   }

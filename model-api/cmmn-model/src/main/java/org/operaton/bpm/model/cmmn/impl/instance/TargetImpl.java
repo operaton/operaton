@@ -33,7 +33,7 @@ public class TargetImpl extends CmmnModelElementInstanceImpl implements Target {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Target.class, CMMN_ELEMENT_TARGET)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(instanceContext -> new TargetImpl(instanceContext));
+      .instanceProvider(TargetImpl::new);
 
     typeBuilder.build();
   }

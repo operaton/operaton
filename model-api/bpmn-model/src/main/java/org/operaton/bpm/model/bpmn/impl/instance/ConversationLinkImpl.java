@@ -42,7 +42,7 @@ public class ConversationLinkImpl extends BaseElementImpl implements Conversatio
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ConversationLink.class, BPMN_ELEMENT_CONVERSATION_LINK)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ConversationLinkImpl(instanceContext));
+      .instanceProvider(ConversationLinkImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

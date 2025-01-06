@@ -33,7 +33,7 @@ public class Guardian extends AnimalReference {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Guardian.class, ELEMENT_NAME_GUARDIAN)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(AnimalReference.class)
-      .instanceProvider(instanceContext -> new Guardian(instanceContext));
+      .instanceProvider(Guardian::new);
 
     typeBuilder.build();
   }

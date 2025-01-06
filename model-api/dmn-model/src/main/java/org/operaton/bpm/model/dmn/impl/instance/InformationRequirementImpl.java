@@ -62,7 +62,7 @@ public class InformationRequirementImpl extends DmnModelElementInstanceImpl impl
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InformationRequirement.class, DMN_ELEMENT_INFORMATION_REQUIREMENT)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new InformationRequirementImpl(instanceContext));
+      .instanceProvider(InformationRequirementImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

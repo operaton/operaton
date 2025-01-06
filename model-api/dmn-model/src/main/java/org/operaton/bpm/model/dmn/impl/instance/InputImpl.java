@@ -35,7 +35,7 @@ public class InputImpl extends InputClauseImpl implements Input {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Input.class, DMN_ELEMENT_INPUT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InputClause.class)
-      .instanceProvider(instanceContext -> new InputImpl(instanceContext));
+      .instanceProvider(InputImpl::new);
 
     typeBuilder.build();
   }

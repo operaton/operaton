@@ -39,7 +39,7 @@ public class CaseRoleImpl extends RoleImpl implements CaseRole {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseRole.class, CMMN_ELEMENT_CASE_ROLES)
       .namespaceUri(CMMN10_NS)
       .extendsType(Role.class)
-      .instanceProvider(instanceContext -> new CaseRoleImpl(instanceContext));
+      .instanceProvider(CaseRoleImpl::new);
 
     typeBuilder.build();
   }

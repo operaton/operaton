@@ -35,7 +35,7 @@ public class EncapsulatedDecisionReferenceImpl extends DmnElementReferenceImpl i
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EncapsulatedDecisionReference.class, DMN_ELEMENT_ENCAPSULATED_DECISION_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new EncapsulatedDecisionReferenceImpl(instanceContext));
+      .instanceProvider(EncapsulatedDecisionReferenceImpl::new);
 
     typeBuilder.build();
   }

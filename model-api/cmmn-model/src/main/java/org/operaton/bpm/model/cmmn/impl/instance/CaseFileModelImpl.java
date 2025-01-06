@@ -39,7 +39,7 @@ public class CaseFileModelImpl extends CaseFileImpl implements CaseFileModel {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileModel.class, CMMN_ELEMENT_CASE_FILE_MODEL)
       .namespaceUri(CMMN11_NS)
       .extendsType(CaseFile.class)
-      .instanceProvider(instanceContext -> new CaseFileModelImpl(instanceContext));
+      .instanceProvider(CaseFileModelImpl::new);
 
     typeBuilder.build();
   }

@@ -41,7 +41,7 @@ public class Egg extends ModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Egg.class, ELEMENT_NAME_EGG)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(instanceContext -> new Egg(instanceContext));
+      .instanceProvider(Egg::new);
 
     idAttr = typeBuilder.stringAttribute(ATTRIBUTE_NAME_ID)
       .idAttribute()

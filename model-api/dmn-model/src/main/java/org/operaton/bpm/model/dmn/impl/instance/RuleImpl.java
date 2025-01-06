@@ -35,7 +35,7 @@ public class RuleImpl extends DecisionRuleImpl implements Rule {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Rule.class, DMN_ELEMENT_RULE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DecisionRule.class)
-      .instanceProvider(instanceContext -> new RuleImpl(instanceContext));
+      .instanceProvider(RuleImpl::new);
 
     typeBuilder.build();
   }

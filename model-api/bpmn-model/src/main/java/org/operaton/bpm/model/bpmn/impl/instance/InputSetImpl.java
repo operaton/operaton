@@ -49,7 +49,7 @@ public class InputSetImpl extends BaseElementImpl implements InputSet {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputSet.class, BPMN_ELEMENT_INPUT_SET)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new InputSetImpl(instanceContext));
+      .instanceProvider(InputSetImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute("name")
       .build();

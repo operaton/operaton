@@ -42,7 +42,7 @@ public class OperatonMapImpl extends BpmnModelElementInstanceImpl implements Ope
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonMap.class, BpmnModelConstants.OPERATON_ELEMENT_MAP)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonMapImpl(instanceContext));
+      .instanceProvider(OperatonMapImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

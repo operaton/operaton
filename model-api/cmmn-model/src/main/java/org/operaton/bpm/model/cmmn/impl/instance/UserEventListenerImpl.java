@@ -52,7 +52,7 @@ public class UserEventListenerImpl extends EventListenerImpl implements UserEven
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UserEventListener.class, CMMN_ELEMENT_USER_EVENT_LISTENER)
         .namespaceUri(CMMN11_NS)
         .extendsType(EventListener.class)
-        .instanceProvider(instanceContext -> new UserEventListenerImpl(instanceContext));
+        .instanceProvider(UserEventListenerImpl::new);
 
     authorizedRoleRefCollection = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_AUTHORIZED_ROLE_REFS)
         .idAttributeReferenceCollection(Role.class, CmmnAttributeElementReferenceCollection.class)

@@ -35,7 +35,7 @@ public class RequiredKnowledgeReferenceImpl extends DmnElementReferenceImpl impl
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredKnowledgeReference.class, DMN_ELEMENT_REQUIRED_KNOWLEDGE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new RequiredKnowledgeReferenceImpl(instanceContext));
+      .instanceProvider(RequiredKnowledgeReferenceImpl::new);
 
     typeBuilder.build();
   }

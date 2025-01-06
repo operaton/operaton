@@ -39,7 +39,7 @@ public class InputDecisionParameterImpl extends DecisionParameterImpl implements
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputDecisionParameter.class, CMMN_ELEMENT_INPUT)
         .namespaceUri(CMMN11_NS)
         .extendsType(DecisionParameter.class)
-        .instanceProvider(instanceContext -> new InputDecisionParameterImpl(instanceContext));
+        .instanceProvider(InputDecisionParameterImpl::new);
 
     typeBuilder.build();
   }

@@ -36,7 +36,7 @@ public class ConversationImpl extends ConversationNodeImpl implements Conversati
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Conversation.class, BPMN_ELEMENT_CONVERSATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(ConversationNode.class)
-      .instanceProvider(instanceContext -> new ConversationImpl(instanceContext));
+      .instanceProvider(ConversationImpl::new);
 
     typeBuilder.build();
   }

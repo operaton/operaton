@@ -71,7 +71,7 @@ public class PlanItemStartTriggerImpl extends StartTriggerImpl implements PlanIt
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanItemStartTrigger.class, CMMN_ELEMENT_PLAN_ITEM_START_TRIGGER)
         .extendsType(StartTrigger.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new PlanItemStartTriggerImpl(instanceContext));
+        .instanceProvider(PlanItemStartTriggerImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
         .idAttributeReference(PlanItem.class)

@@ -84,7 +84,7 @@ public class DecisionImpl extends CmmnElementImpl implements Decision {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Decision.class, CMMN_ELEMENT_DECISION)
         .extendsType(CmmnElement.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new DecisionImpl(instanceContext));
+        .instanceProvider(DecisionImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

@@ -65,7 +65,7 @@ public class PropertyImpl extends CmmnElementImpl implements Property {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Property.class, CMMN_ELEMENT_PROPERTY)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new PropertyImpl(instanceContext));
+        .instanceProvider(PropertyImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

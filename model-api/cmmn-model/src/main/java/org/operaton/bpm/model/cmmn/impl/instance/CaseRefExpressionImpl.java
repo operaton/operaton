@@ -39,7 +39,7 @@ public class CaseRefExpressionImpl extends ExpressionImpl implements CaseRefExpr
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseRefExpression.class, CMMN_ELEMENT_CASE_REF_EXPRESSION)
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new CaseRefExpressionImpl(instanceContext));
+      .instanceProvider(CaseRefExpressionImpl::new);
 
     typeBuilder.build();
   }

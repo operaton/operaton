@@ -35,7 +35,7 @@ public class DecisionOwnerReferenceImpl extends DmnElementReferenceImpl implemen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionOwnerReference.class, DMN_ELEMENT_DECISION_OWNER)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new DecisionOwnerReferenceImpl(instanceContext));
+      .instanceProvider(DecisionOwnerReferenceImpl::new);
 
     typeBuilder.build();
   }

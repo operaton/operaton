@@ -39,7 +39,7 @@ public class EscalationEventDefinitionImpl extends EventDefinitionImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EscalationEventDefinition.class, BPMN_ELEMENT_ESCALATION_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(instanceContext -> new EscalationEventDefinitionImpl(instanceContext));
+      .instanceProvider(EscalationEventDefinitionImpl::new);
 
     escalationRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ESCALATION_REF)
       .qNameAttributeReference(Escalation.class)

@@ -41,7 +41,7 @@ public class Wings extends ModelElementInstanceImpl{
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Wings.class, TYPE_NAME_WINGS)
       .namespaceUri(NEWER_NAMESPACE)
-      .instanceProvider(instanceContext -> new Wings(instanceContext));
+      .instanceProvider(Wings::new);
 
     typeBuilder.build();
   }

@@ -43,7 +43,7 @@ public class ParallelGatewayImpl extends GatewayImpl implements ParallelGateway 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ParallelGateway.class, BPMN_ELEMENT_PARALLEL_GATEWAY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
-      .instanceProvider(instanceContext -> new ParallelGatewayImpl(instanceContext));
+      .instanceProvider(ParallelGatewayImpl::new);
 
     /** operaton extensions */
 

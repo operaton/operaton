@@ -81,7 +81,7 @@ public class ManualActivationRuleImpl extends CmmnElementImpl implements ManualA
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ManualActivationRule.class, CMMN_ELEMENT_MANUAL_ACTIVATION_RULE)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new ManualActivationRuleImpl(instanceContext));
+        .instanceProvider(ManualActivationRuleImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

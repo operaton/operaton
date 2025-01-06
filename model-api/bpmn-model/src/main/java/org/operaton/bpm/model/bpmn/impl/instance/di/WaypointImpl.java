@@ -37,7 +37,7 @@ public class WaypointImpl extends PointImpl implements Waypoint {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Waypoint.class, DI_ELEMENT_WAYPOINT)
       .namespaceUri(DI_NS)
       .extendsType(Point.class)
-      .instanceProvider(instanceContext -> new WaypointImpl(instanceContext));
+      .instanceProvider(WaypointImpl::new);
 
     typeBuilder.build();
   }

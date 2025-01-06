@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-
-import junit.framework.TestCase;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -28,16 +23,7 @@ import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.BatchStatistics;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
-import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
-import org.operaton.bpm.engine.history.HistoricDecisionInstance;
-import org.operaton.bpm.engine.history.HistoricDetail;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
-import org.operaton.bpm.engine.history.HistoricIncident;
-import org.operaton.bpm.engine.history.HistoricJobLog;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.history.HistoricTaskInstance;
-import org.operaton.bpm.engine.history.HistoricVariableInstance;
+import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogEventEntity;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
@@ -51,6 +37,11 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+
+import java.util.Comparator;
+import java.util.List;
+
+import junit.framework.TestCase;
 
 /**
  * This class provides utils to verify the sorting of queries of engine entities.
@@ -67,7 +58,7 @@ public class TestOrderingUtil {
   // EXECUTION
 
   public static NullTolerantComparator<Execution> executionByProcessInstanceId() {
-    return propertyComparator(obj -> obj.getProcessInstanceId());
+    return propertyComparator(Execution::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<Execution> executionByProcessDefinitionId() {
@@ -89,15 +80,15 @@ public class TestOrderingUtil {
   //PROCESS INSTANCE
 
   public static NullTolerantComparator<ProcessInstance> processInstanceByProcessInstanceId() {
-    return propertyComparator(obj -> obj.getProcessInstanceId());
+    return propertyComparator(Execution::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<ProcessInstance> processInstanceByProcessDefinitionId() {
-    return propertyComparator(obj -> obj.getProcessDefinitionId());
+    return propertyComparator(ProcessInstance::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<ProcessInstance> processInstanceByBusinessKey() {
-    return propertyComparator(obj -> obj.getBusinessKey());
+    return propertyComparator(ProcessInstance::getBusinessKey);
   }
 
   // PROCESS DEFINITION
@@ -123,29 +114,29 @@ public class TestOrderingUtil {
   //HISTORIC PROCESS INSTANCE
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessDefinitionId() {
-    return propertyComparator(obj -> obj.getProcessDefinitionId());
+    return propertyComparator(HistoricProcessInstance::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessDefinitionKey() {
-    return propertyComparator(obj -> obj.getProcessDefinitionKey());
+    return propertyComparator(HistoricProcessInstance::getProcessDefinitionKey);
   }
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessDefinitionName() {
-    return propertyComparator(obj -> obj.getProcessDefinitionName());
+    return propertyComparator(HistoricProcessInstance::getProcessDefinitionName);
   }
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessDefinitionVersion() {
-    return propertyComparator(obj -> obj.getProcessDefinitionVersion());
+    return propertyComparator(HistoricProcessInstance::getProcessDefinitionVersion);
   }
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessInstanceId() {
-    return propertyComparator(obj -> obj.getId());
+    return propertyComparator(HistoricProcessInstance::getId);
   }
 
   // CASE EXECUTION
 
   public static NullTolerantComparator<CaseExecution> caseExecutionByDefinitionId() {
-    return propertyComparator(obj -> obj.getCaseDefinitionId());
+    return propertyComparator(CaseExecution::getCaseDefinitionId);
   }
 
   public static NullTolerantComparator<CaseExecution> caseExecutionByDefinitionKey(ProcessEngine processEngine) {
@@ -157,95 +148,95 @@ public class TestOrderingUtil {
   }
 
   public static NullTolerantComparator<CaseExecution> caseExecutionById() {
-    return propertyComparator(obj -> obj.getId());
+    return propertyComparator(CaseExecution::getId);
   }
 
   // TASK
 
   public static NullTolerantComparator<Task> taskById() {
-    return propertyComparator(obj -> obj.getId());
+    return propertyComparator(Task::getId);
   }
 
   public static NullTolerantComparator<Task> taskByName() {
-    return propertyComparator(obj -> obj.getName());
+    return propertyComparator(Task::getName);
   }
 
   public static NullTolerantComparator<Task> taskByPriority() {
-    return propertyComparator(obj -> obj.getPriority());
+    return propertyComparator(Task::getPriority);
   }
 
   public static NullTolerantComparator<Task> taskByAssignee() {
-    return propertyComparator(obj -> obj.getAssignee());
+    return propertyComparator(Task::getAssignee);
   }
 
   public static NullTolerantComparator<Task> taskByDescription() {
-    return propertyComparator(obj -> obj.getDescription());
+    return propertyComparator(Task::getDescription);
   }
 
   public static NullTolerantComparator<Task> taskByProcessInstanceId() {
-    return propertyComparator(obj -> obj.getProcessInstanceId());
+    return propertyComparator(Task::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<Task> taskByExecutionId() {
-    return propertyComparator(obj -> obj.getExecutionId());
+    return propertyComparator(Task::getExecutionId);
   }
 
   public static NullTolerantComparator<Task> taskByCreateTime() {
-    return propertyComparator(obj -> obj.getCreateTime());
+    return propertyComparator(Task::getCreateTime);
   }
 
   public static NullTolerantComparator<Task> taskByDueDate() {
-    return propertyComparator(obj -> obj.getDueDate());
+    return propertyComparator(Task::getDueDate);
   }
 
   public static NullTolerantComparator<Task> taskByFollowUpDate() {
-    return propertyComparator(obj -> obj.getFollowUpDate());
+    return propertyComparator(Task::getFollowUpDate);
   }
 
   public static NullTolerantComparator<Task> taskByCaseInstanceId() {
-    return propertyComparator(obj -> obj.getCaseInstanceId());
+    return propertyComparator(Task::getCaseInstanceId);
   }
 
   public static NullTolerantComparator<Task> taskByCaseExecutionId() {
-    return propertyComparator(obj -> obj.getCaseExecutionId());
+    return propertyComparator(Task::getCaseExecutionId);
   }
 
   // HISTORIC JOB LOG
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByTimestamp() {
-    return propertyComparator(obj -> obj.getTimestamp());
+    return propertyComparator(HistoricJobLog::getTimestamp);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobId() {
-    return propertyComparator(obj -> obj.getJobId());
+    return propertyComparator(HistoricJobLog::getJobId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobDefinitionId() {
-    return propertyComparator(obj -> obj.getJobDefinitionId());
+    return propertyComparator(HistoricJobLog::getJobDefinitionId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobDueDate() {
-    return propertyComparator(obj -> obj.getJobDueDate());
+    return propertyComparator(HistoricJobLog::getJobDueDate);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobRetries() {
-    return propertyComparator(obj -> obj.getJobRetries());
+    return propertyComparator(HistoricJobLog::getJobRetries);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByActivityId() {
-    return propertyComparator(obj -> obj.getActivityId());
+    return propertyComparator(HistoricJobLog::getActivityId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByExecutionId() {
-    return propertyComparator(obj -> obj.getExecutionId());
+    return propertyComparator(HistoricJobLog::getExecutionId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByProcessInstanceId() {
-    return propertyComparator(obj -> obj.getProcessInstanceId());
+    return propertyComparator(HistoricJobLog::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByProcessDefinitionId() {
-    return propertyComparator(obj -> obj.getProcessDefinitionId());
+    return propertyComparator(HistoricJobLog::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByProcessDefinitionKey(ProcessEngine processEngine) {
@@ -258,11 +249,11 @@ public class TestOrderingUtil {
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByDeploymentId() {
-    return propertyComparator(obj -> obj.getDeploymentId());
+    return propertyComparator(HistoricJobLog::getDeploymentId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobPriority() {
-    return propertyComparator(obj -> obj.getJobPriority());
+    return propertyComparator(HistoricJobLog::getJobPriority);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogPartiallyByOccurence() {
@@ -270,73 +261,73 @@ public class TestOrderingUtil {
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricJobLog::getTenantId);
   }
 
   // jobs
 
   public static NullTolerantComparator<Job> jobByPriority() {
-    return propertyComparator(obj -> obj.getPriority());
+    return propertyComparator(Job::getPriority);
   }
 
   // external task
 
   public static NullTolerantComparator<ExternalTask> externalTaskById() {
-    return propertyComparator(obj -> obj.getId());
+    return propertyComparator(ExternalTask::getId);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByProcessInstanceId() {
-    return propertyComparator(obj -> obj.getProcessInstanceId());
+    return propertyComparator(ExternalTask::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByProcessDefinitionId() {
-    return propertyComparator(obj -> obj.getProcessDefinitionId());
+    return propertyComparator(ExternalTask::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByProcessDefinitionKey() {
-    return propertyComparator(obj -> obj.getProcessDefinitionKey());
+    return propertyComparator(ExternalTask::getProcessDefinitionKey);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByLockExpirationTime() {
-    return propertyComparator(obj -> obj.getLockExpirationTime());
+    return propertyComparator(ExternalTask::getLockExpirationTime);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByPriority() {
-    return propertyComparator(obj -> obj.getPriority());
+    return propertyComparator(ExternalTask::getPriority);
   }
 
   // batch
 
   public static NullTolerantComparator<Batch> batchById() {
-    return propertyComparator(obj -> obj.getId());
+    return propertyComparator(Batch::getId);
   }
 
   public static NullTolerantComparator<Batch> batchByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(Batch::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricBatch> historicBatchById() {
-    return propertyComparator(obj -> obj.getId());
+    return propertyComparator(HistoricBatch::getId);
   }
 
   public static NullTolerantComparator<HistoricBatch> historicBatchByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricBatch::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricBatch> historicBatchByStartTime() {
-    return propertyComparator(obj -> obj.getStartTime());
+    return propertyComparator(HistoricBatch::getStartTime);
   }
 
   public static NullTolerantComparator<HistoricBatch> historicBatchByEndTime() {
-    return propertyComparator(obj -> obj.getEndTime());
+    return propertyComparator(HistoricBatch::getEndTime);
   }
 
   public static NullTolerantComparator<BatchStatistics> batchStatisticsById() {
-    return propertyComparator(obj -> obj.getId());
+    return propertyComparator(Batch::getId);
   }
 
   public static NullTolerantComparator<BatchStatistics> batchStatisticsByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(Batch::getTenantId);
   }
 
   public static NullTolerantComparator<BatchStatistics> batchStatisticsByStartTime() {
@@ -346,47 +337,47 @@ public class TestOrderingUtil {
   // HISTORIC EXTERNAL TASK LOG
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskByTimestamp() {
-    return propertyComparator(obj -> obj.getTimestamp());
+    return propertyComparator(HistoricExternalTaskLog::getTimestamp);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByExternalTaskId() {
-    return propertyComparator(obj -> obj.getExternalTaskId());
+    return propertyComparator(HistoricExternalTaskLog::getExternalTaskId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByRetries() {
-    return propertyComparator(obj -> obj.getRetries());
+    return propertyComparator(HistoricExternalTaskLog::getRetries);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByPriority() {
-    return propertyComparator(obj -> obj.getPriority());
+    return propertyComparator(HistoricExternalTaskLog::getPriority);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByTopicName() {
-    return propertyComparator(obj -> obj.getTopicName());
+    return propertyComparator(HistoricExternalTaskLog::getTopicName);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByWorkerId() {
-    return propertyComparator(obj -> obj.getWorkerId());
+    return propertyComparator(HistoricExternalTaskLog::getWorkerId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByActivityId() {
-    return propertyComparator(obj -> obj.getActivityId());
+    return propertyComparator(HistoricExternalTaskLog::getActivityId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByActivityInstanceId() {
-    return propertyComparator(obj -> obj.getActivityInstanceId());
+    return propertyComparator(HistoricExternalTaskLog::getActivityInstanceId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByExecutionId() {
-    return propertyComparator(obj -> obj.getExecutionId());
+    return propertyComparator(HistoricExternalTaskLog::getExecutionId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByProcessInstanceId() {
-    return propertyComparator(obj -> obj.getProcessInstanceId());
+    return propertyComparator(HistoricExternalTaskLog::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByProcessDefinitionId() {
-    return propertyComparator(obj -> obj.getProcessDefinitionId());
+    return propertyComparator(HistoricExternalTaskLog::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByProcessDefinitionKey(ProcessEngine processEngine) {
@@ -401,40 +392,40 @@ public class TestOrderingUtil {
   // HISTORIC ENTITIES
 
   public static NullTolerantComparator<HistoricActivityInstance> historicActivityInstanceByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricActivityInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricIncident> historicIncidentByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricIncident::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricDecisionInstance> historicDecisionInstanceByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricDecisionInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricDetail> historicDetailByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricDetail::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricTaskInstance> historicTaskInstanceByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricTaskInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricVariableInstance> historicVariableInstanceByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricVariableInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricCaseActivityInstance> historicCaseActivityInstanceByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricCaseActivityInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByTenantId() {
-    return propertyComparator(obj -> obj.getTenantId());
+    return propertyComparator(HistoricExternalTaskLog::getTenantId);
   }
 
   // SCHEMA LOG
   public static NullTolerantComparator<SchemaLogEntry> schemaLogEntryByTimestamp() {
-    return propertyComparator(obj -> obj.getTimestamp());
+    return propertyComparator(SchemaLogEntry::getTimestamp);
   }
 
   // general

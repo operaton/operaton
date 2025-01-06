@@ -55,7 +55,7 @@ public class SendTaskImpl extends TaskImpl implements SendTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SendTask.class, BPMN_ELEMENT_SEND_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(instanceContext -> new SendTaskImpl(instanceContext));
+      .instanceProvider(SendTaskImpl::new);
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##WebService")

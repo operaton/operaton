@@ -39,7 +39,7 @@ public class ParticipantMultiplicityImpl extends BaseElementImpl implements Part
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ParticipantMultiplicity.class, BPMN_ELEMENT_PARTICIPANT_MULTIPLICITY)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ParticipantMultiplicityImpl(instanceContext));
+      .instanceProvider(ParticipantMultiplicityImpl::new);
 
     minimumAttribute = typeBuilder.integerAttribute(BPMN_ATTRIBUTE_MINIMUM)
       .defaultValue(0)

@@ -33,7 +33,7 @@ public class QuestionImpl extends DmnModelElementInstanceImpl implements Questio
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Question.class, DMN_ELEMENT_QUESTION)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new QuestionImpl(instanceContext));
+      .instanceProvider(QuestionImpl::new);
 
     typeBuilder.build();
   }

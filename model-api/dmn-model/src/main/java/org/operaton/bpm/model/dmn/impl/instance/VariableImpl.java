@@ -35,7 +35,7 @@ public class VariableImpl extends InformationItemImpl implements Variable {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Variable.class, DMN_ELEMENT_VARIABLE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
-      .instanceProvider(instanceContext -> new VariableImpl(instanceContext));
+      .instanceProvider(VariableImpl::new);
 
     typeBuilder.build();
   }

@@ -81,7 +81,7 @@ public class InputClauseImpl extends DmnElementImpl implements InputClause {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputClause.class, DMN_ELEMENT_INPUT_CLAUSE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElement.class)
-      .instanceProvider(instanceContext -> new InputClauseImpl(instanceContext));
+      .instanceProvider(InputClauseImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

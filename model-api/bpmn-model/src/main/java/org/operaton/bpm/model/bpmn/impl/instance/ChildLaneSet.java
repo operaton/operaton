@@ -35,7 +35,7 @@ public class ChildLaneSet extends LaneSetImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ChildLaneSet.class, BPMN_ELEMENT_CHILD_LANE_SET)
       .namespaceUri(BPMN20_NS)
       .extendsType(LaneSet.class)
-      .instanceProvider(instanceContext -> new ChildLaneSet(instanceContext));
+      .instanceProvider(ChildLaneSet::new);
 
     typeBuilder.build();
   }

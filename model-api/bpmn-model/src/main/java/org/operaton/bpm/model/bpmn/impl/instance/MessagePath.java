@@ -35,7 +35,7 @@ public class MessagePath extends FormalExpressionImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(MessagePath.class, BPMN_ELEMENT_MESSAGE_PATH)
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
-      .instanceProvider(instanceContext -> new MessagePath(instanceContext));
+      .instanceProvider(MessagePath::new);
 
     typeBuilder.build();
   }

@@ -35,7 +35,7 @@ public class UsingProcessReferenceImpl extends DmnElementReferenceImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UsingProcessReference.class, DMN_ELEMENT_USING_PROCESS)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new UsingProcessReferenceImpl(instanceContext));
+      .instanceProvider(UsingProcessReferenceImpl::new);
 
     typeBuilder.build();
   }

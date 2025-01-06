@@ -59,7 +59,7 @@ public class InvocationImpl extends ExpressionImpl implements Invocation {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Invocation.class, DMN_ELEMENT_INVOCATION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new InvocationImpl(instanceContext));
+      .instanceProvider(InvocationImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

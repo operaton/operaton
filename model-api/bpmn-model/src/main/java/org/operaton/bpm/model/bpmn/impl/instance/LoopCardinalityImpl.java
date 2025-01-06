@@ -38,7 +38,7 @@ public class LoopCardinalityImpl extends ExpressionImpl implements LoopCardinali
       .defineType(LoopCardinality.class, BPMN_ELEMENT_LOOP_CARDINALITY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new LoopCardinalityImpl(instanceContext));
+      .instanceProvider(LoopCardinalityImpl::new);
 
     typeBuilder.build();
   }

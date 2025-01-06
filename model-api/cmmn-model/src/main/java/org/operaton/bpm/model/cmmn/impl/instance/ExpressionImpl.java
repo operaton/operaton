@@ -94,7 +94,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Expression.class, CMMN_ELEMENT_EXPRESSION)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new ExpressionImpl(instanceContext));
+        .instanceProvider(ExpressionImpl::new);
 
     languageAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_LANGUAGE)
         .defaultValue("http://www.w3.org/1999/XPath")

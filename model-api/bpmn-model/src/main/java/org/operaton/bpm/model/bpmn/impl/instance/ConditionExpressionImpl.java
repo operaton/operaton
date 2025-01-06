@@ -44,7 +44,7 @@ public class ConditionExpressionImpl extends FormalExpressionImpl implements Con
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ConditionExpression.class, BPMN_ELEMENT_CONDITION_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
-      .instanceProvider(instanceContext -> new ConditionExpressionImpl(instanceContext));
+      .instanceProvider(ConditionExpressionImpl::new);
 
     typeAttribute = typeBuilder.stringAttribute(XSI_ATTRIBUTE_TYPE)
       .namespace(XSI_NS)

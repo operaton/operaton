@@ -81,7 +81,7 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
     Assert.assertNull(Context.getCurrentProcessApplication());
 
     ProcessApplicationReference contextPA = ProcessApplicationContext.withProcessApplicationContext(
-        (Callable<ProcessApplicationReference>) () -> getCurrentContextApplication(),
+        (Callable<ProcessApplicationReference>) this::getCurrentContextApplication,
         pa.getName());
 
     Assert.assertEquals(contextPA.getProcessApplication(), pa);
@@ -109,7 +109,7 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
     Assert.assertNull(Context.getCurrentProcessApplication());
 
     ProcessApplicationReference contextPA = ProcessApplicationContext.withProcessApplicationContext(
-        (Callable<ProcessApplicationReference>) () -> getCurrentContextApplication(),
+        (Callable<ProcessApplicationReference>) this::getCurrentContextApplication,
         pa.getReference());
 
     Assert.assertEquals(contextPA.getProcessApplication(), pa);
@@ -137,7 +137,7 @@ public class ProcessApplicationContextTest extends PluggableProcessEngineTest {
     Assert.assertNull(Context.getCurrentProcessApplication());
 
     ProcessApplicationReference contextPA = ProcessApplicationContext.withProcessApplicationContext(
-        (Callable<ProcessApplicationReference>) () -> getCurrentContextApplication(),
+        (Callable<ProcessApplicationReference>) this::getCurrentContextApplication,
         pa);
 
     Assert.assertEquals(contextPA.getProcessApplication(), pa);

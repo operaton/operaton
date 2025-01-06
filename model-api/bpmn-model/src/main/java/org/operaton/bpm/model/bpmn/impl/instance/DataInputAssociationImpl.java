@@ -36,7 +36,7 @@ public class DataInputAssociationImpl extends DataAssociationImpl implements Dat
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataInputAssociation.class, BPMN_ELEMENT_DATA_INPUT_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(DataAssociation.class)
-      .instanceProvider(instanceContext -> new DataInputAssociationImpl(instanceContext));
+      .instanceProvider(DataInputAssociationImpl::new);
 
     typeBuilder.build();
   }

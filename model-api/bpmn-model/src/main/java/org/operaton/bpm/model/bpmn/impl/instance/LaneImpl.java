@@ -49,7 +49,7 @@ public class LaneImpl extends BaseElementImpl implements Lane {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Lane.class, BPMN_ELEMENT_LANE)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new LaneImpl(instanceContext));
+      .instanceProvider(LaneImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

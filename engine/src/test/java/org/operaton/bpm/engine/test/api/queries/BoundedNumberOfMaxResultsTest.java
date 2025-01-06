@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstanceQuery;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
@@ -204,7 +203,7 @@ public class BoundedNumberOfMaxResultsTest {
         runtimeService.createProcessInstanceQuery();
 
     // when/then
-    assertThatThrownBy(() -> processInstanceQuery.list())
+    assertThatThrownBy(processInstanceQuery::list)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("An unbound number of results is forbidden!");
 

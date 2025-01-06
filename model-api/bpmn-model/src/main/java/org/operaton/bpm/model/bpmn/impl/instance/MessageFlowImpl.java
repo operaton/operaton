@@ -45,7 +45,7 @@ public class MessageFlowImpl extends BaseElementImpl implements MessageFlow {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(MessageFlow.class, BPMN_ELEMENT_MESSAGE_FLOW)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new MessageFlowImpl(instanceContext));
+      .instanceProvider(MessageFlowImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

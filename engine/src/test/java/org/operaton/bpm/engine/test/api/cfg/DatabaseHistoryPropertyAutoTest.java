@@ -83,7 +83,7 @@ public class DatabaseHistoryPropertyAutoTest {
     final ProcessEngineConfigurationImpl config = config("true", ProcessEngineConfiguration.HISTORY_AUTO);
     ProcessEngineImpl processEngine = buildEngine(config);
 
-    final Integer level = config.getCommandExecutorSchemaOperations().execute(commandContext -> HistoryLevelSetupCommand.databaseHistoryLevel(commandContext));
+    final Integer level = config.getCommandExecutorSchemaOperations().execute(HistoryLevelSetupCommand::databaseHistoryLevel);
 
     assertThat(level).isEqualTo(HistoryLevel.HISTORY_LEVEL_AUDIT.getId());
 

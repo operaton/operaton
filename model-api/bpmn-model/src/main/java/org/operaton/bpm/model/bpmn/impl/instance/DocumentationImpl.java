@@ -39,7 +39,7 @@ public class DocumentationImpl extends BpmnModelElementInstanceImpl implements D
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Documentation.class, BPMN_ELEMENT_DOCUMENTATION)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new DocumentationImpl(instanceContext));
+      .instanceProvider(DocumentationImpl::new);
 
     idAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ID)
       .idAttribute()

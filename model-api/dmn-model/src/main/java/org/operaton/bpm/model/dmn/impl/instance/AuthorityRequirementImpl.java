@@ -75,7 +75,7 @@ public class AuthorityRequirementImpl extends DmnModelElementInstanceImpl implem
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(AuthorityRequirement.class, DMN_ELEMENT_AUTHORITY_REQUIREMENT)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new AuthorityRequirementImpl(instanceContext));
+      .instanceProvider(AuthorityRequirementImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

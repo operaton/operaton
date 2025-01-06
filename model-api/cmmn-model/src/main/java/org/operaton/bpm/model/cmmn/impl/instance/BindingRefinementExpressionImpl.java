@@ -39,7 +39,7 @@ public class BindingRefinementExpressionImpl extends ExpressionImpl implements B
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BindingRefinementExpression.class, CMMN_ELEMENT_BINDING_REFINEMENT)
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new BindingRefinementExpressionImpl(instanceContext));
+      .instanceProvider(BindingRefinementExpressionImpl::new);
 
     typeBuilder.build();
   }

@@ -41,7 +41,7 @@ public class OperatonOutImpl extends BpmnModelElementInstanceImpl implements Ope
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonOut.class, OPERATON_ELEMENT_OUT)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonOutImpl(instanceContext));
+      .instanceProvider(OperatonOutImpl::new);
 
     operatonSourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE)
       .namespace(OPERATON_NS)

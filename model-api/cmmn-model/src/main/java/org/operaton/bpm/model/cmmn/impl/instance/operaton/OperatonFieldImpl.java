@@ -48,7 +48,7 @@ public class OperatonFieldImpl extends CmmnModelElementInstanceImpl implements O
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonField.class, OPERATON_ELEMENT_FIELD)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(instanceContext -> new OperatonFieldImpl(instanceContext));
+      .instanceProvider(OperatonFieldImpl::new);
 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(CAMUNDA_NS)

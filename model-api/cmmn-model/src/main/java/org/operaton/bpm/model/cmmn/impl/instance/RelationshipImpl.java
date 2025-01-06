@@ -50,7 +50,7 @@ public class RelationshipImpl extends CmmnElementImpl implements Relationship {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Relationship.class, CMMN_ELEMENT_RELATIONSHIP)
       .namespaceUri(CMMN11_NS)
       .extendsType(CmmnElement.class)
-      .instanceProvider(instanceContext -> new RelationshipImpl(instanceContext));
+      .instanceProvider(RelationshipImpl::new);
 
     typeAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_TYPE)
       .required()

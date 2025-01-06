@@ -33,7 +33,7 @@ public class InMessageRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InMessageRef.class, BPMN_ELEMENT_IN_MESSAGE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new InMessageRef(instanceContext));
+      .instanceProvider(InMessageRef::new);
 
     typeBuilder.build();
   }

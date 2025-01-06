@@ -36,7 +36,7 @@ public class OperatonEntryImpl extends OperatonGenericValueElementImpl implement
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonEntry.class, OPERATON_ELEMENT_ENTRY)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonEntryImpl(instanceContext));
+      .instanceProvider(OperatonEntryImpl::new);
 
     operatonKeyAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_KEY)
       .namespace(OPERATON_NS)

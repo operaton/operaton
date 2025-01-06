@@ -51,7 +51,7 @@ public class ChildrenImpl extends CmmnElementImpl implements Children {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Children.class, CMMN_ELEMENT_CHILDREN)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(instanceContext -> new ChildrenImpl(instanceContext));
+        .instanceProvider(ChildrenImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

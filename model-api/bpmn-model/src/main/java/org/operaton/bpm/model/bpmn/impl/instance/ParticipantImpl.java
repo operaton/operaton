@@ -48,7 +48,7 @@ public class ParticipantImpl extends BaseElementImpl implements Participant {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Participant.class, BPMN_ELEMENT_PARTICIPANT)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ParticipantImpl(instanceContext));
+      .instanceProvider(ParticipantImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

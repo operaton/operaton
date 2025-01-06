@@ -33,7 +33,7 @@ public class Mother extends AnimalReference {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Mother.class, ELEMENT_NAME_MOTHER)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(AnimalReference.class)
-      .instanceProvider(instanceContext -> new Mother(instanceContext));
+      .instanceProvider(Mother::new);
 
     typeBuilder.build();
   }

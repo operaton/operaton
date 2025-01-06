@@ -33,7 +33,7 @@ public class InnerParticipantRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InnerParticipantRef.class, BPMN_ELEMENT_INNER_PARTICIPANT_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new InnerParticipantRef(instanceContext));
+      .instanceProvider(InnerParticipantRef::new);
 
     typeBuilder.build();
   }

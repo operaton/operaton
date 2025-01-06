@@ -40,7 +40,7 @@ public class ConversationAssociationImpl extends BaseElementImpl implements Conv
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ConversationAssociation.class, BPMN_ELEMENT_CONVERSATION_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(instanceContext -> new ConversationAssociationImpl(instanceContext));
+      .instanceProvider(ConversationAssociationImpl::new);
 
     innerConversationNodeRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_INNER_CONVERSATION_NODE_REF)
       .required()

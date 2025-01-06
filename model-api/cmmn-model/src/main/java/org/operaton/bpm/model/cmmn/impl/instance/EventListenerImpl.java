@@ -39,7 +39,7 @@ public class EventListenerImpl extends PlanItemDefinitionImpl implements EventLi
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EventListener.class, CMMN_ELEMENT_EVENT_LISTENER)
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanItemDefinition.class)
-        .instanceProvider(instanceContext -> new EventListenerImpl(instanceContext));
+        .instanceProvider(EventListenerImpl::new);
 
     typeBuilder.build();
   }

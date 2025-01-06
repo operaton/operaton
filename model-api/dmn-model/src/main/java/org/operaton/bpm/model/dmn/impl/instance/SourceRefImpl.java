@@ -35,7 +35,7 @@ public class SourceRefImpl extends DmnElementReferenceImpl implements SourceRef 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SourceRef.class, DMN_ELEMENT_SOURCE_REF)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(instanceContext -> new SourceRefImpl(instanceContext));
+      .instanceProvider(SourceRefImpl::new);
 
     typeBuilder.build();
   }

@@ -33,7 +33,7 @@ public class Outgoing extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Outgoing.class, BPMN_ELEMENT_OUTGOING)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new Outgoing(instanceContext));
+      .instanceProvider(Outgoing::new);
 
     typeBuilder.build();
   }

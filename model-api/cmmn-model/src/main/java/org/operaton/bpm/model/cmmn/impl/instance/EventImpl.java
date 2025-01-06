@@ -39,7 +39,7 @@ public class EventImpl extends PlanItemDefinitionImpl implements Event {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Event.class, CMMN_ELEMENT_EVENT)
         .namespaceUri(CMMN10_NS)
         .extendsType(PlanItemDefinition.class)
-        .instanceProvider(instanceContext -> new EventImpl(instanceContext));
+        .instanceProvider(EventImpl::new);
 
     typeBuilder.build();
   }

@@ -41,7 +41,7 @@ public class TimerEventDefinitionImpl extends EventDefinitionImpl implements Tim
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimerEventDefinition.class, BPMN_ELEMENT_TIMER_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(instanceContext -> new TimerEventDefinitionImpl(instanceContext));
+      .instanceProvider(TimerEventDefinitionImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

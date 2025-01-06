@@ -35,7 +35,7 @@ public class OutputValuesImpl extends UnaryTestsImpl implements OutputValues {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputValues.class, DMN_ELEMENT_OUTPUT_VALUES)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(UnaryTests.class)
-      .instanceProvider(instanceContext -> new OutputValuesImpl(instanceContext));
+      .instanceProvider(OutputValuesImpl::new);
 
     typeBuilder.build();
   }

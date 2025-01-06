@@ -114,7 +114,7 @@ public class DecisionTableImpl extends ExpressionImpl implements DecisionTable {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionTable.class, DMN_ELEMENT_DECISION_TABLE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new DecisionTableImpl(instanceContext));
+      .instanceProvider(DecisionTableImpl::new);
 
     hitPolicyAttribute = typeBuilder.namedEnumAttribute(DMN_ATTRIBUTE_HIT_POLICY, HitPolicy.class)
       .defaultValue(HitPolicy.UNIQUE)

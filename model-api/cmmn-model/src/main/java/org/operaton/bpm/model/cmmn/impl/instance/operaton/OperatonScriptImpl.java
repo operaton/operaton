@@ -40,7 +40,7 @@ public class OperatonScriptImpl extends CmmnModelElementInstanceImpl implements 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonScript.class, OPERATON_ELEMENT_SCRIPT)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(instanceContext -> new OperatonScriptImpl(instanceContext));
+      .instanceProvider(OperatonScriptImpl::new);
 
     operatonScriptFormatAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SCRIPT_FORMAT)
         .namespace(CAMUNDA_NS)

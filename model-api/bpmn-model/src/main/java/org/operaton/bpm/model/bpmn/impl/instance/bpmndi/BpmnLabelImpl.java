@@ -42,7 +42,7 @@ public class BpmnLabelImpl extends LabelImpl implements BpmnLabel {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnLabel.class, BPMNDI_ELEMENT_BPMN_LABEL)
       .namespaceUri(BPMNDI_NS)
       .extendsType(Label.class)
-      .instanceProvider(instanceContext -> new BpmnLabelImpl(instanceContext));
+      .instanceProvider(BpmnLabelImpl::new);
 
     labelStyleAttribute = typeBuilder.stringAttribute(BPMNDI_ATTRIBUTE_LABEL_STYLE)
       .qNameAttributeReference(BpmnLabelStyle.class)

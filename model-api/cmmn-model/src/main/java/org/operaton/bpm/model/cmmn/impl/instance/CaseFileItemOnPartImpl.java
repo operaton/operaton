@@ -71,7 +71,7 @@ public class CaseFileItemOnPartImpl extends OnPartImpl implements CaseFileItemOn
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileItemOnPart.class, CMMN_ELEMENT_CASE_FILE_ITEM_ON_PART)
         .extendsType(OnPart.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new CaseFileItemOnPartImpl(instanceContext));
+        .instanceProvider(CaseFileItemOnPartImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
         .idAttributeReference(CaseFileItem.class)

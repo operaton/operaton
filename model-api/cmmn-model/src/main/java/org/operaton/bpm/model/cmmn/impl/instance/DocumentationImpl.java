@@ -63,7 +63,7 @@ public class DocumentationImpl extends CmmnModelElementInstanceImpl implements D
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Documentation.class, CMMN_ELEMENT_DOCUMENTATION)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(instanceContext -> new DocumentationImpl(instanceContext));
+      .instanceProvider(DocumentationImpl::new);
 
     idAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_ID)
       .idAttribute()

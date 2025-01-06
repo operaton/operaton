@@ -36,7 +36,7 @@ public class DataOutputAssociationImpl extends DataAssociationImpl implements Da
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataOutputAssociation.class, BPMN_ELEMENT_DATA_OUTPUT_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(DataAssociation.class)
-      .instanceProvider(instanceContext -> new DataOutputAssociationImpl(instanceContext));
+      .instanceProvider(DataOutputAssociationImpl::new);
   
     typeBuilder.build();
   }

@@ -33,7 +33,7 @@ public class Source extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Source.class, BPMN_ELEMENT_SOURCE)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(instanceContext -> new Source(instanceContext));
+      .instanceProvider(Source::new);
 
     typeBuilder.build();
   }

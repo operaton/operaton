@@ -64,7 +64,7 @@ public class UnaryTestsImpl extends DmnElementImpl implements UnaryTests {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UnaryTests.class, DMN_ELEMENT_UNARY_TESTS)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElement.class)
-      .instanceProvider(instanceContext -> new UnaryTestsImpl(instanceContext));
+      .instanceProvider(UnaryTestsImpl::new);
 
     expressionLanguageAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_EXPRESSION_LANGUAGE)
       .build();

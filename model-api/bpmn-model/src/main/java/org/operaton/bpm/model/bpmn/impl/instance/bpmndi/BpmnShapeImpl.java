@@ -52,7 +52,7 @@ public class BpmnShapeImpl extends LabeledShapeImpl implements BpmnShape {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnShape.class, BPMNDI_ELEMENT_BPMN_SHAPE)
       .namespaceUri(BPMNDI_NS)
       .extendsType(LabeledShape.class)
-      .instanceProvider(instanceContext -> new BpmnShapeImpl(instanceContext));
+      .instanceProvider(BpmnShapeImpl::new);
 
     bpmnElementAttribute = typeBuilder.stringAttribute(BPMNDI_ATTRIBUTE_BPMN_ELEMENT)
       .qNameAttributeReference(BaseElement.class)

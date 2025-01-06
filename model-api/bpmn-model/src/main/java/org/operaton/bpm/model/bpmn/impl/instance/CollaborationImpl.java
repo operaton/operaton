@@ -52,7 +52,7 @@ public class CollaborationImpl extends RootElementImpl implements Collaboration 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Collaboration.class, BPMN_ELEMENT_COLLABORATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(instanceContext -> new CollaborationImpl(instanceContext));
+      .instanceProvider(CollaborationImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

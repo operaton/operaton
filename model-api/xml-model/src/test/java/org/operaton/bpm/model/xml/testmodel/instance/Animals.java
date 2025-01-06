@@ -42,7 +42,7 @@ public class Animals extends ModelElementInstanceImpl {
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Animals.class, ELEMENT_NAME_ANIMALS)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(instanceContext -> new Animals(instanceContext));
+      .instanceProvider(Animals::new);
 
     SequenceBuilder sequence = typeBuilder.sequence();
 

@@ -91,7 +91,7 @@ public class TaskImpl extends PlanItemDefinitionImpl implements Task {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Task.class, CMMN_ELEMENT_TASK)
         .namespaceUri(CMMN11_NS)
         .extendsType(PlanItemDefinition.class)
-        .instanceProvider(instanceContext -> new TaskImpl(instanceContext));
+        .instanceProvider(TaskImpl::new);
 
     isBlockingAttribute = typeBuilder.booleanAttribute(CMMN_ATTRIBUTE_IS_BLOCKING)
         .defaultValue(true)

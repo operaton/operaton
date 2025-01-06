@@ -45,7 +45,7 @@ public class SignalEventDefinitionImpl extends EventDefinitionImpl implements Si
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SignalEventDefinition.class, BPMN_ELEMENT_SIGNAL_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(instanceContext -> new SignalEventDefinitionImpl(instanceContext));
+      .instanceProvider(SignalEventDefinitionImpl::new);
 
     signalRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_SIGNAL_REF)
       .qNameAttributeReference(Signal.class)

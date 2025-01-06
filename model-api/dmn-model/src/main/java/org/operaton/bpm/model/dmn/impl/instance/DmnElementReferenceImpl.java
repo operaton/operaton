@@ -47,7 +47,7 @@ public class DmnElementReferenceImpl extends DmnModelElementInstanceImpl impleme
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DmnElementReference.class, DMN_ELEMENT_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(instanceContext -> new DmnElementReferenceImpl(instanceContext));
+      .instanceProvider(DmnElementReferenceImpl::new);
 
     hrefAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_HREF)
       .required()

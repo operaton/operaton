@@ -36,7 +36,7 @@ public class TimeDateImpl extends ExpressionImpl implements TimeDate {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimeDate.class, BPMN_ELEMENT_TIME_DATE)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new TimeDateImpl(instanceContext));
+      .instanceProvider(TimeDateImpl::new);
 
     typeBuilder.build();
   }

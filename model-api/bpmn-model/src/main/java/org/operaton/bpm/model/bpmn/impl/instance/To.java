@@ -35,7 +35,7 @@ public class To extends ExpressionImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(To.class, BPMN_ELEMENT_TO)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(instanceContext -> new To(instanceContext));
+      .instanceProvider(To::new);
 
     typeBuilder.build();
   }

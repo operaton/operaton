@@ -117,7 +117,7 @@ public class CaseTaskImpl extends TaskImpl implements CaseTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseTask.class, CMMN_ELEMENT_CASE_TASK)
         .extendsType(Task.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(instanceContext -> new CaseTaskImpl(instanceContext));
+        .instanceProvider(CaseTaskImpl::new);
 
     caseRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_CASE_REF)
         .build();

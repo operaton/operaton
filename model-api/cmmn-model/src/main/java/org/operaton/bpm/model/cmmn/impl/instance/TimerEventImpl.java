@@ -62,7 +62,7 @@ public class TimerEventImpl extends EventImpl implements TimerEvent {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimerEvent.class, CMMN_ELEMENT_TIMER_EVENT)
         .namespaceUri(CMMN10_NS)
         .extendsType(Event.class)
-        .instanceProvider(instanceContext -> new TimerEventImpl(instanceContext));
+        .instanceProvider(TimerEventImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

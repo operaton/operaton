@@ -35,7 +35,7 @@ public class OperatonExpressionImpl extends BpmnModelElementInstanceImpl impleme
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExpression.class, OPERATON_ELEMENT_EXPRESSION)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(instanceContext -> new OperatonExpressionImpl(instanceContext));
+      .instanceProvider(OperatonExpressionImpl::new);
 
     typeBuilder.build();
   }

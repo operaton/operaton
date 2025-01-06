@@ -32,7 +32,7 @@ public class FlightPartnerRef extends ModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FlightPartnerRef.class, ELEMENT_NAME_FLIGHT_PARTNER_REF)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(instanceContext -> new FlightPartnerRef(instanceContext));
+      .instanceProvider(FlightPartnerRef::new);
 
     typeBuilder.build();
   }

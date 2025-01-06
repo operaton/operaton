@@ -35,7 +35,8 @@ public class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest extends Plugg
   protected static String TEST_SCRIPT = """
                                         var_s = S('{}')
                                         var_xml = XML('<root/>')
-                                        var_json = JSON('{}')""";
+                                        var_json = JSON('{}')
+                                        """;
 
   protected ProcessInstance processInstance;
 

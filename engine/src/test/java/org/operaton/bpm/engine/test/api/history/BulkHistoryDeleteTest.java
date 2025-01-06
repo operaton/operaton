@@ -56,7 +56,6 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.history.event.HistoricDecisionInputInstanceEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoricDecisionOutputInstanceEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoricExternalTaskLogEntity;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogEventEntity;

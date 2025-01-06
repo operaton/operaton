@@ -22,7 +22,6 @@ import static org.junit.Assert.fail;
 
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.tasklistener.util.FieldInjectionTaskListener;

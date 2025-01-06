@@ -50,12 +50,10 @@ public class ExecutionTree implements Execution {
 
     CommandExecutor commandExecutor = configuration.getCommandExecutorTxRequired();
 
-    ExecutionTree executionTree = commandExecutor.execute(commandContext -> {
+    return commandExecutor.execute(commandContext -> {
       ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(executionId);
       return ExecutionTree.forExecution(execution);
     });
-
-    return executionTree;
   }
 
   protected static ExecutionTree forExecution(ExecutionEntity execution) {

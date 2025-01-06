@@ -29,7 +29,6 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateProcessDefinitionHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendProcessDefinitionHandler;

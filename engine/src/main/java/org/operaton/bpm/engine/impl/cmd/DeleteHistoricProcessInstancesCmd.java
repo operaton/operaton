@@ -29,7 +29,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;

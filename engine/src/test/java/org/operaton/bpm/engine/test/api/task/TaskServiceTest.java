@@ -57,7 +57,6 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailVariableInstanceUpdateEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;

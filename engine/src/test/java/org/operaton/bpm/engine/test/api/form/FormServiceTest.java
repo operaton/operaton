@@ -66,7 +66,6 @@ import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.form.type.AbstractFormFieldType;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;

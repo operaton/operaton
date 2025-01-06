@@ -51,7 +51,6 @@ import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
 import org.operaton.bpm.engine.impl.cfg.auth.DefaultAuthorizationProvider;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.task.IdentityLink;

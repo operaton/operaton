@@ -22,7 +22,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.impl.identity.Authentication;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.ProcessInstance;

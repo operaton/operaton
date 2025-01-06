@@ -51,7 +51,6 @@ import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
 import org.operaton.bpm.engine.impl.cmd.SubmitStartFormCmd;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.CaseInstance;

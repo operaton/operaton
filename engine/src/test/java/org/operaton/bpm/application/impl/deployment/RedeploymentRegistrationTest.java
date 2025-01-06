@@ -32,7 +32,6 @@ import org.operaton.bpm.engine.impl.context.ProcessApplicationContextUtil;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionDefinitionEntity;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionRequirementsDefinitionEntity;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.repository.Deployment;

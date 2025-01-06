@@ -32,7 +32,6 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobsCmd;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;

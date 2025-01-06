@@ -22,7 +22,6 @@ import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.CachedDbEntity;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityState;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;

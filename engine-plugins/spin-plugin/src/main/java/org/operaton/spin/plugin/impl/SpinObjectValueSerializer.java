@@ -113,12 +113,7 @@ public class SpinObjectValueSerializer extends AbstractObjectValueSerializer {
 
   protected DeserializationTypeValidator getValidator(final ProcessEngineConfigurationImpl processEngineConfiguration) {
     if (validator == null && processEngineConfiguration.isDeserializationTypeValidationEnabled()) {
-      validator = new DeserializationTypeValidator() {
-          @Override
-          public boolean validate(String type) {
-            return processEngineConfiguration.getDeserializationTypeValidator().validate(type);
-          }
-      };
+      validator = type -> processEngineConfiguration.getDeserializationTypeValidator().validate(type);
     }
     return validator;
   }

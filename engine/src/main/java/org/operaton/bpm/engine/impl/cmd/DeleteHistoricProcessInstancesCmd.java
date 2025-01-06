@@ -55,7 +55,8 @@ public class DeleteHistoricProcessInstancesCmd implements Command<Void>, Seriali
     ensureNotContainsNull(BadUserRequestException.class, "processInstanceId is null", "processInstanceIds", processInstanceIds);
 
     // Check if process instance is still running
-    List<HistoricProcessInstance> instances = commandContext.runWithoutAuthorization((Callable<List<HistoricProcessInstance>>) () -> new HistoricProcessInstanceQueryImpl().processInstanceIds(new HashSet<String>(processInstanceIds)).list());
+    List<HistoricProcessInstance> instances = commandContext.runWithoutAuthorization(
+        () -> new HistoricProcessInstanceQueryImpl().processInstanceIds(new HashSet<>(processInstanceIds)).list());
 
     if (failIfNotExists) {
       if (processInstanceIds.size() == 1) {

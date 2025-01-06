@@ -16,16 +16,15 @@
  */
 package org.operaton.connect.plugin;
 
+import org.operaton.connect.httpclient.HttpConnector;
+import org.operaton.connect.httpclient.impl.HttpResponseImpl;
+import org.operaton.connect.spi.ConnectorConfigurator;
+
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHttpResponse;
-import org.operaton.connect.httpclient.HttpConnector;
-import org.operaton.connect.httpclient.impl.HttpResponseImpl;
-import org.operaton.connect.spi.ConnectorConfigurator;
-import org.operaton.connect.spi.ConnectorInvocation;
-import org.operaton.connect.spi.ConnectorRequestInterceptor;
 
 /**
  * @author Daniel Meyer
@@ -34,24 +33,20 @@ import org.operaton.connect.spi.ConnectorRequestInterceptor;
 public class MockHttpConnectorConfigurator implements ConnectorConfigurator<HttpConnector> {
 
   @Override
-  public void configure(HttpConnector connecor) {
-    connecor.addRequestInterceptor(new ConnectorRequestInterceptor() {
+  public void configure(HttpConnector connector) {
+    connector.addRequestInterceptor(invocation -> {
 
-      @Override
-      public Object handleInvocation(ConnectorInvocation invocation) throws Exception {
+      // intercept the call. => do not call invocation.proceed()
 
-        // intercept the call. => do not call invocation.proceed()
+      // Could do validation on the invocation here:
+      // invocation.getRequest() ....
 
-        // Could do validation on the invocation here:
-        // invocation.getRequest() ....
+      // build response using http client api...
+      TestHttpResonse testHttpResonse = new TestHttpResonse();
+      testHttpResonse.setEntity(new StringEntity("{...}", ContentType.APPLICATION_JSON));
 
-        // build response using http client api...
-        TestHttpResonse testHttpResonse = new TestHttpResonse();
-        testHttpResonse.setEntity(new StringEntity("{...}", ContentType.APPLICATION_JSON));
-
-        // return the response
-        return new HttpResponseImpl(testHttpResonse);
-      }
+      // return the response
+      return new HttpResponseImpl(testHttpResonse);
     });
   }
 

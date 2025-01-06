@@ -62,7 +62,6 @@ import org.operaton.bpm.engine.impl.pvm.runtime.AtomicOperation;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 import org.operaton.bpm.engine.impl.tree.ExecutionTopDownWalker;
-import org.operaton.bpm.engine.impl.tree.TreeVisitor;
 import org.operaton.bpm.engine.impl.util.BitMaskUtil;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;

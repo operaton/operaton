@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.delegate;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;

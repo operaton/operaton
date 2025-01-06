@@ -98,10 +98,9 @@ public abstract class MigratingProcessElementInstanceVisitor implements TreeVisi
   protected List<ScopeImpl> collectNonExistingFlowScopes(ScopeImpl scope, final MigratingScopeInstanceBranch migratingExecutionBranch) {
     FlowScopeWalker walker = new FlowScopeWalker(scope);
     final List<ScopeImpl> result = new LinkedList<>();
-    walker.addPreVisitor(obj ->
-        result.add(0, obj));
+    walker.addPreVisitor(obj -> result.add(0, obj));
 
-    walker.walkWhile(element -> migratingExecutionBranch.hasInstance(element));
+    walker.walkWhile(migratingExecutionBranch::hasInstance);
 
     return result;
   }

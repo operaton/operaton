@@ -39,7 +39,7 @@ public class ClassLoaderUtil {
 
   public static ClassLoader getClassloader(final Class<?> clazz) {
     if(System.getSecurityManager() != null) {
-      return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> clazz.getClassLoader());
+      return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) clazz::getClassLoader);
     } else {
       return clazz.getClassLoader();
     }

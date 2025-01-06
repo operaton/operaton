@@ -16,10 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.io.Serializable;
-import java.util.Date;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.batch.BatchJobContext;
@@ -31,6 +27,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+import static org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity.DEFAULT_EXCLUSIVE;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>A job declaration is associated with an activity in the process definition graph.
@@ -54,7 +55,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
   protected JobHandlerConfiguration jobHandlerConfiguration;
   protected String jobConfiguration;
 
-  protected boolean exclusive = JobEntity.DEFAULT_EXCLUSIVE;
+  protected boolean exclusive = DEFAULT_EXCLUSIVE;
 
   protected ActivityImpl activity;
 
@@ -75,8 +76,8 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
     T job = newJobInstance(context);
 
     // set job definition id
-    String jobDefinitionId = resolveJobDefinitionId(context);
-    job.setJobDefinitionId(jobDefinitionId);
+    String jobDefId = resolveJobDefinitionId(context);
+    job.setJobDefinitionId(jobDefId);
 
     //set batch id for monitor and seed jobs (BatchEntity) and batch execution jobs (BatchJobContext)
     if (context instanceof BatchEntity batch) {
@@ -85,11 +86,11 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
       job.setBatchId(batchJobContext.getBatch().getId());
     }
 
-    if(jobDefinitionId != null) {
+    if(jobDefId != null) {
 
       JobDefinitionEntity jobDefinition = Context.getCommandContext()
         .getJobDefinitionManager()
-        .findById(jobDefinitionId);
+        .findById(jobDefId);
 
       if(jobDefinition != null) {
         // if job definition is suspended while creating a job instance,
@@ -120,7 +121,7 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
       long priority = Context
           .getProcessEngineConfiguration()
           .getJobPriorityProvider()
-          .determinePriority(contextExecution, this, jobDefinitionId);
+          .determinePriority(contextExecution, this, jobDefId);
 
       job.setPriority(priority);
     }

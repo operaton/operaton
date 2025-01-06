@@ -123,15 +123,15 @@ public class PerfTestConfiguration {
       return WATCH_ALL_ACTIVITIES;
     }
     else {
-      List<String> watchActivities = new ArrayList<>();
+      List<String> activities = new ArrayList<>();
       String[] parts = watchActivitiesString.split(",");
       for (String part : parts) {
         part = part.trim();
         if (!part.isEmpty()) {
-          watchActivities.add(part);
+          activities.add(part);
         }
       }
-      return Collections.unmodifiableList(watchActivities);
+      return Collections.unmodifiableList(activities);
     }
   }
 }

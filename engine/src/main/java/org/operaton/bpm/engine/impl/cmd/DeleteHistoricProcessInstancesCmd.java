@@ -86,12 +86,12 @@ public class DeleteHistoricProcessInstancesCmd implements Command<Void>, Seriali
     if(failIfNotExists) {
       ArrayList<String> nonExistingIds = new ArrayList<>(processInstanceIds);
       nonExistingIds.removeAll(existingIds);
-      if(nonExistingIds.size() != 0) {
+      if(!nonExistingIds.isEmpty()) {
         throw new BadUserRequestException("No historic process instance found with id: " + nonExistingIds);
       }
     }
 
-    if(existingIds.size() > 0) {
+    if(!existingIds.isEmpty()) {
       commandContext.getHistoricProcessInstanceManager().deleteHistoricProcessInstanceByIds(existingIds);
     }
     writeUserOperationLog(commandContext, existingIds.size());

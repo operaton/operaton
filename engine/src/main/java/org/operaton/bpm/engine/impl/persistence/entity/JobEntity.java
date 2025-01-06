@@ -16,30 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
-import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
-
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.db.DbEntity;
-import org.operaton.bpm.engine.impl.db.DbEntityLifecycleAware;
-import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
-import org.operaton.bpm.engine.impl.db.HasDbReferences;
-import org.operaton.bpm.engine.impl.db.HasDbRevision;
+import org.operaton.bpm.engine.impl.db.*;
 import org.operaton.bpm.engine.impl.incident.IncidentContext;
 import org.operaton.bpm.engine.impl.incident.IncidentHandling;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobPriorityProvider;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.JobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
@@ -50,6 +33,13 @@ import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
+import static org.operaton.bpm.engine.impl.DefaultPriorityProvider.DEFAULT_PRIORITY;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
+import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Stub of the common parts of a Job. You will normally work with a subclass of
@@ -92,7 +82,7 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   protected String jobDefinitionId;
 
-  protected long priority = DefaultJobPriorityProvider.DEFAULT_PRIORITY;
+  protected long priority = DEFAULT_PRIORITY;
 
   protected String tenantId;
 
@@ -118,8 +108,7 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   public void execute(CommandContext commandContext) {
     if (executionId != null) {
-      ExecutionEntity execution = getExecution();
-      ensureNotNull("Cannot find execution with id '" + executionId + "' referenced from job '" + this + "'", "execution", execution);
+      ensureNotNull("Cannot find execution with id '" + executionId + "' referenced from job '" + this + "'", "execution", getExecution());
     }
 
     // initialize activity id
@@ -160,8 +149,8 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
 
     // cancel the retries -> will resolve job incident if present
-    int retries = HistoryCleanupHelper.getMaxRetries();
-    setRetries(retries);
+    int maxRetries = HistoryCleanupHelper.getMaxRetries();
+    setRetries(maxRetries);
 
     // delete the job's exception byte array and exception message
     if (exceptionByteArrayId != null) {
@@ -179,11 +168,11 @@ public abstract class JobEntity extends AcquirableJobEntity
     CommandContext commandContext = Context.getCommandContext();
 
     // add link to execution and deployment
-    ExecutionEntity execution = getExecution();
-    if (execution != null) {
-      execution.addJob(this);
+    ExecutionEntity exec = getExecution();
+    if (exec != null) {
+      exec.addJob(this);
 
-      ProcessDefinitionImpl processDefinition = execution.getProcessDefinition();
+      ProcessDefinitionImpl processDefinition = exec.getProcessDefinition();
       this.deploymentId = processDefinition.getDeploymentId();
     }
 
@@ -217,9 +206,9 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
 
     // remove link to execution
-    ExecutionEntity execution = getExecution();
-    if (execution != null) {
-      execution.removeJob(this);
+    ExecutionEntity exec = getExecution();
+    if (exec != null) {
+      exec.removeJob(this);
     }
 
     removeFailedJobIncident(incidentResolved);
@@ -614,14 +603,14 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   protected void ensureActivityIdInitialized() {
     if (activityId == null) {
-      JobDefinition jobDefinition = getJobDefinition();
-      if (jobDefinition != null) {
-        activityId = jobDefinition.getActivityId();
+      JobDefinition jobDef = getJobDefinition();
+      if (jobDef != null) {
+        activityId = jobDef.getActivityId();
       }
       else {
-        ExecutionEntity execution = getExecution();
-        if (execution != null) {
-          activityId = execution.getActivityId();
+        ExecutionEntity exec = getExecution();
+        if (exec != null) {
+          activityId = exec.getActivityId();
         }
       }
     }

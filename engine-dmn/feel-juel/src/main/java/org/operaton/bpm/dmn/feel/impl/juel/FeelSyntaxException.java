@@ -23,8 +23,8 @@ import org.operaton.bpm.dmn.feel.impl.FeelException;
  */
 public class FeelSyntaxException extends FeelException {
 
-  protected String feelExpression;
-  protected String description;
+  protected final String feelExpression;
+  protected final String description;
 
   public FeelSyntaxException(String message, String feelExpression, String description) {
     super(message);

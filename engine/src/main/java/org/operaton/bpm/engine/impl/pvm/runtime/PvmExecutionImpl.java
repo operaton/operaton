@@ -16,16 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
-import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
-import static org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState.ENDING;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -48,34 +38,21 @@ import org.operaton.bpm.engine.impl.incident.IncidentHandler;
 import org.operaton.bpm.engine.impl.incident.IncidentHandling;
 import org.operaton.bpm.engine.impl.persistence.entity.DelayedVariableEvent;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
-import org.operaton.bpm.engine.impl.pvm.PvmActivity;
-import org.operaton.bpm.engine.impl.pvm.PvmException;
-import org.operaton.bpm.engine.impl.pvm.PvmExecution;
-import org.operaton.bpm.engine.impl.pvm.PvmLogger;
-import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
-import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
-import org.operaton.bpm.engine.impl.pvm.PvmScope;
-import org.operaton.bpm.engine.impl.pvm.PvmTransition;
+import org.operaton.bpm.engine.impl.pvm.*;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.delegate.CompositeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.ModificationObserverBehavior;
 import org.operaton.bpm.engine.impl.pvm.delegate.SignallableActivityBehavior;
-import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-import org.operaton.bpm.engine.impl.pvm.process.ActivityStartBehavior;
-import org.operaton.bpm.engine.impl.pvm.process.ProcessDefinitionImpl;
-import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
-import org.operaton.bpm.engine.impl.pvm.process.TransitionImpl;
+import org.operaton.bpm.engine.impl.pvm.process.*;
 import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
-import org.operaton.bpm.engine.impl.tree.ExecutionWalker;
-import org.operaton.bpm.engine.impl.tree.FlowScopeWalker;
-import org.operaton.bpm.engine.impl.tree.LeafActivityInstanceExecutionCollector;
-import org.operaton.bpm.engine.impl.tree.ReferenceWalker;
-import org.operaton.bpm.engine.impl.tree.ScopeCollector;
-import org.operaton.bpm.engine.impl.tree.ScopeExecutionCollector;
-import org.operaton.bpm.engine.impl.tree.TreeVisitor;
+import org.operaton.bpm.engine.impl.tree.*;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.variable.VariableMap;
+import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_COMPENSATION_DONE;
+import static org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState.ENDING;
+
+import java.util.*;
 
 /**
  * @author Daniel Meyer
@@ -201,12 +178,12 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   public PvmExecutionImpl createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey) {
     PvmExecutionImpl processInstance = getProcessInstance();
 
-    String caseInstanceId = null;
+    String caseId = null;
     if (processInstance != null) {
-      caseInstanceId = processInstance.getCaseInstanceId();
+      caseId = processInstance.getCaseInstanceId();
     }
 
-    return createSubProcessInstance(processDefinition, businessKey, caseInstanceId);
+    return createSubProcessInstance(processDefinition, businessKey, caseId);
   }
 
   @Override
@@ -360,8 +337,8 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     }
 
     // fire activity end on active activity
-    PvmActivity activity = getActivity();
-    if ((isActive || externallyTerminated) && activity != null) {
+    PvmActivity pvmActivity = getActivity();
+    if ((isActive || externallyTerminated) && pvmActivity != null) {
       // set activity instance state to cancel
       if (activityInstanceState != ENDING.getStateCode() || activityInstanceEndListenersFailed) {
         setCanceled(true);
@@ -1189,9 +1166,9 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   protected void collectActiveActivityIds(List<String> activeActivityIds) {
-    ActivityImpl activity = getActivity();
-    if (isActive && activity != null) {
-      activeActivityIds.add(activity.getId());
+    ActivityImpl act = getActivity();
+    if (isActive && act != null) {
+      activeActivityIds.add(act.getId());
     }
 
     for (PvmExecutionImpl execution : getExecutions()) {
@@ -1272,9 +1249,9 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   public String getActivityId() {
-    ActivityImpl activity = getActivity();
-    if (activity != null) {
-      return activity.getId();
+    ActivityImpl act = getActivity();
+    if (act != null) {
+      return act.getId();
     } else {
       return null;
     }
@@ -1282,9 +1259,9 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   @Override
   public String getCurrentActivityName() {
-    ActivityImpl activity = getActivity();
-    if (activity != null) {
-      return activity.getName();
+    ActivityImpl act = getActivity();
+    if (act != null) {
+      return act.getName();
     } else {
       return null;
     }
@@ -1302,8 +1279,8 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   @Override
   public void enterActivityInstance() {
-    ActivityImpl activity = getActivity();
-    activityInstanceId = generateActivityInstanceId(activity.getId());
+    ActivityImpl act = getActivity();
+    activityInstanceId = generateActivityInstanceId(act.getId());
 
     LOG.debugEnterActivityInstance(this, getParentActivityInstanceId());
 
@@ -1313,7 +1290,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     // anyway because the multi-instance body already ensures variable isolation
     executeIoMapping();
 
-    if (activity.isScope()) {
+    if (act.isScope()) {
       initializeTimerDeclarations();
     }
 
@@ -1590,19 +1567,19 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   }
 
   protected ScopeImpl getFlowScope() {
-    ActivityImpl activity = getActivity();
+    ActivityImpl act = getActivity();
 
-    if (!activity.isScope() || activityInstanceId == null
-      || (activity.isScope() && !isScope() && activity.getActivityBehavior() instanceof CompositeActivityBehavior)) {
+    if (!act.isScope() || activityInstanceId == null
+      || (act.isScope() && !isScope() && act.getActivityBehavior() instanceof CompositeActivityBehavior)) {
       // if
       // - this is a scope execution currently executing a non scope activity
       // - or it is not scope but the current activity is (e.g. can happen during activity end, when the actual
       //   scope execution has been removed and the concurrent parent has been set to the scope activity)
       // - or it is asyncBefore/asyncAfter
 
-      return activity.getFlowScope();
+      return act.getFlowScope();
     } else {
-      return activity;
+      return act;
     }
   }
 
@@ -1802,9 +1779,9 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   @Override
   public String getCurrentTransitionId() {
-    TransitionImpl transition = getTransition();
-    if (transition != null) {
-      return transition.getId();
+    TransitionImpl trans = getTransition();
+    if (trans != null) {
+      return trans.getId();
     } else {
       return null;
     }
@@ -2130,12 +2107,12 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   protected void dispatchScopeEvents(PvmExecutionImpl execution) {
     PvmExecutionImpl scopeExecution = execution.isScope() ? execution : execution.getParent();
 
-    List<DelayedVariableEvent> delayedEvents = new ArrayList<>(scopeExecution.getDelayedEvents());
+    List<DelayedVariableEvent> delayedVariableEvents = new ArrayList<>(scopeExecution.getDelayedEvents());
     scopeExecution.clearDelayedEvents();
 
     Map<PvmExecutionImpl, String> activityInstanceIds = new HashMap<>();
     Map<PvmExecutionImpl, String> activityIds = new HashMap<>();
-    initActivityIds(delayedEvents, activityInstanceIds, activityIds);
+    initActivityIds(delayedVariableEvents, activityInstanceIds, activityIds);
 
     //For each delayed variable event we have to check if the delayed event can be dispatched,
     //the check will be done with the help of the activity id and activity instance id.
@@ -2143,7 +2120,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     //the other delayed variable events. We have to check the target scope with the last activity id and activity instance id
     //and also the replace pointer if it exist. Because on concurrency the replace pointer will be set on which we have
     //to check the latest state.
-    for (DelayedVariableEvent event : delayedEvents) {
+    for (DelayedVariableEvent event : delayedVariableEvents) {
       PvmExecutionImpl targetScope = event.getTargetScope();
       PvmExecutionImpl replaced = targetScope.getReplacedBy() != null ? targetScope.getReplacedBy() : targetScope;
       dispatchOnSameActivity(targetScope, replaced, activityIds, activityInstanceIds, event);

@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
+
+import org.operaton.bpm.model.bpmn.instance.Process;
+import org.operaton.bpm.model.bpmn.instance.*;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.bpmn.instance.*;
-import org.operaton.bpm.model.bpmn.instance.Process;
 
 /**
  * @author Sebastian Menski
@@ -58,38 +60,38 @@ public class CreateModelTest {
   @Test
   void createProcessWithOneTask() {
     // create process
-    Process process = createElement(definitions, "process-with-one-task", Process.class);
+    Process processWithOneTask = createElement(definitions, "process-with-one-task", Process.class);
 
     // create elements
-    StartEvent startEvent = createElement(process, "start", StartEvent.class);
-    UserTask task1 = createElement(process, "task1", UserTask.class);
-    EndEvent endEvent = createElement(process, "end", EndEvent.class);
+    StartEvent startEvent = createElement(processWithOneTask, "start", StartEvent.class);
+    UserTask task1 = createElement(processWithOneTask, "task1", UserTask.class);
+    EndEvent endEvent = createElement(processWithOneTask, "end", EndEvent.class);
 
     // create flows
-    createSequenceFlow(process, startEvent, task1);
-    createSequenceFlow(process, task1, endEvent);
+    createSequenceFlow(processWithOneTask, startEvent, task1);
+    createSequenceFlow(processWithOneTask, task1, endEvent);
   }
 
   @Test
   void createProcessWithParallelGateway() {
     // create process
-    Process process = createElement(definitions, "process-with-parallel-gateway", Process.class);
+    Process processWithParallelGateway = createElement(definitions, "process-with-parallel-gateway", Process.class);
 
     // create elements
-    StartEvent startEvent = createElement(process, "start", StartEvent.class);
-    ParallelGateway fork = createElement(process, "fork", ParallelGateway.class);
-    UserTask task1 = createElement(process, "task1", UserTask.class);
-    ServiceTask task2 = createElement(process, "task2", ServiceTask.class);
-    ParallelGateway join = createElement(process, "join", ParallelGateway.class);
-    EndEvent endEvent = createElement(process, "end", EndEvent.class);
+    StartEvent startEvent = createElement(processWithParallelGateway, "start", StartEvent.class);
+    ParallelGateway fork = createElement(processWithParallelGateway, "fork", ParallelGateway.class);
+    UserTask task1 = createElement(processWithParallelGateway, "task1", UserTask.class);
+    ServiceTask task2 = createElement(processWithParallelGateway, "task2", ServiceTask.class);
+    ParallelGateway join = createElement(processWithParallelGateway, "join", ParallelGateway.class);
+    EndEvent endEvent = createElement(processWithParallelGateway, "end", EndEvent.class);
 
     // create flows
-    createSequenceFlow(process, startEvent, fork);
-    createSequenceFlow(process, fork, task1);
-    createSequenceFlow(process, fork, task2);
-    createSequenceFlow(process, task1, join);
-    createSequenceFlow(process, task2, join);
-    createSequenceFlow(process, join, endEvent);
+    createSequenceFlow(processWithParallelGateway, startEvent, fork);
+    createSequenceFlow(processWithParallelGateway, fork, task1);
+    createSequenceFlow(processWithParallelGateway, fork, task2);
+    createSequenceFlow(processWithParallelGateway, task1, join);
+    createSequenceFlow(processWithParallelGateway, task2, join);
+    createSequenceFlow(processWithParallelGateway, join, endEvent);
   }
 
   @AfterEach

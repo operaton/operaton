@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.core.instance;
 
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.CoreLogger;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
@@ -35,7 +36,7 @@ public abstract class CoreExecution extends AbstractVariableScope implements Bas
 
   private static final long serialVersionUID = 1L;
 
-  private static final CoreLogger LOG = CoreLogger.CORE_LOGGER;
+  private static final CoreLogger LOG = ProcessEngineLogger.CORE_LOGGER;
 
   protected String id;
 

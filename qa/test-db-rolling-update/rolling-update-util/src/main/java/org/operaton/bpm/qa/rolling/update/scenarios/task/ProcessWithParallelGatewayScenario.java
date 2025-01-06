@@ -62,7 +62,7 @@ public class ProcessWithParallelGatewayScenario {
       public void execute(ProcessEngine engine, String scenarioName) {
         ProcessInstance procInst = engine.getRuntimeService().startProcessInstanceByKey(PROCESS_DEF_KEY, scenarioName);
         List<Task> tasks = engine.getTaskService().createTaskQuery().processInstanceId(procInst.getId()).list();
-        if (tasks.size() > 0) {
+        if (!tasks.isEmpty()) {
           engine.getTaskService().complete(tasks.get(0).getId());
         }
       }

@@ -16,21 +16,21 @@
  */
 package org.operaton.spin.impl;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
-import java.io.IOException;
-import java.io.Reader;
-
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.Spin;
 import org.operaton.spin.SpinFactory;
 import org.operaton.spin.impl.logging.SpinCoreLogger;
+import org.operaton.spin.impl.logging.SpinLogger;
 import org.operaton.spin.impl.util.RewindableReader;
 import org.operaton.spin.impl.util.SpinIoUtil;
 import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.spi.DataFormatMapper;
 import org.operaton.spin.spi.DataFormatReader;
 import org.operaton.spin.spi.SpinDataFormatException;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
+
+import java.io.IOException;
+import java.io.Reader;
 
 /**
  * @author Daniel Meyer
@@ -39,7 +39,7 @@ import org.operaton.spin.spi.SpinDataFormatException;
  */
 public class SpinFactoryImpl extends SpinFactory {
 
-  private static final SpinCoreLogger LOG = SpinCoreLogger.CORE_LOGGER;
+  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
 
   private static final int READ_SIZE = 256;
 

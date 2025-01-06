@@ -16,22 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import org.apache.commons.lang3.time.DateUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.operaton.bpm.engine.BadUserRequestException;
-import org.operaton.bpm.engine.CaseService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.history.HistoricCaseInstance;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
@@ -67,17 +52,18 @@ import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.test.util.Removable;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.TimeZone;
+import java.util.*;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.*;
+import org.junit.rules.RuleChain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -86,10 +72,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB;
 /**
  * @author Svetlana Dorokhova
  */
@@ -1235,12 +1217,12 @@ public class HistoryCleanupTest {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("22:00+0100");
     processEngineConfiguration.initHistoryCleanup();
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-    Date date = sdf.parse("2017-09-06T22:15:00+0100");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+    Date date = dateFormat.parse("2017-09-06T22:15:00+0100");
 
     assertTrue(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration));
 
-    date = sdf.parse("2017-09-06T22:15:00+0200");
+    date = dateFormat.parse("2017-09-06T22:15:00+0200");
     assertFalse(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration));
   }
 

@@ -16,16 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.core.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
 import org.operaton.bpm.engine.delegate.DelegateListener;
 import org.operaton.bpm.engine.delegate.VariableListener;
+
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author Daniel Meyer
@@ -152,15 +148,15 @@ public abstract class CoreModelElement implements Serializable {
   }
 
   protected <T> void addListenerToMap(Map<String, List<T>> listenerMap, String eventName, T listener, int index) {
-    List<T> listeners = listenerMap.get(eventName);
-    if (listeners == null) {
-      listeners = new ArrayList<>();
-      listenerMap.put(eventName, listeners);
+    List<T> listenerList = listenerMap.get(eventName);
+    if (listenerList == null) {
+      listenerList = new ArrayList<>();
+      listenerMap.put(eventName, listenerList);
     }
     if (index < 0) {
-      listeners.add(listener);
+      listenerList.add(listener);
     } else {
-      listeners.add(index, listener);
+      listenerList.add(index, listener);
     }
   }
 

@@ -145,7 +145,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
   }
 
   public Lane getLaneForId(String id) {
-    if(laneSets != null && laneSets.size() > 0) {
+    if(laneSets != null && !laneSets.isEmpty()) {
       Lane lane;
       for(LaneSet set : laneSets) {
         lane = set.getLaneForId(id);

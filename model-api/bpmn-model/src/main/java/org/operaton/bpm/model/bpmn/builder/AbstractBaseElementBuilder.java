@@ -333,7 +333,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
       if (element instanceof FlowNode flowNode) {
         Collection<SequenceFlow> outgoing = flowNode.getOutgoing();
 
-        if (outgoing.size() == 0) {
+        if (outgoing.isEmpty()) {
           double sourceY = sourceBounds.getY();
           double sourceHeight = sourceBounds.getHeight();
           double targetHeight = shapeBounds.getHeight();

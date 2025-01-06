@@ -159,7 +159,7 @@ public class DeploymentResourceImpl extends AbstractRestProcessEngineAware imple
     MultivaluedMap<String,String> queryParams = uriInfo.getQueryParameters();
 
     return queryParams.containsKey(property)
-        && queryParams.get(property).size() > 0
+        && !queryParams.get(property).isEmpty()
         && "true".equals(queryParams.get(property).get(0));
   }
 

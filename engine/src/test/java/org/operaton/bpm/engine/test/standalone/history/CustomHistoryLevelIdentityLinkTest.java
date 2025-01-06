@@ -119,7 +119,7 @@ public class CustomHistoryLevelIdentityLinkTest {
 
     // assume
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertTrue(historicIdentityLinks.size() > 0);
+    assertTrue(!historicIdentityLinks.isEmpty());
 
     // when
     repositoryService.deleteProcessDefinitions()
@@ -149,7 +149,7 @@ public class CustomHistoryLevelIdentityLinkTest {
 
     // assume
     historicIdentityLinks = historyService.createHistoricIdentityLinkLogQuery().list();
-    assertTrue(historicIdentityLinks.size() > 0);
+    assertTrue(!historicIdentityLinks.isEmpty());
 
     // when
     taskService.deleteTask(taskId, true);

@@ -16,63 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.execution;
 
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ACTIVE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.AVAILABLE;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.CLOSED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.COMPLETED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.DISABLED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.ENABLED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.FAILED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.NEW;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDING_ON_PARENT_SUSPENSION;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.SUSPENDING_ON_SUSPENSION;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATED;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATING_ON_EXIT;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATING_ON_PARENT_TERMINATION;
-import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.TERMINATING_ON_TERMINATION;
-import static org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration.IF_PART;
-import static org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration.PLAN_ITEM_ON_PART;
-import static org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration.VARIABLE_ON_PART;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_COMPLETE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_CREATE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_DELETE_CASCADE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_DISABLE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_ENABLE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_EXIT;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_FIRE_ENTRY_CRITERIA;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_FIRE_EXIT_CRITERIA;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_MANUAL_COMPLETE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_MANUAL_START;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_OCCUR;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_PARENT_RESUME;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_PARENT_SUSPEND;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_PARENT_TERMINATE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_RESUME;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_RE_ACTIVATE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_RE_ENABLE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_START;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_SUSPEND;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_SUSPENDING_ON_PARENT_SUSPENSION;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_SUSPENDING_ON_SUSPENSION;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_TERMINATE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_TERMINATING_ON_EXIT;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_TERMINATING_ON_PARENT_TERMINATION;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_EXECUTION_TERMINATING_ON_TERMINATION;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_INSTANCE_CLOSE;
-import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.CASE_INSTANCE_CREATE;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-
 import org.operaton.bpm.engine.delegate.CaseVariableListener;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableListener;
@@ -80,12 +23,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CmmnBehaviorLogger;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseSentryPartEntity;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnIfPartDeclaration;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnOnPartDeclaration;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
-import org.operaton.bpm.engine.impl.cmmn.model.CmmnVariableOnPartDeclaration;
+import org.operaton.bpm.engine.impl.cmmn.model.*;
 import org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
@@ -101,6 +39,15 @@ import org.operaton.bpm.engine.impl.variable.listener.CaseVariableListenerInvoca
 import org.operaton.bpm.engine.impl.variable.listener.DelegateCaseVariableInstanceImpl;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+import static org.operaton.bpm.engine.impl.cmmn.execution.CaseExecutionState.*;
+import static org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration.IF_PART;
+import static org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration.PLAN_ITEM_ON_PART;
+import static org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration.VARIABLE_ON_PART;
+import static org.operaton.bpm.engine.impl.cmmn.operation.CmmnAtomicOperation.*;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureInstanceOf;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
+import java.util.*;
 
 /**
  * @author Roman Smirnov
@@ -141,9 +88,6 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   // plan items ///////////////////////////////////////////////////////////////
 
-  @Override
-  public abstract List<? extends CmmnExecution> getCaseExecutions();
-
   protected abstract List<? extends CmmnExecution> getCaseExecutionsInternal();
 
   @Override
@@ -172,17 +116,17 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   @Override
   public TaskEntity createTask(TaskDecorator taskDecorator) {
-    TaskEntity task = new TaskEntity((CaseExecutionEntity) this);
-    task.insert();
+    TaskEntity taskEntity = new TaskEntity((CaseExecutionEntity) this);
+    taskEntity.insert();
 
-    setTask(task);
-    taskDecorator.decorate(task, this);
+    setTask(taskEntity);
+    taskDecorator.decorate(taskEntity, this);
 
     // task decoration is part of the initialization of the task,
     // so we transition to CREATED only afterwards
-    task.transitionTo(TaskState.STATE_CREATED);
+    taskEntity.transitionTo(TaskState.STATE_CREATED);
 
-    return task;
+    return taskEntity;
   }
 
   // super execution  ////////////////////////////////////////////////////////
@@ -232,10 +176,10 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   @Override
   public void createSentryParts() {
-    CmmnActivity activity = getActivity();
-    ensureNotNull("Case execution '"+id+"': has no current activity", "activity", activity);
+    CmmnActivity cmmnActivity = getActivity();
+    ensureNotNull("Case execution '"+id+"': has no current activity", "activity", cmmnActivity);
 
-    List<CmmnSentryDeclaration> sentries = activity.getSentries();
+    List<CmmnSentryDeclaration> sentries = cmmnActivity.getSentries();
 
     if (sentries != null && !sentries.isEmpty()) {
 
@@ -604,11 +548,11 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   protected void checkAndFireExitCriteria(List<String> satisfiedSentries) {
     if (isActive()) {
-      CmmnActivity activity = getActivity();
-      ensureNotNull(PvmException.class, "Case execution '"+getId()+"': has no current activity.", "activity", activity);
+      CmmnActivity cmmnActivity = getActivity();
+      ensureNotNull(PvmException.class, "Case execution '"+getId()+"': has no current activity.", "activity", cmmnActivity);
 
       // trigger first exitCriteria
-      List<CmmnSentryDeclaration> exitCriteria = activity.getExitCriteria();
+      List<CmmnSentryDeclaration> exitCriteria = cmmnActivity.getExitCriteria();
       for (CmmnSentryDeclaration sentryDeclaration : exitCriteria) {
 
         if (sentryDeclaration != null && satisfiedSentries.contains(sentryDeclaration.getId())) {
@@ -624,10 +568,10 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
       // do that only, when this child case execution
       // is available
 
-      CmmnActivity activity = getActivity();
-      ensureNotNull(PvmException.class, "Case execution '"+getId()+"': has no current activity.", "activity", activity);
+      CmmnActivity cmmnActivity = getActivity();
+      ensureNotNull(PvmException.class, "Case execution '"+getId()+"': has no current activity.", "activity", cmmnActivity);
 
-      List<CmmnSentryDeclaration> criteria = activity.getEntryCriteria();
+      List<CmmnSentryDeclaration> criteria = cmmnActivity.getEntryCriteria();
       for (CmmnSentryDeclaration sentryDeclaration : criteria) {
         if (sentryDeclaration != null && satisfiedSentries.contains(sentryDeclaration.getId())) {
           if (isAvailable()) {
@@ -701,10 +645,10 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
       CmmnExecution execution = ifPart.getCaseExecution();
       ensureNotNull("Case execution of sentry '"+ifPart.getSentryId() +"': is null", execution);
 
-      CmmnActivity activity = ifPart.getCaseExecution().getActivity();
-      ensureNotNull("Case execution '"+id+"': has no current activity", "activity", activity);
+      CmmnActivity cmmnActivity = ifPart.getCaseExecution().getActivity();
+      ensureNotNull("Case execution '"+id+"': has no current activity", "activity", cmmnActivity);
 
-      CmmnSentryDeclaration sentryDeclaration = activity.getSentry(sentryId);
+      CmmnSentryDeclaration sentryDeclaration = cmmnActivity.getSentry(sentryId);
       ensureNotNull("Case execution '"+id+"': has no declaration for sentry '"+sentryId+"'", "sentryDeclaration", sentryDeclaration);
 
       CmmnIfPartDeclaration ifPartDeclaration = sentryDeclaration.getIfPart();
@@ -1140,22 +1084,22 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   protected void queueVariableEvent(VariableEvent variableEvent, boolean includeCustomerListeners) {
 
-    Queue<VariableEvent> variableEventsQueue = getVariableEventQueue();
+    Queue<VariableEvent> queue = getVariableEventQueue();
 
-    variableEventsQueue.add(variableEvent);
+    queue.add(variableEvent);
 
     // if this is the first event added, trigger listener invocation
-    if (variableEventsQueue.size() == 1) {
+    if (queue.size() == 1) {
       invokeVariableListeners(includeCustomerListeners);
     }
   }
 
   protected void invokeVariableListeners(boolean includeCustomerListeners) {
-    Queue<VariableEvent> variableEventsQueue = getVariableEventQueue();
+    Queue<VariableEvent> eventQueue = getVariableEventQueue();
 
-    while (!variableEventsQueue.isEmpty()) {
+    while (!eventQueue.isEmpty()) {
       // do not remove the event yet, as otherwise new events will immediately be dispatched
-      VariableEvent nextEvent = variableEventsQueue.peek();
+      VariableEvent nextEvent = eventQueue.peek();
 
       CmmnExecution sourceExecution = (CmmnExecution) nextEvent.getSourceScope();
 
@@ -1194,7 +1138,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
       }
 
       // finally remove the event from the queue
-      variableEventsQueue.remove();
+      eventQueue.remove();
     }
   }
 

@@ -16,18 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jmx;
 
-import java.lang.management.ManagementFactory;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
-
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation.DeploymentOperationBuilder;
@@ -35,8 +23,13 @@ import org.operaton.bpm.container.impl.spi.PlatformService;
 import org.operaton.bpm.container.impl.spi.PlatformServiceContainer;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+import java.lang.management.ManagementFactory;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>A simple Service Container that delegates to the JVM's {@link MBeanServer}.</p>
@@ -116,7 +109,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
   @Override
   public synchronized void stopService(String name) {
 
-    final MBeanServer mBeanServer = getmBeanServer();
+    final MBeanServer beanServer = getmBeanServer();
 
     ObjectName serviceName = getObjectName(name);
 
@@ -130,7 +123,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     } finally {
       // always unregister, even if the stop method throws an exception.
       try {
-        mBeanServer.unregisterMBean(serviceName);
+        beanServer.unregisterMBean(serviceName);
         servicesByName.remove(serviceName);
       }
       catch (Throwable t) {

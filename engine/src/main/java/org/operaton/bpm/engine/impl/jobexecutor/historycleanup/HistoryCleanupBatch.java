@@ -90,19 +90,19 @@ public class HistoryCleanupBatch extends HistoryCleanupHandler {
     HistoryCleanupHelper.prepareNextBatch(this, commandContext);
 
     if (size() > 0) {
-      if (historicProcessInstanceIds.size() > 0) {
+      if (!historicProcessInstanceIds.isEmpty()) {
         commandContext.getHistoricProcessInstanceManager().deleteHistoricProcessInstanceByIds(historicProcessInstanceIds);
       }
-      if (historicDecisionInstanceIds.size() > 0) {
+      if (!historicDecisionInstanceIds.isEmpty()) {
         commandContext.getHistoricDecisionInstanceManager().deleteHistoricDecisionInstanceByIds(historicDecisionInstanceIds);
       }
-      if (historicCaseInstanceIds.size() > 0) {
+      if (!historicCaseInstanceIds.isEmpty()) {
         commandContext.getHistoricCaseInstanceManager().deleteHistoricCaseInstancesByIds(historicCaseInstanceIds);
       }
-      if (historicBatchIds.size() > 0) {
+      if (!historicBatchIds.isEmpty()) {
         commandContext.getHistoricBatchManager().deleteHistoricBatchesByIds(historicBatchIds);
       }
-      if (taskMetricIds.size() > 0) {
+      if (!taskMetricIds.isEmpty()) {
         commandContext.getMeterLogManager().deleteTaskMetricsById(taskMetricIds);
       }
     }
@@ -112,19 +112,19 @@ public class HistoryCleanupBatch extends HistoryCleanupHandler {
   protected Map<String, Long> reportMetrics() {
     Map<String, Long> reports = new HashMap<>();
 
-    if (historicProcessInstanceIds.size() > 0) {
+    if (!historicProcessInstanceIds.isEmpty()) {
       reports.put(Metrics.HISTORY_CLEANUP_REMOVED_PROCESS_INSTANCES, (long) historicProcessInstanceIds.size());
     }
-    if (historicDecisionInstanceIds.size() > 0) {
+    if (!historicDecisionInstanceIds.isEmpty()) {
       reports.put(Metrics.HISTORY_CLEANUP_REMOVED_DECISION_INSTANCES, (long) historicDecisionInstanceIds.size());
     }
-    if (historicCaseInstanceIds.size() > 0) {
+    if (!historicCaseInstanceIds.isEmpty()) {
       reports.put(Metrics.HISTORY_CLEANUP_REMOVED_CASE_INSTANCES, (long) historicCaseInstanceIds.size());
     }
-    if (historicBatchIds.size() > 0) {
+    if (!historicBatchIds.isEmpty()) {
       reports.put(Metrics.HISTORY_CLEANUP_REMOVED_BATCH_OPERATIONS, (long) historicBatchIds.size());
     }
-    if (taskMetricIds.size() > 0) {
+    if (!taskMetricIds.isEmpty()) {
       reports.put(Metrics.HISTORY_CLEANUP_REMOVED_TASK_METRICS, (long) taskMetricIds.size());
     }
 

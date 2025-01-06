@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.variable.impl.value.builder;
 
-import java.io.File;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-
 import org.operaton.bpm.engine.variable.impl.value.FileValueImpl;
-import org.operaton.bpm.engine.variable.type.PrimitiveValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.builder.FileValueBuilder;
 import org.operaton.commons.utils.EnsureUtil;
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.commons.utils.IoUtilException;
+import static org.operaton.bpm.engine.variable.type.ValueType.FILE;
+
+import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 
 /**
  * @author Ronny Bräunlich
@@ -39,7 +39,7 @@ public class FileValueBuilderImpl implements FileValueBuilder {
 
   public FileValueBuilderImpl(String filename) {
     EnsureUtil.ensureNotNull("filename", filename);
-    fileValue = new FileValueImpl(PrimitiveValueType.FILE, filename);
+    fileValue = new FileValueImpl(FILE, filename);
   }
 
   @Override

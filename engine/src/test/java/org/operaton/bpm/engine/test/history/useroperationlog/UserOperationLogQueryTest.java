@@ -16,53 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.operaton.bpm.engine.EntityTypes.JOB;
-import static org.operaton.bpm.engine.EntityTypes.JOB_DEFINITION;
-import static org.operaton.bpm.engine.EntityTypes.PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.EntityTypes.PROCESS_INSTANCE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.ENTITY_TYPE_ATTACHMENT;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.ENTITY_TYPE_IDENTITY_LINK;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.ENTITY_TYPE_TASK;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_JOB;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_JOB_DEFINITION;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ADD_ATTACHMENT;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ADD_GROUP_LINK;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_ADD_USER_LINK;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE_ATTACHMENT;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE_GROUP_LINK;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_DELETE_USER_LINK;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SET_JOB_RETRIES;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SET_PRIORITY;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_JOB;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_JOB_DEFINITION;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION;
-import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_UPDATE;
-import static org.operaton.bpm.engine.impl.cmd.AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY;
-import static org.operaton.bpm.engine.impl.cmd.AbstractSetProcessDefinitionStateCmd.INCLUDE_PROCESS_INSTANCES_PROPERTY;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
-import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
@@ -78,16 +31,31 @@ import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateJobDefinitionHandle
 import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendProcessDefinitionHandler;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
-import org.operaton.bpm.engine.runtime.CaseInstance;
-import org.operaton.bpm.engine.runtime.Execution;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.runtime.JobQuery;
-import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.runtime.*;
 import org.operaton.bpm.engine.task.Attachment;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
+import static org.operaton.bpm.engine.EntityTypes.JOB;
+import static org.operaton.bpm.engine.EntityTypes.JOB_DEFINITION;
+import static org.operaton.bpm.engine.EntityTypes.PROCESS_DEFINITION;
+import static org.operaton.bpm.engine.EntityTypes.PROCESS_INSTANCE;
+import static org.operaton.bpm.engine.history.UserOperationLogEntry.*;
+import static org.operaton.bpm.engine.impl.cmd.AbstractSetBatchStateCmd.SUSPENSION_STATE_PROPERTY;
+import static org.operaton.bpm.engine.impl.cmd.AbstractSetProcessDefinitionStateCmd.INCLUDE_PROCESS_INSTANCES_PROPERTY;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.ASSIGNEE;
+import static org.operaton.bpm.engine.impl.persistence.entity.TaskEntity.OWNER;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
 import org.junit.After;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 /**
  * @author Danny Gräf
  */
@@ -893,10 +861,10 @@ public class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   public void testQueryJobDefinitionOperationWithDelayedJobDefinition() {
     // given
     // a running process instance
-    ProcessInstance process = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    ProcessInstance oneTaskProcess = runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     // with a process definition id
-    String processDefinitionId = process.getProcessDefinitionId();
+    String processDefinitionId = oneTaskProcess.getProcessDefinitionId();
 
     // ...which will be suspended with the corresponding jobs
     managementService.suspendJobDefinitionByProcessDefinitionId(processDefinitionId, true);

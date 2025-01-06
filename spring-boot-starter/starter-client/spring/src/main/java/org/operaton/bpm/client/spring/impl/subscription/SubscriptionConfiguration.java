@@ -17,16 +17,15 @@
 package org.operaton.bpm.client.spring.impl.subscription;
 
 import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
+import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.LONG_NULL_VALUE;
+import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.ProcessVariable;
+import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.STRING_NULL_VALUE;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.LONG_NULL_VALUE;
-import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.ProcessVariable;
-import static org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription.STRING_NULL_VALUE;
 
 public class SubscriptionConfiguration {
 
@@ -170,46 +169,46 @@ public class SubscriptionConfiguration {
   public void fromAnnotation(ExternalTaskSubscription config) {
     setAutoOpen(config.autoOpen());
 
-    String topicName = config.topicName();
-    setTopicName(isNull(topicName) ? null : topicName);
+    String configuredTopicName = config.topicName();
+    setTopicName(isNull(configuredTopicName) ? null : configuredTopicName);
 
-    long lockDuration = config.lockDuration();
-    setLockDuration(isNull(lockDuration) ? null : lockDuration);
+    long configuredLockDuration = config.lockDuration();
+    setLockDuration(isNull(configuredLockDuration) ? null : configuredLockDuration);
 
-    String[] variableNames = config.variableNames();
-    setVariableNames(isNull(variableNames) ? null : Arrays.asList(variableNames));
+    String[] configuredVariableNames = config.variableNames();
+    setVariableNames(isNull(configuredVariableNames) ? null : Arrays.asList(configuredVariableNames));
 
     setLocalVariables(config.localVariables());
 
-    String businessKey = config.businessKey();
-    setBusinessKey(isNull(businessKey) ? null : businessKey);
+    String configuredBusinessKey = config.businessKey();
+    setBusinessKey(isNull(configuredBusinessKey) ? null : configuredBusinessKey);
 
-    String processDefinitionId = config.processDefinitionId();
-    setProcessDefinitionId(isNull(processDefinitionId) ? null : processDefinitionId);
+    String configuredProcessDefinitionId = config.processDefinitionId();
+    setProcessDefinitionId(isNull(configuredProcessDefinitionId) ? null : configuredProcessDefinitionId);
 
-    String[] processDefinitionIdIn = config.processDefinitionIdIn();
-    setProcessDefinitionIdIn(isNull(processDefinitionIdIn) ? null :
-        Arrays.asList(processDefinitionIdIn));
+    String[] configuredProcessDefinitionIdIn = config.processDefinitionIdIn();
+    setProcessDefinitionIdIn(isNull(configuredProcessDefinitionIdIn) ? null :
+        Arrays.asList(configuredProcessDefinitionIdIn));
 
-    String processDefinitionKey = config.processDefinitionKey();
-    setProcessDefinitionKey(isNull(processDefinitionKey) ? null : processDefinitionKey);
+    String configuredProcessDefinitionKey = config.processDefinitionKey();
+    setProcessDefinitionKey(isNull(configuredProcessDefinitionKey) ? null : configuredProcessDefinitionKey);
 
-    String[] processDefinitionKeyIn = config.processDefinitionKeyIn();
-    setProcessDefinitionKeyIn(isNull(processDefinitionKeyIn) ? null :
-        Arrays.asList(processDefinitionKeyIn));
+    String[] configuredProcessDefinitionKeyIn = config.processDefinitionKeyIn();
+    setProcessDefinitionKeyIn(isNull(configuredProcessDefinitionKeyIn) ? null :
+        Arrays.asList(configuredProcessDefinitionKeyIn));
 
-    String processDefinitionVersionTag = config.processDefinitionVersionTag();
-    setProcessDefinitionVersionTag(isNull(processDefinitionVersionTag) ? null :
-        processDefinitionVersionTag);
+    String configuredProcessDefinitionVersionTag = config.processDefinitionVersionTag();
+    setProcessDefinitionVersionTag(isNull(configuredProcessDefinitionVersionTag) ? null :
+        configuredProcessDefinitionVersionTag);
 
-    ProcessVariable[] processVariables = config.processVariables();
-    setProcessVariables(isNull(processVariables) ? null : Arrays.stream(processVariables)
+    ProcessVariable[] configuredProcessVariables = config.processVariables();
+    setProcessVariables(isNull(configuredProcessVariables) ? null : Arrays.stream(configuredProcessVariables)
         .collect(Collectors.toMap(ProcessVariable::name, ProcessVariable::value)));
 
     setWithoutTenantId(config.withoutTenantId());
 
-    String[] tenantIdIn = config.tenantIdIn();
-    setTenantIdIn(isNull(tenantIdIn) ? null : Arrays.asList(tenantIdIn));
+    String[] configuredTenantIdIn = config.tenantIdIn();
+    setTenantIdIn(isNull(configuredTenantIdIn) ? null : Arrays.asList(configuredTenantIdIn));
 
     setIncludeExtensionProperties(config.includeExtensionProperties());
   }

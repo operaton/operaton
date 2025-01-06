@@ -16,31 +16,10 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
-
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.identity.Group;
-import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.identity.Tenant;
-import org.operaton.bpm.engine.identity.TenantQuery;
-import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.identity.*;
 import org.operaton.bpm.engine.impl.AuthorizationServiceImpl;
 import org.operaton.bpm.engine.impl.IdentityServiceImpl;
 import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
@@ -51,10 +30,25 @@ import org.operaton.bpm.engine.rest.ProcessDefinitionRestService;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.impl.NamedProcessEngineRestServiceImpl;
+
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import io.restassured.http.ContentType;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.restassured.http.ContentType;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.anyBoolean;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public abstract class AbstractAuthenticationFilterTest extends AbstractRestServiceTest {
 
@@ -103,11 +97,7 @@ public abstract class AbstractAuthenticationFilterTest extends AbstractRestServi
     when(mockGroupQuery.groupMember(anyString())).thenReturn(mockGroupQuery);
     when(mockGroupQuery.list()).thenReturn(groups);
 
-    List<String> groupIds = new ArrayList<>();
-    for (Group groupMock : groups) {
-      groupIds.add(groupMock.getId());
-    }
-    return groupIds;
+    return groups.stream().map(Group::getId).toList();
   }
 
   protected List<String> setupTenantQueryMock(List<Tenant> tenants) {
@@ -118,11 +108,7 @@ public abstract class AbstractAuthenticationFilterTest extends AbstractRestServi
     when(mockTenantQuery.includingGroupsOfUser(anyBoolean())).thenReturn(mockTenantQuery);
     when(mockTenantQuery.list()).thenReturn(tenants);
 
-    List<String> tenantIds = new ArrayList<>();
-    for(Tenant tenant: tenants) {
-      tenantIds.add(tenant.getId());
-    }
-    return tenantIds;
+    return tenants.stream().map(Tenant::getId).toList();
   }
 
   @Test

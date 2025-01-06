@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionLogic;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
@@ -38,12 +31,14 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.model.dmn.HitPolicy;
 
+import java.util.*;
+
 /**
  * Context which evaluates a decision on a given input
  */
 public class DefaultDmnDecisionContext {
 
-  protected static final DmnEngineLogger LOG = DmnEngineLogger.ENGINE_LOGGER;
+  protected static final DmnEngineLogger LOG = DmnLogger.ENGINE_LOGGER;
 
   protected static final HitPolicyEntry COLLECT_HIT_POLICY = new HitPolicyEntry(HitPolicy.COLLECT, null);
   protected static final HitPolicyEntry RULE_ORDER_HIT_POLICY = new HitPolicyEntry(HitPolicy.RULE_ORDER, null);

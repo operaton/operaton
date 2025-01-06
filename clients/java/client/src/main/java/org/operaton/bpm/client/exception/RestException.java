@@ -22,8 +22,8 @@ package org.operaton.bpm.client.exception;
 public class RestException extends ExternalTaskClientException {
 
   protected Integer httpStatusCode;
-  protected String type;
-  protected Integer code;
+  protected final String type;
+  protected final Integer code;
 
   public RestException(String message, String type, Integer code) {
     super(message);
@@ -33,6 +33,8 @@ public class RestException extends ExternalTaskClientException {
 
   public RestException(String message, Throwable throwable) {
     super(message, throwable);
+    this.type = null;
+    this.code = null;
   }
 
   /**
@@ -53,19 +55,11 @@ public class RestException extends ExternalTaskClientException {
     return getCause() == null ? type : ((RestException) getCause()).getType();
   }
 
-  public void setType(String type) {
-    this.type = type;
-  }
-
   /**
    * @return the exception error code from the Engine's REST API.
    */
   public Integer getCode() {
     return getCause() == null ? code : ((RestException) getCause()).getCode();
-  }
-
-  public void setCode(Integer code) {
-    this.code = code;
   }
 
 }

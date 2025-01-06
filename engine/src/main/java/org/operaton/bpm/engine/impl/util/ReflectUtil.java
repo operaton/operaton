@@ -311,7 +311,7 @@ public abstract class ReflectUtil {
       if (parameterTypes.size() > 1) {
         throw LOG.ambiguousSetterMethod(setterName, clazz.getName());
       }
-      if (candidates.size() >= 1) {
+      if (!candidates.isEmpty()) {
         return candidates.get(0);
       }
 

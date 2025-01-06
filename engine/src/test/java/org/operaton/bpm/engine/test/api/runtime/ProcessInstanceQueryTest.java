@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
@@ -36,14 +31,27 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByBusinessKey;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessDefinitionId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessInstanceId;
+import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.RuleChain;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
-import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Joram Barrez
@@ -91,6 +99,8 @@ public class ProcessInstanceQueryTest {
     repositoryService = engineRule.getRepositoryService();
     managementService = engineRule.getManagementService();
     caseService = engineRule.getCaseService();
+
+    deployTestProcesses();
   }
 
 
@@ -98,7 +108,6 @@ public class ProcessInstanceQueryTest {
    * Setup starts 4 process instances of oneTaskProcess
    * and 1 instance of otherOneTaskProcess
    */
-  @Before
   public void deployTestProcesses() {
     org.operaton.bpm.engine.repository.Deployment deployment = engineRule.getRepositoryService().createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml")
@@ -107,7 +116,6 @@ public class ProcessInstanceQueryTest {
 
     engineRule.manageDeployment(deployment);
 
-    RuntimeService runtimeService = engineRule.getRuntimeService();
     processInstanceIds = new ArrayList<>();
     for (int i = 0; i < 4; i++) {
       processInstanceIds.add(runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY, i + "").getId());
@@ -1334,12 +1342,12 @@ public class ProcessInstanceQueryTest {
 
   @Test
   public void testQueryByProcessInstanceIds() {
-    Set<String> processInstanceIds = new HashSet<>(this.processInstanceIds);
+    Set<String> ids = new HashSet<>(this.processInstanceIds);
 
     // start an instance that will not be part of the query
     runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY_2, "2");
 
-    ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceIds(processInstanceIds);
+    ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceIds(ids);
     assertEquals(5, processInstanceQuery.count());
 
     List<ProcessInstance> processInstances = processInstanceQuery.list();
@@ -1347,7 +1355,7 @@ public class ProcessInstanceQueryTest {
     assertEquals(5, processInstances.size());
 
     for (ProcessInstance processInstance : processInstances) {
-      assertTrue(processInstanceIds.contains(processInstance.getId()));
+      assertTrue(ids.contains(processInstance.getId()));
     }
   }
 

@@ -16,18 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.entity.runtime;
 
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_DESCRIPTION;
-import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_TYPE;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ProcessEngineServices;
@@ -44,11 +32,7 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.core.instance.CoreExecution;
 import org.operaton.bpm.engine.impl.core.operation.CoreAtomicOperation;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
-import org.operaton.bpm.engine.impl.core.variable.scope.CmmnVariableInvocationListener;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceFactory;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycleListener;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableOnPartListener;
-import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore;
+import org.operaton.bpm.engine.impl.core.variable.scope.*;
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableStore.VariablesProvider;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
@@ -59,15 +43,7 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.producer.CmmnHistoryEventProducer;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.persistence.entity.CaseExecutionEntityReferencer;
-import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntityFactory;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntityPersistenceListener;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceHistoryListener;
-import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceSequenceCounterListener;
+import org.operaton.bpm.engine.impl.persistence.entity.*;
 import org.operaton.bpm.engine.impl.pvm.PvmProcessDefinition;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.impl.task.TaskDecorator;
@@ -80,6 +56,10 @@ import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_DESCRIPTION;
+import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACTIVITY_TYPE;
+
+import java.util.*;
 
 /**
  * @author Roman Smirnov
@@ -215,22 +195,21 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
       .getCaseExecutionManager()
       .findChildCaseExecutionsByCaseInstanceId(caseInstanceId);
 
-    CaseExecutionEntity caseInstance = null;
+    CaseExecutionEntity caseExecutionInstance = null;
 
     Map<String, CaseExecutionEntity> executionMap = new HashMap<>();
     for (CaseExecutionEntity execution : executions) {
       execution.caseExecutions = new ArrayList<>();
       executionMap.put(execution.getId(), execution);
       if(execution.isCaseInstanceExecution()) {
-        caseInstance = execution;
+        caseExecutionInstance = execution;
       }
     }
 
     for (CaseExecutionEntity execution : executions) {
-      String parentId = execution.getParentId();
-      CaseExecutionEntity parent = executionMap.get(parentId);
+      CaseExecutionEntity parent = executionMap.get(execution.getParentId());
       if(!execution.isCaseInstanceExecution()) {
-        execution.caseInstance = caseInstance;
+        execution.caseInstance = caseExecutionInstance;
         execution.parent = parent;
         parent.caseExecutions.add(execution);
       } else {
@@ -534,25 +513,25 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
   @Override
   public ExecutionEntity createSubProcessInstance(PvmProcessDefinition processDefinition, String businessKey, String caseInstanceId) {
-    ExecutionEntity subProcessInstance = (ExecutionEntity) processDefinition.createProcessInstance(businessKey, caseInstanceId);
+    ExecutionEntity subProcess = (ExecutionEntity) processDefinition.createProcessInstance(businessKey, caseInstanceId);
 
     // inherit the tenant-id from the process definition
     String tenantId = ((ProcessDefinitionEntity) processDefinition).getTenantId();
     if (tenantId != null) {
-      subProcessInstance.setTenantId(tenantId);
+      subProcess.setTenantId(tenantId);
     }
     else {
       // if process definition has no tenant id, inherit this case instance's tenant id
-      subProcessInstance.setTenantId(this.tenantId);
+      subProcess.setTenantId(this.tenantId);
     }
 
     // manage bidirectional super-subprocess relation
-    subProcessInstance.setSuperCaseExecution(this);
-    setSubProcessInstance(subProcessInstance);
+    subProcess.setSuperCaseExecution(this);
+    setSubProcessInstance(subProcess);
 
     fireHistoricCaseActivityInstanceUpdate();
 
-    return subProcessInstance;
+    return subProcess;
   }
 
   protected void ensureSubProcessInstanceInitialized() {
@@ -584,25 +563,25 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
   @Override
   public CaseExecutionEntity createSubCaseInstance(CmmnCaseDefinition caseDefinition, String businessKey) {
-    CaseExecutionEntity subCaseInstance = (CaseExecutionEntity) caseDefinition.createCaseInstance(businessKey);
+    CaseExecutionEntity subCase = (CaseExecutionEntity) caseDefinition.createCaseInstance(businessKey);
 
     // inherit the tenant-id from the case definition
     String tenantId = ((CaseDefinitionEntity) caseDefinition).getTenantId();
     if (tenantId != null) {
-      subCaseInstance.setTenantId(tenantId);
+      subCase.setTenantId(tenantId);
     }
     else {
       // if case definition has no tenant id, inherit this case instance's tenant id
-      subCaseInstance.setTenantId(this.tenantId);
+      subCase.setTenantId(this.tenantId);
     }
 
     // manage bidirectional super-sub-case-instances relation
-    subCaseInstance.setSuperCaseExecution(this);
-    setSubCaseInstance(subCaseInstance);
+    subCase.setSuperCaseExecution(this);
+    setSubCaseInstance(subCase);
 
     fireHistoricCaseActivityInstanceUpdate();
 
-    return subCaseInstance;
+    return subCase;
   }
 
   public void fireHistoricCaseActivityInstanceUpdate() {

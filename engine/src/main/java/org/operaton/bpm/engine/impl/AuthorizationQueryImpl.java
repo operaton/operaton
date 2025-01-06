@@ -103,7 +103,7 @@ public class AuthorizationQueryImpl extends AbstractQuery<AuthorizationQuery, Au
   public AuthorizationQuery hasPermission(Permission p) {
     queryByPermission = true;
 
-    if (resourcesIntersection.size() == 0) {
+    if (resourcesIntersection.isEmpty()) {
       resourcesIntersection.addAll(Arrays.asList(p.getTypes()));
     } else {
       resourcesIntersection.retainAll(new HashSet<Resource>(Arrays.asList(p.getTypes())));

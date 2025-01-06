@@ -191,7 +191,7 @@ public class HistoryServiceImpl extends ServiceImpl implements HistoryService {
   @Override
   public Job findHistoryCleanupJob() {
     final List<Job> jobs = commandExecutor.execute(new FindHistoryCleanupJobsCmd());
-    if (jobs.size() > 0) {
+    if (!jobs.isEmpty()) {
       return jobs.get(0);
     } else {
       return null;

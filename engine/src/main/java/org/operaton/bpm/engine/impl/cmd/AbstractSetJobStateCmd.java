@@ -20,12 +20,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.management.UpdateJobSuspensionStateBuilderImpl;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionManager;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
-import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
-import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
+import org.operaton.bpm.engine.impl.persistence.entity.*;
 
 /**
  * @author roman.smirnov
@@ -72,18 +67,18 @@ public abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd {
 
         if (job != null) {
 
-          String processInstanceId = job.getProcessInstanceId();
-          if (processInstanceId != null) {
-            checker.checkUpdateProcessInstanceById(processInstanceId);
+          String instanceId = job.getProcessInstanceId();
+          if (instanceId != null) {
+            checker.checkUpdateProcessInstanceById(instanceId);
           }
           else {
             // start timer job is not assigned to a specific process
             // instance, that's why we have to check whether there
             // exists a UPDATE_INSTANCES permission on process definition or
             // a UPDATE permission on any process instance
-            String processDefinitionKey = job.getProcessDefinitionKey();
-            if (processDefinitionKey != null) {
-              checker.checkUpdateProcessInstanceByProcessDefinitionKey(processDefinitionKey);
+            String definitionKey = job.getProcessDefinitionKey();
+            if (definitionKey != null) {
+              checker.checkUpdateProcessInstanceByProcessDefinitionKey(definitionKey);
             }
           }
           // if (processInstanceId == null && processDefinitionKey == null):
@@ -99,8 +94,7 @@ public abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd {
         JobDefinitionEntity jobDefinition = jobDefinitionManager.findById(jobDefinitionId);
 
         if (jobDefinition != null) {
-          String processDefinitionKey = jobDefinition.getProcessDefinitionKey();
-          checker.checkUpdateProcessInstanceByProcessDefinitionKey(processDefinitionKey);
+          checker.checkUpdateProcessInstanceByProcessDefinitionKey(jobDefinition.getProcessDefinitionKey());
         }
 
       } else

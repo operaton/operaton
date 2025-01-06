@@ -22,10 +22,11 @@ public class RestException extends RuntimeException {
   
   private static final long serialVersionUID = 1L;
   
-  private Status status;
+  private final Status status;
   
   public RestException(String message) {
     super(message);
+    this.status = null;
   }
   
   public RestException(Status status, String message) {

@@ -16,54 +16,22 @@
  */
 package org.operaton.bpm.dmn.engine.impl.transform;
 
-import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
-
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.operaton.bpm.dmn.engine.DmnDecision;
 import org.operaton.bpm.dmn.engine.DmnDecisionRequirementsGraph;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionLiteralExpressionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionRequirementsGraphImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableInputImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableOutputImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnDecisionTableRuleImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnExpressionImpl;
-import org.operaton.bpm.dmn.engine.impl.DmnLogger;
-import org.operaton.bpm.dmn.engine.impl.DmnVariableImpl;
+import org.operaton.bpm.dmn.engine.impl.*;
 import org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandlerRegistry;
-import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformContext;
-import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandler;
-import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandlerRegistry;
-import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransform;
-import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformListener;
-import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformer;
+import org.operaton.bpm.dmn.engine.impl.spi.transform.*;
 import org.operaton.bpm.dmn.engine.impl.spi.type.DmnDataTypeTransformerRegistry;
 import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelException;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
-import org.operaton.bpm.model.dmn.instance.Decision;
-import org.operaton.bpm.model.dmn.instance.DecisionTable;
-import org.operaton.bpm.model.dmn.instance.Definitions;
-import org.operaton.bpm.model.dmn.instance.Expression;
-import org.operaton.bpm.model.dmn.instance.InformationRequirement;
-import org.operaton.bpm.model.dmn.instance.Input;
-import org.operaton.bpm.model.dmn.instance.InputEntry;
-import org.operaton.bpm.model.dmn.instance.InputExpression;
-import org.operaton.bpm.model.dmn.instance.LiteralExpression;
-import org.operaton.bpm.model.dmn.instance.Output;
-import org.operaton.bpm.model.dmn.instance.OutputEntry;
-import org.operaton.bpm.model.dmn.instance.Rule;
-import org.operaton.bpm.model.dmn.instance.Variable;
+import org.operaton.bpm.model.dmn.instance.*;
+import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.List;
+import java.util.*;
 
 public class DefaultDmnTransform implements DmnTransform, DmnElementTransformContext {
 
@@ -187,9 +155,9 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
     buildDecisionRequirements(decisions, dmnDecisions);
     List<DmnDecision> dmnDecisionList = new ArrayList<>(dmnDecisions.values());
 
-    for(Decision decision: decisions) {
-      DmnDecision dmnDecision = dmnDecisions.get(decision.getId());
-      notifyTransformListeners(decision, dmnDecision);
+    for(Decision dec: decisions) {
+      DmnDecision dmnDecision = dmnDecisions.get(dec.getId());
+      notifyTransformListeners(dec, dmnDecision);
     }
     ensureNoLoopInDecisions(dmnDecisionList);
 
@@ -199,8 +167,8 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
   protected Map<String,DmnDecisionImpl> transformIndividualDecisions(Collection<Decision> decisions) {
     Map<String, DmnDecisionImpl> dmnDecisions = new HashMap<>();
 
-    for (Decision decision : decisions) {
-      DmnDecisionImpl dmnDecision = transformDecision(decision);
+    for (Decision dec : decisions) {
+      DmnDecisionImpl dmnDecision = transformDecision(dec);
       if (dmnDecision != null) {
         dmnDecisions.put(dmnDecision.getKey(), dmnDecision);
       }
@@ -209,11 +177,11 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
   }
 
   protected void buildDecisionRequirements(Collection<Decision> decisions, Map<String, DmnDecisionImpl> dmnDecisions) {
-    for(Decision decision: decisions) {
-      List<DmnDecision> requiredDmnDecisions = getRequiredDmnDecisions(decision, dmnDecisions);
-      DmnDecisionImpl dmnDecision = dmnDecisions.get(decision.getId());
+    for(Decision dec: decisions) {
+      List<DmnDecision> requiredDmnDecisions = getRequiredDmnDecisions(dec, dmnDecisions);
+      DmnDecisionImpl dmnDecision = dmnDecisions.get(dec.getId());
 
-      if(requiredDmnDecisions.size() > 0) {
+      if(!requiredDmnDecisions.isEmpty()) {
         dmnDecision.setRequiredDecision(requiredDmnDecisions);
       }
     }
@@ -222,8 +190,8 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
   protected void ensureNoLoopInDecisions(List<DmnDecision> dmnDecisionList) {
     List<String> visitedDecisions = new ArrayList<>();
 
-    for(DmnDecision decision: dmnDecisionList) {
-      ensureNoLoopInDecision(decision, new ArrayList<>(), visitedDecisions);
+    for(DmnDecision dec: dmnDecisionList) {
+      ensureNoLoopInDecision(dec, new ArrayList<>(), visitedDecisions);
     }
   }
 
@@ -275,8 +243,8 @@ public class DefaultDmnTransform implements DmnTransform, DmnElementTransformCon
       return null;
     }
 
-    if (expression instanceof DecisionTable decisionTable) {
-      DmnDecisionTableImpl dmnDecisionTable = transformDecisionTable(decisionTable);
+    if (expression instanceof DecisionTable decisionTbl) {
+      DmnDecisionTableImpl dmnDecisionTable = transformDecisionTable(decisionTbl);
       dmnDecision.setDecisionLogic(dmnDecisionTable);
 
     } else if (expression instanceof LiteralExpression literalExpression) {

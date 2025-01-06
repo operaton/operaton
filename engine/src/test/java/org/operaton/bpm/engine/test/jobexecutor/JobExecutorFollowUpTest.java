@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -34,11 +32,14 @@ import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test cases for handling of new jobs created while a job is executed
@@ -88,12 +89,12 @@ public class JobExecutorFollowUpTest {
 
   protected boolean skipFlushControl = true;
   protected ProcessEngineBootstrapRule bootstrapRule =
-      new ProcessEngineBootstrapRule(configuration -> {
-        configuration.setJobExecutor(buildControllableJobExecutor());
-        configuration.setCommandContextFactory(new CommandContextFactory() {
+      new ProcessEngineBootstrapRule(cfg -> {
+        cfg.setJobExecutor(buildControllableJobExecutor());
+        cfg.setCommandContextFactory(new CommandContextFactory() {
           @Override
           public CommandContext createCommandContext() {
-            return new ControllableCommandContext(configuration, executionThread, skipFlushControl);
+            return new ControllableCommandContext(cfg, executionThread, skipFlushControl);
           }
         });
       });

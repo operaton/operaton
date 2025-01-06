@@ -16,35 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import static io.restassured.RestAssured.expect;
-import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.anySet;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessInstanceQueryImpl;
 import org.operaton.bpm.engine.impl.calendar.DateTimeUtil;
@@ -56,6 +27,14 @@ import org.operaton.bpm.engine.rest.util.OrderingBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
+
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
+import java.util.*;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -64,8 +43,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import static io.restassured.RestAssured.expect;
+import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.*;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 public class ProcessInstanceRestServiceQueryTest extends
     AbstractRestServiceTest {
@@ -1547,8 +1532,8 @@ public class ProcessInstanceRestServiceQueryTest extends
   @Test
   public void testOrQuery() {
     // given
-    ProcessInstanceQuery mockedQuery = mock(ProcessInstanceQueryImpl.class);
-    when(processEngine.getRuntimeService().createProcessInstanceQuery()).thenReturn(mockedQuery);
+    ProcessInstanceQuery query = mock(ProcessInstanceQueryImpl.class);
+    when(processEngine.getRuntimeService().createProcessInstanceQuery()).thenReturn(query);
 
     ProcessInstanceQueryDto processInstanceQueryDto = new ProcessInstanceQueryDto();
 
@@ -1569,7 +1554,7 @@ public class ProcessInstanceRestServiceQueryTest extends
       .post(PROCESS_INSTANCE_QUERY_URL);
 
     ArgumentCaptor<ProcessInstanceQueryImpl> argument = ArgumentCaptor.forClass(ProcessInstanceQueryImpl.class);
-    verify(((ProcessInstanceQueryImpl) mockedQuery)).addOrQuery(argument.capture());
+    verify(((ProcessInstanceQueryImpl) query)).addOrQuery(argument.capture());
 
     // then
     assertThat(argument.getValue().getProcessDefinitionId()).isEqualTo(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);

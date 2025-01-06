@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.rest.hal.cache;
 
+import org.operaton.bpm.engine.rest.cache.Cache;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.operaton.bpm.engine.rest.cache.Cache;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -89,8 +89,8 @@ public class HalRelationCacheConfiguration {
     JsonNode jsonNode = jsonConfiguration.get(CONFIG_CACHE_IMPLEMENTATION);
     if (jsonNode != null) {
       String cacheImplementationClassName = jsonNode.textValue();
-      Class<?> cacheImplementationClass = loadClass(cacheImplementationClassName);
-      setCacheImplementationClass(cacheImplementationClass);
+      Class<?> cacheImplClass = loadClass(cacheImplementationClassName);
+      setCacheImplementationClass(cacheImplClass);
     }
     else {
       throw new HalRelationCacheConfigurationException("Unable to find the " + CONFIG_CACHE_IMPLEMENTATION + " parameter");
@@ -100,9 +100,9 @@ public class HalRelationCacheConfiguration {
   protected void parseCacheConfigurations(JsonNode jsonConfiguration) {
     JsonNode jsonNode = jsonConfiguration.get(CONFIG_CACHES);
     if (jsonNode != null) {
-      Iterator<Entry<String, JsonNode>> cacheConfigurations = jsonNode.fields();
-      while (cacheConfigurations.hasNext()) {
-        Entry<String, JsonNode> cacheConfiguration = cacheConfigurations.next();
+      Iterator<Entry<String, JsonNode>> cacheConfigs = jsonNode.fields();
+      while (cacheConfigs.hasNext()) {
+        Entry<String, JsonNode> cacheConfiguration = cacheConfigs.next();
         parseCacheConfiguration(cacheConfiguration.getKey(), cacheConfiguration.getValue());
       }
     }

@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
-import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
-
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.behavior.FlowNodeActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
+import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
 
 /**
  * @author Thorben Lindhauer
@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationActivityLeave implements PvmAtomicOperation {
 
-  private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
   @Override
   public boolean isAsync(PvmExecutionImpl execution) {

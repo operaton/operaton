@@ -16,13 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.pvm.PvmException;
 import org.operaton.bpm.engine.impl.pvm.PvmLogger;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.Callback;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
-
 import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivityBehavior;
 
 /**
@@ -30,7 +30,7 @@ import static org.operaton.bpm.engine.impl.util.ActivityBehaviorUtil.getActivity
  */
 public class PvmAtomicOperationActivityExecute implements PvmAtomicOperation {
 
-  private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
   @Override
   public boolean isAsync(PvmExecutionImpl execution) {

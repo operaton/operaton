@@ -72,26 +72,26 @@ public class StringAttributeBuilderImpl extends AttributeBuilderImpl<String> imp
   @Override
   public <V extends ModelElementInstance> AttributeReferenceBuilder<V> qNameAttributeReference(Class<V> referenceTargetElement) {
     AttributeImpl<String> attribute = (AttributeImpl<String>) build();
-    AttributeReferenceBuilderImpl<V> referenceBuilder = new QNameAttributeReferenceBuilderImpl<>(attribute, referenceTargetElement);
-    setAttributeReference(referenceBuilder);
-    return referenceBuilder;
+    AttributeReferenceBuilderImpl<V> builder = new QNameAttributeReferenceBuilderImpl<>(attribute, referenceTargetElement);
+    setAttributeReference(builder);
+    return builder;
   }
 
   @Override
   public <V extends ModelElementInstance> AttributeReferenceBuilder<V> idAttributeReference(Class<V> referenceTargetElement) {
     AttributeImpl<String> attribute = (AttributeImpl<String>) build();
-    AttributeReferenceBuilderImpl<V> referenceBuilder = new AttributeReferenceBuilderImpl<>(attribute, referenceTargetElement);
-    setAttributeReference(referenceBuilder);
-    return referenceBuilder;
+    AttributeReferenceBuilderImpl<V> builder = new AttributeReferenceBuilderImpl<>(attribute, referenceTargetElement);
+    setAttributeReference(builder);
+    return builder;
   }
 
   @Override
   @SuppressWarnings("rawtypes")
   public <V extends ModelElementInstance> AttributeReferenceCollectionBuilder<V> idAttributeReferenceCollection(Class<V> referenceTargetElement, Class<? extends AttributeReferenceCollection> attributeReferenceCollection) {
     AttributeImpl<String> attribute = (AttributeImpl<String>) build();
-    AttributeReferenceCollectionBuilder<V> referenceBuilder = new AttributeReferenceCollectionBuilderImpl<>(attribute, referenceTargetElement, attributeReferenceCollection);
-    setAttributeReference(referenceBuilder);
-    return referenceBuilder;
+    AttributeReferenceCollectionBuilder<V> builder = new AttributeReferenceCollectionBuilderImpl<>(attribute, referenceTargetElement, attributeReferenceCollection);
+    setAttributeReference(builder);
+    return builder;
   }
 
   protected <V extends ModelElementInstance> void setAttributeReference(AttributeReferenceBuilder<V> referenceBuilder) {

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.core.variable.mapping;
 
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.core.CoreLogger;
 import org.operaton.bpm.engine.impl.core.variable.mapping.value.ParameterValueProvider;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
@@ -34,7 +35,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
  */
 public class InputParameter extends IoParameter {
 
-  private static final CoreLogger LOG = CoreLogger.CORE_LOGGER;
+  private static final CoreLogger LOG = ProcessEngineLogger.CORE_LOGGER;
 
   public InputParameter(String name, ParameterValueProvider valueProvider) {
     super(name, valueProvider);

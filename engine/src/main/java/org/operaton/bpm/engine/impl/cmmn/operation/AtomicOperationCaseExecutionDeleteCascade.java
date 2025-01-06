@@ -34,7 +34,7 @@ public class AtomicOperationCaseExecutionDeleteCascade implements CmmnAtomicOper
  protected CmmnExecution findFirstLeaf(CmmnExecution execution) {
    List<? extends CmmnExecution> executions = execution.getCaseExecutions();
 
-   if (executions.size() > 0) {
+   if (!executions.isEmpty()) {
      return findFirstLeaf(executions.get(0));
    }
    return execution;

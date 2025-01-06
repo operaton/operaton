@@ -94,7 +94,7 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
   protected Collection<ActivityExecution> getLeafExecutions(ActivityExecution parent) {
     List<ActivityExecution> executionlist = new ArrayList<>();
     List<? extends ActivityExecution> subExecutions = parent.getNonEventScopeExecutions();
-    if (subExecutions.size() == 0) {
+    if (subExecutions.isEmpty()) {
       executionlist.add(parent);
     } else {
       for (ActivityExecution concurrentExecution : subExecutions) {

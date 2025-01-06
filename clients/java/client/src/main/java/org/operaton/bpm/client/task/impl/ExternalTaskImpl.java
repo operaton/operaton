@@ -16,18 +16,18 @@
  */
 package org.operaton.bpm.client.task.impl;
 
-import java.text.DateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.variable.impl.TypedValueField;
 import org.operaton.bpm.client.variable.impl.VariableValue;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import java.text.DateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -240,14 +240,14 @@ public class ExternalTaskImpl implements ExternalTask {
   @JsonIgnore
   @Override
   public Map<String, Object> getAllVariables() {
-    Map<String, Object> variables = new HashMap<>();
+    Map<String, Object> vars = new HashMap<>();
 
     receivedVariableMap.forEach((variableName, variableValue) -> {
       Object variable = getVariable(variableName);
-      variables.put(variableName, variable);
+      vars.put(variableName, variable);
     });
 
-    return variables;
+    return vars;
   }
 
   @JsonIgnore
@@ -272,14 +272,14 @@ public class ExternalTaskImpl implements ExternalTask {
 
   @Override
   public VariableMap getAllVariablesTyped(boolean deserializeObjectValues) {
-    VariableMap variables = Variables.createVariables();
+    VariableMap vars = Variables.createVariables();
 
     receivedVariableMap.forEach((variableName, variableValue) -> {
       TypedValue typedValue = getVariableTyped(variableName, deserializeObjectValues);
-      variables.putValueTyped(variableName, typedValue);
+      vars.putValueTyped(variableName, typedValue);
     });
 
-    return variables;
+    return vars;
   }
 
   @JsonIgnore

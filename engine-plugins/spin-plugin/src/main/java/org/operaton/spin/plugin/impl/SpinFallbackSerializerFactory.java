@@ -16,13 +16,13 @@
  */
 package org.operaton.spin.plugin.impl;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializerFactory;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Thorben Lindhauer
@@ -44,12 +44,10 @@ public class SpinFallbackSerializerFactory implements VariableSerializerFactory 
   }
 
   public TypedValueSerializer<?> getSerializer(TypedValue value) {
-    if (value instanceof ObjectValue) {
-      ObjectValue objectValue = (ObjectValue) value;
-      if (objectValue.getSerializationDataFormat() != null && !objectValue.isDeserialized()) {
+    if (value instanceof ObjectValue objectValue && objectValue.getSerializationDataFormat() != null && !objectValue.isDeserialized()) {
         return new FallbackSpinObjectValueSerializer(objectValue.getSerializationDataFormat());
       }
-    }
+
     return null;
   }
 }

@@ -301,7 +301,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
 
     // obtain totally ordered operation list from operation manager
     List<DbOperation> operationsToFlush = dbOperationManager.calculateFlush();
-    if (operationsToFlush == null || operationsToFlush.size() == 0) {
+    if (operationsToFlush == null || operationsToFlush.isEmpty()) {
       return;
     }
 

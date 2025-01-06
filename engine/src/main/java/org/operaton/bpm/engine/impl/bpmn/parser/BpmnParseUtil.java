@@ -155,7 +155,7 @@ public final class BpmnParseUtil {
    */
   protected static ParameterValueProvider parseNestedParamValueProvider(Element element) {
     // parse value provider
-    if(element.elements().size() == 0) {
+    if(element.elements().isEmpty()) {
       return parseParamValueProvider(element);
 
     } else if(element.elements().size() == 1) {

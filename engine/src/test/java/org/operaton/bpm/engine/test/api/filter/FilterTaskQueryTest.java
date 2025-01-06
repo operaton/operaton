@@ -16,34 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
-import org.operaton.bpm.engine.impl.Direction;
-import org.operaton.bpm.engine.impl.QueryEntityRelationCondition;
-import org.operaton.bpm.engine.impl.QueryOperator;
-import org.operaton.bpm.engine.impl.QueryOrderingProperty;
-import org.operaton.bpm.engine.impl.TaskQueryImpl;
-import org.operaton.bpm.engine.impl.TaskQueryProperty;
-import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
-import org.operaton.bpm.engine.impl.VariableOrderProperty;
+import org.operaton.bpm.engine.impl.*;
 import org.operaton.bpm.engine.impl.json.JsonTaskQueryConverter;
 import org.operaton.bpm.engine.impl.persistence.entity.FilterEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
@@ -60,19 +38,29 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
+
+import java.util.*;
+
+import com.google.gson.JsonObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.google.gson.JsonObject;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Sebastian Menski
  */
 public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
-  protected Filter filter;
+  protected Filter testFilter;
 
   protected String testString = "test";
   protected Integer testInteger = 1;
@@ -105,7 +93,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
   @Before
   public void setUp() {
-    filter = filterService.newTaskFilter("name")
+    testFilter = filterService.newTaskFilter("name")
         .setOwner("owner")
         .setQuery(taskService.createTaskQuery())
         .setProperties(new HashMap<>());
@@ -152,10 +140,10 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery emptyQuery = taskService.createTaskQuery();
     String emptyQueryJson = "{}";
 
-    filter.setQuery(emptyQuery);
+    testFilter.setQuery(emptyQuery);
 
-    assertEquals(emptyQueryJson, ((FilterEntity) filter).getQueryInternal());
-    assertNotNull(filter.getQuery());
+    assertEquals(emptyQueryJson, ((FilterEntity) testFilter).getQueryInternal());
+    assertNotNull(testFilter.getQuery());
   }
 
   @Test
@@ -260,14 +248,14 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     List<QueryOrderingProperty> expectedOrderingProperties = query.getOrderingProperties();
 
     // save filter
-    filter.setQuery(query);
-    filterService.saveFilter(filter);
+    testFilter.setQuery(query);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
 
     // test query
-    query = filter.getQuery();
+    query = testFilter.getQuery();
     assertEquals(testString, query.getTaskId());
     assertEquals(testString, query.getName());
     assertEquals(testString, query.getNameNotEqual());
@@ -527,14 +515,14 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.followUpBeforeOrNotExistent(testDate);
 
     // save filter
-    filter.setQuery(query);
-    filterService.saveFilter(filter);
+    testFilter.setQuery(query);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
 
     // test query
-    query = filter.getQuery();
+    query = testFilter.getQuery();
     assertTrue(query.isFollowUpNullAccepted());
     assertEquals(testDate, query.getFollowUpBefore());
   }
@@ -547,23 +535,23 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.followUpBeforeOrNotExistent(testDate);
 
     // save filter without query
-    filterService.saveFilter(filter);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
 
     // use query as extending query
-    List<Task> tasks = filterService.list(filter.getId(), query);
+    List<Task> tasks = filterService.list(testFilter.getId(), query);
     assertEquals(3, tasks.size());
 
     // set as filter query and save filter
-    filter.setQuery(query);
-    filterService.saveFilter(filter);
+    testFilter.setQuery(query);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
 
-    tasks = filterService.list(filter.getId());
+    tasks = filterService.list(testFilter.getId());
     assertEquals(3, tasks.size());
 
     TaskQuery extendingQuery = taskService.createTaskQuery();
@@ -572,7 +560,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
       .orderByTaskCreateTime()
       .asc();
 
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertEquals(3, tasks.size());
   }
 
@@ -584,14 +572,14 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.followUpBeforeOrNotExistentExpression(testString);
 
     // save filter
-    filter.setQuery(query);
-    filterService.saveFilter(filter);
+    testFilter.setQuery(query);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
 
     // test query
-    query = filter.getQuery();
+    query = testFilter.getQuery();
     assertTrue(query.isFollowUpNullAccepted());
     assertEquals(testString, query.getExpressions().get("followUpBeforeOrNotExistent"));
   }
@@ -604,23 +592,23 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.followUpBeforeOrNotExistentExpression("${dateTime().withMillis(0)}");
 
     // save filter without query
-    filterService.saveFilter(filter);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
 
     // use query as extending query
-    List<Task> tasks = filterService.list(filter.getId(), query);
+    List<Task> tasks = filterService.list(testFilter.getId(), query);
     assertEquals(3, tasks.size());
 
     // set as filter query and save filter
-    filter.setQuery(query);
-    filterService.saveFilter(filter);
+    testFilter.setQuery(query);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
 
-    tasks = filterService.list(filter.getId());
+    tasks = filterService.list(testFilter.getId());
     assertEquals(3, tasks.size());
 
     TaskQuery extendingQuery = taskService.createTaskQuery();
@@ -629,7 +617,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
       .orderByTaskCreateTime()
       .asc();
 
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertEquals(3, tasks.size());
   }
 
@@ -639,8 +627,8 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.taskCandidateUser(testUser.getId());
     query.taskCandidateUserExpression(testUser.getId());
 
-    filter.setQuery(query);
-    query = filter.getQuery();
+    testFilter.setQuery(query);
+    query = testFilter.getQuery();
 
     assertEquals(testUser.getId(), query.getCandidateUser());
     assertEquals(testUser.getId(), query.getExpressions().get("taskCandidateUser"));
@@ -652,8 +640,8 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.taskCandidateGroup(testGroup.getId());
     query.taskCandidateGroupExpression(testGroup.getId());
 
-    filter.setQuery(query);
-    query = filter.getQuery();
+    testFilter.setQuery(query);
+    query = testFilter.getQuery();
 
     assertEquals(testGroup.getId(), query.getCandidateGroup());
     assertEquals(testGroup.getId(), query.getExpressions().get("taskCandidateGroup"));
@@ -668,7 +656,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     saveQuery(query);
 
     // when
-    query = filter.getQuery();
+    query = testFilter.getQuery();
 
     // then
     assertEquals(testGroup.getId(), query.getCandidateGroupLike());
@@ -681,7 +669,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.includeAssignedTasks();
 
     saveQuery(query);
-    query = filterService.getFilter(filter.getId()).getQuery();
+    query = filterService.getFilter(testFilter.getId()).getQuery();
 
     assertEquals(testUser.getId(), query.getCandidateUser());
     assertTrue(query.isIncludeAssignedTasks());
@@ -694,7 +682,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.includeAssignedTasks();
 
     saveQuery(query);
-    query = filterService.getFilter(filter.getId()).getQuery();
+    query = filterService.getFilter(testFilter.getId()).getQuery();
 
     assertEquals(testString, query.getExpressions().get("taskCandidateUser"));
     assertTrue(query.isIncludeAssignedTasks());
@@ -707,7 +695,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.includeAssignedTasks();
 
     saveQuery(query);
-    query = filterService.getFilter(filter.getId()).getQuery();
+    query = filterService.getFilter(testFilter.getId()).getQuery();
 
     assertEquals(testGroup.getId(), query.getCandidateGroup());
     assertTrue(query.isIncludeAssignedTasks());
@@ -720,7 +708,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.includeAssignedTasks();
 
     saveQuery(query);
-    query = filterService.getFilter(filter.getId()).getQuery();
+    query = filterService.getFilter(testFilter.getId()).getQuery();
 
     assertEquals(testString, query.getExpressions().get("taskCandidateGroup"));
     assertTrue(query.isIncludeAssignedTasks());
@@ -736,7 +724,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     saveQuery(query);
 
     // when
-    query = filter.getQuery();
+    query = testFilter.getQuery();
 
     // then
     assertEquals(testGroup.getId(), query.getCandidateGroupLike());
@@ -750,7 +738,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.includeAssignedTasks();
 
     saveQuery(query);
-    query = filterService.getFilter(filter.getId()).getQuery();
+    query = filterService.getFilter(testFilter.getId()).getQuery();
 
     assertEquals(testCandidateGroups, query.getCandidateGroupsInternal());
     assertTrue(query.isIncludeAssignedTasks());
@@ -763,7 +751,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.includeAssignedTasks();
 
     saveQuery(query);
-    query = filterService.getFilter(filter.getId()).getQuery();
+    query = filterService.getFilter(testFilter.getId()).getQuery();
 
     assertEquals(testString, query.getExpressions().get("taskCandidateGroupIn"));
     assertTrue(query.isIncludeAssignedTasks());
@@ -776,7 +764,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertEquals(3, tasks.size());
     for (Task task : tasks) {
       assertEquals(testUser.getId(), task.getOwner());
@@ -789,17 +777,17 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertEquals(3, tasks.size());
 
-    tasks = filterService.list(filter.getId(), query);
+    tasks = filterService.list(testFilter.getId(), query);
     assertEquals(3, tasks.size());
 
     TaskQuery extendingQuery = taskService.createTaskQuery();
 
     extendingQuery.taskDelegationState(DelegationState.RESOLVED);
 
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertEquals(2, tasks.size());
 
     for (Task task : tasks) {
@@ -819,12 +807,12 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     // then
     TaskQuery query = taskService.createTaskQuery().taskAssigneeIn("john");
     saveQuery(query);
-    List<Task> origQueryTasks = filterService.list(filter.getId());
-    List<Task> selfExtendQueryTasks = filterService.list(filter.getId(), query);
+    List<Task> origQueryTasks = filterService.list(testFilter.getId());
+    List<Task> selfExtendQueryTasks = filterService.list(testFilter.getId(), query);
 
     TaskQuery extendingQuery = taskService.createTaskQuery();
     extendingQuery.taskAssigneeIn("john", "kermit");
-    List<Task> extendingQueryTasks = filterService.list(filter.getId(), extendingQuery);
+    List<Task> extendingQueryTasks = filterService.list(testFilter.getId(), extendingQuery);
 
     // then
     assertEquals(1, origQueryTasks.size());
@@ -844,12 +832,12 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     // then
     TaskQuery query = taskService.createTaskQuery().taskAssigneeNotIn("kermit");
     saveQuery(query);
-    List<Task> origQueryTasks = filterService.list(filter.getId());
-    List<Task> selfExtendQueryTasks = filterService.list(filter.getId(), query);
+    List<Task> origQueryTasks = filterService.list(testFilter.getId());
+    List<Task> selfExtendQueryTasks = filterService.list(testFilter.getId(), query);
 
     TaskQuery extendingQuery = taskService.createTaskQuery();
     extendingQuery.taskAssigneeNotIn("john", "kermit");
-    List<Task> extendingQueryTasks = filterService.list(filter.getId(), extendingQuery);
+    List<Task> extendingQueryTasks = filterService.list(testFilter.getId(), extendingQuery);
 
     // then
     assertEquals(1, origQueryTasks.size());
@@ -862,7 +850,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     // given 3 test tasks created during setup
     TaskQuery query = taskService.createTaskQuery();
     saveQuery(query);
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertEquals(3, tasks.size());
 
     // when extending the query with a "candidate group like"
@@ -870,7 +858,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     extendingQuery.taskCandidateGroupLike("%count%");
 
     // then there is 1 unassigned task with the candidate group "accounting"
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertEquals(1, tasks.size());
   }
 
@@ -879,14 +867,14 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     // given 3 existing tasks but only 1 unassigned task that matches the initial filter
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupLike("%count%");
     saveQuery(query);
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertEquals(1, tasks.size());
 
     // when extending the query with an empty query
     TaskQuery extendingQuery = taskService.createTaskQuery();
 
     // then the empty query should be ignored in favor of the existing value for "candidate group like"
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertEquals(1, tasks.size());
   }
 
@@ -895,7 +883,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     // given 3 existing tasks but zero match the initial filter
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupLike("HR");
     saveQuery(query);
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertTrue(tasks.isEmpty());
 
     // when extending the query with a "candidate groups like" query
@@ -903,7 +891,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     extendingQuery.taskCandidateGroupLike("acc%");
 
     // then the query should be return result of task matching the new filter
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertEquals(1, tasks.size());
   }
 
@@ -917,10 +905,10 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertEquals(1, tasks.size());
 
-    tasks = filterService.list(filter.getId(), query);
+    tasks = filterService.list(testFilter.getId(), query);
     assertEquals(1, tasks.size());
 
     TaskQuery extendingQuery = taskService.createTaskQuery();
@@ -929,7 +917,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
       .orderByTaskCreateTime()
       .asc();
 
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertEquals(1, tasks.size());
   }
 
@@ -941,7 +929,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertEquals(1, tasks.size());
 
     TaskQuery extendingQuery = taskService.createTaskQuery();
@@ -950,7 +938,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
       .taskCandidateGroup("accounting")
       .includeAssignedTasks();
 
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertEquals(2, tasks.size());
   }
 
@@ -1081,7 +1069,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    List<Task> tasks = filterService.listPage(filter.getId(), 1, 2);
+    List<Task> tasks = filterService.listPage(testFilter.getId(), 1, 2);
     assertEquals(2, tasks.size());
     for (Task task : tasks) {
       assertEquals(testUser.getId(), task.getOwner());
@@ -1094,17 +1082,17 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    List<Task> tasks = filterService.listPage(filter.getId(), 1, 2);
+    List<Task> tasks = filterService.listPage(testFilter.getId(), 1, 2);
     assertEquals(2, tasks.size());
 
-    tasks = filterService.listPage(filter.getId(), query, 1, 2);
+    tasks = filterService.listPage(testFilter.getId(), query, 1, 2);
     assertEquals(2, tasks.size());
 
     TaskQuery extendingQuery = taskService.createTaskQuery();
 
     extendingQuery.taskDelegationState(DelegationState.RESOLVED);
 
-    tasks = filterService.listPage(filter.getId(), extendingQuery, 1, 2);
+    tasks = filterService.listPage(testFilter.getId(), extendingQuery, 1, 2);
     assertEquals(1, tasks.size());
 
     assertEquals(DelegationState.RESOLVED, tasks.get(0).getDelegationState());
@@ -1117,7 +1105,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    Task task = filterService.singleResult(filter.getId());
+    Task task = filterService.singleResult(testFilter.getId());
     assertNotNull(task);
     assertEquals("Task 1", task.getName());
   }
@@ -1129,7 +1117,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     saveQuery(query);
 
     try {
-      filterService.singleResult(filter.getId());
+      filterService.singleResult(testFilter.getId());
       fail("Exception expected");
     }
     catch (ProcessEngineException e) {
@@ -1144,12 +1132,12 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    Task task = filterService.singleResult(filter.getId());
+    Task task = filterService.singleResult(testFilter.getId());
     assertNotNull(task);
     assertEquals("Task 1", task.getName());
     assertEquals("task1", task.getId());
 
-    task = filterService.singleResult(filter.getId(), query);
+    task = filterService.singleResult(testFilter.getId(), query);
     assertNotNull(task);
     assertEquals("Task 1", task.getName());
     assertEquals("task1", task.getId());
@@ -1158,7 +1146,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     extendingQuery.taskId("task1");
 
-    task = filterService.singleResult(filter.getId(), extendingQuery);
+    task = filterService.singleResult(testFilter.getId(), extendingQuery);
     assertNotNull(task);
     assertEquals("Task 1", task.getName());
     assertEquals("task1", task.getId());
@@ -1175,7 +1163,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.taskName("task 1");
     saveQuery(query);
 
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertNotNull(tasks);
     assertThat(tasks).hasSize(1);
 
@@ -1183,7 +1171,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.taskName("tASk 2");
     saveQuery(query);
 
-    tasks = filterService.list(filter.getId());
+    tasks = filterService.list(testFilter.getId());
     assertNotNull(tasks);
     assertThat(tasks).hasSize(1);
   }
@@ -1199,7 +1187,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.taskDescription("description 1");
     saveQuery(query);
 
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertNotNull(tasks);
     assertThat(tasks).hasSize(1);
 
@@ -1207,7 +1195,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.taskDescription("dEscription 2");
     saveQuery(query);
 
-    tasks = filterService.list(filter.getId());
+    tasks = filterService.list(testFilter.getId());
     assertNotNull(tasks);
     assertThat(tasks).hasSize(1);
   }
@@ -1223,7 +1211,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.taskNameLike("%task%");
     saveQuery(query);
 
-    List<Task> tasks = filterService.list(filter.getId());
+    List<Task> tasks = filterService.list(testFilter.getId());
     assertNotNull(tasks);
     assertThat(tasks).hasSize(3);
 
@@ -1231,7 +1219,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     query.taskNameLike("%Task%");
     saveQuery(query);
 
-    tasks = filterService.list(filter.getId());
+    tasks = filterService.list(testFilter.getId());
     assertNotNull(tasks);
     assertThat(tasks).hasSize(3);
   }
@@ -1242,14 +1230,14 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    long count = filterService.count(filter.getId());
+    long count = filterService.count(testFilter.getId());
     assertEquals(3, count);
 
     query.taskDelegationState(DelegationState.RESOLVED);
 
     saveQuery(query);
 
-    count = filterService.count(filter.getId());
+    count = filterService.count(testFilter.getId());
     assertEquals(2, count);
   }
 
@@ -1263,15 +1251,15 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     extendingQuery.taskId("task3");
 
-    long count = filterService.count(filter.getId());
+    long count = filterService.count(testFilter.getId());
 
     assertEquals(3, count);
 
-    count = filterService.count(filter.getId(), query);
+    count = filterService.count(testFilter.getId(), query);
 
     assertEquals(3, count);
 
-    count = filterService.count(filter.getId(), extendingQuery);
+    count = filterService.count(testFilter.getId(), extendingQuery);
 
     assertEquals(1, count);
   }
@@ -1282,7 +1270,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    long count = filterService.count(filter.getId(), (Query) null);
+    long count = filterService.count(testFilter.getId(), (Query) null);
     assertEquals(3, count);
   }
 
@@ -1293,12 +1281,12 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     saveQuery(query);
 
     // assert default sorting
-    query = filter.getQuery();
+    query = testFilter.getQuery();
     assertTrue(query.getOrderingProperties().isEmpty());
 
     // extend query by new task query with sorting
     TaskQueryImpl sortQuery = (TaskQueryImpl) taskService.createTaskQuery().orderByTaskName().asc();
-    Filter extendedFilter = filter.extend(sortQuery);
+    Filter extendedFilter = testFilter.extend(sortQuery);
     query = extendedFilter.getQuery();
 
     List<QueryOrderingProperty> expectedOrderingProperties =
@@ -1335,7 +1323,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     String sortByNameAsc = "RES." + TaskQueryProperty.NAME.getName() + " " + Direction.ASCENDING.getName();
 
     JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
-    JsonObject queryJson = converter.toJsonObject(filter.<TaskQuery>getQuery());
+    JsonObject queryJson = converter.toJsonObject(testFilter.<TaskQuery>getQuery());
 
     // when I apply a specific ordering by one dimension
     queryJson.addProperty(JsonTaskQueryConverter.ORDER_BY, sortByNameAsc);
@@ -1365,7 +1353,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     String secondaryOrdering = sortByNameAsc + ", RES." + TaskQueryProperty.ASSIGNEE.getName() + " " + Direction.DESCENDING.getName();
 
     JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
-    JsonObject queryJson = converter.toJsonObject(filter.<TaskQuery>getQuery());
+    JsonObject queryJson = converter.toJsonObject(testFilter.<TaskQuery>getQuery());
 
     // when I apply a secondary ordering
     queryJson.addProperty(JsonTaskQueryConverter.ORDER_BY, secondaryOrdering);
@@ -1402,7 +1390,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     String orderingWithFunction = "LOWER(RES." + TaskQueryProperty.NAME.getName() + ") asc";
 
     JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
-    JsonObject queryJson = converter.toJsonObject(filter.<TaskQuery>getQuery());
+    JsonObject queryJson = converter.toJsonObject(testFilter.<TaskQuery>getQuery());
 
     // when I apply an ordering with a function
     queryJson.addProperty(JsonTaskQueryConverter.ORDER_BY, orderingWithFunction);
@@ -1433,11 +1421,11 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     saveQuery(query);
 
-    Task task = (Task) filterService.list(filter.getId()).get(0);
+    Task task = (Task) filterService.list(testFilter.getId()).get(0);
 
     assertEquals("exampleFormKey", task.getFormKey());
 
-    task = filterService.singleResult(filter.getId());
+    task = filterService.singleResult(testFilter.getId());
 
     assertEquals("exampleFormKey", task.getFormKey());
 
@@ -1454,7 +1442,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
       .taskVariableValueEquals("hello", "world")
       .caseInstanceVariableValueEquals("hello", "world");
 
-    Filter extendedFilter = filter.extend(extendingQuery);
+    Filter extendedFilter = testFilter.extend(extendingQuery);
     TaskQueryImpl extendedQuery = extendedFilter.getQuery();
     List<TaskQueryVariableValue> variables = extendedQuery.getVariables();
 
@@ -1483,7 +1471,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
       .taskVariableValueLessThan("hello", 42)
       .caseInstanceVariableValueLessThan("hello", 42);
 
-    extendedFilter = filter.extend(extendingQuery);
+    extendedFilter = testFilter.extend(extendingQuery);
     extendedQuery = extendedFilter.getQuery();
     variables = extendedQuery.getVariables();
 
@@ -1526,7 +1514,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
         .orderByProcessVariable("var", ValueType.INTEGER)
         .asc();
 
-    List<Task> tasks = filterService.list(filter.getId(), extendingQuery);
+    List<Task> tasks = filterService.list(testFilter.getId(), extendingQuery);
 
     assertEquals(3, tasks.size());
     assertEquals(instance250.getId(), tasks.get(0).getProcessInstanceId());
@@ -1539,7 +1527,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
         .orderByProcessVariable("var", ValueType.INTEGER)
         .desc();
 
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
 
     assertEquals(3, tasks.size());
     assertEquals(instance1000.getId(), tasks.get(0).getProcessInstanceId());
@@ -1576,7 +1564,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
         .orderByProcessVariable("var", ValueType.INTEGER)
         .asc();
 
-    List<Task> tasks = filterService.list(filter.getId(), extendingQuery);
+    List<Task> tasks = filterService.list(testFilter.getId(), extendingQuery);
 
     assertEquals(3, tasks.size());
     assertEquals(task250.getId(), tasks.get(0).getId());
@@ -1589,7 +1577,7 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
         .orderByProcessVariable("var", ValueType.INTEGER)
         .desc();
 
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
 
     assertEquals(3, tasks.size());
     assertEquals(task1000.getId(), tasks.get(0).getId());
@@ -1624,63 +1612,63 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     saveQuery(query);
 
     // all tasks
-    List<Task> tasks = filterService.list(filter.getId(), query);
+    List<Task> tasks = filterService.list(testFilter.getId(), query);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertTrue(tasks.contains(taskWithNoVariable));
 
     // equals case-sensitive for comparison
     TaskQuery extendingQuery = taskService.createTaskQuery().taskVariableValueEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // equals case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not equals case-sensitive for comparison
     extendingQuery = taskService.createTaskQuery().taskVariableValueNotEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not equals case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueNotEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // like case-sensitive for comparison
     extendingQuery = taskService.createTaskQuery().taskVariableValueLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // like case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().taskVariableValueLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // variable name case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableNamesIgnoreCase().taskVariableValueEquals(variableName.toLowerCase(), variableValueCamelCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // variable name and variable value case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableNamesIgnoreCase().matchVariableValuesIgnoreCase().taskVariableValueEquals(variableName.toLowerCase(), variableValueCamelCase.toLowerCase());
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
@@ -1710,77 +1698,77 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     saveQuery(query);
 
     // all tasks
-    List<Task> tasks = filterService.list(filter.getId(), query);
+    List<Task> tasks = filterService.list(testFilter.getId(), query);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertTrue(tasks.contains(taskWithNoVariable));
 
     // equals case-sensitive for comparison
     TaskQuery extendingQuery = taskService.createTaskQuery().caseInstanceVariableValueEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // equals case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().caseInstanceVariableValueEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not equals case-sensitive for comparison
     extendingQuery = taskService.createTaskQuery().caseInstanceVariableValueNotEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not equals case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().caseInstanceVariableValueNotEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // like case-sensitive for comparison
     extendingQuery = taskService.createTaskQuery().caseInstanceVariableValueLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // like case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().caseInstanceVariableValueLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not like case-sensitive for comparison
     extendingQuery = taskService.createTaskQuery().caseInstanceVariableValueNotLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not like case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().caseInstanceVariableValueNotLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // variable name case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableNamesIgnoreCase().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValueCamelCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     //variable name and variable value case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableNamesIgnoreCase().matchVariableValuesIgnoreCase().caseInstanceVariableValueEquals(variableName.toLowerCase(), variableValueCamelCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
@@ -1813,77 +1801,77 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     saveQuery(query);
 
     // all tasks
-    List<Task> tasks = filterService.list(filter.getId(), query);
+    List<Task> tasks = filterService.list(testFilter.getId(), query);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertTrue(tasks.contains(taskWithNoVariable));
 
     // equals case-sensitive for comparison
     TaskQuery extendingQuery = taskService.createTaskQuery().processVariableValueEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // equals case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not equals case-sensitive for comparison
     extendingQuery = taskService.createTaskQuery().processVariableValueNotEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not equals case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotEquals(variableName, variableValueLowerCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // like case-sensitive for comparison
     extendingQuery = taskService.createTaskQuery().processVariableValueLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // like case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not like case-sensitive for comparison
     extendingQuery = taskService.createTaskQuery().processVariableValueNotLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // not like case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike(variableName, "somevariable%");
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertFalse(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // variable name case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableNamesIgnoreCase().processVariableValueEquals(variableName.toLowerCase(), variableValueCamelCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertFalse(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
 
     // variable name and variable value case-insensitive
     extendingQuery = taskService.createTaskQuery().matchVariableNamesIgnoreCase().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName.toLowerCase(), variableValueCamelCase);
-    tasks = filterService.list(filter.getId(), extendingQuery);
+    tasks = filterService.list(testFilter.getId(), extendingQuery);
     assertTrue(tasks.contains(taskCamelCase));
     assertTrue(tasks.contains(taskLowerCase));
     assertFalse(tasks.contains(taskWithNoVariable));
@@ -2169,13 +2157,13 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     TaskQuery query = taskService.createTaskQuery()
       .withoutDueDate();
 
-    filter.setQuery(query);
+    testFilter.setQuery(query);
 
     // when
-    filterService.saveFilter(filter);
+    filterService.saveFilter(testFilter);
 
     // then
-    assertThat(filterService.count(filter.getId())).isEqualTo(3L);
+    assertThat(filterService.count(testFilter.getId())).isEqualTo(3L);
   }
 
   @Test
@@ -2189,13 +2177,13 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     saveQuery(query);
 
     // assume
-    assertThat(filterService.count(filter.getId())).isEqualTo(4L);
+    assertThat(filterService.count(testFilter.getId())).isEqualTo(4L);
 
     // when
     TaskQuery extendingQuery = taskService.createTaskQuery().withoutDueDate();
 
     // then
-    assertThat(filterService.count(filter.getId(), extendingQuery)).isEqualTo(3L);
+    assertThat(filterService.count(testFilter.getId(), extendingQuery)).isEqualTo(3L);
   }
 
   @Test
@@ -2228,12 +2216,12 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     // when
     // save filter
-    filter.setQuery(taskQuery);
-    filterService.saveFilter(filter);
+    testFilter.setQuery(taskQuery);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
-    taskQuery = filter.getQuery();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
+    taskQuery = testFilter.getQuery();
 
     // then
     assertTrue(taskQuery.getAssigneeIn().contains(testString));
@@ -2247,12 +2235,12 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     // when
     // save filter
-    filter.setQuery(taskQuery);
-    filterService.saveFilter(filter);
+    testFilter.setQuery(taskQuery);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
-    taskQuery = filter.getQuery();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
+    taskQuery = testFilter.getQuery();
 
     // then
     assertTrue(taskQuery.getAssigneeNotIn().contains(testString));
@@ -2265,14 +2253,14 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     // when
     // save filter
-    filter.setQuery(taskQuery);
-    filterService.saveFilter(filter);
+    testFilter.setQuery(taskQuery);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
 
     // test query
-    taskQuery = filter.getQuery();
+    taskQuery = testFilter.getQuery();
 
     // then
     assertNull(taskQuery.getAssigneeIn());
@@ -2285,14 +2273,14 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
 
     // when
     // save filter
-    filter.setQuery(taskQuery);
-    filterService.saveFilter(filter);
+    testFilter.setQuery(taskQuery);
+    filterService.saveFilter(testFilter);
 
     // fetch from db
-    filter = filterService.createTaskFilterQuery().singleResult();
+    testFilter = filterService.createTaskFilterQuery().singleResult();
 
     // test query
-    taskQuery = filter.getQuery();
+    taskQuery = testFilter.getQuery();
 
     // then
     assertNull(taskQuery.getAssigneeNotIn());
@@ -2393,12 +2381,12 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
     // then
     TaskQuery query = taskService.createTaskQuery().processInstanceIdIn(firstId);
     saveQuery(query);
-    List<Task> origQueryTasks = filterService.list(filter.getId());
-    List<Task> selfExtendQueryTasks = filterService.list(filter.getId(), query);
+    List<Task> origQueryTasks = filterService.list(testFilter.getId());
+    List<Task> selfExtendQueryTasks = filterService.list(testFilter.getId(), query);
 
     TaskQuery extendingQuery = taskService.createTaskQuery();
     extendingQuery.processInstanceIdIn(firstId, secondId);
-    List<Task> extendingQueryTasks = filterService.list(filter.getId(), extendingQuery);
+    List<Task> extendingQueryTasks = filterService.list(testFilter.getId(), extendingQuery);
 
     // then
     assertEquals(1, origQueryTasks.size());
@@ -2422,9 +2410,9 @@ public class FilterTaskQueryTest extends PluggableProcessEngineTest {
   }
 
   protected void saveQuery(TaskQuery query) {
-    filter.setQuery(query);
-    filterService.saveFilter(filter);
-    filter = filterService.getFilter(filter.getId());
+    testFilter.setQuery(query);
+    filterService.saveFilter(testFilter);
+    testFilter = filterService.getFilter(testFilter.getId());
   }
 
   protected void createTasks() {

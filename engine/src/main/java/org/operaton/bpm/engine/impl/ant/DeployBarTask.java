@@ -16,6 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.ant;
 
+import org.operaton.bpm.engine.*;
+import org.operaton.bpm.engine.impl.util.IoUtil;
+import org.operaton.bpm.engine.impl.util.LogUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -27,13 +31,6 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.ProcessEngineInfo;
-import org.operaton.bpm.engine.ProcessEngines;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.impl.util.IoUtil;
-import org.operaton.bpm.engine.impl.util.LogUtil;
 
 
 /**
@@ -77,7 +74,7 @@ public class DeployBarTask extends Task {
       ProcessEngine processEngine = ProcessEngines.getProcessEngine(processEngineName);
       if (processEngine == null) {
         List<ProcessEngineInfo> processEngineInfos = ProcessEngines.getProcessEngineInfos();
-        if( processEngineInfos != null && processEngineInfos.size() > 0 )
+        if( processEngineInfos != null && !processEngineInfos.isEmpty() )
         {
           // Since no engine with the given name is found, we can't be 100% sure which ProcessEngineInfo
           // is causing the error. We should show ALL errors and process engine names / resource URL's.
@@ -91,16 +88,16 @@ public class DeployBarTask extends Task {
       RepositoryService repositoryService = processEngine.getRepositoryService();
 
       log("Starting to deploy " + files.size() + " files");
-      for (File file: files) {
-        String path = file.getAbsolutePath();
+      for (File f: files) {
+        String path = f.getAbsolutePath();
         log("Handling file " + path);
         try {
-          FileInputStream inputStream = new FileInputStream(file);
+          FileInputStream inputStream = new FileInputStream(f);
           try {
             log("deploying bar "+path);
             repositoryService
                 .createDeployment()
-                .name(file.getName())
+                .name(f.getName())
                 .addZipInputStream(new ZipInputStream(inputStream))
                 .deploy();
           } finally {

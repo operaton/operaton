@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
-import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
-
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.batch.Batch;
@@ -31,6 +29,8 @@ import org.operaton.bpm.engine.test.api.authorization.util.AuthorizationTestRule
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
+
 import org.junit.After;
 import org.junit.Before;
 
@@ -79,16 +79,14 @@ public abstract class AbstractBatchAuthorizationTest {
 
   @After
   public void cleanBatch() {
-    Batch batch = engineRule.getManagementService().createBatchQuery().singleResult();
-    if (batch != null) {
-      engineRule.getManagementService().deleteBatch(
-          batch.getId(), true);
+    Batch runningBatch = engineRule.getManagementService().createBatchQuery().singleResult();
+    if (runningBatch != null) {
+      engineRule.getManagementService().deleteBatch(runningBatch.getId(), true);
     }
 
     HistoricBatch historicBatch = engineRule.getHistoryService().createHistoricBatchQuery().singleResult();
     if (historicBatch != null) {
-      engineRule.getHistoryService().deleteHistoricBatch(
-          historicBatch.getId());
+      engineRule.getHistoryService().deleteHistoricBatch(historicBatch.getId());
     }
   }
 

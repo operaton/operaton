@@ -16,10 +16,10 @@
  */
 package org.operaton.spin.scripting;
 
+import org.operaton.commons.utils.IoUtil;
 import org.operaton.spin.SpinScriptException;
 import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
-import org.operaton.spin.impl.util.SpinIoUtil;
 
 import javax.script.ScriptEngine;
 import java.io.InputStream;
@@ -101,10 +101,10 @@ public class SpinScriptEnv {
 
     } else {
       try {
-        return SpinIoUtil.inputStreamAsString(envResource);
+        return IoUtil.inputStreamAsString(envResource);
 
       } finally {
-        SpinIoUtil.closeSilently(envResource);
+        IoUtil.closeSilently(envResource);
 
       }
     }

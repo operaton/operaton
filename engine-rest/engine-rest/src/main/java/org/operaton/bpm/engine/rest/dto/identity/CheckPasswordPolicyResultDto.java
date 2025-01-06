@@ -32,7 +32,7 @@ public class CheckPasswordPolicyResultDto extends PasswordPolicyDto {
     for (PasswordPolicyRule rule : result.getFulfilledRules()) {
       dto.rules.add(new CheckPasswordPolicyRuleDto(rule, true));
     }
-    if(result.getViolatedRules().size() > 0) {
+    if(!result.getViolatedRules().isEmpty()) {
       dto.valid = false;
       for (PasswordPolicyRule rule : result.getViolatedRules()) {
         dto.rules.add(new CheckPasswordPolicyRuleDto(rule, false));

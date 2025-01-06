@@ -16,19 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.db.DbEntity;
-import org.operaton.bpm.engine.impl.db.DbEntityLifecycleAware;
-import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
-import org.operaton.bpm.engine.impl.db.HasDbRevision;
-import org.operaton.bpm.engine.impl.db.HistoricEntity;
+import org.operaton.bpm.engine.impl.db.*;
 import org.operaton.bpm.engine.impl.history.event.HistoricVariableUpdateEventEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.util.ByteArrayField;
 import org.operaton.bpm.engine.impl.persistence.entity.util.TypedValueField;
@@ -36,6 +27,11 @@ import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
 import org.operaton.bpm.engine.impl.variable.serializer.ValueFields;
 import org.operaton.bpm.engine.repository.ResourceTypes;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Christian Lipphardt (operaton)
@@ -131,17 +127,17 @@ public class HistoricVariableInstanceEntity implements ValueFields, HistoricVari
 
   @Override
   public Object getPersistentState() {
-    List<Object> state = new ArrayList<>(8);
-    state.add(getSerializerName());
-    state.add(textValue);
-    state.add(textValue2);
-    state.add(this.state);
-    state.add(doubleValue);
-    state.add(longValue);
-    state.add(processDefinitionId);
-    state.add(processDefinitionKey);
-    state.add(getByteArrayId());
-    return state;
+    List<Object> result = new ArrayList<>(8);
+    result.add(getSerializerName());
+    result.add(textValue);
+    result.add(textValue2);
+    result.add(this.state);
+    result.add(doubleValue);
+    result.add(longValue);
+    result.add(processDefinitionId);
+    result.add(processDefinitionKey);
+    result.add(getByteArrayId());
+    return result;
   }
 
   @Override

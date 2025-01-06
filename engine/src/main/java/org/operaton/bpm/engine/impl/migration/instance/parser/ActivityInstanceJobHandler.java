@@ -159,7 +159,7 @@ public class ActivityInstanceJobHandler implements MigratingDependentInstancePar
 
   protected boolean isNonInterruptingTimerTriggeredAlready(MigratingInstanceParseContext parseContext,
       Map<String, TimerDeclarationImpl> sourceTimerDeclarationsInEventScope, TimerDeclarationImpl targetTimerDeclaration) {
-    if (targetTimerDeclaration.isInterruptingTimer() || targetTimerDeclaration.getJobHandlerType() != TimerExecuteNestedActivityJobHandler.TYPE || sourceTimerDeclarationsInEventScope.values().size() == 0) {
+    if (targetTimerDeclaration.isInterruptingTimer() || targetTimerDeclaration.getJobHandlerType() != TimerExecuteNestedActivityJobHandler.TYPE || sourceTimerDeclarationsInEventScope.values().isEmpty()) {
       return false;
     }
     for (TimerDeclarationImpl sourceTimerDeclaration : sourceTimerDeclarationsInEventScope.values()) {
@@ -177,7 +177,7 @@ public class ActivityInstanceJobHandler implements MigratingDependentInstancePar
       Map<String, Map<String, TimerDeclarationImpl>> sourceTimeoutListenerDeclarationsInEventScope,
       Entry<String, TimerDeclarationImpl> targetTimerDeclarationEntry) {
     TimerDeclarationImpl targetTimerDeclaration = targetTimerDeclarationEntry.getValue();
-    if (targetTimerDeclaration.isInterruptingTimer() || targetTimerDeclaration.getJobHandlerType() != TimerTaskListenerJobHandler.TYPE || sourceTimeoutListenerDeclarationsInEventScope.values().size() == 0) {
+    if (targetTimerDeclaration.isInterruptingTimer() || targetTimerDeclaration.getJobHandlerType() != TimerTaskListenerJobHandler.TYPE || sourceTimeoutListenerDeclarationsInEventScope.values().isEmpty()) {
       return false;
     }
     for (Entry<String, Map<String, TimerDeclarationImpl>> sourceTimerDeclarationsEntry : sourceTimeoutListenerDeclarationsInEventScope.entrySet()) {

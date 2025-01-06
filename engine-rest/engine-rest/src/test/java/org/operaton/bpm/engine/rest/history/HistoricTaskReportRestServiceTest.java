@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import io.restassured.http.ContentType;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.history.DurationReportResult;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceReport;
@@ -26,9 +25,9 @@ import org.operaton.bpm.engine.query.PeriodUnit;
 import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.rest.util.container.TestContainerRule;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Test;
+import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
+import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
+import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 
 import javax.ws.rs.core.Response.Status;
 import java.util.Date;
@@ -36,26 +35,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.restassured.http.ContentType;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+
 import static io.restassured.RestAssured.given;
-import static org.operaton.bpm.engine.query.PeriodUnit.MONTH;
-import static org.operaton.bpm.engine.query.PeriodUnit.QUARTER;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_END_TIME;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_INST_DURATION_REPORT_AVG;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_INST_DURATION_REPORT_MAX;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_INST_DURATION_REPORT_MIN;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_INST_DURATION_REPORT_PERIOD;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_INST_END_TIME;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_INST_START_TIME;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_REPORT_COUNT;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_REPORT_PROC_DEFINITION;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_REPORT_PROC_DEF_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_REPORT_PROC_DEF_NAME;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_REPORT_TASK_NAME;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_HISTORIC_TASK_START_TIME;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TENANT_ID;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricTaskInstanceDurationReport;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricTaskInstanceReport;
-import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockHistoricTaskInstanceReportWithProcDef;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.any;
@@ -83,26 +68,26 @@ public class HistoricTaskReportRestServiceTest extends AbstractRestServiceTest {
   }
 
   private HistoricTaskInstanceReport setUpMockReportQuery() {
-    HistoricTaskInstanceReport mockedReportQuery = mock(HistoricTaskInstanceReport.class);
+    HistoricTaskInstanceReport historicTaskInstanceReport = mock(HistoricTaskInstanceReport.class);
 
     List<HistoricTaskInstanceReportResult> taskReportResults = createMockHistoricTaskInstanceReport();
     List<HistoricTaskInstanceReportResult> taskReportResultsWithProcDef = createMockHistoricTaskInstanceReportWithProcDef();
 
-    when(mockedReportQuery.completedAfter(any(Date.class))).thenReturn(mockedReportQuery);
-    when(mockedReportQuery.completedBefore(any(Date.class))).thenReturn(mockedReportQuery);
+    when(historicTaskInstanceReport.completedAfter(any(Date.class))).thenReturn(historicTaskInstanceReport);
+    when(historicTaskInstanceReport.completedBefore(any(Date.class))).thenReturn(historicTaskInstanceReport);
 
-    when(mockedReportQuery.countByTaskName()).thenReturn(taskReportResults);
-    when(mockedReportQuery.countByProcessDefinitionKey()).thenReturn(taskReportResultsWithProcDef);
+    when(historicTaskInstanceReport.countByTaskName()).thenReturn(taskReportResults);
+    when(historicTaskInstanceReport.countByProcessDefinitionKey()).thenReturn(taskReportResultsWithProcDef);
 
     List<DurationReportResult> durationReportByMonth = createMockHistoricTaskInstanceDurationReport(MONTH);
-    when(mockedReportQuery.duration(MONTH)).thenReturn(durationReportByMonth);
+    when(historicTaskInstanceReport.duration(MONTH)).thenReturn(durationReportByMonth);
 
     List<DurationReportResult> durationReportByQuarter = createMockHistoricTaskInstanceDurationReport(QUARTER);
-    when(mockedReportQuery.duration(QUARTER)).thenReturn(durationReportByQuarter);
+    when(historicTaskInstanceReport.duration(QUARTER)).thenReturn(durationReportByQuarter);
 
-    when(processEngine.getHistoryService().createHistoricTaskInstanceReport()).thenReturn(mockedReportQuery);
+    when(processEngine.getHistoryService().createHistoricTaskInstanceReport()).thenReturn(historicTaskInstanceReport);
 
-    return mockedReportQuery;
+    return historicTaskInstanceReport;
   }
 
   @Test

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.el;
 
-import jakarta.el.*;
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElProvider;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
@@ -26,6 +25,7 @@ import org.operaton.bpm.engine.test.mock.MockElResolver;
 import org.operaton.bpm.engine.variable.context.VariableContext;
 import org.operaton.bpm.impl.juel.ExpressionFactoryImpl;
 
+import jakarta.el.*;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -132,30 +132,30 @@ public class JuelExpressionManager implements ExpressionManager, ElProviderCompa
   }
 
   protected ELResolver createElResolver() {
-    CompositeELResolver elResolver = new CompositeELResolver();
-    elResolver.add(new VariableScopeElResolver());
-    elResolver.add(new VariableContextElResolver());
-    elResolver.add(new MockElResolver());
+    CompositeELResolver compositeELResolver = new CompositeELResolver();
+    compositeELResolver.add(new VariableScopeElResolver());
+    compositeELResolver.add(new VariableContextElResolver());
+    compositeELResolver.add(new MockElResolver());
 
     if (beans != null) {
       // ACT-1102: Also expose all beans in configuration when using standalone
       // engine, not
       // in spring-context
-      elResolver.add(new ReadOnlyMapELResolver(beans));
+      compositeELResolver.add(new ReadOnlyMapELResolver(beans));
     }
 
-    elResolver.add(new ProcessApplicationElResolverDelegate());
+    compositeELResolver.add(new ProcessApplicationElResolverDelegate());
 
-    elResolver.add(new ArrayELResolver());
-    elResolver.add(new ListELResolver());
-    elResolver.add(new MapELResolver());
-    elResolver.add(new ProcessApplicationBeanElResolverDelegate());
+    compositeELResolver.add(new ArrayELResolver());
+    compositeELResolver.add(new ListELResolver());
+    compositeELResolver.add(new MapELResolver());
+    compositeELResolver.add(new ProcessApplicationBeanElResolverDelegate());
 
-    return elResolver;
+    return compositeELResolver;
   }
 
   protected FunctionMapper createFunctionMapper() {
-    FunctionMapper functionMapper = new FunctionMapper() {
+    return new FunctionMapper() {
       @Override
       public Method resolveFunction(String prefix, String localName) {
         String fullName = localName;
@@ -164,9 +164,7 @@ public class JuelExpressionManager implements ExpressionManager, ElProviderCompa
         }
         return functions.get(fullName);
       }
-
     };
-    return functionMapper;
   }
 
   @Override

@@ -28,7 +28,7 @@ public class MigrationPlanValidationException extends BadUserRequestException {
 
   private static final long serialVersionUID = 1L;
 
-  protected MigrationPlanValidationReport validationReport;
+  protected final MigrationPlanValidationReport validationReport;
 
   public MigrationPlanValidationException(String message, MigrationPlanValidationReport validationReport) {
     super(message);

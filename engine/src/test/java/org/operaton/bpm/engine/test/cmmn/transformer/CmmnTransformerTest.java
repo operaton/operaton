@@ -16,14 +16,6 @@
  */
 package org.operaton.bpm.engine.test.cmmn.transformer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.handler.DefaultCmmnElementHandlerRegistry;
@@ -36,17 +28,21 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
-import org.operaton.bpm.model.cmmn.instance.Case;
-import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
-import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstance;
-import org.operaton.bpm.model.cmmn.instance.Definitions;
-import org.operaton.bpm.model.cmmn.instance.HumanTask;
-import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.operaton.bpm.model.cmmn.instance.Stage;
+import org.operaton.bpm.model.cmmn.instance.*;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Roman Smirnov
@@ -108,12 +104,12 @@ public class CmmnTransformerTest {
     resource.setName("test");
 
     transformer.setResource(resource);
-    List<CaseDefinitionEntity> definitions = transformer.transform();
+    List<CaseDefinitionEntity> caseDefinitions = transformer.transform();
 
     IoUtil.closeSilently(outputStream);
     IoUtil.closeSilently(inputStream);
 
-    return definitions;
+    return caseDefinitions;
   }
 
   /**
@@ -179,8 +175,8 @@ public class CmmnTransformerTest {
     // then
     assertEquals(1, caseDefinitions.size());
 
-    CaseDefinitionEntity caseDefinition = caseDefinitions.get(0);
-    List<CmmnActivity> activities = caseDefinition.getActivities();
+    CaseDefinitionEntity caseDef = caseDefinitions.get(0);
+    List<CmmnActivity> activities = caseDef.getActivities();
 
     CmmnActivity casePlanModelActivity = activities.get(0);
 
@@ -232,8 +228,8 @@ public class CmmnTransformerTest {
     // then
     assertEquals(1, caseDefinitions.size());
 
-    CaseDefinitionEntity caseDefinition = caseDefinitions.get(0);
-    List<CmmnActivity> activities = caseDefinition.getActivities();
+    CaseDefinitionEntity caseDef = caseDefinitions.get(0);
+    List<CmmnActivity> activities = caseDef.getActivities();
 
     CmmnActivity casePlanModelActivity = activities.get(0);
 
@@ -324,8 +320,8 @@ public class CmmnTransformerTest {
     // then
     assertEquals(1, caseDefinitions.size());
 
-    CaseDefinitionEntity caseDefinition = caseDefinitions.get(0);
-    List<CmmnActivity> activities = caseDefinition.getActivities();
+    CaseDefinitionEntity caseDef = caseDefinitions.get(0);
+    List<CmmnActivity> activities = caseDef.getActivities();
 
     CmmnActivity casePlanModelActivity = activities.get(0);
 

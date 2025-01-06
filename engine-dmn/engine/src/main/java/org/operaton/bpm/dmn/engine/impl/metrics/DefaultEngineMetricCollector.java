@@ -16,12 +16,12 @@
  */
 package org.operaton.bpm.dmn.engine.impl.metrics;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationEvent;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationListener;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionTableEvaluationEvent;
 import org.operaton.bpm.dmn.engine.spi.DmnEngineMetricCollector;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 public class DefaultEngineMetricCollector implements DmnEngineMetricCollector, DmnDecisionEvaluationListener {
 
@@ -35,10 +35,8 @@ public class DefaultEngineMetricCollector implements DmnEngineMetricCollector, D
 
   @Override
   public void notify(DmnDecisionEvaluationEvent evaluationEvent) {
-    long executedDecisionInstances = evaluationEvent.getExecutedDecisionInstances();
-    long executedDecisionElements = evaluationEvent.getExecutedDecisionElements();
-    this.executedDecisionInstances.getAndAdd(executedDecisionInstances);
-    this.executedDecisionElements.getAndAdd(executedDecisionElements);
+    this.executedDecisionInstances.getAndAdd(evaluationEvent.getExecutedDecisionInstances());
+    this.executedDecisionElements.getAndAdd(evaluationEvent.getExecutedDecisionElements());
   }
 
   @Override

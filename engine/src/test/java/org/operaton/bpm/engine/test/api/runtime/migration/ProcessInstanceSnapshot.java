@@ -291,7 +291,7 @@ public class ProcessInstanceSnapshot {
     if (matchingVariables.size() == 1) {
       return  matchingVariables.get(0);
     }
-    else if (matchingVariables.size() == 0) {
+    else if (matchingVariables.isEmpty()) {
       return null;
     }
     else {

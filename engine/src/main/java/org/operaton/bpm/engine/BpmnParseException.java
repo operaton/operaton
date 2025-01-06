@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
 public class BpmnParseException extends ProcessEngineException {
 
   private static final long serialVersionUID = 1L;
-  protected Element element;
+  protected final Element element;
 
   public BpmnParseException(String message, Element element) {
     super(message);

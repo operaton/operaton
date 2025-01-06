@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.client.spring.impl.subscription;
 
-import org.operaton.bpm.client.spring.impl.client.util.ClientLoggerUtil;
 import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.operaton.bpm.client.spring.impl.subscription.util.SubscriptionLoggerUtil;
 import org.operaton.bpm.client.spring.impl.util.AnnotationUtil;
+import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
 
 import org.springframework.beans.BeansException;
@@ -34,7 +34,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 
 public class SubscriptionPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
-  protected static final SubscriptionLoggerUtil LOG = ClientLoggerUtil.SUBSCRIPTION_LOGGER;
+  protected static final SubscriptionLoggerUtil LOG = LoggerUtil.SUBSCRIPTION_LOGGER;
 
   protected Class<? extends SpringTopicSubscriptionImpl> springTopicSubscription;
 

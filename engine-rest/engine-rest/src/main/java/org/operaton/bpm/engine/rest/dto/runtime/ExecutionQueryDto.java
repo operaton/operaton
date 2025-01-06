@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.runtime;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response.Status;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
@@ -32,6 +25,13 @@ import org.operaton.bpm.engine.rest.dto.converter.StringListConverter;
 import org.operaton.bpm.engine.rest.dto.converter.VariableListConverter;
 import org.operaton.bpm.engine.rest.exception.InvalidRequestException;
 import org.operaton.bpm.engine.runtime.ExecutionQuery;
+import static org.operaton.bpm.engine.rest.dto.ConditionQueryParameterDto.*;
+
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response.Status;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -236,19 +236,19 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(VariableQueryParameterDto.EQUALS_OPERATOR_NAME)) {
+        if (op.equals(EQUALS_OPERATOR_NAME)) {
           query.variableValueEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OPERATOR_NAME)) {
+        } else if (op.equals(GREATER_THAN_OPERATOR_NAME)) {
           query.variableValueGreaterThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(GREATER_THAN_OR_EQUALS_OPERATOR_NAME)) {
           query.variableValueGreaterThanOrEqual(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OPERATOR_NAME)) {
+        } else if (op.equals(LESS_THAN_OPERATOR_NAME)) {
           query.variableValueLessThan(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(LESS_THAN_OR_EQUALS_OPERATOR_NAME)) {
           query.variableValueLessThanOrEqual(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
           query.variableValueNotEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.LIKE_OPERATOR_NAME)) {
+        } else if (op.equals(LIKE_OPERATOR_NAME)) {
           query.variableValueLike(variableName, String.valueOf(variableValue));
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
@@ -262,9 +262,9 @@ public class ExecutionQueryDto extends AbstractQueryDto<ExecutionQuery> {
         String op = variableQueryParam.getOperator();
         Object variableValue = variableQueryParam.resolveValue(objectMapper);
 
-        if (op.equals(VariableQueryParameterDto.EQUALS_OPERATOR_NAME)) {
+        if (op.equals(EQUALS_OPERATOR_NAME)) {
           query.processVariableValueEquals(variableName, variableValue);
-        } else if (op.equals(VariableQueryParameterDto.NOT_EQUALS_OPERATOR_NAME)) {
+        } else if (op.equals(NOT_EQUALS_OPERATOR_NAME)) {
           query.processVariableValueNotEquals(variableName, variableValue);
         } else {
           throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid process variable comparator specified: " + op);

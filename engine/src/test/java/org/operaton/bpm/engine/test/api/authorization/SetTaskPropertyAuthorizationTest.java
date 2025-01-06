@@ -17,8 +17,10 @@
 
 package org.operaton.bpm.engine.test.api.authorization;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Fail.fail;
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.engine.test.util.*;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.TASK_ASSIGN;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
@@ -29,14 +31,7 @@ import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import org.operaton.bpm.engine.AuthorizationException;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.test.util.ClockTestUtil;
-import org.operaton.bpm.engine.test.util.EntityRemoveRule;
-import org.operaton.bpm.engine.test.util.ObjectProperty;
-import org.operaton.bpm.engine.test.util.RemoveAfter;
-import org.operaton.bpm.engine.test.util.TriConsumer;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,7 +40,11 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Fail.fail;
+
 @RunWith(Parameterized.class)
+@SuppressWarnings("java:S1117")
 public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
 
   protected static final String PROCESS_KEY = "oneTaskProcess";

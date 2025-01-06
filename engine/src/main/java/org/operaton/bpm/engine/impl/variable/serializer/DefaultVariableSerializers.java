@@ -79,7 +79,7 @@ public class DefaultVariableSerializers implements Serializable, VariableSeriali
       }
     }
 
-    if(matchedSerializers.size() == 0) {
+    if(matchedSerializers.isEmpty()) {
       if (fallBackSerializerFactory != null) {
         TypedValueSerializer<?> serializer = fallBackSerializerFactory.getSerializer(value);
         if (serializer != null) {

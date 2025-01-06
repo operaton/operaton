@@ -16,11 +16,9 @@
  */
 package org.operaton.bpm.engine.cdi.jsf;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.operaton.bpm.engine.RepositoryService;
+import org.operaton.bpm.engine.cdi.BusinessProcess;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -28,10 +26,11 @@ import javax.enterprise.inject.Instance;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.cdi.BusinessProcess;
-import org.operaton.bpm.engine.repository.ProcessDefinition;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ConversationScoped
 @Named("operatonTaskForm")
@@ -145,10 +144,8 @@ public class TaskForm implements Serializable {
     }
 
     Map<String, String> requestParameterMap = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-    String processDefinitionId = requestParameterMap.get("processDefinitionId");
-    String callbackUrl = requestParameterMap.get("callbackUrl");
-    this.url = callbackUrl;
-    this.processDefinitionId = processDefinitionId;
+    this.url = requestParameterMap.get("callbackUrl");
+    this.processDefinitionId = requestParameterMap.get("processDefinitionId");
     beginConversation();
   }
 

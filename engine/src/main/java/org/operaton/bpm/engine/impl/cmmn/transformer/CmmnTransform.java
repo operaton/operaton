@@ -16,19 +16,9 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.transformer;
 
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
-import org.operaton.bpm.engine.impl.cmmn.handler.CasePlanModelHandler;
-import org.operaton.bpm.engine.impl.cmmn.handler.CmmnElementHandler;
-import org.operaton.bpm.engine.impl.cmmn.handler.CmmnHandlerContext;
-import org.operaton.bpm.engine.impl.cmmn.handler.DefaultCmmnElementHandlerRegistry;
-import org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler;
-import org.operaton.bpm.engine.impl.cmmn.handler.SentryHandler;
+import org.operaton.bpm.engine.impl.cmmn.handler.*;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnCaseDefinition;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnSentryDeclaration;
@@ -39,23 +29,12 @@ import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelException;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
-import org.operaton.bpm.model.cmmn.instance.Case;
-import org.operaton.bpm.model.cmmn.instance.CasePlanModel;
-import org.operaton.bpm.model.cmmn.instance.CaseTask;
-import org.operaton.bpm.model.cmmn.instance.CmmnElement;
-import org.operaton.bpm.model.cmmn.instance.DecisionTask;
-import org.operaton.bpm.model.cmmn.instance.Definitions;
-import org.operaton.bpm.model.cmmn.instance.EventListener;
-import org.operaton.bpm.model.cmmn.instance.HumanTask;
-import org.operaton.bpm.model.cmmn.instance.Milestone;
-import org.operaton.bpm.model.cmmn.instance.PlanFragment;
-import org.operaton.bpm.model.cmmn.instance.PlanItem;
-import org.operaton.bpm.model.cmmn.instance.PlanItemDefinition;
-import org.operaton.bpm.model.cmmn.instance.PlanningTable;
-import org.operaton.bpm.model.cmmn.instance.ProcessTask;
-import org.operaton.bpm.model.cmmn.instance.Sentry;
-import org.operaton.bpm.model.cmmn.instance.Stage;
-import org.operaton.bpm.model.cmmn.instance.Task;
+import org.operaton.bpm.model.cmmn.instance.*;
+
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Roman Smirnov
@@ -180,14 +159,14 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
   }
 
   protected void transformCasePlanModel(CasePlanModel casePlanModel) {
-    CasePlanModelHandler transformer = (CasePlanModelHandler) getPlanItemHandler(CasePlanModel.class);
-    CmmnActivity newActivity = transformer.handleElement(casePlanModel, context);
+    CasePlanModelHandler planItemHandler = (CasePlanModelHandler) getPlanItemHandler(CasePlanModel.class);
+    CmmnActivity newActivity = planItemHandler.handleElement(casePlanModel, context);
     context.setParent(newActivity);
 
     transformStage(casePlanModel, newActivity);
 
     context.setParent(newActivity);
-    transformer.initializeExitCriterias(casePlanModel, newActivity, context);
+    planItemHandler.initializeExitCriterias(casePlanModel, newActivity, context);
 
     for (CmmnTransformListener transformListener : transformListeners) {
       transformListener.transformCasePlanModel((org.operaton.bpm.model.cmmn.impl.instance.CasePlanModel) casePlanModel, newActivity);

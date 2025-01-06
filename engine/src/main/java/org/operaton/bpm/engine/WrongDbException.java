@@ -29,8 +29,8 @@ public class WrongDbException extends ProcessEngineException {
 
   private static final long serialVersionUID = 1L;
 
-  String libraryVersion;
-  String dbVersion;
+  final String libraryVersion;
+  final String dbVersion;
 
   public WrongDbException(String libraryVersion, String dbVersion) {
     this("version mismatch: activiti library version is '" + libraryVersion + "', db version is " +

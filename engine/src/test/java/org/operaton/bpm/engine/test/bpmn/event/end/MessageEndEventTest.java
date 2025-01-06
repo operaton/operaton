@@ -16,16 +16,17 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.operaton.bpm.engine.runtime.ProcessInstance;
+import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.operaton.bpm.engine.runtime.ProcessInstance;
-import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.junit.Test;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Kristin Polenz

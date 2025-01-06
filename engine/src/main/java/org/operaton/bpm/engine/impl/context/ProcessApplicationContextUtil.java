@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.context;
 
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.application.impl.ProcessApplicationLogger;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.application.ProcessApplicationManager;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
@@ -33,7 +34,7 @@ import java.util.concurrent.Callable;
 
 public class ProcessApplicationContextUtil {
 
-  private static final ProcessApplicationLogger LOG = ProcessApplicationLogger.PROCESS_APPLICATION_LOGGER;
+  private static final ProcessApplicationLogger LOG = ProcessEngineLogger.PROCESS_APPLICATION_LOGGER;
 
   private ProcessApplicationContextUtil() {
   }

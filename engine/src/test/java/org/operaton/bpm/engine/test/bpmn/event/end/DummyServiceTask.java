@@ -31,13 +31,9 @@ public class DummyServiceTask implements JavaDelegate {
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {
-    boolean expressionWasExecuted = (Boolean )execution.getVariable("expressionWasExecuted");
-    boolean delegateExpressionWasExecuted = (Boolean )execution.getVariable("delegateExpressionWasExecuted");
-    boolean wasExecuted = (Boolean )execution.getVariable("wasExecuted");
-    
-    this.expressionWasExecuted = expressionWasExecuted;
-    this.delegateExpressionWasExecuted = delegateExpressionWasExecuted;
-    this.wasExecuted = wasExecuted;
+    expressionWasExecuted = (Boolean )execution.getVariable("expressionWasExecuted");
+    delegateExpressionWasExecuted = (Boolean )execution.getVariable("delegateExpressionWasExecuted");
+    wasExecuted = (Boolean )execution.getVariable("wasExecuted");
   }
 
 }

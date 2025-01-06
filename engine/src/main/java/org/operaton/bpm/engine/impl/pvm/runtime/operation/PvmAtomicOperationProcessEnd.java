@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.behavior.TransferVariablesActivityBehavior;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.operaton.bpm.engine.impl.cmmn.model.CmmnActivity;
@@ -32,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
  */
 public class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInstanceEnd {
 
-  private static final PvmLogger LOG = PvmLogger.PVM_LOGGER;
+  private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 
   @Override
   protected ScopeImpl getScope(PvmExecutionImpl execution) {

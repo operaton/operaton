@@ -16,36 +16,11 @@
  */
 package org.operaton.bpm.engine.rest.standalone;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.anyList;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.ws.rs.core.Response.Status;
-
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.identity.Group;
-import org.operaton.bpm.engine.identity.GroupQuery;
-import org.operaton.bpm.engine.identity.Tenant;
-import org.operaton.bpm.engine.identity.TenantQuery;
-import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.identity.*;
 import org.operaton.bpm.engine.impl.AuthorizationServiceImpl;
 import org.operaton.bpm.engine.impl.IdentityServiceImpl;
 import org.operaton.bpm.engine.impl.digest._apacheCommonsCodec.Base64;
@@ -53,6 +28,17 @@ import org.operaton.bpm.engine.rest.AbstractRestServiceTest;
 import org.operaton.bpm.engine.rest.helper.MockProvider;
 import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
 import org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.ws.rs.core.Response.Status;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,6 +49,8 @@ import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(Parameterized.class)
 public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTest {
@@ -154,11 +142,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
     when(mockGroupQuery.groupMember(anyString())).thenReturn(mockGroupQuery);
     when(mockGroupQuery.list()).thenReturn(groups);
 
-    List<String> groupIds = new ArrayList<>();
-    for (Group groupMock : groups) {
-      groupIds.add(groupMock.getId());
-    }
-    return groupIds;
+    return groups.stream().map(Group::getId).toList();
   }
 
   protected List<String> setupTenantQueryMock(List<Tenant> tenants) {
@@ -169,11 +153,7 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
     when(mockTenantQuery.includingGroupsOfUser(anyBoolean())).thenReturn(mockTenantQuery);
     when(mockTenantQuery.list()).thenReturn(tenants);
 
-    List<String> tenantIds = new ArrayList<>();
-    for(Tenant tenant: tenants) {
-      tenantIds.add(tenant.getId());
-    }
-    return tenantIds;
+    return tenants.stream().map(Tenant::getId).toList();
   }
 
   protected void setupFilter() throws ServletException {

@@ -23,7 +23,7 @@ import org.operaton.bpm.dmn.feel.impl.FeelException;
  */
 public class FeelMissingFunctionException extends FeelException {
 
-  protected String function;
+  protected final String function;
 
   public FeelMissingFunctionException(String message, String function) {
     super(message);

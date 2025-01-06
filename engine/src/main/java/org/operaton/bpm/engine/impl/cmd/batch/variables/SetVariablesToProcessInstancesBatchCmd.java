@@ -34,15 +34,14 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.util.CollectionUtil;
 import org.operaton.bpm.engine.impl.util.ImmutablePair;
 import org.operaton.bpm.engine.runtime.ProcessInstanceQuery;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
+import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureAtLeastOneNotNull;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
-import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class SetVariablesToProcessInstancesBatchCmd implements Command<Batch> {
 
@@ -123,20 +122,20 @@ public class SetVariablesToProcessInstancesBatchCmd implements Command<Batch> {
       elementConfiguration.addDeploymentMappings(mappings);
     }
 
-    ProcessInstanceQueryImpl processInstanceQuery =
+    ProcessInstanceQueryImpl query =
         (ProcessInstanceQueryImpl) this.processInstanceQuery;
-    if (processInstanceQuery != null) {
+    if (query != null) {
       List<ImmutablePair<String, String>> mappings =
-          processInstanceQuery.listDeploymentIdMappings();
+          query.listDeploymentIdMappings();
       elementConfiguration.addDeploymentMappings(mappings);
     }
 
-    HistoricProcessInstanceQueryImpl historicProcessInstanceQuery =
+    HistoricProcessInstanceQueryImpl historicQuery =
         (HistoricProcessInstanceQueryImpl) this.historicProcessInstanceQuery;
-    if (historicProcessInstanceQuery != null) {
-      historicProcessInstanceQuery.unfinished();
+    if (historicQuery != null) {
+      historicQuery.unfinished();
       List<ImmutablePair<String, String>> mappings =
-          historicProcessInstanceQuery.listDeploymentIdMappings();
+          historicQuery.listDeploymentIdMappings();
       elementConfiguration.addDeploymentMappings(mappings);
     }
 

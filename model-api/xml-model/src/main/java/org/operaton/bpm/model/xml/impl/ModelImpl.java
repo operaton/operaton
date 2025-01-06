@@ -90,7 +90,7 @@ public class ModelImpl implements Model {
   public String getAlternativeNamespace(String actualNs) {
     Set<String> alternatives = getAlternativeNamespaces(actualNs);
 
-    if (alternatives == null || alternatives.size() == 0) {
+    if (alternatives == null || alternatives.isEmpty()) {
       return null;
     }
     else if (alternatives.size() == 1) {

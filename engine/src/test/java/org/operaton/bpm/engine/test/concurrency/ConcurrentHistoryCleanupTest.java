@@ -50,7 +50,7 @@ public class ConcurrentHistoryCleanupTest extends ConcurrencyTestCase {
     processEngineConfiguration.getCommandExecutorTxRequired().execute((Command<Void>) commandContext -> {
 
       List<Job> jobs = processEngine.getManagementService().createJobQuery().list();
-      if (jobs.size() > 0) {
+      if (!jobs.isEmpty()) {
         String jobId = jobs.get(0).getId();
         commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
         commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);

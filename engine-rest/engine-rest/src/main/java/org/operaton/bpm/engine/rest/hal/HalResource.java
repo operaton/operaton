@@ -97,7 +97,7 @@ public abstract class HalResource<T extends HalResource<?>> {
   @SuppressWarnings("unchecked")
   public T embed(HalRelation relation, ProcessEngine processEngine) {
     List<HalResource<?>> resolvedLinks = linker.resolve(relation, processEngine);
-    if(resolvedLinks != null && resolvedLinks.size() > 0) {
+    if(resolvedLinks != null && !resolvedLinks.isEmpty()) {
       addEmbedded(relation.relName, resolvedLinks);
     }
     return (T) this;

@@ -101,7 +101,7 @@ public class ProgrammaticBeanLookup {
 
   @SuppressWarnings("unchecked")
   private static <T> T getContextualReference(BeanManager bm, Set<Bean<?>> beans, Class<?> type) {
-    if (beans == null || beans.size() == 0) {
+    if (beans == null || beans.isEmpty()) {
       return null;
     }
 

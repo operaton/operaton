@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.model.bpmn.instance.*;
+
 import org.operaton.bpm.model.bpmn.instance.Process;
+import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.util.BpmnModelResource;
 
 import java.util.Collection;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -153,8 +155,8 @@ class ReferenceTest extends BpmnModelTest {
   @Test
   @BpmnModelResource
   void shouldFindReferenceWithNamespace() {
-    MessageEventDefinition messageEventDefinition = bpmnModelInstance.getModelElementById("message-event-definition");
-    Message message = bpmnModelInstance.getModelElementById("message-id");
+    messageEventDefinition = bpmnModelInstance.getModelElementById("message-event-definition");
+    message = bpmnModelInstance.getModelElementById("message-id");
     assertThat(messageEventDefinition.getMessage()).isNotNull();
     assertThat(messageEventDefinition.getMessage()).isEqualTo(message);
     message.setId("changed-message");

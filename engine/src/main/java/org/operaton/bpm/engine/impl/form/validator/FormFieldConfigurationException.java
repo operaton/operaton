@@ -25,7 +25,7 @@ public class FormFieldConfigurationException extends FormException {
 
   private static final long serialVersionUID = 1L;
 
-  protected String configuration;
+  protected final String configuration;
 
   public FormFieldConfigurationException(String configuration) {
     super();

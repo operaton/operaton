@@ -26,7 +26,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
  * @author Daniel Meyer
  *
  */
-public class ProcessEngineQueryPerformanceTestCase {
+class ProcessEngineQueryPerformanceTestCase {
 
   @RegisterExtension
   protected static ProcessEngineExtension processEngineExtension =

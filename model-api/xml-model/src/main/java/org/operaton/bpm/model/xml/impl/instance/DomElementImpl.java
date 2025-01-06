@@ -23,11 +23,12 @@ import org.operaton.bpm.model.xml.impl.util.XmlQName;
 import org.operaton.bpm.model.xml.instance.DomDocument;
 import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
-import org.w3c.dom.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import org.w3c.dom.*;
 
 import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE;
 import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
@@ -88,9 +89,9 @@ public class DomElementImpl implements DomElement {
   @Override
   public DomElement getRootElement() {
     synchronized(document) {
-      DomDocument document = getDocument();
-      if (document != null) {
-        return document.getRootElement();
+      DomDocument doc = getDocument();
+      if (doc != null) {
+        return doc.getRootElement();
       }
       else {
         return null;
@@ -102,8 +103,8 @@ public class DomElementImpl implements DomElement {
   public DomElement getParentElement() {
     synchronized(document) {
       Node parentNode = element.getParentNode();
-      if (parentNode != null && parentNode instanceof Element element) {
-        return new DomElementImpl(element);
+      if (parentNode != null && parentNode instanceof Element elem) {
+        return new DomElementImpl(elem);
       }
       else {
         return null;

@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The DC point element
@@ -39,12 +38,7 @@ public class PointImpl extends BpmnModelElementInstanceImpl implements Point {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Point.class, DC_ELEMENT_POINT)
       .namespaceUri(DC_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Point>() {
-      @Override
-      public Point newInstance(ModelTypeInstanceContext instanceContext) {
-          return new PointImpl(instanceContext);
-        }
-      });
+      .instanceProvider(PointImpl::new);
 
     xAttribute = typeBuilder.doubleAttribute(DC_ATTRIBUTE_X)
       .required()

@@ -21,11 +21,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -41,8 +38,6 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.bpmn.diagram.ProcessDiagramLayoutFactory;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.repository.DiagramLayout;
 import org.operaton.bpm.engine.repository.DiagramNode;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
@@ -216,12 +211,7 @@ public class ProcessDiagramRetrievalTest {
       // we need to run this in the ProcessEngine context
       processDiagramLayout = engineRule.getProcessEngineConfiguration()
         .getCommandExecutorTxRequired()
-        .execute(new Command<DiagramLayout>() {
-          @Override
-          public DiagramLayout execute(CommandContext commandContext) {
-            return new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream);
-          }
-        });
+        .execute(commandContext -> new ProcessDiagramLayoutFactory().getProcessDiagramLayout(bpmnXmlStream, imageStream));
     }
     assertLayoutCorrect(processDiagramLayout);
   }

@@ -28,7 +28,6 @@ import org.operaton.bpm.model.cmmn.instance.StartTrigger;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
@@ -72,12 +71,7 @@ public class CaseFileItemStartTriggerImpl extends StartTriggerImpl implements Ca
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileItemStartTrigger.class, CMMN_ELEMENT_CASE_FILE_ITEM_START_TRIGGER)
         .extendsType(StartTrigger.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(new ModelTypeInstanceProvider<CaseFileItemStartTrigger>() {
-      @Override
-      public CaseFileItemStartTrigger newInstance(ModelTypeInstanceContext instanceContext) {
-            return new CaseFileItemStartTriggerImpl(instanceContext);
-          }
-        });
+        .instanceProvider(CaseFileItemStartTriggerImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
         .idAttributeReference(CaseFileItem.class)

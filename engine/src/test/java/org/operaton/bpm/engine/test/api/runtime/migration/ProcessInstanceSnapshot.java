@@ -249,34 +249,16 @@ public class ProcessInstanceSnapshot {
   }
 
   public VariableInstance getSingleVariable(final String variableName) {
-    return getSingleVariable(new Condition<>() {
-
-      @Override
-      public boolean matches(VariableInstance variable) {
-        return variableName.equals(variable.getName());
-      }
-    });
+    return getSingleVariable(variable -> variableName.equals(variable.getName()));
   }
 
   public VariableInstance getSingleVariable(final String executionId, final String variableName) {
-    return getSingleVariable(new Condition<>() {
-
-      @Override
-      public boolean matches(VariableInstance variable) {
-        return executionId.equals(variable.getExecutionId()) && variableName.equals(variable.getName());
-      }
-    });
+    return getSingleVariable(variable -> executionId.equals(variable.getExecutionId()) && variableName.equals(variable.getName()));
   }
 
   public VariableInstance getSingleTaskVariable(final String taskId, final String variableName) {
-    return getSingleVariable(new Condition<>() {
-
-      @Override
-      public boolean matches(VariableInstance variable) {
-        return variableName.equals(variable.getName())
-            && taskId.equals(variable.getTaskId());
-      }
-    });
+    return getSingleVariable(variable -> variableName.equals(variable.getName())
+        && taskId.equals(variable.getTaskId()));
   }
 
   protected VariableInstance getSingleVariable(Condition<VariableInstance> condition) {

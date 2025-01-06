@@ -24,12 +24,7 @@ public class JakartaClassLoaderUtil extends ClassLoaderUtil {
 
   public static ClassLoader getServletContextClassloader(final ServletContextEvent sce) {
     if(System.getSecurityManager() != null) {
-      return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
-        @Override
-        public ClassLoader run() {
-          return sce.getServletContext().getClassLoader();
-        }
-      });
+      return AccessController.doPrivileged((PrivilegedAction<ClassLoader>) () -> sce.getServletContext().getClassLoader());
     } else {
       return sce.getServletContext().getClassLoader();
     }

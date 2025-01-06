@@ -29,7 +29,6 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
@@ -81,12 +80,7 @@ public class AssociationImpl extends ArtifactImpl implements Association {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Association.class, CMMN_ELEMENT_ASSOCIATION)
       .namespaceUri(CMMN11_NS)
       .extendsType(Artifact.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Association>() {
-      @Override
-      public Association newInstance(ModelTypeInstanceContext instanceContext) {
-          return new AssociationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(AssociationImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_SOURCE_REF)
       .idAttributeReference(CmmnElement.class)

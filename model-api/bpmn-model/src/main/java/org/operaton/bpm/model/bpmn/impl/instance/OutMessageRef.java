@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_OUT_MESSAGE_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN outMessageRef of the BPMN tOperation type
@@ -34,12 +33,7 @@ public class OutMessageRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutMessageRef.class, BPMN_ELEMENT_OUT_MESSAGE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OutMessageRef>() {
-      @Override
-      public OutMessageRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OutMessageRef(instanceContext);
-        }
-      });
+      .instanceProvider(OutMessageRef::new);
 
     typeBuilder.build();
   }

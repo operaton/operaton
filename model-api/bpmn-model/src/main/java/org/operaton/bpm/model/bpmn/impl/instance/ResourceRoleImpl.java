@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReference;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN resourceRole element
@@ -47,12 +46,7 @@ public class ResourceRoleImpl extends BaseElementImpl implements ResourceRole {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceRole.class, BPMN_ELEMENT_RESOURCE_ROLE)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ResourceRole>() {
-      @Override
-      public ResourceRole newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ResourceRoleImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ResourceRoleImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_ELEMENT_BPMN_LABEL_STYLE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMNDI BPMNLabelStyle element
@@ -43,12 +42,7 @@ public class BpmnLabelStyleImpl extends StyleImpl implements BpmnLabelStyle {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnLabelStyle.class, BPMNDI_ELEMENT_BPMN_LABEL_STYLE)
       .namespaceUri(BPMNDI_NS)
       .extendsType(Style.class)
-      .instanceProvider(new ModelTypeInstanceProvider<BpmnLabelStyle>() {
-      @Override
-      public BpmnLabelStyle newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BpmnLabelStyleImpl(instanceContext);
-        }
-      });
+      .instanceProvider(BpmnLabelStyleImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

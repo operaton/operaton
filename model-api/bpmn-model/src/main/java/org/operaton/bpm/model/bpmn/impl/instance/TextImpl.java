@@ -23,7 +23,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TEXT;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN 2.0 text element from the tTextAnnotation complex type
@@ -35,12 +34,7 @@ public class TextImpl extends BpmnModelElementInstanceImpl implements Text {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Text.class, BPMN_ELEMENT_TEXT)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Text>() {
-      @Override
-      public Text newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TextImpl(instanceContext);
-        }
-      });
+      .instanceProvider(TextImpl::new);
 
     typeBuilder.build();
   }

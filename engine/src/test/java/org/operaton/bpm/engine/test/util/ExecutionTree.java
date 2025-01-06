@@ -16,17 +16,15 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 import org.operaton.bpm.engine.runtime.Execution;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Thorben Lindhauer
@@ -52,15 +50,10 @@ public class ExecutionTree implements Execution {
 
     CommandExecutor commandExecutor = configuration.getCommandExecutorTxRequired();
 
-    ExecutionTree executionTree = commandExecutor.execute(new Command<ExecutionTree>() {
-      @Override
-      public ExecutionTree execute(CommandContext commandContext) {
-        ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(executionId);
-        return ExecutionTree.forExecution(execution);
-      }
+    return commandExecutor.execute(commandContext -> {
+      ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(executionId);
+      return ExecutionTree.forExecution(execution);
     });
-
-    return executionTree;
   }
 
   protected static ExecutionTree forExecution(ExecutionEntity execution) {

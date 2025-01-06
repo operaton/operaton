@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN compensateEventDefinition element
@@ -42,12 +41,7 @@ public class CompensateEventDefinitionImpl extends EventDefinitionImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CompensateEventDefinition.class, BPMN_ELEMENT_COMPENSATE_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CompensateEventDefinition>() {
-      @Override
-      public CompensateEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CompensateEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(CompensateEventDefinitionImpl::new);
 
     waitForCompletionAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_WAIT_FOR_COMPLETION)
       .build();

@@ -32,7 +32,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMNDI BPMNEdge element
@@ -51,12 +50,7 @@ public class BpmnEdgeImpl extends LabeledEdgeImpl implements BpmnEdge {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnEdge.class, BPMNDI_ELEMENT_BPMN_EDGE)
       .namespaceUri(BPMNDI_NS)
       .extendsType(LabeledEdge.class)
-      .instanceProvider(new ModelTypeInstanceProvider<BpmnEdge>() {
-      @Override
-      public BpmnEdge newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BpmnEdgeImpl(instanceContext);
-        }
-      });
+      .instanceProvider(BpmnEdgeImpl::new);
 
     bpmnElementAttribute = typeBuilder.stringAttribute(BPMNDI_ATTRIBUTE_BPMN_ELEMENT)
       .qNameAttributeReference(BaseElement.class)

@@ -26,7 +26,6 @@ import org.operaton.bpm.model.cmmn.instance.Property;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -66,12 +65,7 @@ public class PropertyImpl extends CmmnElementImpl implements Property {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Property.class, CMMN_ELEMENT_PROPERTY)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(new ModelTypeInstanceProvider<Property>() {
-      @Override
-      public Property newInstance(ModelTypeInstanceContext instanceContext) {
-            return new PropertyImpl(instanceContext);
-          }
-        });
+        .instanceProvider(PropertyImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

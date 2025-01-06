@@ -23,7 +23,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_MESSAGE_PATH;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN messagePath element of the BPMN tCorrelationPropertyRetrievalExpression type
@@ -36,12 +35,7 @@ public class MessagePath extends FormalExpressionImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(MessagePath.class, BPMN_ELEMENT_MESSAGE_PATH)
       .namespaceUri(BPMN20_NS)
       .extendsType(FormalExpression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<MessagePath>() {
-      @Override
-      public MessagePath newInstance(ModelTypeInstanceContext instanceContext) {
-          return new MessagePath(instanceContext);
-        }
-      });
+      .instanceProvider(MessagePath::new);
 
     typeBuilder.build();
   }

@@ -28,7 +28,6 @@ import org.operaton.bpm.model.dmn.instance.OutputValues;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -89,12 +88,7 @@ public class OutputClauseImpl extends DmnElementImpl implements OutputClause {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputClause.class, DMN_ELEMENT_OUTPUT_CLAUSE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<OutputClause>() {
-      @Override
-      public OutputClause newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OutputClauseImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OutputClauseImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_NAME)
       .build();

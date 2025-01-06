@@ -32,7 +32,6 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableListener;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -53,12 +52,7 @@ public class OperatonVariableListenerImpl extends CmmnModelElementInstanceImpl i
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableListener.class, OPERATON_ELEMENT_VARIABLE_LISTENER)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonVariableListener>() {
-      @Override
-      public OperatonVariableListener newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonVariableListenerImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonVariableListenerImpl::new);
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
       .namespace(CAMUNDA_NS)

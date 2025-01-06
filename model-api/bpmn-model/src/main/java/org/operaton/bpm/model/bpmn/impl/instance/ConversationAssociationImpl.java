@@ -25,7 +25,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN conversationAssociation element
@@ -41,12 +40,7 @@ public class ConversationAssociationImpl extends BaseElementImpl implements Conv
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ConversationAssociation.class, BPMN_ELEMENT_CONVERSATION_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ConversationAssociation>() {
-      @Override
-      public ConversationAssociation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ConversationAssociationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ConversationAssociationImpl::new);
 
     innerConversationNodeRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_INNER_CONVERSATION_NODE_REF)
       .required()

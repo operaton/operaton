@@ -23,7 +23,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CHILD_LANE_SET;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN childLaneSet element of the BPMN tLaneSet type
@@ -36,12 +35,7 @@ public class ChildLaneSet extends LaneSetImpl {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ChildLaneSet.class, BPMN_ELEMENT_CHILD_LANE_SET)
       .namespaceUri(BPMN20_NS)
       .extendsType(LaneSet.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ChildLaneSet>() {
-      @Override
-      public ChildLaneSet newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ChildLaneSet(instanceContext);
-        }
-      });
+      .instanceProvider(ChildLaneSet::new);
 
     typeBuilder.build();
   }

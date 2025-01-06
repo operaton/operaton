@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 
 import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateDecision;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.model.BaseCallableElement;
 import org.operaton.bpm.engine.impl.dmn.result.DecisionResultMapper;
@@ -50,21 +48,16 @@ public class DmnBusinessRuleTaskActivityBehavior extends AbstractBpmnActivityBeh
 
   @Override
   public void execute(final ActivityExecution execution) throws Exception {
-    executeWithErrorPropagation(execution, new Callable<>() {
+    executeWithErrorPropagation(execution, () -> {
+      ExecutionEntity executionEntity = (ExecutionEntity) execution;
 
-      @Override
-      public Void call() throws Exception {
-        ExecutionEntity executionEntity = (ExecutionEntity) execution;
-
-        evaluateDecision(executionEntity,
-            executionEntity.getProcessDefinitionTenantId(),
-            callableElement,
-            resultVariable,
-            decisionResultMapper);
-        leave(execution);
-        return null;
-      }
-
+      evaluateDecision(executionEntity,
+          executionEntity.getProcessDefinitionTenantId(),
+          callableElement,
+          resultVariable,
+          decisionResultMapper);
+      leave(execution);
+      return null;
     });
   }
 

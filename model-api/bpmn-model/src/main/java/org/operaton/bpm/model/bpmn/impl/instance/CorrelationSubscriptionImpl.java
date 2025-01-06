@@ -30,7 +30,6 @@ import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN correlationSubscription element
@@ -46,12 +45,7 @@ public class CorrelationSubscriptionImpl extends BaseElementImpl implements Corr
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationSubscription.class, BPMN_ELEMENT_CORRELATION_SUBSCRIPTION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CorrelationSubscription>() {
-      @Override
-      public CorrelationSubscription newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CorrelationSubscriptionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(CorrelationSubscriptionImpl::new);
 
     correlationKeyAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_CORRELATION_KEY_REF)
       .required()

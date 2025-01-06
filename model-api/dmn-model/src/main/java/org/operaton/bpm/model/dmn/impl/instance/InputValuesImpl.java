@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.UnaryTests;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class InputValuesImpl extends UnaryTestsImpl implements InputValues {
 
@@ -36,12 +35,7 @@ public class InputValuesImpl extends UnaryTestsImpl implements InputValues {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputValues.class, DMN_ELEMENT_INPUT_VALUES)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(UnaryTests.class)
-      .instanceProvider(new ModelTypeInstanceProvider<InputValues>() {
-      @Override
-      public InputValues newInstance(ModelTypeInstanceContext instanceContext) {
-          return new InputValuesImpl(instanceContext);
-        }
-      });
+      .instanceProvider(InputValuesImpl::new);
 
     typeBuilder.build();
   }

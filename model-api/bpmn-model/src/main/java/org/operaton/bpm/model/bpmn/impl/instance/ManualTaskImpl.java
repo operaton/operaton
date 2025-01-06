@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_MANUAL_TASK;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN manualTask element
@@ -39,12 +38,7 @@ public class ManualTaskImpl extends TaskImpl implements ManualTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ManualTask.class, BPMN_ELEMENT_MANUAL_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ManualTask>() {
-      @Override
-      public ManualTask newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ManualTaskImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ManualTaskImpl::new);
 
     typeBuilder.build();
   }

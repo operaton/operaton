@@ -26,7 +26,6 @@ import org.operaton.bpm.model.bpmn.instance.Transaction;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -41,12 +40,7 @@ public class TransactionImpl extends SubProcessImpl implements Transaction {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Transaction.class, BPMN_ELEMENT_TRANSACTION)
       .namespaceUri(BPMN20_NS)
       .extendsType(SubProcess.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Transaction>() {
-      @Override
-      public Transaction newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TransactionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(TransactionImpl::new);
 
     methodAttribute = typeBuilder.namedEnumAttribute(BPMN_ATTRIBUTE_METHOD, TransactionMethod.class)
       .defaultValue(TransactionMethod.Compensate)

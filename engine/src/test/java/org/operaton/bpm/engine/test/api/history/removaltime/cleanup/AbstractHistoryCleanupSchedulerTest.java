@@ -16,19 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime.cleanup;
 
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_END;
-import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
-
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -36,12 +23,15 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.DefaultHistoryRemovalTimeProvider;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Job;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.*;
+import static org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler.MAX_BATCH_SIZE;
+
+import java.util.*;
+
 import org.junit.After;
 import org.junit.AfterClass;
 
@@ -130,39 +120,30 @@ public abstract class AbstractHistoryCleanupSchedulerTest {
 
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = engineConfiguration.getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
+      return null;
     });
   }
 
   protected void clearJob(final String jobId) {
     engineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-          JobEntity job = commandContext.getJobManager().findJobById(jobId);
-          if (job != null) {
-            commandContext.getJobManager().delete(job);
-          }
-          return null;
-        }
-      });
+      .execute(commandContext -> {
+      JobEntity job = commandContext.getJobManager().findJobById(jobId);
+      if (job != null) {
+        commandContext.getJobManager().delete(job);
+      }
+      return null;
+    });
   }
 
   protected void clearMeterLog() {
     engineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-          commandContext.getMeterLogManager().deleteAll();
+      .execute(commandContext -> {
+      commandContext.getMeterLogManager().deleteAll();
 
-          return null;
-        }
-      });
+      return null;
+    });
   }
 
   protected static List<HistoryLevel> setCustomHistoryLevel(HistoryEventTypes... eventType) {

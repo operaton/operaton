@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.RequiredDecisionReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class RequiredDecisionReferenceImpl extends DmnElementReferenceImpl implements org.operaton.bpm.model.dmn.instance.RequiredDecisionReference {
 
@@ -36,12 +35,7 @@ public class RequiredDecisionReferenceImpl extends DmnElementReferenceImpl imple
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredDecisionReference.class, DMN_ELEMENT_REQUIRED_DECISION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<RequiredDecisionReference>() {
-      @Override
-      public RequiredDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new RequiredDecisionReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(RequiredDecisionReferenceImpl::new);
 
     typeBuilder.build();
   }

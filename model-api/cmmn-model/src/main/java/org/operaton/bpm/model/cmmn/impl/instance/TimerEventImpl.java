@@ -26,7 +26,6 @@ import org.operaton.bpm.model.cmmn.instance.TimerExpression;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -63,12 +62,7 @@ public class TimerEventImpl extends EventImpl implements TimerEvent {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimerEvent.class, CMMN_ELEMENT_TIMER_EVENT)
         .namespaceUri(CMMN10_NS)
         .extendsType(Event.class)
-        .instanceProvider(new ModelTypeInstanceProvider<TimerEvent>() {
-      @Override
-      public TimerEvent newInstance(ModelTypeInstanceContext instanceContext) {
-            return new TimerEventImpl(instanceContext);
-          }
-        });
+        .instanceProvider(TimerEventImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

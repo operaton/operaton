@@ -23,7 +23,6 @@ import org.operaton.bpm.model.dmn.instance.ImportedElement;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class ImportedElementImpl extends DmnModelElementInstanceImpl implements ImportedElement {
 
@@ -34,12 +33,7 @@ public class ImportedElementImpl extends DmnModelElementInstanceImpl implements 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ImportedElement.class, DMN_ELEMENT_IMPORTED_ELEMENT)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<ImportedElement>() {
-      @Override
-      public ImportedElement newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ImportedElementImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ImportedElementImpl::new);
 
     typeBuilder.build();
   }

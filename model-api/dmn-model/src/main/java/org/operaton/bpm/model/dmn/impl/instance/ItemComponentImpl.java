@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.ItemDefinition;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class ItemComponentImpl extends ItemDefinitionImpl implements ItemComponent {
 
@@ -36,12 +35,7 @@ public class ItemComponentImpl extends ItemDefinitionImpl implements ItemCompone
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ItemComponent.class, DMN_ELEMENT_ITEM_COMPONENT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(ItemDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ItemComponent>() {
-      @Override
-      public ItemComponent newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ItemComponentImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ItemComponentImpl::new);
 
     typeBuilder.build();
   }

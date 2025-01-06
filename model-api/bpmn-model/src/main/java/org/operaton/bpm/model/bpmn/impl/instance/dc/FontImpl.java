@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The DC font element
@@ -43,12 +42,7 @@ public class FontImpl extends BpmnModelElementInstanceImpl implements Font {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Font.class, DC_ELEMENT_FONT)
       .namespaceUri(DC_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Font>() {
-      @Override
-      public Font newInstance(ModelTypeInstanceContext instanceContext) {
-          return new FontImpl(instanceContext);
-        }
-      });
+      .instanceProvider(FontImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(DC_ATTRIBUTE_NAME)
       .build();

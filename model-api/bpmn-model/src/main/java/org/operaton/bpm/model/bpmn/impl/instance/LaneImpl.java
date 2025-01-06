@@ -31,7 +31,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN lane element
@@ -50,12 +49,7 @@ public class LaneImpl extends BaseElementImpl implements Lane {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Lane.class, BPMN_ELEMENT_LANE)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Lane>() {
-      @Override
-      public Lane newInstance(ModelTypeInstanceContext instanceContext) {
-          return new LaneImpl(instanceContext);
-        }
-      });
+      .instanceProvider(LaneImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

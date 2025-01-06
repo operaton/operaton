@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.UsingTaskReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class UsingTaskReferenceImpl extends DmnElementReferenceImpl implements UsingTaskReference {
 
@@ -36,12 +35,7 @@ public class UsingTaskReferenceImpl extends DmnElementReferenceImpl implements U
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UsingTaskReference.class, DMN_ELEMENT_USING_TASK)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<UsingTaskReference>() {
-      @Override
-      public UsingTaskReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new UsingTaskReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(UsingTaskReferenceImpl::new);
 
     typeBuilder.build();
   }

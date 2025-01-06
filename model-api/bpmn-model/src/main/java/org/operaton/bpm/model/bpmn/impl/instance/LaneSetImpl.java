@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN laneSet element
@@ -45,12 +44,7 @@ public class LaneSetImpl extends BaseElementImpl implements LaneSet {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(LaneSet.class, BPMN_ELEMENT_LANE_SET)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<LaneSet>() {
-      @Override
-      public LaneSet newInstance(ModelTypeInstanceContext instanceContext) {
-          return new LaneSetImpl(instanceContext);
-        }
-      });
+      .instanceProvider(LaneSetImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

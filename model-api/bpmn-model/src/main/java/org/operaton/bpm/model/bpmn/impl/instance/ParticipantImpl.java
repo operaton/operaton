@@ -30,7 +30,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN participant element
@@ -49,12 +48,7 @@ public class ParticipantImpl extends BaseElementImpl implements Participant {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Participant.class, BPMN_ELEMENT_PARTICIPANT)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Participant>() {
-      @Override
-      public Participant newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ParticipantImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ParticipantImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

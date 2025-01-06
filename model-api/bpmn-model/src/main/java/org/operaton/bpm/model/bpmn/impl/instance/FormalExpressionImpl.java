@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN formalExpression element
@@ -42,12 +41,7 @@ public class FormalExpressionImpl extends ExpressionImpl implements FormalExpres
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FormalExpression.class, BPMN_ELEMENT_FORMAL_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<FormalExpression>() {
-      @Override
-      public FormalExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new FormalExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(FormalExpressionImpl::new);
 
     languageAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_LANGUAGE)
       .build();

@@ -27,7 +27,6 @@ import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_IO_SPECIFICATION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN IoSpecification element
@@ -45,12 +44,7 @@ public class IoSpecificationImpl extends BaseElementImpl implements IoSpecificat
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(IoSpecification.class, BPMN_ELEMENT_IO_SPECIFICATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<IoSpecification>() {
-      @Override
-      public IoSpecification newInstance(ModelTypeInstanceContext instanceContext) {
-          return new IoSpecificationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(IoSpecificationImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

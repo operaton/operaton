@@ -44,7 +44,6 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.impl.util.StringUtil;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -77,12 +76,7 @@ public class UserTaskImpl extends TaskImpl implements UserTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UserTask.class, BPMN_ELEMENT_USER_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(new ModelTypeInstanceProvider<UserTask>() {
-      @Override
-      public UserTask newInstance(ModelTypeInstanceContext instanceContext) {
-          return new UserTaskImpl(instanceContext);
-        }
-      });
+      .instanceProvider(UserTaskImpl::new);
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##unspecified")

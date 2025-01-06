@@ -27,7 +27,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN correlationPropertyBinding element
@@ -43,12 +42,7 @@ public class CorrelationPropertyBindingImpl extends BaseElementImpl implements C
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationPropertyBinding.class, BPMN_ELEMENT_CORRELATION_PROPERTY_BINDING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CorrelationPropertyBinding>() {
-      @Override
-      public CorrelationPropertyBinding newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CorrelationPropertyBindingImpl(instanceContext);
-        }
-      });
+      .instanceProvider(CorrelationPropertyBindingImpl::new);
 
     correlationPropertyRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_CORRELATION_PROPERTY_REF)
       .required()

@@ -20,9 +20,6 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
@@ -51,17 +48,12 @@ public class DbSchemaExecuteFile {
     ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(configurationFileResourceName);
     ProcessEngine processEngine = configuration.buildProcessEngine();
 
-    configuration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+    configuration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-      @Override
-      public Void execute(CommandContext commandContext) {
-
-        commandContext.getDbSqlSession()
+      commandContext.getDbSqlSession()
           .executeSchemaResource(schemaFileResourceName);
 
-        return null;
-      }
-
+      return null;
     });
 
     processEngine.close();

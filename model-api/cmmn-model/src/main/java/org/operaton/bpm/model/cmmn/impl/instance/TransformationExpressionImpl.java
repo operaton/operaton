@@ -39,12 +39,7 @@ public class TransformationExpressionImpl extends ExpressionImpl implements Tran
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TransformationExpression.class, CMMN_ELEMENT_TRANSFORMATION)
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<TransformationExpression>() {
-      @Override
-      public TransformationExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TransformationExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(TransformationExpressionImpl::new);
 
     typeBuilder.build();
   }

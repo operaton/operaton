@@ -23,8 +23,6 @@ import org.operaton.bpm.engine.impl.batch.BatchEntity;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -130,25 +128,22 @@ public class CustomHistoryLevelIncidentTest {
     }
     migrationHelper.removeAllRunningAndHistoricBatches();
 
-    configuration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    configuration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-        List<Job> jobs = managementService.createJobQuery().list();
-        for (Job job : jobs) {
-          commandContext.getJobManager().deleteJob((JobEntity) job);
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
-        }
-
-        List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
-        for (HistoricIncident historicIncident : historicIncidents) {
-          commandContext.getDbEntityManager().delete((HistoricIncidentEntity) historicIncident);
-        }
-
-        commandContext.getMeterLogManager().deleteAll();
-
-        return null;
+      List<Job> jobs = managementService.createJobQuery().list();
+      for (Job job : jobs) {
+        commandContext.getJobManager().deleteJob((JobEntity) job);
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
       }
+
+      List<HistoricIncident> historicIncidents = historyService.createHistoricIncidentQuery().list();
+      for (HistoricIncident historicIncident : historicIncidents) {
+        commandContext.getDbEntityManager().delete((HistoricIncidentEntity) historicIncident);
+      }
+
+      commandContext.getMeterLogManager().deleteAll();
+
+      return null;
     });
   }
 

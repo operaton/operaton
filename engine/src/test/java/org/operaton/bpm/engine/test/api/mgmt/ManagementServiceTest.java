@@ -553,19 +553,16 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
 
   protected void createJob(final int retries, final String owner, final Date lockExpirationTime) {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        JobManager jobManager = commandContext.getJobManager();
-        MessageEntity job = new MessageEntity();
-        job.setJobHandlerType("any");
-        job.setLockOwner(owner);
-        job.setLockExpirationTime(lockExpirationTime);
-        job.setRetries(retries);
+    commandExecutor.execute(commandContext -> {
+      JobManager jobManager = commandContext.getJobManager();
+      MessageEntity job = new MessageEntity();
+      job.setJobHandlerType("any");
+      job.setLockOwner(owner);
+      job.setLockExpirationTime(lockExpirationTime);
+      job.setRetries(retries);
 
-        jobManager.send(job);
-        return null;
-      }
+      jobManager.send(job);
+      return null;
     });
   }
 
@@ -612,20 +609,17 @@ public class ManagementServiceTest extends PluggableProcessEngineTest {
             .incidentType(Incident.FAILED_JOB_HANDLER_TYPE).list();
 
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        ((JobEntity) job).delete();
+    commandExecutor.execute(commandContext -> {
+      ((JobEntity) job).delete();
 
-        HistoricIncidentManager historicIncidentManager = commandContext.getHistoricIncidentManager();
-        for (HistoricIncident incident : incidents) {
-          HistoricIncidentEntity incidentEntity = (HistoricIncidentEntity) incident;
-          historicIncidentManager.delete(incidentEntity);
-        }
-
-        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
-        return null;
+      HistoricIncidentManager historicIncidentManager = commandContext.getHistoricIncidentManager();
+      for (HistoricIncident incident : incidents) {
+        HistoricIncidentEntity incidentEntity = (HistoricIncidentEntity) incident;
+        historicIncidentManager.delete(incidentEntity);
       }
+
+      commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
+      return null;
     });
   }
 

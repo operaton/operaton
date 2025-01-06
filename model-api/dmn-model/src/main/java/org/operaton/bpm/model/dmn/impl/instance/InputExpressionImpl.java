@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.LiteralExpression;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class InputExpressionImpl extends LiteralExpressionImpl implements InputExpression {
 
@@ -36,12 +35,7 @@ public class InputExpressionImpl extends LiteralExpressionImpl implements InputE
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputExpression.class, DMN_ELEMENT_INPUT_EXPRESSION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<InputExpression>() {
-      @Override
-      public InputExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new InputExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(InputExpressionImpl::new);
 
     typeBuilder.build();
   }

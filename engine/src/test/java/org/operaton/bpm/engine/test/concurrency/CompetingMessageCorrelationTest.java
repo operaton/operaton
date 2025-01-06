@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.CompleteTaskCmd;
 import org.operaton.bpm.engine.impl.cmd.MessageEventReceivedCmd;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
-import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.test.RequiredDatabase;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -55,17 +54,14 @@ public class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @After
   public void tearDown() {
-    ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequiresNew().execute(commandContext -> {
 
-        List<HistoricJobLog> jobLogs = processEngine.getHistoryService().createHistoricJobLogQuery().list();
-        for (HistoricJobLog jobLog : jobLogs) {
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogById(jobLog.getId());
-        }
-
-        return null;
+      List<HistoricJobLog> jobLogs = processEngine.getHistoryService().createHistoricJobLogQuery().list();
+      for (HistoricJobLog jobLog : jobLogs) {
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogById(jobLog.getId());
       }
+
+      return null;
     });
 
     assertEquals(0, processEngine.getHistoryService().createHistoricJobLogQuery().list().size());

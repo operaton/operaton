@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_FLOW_NODE_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN flowNodeRef element of the BPMN tLane type
@@ -34,12 +33,7 @@ public class FlowNodeRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FlowNodeRef.class, BPMN_ELEMENT_FLOW_NODE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<FlowNodeRef>() {
-      @Override
-      public FlowNodeRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new FlowNodeRef(instanceContext);
-        }
-      });
+      .instanceProvider(FlowNodeRef::new);
 
     typeBuilder.build();
   }

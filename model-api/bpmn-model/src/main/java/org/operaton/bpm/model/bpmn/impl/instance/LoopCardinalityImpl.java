@@ -24,7 +24,6 @@ import org.operaton.bpm.model.bpmn.instance.LoopCardinality;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The loopCardinality element from the tMultiInstanceLoopCharacteristics
@@ -39,12 +38,7 @@ public class LoopCardinalityImpl extends ExpressionImpl implements LoopCardinali
       .defineType(LoopCardinality.class, BPMN_ELEMENT_LOOP_CARDINALITY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<LoopCardinality>() {
-      @Override
-      public LoopCardinality newInstance(ModelTypeInstanceContext instanceContext) {
-          return new LoopCardinalityImpl(instanceContext);
-        }
-      });
+      .instanceProvider(LoopCardinalityImpl::new);
 
     typeBuilder.build();
   }

@@ -24,7 +24,6 @@ import org.operaton.bpm.model.cmmn.instance.OutputDecisionParameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -40,12 +39,7 @@ public class OutputDecisionParameterImpl extends DecisionParameterImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputDecisionParameter.class, CMMN_ELEMENT_OUTPUT)
         .namespaceUri(CMMN11_NS)
         .extendsType(DecisionParameter.class)
-        .instanceProvider(new ModelTypeInstanceProvider<OutputDecisionParameter>() {
-      @Override
-      public OutputDecisionParameter newInstance(ModelTypeInstanceContext instanceContext) {
-            return new OutputDecisionParameterImpl(instanceContext);
-          }
-        });
+        .instanceProvider(OutputDecisionParameterImpl::new);
 
     typeBuilder.build();
   }

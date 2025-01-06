@@ -23,8 +23,6 @@ import java.util.List;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
@@ -75,25 +73,22 @@ public class JobExecutorCleanupTest {
 
   @After
   public void resetDatabase() {
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        String handlerType = "history-cleanup";
-        List<Job> jobsByHandlerType = commandContext.getJobManager()
-            .findJobsByHandlerType(handlerType);
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
+      String handlerType = "history-cleanup";
+      List<Job> jobsByHandlerType = commandContext.getJobManager()
+          .findJobsByHandlerType(handlerType);
 
-        for (Job job : jobsByHandlerType) {
-          commandContext.getJobManager()
-              .deleteJob((JobEntity) job);
-        }
-
-        commandContext.getHistoricJobLogManager()
-            .deleteHistoricJobLogsByHandlerType(handlerType);
-
-        commandContext.getMeterLogManager().deleteAll();
-
-        return null;
+      for (Job job : jobsByHandlerType) {
+        commandContext.getJobManager()
+            .deleteJob((JobEntity) job);
       }
+
+      commandContext.getHistoricJobLogManager()
+          .deleteHistoricJobLogsByHandlerType(handlerType);
+
+      commandContext.getMeterLogManager().deleteAll();
+
+      return null;
     });
   }
 

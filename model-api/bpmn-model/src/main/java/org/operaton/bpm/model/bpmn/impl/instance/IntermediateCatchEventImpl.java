@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_INTERMEDIATE_CATCH_EVENT;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN intermediateCatchEvent element
@@ -39,12 +38,7 @@ public class IntermediateCatchEventImpl extends CatchEventImpl implements Interm
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(IntermediateCatchEvent.class, BPMN_ELEMENT_INTERMEDIATE_CATCH_EVENT)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(CatchEvent.class)
-      .instanceProvider(new ModelTypeInstanceProvider<IntermediateCatchEvent>() {
-      @Override
-      public IntermediateCatchEvent newInstance(ModelTypeInstanceContext instanceContext) {
-          return new IntermediateCatchEventImpl(instanceContext);
-        }
-      });
+      .instanceProvider(IntermediateCatchEventImpl::new);
 
     typeBuilder.build();
   }

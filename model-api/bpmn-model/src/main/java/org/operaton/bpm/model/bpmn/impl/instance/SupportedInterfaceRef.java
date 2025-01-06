@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_SUPPORTED_INTERFACE_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN supportedInterfaceRef element of the BPMN tCallableElement type
@@ -34,12 +33,7 @@ public class SupportedInterfaceRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SupportedInterfaceRef.class, BPMN_ELEMENT_SUPPORTED_INTERFACE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<SupportedInterfaceRef>() {
-      @Override
-      public SupportedInterfaceRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new SupportedInterfaceRef(instanceContext);
-        }
-      });
+      .instanceProvider(SupportedInterfaceRef::new);
 
     typeBuilder.build();
   }

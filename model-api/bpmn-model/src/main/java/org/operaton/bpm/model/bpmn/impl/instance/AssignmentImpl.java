@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_ASSIGNMENT;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN assignment element
@@ -42,12 +41,7 @@ public class AssignmentImpl extends BaseElementImpl implements Assignment {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Assignment.class, BPMN_ELEMENT_ASSIGNMENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Assignment>() {
-      @Override
-      public Assignment newInstance(ModelTypeInstanceContext instanceContext) {
-          return new AssignmentImpl(instanceContext);
-        }
-      });
+      .instanceProvider(AssignmentImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

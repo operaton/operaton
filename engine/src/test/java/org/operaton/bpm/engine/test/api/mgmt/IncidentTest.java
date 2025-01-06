@@ -35,8 +35,6 @@ import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.HistoricIncident;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.management.JobDefinition;
@@ -527,13 +525,10 @@ public class IncidentTest extends PluggableProcessEngineTest {
     final JobEntity jobEntity = (JobEntity) job;
     processEngineConfiguration
       .getCommandExecutorTxRequired()
-      .execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-          jobEntity.setRetries(-100);
-          return null;
-        }
-      });
+      .execute(commandContext -> {
+      jobEntity.setRetries(-100);
+      return null;
+    });
 
     assertEquals(0, job.getRetries());
 

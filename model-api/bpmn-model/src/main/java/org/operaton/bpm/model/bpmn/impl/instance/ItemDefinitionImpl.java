@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Sebastian Menski
@@ -41,12 +40,7 @@ public class ItemDefinitionImpl extends RootElementImpl implements ItemDefinitio
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ItemDefinition.class,BpmnModelConstants.BPMN_ELEMENT_ITEM_DEFINITION)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ItemDefinition>() {
-      @Override
-      public ItemDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ItemDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ItemDefinitionImpl::new);
 
     structureRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_STRUCTURE_REF)
       .build();

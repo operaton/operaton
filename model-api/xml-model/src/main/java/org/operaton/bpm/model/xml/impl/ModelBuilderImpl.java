@@ -19,7 +19,6 @@ package org.operaton.bpm.model.xml.impl;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
-import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.impl.type.ModelElementTypeBuilderImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.ModelElementType;
@@ -27,8 +26,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * This builder is used to define and create a new model.
@@ -62,12 +59,7 @@ public class ModelBuilderImpl extends ModelBuilder {
   public ModelElementType defineGenericType(String typeName, String typeNamespaceUri) {
     ModelElementTypeBuilder typeBuilder = defineType(ModelElementInstance.class, typeName)
       .namespaceUri(typeNamespaceUri)
-      .instanceProvider(new ModelTypeInstanceProvider<ModelElementInstance>() {
-      @Override
-      public ModelElementInstance newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ModelElementInstanceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ModelElementInstanceImpl::new);
 
     return typeBuilder.build();
   }

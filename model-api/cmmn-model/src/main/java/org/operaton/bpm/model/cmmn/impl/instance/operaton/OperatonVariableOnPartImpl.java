@@ -27,7 +27,6 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableTransitionE
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -45,12 +44,7 @@ public class OperatonVariableOnPartImpl extends CmmnModelElementInstanceImpl imp
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableOnPart.class, OPERATON_ELEMENT_VARIABLE_ON_PART)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonVariableOnPart>() {
-      @Override
-      public OperatonVariableOnPart newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonVariableOnPartImpl(instanceContext);
-      }
-    });
+      .instanceProvider(OperatonVariableOnPartImpl::new);
 
     operatonVariableNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE_NAME)
       .namespace(CAMUNDA_NS)

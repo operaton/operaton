@@ -22,7 +22,6 @@ import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAME
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class Guardian extends AnimalReference {
 
@@ -34,12 +33,7 @@ public class Guardian extends AnimalReference {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Guardian.class, ELEMENT_NAME_GUARDIAN)
       .namespaceUri(MODEL_NAMESPACE)
       .extendsType(AnimalReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Guardian>() {
-      @Override
-      public Guardian newInstance(ModelTypeInstanceContext instanceContext) {
-          return new Guardian(instanceContext);
-        }
-      });
+      .instanceProvider(Guardian::new);
 
     typeBuilder.build();
   }

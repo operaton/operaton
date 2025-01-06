@@ -32,7 +32,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN sequenceFlow element
@@ -50,12 +49,7 @@ public class SequenceFlowImpl extends FlowElementImpl implements SequenceFlow {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SequenceFlow.class, BPMN_ELEMENT_SEQUENCE_FLOW)
       .namespaceUri(BPMN20_NS)
       .extendsType(FlowElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<SequenceFlow>() {
-      @Override
-      public SequenceFlow newInstance(ModelTypeInstanceContext instanceContext) {
-          return new SequenceFlowImpl(instanceContext);
-        }
-      });
+      .instanceProvider(SequenceFlowImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_SOURCE_REF)
       .required()

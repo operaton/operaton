@@ -30,7 +30,6 @@ import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN callConversation element
@@ -46,12 +45,7 @@ public class CallConversationImpl extends ConversationNodeImpl implements CallCo
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CallConversation.class, BPMN_ELEMENT_CALL_CONVERSATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(ConversationNode.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CallConversation>() {
-      @Override
-      public CallConversation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CallConversationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(CallConversationImpl::new);
 
     calledCollaborationRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_CALLED_COLLABORATION_REF)
       .qNameAttributeReference(GlobalConversation.class)

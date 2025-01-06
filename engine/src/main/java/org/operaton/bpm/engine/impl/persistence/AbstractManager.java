@@ -296,36 +296,30 @@ public abstract class AbstractManager implements Session {
 
   public void saveDefaultAuthorizations(final AuthorizationEntity[] authorizations) {
     if(authorizations != null && authorizations.length > 0) {
-      Context.getCommandContext().runWithoutAuthorization(new Callable<Void>() {
-        @Override
-        public Void call() {
-          AuthorizationManager authorizationManager = getAuthorizationManager();
-          for (AuthorizationEntity authorization : authorizations) {
+      Context.getCommandContext().runWithoutAuthorization((Callable<Void>) () -> {
+        AuthorizationManager authorizationManager = getAuthorizationManager();
+        for (AuthorizationEntity authorization : authorizations) {
 
-            if(authorization.getId() == null) {
-              authorizationManager.insert(authorization);
-            } else {
-              authorizationManager.update(authorization);
-            }
-
+          if (authorization.getId() == null) {
+            authorizationManager.insert(authorization);
+          } else {
+            authorizationManager.update(authorization);
           }
-          return null;
+
         }
+        return null;
       });
     }
   }
 
   public void deleteDefaultAuthorizations(final AuthorizationEntity[] authorizations) {
     if(authorizations != null && authorizations.length > 0) {
-      Context.getCommandContext().runWithoutAuthorization(new Callable<Void>() {
-        @Override
-        public Void call() {
-          AuthorizationManager authorizationManager = getAuthorizationManager();
-          for (AuthorizationEntity authorization : authorizations) {
-            authorizationManager.delete(authorization);
-          }
-          return null;
+      Context.getCommandContext().runWithoutAuthorization((Callable<Void>) () -> {
+        AuthorizationManager authorizationManager = getAuthorizationManager();
+        for (AuthorizationEntity authorization : authorizations) {
+          authorizationManager.delete(authorization);
         }
+        return null;
       });
     }
   }

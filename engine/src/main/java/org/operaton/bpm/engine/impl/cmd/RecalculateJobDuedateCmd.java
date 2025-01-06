@@ -81,12 +81,8 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
     final TimerDeclarationImpl timerDeclaration = findTimerDeclaration(commandContext, job);
     final TimerEntity timer = (TimerEntity) job;
     Date oldDuedate = job.getDuedate();
-    Runnable runnable = new Runnable() {
-      @Override
-      public void run() {
+    Runnable runnable = () ->
         timerDeclaration.resolveAndSetDuedate(timer.getExecution(), timer, creationDateBased);
-      }
-    };
 
     // run recalculation in correct context
     ProcessDefinitionEntity contextDefinition = commandContext

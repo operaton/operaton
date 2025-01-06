@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN escalation element
@@ -43,12 +42,7 @@ public class EscalationImpl extends RootElementImpl implements Escalation {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Escalation.class, BPMN_ELEMENT_ESCALATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Escalation>() {
-      @Override
-      public Escalation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new EscalationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(EscalationImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

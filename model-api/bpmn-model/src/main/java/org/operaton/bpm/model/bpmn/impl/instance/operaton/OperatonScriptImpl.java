@@ -21,7 +21,6 @@ import org.operaton.bpm.model.bpmn.instance.operaton.OperatonScript;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_RESOURCE;
@@ -42,12 +41,7 @@ public class OperatonScriptImpl extends BpmnModelElementInstanceImpl implements 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonScript.class, OPERATON_ELEMENT_SCRIPT)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonScript>() {
-      @Override
-      public OperatonScript newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonScriptImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonScriptImpl::new);
 
     operatonScriptFormatAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SCRIPT_FORMAT)
       .required()

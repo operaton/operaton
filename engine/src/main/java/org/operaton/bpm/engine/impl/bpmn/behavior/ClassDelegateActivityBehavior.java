@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.bpmn.behavior;
 import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDelegate;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -62,12 +61,9 @@ public class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior 
   // Activity Behavior
   @Override
   public void execute(final ActivityExecution execution) throws Exception {
-    this.executeWithErrorPropagation(execution, new Callable<>() {
-      @Override
-      public Void call() throws Exception {
-        getActivityBehaviorInstance(execution).execute(execution);
-        return null;
-      }
+    this.executeWithErrorPropagation(execution, () -> {
+      getActivityBehaviorInstance(execution).execute(execution);
+      return null;
     });
   }
 
@@ -76,12 +72,9 @@ public class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior 
   public void signal(final ActivityExecution execution, final String signalName, final Object signalData) throws Exception {
     ProcessApplicationReference targetProcessApplication = ProcessApplicationContextUtil.getTargetProcessApplication((ExecutionEntity) execution);
     if(ProcessApplicationContextUtil.requiresContextSwitch(targetProcessApplication)) {
-      Context.executeWithinProcessApplication(new Callable<Void>() {
-        @Override
-        public Void call() throws Exception {
-          signal(execution, signalName, signalData);
-          return null;
-        }
+      Context.executeWithinProcessApplication(() -> {
+        signal(execution, signalName, signalData);
+        return null;
       }, targetProcessApplication, new InvocationContext(execution));
     }
     else {
@@ -99,12 +92,9 @@ public class ClassDelegateActivityBehavior extends AbstractBpmnActivityBehavior 
         throw LOG.incorrectlyUsedSignalException(SignallableActivityBehavior.class.getName() );
       }
     }
-    executeWithErrorPropagation(execution, new Callable<>() {
-      @Override
-      public Void call() throws Exception {
-        ((SignallableActivityBehavior) activityBehaviorInstance).signal(execution, signalName, signalData);
-        return null;
-      }
+    executeWithErrorPropagation(execution, () -> {
+      ((SignallableActivityBehavior) activityBehaviorInstance).signal(execution, signalName, signalData);
+      return null;
     });
   }
 

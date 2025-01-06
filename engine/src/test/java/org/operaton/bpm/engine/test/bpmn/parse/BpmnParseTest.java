@@ -24,8 +24,6 @@ import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.PvmActivity;
@@ -441,12 +439,7 @@ public class BpmnParseTest {
     // Graphical information is not yet exposed publicly, so we need to do some
     // plumbing
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(new Command<ProcessDefinitionEntity>() {
-      @Override
-      public ProcessDefinitionEntity execute(CommandContext commandContext) {
-        return Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("myProcess");
-      }
-    });
+    ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(commandContext -> Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("myProcess"));
 
     assertNotNull(processDefinitionEntity);
     assertEquals(7, processDefinitionEntity.getActivities().size());
@@ -506,12 +499,7 @@ public class BpmnParseTest {
   @Test
   public void testParseNamespaceInConditionExpressionType() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(new Command<ProcessDefinitionEntity>() {
-      @Override
-      public ProcessDefinitionEntity execute(CommandContext commandContext) {
-        return Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("resolvableNamespacesProcess");
-      }
-    });
+    ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(commandContext -> Context.getProcessEngineConfiguration().getDeploymentCache().findDeployedLatestProcessDefinitionByKey("resolvableNamespacesProcess"));
 
     // Test that the process definition has been deployed
     assertNotNull(processDefinitionEntity);

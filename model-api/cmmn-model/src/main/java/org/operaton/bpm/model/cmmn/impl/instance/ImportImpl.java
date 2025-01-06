@@ -26,7 +26,6 @@ import org.operaton.bpm.model.cmmn.instance.Import;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -76,12 +75,7 @@ public class ImportImpl extends CmmnModelElementInstanceImpl implements Import {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Import.class, CMMN_ELEMENT_IMPORT)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Import>() {
-      @Override
-      public Import newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ImportImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ImportImpl::new);
 
     namespaceAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAMESPACE)
       .build();

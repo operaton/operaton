@@ -23,7 +23,6 @@ import org.operaton.bpm.model.dmn.instance.TypeRef;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class TypeRefImpl extends DmnModelElementInstanceImpl implements TypeRef {
 
@@ -34,12 +33,7 @@ public class TypeRefImpl extends DmnModelElementInstanceImpl implements TypeRef 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TypeRef.class, DMN_ELEMENT_TYPE_REF)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<TypeRef>() {
-      @Override
-      public TypeRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TypeRefImpl(instanceContext);
-        }
-      });
+      .instanceProvider(TypeRefImpl::new);
 
     typeBuilder.build();
   }

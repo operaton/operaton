@@ -16,17 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.lang3.time.DateUtils;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -35,8 +24,6 @@ import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.impl.batch.history.HistoricBatchEntity;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.metrics.Meter;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricBatchManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -45,11 +32,19 @@ import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import java.util.*;
+
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 public class HistoricInstanceForCleanupQueryTest {
@@ -116,21 +111,18 @@ public class HistoricInstanceForCleanupQueryTest {
     List<HistoricBatch> historicList = historyService.createHistoricBatchQuery().list();
     assertEquals(3, historicList.size());
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-        HistoricBatchManager historicBatchManager = commandContext.getHistoricBatchManager();
-        List<String> ids = historicBatchManager.findHistoricBatchIdsForCleanup(7, batchOperationsMap, 0, 59);
-        assertEquals(3, ids.size());
-        HistoricBatchEntity instance0 = historicBatchManager.findHistoricBatchById(ids.get(0));
-        HistoricBatchEntity instance1 = historicBatchManager.findHistoricBatchById(ids.get(1));
-        HistoricBatchEntity instance2 = historicBatchManager.findHistoricBatchById(ids.get(2));
-        assertTrue(instance0.getEndTime().before(instance1.getEndTime()));
-        assertTrue(instance1.getEndTime().before(instance2.getEndTime()));
+      HistoricBatchManager historicBatchManager = commandContext.getHistoricBatchManager();
+      List<String> ids = historicBatchManager.findHistoricBatchIdsForCleanup(7, batchOperationsMap, 0, 59);
+      assertEquals(3, ids.size());
+      HistoricBatchEntity instance0 = historicBatchManager.findHistoricBatchById(ids.get(0));
+      HistoricBatchEntity instance1 = historicBatchManager.findHistoricBatchById(ids.get(1));
+      HistoricBatchEntity instance2 = historicBatchManager.findHistoricBatchById(ids.get(2));
+      assertTrue(instance0.getEndTime().before(instance1.getEndTime()));
+      assertTrue(instance1.getEndTime().before(instance2.getEndTime()));
 
-        return null;
-      }
+      return null;
     });
   }
 

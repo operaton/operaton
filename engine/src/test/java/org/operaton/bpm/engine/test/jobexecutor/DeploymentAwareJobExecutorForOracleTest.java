@@ -16,17 +16,16 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import java.util.List;
-
 import org.operaton.bpm.engine.impl.Page;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import java.util.List;
+
 import org.junit.Assume;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -100,14 +99,8 @@ public class DeploymentAwareJobExecutorForOracleTest {
   }
 
   protected List<AcquirableJobEntity> findAcquirableJobs() {
-    return engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<List<AcquirableJobEntity>>() {
-
-      @Override
-      public List<AcquirableJobEntity> execute(CommandContext commandContext) {
-        return commandContext
-          .getJobManager()
-          .findNextJobsToExecute(new Page(0, 100));
-      }
-    });
+    return engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> commandContext
+        .getJobManager()
+        .findNextJobsToExecute(new Page(0, 100)));
   }
 }

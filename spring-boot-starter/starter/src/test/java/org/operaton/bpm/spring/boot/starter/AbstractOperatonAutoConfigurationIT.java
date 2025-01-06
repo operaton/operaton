@@ -74,15 +74,12 @@ public abstract class AbstractOperatonAutoConfigurationIT {
   @AfterEach
   public void cleanup() {
     //remove history level from database
-    ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        final PropertyEntity historyLevel = commandContext.getPropertyManager().findPropertyById("historyLevel");
-        if (historyLevel != null) {
-          commandContext.getDbEntityManager().delete(historyLevel);
-        }
-        return null;
+    ((ProcessEngineConfigurationImpl)processEngine.getProcessEngineConfiguration()).getCommandExecutorTxRequired().execute(commandContext -> {
+      final PropertyEntity historyLevel = commandContext.getPropertyManager().findPropertyById("historyLevel");
+      if (historyLevel != null) {
+        commandContext.getDbEntityManager().delete(historyLevel);
       }
+      return null;
     });
   }
 

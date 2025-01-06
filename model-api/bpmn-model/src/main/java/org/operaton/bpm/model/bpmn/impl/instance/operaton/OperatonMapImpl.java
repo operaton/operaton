@@ -27,7 +27,6 @@ import org.operaton.bpm.model.bpmn.instance.operaton.OperatonMap;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -43,12 +42,7 @@ public class OperatonMapImpl extends BpmnModelElementInstanceImpl implements Ope
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonMap.class, BpmnModelConstants.OPERATON_ELEMENT_MAP)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonMap>() {
-      @Override
-      public OperatonMap newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonMapImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonMapImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

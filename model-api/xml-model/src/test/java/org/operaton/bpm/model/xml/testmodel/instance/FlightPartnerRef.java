@@ -23,7 +23,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ELEMENT_NAME_FLIGHT_PARTNER_REF;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Sebastian Menski
@@ -33,12 +32,7 @@ public class FlightPartnerRef extends ModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FlightPartnerRef.class, ELEMENT_NAME_FLIGHT_PARTNER_REF)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(new ModelTypeInstanceProvider<FlightPartnerRef>() {
-      @Override
-      public FlightPartnerRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new FlightPartnerRef(instanceContext);
-        }
-      });
+      .instanceProvider(FlightPartnerRef::new);
 
     typeBuilder.build();
   }

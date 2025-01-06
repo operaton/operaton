@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_OPTIONAL_INPUT_REFS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN optionalInputRefs element of the BPMN tInputSet type
@@ -34,12 +33,7 @@ public class OptionalInputRefs extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OptionalInputRefs.class, BPMN_ELEMENT_OPTIONAL_INPUT_REFS)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OptionalInputRefs>() {
-      @Override
-      public OptionalInputRefs newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OptionalInputRefs(instanceContext);
-        }
-      });
+      .instanceProvider(OptionalInputRefs::new);
 
     typeBuilder.build();
   }

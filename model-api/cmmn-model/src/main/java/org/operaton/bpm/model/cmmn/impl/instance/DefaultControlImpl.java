@@ -24,7 +24,6 @@ import org.operaton.bpm.model.cmmn.instance.PlanItemControl;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -40,12 +39,7 @@ public class DefaultControlImpl extends PlanItemControlImpl implements DefaultCo
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DefaultControl.class, CMMN_ELEMENT_DEFAULT_CONTROL)
       .namespaceUri(CMMN11_NS)
       .extendsType(PlanItemControl.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DefaultControl>() {
-      @Override
-      public DefaultControl newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DefaultControlImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DefaultControlImpl::new);
 
     typeBuilder.build();
   }

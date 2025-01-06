@@ -16,20 +16,19 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.license;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LicenseKeyDirtyDbTest {
 
@@ -73,12 +72,9 @@ public class LicenseKeyDirtyDbTest {
   }
 
   private Long queryByteArrayTableSize() {
-    return processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Long>() {
-      @Override
-      public Long execute(CommandContext commandContext) {
-        String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
-        return commandContext.getProcessEngineConfiguration().getManagementService().getTableCount().get(tablePrefix + "ACT_GE_BYTEARRAY");
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      String tablePrefix = processEngineConfiguration.getDatabaseTablePrefix();
+      return commandContext.getProcessEngineConfiguration().getManagementService().getTableCount().get(tablePrefix + "ACT_GE_BYTEARRAY");
     });
   }
 }

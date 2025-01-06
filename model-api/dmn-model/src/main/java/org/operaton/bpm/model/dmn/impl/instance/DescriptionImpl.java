@@ -23,7 +23,6 @@ import org.operaton.bpm.model.dmn.instance.Description;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class DescriptionImpl extends DmnModelElementInstanceImpl implements Description {
 
@@ -34,12 +33,7 @@ public class DescriptionImpl extends DmnModelElementInstanceImpl implements Desc
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Description.class, DMN_ELEMENT_DESCRIPTION)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Description>() {
-      @Override
-      public Description newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DescriptionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DescriptionImpl::new);
 
     typeBuilder.build();
   }

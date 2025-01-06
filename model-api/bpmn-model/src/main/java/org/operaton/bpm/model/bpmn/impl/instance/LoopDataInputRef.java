@@ -36,12 +36,7 @@ public class LoopDataInputRef extends BpmnModelElementInstanceImpl {
         .defineType(LoopDataInputRef.class, BPMN_ELEMENT_LOOP_DATA_INPUT_REF)
         .namespaceUri(BPMN20_NS)
         .instanceProvider(
-            new ModelElementTypeBuilder.ModelTypeInstanceProvider<LoopDataInputRef>() {
-              @Override
-              public LoopDataInputRef newInstance(ModelTypeInstanceContext instanceContext) {
-                return new LoopDataInputRef(instanceContext);
-              }
-            });
+      LoopDataInputRef::new);
 
     typeBuilder.build();
   }

@@ -23,7 +23,6 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Ronny Bräunlich
@@ -42,12 +41,7 @@ public class Wings extends ModelElementInstanceImpl{
 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Wings.class, TYPE_NAME_WINGS)
       .namespaceUri(NEWER_NAMESPACE)
-      .instanceProvider(new ModelTypeInstanceProvider<Wings>() {
-        @Override
-        public Wings newInstance(ModelTypeInstanceContext instanceContext) {
-          return new Wings(instanceContext);
-        }
-      });
+      .instanceProvider(Wings::new);
 
     typeBuilder.build();
   }

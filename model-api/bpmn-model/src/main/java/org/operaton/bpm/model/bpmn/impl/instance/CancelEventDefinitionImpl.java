@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CANCEL_EVENT_DEFINITION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN cancelEventDefinition element
@@ -37,12 +36,7 @@ public class CancelEventDefinitionImpl extends EventDefinitionImpl implements Ca
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CancelEventDefinition.class, BPMN_ELEMENT_CANCEL_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CancelEventDefinition>() {
-      @Override
-      public CancelEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CancelEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(CancelEventDefinitionImpl::new);
 
     typeBuilder.build();
   }

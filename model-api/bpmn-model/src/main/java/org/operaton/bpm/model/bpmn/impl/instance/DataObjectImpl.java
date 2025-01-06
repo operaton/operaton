@@ -20,7 +20,6 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_IS_COLLECTION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_ITEM_SUBJECT_REF;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_DATA_OBJECT;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 import org.operaton.bpm.model.bpmn.instance.DataObject;
 import org.operaton.bpm.model.bpmn.instance.DataState;
@@ -49,12 +48,7 @@ public class DataObjectImpl extends FlowElementImpl implements DataObject {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataObject.class, BPMN_ELEMENT_DATA_OBJECT)
       .namespaceUri(BPMN20_NS)
       .extendsType(FlowElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DataObject>() {
-      @Override
-      public DataObject newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DataObjectImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DataObjectImpl::new);
 
     itemSubjectRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ITEM_SUBJECT_REF)
       .qNameAttributeReference(ItemDefinition.class)

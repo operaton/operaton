@@ -26,7 +26,6 @@ import org.operaton.bpm.model.dmn.instance.List;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -47,12 +46,7 @@ public class ListImpl extends ExpressionImpl implements List {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(List.class, DMN_ELEMENT_LIST)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<List>() {
-      @Override
-      public List newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ListImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ListImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

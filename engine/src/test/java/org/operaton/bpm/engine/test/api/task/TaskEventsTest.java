@@ -30,8 +30,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.Date;
 import java.util.List;
 
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.CommentEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.task.Attachment;
@@ -221,12 +219,9 @@ public class TaskEventsTest extends AbstractUserOperationLogTest {
 
 
   private void assertNoCommentsForTask() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        assertTrue(commandContext.getCommentManager().findCommentsByTaskId(task.getId()).isEmpty());
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      assertTrue(commandContext.getCommentManager().findCommentsByTaskId(task.getId()).isEmpty());
+      return null;
     });
   }
 

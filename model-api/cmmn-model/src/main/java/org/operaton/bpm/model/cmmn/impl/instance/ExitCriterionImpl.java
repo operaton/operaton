@@ -24,7 +24,6 @@ import org.operaton.bpm.model.cmmn.instance.ExitCriterion;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -40,12 +39,7 @@ public class ExitCriterionImpl extends CriterionImpl implements ExitCriterion {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ExitCriterion.class, CMMN_ELEMENT_EXIT_CRITERION)
         .extendsType(Criterion.class)
         .namespaceUri(CMMN11_NS)
-        .instanceProvider(new ModelTypeInstanceProvider<ExitCriterion>() {
-      @Override
-      public ExitCriterion newInstance(ModelTypeInstanceContext instanceContext) {
-            return new ExitCriterionImpl(instanceContext);
-          }
-        });
+        .instanceProvider(ExitCriterionImpl::new);
 
     typeBuilder.build();
   }

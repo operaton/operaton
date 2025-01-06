@@ -16,23 +16,22 @@
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Arrays;
-import java.util.UUID;
-
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.oplog.UserOperationLogContext;
 import org.operaton.bpm.engine.impl.oplog.UserOperationLogContextEntry;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
+
+import java.util.Arrays;
+import java.util.UUID;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CustomUserOperationLogTest  {
 
@@ -56,20 +55,17 @@ public class CustomUserOperationLogTest  {
 
     @Test
     public void testDoNotOverwriteUserId() {
-        commandExecutor.execute(new Command<Void>(){
-            @Override
-            public Void execute(final CommandContext commandContext) {
-                final UserOperationLogContext userOperationLogContext = new UserOperationLogContext();
-                userOperationLogContext.setUserId("kermit");
+        commandExecutor.execute(commandContext -> {
+          final UserOperationLogContext userOperationLogContext = new UserOperationLogContext();
+          userOperationLogContext.setUserId("kermit");
 
-                final UserOperationLogContextEntry entry = new UserOperationLogContextEntry("foo", "bar");
-                entry.setPropertyChanges(Arrays.asList(new PropertyChange(null, null, null)));
-                entry.setTaskId(TASK_ID);
-                userOperationLogContext.addEntry(entry);
+          final UserOperationLogContextEntry entry = new UserOperationLogContextEntry("foo", "bar");
+          entry.setPropertyChanges(Arrays.asList(new PropertyChange(null, null, null)));
+          entry.setTaskId(TASK_ID);
+          userOperationLogContext.addEntry(entry);
 
-                commandContext.getOperationLogManager().logUserOperations(userOperationLogContext);
-                return null;
-            }
+          commandContext.getOperationLogManager().logUserOperations(userOperationLogContext);
+          return null;
         });
 
         // and check its there

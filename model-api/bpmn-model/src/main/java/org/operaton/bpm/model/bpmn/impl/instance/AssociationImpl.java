@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Sebastian Menski
@@ -43,12 +42,7 @@ public class AssociationImpl extends ArtifactImpl implements Association {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Association.class, BPMN_ELEMENT_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Artifact.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Association>() {
-      @Override
-      public Association newInstance(ModelTypeInstanceContext instanceContext) {
-          return new AssociationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(AssociationImpl::new);
 
     sourceRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_SOURCE_REF)
       .required()

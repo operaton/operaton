@@ -27,7 +27,6 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -52,12 +51,7 @@ public class ChildrenImpl extends CmmnElementImpl implements Children {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Children.class, CMMN_ELEMENT_CHILDREN)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(new ModelTypeInstanceProvider<Children>() {
-      @Override
-      public Children newInstance(ModelTypeInstanceContext instanceContext) {
-            return new ChildrenImpl(instanceContext);
-          }
-        });
+        .instanceProvider(ChildrenImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

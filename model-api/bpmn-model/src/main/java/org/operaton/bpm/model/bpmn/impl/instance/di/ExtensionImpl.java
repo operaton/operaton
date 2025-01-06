@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DI_ELEMENT_EXTENSION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.DI_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The DI extension element of the DI DiagramElement type
@@ -36,12 +35,7 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Extension.class, DI_ELEMENT_EXTENSION)
       .namespaceUri(DI_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Extension>() {
-      @Override
-      public Extension newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ExtensionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ExtensionImpl::new);
 
     typeBuilder.build();
   }

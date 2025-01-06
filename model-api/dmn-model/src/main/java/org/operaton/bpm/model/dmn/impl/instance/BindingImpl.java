@@ -25,7 +25,6 @@ import org.operaton.bpm.model.dmn.instance.Parameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -61,12 +60,7 @@ public class BindingImpl extends DmnModelElementInstanceImpl implements Binding 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Binding.class, DMN_ELEMENT_BINDING)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Binding>() {
-      @Override
-      public Binding newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BindingImpl(instanceContext);
-        }
-      });
+      .instanceProvider(BindingImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

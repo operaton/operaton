@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TIME_DURATION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN timeDuration element of the BPMN tTimerEventDefinition type
@@ -37,12 +36,7 @@ public class TimeDurationImpl extends ExpressionImpl implements TimeDuration {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimeDuration.class, BPMN_ELEMENT_TIME_DURATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<TimeDuration>() {
-      @Override
-      public TimeDuration newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TimeDurationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(TimeDurationImpl::new);
 
     typeBuilder.build();
   }

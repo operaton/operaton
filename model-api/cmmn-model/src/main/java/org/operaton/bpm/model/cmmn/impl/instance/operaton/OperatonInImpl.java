@@ -30,7 +30,6 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonIn;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -50,12 +49,7 @@ public class OperatonInImpl extends CmmnModelElementInstanceImpl implements Oper
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonIn.class, OPERATON_ELEMENT_IN)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonIn>() {
-      @Override
-      public OperatonIn newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonInImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonInImpl::new);
 
     operatonSourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE)
       .namespace(CAMUNDA_NS)

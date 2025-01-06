@@ -20,8 +20,6 @@ import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
@@ -145,12 +143,9 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
   protected void deleteHistoryCleanupJobs() {
     final List<Job> jobs = historyService.findHistoryCleanupJobs();
     for (final Job job: jobs) {
-      processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-        @Override
-        public Void execute(CommandContext commandContext) {
-            commandContext.getJobManager().deleteJob((JobEntity) job);
-          return null;
-        }
+      processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+        commandContext.getJobManager().deleteJob((JobEntity) job);
+        return null;
       });
     }
   }

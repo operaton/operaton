@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.DmnElementReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class DecisionMadeReferenceImpl extends DmnElementReferenceImpl implements DecisionMadeReference {
 
@@ -36,12 +35,7 @@ public class DecisionMadeReferenceImpl extends DmnElementReferenceImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionMadeReference.class, DMN_ELEMENT_DECISION_MADE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DecisionMadeReference>() {
-      @Override
-      public DecisionMadeReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DecisionMadeReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DecisionMadeReferenceImpl::new);
 
     typeBuilder.build();
   }

@@ -26,7 +26,6 @@ import org.operaton.bpm.model.cmmn.instance.Expression;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -95,12 +94,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Expression.class, CMMN_ELEMENT_EXPRESSION)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(new ModelTypeInstanceProvider<Expression>() {
-      @Override
-      public Expression newInstance(ModelTypeInstanceContext instanceContext) {
-            return new ExpressionImpl(instanceContext);
-          }
-        });
+        .instanceProvider(ExpressionImpl::new);
 
     languageAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_LANGUAGE)
         .defaultValue("http://www.w3.org/1999/XPath")

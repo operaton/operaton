@@ -76,7 +76,7 @@ public class PermissionsTest {
     Map<Integer, Class<? extends Enum<? extends Permission>>> permissionEnums = ResourceTypeUtil.getPermissionEnums();
 
     // then
-    Integer[] allResourceTypes = Stream.of(Resources.values()).map(r -> r.resourceType()).toArray(Integer[]::new);
+    Integer[] allResourceTypes = Stream.of(Resources.values()).map(Resources::resourceType).toArray(Integer[]::new);
     assertThat(permissionEnums).containsKeys(allResourceTypes);
   }
 

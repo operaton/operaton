@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.impl.cmd.SetJobDefinitionPriorityCmd;
 import org.operaton.bpm.engine.impl.cmd.SuspendJobCmd;
 import org.operaton.bpm.engine.impl.cmd.SuspendJobDefinitionCmd;
 import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.ExecuteJobHelper;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
@@ -103,13 +102,9 @@ public class ConcurrentJobExecutorTest {
     ClockUtil.reset();
     for(final Job job : managementService.createJobQuery().list()) {
 
-      processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-
-        @Override
-        public Void execute(CommandContext commandContext) {
-          ((JobEntity) job).delete();
-          return null;
-        }
+      processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+        ((JobEntity) job).delete();
+        return null;
       });
     }
   }

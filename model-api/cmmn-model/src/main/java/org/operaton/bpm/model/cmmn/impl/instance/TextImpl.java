@@ -23,7 +23,6 @@ import org.operaton.bpm.model.cmmn.instance.Text;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -38,12 +37,7 @@ public class TextImpl extends CmmnModelElementInstanceImpl implements Text {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Text.class, CMMN_ELEMENT_TEXT)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Text>() {
-      @Override
-      public Text newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TextImpl(instanceContext);
-        }
-      });
+      .instanceProvider(TextImpl::new);
 
     typeBuilder.build();
   }

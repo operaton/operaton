@@ -44,7 +44,6 @@ import org.operaton.bpm.model.dmn.instance.Variable;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -200,12 +199,7 @@ public class DecisionImpl extends DrgElementImpl implements Decision {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Decision.class, DMN_ELEMENT_DECISION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Decision>() {
-      @Override
-      public Decision newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DecisionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DecisionImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

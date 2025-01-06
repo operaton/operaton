@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.tasklistener.builtin;
 
-import org.operaton.bpm.engine.delegate.DelegateTask;
-import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
@@ -33,13 +31,8 @@ public class PreParseListener extends AbstractBpmnParseListener {
 
   @Override
   public void parseUserTask(final Element userTaskElement, final ScopeImpl scope, final ActivityImpl activity) {
-    getTaskDefinition(activity).addBuiltInTaskListener("create", new TaskListener() {
-
-      @Override
-      public void notify(DelegateTask delegateTask) {
-        LOG.info("Executed task listener: PreParseListener");
-      }
-    });
+    getTaskDefinition(activity).addBuiltInTaskListener("create", delegateTask ->
+        LOG.info("Executed task listener: PreParseListener"));
   }
 
   private TaskDefinition getTaskDefinition(final ActivityImpl activity) {

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.delegate.ScriptInvocation;
@@ -48,18 +46,15 @@ public class ScriptTaskActivityBehavior extends TaskActivityBehavior {
 
   @Override
   public void performExecution(final ActivityExecution execution) throws Exception {
-    executeWithErrorPropagation(execution, new Callable<>() {
-      @Override
-      public Void call() throws Exception {
-        ScriptInvocation invocation = new ScriptInvocation(script, execution);
-        Context.getProcessEngineConfiguration().getDelegateInterceptor().handleInvocation(invocation);
-        Object result = invocation.getInvocationResult();
-        if (result != null && resultVariable != null) {
-          execution.setVariable(resultVariable, result);
-        }
-        leave(execution);
-        return null;
+    executeWithErrorPropagation(execution, () -> {
+      ScriptInvocation invocation = new ScriptInvocation(script, execution);
+      Context.getProcessEngineConfiguration().getDelegateInterceptor().handleInvocation(invocation);
+      Object result = invocation.getInvocationResult();
+      if (result != null && resultVariable != null) {
+        execution.setVariable(resultVariable, result);
       }
+      leave(execution);
+      return null;
     });
   }
 

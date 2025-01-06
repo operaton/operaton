@@ -53,12 +53,7 @@ public class TweetExceptionHandler implements JobHandler<JobHandlerConfiguration
 
   @Override
   public JobHandlerConfiguration newConfiguration(String canonicalString) {
-    return new JobHandlerConfiguration() {
-      @Override
-      public String toCanonicalString() {
-        return null;
-      }
-    };
+    return () -> null;
   }
 
   @Override

@@ -16,23 +16,22 @@
  */
 package org.operaton.bpm.engine.test.standalone.entity;
 
-import static java.util.Collections.singletonList;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Date;
-import java.util.UUID;
-
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoricCaseActivityInstanceEventEntity;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceEntity;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
+
+import java.util.Date;
+import java.util.UUID;
+
 import org.junit.Test;
+
+import static java.util.Collections.singletonList;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CaseDefinitionIdHistoryUpdateTest extends PluggableProcessEngineTest {
 
@@ -99,81 +98,55 @@ public class CaseDefinitionIdHistoryUpdateTest extends PluggableProcessEngineTes
   }
 
   private Void createCaseExecutionHistory(final HistoricCaseActivityInstanceEventEntity historicCaseActivityInstanceEntity) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getDbEntityManager().insert(historicCaseActivityInstanceEntity);
-        return null;
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getDbEntityManager().insert(historicCaseActivityInstanceEntity);
+      return null;
     });
   }
 
   private Void updateCaseExecutionHistory(final HistoricCaseActivityInstanceEventEntity historicCaseActivityInstanceEntity) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getDbEntityManager().merge(historicCaseActivityInstanceEntity);
-        return null;
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getDbEntityManager().merge(historicCaseActivityInstanceEntity);
+      return null;
     });
   }
 
   private HistoricCaseActivityInstanceEntity findHistoricCaseActivityInstance(final String id) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<HistoricCaseActivityInstanceEntity>() {
-      @Override
-      public HistoricCaseActivityInstanceEntity execute(CommandContext commandContext) {
-        return (HistoricCaseActivityInstanceEntity) commandContext.getDbEntityManager().selectOne("selectHistoricCaseActivityInstance", id);
-      }
-    });
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> (HistoricCaseActivityInstanceEntity) commandContext.getDbEntityManager().selectOne("selectHistoricCaseActivityInstance", id));
   }
 
   private Void deleteCaseExecution(final CaseExecutionEntity caseExecutionEntity) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseExecutionManager().deleteCaseExecution(caseExecutionEntity);
-        return null;
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getCaseExecutionManager().deleteCaseExecution(caseExecutionEntity);
+      return null;
     });
   }
 
   private void createCaseExecution(final CaseExecutionEntity caseExecutionEntity) {
-    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseExecutionManager().insertCaseExecution(caseExecutionEntity);
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getCaseExecutionManager().insertCaseExecution(caseExecutionEntity);
+      return null;
     });
   }
 
   private void createCaseDefinition(final CaseDefinitionEntity caseDefinitionEntity) {
-    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseDefinitionManager().insertCaseDefinition(caseDefinitionEntity);
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getCaseDefinitionManager().insertCaseDefinition(caseDefinitionEntity);
+      return null;
     });
   }
 
   private Void deleteCaseDefinition(final CaseDefinitionEntity caseDefinitionEntity) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getCaseDefinitionManager().deleteCaseDefinitionsByDeploymentId(caseDefinitionEntity.getDeploymentId());
-        return null;
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getCaseDefinitionManager().deleteCaseDefinitionsByDeploymentId(caseDefinitionEntity.getDeploymentId());
+      return null;
     });
   }
 
   private Void deleteHistoricCaseActivityInstance(final HistoricCaseActivityInstanceEventEntity entity) {
-    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        commandContext.getHistoricCaseActivityInstanceManager().deleteHistoricCaseActivityInstancesByCaseInstanceIds(singletonList(entity.getCaseInstanceId()));
-        return null;
-      }
+    return processEngineConfiguration.getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      commandContext.getHistoricCaseActivityInstanceManager().deleteHistoricCaseActivityInstancesByCaseInstanceIds(singletonList(entity.getCaseInstanceId()));
+      return null;
     });
   }
 }

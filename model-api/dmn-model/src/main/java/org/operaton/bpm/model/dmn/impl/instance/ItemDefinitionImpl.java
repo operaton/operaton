@@ -31,7 +31,6 @@ import org.operaton.bpm.model.dmn.instance.TypeRef;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -99,12 +98,7 @@ public class ItemDefinitionImpl extends NamedElementImpl implements ItemDefiniti
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ItemDefinition.class, DMN_ELEMENT_ITEM_DEFINITION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(NamedElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ItemDefinition>() {
-      @Override
-      public ItemDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ItemDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ItemDefinitionImpl::new);
 
     typeLanguageAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_TYPE_LANGUAGE)
       .build();

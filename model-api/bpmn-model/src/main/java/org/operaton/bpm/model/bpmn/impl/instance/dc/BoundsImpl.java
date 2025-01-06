@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The DC bounds element
@@ -41,12 +40,7 @@ public class BoundsImpl extends BpmnModelElementInstanceImpl implements Bounds {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Bounds.class, DC_ELEMENT_BOUNDS)
       .namespaceUri(DC_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Bounds>() {
-      @Override
-      public Bounds newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BoundsImpl(instanceContext);
-        }
-      });
+      .instanceProvider(BoundsImpl::new);
 
     xAttribute = typeBuilder.doubleAttribute(DC_ATTRIBUTE_X)
       .required()

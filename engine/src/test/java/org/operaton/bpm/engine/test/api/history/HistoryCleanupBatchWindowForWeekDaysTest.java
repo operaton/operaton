@@ -16,9 +16,17 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.operaton.bpm.engine.HistoryService;
+import org.operaton.bpm.engine.ManagementService;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
+import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
+import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
+import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,19 +36,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
-import org.operaton.bpm.engine.impl.util.ClockUtil;
-import org.operaton.bpm.engine.runtime.Job;
-import org.operaton.bpm.engine.test.RequiredHistoryLevel;
-import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
-import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
-import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -48,6 +43,8 @@ import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import static org.junit.Assert.*;
 
 /**
  *
@@ -138,20 +135,17 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(defaultEndTime);
     processEngineConfiguration.setHistoryCleanupBatchSize(defaultBatchSize);
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-        List<Job> jobs = managementService.createJobQuery().list();
-        if (!jobs.isEmpty()) {
-          assertEquals(1, jobs.size());
-          String jobId = jobs.get(0).getId();
-          commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
-        }
-
-        return null;
+      List<Job> jobs = managementService.createJobQuery().list();
+      if (!jobs.isEmpty()) {
+        assertEquals(1, jobs.size());
+        String jobId = jobs.get(0).getId();
+        commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
       }
+
+      return null;
     });
   }
 

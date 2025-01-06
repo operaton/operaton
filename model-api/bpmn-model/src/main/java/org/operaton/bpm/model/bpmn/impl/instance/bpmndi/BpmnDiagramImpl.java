@@ -32,7 +32,6 @@ import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_ELEMENT_BPMN_DIAGRAM;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMNDI BPMNDiagram element
@@ -48,12 +47,7 @@ public class BpmnDiagramImpl extends DiagramImpl implements BpmnDiagram {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnDiagram.class, BPMNDI_ELEMENT_BPMN_DIAGRAM)
       .namespaceUri(BPMNDI_NS)
       .extendsType(Diagram.class)
-      .instanceProvider(new ModelTypeInstanceProvider<BpmnDiagram>(){
-      @Override
-      public BpmnDiagram newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BpmnDiagramImpl(instanceContext);
-        }
-      });
+      .instanceProvider(BpmnDiagramImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

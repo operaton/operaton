@@ -94,7 +94,7 @@ public abstract class AbstractDefinitionQueryTest {
   private void verifySingleResultFails(Query query) {
 
     // when/then
-    assertThatThrownBy(() -> query.singleResult())
+    assertThatThrownBy(query::singleResult)
       .isInstanceOf(ProcessEngineException.class);
   }
 }

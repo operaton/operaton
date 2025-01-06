@@ -26,7 +26,6 @@ import org.operaton.bpm.model.bpmn.instance.Task;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 
@@ -60,12 +59,7 @@ public class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BusinessRuleTask.class, BPMN_ELEMENT_BUSINESS_RULE_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(new ModelTypeInstanceProvider<BusinessRuleTask>() {
-      @Override
-      public BusinessRuleTask newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BusinessRuleTaskImpl(instanceContext);
-        }
-      });
+      .instanceProvider(BusinessRuleTaskImpl::new);
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##unspecified")

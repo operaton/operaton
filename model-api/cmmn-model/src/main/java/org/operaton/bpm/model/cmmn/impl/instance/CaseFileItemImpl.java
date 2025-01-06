@@ -36,7 +36,6 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -133,12 +132,7 @@ public class CaseFileItemImpl extends CmmnElementImpl implements CaseFileItem {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CaseFileItem.class, CMMN_ELEMENT_CASE_FILE_ITEM)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(new ModelTypeInstanceProvider<CaseFileItem>() {
-      @Override
-      public CaseFileItem newInstance(ModelTypeInstanceContext instanceContext) {
-            return new CaseFileItemImpl(instanceContext);
-          }
-        });
+        .instanceProvider(CaseFileItemImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

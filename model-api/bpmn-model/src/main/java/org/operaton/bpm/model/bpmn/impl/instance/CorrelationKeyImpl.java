@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN correlationKey element
@@ -45,12 +44,7 @@ public class CorrelationKeyImpl extends BaseElementImpl implements CorrelationKe
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationKey.class, BPMN_ELEMENT_CORRELATION_KEY)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CorrelationKey>() {
-      @Override
-      public CorrelationKey newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CorrelationKeyImpl(instanceContext);
-        }
-      });
+      .instanceProvider(CorrelationKeyImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

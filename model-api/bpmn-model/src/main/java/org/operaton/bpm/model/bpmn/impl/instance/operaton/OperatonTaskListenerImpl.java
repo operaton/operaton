@@ -37,7 +37,6 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRI
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_EXPRESSION;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_TASK_LISTENER;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN taskListener operaton extension element
@@ -57,12 +56,7 @@ public class OperatonTaskListenerImpl extends BpmnModelElementInstanceImpl imple
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonTaskListener.class, OPERATON_ELEMENT_TASK_LISTENER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonTaskListener>() {
-      @Override
-      public OperatonTaskListener newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonTaskListenerImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonTaskListenerImpl::new);
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
       .namespace(OPERATON_NS)

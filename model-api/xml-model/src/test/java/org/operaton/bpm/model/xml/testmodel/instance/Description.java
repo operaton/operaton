@@ -20,7 +20,6 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ELEMENT_NAME_DESCRIPTION;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
@@ -34,12 +33,7 @@ public class Description extends ModelElementInstanceImpl {
     public static void registerType(ModelBuilder modelBuilder) {
       ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Description.class, ELEMENT_NAME_DESCRIPTION)
         .namespaceUri(MODEL_NAMESPACE)
-        .instanceProvider(new ModelTypeInstanceProvider<Description>() {
-        @Override
-        public Description newInstance(ModelTypeInstanceContext instanceContext) {
-            return new Description(instanceContext);
-          }
-        });
+        .instanceProvider(Description::new);
 
       typeBuilder.build();
     }

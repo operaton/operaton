@@ -55,12 +55,7 @@ public class DefinitionsImpl extends BpmnModelElementInstanceImpl implements Def
 
     ModelElementTypeBuilder typeBuilder = bpmnModelBuilder.defineType(Definitions.class, BPMN_ELEMENT_DEFINITIONS)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<Definitions>() {
-      @Override
-      public Definitions newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DefinitionsImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DefinitionsImpl::new);
 
     idAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ID)
       .idAttribute()

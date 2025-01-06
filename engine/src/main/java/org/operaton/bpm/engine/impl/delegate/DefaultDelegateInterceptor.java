@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.delegate;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.delegate.BaseDelegateExecution;
@@ -52,12 +50,9 @@ public class DefaultDelegateInterceptor implements DelegateInterceptor {
     final ProcessApplicationReference processApplication = getProcessApplicationForInvocation(invocation);
 
     if (processApplication != null && ProcessApplicationContextUtil.requiresContextSwitch(processApplication)) {
-      Context.executeWithinProcessApplication(new Callable<Void>() {
-        @Override
-        public Void call() throws Exception {
-          handleInvocation(invocation);
-          return null;
-        }
+      Context.executeWithinProcessApplication(() -> {
+        handleInvocation(invocation);
+        return null;
       }, processApplication, new InvocationContext(invocation.getContextExecution()));
     }
     else {

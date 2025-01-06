@@ -31,7 +31,6 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_E
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ERROR_CODE_VARIABLE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ATTRIBUTE_ERROR_MESSAGE_VARIABLE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN errorEventDefinition element
@@ -50,12 +49,7 @@ public class ErrorEventDefinitionImpl extends EventDefinitionImpl implements Err
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ErrorEventDefinition.class, BPMN_ELEMENT_ERROR_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ErrorEventDefinition>() {
-      @Override
-      public ErrorEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ErrorEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ErrorEventDefinitionImpl::new);
 
     errorRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ERROR_REF)
       .qNameAttributeReference(Error.class)

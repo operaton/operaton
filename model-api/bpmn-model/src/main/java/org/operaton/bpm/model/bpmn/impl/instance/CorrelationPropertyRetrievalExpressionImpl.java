@@ -27,7 +27,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN correlationPropertyRetrievalExpression element
@@ -43,12 +42,7 @@ public class CorrelationPropertyRetrievalExpressionImpl extends BaseElementImpl 
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CorrelationPropertyRetrievalExpression.class, BPMN_ELEMENT_CORRELATION_PROPERTY_RETRIEVAL_EXPRESSION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<CorrelationPropertyRetrievalExpression>() {
-      @Override
-      public CorrelationPropertyRetrievalExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CorrelationPropertyRetrievalExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(CorrelationPropertyRetrievalExpressionImpl::new);
 
     messageRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_MESSAGE_REF)
       .required()

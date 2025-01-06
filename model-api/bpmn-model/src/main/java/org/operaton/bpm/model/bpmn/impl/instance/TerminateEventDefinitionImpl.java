@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TERMINATE_EVENT_DEFINITION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN terminateEventDefinition element
@@ -37,12 +36,7 @@ public class TerminateEventDefinitionImpl extends EventDefinitionImpl implements
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TerminateEventDefinition.class, BPMN_ELEMENT_TERMINATE_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<TerminateEventDefinition>() {
-      @Override
-      public TerminateEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TerminateEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(TerminateEventDefinitionImpl::new);
 
     typeBuilder.build();
   }

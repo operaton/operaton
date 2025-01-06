@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN signal element
@@ -42,12 +41,7 @@ public class SignalImpl extends BaseElementImpl implements Signal {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Signal.class, BPMN_ELEMENT_SIGNAL)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Signal>() {
-      @Override
-      public Signal newInstance(ModelTypeInstanceContext instanceContext) {
-          return new SignalImpl(instanceContext);
-        }
-      });
+      .instanceProvider(SignalImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

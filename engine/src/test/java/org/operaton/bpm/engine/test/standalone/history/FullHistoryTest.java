@@ -51,8 +51,6 @@ import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricVariableUpdate;
 import org.operaton.bpm.engine.impl.cmd.SubmitStartFormCmd;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.CaseInstance;
@@ -892,19 +890,15 @@ public class FullHistoryTest {
     final String processDefinitionId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 
 
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
+      Map<String, Object> formProperties = new HashMap<String, Object>();
+      formProperties.put("formProp1", "value1");
 
-      @Override
-      public Void execute(CommandContext commandContext) {
-        Map<String, Object> formProperties = new HashMap<String, Object>();
-        formProperties.put("formProp1", "value1");
+      ProcessInstance processInstance = new SubmitStartFormCmd(processDefinitionId, null, formProperties).execute(commandContext);
 
-        ProcessInstance processInstance = new SubmitStartFormCmd(processDefinitionId, null, formProperties).execute(commandContext);
-
-        // two historic details should be in cache: one form property and one variable update
-        commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(Arrays.asList(processInstance.getId()));
-        return null;
-      }
+      // two historic details should be in cache: one form property and one variable update
+      commandContext.getHistoricDetailManager().deleteHistoricDetailsByProcessInstanceIds(Arrays.asList(processInstance.getId()));
+      return null;
     });
 
     // the historic process instance should still be there

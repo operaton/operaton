@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.OutputEntry;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class OutputEntryImpl extends LiteralExpressionImpl implements OutputEntry {
 
@@ -36,12 +35,7 @@ public class OutputEntryImpl extends LiteralExpressionImpl implements OutputEntr
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputEntry.class, DMN_ELEMENT_OUTPUT_ENTRY)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<OutputEntry>() {
-      @Override
-      public OutputEntry newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OutputEntryImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OutputEntryImpl::new);
 
     typeBuilder.build();
   }

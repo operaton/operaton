@@ -29,7 +29,6 @@ import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_PROPERTIES;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN properties operaton extension element
@@ -43,12 +42,7 @@ public class OperatonPropertiesImpl extends BpmnModelElementInstanceImpl impleme
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonProperties.class, OPERATON_ELEMENT_PROPERTIES)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonProperties>() {
-      @Override
-      public OperatonProperties newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonPropertiesImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonPropertiesImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

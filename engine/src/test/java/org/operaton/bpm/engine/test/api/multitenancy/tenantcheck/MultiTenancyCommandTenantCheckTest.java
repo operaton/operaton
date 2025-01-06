@@ -16,20 +16,19 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Collections;
-
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import java.util.Collections;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MultiTenancyCommandTenantCheckTest {
 
@@ -52,64 +51,48 @@ public class MultiTenancyCommandTenantCheckTest {
     // disable tenant check for process engine
     processEngineConfiguration.setTenantCheckEnabled(false);
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      // cannot enable tenant check for command when it is disabled for process engine
+      commandContext.enableTenantCheck();
+      assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isFalse();
 
-      @Override
-      public Void execute(CommandContext commandContext) {
-        // cannot enable tenant check for command when it is disabled for process engine
-        commandContext.enableTenantCheck();
-        assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isFalse();
-
-        return null;
-      }
+      return null;
     });
   }
 
   @Test
   public void disableTenantCheckForCommand() {
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      // disable tenant check for the current command
+      commandContext.disableTenantCheck();
+      assertThat(commandContext.isTenantCheckEnabled()).isFalse();
+      assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isFalse();
 
-      @Override
-      public Void execute(CommandContext commandContext) {
-        // disable tenant check for the current command
-        commandContext.disableTenantCheck();
-        assertThat(commandContext.isTenantCheckEnabled()).isFalse();
-        assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isFalse();
-
-        return null;
-      }
+      return null;
     });
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      // assert that it is enabled again for further commands
+      assertThat(commandContext.isTenantCheckEnabled()).isTrue();
+      assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isTrue();
 
-      @Override
-      public Void execute(CommandContext commandContext) {
-        // assert that it is enabled again for further commands
-        assertThat(commandContext.isTenantCheckEnabled()).isTrue();
-        assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isTrue();
-
-        return null;
-      }
+      return null;
     });
   }
 
   @Test
   public void disableAndEnableTenantCheckForCommand() {
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-      @Override
-      public Void execute(CommandContext commandContext) {
+      commandContext.disableTenantCheck();
+      assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isFalse();
 
-        commandContext.disableTenantCheck();
-        assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isFalse();
+      commandContext.enableTenantCheck();
+      assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isTrue();
 
-        commandContext.enableTenantCheck();
-        assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isTrue();
-
-        return null;
-      }
+      return null;
     });
   }
 
@@ -117,15 +100,11 @@ public class MultiTenancyCommandTenantCheckTest {
   public void disableTenantCheckForOperatonAdmin() {
     identityService.setAuthentication("user", Collections.singletonList(Groups.OPERATON_ADMIN), null);
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      // operaton-admin should access data from all tenants
+      assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isFalse();
 
-      @Override
-      public Void execute(CommandContext commandContext) {
-        // operaton-admin should access data from all tenants
-        assertThat(commandContext.getTenantManager().isTenantCheckEnabled()).isFalse();
-
-        return null;
-      }
+      return null;
     });
   }
 

@@ -31,7 +31,6 @@ import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_INPUT_SET;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN inputSet element
@@ -50,12 +49,7 @@ public class InputSetImpl extends BaseElementImpl implements InputSet {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputSet.class, BPMN_ELEMENT_INPUT_SET)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<InputSet>() {
-      @Override
-      public InputSet newInstance(ModelTypeInstanceContext instanceContext) {
-          return new InputSetImpl(instanceContext);
-        }
-      });
+      .instanceProvider(InputSetImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute("name")
       .build();

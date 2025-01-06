@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_DATA_OUTPUT_ASSOCIATION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN dataOutputAssociation element
@@ -37,12 +36,7 @@ public class DataOutputAssociationImpl extends DataAssociationImpl implements Da
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataOutputAssociation.class, BPMN_ELEMENT_DATA_OUTPUT_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(DataAssociation.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DataOutputAssociation>() {
-      @Override
-      public DataOutputAssociation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DataOutputAssociationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DataOutputAssociationImpl::new);
   
     typeBuilder.build();
   }

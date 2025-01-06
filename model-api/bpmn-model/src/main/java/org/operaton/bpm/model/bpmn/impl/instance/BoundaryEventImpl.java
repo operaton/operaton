@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN boundaryEvent element
@@ -44,12 +43,7 @@ public class BoundaryEventImpl extends CatchEventImpl implements BoundaryEvent {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BoundaryEvent.class, BPMN_ELEMENT_BOUNDARY_EVENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(CatchEvent.class)
-      .instanceProvider(new ModelTypeInstanceProvider<BoundaryEvent>() {
-      @Override
-      public BoundaryEvent newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BoundaryEventImpl(instanceContext);
-        }
-      });
+      .instanceProvider(BoundaryEventImpl::new);
 
     cancelActivityAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_CANCEL_ACTIVITY)
       .defaultValue(true)

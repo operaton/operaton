@@ -27,7 +27,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN exclusiveGateway element
@@ -42,12 +41,7 @@ public class ExclusiveGatewayImpl extends GatewayImpl implements ExclusiveGatewa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ExclusiveGateway.class, BPMN_ELEMENT_EXCLUSIVE_GATEWAY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ExclusiveGateway>() {
-      @Override
-      public ExclusiveGateway newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ExclusiveGatewayImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ExclusiveGatewayImpl::new);
 
     defaultAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_DEFAULT)
       .idAttributeReference(SequenceFlow.class)

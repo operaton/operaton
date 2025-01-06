@@ -16,26 +16,25 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.MigrationTestRule;
 import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHelper;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
+
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BatchJobPriorityRangeTest {
 
@@ -167,11 +166,6 @@ public class BatchJobPriorityRangeTest {
   }
 
   private List<AcquirableJobEntity> findAcquirableJobs() {
-    return configuration.getCommandExecutorTxRequired().execute(new Command<List<AcquirableJobEntity>>() {
-      @Override
-      public List<AcquirableJobEntity> execute(CommandContext commandContext) {
-        return commandContext.getJobManager().findNextJobsToExecute(new Page(0, 100));
-      }
-    });
+    return configuration.getCommandExecutorTxRequired().execute(commandContext -> commandContext.getJobManager().findNextJobsToExecute(new Page(0, 100)));
   }
 }

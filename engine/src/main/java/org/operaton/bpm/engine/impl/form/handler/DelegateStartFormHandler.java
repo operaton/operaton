@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.form.handler;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
@@ -35,15 +33,12 @@ public class DelegateStartFormHandler extends DelegateFormHandler implements Sta
 
   @Override
   public StartFormData createStartFormData(final ProcessDefinitionEntity processDefinition) {
-    return performContextSwitch(new Callable<StartFormData> () {
-      @Override
-      public StartFormData call() throws Exception {
-        CreateStartFormInvocation invocation = new CreateStartFormInvocation((StartFormHandler) formHandler, processDefinition);
-        Context.getProcessEngineConfiguration()
-            .getDelegateInterceptor()
-            .handleInvocation(invocation);
-        return (StartFormData) invocation.getInvocationResult();
-      }
+    return performContextSwitch(() -> {
+      CreateStartFormInvocation invocation = new CreateStartFormInvocation((StartFormHandler) formHandler, processDefinition);
+      Context.getProcessEngineConfiguration()
+          .getDelegateInterceptor()
+          .handleInvocation(invocation);
+      return (StartFormData) invocation.getInvocationResult();
     });
   }
 

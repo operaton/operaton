@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CONDITION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN condition element of the BPMN tConditionalEventDefinition type
@@ -37,12 +36,7 @@ public class ConditionImpl extends ExpressionImpl implements Condition {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Condition.class, BPMN_ELEMENT_CONDITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Condition>() {
-      @Override
-      public Condition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ConditionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ConditionImpl::new);
 
     typeBuilder.build();
   }

@@ -32,7 +32,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN formField operaton extension element
@@ -53,12 +52,7 @@ public class OperatonFormFieldImpl extends BpmnModelElementInstanceImpl implemen
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonFormField.class, OPERATON_ELEMENT_FORM_FIELD)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonFormField>() {
-      @Override
-      public OperatonFormField newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonFormFieldImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonFormFieldImpl::new);
 
     operatonIdAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ID)
       .namespace(OPERATON_NS)

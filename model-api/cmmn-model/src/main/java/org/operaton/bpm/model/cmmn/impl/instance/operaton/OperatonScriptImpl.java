@@ -26,7 +26,6 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonScript;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -41,12 +40,7 @@ public class OperatonScriptImpl extends CmmnModelElementInstanceImpl implements 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonScript.class, OPERATON_ELEMENT_SCRIPT)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonScript>() {
-      @Override
-      public OperatonScript newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonScriptImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonScriptImpl::new);
 
     operatonScriptFormatAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SCRIPT_FORMAT)
         .namespace(CAMUNDA_NS)

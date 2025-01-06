@@ -39,7 +39,6 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.impl.util.StringUtil;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
@@ -199,12 +198,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(HumanTask.class, CMMN_ELEMENT_HUMAN_TASK)
         .namespaceUri(CMMN11_NS)
         .extendsType(Task.class)
-        .instanceProvider(new ModelTypeInstanceProvider<HumanTask>() {
-      @Override
-      public HumanTask newInstance(ModelTypeInstanceContext instanceContext) {
-            return new HumanTaskImpl(instanceContext);
-          }
-        });
+        .instanceProvider(HumanTaskImpl::new);
 
     performerRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_PERFORMER_REF)
         .idAttributeReference(Role.class)

@@ -16,26 +16,21 @@
  */
 package org.operaton.bpm.engine.test.util;
 
-import java.sql.SQLException;
-
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+
+import java.sql.SQLException;
 
 public class DatabaseHelper {
 
   public static Integer getTransactionIsolationLevel(ProcessEngineConfigurationImpl processEngineConfiguration) {
     final Integer[] transactionIsolation = new Integer[1];
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        try {
-          transactionIsolation[0] = commandContext.getDbSqlSession().getSqlSession().getConnection().getTransactionIsolation();
-        } catch (SQLException e) {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      try {
+        transactionIsolation[0] = commandContext.getDbSqlSession().getSqlSession().getConnection().getTransactionIsolation();
+      } catch (SQLException e) {
 
-        }
-        return null;
       }
+      return null;
     });
     return transactionIsolation[0];
   }

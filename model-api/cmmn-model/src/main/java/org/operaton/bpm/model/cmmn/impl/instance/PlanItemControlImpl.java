@@ -27,7 +27,6 @@ import org.operaton.bpm.model.cmmn.instance.RequiredRule;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -79,12 +78,7 @@ public class PlanItemControlImpl extends CmmnElementImpl implements PlanItemCont
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanItemControl.class, CMMN_ELEMENT_PLAN_ITEM_CONTROL)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(new ModelTypeInstanceProvider<PlanItemControl>() {
-      @Override
-      public PlanItemControl newInstance(ModelTypeInstanceContext instanceContext) {
-            return new PlanItemControlImpl(instanceContext);
-          }
-        });
+        .instanceProvider(PlanItemControlImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

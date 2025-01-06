@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN sendTask element
@@ -56,12 +55,7 @@ public class SendTaskImpl extends TaskImpl implements SendTask {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SendTask.class, BPMN_ELEMENT_SEND_TASK)
       .namespaceUri(BPMN20_NS)
       .extendsType(Task.class)
-      .instanceProvider(new ModelTypeInstanceProvider<SendTask>() {
-      @Override
-      public SendTask newInstance(ModelTypeInstanceContext instanceContext) {
-          return new SendTaskImpl(instanceContext);
-        }
-      });
+      .instanceProvider(SendTaskImpl::new);
 
     implementationAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_IMPLEMENTATION)
       .defaultValue("##WebService")

@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_INTERMEDIATE_THROW_EVENT;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN intermediateThrowEvent element
@@ -39,12 +38,7 @@ public class IntermediateThrowEventImpl extends ThrowEventImpl implements Interm
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(IntermediateThrowEvent.class, BPMN_ELEMENT_INTERMEDIATE_THROW_EVENT)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(ThrowEvent.class)
-      .instanceProvider(new ModelTypeInstanceProvider<IntermediateThrowEvent>() {
-      @Override
-      public IntermediateThrowEvent newInstance(ModelTypeInstanceContext instanceContext) {
-          return new IntermediateThrowEventImpl(instanceContext);
-        }
-      });
+      .instanceProvider(IntermediateThrowEventImpl::new);
 
     typeBuilder.build();
   }

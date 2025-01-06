@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.RequiredAuthorityReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class RequiredAuthorityReferenceImpl extends DmnElementReferenceImpl implements RequiredAuthorityReference {
 
@@ -36,12 +35,7 @@ public class RequiredAuthorityReferenceImpl extends DmnElementReferenceImpl impl
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredAuthorityReference.class, DMN_ELEMENT_REQUIRED_AUTHORITY)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<RequiredAuthorityReference>() {
-      @Override
-      public RequiredAuthorityReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new RequiredAuthorityReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(RequiredAuthorityReferenceImpl::new);
 
     typeBuilder.build();
   }

@@ -44,16 +44,13 @@ public class UuidGeneratorTest {
     final ConcurrentSkipListSet<String> duplicatedIds = new ConcurrentSkipListSet<>();
 
     for (int i = 0; i < THREAD_COUNT; i++) {
-      Thread thread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-          for (int j = 0; j < LOOP_COUNT; j++) {
+      Thread thread = new Thread(() -> {
+        for (int j = 0;j < LOOP_COUNT;j++) {
 
-            String id = timeBasedGenerator.generate().toString();
-            boolean wasAdded = generatedIds.add(id);
-            if (!wasAdded) {
-              duplicatedIds.add(id);
-            }
+          String id = timeBasedGenerator.generate().toString();
+          boolean wasAdded = generatedIds.add(id);
+          if (!wasAdded) {
+            duplicatedIds.add(id);
           }
         }
       });

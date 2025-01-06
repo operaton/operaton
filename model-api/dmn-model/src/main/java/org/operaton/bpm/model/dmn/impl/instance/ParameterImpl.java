@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.Parameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class ParameterImpl extends InformationItemImpl implements Parameter {
 
@@ -36,12 +35,7 @@ public class ParameterImpl extends InformationItemImpl implements Parameter {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Parameter.class, DMN_ELEMENT_PARAMETER)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Parameter>() {
-        @Override
-        public Parameter newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ParameterImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ParameterImpl::new);
 
     typeBuilder.build();
   }

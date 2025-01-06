@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.impl.db;
 
 import org.operaton.bpm.engine.ProcessEngines;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 
 
@@ -31,14 +29,11 @@ public class DbSchemaPrune {
   public static void main(String[] args) {
     ProcessEngineImpl processEngine = (ProcessEngineImpl) ProcessEngines.getDefaultProcessEngine();
     CommandExecutor commandExecutor = processEngine.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object> (){
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext
+    commandExecutor.execute(commandContext -> {
+      commandContext
           .getSession(PersistenceSession.class)
           .dbSchemaPrune();
-        return null;
-      }
+      return null;
     });
   }
 }

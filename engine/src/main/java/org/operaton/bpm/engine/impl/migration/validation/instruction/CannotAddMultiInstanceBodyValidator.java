@@ -20,7 +20,6 @@ import org.operaton.bpm.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.tree.FlowScopeWalker;
-import org.operaton.bpm.engine.impl.tree.ReferenceWalker.WalkCondition;
 import org.operaton.bpm.engine.impl.tree.TreeVisitor;
 
 /**
@@ -40,12 +39,7 @@ public class CannotAddMultiInstanceBodyValidator implements MigrationInstruction
     flowScopeWalker.addPreVisitor(miBodyCollector);
 
     // walk until a target scope is found that is mapped
-    flowScopeWalker.walkWhile(new WalkCondition<ScopeImpl>() {
-      @Override
-      public boolean isFulfilled(ScopeImpl element) {
-        return element == null || !instructions.getInstructionsByTargetScope(element).isEmpty();
-      }
-    });
+    flowScopeWalker.walkWhile(element -> element == null || !instructions.getInstructionsByTargetScope(element).isEmpty());
 
     if (miBodyCollector.firstMiBody != null) {
       report.addFailure("Target activity '" + targetActivity.getId() + "' is a descendant of multi-instance body '" +

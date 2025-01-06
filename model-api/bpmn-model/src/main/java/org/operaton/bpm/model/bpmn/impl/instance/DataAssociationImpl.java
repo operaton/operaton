@@ -31,7 +31,6 @@ import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_DATA_ASSOCIATION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN dataAssociation element
@@ -49,12 +48,7 @@ public class DataAssociationImpl extends BaseElementImpl implements DataAssociat
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataAssociation.class, BPMN_ELEMENT_DATA_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DataAssociation>() {
-      @Override
-      public DataAssociation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DataAssociationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DataAssociationImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

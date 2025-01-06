@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollection;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN linkEventDefinition element
@@ -46,12 +45,7 @@ public class LinkEventDefinitionImpl extends EventDefinitionImpl implements Link
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(LinkEventDefinition.class, BPMN_ELEMENT_LINK_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<LinkEventDefinition>() {
-      @Override
-      public LinkEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new LinkEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(LinkEventDefinitionImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .required()

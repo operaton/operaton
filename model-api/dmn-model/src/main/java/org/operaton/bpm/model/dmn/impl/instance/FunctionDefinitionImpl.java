@@ -27,7 +27,6 @@ import org.operaton.bpm.model.dmn.instance.FunctionDefinition;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -60,12 +59,7 @@ public class FunctionDefinitionImpl extends ExpressionImpl implements FunctionDe
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FunctionDefinition.class, DMN_ELEMENT_FUNCTION_DEFINITION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<FunctionDefinition>() {
-      @Override
-      public FunctionDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new FunctionDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(FunctionDefinitionImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

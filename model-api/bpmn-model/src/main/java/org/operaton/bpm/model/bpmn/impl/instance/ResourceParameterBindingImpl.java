@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN resourceParameterBinding element
@@ -44,12 +43,7 @@ public class ResourceParameterBindingImpl extends BaseElementImpl implements Res
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ResourceParameterBinding.class, BPMN_ELEMENT_RESOURCE_PARAMETER_BINDING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ResourceParameterBinding>() {
-      @Override
-      public ResourceParameterBinding newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ResourceParameterBindingImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ResourceParameterBindingImpl::new);
 
     parameterRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_PARAMETER_REF)
       .required()

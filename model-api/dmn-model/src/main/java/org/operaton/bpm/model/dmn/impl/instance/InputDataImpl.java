@@ -25,7 +25,6 @@ import org.operaton.bpm.model.dmn.instance.InputData;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -51,12 +50,7 @@ public class InputDataImpl extends DrgElementImpl implements InputData {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(InputData.class, DMN_ELEMENT_INPUT_DATA)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DrgElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<InputData>() {
-      @Override
-      public InputData newInstance(ModelTypeInstanceContext instanceContext) {
-          return new InputDataImpl(instanceContext);
-        }
-      });
+      .instanceProvider(InputDataImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

@@ -26,7 +26,6 @@ import org.operaton.bpm.model.dmn.instance.TextAnnotation;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -65,12 +64,7 @@ public class TextAnnotationImpl extends ArtifactImpl implements TextAnnotation {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TextAnnotation.class, DMN_ELEMENT_TEXT_ANNOTATION)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(Artifact.class)
-      .instanceProvider(new ModelTypeInstanceProvider<TextAnnotation>() {
-      @Override
-      public TextAnnotation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TextAnnotationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(TextAnnotationImpl::new);
 
     textFormatAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_TEXT_FORMAT)
       .defaultValue("text/plain")

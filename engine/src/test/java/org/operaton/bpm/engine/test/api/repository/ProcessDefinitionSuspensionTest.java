@@ -29,8 +29,6 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateProcessDefinitionHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendProcessDefinitionHandler;
@@ -57,13 +55,10 @@ public class ProcessDefinitionSuspensionTest extends PluggableProcessEngineTest 
   @After
   public void tearDown() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerActivateProcessDefinitionHandler.TYPE);
-        commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerSuspendProcessDefinitionHandler.TYPE);
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerActivateProcessDefinitionHandler.TYPE);
+      commandContext.getHistoricJobLogManager().deleteHistoricJobLogsByHandlerType(TimerSuspendProcessDefinitionHandler.TYPE);
+      return null;
     });
   }
 

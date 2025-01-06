@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.OutputDecisionReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class OutputDecisionReferenceImpl extends DmnElementReferenceImpl implements OutputDecisionReference {
 
@@ -36,12 +35,7 @@ public class OutputDecisionReferenceImpl extends DmnElementReferenceImpl impleme
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OutputDecisionReference.class, DMN_ELEMENT_OUTPUT_DECISION_REFERENCE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<OutputDecisionReference>() {
-      @Override
-      public OutputDecisionReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OutputDecisionReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OutputDecisionReferenceImpl::new);
 
     typeBuilder.build();
   }

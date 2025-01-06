@@ -26,7 +26,6 @@ import org.operaton.bpm.model.dmn.instance.UnaryTests;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -65,12 +64,7 @@ public class UnaryTestsImpl extends DmnElementImpl implements UnaryTests {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UnaryTests.class, DMN_ELEMENT_UNARY_TESTS)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<UnaryTests>() {
-      @Override
-      public UnaryTests newInstance(ModelTypeInstanceContext instanceContext) {
-          return new UnaryTestsImpl(instanceContext);
-        }
-      });
+      .instanceProvider(UnaryTestsImpl::new);
 
     expressionLanguageAttribute = typeBuilder.stringAttribute(DMN_ATTRIBUTE_EXPRESSION_LANGUAGE)
       .build();

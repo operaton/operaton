@@ -25,7 +25,6 @@ import org.operaton.bpm.model.dmn.instance.RequiredKnowledgeReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.ElementReference;
 
@@ -50,12 +49,7 @@ public class KnowledgeRequirementImpl extends DmnModelElementInstanceImpl implem
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(KnowledgeRequirement.class, DMN_ELEMENT_KNOWLEDGE_REQUIREMENT)
       .namespaceUri(LATEST_DMN_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<KnowledgeRequirement>() {
-      @Override
-      public KnowledgeRequirement newInstance(ModelTypeInstanceContext instanceContext) {
-          return new KnowledgeRequirementImpl(instanceContext);
-        }
-      });
+      .instanceProvider(KnowledgeRequirementImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

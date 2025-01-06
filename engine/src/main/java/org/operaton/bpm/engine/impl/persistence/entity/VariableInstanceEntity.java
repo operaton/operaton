@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -637,14 +636,9 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
 
     ProcessApplicationReference targetProcessApplication = getContextProcessApplication();
     if (targetProcessApplication != null) {
-      Context.executeWithinProcessApplication(new Callable<Void>() {
-
-        @Override
-        public Void call() throws Exception {
-          getVariableScope().setVariableLocal(name, updatedValue);
-          return null;
-        }
-
+      Context.executeWithinProcessApplication(() -> {
+        getVariableScope().setVariableLocal(name, updatedValue);
+        return null;
       }, targetProcessApplication, new InvocationContext(getExecution()));
 
     }

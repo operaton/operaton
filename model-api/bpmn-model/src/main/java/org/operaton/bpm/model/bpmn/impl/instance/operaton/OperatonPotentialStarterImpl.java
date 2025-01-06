@@ -27,7 +27,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_ELEMENT_POTENTIAL_STARTER;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN potentialStarter operaton extension
@@ -41,12 +40,7 @@ public class OperatonPotentialStarterImpl extends BpmnModelElementInstanceImpl i
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonPotentialStarter.class, OPERATON_ELEMENT_POTENTIAL_STARTER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonPotentialStarter>() {
-      @Override
-      public OperatonPotentialStarter newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonPotentialStarterImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonPotentialStarterImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

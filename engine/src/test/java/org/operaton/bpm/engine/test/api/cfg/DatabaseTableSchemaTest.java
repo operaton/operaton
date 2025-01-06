@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -30,13 +23,19 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSession;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Ronny Bräunlich
@@ -110,13 +109,10 @@ public class DatabaseTableSchemaTest {
     ProcessEngine engine = config1.buildProcessEngine();
     CommandExecutor commandExecutor = config1.getCommandExecutorTxRequired();
 
-    commandExecutor.execute(new Command<Void>(){
-      @Override
-      public Void execute(CommandContext commandContext) {
-        DbSqlSession sqlSession = commandContext.getSession(DbSqlSession.class);
-        assertTrue(sqlSession.isTablePresent("SOME_TABLE"));
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      DbSqlSession sqlSession = commandContext.getSession(DbSqlSession.class);
+      assertTrue(sqlSession.isTablePresent("SOME_TABLE"));
+      return null;
     });
 
     engine.close();

@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.InformationItem;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class FormalParameterImpl extends InformationItemImpl implements FormalParameter {
 
@@ -36,12 +35,7 @@ public class FormalParameterImpl extends InformationItemImpl implements FormalPa
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FormalParameter.class, DMN_ELEMENT_FORMAL_PARAMETER)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
-      .instanceProvider(new ModelTypeInstanceProvider<FormalParameter>() {
-      @Override
-      public FormalParameter newInstance(ModelTypeInstanceContext instanceContext) {
-          return new FormalParameterImpl(instanceContext);
-        }
-      });
+      .instanceProvider(FormalParameterImpl::new);
 
     typeBuilder.build();
   }

@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_CATEGORY_VALUE_REF;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN categoryValueRef element of the BPMN tFlowElement type
@@ -34,12 +33,7 @@ public class CategoryValueRef extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CategoryValueRef.class, BPMN_ELEMENT_CATEGORY_VALUE_REF)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<CategoryValueRef>() {
-      @Override
-      public CategoryValueRef newInstance(ModelTypeInstanceContext instanceContext) {
-          return new CategoryValueRef(instanceContext);
-        }
-      });
+      .instanceProvider(CategoryValueRef::new);
 
     typeBuilder.build();
   }

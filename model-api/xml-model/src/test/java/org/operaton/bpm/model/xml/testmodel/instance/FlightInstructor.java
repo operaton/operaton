@@ -23,7 +23,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.ELEMENT_NAME_FLIGHT_INSTRUCTOR;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Sebastian Menski
@@ -33,12 +32,7 @@ public class FlightInstructor extends ModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(FlightInstructor.class, ELEMENT_NAME_FLIGHT_INSTRUCTOR)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(new ModelTypeInstanceProvider<FlightInstructor>() {
-      @Override
-      public FlightInstructor newInstance(ModelTypeInstanceContext instanceContext) {
-          return new FlightInstructor(instanceContext);
-        }
-      });
+      .instanceProvider(FlightInstructor::new);
 
     typeBuilder.build();
   }

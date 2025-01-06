@@ -32,7 +32,6 @@ import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_DEFAULT;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_COMPLEX_GATEWAY;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN complexGateway element
@@ -48,12 +47,7 @@ public class ComplexGatewayImpl extends GatewayImpl implements ComplexGateway {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(ComplexGateway.class, BPMN_ELEMENT_COMPLEX_GATEWAY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
-      .instanceProvider(new ModelTypeInstanceProvider<ComplexGateway>() {
-      @Override
-      public ComplexGateway newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ComplexGatewayImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ComplexGatewayImpl::new);
 
     defaultAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_DEFAULT)
       .idAttributeReference(SequenceFlow.class)

@@ -16,11 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-
-import junit.framework.TestCase;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -28,16 +23,7 @@ import org.operaton.bpm.engine.batch.Batch;
 import org.operaton.bpm.engine.batch.BatchStatistics;
 import org.operaton.bpm.engine.batch.history.HistoricBatch;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
-import org.operaton.bpm.engine.history.HistoricActivityInstance;
-import org.operaton.bpm.engine.history.HistoricCaseActivityInstance;
-import org.operaton.bpm.engine.history.HistoricDecisionInstance;
-import org.operaton.bpm.engine.history.HistoricDetail;
-import org.operaton.bpm.engine.history.HistoricExternalTaskLog;
-import org.operaton.bpm.engine.history.HistoricIncident;
-import org.operaton.bpm.engine.history.HistoricJobLog;
-import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.history.HistoricTaskInstance;
-import org.operaton.bpm.engine.history.HistoricVariableInstance;
+import org.operaton.bpm.engine.history.*;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogEventEntity;
 import org.operaton.bpm.engine.management.SchemaLogEntry;
@@ -51,6 +37,11 @@ import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+
+import java.util.Comparator;
+import java.util.List;
+
+import junit.framework.TestCase;
 
 /**
  * This class provides utils to verify the sorting of queries of engine entities.
@@ -67,74 +58,46 @@ public class TestOrderingUtil {
   // EXECUTION
 
   public static NullTolerantComparator<Execution> executionByProcessInstanceId() {
-    return propertyComparator(new PropertyAccessor<Execution, String>() {
-      @Override
-      public String getProperty(Execution obj) {
-        return obj.getProcessInstanceId();
-      }
-    });
+    return propertyComparator(Execution::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<Execution> executionByProcessDefinitionId() {
-    return propertyComparator(new PropertyAccessor<Execution, String>() {
-      @Override
-      public String getProperty(Execution obj) {
-        return ((ExecutionEntity) obj).getProcessDefinitionId();
-      }
-    });
+    return propertyComparator(obj -> ((ExecutionEntity) obj).getProcessDefinitionId());
   }
 
   public static NullTolerantComparator<Execution> executionByProcessDefinitionKey(ProcessEngine processEngine) {
     final RuntimeService runtimeService = processEngine.getRuntimeService();
     final RepositoryService repositoryService = processEngine.getRepositoryService();
 
-    return propertyComparator(new PropertyAccessor<Execution, String>() {
-      @Override
-      public String getProperty(Execution obj) {
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
-            .processInstanceId(obj.getProcessInstanceId()).singleResult();
-        ProcessDefinition processDefinition = repositoryService.getProcessDefinition(processInstance.getProcessDefinitionId());
-        return processDefinition.getKey();
-      }
+    return propertyComparator(obj -> {
+      ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+          .processInstanceId(obj.getProcessInstanceId()).singleResult();
+      ProcessDefinition processDefinition = repositoryService.getProcessDefinition(processInstance.getProcessDefinitionId());
+      return processDefinition.getKey();
     });
   }
 
   //PROCESS INSTANCE
 
   public static NullTolerantComparator<ProcessInstance> processInstanceByProcessInstanceId() {
-    return propertyComparator(new PropertyAccessor<ProcessInstance, String>() {
-      @Override public String getProperty(ProcessInstance obj) {
-        return obj.getProcessInstanceId();
-      }
-    });
+    return propertyComparator(Execution::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<ProcessInstance> processInstanceByProcessDefinitionId() {
-    return propertyComparator(new PropertyAccessor<ProcessInstance, String>() {
-      @Override public String getProperty(ProcessInstance obj) {
-        return obj.getProcessDefinitionId();
-      }
-    });
+    return propertyComparator(ProcessInstance::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<ProcessInstance> processInstanceByBusinessKey() {
-    return propertyComparator(new PropertyAccessor<ProcessInstance, String>() {
-      @Override public String getProperty(ProcessInstance obj) {
-        return obj.getBusinessKey();
-      }
-    });
+    return propertyComparator(ProcessInstance::getBusinessKey);
   }
 
   // PROCESS DEFINITION
 
   public static NullTolerantComparator<ProcessDefinition> processDefinitionByDeployTime(ProcessEngine processEngine){
     RepositoryService repositoryService = processEngine.getRepositoryService();
-    return propertyComparator(new PropertyAccessor<ProcessDefinition, Date>() {
-      @Override
-      public Date getProperty(ProcessDefinition obj) {
-        Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(obj.getDeploymentId()).singleResult();
-        return deployment.getDeploymentTime();
-      }
+    return propertyComparator(obj -> {
+      Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(obj.getDeploymentId()).singleResult();
+      return deployment.getDeploymentTime();
     });
   }
 
@@ -142,468 +105,229 @@ public class TestOrderingUtil {
 
   public static NullTolerantComparator<DecisionDefinition> decisionDefinitionByDeployTime(ProcessEngine processEngine) {
     RepositoryService repositoryService = processEngine.getRepositoryService();
-    return propertyComparator(new PropertyAccessor<DecisionDefinition, Date>() {
-      @Override
-      public Date getProperty(DecisionDefinition obj) {
-        Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(obj.getDeploymentId()).singleResult();
-        return deployment.getDeploymentTime();
-      }
+    return propertyComparator(obj -> {
+      Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(obj.getDeploymentId()).singleResult();
+      return deployment.getDeploymentTime();
     });
   }
 
   //HISTORIC PROCESS INSTANCE
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessDefinitionId() {
-    return propertyComparator(new PropertyAccessor<HistoricProcessInstance, String>() {
-      @Override public String getProperty(HistoricProcessInstance obj) {
-        return obj.getProcessDefinitionId();
-      }
-    });
+    return propertyComparator(HistoricProcessInstance::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessDefinitionKey() {
-    return propertyComparator(new PropertyAccessor<HistoricProcessInstance, String>() {
-      @Override public String getProperty(HistoricProcessInstance obj) {
-        return obj.getProcessDefinitionKey();
-      }
-    });
+    return propertyComparator(HistoricProcessInstance::getProcessDefinitionKey);
   }
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessDefinitionName() {
-    return propertyComparator(new PropertyAccessor<HistoricProcessInstance, String>() {
-      @Override public String getProperty(HistoricProcessInstance obj) {
-        return obj.getProcessDefinitionName();
-      }
-    });
+    return propertyComparator(HistoricProcessInstance::getProcessDefinitionName);
   }
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessDefinitionVersion() {
-    return propertyComparator(new PropertyAccessor<HistoricProcessInstance, Integer>() {
-      @Override public Integer getProperty(HistoricProcessInstance obj) {
-        return obj.getProcessDefinitionVersion();
-      }
-    });
+    return propertyComparator(HistoricProcessInstance::getProcessDefinitionVersion);
   }
 
   public static NullTolerantComparator<HistoricProcessInstance> historicProcessInstanceByProcessInstanceId() {
-    return propertyComparator(new PropertyAccessor<HistoricProcessInstance, String>() {
-      @Override public String getProperty(HistoricProcessInstance obj) {
-        return obj.getId();
-      }
-    });
+    return propertyComparator(HistoricProcessInstance::getId);
   }
 
   // CASE EXECUTION
 
   public static NullTolerantComparator<CaseExecution> caseExecutionByDefinitionId() {
-    return propertyComparator(new PropertyAccessor<CaseExecution, String>() {
-      @Override
-      public String getProperty(CaseExecution obj) {
-        return obj.getCaseDefinitionId();
-      }
-    });
+    return propertyComparator(CaseExecution::getCaseDefinitionId);
   }
 
   public static NullTolerantComparator<CaseExecution> caseExecutionByDefinitionKey(ProcessEngine processEngine) {
     final RepositoryService repositoryService = processEngine.getRepositoryService();
-    return propertyComparator(new PropertyAccessor<CaseExecution, String>() {
-      @Override
-      public String getProperty(CaseExecution obj) {
-        CaseDefinition caseDefinition = repositoryService.getCaseDefinition(obj.getCaseDefinitionId());
-        return caseDefinition.getKey();
-      }
+    return propertyComparator(obj -> {
+      CaseDefinition caseDefinition = repositoryService.getCaseDefinition(obj.getCaseDefinitionId());
+      return caseDefinition.getKey();
     });
   }
 
   public static NullTolerantComparator<CaseExecution> caseExecutionById() {
-    return propertyComparator(new PropertyAccessor<CaseExecution, String>() {
-      @Override
-      public String getProperty(CaseExecution obj) {
-        return obj.getId();
-      }
-    });
+    return propertyComparator(CaseExecution::getId);
   }
 
   // TASK
 
   public static NullTolerantComparator<Task> taskById() {
-    return propertyComparator(new PropertyAccessor<Task, String>() {
-      @Override
-      public String getProperty(Task obj) {
-        return obj.getId();
-      }
-    });
+    return propertyComparator(Task::getId);
   }
 
   public static NullTolerantComparator<Task> taskByName() {
-    return propertyComparator(new PropertyAccessor<Task, String>() {
-      @Override
-      public String getProperty(Task obj) {
-        return obj.getName();
-      }
-    });
+    return propertyComparator(Task::getName);
   }
 
   public static NullTolerantComparator<Task> taskByPriority() {
-    return propertyComparator(new PropertyAccessor<Task, Integer>() {
-      @Override
-      public Integer getProperty(Task obj) {
-        return obj.getPriority();
-      }
-    });
+    return propertyComparator(Task::getPriority);
   }
 
   public static NullTolerantComparator<Task> taskByAssignee() {
-    return propertyComparator(new PropertyAccessor<Task, String>() {
-      @Override
-      public String getProperty(Task obj) {
-        return obj.getAssignee();
-      }
-    });
+    return propertyComparator(Task::getAssignee);
   }
 
   public static NullTolerantComparator<Task> taskByDescription() {
-    return propertyComparator(new PropertyAccessor<Task, String>() {
-      @Override
-      public String getProperty(Task obj) {
-        return obj.getDescription();
-      }
-    });
+    return propertyComparator(Task::getDescription);
   }
 
   public static NullTolerantComparator<Task> taskByProcessInstanceId() {
-    return propertyComparator(new PropertyAccessor<Task, String>() {
-      @Override
-      public String getProperty(Task obj) {
-        return obj.getProcessInstanceId();
-      }
-    });
+    return propertyComparator(Task::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<Task> taskByExecutionId() {
-    return propertyComparator(new PropertyAccessor<Task, String>() {
-      @Override
-      public String getProperty(Task obj) {
-        return obj.getExecutionId();
-      }
-    });
+    return propertyComparator(Task::getExecutionId);
   }
 
   public static NullTolerantComparator<Task> taskByCreateTime() {
-    return propertyComparator(new PropertyAccessor<Task, Date>() {
-      @Override
-      public Date getProperty(Task obj) {
-        return obj.getCreateTime();
-      }
-    });
+    return propertyComparator(Task::getCreateTime);
   }
 
   public static NullTolerantComparator<Task> taskByDueDate() {
-    return propertyComparator(new PropertyAccessor<Task, Date>() {
-      @Override
-      public Date getProperty(Task obj) {
-        return obj.getDueDate();
-      }
-    });
+    return propertyComparator(Task::getDueDate);
   }
 
   public static NullTolerantComparator<Task> taskByFollowUpDate() {
-    return propertyComparator(new PropertyAccessor<Task, Date>() {
-      @Override
-      public Date getProperty(Task obj) {
-        return obj.getFollowUpDate();
-      }
-    });
+    return propertyComparator(Task::getFollowUpDate);
   }
 
   public static NullTolerantComparator<Task> taskByCaseInstanceId() {
-    return propertyComparator(new PropertyAccessor<Task, String>() {
-      @Override
-      public String getProperty(Task obj) {
-        return obj.getCaseInstanceId();
-      }
-    });
+    return propertyComparator(Task::getCaseInstanceId);
   }
 
   public static NullTolerantComparator<Task> taskByCaseExecutionId() {
-    return propertyComparator(new PropertyAccessor<Task, String>() {
-      @Override
-      public String getProperty(Task obj) {
-        return obj.getCaseExecutionId();
-      }
-    });
+    return propertyComparator(Task::getCaseExecutionId);
   }
 
   // HISTORIC JOB LOG
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByTimestamp() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, Date>() {
-      @Override
-      public Date getProperty(HistoricJobLog obj) {
-        return obj.getTimestamp();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getTimestamp);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobId() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, String>() {
-      @Override
-      public String getProperty(HistoricJobLog obj) {
-        return obj.getJobId();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getJobId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobDefinitionId() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, String>() {
-      @Override
-      public String getProperty(HistoricJobLog obj) {
-        return obj.getJobDefinitionId();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getJobDefinitionId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobDueDate() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, Date>() {
-      @Override
-      public Date getProperty(HistoricJobLog obj) {
-        return obj.getJobDueDate();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getJobDueDate);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobRetries() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, Integer>() {
-      @Override
-      public Integer getProperty(HistoricJobLog obj) {
-        return obj.getJobRetries();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getJobRetries);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByActivityId() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, String>() {
-      @Override
-      public String getProperty(HistoricJobLog obj) {
-        return obj.getActivityId();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getActivityId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByExecutionId() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, String>() {
-      @Override
-      public String getProperty(HistoricJobLog obj) {
-        return obj.getExecutionId();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getExecutionId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByProcessInstanceId() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, String>() {
-      @Override
-      public String getProperty(HistoricJobLog obj) {
-        return obj.getProcessInstanceId();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByProcessDefinitionId() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, String>() {
-      @Override
-      public String getProperty(HistoricJobLog obj) {
-        return obj.getProcessDefinitionId();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByProcessDefinitionKey(ProcessEngine processEngine) {
     final RepositoryService repositoryService = processEngine.getRepositoryService();
 
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, String>() {
-      @Override
-      public String getProperty(HistoricJobLog obj) {
-        ProcessDefinition processDefinition = repositoryService.getProcessDefinition(obj.getProcessDefinitionId());
-        return processDefinition.getKey();
-      }
+    return propertyComparator(obj -> {
+      ProcessDefinition processDefinition = repositoryService.getProcessDefinition(obj.getProcessDefinitionId());
+      return processDefinition.getKey();
     });
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByDeploymentId() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, String>() {
-      @Override
-      public String getProperty(HistoricJobLog obj) {
-        return obj.getDeploymentId();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getDeploymentId);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByJobPriority() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, Long>() {
-      @Override
-      public Long getProperty(HistoricJobLog obj) {
-        return obj.getJobPriority();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getJobPriority);
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogPartiallyByOccurence() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, Long>() {
-      @Override
-      public Long getProperty(HistoricJobLog obj) {
-        return ((HistoricJobLogEventEntity) obj).getSequenceCounter();
-      }
-    });
+    return propertyComparator(obj -> ((HistoricJobLogEventEntity) obj).getSequenceCounter());
   }
 
   public static NullTolerantComparator<HistoricJobLog> historicJobLogByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricJobLog, String>() {
-      @Override
-      public String getProperty(HistoricJobLog obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricJobLog::getTenantId);
   }
 
   // jobs
 
   public static NullTolerantComparator<Job> jobByPriority() {
-    return propertyComparator(new PropertyAccessor<Job, Long>() {
-      @Override
-      public Long getProperty(Job obj) {
-        return obj.getPriority();
-      }
-    });
+    return propertyComparator(Job::getPriority);
   }
 
   // external task
 
   public static NullTolerantComparator<ExternalTask> externalTaskById() {
-    return propertyComparator(new PropertyAccessor<ExternalTask, String>() {
-      @Override
-      public String getProperty(ExternalTask obj) {
-        return obj.getId();
-      }
-    });
+    return propertyComparator(ExternalTask::getId);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByProcessInstanceId() {
-    return propertyComparator(new PropertyAccessor<ExternalTask, String>() {
-      @Override
-      public String getProperty(ExternalTask obj) {
-        return obj.getProcessInstanceId();
-      }
-    });
+    return propertyComparator(ExternalTask::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByProcessDefinitionId() {
-    return propertyComparator(new PropertyAccessor<ExternalTask, String>() {
-      @Override
-      public String getProperty(ExternalTask obj) {
-        return obj.getProcessDefinitionId();
-      }
-    });
+    return propertyComparator(ExternalTask::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByProcessDefinitionKey() {
-    return propertyComparator(new PropertyAccessor<ExternalTask, String>() {
-      @Override
-      public String getProperty(ExternalTask obj) {
-        return obj.getProcessDefinitionKey();
-      }
-    });
+    return propertyComparator(ExternalTask::getProcessDefinitionKey);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByLockExpirationTime() {
-    return propertyComparator(new PropertyAccessor<ExternalTask, Date>() {
-      @Override
-      public Date getProperty(ExternalTask obj) {
-        return obj.getLockExpirationTime();
-      }
-    });
+    return propertyComparator(ExternalTask::getLockExpirationTime);
   }
 
   public static NullTolerantComparator<ExternalTask> externalTaskByPriority() {
-    return propertyComparator(new PropertyAccessor<ExternalTask, Long>() {
-      @Override
-      public Long getProperty(ExternalTask obj) {
-        return obj.getPriority();
-      }
-    });
+    return propertyComparator(ExternalTask::getPriority);
   }
 
   // batch
 
   public static NullTolerantComparator<Batch> batchById() {
-    return propertyComparator(new PropertyAccessor<Batch, String>() {
-      @Override
-      public String getProperty(Batch obj) {
-        return obj.getId();
-      }
-    });
+    return propertyComparator(Batch::getId);
   }
 
   public static NullTolerantComparator<Batch> batchByTenantId() {
-    return propertyComparator(new PropertyAccessor<Batch, String>() {
-      @Override
-      public String getProperty(Batch obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(Batch::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricBatch> historicBatchById() {
-    return propertyComparator(new PropertyAccessor<HistoricBatch, String>() {
-      @Override
-      public String getProperty(HistoricBatch obj) {
-        return obj.getId();
-      }
-    });
+    return propertyComparator(HistoricBatch::getId);
   }
 
   public static NullTolerantComparator<HistoricBatch> historicBatchByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricBatch, String>() {
-      @Override
-      public String getProperty(HistoricBatch obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricBatch::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricBatch> historicBatchByStartTime() {
-    return propertyComparator(new PropertyAccessor<HistoricBatch, Date>() {
-      @Override
-      public Date getProperty(HistoricBatch obj) {
-        return obj.getStartTime();
-      }
-    });
+    return propertyComparator(HistoricBatch::getStartTime);
   }
 
   public static NullTolerantComparator<HistoricBatch> historicBatchByEndTime() {
-    return propertyComparator(new PropertyAccessor<HistoricBatch, Date>() {
-      @Override
-      public Date getProperty(HistoricBatch obj) {
-        return obj.getEndTime();
-      }
-    });
+    return propertyComparator(HistoricBatch::getEndTime);
   }
 
   public static NullTolerantComparator<BatchStatistics> batchStatisticsById() {
-    return propertyComparator(new PropertyAccessor<BatchStatistics, String>() {
-      @Override
-      public String getProperty(BatchStatistics obj) {
-        return obj.getId();
-      }
-    });
+    return propertyComparator(Batch::getId);
   }
 
   public static NullTolerantComparator<BatchStatistics> batchStatisticsByTenantId() {
-    return propertyComparator(new PropertyAccessor<BatchStatistics, String>() {
-      @Override
-      public String getProperty(BatchStatistics obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(Batch::getTenantId);
   }
 
   public static NullTolerantComparator<BatchStatistics> batchStatisticsByStartTime() {
@@ -613,198 +337,95 @@ public class TestOrderingUtil {
   // HISTORIC EXTERNAL TASK LOG
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskByTimestamp() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, Date>() {
-      @Override
-      public Date getProperty(HistoricExternalTaskLog obj) {
-        return obj.getTimestamp();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getTimestamp);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByExternalTaskId() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        return obj.getExternalTaskId();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getExternalTaskId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByRetries() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, Integer>() {
-      @Override
-      public Integer getProperty(HistoricExternalTaskLog obj) {
-        return obj.getRetries();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getRetries);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByPriority() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, Long>() {
-      @Override
-      public Long getProperty(HistoricExternalTaskLog obj) {
-        return obj.getPriority();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getPriority);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByTopicName() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        return obj.getTopicName();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getTopicName);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByWorkerId() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        return obj.getWorkerId();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getWorkerId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByActivityId() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        return obj.getActivityId();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getActivityId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByActivityInstanceId() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        return obj.getActivityInstanceId();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getActivityInstanceId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByExecutionId() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        return obj.getExecutionId();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getExecutionId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByProcessInstanceId() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        return obj.getProcessInstanceId();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getProcessInstanceId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByProcessDefinitionId() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        return obj.getProcessDefinitionId();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getProcessDefinitionId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByProcessDefinitionKey(ProcessEngine processEngine) {
     final RepositoryService repositoryService = processEngine.getRepositoryService();
 
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        ProcessDefinition processDefinition = repositoryService.getProcessDefinition(obj.getProcessDefinitionId());
-        return processDefinition.getKey();
-      }
+    return propertyComparator(obj -> {
+      ProcessDefinition processDefinition = repositoryService.getProcessDefinition(obj.getProcessDefinitionId());
+      return processDefinition.getKey();
     });
   }
 
   // HISTORIC ENTITIES
 
   public static NullTolerantComparator<HistoricActivityInstance> historicActivityInstanceByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricActivityInstance, String>() {
-      @Override
-      public String getProperty(HistoricActivityInstance obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricActivityInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricIncident> historicIncidentByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricIncident, String>() {
-      @Override
-      public String getProperty(HistoricIncident obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricIncident::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricDecisionInstance> historicDecisionInstanceByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricDecisionInstance, String>() {
-      @Override
-      public String getProperty(HistoricDecisionInstance obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricDecisionInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricDetail> historicDetailByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricDetail, String>() {
-      @Override
-      public String getProperty(HistoricDetail obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricDetail::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricTaskInstance> historicTaskInstanceByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricTaskInstance, String>() {
-      @Override
-      public String getProperty(HistoricTaskInstance obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricTaskInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricVariableInstance> historicVariableInstanceByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricVariableInstance, String>() {
-      @Override
-      public String getProperty(HistoricVariableInstance obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricVariableInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricCaseActivityInstance> historicCaseActivityInstanceByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricCaseActivityInstance, String>() {
-      @Override
-      public String getProperty(HistoricCaseActivityInstance obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricCaseActivityInstance::getTenantId);
   }
 
   public static NullTolerantComparator<HistoricExternalTaskLog> historicExternalTaskLogByTenantId() {
-    return propertyComparator(new PropertyAccessor<HistoricExternalTaskLog, String>() {
-      @Override
-      public String getProperty(HistoricExternalTaskLog obj) {
-        return obj.getTenantId();
-      }
-    });
+    return propertyComparator(HistoricExternalTaskLog::getTenantId);
   }
 
   // SCHEMA LOG
   public static NullTolerantComparator<SchemaLogEntry> schemaLogEntryByTimestamp() {
-    return propertyComparator(new PropertyAccessor<SchemaLogEntry, Date>() {
-      @Override
-      public Date getProperty(SchemaLogEntry obj) {
-        return obj.getTimestamp();
-      }
-    });
+    return propertyComparator(SchemaLogEntry::getTimestamp);
   }
 
   // general

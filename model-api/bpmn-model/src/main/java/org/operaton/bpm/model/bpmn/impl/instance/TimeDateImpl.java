@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_TIME_DATE;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN timeDate element of the BPMN tTimerEventDefinition type
@@ -37,12 +36,7 @@ public class TimeDateImpl extends ExpressionImpl implements TimeDate {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(TimeDate.class, BPMN_ELEMENT_TIME_DATE)
       .namespaceUri(BPMN20_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<TimeDate>() {
-      @Override
-      public TimeDate newInstance(ModelTypeInstanceContext instanceContext) {
-          return new TimeDateImpl(instanceContext);
-        }
-      });
+      .instanceProvider(TimeDateImpl::new);
 
     typeBuilder.build();
   }

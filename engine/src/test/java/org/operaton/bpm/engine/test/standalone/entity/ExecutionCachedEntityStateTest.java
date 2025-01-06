@@ -21,8 +21,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.incident.IncidentContext;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.impl.util.BitMaskUtil;
@@ -191,18 +189,15 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     assertEquals(0, execution.getCachedEntityStateRaw());
 
     processEngineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+      .execute(commandContext -> {
 
-          IncidentContext incidentContext = new IncidentContext();
-          incidentContext.setExecutionId(execution.getId());
+      IncidentContext incidentContext = new IncidentContext();
+      incidentContext.setExecutionId(execution.getId());
 
-          IncidentEntity.createAndInsertIncident("foo", incidentContext, null);
+      IncidentEntity.createAndInsertIncident("foo", incidentContext, null);
 
-          return null;
-        }
-      });
+      return null;
+    });
 
     ExecutionEntity execution2 = (ExecutionEntity) runtimeService.createExecutionQuery().activityId("task").singleResult();
     assertEquals(BitMaskUtil.getMaskForBit(ExecutionEntity.INCIDENT_STATE_BIT), execution2.getCachedEntityStateRaw());
@@ -222,18 +217,15 @@ public class ExecutionCachedEntityStateTest extends PluggableProcessEngineTest {
     assertEquals(0, execution.getCachedEntityStateRaw());
 
     processEngineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+      .execute(commandContext -> {
 
-          IncidentContext incidentContext = new IncidentContext();
-          incidentContext.setExecutionId(execution.getId());
+      IncidentContext incidentContext = new IncidentContext();
+      incidentContext.setExecutionId(execution.getId());
 
-          IncidentEntity.createAndInsertIncident("foo", incidentContext, null);
+      IncidentEntity.createAndInsertIncident("foo", incidentContext, null);
 
-          return null;
-        }
-      });
+      return null;
+    });
 
     ExecutionEntity execution2 = (ExecutionEntity) runtimeService.createExecutionQuery().activityId("task").singleResult();
     assertEquals(BitMaskUtil.getMaskForBit(ExecutionEntity.INCIDENT_STATE_BIT), execution2.getCachedEntityStateRaw());

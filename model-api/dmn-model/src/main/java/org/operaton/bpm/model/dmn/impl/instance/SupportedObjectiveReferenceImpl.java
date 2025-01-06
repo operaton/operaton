@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.SupportedObjectiveReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class SupportedObjectiveReferenceImpl extends DmnElementReferenceImpl implements SupportedObjectiveReference {
 
@@ -36,12 +35,7 @@ public class SupportedObjectiveReferenceImpl extends DmnElementReferenceImpl imp
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(SupportedObjectiveReference.class, DMN_ELEMENT_SUPPORTED_OBJECT)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<SupportedObjectiveReference>() {
-      @Override
-      public SupportedObjectiveReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new SupportedObjectiveReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(SupportedObjectiveReferenceImpl::new);
 
     typeBuilder.build();
   }

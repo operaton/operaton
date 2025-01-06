@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_MONITORING;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN monitoring element
@@ -37,12 +36,7 @@ public class MonitoringImpl extends BaseElementImpl implements Monitoring {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Monitoring.class, BPMN_ELEMENT_MONITORING)
       .namespaceUri(BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Monitoring>() {
-      @Override
-      public Monitoring newInstance(ModelTypeInstanceContext instanceContext) {
-          return new MonitoringImpl(instanceContext);
-        }
-      });
+      .instanceProvider(MonitoringImpl::new);
 
     typeBuilder.build();
   }

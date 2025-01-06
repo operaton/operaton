@@ -25,7 +25,6 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonVariableTransitionE
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class OperatonVariableTransitionEventImpl  extends CmmnModelElementInstanceImpl implements OperatonVariableTransitionEvent {
 
@@ -36,12 +35,7 @@ public class OperatonVariableTransitionEventImpl  extends CmmnModelElementInstan
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonVariableTransitionEvent.class, OPERATON_ELEMENT_VARIABLE_EVENT)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonVariableTransitionEvent>() {
-      @Override
-      public OperatonVariableTransitionEvent newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonVariableTransitionEventImpl(instanceContext);
-      }
-    });
+      .instanceProvider(OperatonVariableTransitionEventImpl::new);
 
     typeBuilder.build();
   }

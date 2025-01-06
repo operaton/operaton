@@ -16,16 +16,8 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.ExecuteJobHelper;
@@ -33,7 +25,14 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Tom Baeyens
@@ -44,14 +43,10 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
   public void testJobCommandsWithMessage() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
-    String jobId = commandExecutor.execute(new Command<String>() {
-
-      @Override
-      public String execute(CommandContext commandContext) {
-        MessageEntity message = createTweetMessage("i'm coding a test");
-        commandContext.getJobManager().send(message);
-        return message.getId();
-      }
+    String jobId = commandExecutor.execute(commandContext -> {
+      MessageEntity message = createTweetMessage("i'm coding a test");
+      commandContext.getJobManager().send(message);
+      return message.getId();
     });
 
     AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor));
@@ -85,14 +80,10 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
 
-    String jobId = commandExecutor.execute(new Command<String>() {
-
-      @Override
-      public String execute(CommandContext commandContext) {
-        TimerEntity timer = createTweetTimer("i'm coding a test", new Date(SOME_TIME + (10 * SECOND)));
-        commandContext.getJobManager().schedule(timer);
-        return timer.getId();
-      }
+    String jobId = commandExecutor.execute(commandContext -> {
+      TimerEntity timer = createTweetTimer("i'm coding a test", new Date(SOME_TIME + (10 * SECOND)));
+      commandContext.getJobManager().schedule(timer);
+      return timer.getId();
     });
 
     AcquiredJobs acquiredJobs = commandExecutor.execute(new AcquireJobsCmd(jobExecutor));
@@ -123,23 +114,20 @@ public class JobExecutorCmdHappyTest extends JobExecutorTestCase {
   }
 
   protected void clearDatabase() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-        List<HistoricJobLog> historicJobLogs = processEngineConfiguration
-            .getHistoryService()
-            .createHistoricJobLogQuery()
-            .list();
+      List<HistoricJobLog> historicJobLogs = processEngineConfiguration
+          .getHistoryService()
+          .createHistoricJobLogQuery()
+          .list();
 
-        for (HistoricJobLog historicJobLog : historicJobLogs) {
-          commandContext
+      for (HistoricJobLog historicJobLog : historicJobLogs) {
+        commandContext
             .getHistoricJobLogManager()
             .deleteHistoricJobLogById(historicJobLog.getId());
-        }
-
-        return null;
       }
+
+      return null;
     });
   }
 

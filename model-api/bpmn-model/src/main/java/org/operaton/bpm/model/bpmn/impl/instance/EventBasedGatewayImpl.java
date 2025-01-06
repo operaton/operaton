@@ -27,7 +27,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN eventBasedGateway element
@@ -43,12 +42,7 @@ public class EventBasedGatewayImpl extends GatewayImpl implements EventBasedGate
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EventBasedGateway.class, BPMN_ELEMENT_EVENT_BASED_GATEWAY)
       .namespaceUri(BPMN20_NS)
       .extendsType(Gateway.class)
-      .instanceProvider(new ModelTypeInstanceProvider<EventBasedGateway>() {
-      @Override
-      public EventBasedGateway newInstance(ModelTypeInstanceContext instanceContext) {
-          return new EventBasedGatewayImpl(instanceContext);
-        }
-      });
+      .instanceProvider(EventBasedGatewayImpl::new);
 
     instantiateAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_INSTANTIATE)
       .defaultValue(false)

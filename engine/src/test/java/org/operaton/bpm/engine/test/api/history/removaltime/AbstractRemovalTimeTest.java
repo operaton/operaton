@@ -16,27 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.history.removaltime;
 
-import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
-
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
-import org.operaton.bpm.engine.AuthorizationService;
-import org.operaton.bpm.engine.DecisionService;
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.FormService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
-import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
@@ -49,6 +32,12 @@ import org.operaton.bpm.engine.test.api.resources.GetByteArrayCommand;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.test.util.ResetDmnConfigUtil;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_FULL;
+
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
@@ -136,68 +125,50 @@ public abstract class AbstractRemovalTimeTest {
 
   protected void clearAttachment(final Attachment attachment) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getAttachmentManager().delete((AttachmentEntity) attachment);
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getAttachmentManager().delete((AttachmentEntity) attachment);
+      return null;
     });
   }
 
   protected void clearCommentByTaskId(final String taskId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getCommentManager().deleteCommentsByTaskId(taskId);
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getCommentManager().deleteCommentsByTaskId(taskId);
+      return null;
     });
   }
 
   protected void clearCommentByProcessInstanceId(final String processInstanceId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getCommentManager().deleteCommentsByProcessInstanceIds(Collections.singletonList(processInstanceId));
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getCommentManager().deleteCommentsByProcessInstanceIds(Collections.singletonList(processInstanceId));
+      return null;
     });
   }
 
   protected void clearHistoricTaskInst(final String taskId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getHistoricTaskInstanceManager().deleteHistoricTaskInstanceById(taskId);
-        commandContext.getHistoricIdentityLinkManager().deleteHistoricIdentityLinksLogByTaskId(taskId);
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getHistoricTaskInstanceManager().deleteHistoricTaskInstanceById(taskId);
+      commandContext.getHistoricIdentityLinkManager().deleteHistoricIdentityLinksLogByTaskId(taskId);
+      return null;
     });
   }
 
   protected void clearJobLog(final String jobId) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
+      return null;
     });
   }
 
   protected void clearHistoricIncident(final HistoricIncident historicIncident) {
     CommandExecutor commandExecutor = engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired();
-    commandExecutor.execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        commandContext.getHistoricIncidentManager().delete((HistoricIncidentEntity) historicIncident);
-        return null;
-      }
+    commandExecutor.execute(commandContext -> {
+      commandContext.getHistoricIncidentManager().delete((HistoricIncidentEntity) historicIncident);
+      return null;
     });
   }
 

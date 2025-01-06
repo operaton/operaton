@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.InformationItem;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class ColumnImpl extends InformationItemImpl implements Column {
 
@@ -36,12 +35,7 @@ public class ColumnImpl extends InformationItemImpl implements Column {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Column.class, DMN_ELEMENT_COLUMN)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(InformationItem.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Column>() {
-      @Override
-      public Column newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ColumnImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ColumnImpl::new);
 
     typeBuilder.build();
   }

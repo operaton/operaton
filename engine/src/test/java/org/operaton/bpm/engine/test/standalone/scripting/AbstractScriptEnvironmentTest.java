@@ -19,13 +19,9 @@ package org.operaton.bpm.engine.test.standalone.scripting;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 
-import java.util.concurrent.Callable;
-
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.SourceExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
@@ -61,27 +57,18 @@ public abstract class AbstractScriptEnvironmentTest extends PluggableProcessEngi
 
   protected void executeScript(final ProcessApplicationInterface processApplication, String language) {
     processEngineConfiguration.getCommandExecutorTxRequired()
-      .execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-          return Context.executeWithinProcessApplication(new Callable<Void>() {
+      .execute(commandContext -> Context.executeWithinProcessApplication(() -> {
+      ScriptingEngines scriptingEngines = processEngineConfiguration.getScriptingEngines();
+      ScriptEngine scriptEngine = scriptingEngines.getScriptEngineForLanguage(language);
 
-            @Override
-            public Void call() throws Exception {
-              ScriptingEngines scriptingEngines = processEngineConfiguration.getScriptingEngines();
-              ScriptEngine scriptEngine = scriptingEngines.getScriptEngineForLanguage(language);
+      SourceExecutableScript script = createScript(language, getScript());
 
-              SourceExecutableScript script = createScript(language, getScript());
+      ScriptingEnvironment scriptingEnvironment = processEngineConfiguration.getScriptingEnvironment();
+      Bindings bindings = scriptingEngines.createBindings(scriptEngine, null);
+      scriptingEnvironment.execute(script, null, bindings, scriptEngine);
 
-              ScriptingEnvironment scriptingEnvironment = processEngineConfiguration.getScriptingEnvironment();
-              Bindings bindings = scriptingEngines.createBindings(scriptEngine, null);
-              scriptingEnvironment.execute(script, null, bindings, scriptEngine);
-
-              return null;
-            }
-          }, processApplication.getReference());
-        }
-      });
+      return null;
+    }, processApplication.getReference()));
   }
 
   protected SourceExecutableScript createScript(String language, String source) {

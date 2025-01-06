@@ -25,7 +25,6 @@ import org.operaton.bpm.model.cmmn.instance.Documentation;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -64,12 +63,7 @@ public class DocumentationImpl extends CmmnModelElementInstanceImpl implements D
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Documentation.class, CMMN_ELEMENT_DOCUMENTATION)
       .namespaceUri(CMMN11_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<Documentation>() {
-      @Override
-      public Documentation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DocumentationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DocumentationImpl::new);
 
     idAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_ID)
       .idAttribute()

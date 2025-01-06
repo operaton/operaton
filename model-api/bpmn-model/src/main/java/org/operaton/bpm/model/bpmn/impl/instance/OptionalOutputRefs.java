@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_OPTIONAL_OUTPUT_REFS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN optionalOutputRefs element of the BPMN tOutputSet type
@@ -34,12 +33,7 @@ public class OptionalOutputRefs extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OptionalOutputRefs.class, BPMN_ELEMENT_OPTIONAL_OUTPUT_REFS)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OptionalOutputRefs>() {
-      @Override
-      public OptionalOutputRefs newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OptionalOutputRefs(instanceContext);
-        }
-      });
+      .instanceProvider(OptionalOutputRefs::new);
 
     typeBuilder.build();
   }

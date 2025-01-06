@@ -24,7 +24,6 @@ import org.operaton.bpm.model.cmmn.instance.Parameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -40,12 +39,7 @@ public class DecisionParameterImpl extends ParameterImpl implements DecisionPara
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionParameter.class, CMMN_ELEMENT_DECISION_PARAMETER)
         .namespaceUri(CMMN11_NS)
         .extendsType(Parameter.class)
-        .instanceProvider(new ModelTypeInstanceProvider<DecisionParameter>() {
-      @Override
-      public DecisionParameter newInstance(ModelTypeInstanceContext instanceContext) {
-            return new DecisionParameterImpl(instanceContext);
-          }
-        });
+        .instanceProvider(DecisionParameterImpl::new);
 
     typeBuilder.build();
   }

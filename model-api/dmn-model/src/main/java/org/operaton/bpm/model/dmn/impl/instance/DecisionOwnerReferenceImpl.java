@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.DmnElementReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class DecisionOwnerReferenceImpl extends DmnElementReferenceImpl implements DecisionOwnerReference {
 
@@ -36,12 +35,7 @@ public class DecisionOwnerReferenceImpl extends DmnElementReferenceImpl implemen
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionOwnerReference.class, DMN_ELEMENT_DECISION_OWNER)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DecisionOwnerReference>() {
-      @Override
-      public DecisionOwnerReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DecisionOwnerReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DecisionOwnerReferenceImpl::new);
 
     typeBuilder.build();
   }

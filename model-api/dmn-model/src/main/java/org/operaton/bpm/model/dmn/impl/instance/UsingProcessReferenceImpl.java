@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.UsingProcessReference;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class UsingProcessReferenceImpl extends DmnElementReferenceImpl implements UsingProcessReference {
 
@@ -36,12 +35,7 @@ public class UsingProcessReferenceImpl extends DmnElementReferenceImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(UsingProcessReference.class, DMN_ELEMENT_USING_PROCESS)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(DmnElementReference.class)
-      .instanceProvider(new ModelTypeInstanceProvider<UsingProcessReference>() {
-      @Override
-      public UsingProcessReference newInstance(ModelTypeInstanceContext instanceContext) {
-          return new UsingProcessReferenceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(UsingProcessReferenceImpl::new);
 
     typeBuilder.build();
   }

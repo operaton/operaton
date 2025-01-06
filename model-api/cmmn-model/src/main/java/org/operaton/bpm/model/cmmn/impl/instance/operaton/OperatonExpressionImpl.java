@@ -24,7 +24,6 @@ import org.operaton.bpm.model.cmmn.instance.operaton.OperatonExpression;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Roman Smirnov
@@ -35,12 +34,7 @@ public class OperatonExpressionImpl extends CmmnModelElementInstanceImpl impleme
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExpression.class, OPERATON_ELEMENT_EXPRESSION)
       .namespaceUri(CAMUNDA_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonExpression>() {
-      @Override
-      public OperatonExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonExpressionImpl::new);
 
     typeBuilder.build();
   }

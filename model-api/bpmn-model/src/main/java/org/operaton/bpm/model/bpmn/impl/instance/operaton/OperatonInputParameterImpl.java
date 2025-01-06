@@ -24,7 +24,6 @@ import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputParameter;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 /**
@@ -39,12 +38,7 @@ public class OperatonInputParameterImpl extends OperatonGenericValueElementImpl 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonInputParameter.class, OPERATON_ELEMENT_INPUT_PARAMETER)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonInputParameter>() {
-      @Override
-      public OperatonInputParameter newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonInputParameterImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonInputParameterImpl::new);
 
     operatonNameAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_NAME)
       .namespace(OPERATON_NS)

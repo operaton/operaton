@@ -119,14 +119,11 @@ public class FailedJobListenerWithRetriesTest {
   }
 
   void lockTheJob(final String jobId) {
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequiresNew().execute(new Command<Object>() {
-      @Override
-      public Object execute(CommandContext commandContext) {
-        final JobEntity job = commandContext.getJobManager().findJobById(jobId);
-        job.setLockOwner("someLockOwner");
-        job.setLockExpirationTime(DateUtils.addHours(ClockUtil.getCurrentTime(), 1));
-        return null;
-      }
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequiresNew().execute(commandContext -> {
+      final JobEntity job = commandContext.getJobManager().findJobById(jobId);
+      job.setLockOwner("someLockOwner");
+      job.setLockExpirationTime(DateUtils.addHours(ClockUtil.getCurrentTime(), 1));
+      return null;
     });
   }
 

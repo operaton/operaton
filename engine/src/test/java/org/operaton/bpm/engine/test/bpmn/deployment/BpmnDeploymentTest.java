@@ -23,8 +23,6 @@ import org.junit.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
 import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.engine.impl.pvm.ReadOnlyProcessDefinition;
@@ -394,14 +392,9 @@ public class BpmnDeploymentTest extends PluggableProcessEngineTest {
 
     // Graphical information is not yet exposed publicly, so we need to do some plumbing
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(new Command<ProcessDefinitionEntity>() {
-      @Override
-      public ProcessDefinitionEntity execute(CommandContext commandContext) {
-        return Context.getProcessEngineConfiguration()
-                      .getDeploymentCache()
-                      .findDeployedLatestProcessDefinitionByKey("myProcess");
-      }
-    });
+    ProcessDefinitionEntity processDefinitionEntity = commandExecutor.execute(commandContext -> Context.getProcessEngineConfiguration()
+        .getDeploymentCache()
+        .findDeployedLatestProcessDefinitionByKey("myProcess"));
 
     assertThat(processDefinitionEntity).isNotNull();
     assertThat(processDefinitionEntity.getActivities()).hasSize(7);

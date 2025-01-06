@@ -22,7 +22,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_WHILE_EXECUTING_INPUT_REFS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN whileExecutingInputRefs of the BPMN tInputSet type
@@ -34,12 +33,7 @@ public class WhileExecutingInputRefs extends BpmnModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(WhileExecutingInputRefs.class, BPMN_ELEMENT_WHILE_EXECUTING_INPUT_REFS)
       .namespaceUri(BPMN20_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<WhileExecutingInputRefs>() {
-      @Override
-      public WhileExecutingInputRefs newInstance(ModelTypeInstanceContext instanceContext) {
-          return new WhileExecutingInputRefs(instanceContext);
-        }
-      });
+      .instanceProvider(WhileExecutingInputRefs::new);
 
     typeBuilder.build();
   }

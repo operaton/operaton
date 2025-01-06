@@ -29,7 +29,6 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN resource element
@@ -45,12 +44,7 @@ public class ResourceImpl extends RootElementImpl implements Resource {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Resource.class, BPMN_ELEMENT_RESOURCE)
       .namespaceUri(BPMN20_NS)
       .extendsType(RootElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<Resource>() {
-      @Override
-      public Resource newInstance(ModelTypeInstanceContext instanceContext) {
-          return new ResourceImpl(instanceContext);
-        }
-      });
+      .instanceProvider(ResourceImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .required()

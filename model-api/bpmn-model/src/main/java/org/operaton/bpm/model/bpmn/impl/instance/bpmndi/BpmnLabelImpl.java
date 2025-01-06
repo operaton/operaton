@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_ATTRIBUTE_LABEL_STYLE;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_ELEMENT_BPMN_LABEL;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMNDI_NS;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMNDI BPMNLabel element
@@ -43,12 +42,7 @@ public class BpmnLabelImpl extends LabelImpl implements BpmnLabel {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(BpmnLabel.class, BPMNDI_ELEMENT_BPMN_LABEL)
       .namespaceUri(BPMNDI_NS)
       .extendsType(Label.class)
-      .instanceProvider(new ModelTypeInstanceProvider<BpmnLabel>() {
-      @Override
-      public BpmnLabel newInstance(ModelTypeInstanceContext instanceContext) {
-          return new BpmnLabelImpl(instanceContext);
-        }
-      });
+      .instanceProvider(BpmnLabelImpl::new);
 
     labelStyleAttribute = typeBuilder.stringAttribute(BPMNDI_ATTRIBUTE_LABEL_STYLE)
       .qNameAttributeReference(BpmnLabelStyle.class)

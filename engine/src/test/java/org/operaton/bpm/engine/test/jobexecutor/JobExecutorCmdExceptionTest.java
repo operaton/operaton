@@ -16,28 +16,24 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.history.HistoricIncident;
 import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobCmd;
 import org.operaton.bpm.engine.impl.db.DbEntity;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.util.PluggableProcessEngineTest;
 import org.operaton.bpm.model.bpmn.Bpmn;
+
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Tom Baeyens
@@ -203,14 +199,10 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
   }
 
   protected void createJob(final String handlerType) {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<String>() {
-
-      @Override
-      public String execute(CommandContext commandContext) {
-        MessageEntity message = createMessage(handlerType);
-        commandContext.getJobManager().send(message);
-        return message.getId();
-      }
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      MessageEntity message = createMessage(handlerType);
+      commandContext.getJobManager().send(message);
+      return message.getId();
     });
   }
 
@@ -221,44 +213,41 @@ public class JobExecutorCmdExceptionTest extends PluggableProcessEngineTest {
   }
 
   protected void clearDatabase() {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
 
-        List<Job> jobs = processEngineConfiguration
-            .getManagementService()
-            .createJobQuery()
-            .list();
+      List<Job> jobs = processEngineConfiguration
+          .getManagementService()
+          .createJobQuery()
+          .list();
 
-        for (Job job : jobs) {
-          new DeleteJobCmd(job.getId()).execute(commandContext);
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
-        }
+      for (Job job : jobs) {
+        new DeleteJobCmd(job.getId()).execute(commandContext);
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(job.getId());
+      }
 
-        List<HistoricIncident> historicIncidents = processEngineConfiguration
-            .getHistoryService()
-            .createHistoricIncidentQuery()
-            .list();
+      List<HistoricIncident> historicIncidents = processEngineConfiguration
+          .getHistoryService()
+          .createHistoricIncidentQuery()
+          .list();
 
-        for (HistoricIncident historicIncident : historicIncidents) {
-          commandContext
+      for (HistoricIncident historicIncident : historicIncidents) {
+        commandContext
             .getDbEntityManager()
             .delete((DbEntity) historicIncident);
-        }
+      }
 
-        List<HistoricJobLog> historicJobLogs = processEngineConfiguration
-            .getHistoryService()
-            .createHistoricJobLogQuery()
-            .list();
+      List<HistoricJobLog> historicJobLogs = processEngineConfiguration
+          .getHistoryService()
+          .createHistoricJobLogQuery()
+          .list();
 
-        for (HistoricJobLog historicJobLog : historicJobLogs) {
-          commandContext
+      for (HistoricJobLog historicJobLog : historicJobLogs) {
+        commandContext
             .getHistoricJobLogManager()
             .deleteHistoricJobLogById(historicJobLog.getId());
-        }
-
-        return null;
       }
+
+      return null;
     });
   }
 

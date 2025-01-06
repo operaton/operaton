@@ -25,7 +25,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN escalationEventDefinition element
@@ -40,12 +39,7 @@ public class EscalationEventDefinitionImpl extends EventDefinitionImpl implement
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(EscalationEventDefinition.class, BPMN_ELEMENT_ESCALATION_EVENT_DEFINITION)
       .namespaceUri(BPMN20_NS)
       .extendsType(EventDefinition.class)
-      .instanceProvider(new ModelTypeInstanceProvider<EscalationEventDefinition>() {
-      @Override
-      public EscalationEventDefinition newInstance(ModelTypeInstanceContext instanceContext) {
-          return new EscalationEventDefinitionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(EscalationEventDefinitionImpl::new);
 
     escalationRefAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_ESCALATION_REF)
       .qNameAttributeReference(Escalation.class)

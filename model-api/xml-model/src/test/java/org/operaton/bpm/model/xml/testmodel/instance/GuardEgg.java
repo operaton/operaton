@@ -23,7 +23,6 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class GuardEgg extends ModelElementInstanceImpl {
 
@@ -34,12 +33,7 @@ public class GuardEgg extends ModelElementInstanceImpl {
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(GuardEgg.class, ELEMENT_NAME_GUARD_EGG)
       .namespaceUri(MODEL_NAMESPACE)
-      .instanceProvider(new ModelTypeInstanceProvider<GuardEgg>() {
-      @Override
-      public GuardEgg newInstance(ModelTypeInstanceContext instanceContext) {
-          return new GuardEgg(instanceContext);
-        }
-      });
+      .instanceProvider(GuardEgg::new);
 
     typeBuilder.build();
   }

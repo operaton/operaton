@@ -24,8 +24,6 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.BatchWindowConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupJobHandlerConfiguration;
 import org.operaton.bpm.engine.impl.metrics.Meter;
@@ -662,15 +660,12 @@ public class HistoryCleanupTest {
   }
 
   private void imitateFailedJob(final String jobId) {
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        JobEntity jobEntity = getJobEntity(jobId);
-        jobEntity.setRetries(0);
-        jobEntity.setExceptionMessage("Something bad happened");
-        jobEntity.setExceptionStacktrace(ExceptionUtil.getExceptionStacktrace(new RuntimeException("Something bad happened")));
-        return null;
-      }
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      JobEntity jobEntity = getJobEntity(jobId);
+      jobEntity.setRetries(0);
+      jobEntity.setExceptionMessage("Something bad happened");
+      jobEntity.setExceptionStacktrace(ExceptionUtil.getExceptionStacktrace(new RuntimeException("Something bad happened")));
+      return null;
     });
   }
 

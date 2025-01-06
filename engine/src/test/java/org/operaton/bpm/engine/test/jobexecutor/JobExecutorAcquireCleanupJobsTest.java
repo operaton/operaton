@@ -16,19 +16,18 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
 import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
+
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JobExecutorAcquireCleanupJobsTest extends AbstractJobExecutorAcquireJobsTest {
 
@@ -79,23 +78,20 @@ public class JobExecutorAcquireCleanupJobsTest extends AbstractJobExecutorAcquir
 
   @After
   public void resetDatabase() {
-    configuration.getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
-        String handlerType = "history-cleanup";
-        List<Job> jobsByHandlerType = commandContext.getJobManager()
-            .findJobsByHandlerType(handlerType);
+    configuration.getCommandExecutorTxRequired().execute(commandContext -> {
+      String handlerType = "history-cleanup";
+      List<Job> jobsByHandlerType = commandContext.getJobManager()
+          .findJobsByHandlerType(handlerType);
 
-        for (Job job : jobsByHandlerType) {
-          commandContext.getJobManager()
-              .deleteJob((JobEntity) job);
-        }
-
-        commandContext.getHistoricJobLogManager()
-            .deleteHistoricJobLogsByHandlerType(handlerType);
-
-        return null;
+      for (Job job : jobsByHandlerType) {
+        commandContext.getJobManager()
+            .deleteJob((JobEntity) job);
       }
+
+      commandContext.getHistoricJobLogManager()
+          .deleteHistoricJobLogsByHandlerType(handlerType);
+
+      return null;
     });
   }
 

@@ -24,7 +24,6 @@ import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_DATA_INPUT_ASSOCIATION;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * The BPMN dataInputAssociation element
@@ -37,12 +36,7 @@ public class DataInputAssociationImpl extends DataAssociationImpl implements Dat
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataInputAssociation.class, BPMN_ELEMENT_DATA_INPUT_ASSOCIATION)
       .namespaceUri(BPMN20_NS)
       .extendsType(DataAssociation.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DataInputAssociation>() {
-      @Override
-      public DataInputAssociation newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DataInputAssociationImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DataInputAssociationImpl::new);
 
     typeBuilder.build();
   }

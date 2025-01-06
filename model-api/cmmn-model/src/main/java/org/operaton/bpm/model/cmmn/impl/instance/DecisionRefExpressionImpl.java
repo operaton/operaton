@@ -39,12 +39,7 @@ public class DecisionRefExpressionImpl extends ExpressionImpl implements Decisio
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DecisionRefExpression.class, CMMN_ELEMENT_DECISION_REF_EXPRESSION)
       .namespaceUri(CMMN11_NS)
       .extendsType(Expression.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<DecisionRefExpression>() {
-      @Override
-      public DecisionRefExpression newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DecisionRefExpressionImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DecisionRefExpressionImpl::new);
 
     typeBuilder.build();
   }

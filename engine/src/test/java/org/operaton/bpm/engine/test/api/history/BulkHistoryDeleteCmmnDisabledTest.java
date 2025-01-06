@@ -16,20 +16,11 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang3.time.DateUtils;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
@@ -42,12 +33,16 @@ import org.operaton.bpm.engine.test.util.ProcessEngineBootstrapRule;
 import org.operaton.bpm.engine.test.util.ProcessEngineTestRule;
 import org.operaton.bpm.engine.test.util.ProvidedProcessEngineRule;
 import org.operaton.bpm.engine.variable.Variables;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.junit.*;
 import org.junit.rules.RuleChain;
+
+import static org.junit.Assert.assertEquals;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
 public class BulkHistoryDeleteCmmnDisabledTest {
@@ -73,22 +68,19 @@ public class BulkHistoryDeleteCmmnDisabledTest {
 
   @After
   public void clearDatabase() {
-    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(new Command<Void>() {
-      @Override
-      public Void execute(CommandContext commandContext) {
+    engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> {
 
-        List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
-        if (!jobs.isEmpty()) {
-          assertEquals(1, jobs.size());
-          String jobId = jobs.get(0).getId();
-          commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
-          commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
-        }
-
-        commandContext.getMeterLogManager().deleteAll();
-
-        return null;
+      List<Job> jobs = engineRule.getManagementService().createJobQuery().list();
+      if (!jobs.isEmpty()) {
+        assertEquals(1, jobs.size());
+        String jobId = jobs.get(0).getId();
+        commandContext.getJobManager().deleteJob((JobEntity) jobs.get(0));
+        commandContext.getHistoricJobLogManager().deleteHistoricJobLogByJobId(jobId);
       }
+
+      commandContext.getMeterLogManager().deleteAll();
+
+      return null;
     });
 
     List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery().list();

@@ -26,7 +26,6 @@ import org.operaton.bpm.model.bpmn.instance.operaton.OperatonInputOutput;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
@@ -43,12 +42,7 @@ public class OperatonConnectorImpl extends BpmnModelElementInstanceImpl implemen
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonConnector.class, OPERATON_ELEMENT_CONNECTOR)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonConnector>() {
-      @Override
-      public OperatonConnector newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonConnectorImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonConnectorImpl::new);
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

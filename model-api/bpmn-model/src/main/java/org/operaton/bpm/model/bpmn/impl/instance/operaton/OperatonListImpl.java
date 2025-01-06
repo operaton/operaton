@@ -32,7 +32,6 @@ import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.impl.util.ModelUtil;
 import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Sebastian Menski
@@ -42,12 +41,7 @@ public class OperatonListImpl extends BpmnModelElementInstanceImpl implements Op
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonList.class, OPERATON_ELEMENT_LIST)
       .namespaceUri(OPERATON_NS)
-      .instanceProvider(new ModelTypeInstanceProvider<OperatonList>() {
-      @Override
-      public OperatonList newInstance(ModelTypeInstanceContext instanceContext) {
-          return new OperatonListImpl(instanceContext);
-        }
-      });
+      .instanceProvider(OperatonListImpl::new);
 
     typeBuilder.build();
   }

@@ -51,12 +51,7 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(StartEvent.class, BPMN_ELEMENT_START_EVENT)
       .namespaceUri(BPMN20_NS)
       .extendsType(CatchEvent.class)
-      .instanceProvider(new ModelElementTypeBuilder.ModelTypeInstanceProvider<StartEvent>() {
-      @Override
-      public StartEvent newInstance(ModelTypeInstanceContext instanceContext) {
-          return new StartEventImpl(instanceContext);
-        }
-      });
+      .instanceProvider(StartEventImpl::new);
 
     isInterruptingAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_IS_INTERRUPTING)
       .defaultValue(true)

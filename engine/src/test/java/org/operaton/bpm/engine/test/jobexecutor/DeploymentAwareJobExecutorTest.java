@@ -32,8 +32,6 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobsCmd;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
@@ -183,13 +181,10 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
   public void testJobsWithoutDeploymentIdAreAlwaysProcessed() {
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
 
-    String messageId = commandExecutor.execute(new Command<String>() {
-      @Override
-      public String execute(CommandContext commandContext) {
-        MessageEntity message = new MessageEntity();
-        commandContext.getJobManager().send(message);
-        return message.getId();
-      }
+    String messageId = commandExecutor.execute(commandContext -> {
+      MessageEntity message = new MessageEntity();
+      commandContext.getJobManager().send(message);
+      return message.getId();
     });
 
     AcquiredJobs acquiredJobs = getExecutableJobs(processEngineConfiguration.getJobExecutor());
@@ -282,15 +277,9 @@ public class DeploymentAwareJobExecutorTest extends PluggableProcessEngineTest {
   }
 
   protected List<AcquirableJobEntity> findAcquirableJobs() {
-    return processEngineConfiguration.getCommandExecutorTxRequired().execute(new Command<List<AcquirableJobEntity>>() {
-
-      @Override
-      public List<AcquirableJobEntity> execute(CommandContext commandContext) {
-        return commandContext
-          .getJobManager()
-          .findNextJobsToExecute(new Page(0, 100));
-      }
-    });
+    return processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> commandContext
+        .getJobManager()
+        .findNextJobsToExecute(new Page(0, 100)));
   }
 
 }

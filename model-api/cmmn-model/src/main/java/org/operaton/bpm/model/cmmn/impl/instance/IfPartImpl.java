@@ -29,7 +29,6 @@ import org.operaton.bpm.model.cmmn.instance.IfPart;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 import org.operaton.bpm.model.xml.type.reference.AttributeReference;
@@ -78,12 +77,7 @@ public class IfPartImpl extends CmmnElementImpl implements IfPart {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(IfPart.class, CMMN_ELEMENT_IF_PART)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(new ModelTypeInstanceProvider<IfPart>() {
-      @Override
-      public IfPart newInstance(ModelTypeInstanceContext instanceContext) {
-            return new IfPartImpl(instanceContext);
-          }
-        });
+        .instanceProvider(IfPartImpl::new);
 
     contextRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_CONTEXT_REF)
         .idAttributeReference(CaseFileItem.class)

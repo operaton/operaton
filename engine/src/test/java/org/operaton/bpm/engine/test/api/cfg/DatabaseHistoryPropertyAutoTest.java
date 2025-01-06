@@ -16,13 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
@@ -30,10 +23,16 @@ import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
-import org.operaton.bpm.engine.impl.interceptor.Command;
-import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.After;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DatabaseHistoryPropertyAutoTest {
 
@@ -84,12 +83,7 @@ public class DatabaseHistoryPropertyAutoTest {
     final ProcessEngineConfigurationImpl config = config("true", ProcessEngineConfiguration.HISTORY_AUTO);
     ProcessEngineImpl processEngine = buildEngine(config);
 
-    final Integer level = config.getCommandExecutorSchemaOperations().execute(new Command<Integer>() {
-      @Override
-      public Integer execute(CommandContext commandContext) {
-        return HistoryLevelSetupCommand.databaseHistoryLevel(commandContext);
-      }
-    });
+    final Integer level = config.getCommandExecutorSchemaOperations().execute(HistoryLevelSetupCommand::databaseHistoryLevel);
 
     assertThat(level).isEqualTo(HistoryLevel.HISTORY_LEVEL_AUDIT.getId());
 

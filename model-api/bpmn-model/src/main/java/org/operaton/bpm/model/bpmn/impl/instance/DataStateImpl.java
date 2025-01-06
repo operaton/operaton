@@ -26,7 +26,6 @@ import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ATTRIBUTE_NAME;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN_ELEMENT_DATA_STATE;
-import static org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 /**
  * @author Sebastian Menski
@@ -39,12 +38,7 @@ public class DataStateImpl extends BaseElementImpl implements DataState {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(DataState.class, BPMN_ELEMENT_DATA_STATE)
       .namespaceUri(BpmnModelConstants.BPMN20_NS)
       .extendsType(BaseElement.class)
-      .instanceProvider(new ModelTypeInstanceProvider<DataState>() {
-      @Override
-      public DataState newInstance(ModelTypeInstanceContext instanceContext) {
-          return new DataStateImpl(instanceContext);
-        }
-      });
+      .instanceProvider(DataStateImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_NAME)
       .build();

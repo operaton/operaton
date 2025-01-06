@@ -28,7 +28,6 @@ import org.operaton.bpm.model.cmmn.instance.RequiredRule;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
@@ -82,12 +81,7 @@ public class RequiredRuleImpl extends CmmnElementImpl implements RequiredRule {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(RequiredRule.class, CMMN_ELEMENT_REQUIRED_RULE)
         .namespaceUri(CMMN11_NS)
         .extendsType(CmmnElement.class)
-        .instanceProvider(new ModelTypeInstanceProvider<RequiredRule>() {
-      @Override
-      public RequiredRule newInstance(ModelTypeInstanceContext instanceContext) {
-            return new RequiredRuleImpl(instanceContext);
-          }
-        });
+        .instanceProvider(RequiredRuleImpl::new);
 
     nameAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_NAME)
         .build();

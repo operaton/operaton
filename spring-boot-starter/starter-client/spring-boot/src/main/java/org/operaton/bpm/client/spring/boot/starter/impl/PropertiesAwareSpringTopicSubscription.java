@@ -39,7 +39,7 @@ public class PropertiesAwareSpringTopicSubscription extends SpringTopicSubscript
 
   @Override
   protected Predicate<ApplicationEvent> isEventThatCanStartSubscription() {
-    return event -> event instanceof ApplicationStartedEvent;
+    return ApplicationStartedEvent.class::isInstance;
   }
 
   protected void mergeSubscriptionWithProperties() {

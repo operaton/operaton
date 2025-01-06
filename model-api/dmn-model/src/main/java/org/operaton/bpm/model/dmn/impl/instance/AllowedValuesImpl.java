@@ -24,7 +24,6 @@ import org.operaton.bpm.model.dmn.instance.LiteralExpression;
 import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
-import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder.ModelTypeInstanceProvider;
 
 public class AllowedValuesImpl extends UnaryTestsImpl implements AllowedValues {
 
@@ -36,12 +35,7 @@ public class AllowedValuesImpl extends UnaryTestsImpl implements AllowedValues {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(AllowedValues.class, DMN_ELEMENT_ALLOWED_VALUE)
       .namespaceUri(LATEST_DMN_NS)
       .extendsType(LiteralExpression.class)
-      .instanceProvider(new ModelTypeInstanceProvider<AllowedValues>() {
-      @Override
-      public AllowedValues newInstance(ModelTypeInstanceContext instanceContext) {
-          return new AllowedValuesImpl(instanceContext);
-        }
-      });
+      .instanceProvider(AllowedValuesImpl::new);
 
     typeBuilder.build();
   }
